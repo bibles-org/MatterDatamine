@@ -1,0 +1,2000 @@
+anomaly_zone{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  nmesh_voxel__randomSeed:i=0
+  nmesh_voxel__gridStep:r=2
+  nmesh_voxel__gridSize:ip3=40, 18, 40
+  nmesh_voxel__debugDraw:b=no
+  nmesh_voxel__debugDrawBranches:b=no
+  nmesh_voxel__debugTime:i=1000
+  anomaly_zone__generated:b=no
+  anomaly_zone__dryRun:b=no
+  anomaly_zone__branchesGrowIterations:i=30
+  anomaly_zone__brancheLengthMult:r=1
+  anomaly_zone__spawnCountMult:r=1
+  anomaly_zone__spawnTraitTemplate:t="zone_child"
+}
+
+zone_child{
+  "anomaly_zone__ownerZoneEid:eid"{}
+}
+
+anomaly_zone_branch{
+  anomaly_zone__branchLength:ip2=10, 20
+}
+
+flowerman_anomaly_gpu_objects_trait{
+  _group{
+    _tags:t="render"
+    gpu_object_placer__object_density:r=1.5
+  }
+}
+
+gpu_objects_trait_low_density{
+  _group{
+    _tags:t="render"
+    gpu_object_placer__object_density:r=0.75
+  }
+}
+
+anomaly_zone_confusion_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=100, 100
+
+  "anomaly_zone__spawnPresets:object"{
+    "anomaly_preset:array"{
+      "it:object"{
+        template:t="indoor_confusion_anomaly_trap+area_decor_confusion"
+        scaleToBox:b=yes
+      }
+    }
+
+    "decor_preset:array"{
+      "it:object"{
+        template:t="area_decor_confusion"
+        scaleToBox:b=yes
+      }
+    }
+
+    "artifact_legendary_preset:array"{
+      "it:object"{
+        template:t="artifact_legendary+alarm_on_pickup+item_in_world"
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_confusion"
+        scaleToBox:b=yes
+      }
+    }
+
+    "artifact_active_mattery_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_10+item_in_world"
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_confusion"
+        scaleToBox:b=yes
+      }
+    }
+
+    "artifact_active_mattery_extraction_preset:array"{
+      "it:object"{
+        template:t="artifact_active_mattery_base"
+        projectToNavmesh:b=yes
+      }
+    }
+
+    "active_mattery_pile_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_5+item_in_world"
+        projectToNavmesh:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=4, 8
+      preset:t="active_mattery_pile_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=2, 3
+      preset:t="artifact_legendary_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=6, 6
+      zoneMinSize:ip3=3, 3, 3
+      preset:t="anomaly_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=16, 16
+      zoneMinSize:ip3=3, 2, 3
+      preset:t="anomaly_preset"
+    }
+  }
+}
+
+anomaly_zone_metal_heat_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=20, 20
+
+  "anomaly_zone__spawnPresets:object"{
+    "anomaly_preset:array"{
+      "it:object"{
+        template:t="indoor_metal_heat_anomaly_trap"
+        targetScale:p3=8, 5, 8
+        projectToNavmesh:b=yes
+      }
+    }
+
+    "active_mattery_pile_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_3+item_in_world"
+        projectToNavmesh:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=1, 2
+      preset:t="active_mattery_pile_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=2, 2
+      zoneMinSize:ip3=2, 1, 2
+      preset:t="anomaly_preset"
+    }
+  }
+}
+
+anomaly_zone_metal_heat{
+  _use:t="anomaly_zone"
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_metal_heat_branch"
+  }
+}
+
+anomaly_zone_darkness_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=100, 100
+
+  "anomaly_zone__spawnPresets:object"{
+    "creature_preset:array"{
+      "it:object"{
+        template:t="indoor_darkness_anomaly_trap"
+        scaleToBox:b=yes
+      }
+    }
+
+    "artifact_sensor_preset:array"{
+      "it:object"{
+        template:t="artifact_sensor+alarm_on_pickup+item_in_world"
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_darkness"
+        scaleToBox:b=yes
+      }
+    }
+
+    "artifact_active_mattery_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_10+item_in_world"
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_darkness"
+        scaleToBox:b=yes
+      }
+    }
+
+    "artifact_active_mattery_extraction_preset:array"{
+      "it:object"{
+        template:t="artifact_active_mattery_base"
+        projectToNavmesh:b=yes
+      }
+    }
+
+    "active_mattery_pile_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_5+item_in_world"
+        projectToNavmesh:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=4, 8
+      preset:t="active_mattery_pile_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 3
+      zoneMinSize:ip3=4, 4, 4
+      preset:t="creature_preset"
+      randomizeCenter:p3=0.5, 0.5, 0.5
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 3
+      zoneMinSize:ip3=4, 3, 4
+      preset:t="creature_preset"
+      randomizeCenter:p3=0.5, 0.5, 0.5
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 3
+      zoneMinSize:ip3=3, 3, 3
+      preset:t="creature_preset"
+      randomizeCenter:p3=0.5, 0.5, 0.5
+    }
+
+    "group:object"{
+      spawnCount:ip2=10, 10
+      zoneMinSize:ip3=3, 2, 3
+      preset:t="creature_preset"
+      randomizeCenter:p3=0.5, 0.5, 0.5
+    }
+  }
+}
+
+anomaly_zone_flowerman_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=100, 100
+
+  "anomaly_zone__spawnPresets:object"{
+    "creature_preset:array"{
+      "it:object"{
+        template:t="flower_human+flower_human_root_spawner+am_inside_body_5"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnOnLeafs:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "fake_creature_preset:array"{
+      "it:object"{
+        template:t="flower_human_bush+flower_human_root_spawner"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "decor_preset:array"{
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "decor_low_density_preset:array"{
+      "it:object"{
+        template:t="area_decor_flowerman+gpu_objects_trait_low_density"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "wakeup_trigger_preset:array"{
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "flower_human_sensor_preset:array"{
+      "it:object"{
+        template:t="flower_human_sensor+alarm_on_pickup+item_in_world"
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "artifact_active_mattery_extraction_preset:array"{
+      "it:object"{
+        template:t="artifact_active_mattery_base"
+        projectToNavmesh:b=yes
+      }
+    }
+
+    "active_mattery_pile_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_5+item_in_world"
+        projectToNavmesh:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=4, 8
+      preset:t="active_mattery_pile_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 3
+      zoneMinSize:ip3=3, 1, 3
+      preset:t="creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 3
+      zoneMinSize:ip3=2, 1, 2
+      preset:t="creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 3
+      preset:t="creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 4
+      preset:t="fake_creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=5, 10
+      zoneMinSize:ip3=2, 1, 1
+      preset:t="wakeup_trigger_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=5, 10
+      zoneMinSize:ip3=1, 1, 2
+      preset:t="wakeup_trigger_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=10, 15
+      zoneMinSize:ip3=2, 1, 1
+      preset:t="decor_low_density_preset"
+      cellChancePow:r=-1
+    }
+
+    "group:object"{
+      spawnCount:ip2=10, 15
+      zoneMinSize:ip3=1, 1, 2
+      preset:t="decor_low_density_preset"
+      cellChancePow:r=-1
+    }
+
+    "group:object"{
+      spawnCount:ip2=10, 10
+      zoneMinSize:ip3=2, 1, 2
+      preset:t="decor_preset"
+      cellChancePow:r=1
+    }
+  }
+}
+
+anomaly_zone_flowerman_field_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=100, 100
+
+  "anomaly_zone__spawnPresets:object"{
+    "creature_preset:array"{
+      "it:object"{
+        template:t="flower_human+flower_human_root_spawner+am_inside_body_3"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnOnLeafs:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "fake_creature_preset:array"{
+      "it:object"{
+        template:t="flower_human_bush+flower_human_root_spawner"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "decor_preset:array"{
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "decor_low_density_preset:array"{
+      "it:object"{
+        template:t="area_decor_flowerman+gpu_objects_trait_low_density"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "wakeup_trigger_preset:array"{
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "flower_human_sensor_preset:array"{
+      "it:object"{
+        template:t="flower_human_sensor+item_in_world"
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "artifact_active_mattery_extraction_preset:array"{
+      "it:object"{
+        template:t="artifact_active_mattery_base"
+        projectToNavmesh:b=yes
+      }
+    }
+
+    "active_mattery_pile_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_3+item_in_world"
+        projectToNavmesh:b=yes
+      }
+    }
+
+    "active_mattery_rich_pile_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_10+item_in_world"
+        projectToNavmesh:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=1, 1
+      preset:t="active_mattery_rich_pile_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=2, 3
+      preset:t="active_mattery_pile_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=2, 3
+      zoneMinSize:ip3=3, 1, 3
+      preset:t="creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=2, 3
+      preset:t="creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=0, 3
+      preset:t="fake_creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=5, 10
+      zoneMinSize:ip3=2, 1, 1
+      preset:t="wakeup_trigger_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=5, 10
+      zoneMinSize:ip3=1, 1, 2
+      preset:t="wakeup_trigger_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=10, 15
+      zoneMinSize:ip3=2, 1, 1
+      preset:t="decor_low_density_preset"
+      cellChancePow:r=-1
+    }
+
+    "group:object"{
+      spawnCount:ip2=10, 15
+      zoneMinSize:ip3=1, 1, 2
+      preset:t="decor_low_density_preset"
+      cellChancePow:r=-1
+    }
+
+    "group:object"{
+      spawnCount:ip2=10, 10
+      zoneMinSize:ip3=2, 1, 2
+      preset:t="decor_preset"
+      cellChancePow:r=1
+    }
+  }
+}
+
+anomaly_zone_flowerman_indoor_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=15, 15
+
+  "anomaly_zone__spawnPresets:object"{
+    "indoor_creature_preset:array"{
+      "it:object"{
+        template:t="flower_human+flower_human_root_spawner+am_inside_body_3"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnOnLeafs:b=yes
+        spawnIndoor:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+        spawnIndoor:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "creature_preset:array"{
+      "it:object"{
+        template:t="flower_human+flower_human_root_spawner+am_inside_body_3"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+      }
+
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "fake_creature_preset:array"{
+      "it:object"{
+        template:t="flower_human_bush+flower_human_root_spawner"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "decor_preset:array"{
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "decor_low_density_preset:array"{
+      "it:object"{
+        template:t="area_decor_flowerman+gpu_objects_trait_low_density"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "wakeup_trigger_preset:array"{
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "active_mattery_pile_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_3+item_in_world"
+        projectToNavmesh:b=yes
+        spawnIndoor:b=yes
+      }
+    }
+
+    "active_mattery_rich_pile_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_10+item_in_world"
+        projectToNavmesh:b=yes
+        spawnIndoor:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=1, 2
+      preset:t="active_mattery_rich_pile_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=4, 6
+      preset:t="active_mattery_pile_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 2
+      zoneMinSize:ip3=3, 1, 3
+      preset:t="indoor_creature_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 2
+      preset:t="indoor_creature_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 3
+      preset:t="creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=0, 3
+      preset:t="fake_creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=5, 10
+      zoneMinSize:ip3=2, 1, 1
+      preset:t="wakeup_trigger_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=5, 10
+      zoneMinSize:ip3=1, 1, 2
+      preset:t="wakeup_trigger_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=10, 15
+      zoneMinSize:ip3=2, 1, 1
+      preset:t="decor_low_density_preset"
+      cellChancePow:r=-1
+    }
+
+    "group:object"{
+      spawnCount:ip2=10, 15
+      zoneMinSize:ip3=1, 1, 2
+      preset:t="decor_low_density_preset"
+      cellChancePow:r=-1
+    }
+
+    "group:object"{
+      spawnCount:ip2=10, 10
+      zoneMinSize:ip3=2, 1, 2
+      preset:t="decor_preset"
+      cellChancePow:r=1
+    }
+  }
+}
+
+anomaly_zone_flowerman_fake_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=15, 15
+
+  "anomaly_zone__spawnPresets:object"{
+    "fake_creature_preset:array"{
+      "it:object"{
+        template:t="flower_human_bush+flower_human_root_spawner"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "decor_preset:array"{
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "decor_low_density_preset:array"{
+      "it:object"{
+        template:t="area_decor_flowerman+gpu_objects_trait_low_density"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+    }
+
+    "wakeup_trigger_preset:array"{
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+        clientOnly:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=0, 3
+      preset:t="fake_creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 6
+      zoneMinSize:ip3=2, 1, 1
+      preset:t="wakeup_trigger_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 6
+      zoneMinSize:ip3=1, 1, 2
+      preset:t="wakeup_trigger_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=7, 10
+      zoneMinSize:ip3=2, 1, 1
+      preset:t="decor_low_density_preset"
+      cellChancePow:r=-1
+    }
+
+    "group:object"{
+      spawnCount:ip2=7, 10
+      zoneMinSize:ip3=1, 1, 2
+      preset:t="decor_low_density_preset"
+      cellChancePow:r=-1
+    }
+
+    "group:object"{
+      spawnCount:ip2=5, 8
+      zoneMinSize:ip3=2, 1, 2
+      preset:t="decor_preset"
+      cellChancePow:r=1
+    }
+  }
+}
+
+anomaly_zone_skeleton_swarm_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=100, 100
+
+  "anomaly_zone__spawnPresets:object"{
+    "creature_preset:array"{
+      "it:object"{
+        template:t="skeleton_swarm"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+      }
+
+      "it:object"{
+        template:t="area_decor_skeleton_swarm"
+        scaleToBox:b=yes
+      }
+    }
+
+    "decor_preset:array"{
+      "it:object"{
+        template:t="area_decor_skeleton_swarm"
+        scaleToBox:b=yes
+      }
+    }
+
+    "decor_low_density_preset:array"{
+      "it:object"{
+        template:t="area_decor_skeleton_swarm+gpu_objects_trait_low_density"
+        scaleToBox:b=yes
+      }
+    }
+
+    "skeleton_swarm_sensor_preset:array"{
+      "it:object"{
+        template:t="skeleton_swarm_sensor+alarm_on_pickup+item_in_world"
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_skeleton_swarm"
+        scaleToBox:b=yes
+      }
+    }
+
+    "artifact_active_mattery_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_10+item_in_world"
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_confusion"
+        scaleToBox:b=yes
+      }
+    }
+
+    "artifact_active_mattery_extraction_preset:array"{
+      "it:object"{
+        template:t="artifact_active_mattery_base"
+        projectToNavmesh:b=yes
+      }
+    }
+
+    "active_mattery_pile_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_5+item_in_world"
+        projectToNavmesh:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=4, 8
+      preset:t="active_mattery_pile_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 3
+      zoneMinSize:ip3=3, 1, 3
+      preset:t="creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 3
+      zoneMinSize:ip3=2, 1, 2
+      preset:t="creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 3
+      preset:t="creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=30, 30
+      zoneMinSize:ip3=2, 1, 2
+      preset:t="decor_low_density_preset"
+      cellChancePow:r=-1
+    }
+
+    "group:object"{
+      spawnCount:ip2=30, 30
+      zoneMinSize:ip3=2, 1, 2
+      preset:t="decor_preset"
+      cellChancePow:r=1
+    }
+  }
+}
+
+anomaly_zone_nesting_swarm_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=50, 50
+
+  "anomaly_zone__spawnPresets:object"{
+    "creature_preset:array"{
+      "it:object"{
+        template:t="nesting_swarm_nest"
+        minDistanceToWall:r=0.4
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_skeleton_swarm"
+        scaleToBox:b=yes
+      }
+    }
+
+    "decor_preset:array"{
+      "it:object"{
+        template:t="area_decor_skeleton_swarm"
+        scaleToBox:b=yes
+      }
+    }
+
+    "decor_low_density_preset:array"{
+      "it:object"{
+        template:t="area_decor_skeleton_swarm+gpu_objects_trait_low_density"
+        scaleToBox:b=yes
+      }
+    }
+
+    "artifact_active_mattery_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_10+item_in_world"
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_skeleton_swarm"
+        scaleToBox:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=4, 8
+      preset:t="artifact_active_mattery_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 1
+      preset:t="creature_preset"
+      cellChancePow:r=2
+    }
+
+    "group:object"{
+      spawnCount:ip2=30, 30
+      zoneMinSize:ip3=2, 1, 2
+      preset:t="decor_low_density_preset"
+      cellChancePow:r=-1
+    }
+
+    "group:object"{
+      spawnCount:ip2=30, 30
+      zoneMinSize:ip3=2, 1, 2
+      preset:t="decor_preset"
+      cellChancePow:r=1
+    }
+  }
+}
+
+anomaly_zone_flowerman{
+  _use:t="anomaly_zone"
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_flowerman_branch"
+  }
+}
+
+anomaly_zone_flowerman_indoor{
+  _use:t="anomaly_zone"
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_flowerman_indoor_branch"
+  }
+}
+
+anomaly_zone_flowerman_indoor_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="anomaly_zone_flowerman_indoor"
+      number:ip2=1, 3
+    }
+  }
+}
+
+anomaly_zone_flowerman_indoor_generator{
+  _use:t="region_loot_generator_by_loot_preset"
+  _use:t="loot_generator_monster_gen"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="anomaly_zone_flowerman_indoor_loot_preset"
+}
+
+anomaly_zone_flowerman_small{
+  _use:t="anomaly_zone"
+  nmesh_voxel__gridSize:ip3=10, 6, 10
+  nmesh_voxel__gridStep:r=1.5
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_flowerman_branch"
+  }
+}
+
+anomaly_zone_flowerman_field{
+  _use:t="anomaly_zone"
+  nmesh_voxel__gridSize:ip3=25, 6, 25
+  nmesh_voxel__gridStep:r=1.5
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_flowerman_field_branch"
+  }
+}
+
+anomaly_zone_flowerman_forest{
+  _use:t="anomaly_zone"
+  nmesh_voxel__gridSize:ip3=10, 6, 10
+  nmesh_voxel__gridStep:r=1.5
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_flowerman_field_branch"
+  }
+}
+
+anomaly_zone_flowerman_indoor_small{
+  _use:t="anomaly_zone"
+  nmesh_voxel__gridSize:ip3=10, 6, 10
+  nmesh_voxel__gridStep:r=1.5
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_flowerman_indoor_branch"
+  }
+}
+
+anomaly_zone_nesting_swarm_small{
+  _use:t="anomaly_zone"
+  nmesh_voxel__gridSize:ip3=10, 6, 10
+  nmesh_voxel__gridStep:r=1.5
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_nesting_swarm_branch"
+  }
+}
+
+anomaly_zone_flowerman_darkness{
+  _use:t="anomaly_zone"
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_flowerman_branch"
+    it:t="anomaly_zone_darkness_branch"
+  }
+}
+
+anomaly_zone_skeleton_swarm_confusion{
+  _use:t="anomaly_zone"
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_skeleton_swarm_branch"
+    it:t="anomaly_zone_confusion_branch"
+  }
+}
+
+anomaly_zone_liana{
+  _use:t="anomaly_zone"
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_flowerman_branch"
+    it:t="anomaly_zone_darkness_branch"
+  }
+}
+
+anomaly_zone_liana_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=100, 100
+
+  "anomaly_zone__spawnPresets:object"{
+    "liana_decor_preset:array"{
+      "it:object"{
+        template:t="indoor_liana_anomaly"
+        spawnCount:ip2=2, 3
+        scaleToBox:b=yes
+        alignToBottom:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=3, 5
+      preset:t="liana_decor_preset"
+      zoneMinSize:ip3=4, 3, 4
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 5
+      preset:t="liana_decor_preset"
+      zoneMinSize:ip3=3, 3, 3
+      cellChancePow:r=1
+    }
+  }
+}
+
+storm_zone{
+  _use:t="replicating"
+  active:b=no
+  sphere_zone__inverted:b=yes
+  sphere_zone__radius:r=500
+  _replicated:t="active"
+  moving_zone__velIncrease:r=1.15
+  moving_zone__checkSizeTime:r=1
+  moving_zone__nextSizeCheckTime:r=0
+  forcefieldAppliesFog:b=yes
+  forcefieldFog__fadeSlowness:r=16
+  forcefieldFog__fadeLimit:r=0.4
+  _tracked:t="sphere_zone__radius"
+  volfog:t=""
+  moving_zone__movingVelocity:r=0
+  moving_zone__sleepingTime:r=60
+  moving_zone__minZone:p2=-300, -300
+  moving_zone__maxZone:p2=300, 300
+  moving_zone__gameObjType:t="loot_box"
+  moving_zone__gridCellSize:r=50
+  moving_zone__generation:i=0
+  moving_zone__stepModifier:r=0.8
+  moving_zone__stepModifierDecrease:r=0.1
+  moving_zone__stepModifierMin:r=0.5
+  moving_zone__movingTimeDecrease:r=10
+  moving_zone__sleepingTimeDecrease:r=10
+
+  _group{
+    _replicate:b=yes
+    moving_zone__startEndTime:p2=0, 0
+    moving_zone__sourcePos:p3=0, 0, 0
+    moving_zone__targetPos:p3=0, 0, 0
+    moving_zone__sourceRadius:r=0
+    moving_zone__targetRadius:r=0
+    moving_zone__collapseRadius:r=0.001
+    moving_zone__collapseTime:r=10
+    moving_zone__manual_activation:b=no
+  }
+
+  _group{
+    _tags:t="server"
+    moving_zone__isInitialized:b=no
+    moving_zone__chooseFinalExtraction:b=yes
+  }
+
+  _group{
+    _replicate:b=yes
+    _track:b=yes
+    moving_zone_hud__playerZonePosition:i=0
+    moving_zone_hud__zoneStartTimer:i=-1
+    moving_zone_hud__zoneFinishTimer:i=-1
+    moving_zone_hud__zoneProgress:i=-1
+    transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  }
+
+  "moving_zone_hud:tag"{
+    _tags:t="render"
+  }
+
+  "moving_zone__generations:array"{
+    _hide:b=yes
+    _tags:t="server"
+  }
+
+  "moving_zone__generated:b"{
+    _tags:t="server"
+    value:b=no
+    _hide:b=yes
+  }
+}
+
+storm_damage{
+  dmgzone__teamToDamage:i=-1
+  dmgzone__damage:r=0
+  dmgzone__damageIncrease:r=0
+  dmgzone__damageCap:r=0
+  dmgzone__lastUpdate:r=-1
+  corruption_zone__damage:r=1.5
+  corruption_zone__damageIncrease:r=1.35
+  corruption_zone__damageCap:r=3.5
+  corruption_zone__doublingTime:r=15
+  _replicated:t="corruption_zone__damage"
+  corruption_zone__playerFx:t="corrupted_player_effect"
+
+  "dmgzone__eidsInZone:list<eid>"{
+    _tags:t="server"
+  }
+}
+
+corrupted_player_effect{
+  _use:t="replicated_game_effect"
+  _use:t="game_effect_geomtree_effects"
+  game_effect__timeToDestroy:r=3
+  game_effect__destroyAt:r=0
+
+  "net__alwaysInScope:tag"{}
+  "game_effect__attachedTo:eid"{}
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="corrupted_player_fx"
+  }
+
+  "corrupted_player_effect:tag"{}
+}
+
+corrupted_player_fx{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="human_extraction_lightnings_effect_fps_fx"
+  }
+}
+
+render_forcefield{
+  _tags:t="render"
+  zone_pos_radius_value:p4=0, 0, 0, 1e+06
+  forcefield__aberrationShift:p4=0, 0, 0, 0
+  _tracked:t="forcefield__aberrationShift"
+  forcefield__fadeMaxDist:r=50
+  _tracked:t="forcefield__fadeMaxDist"
+  forcefield__shiningBorderMaxHeight:r=10
+  _tracked:t="forcefield__shiningBorderMaxHeight"
+  forcefield__shiningFlamesMaxHeight:r=20
+  _tracked:t="forcefield__shiningFlamesMaxHeight"
+  forcefield__color:p4=0, 0.5, 1, 0
+  _tracked:t="forcefield__color"
+  forcefield__waveSpeed:r=0.025
+  _tracked:t="forcefield__waveSpeed"
+  forcefield__distortionStrength:r=1000
+  _tracked:t="forcefield__distortionStrength"
+  forcefield__waveLength:r=0.05
+  _tracked:t="forcefield__waveLength"
+
+  "zone_pos_radius:ShaderVar"{}
+  "render_forcefield:tag"{}
+}
+
+storm_zone_with_forcefield{
+  _use:t="storm_zone"
+  _use:t="storm_damage"
+  _use:t="render_forcefield"
+  shrinkZoneRadius:r=0
+  shrinkedZonePos:p2=0, 0
+
+  "disableExternalArea:tag"{}
+}
+
+zone_decay_smoke_effect_template{
+  _use:t="attached_effect_world_space_no_scale"
+}
+
+zone_decay_smoke_pillar_effect_template{
+  _use:t="node_attached_itm"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "zone_decay:tag"{}
+  "node_attached__destroyWithParent:tag"{}
+}
+
+anomaly_zone_sleeping_changed_traps{
+  _use:t="anomaly_zone"
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_sleeping_changed_branch"
+    it:t="anomaly_zone_sleeping_changed_branch"
+    it:t="anomaly_zone_sleeping_changed_branch"
+    it:t="anomaly_zone_sleeping_changed_branch"
+  }
+}
+
+anomaly_zone_sleeping_changed_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=100, 100
+
+  "anomaly_zone__spawnPresets:object"{
+    "sleeping_changed_preset:array"{
+      "it:object"{
+        template:t="changed_human_trap+sleeping_trap"
+        projectToNavmesh:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=1, 2
+      zoneMinSize:ip3=2, 1, 1
+      preset:t="sleeping_changed_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 2
+      zoneMinSize:ip3=1, 1, 2
+      preset:t="sleeping_changed_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 2
+      preset:t="sleeping_changed_preset"
+    }
+  }
+}
+
+anomaly_zone_changed_indoor_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=15, 15
+
+  "anomaly_zone__spawnPresets:object"{
+    "indoor_creature_preset:array"{
+      "it:object"{
+        template:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_monster+am_inside_body_3"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "indoor_mini_creature_preset:array"{
+      "it:object"{
+        template:t="outdoor_sleeper_changed_human_mini+changed_human_collision+sleeping_monster+am_inside_body_2"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "active_mattery_pile_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_3+item_in_world"
+        projectToNavmesh:b=yes
+        spawnIndoor:b=yes
+      }
+    }
+
+    "lootbox_big_preset:array"{
+      "it:object"{
+        template:t="military_long_range_weapons_t1_lootable_rendinst"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "lootbox_small_preset:array"{
+      "it:object"{
+        template:t="military_medical_t1_lootable_rendinst"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.1
+        spawnIndoor:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=2, 3
+      preset:t="indoor_creature_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=0, 1
+      preset:t="indoor_mini_creature_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=4, 6
+      preset:t="active_mattery_pile_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 1
+      preset:t="lootbox_big_preset"
+      zoneMinSize:ip3=1, 1, 1
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 1
+      preset:t="lootbox_small_preset"
+      cellChancePow:r=1
+    }
+  }
+}
+
+anomaly_zone_changed_indoor_small{
+  _use:t="anomaly_zone"
+  nmesh_voxel__gridSize:ip3=15, 8, 15
+  nmesh_voxel__gridStep:r=1.5
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_changed_indoor_branch"
+  }
+}
+
+anomaly_zone_changed_indoor_t1_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=15, 15
+
+  "anomaly_zone__spawnPresets:object"{
+    "indoor_creature_preset:array"{
+      "it:object"{
+        template:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_monster+am_inside_body_3"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "indoor_mini_creature_preset:array"{
+      "it:object"{
+        template:t="outdoor_sleeper_changed_human_mini+changed_human_collision+sleeping_monster+am_inside_body_2"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "active_mattery_pile_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_3+item_in_world"
+        projectToNavmesh:b=yes
+        spawnIndoor:b=yes
+      }
+    }
+
+    "lootbox_big_preset:array"{
+      "it:object"{
+        template:t="military_long_range_weapons_t1_lootable_rendinst"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "lootbox_small_preset:array"{
+      "it:object"{
+        template:t="military_medical_t1_lootable_rendinst"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.1
+        spawnIndoor:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=1, 1
+      preset:t="indoor_creature_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=0, 1
+      preset:t="indoor_mini_creature_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 2
+      preset:t="active_mattery_pile_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=0, 1
+      preset:t="lootbox_big_preset"
+      zoneMinSize:ip3=1, 1, 1
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 1
+      preset:t="lootbox_small_preset"
+      cellChancePow:r=1
+    }
+  }
+}
+
+anomaly_zone_changed_indoor_t1_small{
+  _use:t="anomaly_zone"
+  nmesh_voxel__gridSize:ip3=15, 8, 15
+  nmesh_voxel__gridStep:r=1.5
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_changed_indoor_t1_branch"
+  }
+}
+
+anomaly_zone_changed_spiked_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=100, 100
+
+  "anomaly_zone__spawnPresets:object"{
+    "creature_preset:array"{
+      "it:object"{
+        template:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_monster+am_inside_body_3"
+        projectToNavmesh:b=yes
+      }
+    }
+
+    "mini_creature_preset:array"{
+      "it:object"{
+        template:t="outdoor_sleeper_changed_human_mini+changed_human_collision+sleeping_monster+am_inside_body_2"
+        projectToNavmesh:b=yes
+      }
+    }
+
+    "decor_preset:array"{
+      "it:object"{
+        template:t="area_decor_spikes"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=2, 2
+      preset:t="creature_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=0, 2
+      preset:t="mini_creature_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=15, 20
+      zoneMinSize:ip3=1, 1, 1
+      preset:t="decor_preset"
+      cellChancePow:r=1
+    }
+  }
+}
+
+anomaly_zone_changed_spiked_small{
+  _use:t="anomaly_zone"
+  nmesh_voxel__gridSize:ip3=25, 6, 25
+  nmesh_voxel__gridStep:r=1.5
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="anomaly_zone_changed_spiked_branch"
+  }
+}
+
+anomaly_zone_am_indoor_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=10, 10
+
+  "anomaly_zone__spawnPresets:object"{
+    "active_mattery_pile_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_3+item_in_world"
+        projectToNavmesh:b=yes
+        spawnIndoor:b=yes
+      }
+    }
+
+    "decor_preset:array"{
+      "it:object"{
+        template:t="area_decor_distortion"
+        scaleToBox:b=yes
+        clientOnly:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=3, 5
+      preset:t="active_mattery_pile_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 4
+      zoneMinSize:ip3=5, 5, 5
+      preset:t="decor_preset"
+      cellChancePow:r=1
+    }
+  }
+}
+
+anomaly_zone_statues_cairns_indoor_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=15, 15
+
+  "anomaly_zone__spawnPresets:object"{
+    "indoor_cairn_a_preset:array"{
+      "it:object"{
+        template:t="cairn_trap_a"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "indoor_cairn_b_preset:array"{
+      "it:object"{
+        template:t="cairn_trap_b"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "indoor_cairn_c_preset:array"{
+      "it:object"{
+        template:t="cairn_trap_c"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "indoor_cairn_d_preset:array"{
+      "it:object"{
+        template:t="cairn_trap_d"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "indoor_cairn_e_preset:array"{
+      "it:object"{
+        template:t="cairn_trap_e"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "indoor_cairn_f_preset:array"{
+      "it:object"{
+        template:t="cairn_trap_f"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "active_mattery_pile_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_3+item_in_world"
+        projectToNavmesh:b=yes
+        spawnIndoor:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=1, 2
+      preset:t="indoor_cairn_a_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 2
+      preset:t="indoor_cairn_b_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 2
+      preset:t="indoor_cairn_c_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 2
+      preset:t="indoor_cairn_d_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 2
+      preset:t="indoor_cairn_e_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 2
+      preset:t="indoor_cairn_f_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=2, 3
+      preset:t="active_mattery_pile_preset"
+      cellChancePow:r=1
+    }
+  }
+}
+
+anomaly_zone_statues_cairns_dense_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=15, 15
+
+  "anomaly_zone__spawnPresets:object"{
+    "indoor_cairn_a_preset:array"{
+      "it:object"{
+        template:t="cairn_trap_a"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "indoor_cairn_b_preset:array"{
+      "it:object"{
+        template:t="cairn_trap_b"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "indoor_cairn_c_preset:array"{
+      "it:object"{
+        template:t="cairn_trap_c"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "indoor_cairn_d_preset:array"{
+      "it:object"{
+        template:t="cairn_trap_d"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "indoor_cairn_e_preset:array"{
+      "it:object"{
+        template:t="cairn_trap_e"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "indoor_cairn_f_preset:array"{
+      "it:object"{
+        template:t="cairn_trap_f"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "active_mattery_pile_preset:array"{
+      "it:object"{
+        template:t="active_matter_pile+coin_item_count_3+item_in_world"
+        projectToNavmesh:b=yes
+        spawnIndoor:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=1, 2
+      preset:t="indoor_cairn_a_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=2, 2
+      preset:t="indoor_cairn_b_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 2
+      preset:t="indoor_cairn_c_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=2, 2
+      preset:t="indoor_cairn_d_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 2
+      preset:t="indoor_cairn_e_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=2, 2
+      preset:t="indoor_cairn_f_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=4, 5
+      preset:t="active_mattery_pile_preset"
+      cellChancePow:r=1
+    }
+  }
+}

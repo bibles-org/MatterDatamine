@@ -1,0 +1,824 @@
+nesting_swarm_nest_render_distortion_effect{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="nesting_swarm_nest_aura_distortion_fx"
+  }
+}
+
+nesting_swarm_nest_lifetime_affect{
+  _use:t="replicated_game_effect"
+  _use:t="game_effect_geomtree_effects"
+
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="invisible_man_decay_sparks_effect_template"
+    item:t="nesting_swarm_nest_render_distortion_effect"
+  }
+}
+
+nesting_swarm_nest_explosion_effect{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_effect__timeToDestroy:r=1
+  game_effect__destroyAt:r=-1
+  game_effect__clientDestroyAt:r=-1
+
+  "attachedEffect:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="nesting_swarm_nest_explosion_cmps_fx"
+
+    effect{}
+  }
+}
+
+nesting_swarm_nest_explosion{
+  on_create__spawnActivatedShellBlk:t="gamedata/weapons/nesting_swarm_nest_explosion_shell.blk"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "ownerEid:eid"{}
+}
+
+swarm_destroy_if_empty{
+  swarm_destroy_if_empty__nextCheckAt:r=0
+}
+
+nesting_swarm_nest_death_swarm_boid_element{
+  _use:t="attached_skeleton_swarm_dead_boid_element"
+  nesting_swarm_nest_death_swarm_boid_element__impulse:r=7
+}
+
+nesting_swarm_nest_death_swarm{
+  _use:t="flying_swarm_base"
+  _use:t="swarm_destroy_if_empty"
+  swarmRenderTemplate:t="attached_skeleton_swarm_render"
+  swarm__attackAttractors:b=no
+  swarm__boidTemplateName:t="nesting_swarm_nest_death_swarm_boid_element"
+  swarm__deadBoidTemplateName:t="nesting_swarm_nest_death_swarm_boid_element"
+  count:i=20
+  swarm__initialBoidsCount:i=0
+  radius:r=0.5
+  swarm__moveSpeed:r=0
+  swarm__rotSpeed:r=0
+  swarm__trajectoryLength:r=2.5
+  trajectoryHistory:i=10
+  swarm_cluster__targetPos:p3=0, 0, 0
+  swarm__heightBits:i=3
+  swarm__cellSize:r=0.4
+  swarm__minStayTime:r=0
+  swarm__heightCellSize:r=0.4
+  swarm__obstacleAversionDistance:r=0
+  swarm__groundAvoidanceDistStart:r=0
+  swarm__groundAvoidanceMin:r=0
+  swarm__traceGridOffset:r=1
+  swarm__heightGridCreationPos:p3=0, 0, 0
+  swarm__lmeshOrientation:b=yes
+  swarm_cluster__radius:r=0.1
+  swarm__extraAttractors:b=no
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+nesting_swarm_nest_death_effect_controller{
+  _use:t="game_effect_geomtree_nodes_cache"
+  nesting_swarm_nest_death_effect_controller__effectName:t="nesting_swarm_nest_explosion_aura_composite_fx"
+  nesting_swarm_nest_death_effect_controller__effectType:i=-1
+  nesting_swarm_nest_death_effect_controller__volumePerEffect:r=0.015
+  nesting_swarm_nest_death_effect_controller__distanceToCameraSq:r=2500
+  nesting_swarm_nest_death_effect_controller__deathSwarmTemplate:t="nesting_swarm_nest_death_swarm"
+  nesting_swarm_nest_death_effect_controller__deathSwarmOffset:p3=0, 1, 0
+}
+
+nesting_swarm_nest_oscillation{
+  _use:t="static_sinusoidal_oscillation"
+  _use:t="euler_sinusoidal_oscillation"
+  static_sinusoidal_oscillation__amplitude:r=0.2
+  static_sinusoidal_oscillation__frequency:r=0.5
+  euler_sinusoidal_oscillation__origin:p3=0, 0, 0
+  euler_sinusoidal_oscillation__amplitude:p3=0.25, 2, 0.5
+  euler_sinusoidal_oscillation__frequency:p3=0.2, 0.025, 0.15
+}
+
+nesting_swarm_nest{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="base_dm_parts"
+  _use:t="militant_dm_parts"
+  _use:t="human_grid_obj"
+  _use:t="militant_node_collapser"
+  _use:t="nesting_swarm_nest_light"
+  _use:t="lifetime_affects_client"
+  _use:t="nesting_swarm_nest_oscillation"
+  _use:t="nesting_swarm_nest_death_effect_controller"
+  animchar__res:t="am_trooper_empty_model_male_char"
+  collres__res:t="am_trooper_empty_model_male_collision"
+  animchar__forceAnimState:t="trooper_worm_eaten"
+  animchar__forceAnimStateId:i=-1
+  _use:t="cellular_hitpoints"
+  cellular_hitpoints__maxCellHp:r=2
+  cellular_hitpoints__maxCells:i=20
+  _use:t="hitpoints_recovery"
+  hitpoints__recoveryTimeThreshold:r=15
+  material:t="changedFlesh"
+  team:i=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  collres__centerNode:t="Bip01 Pelvis"
+  bodyCleanupTime:r=0
+  nesting_swarm_nest__createOnDestroyTemplate:t="nesting_swarm_nest_explosion"
+  nesting_swarm_nest__createOnDestroyOffset:p3=0, 1, 0
+  animchar__appliedAnimSpeed:r=0
+  nesting_swarm_nest__warriorTemplate:t="nesting_swarm_warrior"
+  nesting_swarm_nest__supplyTemplate:t="nesting_swarm_supply"
+  nesting_swarm_nest__maxSupplyCount:i=7
+  nesting_swarm_nest__detectionRadius:r=10
+  nesting_swarm_nest__nextScanAt:r=0
+  nesting_swarm_nest__nextScanPeriod:r=5
+  entity_bound_area__radius:r=12
+  entity_bound_area__name:t="POLYAREA_DANGER"
+  transform__dropOnGroundOffset:r=0.8
+  skeleton_swarm__aiState:i=2
+  swarm__deadBoidTemplateName:t="attached_skeleton_swarm_dead_boid_element"
+
+  "animchar__animState:object"{
+    upper:i=-1
+    lower:i=-1
+  }
+
+  collres{}
+  "grid_obj__updateAlways:tag"{}
+  capsule_approximation{}
+  "preloadSpawnActivatedShellProps:list<t>"{
+    template:t="nesting_swarm_nest_explosion"
+  }
+
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="devourer_remains_item"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="devourer_remains_pristine_item"
+      dropChance:r=0.005
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_5"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_5"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_5"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_5"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_5"
+      dropChance:r=0.75
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_5"
+      dropChance:r=0.5
+      dropHeight:r=1
+    }
+  }
+
+  "animchar__animStateDirty:b"{
+    value:b=yes
+    _hide:b=yes
+  }
+
+  "animchar__dirtyWhenAppearsOnClient:tag"{}
+  "nesting_swarm_nest:tag"{}
+  "nesting_swarm_nest__warriorEid:eid"{}
+  "nesting_swarm_nest__supplyEids:list<eid>"{}
+  "transform__dropOnGroundOnAppear:tag"{}
+  "lifetime_affects_client__affectTemplates:list<t>"{
+    i:t="nesting_swarm_nest_lifetime_affect"
+  }
+
+  "game_effect__initialAttachmentsServer:list<t>"{
+    i:t="attached_skeleton_swarm"
+  }
+}
+
+nesting_swarm_boid_element{
+  _use:t="boidElement"
+  _use:t="trajectoryBoid"
+  boid__size:r=0.08
+  boid__targetPosition:p3=0, 0, 0
+  boid__nodeIdx:i=0
+  boid__nodeTime:r=0
+  boid__nodeTimeStep:r=0
+  boid__radius:r=0
+  boid__angle:r=0
+  boid__angleStep:r=0
+
+  "invulnerableBoid:tag"{}
+}
+
+nesting_swarm_nest_swarm{
+  _use:t="flying_swarm_base"
+  swarmRenderTemplate:t="attached_skeleton_swarm_render"
+  swarm__attackAttractors:b=no
+  swarm__boidTemplateName:t="nesting_swarm_boid_element"
+  swarm__deadBoidTemplateName:t="attached_skeleton_swarm_dead_boid_element"
+  count:i=50
+  swarm__initialBoidsCount:i=0
+  radius:r=2
+  swarm__moveSpeed:r=2
+  swarm__rotSpeed:r=3
+  swarm__trajectoryLength:r=2.5
+  trajectoryHistory:i=10
+  swarm_cluster__targetPos:p3=0, 0, 0
+  swarm__heightBits:i=3
+  swarm__cellSize:r=0.4
+  swarm__minStayTime:r=1
+  swarm__heightCellSize:r=0.4
+  swarm__obstacleAversionDistance:r=0
+  swarm__groundAvoidanceDistStart:r=0
+  swarm__groundAvoidanceMin:r=0
+  swarm__traceGridOffset:r=1
+  swarm__heightGridCreationPos:p3=0, 0, 0
+  _replicated:t="swarm_cluster__targetPos"
+  death_note__name:t="note_devourer"
+}
+
+nesting_swarm_nest_light{
+  _use:t="local_light"
+  light__box:m=[[0, 0, 0] [0, 0, 0] [0, 0, 0] [0, 0, 0]]
+  _tracked:t="light__box"
+  light__max_radius:r=5
+  light__offset:p3=0, 0.8, 0
+  light__color:c=83, 227, 237, 155
+  light__brightness:r=0.4
+  _use:t="light_blinker"
+  light_blinker__brightnessRange:p2=0.485, 0.55
+  light_blinker__brightnessBlinkInterval:r=0.06
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    light__contact_shadows:b=yes
+    light__use_box:b=no
+    light__automatic_box:b=no
+    light__direction:p3=0, -1, 0
+    light__texture_name:t=""
+  }
+
+  "ai_target_omni_light:tag"{}
+  omni_light{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    _replicate:b=yes
+    omni_light__shadows:b=no
+    omni_light__dynamic_obj_shadows:b=no
+    omni_light__shadow_shrink:i=0
+    omni_light__shadow_quality:i=2
+  }
+}
+
+indoor_nesting_swarm_spawner{
+  indoor_spawner__count:i=10
+  indoor_spawner__maxTries:i=10
+
+  "indoor_spawner__templateObjectList:array"{
+    "item:object"{
+      template:t="nesting_swarm_nest"
+      projectToNavmesh:b=yes
+      offset:p3=0, 0.7, 0
+    }
+  }
+}
+
+nesting_swarm_warrior_base{
+  swarm_warrior__nextUpdateAt:r=0
+  swarm_warrior__damagePeriod:r=1.5
+  swarm_warrior__damageRadius:r=2
+  swarm_warrior__damage:r=4
+  swarm_warrior__embryoTemplate:t="nesting_swarm_embryo_effect"
+  swarm_warrior__embryoDelay:r=5
+  swarm_warrior__maxNests:i=3
+  swarm_warrior__targetPos:p3=0, 0, 0
+  swarm_warrior__investigationsLeft:i=0
+  swarm_warrior__maxRange:r=40
+  swarm_warrior__lastActionAt:r=0
+  swarm_warrior__teleportDesire:r=0
+  swarm_warrior__teleportLastActionTimeout:r=20
+  swarm_warrior__teleportActiveInc:r=0.15
+  swarm_warrior__teleportPassiveInc:r=0.025
+  swarm_warrior__teleportationRadius:r=40
+  swarm_warrior__teleportationTemplate:t="nesting_swarm_teleportation"
+  swarm_warrior__teleportationHolderTemplate:t="nesting_swarm_placeHolder"
+  swarm_warrior__teleportationSeclusionSuccessesRequired:r=0.66
+  swarm_warrior__teleportationSeclusioncheckLength:r=3
+  swarm_warrior__teleportationElevation:r=0.5
+  swarm_warrior__teleportationFailuresCount:i=0
+  swarm_warrior__teleportationFailuresMax:i=100
+
+  "swarm_warrior__nests:list<eid>"{}
+  "swarm_warrior__primaryNest:eid"{}
+}
+
+nesting_swarm_warrior{
+  _use:t="replicating"
+  _use:t="nesting_swarm_nest_swarm"
+  _use:t="nesting_swarm_warrior_base"
+  _use:t="beh_tree_regular_check"
+  _use:t="corridor_walker"
+  _use:t="nesting_swarm_ai_components"
+  _use:t="monster_danger_calc"
+  _use:t="loc_snapshots"
+  _use:t="dementor_stride"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  navmesh_phys__maxWalkSpeed:r=4
+  swarm__moveSpeed:r=5
+  swarm__rotSpeed:r=6
+  count:i=120
+  isAlive:b=yes
+  team:i=1
+  agent_dangers__maxDangerDist:r=25
+  agent_dangers__nextDangersCheckTime:r=0
+  walker_agent__standShootLocalPos:p3=0, 0.5, 0
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  beh_tree__blackboard__enemyRadius:r=30
+  beh_tree__blackboard__lastShootEnemy:i=0
+  beh_tree__node:t="nesting_swarm_warrior"
+  swarm_warrior__boidsRate:i=10
+  swarm_warrior__boidsInterval:r=3
+  swarm_warrior__boidsLostOnDamage:i=20
+  swarm_warrior__boidsMin:i=30
+  swarm_warrior__checkBoidsAt:r=0
+  swarm_warrior__boidsNestRange:r=4
+  swarm_warrior__startingBoidsCount:i=0
+  flyer__speed:r=3
+  flyer__preferredHeight:r=1
+  stride__lengthAt100:p2=20, 30
+  stride__lengthAt0:p2=0.4, 1
+  stride__focus:r=0.7
+  stride__worstDot:r=-0.4
+  stride__approachPosDistance:r=1
+  stride__approachTargetDistance:r=0.2
+
+  "walker_agent__targetEid:eid"{}
+  agent_dangers{
+    _tags:t="server"
+  }
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+}
+
+nesting_swarm_embryo_effect{
+  _use:t="replicating"
+  _use:t="game_effect_base"
+  nesting_swarm_embryo__template:t="nesting_swarm_nest"
+  nesting_swarm_embryo__offset:p3=0, 0.5, 0
+  nesting_swarm_embryo__convertAt:r=0
+
+  "nesting_swarm_embryo__warriorEid:eid"{}
+}
+
+nesting_swarm_teleportation{
+  nesting_swarm_teleportation__duration:r=5
+  nesting_swarm_teleportation__endsAt:r=0
+  nesting_swarm_teleportation__removeTemplate:t="nesting_swarm_teleportation"
+
+  "nesting_swarm_teleportation__holderEid:eid"{}
+}
+
+nesting_swarm_placeHolder{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "nesting_swarm_place_holder__nestEid:eid"{}
+}
+
+nesting_swarm_supply{
+  _use:t="replicating"
+  _use:t="nesting_swarm_nest_swarm"
+  _use:t="beh_tree_regular_check"
+  _use:t="corridor_walker"
+  _use:t="nesting_swarm_ai_components"
+  _use:t="loc_snapshots"
+  _use:t="dementor_stride"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  navmesh_phys__maxWalkSpeed:r=5
+  swarm__moveSpeed:r=6
+  swarm__rotSpeed:r=8
+  count:i=50
+  isAlive:b=yes
+  team:i=1
+  walker_agent__standShootLocalPos:p3=0, 0.5, 0
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  beh_tree__node:t="nesting_swarm_supply"
+  swarm_supply__amount:i=30
+  flyer__speed:r=4
+  flyer__preferredHeight:r=1
+  stride__lengthAt100:p2=20, 25
+  stride__lengthAt0:p2=0.3, 0.7
+  stride__focus:r=0.9
+  stride__worstDot:r=-0.2
+  stride__approachPosDistance:r=1
+  stride__approachTargetDistance:r=0.5
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  "swarm_supply__targetEid:eid"{}
+  "swarm_supply__nestEid:eid"{}
+}
+
+nesting_swarm_ai_components{
+  agent_dangers__standShootPos:p3=0, 0, 0
+  agent_dangers__standShootDir:p3=0, 0, 0
+  agent_dangers__nextDangersTraceTime:r=0
+  agent_dangers__lastBulletReactionTime:r=-1
+  agent_dangers__nextBulletReactionTime:r=-1
+  walker_agent__standShootLocalPos:p3=0, 1.2, 0
+  walker_agent__targetPos:p3=0, 0, 0
+
+  "walker_agent__potentialTargetEid:eid"{}
+  "walker_agent__targetEid:eid"{}
+  "nestingSwarmAI:tag"{}
+}
+
+basic_flyer_components{
+  flyer__speed:r=1
+  flyer__directionViscosity:r=0
+  flyer__wishLookDir:p3=0, 0, 0
+  flyer__velocityDir:p3=0, 0, 0
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+basic_dementor_components{
+  _use:t="basic_flyer_components"
+  flyer__collisionSpeedMulti:r=1
+  flyer__preferredHeight:r=0
+}
+
+dementor_stride{
+  _use:t="basic_dementor_components"
+  stride__lengthAt100:p2=20, 60
+  stride__lengthAt0:p2=1, 2
+  stride__focus:r=0.4
+  stride__worstDot:r=-0.6
+  stride__approachPosDistance:r=3
+  stride__approachTargetDistance:r=6
+}
+
+nesting_swarm_snake_segment_attacking{
+  nesting_swarm_snake_segment_attacking__timer:r=0
+  nesting_swarm_snake_segment_attacking__interval:r=0.1
+  nesting_swarm_snake_segment_attacking__prevPos:p3=0, 0, 0
+
+  "nesting_swarm_snake_segment_attacking:tag"{}
+}
+
+nesting_swarm_snake_segment{
+  _use:t="replicating"
+  _use:t="nesting_swarm_snake_segment_sound"
+  nesting_swarm_snake_segment__index:i=-1
+  nesting_swarm_snake_segment__dir:p3=0, 0, 1
+  nesting_swarm_snake_segment__visualTemplate:t="nesting_swarm_snake_segment_visual"
+  nesting_swarm_snake_segment__attackingTemplate:t="nesting_swarm_snake_segment_attacking"
+  nesting_swarm_snake_segment__attackingEnabled:b=yes
+  nesting_swarm_snake_segment__attackInterval:r=1
+  nesting_swarm_snake_segment__attackRng:p2=4.2, 4.4
+  nesting_swarm_snake_segment__attackRadius:r=0.3
+  nesting_swarm_snake_segment__pushRng:p2=1.5, 1.7
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "nesting_swarm_snake_segment:tag"{}
+  "nesting_swarm_snake_segment__snakeEid:eid"{}
+  "nesting_swarm_snake_segment__visualEid:eid"{}
+  "nesting_swarm_snake_segment__lastAttackTime:object"{}
+}
+
+nesting_swarm_snake_segment_visual_boid_element{
+  _use:t="nesting_swarm_boid_element"
+  oscillating_boid__offsetRadiusMult:r=1
+  oscillating_boid__lateralAngle:r=0
+  oscillating_boid__oscilationAngle:r=0
+  oscillating_swarm__oscilationRadiusMulti:r=0
+
+  "nesting_swarm_snake_segment_visual_boid_element:tag"{}
+  "nesting_swarm_snake_segment_visual_boid_element__savedOrientation:p4"{
+    _tags:t="render"
+    value:p4=1, 0, 0, 1
+  }
+
+  "customSteeringBoid:tag"{}
+  "oscillatingSteering:tag"{}
+}
+
+nesting_swarm_snake_segment_visual_fx{
+  _use:t="base_effect"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="nesting_swarm_snake_aura_composite_fx"
+
+    effect{}
+  }
+}
+
+nesting_swarm_snake_segment_visual{
+  _use:t="flying_swarm_base"
+  _use:t="attached_pos"
+  _use:t="nesting_swarm_snake_segment_visual_fx"
+  swarmRenderTemplate:t="attached_skeleton_swarm_render"
+  swarm__attackAttractors:b=no
+  swarm__boidTemplateName:t="nesting_swarm_snake_segment_visual_boid_element"
+  swarm__deadBoidTemplateName:t="attached_skeleton_swarm_dead_boid_element"
+  nesting_swarm_snake_segment_visual__dir:p3=0, 0, 1
+  nesting_swarm_snake_segment_visual__length:r=0.45
+  nesting_swarm_snake_segment_visual__timer:r=0
+  nesting_swarm_snake_segment_visual__timeInterval:r=3
+  nesting_swarm_snake_segment_visual__nestSwarmMoveSpeed:r=1.5
+  nesting_swarm_snake_segment_visual__nestSwarmRotSpeed:r=20
+  nesting_swarm_snake_segment_visual__flySwarmMoveSpeed:r=2.75
+  nesting_swarm_snake_segment_visual__flySwarmRotSpeed:r=23
+  nesting_swarm_snake_segment_visual__swarmMoveSpeedDeviationFactor:r=0.2
+  nesting_swarm_snake_segment_visual__swarmRotSpeedDeviationFactor:r=0.15
+  nesting_swarm_snake_segment_visual__swarmMoveSpeedDeviation:r=0
+  nesting_swarm_snake_segment_visual__swarmRotSpeedDeviation:r=0
+  count:i=5
+  swarm__initialBoidsCount:i=0
+  radius:r=2
+  swarm__moveSpeed:r=0
+  swarm__rotSpeed:r=0
+  swarm__trajectoryLength:r=2.5
+  trajectoryHistory:i=10
+  swarm_cluster__targetPos:p3=0, 0, 0
+  swarm__heightBits:i=3
+  swarm__cellSize:r=0.4
+  swarm__minStayTime:r=0
+  swarm__heightCellSize:r=0.4
+  swarm__obstacleAversionDistance:r=0
+  swarm__groundAvoidanceDistStart:r=0
+  swarm__groundAvoidanceMin:r=0
+  swarm__traceGridOffset:r=1
+  swarm__heightGridCreationPos:p3=0, 0, 0
+  _replicated:t="swarm_cluster__targetPos"
+  swarm__lmeshOrientation:b=yes
+  swarm_cluster__radius:r=0.6
+  swarm__extraAttractors:b=no
+  swarm__deathExplosionBoidsImpulse:r=5
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  oscillating_swarm__revPos:p3=0, 0, 0
+  oscillating_swarm__forward:p3=0, 0, 0
+  oscillating_swarm__side:p3=0, 0, 0
+  oscillating_swarm__prevPos:p3=0, 0, 0
+  oscillating_swarm__lateralAngleSpeed:r=9
+  oscillating_swarm__oscilationAngleSpeed:r=9
+  oscillating_swarm__lateralAngleSpeedRange:p2=2, 28
+  oscillating_swarm__oscilationAngleSpeedRange:p2=10, 0
+  oscillating_swarm__radiusRange:p2=0.4, 0.15
+  oscillating_swarm__approachThreshold:p2=5, 3
+  oscillating_swarm__offsetRadiusRange:p2=0, 0.5
+  oscillating_swarm__avoidPoint:p2=0, 0
+  oscillating_swarm__avoidRadius:r=0
+  oscillating_swarm__avoidMaxRadius:r=-1
+  oscillating_swarm__avoidSpeed:r=0
+  oscillating_swarm__avoidAccel:r=-50
+  oscillating_swarm__avoidMaxSpeed:r=10
+
+  "nesting_swarm_snake_segment_visual:tag"{}
+  "nesting_swarm_snake_segment_visual__boidEids:list<eid>"{}
+  "swarm__extraTargets:list<p3>"{}
+  "swarmCustomSteering:tag"{}
+  "oscillatingSteering:tag"{}
+}
+
+nesting_swarm_snake_ai{
+  _use:t="nesting_swarm_warrior_base"
+  _use:t="beh_tree_regular_check"
+  _use:t="corridor_walker"
+  _use:t="nesting_swarm_ai_components"
+  _use:t="monster_danger_calc"
+  _use:t="dementor_stride"
+  agent_dangers__maxDangerDist:r=25
+  agent_dangers__nextDangersCheckTime:r=0
+  walker_agent__standShootLocalPos:p3=0, 0.5, 0
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  beh_tree__blackboard__enemyRadius:r=30
+  beh_tree__blackboard__lastShootEnemy:i=0
+  beh_tree__node:t="nesting_swarm_snake"
+  flyer__speed:r=0
+  flyer__preferredHeight:r=0.35
+  flyer__directionViscosity:r=0.005
+  stride__lengthAt100:p2=20, 30
+  stride__lengthAt0:p2=0.4, 1
+  stride__focus:r=0.7
+  stride__absoluteFocusDistance:p2=4, 2
+  stride__worstDot:r=-0.4
+  stride__approachPosDistance:r=0.3
+  stride__approachTargetDistance:r=1.35
+
+  "walker_agent__targetEid:eid"{}
+  agent_dangers{
+    _tags:t="server"
+  }
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+}
+
+nesting_swarm_snake_hole_fxs{
+  _group{
+    _tags:t="render"
+    nesting_swarm_snake_hole_fxs__timer:r=0
+    nesting_swarm_snake_hole_fxs__interval:r=0.2
+    nesting_swarm_snake_hole_fxs__prevPos:p3=0, 0, 0
+    nesting_swarm_snake_hole_fxs__holesInFxName:t="nesting_swarm_snake_holes_in_composite_fx"
+    nesting_swarm_snake_hole_fxs__holesInFxType:i=-1
+    nesting_swarm_snake_hole_fxs__holesOutFxName:t="nesting_swarm_snake_holes_out_composite_fx"
+    nesting_swarm_snake_hole_fxs__holesOutFxType:i=-1
+    nesting_swarm_snake_hole_fxs__createSwarmTemplate:t="nesting_snake_runner_swarm"
+
+    "nesting_swarm_snake_hole_fxs:tag"{}
+  }
+}
+
+nesting_swarm_snake{
+  _use:t="replicating"
+  _use:t="truce_zone_creature"
+  _use:t="personal_enemies"
+  _use:t="nesting_swarm_snake_ai"
+  _use:t="loc_snapshots"
+  _use:t="nesting_swarm_snake_sound"
+  loc_snapshots__timeOffset:r=0.07
+  loc_snapshots__targetTimeOffset:r=0.07
+  isAlive:b=yes
+  team:i=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  nesting_swarm_snake__state:i=0
+  _tracked:t="nesting_swarm_snake__state"
+  _replicated:t="nesting_swarm_snake__state"
+  nesting_swarm_snake__stateTimestamp:r=0
+  nesting_swarm_snake__segmentsCount:i=20
+  nesting_swarm_snake__segmentTemplate:t="nesting_swarm_snake_segment"
+  _tracked:t="nesting_swarm_snake__segmentEids"
+  _replicated:t="nesting_swarm_snake__segmentEids"
+  nesting_swarm_snake__targetPos:p3=0, 0, 0
+  nesting_swarm_snake__targetAcceptableDistance:r=1
+  nesting_swarm_snake__requiredSpeed:r=6.5
+  nesting_swarm_snake__targetSavedPos:p3=0, 0, 0
+  _replicated:t="nesting_swarm_snake__targetSavedPos"
+  nesting_swarm_snake__attackPerforatingSpanSq:r=9
+  nesting_swarm_snake__attackSmoothKoef:r=3
+  nesting_swarm_snake__nestSegmentLengthMin:r=0.001
+  nesting_swarm_snake__nestSegmentLengthDesired:r=0.002
+  nesting_swarm_snake__nestSegmentLengthMax:r=0.003
+  nesting_swarm_snake__nestSpeed:r=2
+  nesting_swarm_snake__flySegmentLengthMin:r=0.1
+  nesting_swarm_snake__flySegmentLengthDesired:r=0.3
+  nesting_swarm_snake__flySegmentLengthMax:r=0.4
+  nesting_swarm_snake__flySpeed:r=18
+  nesting_swarm_snake__attackSpeed:r=26
+  nesting_swarm_snake__segmentLengthMin:r=0.1
+  nesting_swarm_snake__segmentLengthDesired:r=0.1
+  nesting_swarm_snake__segmentLengthMax:r=0.1
+  nesting_swarm_snake__targetSegmentLengthMin:r=0.1
+  nesting_swarm_snake__targetSegmentLengthDesired:r=0.1
+  nesting_swarm_snake__targetSegmentLengthMax:r=0.1
+  nesting_swarm_snake__collisionTracePrevPos:p3=0, 0, 0
+  nesting_swarm_snake__collisionTraceDistSq:r=0.01
+  nesting_swarm_snake__collisionSpeedSlowdownDamping:r=3
+  nesting_swarm_snake__collisionSpeedSlowdown:r=1
+  nesting_swarm_snake__collisionSpeedCurrentSlowdown:r=0
+  nesting_swarm_snake__alwaysAttackRadius:r=15
+  nesting_swarm_snake__navmeshRadiusMult:r=2.5
+  nesting_swarm_snake__boidsPerSegment:ip2=30, 1
+  nesting_swarm_snake__boidsPerSegmentDeviation:ip2=1, 2
+
+  "nesting_swarm_snake:tag"{}
+  "nesting_swarm_snake__segmentEids:list<eid>"{}
+  _group{
+    _tags:t="render"
+    nesting_swarm_snake__holeFxsTemplate:t="nesting_swarm_snake_hole_fxs"
+    nesting_swarm_snake__segmentVisualShowHideDistanceSq:p2=10000, 14400
+    nesting_swarm_snake__segmentVisualShowHideCheckAt:r=0
+    nesting_swarm_snake__segmentVisualShowHideCheckInterval:r=3
+    nesting_swarm_snake__segmentVisualVisible:b=yes
+  }
+}
+
+nesting_swarm_snake_nest{
+  _use:t="truce_zone_creature"
+  _use:t="nesting_swarm_nest"
+  _use:t="nesting_swarm_snake_nest_sound"
+  nesting_swarm_nest__warriorTemplate:t="nesting_swarm_snake"
+  nesting_swarm_nest__supplyTemplate:t=""
+  needsBlood:b=no
+  kill_tracking_tag:t="swarm_snake_nest"
+
+  "kill_tracking__taggedPlayers:object"{}
+}
+
+nesting_swarm_snake_nest_placer{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+  nesting_swarm_snake_nest_placer__nestTemplate:t="nesting_swarm_snake_nest"
+  nesting_swarm_snake_nest_placer__offset:p3=0, 0.8, 0
+
+  "nesting_swarm_snake_nest_placer__nest:eid"{}
+}
+
+nesting_swarm_snake_nest_no_random_pos{
+  _use:t="nesting_swarm_snake_nest"
+
+  "swarm_nest__noRandomPosAtAppear:tag"{}
+}
+
+nesting_swarm_snake_nest_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="changed"
+  monster_gen__density:p2=0.00025, 0.00025
+
+  "monster_gen__templates:list<t>"{
+    i:t="nesting_swarm_snake_nest_placer"
+  }
+}
+
+nesting_swarm_fx_origin{
+  nesting_swarm_fx__maxDisturbedDstSq:r=15000
+  nesting_swarm_fx__maxRunnerDstSq:r=3600
+}
+
+nesting_snake_runner_swarm{
+  _use:t="flying_swarm_base"
+  _use:t="attached_pos"
+  _use:t="nesting_swarm_snake_segment_visual_fx"
+  swarmRenderTemplate:t="attached_skeleton_swarm_render"
+  swarm__boidTemplateName:t="nesting_snake_runner"
+  count:i=0
+  radius:r=0.05
+  swarm__initialBoidsCount:i=0
+  swarm__trajectoryLength:r=2.5
+  trajectoryHistory:i=25
+  surface_runner_swarm__spawnCount:ip2=1, 3
+  surface_runner_swarm__activeRunnersCount:i=0
+
+  "swarmCustomSteering:tag"{}
+}
+
+nesting_snake_runner{
+  _use:t="boidElement"
+  _use:t="trajectoryBoid"
+  surface_crawler__offset:p3=0, 0, 0
+  surface_crawler__norm:p3=0, 0, 0
+  surface_crawler__dir:p3=0, 0, 0
+  surface_crawler__head:p3=0, 0, 0
+  surface_crawler__active:b=yes
+  surface_crawler__frustration:i=0
+  surface_crawler__maxFrustration:i=10
+  surface_crawler__seed:i=0
+  surface_crawler__lookAhead:p2=0.3, 0.5
+  surface_crawler__lookDown:p3=0.08, 0.14, 0.2
+  surface_crawler__curvePerSecond:r=15
+  surface_crawler__curvePerSecondRnd:r=0
+  surface_crawler__rndInfluence:r=40
+  surface_crawler__speed:r=4
+  surface_crawler__matId:i=0
+  nesting_snake_runner__lifeDuration:r=12
+  nesting_snake_runner__buryDuration:r=3
+  nesting_snake_runner__buryAt:r=0
+  nesting_snake_runner__killAt:r=0
+  nesting_snake_runner__speed:p2=3.5, 1.2
+  nesting_snake_runner__buryOffset:p3=0, -0.3, 0
+
+  "customSteeringBoid:tag"{}
+}
+
+wormhuman_debug_log{
+  "wormhuman_debug_log:tag"{}
+  "wormhuman_debug_log__heroEid:eid"{}
+}

@@ -1,0 +1,63 @@
+entity{
+  _template:t="africa_headquarters_sound_occlusion"
+}
+
+entity{
+  _template:t="africa_ambient_sound"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="abandoned_house"
+  compound_ambient_sound_type__path:t="ambient/positioned/abandoned_house"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="metal_tower"
+  compound_ambient_sound_type__path:t="ambient/positioned/metal_tower"
+}
+
+entity{
+  _template:t="compound_ambient_sound_controller"
+
+  "compound_ambient_sound_controller__soundTypes:list<t>"{
+    name:t="abandoned_house"
+    name:t="metal_tower"
+  }
+}
+
+entity{
+  _template:t="sound_field"
+
+  "sound_field__biomeTypes:array"{
+    "obj:object"{
+      gameObject:t="biome_forest_sound_var"
+      alpha2Value:p2=0.25, 1
+      extent:r=0
+    }
+
+    "obj:object"{
+      gameObject:t="biome_hill_sound_var"
+      alpha2Value:p2=0.25, 1
+    }
+
+    "obj:object"{
+      gameObject:t="biome_city_sound_var"
+      alpha2Value:p2=0.5, 1
+      extent:r=15
+    }
+  }
+
+  "sound_field__vars:list<t>"{
+    var:t="biome_forest"
+    var:t="biome_high_hills"
+    var:t="biome_city"
+  }
+}
+
+entity{
+  _template:t="water_sound_field"
+  water_sound_field__worldAABB:p4=-2000, -3000, 2000, 2000
+  water_sound_field__cellSize:r=10
+}

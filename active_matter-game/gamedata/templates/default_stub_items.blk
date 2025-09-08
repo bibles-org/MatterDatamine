@@ -1,0 +1,27 @@
+default_stub_item{
+  _use:t="hammerspace_item"
+  _use:t="item_with_human_owner"
+
+  "default_stub_item:tag"{}
+}
+
+default_stub_melee{
+  _use:t="default_stub_item"
+  item__recreateInInventory:t="weapon_invis_item"
+}
+
+default_stub_equipment{
+  _use:t="default_stub_item"
+  item__recreateInInventory:t="base_invis_item"
+}
+
+default_stub_melee_controller{
+  default_stub_melee_controller__meleeTemplate:t="default_stub_pocket_knife_weapon"
+
+  "default_stub_melee_controller__meleeItemEid:eid"{}
+}
+
+default_stub_equipment_controller{
+  "default_stub_equipment_controller__equipmentTemplates:object"{}
+  "default_stub_equipment_controller__equipmentItemEids:object"{}
+}

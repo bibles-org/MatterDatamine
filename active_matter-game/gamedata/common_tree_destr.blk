@@ -1,0 +1,16 @@
+heightThreshold:r=3
+impulseThresholdMult:r=67
+radiusThreshold:r=0.5
+canopyRestitution:r=0.5
+canopyStiffnessMult:r=1
+canopyAngularLimit:r=0.3
+canopyMaxRaduis:r=5
+canopyRollingFriction:r=5
+canopyInertia:p3=1, 10, 1
+constraintLimitY:p2=0, 1
+
+radiusToImpulse{
+  row:p2=0, 1
+  row:p2=0.5, 5
+  row:p2=1, 10
+}

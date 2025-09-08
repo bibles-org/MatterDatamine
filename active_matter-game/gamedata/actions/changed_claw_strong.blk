@@ -1,0 +1,30 @@
+melee{
+  hitPower:r=6
+  impulsePower:r=6
+  node:t="Bip01 Head"
+  hitFxPreset:t="hands"
+}
+
+slow{}
+volume{
+  frustum{
+    znear:r=0.01
+    zfar:r=1.75
+    fovx:r=60
+    fovy:r=90
+  }
+}
+
+ridmg{
+  node:t="Bip01 Pelvis"
+  nodeOffset:p3=0.3, 0.5, -0.15
+  hitPower:r=40
+  rayLen:r=1.5
+  rad:r=0.4
+  backoffFactor:r=0.1
+}
+
+actionSound{
+  humanHitSoundName:t="melee_claws"
+  humanHitSoundPath:t="hit_dmgClaws"
+}

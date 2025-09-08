@@ -1,0 +1,13 @@
+am_militant_base_ability{
+  _use:t="common_char_ability"
+  _tracked:t="hero_ability__abilities"
+  _replicated:t="hero_ability__abilities"
+
+  "hero_ability__abilities:array"{}
+}
+
+player_base_afterdeath_respawn{
+  _use:t="client_destroy_in_5_sec"
+
+  "player_base_afterdeath_respawn__heroEid:eid"{}
+}

@@ -1,0 +1,50 @@
+nodes_name{
+  node:t="Bip01 L Foot"
+  node:t="Bip01 R Foot"
+  node:t="Bip01 Pelvis"
+}
+
+prediction_times{
+  time:r=0.33
+  time:r=0.66
+  time:r=0.99
+}
+
+default{
+  animationBlendTime:r=0.2
+  linearVelocityViscosity:r=0.3
+  angularVelocityViscosity:r=0.4
+  metricaToleranceMin:r=0.3
+  metricaToleranceMax:r=5
+  metricaToleranceDecayTime:r=0.7
+
+  node{
+    position_weight:r=0.5
+    velocity_weight:r=1
+  }
+
+  node{
+    position_weight:r=0.5
+    velocity_weight:r=1
+  }
+
+  node{
+    position_weight:r=0.01
+    velocity_weight:r=1
+  }
+
+  point{
+    position_weight:r=1
+    velocity_weight:r=1.5
+  }
+
+  point{
+    position_weight:r=1
+    velocity_weight:r=1.5
+  }
+
+  point{
+    position_weight:r=1
+    velocity_weight:r=1.5
+  }
+}

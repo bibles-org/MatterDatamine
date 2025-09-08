@@ -1,0 +1,204 @@
+entity{
+  _template:t="dagdp_level_settings"
+  dagdp__max_objects:i=10000
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="plants_trash"
+
+  "dagdp__params:object"{
+    scale:p2=0.8, 0.2
+    orientation:t="normal"
+  }
+
+  "dagdp__assets:object"{
+    "wood_branch_a:object"{}
+    "wood_branch_c:object"{}
+    "wood_branch_d:object"{}
+    "tree_date_palm_leaf_a:object"{}
+    "tree_date_palm_leaf_b:object"{}
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="forest_plants"
+
+  "dagdp__params:object"{
+    scale:p2=0.8, 0.2
+  }
+
+  "dagdp__assets:object"{
+    "ground_plant_beech_a:object"{}
+    "ground_plant_beech_b:object"{}
+    "ground_plant_beech_c:object"{}
+    "ground_plant_beech_d:object"{}
+    "ground_plant_beech_e:object"{}
+    "ground_plant_beech_f:object"{}
+    "ground_plant_phyllanthus_urinaria_a:object"{}
+    "ground_plant_phyllanthus_urinaria_b:object"{}
+    "ground_plant_phyllanthus_urinaria_c:object"{}
+    "ground_plant_phyllanthus_urinaria_d:object"{}
+    "ground_plant_phyllanthus_urinaria_e:object"{}
+    "ground_plant_causonis_japonica_b:object"{}
+    "ground_plant_causonis_japonica_c:object"{}
+    "ground_plant_causonis_japonica_d:object"{}
+    "ground_plant_causonis_japonica_e:object"{}
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="town_debris"
+
+  "dagdp__params:object"{
+    scale:p2=0.9, 0.1
+    orientation:t="normal"
+  }
+
+  "dagdp__assets:object"{
+    "clothes_pile_a:object"{}
+    "clothes_pile_d:object"{}
+    "sandal_a:object"{}
+    "sneaker_a:object"{}
+    "garbadge_set_middle_a:object"{}
+    "garbadge_set_middle_b:object"{}
+    "garbadge_set_middle_c:object"{}
+    "garbadge_set_middle_d:object"{}
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="trash"
+
+  "dagdp__params:object"{
+    scale:p2=0.9, 0.1
+    orientation:t="normal"
+  }
+
+  "dagdp__assets:object"{
+    "debris_bricks_a:object"{}
+    "debris_bricks_b:object"{}
+    "tire_squashed_a:object"{}
+    "tire_squashed_b:object"{}
+    "tire_squashed_c:object"{}
+    "tire_squashed_d:object"{}
+    "debris_modern_road_bridge_a_trash_pille_a:object"{}
+    "debris_modern_road_bridge_a_trash_pille_b:object"{}
+    "debris_modern_road_bridge_a_trash_pille_c:object"{}
+    "block_concrete_390x190x190_a_lying_a:object"{}
+    "block_concrete_390x190x190_b_lying_a:object"{}
+    "garbadge_plastic_bottle_a:object"{}
+    "garbadge_plastic_bottle_b:object"{}
+    "garbadge_pizza_box_a:object"{}
+    "garbadge_pizza_box_b:object"{}
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="sand_stones"
+
+  "dagdp__params:object"{
+    scale:p2=0.6, 0.2
+    orientation:t="normal"
+  }
+
+  "dagdp__assets:object"{
+    "sand_stone_small_a:object"{}
+    "sand_stone_small_b:object"{}
+    "sand_stone_small_c:object"{}
+    "sand_stone_small_d:object"{}
+    "sand_stone_small_e:object"{}
+    "sand_stone_small_f:object"{}
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="town_debris_placer"
+  dagdp__density:r=0.05
+
+  "dagdp__biomes:list<i>"{
+    index:i=35
+    index:i=36
+    index:i=56
+    index:i=57
+  }
+
+  "dagdp__object_groups:list<t>"{
+    item:t="town_debris"
+    item:t="trash"
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="road_trash_placer"
+  dagdp__density:r=0.1
+
+  "dagdp__biomes:list<i>"{
+    index:i=42
+  }
+
+  "dagdp__object_groups:list<t>"{
+    item:t="trash"
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="sand_stones_placer"
+  dagdp__density:r=0.24
+
+  "dagdp__biomes:list<i>"{
+    index:i=1
+    index:i=2
+    index:i=4
+    index:i=9
+    index:i=12
+    index:i=27
+    index:i=29
+    index:i=38
+    index:i=39
+    index:i=54
+  }
+
+  "dagdp__object_groups:list<t>"{
+    item:t="sand_stones"
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="plants_trash_placer"
+  dagdp__density:r=0.12
+
+  "dagdp__biomes:list<i>"{
+    index:i=1
+    index:i=2
+    index:i=3
+    index:i=4
+  }
+
+  "dagdp__object_groups:list<t>"{
+    item:t="plants_trash"
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="forest_plants_placer"
+  dagdp__density:r=0.25
+
+  "dagdp__biomes:list<i>"{
+    index:i=7
+  }
+
+  "dagdp__object_groups:list<t>"{
+    item:t="plants_trash"
+    item:t="forest_plants"
+  }
+}

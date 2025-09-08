@@ -1,0 +1,88 @@
+sprintStaminaDrain:r=10
+restStaminaRestore:r=5
+jumpStaminaDrain:r=5
+canWallJump:b=yes
+wallJumpSpeed:r=10
+wallJumpRad:r=1
+hasGuns:b=no
+runSpeed:r=4.5
+sprintSpeed:r=7
+acceleration:r=500
+standSlideAngle:r=89
+crawlSlideAngle:r=89
+standAimPos:p3=0.1, 1.7, 0
+crouchAimPos:p3=0.1, 1.2, 0
+crawlAimPos:p3=0.5, 0.3, 0
+airFrictionAccel:r=10
+jumpVertSpeed:r=10
+sprintJumpVertSpeed:r=8
+maxSprintAngle:r=70
+maxRunAngle:r=85
+canCrawl:b=no
+canCrouch:b=no
+climber:b=yes
+canClimb:b=no
+canAttachToSurfaces:b=yes
+collisionRadius:r=0.25
+maxObstacleHeight:r=0.5
+aimingMoveSpeed:r=1
+
+collision{
+  ccdSphere{
+    center:p3=0, 1.2, 0
+    radius:r=0.2
+  }
+}
+
+standState{
+  walkSpeed:r=6
+  runSpeed:r=6
+  sprintSpeed:r=7
+
+  collisionLinks{
+    offset:p3=0, 0.8, 0
+    haveCollision:b=no
+
+    pelvis{
+      offset:p3=0.2, 0, 0
+      haveCollision:b=yes
+    }
+  }
+}
+
+crouchState{
+  walkSpeed:r=1
+  runSpeed:r=1.5
+
+  collisionLinks{
+    offset:p3=0, 0.8, 0
+    haveCollision:b=no
+
+    pelvis{
+      offset:p3=0.2, 0, 0
+      haveCollision:b=yes
+    }
+  }
+}
+
+crawlState{
+  walkSpeed:r=0.3
+  runSpeed:r=0.5
+
+  collisionLinks{
+    offset:p3=0, 0.8, 0
+    haveCollision:b=no
+
+    pelvis{
+      offset:p3=0.2, 0, 0
+      haveCollision:b=yes
+    }
+  }
+}
+
+weapons{
+  primary{}
+  secondary{}
+  tertiary{}
+  grenade{}
+}

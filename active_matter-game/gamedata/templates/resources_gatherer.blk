@@ -1,0 +1,52 @@
+resources_gatherer_hero{
+  resources_gatherer__template:t="resources_gatherer_device"
+  resources_gatherer_hero__enabled:b=yes
+  resources_gatherer_hero__nodeName:t="Bip01 L Finger21"
+  resources_gatherer_hero__nodeIdx:i=-1
+  _replicated:t="resources_gatherer_hero__enabled"
+
+  "resources_gatherer__eid:eid"{}
+}
+
+resources_gatherer_hero_debug{
+  "resources_gatherer_hero_debug:tag"{}
+}
+
+resources_gatherer_device{
+  _use:t="replicating"
+  resources_gatherer_device__tickInterval:r=2
+  resources_gatherer_device__range:r=3
+  resources_gatherer_device__coneAngleDeg:r=50
+  resources_gatherer_device__coneAngleCos:r=0
+  resources_gatherer_device__pointBlankDist:r=0.35
+  resources_gatherer_device__gatherRatePerTick:r=5
+  resources_gatherer_device__gatherMultiplier:r=1
+  resources_gatherer_device__gatherMultiplierIncVel:r=1.2
+  resources_gatherer_device__affectTemplate:t="resources_gatherer_affect"
+
+  "resources_gatherer_device__ownerEid:eid"{}
+  "resources_gatherer_device__affectEid:eid"{}
+  _group{
+    _replicate:b=yes
+    _track:b=yes
+    resources_gatherer_device__tickAt:r=0
+  }
+
+  _group{
+    _replicate:b=yes
+
+    "resources_gatherer_device__amPiles:list<eid>"{}
+  }
+
+  _group{
+    _tags:t="gameClient"
+
+    "resources_gatherer_device__animationEffect:eid"{}
+  }
+}
+
+resources_gatherer_affect{
+  _use:t="replicated_game_effect"
+
+  "state__interruptReload:tag"{}
+}

@@ -1,0 +1,272 @@
+import{
+  scene:t="gamedata/scenes/_raid_mode_base_config.blk"
+}
+
+entity{
+  _template:t="activity_helper_manager"
+}
+
+entity{
+  _template:t="monster_attack_event_manager"
+}
+
+entity{
+  _template:t="zone_weather"
+}
+
+import{
+  scene:t="gamedata/scenes/_africa_forsaken_sounds.blk"
+  scene:t="gamedata/scenes/_africa_forsaken_gpu_objects.blk"
+  scene:t="gamedata/scenes/_africa_forsaken_envi_cover.blk"
+}
+
+entity{
+  _template:t="static_cam"
+  camera__active:b=yes
+  transform:m=[[0, 0, -1] [0, 1, 0] [1, 0, 0] [0, 0, 0]]
+}
+
+entity{
+  _template:t="navmesh_isle_marker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [470, 0, -1060]]
+  navmesh_isle_marker__expectedNumTriangles:i=226475
+}
+
+entity{
+  _template:t="navmesh_battle_area"
+  transform:m=[[1500, 0, 0] [0, 1500, 0] [0, 0, 1500] [470, 0, -1060]]
+}
+
+import{
+  scene:t="gamedata/scenes/_africa_water_calm.blk"
+}
+
+entity{
+  _template:t="raid_description"
+  raid_description__raidType:t="hunt"
+  raid_description__difficulty:t="dif_norm"
+  raid_description__drawSpawnsAsPoints:b=no
+  raid_description__drawSpawnsAsPoly:b=yes
+  raid_description__drawSpawnsAlpha:r=190
+  raid_description__drawSpawnsRadius:r=50
+  raid_description__drawSpawnsClampParam:p2=20, 30
+
+  "raid_description__enemies:list<t>"{
+    item:t="distorted"
+    item:t="turned"
+    item:t="invisible"
+    item:t="flower"
+    item:t="mosquito"
+    item:t="worms"
+    item:t="statue"
+    item:t="gravity_trap"
+  }
+
+  "raid_description__images:list<t>"{
+    item:t="ui/zone_thumbnails/raid_africa_town_1"
+    item:t="ui/zone_thumbnails/raid_africa_town_2"
+    item:t="ui/zone_thumbnails/raid_africa_town_3"
+  }
+
+  "raid_description__mcImages:list<t>"{
+    item:t="ui/zone_thumbnails/raid_africa_town_1"
+    item:t="ui/zone_thumbnails/raid_africa_town_2"
+    item:t="ui/zone_thumbnails/raid_africa_town_3"
+  }
+
+  "raid_description__possibleLoot:list<t>"{
+    item:t="pk_gun"
+    item:t="as_val_gun"
+    item:t="rpk_74_gun"
+    item:t="svd_gun"
+    item:t="hk_g3a4_gun"
+    item:t="spas_12_gun"
+    item:t="ks_23_gun"
+    item:t="m4a1_gun"
+    item:t="ak_103_gun"
+    item:t="hk_mp5n_gun"
+    item:t="hk_ump_45_gun"
+    item:t="beretta_m9_gun"
+    item:t="medium_backpack"
+  }
+}
+
+entity{
+  _template:t="shaderVars"
+
+  "shader_vars__vars:object"{
+    hmap_displacement_up:r=0.3
+    ocean1:c=40, 50, 100, 0
+    ocean0:c=30, 55, 55, 0
+    ocean_density:r=0.7
+    river1:c=68, 89, 37, 0
+    river0:c=126, 100, 17, 0
+    hmap_displacement_down:r=-0.15
+    leaves_ss_profile:p4=1, 1, 1, 0
+    paint_details_tex:t="african_building_colors_tex_palette*"
+    puddle_increase:r=-0.5
+    water_color_noise_size:r=221
+    max_river_width:r=50
+    river_density:r=1.2
+    puddle_hardness:r=18
+    puddle_increase:r=0.01
+    puddle_flat_noise_normal_effect:r=0.015
+    puddle_flat_normal_hardness:r=25
+    puddle_flat_hmap_reduce:r=-0.2
+    puddle_flat_noise_height_reduce:r=0.09
+  }
+}
+
+entity{
+  _template:t="wind"
+  wind__strength:r=4
+  wind__noiseStrength:r=3
+  wind__noiseSpeed:r=1.3
+  wind__noiseScale:r=20
+  wind__dir:r=60
+  dyn_wind__cumulus_alt_multiplier:r=0
+  dyn_wind__strata_alt_multiplier:r=0
+}
+
+entity{
+  _template:t="clouds_hole_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [470, 0, -1060]]
+}
+
+entity{
+  _template:t="storm_zone_with_forcefield"
+  sphere_zone__radius:r=680
+  moving_zone__manual_activation:b=no
+  moving_zone__sourcePos:p3=470, 0, -1060
+  moving_zone__sleepingTime:r=2700
+  moving_zone__movingVelocity:r=1.8
+}
+
+entity{
+  _template:t="am_bot_spawner"
+  bot_spawner__spawnInterval:r=20
+  bot_spawner__botsPerGroupMinMax:ip2=1, 2
+}
+
+entity{
+  _template:t="tiled_map"
+  tiled_map__leftTop:p2=-2048, -2048
+  tiled_map__rightBottom:p2=2048, 2048
+  tiled_map__leftTopBorder:p2=-2048, -2048
+  tiled_map__rightBottomBorder:p2=2048, 2048
+  tiled_map__visibleRange:p2=144, 4000
+  tiled_map__tileWidth:i=512
+  tiled_map__zlevels:i=5
+  tiled_map__northAngle:r=0
+  tiled_map__tilesPath:t="maps/forsaken_africa"
+  tiled_map__backgroundColor:c=35, 128, 97, 255
+  fog_of_war__enabled:b=yes
+}
+
+entity{
+  _template:t="door_mult_ent_generator"
+  ri_extra_gen__blk:t="gamedata/africa_doors.blk"
+}
+
+entity{
+  _template:t="euclid_central_sphere"
+  transform:m=[[0.25, 0, 0] [0, 0.25, 0] [0, 0, 0.25] [262, 140, -1085]]
+
+  "euclid_anomaly_visual__subObjects:array"{
+    "i:object"{
+      templateName:t="euclid_distortion_spike_small"
+      creationTemplate:t="sphere"
+      count:i=10
+    }
+
+    "i:object"{
+      templateName:t="euclid_distortion_effect"
+      creationTemplate:t="none"
+      count:i=1
+    }
+  }
+}
+
+entity{
+  _template:t="postfx_color_grading_tonemap_death_alive"
+}
+
+entity{
+  _template:t="civil_africa_lootable_rendinst_manager"
+}
+
+entity{
+  _template:t="military_africa_lootable_rendinst_manager"
+}
+
+import{
+  scene:t="gamedata/scenes/africa_headquarters/_africa_headquarters_regions.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/africa_headquarters/_africa_headquarters_minimap_regions.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/africa_headquarters/_africa_headquarters_custom_points.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/africa_headquarters/_africa_headquarters_spawn_points.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/africa_headquarters/_africa_headquarters_extraction_points.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/africa_headquarters/_africa_headquarters_loot_generators.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/africa_headquarters/_africa_headquarters_monsters.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/africa_headquarters/_africa_headquarters_traps.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/africa_headquarters/_africa_headquarters_gravity_zones.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/africa_headquarters/_africa_headquarters_encounters.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/africa_headquarters/_africa_headquarters_quest_objects.blk"
+}
+
+entity{
+  _template:t="corpse_swarm_manager"
+}
+
+entity{
+  _template:t="airdrop_manager"
+}
+
+entity{
+  _template:t="level+level_synced_environment"
+  level__blk:t="levels/forsaken_africa.blk"
+  level__useGroundHolesCollision:b=yes
+  level_synced_environment__timeOfDaySeed:i=680897
+  level_synced_environment__weatherSeed:i=781267
+  level_synced_environment__timeOfDayChangeInterval:i=310
+  level_synced_environment__weatherChangeInterval:i=410
+
+  "level__weatherChoice:object"{
+    weather_dalniy_island_overcast:r=1
+  }
+
+  "level__timeVec:array"{
+    level_timeVec:r=6
+    level_timeVec:r=14
+    level_timeVec:r=18.7
+  }
+}

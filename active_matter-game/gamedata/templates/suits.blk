@@ -1,0 +1,73 @@
+attachable_suit_controller{
+  attachable_suit_controller__suitType:i=0
+  attachable_suit_controller__appendOnDeath:t="update_attachables_post_ragdoll"
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+
+    "attachable_suit_controller__suitAnimcharEid:eid"{}
+    "attachable_suit_controller__attachedAnimcharEids:object"{}
+  }
+
+  "attachable_suit_controller__mainAnimcharConfig:array"{}
+  "attachable_suit_controller__attachedAnimcharTemplates:object"{}
+  "attachable_suit_controller__holsterAttachedAnimchars:list<t>"{
+    EWS_PRIMARY:t=""
+    EWS_SECONDARY:t=""
+    EWS_TERTIARY:t=""
+    EWS_MELEE:t=""
+    EWS_GRENADE:t=""
+  }
+}
+
+suit_attachable_animchar{
+  _use:t="human_animchar_attachable_part"
+  animchar_render__enabled:b=yes
+  slot_attach__visible:b=yes
+  _tracked:t="slot_attach__visible"
+  _replicated:t="slot_attach__visible"
+  animchar__res:t=""
+
+  "suit_attachable_animchar:tag"{}
+}
+
+suit_attachable_item_in_equipment{
+  _use:t="base_attached_invis_item"
+
+  "suit_attachable_item_in_equipment__attachedTo:eid"{}
+  "suit_attachable_item_in_equipment:tag"{}
+}
+
+suit_attachable_item_base{
+  item__recreateOnGround:t="item_in_world"
+  item__recreateInWorldPhys:t="item_in_world_phys"
+  item__recreateInInventory:t="base_invis_item"
+  item__recreateInEquipment:t="suit_attachable_item_in_equipment"
+
+  "suit_attachable_item__animcharTemplates:object"{}
+}
+
+suit_item_base{
+  _use:t="equipable_item"
+  _use:t="slot_attachable"
+  _use:t="suit_attachable_item_base"
+  slot_attach__slotName:t="suit"
+  suit__suitType:i=0
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1, 2
+  use_object__offset:p3=0, 0.5, 0
+
+  "item__equipInsteadOfPickup:tag"{}
+  "item__equipmentSlots:list<t>"{
+    slot:t="chronogene_primary_1"
+  }
+
+  "equipment_item:tag"{}
+}
+
+attachable_suit_decorator{
+  _use:t="animchar_dynmodel_nodes_hider"
+
+  "attachable_suit_decorator:tag"{}
+}

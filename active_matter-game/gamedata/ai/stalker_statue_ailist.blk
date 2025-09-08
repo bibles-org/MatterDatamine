@@ -1,0 +1,110 @@
+repeat{
+  name:t="stalker_statue"
+  selectStrategy:t="ordered"
+
+  reaction{
+    event:t="regularCheck"
+
+    sequencer{
+      success{
+        statueFindTarget{
+          targetParam:t="walker_agent__anotherTargetEid"
+        }
+      }
+
+      compareNode{
+        lhs:t="walker_agent__targetEid"
+        operator:t="!="
+        rhs:t="walker_agent__anotherTargetEid"
+      }
+
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        arg:t="walker_agent__anotherTargetEid"
+      }
+
+      recalculateTree{}
+    }
+  }
+
+  orderedSelector{
+    sequencer{
+      compareNode{
+        lhs:t="walker_agent__targetEid"
+        operator:t="!="
+        rhs:i=0
+      }
+
+      statueGoToEntity{
+        targetParam:t="walker_agent__targetEid"
+        stopDist:p2=0.9, 1.4
+      }
+    }
+
+    statueFindTarget{
+      targetParam:t="walker_agent__targetEid"
+    }
+  }
+
+  repeatUntilFail{
+    name:t="attack"
+
+    checkDistanceToTarget{
+      targetParam:t="walker_agent__targetEid"
+      radius:r=1.7
+    }
+
+    not{
+      statueIsVisible{}
+    }
+
+    join{
+      wait{
+        range:p2=0.2, 0.2
+        resetable:b=yes
+      }
+
+      not{
+        statueIsVisible{}
+      }
+    }
+
+    checkDistanceToTarget{
+      targetParam:t="walker_agent__targetEid"
+      radius:r=1.7
+    }
+
+    not{
+      statueIsVisible{}
+    }
+
+    statueTurnToEntity{
+      targetParam:t="walker_agent__targetEid"
+    }
+
+    statueAttack{
+      targetParam:t="walker_agent__targetEid"
+    }
+
+    wait{
+      range:p2=1.7, 2.7
+      resetable:b=yes
+    }
+  }
+
+  sequencer{
+    name:t="goToSleep"
+
+    compareNode{
+      lhs:t="walker_agent__targetEid"
+      operator:t="=="
+      rhs:i=0
+    }
+
+    statueGoToOrigin{}
+    addTemplate{
+      name:t="sleeping_statue_tmpl"
+    }
+  }
+}

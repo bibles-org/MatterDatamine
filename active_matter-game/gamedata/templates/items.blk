@@ -1,0 +1,1363 @@
+item_with_owner{
+  _replicated:t="item__containerOwnerEid"
+  _tracked:t="item__containerOwnerEid"
+  _replicated:t="item__lastContainerOwnerEid"
+  _tracked:t="item__lastContainerOwnerEid"
+
+  "item__containerOwnerEid:eid"{}
+  "item__lastContainerOwnerEid:eid"{}
+}
+
+item_with_human_owner{
+  _replicated:t="item__humanOwnerEid"
+  _tracked:t="item__humanOwnerEid"
+
+  "item__humanOwnerEid:eid"{}
+}
+
+notify_hero_picked_up{
+  "notify_hero_picked_up:tag"{}
+}
+
+notify_hero_dropped{
+  "notify_hero_dropped:tag"{}
+  "notify_hero_dropped__inventoryEid:eid"{}
+}
+
+base_nonreplicated_item{
+  _use:t="item_with_owner"
+  _use:t="item_with_human_owner"
+  _use:t="recognizable_item"
+  item__lootType:t="item"
+  item__alreadyLooted:b=no
+  item__isOnGround:b=no
+  item__visibleCheckHeight:r=0.5
+  item__useActionHintType:i=1
+  _tracked:t="item__isOnGround"
+  item__appearInItemContainer:b=no
+  uniqueId:t="-1"
+  animchar_render__enabled:b=yes
+  item__disablePickup:b=no
+  item__id:i=0
+  item__wantToBeCorrupted:b=yes
+  item__wantToBeReplica:b=no
+  server_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__isFoundInRaid:b=no
+
+    "item__initialPlayerOwnerEid:eid"{}
+  }
+
+  "net__notInInitialScope:tag"{}
+}
+
+item_created_by_zone{
+  "item_created_by_zone:tag"{}
+}
+
+item_enriched{
+  "item_enriched:tag"{}
+}
+
+item_replica{
+  "item_replica:tag"{}
+}
+
+item_generated{
+  "item_generated:tag"{}
+}
+
+base_item{
+  _use:t="base_nonreplicated_item"
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="item_rarity_common"
+  item__isOnGround:b=no
+  _replicated:t="item__isOnGround"
+  item__id:i=0
+  _replicated:t="item__id"
+}
+
+base_item_with_ui{
+  _use:t="base_item"
+  item__id:i=0
+  _replicated:t="item__id"
+  item__iconYaw:r=45
+  item__iconPitch:r=0
+  item__iconRoll:r=0
+  item__iconOffset:p2=0, 0
+  item__iconScale:r=1
+  item__ui_priority:i=0
+}
+
+block_item_use{
+  "item__blockUse:tag"{}
+}
+
+block_item_inventory_move{
+  "item__blockInventoryMove:tag"{}
+}
+
+block_item_move_to_backpack{
+  "item__blockMoveToBackpack:tag"{}
+  "item__blockMoveToSafepack:tag"{}
+}
+
+block_item_move_to_safepack{
+  "item__blockMoveToSafepack:tag"{}
+}
+
+block_item_move_to_ground{
+  "item__blockMoveToGround:tag"{}
+}
+
+block_item_move_to_item_container{
+  "item__blockMoveToItemContainer:tag"{}
+}
+
+ignore_block_item_move{
+  "ignore_block_item_move:tag"{}
+}
+
+block_item_all_actions{
+  _use:t="block_item_use"
+  _use:t="block_item_inventory_move"
+}
+
+drop_item_cb{
+  drop_item_cb__lootCleanupTime:r=0
+}
+
+visibility_traceable_item{
+  item__visible:b=no
+  _tracked:t="item__visible"
+
+  "traceVisibility:tag"{}
+}
+
+visibility_traceable_item_cache{
+  lastVisibilityTraceTime:r=0
+  lastVisibilityTraceOffset:i=0
+}
+
+ui_visible{
+  "ui_visible:tag"{
+    _tags:t="render"
+  }
+}
+
+nonreplicated_tm_item_in_world{
+  _use:t="animchar"
+  _use:t="visibility_traceable_item_cache"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+  item__isOnGround:b=yes
+  animchar__updatable:b=no
+  spawnedInRegion:t=""
+  net__scopeDistanceSq:r=2500
+  ui__visibility_distance_sq:r=100
+  grid_obj__gridType:t="loot"
+  grid_obj__fixedTmScale:r=-1
+
+  "disableDropOnRiDestroyd:tag"{}
+  "item__dropOnRiDestroy:tag"{}
+  grid_obj{}
+  collres{}
+  "item__isPickable:tag"{}
+  _group{
+    _tags:t="ui"
+    hud_marker__max_distance:r=10
+    hud_marker__showOnlyWhenSelected:b=yes
+  }
+}
+
+racked_weapon{
+  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  racked_weapon__transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  racked_weapon__rackTemplate:t="placeable_rendinst"
+  racked_weapon__isWeaponOnRack:b=no
+  racked_weapon__recreateOnRack:t="item_on_rack"
+
+  "racked_weapon__rackRendinsts:array"{}
+  "racked_weapon__rackEids:list<eid>"{}
+}
+
+displacement_compensation_origin{
+  displacement_compensation__interval:r=5
+  displacement_compensation__radius:r=40
+  displacement_compensation__updateAt:r=0
+}
+
+item_in_world{
+  _use:t="nonreplicated_tm_item_in_world"
+  _use:t="disable_update"
+  _use:t="deformation_bbox_receiver"
+  server_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _replicated:t="server_transform"
+  displacement_compensation__queryId:i=-1
+  displacement_compensation__queryPos:p3=0, 0, 0
+  displacement_compensation__compensationTime:r=0
+  item__isOnGround:b=yes
+  _replicated:t="item__isOnGround"
+  _tracked:t="item__isOnGround"
+
+  "item_in_world:tag"{}
+}
+
+item_in_world_inactive{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="disable_update"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+  net__scopeDistanceSq:r=2500
+  grid_obj__gridType:t="loot"
+  grid_obj__fixedTmScale:r=-1
+
+  "disableDropOnRiDestroyd:tag"{}
+  "item__dropOnRiDestroy:tag"{}
+  grid_obj{}
+  collres{}
+}
+
+item_waiting_for_container_appear{
+  "item_waiting_for_container_appear:eid"{}
+}
+
+equipment_waiting_for_hero_appear{
+  equipment_waiting_for_hero_appear_slot:t=""
+
+  "equipment_waiting_for_hero_appear:eid"{}
+}
+
+weapon_waiting_for_hero_appear{
+  weapon_waiting_for_hero_appear_slot:i=-1
+
+  "weapon_waiting_for_hero_appear:eid"{}
+}
+
+weapon_mod_waiting_for_weapon_appear{
+  weapon_mod_waiting_for_weapon_appear_slot:t=""
+
+  "weapon_mod_waiting_for_weapon_appear:eid"{}
+}
+
+equipment_mod_waiting_for_equipment_appear{
+  equipment_mod_waiting_for_equipment_appear_slot:t=""
+
+  "equipment_mod_waiting_for_equipment_appear:eid"{}
+}
+
+default_item_ui_info{
+  item__iconYaw:r=45
+  item__iconPitch:r=0
+  item__iconRoll:r=0
+  item__iconOffset:p2=0, 0
+  item__iconScale:r=1
+  item__ui_priority:i=0
+  item__lootType:t="item"
+  item__alreadyLooted:b=no
+}
+
+attached_to_parent{
+  "attachedToParent:tag"{}
+}
+
+item_in_equipment{
+  _use:t="base_vis_item"
+
+  "item_in_equipment:tag"{}
+}
+
+item_in_equipment_hided_on_doll{
+  _use:t="base_vis_item"
+
+  "item_in_equipment:tag"{}
+  "item_in_equipment_hided_on_doll:tag"{}
+}
+
+equipable_item{
+  _use:t="ecs_no_debug"
+  _use:t="base_item_with_ui"
+  _use:t="default_item_ui_info"
+  _use:t="replicating"
+  item__recreateOnGround:t="item_in_world"
+  item__recreateInWorldPhys:t="item_in_world_phys"
+  item__recreateInInventory:t="base_invis_item"
+  item__recreateInEquipment:t="item_in_equipment"
+  item__volume:r=1
+  equipable_item__curSlot:t=""
+  _tracked:t="equipable_item__curSlot"
+  _replicated:t="equipable_item__curSlot"
+
+  "net__notInInitialScope:tag"{}
+  collres{}
+}
+
+heal_anim_item{
+  item__healAnimEnumValue:i=-1
+  item__healTargetAnimEnumValue:i=-1
+}
+
+hidden_equipped_item{
+  _use:t="slot_attachable"
+  slot_attach__visible:b=no
+  _tracked:t="slot_attach__visible"
+  animchar_render__enabled:b=no
+}
+
+item_with_animchar_updatable{
+  _use:t="base_item_with_ui"
+  item__recreateOnGround:t="item_in_world"
+  item__recreateInWorldPhys:t="item_in_world_phys"
+  item__recreateInInventory:t="base_invis_item"
+}
+
+item{
+  _use:t="ecs_no_debug"
+  _use:t="item_with_animchar_updatable"
+
+  "animchar__actOnDemand:tag"{}
+}
+
+base_map_highlight{
+  map_highlight__type:t=""
+  map_highlight__template:t=""
+  map_highlight__visible:b=no
+  map_highlight__enabled:b=yes
+  map_highlight__disableWhenOwned:b=yes
+}
+
+scope_map_icon{
+  map_marker__image:t="!ui/skin#map_mole.svg"
+}
+
+scope_highlight{
+  _use:t="base_map_highlight"
+  map_highlight__type:t="scope"
+  map_highlight__template:t="scope_map_icon"
+}
+
+gun_mod_icon{
+  item__iconYaw:r=25
+  item__iconPitch:r=0
+  item__iconRoll:r=15
+  item__iconOffset:p2=0, 0
+  item__iconScale:r=1
+}
+
+item_perk{
+  _use:t="equipable_item"
+  item__lootType:t="mod"
+}
+
+item_bag{
+  _use:t="equipable_item"
+  item__lootType:t="bag"
+}
+
+item_armor{
+  _use:t="equipable_item"
+  item__lootType:t="armor"
+  item__lootSoundType:t="armor"
+  item__iconPitch:r=25
+  item__iconYaw:r=-90
+  item__iconRoll:r=90
+}
+
+base_invis_item{
+  slot_attach__visible:b=no
+  animchar_render__enabled:b=no
+
+  "item__invisible:tag"{}
+}
+
+base_attached_invis_item{
+  _use:t="item_with_owner"
+  _use:t="slot_attachable_no_slotname"
+  _use:t="base_invis_item"
+}
+
+burnable_vis_item{
+  burning_effect:r=0
+  _tracked:t="burning_effect"
+}
+
+base_local_vis_item{
+  _use:t="animchar"
+  _use:t="item_with_owner"
+  _use:t="slot_attachable_no_slotname"
+  _use:t="burnable_vis_item"
+  slot_attach__visible:b=yes
+  _replicated:t="slot_attach__visible"
+  _tracked:t="slot_attach__visible"
+  animchar_render__enabled:b=yes
+
+  "additional_data:list<p4>"{
+    _tags:t="render"
+  }
+}
+
+base_vis_item{
+  _use:t="base_local_vis_item"
+  _use:t="replicating"
+
+  "net__notInInitialScope:tag"{}
+}
+
+base_vis_item_with_fast_phys{
+  _use:t="base_vis_item"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+}
+
+base_vis_item_with_animchar_effect{
+  _use:t="base_vis_item"
+
+  animchar_effect{
+    _tags:t="render"
+  }
+}
+
+base_collres_vis_item{
+  _use:t="base_vis_item"
+
+  collres{}
+}
+
+attachable_wear{
+  _use:t="ecs_no_debug"
+  _use:t="base_collres_vis_item"
+  _use:t="skeleton_attached"
+  _use:t="disable_update"
+  item__recreateInEquipment:t=""
+  animchar__updatable:b=no
+  paintColor:p4=1, 1, 1, 0
+  _tracked:t="paintColor"
+}
+
+hair_item{
+  _use:t="item"
+  slot_attach__visible:b=yes
+  animchar_render__enabled:b=yes
+}
+
+item_usable_in_water{
+  "item__canUseUnderWater:tag"{}
+  "item__canUseWhileSwimming:tag"{}
+  "item__canUseWhileSwimmingStill:tag"{}
+}
+
+teammate_raiser{
+  _use:t="item_usable_in_water"
+  _use:t="heal_anim_item"
+  item__healTargetAnimEnumName:t="first_aid_feed_generic"
+  item__useTime:r=5
+
+  "teammate_raiser:tag"{}
+  "canBeUsedOutOfInventory:tag"{}
+}
+
+encounter_transformable_item{
+  encounter_transformable_item__itemsToTransformation:i=1
+  encounter_transformable_item__transformationTo:t=""
+  encounter_transformable_item__onPickUpMessage:t=""
+  encounter_transformable_item__onEndCollectMessage:t=""
+}
+
+gold_bar{
+  _use:t="item"
+  animchar__res:t="ecoin_char"
+  collres__res:t="ecoin_collision"
+  item__name:t="items/gold_bar"
+  item__proto:t="gold_bar"
+  item__lootType:t="item"
+  item__weight:r=1
+  item__volume:r=0.5
+  dropTm:m=[[-0.0271033, -0.0427872, -0.998717] [0.999488, 0.0158482, -0.0278032] [0.0170175, -0.998958, 0.0423357] [0, 0, 0]]
+
+  "gold_bar:tag"{}
+  "item__alwaysUseful:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_non-existant-note"
+  }
+}
+
+flowerman_eye_item{
+  _use:t="item"
+  animchar__res:t="sample_spidereye_char"
+  collres__res:t="sample_spidereye_collision"
+  item__name:t="items/flowerman_eye"
+  item__proto:t="flowerman_eye_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  dropTm:m=[[-0.0676222, 0.997711, 0] [-0.997711, -0.0676222, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+changed_ear_item{
+  _use:t="item"
+  animchar__res:t="sample_vangogh_char"
+  collres__res:t="sample_vangogh_collision"
+  item__name:t="items/changed_ear"
+  item__proto:t="changed_ear_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  dropTm:m=[[-0.0676222, 0.997711, 0] [-0.997711, -0.0676222, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+invisible_item{
+  _use:t="item"
+  animchar_render__enabled:b=no
+
+  "forceVisibleInUi:tag"{}
+}
+
+item_weight_from_human_inventory_weight{
+  human_inventory__currentWeight:r=0
+  _replicated:t="human_inventory__currentWeight"
+  _tracked:t="human_inventory__currentWeight"
+  item_weight_from_human_inventory_weight__baseWeight:r=0
+  item_weight_from_human_inventory_weight__multiplier:r=1
+  item__weight:r=0
+  _replicated:t="item__weight"
+  _tracked:t="item__weight"
+}
+
+item_hitpoints{
+  item__hp:r=100
+  _tracked:t="item__hp"
+  _replicated:t="item__hp"
+  item__maxHp:r=100
+}
+
+base_slot_holder{
+  "slot_holder__availableItems:list<t>"{}
+}
+
+base_mod_slot{
+  _use:t="base_slot_holder"
+  mod_slot__icon:t=""
+  mod_slot__tooltip:t=""
+}
+
+soviet_repair_kit_item{
+  _use:t="item"
+  animchar__res:t="loot_car_tools_char"
+  item__animcharInInventoryName:t="loot_car_tools_item_char"
+  collres__res:t="loot_car_tools_collision"
+  item__proto:t="soviet_repair_kit_item"
+  item__name:t="items/soviet_repair_kit"
+  item__type:t="repair_kit"
+  item__lootSoundType:t="healing"
+  item__weight:r=1.2
+  item__volume:r=8
+  repair_kit__useCounter:i=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.03, 0]]
+  item__iconPitch:r=160
+  item__iconRoll:r=260
+  item__iconYaw:r=280
+  item__iconScale:r=1
+
+  "using_item_sound__path:shared:object"{
+    _tags:t="sound"
+    path:t="/walker/am_trooper_male/items/healing/activate"
+  }
+
+  "item__alwaysUseful:tag"{}
+  "item__isRepairTool:tag"{}
+  "item_civil:tag"{}
+  "item_tools:tag"{}
+}
+
+distorted_remains_item{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="remains_soldier_char"
+  collres__res:t="remains_soldier_collision"
+  item__name:t="items/distorted_remains_item"
+  item__proto:t="distorted_remains_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+distorted_remains_pristine_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  item__iconScale:r=1.35
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  animchar__res:t="remains_soldier_char"
+  collres__res:t="remains_soldier_collision"
+  item__name:t="items/distorted_remains_pristine_item"
+  item__proto:t="distorted_remains_pristine_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=3
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+flowerman_remains_item{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="remains_flowerman_char"
+  collres__res:t="remains_flowerman_collision"
+  item__name:t="items/flowerman_remains_item"
+  item__proto:t="flowerman_remains_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+monstrify_artifact_manager{
+  _use:t="replicating"
+  _singleton:b=yes
+  monstrify_artifact_manager__startDelayUpdatePos:r=300
+  monstrify_artifact_manager__scriptName:t="map_artifacts_appear"
+}
+
+monstrify_artifact_use{
+  item__setCustomUseAltPrompt:t="hud/use"
+  item__useTime:r=1
+
+  "item_common_use:tag"{}
+}
+
+monstrify_artifact{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  item__unarmedUsage:b=yes
+  monstrify_artifact__usableSubTemplate:t="monstrify_artifact_use"
+  monstrify_artifact__updatePositionAllowed:b=no
+  _replicated:t="monstrify_artifact__updatePositionAllowed"
+
+  "transform__dropOnGroundOnAppear:tag"{}
+  _group{
+    _tags:t="gameClient"
+    monstrify_artifact__updatePositionAt:r=0
+    monstrify_artifact__updateInterval:p2=10, 30
+  }
+
+  "net__alwaysInScope:tag"{}
+}
+
+monstrify_artifact_for_everyone{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  item__unarmedUsage:b=yes
+  monstrify_artifact__usableSubTemplate:t="monstrify_artifact_use"
+  monstrify_artifact__updatePositionAllowed:b=no
+  _replicated:t="monstrify_artifact__updatePositionAllowed"
+
+  "transform__dropOnGroundOnAppear:tag"{}
+  _group{
+    _tags:t="gameClient"
+    monstrify_artifact__updatePositionAt:r=0
+    monstrify_artifact__updateInterval:p2=10, 30
+  }
+
+  "net__alwaysInScope:tag"{}
+}
+
+spawn_client_decorations_around{
+  spawn_client_decorations_around__minMaxRadius:p2=1, 2
+  spawn_client_decorations_around__minMaxCount:ip2=4, 8
+  spawn_client_decorations_around__decoration:t="area_decor_spikes"
+  spawn_client_decorations_around__finished:b=no
+}
+
+monster_impostor_artifact_item{
+  _use:t="monstrify_artifact"
+  _use:t="spawn_client_decorations_around"
+  animchar__res:t="remains_trooper_char"
+  collres__res:t="remains_trooper_collision"
+  item__name:t="items/monster_impostor_artifact_item"
+  item__proto:t="monster_impostor_artifact_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  monstrify_artifact__sequenceTemplate:t="monstrify_impostor_sequence"
+  monstrify_trap__group:t="default"
+  monstrify_trap__icon:t="!ui/uiskin/raid_info/turned.svg"
+  monstrify_trap__monsterName:t="items/mindcontrolled_soldier"
+
+  "monster_impostor_artifact_item:tag"{}
+}
+
+monster_hunter_artifact_item{
+  _use:t="monstrify_artifact"
+  _use:t="spawn_client_decorations_around"
+  animchar__res:t="remains_soldier_char"
+  collres__res:t="remains_soldier_collision"
+  item__name:t="items/monster_hunter_artifact_item"
+  item__proto:t="monster_hunter_artifact_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  monstrify_artifact__sequenceTemplate:t="monstrify_sequence"
+  monstrify_trap__group:t="default"
+  monstrify_trap__icon:t="!ui/uiskin/raid_info/distorted.svg"
+  monstrify_trap__monsterName:t="items/suit_militant_changed_item"
+}
+
+monster_hunter_artifact_item_for_everyone{
+  _use:t="monstrify_artifact_for_everyone"
+  _use:t="spawn_client_decorations_around"
+  animchar__res:t="remains_soldier_char"
+  collres__res:t="remains_soldier_collision"
+  item__name:t="items/monster_hunter_artifact_item"
+  item__proto:t="monster_hunter_artifact_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  monstrify_artifact__sequenceTemplate:t="monstrify_sequence"
+  monstrify_trap__group:t="default"
+  monstrify_trap__icon:t="!ui/uiskin/raid_info/distorted.svg"
+  monstrify_trap__monsterName:t="items/suit_militant_changed_item"
+}
+
+monster_mothman_artifact_item{
+  _use:t="monstrify_artifact"
+  _use:t="spawn_client_decorations_around"
+  animchar__res:t="remains_invisible_char"
+  collres__res:t="remains_invisible_collision"
+  item__name:t="items/monster_mothman_artifact_item"
+  item__proto:t="monster_mothman_artifact_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  monstrify_artifact__sequenceTemplate:t="monstrify_mothman_sequence"
+  monstrify_trap__group:t="default"
+  monstrify_trap__icon:t="!ui/uiskin/raid_info/mothman.svg"
+  monstrify_trap__monsterName:t="items/suit_militant_mothman_item"
+}
+
+monster_diving_mothman_artifact_item{
+  _use:t="monster_mothman_artifact_item"
+  monstrify_artifact__sequenceTemplate:t="monstrify_diving_mothman_sequence"
+  item__name:t="Artifact: Mothman (Piking variant)"
+  item__proto:t="monster_diving_mothman_artifact_item"
+}
+
+monster_mothman_artifact_item_for_everyone{
+  _use:t="monstrify_artifact_for_everyone"
+  animchar__res:t="remains_invisible_char"
+  collres__res:t="remains_invisible_collision"
+  item__name:t="items/monster_mothman_artifact_item"
+  item__proto:t="monster_mothman_artifact_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  monstrify_artifact__sequenceTemplate:t="monstrify_mothman_sequence"
+  monstrify_trap__group:t="default"
+  monstrify_trap__icon:t="!ui/uiskin/raid_info/mothman.svg"
+  monstrify_trap__monsterName:t="items/suit_militant_mothman_item"
+}
+
+flowerman_remains_pristine_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  item__iconScale:r=1.35
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  animchar__res:t="remains_flowerman_char"
+  collres__res:t="remains_flowerman_collision"
+  item__name:t="items/flowerman_remains_pristine_item"
+  item__proto:t="flowerman_remains_pristine_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=3
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+devourer_remains_item{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="remains_worms_char"
+  collres__res:t="remains_worms_collision"
+  item__name:t="items/devourer_remains_item"
+  item__proto:t="devourer_remains_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+devourer_remains_pristine_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  item__iconScale:r=1.35
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  animchar__res:t="remains_worms_char"
+  collres__res:t="remains_worms_collision"
+  item__name:t="items/devourer_remains_pristine_item"
+  item__proto:t="devourer_remains_pristine_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=3
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+invisible_remains_item{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="remains_invisible_char"
+  collres__res:t="remains_invisible_collision"
+  item__name:t="items/invisible_remains_item"
+  item__proto:t="invisible_remains_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+invisible_remains_pristine_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  item__iconScale:r=1.35
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  animchar__res:t="remains_invisible_char"
+  collres__res:t="remains_invisible_collision"
+  item__name:t="items/invisible_remains_pristine_item"
+  item__proto:t="invisible_remains_pristine_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=3
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+turned_soldier_remains_item{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="remains_trooper_char"
+  collres__res:t="remains_trooper_collision"
+  item__name:t="items/turned_soldier_remains_item"
+  item__proto:t="turned_soldier_remains_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+turned_soldier_remains_pristine_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  item__iconScale:r=1.35
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  animchar__res:t="remains_trooper_char"
+  collres__res:t="remains_trooper_collision"
+  item__name:t="items/turned_soldier_remains_pristine_item"
+  item__proto:t="turned_soldier_remains_pristine_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=3
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+dendroid_remains_item{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="remains_flowerman_char"
+  collres__res:t="remains_flowerman_collision"
+  item__name:t="items/dendroid_remains_item"
+  item__proto:t="dendroid_remains_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+dendroid_remains_pristine_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  item__iconScale:r=1.35
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  animchar__res:t="remains_flowerman_char"
+  collres__res:t="remains_flowerman_collision"
+  item__name:t="items/dendroid_remains_pristine_item"
+  item__proto:t="dendroid_remains_pristine_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=3
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+hellhound_remains_item{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="remains_soldier_char"
+  collres__res:t="remains_soldier_collision"
+  item__name:t="items/hellhound_remains_item"
+  item__proto:t="hellhound_remains_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+hellhound_remains_pristine_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  item__iconScale:r=1.35
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  animchar__res:t="remains_soldier_char"
+  collres__res:t="remains_soldier_collision"
+  item__name:t="items/hellhound_remains_pristine_item"
+  item__proto:t="hellhound_remains_pristine_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=3
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+altered_wax_item{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="remains_hive_char"
+  collres__res:t="remains_hive_collision"
+  item__name:t="items/altered_wax_item"
+  item__proto:t="altered_wax_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+altered_wax_pristine_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  item__iconScale:r=1.35
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  animchar__res:t="remains_hive_char"
+  collres__res:t="remains_hive_collision"
+  item__name:t="items/altered_wax_pristine_item"
+  item__proto:t="altered_wax_pristine_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=3
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_remains_with_chronogenes"
+  }
+}
+
+item_in_world_phys{
+  _use:t="nonreplicated_tm_item_in_world"
+  _use:t="replicating"
+  item_in_world_phys__isAsleep:b=no
+  net__physId:i=-1
+  phys_obj_net_phys__blk:t="gamedata/am/item_in_world_phys.blk"
+  collision_physMatId:i=-1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  server_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _replicated:t="server_transform"
+
+  "item_in_world_phys:tag"{}
+  "grid_obj__updateAlways:tag"{}
+  "animchar__physSymDependence:tag"{}
+  collres{}
+  phys_obj_net_phys{}
+  base_net_phys_ptr{}
+  phys_vars{}
+}
+
+item_rarity_common{
+  item__rarity:t="common"
+}
+
+item_rarity_uncommon{
+  item__rarity:t="uncommon"
+}
+
+item_rarity_rare{
+  item__rarity:t="rare"
+}
+
+item_rarity_epic{
+  item__rarity:t="epic"
+}
+
+robodog_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  animchar__res:t="robo_dog_a_char"
+  collres__res:t="robo_dog_a_collision"
+  item__name:t="items/robodog_item"
+  item__proto:t="robodog_item"
+  item__lootType:t="item"
+  item__weight:r=29
+  item__volume:r=50
+  item__iconPitch:r=0
+  item__iconRoll:r=25
+}
+
+exoskeleton_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  animchar__res:t="battlepass_box_char"
+  collres__res:t="battlepass_box_collision"
+  item__name:t="items/exoskeleton_item"
+  item__proto:t="exoskeleton_item"
+  item__lootType:t="item"
+  item__weight:r=80
+  item__volume:r=70
+  item__iconPitch:r=0
+  item__iconRoll:r=25
+  item__iconYaw:r=210
+}
+
+jetpack_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  animchar__res:t="jetpack_sg_char"
+  collres__res:t="jetpack_sg_collision"
+  item__name:t="items/jetpack_item"
+  item__proto:t="jetpack_item"
+  item__lootType:t="item"
+  item__weight:r=90
+  item__volume:r=80
+  item__iconPitch:r=0
+  item__iconRoll:r=25
+  item__iconYaw:r=30
+  item__iconScale:r=1.1
+}
+
+motion_tracker_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  animchar__res:t="battlepass_box_char"
+  collres__res:t="battlepass_box_collision"
+  item__name:t="items/motion_tracker_item"
+  item__proto:t="motion_tracker_item"
+  item__lootType:t="item"
+  item__weight:r=1.2
+  item__volume:r=8
+  item__iconPitch:r=0
+  item__iconRoll:r=25
+  item__iconYaw:r=210
+}
+
+combat_drone_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  animchar__res:t="battlepass_box_char"
+  collres__res:t="battlepass_box_collision"
+  item__name:t="items/combat_drone_item"
+  item__proto:t="combat_drone_item"
+  item__lootType:t="item"
+  item__weight:r=1.8
+  item__volume:r=20
+  item__iconPitch:r=0
+  item__iconRoll:r=25
+  item__iconYaw:r=210
+}
+
+trip_mine{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="m18a1_mine_char"
+  collres__res:t="m18a1_mine_collision"
+  item__name:t="items/trip_mine"
+  item__proto:t="trip_mine"
+  item__lootType:t="item"
+  item__weight:r=1.2
+  item__volume:r=8
+  item__iconPitch:r=-50
+  item__iconRoll:r=-30
+  item__iconYaw:r=0
+}
+
+anti_tank_mine{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  animchar__res:t="tm89_mine_char"
+  collres__res:t="tm89_mine_collision"
+  item__name:t="items/anti_tank_mine"
+  item__proto:t="anti_tank_mine"
+  item__lootType:t="item"
+  item__weight:r=9
+  item__volume:r=20
+  item__iconPitch:r=0
+  item__iconRoll:r=25
+  item__iconYaw:r=210
+}
+
+quadro_bike_bombardier_800r{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  animchar__res:t="bombardier_outlander_800r_char"
+  collres__res:t="bombardier_outlander_800r_collision"
+  item__name:t="items/quadro_bike_bombardier_800r"
+  item__proto:t="quadro_bike_bombardier_800r"
+  item__lootType:t="item"
+  item__weight:r=330
+  item__volume:r=12000
+  item__iconScale:r=1.3
+  item__iconOffset:p2=0.1, 0
+}
+
+buggy_vehicle{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  animchar__res:t="dune_buggy_char"
+  collres__res:t="dune_buggy_collision"
+  item__name:t="items/buggy_vehicle"
+  item__proto:t="buggy_vehicle"
+  item__lootType:t="item"
+  item__weight:r=720
+  item__volume:r=120000
+  item__iconPitch:r=0
+  item__iconRoll:r=25
+  item__iconYaw:r=210
+}
+
+t90_tank_vehicle{
+  _use:t="item"
+  _use:t="item_rarity_epic"
+  animchar__res:t="t_90a_char"
+  collres__res:t="t_90a_collision"
+  item__name:t="items/t90_tank_vehicle"
+  item__proto:t="t90_tank_vehicle"
+  item__lootType:t="item"
+  item__weight:r=46500
+  item__volume:r=720000
+  item__iconPitch:r=0
+  item__iconRoll:r=25
+  item__iconYaw:r=30
+  item__iconScale:r=1.3
+  item__iconOffset:p2=0.1, 0
+}
+
+ka50_attack_heli_aircraft{
+  _use:t="item"
+  _use:t="item_rarity_epic"
+  animchar__res:t="ka_50_char"
+  collres__res:t="ka_50_collision"
+  item__name:t="items/ka50_attack_heli_aircraft"
+  item__proto:t="ka50_attack_heli_aircraft"
+  item__lootType:t="item"
+  item__weight:r=10100
+  item__volume:r=500000
+  _use:t="animchar_dynmodel_nodes_hider"
+  item__iconPitch:r=0
+  item__iconRoll:r=25
+  item__iconYaw:r=30
+  item__iconScale:r=1.8
+  item__iconOffset:p2=-0.1, -0.1
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="prop01_1_dmg"
+    n:t="prop01_2_dmg"
+  }
+}
+
+safepack_remains_item{
+  _use:t="item"
+  animchar__res:t="am_safepouch_a_spent_char"
+  collres__res:t="am_safepouch_a_spent_collision"
+  item__name:t="items/safepack_remains_item"
+  item__desc:t="items/safepack_remains_item/desc"
+  item__proto:t="safepack_remains_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=4
+  dropTm:m=[[-0.0676222, 0.997711, 0] [-0.997711, -0.0676222, 0] [0, 0, 1] [0, 0, 0]]
+  profile_server_data__enrichmentAMCount:ip2=30, 50
+}
+
+stash_container_item{
+  _use:t="item"
+  _use:t="external_inventory_accesspoint"
+  _use:t="external_inventory_container"
+  _use:t="base_inventory"
+  _use:t="item_rarity_epic"
+  animchar__res:t="am_weapon_crate_char"
+  collres__res:t="am_weapon_crate_collision"
+  item__name:t="items/stash_container_item"
+  item__desc:t="items/stash_container_item/desc"
+  item__proto:t="stash_container_item"
+  inventory__name:t="backpack"
+  profile_server__slotName:t="inventory"
+  item__filterType:t="container"
+  human_inventory__maxVolume:r=600
+  item__volume:r=300
+
+  "human_inventory__autoCalculateCapacities:tag"{}
+  _group{
+    _tags:t="ui"
+    itemContainer__uiItemsMergeEnabled:b=no
+    itemContainer__uiItemsSortingEnabled:b=yes
+    itemContainer__uiItemsOverrideSortingPriority:b=yes
+  }
+}
+
+polterheist_item{
+  polterheist_item__startAt:r=-1
+  polterheist_item__rndSeed:i=0
+  polterheist_item__stage:i=0
+  polterheist_item__progress:r=0
+  polterheist_item__riseTime:r=1.4
+  polterheist_item__riseVel:r=0.8
+  polterheist_item__riseRotationStep:p3=0, 0, 0
+  polterheist_item__rotationCounter:r=0
+  polterheist_item__rotationTime:r=1.8
+  polterheist_item__rotationSpeed:r=1.2
+  polterheist_item__throwPower:r=10
+  polterheist_item__throwOffsetY:p2=0.8, 5
+  polterheist_item__throwOffsetXZ:p2=-0.8, 0.8
+  polterheist_item__throwRotationMult:r=10
+  polterheist_item__throwToCameraChance:r=0.08
+
+  "potlerheistItem:tag"{}
+}
+
+synced_poltherheist_item{
+  polterheist_item__startAt:r=-1
+  polterheist_item__rndSeed:i=0
+  _replicated:t="polterheist_item__startAt"
+  _replicated:t="polterheist_item__rndSeed"
+}

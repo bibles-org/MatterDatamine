@@ -1,0 +1,1262 @@
+import:t="net.blk"
+import:t="ui_system.blk"
+import:t="app.blk"
+import:t="input.blk"
+import:t="attached.blk"
+import:t="effects.blk"
+import:t="fire.blk"
+import:t="animchar.blk"
+import:t="ambient_sounds.blk"
+import:t="am_occlusion_sounds.blk"
+import:t="am_shell_sounds.blk"
+import:t="am_human_sounds.blk"
+import:t="am_monster_sounds.blk"
+import:t="gun_sounds.blk"
+import:t="environment_sounds.blk"
+import:t="hitpoints.blk"
+import:t="cameras.blk"
+import:t="replay.blk"
+import:t="free_cameras.blk"
+import:t="capturer.blk"
+import:t="humans.blk"
+import:t="items.blk"
+import:t="pouches.blk"
+import:t="previews.blk"
+import:t="doors.blk"
+import:t="sliding_rendinsts.blk"
+import:t="sliding_doors.blk"
+import:t="lights.blk"
+import:t="teams.blk"
+import:t="hud_entities.blk"
+import:t="color_grading_tonemap.blk"
+import:t="players.blk"
+import:t="rendinsts.blk"
+import:t="base_damage_model.blk"
+import:t="scenic.blk"
+import:t="postfx.blk"
+import:t="device_anim.blk"
+import:t="affects.blk"
+import:t="debug_entities.blk"
+import:t="forestall.blk"
+import:t="smoke_occluders.blk"
+import:t="cockpit.blk"
+import:t="level.blk"
+import:t="updatable.blk"
+import:t="dedicated_server.blk"
+import:t="darg_panels.blk"
+import:t="scripts_loader.blk"
+import:t="resources_gatherer.blk"
+import:t="ground_hole.blk"
+import:t="equipment_generators.blk"
+
+ecs_no_debug{
+  "noECSDebug:tag"{
+    _tags:t="ecsDebug"
+  }
+}
+
+daeditor_selected{
+  "daeditor__selected:tag"{}
+}
+
+blood_puddles_creator{
+  blood_puddles__pos:p3=0, 0, 0
+  blood_puddles__dir:p3=0, 0, 0
+  blood_puddles__active:b=yes
+}
+
+explosion_blood_puddles_creator{
+  _use:t="ecs_no_debug"
+  explosion_blood_puddles__pos:p3=0, 0, 0
+  explosion_blood_puddles__dir:p3=0, 0, 0
+  explosion_blood_puddles__isSpray:b=no
+  explosion_blood_puddles__active:b=yes
+}
+
+bodies_cleanup{
+  _singleton:b=yes
+  bodies_cleanup__prolongAt:r=-1
+  bodies_cleanup__prolongDelay:r=0.1
+  bodies_cleanup__prolongLootableMonstersTtlInRad:r=20
+
+  bodies_cleanup{}
+}
+
+capsules_ao{
+  capsules_ao__max_units_per_cell:i=4
+  _singleton:b=yes
+
+  capsules_ao{
+    _tags:t="render"
+  }
+}
+
+key_track_animated{
+  anim_track_on:b=no
+  _tracked:t="anim_track_on"
+
+  anim_key_track{}
+}
+
+attr_float_key_track_anim{
+  anim_track_on:b=no
+  _tracked:t="anim_track_on"
+
+  anim_float_attr{}
+}
+
+screen_fade_anim{
+  screen_fade:r=0
+  _use:t="attr_float_key_track_anim"
+  _tracked:t="screen_fade"
+  _singleton:b=yes
+}
+
+set_rotation{
+  ang_speed_yaw:r=0
+  ang_speed_pitch:r=0
+  ang_speed_roll:r=0
+  local_space:b=yes
+  _tracked:t="ang_speed_yaw"
+  _tracked:t="ang_speed_pitch"
+  _tracked:t="ang_speed_roll"
+  _tracked:t="local_space"
+
+  "set_rotation:tag"{}
+}
+
+enable_ri_motion_on_dist_from_cam{
+  ri_motion__enabled:b=yes
+  _tracked:t="ri_motion__enabled"
+  ri_motion__enableDistSqFromCam:r=500000
+}
+
+gamerules_capture_zones{
+  scoring_capture_zones__team1__deathPenalty:r=100
+  scoring_capture_zones__team2__deathPenalty:r=100
+  scoring_capture_zones__team1__domBleed:r=10
+  scoring_capture_zones__team2__domBleed:r=10
+}
+
+psn_external_match_id{
+  _use:t="replicating"
+  _singleton:b=yes
+  _tracked:t="psn_external_match_id"
+  _replicated:t="psn_external_match_id"
+  _replicated:t="psn_external_match_leader"
+  _replicated:t="psn_activity_id"
+  _replicated:t="psn_activity_requires_teams"
+  psn_external_match_leader:t=""
+  psn_external_match_id:t=""
+  psn_activity_id:t=""
+  psn_local_user_leaved_match:b=no
+  psn_activity_requires_teams:b=no
+}
+
+psn_external_match_id_update{
+  "psn_external_match_id_update:tag"{
+    _tags:t="server"
+  }
+}
+
+session_finalizer{
+  _use:t="replicating"
+  _singleton:b=yes
+  session_finalizer__timer:r=10
+  is_session_finalizing:b=no
+}
+
+player_raid_session_finisher{
+  _tags:t="server"
+  player_raid_session_finisher__state:i=-1
+  _tracked:t="player_raid_session_finisher__state"
+  player_raid_session_finisher__nextStateAt:r=-1
+  player_raid_session_finisher__smallZoneTime:r=30
+  player_raid_session_finisher__zoneCollapsedCompletely:r=30
+  player_raid_session_finisher__zompleteZoneCollapseTime:r=2
+  player_raid_session_finisher__delayAfterEveryoneDead:r=7
+}
+
+gamerules_chain_zones{
+  scoring_capture_zones__team1__deathPenalty:r=100
+  scoring_capture_zones__team2__deathPenalty:r=100
+  scoring_capture_zones__team1__domBleed:r=0
+  scoring_capture_zones__team2__domBleed:r=0
+}
+
+level_spline{
+  nonCreatableObj:b=yes
+  level_spline__name:t=""
+
+  "level_spline__points:list<p3>"{}
+}
+
+level_roads{
+  _singleton:b=yes
+  nonCreatableObj:b=yes
+
+  level_roads{}
+}
+
+region_creation_point{
+  region_creation_point__idx:i=0
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+custom_region{
+  _use:t="editor_selected_box_preview"
+  custom_region__name:t=""
+  custom_region__area:r=0
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "custom_region__points:list<p2>"{}
+  "custom_region__triangulationIdxs:list<i>"{}
+}
+
+custom_region_on_map{
+  _use:t="replicating"
+  _use:t="editor_selected_box_preview"
+  custom_region__name:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  custom_region__titleAlignment:i=0
+  custom_region__titleWorldPosOffset:p3=0, 0, 0
+  custom_region__visibleRange:p2=-1, -1
+
+  "custom_region__points:list<p2>"{}
+  "custom_region__visibleOnMap:tag"{}
+}
+
+hero_dof{
+  fNumber:r=1
+  sensorHeight:r=0.024
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "dof_target_id:eid"{}
+}
+
+shaderVars{
+  _tracked:t="shader_vars__vars"
+  _replicated:t="shader_vars__vars"
+  _use:t="replicating"
+  _singleton:b=yes
+
+  "shader_vars__vars:object"{}
+  "shader_vars__original_vars:object"{}
+}
+
+loot_grid{
+  editableObj:b=no
+  _use:t="replicating"
+  _singleton:b=yes
+  grid_holder__type:t="loot"
+  grid_holder__typeHash:i=0
+
+  grid_holder{}
+}
+
+session_timer{
+  session_timer__time_left:r=1200
+  _singleton:b=yes
+}
+
+zones_visitor{
+  zones_visitor__triggerTag:t="humanTriggerable"
+  _replicated:t="zones_visitor__triggerTag"
+  zones_visitor__disabled:b=no
+
+  "zones_visitor__zonesIn:list<eid>"{}
+}
+
+respawn_camera{
+  _use:t="replicating"
+  moveCameraToHeight:r=300
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  camera__lookDir:p3=1, 0, 0
+  camera__isStabilized:b=no
+  camera__tauMult:r=10
+  respawnCamera__showDelay:r=2
+  respawnCameraForTeam:i=-1
+  respawnSelectorDistanceMult:r=2
+  respawnCameraLookFrom:p3=0, 0, 0
+  respawnCameraTemplate:t="respawn_cam"
+  respawnCameraLODMultiplier:r=0.33
+  _replicated:t="respawnCameraLookFrom"
+
+  "camera__look_at:dp3"{
+    _tags:t="render"
+  }
+}
+
+base_menu_animchar{
+  _use:t="animchar_turn_dir"
+  animchar_render__enabled:b=yes
+  menuChar:b=yes
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  menu_animchar__uid:i=0
+  _tracked:t="animchar__animStateNames"
+  animchar__res:t=""
+  animchar__scale:r=1
+  animchar__depScale:p3=1, 1, 1
+  animchar__transformScale:p3=1, 1, 1
+  animchar__appliedAnimSpeed:r=0
+  randomAnimStart:b=yes
+
+  "animchar__animStateNames:object"{
+    upper:t="presentation_idle_beast"
+    lower:t="presentation_idle_beast"
+  }
+
+  "animchar__animState:object"{
+    upper:i=-1
+    lower:i=-1
+  }
+
+  "animchar__animStateDirty:b"{
+    value:b=yes
+    _hide:b=yes
+  }
+
+  animchar{}
+}
+
+quit_after_load{
+  quit_after_load_time:r=10
+  quitAtTime:r=-1
+}
+
+slot_attachable_no_slotname{
+  _group{
+    _replicate:b=yes
+    _track:b=yes
+    slot_attach__slotId:i=-1
+
+    "slot_attach__attachedTo:eid"{}
+    "slot_attach__inAttachedList:eid"{}
+  }
+
+  "slot_attach:tag"{}
+}
+
+slot_attachable{
+  _use:t="slot_attachable_no_slotname"
+  slot_attach__slotName:t=""
+}
+
+weapon_slot_indexed{
+  slot_attach__weaponSlotIdx:i=-1
+  _tracked:t="slot_attach__weaponSlotIdx"
+  _replicated:t="slot_attach__weaponSlotIdx"
+}
+
+phys_props_controller{
+  _use:t="replicating"
+  phys_props__gravity:r=9.80665
+  phys_props__initialGravity:r=9.80665
+  _tracked:t="phys_props__gravity"
+  _replicated:t="phys_props__gravity"
+}
+
+hint{
+  hint__message:t=""
+  hint__showTimeout:r=0
+  hint__ttl:r=0
+}
+
+item_spawner{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  spawnItemStep:p3=1, 0, 0
+  team:i=-1
+
+  "spawnItemList:array"{}
+}
+
+item_grid_spawner{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  grid_spawner__rowHeight:r=0
+  grid_spawner__gridWidth:i=0
+  grid_spawner__gap:p2=0.2, 0.2
+
+  "spawnItemList:array"{}
+}
+
+item_grid_spawner_entity{
+  grid_spawner__nextIdx:i=0
+  grid_spawner__firstItem:b=no
+
+  "grid_spawner__ownerEid:eid"{}
+}
+
+camera_animator{
+  camera_animator__origo:p3=0, 0, 0
+  camera_animator__angle:r=0
+  camera_animator__speed:r=1
+  camera_animator__prev_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+camera_path_animator{
+  camera_animator__speed:r=1
+  camera_animator__prev_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  camera_path_animator__progress:r=0
+  camera_path_animator__distance:r=1
+
+  "camera_path_animator__transforms:array"{}
+}
+
+vehicle_last_origins{
+  _singleton:b=yes
+
+  vehicle_last_origins{
+    _tags:t="render"
+  }
+}
+
+forced_animstate_militant_effect{
+  _use:t="replicated_game_effect"
+
+  "game_effect__activateUnarmed:tag"{}
+  "game_effect__hiddenWeapon:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+}
+
+forced_animstate_militant{
+  _use:t="am_militant_bot"
+  _use:t="equipped_bot"
+  beh_tree__enabled:b=no
+  animchar__forceAnimState:t=""
+  animchar__forceAnimStateId:i=-1
+
+  "game_effect__initialAttachmentsServer:list<t>"{
+    item:t="forced_animstate_militant_effect"
+  }
+}
+
+benchmark_always_shoot_militant{
+  _use:t="am_militant_bot"
+  _use:t="equipped_bot"
+  _use:t="infinite_ammo_on_appear"
+  beh_tree__node:t="benchmark_always_shoot_ai"
+}
+
+benchmark{
+  benchmark__averageDt:r=0
+  benchmark__prevMsec:i=0
+  benchmark__firstMsec:i=0
+  benchmark__frames:i=0
+  benchmark__slowFrames:i=0
+  benchmark__verySlowFrames:i=0
+  benchmark__maxMemoryUsedKb:i=0
+  benchmark__allMemoryUsedKb:i64=0
+  benchmark__maxDeviceVRamUsedKb:i=0
+  benchmark__allDeviceVRamUsedKb:i64=0
+  benchmark__maxSharedVRamUsedKb:i=0
+  benchmark__allSharedVRamUsedKb:i64=0
+  benchmark__currentRun:i=0
+  benchmark__active:b=no
+  benchmark__name:t="benchmark"
+  benchmark__runsCount:i=3
+  benchmark__trackTimeLeft:r=0
+  benchmark__currentTrack:i=0
+
+  "benchmark__cameraTracks:array"{}
+}
+
+dead_entity{
+  "deadEntity:tag"{}
+  "loc_snaphots__disabled:tag"{}
+}
+
+dead_entity_with_container{
+  _use:t="dead_entity"
+  _use:t="external_inventory_container"
+}
+
+navmesh_disabler{
+  "navmeshDisabler:tag"{}
+}
+
+animchar_shadow_occlusion_manager{
+  soldier_bbox_expand_size:p3=0.2, 0.2, 0.2
+  soldier_bbox_max_half_size:p3=3, 3, 3
+  _singleton:b=yes
+
+  animchar_shadow_occlusion_manager{
+    _tags:t="render"
+  }
+}
+
+debug_draw_movement{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  draw_movement__previousPos:p3=0, 0, 0
+}
+
+beh_tree_regular_check{
+  beh_tree__regularCheckAt:r=0
+  beh_tree__regularCheckRange:p2=0.5, 1.5
+}
+
+beh_tree_enemy_player_in_radius{
+  beh_tree__enemyPlayerInRadiusAt:r=0
+  beh_tree__enemyPlayerInRadiusPeriod:r=0.1
+  beh_tree__enemyPlayerInRadiusDist:r=10
+}
+
+beh_tree_agent_in_train_zone{
+  _tracked:t="beh_tree__isAgentInTrainZone"
+
+  _group{
+    _tags:t="server"
+    beh_tree__agentInTrainZoneAt:r=0
+    beh_tree__agentInTrainZonePeriod:r=0.4
+    beh_tree__isAgentInTrainZone:b=no
+  }
+}
+
+beh_tree_agent_on_train{
+  _tracked:t="beh_tree__isAgentOnTrain"
+
+  _group{
+    _tags:t="server"
+    beh_tree__agentOnTrainAt:r=0
+    beh_tree__agentOnTrainPeriod:r=0.4
+    beh_tree__isAgentOnTrain:b=no
+  }
+}
+
+beh_tree_bomb_site_in_radius{
+  beh_tree__bombSiteInRadiusAt:r=0
+  beh_tree__bombSiteInRadiusPeriod:r=0.1
+  beh_tree__bombSiteInRadiusDistSqr:r=100
+}
+
+turn_off_souls{
+  _singleton:b=yes
+}
+
+envi_probe_render_settings{
+  _singleton:b=yes
+  _tags:t="render"
+  envi_probe_use_geometry:b=no
+  envi_probe_sun_enabled:b=no
+}
+
+temperature_anomalies_manager{
+  _use:t="replicating"
+  _tags:t="render"
+  _singleton:b=yes
+
+  "temperature_anomalies_buffer:UniqueBufHolder"{}
+}
+
+temperature_anomaly{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  temperature_anomaly__intensity:r=1
+  temperature_anomaly__radius:r=1
+  temperature_anomaly__aura_distance:r=1
+}
+
+dynmat_params_base{
+  "additional_data:list<p4>"{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    needImmediateConstPS:b=yes
+  }
+
+  "dynamic_material_channels_arr:array"{
+    _tags:t="render"
+
+    "dynamic_material_channel:object"{
+      dynamic_material_type:t="emissive"
+      dynmat_param__emissive_color:p4=1, 0, 1, 3
+      dynmat_param__emission_albedo_mult:r=0.1
+    }
+  }
+}
+
+sphere_zone{
+  sphere_zone__radius:r=0
+}
+
+grass_eraser{
+  _use:t="replicating"
+  sphere_zone__radius:r=5
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "grass_eraser:tag"{}
+}
+
+spawn_random_entity_on_disappear{
+  spawn_random_entity_on_disappear__chance:r=1
+
+  "drop_entity_on_disappear__templates:array"{
+    "item:object"{
+      weight:r=5
+      template:t="active_matter_pile+coin_item_count_1+item_in_world"
+    }
+
+    "item:object"{
+      weight:r=2.5
+      template:t="active_matter_pile+coin_item_count_2+item_in_world"
+    }
+
+    "item:object"{
+      weight:r=1
+      template:t="active_matter_pile+coin_item_count_3+item_in_world"
+    }
+
+    "item:object"{
+      weight:r=0.5
+      template:t="active_matter_pile+coin_item_count_5+item_in_world"
+    }
+  }
+}
+
+recreate_on_disappear{
+  recreate_on_disappear__delay:r=0
+}
+
+recreate_on_disappear_timer{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  recreate_on_disappear_timer__template:t=""
+  recreate_on_disappear_timer__createAt:r=0
+  recreate_on_disappear_timer__delay:r=0
+}
+
+create_entity_on_appear_with_delay{
+  create_entity_on_appear_with_delay__delay:r=0
+  create_entity_on_appear_with_delay__createAt:r=0
+  create_entity_on_appear_with_delay__template:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+destroy_self_after_delayed_creation{
+  "destroy_self_after_delayed_creation:tag"{}
+}
+
+create_entity_on_disappear_with_delay{
+  create_entity_on_disappear_with_delay__delay:r=0
+  create_entity_on_disappear_with_delay__template:t=""
+}
+
+recreate_on_disappear_after_5m{
+  recreate_on_disappear__delay:r=300
+}
+
+asset_manager{
+  _tags:t="render"
+  _use:t="base_asset_manager"
+}
+
+if_there_no_heroes_nearby{
+  if_there_no_heroes_nearby__distance:r=70
+}
+
+status_tip_no_healkits_in_inventory{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=5
+  status_tip__text:t="hint/no_healkits_in_inventory"
+}
+
+status_tip_use_healkit_when_crawl{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=5
+  status_tip__text:t="hint/use_healkit_when_crawl"
+}
+
+status_tip_medkit_is_empty{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=5
+  status_tip__text:t="hint/medkit_is_empty"
+}
+
+status_tip_full_health{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=5
+  status_tip__text:t="hint/full_health"
+}
+
+status_tip_full_am{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=5
+  status_tip__text:t="hint/active_matter_pile/disable_pickup"
+}
+
+status_tip_no_magazines{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=5
+  status_tip__text:t="hint/load_empty_mag_hint"
+
+  "status_tip__destroyOnChangeWeapon:tag"{}
+}
+
+status_tip_no_ammo{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=5
+  status_tip__text:t="hint/load_no_ammo_hint"
+
+  "status_tip__destroyOnChangeWeapon:tag"{}
+}
+
+status_tip_full_ammo{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=5
+  status_tip__text:t="hint/load_full_ammo_hint"
+
+  "status_tip__destroyOnChangeWeapon:tag"{}
+  "status_tip__destroyOnShoot:tag"{}
+}
+
+status_tip_firing_mode_full_auto{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=2
+  status_tip__textPrefix:t="firing_mode/firingMode"
+  status_tip__text:t="firing_mode/full_auto"
+
+  "status_tip__destroyOnChangeWeapon:tag"{}
+  "status_tip__destroyOnShoot:tag"{}
+  "status_tip__destroyOnAnotherTipAppears:tag"{}
+}
+
+status_tip_firing_mode_full_auto_slow{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=2
+  status_tip__textPrefix:t="firing_mode/firingMode"
+  status_tip__text:t="firing_mode/full_auto_slow"
+
+  "status_tip__destroyOnChangeWeapon:tag"{}
+  "status_tip__destroyOnShoot:tag"{}
+  "status_tip__destroyOnAnotherTipAppears:tag"{}
+}
+
+status_tip_firing_mode_semi_auto_3_shots{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=2
+  status_tip__textPrefix:t="firing_mode/firingMode"
+  status_tip__text:t="firing_mode/semi_auto_3_shots"
+
+  "status_tip__destroyOnChangeWeapon:tag"{}
+  "status_tip__destroyOnShoot:tag"{}
+  "status_tip__destroyOnAnotherTipAppears:tag"{}
+}
+
+status_tip_firing_mode_semi_auto_2_shots{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=2
+  status_tip__textPrefix:t="firing_mode/firingMode"
+  status_tip__text:t="firing_mode/semi_auto_2_shots"
+
+  "status_tip__destroyOnChangeWeapon:tag"{}
+  "status_tip__destroyOnShoot:tag"{}
+  "status_tip__destroyOnAnotherTipAppears:tag"{}
+}
+
+status_tip_firing_mode_semi_auto{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=2
+  status_tip__textPrefix:t="firing_mode/firingMode"
+  status_tip__text:t="firing_mode/semi_auto"
+
+  "status_tip__destroyOnChangeWeapon:tag"{}
+  "status_tip__destroyOnShoot:tag"{}
+  "status_tip__destroyOnAnotherTipAppears:tag"{}
+}
+
+status_tip_firing_mode_bolt_action{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=2
+  status_tip__textPrefix:t="firing_mode/firingMode"
+  status_tip__text:t="firing_mode/bolt_action"
+
+  "status_tip__destroyOnChangeWeapon:tag"{}
+  "status_tip__destroyOnShoot:tag"{}
+  "status_tip__destroyOnAnotherTipAppears:tag"{}
+}
+
+status_tip_no_base_shoot{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/no_base_shoot"
+}
+
+status_tip_workbench_not_enough_items{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="encounter/workbench_not_enough_items"
+}
+
+status_tip_workbench_not_enough_items_craft{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="encounter/workbench_not_enough_items_craft"
+}
+
+status_tip_workbench_not_enough_charges{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="encounter/workbench_not_enough_charges"
+}
+
+status_tip_drone_lost_signal{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="drone/lost_signal"
+}
+
+status_tip_drone_weak_signal{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="drone/weak_signal"
+}
+
+status_tip_create_control_console{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="drone/createControlConsole"
+}
+
+status_tip_drone_destroy{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="drone/droneDestroy"
+}
+
+status_tip_no_inventory_space{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="drone/noSpaceInInventory"
+}
+
+status_tip_drone_too_far{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="drone/droneTooFar"
+}
+
+status_tip_drone_has_been_captured{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="drone/captured"
+}
+
+status_tip_drone_doesnt_have_grenade{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="drone/doenstHaveGreanade"
+}
+
+status_tip_can_not_vehicle_use{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/vehicle/lockUse"
+}
+
+status_tip_use_item_failed_on_crawl{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/use_item_failed_on_crawl"
+}
+
+status_tip_use_item_failed_in_air{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/use_item_failed_in_air"
+}
+
+status_tip_use_item_failed_in_downed{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/use_item_failed_in_downed"
+}
+
+status_tip_equip_in_occupied_slot_failed_by_capacity{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/equip_in_occupied_slot_failed_capacity_exceeded"
+}
+
+status_tip_item_unloading_failed_by_capacity{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/item_unloading_failed_capacity_exceeded"
+}
+
+status_tip_drop_all_failed_by_unrecognized{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/drop_all_failed_not_all_recognized"
+}
+
+status_tip_on_diy_rq_create_error_out_of_zone{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="diy/wrong_place/out_of_zone"
+}
+
+status_tip_on_diy_rq_create_error_wrong_place{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="diy/wrong_place"
+}
+
+status_tip_moving_zone_started{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=10
+  status_tip__text:t="hint/movingZoneStarted"
+}
+
+status_tip_no_ampoule_to_load{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/no_ampoule_to_load"
+}
+
+status_tip_no_boxed_ammo_to_load{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/no_boxed_ammo_to_load"
+}
+
+status_tip_photo_wrong_place{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="photo/wrong_place"
+}
+
+status_tip_photo_not_in_view{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="photo/not_in_view"
+}
+
+status_tip_photo_no_active_targets{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="photo/no_active_targets"
+}
+
+status_tip_stone_throw_failed_by_pose{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/status_tip_stone_throw_failed_by_pose"
+}
+
+status_tip_use_external_inventory_access_denied_wrong_team{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/use_external_inventory_access_denied_wrong_team"
+}
+
+status_tip_key_required{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="closedDoor/requiredKey"
+}
+
+status_tip_access_denied{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="closedDoor/accessDenied"
+}
+
+status_tip_gym_in_construction{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="closedDoor/gymWip"
+}
+
+status_tip_shooting_range_in_construction{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="closedDoor/shootingRangeWip"
+}
+
+status_tip_another_closed_portal{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="closedDoor/help"
+}
+
+status_tip_onboarding_door_locked{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="onboarding/door_locked"
+}
+
+status_tip_door_no_power{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="encounter/locked_door_no_power"
+}
+
+status_tip_door_locked{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="block_reason/no_key"
+}
+
+status_tip_mothman_too_high_to_gather{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="mothman_gather_stones/too_high"
+}
+
+status_tip_out_of_ammo{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/out_of_ammo"
+}
+
+status_tip_jammed_gun{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/jammed_gun"
+}
+
+status_tip_revive_enemy{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/revive_enemy"
+}
+
+status_tip_revive_broken_player{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/revive_broken_player"
+}
+
+status_tip_revive_disconnected_player{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/revive_disconnected_player"
+}
+
+status_tip_revive_not_enough_am{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/revive_not_enough_am"
+
+  "status_tip__data:object"{}
+}
+
+status_tip_night_vision_interferes_with_binoculars_use{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/night_vision_interferes_with_binoculars_use"
+}
+
+status_tip_use_item_failed_not_in_vehicle{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/use_item_failed_not_in_vehicle"
+}
+
+status_tip_use_item_forbidden_on_player_base{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/use_item_forbidden_on_player_base"
+}
+
+status_tip_resurect_device_destroyed{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/resurect_device_destroyed"
+}
+
+attachable_dynamic_char{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="slot_attachable"
+  animchar__res:t=""
+
+  "slot_attach__toSkeletonAttach:tag"{}
+}
+
+ri_extra_loading{
+  "ri_extra_loading:tag"{}
+}
+
+showroom_item{
+  _use:t="item_in_world"
+  showroom_item__rotationAngle:r=0
+  showroom_item__screenPos:p2=0, 0
+  showroom_item__camera_pos:p3=0, 0, 0
+  showroom_item__item_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  showroom_item__base_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  showroom_item__autoRotationEnabled:b=yes
+
+  "showroom_item:eid"{}
+  "initial_weapon_mods__list:object"{
+    _tags:t="server"
+  }
+
+  "animchar__setAnimStateAndActOnCreate:tag"{}
+  "animchar__animStateNames:object"{
+    upper:t=""
+    lower:t=""
+  }
+}
+
+showroom_light_1{
+  _use:t="spot_light"
+  light__max_radius:r=3
+  light__brightness:r=1
+  light__radius_scale:r=4
+  light__color:c=100, 255, 250, 255
+  light__affect_volumes:b=no
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    spot_light__inner_attenuation:r=0.5
+  }
+
+  _group{
+    _tags:t="render"
+    spot_light__dynamic_obj_shadows:b=yes
+    spot_light__shadows:b=yes
+  }
+}
+
+showroom_light_2{
+  _use:t="spot_light"
+  light__max_radius:r=3
+  light__brightness:r=0.6
+  light__radius_scale:r=4
+  light__color:c=255, 70, 40, 255
+  light__affect_volumes:b=no
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    spot_light__inner_attenuation:r=0.5
+  }
+
+  _group{
+    _tags:t="render"
+    spot_light__dynamic_obj_shadows:b=yes
+    spot_light__shadows:b=yes
+  }
+}
+
+showroom_light_3{
+  _use:t="spot_light"
+  light__max_radius:r=2
+  light__brightness:r=0.4
+  light__radius_scale:r=4
+  light__color:c=255, 230, 200, 255
+  light__affect_volumes:b=no
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    spot_light__inner_attenuation:r=0.5
+  }
+
+  _group{
+    _tags:t="render"
+    spot_light__dynamic_obj_shadows:b=yes
+    spot_light__shadows:b=yes
+  }
+}
+
+showroom_light_4{
+  _use:t="spot_light"
+  light__max_radius:r=3
+  light__brightness:r=0.3
+  light__radius_scale:r=4
+  light__color:c=220, 240, 255, 255
+  light__affect_volumes:b=no
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    spot_light__inner_attenuation:r=0.1
+  }
+
+  _group{
+    _tags:t="render"
+    spot_light__dynamic_obj_shadows:b=yes
+    spot_light__shadows:b=yes
+  }
+}
+
+showroom_item_place{
+  showroom_item_place__key:t=""
+  showroom_item_place__isCurrent:b=no
+  _tracked:t="showroom_item_place__isCurrent"
+  showroom_item_place__fov:r=90
+  showroom_item_place__zoomBordersRng:p2=0.7, 1.3
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "showroom_item_place:tag"{}
+  "showroom_item_place__itemInPlaceEid:eid"{}
+  "showroom_item_place__lightEids:list<eid>"{}
+  "showroom_item_place__lights:object"{}
+}
+
+dynamic_portal{
+  _use:t="animchar"
+  animchar__res:t="am_portal_dynamic_spherical_hole_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  target_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  portal_range:r=200
+  use_dense_fog:b=no
+  fog_start_dist:r=10
+  _tracked:t="transform"
+  _tracked:t="target_transform"
+
+  _group{
+    _tags:t="render"
+    dynamic_portal__index:i=0
+  }
+
+  "additional_data:list<p4>"{
+    _tags:t="render"
+  }
+}
+
+portal_renderer_manager{
+  _singleton:b=yes
+  _tags:t="render"
+
+  "portal_renderer:PortalRenderer"{}
+}
+
+message_queue{
+  _singleton:b=yes
+
+  "transaction_id:u64"{
+    value:i64=0
+  }
+}
+
+hierarchial_entity{
+  hierarchy_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  hierarchy_unresolved_id:i=0
+  hierarchy_unresolved_parent_id:i=0
+
+  "hierarchy_eid:eid"{}
+  "hierarchy_parent:eid"{
+    _track:b=yes
+  }
+
+  "hierarchy_last_parent:eid"{}
+}
+
+entities_hierarchy{
+  "hierarchy_transformation:list<eid>"{}
+}
+
+hierarchial_free_transform{
+  hierarchy_parent_last_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+actions_resume_graph{
+  "actions__resumeGraphNodeNodeNames:list<t>"{}
+  "actions__resumeGraphNodeActionNames:list<t>"{}
+  "actions__resumeGraphNodeNodeId:list<i>"{}
+  "actions__resumeGraphNodeActionId:list<i>"{}
+}

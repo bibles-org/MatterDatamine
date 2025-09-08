@@ -1,0 +1,504 @@
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [769.289, 7.19542, 1832.53]]
+  objective_static_target__tag:t="device_cargoport_primary_1"
+  map_object_zone__radius:r=40
+  quest_target_geometry_sphere__radius:r=40
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1080.04, 5.76114, 1834.53]]
+  objective_static_target__tag:t="device_cargoport_primary_2"
+  map_object_zone__radius:r=40
+  quest_target_geometry_sphere__radius:r=40
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[49.682, 0, 0] [0, 9.39544, 0] [0, 0, 68.7406] [1045.78, 6.18459, 1743.47]]
+  objective_static_target__tag:t="device_cargoport_primary_3"
+  map_object_zone__radius:r=30
+  quest_target_geometry_sphere__radius:r=0
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [872.719, 5.00006, 1795.65]]
+  objective_static_target__tag:t="device_cargoport_primary_4"
+  map_object_zone__radius:r=35
+  quest_target_geometry_sphere__radius:r=35
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1134.41, 5.00012, 1571.46]]
+  objective_static_target__tag:t="device_cargoport_primary_5"
+  map_object_zone__radius:r=25
+  quest_target_geometry_sphere__radius:r=25
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [764.499, 4.99585, 1520.31]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_cargoport_zone_1"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [999.13, 4.99575, 1647.67]]
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_cargoport_zone_2"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [902.247, 5.61366, 1732.78]]
+  map_object_zone__radius:r=14
+  quest_target_geometry_sphere__radius:r=14
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_cargoport_zone_3"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [791.784, 4.99577, 1675.78]]
+  map_object_zone__radius:r=17
+  quest_target_geometry_sphere__radius:r=17
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_cargoport_zone_4"
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [610.772, 0.00667572, 1565.91]]
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_water_cargoport_zone_1"
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [550.898, 0.00650024, 1698.75]]
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_water_cargoport_zone_2"
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1275.29, 0.00650024, 1585.83]]
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_water_cargoport_zone_3"
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1302.36, 0.129536, 1504.46]]
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_water_cargoport_zone_4"
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+}
+
+entity{
+  _template:t="spherical_quest_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1141.1, 5.04263, 1746.12]]
+  quest_target_geometry_sphere__radius:r=70
+  objective_static_target__tag:t="monolith_plant_item_zone_1"
+}
+
+entity{
+  _template:t="spherical_quest_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [832.17, 5.0426, 1632.91]]
+  quest_target_geometry_sphere__radius:r=70
+  objective_static_target__tag:t="monolith_plant_item_zone_2"
+}
+
+entity{
+  _template:t="spherical_quest_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [882.269, 5.04263, 1770.67]]
+  quest_target_geometry_sphere__radius:r=70
+  objective_static_target__tag:t="monolith_plant_item_zone_3"
+}
+
+entity{
+  _template:t="photographing_target"
+  transform:m=[[2.41873, -0.576969, -0.268866] [0.065526, 1.06552, -1.69705] [0.943273, 3.04611, 1.94896] [827.274, 68.6742, 2079.65]]
+  objective_static_target__tag:t="cargoport_anomaly_portal_photo_target"
+  photographing_target__name:t="photo/cargoport_anomaly_portal"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="photographing_stand_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [822.719, 49.7403, 2068.15]]
+  objective_static_target__tag:t="cargoport_anomaly_portal_photo_area"
+  map_object_zone__radius:r=20
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[-19.5658, 46.6213, 86.785] [21.7222, 7.37562, 0.935098] [-5.45217, 17.3982, -10.5756] [719.547, 75.7384, 1981.78]]
+  objective_static_target__tag:t="cargoport_anomaly_place_device_quest"
+  map_object_zone__radius:r=25
+  quest_target_geometry_sphere__radius:r=0
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="decor_port_container"
+  transform:m=[[-0.5796, 0, 0.814901] [0, 1, 0] [-0.814901, 0, -0.5796] [1177.77, 15.3964, 1843.78]]
+}
+
+entity{
+  _template:t="decor_port_container"
+  transform:m=[[-0.998842, 0, -0.0481158] [0, 1, 0] [0.0481158, 0, -0.998842] [1178.56, 17.959, 1843.69]]
+}
+
+entity{
+  _template:t="decor_port_container"
+  transform:m=[[-0.188665, 0, -0.982041] [0, 1, 0] [0.982041, 0, -0.188665] [1175, 15.4304, 1893.03]]
+}
+
+entity{
+  _template:t="decor_port_container"
+  transform:m=[[0.162607, 0, 0.986691] [0, 1, -0] [-0.986691, 0, 0.162607] [1055.78, 12.7885, 1862.56]]
+}
+
+entity{
+  _template:t="decor_port_container"
+  transform:m=[[-1, 0, -8.74228e-08] [0, 1, 0] [8.74228e-08, 0, -1] [1113.94, 6.30914, 1944.6]]
+}
+
+entity{
+  _template:t="decor_port_container"
+  transform:m=[[-0.101814, 0, -0.994803] [0, 1, 0] [0.994803, 0, -0.101814] [1004.38, 4.20604, 2025.53]]
+}
+
+entity{
+  _template:t="decor_port_container"
+  transform:m=[[-0.817805, 0, -0.575496] [0, 1, 0] [0.575496, 0, -0.817805] [747.502, 15.3895, 1763.75]]
+}
+
+entity{
+  _template:t="decor_port_container"
+  transform:m=[[-0.628976, 0, -0.777425] [0, 1, 0] [0.777425, 0, -0.628976] [748.068, 17.9521, 1763.72]]
+}
+
+entity{
+  _template:t="decor_port_container"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [556.829, 6.46398, 1917.75]]
+}
+
+entity{
+  _template:t="decor_port_container"
+  transform:m=[[0.957823, 0, -0.287359] [0, 1, 0] [0.287359, -0, 0.957823] [1081.77, 5.24257, 2123.11]]
+}
+
+entity{
+  _template:t="decor_port_container"
+  transform:m=[[-0.999983, 0, -0.00587547] [0, 1, 0] [0.00587547, 0, -0.999983] [1190.49, 12.8263, 1842.96]]
+}
+
+entity{
+  _template:t="decor_port_container_door_l"
+  transform:m=[[0.9662, -0.218158, -0.137348] [0.249783, 0.660458, 0.708098] [-0.0637648, -0.718472, 0.692627] [906.815, 79.2532, 1986.81]]
+}
+
+entity{
+  _template:t="decor_port_container_door_l"
+  transform:m=[[-0.132512, -0.700349, -0.701393] [0.990688, -0.115907, -0.0714324] [-0.0312688, -0.704327, 0.709187] [905.102, 81.0213, 1988.46]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_wooden_box_a_2000_type_c"
+  transform:m=[[0.26774, -0.846913, 0.459406] [0.950728, 0.30958, 0.0166286] [-0.156306, 0.432318, 0.888071] [721.44, 54.8763, 1949.63]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_wooden_box_a_2000_type_c"
+  transform:m=[[-0.160333, 0.445064, 0.881029] [0.950728, 0.30958, 0.0166286] [-0.265348, 0.840285, -0.472771] [719.185, 65.6082, 1965.99]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_wooden_box_a_2000_type_c"
+  transform:m=[[-0.156306, 0.432318, 0.888071] [0.950728, 0.30958, 0.0166287] [-0.26774, 0.846913, -0.459406] [706.388, 89.4469, 2008.98]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_wooden_box_a_2000_type_c"
+  transform:m=[[0.156306, -0.432318, -0.888071] [0.950728, 0.30958, 0.0166287] [0.26774, -0.846913, 0.459406] [707.435, 89.3535, 2008.21]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_wooden_box_a_2000_type_c"
+  transform:m=[[-0.612076, -0.780824, -0.125203] [0.292929, -0.0768044, -0.953045] [0.734544, -0.620012, 0.275736] [796.284, 85.8199, 2086.6]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_wooden_box_a_2000_type_c"
+  transform:m=[[0.734544, -0.620012, 0.275736] [0.292929, -0.0768044, -0.953045] [0.612076, 0.780824, 0.125203] [746.388, 131.938, 2068.22]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_wooden_box_a_2000_type_c"
+  transform:m=[[-0.734544, 0.620011, -0.275736] [0.292929, -0.0768044, -0.953045] [-0.612076, -0.780824, -0.125203] [747.393, 131.3, 2067.53]]
+}
+
+entity{
+  _template:t="decor_bmp_2m"
+  transform:m=[[-0.510582, -0.543359, 0.666384] [-0.859122, 0.353815, -0.369763] [-0.034863, -0.761299, -0.647463] [903.351, 84.1186, 2013.79]]
+}
+
+entity{
+  _template:t="decor_bmp_2m"
+  transform:m=[[-0.493769, -0.383119, 0.780648] [-0.859122, 0.353815, -0.369763] [-0.134542, -0.853249, -0.503849] [891.535, 68.938, 2027.19]]
+}
+
+entity{
+  _template:t="decor_bmp_2m"
+  transform:m=[[0.506864, 0.68808, -0.519264] [-0.859122, 0.353815, -0.369763] [-0.0707025, 0.63353, 0.77048] [883.806, 61.5711, 2038.44]]
+}
+
+entity{
+  _template:t="quest_container+safe_openable_ri_sound"
+  transform:m=[[0.00852574, 0, -0.999964] [0, 1, 0] [0.999964, -0, 0.00852574] [1181.99, 10.7, 1634.77]]
+  ri_extra__name:t="sovmod_safe_type_c_loot"
+  openable_ri__closed:t="sovmod_safe_type_c_loot"
+  ri_preload__name:t="sovmod_safe_type_c_loot_open"
+  objective_static_target__tag:t="cargoport_admin_docs"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_cargoport_admin_docs"
+  }
+}
+
+entity{
+  _template:t="quest_container+locker_openable_ri_sound"
+  transform:m=[[0.999965, 0, -0.00836204] [0, 1, 0] [0.00836204, -0, 0.999965] [1212.5, 17.4722, 1833.19]]
+  ri_extra__name:t="sovindustrial_box_zip_b_type_b"
+  openable_ri__closed:t="sovindustrial_box_zip_b_type_b"
+  ri_preload__name:t="sovindustrial_box_zip_b_type_b"
+  objective_static_target__tag:t="cargoport_cargo_movement_log"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_cargoport_cargo_movement_log"
+  }
+}
+
+entity{
+  _template:t="quest_container_locked+drawer_openable_ri_sound"
+  transform:m=[[0.973596, 0, 0.228277] [0, 1, -0] [-0.228277, 0, 0.973596] [775.229, 34.86, 1289.65]]
+  ri_extra__name:t="russia_village_chest_a"
+  openable_ri__closed:t="russia_village_chest_a"
+  ri_preload__name:t="russia_village_chest_a"
+  objective_static_target__tag:t="cargoport_bribe_evidence"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_cargoport_bribe_evidence"
+  }
+
+  "locked__keyTags:list<t>"{
+    item:t="crane_operator_house_lock"
+  }
+}
+
+entity{
+  _template:t="quest_container_secret+drawer_openable_ri_sound"
+  transform:m=[[-0.985245, 0, -0.171152] [0, 1, 0] [0.171152, 0, -0.985245] [779.838, 31.3553, 1283.03]]
+  ri_extra__name:t="sovmod_nightstand_f"
+  openable_ri__closed:t="sovmod_nightstand_f"
+  ri_preload__name:t="sovmod_nightstand_f_loot"
+  objective_static_target__tag:t="cargoport_evidence_keys"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="key_cargoport_crane_operator_house_item"
+  }
+}
+
+entity{
+  _template:t="quest_container+safe_openable_ri_sound"
+  transform:m=[[-0.998273, 0, 0.0587359] [0, 1, 0] [-0.0587359, 0, -0.998274] [1094.98, 10.5915, 1757.72]]
+  ri_extra__name:t="sovmod_safe_type_c_loot"
+  openable_ri__closed:t="sovmod_safe_type_c_loot"
+  ri_preload__name:t="sovmod_safe_type_c_loot_open"
+  objective_static_target__tag:t="cargoport_security_chief_docs"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_cargoport_security_chief_docs"
+  }
+}
+
+entity{
+  _template:t="quest_container+locker_openable_ri_sound"
+  transform:m=[[-0.99944, 0, 0.0334631] [0, 1, 0] [-0.0334631, 0, -0.99944] [728.173, 5.5, 1675.63]]
+  ri_extra__name:t="sovindustrial_locker_metal_a_type_a"
+  openable_ri__closed:t="sovindustrial_locker_metal_a_type_a"
+  ri_preload__name:t="sovindustrial_locker_metal_a_type_a_open"
+  objective_static_target__tag:t="cargoport_stolen_device"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_cargoport_stolen_device"
+  }
+}
+
+entity{
+  _template:t="quest_container_secret+safe_openable_ri_sound"
+  transform:m=[[0.191838, 0, 0.981426] [0, 1, -0] [-0.981427, 0, 0.191838] [784.62, 5.2892, 1742.11]]
+  ri_extra__name:t="sovmod_safe_type_c_loot"
+  openable_ri__closed:t="sovmod_safe_type_c_loot"
+  ri_preload__name:t="sovmod_safe_type_c_loot_open"
+  objective_static_target__tag:t="cargoport_stolen_device_keys"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="key_cargoport_chief_stash_item"
+  }
+}
+
+entity{
+  _template:t="military_long_range_weapons_t3_lootable_rendinst"
+  transform:m=[[-1, 0, -8.74228e-08] [0, 1, 0] [8.74228e-08, 0, -1] [726.861, 6.01, 1678.34]]
+}
+
+entity{
+  _template:t="military_long_range_weapons_t3_lootable_rendinst"
+  transform:m=[[-0.990339, 0, 0.138667] [0, 1, 0] [-0.138667, 0, -0.990339] [726.73, 6.68031, 1678.34]]
+}
+
+entity{
+  _template:t="military_medical_t3_lootable_rendinst"
+  transform:m=[[-0.051545, 0, -0.998671] [0, 1, 0] [0.998671, 0, -0.0515451] [727.878, 6.01, 1674.54]]
+}
+
+entity{
+  _template:t="military_medical_t3_lootable_rendinst"
+  transform:m=[[-0.203279, 0, -0.979121] [0, 1, 0] [0.979121, 0, -0.203279] [727.776, 6.01, 1673.73]]
+}
+
+entity{
+  _template:t="military_medical_t3_lootable_rendinst"
+  transform:m=[[0.0102216, 0, -0.999948] [0, 1, 0] [0.999948, -0, 0.0102216] [727.778, 6.68172, 1673.58]]
+}
+
+entity{
+  _template:t="military_equipment_t3_lootable_rendinst"
+  transform:m=[[-0.0588664, 0, -0.998266] [0, 1, 0] [0.998266, 0, -0.0588664] [727.808, 5.5, 1676.62]]
+}
+
+entity{
+  _template:t="military_equipment_t3_lootable_rendinst"
+  transform:m=[[0.0829942, 0, -0.99655] [0, 1, 0] [0.99655, -0, 0.0829942] [727.768, 5.5, 1677.54]]
+}
+
+entity{
+  _template:t="military_close_range_weapons_t2_lootable_rendinst"
+  transform:m=[[0.0292406, 0, 0.999572] [0, 1, -0] [-0.999572, 0, 0.0292406] [722.848, 6.01, 1674.59]]
+}
+
+entity{
+  _template:t="military_close_range_weapons_t2_lootable_rendinst"
+  transform:m=[[0.134234, 0, 0.99095] [0, 1, -0] [-0.99095, 0, 0.134234] [722.879, 6.68047, 1674.92]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_rack_storage_a_type_a"
+  transform:m=[[0.999336, 0, -0.0364395] [0, 1, 0] [0.0364395, -0, 0.999336] [726.807, 5.5, 1678.34]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_rack_storage_a_type_a"
+  transform:m=[[0.0364395, 0, 0.999336] [-0, 1, 0] [-0.999336, -0, 0.0364395] [722.871, 5.5, 1677.55]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_rack_storage_a_type_a"
+  transform:m=[[0.0453484, 0, 0.998971] [0, 1, -0] [-0.998971, 0, 0.0453484] [722.769, 5.5, 1674.77]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_rack_storage_a_type_a"
+  transform:m=[[0.0453484, 0, 0.998971] [0, 1, -0] [-0.998971, 0, 0.0453484] [727.822, 5.5, 1674.06]]
+}
+
+entity{
+  _template:t="decor_sovindustrial_box_zip_a_1000_type_a_open_loot"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [722.927, 6.01, 1677.2]]
+}
+
+entity{
+  _template:t="decor_sovindustrial_box_weapons_c_open_c"
+  transform:m=[[0.963725, 0, -0.266899] [0, 1, 0] [0.266899, -0, 0.963725] [722.977, 6.01, 1678.11]]
+}
+
+entity{
+  _template:t="decor_sovindustrial_box_zip_a_1000_type_a_open_loot"
+  transform:m=[[0.995376, 0, -0.0960558] [0, 1, 0] [0.0960558, -0, 0.995376] [722.947, 6.68109, 1677.61]]
+}
+
+entity{
+  _template:t="decor_sovindustrial_box_weapons_c_open_c"
+  transform:m=[[0.999991, 0, 0.00421017] [0, 1, -0] [-0.00421017, 0, 0.999991] [722.848, 7.333, 1675.32]]
+}
+
+entity{
+  _template:t="decor_sovindustrial_box_weapons_c_open_c"
+  transform:m=[[0.948538, 0, 0.316663] [0, 1, -0] [-0.316663, 0, 0.948538] [722.83, 7.333, 1674.24]]
+}
+
+entity{
+  _template:t="decor_cardboard_box_b_600_loot"
+  transform:m=[[-0.0540404, 0, 0.998539] [0, 1, 0] [-0.998539, 0, -0.0540404] [726.241, 7.333, 1678.33]]
+}
+
+entity{
+  _template:t="decor_cardboard_box_b_600_loot"
+  transform:m=[[-0.166661, 0, -0.986014] [0, 1, 0] [0.986014, 0, -0.166661] [727.187, 7.333, 1678.31]]
+}
+
+entity{
+  _template:t="decor_cardboard_box_a_400_broken"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [727.713, 7.333, 1673.55]]
+}
+
+entity{
+  _template:t="decor_cardboard_box_a_400_broken"
+  transform:m=[[-0.329205, 0, 0.944259] [0, 1, 0] [-0.944259, 0, -0.329205] [727.773, 7.333, 1674.71]]
+}
+
+entity{
+  _template:t="decor_cardboard_box_b_600_loot"
+  transform:m=[[-0.996887, 0, 0.0788486] [0, 1, 0] [-0.0788486, 0, -0.996887] [727.798, 6.68958, 1674.49]]
+}
+
+entity{
+  _template:t="decor_cardboard_box_a_400_broken"
+  transform:m=[[0.164529, 0, 0.986372] [0, 1, -0] [-0.986372, 0, 0.164529] [722.932, 7.333, 1677.94]]
+}

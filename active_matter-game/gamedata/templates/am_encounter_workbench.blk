@@ -1,0 +1,369 @@
+encounter_workbench_decor{
+  _use:t="composit_object"
+
+  "composit_spawn__nodes:array"{
+    "node:object"{
+      type:t="riExtra"
+      name:t="sovind_items_a_laboratory_room_a_laboratory_bench_b"
+      template:t="placeable_rendinst"
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+    }
+
+    "node:object"{
+      type:t="riExtra"
+      name:t="russia_set_tools_d"
+      template:t="placeable_rendinst"
+      tm:m=[[-0.053349, 0.0245495, 0.998274] [-1.16415e-10, 0.999698, -0.0245845] [-0.998576, -0.00131156, -0.0533329] [0.18222, 0.923393, 0.501343]]
+    }
+
+    "node:object"{
+      type:t="riExtra"
+      name:t="vice_a"
+      template:t="placeable_rendinst"
+      tm:m=[[-0.029793, -0.00671139, 0.999533] [-0.000367506, 0.999978, 0.00670341] [-0.999556, -0.000167619, -0.0297948] [0.562836, 0.913483, -1.13831]]
+    }
+
+    "node:object"{
+      type:t="riExtra"
+      name:t="sovindustrial_oscilloscope_a"
+      template:t="placeable_rendinst"
+      tm:m=[[0.948418, 0.0245495, 0.316068] [-0.023705, 0.999698, -0.006517] [-0.316133, -0.00131156, 0.948714] [0.457275, 0.904678, -0.210144]]
+    }
+  }
+}
+
+encounter_workbench_base{
+  _use:t="usable_object_base"
+  _use:t="rendinst"
+  _use:t="replicating"
+  _use:t="encounter_workbench_decor"
+  ri_extra__name:t="sovindustrial_laboratory_room_a_laboratory_bench_b"
+  use_object__obbMin:p3=0, 0, 0
+  use_object__obbMax:p3=0, 0, 0
+  item__useActionHintType:i=1
+  item_world_marker__offset:p3=0.75, 1.1, 0
+  encounter_workbench__craftResultTm:m=[[-0.902273, 0, -0.431164] [0, 1, 0] [0.431164, 0, -0.902273] [0.581909, 0.916222, 0.145325]]
+
+  "encounter_workbench:tag"{}
+}
+
+encounter_workbench_oscilloscope_light_a{
+  _use:t="attached_omni_light"
+  light__color:c=37, 255, 0, 255
+  light__max_radius:r=0.075
+  light__brightness:r=2
+}
+
+encounter_workbench_oscilloscope_light_b{
+  _use:t="attached_omni_light"
+  light__color:c=255, 0, 0, 255
+  light__max_radius:r=0.015
+  light__brightness:r=1
+}
+
+encounter_workbench_corruption{
+  _use:t="replicating"
+  _use:t="composit_object"
+  encounter_workbench_corruption__amPerNode:i=1
+  _tracked:t="composit_holder__childrenEids"
+  _replicated:t="composit_holder__childrenEids"
+
+  "encounter_workbench_corruption:tag"{}
+  "ownerEid:eid"{}
+  "composit_spawn__nodes:array"{
+    "node:object"{
+      type:t="riExtra"
+      name:t="am_crystal_central_ground_decor_a"
+      template:t="placeable_rendinst"
+      tm:m=[[-3.94046, 0.134149, -1.44555] [0.165759, 5.46097, 0.0549402] [1.44586, -0.00423101, -3.9417] [0.408173, 0.0257187, -0.101257]]
+    }
+
+    "node:object"{
+      type:t="riExtra"
+      name:t="am_crystal_central_ground_decor_a"
+      template:t="placeable_rendinst"
+      tm:m=[[-0.798541, 0.102172, -3.09542] [0.0372694, 4.15926, 0.127673] [3.09633, -0.00322248, -0.798882] [0.360107, -0.0110703, -0.698242]]
+    }
+
+    "node:object"{
+      type:t="riExtra"
+      name:t="am_crystal_central_ground_decor_a"
+      template:t="placeable_rendinst"
+      tm:m=[[-1.2679, 0.0462676, 0.698585] [0.0518078, 1.88347, -0.0307143] [-0.698838, -0.00145926, -1.26826] [0.360138, 0.864685, 0.835205]]
+    }
+
+    "node:object"{
+      type:t="riExtra"
+      name:t="am_crystal_central_ground_decor_a"
+      template:t="placeable_rendinst"
+      tm:m=[[-1.18501, 0.114734, -2.78688] [0.0511935, 4.67061, 0.11292] [1.45993, -0.00361866, -2.26348] [0.49762, 0.508888, -0.282715]]
+    }
+
+    "node:object"{
+      type:t="riExtra"
+      name:t="am_crystal_central_ground_decor_a"
+      template:t="placeable_rendinst"
+      tm:m=[[0.418369, 0.0462676, -1.38584] [-0.0155786, 1.88347, 0.0581784] [1.38628, -0.00145926, 0.41845] [0.360138, 0.903725, -0.933838]]
+    }
+  }
+
+  "composit_holder__childrenEids:list<eid>"{}
+}
+
+encounter_workbench_corruption_cleaning{
+  encounter_workbench_corruption_cleaning__amCount:i=0
+  encounter_workbench_corruption_cleaning__updateAt:r=0
+  encounter_workbench_corruption_cleaning__timePerAm:r=0.66
+
+  "encounter_workbench_corruption_cleaning__cleanerHero:eid"{}
+}
+
+item_on_corrupted_workbench{
+  _use:t="item_in_world_inactive"
+
+  "item_on_corrupted_workbench__workbenchEid:eid"{}
+}
+
+encounter_workbench_client{
+  encounter_workbench__clientMode:i=0
+  _tracked:t="encounter_workbench__clientMode"
+}
+
+encounter_workbench{
+  _use:t="encounter_workbench_base"
+  _use:t="encounter_workbench_client"
+  _tracked:t="interaction_menu_available"
+  encounter_workbench__charges:i=0
+  _tracked:t="encounter_workbench__charges"
+  _replicated:t="encounter_workbench__charges"
+  encounter_workbench__maxCharges:i=20
+  encounter_workbench__initialCharges:ip2=2, 5
+  item__useActionAvailable:b=yes
+  item__setCustomUsePrompt:t=""
+  encounter_workbench__itemCreatedFx:t="sparks_fuse_box_placed_fx"
+  encounter_workbench__itemCreatedFxLocalTm:m=[[-0.0402641, -0.0315943, -0.998689] [-0.0061223, 0.999489, -0.0313727] [0.99917, 0.00485108, -0.0404369] [0.598419, 0.92343, 0.135223]]
+  encounter_workbench__itemCreatedFxScale:r=1
+  encounter_workbench__batteryInsertedFx:t="sparks_fuse_box_placed_fx"
+  encounter_workbench__batteryInsertedFxLocalTm:m=[[-0.0402641, -0.0315943, -0.998689] [-0.0061223, 0.999489, -0.0313727] [0.99917, 0.00485108, -0.0404369] [0.598419, 1.12343, -0.135223]]
+  encounter_workbench__batteryInsertedFxScale:r=1
+
+  _group{
+    _tags:t="gameClient"
+    interaction_menu_available:b=yes
+
+    "interaction_menu_header:array"{}
+    "interaction_menu:array"{}
+  }
+
+  "encounter_workbench_crafts:array"{
+    "recipe:object"{
+      loc:t="action/workbench_insert_battery"
+      closeInteraction:b=no
+      resultEvent:t="battery"
+
+      "requiredItems:array"{
+        "item:object"{
+          template:t="encounter_battery_item"
+          count:i=1
+        }
+      }
+    }
+
+    "recipe:object"{
+      loc:t="action/workbench_open_repair_menu"
+      closeInteraction:b=no
+      resultEvent:t="repair_menu"
+    }
+
+    "recipe:object"{
+      icon:t="fuse_box.svg"
+      loc:t="action/craft_fuse_box"
+      requiredCharges:i=1
+
+      "requiredItems:array"{
+        "item:object"{
+          template:t="encounter_fuse_item"
+          count:i=5
+        }
+      }
+
+      "resultItems:array"{
+        "item:object"{
+          template:t="encounter_fuse_block_item"
+          count:i=1
+        }
+      }
+    }
+
+    "recipe:object"{
+      icon:t="ammunition.svg"
+      loc:t="action/craft_ammo_9mm"
+      requiredCharges:i=1
+
+      "requiredItems:array"{
+        "item:object"{
+          template:t="item_broken_ammo"
+          count:i=1
+        }
+      }
+
+      "resultItems:array"{
+        "item:object"{
+          template:t="box_9mm_magazine"
+          count:i=1
+        }
+      }
+    }
+
+    "recipe:object"{
+      icon:t="ammunition.svg"
+      loc:t="action/craft_ammo_12_gauge"
+      requiredCharges:i=1
+
+      "requiredItems:array"{
+        "item:object"{
+          template:t="item_broken_ammo"
+          count:i=1
+        }
+      }
+
+      "resultItems:array"{
+        "item:object"{
+          template:t="box_12_gauge_magazine"
+          count:i=1
+        }
+      }
+    }
+
+    "recipe:object"{
+      icon:t="ammunition.svg"
+      loc:t="action/craft_ammo_7_62x39"
+      requiredCharges:i=1
+
+      "requiredItems:array"{
+        "item:object"{
+          template:t="item_broken_ammo"
+          count:i=1
+        }
+      }
+
+      "resultItems:array"{
+        "item:object"{
+          template:t="box_7_62x39_magazine"
+          count:i=1
+        }
+      }
+    }
+
+    "recipe:object"{
+      icon:t="ammunition.svg"
+      loc:t="action/craft_ammo_5_56"
+      requiredCharges:i=1
+
+      "requiredItems:array"{
+        "item:object"{
+          template:t="item_broken_ammo"
+          count:i=1
+        }
+      }
+
+      "resultItems:array"{
+        "item:object"{
+          template:t="box_5_56_magazine"
+          count:i=1
+        }
+      }
+    }
+  }
+
+  "item__setCustomUsePromptParams:object"{}
+  "encounter_workbench__bonusLootTms:array"{
+    tm:m=[[0.37188, 0, 0.928281] [0, 1, 0] [-0.928281, 0, 0.37188] [0.564331, 0.920547, 0.139221]]
+    tm:m=[[0.371879, 0, 0.928281] [0, 1, 0] [-0.928281, 0, 0.371879] [0.429932, 0.91436, 0.159241]]
+    tm:m=[[0.37188, 0, 0.928281] [0, 1, 0] [-0.928281, 0, 0.37188] [0.49826, 0.940544, 0.0497437]]
+  }
+
+  "encounter_workbench__bonusLootTemplates:array"{
+    "item:object"{
+      template:t="encounter_fuse_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template:t="item_broken_ammo"
+      weight:r=1
+    }
+  }
+
+  "encounter_workbench__activeStateDecor:array"{
+    "item:object"{
+      template:t="encounter_workbench_oscilloscope_light_a"
+      tm:m=[[-0.0402641, -0.0315943, -0.998689] [-0.0061223, 0.999489, -0.0313727] [0.99917, 0.00485108, -0.0404369] [0.712982, 1.18814, -0.125366]]
+    }
+
+    "item:object"{
+      template:t="encounter_workbench_oscilloscope_light_b"
+      tm:m=[[-0.0402641, -0.0315943, -0.998689] [-0.0061223, 0.999489, -0.0313727] [0.99917, 0.00485108, -0.0404369] [0.722404, 1.15031, -0.22937]]
+    }
+
+    "item:object"{
+      template:t="encounter_workbench_oscilloscope_light_b"
+      tm:m=[[-0.0402641, -0.0315943, -0.998689] [-0.0061223, 0.999489, -0.0313727] [0.99917, 0.00485108, -0.0404369] [0.727108, 1.20974, -0.245789]]
+    }
+
+    "item:object"{
+      template:t="encounter_workbench_oscilloscope_light_b"
+      tm:m=[[-0.0402641, -0.0315943, -0.998689] [-0.0061223, 0.999489, -0.0313727] [0.99917, 0.00485108, -0.0404369] [0.726997, 1.04086, -0.215942]]
+    }
+  }
+
+  "encounter_workbench__activeStateDecorEids:list<eid>"{}
+  _group{
+    _tags:t="sound"
+    encounter_workbench_sound__itemCreated:t="player/walker/am_trooper_male/items/healing/pick"
+    encounter_workbench_sound__itemRepaired:t="player/weapon/pistol/nagant_1895/reload1/change_ammo"
+    encounter_workbench_sound__batteryInserted:t="env_effects/doors/coponier/coponier_power_up"
+  }
+}
+
+encounter_corrupted_workbench{
+  _use:t="encounter_workbench"
+  encounter_corrupted_workbench__cleaned:b=no
+  _tracked:t="encounter_corrupted_workbench__cleaned"
+  _replicated:t="encounter_corrupted_workbench__cleaned"
+  encounter_corrupted_workbench__corruptionTemplate:t="encounter_workbench_corruption"
+  encounter_workbench__corruptionBlockRemovedFx:t="sparks_am_core_protective_sphere_hit_fx"
+  encounter_workbench__corruptionBlockRemovedFxScale:r=2
+
+  "encounter_corrupted_workbench__corruptionEid:eid"{}
+  "encounter_corrupted_workbench__corruptionCleanersInfo:object"{}
+  _group{
+    _tags:t="sound"
+    encounter_workbench_sound__itemCreated:t="player/walker/am_trooper_male/items/healing/pick"
+    encounter_workbench_sound__itemRepaired:t="player/weapon/pistol/nagant_1895/reload1/change_ammo"
+    encounter_workbench_sound__batteryInserted:t="env_effects/doors/coponier/coponier_power_up"
+    encounter_corrupted_workbench_sound__cleaned:t="player/effects/powerup_pick"
+    encounter_corrupted_workbench_sound__corruptionBlockRemoved:t="player/effects/doublejump"
+  }
+}
+
+encounter_corrupted_workbench_clear_action{
+  _use:t="base_interactable_invoice_with_piemenu"
+  interactable_invoice__icon:t="white_circle.svg"
+  interactable_invoice__name:t=""
+
+  "encounter_corrupted_workbench_clear_action:tag"{}
+}
+
+encounter_workbench_menu_controller{
+  _tracked:t="encounter_workbench_menu_controller__state"
+  _tracked:t="encounter_workbench_menu_controller__workbenchEid"
+
+  _group{
+    _tags:t="gameClient"
+    encounter_workbench_menu_controller__state:i=0
+
+    "encounter_workbench_menu_controller__workbenchEid:eid"{}
+    "encounter_workbench_menu_controller__itemsToRepair:list<eid>"{}
+  }
+}

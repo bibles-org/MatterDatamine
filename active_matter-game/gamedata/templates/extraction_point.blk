@@ -1,0 +1,603 @@
+debug_portal{
+  extraction__extractionTime:r=5
+
+  "debug_portal__doNotExtract:tag"{}
+}
+
+active_extraction_point{
+  "extraction__hudPoint:tag"{
+    _tags:t="render"
+  }
+
+  "humanTriggerable:tag"{}
+}
+
+portal_dynmodel_cubemap{
+  _use:t="animchar"
+  animchar__res:t="am_portal_spherical_hole_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+portal_dynmodel_cubemap_active{
+  _use:t="portal_dynmodel_cubemap"
+  extraction_visual__initialTime:r=0
+
+  "extraction__activePortal:tag"{}
+  "extraction_visual__ownerEid:eid"{}
+}
+
+portal_dynmodel_cubemap_opening{
+  _use:t="portal_dynmodel_cubemap"
+  extraction_visual__initialPos:p3=0, 0, 0
+  extraction_visual__initialTime:r=0
+  extraction_visual__minScale:r=0.135
+  extraction_visual__preExpandScale:r=0.7
+  extraction_visual__preCollapseScale:r=1.25
+
+  "extraction__activatingPortal:tag"{}
+  "extraction_visual__ownerEid:eid"{}
+}
+
+portal_dynmodel_distortion{
+  _use:t="animchar"
+  animchar__res:t="am_portal_spherical_hole_distortion_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  am_core_protective_sphere__rotationSpd:p3=20, 0, 0
+
+  "requires_distortion_render:tag"{}
+}
+
+portal_dynmodel_distortion_active{
+  _use:t="portal_dynmodel_distortion"
+  _use:t="euler_sinusoidal_oscillation"
+  extraction_visual__initialTime:r=0
+  extraction_visual__preExpandScale:r=0.7
+  extraction_visual__expandTime:r=0.5
+  extraction_visual__maxScale:r=1.4
+  euler_sinusoidal_oscillation__origin:p3=0, 0, 0
+  euler_sinusoidal_oscillation__amplitude:p3=0.4, 0.4, 0.4
+  euler_sinusoidal_oscillation__frequency:p3=2, 2, 2
+
+  "extraction__activePortal:tag"{}
+  "extraction_visual__ownerEid:eid"{}
+}
+
+portal_dynmodel_distortion_opening{
+  _use:t="portal_dynmodel_distortion"
+  _use:t="euler_sinusoidal_oscillation"
+  extraction_visual__initialPos:p3=0, 0, 0
+  extraction_visual__initialTime:r=0
+  extraction_visual__minScale:r=0.135
+  extraction_visual__preExpandScale:r=1
+  extraction_visual__preCollapseScale:r=1.25
+  euler_sinusoidal_oscillation__origin:p3=0, 0, 0
+  euler_sinusoidal_oscillation__amplitude:p3=0.4, 0.4, 0.4
+  euler_sinusoidal_oscillation__frequency:p3=2, 2, 2
+
+  "extraction__activatingPortal:tag"{}
+  "extraction_visual__ownerEid:eid"{}
+}
+
+extraction_point_sound{
+  "extraction_point_sound__statePaths:shared:object"{
+    _tags:t="sound"
+
+    "disabled:object"{}
+    "inactive:object"{}
+    "activating:object"{
+      path:t="am/objects/teleport/teleport_start_1"
+    }
+
+    "active:object"{
+      path:t="am/objects/teleport/teleport_start_2"
+    }
+
+    "deactivating:object"{
+      path:t="am/objects/teleport/teleport_stop"
+    }
+  }
+}
+
+extraction_point{
+  _use:t="replicating"
+  _use:t="extraction_point_trigger_visual"
+  _use:t="extraction_point_sound"
+  item__setCustomUsePrompt:t=""
+  extraction__useHintOk:t="extraction/extraction_to_base"
+  extraction__useHintWrongTime:t="extraction/wrongTimeToUse"
+  extraction__useHintPrimaryContract:t="extraction/primaryContractNotComplete"
+  item__useActionHintType:i=1
+  use_object__offset:p3=0, 1.5, 0
+  item_world_marker__offset:p3=0, 1.5, 0
+  item__useActionAvailable:b=yes
+  extraction__radiusMinMax:p2=5.5, 6.5
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  extraction__currentState:i=1
+  _tracked:t="extraction__currentState"
+  _replicated:t="extraction__currentState"
+  extraction__forceMapVisible:b=no
+  _replicated:t="extraction__forceMapVisible"
+  _tracked:t="extraction__forceMapVisible"
+  extraction__extractionTime:r=20
+  extraction__extractionProgress:r=0
+  _tracked:t="extraction__extractionProgress"
+  _replicated:t="extraction__extractionProgress"
+  extraction__activationStartsAt:r=0
+  extraction__useDistance:r=1.75
+  extraction__closeModifier:r=2.5
+  extraction__extracting:b=no
+  _replicated:t="extraction__extracting"
+  extraction__activePhaseDelay:r=1.5
+  _replicated:t="extraction__connectedSpawnGroups"
+  extraction__locName:t=""
+  extraction__nextUpdateAt:r=0
+  extraction__updateInterval:r=0.1
+  extraction__extractionSequenceTemplate:t="extraction_sequence_affect"
+
+  _group{
+    _tags:t="gameClient"
+    _track:b=yes
+    extraction__statusForHero:i=0
+  }
+
+  "extraction__connectedSpawnGroups:list<i>"{}
+  "extraction__timers:list<eid>"{}
+  "extraction_point:tag"{}
+}
+
+extraction_point_with_guards{
+  _use:t="extraction_point"
+  _use:t="guarded_zone"
+  guarded_zone__maxGuardsCount:i=6
+  guarded_zone__playersCheckRadMult:r=3
+}
+
+extraction_point_lightning_effect{
+  _use:t="lightning_effect"
+  lightning_effect__canBranch:b=yes
+
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_portal_lightnings_small_fx"
+  }
+}
+
+extraction_point_light{
+  _use:t="local_light"
+  light__box:m=[[0, 0, 0] [0, 0, 0] [0, 0, 0] [0, 0, 0]]
+  _tracked:t="light__box"
+  light__max_radius:r=4
+  light__brightness:r=0.1
+  light__radius_scale:r=4
+  light__color:c=200, 250, 255, 255
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    light__contact_shadows:b=yes
+    light__use_box:b=no
+    light__automatic_box:b=no
+    light__direction:p3=0, -1, 0
+    light__texture_name:t=""
+  }
+
+  "ai_target_omni_light:tag"{}
+  omni_light{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    _replicate:b=yes
+    omni_light__shadows:b=no
+    omni_light__dynamic_obj_shadows:b=no
+    omni_light__shadow_shrink:i=0
+    omni_light__shadow_quality:i=2
+  }
+}
+
+extraction_point_trigger_visual{
+  _use:t="extraction_point_light"
+
+  _group{
+    _tags:t="render"
+    extraction__extractedPlayerEffect:t="extraction_person_delayed_effect"
+    extraction__prevExtractedPlayersNum:i=0
+
+    "extraction__inactiveEntityTemplates:object"{
+      extraction_inactive_portal_effect:p3=0, 1.5, 0
+      aurora_inside_active_effect:p3=0, 1.5, 0
+      extraction_inactive_floor_effect:p3=0, 0.1, 0
+    }
+
+    "extraction__activatingEntityTemplates:object"{
+      extraction_activating_portal_effect:p3=0, 1.5, 0
+      aurora_inside_active_effect:p3=0, 1.5, 0
+      extraction_activating_floor_effect:p3=0, 0.1, 0
+      extraction_activating_floor_effect2:p3=0, 0.1, 0
+    }
+
+    "extraction__activeEntityTemplates:object"{
+      extraction_active_portal_effect:p3=0, 1.5, 0
+      aurora_inside_active_effect:p3=0, 1.5, 0
+      extraction_activating_floor_effect:p3=0, 0.1, 0
+      extraction_active_light_portal:p3=0, 1.5, 0
+    }
+
+    "extraction__visualEntities:list<eid>"{}
+    _group{
+      extraction__extractedPlayersNum:i=0
+      _track:b=yes
+      _replicate:b=yes
+    }
+  }
+}
+
+extraction_effect{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+  _replicated:t="transform"
+
+  "extraction_visual__ownerEid:eid"{}
+  "net__alwaysInScope:tag"{}
+}
+
+extraction_visual_effect{
+  _use:t="extraction_effect"
+
+  effect{
+    _tags:t="render"
+  }
+}
+
+extraction_preparing_affect{
+  _use:t="replicated_game_effect"
+  extraction_preparing_affect__startedAt:r=0
+  extraction_preparing_affect__extractAt:r=0
+  extraction_preparing_affect__fovMagnificationFrequency:r=0.275
+  extraction_preparing_affect__fovMagnificationAmplitudeStart:p2=1, 1
+  extraction_preparing_affect__fovMagnificationAmplitudeEnd:p2=0.7, 1.3
+
+  "game_effect__portalEid:eid"{}
+  "extraction_preparing_affect:tag"{}
+  "extraction_preparing_affect__gameClientAffects:array"{
+    "human_extraction_aura_affect:object"{
+      fps:t="human_extraction_aura_affect_fps"
+      tps:t="human_extraction_aura_affect_tps"
+    }
+  }
+
+  "extraction_preparing_affect__gameClientAffectEids:list<eid>"{}
+}
+
+extraction_omni_light{
+  _use:t="attached_omni_light"
+  light__max_radius:r=8
+  light__offset:p3=0, 0, 0
+  light__color:c=200, 250, 255, 255
+  light__brightness:r=10
+  light__radius_scale:r=4
+  extraction_light__targetRadius:r=8
+}
+
+extraction_inactive_floor_effect{
+  _use:t="extraction_visual_effect"
+  transform__dropOnGroundOffset:r=0.1
+
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_portal_ground_distortion_b_fx"
+  }
+
+  "transform__groundAlign:tag"{}
+  "transform__dropOnGroundOnAppear:tag"{}
+}
+
+extraction_activating_floor_effect{
+  _use:t="extraction_visual_effect"
+  transform__dropOnGroundOffset:r=0.1
+
+  "extraction__activatingFloorPortal:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_portal_ground_distortion_a_fx"
+  }
+
+  "transform__groundAlign:tag"{}
+  "transform__dropOnGroundOnAppear:tag"{}
+}
+
+extraction_activating_floor_effect2{
+  _use:t="extraction_visual_effect"
+  transform__dropOnGroundOffset:r=0.1
+
+  "extraction__activatingFloorPortal:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_portal_ground_shards_a_fx"
+  }
+
+  "transform__groundAlign:tag"{}
+  "transform__dropOnGroundOnAppear:tag"{}
+}
+
+extraction_activating_portal_effect_sound{
+  _use:t="sound_effect"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__abandonOnReset:b=yes
+    sound_effect__path:t="am/objects/teleport/teleport_loop_1"
+  }
+}
+
+extraction_active_portal_effect_sound{
+  _use:t="sound_effect"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__abandonOnReset:b=yes
+    sound_effect__path:t="am/objects/teleport/teleport_loop_2"
+  }
+}
+
+extraction_inactive_portal_effect_sound{
+  _use:t="sound_effect"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__abandonOnReset:b=yes
+    sound_effect__path:t="am/objects/teleport/teleport_base"
+  }
+}
+
+extraction_activating_portal_effect{
+  _use:t="extraction_omni_light"
+  _use:t="extraction_visual_effect"
+  _use:t="extraction_activating_portal_effect_sound"
+  light__affect_volumes:b=no
+  extraction_visual__initialPos:p3=0, 0, 0
+  extraction_visual__initialTime:r=0
+
+  "extraction__activatingPortal:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_portal_a_composite_fx"
+  }
+}
+
+aurora_inside_active_effect{
+  _use:t="extraction_visual_effect"
+  transform__localTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "effects:object"{
+    relocation_portal_aurora_omni_composite_fx:r=1
+  }
+}
+
+aurora_down_active_effect{
+  _use:t="extraction_visual_effect"
+  transform__localTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "effects:object"{
+    relocation_portal_aurora_active_fx:r=1
+    relocation_portal_aurora_distortion_a_fx:r=1
+  }
+}
+
+extraction_active_portal_effect{
+  _use:t="extraction_visual_effect"
+  _use:t="extraction_active_portal_effect_sound"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  extraction_visual__initialTime:r=0
+  extraction_visual__preExpandScale:r=0.5
+  extraction_visual__expandTime:r=0.5
+  extraction_visual__maxScale:r=1.2
+
+  "extraction__activePortal:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_portal_a_composite_fx"
+  }
+}
+
+extraction_active_light_portal{
+  _use:t="extraction_omni_light"
+  _use:t="extraction_effect"
+  extraction_visual__initialPos:p3=0, 0, 0
+  extraction_visual__activePortal:c=200, 250, 255, 255
+  extraction_visual__extractingPortal:c=220, 250, 255, 255
+  light__brightness:r=1
+
+  "extraction__activePortalLight:tag"{}
+}
+
+extraction_inactive_portal_effect{
+  _use:t="extraction_omni_light"
+  _use:t="extraction_inactive_portal_effect_sound"
+  light__brightness:r=0
+  _use:t="extraction_visual_effect"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_portal_sleeping_a_composite_fx"
+  }
+}
+
+extraction_incative_portal_pulse_effect{
+  _use:t="extraction_visual_effect"
+  transform__localTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  extraction_pulse_effect__minMaxScale:p2=0.2, 0.6
+  extraction_inactive_portal_pulse_effect__pulseDuration:r=1
+  extraction_inactive_portal_pulse_effect__pulsePeriodRange:p2=0.2, 1.2
+  extraction_inactive_portal_pulse_effect__state:i=0
+  extraction_inactive_portal_pulse_effect__nextStateAt:r=0
+
+  "effects:object"{
+    relocation_portal_distortion_a_fx:r=1
+  }
+
+  "extraction_pulse_effect:tag"{}
+}
+
+relocation_portal_sphere_small{
+  _use:t="extraction_visual_effect"
+  transform__localTm:m=[[0.12, 0, 0] [0, 0.12, 0] [0, 0, 0.12] [0, 0, 0]]
+
+  "effects:object"{
+    relocation_portal_sphere_a_fx:r=1
+  }
+}
+
+extraction_person_delayed_effect{
+  _use:t="game_effect_with_duration"
+  post_effect__templateName:t="extraction_person_effect"
+  post_effect__duration:r=5
+}
+
+extraction_person_effect{
+  _use:t="extraction_visual_effect"
+  game_effect__destroyAt:r=-1
+
+  "game_effect__attachedTo:eid"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_portal_aurora_flash_fx"
+  }
+}
+
+mindcontrolled_extraction{
+  _use:t="extraction_point"
+  _use:t="extraction_enable_time"
+
+  "extraction__connectedSpawnGroups:list<i>"{
+    groupId:i=1
+  }
+}
+
+final_extraction{
+  _use:t="extraction_point_with_guards"
+  extraction__currentState:i=0
+
+  "final_extraction_point:tag"{}
+  "extraction_for_everyone:tag"{}
+}
+
+am_extraction_group_0{
+  _use:t="extraction_point_with_guards"
+
+  "extraction__connectedSpawnGroups:list<i>"{
+    groupId:i=1
+  }
+}
+
+am_extraction_group_1{
+  _use:t="extraction_point_with_guards"
+
+  "extraction__connectedSpawnGroups:list<i>"{
+    groupId:i=2
+  }
+}
+
+am_extraction_group_2{
+  _use:t="extraction_point_with_guards"
+
+  "extraction__connectedSpawnGroups:list<i>"{
+    groupId:i=3
+  }
+}
+
+am_extraction_group_3{
+  _use:t="extraction_point_with_guards"
+
+  "extraction__connectedSpawnGroups:list<i>"{
+    groupId:i=4
+  }
+}
+
+am_extraction_group_4{
+  _use:t="extraction_point_with_guards"
+
+  "extraction__connectedSpawnGroups:list<i>"{
+    groupId:i=5
+  }
+}
+
+am_extraction_group_5{
+  _use:t="extraction_point_with_guards"
+
+  "extraction__connectedSpawnGroups:list<i>"{
+    groupId:i=6
+  }
+}
+
+militant_extraction{
+  _use:t="extraction_point_with_guards"
+
+  "extraction__connectedSpawnGroups:list<i>"{
+    groupId:i=2
+    groupId:i=3
+    groupId:i=4
+    groupId:i=5
+    groupId:i=6
+  }
+}
+
+extraction_enable_time{
+  extraction_enable_time__defaultTime:r=420
+
+  _group{
+    _tags:t="gameClient"
+    _track:b=yes
+    extraction_enable_time__at:r=-1
+  }
+
+  _group{
+    _tags:t="server"
+
+    "extraction_enable_time__player:list<eid>"{}
+    "extraction_enable_time__forPlayerAt:list<r>"{}
+  }
+}
+
+extraction_disable_time{
+  _group{
+    _track:b=yes
+    extraction_disable_time__at:r=-1
+  }
+}
+
+disable_extraction_point_when_inactive{
+  "disable_extraction_point_when_inactive:tag"{}
+}
+
+dynamic_extraction_point{
+  _use:t="extraction_point_with_guards"
+  _use:t="extraction_disable_time"
+  extraction__currentState:i=0
+
+  "dynamic_extraction_point:tag"{}
+  "extraction_for_everyone:tag"{}
+}
+
+dynamic_extraction_controller{
+  _use:t="replicating"
+  dynamic_extraction_controller__initialDelay:r=180
+  dynamic_extraction_controller__interval:r=210
+  dynamic_extraction_controller__pointsPerStep:i=1
+  dynamic_extraction_controller__seed:i=0
+  dynamic_extraction_controller__step:i=0
+  dynamic_extraction_controller__nextStepAt:r=0
+
+  "dynamic_extraction_controller:tag"{}
+  "dynamic_extraction_controller__pointEids:list<eid>"{}
+}
+
+hero_extraction{
+  _tags:t="gameClient"
+  _tracked:t="hero_extraction__closestExtractionPortal"
+
+  "hero_extraction__closestExtractionPortal:eid"{}
+}

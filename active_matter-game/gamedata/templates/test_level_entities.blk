@@ -1,0 +1,66 @@
+test_level_teleport{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovmod_tires_a_type_a"
+  _use:t="am_triggerable_zone"
+  sphere_zone__radius:r=0.5
+  test_level_teleport__name:t="Raid Console"
+  test_level_teleport__toPos:p3=0, 0, 0
+
+  "humanTriggerable:tag"{}
+  "test_level_teleport__marker:eid"{}
+  "net__alwaysInScope:tag"{}
+}
+
+test_level_teleport_marker{
+  _use:t="interactable_grid_obj"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  interactable__iconYOffset:r=1.3
+  interactable__name:t="Unknown"
+  interactable__icon:t="interactable_pos.svg"
+
+  "clientUsable:tag"{}
+}
+
+test_level_visible_trigger{
+  _use:t="game_trigger_box"
+  _use:t="test_objective_fx"
+
+  "game_trigger__includeGrids:list<t>"{
+    item:t="humans"
+  }
+}
+
+running_olympics_finish{
+  "running_olympics_finish:tag"{}
+}
+
+running_olympics_start{
+  "running_olympics_start:tag"{}
+  "running_olympics__results:array"{}
+}
+
+running_olympic_result_resetter{
+  _use:t="game_trigger_processor_base"
+  game_trigger_processor__onTrigger:t="reset_olympics_leaderboard"
+
+  "running_olympic_result_resetter:tag"{}
+}
+
+running_olympics_runner{
+  _use:t="game_trigger_processor_targeted_self_destroy"
+  game_trigger_processor__onTrigger:t="running_olympics_finished"
+  running_olympics_runner__runStart:r=0
+  running_olympics_runner__overrideWeight:r=0
+  running_olympics_runner__prevFrameSpeedMult:r=0
+  running_olympics_runner__prevFrameSpeed:r=0
+
+  "running_olympics_runner__runCheckpoints:list<r>"{}
+  "running_olympics_runner__chronogenes:list<t>"{}
+}
+
+running_olympics_checkpoint_processor{
+  _use:t="game_trigger_processor_base"
+  game_trigger_processor__onTrigger:t="running_olympics_checkpoint"
+
+  "running_olympics_checkpoint_processor:tag"{}
+}

@@ -1,0 +1,178 @@
+repeat{
+  name:t="kamikaze"
+  selectStrategy:t="ordered"
+
+  reaction{
+    event:t="onHit"
+
+    selectNode{
+      name:t="retaliatory_attack"
+    }
+  }
+
+  reaction{
+    event:t="onBulletNearby"
+
+    selectNode{
+      name:t="retaliatory_attack"
+    }
+  }
+
+  reaction{
+    event:t="onTraceableDanger"
+
+    selectNode{
+      name:t="attack"
+    }
+  }
+
+  subTree{
+    refId:t="retaliatory_attack"
+    name:t="retaliatory_attack"
+  }
+
+  subTree{
+    refId:t="attack"
+    name:t="attack"
+  }
+
+  sequencer{
+    name:t="patrol"
+
+    reaction{
+      event:t="regularCheck"
+
+      orderedSelector{
+        sequencer{
+          getAttractionPosition{}
+          selectNode{
+            name:t="runToAttrackPoint"
+          }
+        }
+
+        sequencer{
+          getVisibleAttractionPosition{}
+          selectNode{
+            name:t="runToVisibleAttrackPoint"
+          }
+        }
+      }
+    }
+
+    modifyNode{
+      target:t="walker_agent__targetEid"
+      operator:t="="
+      arg:i=0
+    }
+
+    patroller{}
+    nPhysCorridorMoveToPos{
+      posParam:t="patroller__currentWaypoint"
+      forceToWalk:b=yes
+      sprintTimerRange:p2=0, 0
+    }
+
+    wait{
+      range:p2=5, 10
+      resetable:b=yes
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.kamikaze_attack"
+
+  findDanger{
+    paramName:t="enemy"
+    radiusParamName:t="enemyRadius"
+    traceDangers:b=yes
+    minDanger:r=1
+    tag:t="human"
+  }
+
+  modifyNode{
+    target:t="walker_agent__targetEid"
+    operator:t="="
+    argIntParam:t="enemy"
+  }
+
+  orderedSelector{
+    sequencer{
+      nPhysCorridorMoveToTarget{
+        targetParam:t="walker_agent__targetEid"
+        forceToWalk:b=no
+        stopDist:r=3
+        traceTarget:b=yes
+      }
+
+      parallel{
+        nPhysStareAtEntity{
+          targetParam:t="walker_agent__targetEid"
+        }
+
+        wait{
+          range:p2=2, 2
+          resetable:b=yes
+        }
+      }
+
+      kamikazeExplode{}
+    }
+
+    sequencer{
+      wait{
+        range:p2=5, 5
+        resetable:b=yes
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.kamikaze_retaliatory_attack"
+
+  findDanger{
+    paramName:t="enemy"
+    radiusParamName:t="enemyRadius"
+    traceDangers:b=no
+    minDanger:r=1
+    tag:t="human"
+  }
+
+  modifyNode{
+    target:t="walker_agent__targetEid"
+    operator:t="="
+    argIntParam:t="enemy"
+  }
+
+  orderedSelector{
+    sequencer{
+      nPhysCorridorMoveToTarget{
+        targetParam:t="walker_agent__targetEid"
+        forceToWalk:b=no
+        stopDist:r=3
+        traceTarget:b=yes
+      }
+
+      parallel{
+        nPhysStareAtEntity{
+          targetParam:t="walker_agent__targetEid"
+        }
+
+        wait{
+          range:p2=2, 2
+          resetable:b=yes
+        }
+      }
+
+      kamikazeExplode{}
+    }
+
+    sequencer{
+      wait{
+        range:p2=5, 5
+        resetable:b=yes
+      }
+    }
+  }
+}

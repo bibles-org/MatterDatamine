@@ -1,0 +1,4103 @@
+tiny_loot_item{
+  item__volume:r=0
+  profile_server_data__enrichmentAMCount:ip2=3, 3
+}
+
+small_loot_item{
+  item__volume:r=0.5
+  profile_server_data__enrichmentAMCount:ip2=3, 3
+}
+
+medium_loot_item{
+  item__volume:r=1
+  profile_server_data__enrichmentAMCount:ip2=5, 5
+}
+
+big_loot_item{
+  item__volume:r=5
+  profile_server_data__enrichmentAMCount:ip2=25, 25
+}
+
+tiny_uncommon_item_am{
+  profile_server_data__enrichmentAMCount:ip2=10, 10
+}
+
+small_uncommon_item_am{
+  profile_server_data__enrichmentAMCount:ip2=10, 10
+}
+
+medium_uncommon_item_am{
+  profile_server_data__enrichmentAMCount:ip2=20, 20
+}
+
+big_uncommon_item_am{
+  profile_server_data__enrichmentAMCount:ip2=100, 100
+}
+
+tiny_saturated_item_am{
+  profile_server_data__enrichmentAMCount:ip2=300, 300
+}
+
+small_saturated_item_am{
+  profile_server_data__enrichmentAMCount:ip2=300, 300
+}
+
+medium_saturated_item_am{
+  profile_server_data__enrichmentAMCount:ip2=500, 500
+}
+
+big_saturated_item_am{
+  profile_server_data__enrichmentAMCount:ip2=700, 700
+}
+
+item_sewing_machine{
+  _use:t="item"
+  _use:t="big_loot_item"
+  _use:t="big_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="junk_loot_sewing_machine_a_char"
+  collres__res:t="junk_loot_sewing_machine_a_collision"
+  item__proto:t="item_sewing_machine"
+  item__name:t="items/item_sewing_machine"
+  item__weight:r=12
+  item__scaleMult:r=0.5
+  item__iconPitch:r=10
+  item__iconRoll:r=10
+  item__iconYaw:r=-30
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+electronics{
+  _use:t="item"
+  _use:t="big_loot_item"
+  _use:t="big_uncommon_item_am"
+  animchar__res:t="junk_loot_radio_a_char"
+  collres__res:t="junk_loot_radio_a_collision"
+  item__proto:t="electronics"
+  item__name:t="items/electronics"
+  item__weight:r=2.5
+
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+  "item__alwaysUseful:tag"{}
+}
+
+encounter_battery_item{
+  _use:t="item"
+  _use:t="small_loot_item"
+  animchar__res:t="sovmod_battery_scs25_char"
+  collres__res:t="sovmod_battery_scs25_collision"
+  item__proto:t="encounter_battery_item"
+  item__name:t="items/encounter_battery"
+  item__weight:r=0.8
+  item__amount:i=5
+  _replicated:t="item__amount"
+  _tracked:t="item__amount"
+  key__initCharges:ip2=2, 5
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=65
+  item__iconRoll:r=20
+  item__iconPitch:r=20
+
+  "item_civil:tag"{}
+  "item__alwaysUseful:tag"{}
+}
+
+encounter_fuse_item{
+  _use:t="item"
+  _use:t="small_loot_item"
+  animchar__res:t="fuse_a_char"
+  collres__res:t="fuse_a_collision"
+  item__name:t="items/encounter_fuse"
+  item__proto:t="encounter_fuse_item"
+  item__lootType:t="item"
+  item__weight:r=0.2
+  item__recreateOnGround:t="item_in_world"
+  item__recreateInWorldPhys:t="item_in_world_phys"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__iconPitch:r=15
+  item__iconRoll:r=20
+  item__iconYaw:r=75
+
+  "item_civil:tag"{}
+  "drop_tms:list<m>"{
+    tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+    tm:m=[[0, 1, 0] [-1, 0, 0] [0, 0, 1] [0, 0.02, 0]]
+    tm:m=[[1, 0, 0] [0, 0, -1] [0, 1, 0] [0, 0.02, 0]]
+  }
+}
+
+encounter_fuse_block_item{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  animchar__res:t="injections_medkit_a_char"
+  collres__res:t="injections_medkit_a_collision"
+  item__name:t="items/encounter_fuse_block"
+  item__proto:t="encounter_fuse_block_item"
+  item__lootType:t="item"
+  item__weight:r=0.5
+  item__recreateOnGround:t="item_in_world"
+  item__recreateInWorldPhys:t="item_in_world_phys"
+  dropTm:m=[[-0.0676222, 0.997711, 0] [-0.997711, -0.0676222, 0] [0, 0, 1] [0, 0, 0]]
+
+  "encounter_fuse_block_item:tag"{}
+}
+
+canister_gasoline_item{
+  _use:t="item"
+  animchar__res:t="sovmod_jerrycan_a_char"
+  collres__res:t="sovmod_jerrycan_a_collision"
+  item__name:t="items/canister_gasoline"
+  item__proto:t="canister_gasoline_item"
+  item__weight:r=8
+  item__volume:r=20
+  item__marketPrice:i=100
+  item__recreateOnGround:t="item_in_world"
+  item__recreateInWorldPhys:t="item_in_world_phys"
+  item__useTime:r=0.1
+  vehicle_fuel__amount:r=15
+  drop_item__horizontalAngleLimits:p2=0, 360
+
+  "canBeUsedOutOfInventory:tag"{}
+  "item_common_use:tag"{}
+  "item__alwaysUseful:tag"{}
+  "item__interruptNotInVehicle:tag"{}
+  "drop_tms:list<m>"{
+    tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.01, 0]]
+  }
+}
+
+canister_gasoline_big_item{
+  _use:t="canister_gasoline_item"
+  animchar__res:t="canister_gasoline_a_char"
+  collres__res:t="canister_gasoline_a_collision"
+  item__name:t="items/canister_gasoline_big"
+  item__proto:t="canister_gasoline_big_item"
+  item__weight:r=18
+  item__volume:r=35
+  vehicle_fuel__amount:r=25
+  item__iconPitch:r=0
+  item__iconRoll:r=0
+  item__iconYaw:r=145
+}
+
+canister_gasoline_modern_item{
+  _use:t="canister_gasoline_item"
+  animchar__res:t="liquid_canister_a_dyn_char"
+  collres__res:t="liquid_canister_a_dyn_collision"
+  item__name:t="items/canister_gasoline"
+  item__proto:t="canister_gasoline_modern_item"
+  item__iconYaw:r=-30
+}
+
+canister_gasoline_big_modern_item{
+  _use:t="canister_gasoline_big_item"
+  animchar__res:t="jerrycan_metal_a_dyn_char"
+  collres__res:t="jerrycan_metal_a_dyn_collision"
+  item__name:t="items/canister_gasoline_big"
+  item__proto:t="canister_gasoline_big_modern_item"
+  item__iconYaw:r=60
+}
+
+sovmod_fire_extinguisher{
+  _use:t="item"
+  _use:t="big_loot_item"
+  animchar__res:t="loot_sovmod_extinguisher_a_char"
+  collres__res:t="loot_sovmod_extinguisher_a_collision"
+  item__proto:t="sovmod_fire_extinguisher"
+  item__name:t="items/sovmod_fire_extinguisher"
+  item__weight:r=3.6
+  item__iconPitch:r=-20
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_broken_ammo{
+  _use:t="item_broken"
+  _use:t="small_loot_item"
+  animchar__res:t="sovmod_ammo_damaged_char"
+  collres__res:t="sovmod_ammo_damaged_collision"
+  item__proto:t="item_broken_ammo"
+  item__name:t="items/item_broken_ammo"
+  item__weight:r=0.6
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.005, 0]]
+  item__iconPitch:r=0
+  item__iconRoll:r=20
+  item__iconYaw:r=-25
+  item__iconScale:r=0.8
+}
+
+item_junk_kitchen_stack{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  animchar__res:t="lootpile_kitchenware_char"
+  collres__res:t="lootpile_kitchenware_collision"
+  item__proto:t="item_junk_kitchen_stack"
+  item__name:t="items/item_junk_kitchen_stack"
+  item__weight:r=0.2
+  item__marketPrice:i=10
+  item__iconPitch:r=0
+  item__iconRoll:r=20
+  item__iconYaw:r=70
+  item__iconScale:r=1.4
+  item__iconOffset:p2=0.1, 0
+
+  "item_civil:tag"{}
+  "item_junk:tag"{}
+  "item__alwaysUseful:tag"{}
+}
+
+item_junk_kitchen_cutlery{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="junk_loot_cutlery_a_char"
+  collres__res:t="junk_loot_cutlery_a_collision"
+  item__name:t="items/item_junk_kitchen_cutlery"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=0
+  item__iconRoll:r=90
+  item__iconYaw:r=135
+  item__iconScale:r=1.1
+}
+
+item_junk_kitchen_plates{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="junk_loot_plates_a_char"
+  collres__res:t="junk_loot_plates_a_collision"
+  item__name:t="items/item_junk_kitchen_plates"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=0
+  item__iconRoll:r=45
+  item__iconYaw:r=45
+  item__iconScale:r=1
+}
+
+item_junk_kitchen_big_tin_base{
+  _use:t="item_junk_kitchen_stack"
+  item__name:t="items/item_junk_kitchen_tin"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=0
+  item__iconRoll:r=0
+  item__iconYaw:r=30
+  item__iconScale:r=0.9
+  item__iconOffset:p2=-0.05, 0
+}
+
+item_junk_kitchen_tin_1{
+  _use:t="item_junk_kitchen_big_tin_base"
+  animchar__res:t="junk_loot_bank_a_type_150_a_char"
+  collres__res:t="junk_loot_bank_a_type_150_a_collision"
+}
+
+item_junk_kitchen_tin_2{
+  _use:t="item_junk_kitchen_big_tin_base"
+  animchar__res:t="junk_loot_bank_a_type_150_b_char"
+  collres__res:t="junk_loot_bank_a_type_150_b_collision"
+}
+
+item_junk_kitchen_tin_3{
+  _use:t="item_junk_kitchen_big_tin_base"
+  animchar__res:t="junk_loot_bank_a_type_150_c_char"
+  collres__res:t="junk_loot_bank_a_type_150_c_collision"
+}
+
+item_junk_kitchen_tin_4{
+  _use:t="item_junk_kitchen_big_tin_base"
+  animchar__res:t="junk_loot_bank_a_type_150_d_char"
+  collres__res:t="junk_loot_bank_a_type_150_d_collision"
+}
+
+item_junk_kitchen_tin_5{
+  _use:t="item_junk_kitchen_big_tin_base"
+  animchar__res:t="junk_loot_bank_a_type_150_e_char"
+  collres__res:t="junk_loot_bank_a_type_150_e_collision"
+}
+
+item_junk_kitchen_medium_tin_base{
+  _use:t="item_junk_kitchen_stack"
+  item__name:t="items/item_junk_kitchen_tin"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=20
+  item__iconRoll:r=5
+  item__iconYaw:r=-20
+  item__iconScale:r=0.8
+  item__iconOffset:p2=-0.05, 0
+}
+
+item_junk_kitchen_tin_6{
+  _use:t="item_junk_kitchen_medium_tin_base"
+  animchar__res:t="junk_loot_bank_a_type_100_a_char"
+  collres__res:t="junk_loot_bank_a_type_100_a_collision"
+}
+
+item_junk_kitchen_tin_7{
+  _use:t="item_junk_kitchen_medium_tin_base"
+  animchar__res:t="junk_loot_bank_a_type_100_b_char"
+  collres__res:t="junk_loot_bank_a_type_100_b_collision"
+}
+
+item_junk_kitchen_tin_8{
+  _use:t="item_junk_kitchen_medium_tin_base"
+  animchar__res:t="junk_loot_bank_a_type_100_c_char"
+  collres__res:t="junk_loot_bank_a_type_100_c_collision"
+}
+
+item_junk_kitchen_small_tin_base{
+  _use:t="item_junk_kitchen_stack"
+  item__name:t="items/item_junk_kitchen_tin"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=-20
+  item__iconRoll:r=0
+  item__iconYaw:r=30
+  item__iconScale:r=0.65
+  item__iconOffset:p2=-0.1, 0
+}
+
+item_junk_kitchen_tin_9{
+  _use:t="item_junk_kitchen_small_tin_base"
+  animchar__res:t="junk_loot_bank_a_type_50_a_char"
+  collres__res:t="junk_loot_bank_a_type_50_a_collision"
+}
+
+item_junk_kitchen_tin_10{
+  _use:t="item_junk_kitchen_small_tin_base"
+  animchar__res:t="junk_loot_bank_a_type_50_b_char"
+  collres__res:t="junk_loot_bank_a_type_50_b_collision"
+}
+
+item_junk_kitchen_grinder{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="junk_loot_meatgrinder_a_char"
+  collres__res:t="junk_loot_meatgrinder_a_collision"
+  item__name:t="items/item_junk_kitchen_grinder"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=-190
+  item__iconRoll:r=40
+  item__iconYaw:r=115
+  item__iconScale:r=1
+  item__iconOffset:p2=0, -0.1
+}
+
+item_junk_kitchen_saucer_a{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="junk_loot_saucer_a_char"
+  collres__res:t="junk_loot_saucer_a_collision"
+  item__name:t="items/item_junk_kitchen_saucer_a"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=10
+  item__iconRoll:r=20
+  item__iconYaw:r=60
+  item__iconScale:r=1
+  item__iconOffset:p2=0, -0.1
+}
+
+item_junk_kitchen_wafflemaker{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="junk_loot_wafflemaker_a_char"
+  collres__res:t="junk_loot_wafflemaker_a_collision"
+  item__name:t="items/item_junk_kitchen_wafflemaker"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=0
+  item__iconRoll:r=65
+  item__iconYaw:r=35
+  item__iconScale:r=1.15
+  item__iconOffset:p2=0, -0.05
+}
+
+item_junk_kitchen_cup_a{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="loot_cup_a_char"
+  collres__res:t="loot_cup_a_collision"
+  item__name:t="items/item_junk_kitchen_cup_a"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=10
+  item__iconRoll:r=-15
+  item__iconYaw:r=10
+  item__iconScale:r=1
+  item__iconOffset:p2=-0.07, 0
+}
+
+item_junk_kitchen_cup_b{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="loot_cup_b_char"
+  collres__res:t="loot_cup_b_collision"
+  item__name:t="items/item_junk_kitchen_cup_b"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=10
+  item__iconRoll:r=-15
+  item__iconYaw:r=10
+  item__iconScale:r=1
+  item__iconOffset:p2=-0.07, 0
+}
+
+item_junk_kitchen_jug_a{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="loot_jug_a_char"
+  collres__res:t="loot_jug_a_collision"
+  item__name:t="items/item_junk_kitchen_jug_a"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=0
+  item__iconRoll:r=15
+  item__iconYaw:r=160
+  item__iconScale:r=1
+  item__iconOffset:p2=0.05, -0.05
+}
+
+item_junk_kitchen_plate_a{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="loot_plate_a_char"
+  collres__res:t="loot_plate_a_collision"
+  item__name:t="items/item_junk_kitchen_plate_a"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=0
+  item__iconRoll:r=45
+  item__iconYaw:r=45
+  item__iconScale:r=1
+}
+
+item_junk_kitchen_plate_b{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="loot_plate_b_char"
+  collres__res:t="loot_plate_b_collision"
+  item__name:t="items/item_junk_kitchen_plate_b"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=0
+  item__iconRoll:r=45
+  item__iconYaw:r=45
+  item__iconScale:r=1
+}
+
+item_junk_kitchen_plate_c{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="loot_plate_c_char"
+  collres__res:t="loot_plate_c_collision"
+  item__name:t="items/item_junk_kitchen_plate_c"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=0
+  item__iconRoll:r=45
+  item__iconYaw:r=45
+  item__iconScale:r=1
+}
+
+item_junk_kitchen_teapot_a{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="loot_teapot_a_char"
+  collres__res:t="loot_teapot_a_collision"
+  item__name:t="items/item_junk_kitchen_teapot_a"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=0
+  item__iconRoll:r=20
+  item__iconYaw:r=155
+  item__iconScale:r=1.1
+  item__iconOffset:p2=-0.05, -0.05
+}
+
+item_junk_kitchen_teapot_b{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="loot_teapot_b_char"
+  collres__res:t="loot_teapot_b_collision"
+  item__name:t="items/item_junk_kitchen_teapot_b"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=0
+  item__iconRoll:r=20
+  item__iconYaw:r=155
+  item__iconScale:r=1
+}
+
+item_junk_kitchen_tureen_a{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="loot_tureen_a_char"
+  collres__res:t="loot_tureen_a_collision"
+  item__name:t="items/item_junk_kitchen_tureen_a"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=0
+  item__iconRoll:r=0
+  item__iconYaw:r=20
+  item__iconScale:r=1
+  item__iconOffset:p2=-0.1, 0
+}
+
+item_junk_kitchen_tureen_b{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="loot_tureen_b_char"
+  collres__res:t="loot_tureen_b_collision"
+  item__name:t="items/item_junk_kitchen_tureen_b"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=-5
+  item__iconRoll:r=25
+  item__iconYaw:r=20
+  item__iconScale:r=1
+  item__iconOffset:p2=-0.1, 0
+}
+
+item_junk_kitchen_coffee_can{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="loot_tin_nails_a_char"
+  collres__res:t="loot_tin_nails_a_collision"
+  item__name:t="items/item_junk_kitchen_coffee_can"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=-10
+  item__iconRoll:r=-10
+  item__iconYaw:r=100
+  item__iconScale:r=0.9
+  item__iconOffset:p2=0, 0.05
+}
+
+item_junk_kitchen_champagne{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="item_bottle_champagne_char"
+  collres__res:t="item_bottle_champagne_collision"
+  item__name:t="items/item_junk_kitchen_champagne"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=-20
+  item__iconRoll:r=0
+  item__iconYaw:r=0
+  item__iconScale:r=1
+}
+
+item_junk_kitchen_soda{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="item_bottle_soda_char"
+  collres__res:t="item_bottle_soda_collision"
+  item__name:t="items/item_junk_kitchen_soda"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=-15
+  item__iconRoll:r=0
+  item__iconYaw:r=70
+  item__iconScale:r=1
+}
+
+item_junk_kitchen_vine{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="item_bottle_wine_char"
+  collres__res:t="item_bottle_wine_collision"
+  item__name:t="items/item_junk_kitchen_vine"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=-20
+  item__iconRoll:r=0
+  item__iconYaw:r=0
+  item__iconScale:r=1
+}
+
+item_junk_kitchen_candy_box{
+  _use:t="item_junk_kitchen_stack"
+  animchar__res:t="item_candy_char"
+  collres__res:t="item_candy_collision"
+  item__name:t="items/item_junk_kitchen_candy_box"
+  item__desc:t="items/item_junk_kitchen_item/desc"
+  item__iconPitch:r=5
+  item__iconRoll:r=40
+  item__iconYaw:r=50
+  item__iconScale:r=0.8
+}
+
+item_junk_home_small_stack{
+  _use:t="item"
+  _use:t="small_loot_item"
+  animchar__res:t="junk_loot_b_char"
+  collres__res:t="junk_loot_b_collision"
+  item__proto:t="item_junk_home_small_stack"
+  item__name:t="items/item_junk_home_small_stack"
+  item__weight:r=0.05
+  item__marketPrice:i=10
+  item__iconPitch:r=0
+  item__iconRoll:r=45
+  item__iconYaw:r=45
+
+  "item_civil:tag"{}
+  "item_junk:tag"{}
+  "item__alwaysUseful:tag"{}
+}
+
+item_junk_home_small_matchbox_a{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_matches_a_char"
+  collres__res:t="loot_matches_a_collision"
+  item__name:t="items/item_junk_home_small_matchbox"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=65
+  item__iconYaw:r=25
+}
+
+item_junk_home_small_matchbox_b{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_matches_b_char"
+  collres__res:t="loot_matches_b_collision"
+  item__name:t="items/item_junk_home_small_matchbox"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=65
+  item__iconYaw:r=25
+}
+
+item_junk_home_small_matchbox_c{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_matches_c_char"
+  collres__res:t="loot_matches_c_collision"
+  item__name:t="items/item_junk_home_small_matchbox"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=65
+  item__iconYaw:r=25
+}
+
+item_junk_home_small_matchbox_d{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_matches_d_char"
+  collres__res:t="loot_matches_d_collision"
+  item__name:t="items/item_junk_home_small_matchbox"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=65
+  item__iconYaw:r=25
+}
+
+item_junk_home_small_matchbox_hunt_a{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_matches_hunt_a_char"
+  collres__res:t="loot_matches_hunt_a_collision"
+  item__animcharInInventoryName:t="loot_matches_hunt_a_item_char"
+  item__name:t="items/item_junk_home_small_matchbox_hunt"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=65
+  item__iconYaw:r=25
+}
+
+item_junk_home_small_matchbox_hunt_b{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_matches_hunt_b_char"
+  collres__res:t="loot_matches_hunt_b_collision"
+  item__animcharInInventoryName:t="loot_matches_hunt_b_item_char"
+  item__name:t="items/item_junk_home_small_matchbox_hunt"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=65
+  item__iconYaw:r=25
+}
+
+item_junk_home_small_matchbox_hunt_c{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_matches_hunt_c_char"
+  collres__res:t="loot_matches_hunt_c_collision"
+  item__animcharInInventoryName:t="loot_matches_hunt_c_item_char"
+  item__name:t="items/item_junk_home_small_matchbox_hunt"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=65
+  item__iconYaw:r=25
+}
+
+item_junk_home_small_matchbox_hunt_d{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_matches_hunt_d_char"
+  collres__res:t="loot_matches_hunt_d_collision"
+  item__animcharInInventoryName:t="loot_matches_hunt_d_item_char"
+  item__name:t="items/item_junk_home_small_matchbox_hunt"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=65
+  item__iconYaw:r=25
+}
+
+item_junk_home_small_old_canteen{
+  _use:t="item_junk_home_small_stack"
+  _use:t="medium_loot_item"
+  animchar__res:t="loot_old_canteen_a_char"
+  collres__res:t="loot_old_canteen_a_collision"
+  item__name:t="items/item_junk_home_small_old_canteen"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__weight:r=0.15
+  item__iconPitch:r=-25
+  item__iconRoll:r=-5
+  item__iconYaw:r=100
+}
+
+item_junk_home_small_old_shells_a{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_old_shells_12ga_a_char"
+  collres__res:t="loot_old_shells_12ga_a_collision"
+  item__name:t="items/item_junk_home_small_old_shells"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=30
+  item__iconRoll:r=80
+  item__iconYaw:r=50
+}
+
+item_junk_home_small_old_shells_b{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_old_shells_12ga_b_char"
+  collres__res:t="loot_old_shells_12ga_b_collision"
+  item__name:t="items/item_junk_home_small_old_shells"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=30
+  item__iconRoll:r=80
+  item__iconYaw:r=50
+}
+
+item_junk_home_small_handkerchief_a{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_hankie_a_char"
+  collres__res:t="loot_hankie_a_collision"
+  item__name:t="items/item_junk_home_small_handkerchief"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=65
+  item__iconYaw:r=25
+}
+
+item_junk_home_small_handkerchief_b{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_hankie_b_char"
+  collres__res:t="loot_hankie_b_collision"
+  item__name:t="items/item_junk_home_small_handkerchief"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=65
+  item__iconYaw:r=25
+}
+
+item_junk_home_small_handkerchief_c{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_hankie_c_char"
+  collres__res:t="loot_hankie_c_collision"
+  item__name:t="items/item_junk_home_small_handkerchief"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=65
+  item__iconYaw:r=25
+}
+
+item_junk_home_small_handkerchief_d{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_hankie_d_char"
+  collres__res:t="loot_hankie_d_collision"
+  item__name:t="items/item_junk_home_small_handkerchief"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=65
+  item__iconYaw:r=25
+}
+
+item_junk_home_small_rugs_a{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_hankie_a_char"
+  collres__res:t="loot_hankie_a_collision"
+  item__name:t="items/item_junk_home_small_rugs_a"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=45
+  item__iconYaw:r=25
+  item__iconScale:r=1.2
+}
+
+item_junk_home_small_rugs_b{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_hankie_b_char"
+  collres__res:t="loot_hankie_b_collision"
+  item__name:t="items/item_junk_home_small_rugs_b"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=45
+  item__iconYaw:r=25
+  item__iconScale:r=1.2
+}
+
+item_junk_home_small_bandage{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="medical_bandage_roll_a_char"
+  collres__res:t="medical_bandage_roll_a_collision"
+  item__name:t="items/item_junk_home_small_bandage"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=10
+  item__iconRoll:r=-30
+  item__iconYaw:r=20
+  item__iconScale:r=0.9
+  item__iconOffset:p2=0, 0.05
+}
+
+item_junk_home_small_paperclip_a{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_sovmod_staples_a_item_char"
+  item__animcharInInventoryName:t="loot_sovmod_staples_a_item_char"
+  collres__res:t="loot_sovmod_staples_a_collision"
+  item__name:t="items/item_junk_home_small_paperclip"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=-5
+  item__iconRoll:r=35
+  item__iconYaw:r=-150
+  item__iconScale:r=1.3
+  item__iconOffset:p2=-0.25, 0
+}
+
+item_junk_home_small_paperclip_b{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_sovmod_staples_b_item_char"
+  item__animcharInInventoryName:t="loot_sovmod_staples_b_item_char"
+  collres__res:t="loot_sovmod_staples_b_collision"
+  item__name:t="items/item_junk_home_small_paperclip"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=-5
+  item__iconRoll:r=35
+  item__iconYaw:r=-150
+  item__iconScale:r=1.1
+  item__iconOffset:p2=-0.25, 0
+}
+
+item_junk_home_small_pins_a{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_sovmod_pins_a_char"
+  item__animcharInInventoryName:t="loot_sovmod_pins_a_item_char"
+  collres__res:t="loot_sovmod_pins_a_collision"
+  item__name:t="items/item_junk_home_small_pins"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=-5
+  item__iconRoll:r=35
+  item__iconYaw:r=-150
+  item__iconScale:r=1.1
+  item__iconOffset:p2=-0.15, 0
+}
+
+item_junk_home_small_pins_b{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_sovmod_pins_b_char"
+  item__animcharInInventoryName:t="loot_sovmod_pins_b_item_char"
+  collres__res:t="loot_sovmod_pins_b_collision"
+  item__name:t="items/item_junk_home_small_pins"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=-5
+  item__iconRoll:r=35
+  item__iconYaw:r=-150
+  item__iconScale:r=1.1
+  item__iconOffset:p2=-0.15, 0.1
+}
+
+item_junk_home_small_shaver{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_sovmod_shaver_a_char"
+  collres__res:t="loot_sovmod_shaver_a_collision"
+  item__name:t="items/item_junk_home_small_shaver"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=50
+  item__iconYaw:r=125
+  item__iconScale:r=1
+  item__iconOffset:p2=-0.1, 0
+}
+
+item_junk_home_padlock{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_sovmod_padlock_a_char"
+  collres__res:t="loot_sovmod_padlock_a_collision"
+  item__name:t="items/item_junk_home_padlock"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=60
+  item__iconYaw:r=115
+  item__iconScale:r=0.9
+}
+
+item_junk_home_pruner{
+  _use:t="item_junk_home_small_stack"
+  animchar__res:t="loot_sovmod_pruner_char"
+  collres__res:t="loot_sovmod_pruner_collision"
+  item__name:t="items/item_junk_home_pruner"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=15
+  item__iconRoll:r=70
+  item__iconYaw:r=125
+  item__iconScale:r=1
+}
+
+item_junk_home_small_scales_base{
+  _use:t="item_junk_home_small_stack"
+  item__name:t="items/item_junk_home_small_scales"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=-15
+  item__iconRoll:r=80
+  item__iconYaw:r=55
+  item__iconScale:r=1.1
+}
+
+item_junk_home_small_scales_a{
+  _use:t="item_junk_home_small_scales_base"
+  animchar__res:t="loot_sovmod_scales_a_char"
+  collres__res:t="loot_sovmod_scales_a_collision"
+}
+
+item_junk_home_small_scales_b{
+  _use:t="item_junk_home_small_scales_base"
+  animchar__res:t="loot_sovmod_scales_b_char"
+  collres__res:t="loot_sovmod_scales_b_collision"
+}
+
+item_junk_home_small_scales_c{
+  _use:t="item_junk_home_small_scales_base"
+  animchar__res:t="loot_sovmod_scales_c_char"
+  collres__res:t="loot_sovmod_scales_c_collision"
+}
+
+item_junk_home_small_scales_d{
+  _use:t="item_junk_home_small_scales_base"
+  animchar__res:t="loot_sovmod_scales_d_char"
+  collres__res:t="loot_sovmod_scales_d_collision"
+}
+
+item_junk_home_small_ruler_base{
+  _use:t="item_junk_home_small_stack"
+  item__name:t="items/item_junk_home_small_ruler"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=45
+  item__iconYaw:r=25
+}
+
+item_junk_home_small_ruler_1{
+  _use:t="item_junk_home_small_ruler_base"
+  animchar__res:t="loot_ruler_a_char"
+  collres__res:t="loot_ruler_a_collision"
+}
+
+item_junk_home_small_ruler_2{
+  _use:t="item_junk_home_small_ruler_base"
+  animchar__res:t="loot_ruler_c_char"
+  collres__res:t="loot_ruler_c_collision"
+}
+
+item_junk_home_small_ruler_3{
+  _use:t="item_junk_home_small_ruler_base"
+  animchar__res:t="loot_ruler_d_char"
+  collres__res:t="loot_ruler_d_collision"
+}
+
+item_junk_home_small_ruler_4{
+  _use:t="item_junk_home_small_ruler_base"
+  animchar__res:t="loot_ruler_e_char"
+  collres__res:t="loot_ruler_e_collision"
+}
+
+item_junk_home_small_spool_base{
+  _use:t="item_junk_home_small_stack"
+  item__name:t="items/item_junk_home_small_spool"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=35
+  item__iconScale:r=0.9
+}
+
+item_junk_home_small_spool_1{
+  _use:t="item_junk_home_small_spool_base"
+  animchar__res:t="loot_spool_a_char"
+  collres__res:t="loot_spool_a_collision"
+  item__name:t="items/item_junk_home_small_spool_empty"
+}
+
+item_junk_home_small_spool_2{
+  _use:t="item_junk_home_small_spool_base"
+  animchar__res:t="loot_spool_b_char"
+  collres__res:t="loot_spool_b_collision"
+  item__name:t="items/item_junk_home_small_spool_empty"
+}
+
+item_junk_home_small_spool_3{
+  _use:t="item_junk_home_small_spool_base"
+  animchar__res:t="loot_spool_c_char"
+  collres__res:t="loot_spool_c_collision"
+}
+
+item_junk_home_small_spool_4{
+  _use:t="item_junk_home_small_spool_base"
+  animchar__res:t="loot_spool_d_char"
+  collres__res:t="loot_spool_d_collision"
+}
+
+item_junk_home_small_spool_5{
+  _use:t="item_junk_home_small_spool_base"
+  animchar__res:t="loot_spool_e_char"
+  collres__res:t="loot_spool_e_collision"
+}
+
+item_junk_home_small_spool_6{
+  _use:t="item_junk_home_small_spool_base"
+  animchar__res:t="loot_spool_f_char"
+  collres__res:t="loot_spool_f_collision"
+}
+
+item_junk_home_small_spool_7{
+  _use:t="item_junk_home_small_spool_base"
+  animchar__res:t="loot_spool_g_char"
+  collres__res:t="loot_spool_g_collision"
+}
+
+item_junk_home_sovmod_radio_base{
+  _use:t="item_junk_home_small_stack"
+  _use:t="medium_loot_item"
+  item__name:t="items/item_junk_home_sovmod_radio"
+  item__desc:t="items/item_junk_home_sovmod_radio/desc"
+  item__weight:r=0.85
+  item__iconPitch:r=-10
+  item__iconRoll:r=-5
+  item__iconYaw:r=15
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 3
+}
+
+item_junk_home_sovmod_radio_a{
+  _use:t="item_junk_home_sovmod_radio_base"
+  animchar__res:t="loot_turist_radio_a_char"
+  collres__res:t="loot_turist_radio_a_collision"
+}
+
+item_junk_home_sovmod_radio_b{
+  _use:t="item_junk_home_sovmod_radio_base"
+  animchar__res:t="loot_turist_radio_b_char"
+  collres__res:t="loot_turist_radio_b_collision"
+}
+
+item_junk_home_sovmod_radio_c{
+  _use:t="item_junk_home_sovmod_radio_base"
+  animchar__res:t="loot_turist_radio_c_char"
+  collres__res:t="loot_turist_radio_c_collision"
+}
+
+item_junk_home_sovmod_radio_d{
+  _use:t="item_junk_home_sovmod_radio_base"
+  animchar__res:t="loot_turist_radio_d_char"
+  collres__res:t="loot_turist_radio_d_collision"
+}
+
+item_junk_home_sovmod_radio_e{
+  _use:t="item_junk_home_sovmod_radio_base"
+  animchar__res:t="loot_turist_radio_e_char"
+  collres__res:t="loot_turist_radio_e_collision"
+}
+
+item_junk_home_small_child_drawing_base{
+  _use:t="item_junk_home_small_stack"
+  _use:t="tiny_loot_item"
+  item__name:t="items/item_junk_home_small_child_drawing"
+  item__desc:t="items/item_junk_home_small_child_drawing/desc"
+  item__iconRoll:r=85
+  item__iconYaw:r=85
+  item__iconScale:r=1
+}
+
+item_junk_home_small_child_drawing_1{
+  _use:t="item_junk_home_small_child_drawing_base"
+  animchar__res:t="loot_sovmod_children_drawing_a_char"
+  collres__res:t="loot_sovmod_children_drawing_a_collision"
+}
+
+item_junk_home_small_child_drawing_2{
+  _use:t="item_junk_home_small_child_drawing_base"
+  animchar__res:t="loot_sovmod_children_drawing_b_char"
+  collres__res:t="loot_sovmod_children_drawing_b_collision"
+}
+
+item_junk_home_small_child_drawing_3{
+  _use:t="item_junk_home_small_child_drawing_base"
+  animchar__res:t="loot_sovmod_children_drawing_c_char"
+  collres__res:t="loot_sovmod_children_drawing_c_collision"
+}
+
+item_junk_home_small_child_drawing_4{
+  _use:t="item_junk_home_small_child_drawing_base"
+  animchar__res:t="loot_sovmod_children_drawing_d_char"
+  collres__res:t="loot_sovmod_children_drawing_d_collision"
+}
+
+item_junk_home_small_child_drawing_5{
+  _use:t="item_junk_home_small_child_drawing_base"
+  animchar__res:t="loot_sovmod_children_drawing_e_char"
+  collres__res:t="loot_sovmod_children_drawing_e_collision"
+}
+
+item_junk_home_small_child_drawing_6{
+  _use:t="item_junk_home_small_child_drawing_base"
+  animchar__res:t="loot_sovmod_children_drawing_f_char"
+  collres__res:t="loot_sovmod_children_drawing_f_collision"
+}
+
+item_junk_home_small_child_drawing_7{
+  _use:t="item_junk_home_small_child_drawing_base"
+  animchar__res:t="loot_sovmod_children_drawing_g_char"
+  collres__res:t="loot_sovmod_children_drawing_g_collision"
+}
+
+item_junk_home_small_child_drawing_8{
+  _use:t="item_junk_home_small_child_drawing_base"
+  animchar__res:t="loot_sovmod_children_drawing_h_char"
+  collres__res:t="loot_sovmod_children_drawing_h_collision"
+}
+
+item_junk_home_small_book_base{
+  _use:t="item_junk_home_small_stack"
+  _use:t="medium_loot_item"
+  item__name:t="items/book"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__weight:r=0.4
+  item__iconPitch:r=35
+  item__iconRoll:r=70
+  item__iconYaw:r=90
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_book:tag"{}
+}
+
+item_junk_home_small_book_a{
+  _use:t="item_junk_home_small_book_base"
+  animchar__res:t="loot_book_a_char"
+  collres__res:t="loot_book_a_collision"
+}
+
+item_junk_home_small_book_b{
+  _use:t="item_junk_home_small_book_base"
+  animchar__res:t="loot_book_b_char"
+  collres__res:t="loot_book_b_collision"
+}
+
+item_junk_home_small_book_c{
+  _use:t="item_junk_home_small_book_base"
+  animchar__res:t="loot_book_c_char"
+  collres__res:t="loot_book_c_collision"
+}
+
+item_junk_home_small_book_d{
+  _use:t="item_junk_home_small_book_base"
+  animchar__res:t="loot_book_d_char"
+  collres__res:t="loot_book_d_collision"
+}
+
+item_junk_home_small_book_e{
+  _use:t="item_junk_home_small_book_base"
+  animchar__res:t="loot_book_e_char"
+  collres__res:t="loot_book_e_collision"
+}
+
+item_junk_home_small_book_f{
+  _use:t="item_junk_home_small_book_base"
+  animchar__res:t="loot_book_f_char"
+  collres__res:t="loot_book_f_collision"
+}
+
+item_junk_home_modern_book_base{
+  _use:t="item_junk_home_small_stack"
+  _use:t="medium_loot_item"
+  item__name:t="items/book"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__weight:r=0.4
+  item__iconPitch:r=20
+  item__iconRoll:r=70
+  item__iconYaw:r=110
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_book:tag"{}
+}
+
+item_junk_home_modern_book_a{
+  _use:t="item_junk_home_modern_book_base"
+  animchar__res:t="africa_loot_book_a_char"
+  collres__res:t="africa_loot_book_a_collision"
+}
+
+item_junk_home_modern_book_b{
+  _use:t="item_junk_home_modern_book_base"
+  animchar__res:t="africa_loot_book_b_char"
+  collres__res:t="africa_loot_book_b_collision"
+}
+
+item_junk_home_modern_book_c{
+  _use:t="item_junk_home_modern_book_base"
+  animchar__res:t="africa_loot_book_c_char"
+  collres__res:t="africa_loot_book_c_collision"
+}
+
+item_junk_home_modern_book_d{
+  _use:t="item_junk_home_modern_book_base"
+  animchar__res:t="africa_loot_book_d_char"
+  collres__res:t="africa_loot_book_d_collision"
+}
+
+item_junk_home_modern_book_e{
+  _use:t="item_junk_home_modern_book_base"
+  animchar__res:t="africa_loot_book_e_char"
+  collres__res:t="africa_loot_book_e_collision"
+}
+
+item_junk_home_modern_book_f{
+  _use:t="item_junk_home_modern_book_base"
+  animchar__res:t="africa_loot_book_f_char"
+  collres__res:t="africa_loot_book_f_collision"
+}
+
+item_junk_home_modern_book_g{
+  _use:t="item_junk_home_modern_book_base"
+  animchar__res:t="africa_loot_book_g_char"
+  collres__res:t="africa_loot_book_g_collision"
+}
+
+item_junk_home_modern_book_h{
+  _use:t="item_junk_home_modern_book_base"
+  animchar__res:t="africa_loot_book_h_char"
+  collres__res:t="africa_loot_book_h_collision"
+}
+
+item_junk_home_modern_book_i{
+  _use:t="item_junk_home_modern_book_base"
+  animchar__res:t="africa_loot_book_i_char"
+  collres__res:t="africa_loot_book_i_collision"
+}
+
+item_junk_home_modern_book_j{
+  _use:t="item_junk_home_modern_book_base"
+  animchar__res:t="africa_loot_book_j_char"
+  collres__res:t="africa_loot_book_j_collision"
+}
+
+item_junk_home_modern_book_k{
+  _use:t="item_junk_home_modern_book_base"
+  animchar__res:t="africa_loot_book_k_char"
+  collres__res:t="africa_loot_book_k_collision"
+}
+
+item_junk_home_diary_a{
+  _use:t="item_junk_home_small_book_base"
+  animchar__res:t="item_tower_code_a_char"
+  collres__res:t="item_tower_code_a_collision"
+  item__name:t="items/item_junk_home_diary"
+  item__iconPitch:r=10
+  item__iconRoll:r=80
+  item__iconYaw:r=100
+  item__iconScale:r=1
+}
+
+item_junk_home_diary_b{
+  _use:t="item_junk_home_small_book_base"
+  animchar__res:t="item_tower_code_b_char"
+  collres__res:t="item_tower_code_b_collision"
+  item__name:t="items/item_junk_home_diary"
+  item__iconPitch:r=10
+  item__iconRoll:r=80
+  item__iconYaw:r=100
+  item__iconScale:r=1
+}
+
+item_junk_home_diary_c{
+  _use:t="item_junk_home_small_book_base"
+  animchar__res:t="item_tower_code_c_char"
+  collres__res:t="item_tower_code_c_collision"
+  item__name:t="items/item_junk_home_diary"
+  item__iconPitch:r=10
+  item__iconRoll:r=80
+  item__iconYaw:r=100
+  item__iconScale:r=1
+}
+
+item_junk_home_diary_d{
+  _use:t="item_junk_home_small_book_base"
+  animchar__res:t="item_tower_code_d_char"
+  collres__res:t="item_tower_code_d_collision"
+  item__name:t="items/item_junk_home_diary"
+  item__iconPitch:r=10
+  item__iconRoll:r=80
+  item__iconYaw:r=100
+  item__iconScale:r=1
+}
+
+item_junk_home_diary_e{
+  _use:t="item_junk_home_small_book_base"
+  animchar__res:t="item_tower_code_e_char"
+  collres__res:t="item_tower_code_e_collision"
+  item__name:t="items/item_junk_home_diary"
+  item__iconPitch:r=10
+  item__iconRoll:r=80
+  item__iconYaw:r=100
+  item__iconScale:r=1
+}
+
+item_junk_home_booklet{
+  _use:t="item_junk_home_small_stack"
+  _use:t="tiny_loot_item"
+  animchar__res:t="item_ad_booklet_char"
+  collres__res:t="item_ad_booklet_collision"
+  item__name:t="items/item_junk_home_booklet"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__weight:r=0.01
+}
+
+item_junk_home_ticket{
+  _use:t="item_junk_home_small_stack"
+  _use:t="tiny_loot_item"
+  animchar__res:t="item_ticket_char"
+  collres__res:t="item_ticket_collision"
+  item__name:t="items/item_junk_home_ticket"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__weight:r=0.01
+  item__iconPitch:r=10
+  item__iconRoll:r=65
+  item__iconYaw:r=25
+  item__iconScale:r=1
+}
+
+item_junk_home_air_freshener{
+  _use:t="item_junk_home_small_stack"
+  _use:t="tiny_loot_item"
+  animchar__res:t="item_air_freshener_char"
+  collres__res:t="item_air_freshener_collision"
+  item__name:t="items/item_junk_home_air_freshener"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__weight:r=0.01
+  item__iconPitch:r=20
+  item__iconRoll:r=65
+  item__iconYaw:r=25
+  item__iconScale:r=1
+}
+
+item_junk_home_banner{
+  _use:t="item_junk_home_small_stack"
+  _use:t="small_loot_item"
+  animchar__res:t="item_banner_char"
+  collres__res:t="item_banner_collision"
+  item__name:t="items/item_junk_home_banner"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__weight:r=0.05
+}
+
+item_junk_home_modern_keys{
+  _use:t="item_junk_home_small_stack"
+  _use:t="small_loot_item"
+  animchar__res:t="item_keys_char"
+  collres__res:t="item_keys_collision"
+  item__name:t="items/item_junk_home_modern_keys"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__weight:r=0.05
+  item__iconScale:r=1.2
+}
+
+item_junk_home_finish_flag{
+  _use:t="item_junk_home_small_stack"
+  _use:t="medium_loot_item"
+  animchar__res:t="item_finish_flag_char"
+  collres__res:t="item_finish_flag_collision"
+  item__name:t="items/item_junk_home_finish_flag"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__weight:r=0.1
+}
+
+item_junk_home_flag{
+  _use:t="item_junk_home_small_stack"
+  _use:t="medium_loot_item"
+  animchar__res:t="item_flag_char"
+  collres__res:t="item_flag_collision"
+  item__name:t="items/item_junk_home_flag"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__weight:r=0.5
+}
+
+item_junk_home_balloon_jar{
+  _use:t="item_junk_home_small_stack"
+  _use:t="medium_loot_item"
+  animchar__res:t="item_balloon_char"
+  collres__res:t="item_balloon_collision"
+  item__name:t="items/item_junk_home_balloon_jar"
+  item__desc:t="items/item_junk_home_small_item/desc"
+  item__weight:r=0.5
+  item__iconPitch:r=30
+  item__iconRoll:r=20
+  item__iconYaw:r=155
+  item__iconScale:r=1
+}
+
+item_junk_chemicals_stack{
+  _use:t="item"
+  _use:t="small_loot_item"
+  animchar__res:t="lootpile_chemicals_char"
+  collres__res:t="lootpile_chemicals_collision"
+  item__proto:t="item_junk_chemicals_stack"
+  item__name:t="items/item_junk_chemicals_stack"
+  item__weight:r=0.05
+  item__marketPrice:i=10
+  item__iconPitch:r=0
+  item__iconRoll:r=10
+  item__iconYaw:r=110
+
+  "item_civil:tag"{}
+  "item_junk:tag"{}
+  "item__alwaysUseful:tag"{}
+}
+
+item_junk_chemicals_drugs_1{
+  _use:t="item_junk_chemicals_stack"
+  animchar__res:t="medication_a_char"
+  collres__res:t="medication_a_collision"
+  item__name:t="items/item_junk_chemicals_drugs"
+  item__desc:t="items/item_junk_chemicals_drugs/desc"
+  item__scaleMult:r=0.6
+  item__iconPitch:r=0
+  item__iconRoll:r=45
+  item__iconYaw:r=45
+  item__iconOffset:p2=0, -0.2
+}
+
+item_junk_chemicals_drugs_2{
+  _use:t="item_junk_chemicals_stack"
+  animchar__res:t="medication_b_char"
+  collres__res:t="medication_b_collision"
+  item__name:t="items/item_junk_chemicals_drugs"
+  item__desc:t="items/item_junk_chemicals_drugs/desc"
+  item__scaleMult:r=0.6
+  item__iconYaw:r=10
+  item__iconScale:r=0.9
+  item__iconOffset:p2=-0.1, 0
+}
+
+item_junk_chemicals_drugs_3{
+  _use:t="item_junk_chemicals_stack"
+  animchar__res:t="medication_c_char"
+  collres__res:t="medication_c_collision"
+  item__name:t="items/item_junk_chemicals_drugs"
+  item__desc:t="items/item_junk_chemicals_drugs/desc"
+  item__scaleMult:r=0.6
+  item__iconYaw:r=10
+  item__iconScale:r=0.9
+  item__iconOffset:p2=-0.1, 0
+}
+
+item_junk_chemicals_drugs_4{
+  _use:t="item_junk_chemicals_stack"
+  animchar__res:t="medication_d_char"
+  collres__res:t="medication_d_collision"
+  item__name:t="items/item_junk_chemicals_drugs"
+  item__desc:t="items/item_junk_chemicals_drugs/desc"
+  item__scaleMult:r=0.6
+  item__iconPitch:r=0
+  item__iconRoll:r=45
+  item__iconYaw:r=45
+  item__iconOffset:p2=0, -0.2
+}
+
+item_junk_chemicals_iodine{
+  _use:t="item_junk_chemicals_stack"
+  animchar__res:t="medication_e_char"
+  collres__res:t="medication_e_collision"
+  item__name:t="items/item_junk_chemicals_iodine"
+  item__desc:t="items/item_junk_chemicals_drugs/desc"
+  item__scaleMult:r=0.6
+  item__iconYaw:r=10
+  item__iconScale:r=0.9
+  item__iconOffset:p2=-0.1, 0
+}
+
+item_junk_chemicals_soap{
+  _use:t="item_junk_chemicals_stack"
+  animchar__res:t="loot_soap_a_char"
+  collres__res:t="loot_soap_a_collision"
+  item__name:t="items/item_junk_chemicals_soap"
+  item__iconPitch:r=20
+  item__iconRoll:r=70
+  item__iconYaw:r=85
+}
+
+item_junk_chemicals_jar_1{
+  _use:t="item_junk_chemicals_stack"
+  _use:t="medium_loot_item"
+  animchar__res:t="loot_chemicals_a_char"
+  collres__res:t="loot_chemicals_a_collision"
+  item__name:t="items/item_junk_chemicals_jar"
+  item__desc:t="items/item_junk_chemicals_jar/desc"
+}
+
+item_junk_chemicals_jar_2{
+  _use:t="item_junk_chemicals_stack"
+  _use:t="medium_loot_item"
+  animchar__res:t="loot_chemicals_b_char"
+  collres__res:t="loot_chemicals_b_collision"
+  item__name:t="items/item_junk_chemicals_jar"
+  item__desc:t="items/item_junk_chemicals_jar/desc"
+}
+
+item_junk_chemicals_jar_3{
+  _use:t="item_junk_chemicals_stack"
+  _use:t="medium_loot_item"
+  animchar__res:t="loot_chemicals_c_char"
+  collres__res:t="loot_chemicals_c_collision"
+  item__name:t="items/item_junk_chemicals_jar"
+  item__desc:t="items/item_junk_chemicals_jar/desc"
+  item__iconScale:r=0.9
+  item__iconOffset:p2=-0.05, -0.1
+}
+
+item_junk_chemicals_strange_reagent{
+  _use:t="item_junk_chemicals_stack"
+  _use:t="medium_loot_item"
+  animchar__res:t="item_suspicious_package_char"
+  collres__res:t="item_suspicious_package_collision"
+  item__name:t="items/item_junk_chemicals_strange_reagent"
+  item__weight:r=0.3
+  item__iconPitch:r=20
+  item__iconRoll:r=60
+  item__iconYaw:r=20
+  item__iconScale:r=0.9
+  item__iconOffset:p2=-0.05, 0
+}
+
+item_junk_industrial_stack{
+  _use:t="item"
+  _use:t="small_loot_item"
+  animchar__res:t="lootpile_hardware_char"
+  collres__res:t="lootpile_hardware_collision"
+  item__proto:t="item_junk_industrial_stack"
+  item__name:t="items/item_junk_industrial_stack"
+  item__weight:r=0.1
+  item__marketPrice:i=10
+  item__iconPitch:r=10
+  item__iconRoll:r=50
+  item__iconYaw:r=15
+  item__iconScale:r=1.15
+  item__iconOffset:p2=-0.05, 0
+
+  "item_civil:tag"{}
+  "item_junk:tag"{}
+  "item__alwaysUseful:tag"{}
+}
+
+item_junk_industrial_small_square_battery{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_battery_3336_a_char"
+  collres__res:t="loot_battery_3336_a_collision"
+  item__name:t="items/item_junk_industrial_small_square_battery"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconPitch:r=-10
+  item__iconRoll:r=0
+  item__iconYaw:r=110
+  item__iconScale:r=0.9
+}
+
+item_junk_industrial_small_metal_nut{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="projectile_nut_a_char"
+  collres__res:t="projectile_nut_a_collision"
+  item__name:t="items/item_junk_industrial_small_metal_nut"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=80
+  item__iconYaw:r=20
+  item__iconScale:r=0.9
+  item__iconOffset:p2=0, -0.05
+}
+
+item_junk_industrial_small_nails{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_tin_nails_a_item_char"
+  collres__res:t="loot_tin_nails_a_item_collision"
+  item__name:t="items/item_junk_industrial_small_nails"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__weight:r=0.2
+  item__iconPitch:r=0
+  item__iconRoll:r=20
+  item__iconYaw:r=180
+  item__iconScale:r=1.1
+}
+
+item_junk_industrial_small_ruler{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_ruler_b_char"
+  collres__res:t="loot_ruler_b_collision"
+  item__name:t="items/item_junk_industrial_small_ruler"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconPitch:r=25
+  item__iconRoll:r=45
+  item__iconYaw:r=25
+  item__iconScale:r=1.1
+}
+
+item_junk_industrial_small_glasscutter{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_sovmod_glasscutter_char"
+  collres__res:t="loot_sovmod_glasscutter_collision"
+  item__name:t="items/item_junk_industrial_small_glasscutter"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconPitch:r=0
+  item__iconRoll:r=80
+  item__iconYaw:r=225
+  item__iconScale:r=1
+}
+
+item_junk_industrial_small_calipers{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_calipers_a_char"
+  collres__res:t="loot_calipers_a_collision"
+  item__name:t="items/item_junk_industrial_small_calipers"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconPitch:r=5
+  item__iconRoll:r=80
+  item__iconYaw:r=225
+  item__iconScale:r=1.1
+  item__iconOffset:p2=-0.1, -0.1
+}
+
+item_junk_industrial_small_angle{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_sovmod_tools_angle_char"
+  collres__res:t="loot_sovmod_tools_angle_collision"
+  item__name:t="items/item_junk_industrial_small_angle"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconRoll:r=45
+  item__iconYaw:r=45
+  item__iconScale:r=1.1
+  item__iconOffset:p2=-0.2, 0
+}
+
+item_junk_industrial_small_brush{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_sovmod_tools_brush_char"
+  collres__res:t="loot_sovmod_tools_brush_collision"
+  item__name:t="items/item_junk_industrial_small_brush"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconRoll:r=65
+  item__iconYaw:r=45
+  item__iconScale:r=0.9
+  item__iconOffset:p2=0.1, 0
+}
+
+item_junk_industrial_small_hammer{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_sovmod_tools_hammer_char"
+  collres__res:t="loot_sovmod_tools_hammer_collision"
+  item__name:t="items/item_junk_industrial_small_hammer"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconRoll:r=65
+  item__iconYaw:r=45
+  item__iconScale:r=1
+}
+
+item_junk_industrial_small_nippers{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_sovmod_tools_nippers_char"
+  collres__res:t="loot_sovmod_tools_nippers_collision"
+  item__name:t="items/item_junk_industrial_small_nippers"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconRoll:r=65
+  item__iconYaw:r=45
+  item__iconScale:r=1
+}
+
+item_junk_industrial_small_planer{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_sovmod_tools_planer_char"
+  collres__res:t="loot_sovmod_tools_planer_collision"
+  item__name:t="items/item_junk_industrial_small_planer"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconRoll:r=25
+  item__iconYaw:r=45
+  item__iconScale:r=1
+}
+
+item_junk_industrial_small_pliers{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_sovmod_tools_pliers_char"
+  collres__res:t="loot_sovmod_tools_pliers_collision"
+  item__name:t="items/item_junk_industrial_small_pliers"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconRoll:r=65
+  item__iconYaw:r=45
+  item__iconScale:r=1
+}
+
+item_junk_industrial_small_duct_tape{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_sovmod_bluetape_char"
+  collres__res:t="loot_sovmod_bluetape_collision"
+  item__name:t="items/item_junk_industrial_small_duct_tape"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconPitch:r=30
+  item__iconRoll:r=70
+  item__iconYaw:r=0
+  item__iconScale:r=0.9
+}
+
+item_junk_industrial_small_micrometer{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_sovmod_micrometer_a_char"
+  collres__res:t="loot_sovmod_micrometer_a_collision"
+  item__name:t="items/item_junk_industrial_small_micrometer"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconPitch:r=20
+  item__iconRoll:r=50
+  item__iconYaw:r=55
+  item__iconOffset:p2=0.1, 0
+}
+
+item_junk_industrial_rag_a{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_rag_a_char"
+  collres__res:t="loot_rag_a_collision"
+  item__name:t="items/item_junk_industrial_rag_a"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconPitch:r=15
+  item__iconRoll:r=70
+  item__iconYaw:r=55
+}
+
+item_junk_industrial_rag_b{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_rag_b_char"
+  collres__res:t="loot_rag_b_collision"
+  item__name:t="items/item_junk_industrial_rag_b"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconPitch:r=15
+  item__iconRoll:r=70
+  item__iconYaw:r=55
+}
+
+item_junk_industrial_rag_c{
+  _use:t="item_junk_industrial_stack"
+  animchar__res:t="loot_rag_c_char"
+  collres__res:t="loot_rag_c_collision"
+  item__name:t="items/item_junk_industrial_rag_c"
+  item__desc:t="items/item_junk_industrial_small_item/desc"
+  item__iconPitch:r=15
+  item__iconRoll:r=70
+  item__iconYaw:r=55
+}
+
+item_junk_industrial_modern_car_battery{
+  _use:t="item_junk_industrial_stack"
+  _use:t="big_loot_item"
+  animchar__res:t="battery_12v_dyn_char"
+  collres__res:t="battery_12v_dyn_collision"
+  item__name:t="items/item_junk_industrial_modern_car_battery"
+  item__weight:r=14
+  item__iconPitch:r=-5
+  item__iconRoll:r=20
+  item__iconYaw:r=115
+  item__iconScale:r=1
+  item__iconOffset:p2=-0.05, 0
+}
+
+item_junk_industrial_gas_canister{
+  _use:t="item_junk_industrial_stack"
+  _use:t="big_loot_item"
+  animchar__res:t="gas_cylinder_a_dyn_char"
+  collres__res:t="gas_cylinder_a_dyn_collision"
+  item__name:t="items/item_junk_industrial_gas_canister"
+  item__weight:r=12
+  item__iconPitch:r=-30
+  item__iconRoll:r=10
+  item__iconYaw:r=-35
+  item__iconScale:r=1
+}
+
+item_junk_industrial_chain_coil{
+  _use:t="item_junk_industrial_stack"
+  _use:t="big_loot_item"
+  animchar__res:t="item_chain_coil_char"
+  collres__res:t="item_chain_coil_collision"
+  item__name:t="items/item_junk_industrial_chain_coil"
+  item__weight:r=8
+  item__iconOffset:p2=-0.05, 0
+  item__iconScale:r=1
+}
+
+item_junk_industrial_gears{
+  _use:t="item_junk_industrial_stack"
+  _use:t="medium_loot_item"
+  animchar__res:t="item_gears_char"
+  collres__res:t="item_gears_collision"
+  item__name:t="items/item_junk_industrial_gears"
+  item__weight:r=4
+  item__iconPitch:r=0
+  item__iconRoll:r=35
+  item__iconYaw:r=30
+  item__iconScale:r=1.1
+}
+
+item_junk_industrial_modern_metal_nuts_box{
+  _use:t="item_junk_industrial_stack"
+  _use:t="big_loot_item"
+  animchar__res:t="item_metal_nuts_char"
+  collres__res:t="item_metal_nuts_collision"
+  item__name:t="items/item_junk_industrial_modern_metal_nuts_box"
+  item__weight:r=0.45
+  item__iconPitch:r=15
+  item__iconRoll:r=60
+  item__iconYaw:r=15
+  item__iconScale:r=0.9
+  item__iconOffset:p2=0, -0.1
+}
+
+item_junk_industrial_wires{
+  _use:t="item_junk_industrial_stack"
+  _use:t="big_loot_item"
+  animchar__res:t="item_wires_char"
+  collres__res:t="item_wires_collision"
+  item__name:t="items/item_junk_industrial_wires"
+  item__weight:r=7
+  item__iconPitch:r=40
+  item__iconRoll:r=40
+  item__iconYaw:r=0
+  item__iconScale:r=1
+}
+
+item_junk_industrial_tool_case{
+  _use:t="item_junk_industrial_stack"
+  _use:t="big_loot_item"
+  animchar__res:t="tool_case_a_dyn_char"
+  collres__res:t="tool_case_a_dyn_collision"
+  item__name:t="items/item_junk_industrial_tool_case"
+  item__weight:r=6
+  item__iconScale:r=0.9
+}
+
+item_junk_industrial_big_tool_case{
+  _use:t="item_junk_industrial_stack"
+  _use:t="big_loot_item"
+  animchar__res:t="tool_case_b_dyn_char"
+  collres__res:t="tool_case_b_dyn_collision"
+  item__name:t="items/item_junk_industrial_big_tool_case"
+  item__weight:r=12
+  item__iconPitch:r=0
+  item__iconRoll:r=20
+  item__iconYaw:r=40
+  item__iconScale:r=1
+}
+
+item_junk_industrial_modern_car_spare_parts{
+  _use:t="item_junk_industrial_stack"
+  _use:t="medium_loot_item"
+  animchar__res:t="item_spare_parts_char"
+  collres__res:t="item_spare_parts_collision"
+  item__name:t="items/item_junk_industrial_modern_car_spare_parts"
+  item__weight:r=2
+  item__iconScale:r=1.1
+}
+
+item_junk_electronics_box{
+  _use:t="item"
+  _use:t="small_loot_item"
+  animchar__res:t="lootpile_electronic_components_char"
+  collres__res:t="lootpile_electronic_components_collision"
+  item__proto:t="item_junk_electronics_box"
+  item__name:t="items/item_junk_electronics_box"
+  item__weight:r=0.1
+  item__marketPrice:i=10
+  item__iconPitch:r=10
+  item__iconRoll:r=50
+  item__iconYaw:r=15
+  item__iconScale:r=1.15
+  item__iconOffset:p2=-0.05, 0
+
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+  "item_junk:tag"{}
+  "item__alwaysUseful:tag"{}
+}
+
+item_junk_electronics_capacitor_a{
+  _use:t="item_junk_electronics_box"
+  animchar__res:t="loot_electronic_capacitors_a_char"
+  collres__res:t="loot_electronic_capacitors_a_collision"
+  item__name:t="items/item_junk_electronics_capacitor_a"
+  item__weight:r=0.01
+  item__iconPitch:r=-10
+  item__iconRoll:r=0
+  item__iconYaw:r=110
+  item__iconOffset:p2=-0.1, 0.1
+}
+
+item_junk_electronics_capacitor_b{
+  _use:t="item_junk_electronics_box"
+  animchar__res:t="loot_electronic_capacitors_b_char"
+  collres__res:t="loot_electronic_capacitors_b_collision"
+  item__name:t="items/item_junk_electronics_capacitor_b"
+  item__weight:r=0.01
+  item__iconOffset:p2=-0.1, 0
+}
+
+item_junk_electronics_diode_a{
+  _use:t="item_junk_electronics_box"
+  animchar__res:t="loot_electronic_diodes_a_char"
+  collres__res:t="loot_electronic_diodes_a_collision"
+  item__name:t="items/item_junk_electronics_diode_a"
+  item__weight:r=0.01
+  item__iconPitch:r=-5
+}
+
+item_junk_electronics_diode_b{
+  _use:t="item_junk_electronics_box"
+  animchar__res:t="loot_electronic_diodes_b_char"
+  collres__res:t="loot_electronic_diodes_b_collision"
+  item__name:t="items/item_junk_electronics_diode_b"
+  item__weight:r=0.01
+  item__iconOffset:p2=-0.2, -0.1
+}
+
+item_junk_electronics_diode_c{
+  _use:t="item_junk_electronics_box"
+  animchar__res:t="loot_electronic_diodes_c_char"
+  collres__res:t="loot_electronic_diodes_c_collision"
+  item__name:t="items/item_junk_electronics_diode_c"
+  item__weight:r=0.01
+  item__iconOffset:p2=-0.1, 0
+}
+
+item_junk_electronics_resistor_a{
+  _use:t="item_junk_electronics_box"
+  animchar__res:t="loot_electronic_resistors_a_char"
+  collres__res:t="loot_electronic_resistors_a_collision"
+  item__name:t="items/item_junk_electronics_resistor_a"
+  item__weight:r=0.01
+  item__iconOffset:p2=0, -0.05
+}
+
+item_junk_electronics_resistor_b{
+  _use:t="item_junk_electronics_box"
+  animchar__res:t="loot_electronic_resistors_b_char"
+  collres__res:t="loot_electronic_resistors_b_collision"
+  item__name:t="items/item_junk_electronics_resistor_b"
+  item__weight:r=0.01
+  item__iconPitch:r=10
+  item__iconRoll:r=25
+}
+
+item_junk_electronics_resistor_c{
+  _use:t="item_junk_electronics_box"
+  animchar__res:t="loot_electronic_resistors_c_char"
+  collres__res:t="loot_electronic_resistors_c_collision"
+  item__name:t="items/item_junk_electronics_resistor_c"
+  item__weight:r=0.01
+  item__iconYaw:r=35
+  item__iconOffset:p2=0, -0.1
+}
+
+item_junk_electronics_resistor_d{
+  _use:t="item_junk_electronics_box"
+  animchar__res:t="loot_electronic_resistors_d_char"
+  collres__res:t="loot_electronic_resistors_d_collision"
+  item__name:t="items/item_junk_electronics_resistor_d"
+  item__weight:r=0.01
+  item__iconYaw:r=35
+  item__iconOffset:p2=0.05, -0.1
+}
+
+item_junk_electronics_resistor_e{
+  _use:t="item_junk_electronics_box"
+  animchar__res:t="loot_electronic_resistors_e_char"
+  collres__res:t="loot_electronic_resistors_e_collision"
+  item__name:t="items/item_junk_electronics_resistor_e"
+  item__weight:r=0.01
+  item__iconYaw:r=35
+  item__iconOffset:p2=0, -0.1
+}
+
+item_junk_electronics_light_bulb{
+  _use:t="item_junk_electronics_box"
+  animchar__res:t="item_lightbulb_char"
+  collres__res:t="item_lightbulb_collision"
+  item__name:t="items/item_junk_electronics_light_bulb"
+  item__weight:r=0.1
+  item__iconPitch:r=-10
+  item__iconRoll:r=0
+  item__iconYaw:r=25
+  item__iconScale:r=1
+}
+
+item_junk_electronics_modern_radio{
+  _use:t="item_junk_electronics_box"
+  animchar__res:t="item_radio_char"
+  collres__res:t="item_radio_collision"
+  item__name:t="items/item_junk_electronics_modern_radio"
+  item__weight:r=0.6
+  item__iconPitch:r=-10
+  item__iconRoll:r=0
+  item__iconYaw:r=25
+  item__iconScale:r=1
+}
+
+item_junk_electronics_walkie_talkie{
+  _use:t="item_junk_electronics_box"
+  animchar__res:t="item_walkie_talkie_char"
+  collres__res:t="item_walkie_talkie_collision"
+  item__name:t="items/item_junk_electronics_walkie_talkie"
+  item__weight:r=0.2
+  item__iconPitch:r=-20
+  item__iconRoll:r=70
+  item__iconYaw:r=-45
+  item__iconScale:r=1
+}
+
+note_saturated_item_on_pickup{
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_saturated_item_on_pickup"
+  }
+}
+
+item_amfiton_tape_recorder_a_player_blue{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  _use:t="medium_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_amfiton_tape_recorder_a_player_blue_char"
+  collres__res:t="loot_amfiton_tape_recorder_a_player_blue_collision"
+  item__proto:t="item_amfiton_tape_recorder_a_player_blue"
+  item__name:t="items/item_amfiton_tape_recorder_a_player_blue"
+  item__weight:r=0.6
+  item__iconYaw:r=45
+  item__iconPitch:r=-25
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+}
+
+item_amfiton_tape_recorder_a_player_blue_saturated{
+  _use:t="item_amfiton_tape_recorder_a_player_blue"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_amfiton_tape_recorder_a_player_blue_saturated"
+  item__name:t="items/item_amfiton_tape_recorder_a_player_blue_saturated"
+}
+
+item_amfiton_tape_recorder_a_player_red{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  _use:t="medium_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_amfiton_tape_recorder_a_player_red_char"
+  collres__res:t="loot_amfiton_tape_recorder_a_player_red_collision"
+  item__proto:t="item_amfiton_tape_recorder_a_player_red"
+  item__name:t="items/item_amfiton_tape_recorder_a_player_red"
+  item__weight:r=0.6
+  item__iconYaw:r=45
+  item__iconPitch:r=-25
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+}
+
+item_amfiton_tape_recorder_a_player_red_saturated{
+  _use:t="item_amfiton_tape_recorder_a_player_red"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_amfiton_tape_recorder_a_player_red_saturated"
+  item__name:t="items/item_amfiton_tape_recorder_a_player_red_saturated"
+}
+
+item_amfiton_tape_recorder_a_speaker_blue{
+  _use:t="item"
+  _use:t="big_loot_item"
+  _use:t="big_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_amfiton_tape_recorder_a_speaker_blue_char"
+  collres__res:t="loot_amfiton_tape_recorder_a_speaker_blue_collision"
+  item__proto:t="item_amfiton_tape_recorder_a_speaker_blue"
+  item__name:t="items/item_amfiton_tape_recorder_a_speaker_blue"
+  item__weight:r=2.2
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+}
+
+item_amfiton_tape_recorder_a_speaker_blue_saturated{
+  _use:t="item_amfiton_tape_recorder_a_speaker_blue"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_amfiton_tape_recorder_a_speaker_blue_saturated"
+  item__name:t="items/item_amfiton_tape_recorder_a_speaker_blue_saturated"
+}
+
+item_amfiton_tape_recorder_a_speaker_red{
+  _use:t="item"
+  _use:t="big_loot_item"
+  _use:t="big_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_amfiton_tape_recorder_a_speaker_red_char"
+  collres__res:t="loot_amfiton_tape_recorder_a_speaker_red_collision"
+  item__proto:t="item_amfiton_tape_recorder_a_speaker_red"
+  item__name:t="items/item_amfiton_tape_recorder_a_speaker_red"
+  item__weight:r=2.2
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+}
+
+item_amfiton_tape_recorder_a_speaker_red_saturated{
+  _use:t="item_amfiton_tape_recorder_a_speaker_red"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_amfiton_tape_recorder_a_speaker_red_saturated"
+  item__name:t="items/item_amfiton_tape_recorder_a_speaker_red_saturated"
+}
+
+item_aurora_cam_a{
+  _use:t="item"
+  _use:t="big_loot_item"
+  _use:t="big_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_aurora_cam_a_char"
+  collres__res:t="loot_aurora_cam_a_collision"
+  item__proto:t="item_aurora_cam_a"
+  item__name:t="items/item_aurora_cam_a"
+  item__weight:r=1.4
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+}
+
+item_aurora_cam_a_saturated{
+  _use:t="item_aurora_cam_a"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_aurora_cam_a_saturated"
+  item__name:t="items/item_aurora_cam_a_saturated"
+}
+
+item_legend404_tape_recorder_a{
+  _use:t="item"
+  _use:t="big_loot_item"
+  _use:t="big_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_legend404_tape_recorder_a_char"
+  collres__res:t="loot_legend404_tape_recorder_a_collision"
+  item__proto:t="item_legend404_tape_recorder_a"
+  item__name:t="items/item_legend404_tape_recorder_a"
+  item__weight:r=2.7
+  item__iconYaw:r=45
+  item__iconPitch:r=15
+  item__iconRoll:r=45
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+}
+
+item_legend404_tape_recorder_a_saturated{
+  _use:t="item_legend404_tape_recorder_a"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_legend404_tape_recorder_a_saturated"
+  item__name:t="items/item_legend404_tape_recorder_a_saturated"
+}
+
+item_zenit_cam_a{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  _use:t="medium_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_zenit_cam_a_char"
+  collres__res:t="loot_zenit_cam_a_collision"
+  item__proto:t="item_zenit_cam_a"
+  item__name:t="items/item_zenit_cam_a"
+  item__weight:r=0.92
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_zenit_cam_a_saturated{
+  _use:t="item_zenit_cam_a"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_zenit_cam_a_saturated"
+  item__name:t="items/item_zenit_cam_a_saturated"
+}
+
+item_mk52_calculator{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  _use:t="medium_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_calculator_mk52_char"
+  collres__res:t="loot_calculator_mk52_collision"
+  item__proto:t="item_mk52_calculator"
+  item__name:t="items/item_mk52_calculator"
+  item__weight:r=0.25
+  item__iconPitch:r=20
+  item__iconRoll:r=80
+  item__iconYaw:r=70
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+}
+
+item_mk52_calculator_saturated{
+  _use:t="item_mk52_calculator"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_mk52_calculator_saturated"
+  item__name:t="items/item_mk52_calculator_saturated"
+}
+
+item_mk59_calculator{
+  _use:t="item"
+  _use:t="big_loot_item"
+  _use:t="big_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_calculator_mk59_char"
+  collres__res:t="loot_calculator_mk59_collision"
+  item__proto:t="item_mk59_calculator"
+  item__name:t="items/item_mk59_calculator"
+  item__weight:r=1.2
+  item__iconPitch:r=0
+  item__iconRoll:r=50
+  item__iconYaw:r=100
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+}
+
+item_mk59_calculator_saturated{
+  _use:t="item_mk59_calculator"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_mk59_calculator_saturated"
+  item__name:t="items/item_mk59_calculator_saturated"
+}
+
+item_fishing_rod{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  _use:t="medium_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="item_fishing_rod_char"
+  collres__res:t="item_fishing_rod_collision"
+  item__proto:t="item_fishing_rod"
+  item__name:t="items/item_fishing_rod"
+  item__weight:r=0.8
+  item__marketPrice:i=100
+  item__iconPitch:r=0
+  item__iconRoll:r=50
+  item__iconYaw:r=40
+  item__iconScale:r=1.2
+  item__iconOffset:p2=-0.1, 0
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_fishing_rod_saturated{
+  _use:t="item_fishing_rod"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_mk59_calculator_saturated"
+  item__name:t="items/item_mk59_calculator_saturated"
+}
+
+item_reward_cup{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  _use:t="medium_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="item_reward_cup_char"
+  collres__res:t="item_reward_cup_collision"
+  item__proto:t="item_reward_cup"
+  item__name:t="items/item_reward_cup"
+  item__weight:r=0.6
+  item__marketPrice:i=100
+  item__iconPitch:r=-20
+  item__iconRoll:r=-10
+  item__iconYaw:r=10
+  item__iconOffset:p2=-0.05, 0
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_reward_cup_saturated{
+  _use:t="item_reward_cup"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_reward_cup_saturated"
+  item__name:t="items/item_reward_cup_saturated"
+}
+
+sound_track{
+  soundTrack:t=""
+  author:t="Unknown"
+}
+
+author_jared_benson{
+  author:t="Jared Benson"
+}
+
+item_audio_cassete_base{
+  _use:t="item"
+  _use:t="small_loot_item"
+  _use:t="small_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  _use:t="sound_track"
+  animchar__res:t="loot_audio_cassete_a_char"
+  collres__res:t="loot_audio_cassete_a_collision"
+  item__proto:t="item_audio_cassete_base"
+  item__name:t="items/item_audio_cassete_base"
+  item__desc:t="items/sound_track/desc"
+  item__weight:r=0.1
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_cassette:tag"{}
+}
+
+item_audio_cassete_base_0{
+  _use:t="item_audio_cassete_base"
+  _use:t="author_jared_benson"
+  item__proto:t="item_audio_cassete_base_0"
+  item__name:t="items/item_audio_cassete_base_0"
+  soundTrack:t="music/player/jared_benson_at_the_crossroads"
+  pickup_unlock__name:t="item_audio_cassete_base_0"
+}
+
+item_audio_cassete_base_1{
+  _use:t="item_audio_cassete_base"
+  author:t="Tilman Sillescu"
+  item__proto:t="item_audio_cassete_base_1"
+  item__name:t="items/item_audio_cassete_base_1"
+  soundTrack:t="music/player/tilman_sillescu_shaman_kingdom"
+  pickup_unlock__name:t="item_audio_cassete_base_1"
+}
+
+item_audio_cassete_base_2{
+  _use:t="item_audio_cassete_base"
+  _use:t="author_jared_benson"
+  item__proto:t="item_audio_cassete_base_2"
+  item__name:t="items/item_audio_cassete_base_2"
+  soundTrack:t="music/player/jared_benson_stream_of_mind"
+  pickup_unlock__name:t="item_audio_cassete_base_2"
+}
+
+item_audio_cassete_base_3{
+  _use:t="item_audio_cassete_base"
+  _use:t="author_jared_benson"
+  item__proto:t="item_audio_cassete_base_3"
+  item__name:t="items/item_audio_cassete_base_3"
+  soundTrack:t="music/player/jared_benson_pyramid_crumble"
+  pickup_unlock__name:t="item_audio_cassete_base_3"
+}
+
+item_audio_cassete_base_4{
+  _use:t="item_audio_cassete_base"
+  _use:t="author_jared_benson"
+  item__proto:t="item_audio_cassete_base_4"
+  item__name:t="items/item_audio_cassete_base_4"
+  soundTrack:t="music/player/jared_benson_creative"
+  pickup_unlock__name:t="item_audio_cassete_base_4"
+}
+
+item_audio_cassete_base_5{
+  _use:t="item_audio_cassete_base"
+  _use:t="author_jared_benson"
+  item__proto:t="item_audio_cassete_base_5"
+  item__name:t="items/item_audio_cassete_base_5"
+  soundTrack:t="music/player/jared_benson_drain"
+  pickup_unlock__name:t="item_audio_cassete_base_5"
+}
+
+item_audio_cassete_base_6{
+  _use:t="item_audio_cassete_base"
+  _use:t="author_jared_benson"
+  item__proto:t="item_audio_cassete_base_6"
+  item__name:t="items/item_audio_cassete_base_6"
+  soundTrack:t="music/player/jared_benson_ancients"
+  pickup_unlock__name:t="item_audio_cassete_base_6"
+}
+
+item_audio_cassete_base_7{
+  _use:t="item_audio_cassete_base"
+  _use:t="author_jared_benson"
+  item__proto:t="item_audio_cassete_base_7"
+  item__name:t="items/item_audio_cassete_base_7"
+  soundTrack:t="music/player/jared_benson_firefly"
+  pickup_unlock__name:t="item_audio_cassete_base_7"
+}
+
+item_audio_cassete_1{
+  _use:t="item_audio_cassete_base"
+  _use:t="author_jared_benson"
+  item__proto:t="item_audio_cassete_1"
+  item__name:t="items/item_audio_cassete_1"
+  soundTrack:t="music/player/jared_benson_space_work_universe"
+  pickup_unlock__name:t="item_audio_cassete_1"
+}
+
+item_audio_cassete_2{
+  _use:t="item_audio_cassete_base"
+  _use:t="author_jared_benson"
+  item__proto:t="item_audio_cassete_2"
+  item__name:t="items/item_audio_cassete_2"
+  soundTrack:t="music/player/jared_benson_back_again"
+  pickup_unlock__name:t="item_audio_cassete_2"
+}
+
+item_audio_cassete_3{
+  _use:t="item_audio_cassete_base"
+  _use:t="author_jared_benson"
+  item__proto:t="item_audio_cassete_3"
+  item__name:t="items/item_audio_cassete_3"
+  soundTrack:t="music/player/jared_benson_driving_home"
+  pickup_unlock__name:t="item_audio_cassete_3"
+}
+
+item_audio_cassete_4{
+  _use:t="item_audio_cassete_base"
+  author:t="Craig Riley"
+  item__proto:t="item_audio_cassete_4"
+  item__name:t="items/item_audio_cassete_4"
+  soundTrack:t="music/player/craig_riley_black_iron"
+  pickup_unlock__name:t="item_audio_cassete_4"
+}
+
+item_audio_cassete_5{
+  _use:t="item_audio_cassete_base"
+  _use:t="author_jared_benson"
+  item__proto:t="item_audio_cassete_5"
+  item__name:t="items/item_audio_cassete_5"
+  soundTrack:t="music/player/jared_benson_blackmail"
+  pickup_unlock__name:t="item_audio_cassete_5"
+}
+
+item_audio_cassete_6{
+  _use:t="item_audio_cassete_base"
+  author:t="Phil Symonds"
+  item__proto:t="item_audio_cassete_6"
+  item__name:t="items/item_audio_cassete_6"
+  soundTrack:t="music/player/phil_symonds_blessed_souls"
+  pickup_unlock__name:t="item_audio_cassete_6"
+}
+
+item_audio_cassete_7{
+  _use:t="item_audio_cassete_base"
+  _use:t="author_jared_benson"
+  item__proto:t="item_audio_cassete_7"
+  item__name:t="items/item_audio_cassete_7"
+  soundTrack:t="music/player/jared_benson_citizen"
+  pickup_unlock__name:t="item_audio_cassete_7"
+}
+
+item_audio_cassete_8{
+  _use:t="item_audio_cassete_base"
+  _use:t="author_jared_benson"
+  item__proto:t="item_audio_cassete_8"
+  item__name:t="items/item_audio_cassete_8"
+  soundTrack:t="music/player/jared_benson_detection"
+  pickup_unlock__name:t="item_audio_cassete_8"
+}
+
+item_audio_cassete_9{
+  _use:t="item_audio_cassete_base"
+  author:t="Alex Khaskin"
+  item__proto:t="item_audio_cassete_9"
+  item__name:t="items/item_audio_cassete_9"
+  soundTrack:t="music/player/alex_khaskin_night_call"
+  pickup_unlock__name:t="item_audio_cassete_9"
+}
+
+item_vhs_cassete_base{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  _use:t="medium_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  item__weight:r=0.25
+  item__iconPitch:r=35
+  item__iconRoll:r=70
+  item__iconYaw:r=90
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_cassette:tag"{}
+}
+
+item_vhs_cassete_a{
+  _use:t="item_vhs_cassete_base"
+  animchar__res:t="loot_vhs_cassette_a_char"
+  item__animcharInInventoryName:t="loot_vhs_cassette_a_item_char"
+  collres__res:t="loot_vhs_cassette_a_collision"
+  item__proto:t="item_vhs_cassete_a"
+  item__name:t="items/item_vhs_cassete_a"
+}
+
+item_vhs_cassete_e{
+  _use:t="item_vhs_cassete_base"
+  animchar__res:t="loot_vhs_cassette_e_char"
+  item__animcharInInventoryName:t="loot_vhs_cassette_e_item_char"
+  collres__res:t="loot_vhs_cassette_e_collision"
+  item__proto:t="item_vhs_cassete_e"
+  item__name:t="items/item_vhs_cassete_e"
+}
+
+item_vhs_cassete_g{
+  _use:t="item_vhs_cassete_base"
+  animchar__res:t="loot_vhs_cassette_g_char"
+  item__animcharInInventoryName:t="loot_vhs_cassette_g_item_char"
+  collres__res:t="loot_vhs_cassette_g_collision"
+  item__proto:t="item_vhs_cassete_g"
+  item__name:t="items/item_vhs_cassete_g"
+}
+
+item_vhs_cassete_h{
+  _use:t="item_vhs_cassete_base"
+  animchar__res:t="loot_vhs_cassette_h_char"
+  item__animcharInInventoryName:t="loot_vhs_cassette_h_item_char"
+  collres__res:t="loot_vhs_cassette_h_collision"
+  item__proto:t="item_vhs_cassete_h"
+  item__name:t="items/item_vhs_cassete_h"
+}
+
+item_vhs_cassete_i{
+  _use:t="item_vhs_cassete_base"
+  animchar__res:t="loot_vhs_cassette_i_char"
+  item__animcharInInventoryName:t="loot_vhs_cassette_i_item_char"
+  collres__res:t="loot_vhs_cassette_i_collision"
+  item__proto:t="item_vhs_cassete_i"
+  item__name:t="items/item_vhs_cassete_i"
+}
+
+item_vhs_cassete_k{
+  _use:t="item_vhs_cassete_base"
+  animchar__res:t="loot_vhs_cassette_k_char"
+  item__animcharInInventoryName:t="loot_vhs_cassette_k_item_char"
+  collres__res:t="loot_vhs_cassette_k_collision"
+  item__proto:t="item_vhs_cassete_k"
+  item__name:t="items/item_vhs_cassete_k"
+}
+
+item_vhs_cassete_l{
+  _use:t="item_vhs_cassete_base"
+  animchar__res:t="loot_vhs_cassette_l_char"
+  item__animcharInInventoryName:t="loot_vhs_cassette_l_item_char"
+  collres__res:t="loot_vhs_cassette_l_collision"
+  item__proto:t="item_vhs_cassete_l"
+  item__name:t="items/item_vhs_cassete_l"
+}
+
+item_vhs_cassete_m{
+  _use:t="item_vhs_cassete_base"
+  animchar__res:t="loot_vhs_cassette_m_char"
+  item__animcharInInventoryName:t="loot_vhs_cassette_m_item_char"
+  collres__res:t="loot_vhs_cassette_m_collision"
+  item__proto:t="item_vhs_cassete_m"
+  item__name:t="items/item_vhs_cassete_m"
+}
+
+item_book_base{
+  _use:t="item"
+  _use:t="big_loot_item"
+  _use:t="big_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  item__name:t="items/books"
+  item__weight:r=1.6
+  item__iconPitch:r=35
+  item__iconRoll:r=70
+  item__iconYaw:r=90
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_book:tag"{}
+}
+
+item_book_a{
+  _use:t="item_book_base"
+  animchar__res:t="loot_books_a_char"
+  collres__res:t="loot_books_a_collision"
+  item__proto:t="item_book_a"
+}
+
+item_book_b{
+  _use:t="item_book_base"
+  animchar__res:t="loot_books_b_char"
+  collres__res:t="loot_books_b_collision"
+  item__proto:t="item_book_b"
+}
+
+item_book_c{
+  _use:t="item_book_base"
+  animchar__res:t="loot_books_c_char"
+  collres__res:t="loot_books_c_collision"
+  item__proto:t="item_book_c"
+}
+
+item_book_d{
+  _use:t="item_book_base"
+  animchar__res:t="loot_books_d_char"
+  collres__res:t="loot_books_d_collision"
+  item__proto:t="item_book_d"
+}
+
+item_book_e{
+  _use:t="item_book_base"
+  animchar__res:t="loot_books_e_char"
+  collres__res:t="loot_books_e_collision"
+  item__proto:t="item_book_e"
+}
+
+item_book_f{
+  _use:t="item_book_base"
+  animchar__res:t="loot_books_f_char"
+  collres__res:t="loot_books_f_collision"
+  item__proto:t="item_book_f"
+}
+
+item_encyclopedia_base{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  _use:t="medium_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  item__weight:r=0.4
+  item__iconPitch:r=35
+  item__iconRoll:r=70
+  item__iconYaw:r=90
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_book:tag"{}
+}
+
+item_encyclopedia_a{
+  _use:t="item_encyclopedia_base"
+  animchar__res:t="loot_pedia_a_char"
+  collres__res:t="loot_pedia_a_collision"
+  item__proto:t="item_encyclopedia_a"
+  item__name:t="items/encyclopedia_a"
+}
+
+item_encyclopedia_a_saturated{
+  _use:t="item_encyclopedia_a"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_encyclopedia_a_saturated"
+  item__name:t="items/item_encyclopedia_a_saturated"
+}
+
+item_encyclopedia_b{
+  _use:t="item_encyclopedia_base"
+  animchar__res:t="loot_pedia_b_char"
+  collres__res:t="loot_pedia_b_collision"
+  item__proto:t="item_encyclopedia_b"
+  item__name:t="items/encyclopedia_b"
+}
+
+item_encyclopedia_b_saturated{
+  _use:t="item_encyclopedia_b"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_encyclopedia_b_saturated"
+  item__name:t="items/item_encyclopedia_b_saturated"
+}
+
+item_encyclopedia_c{
+  _use:t="item_encyclopedia_base"
+  animchar__res:t="loot_pedia_c_char"
+  collres__res:t="loot_pedia_c_collision"
+  item__proto:t="item_encyclopedia_c"
+  item__name:t="items/encyclopedia_c"
+}
+
+item_encyclopedia_c_saturated{
+  _use:t="item_encyclopedia_c"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_encyclopedia_c_saturated"
+  item__name:t="items/item_encyclopedia_c_saturated"
+}
+
+item_encyclopedia_d{
+  _use:t="item_encyclopedia_base"
+  animchar__res:t="loot_pedia_d_char"
+  collres__res:t="loot_pedia_d_collision"
+  item__proto:t="item_encyclopedia_d"
+  item__name:t="items/encyclopedia_d"
+}
+
+item_encyclopedia_d_saturated{
+  _use:t="item_encyclopedia_d"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_encyclopedia_d_saturated"
+  item__name:t="items/item_encyclopedia_d_saturated"
+}
+
+item_encyclopedia_e{
+  _use:t="item_encyclopedia_base"
+  animchar__res:t="loot_pedia_e_char"
+  collres__res:t="loot_pedia_e_collision"
+  item__proto:t="item_encyclopedia_e"
+  item__name:t="items/encyclopedia_e"
+}
+
+item_encyclopedia_e_saturated{
+  _use:t="item_encyclopedia_e"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_encyclopedia_e_saturated"
+  item__name:t="items/item_encyclopedia_e_saturated"
+}
+
+item_encyclopedia_f{
+  _use:t="item_encyclopedia_base"
+  animchar__res:t="loot_pedia_f_char"
+  collres__res:t="loot_pedia_f_collision"
+  item__proto:t="item_encyclopedia_f"
+  item__name:t="items/encyclopedia_f"
+}
+
+item_encyclopedia_f_saturated{
+  _use:t="item_encyclopedia_f"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_encyclopedia_f_saturated"
+  item__name:t="items/item_encyclopedia_f_saturated"
+}
+
+item_encyclopedia_g{
+  _use:t="item_encyclopedia_base"
+  animchar__res:t="loot_pedia_g_char"
+  collres__res:t="loot_pedia_g_collision"
+  item__proto:t="item_encyclopedia_g"
+  item__name:t="items/encyclopedia_g"
+}
+
+item_encyclopedia_g_saturated{
+  _use:t="item_encyclopedia_g"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_encyclopedia_g_saturated"
+  item__name:t="items/item_encyclopedia_g_saturated"
+}
+
+item_encyclopedia_h{
+  _use:t="item_encyclopedia_base"
+  animchar__res:t="loot_pedia_h_char"
+  collres__res:t="loot_pedia_h_collision"
+  item__proto:t="item_encyclopedia_h"
+  item__name:t="items/encyclopedia_h"
+}
+
+item_encyclopedia_h_saturated{
+  _use:t="item_encyclopedia_h"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_encyclopedia_h_saturated"
+  item__name:t="items/item_encyclopedia_h_saturated"
+}
+
+item_encyclopedia_i{
+  _use:t="item_encyclopedia_base"
+  animchar__res:t="loot_pedia_i_char"
+  collres__res:t="loot_pedia_i_collision"
+  item__proto:t="item_encyclopedia_i"
+  item__name:t="items/encyclopedia_i"
+}
+
+item_encyclopedia_i_saturated{
+  _use:t="item_encyclopedia_i"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_encyclopedia_i_saturated"
+  item__name:t="items/item_encyclopedia_i_saturated"
+}
+
+item_encyclopedia_j{
+  _use:t="item_encyclopedia_base"
+  animchar__res:t="loot_pedia_j_char"
+  collres__res:t="loot_pedia_j_collision"
+  item__proto:t="item_encyclopedia_j"
+  item__name:t="items/encyclopedia_j"
+}
+
+item_encyclopedia_j_saturated{
+  _use:t="item_encyclopedia_j"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_encyclopedia_j_saturated"
+  item__name:t="items/item_encyclopedia_j_saturated"
+}
+
+item_encyclopedia_k{
+  _use:t="item_encyclopedia_base"
+  animchar__res:t="loot_pedia_k_char"
+  collres__res:t="loot_pedia_k_collision"
+  item__proto:t="item_encyclopedia_k"
+  item__name:t="items/encyclopedia_k"
+}
+
+item_encyclopedia_k_saturated{
+  _use:t="item_encyclopedia_k"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_encyclopedia_k_saturated"
+  item__name:t="items/item_encyclopedia_k_saturated"
+}
+
+item_encyclopedia_l{
+  _use:t="item_encyclopedia_base"
+  animchar__res:t="loot_pedia_l_char"
+  collres__res:t="loot_pedia_l_collision"
+  item__proto:t="item_encyclopedia_l"
+  item__name:t="items/encyclopedia_l"
+}
+
+item_encyclopedia_l_saturated{
+  _use:t="item_encyclopedia_l"
+  _use:t="medium_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_encyclopedia_l_saturated"
+  item__name:t="items/item_encyclopedia_l_saturated"
+}
+
+item_vinyl_disk_base{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  _use:t="medium_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  item__name:t="items/item_vinyl_disk"
+  item__desc:t="items/sound_track/desc"
+  item__weight:r=0.4
+  item__iconPitch:r=35
+  item__iconRoll:r=70
+  item__iconYaw:r=90
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_vinyl_disk_a{
+  _use:t="item_vinyl_disk_base"
+  _use:t="sound_track"
+  _use:t="author_jared_benson"
+  item__name:t="items/item_vinyl_disk_a"
+  animchar__res:t="loot_vinyl_a_char"
+  item__animcharInInventoryName:t="loot_vinyl_a_item_char"
+  collres__res:t="loot_vinyl_a_collision"
+  item__proto:t="item_vinyl_disk_a"
+  soundTrack:t="music/player/jared_benson_nights_in_the_city"
+  pickup_unlock__name:t="item_audio_item_vinyl_disk_a"
+}
+
+item_vinyl_disk_b{
+  _use:t="item_vinyl_disk_base"
+  _use:t="sound_track"
+  _use:t="author_jared_benson"
+  item__name:t="items/item_vinyl_disk_b"
+  animchar__res:t="loot_vinyl_b_char"
+  item__animcharInInventoryName:t="loot_vinyl_b_item_char"
+  collres__res:t="loot_vinyl_b_collision"
+  item__proto:t="item_vinyl_disk_b"
+  soundTrack:t="music/player/jared_benson_pink_clouds"
+  pickup_unlock__name:t="item_audio_item_vinyl_disk_b"
+}
+
+item_vinyl_disk_c{
+  _use:t="item_vinyl_disk_base"
+  _use:t="sound_track"
+  author:t="Alexander Roeder"
+  item__name:t="items/item_vinyl_disk_c"
+  animchar__res:t="loot_vinyl_c_char"
+  item__animcharInInventoryName:t="loot_vinyl_c_item_char"
+  collres__res:t="loot_vinyl_c_collision"
+  item__proto:t="item_vinyl_disk_c"
+  soundTrack:t="music/player/alexander_roeder_richard_wagner_ride_of_the_valkyries"
+  pickup_unlock__name:t="item_audio_item_vinyl_disk_c"
+}
+
+item_vinyl_disk_d{
+  _use:t="item_vinyl_disk_base"
+  _use:t="sound_track"
+  _use:t="author_jared_benson"
+  item__name:t="items/item_vinyl_disk_d"
+  animchar__res:t="loot_vinyl_d_char"
+  item__animcharInInventoryName:t="loot_vinyl_d_item_char"
+  collres__res:t="loot_vinyl_d_collision"
+  item__proto:t="item_vinyl_disk_d"
+  soundTrack:t="music/player/jared_benson_shady_operation"
+  pickup_unlock__name:t="item_audio_item_vinyl_disk_d"
+}
+
+item_vinyl_disk_e{
+  _use:t="item_vinyl_disk_base"
+  _use:t="sound_track"
+  _use:t="author_jared_benson"
+  item__name:t="items/item_vinyl_disk_e"
+  animchar__res:t="loot_vinyl_e_char"
+  item__animcharInInventoryName:t="loot_vinyl_e_item_char"
+  collres__res:t="loot_vinyl_e_collision"
+  item__proto:t="item_vinyl_disk_e"
+  soundTrack:t="music/player/jared_benson_summer_fade"
+  pickup_unlock__name:t="item_audio_item_vinyl_disk_e"
+}
+
+item_vinyl_disk_f{
+  _use:t="item_vinyl_disk_base"
+  _use:t="sound_track"
+  _use:t="author_jared_benson"
+  item__name:t="items/item_vinyl_disk_f"
+  animchar__res:t="loot_vinyl_f_char"
+  item__animcharInInventoryName:t="loot_vinyl_f_item_char"
+  collres__res:t="loot_vinyl_f_collision"
+  item__proto:t="item_vinyl_disk_f"
+  soundTrack:t="music/player/jared_benson_team_spirit"
+  pickup_unlock__name:t="item_audio_item_vinyl_disk_f"
+}
+
+item_vinyl_disk_g{
+  _use:t="item_vinyl_disk_base"
+  _use:t="sound_track"
+  _use:t="author_jared_benson"
+  item__name:t="items/item_vinyl_disk_g"
+  animchar__res:t="loot_vinyl_g_char"
+  item__animcharInInventoryName:t="loot_vinyl_g_item_char"
+  collres__res:t="loot_vinyl_g_collision"
+  item__proto:t="item_vinyl_disk_g"
+  soundTrack:t="music/player/jared_benson_up_the_hill"
+  pickup_unlock__name:t="item_audio_item_vinyl_disk_g"
+}
+
+item_vinyl_disk_h{
+  _use:t="item_vinyl_disk_base"
+  _use:t="sound_track"
+  author:t="Peer Gynt"
+  item__name:t="items/item_vinyl_disk_h"
+  animchar__res:t="loot_vinyl_h_char"
+  item__animcharInInventoryName:t="loot_vinyl_h_item_char"
+  collres__res:t="loot_vinyl_h_collision"
+  item__proto:t="item_vinyl_disk_h"
+  soundTrack:t="music/player/peer_gynt_morning"
+  pickup_unlock__name:t="item_audio_item_vinyl_disk_h"
+}
+
+item_vinyl_disk_i{
+  _use:t="item_vinyl_disk_base"
+  _use:t="sound_track"
+  author:t="Amotz Plessner & Mark Gozman"
+  item__name:t="items/item_vinyl_disk_i"
+  animchar__res:t="loot_vinyl_i_char"
+  item__animcharInInventoryName:t="loot_vinyl_i_item_char"
+  collres__res:t="loot_vinyl_i_collision"
+  item__proto:t="item_vinyl_disk_i"
+  soundTrack:t="music/player/amotz_plessner_mark_gozman_the_revelation"
+  pickup_unlock__name:t="item_audio_item_vinyl_disk_i"
+}
+
+item_vinyl_disk_j{
+  _use:t="item_vinyl_disk_base"
+  _use:t="sound_track"
+  _use:t="author_jared_benson"
+  item__name:t="items/item_vinyl_disk_j"
+  animchar__res:t="loot_vinyl_j_char"
+  item__animcharInInventoryName:t="loot_vinyl_j_item_char"
+  collres__res:t="loot_vinyl_j_collision"
+  item__proto:t="item_vinyl_disk_j"
+  soundTrack:t="music/player/jared_benson_oak_bark"
+  pickup_unlock__name:t="item_audio_item_vinyl_disk_j"
+}
+
+item_vinyl_disk_k{
+  _use:t="item_vinyl_disk_base"
+  animchar__res:t="loot_vinyl_k_char"
+  item__animcharInInventoryName:t="loot_vinyl_k_item_char"
+  collres__res:t="loot_vinyl_k_collision"
+  item__proto:t="item_vinyl_disk_k"
+}
+
+item_vinyl_disk_l{
+  _use:t="item_vinyl_disk_base"
+  animchar__res:t="loot_vinyl_l_char"
+  item__animcharInInventoryName:t="loot_vinyl_l_item_char"
+  collres__res:t="loot_vinyl_l_collision"
+  item__proto:t="item_vinyl_disk_l"
+}
+
+item_vinyl_disk_m{
+  _use:t="item_vinyl_disk_base"
+  animchar__res:t="loot_vinyl_m_char"
+  item__animcharInInventoryName:t="loot_vinyl_m_item_char"
+  collres__res:t="loot_vinyl_m_collision"
+  item__proto:t="item_vinyl_disk_m"
+}
+
+item_vinyl_disk_n{
+  _use:t="item_vinyl_disk_base"
+  animchar__res:t="loot_vinyl_n_char"
+  item__animcharInInventoryName:t="loot_vinyl_n_item_char"
+  collres__res:t="loot_vinyl_n_collision"
+  item__proto:t="item_vinyl_disk_n"
+}
+
+item_vinyl_disk_o{
+  _use:t="item_vinyl_disk_base"
+  animchar__res:t="loot_vinyl_o_char"
+  item__animcharInInventoryName:t="loot_vinyl_o_item_char"
+  collres__res:t="loot_vinyl_o_collision"
+  item__proto:t="item_vinyl_disk_o"
+}
+
+item_cd_base{
+  _use:t="item"
+  _use:t="small_loot_item"
+  _use:t="small_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  _use:t="sound_track"
+  animchar__res:t="loot_music_cd_a_char"
+  collres__res:t="loot_music_cd_a_collision"
+  item__proto:t="item_cd_base"
+  item__name:t="items/item_cd_base"
+  item__desc:t="items/sound_track/desc"
+  item__weight:r=0.1
+  item__iconYaw:r=15
+  item__iconPitch:r=75
+  item__iconRoll:r=105
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_cd_a{
+  _use:t="item_cd_base"
+  author:t="Kagen"
+  item__proto:t="item_cd_a"
+  item__name:t="items/item_cd_a"
+  soundTrack:t="music/player/kagen_sublime"
+  pickup_unlock__name:t="item_audio_item_cd_a"
+}
+
+item_cd_b{
+  _use:t="item_cd_base"
+  author:t="Ian Locke"
+  animchar__res:t="loot_music_cd_b_char"
+  collres__res:t="loot_music_cd_b_collision"
+  item__proto:t="item_cd_b"
+  item__name:t="items/item_cd_b"
+  soundTrack:t="music/player/ian_locke_phantoms"
+  pickup_unlock__name:t="item_audio_item_cd_b"
+}
+
+item_cd_c{
+  _use:t="item_cd_base"
+  author:t="Captain Qubz"
+  animchar__res:t="loot_music_cd_c_char"
+  collres__res:t="loot_music_cd_c_collision"
+  item__proto:t="item_cd_c"
+  item__name:t="items/item_cd_c"
+  soundTrack:t="music/player/captain_qubz_set_me_free"
+  pickup_unlock__name:t="item_audio_item_cd_c"
+}
+
+item_cd_d{
+  _use:t="item_cd_base"
+  author:t="Max Apollo"
+  animchar__res:t="loot_music_cd_d_char"
+  collres__res:t="loot_music_cd_d_collision"
+  item__proto:t="item_cd_d"
+  item__name:t="items/item_cd_d"
+  soundTrack:t="music/player/max_apollo_plain_white_shirt"
+  pickup_unlock__name:t="item_audio_item_cd_d"
+}
+
+item_cd_e{
+  _use:t="item_cd_base"
+  author:t="Francesco D'Andrea"
+  animchar__res:t="loot_music_cd_e_char"
+  collres__res:t="loot_music_cd_e_collision"
+  item__proto:t="item_cd_e"
+  item__name:t="items/item_cd_e"
+  soundTrack:t="music/player/francesco_dandrea_sharp_thin_blade"
+  pickup_unlock__name:t="item_audio_item_cd_e"
+}
+
+item_cd_f{
+  _use:t="item_cd_base"
+  author:t="OK Otter"
+  animchar__res:t="loot_music_cd_f_char"
+  collres__res:t="loot_music_cd_f_collision"
+  item__proto:t="item_cd_f"
+  item__name:t="items/item_cd_f"
+  soundTrack:t="music/player/ok_otter_ichabod"
+  pickup_unlock__name:t="item_audio_item_cd_f"
+}
+
+item_cd_g{
+  _use:t="item_cd_base"
+  author:t="Phototaxis"
+  animchar__res:t="loot_music_cd_f_char"
+  collres__res:t="loot_music_cd_f_collision"
+  item__proto:t="item_cd_g"
+  item__name:t="items/item_cd_g"
+  soundTrack:t="music/player/phototaxis_pistol"
+  pickup_unlock__name:t="item_audio_item_cd_g"
+}
+
+item_cd_h{
+  _use:t="item_cd_base"
+  author:t="MYFEVER"
+  animchar__res:t="loot_music_cd_f_char"
+  collres__res:t="loot_music_cd_f_collision"
+  item__proto:t="item_cd_h"
+  item__name:t="items/item_cd_h"
+  soundTrack:t="music/player/myfever_30_second_chance"
+  pickup_unlock__name:t="item_audio_item_cd_h"
+}
+
+item_cd_i{
+  _use:t="item_cd_base"
+  author:t="OK Otter"
+  animchar__res:t="loot_music_cd_f_char"
+  collres__res:t="loot_music_cd_f_collision"
+  item__proto:t="item_cd_i"
+  item__name:t="items/item_cd_i"
+  soundTrack:t="music/player/ok_otter_something_dont_feel_right"
+  pickup_unlock__name:t="item_audio_item_cd_i"
+}
+
+item_cd_j{
+  _use:t="item_cd_base"
+  author:t="Yotam Ben Horin"
+  animchar__res:t="loot_music_cd_f_char"
+  collres__res:t="loot_music_cd_f_collision"
+  item__proto:t="item_cd_j"
+  item__name:t="items/item_cd_j"
+  soundTrack:t="music/player/yotam_ben_horin_alternate"
+  pickup_unlock__name:t="item_audio_item_cd_j"
+}
+
+item_newyear_toy_base{
+  _use:t="item"
+  _use:t="small_loot_item"
+  _use:t="small_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  item__weight:r=0.03
+  item__iconPitch:r=-20
+  item__iconRoll:r=-10
+  item__iconYaw:r=270
+  item__iconScale:r=1
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_newyear_toy_a{
+  _use:t="item_newyear_toy_base"
+  animchar__res:t="loot_ornament_a_char"
+  collres__res:t="loot_ornament_a_collision"
+  item__proto:t="item_newyear_toy_a"
+  item__name:t="items/item_newyear_toy_a"
+  item__weight:r=0.2
+}
+
+item_newyear_toy_b{
+  _use:t="item_newyear_toy_base"
+  animchar__res:t="loot_ornament_b_char"
+  collres__res:t="loot_ornament_b_collision"
+  item__proto:t="item_newyear_toy_b"
+  item__name:t="items/item_newyear_toy_b"
+  item__iconYaw:r=80
+}
+
+item_newyear_toy_c{
+  _use:t="item_newyear_toy_base"
+  animchar__res:t="loot_ornament_c_char"
+  collres__res:t="loot_ornament_c_collision"
+  item__proto:t="item_newyear_toy_c"
+  item__name:t="items/item_newyear_toy_c"
+  item__iconYaw:r=100
+}
+
+item_newyear_toy_d{
+  _use:t="item_newyear_toy_base"
+  animchar__res:t="loot_ornament_d_char"
+  collres__res:t="loot_ornament_d_collision"
+  item__proto:t="item_newyear_toy_d"
+  item__name:t="items/item_newyear_toy_d"
+}
+
+item_newyear_toy_e{
+  _use:t="item_newyear_toy_base"
+  animchar__res:t="loot_ornament_e_char"
+  collres__res:t="loot_ornament_e_collision"
+  item__proto:t="item_newyear_toy_e"
+  item__name:t="items/item_newyear_toy_e"
+  item__iconYaw:r=90
+}
+
+item_newyear_toy_f{
+  _use:t="item_newyear_toy_base"
+  animchar__res:t="loot_ornament_f_char"
+  collres__res:t="loot_ornament_f_collision"
+  item__proto:t="item_newyear_toy_f"
+  item__name:t="items/item_newyear_toy_f"
+}
+
+item_newyear_toy_g{
+  _use:t="item_newyear_toy_base"
+  animchar__res:t="loot_ornament_g_char"
+  collres__res:t="loot_ornament_g_collision"
+  item__proto:t="item_newyear_toy_g"
+  item__name:t="items/item_newyear_toy_g"
+  item__iconYaw:r=110
+}
+
+item_rc_apc_base{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  _use:t="medium_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  item__name:t="items/item_rc_apc"
+  item__weight:r=0.8
+  item__iconPitch:r=0
+  item__iconRoll:r=30
+  item__iconYaw:r=140
+  item__iconScale:r=1.1
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+}
+
+item_rc_apc_a{
+  _use:t="item_rc_apc_base"
+  animchar__res:t="loot_rc_apc_a_char"
+  collres__res:t="loot_rc_apc_a_collision"
+  item__proto:t="item_rc_apc_a"
+}
+
+item_rc_apc_b{
+  _use:t="item_rc_apc_base"
+  animchar__res:t="loot_rc_apc_b_char"
+  collres__res:t="loot_rc_apc_b_collision"
+  item__proto:t="item_rc_apc_b"
+}
+
+item_rc_apc_c{
+  _use:t="item_rc_apc_base"
+  animchar__res:t="loot_rc_apc_c_char"
+  collres__res:t="loot_rc_apc_c_collision"
+  item__proto:t="item_rc_apc_c"
+}
+
+item_rc_car_base{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  _use:t="medium_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  item__weight:r=0.8
+  item__iconPitch:r=0
+  item__iconRoll:r=30
+  item__iconYaw:r=140
+  item__iconScale:r=1.1
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+}
+
+item_rc_car_a_white{
+  _use:t="item_rc_car_base"
+  animchar__res:t="loot_rc_car_a_char"
+  collres__res:t="loot_rc_car_a_collision"
+  item__proto:t="item_rc_car_a_white"
+  item__name:t="items/item_rc_car_a_white"
+}
+
+item_rc_car_b_red{
+  _use:t="item_rc_car_base"
+  animchar__res:t="loot_rc_car_b_char"
+  collres__res:t="loot_rc_car_b_collision"
+  item__proto:t="item_rc_car_b_red"
+  item__name:t="items/item_rc_car_b_red"
+}
+
+item_rc_car_c_yellow{
+  _use:t="item_rc_car_base"
+  animchar__res:t="loot_rc_car_c_char"
+  collres__res:t="loot_rc_car_c_collision"
+  item__proto:t="item_rc_car_c_yellow"
+  item__name:t="items/item_rc_car_c_yellow"
+}
+
+item_rc_car_d_blue{
+  _use:t="item_rc_car_base"
+  animchar__res:t="loot_rc_car_d_char"
+  collres__res:t="loot_rc_car_d_collision"
+  item__proto:t="item_rc_car_d_blue"
+  item__name:t="items/item_rc_car_d_blue"
+}
+
+item_rc_controller{
+  _use:t="item"
+  _use:t="small_loot_item"
+  _use:t="small_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_rc_controller_char"
+  collres__res:t="loot_rc_controller_collision"
+  item__proto:t="item_rc_controller"
+  item__name:t="items/item_rc_controller"
+  item__weight:r=0.3
+  item__iconPitch:r=20
+  item__iconRoll:r=70
+  item__iconYaw:r=100
+  item__iconScale:r=1.1
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+}
+
+item_toy_railroad{
+  _use:t="item"
+  _use:t="big_loot_item"
+  _use:t="big_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_railroad_a_item_char"
+  collres__res:t="loot_railroad_a_item_collision"
+  item__proto:t="item_toy_railroad"
+  item__name:t="items/item_toy_railroad"
+  item__weight:r=2
+  item__iconPitch:r=20
+  item__iconRoll:r=90
+  item__iconYaw:r=90
+  item__iconScale:r=0.9
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_airplane_clock{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  _use:t="medium_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_achs_clock_a_char"
+  collres__res:t="loot_achs_clock_a_collision"
+  item__proto:t="item_airplane_clock"
+  item__name:t="items/item_airplane_clock"
+  item__weight:r=0.65
+  item__iconPitch:r=0
+  item__iconRoll:r=-15
+  item__iconYaw:r=100
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_boxed_airplane_clock{
+  _use:t="item"
+  _use:t="medium_loot_item"
+  _use:t="medium_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_achs_clock_b_char"
+  item__animcharInInventoryName:t="loot_achs_clock_b_item_char"
+  collres__res:t="loot_achs_clock_b_collision"
+  item__proto:t="item_boxed_airplane_clock"
+  item__name:t="items/item_boxed_airplane_clock"
+  item__weight:r=0.8
+  item__iconPitch:r=0
+  item__iconRoll:r=-15
+  item__iconYaw:r=100
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_airplane_clock_on_stand_1{
+  _use:t="item"
+  _use:t="big_loot_item"
+  _use:t="big_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_achs_clock_c_char"
+  collres__res:t="loot_achs_clock_c_collision"
+  item__proto:t="item_airplane_clock_on_stand_1"
+  item__name:t="items/item_airplane_clock_on_stand_1"
+  item__weight:r=0.9
+  item__iconPitch:r=0
+  item__iconRoll:r=-15
+  item__iconYaw:r=100
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_airplane_clock_on_stand_2{
+  _use:t="item"
+  _use:t="big_loot_item"
+  _use:t="big_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="loot_achs_clock_d_char"
+  collres__res:t="loot_achs_clock_d_collision"
+  item__proto:t="item_airplane_clock_on_stand_2"
+  item__name:t="items/item_airplane_clock_on_stand_2"
+  item__weight:r=1
+  item__iconPitch:r=0
+  item__iconRoll:r=-15
+  item__iconYaw:r=100
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_pins_album_base{
+  _use:t="item"
+  _use:t="big_loot_item"
+  _use:t="big_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  item__weight:r=2.6
+  item__iconPitch:r=10
+  item__iconRoll:r=70
+  item__iconYaw:r=110
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_pins_album_a{
+  _use:t="item_pins_album_base"
+  animchar__res:t="loot_pins_a_char"
+  item__animcharInInventoryName:t="loot_pins_a_item_char"
+  collres__res:t="loot_pins_a_collision"
+  item__proto:t="item_pins_album_a"
+  item__name:t="items/item_pins_album_a"
+}
+
+item_pins_album_b{
+  _use:t="item_pins_album_base"
+  animchar__res:t="loot_pins_b_char"
+  item__animcharInInventoryName:t="loot_pins_b_item_char"
+  collres__res:t="loot_pins_b_collision"
+  item__proto:t="item_pins_album_b"
+  item__name:t="items/item_pins_album_b"
+}
+
+item_pins_album_c{
+  _use:t="item_pins_album_base"
+  animchar__res:t="loot_pins_c_char"
+  item__animcharInInventoryName:t="loot_pins_c_item_char"
+  collres__res:t="loot_pins_c_collision"
+  item__proto:t="item_pins_album_c"
+  item__name:t="items/item_pins_album_c"
+}
+
+item_stamps_album_base{
+  _use:t="item"
+  _use:t="big_loot_item"
+  _use:t="big_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  item__weight:r=1.2
+  item__iconPitch:r=10
+  item__iconRoll:r=70
+  item__iconYaw:r=110
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_stamps_album_a{
+  _use:t="item_stamps_album_base"
+  animchar__res:t="loot_stamps_a_char"
+  item__animcharInInventoryName:t="loot_stamps_a_item_char"
+  collres__res:t="loot_stamps_a_collision"
+  item__proto:t="item_stamps_album_a"
+  item__name:t="items/item_stamps_album_a"
+}
+
+item_stamps_album_a_saturated{
+  _use:t="item_stamps_album_a"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_stamps_album_a_saturated"
+  item__name:t="items/item_stamps_album_a_saturated"
+}
+
+item_stamps_album_b{
+  _use:t="item_stamps_album_base"
+  animchar__res:t="loot_stamps_b_char"
+  item__animcharInInventoryName:t="loot_stamps_b_item_char"
+  collres__res:t="loot_stamps_b_collision"
+  item__proto:t="item_stamps_album_b"
+  item__name:t="items/item_stamps_album_b"
+}
+
+item_stamps_album_b_saturated{
+  _use:t="item_stamps_album_b"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_stamps_album_b_saturated"
+  item__name:t="items/item_stamps_album_b_saturated"
+}
+
+item_stamps_album_c{
+  _use:t="item_stamps_album_base"
+  animchar__res:t="loot_stamps_c_char"
+  item__animcharInInventoryName:t="loot_stamps_c_item_char"
+  collres__res:t="loot_stamps_c_collision"
+  item__proto:t="item_stamps_album_c"
+  item__name:t="items/item_stamps_album_c"
+}
+
+item_stamps_album_c_saturated{
+  _use:t="item_stamps_album_c"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_stamps_album_c_saturated"
+  item__name:t="items/item_stamps_album_c_saturated"
+}
+
+item_vase_base{
+  _use:t="item"
+  _use:t="big_loot_item"
+  _use:t="big_uncommon_item_am"
+  _use:t="item_rarity_uncommon"
+  item__weight:r=0.8
+  item__marketPrice:i=100
+  item__iconPitch:r=-25
+  item__iconRoll:r=-10
+  item__iconYaw:r=0
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_vase_a{
+  _use:t="item_vase_base"
+  animchar__res:t="is_african_vase_a_char"
+  collres__res:t="is_african_vase_a_collision"
+  item__proto:t="item_vase_a"
+  item__name:t="items/vase_a"
+  item__weight:r=1.2
+}
+
+item_vase_a_saturated{
+  _use:t="item_vase_a"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_vase_a_saturated"
+  item__name:t="items/item_vase_a_saturated"
+}
+
+item_vase_b{
+  _use:t="item_vase_base"
+  animchar__res:t="is_african_vase_b_char"
+  collres__res:t="is_african_vase_b_collision"
+  item__proto:t="item_vase_b"
+  item__name:t="items/vase_b"
+  item__weight:r=0.8
+}
+
+item_vase_b_saturated{
+  _use:t="item_vase_b"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_vase_b_saturated"
+  item__name:t="items/item_vase_b_saturated"
+}
+
+item_vase_c{
+  _use:t="item_vase_base"
+  animchar__res:t="is_african_vase_c_char"
+  collres__res:t="is_african_vase_c_collision"
+  item__proto:t="item_vase_c"
+  item__name:t="items/vase_c"
+}
+
+item_vase_c_saturated{
+  _use:t="item_vase_c"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_vase_c_saturated"
+  item__name:t="items/item_vase_c_saturated"
+}
+
+item_vase_d{
+  _use:t="item_vase_base"
+  animchar__res:t="is_african_vase_d_char"
+  collres__res:t="is_african_vase_d_collision"
+  item__proto:t="item_vase_d"
+  item__name:t="items/vase_d"
+}
+
+item_vase_d_saturated{
+  _use:t="item_vase_d"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_vase_d_saturated"
+  item__name:t="items/item_vase_d_saturated"
+}
+
+item_vase_e{
+  _use:t="item_vase_base"
+  animchar__res:t="is_african_vase_e_char"
+  collres__res:t="is_african_vase_e_collision"
+  item__proto:t="item_vase_e"
+  item__name:t="items/vase_e"
+}
+
+item_vase_e_saturated{
+  _use:t="item_vase_e"
+  _use:t="big_saturated_item_am"
+  _use:t="item_rarity_epic"
+  _use:t="note_saturated_item_on_pickup"
+  item__proto:t="item_vase_e_saturated"
+  item__name:t="items/item_vase_e_saturated"
+}
+
+item_civilian_surveillance_logs{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_d_char"
+  collres__res:t="sovmod_folder_d_collision"
+  item__proto:t="item_civilian_surveillance_logs"
+  item__name:t="items/item_civilian_surveillance_logs"
+  item__weight:r=0.01
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__scaleMult:r=0.4
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=45
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_info_notes_base{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_info_notes_base"
+  item__name:t="items/item_info_notes_base"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_info_notes_fuel_1{
+  _use:t="item_info_notes_base"
+  item__proto:t="item_info_notes_fuel_1"
+  item__name:t="items/item_info_notes_fuel_1"
+}
+
+item_info_notes_fuel_2{
+  _use:t="item_info_notes_base"
+  item__proto:t="item_info_notes_fuel_2"
+  item__name:t="items/item_info_notes_fuel_2"
+}
+
+item_info_notes_fuel_3{
+  _use:t="item_info_notes_base"
+  item__proto:t="item_info_notes_fuel_3"
+  item__name:t="items/item_info_notes_fuel_3"
+}
+
+item_info_notes_garage_1{
+  _use:t="item_info_notes_base"
+  item__proto:t="item_info_notes_garage_1"
+  item__name:t="items/item_info_notes_garage_1"
+}
+
+item_info_notes_garage_2{
+  _use:t="item_info_notes_base"
+  item__proto:t="item_info_notes_garage_2"
+  item__name:t="items/item_info_notes_garage_2"
+}
+
+item_info_notes_garage_3{
+  _use:t="item_info_notes_base"
+  animchar__res:t="sovmod_folder_f_char"
+  collres__res:t="sovmod_folder_f_collision"
+  item__proto:t="item_info_notes_garage_3"
+  item__name:t="items/item_info_notes_garage_3"
+}
+
+item_info_notes_medkits_1{
+  _use:t="item_info_notes_base"
+  item__proto:t="item_info_notes_medkits_1"
+  item__name:t="items/item_info_notes_medkits_1"
+}
+
+item_info_notes_medkits_2{
+  _use:t="item_info_notes_base"
+  item__proto:t="item_info_notes_medkits_2"
+  item__name:t="items/item_info_notes_medkits_2"
+}
+
+item_info_notes_medkits_3{
+  _use:t="item_info_notes_base"
+  item__proto:t="item_info_notes_medkits_3"
+  item__name:t="items/item_info_notes_medkits_3"
+}
+
+item_info_notes_weapons_1{
+  _use:t="item_info_notes_base"
+  animchar__res:t="sovmod_folder_f_char"
+  collres__res:t="sovmod_folder_f_collision"
+  item__proto:t="item_info_notes_weapons_1"
+  item__name:t="items/item_info_notes_weapons_1"
+}
+
+item_info_notes_weapons_2{
+  _use:t="item_info_notes_base"
+  animchar__res:t="sovmod_folder_f_char"
+  collres__res:t="sovmod_folder_f_collision"
+  item__proto:t="item_info_notes_weapons_2"
+  item__name:t="items/item_info_notes_weapons_2"
+}
+
+item_info_notes_weapons_3{
+  _use:t="item_info_notes_base"
+  item__proto:t="item_info_notes_weapons_3"
+  item__name:t="items/item_info_notes_weapons_3"
+}
+
+item_newspaper_vestnik_1{
+  _use:t="item_info_notes_base"
+  item__proto:t="item_newspaper_vestnik_1"
+  item__name:t="items/item_newspaper_vestnik_1"
+}
+
+item_newspaper_institute_01{
+  _use:t="item_info_notes_base"
+  item__proto:t="item_newspaper_institute_01"
+  item__name:t="items/newspaper_institute_01"
+}
+
+item_newspaper_base{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="loot_newspaper_a_char"
+  collres__res:t="loot_newspaper_a_collision"
+  item__proto:t="item_newspaper_base"
+  item__name:t="items/item_newspaper_base"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=5
+  item__iconPitch:r=25
+  item__iconRoll:r=90
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
+item_newspaper_komsomol_01{
+  _use:t="item_newspaper_base"
+  item__proto:t="item_newspaper_komsomol_01"
+  item__name:t="items/newspaper_komsomol_01"
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_newspaper_komsomol_01"
+  }
+}
+
+item_newspaper_komsomol_02{
+  _use:t="item_newspaper_base"
+  item__proto:t="item_newspaper_komsomol_02"
+  item__name:t="items/newspaper_komsomol_02"
+  animchar__res:t="loot_newspaper_b_char"
+  collres__res:t="loot_newspaper_b_collision"
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_newspaper_komsomol_02"
+  }
+}
+
+item_newspaper_komsomol_03{
+  _use:t="item_newspaper_base"
+  item__proto:t="item_newspaper_komsomol_03"
+  item__name:t="items/newspaper_komsomol_03"
+  animchar__res:t="loot_newspaper_c_char"
+  collres__res:t="loot_newspaper_c_collision"
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_newspaper_komsomol_03"
+  }
+}
+
+item_newspaper_komsomol_04{
+  _use:t="item_newspaper_base"
+  item__proto:t="item_newspaper_komsomol_04"
+  item__name:t="items/newspaper_komsomol_04"
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_newspaper_komsomol_04"
+  }
+}
+
+item_newspaper_komsomol_05{
+  _use:t="item_newspaper_base"
+  item__proto:t="item_newspaper_komsomol_05"
+  item__name:t="items/newspaper_komsomol_05"
+  animchar__res:t="loot_newspaper_b_char"
+  collres__res:t="loot_newspaper_b_collision"
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_newspaper_komsomol_05"
+  }
+}
+
+item_newspaper_komsomol_06{
+  _use:t="item_newspaper_base"
+  item__proto:t="item_newspaper_komsomol_06"
+  item__name:t="items/newspaper_komsomol_06"
+  animchar__res:t="loot_newspaper_c_char"
+  collres__res:t="loot_newspaper_c_collision"
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_newspaper_komsomol_06"
+  }
+}
+
+item_newspaper_komsomol_07{
+  _use:t="item_newspaper_base"
+  item__proto:t="item_newspaper_komsomol_07"
+  item__name:t="items/newspaper_komsomol_07"
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_newspaper_komsomol_07"
+  }
+}
+
+item_newspaper_komsomol_08{
+  _use:t="item_newspaper_base"
+  item__proto:t="item_newspaper_komsomol_08"
+  item__name:t="items/newspaper_komsomol_08"
+  animchar__res:t="loot_newspaper_b_char"
+  collres__res:t="loot_newspaper_b_collision"
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_newspaper_komsomol_08"
+  }
+}
+
+item_newspaper_komsomol_09{
+  _use:t="item_newspaper_base"
+  item__proto:t="item_newspaper_komsomol_09"
+  item__name:t="items/newspaper_komsomol_09"
+  animchar__res:t="loot_newspaper_c_char"
+  collres__res:t="loot_newspaper_c_collision"
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_newspaper_komsomol_09"
+  }
+}
+
+item_newspaper_komsomol_10{
+  _use:t="item_newspaper_base"
+  item__proto:t="item_newspaper_komsomol_10"
+  item__name:t="items/newspaper_komsomol_10"
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_newspaper_komsomol_10"
+  }
+}
+
+item_info_notes_quarry_camp{
+  _use:t="item_info_notes_base"
+  item__proto:t="item_info_notes_quarry_camp"
+  item__name:t="items/item_info_notes_quarry_camp"
+}
+
+item_info_award_certificate_1{
+  _use:t="item_info_notes_base"
+  _use:t="item_rarity_rare"
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  animchar__res:t="sovmod_folder_d_char"
+  collres__res:t="sovmod_folder_d_collision"
+  item__proto:t="item_info_award_certificate_1"
+  item__name:t="items/item_info_award_certificate_1"
+  profile_server_data__enrichmentAMCount:ip2=150, 150
+}
+
+item_info_notes_secret_sniper{
+  _use:t="item_info_notes_base"
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_info_notes_secret_sniper"
+  item__name:t="items/item_info_notes_secret_sniper"
+}
+
+item_info_notes_tower_sensor_1{
+  _use:t="item_info_notes_base"
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_info_notes_tower_sensor_1"
+  item__name:t="items/item_info_notes_tower_sensor_1"
+}
+
+item_info_notes_secret_ship_journal_1{
+  _use:t="item_info_notes_base"
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_info_notes_secret_ship_journal_1"
+  item__name:t="items/item_info_notes_secret_ship_journal_1"
+}
+
+item_info_notes_secret_ship_journal_2{
+  _use:t="item_info_notes_secret_ship_journal_1"
+  item__proto:t="item_info_notes_secret_ship_journal_2"
+  item__name:t="items/item_info_notes_secret_ship_journal_2"
+}
+
+item_info_notes_smuggler_garage_1{
+  _use:t="item_info_notes_base"
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_info_notes_smuggler_garage_1"
+  item__name:t="items/item_info_notes_smuggler_garage_1"
+}
+
+item_info_notes_crashed_scientist_car_letter{
+  _use:t="item_info_notes_base"
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_info_notes_crashed_scientist_car_letter"
+  item__name:t="items/item_info_notes_crashed_scientist_car_letter"
+}
+
+am_fillers_inventory{
+  _use:t="item_grid_spawner"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  grid_spawner__gap:p2=0.5, 0.5
+
+  "spawnItemList:array"{
+    "item:object"{
+      templ:t="item_civilian_surveillance_logs+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_anomaly_blood_sample+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_flower_human_ashes+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_solid_precursor+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_medical_records_drive+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_precursors_container+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_secret_weapon_parts+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_sample_synthetic_active_matter_container+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_secret_weapon_prototype+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_research_reports_drive+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="precious_metals_part+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="electronics+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="laboratory_prototype+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="valuable_civil_item+item_in_world"
+      count:i=3
+    }
+  }
+}

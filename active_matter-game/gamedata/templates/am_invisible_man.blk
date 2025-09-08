@@ -1,0 +1,799 @@
+invisible_man_util_vars{
+  util_vars__ready:b=no
+  util_vars__visibleTargets:r=0
+  util_vars__offenderHitCoef:r=0
+  util_vars__aggressionLevel:r=0
+  util_vars__lastBulletReactionCoef:r=0
+  util_vars__visibleAttractPoints:r=0
+  util_vars__attractPointRatio:r=0
+  util_vars__inAttackState:b=no
+  _tracked:t="util_vars__inAttackState"
+  util_vars__inShowState:b=no
+
+  "invisibleManUtilVars:tag"{}
+}
+
+invisible_man_anim_state{
+  _use:t="navmesh_phys_move_anim"
+  _use:t="navmesh_phys_attack_anim"
+  _use:t="navmesh_phys_forced_anim_state"
+
+  "anim_state__runStateName:list<t>"{
+    i:t="lower_run"
+  }
+}
+
+invisible_man_attack_anim{
+  _use:t="nphys_forced_anim_affect"
+  _use:t="nphys_forced_paramatric_anim"
+  game_effect__forcedParametricVarName:t="attack_progress"
+  game_effect__nPhysForceAnimState:t="stationary_attack"
+  game_effect__timeToDestroy:r=1
+}
+
+invisible_man_show_anim{
+  _use:t="game_effect_with_duration"
+  _use:t="nphys_forced_anim_affect"
+  game_effect__nPhysForceAnimState:t="flower_man_awake_03"
+  game_effect__timeToDestroy:r=0.85
+}
+
+invisible_man_attack_affect{
+  _use:t="game_effect_with_duration"
+  _use:t="damage_target_single_affect"
+  game_effect__timeToDestroy:r=2
+  game_effect__damageTargetDeltaHp:r=5
+  game_effect__damageTargetDeltaHpRandom:r=3
+}
+
+invisible_man_trail_sparks_effect_template{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="invisible_man_trail_sparks_fx"
+  }
+}
+
+invisible_man_trail_haze_effect_template{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="invisible_man_trail_haze_fx"
+  }
+}
+
+invisible_man_attack{
+  _use:t="game_effect_with_duration"
+  _use:t="persistent_affect_base"
+  game_effect__timeToDestroy:r=0.75
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_effect__followTargetOffset:p3=0.5, 0, 0
+  sphere_zone__radius:r=1
+  game_effect__applyGameEffectTemplate:t="invisible_man_attack_affect"
+
+  "game_effect__ownerEid:eid"{}
+  "game_effect__followAiTargetNode:tag"{}
+  "game_effect__distanceLimit:tag"{}
+  "game_effect__customAffectUpdate:tag"{}
+  "game_effect__destroyWithOwner:tag"{}
+}
+
+invisible_man_invisibility_affect{
+  _use:t="replicated_game_effect"
+  _use:t="game_effect_sound"
+  game_effect_sound__enemy:t="enemy/effects/invisible_man_disappear"
+
+  "game_effect__ownerEid:eid"{}
+  "entity_mod_effects:object"{
+    "hitpointsDmgMult+mult_diminishing":r=0.7
+  }
+}
+
+invisible_man_decay_smoke_attached_effect_template{
+  _use:t="attached_effect_local_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="invisible_man_decay_smoke_attached_fx"
+  }
+}
+
+invisible_man_decay_smoke_effect_template{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="invisible_man_decay_smoke_fx"
+  }
+}
+
+invisible_man_decay_sparks_effect_template{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="invisible_man_sparks_fx"
+  }
+}
+
+invisible_man_decay_haze_effect_template{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="invisible_man_haze_fx"
+  }
+}
+
+invisible_man_disable_human_visible_flag_affect{
+  _use:t="replicated_game_effect"
+  game_effect__disableFlagOnce:t="human__visible"
+}
+
+invisible_man_enable_human_visible_flag_affect{
+  _use:t="replicated_game_effect"
+  game_effect__enableFlagOnce:t="human__visible"
+}
+
+invisible_man_transition_haze_fx_effect{
+  _use:t="attached_effect_local_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="invisible_man_transition_haze_fx"
+  }
+}
+
+invisible_man_transition_smoke_fx_effect{
+  _use:t="attached_effect_local_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="invisible_man_transition_smoke_fx"
+  }
+}
+
+invisible_man_transition_affect{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=0.6
+  _use:t="game_effect_geomtree_effects"
+
+  "game_effect__uniqueHumanDamagedRenderAffect:tag"{}
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="invisible_man_transition_haze_fx_effect"
+    item:t="invisible_man_transition_smoke_fx_effect"
+  }
+}
+
+invisible_man_visibility_render_affect{
+  _use:t="replicated_game_effect_sequence"
+  _use:t="game_effect_geomtree_effects"
+  game_effect__showHideDistanceSq:p2=3600, 8100
+  game_effect_sequence__autoDestroy:b=no
+
+  "game_effect__ownerEid:eid"{}
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="invisible_man_decay_smoke_attached_effect_template"
+    item:t="invisible_man_decay_smoke_effect_template"
+    item:t="invisible_man_decay_haze_effect_template"
+    item:t="invisible_man_decay_sparks_effect_template"
+  }
+
+  "game_effect_sequence__stages:array"{
+    "stage:object"{
+      affectTemplate:t="invisible_man_transition_affect"
+      setupTransform:b=yes
+      duration:r=0.4
+    }
+
+    "stage:object"{
+      affectTemplate:t="invisible_man_enable_human_visible_flag_affect"
+      setupTransform:b=yes
+      duration:r=0.5
+    }
+  }
+}
+
+invisible_man_invisibility_render_affect{
+  _use:t="replicated_game_effect_sequence"
+  _use:t="game_effect_geomtree_effects"
+  game_effect__disableFlagOnce:t="burning__isBurning"
+  game_effect__showHideDistanceSq:p2=3600, 8100
+  game_effect_sequence__autoDestroy:b=no
+
+  "game_effect__ownerEid:eid"{}
+  "game_effect__invisibility:tag"{}
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="invisible_man_trail_sparks_effect_template"
+    item:t="invisible_man_trail_haze_effect_template"
+  }
+
+  "game_effect_sequence__stages:array"{
+    "stage:object"{
+      affectTemplate:t="invisible_man_transition_affect"
+      setupTransform:b=yes
+      duration:r=0.4
+    }
+
+    "stage:object"{
+      affectTemplate:t="invisible_man_disable_human_visible_flag_affect"
+      setupTransform:b=yes
+      duration:r=0.5
+    }
+  }
+}
+
+invisible_man_visibility_render_in_another_dimension_affect{
+  _use:t="invisible_man_visibility_render_affect"
+}
+
+invisible_man_visibility_affect{
+  _use:t="replicated_game_effect"
+  _use:t="game_effect_sound"
+  game_effect_sound__enemy:t="enemy/effects/invisible_man_appear"
+
+  "game_effect__ownerEid:eid"{}
+}
+
+invisible_man_another_dimension_visitor{
+  _use:t="another_dimension_visitor"
+
+  "another_dimension_visitor__renderModeFromOurToOurAffectTemplates:list<t>"{
+    item:t="invisible_man_visibility_render_affect"
+  }
+
+  "another_dimension_visitor__renderModeFromOurToAnotherAffectTemplates:list<t>"{
+    item:t="invisible_man_invisibility_render_affect"
+  }
+
+  "another_dimension_visitor__renderModeFromAnotherToOurAffectTemplates:list<t>"{
+    item:t="invisible_man_visibility_render_in_another_dimension_affect"
+  }
+
+  "another_dimension_visitor__renderModeFromAnotherToAnotherAffectTemplates:list<t>"{
+    item:t="invisible_man_visibility_render_in_another_dimension_affect"
+  }
+}
+
+invisible_man_ai{
+  _use:t="patroller_ai"
+  _use:t="get_attract_position_ai"
+  _use:t="agent_dangers_bullet_reaction"
+  _use:t="agent_dangers_hit_reaction"
+  _use:t="get_reaction_offender_ai"
+  _use:t="track_visual_attract_points"
+  _use:t="get_visible_attract_position_ai"
+  _use:t="beh_tree_regular_check"
+  _use:t="invisible_man_util_vars"
+  _use:t="invisible_man_anim_state"
+  _use:t="base_navmesh_agent_comp"
+  _use:t="obstacle_avoider"
+  _use:t="door_obstacle_handler"
+  _use:t="nphys_hit_tagging"
+  _use:t="nphys_position_mapping"
+  _use:t="zone_patroller"
+  _use:t="invisible_man_another_dimension_visitor"
+  _use:t="personal_enemies"
+  _use:t="climbing_agent"
+  attract_point__searchRadius:r=20
+  attract_point__checkPath:b=no
+  visual_attract__maxDist:r=3
+  obstacle_avoider__updateInterval:r=0.2
+  beh_tree__node:t="invisible_man"
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  navmesh_phys__hitTagPower:r=0.5
+  navmesh_phys__hitTagDuration:r=0.3
+  beh_tree__blackboard__enemyRadius:r=20
+  agent_dangers__hasTraceableDangers:b=no
+  _use:t="monster_danger_calc"
+  agent_dangers__tag:t="invisible_man"
+  path_corridor_ai__slowDownCoef:r=1000
+  agent_dangers__maxDangerDist:r=90
+  agent_dangers__blindDistanceSq:r=8100
+  agent_dangers__frustumAngle:r=90
+  agent_dangers__projectileDist:r=4
+  agent_dangers__lastBulletReactionTime:r=-1
+  agent_dangers__nextBulletReactionTime:r=-1
+  agent_dangers__hmapTraceOffset:p3=0, -0.1, 0
+  agent_dangers__nextDangersCheckTime:r=0
+  agent_dangers__nextDangersTraceTime:r=0
+  agent_dangers__standShootPos:p3=0, 0, 0
+  agent_dangers__standShootDir:p3=0, 0, 0
+  game_effect__invisible:b=no
+  _tracked:t="game_effect__invisible"
+  invisible_man__rageHpRatio:r=0.4
+  invisible_man__inRage:b=no
+  _tracked:t="invisible_man__inRage"
+  invisible_man__inRageVanishChance:r=0.33
+  invisible_man__forceVanish:b=no
+  invisible_man__forceForwardAttack:b=no
+  invisible_man__forceForwardAttackTime:r=10
+  invisible_man__forceForwardAttackAt:r=0
+  invisible_man__mainEnemyFirstPriority:b=no
+  invisible_man__mainEnemyChasingTime:r=210
+  invisible_man__idleDisabled:b=no
+  invisible_man__vanishAt:r=-1
+  invisible_man__timeFromLastDamageToVanish:r=60
+  invisible_man__lastAttackTime:r=0
+  invisible_man__timeFromLastAttackToVanish:r=50
+  invisible_man__anotherDimensionAvailable:b=yes
+  _tracked:t="walker_agent__targetEid"
+
+  "nmesh_phys_approach_navmesh_disabled:tag"{}
+  "invisible_man__anotherDimensionAffectEid:eid"{}
+  "invisible_man__mainEnemyEid:eid"{}
+  "walker_agent__targetEid:eid"{}
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  agent_dangers{
+    _tags:t="server"
+  }
+}
+
+invisible_boss{
+  _use:t="invisible_man_guard"
+  animchar__res:t="invisible_boss_char"
+  collres__res:t="invisible_boss_collision"
+
+  "capsule_approximation__complexNodeNames:array"{
+    "node:array"{
+      node:t="Bip01 Neck"
+      node:t="Bip01 Head"
+    }
+
+    "node:array"{
+      node:t="Bip01 Spine"
+      node:t="Bip01 Spine1"
+    }
+  }
+}
+
+invisible_man_animchar{
+  animchar__res:t="invisible_char"
+  collres__res:t="invisible_collision"
+  animchar__actWhenInvisible:b=yes
+}
+
+invisible_man_climb{
+  _use:t="navmesh_phys_jumplinks_climb"
+  _use:t="navmesh_phys_jumplinks_climb_anim"
+  anim_state__climbJumpProgressVarOffset:r=-0.1
+  navmesh_phys__climbJumpMaxDistSq:r=4
+  navmesh_phys__climbJumpStartSpeed:r=6
+  navmesh_phys__climbJumpMaxUpHeight:r=0.8
+}
+
+invisible_man_jump{
+  _use:t="navmesh_phys_jumplinks_jump"
+  _use:t="navmesh_phys_jumplinks_jump_anim"
+}
+
+invisible_man_hitpoints{
+  _use:t="base_dm_parts"
+  hitpoints__hp:r=25
+  hitpoints__maxHp:r=25
+  _skipInitialReplication:t="dm_parts__parts"
+
+  "dm_parts__parts:object"{
+    "Bip01 Head:object"{
+      dmgMult:r=6
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 Neck:object"{
+      dmgMult:r=2
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 L Thigh:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 R Thigh:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 L Calf:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 R Calf:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 L Foot:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 R Foot:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 Pelvis:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 Spine:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 Spine1:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+  }
+
+  "capsule_approximation__nodeNames:array"{
+    node:t="Bip01 L Calf"
+    node:t="Bip01 L Thigh"
+    node:t="Bip01 L UpperArm"
+    node:t="Bip01 L Forearm"
+    node:t="Bip01 R Calf"
+    node:t="Bip01 R Thigh"
+    node:t="Bip01 R UpperArm"
+    node:t="Bip01 R Forearm"
+  }
+
+  "capsule_approximation__complexNodeNames:array"{
+    "node:array"{
+      node:t="Bip01 Neck"
+      node:t="Bip01 Head"
+    }
+
+    "node:array"{
+      node:t="Bip01 Spine"
+      node:t="Bip01 Spine1"
+      node:t="Bip01 Spine2"
+      node:t="Bip01 Spine3"
+    }
+  }
+}
+
+invisible_man_hit_reactions{
+  human_hit_reaction__use:b=yes
+  hit_reaction__fifoNodeIdx:i=-1
+  hit_reaction__repeatNodeIdxs:ip2=-1, -1
+
+  "hit_reaction__animNodeIdxs:list<i>"{}
+  "hit_reaction__anims:shared:object"{
+    default:t="hit_front_shoulder_right"
+    repeat1:t="hit_front_shoulder_right"
+    repeat2:t="hit_front_shoulder_right"
+
+    "Bip01 Head:object"{
+      front:t="hit_front_head"
+      back:t="hit_back_head"
+      left:t="hit_left_head"
+      right:t="hit_right_head"
+    }
+
+    "Bip01 Neck:object"{
+      front:t="hit_front_head"
+      back:t="hit_back_head"
+      left:t="hit_left_head"
+      right:t="hit_right_head"
+    }
+
+    "Bip01 L Thigh:object"{
+      front:t="hit_front_leg_left"
+      back:t="hit_back_leg_left"
+      left:t="hit_side_leg_left"
+      right:t="hit_side_leg_left"
+    }
+
+    "Bip01 R Thigh:object"{
+      front:t="hit_front_leg_right"
+      back:t="hit_back_leg_right"
+      right:t="hit_side_leg_right"
+      right:t="hit_side_leg_right"
+    }
+
+    "Bip01 L Calf:object"{
+      front:t="hit_front_leg_left"
+      back:t="hit_back_leg_left"
+      left:t="hit_side_leg_left"
+      right:t="hit_side_leg_left"
+    }
+
+    "Bip01 R Calf:object"{
+      front:t="hit_front_leg_right"
+      back:t="hit_back_leg_right"
+      right:t="hit_side_leg_right"
+      right:t="hit_side_leg_right"
+    }
+
+    "Bip01 L Foot:object"{
+      front:t="hit_front_leg_left"
+      back:t="hit_back_leg_left"
+      left:t="hit_side_leg_left"
+      right:t="hit_side_leg_left"
+    }
+
+    "Bip01 R Foot:object"{
+      front:t="hit_front_leg_right"
+      back:t="hit_back_leg_right"
+      right:t="hit_side_leg_right"
+      right:t="hit_side_leg_right"
+    }
+
+    "Bip01 Pelvis:object"{
+      front:t="hit_front_chest"
+      back:t="hit_back_body"
+      right:t="hit_left_body"
+      right:t="hit_right_body"
+    }
+
+    "Bip01 Spine:object"{
+      front:t="hit_front_chest"
+      back:t="hit_back_body"
+      right:t="hit_left_body"
+      right:t="hit_right_body"
+    }
+
+    "Bip01 Spine1:object"{
+      front:t="hit_front_chest"
+      back:t="hit_back_body"
+      right:t="hit_left_body"
+      right:t="hit_right_body"
+    }
+
+    "Bip01 R Clavicle:object"{
+      front:t="hit_front_shoulder_right"
+      back:t="hit_back_shoulder_right"
+      left:t=""
+      right:t=""
+    }
+
+    "Bip01 L Clavicle:object"{
+      front:t="hit_front_shoulder_left"
+      back:t="hit_back_shoulder_left"
+      left:t=""
+      right:t=""
+    }
+
+    "Bip01 R UpperArm:object"{
+      front:t="hit_front_shoulder_right"
+      back:t="hit_back_shoulder_right"
+      left:t=""
+      right:t=""
+    }
+
+    "Bip01 L UpperArm:object"{
+      front:t="hit_front_shoulder_left"
+      back:t="hit_back_shoulder_left"
+      left:t=""
+      right:t=""
+    }
+
+    "Bip01 R Forearm:object"{}
+    "Bip01 L Forearm:object"{}
+    "Bip01 R Hand:object"{}
+    "Bip01 L Hand:object"{}
+  }
+}
+
+invisible_man_loot{
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="invisible_remains_item"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="invisible_remains_pristine_item"
+      dropChance:r=0.005
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_3"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+  }
+}
+
+invisible_man_damaged_sparks_effect{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="invisible_man_damaged_sparks_fx"
+  }
+}
+
+invisible_man_damaged_affect{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=0.1
+  _use:t="game_effect_geomtree_effects"
+
+  "game_effect__uniqueHumanDamagedRenderAffect:tag"{}
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="changed_render_distortion_effect"
+    item:t="invisible_man_damaged_sparks_effect"
+  }
+}
+
+invisible_man{
+  _use:t="am_navmesh_creature_base"
+  _use:t="net_ragdoll"
+  _use:t="navmesh_phys_locomotion"
+  _use:t="navmesh_phys_jumplinks"
+  _use:t="invisible_man_climb"
+  _use:t="invisible_man_jump"
+  _use:t="invisible_man_animchar"
+  _use:t="invisible_man_loot"
+  _use:t="nphys_homo_erectus"
+  _use:t="ai_target"
+  _use:t="invisible_man_ai"
+  _use:t="invisible_man_hitpoints"
+  _use:t="corridor_walker"
+  _use:t="invisible_man_hit_reactions"
+  _use:t="invisible_man_sound"
+  _use:t="deformation_bbox_receiver"
+  kill_tracking_tag:t="invisible_man"
+  damage_model__blk:t="gamedata/units/humans/human.blk"
+  nphys__ccdOffset:p3=0, 1, 0
+  invisible_man__type:i=0
+  human__damagedRenderAffect:t="invisible_man_damaged_affect"
+  human__visible:b=no
+  _replicated:t="human__visible"
+  _tracked:t="human__visible"
+  isInVehicleHidden:b=no
+  _replicated:t="isInVehicleHidden"
+  bodyCleanupTime:r=3
+  hit_verification__maxDistance:r=9
+  dm__bsphereRad:r=9
+  needsBlood:b=no
+  material:t="invisibleManFlesh"
+  team:i=1
+  navmesh_phys__maxWalkSpeed:r=3.25
+  navmesh_phys__walkSpeedModifier:r=1
+  collres__centerNode:t="Bip01 Pelvis"
+  anim_state__attackStateName:t="stationary_attack"
+  death_note__name:t="note_invisible"
+
+  "kill_tracking__taggedPlayers:object"{}
+  "entity_mods:object"{}
+  "entity_mod_values:object"{
+    "hitpointsDmgMult:object"{
+      value:r=1
+      reversePositivity:b=no
+    }
+
+    "hitpointsMeleeDmgMult:object"{
+      value:r=0.4
+      reversePositivity:b=no
+    }
+  }
+
+  anim_phys{}
+  "phys_vars__skipVisibilityCheck:tag"{}
+  "dmgzoneVulnerable:tag"{}
+  "grid_obj__updateAlways:tag"{}
+  "invisibleMan:tag"{}
+}
+
+invisible_man_guard{
+  _use:t="invisible_man"
+  invisible_man__type:i=1
+  invisible_man__inRage:b=yes
+}
+
+invisible_man_manager{
+  invisible_man_manager__maxSpawnCount:i=1
+  invisible_man_manager__requiredMovementDistanceSq:r=25
+  invisible_man_manager__noMovementPenaltyTime:r=10
+  invisible_man_manager__noMovementPenaltyKoef:r=1
+  invisible_man_manager__noAttackPenaltyTime:r=180
+  invisible_man_manager__noAttackPenaltyKoef:r=0
+  invisible_man_manager__noDangerPenaltyTime:r=180
+  invisible_man_manager__noDangerPenaltyKoef:r=0
+  invisible_man_manager__shootProtectionTime:r=120
+  invisible_man_manager__initialSpawnTime:p2=600, 1200
+  invisible_man_manager__spawnTime:p2=600, 1200
+  invisible_man_manager__extraSpawnTimePerSpawnIndex:r=300
+
+  "invisible_man_manager:tag"{}
+  "invisible_man_target_data__eid:list<eid>"{}
+  "invisible_man_target_data__spawnTime:list<r>"{}
+  "invisible_man_target_data__spawnIndex:list<i>"{}
+  "invisible_man_target_data__spawningCount:list<i>"{}
+  "invisible_man_target_data__lastSpawnTime:list<r>"{}
+  "invisible_man_target_data__inactivityCheckTime:list<r>"{}
+  "invisible_man_target_data__lastMovementStartPos:list<p3>"{}
+  "invisible_man_target_data__lastMovementTime:list<r>"{}
+  "invisible_man_target_data__lastDangerTime:list<r>"{}
+  "invisible_man_manager__spawnPatterns:array"{
+    "invisible_man:object"{
+      spawnTempl:t="invisible_man"
+    }
+  }
+}
+
+monster_attack_event_manager{
+  _use:t="invisible_man_manager"
+
+  "invisible_man_manager__spawnPatterns:array"{
+    "invisible_man:object"{
+      spawnTempl:t="invisible_man"
+    }
+
+    "xenohound_event:object"{
+      spawnTempl:t="xenohound_event"
+      scaleParam:t="xenohound_event__scaledDifficulty"
+      targetParam:t="xenohound_event__targetEid"
+    }
+  }
+}
+
+invisible_man_demonstration{
+  _use:t="invisible_man"
+  beh_tree__node:t="invisible_man_demonstration"
+}
+
+test_invisible_man_spawner{
+  _use:t="am_triggerable_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  test_invisible_man_spawner__template:t="invisible_man+beh_tree_debug"
+
+  "box_zone:tag"{}
+  "humanTriggerable:tag"{}
+  "test_invisible_man_spawner:tag"{}
+}

@@ -1,0 +1,427 @@
+suit_preview_presentation_parameters_base{
+  iconYaw:r=20
+  iconPitch:r=0
+  iconRoll:r=10
+  iconOffsX:r=-0.15
+  iconOffsY:r=-0.8
+  iconScale:r=4
+  sunColor:c=255, 80, 0, 255
+  lightZenith:r=100
+  lightAzimuth:r=90
+  presentation_idle_type:r=0
+  presentation_idle_frame:r=0
+  animation:t="presentation_idle_parametric"
+}
+
+suit_full_body_presentation_parameters_base{
+  iconYaw:r=0
+  iconPitch:r=0
+  iconRoll:r=-5
+  iconOffsX:r=0
+  iconOffsY:r=0
+  iconScale:r=1
+  sunColor:c=255, 80, 20, 1
+  lightZenith:r=-20
+  lightAzimuth:r=140
+  presentation_idle_type:r=0
+  presentation_idle_frame:r=0
+  animation:t="presentation_idle_parametric"
+}
+
+suit_militant_light_a_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=1
+  presentation_idle_frame:r=0.9
+  iconYaw:r=10
+  iconRoll:r=2
+}
+
+suit_militant_light_b_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=0
+  presentation_idle_frame:r=0.81
+  iconYaw:r=40
+  iconRoll:r=2
+}
+
+suit_militant_light_b_prem_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=0
+  presentation_idle_frame:r=0.9
+  iconYaw:r=10
+  iconRoll:r=-5
+}
+
+suit_militant_light_c_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=3
+  presentation_idle_frame:r=0
+  iconYaw:r=-0
+  iconRoll:r=0
+}
+
+suit_militant_light_c_prem_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=2
+  presentation_idle_frame:r=0.2
+  iconYaw:r=-20
+  iconRoll:r=-2
+}
+
+suit_militant_light_d_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=3
+  presentation_idle_frame:r=0.92
+  iconYaw:r=-60
+  iconRoll:r=-2
+}
+
+suit_militant_light_e_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=1
+  presentation_idle_frame:r=0.68
+  iconYaw:r=-20
+  iconRoll:r=-2
+}
+
+suit_militant_light_f_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=2
+  presentation_idle_frame:r=0.68
+  iconYaw:r=0
+  iconRoll:r=-2
+}
+
+suit_militant_light_i_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=4
+  presentation_idle_frame:r=0.885
+  iconRoll:r=-5
+  iconYaw:r=-35
+}
+
+suit_militant_heavy_a_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=2
+  presentation_idle_frame:r=0.3
+  iconYaw:r=-30
+}
+
+suit_militant_heavy_b_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=1
+  presentation_idle_frame:r=0.68
+  iconYaw:r=0
+  iconRoll:r=-2
+}
+
+suit_militant_heavy_c_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=2
+  presentation_idle_frame:r=0.3
+  iconYaw:r=-30
+}
+
+suit_militant_female_light_a_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=0
+  presentation_idle_frame:r=0.62
+  iconYaw:r=-45
+  iconRoll:r=-10
+  iconOffsX:r=0.2
+}
+
+suit_militant_female_light_b_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=3
+  presentation_idle_frame:r=0.12
+  iconYaw:r=15
+  iconRoll:r=-5
+  iconOffsX:r=0.2
+}
+
+suit_militant_female_light_c_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  animation:t="presentation_idle"
+  iconYaw:r=0
+  iconRoll:r=-10
+  iconOffsX:r=0.2
+}
+
+suit_militant_female_heavy_a_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+  presentation_idle_type:r=3
+  presentation_idle_frame:r=0.22
+  iconYaw:r=10
+  iconOffsX:r=-0.1
+  iconOffsY:r=0
+  iconScale:r=1
+}
+
+native_sector_militant_suit_1_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+}
+
+native_sector_militant_suit_2_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+}
+
+native_sector_militant_suit_3_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+}
+
+native_sector_militant_suit_4_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+}
+
+native_sector_militant_suit_5_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+}
+
+modern_pmc_suit_1_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+}
+
+modern_pmc_suit_2_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+}
+
+modern_pmc_suit_3_full_body_presentation{
+  _use:t="suit_full_body_presentation_parameters_base"
+}
+
+suit_militant_light_a_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=5
+  presentation_idle_frame:r=0.5
+  iconOffsX:r=-0.01
+  iconOffsY:r=-0.5
+  lightZenith:r=-10
+  lightAzimuth:r=135
+  iconYaw:r=10
+  iconRoll:r=-5
+  iconScale:r=2.8
+}
+
+suit_militant_light_b_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=5
+  presentation_idle_frame:r=1
+  iconYaw:r=20
+  iconRoll:r=-7
+  iconOffsX:r=-0.01
+  iconOffsY:r=-0.5
+  iconScale:r=3.25
+  lightZenith:r=-5
+  lightAzimuth:r=120
+}
+
+suit_militant_light_b_prem_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=1
+  presentation_idle_frame:r=0.2
+  iconYaw:r=-55
+  iconRoll:r=-5
+  iconOffsX:r=0.2
+  iconOffsY:r=-0.5
+  iconScale:r=3.1
+  lightZenith:r=-5
+  lightAzimuth:r=145
+}
+
+suit_militant_light_c_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=3
+  presentation_idle_frame:r=0.5
+  iconYaw:r=25
+  iconRoll:r=-7
+  iconOffsX:r=-0.12
+  iconOffsY:r=-0.4
+  iconScale:r=2.3
+  lightZenith:r=-5
+  lightAzimuth:r=125
+}
+
+suit_militant_light_c_prem_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=2
+  presentation_idle_frame:r=0.2
+  iconYaw:r=-0
+  iconRoll:r=0
+  iconOffsX:r=0.1
+  iconOffsY:r=-0.4
+  iconScale:r=2.1
+  lightZenith:r=-5
+  lightAzimuth:r=125
+}
+
+suit_militant_light_d_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=0
+  presentation_idle_frame:r=0.1
+  iconOffsY:r=-0.6
+  iconOffsX:r=-0.26
+  iconScale:r=3.9
+  iconYaw:r=65
+  iconRoll:r=-7
+  lightZenith:r=5
+  lightAzimuth:r=125
+}
+
+suit_militant_light_e_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=6
+  presentation_idle_frame:r=0.5
+  iconOffsY:r=-0.67
+  iconOffsX:r=-0.15
+  iconScale:r=2.7
+  iconYaw:r=30
+  iconRoll:r=15
+  lightZenith:r=0
+  lightAzimuth:r=115
+}
+
+suit_militant_light_f_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=5
+  presentation_idle_frame:r=0.9
+  iconOffsY:r=-0.65
+  iconOffsX:r=0.22
+  iconScale:r=3
+  iconYaw:r=-10
+  lightZenith:r=0
+  lightAzimuth:r=125
+}
+
+suit_militant_light_i_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=4
+  presentation_idle_frame:r=0.79
+  iconOffsY:r=-0.6
+  iconOffsX:r=-0.02
+  iconScale:r=2.4
+  iconYaw:r=5
+  iconRoll:r=10
+  lightZenith:r=-5
+  lightAzimuth:r=130
+}
+
+suit_militant_heavy_a_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=2
+  presentation_idle_frame:r=0.1
+  iconOffsY:r=-0.55
+  iconOffsX:r=0.01
+  iconScale:r=2.5
+  iconYaw:r=10
+  iconRoll:r=5
+  lightZenith:r=-5
+  lightAzimuth:r=125
+}
+
+suit_militant_heavy_b_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=2
+  presentation_idle_frame:r=0.3
+  iconOffsY:r=-0.5
+  iconOffsX:r=0.2
+  iconScale:r=1.9
+  iconYaw:r=-30
+  lightZenith:r=-5
+  lightAzimuth:r=125
+}
+
+suit_militant_heavy_c_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=2
+  presentation_idle_frame:r=0.3
+  iconOffsY:r=-0.45
+  iconOffsX:r=0.23
+  iconScale:r=1.8
+  iconYaw:r=-30
+  lightZenith:r=-5
+  lightAzimuth:r=125
+}
+
+suit_militant_female_light_a_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=3
+  presentation_idle_frame:r=0.4
+  iconOffsY:r=-0.55
+  iconOffsX:r=0.32
+  iconScale:r=2.45
+  iconYaw:r=-35
+  iconRoll:r=5
+  lightZenith:r=-5
+  lightAzimuth:r=135
+}
+
+suit_militant_female_light_b_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=3
+  presentation_idle_frame:r=0.6
+  iconOffsY:r=-0.62
+  iconOffsX:r=0.23
+  iconScale:r=2.4
+  iconYaw:r=-50
+  iconRoll:r=15
+  lightZenith:r=5
+  lightAzimuth:r=130
+}
+
+suit_militant_female_light_c_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=2
+  presentation_idle_frame:r=0.9
+  iconOffsY:r=-0.42
+  iconOffsX:r=0.35
+  iconScale:r=2.55
+  iconYaw:r=-20
+  iconRoll:r=-10
+  lightZenith:r=0
+  lightAzimuth:r=120
+}
+
+suit_militant_female_heavy_a_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=0
+  presentation_idle_frame:r=0.5
+  iconOffsY:r=-0.58
+  iconOffsX:r=0.25
+  iconScale:r=2.3
+  iconYaw:r=-45
+  lightZenith:r=0
+  lightAzimuth:r=120
+}
+
+native_sector_militant_suit_1_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+}
+
+native_sector_militant_suit_2_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+}
+
+native_sector_militant_suit_3_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+}
+
+native_sector_militant_suit_4_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+}
+
+native_sector_militant_suit_5_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+}
+
+modern_pmc_suit_1_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+}
+
+modern_pmc_suit_2_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+}
+
+modern_pmc_suit_3_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+}

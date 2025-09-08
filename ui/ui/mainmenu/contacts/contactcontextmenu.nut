@@ -1,0 +1,50 @@
+from "%ui/ui_library.nut" import *
+
+let contextMenu = require("%ui/components/contextMenu.nut")
+let locByPlatform = require("%ui/helpers/locByPlatform.nut")
+let { uid2console } = require("%ui/mainMenu/contacts/consoleUidsRemap.nut")
+let { searchContactByInternalId } = require("%ui/mainMenu/contacts/externalIdsManager.nut")
+let { consoleCompare } = require("%ui/helpers/platformUtils.nut")
+
+let expanderForUserId = Watched(null)
+
+function openContextMenu(userId, event, actions) {
+  let actionsButtons = (actions ?? []).reduce(function(res, action) {
+    let isVisible = action.mkIsVisible(userId)
+    if (isVisible.get())
+      return res.append({
+        isVisible
+        text = locByPlatform(action.locId)
+        action = @() action.action(userId)
+      })
+    return res
+  }, [])
+
+  if (actionsButtons.len()) {
+    expanderForUserId.set(userId)
+    contextMenu(event.screenX + 1, event.screenY + 1, fsh(30), actionsButtons, @() expanderForUserId.set(null))
+  }
+}
+
+function open(contactValue, event, actions) {
+  if (contactValue.userId in uid2console.value) {
+    openContextMenu(contactValue.userId, event, actions)
+    return
+  }
+
+  foreach (_platform, data in consoleCompare)
+    if (data.isPlatform && data.isFromPlatform(contactValue.realnick)) {
+      searchContactByInternalId(contactValue.userId, function() {
+        openContextMenu(contactValue.userId, event, actions)
+      })
+      return
+    }
+
+  openContextMenu(contactValue.userId, event, actions)
+}
+
+
+return {
+  open = open
+  expanderForUserId
+}

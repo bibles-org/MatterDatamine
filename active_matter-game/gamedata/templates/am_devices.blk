@@ -1,0 +1,160 @@
+base_device{
+  _use:t="ecs_no_debug"
+  _use:t="item_with_animchar_updatable"
+  animchar__res:t="medkit_char"
+  collres__res:t="medkit_collision"
+  item__lootSoundType:t="powerup"
+  item__recreateInEquipment:t="hidden_equipped_item"
+
+  "item__equipmentSlots:list<t>"{
+    slot:t="device1"
+  }
+}
+
+invisibility_device_item{
+  _use:t="base_device"
+  item__name:t="items/invisibility_device_item"
+  item__proto:t="invisibility_device_item"
+  animchar__res:t="probegun_char"
+  collres__res:t="probegun_collision"
+  dropTm:m=[[-0.00414208, -0.999991, 0] [0.999991, -0.00414208, 0] [0, 0, 1] [0, 0, 0]]
+  device_item__startCooldownOnEquip:b=yes
+
+  "device_item__ability:object"{
+    name:t="invisibility"
+    type:t="ultimate"
+    activeMatterPrice:i=0
+    cooldown:r=180
+    lockWhileSwimming:b=yes
+    lockInVehicle:b=yes
+    isNoWeaponMode:b=yes
+
+    "stages:array"{
+      "in_stage:object"{
+        affectTemplate:t="invisibility_affect_in"
+        setupTransform:b=yes
+        duration:r=0.3
+        activePhase:b=yes
+        interruptible:b=yes
+
+        "substages:array"{
+          "smoke:object"{
+            affectTemplate:t="invisibility_continuous_affect_in"
+            setupTransform:b=yes
+            duration:r=0.2
+          }
+
+          "burst_smoke:object"{
+            affectTemplate:t="invisibility_burst_affect_in"
+            setupTransform:b=yes
+            delay:r=0.2
+            duration:r=1
+          }
+        }
+      }
+
+      "main_stage:object"{
+        affectTemplate:t="invisibility_affect"
+        duration:r=10
+        skippable:b=yes
+        unskippableDuration:r=2
+        activePhase:b=yes
+        interruptible:b=yes
+      }
+
+      "out_stage:object"{
+        affectTemplate:t="invisibility_affect_out"
+        setupTransform:b=yes
+        duration:r=1.5
+        exit:b=yes
+
+        "substages:array"{
+          "smoke:object"{
+            affectTemplate:t="invisibility_continuous_affect_out"
+            setupTransform:b=yes
+            duration:r=1
+          }
+
+          "burst_smoke:object"{
+            affectTemplate:t="invisibility_burst_affect_out"
+            setupTransform:b=yes
+            delay:r=1
+            duration:r=1
+          }
+        }
+      }
+    }
+  }
+}
+
+diy_device_item{
+  _use:t="base_device"
+  item__name:t="items/diy_device_item"
+  item__proto:t="diy_device_item"
+  device_item__startCooldownOnEquip:b=yes
+
+  "device_item__ability:object"{
+    name:t="diy"
+    type:t="ultimate"
+    cooldown:r=0.5
+    lockWhileSwimming:b=yes
+    lockInVehicle:b=yes
+    skipOnDeath:b=yes
+    manualSoulsWithdrawl:b=yes
+
+    "stages:array"{
+      "placement_stage:object"{
+        affectTemplate:t="diy_template_selected"
+        duration:r=9999
+        activePhase:b=yes
+        interruptible:b=yes
+        skippable:b=yes
+      }
+
+      "out_stage:object"{
+        affectTemplate:t="diy_finishing_phase"
+        label:t="out_stage"
+        duration:r=0.1
+        exit:b=yes
+      }
+    }
+  }
+}
+
+bomb_planting_device_item{
+  _use:t="base_device"
+  item__name:t="items/bomb_planting_device_item"
+  item__proto:t="bomb_planting_device_item"
+  animchar__res:t="tnt_explosive_char"
+  collres__res:t="tnt_explosive_collision"
+  dropTm:m=[[-0.00414208, -0.999991, 0] [0.999991, -0.00414208, 0] [0, 0, 1] [0, 0, 0]]
+  device_item__startCooldownOnEquip:b=yes
+
+  "device_item__ability:object"{
+    name:t="diy"
+    type:t="ultimate"
+    activeMatterPrice:i=0
+    cooldown:r=180
+    lockWhileSwimming:b=yes
+    lockInVehicle:b=yes
+    isNoWeaponMode:b=yes
+    manualSoulsWithdrawl:b=yes
+
+    "stages:array"{
+      "placement_stage:object"{
+        affectTemplate:t="bomb_planting_preview_phase"
+        duration:r=999999
+        activePhase:b=yes
+        interruptible:b=yes
+        skippable:b=yes
+      }
+
+      "out_stage:object"{
+        affectTemplate:t="bomb_planting_finishing_phase"
+        label:t="out_stage"
+        duration:r=0.25
+        exit:b=yes
+      }
+    }
+  }
+}

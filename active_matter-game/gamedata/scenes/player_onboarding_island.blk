@@ -1,0 +1,2209 @@
+import{
+  scene:t="gamedata/scenes/_player_onboarding_logic_entities.blk"
+}
+
+entity{
+  _template:t="raid_description"
+  raid_description__raidType:t="unknown"
+  raid_description__difficulty:t="dif_easy"
+
+  "raid_description__enemies:list<t>"{
+    item:t="turned"
+  }
+
+  "raid_description__images:list<t>"{
+    item:t="ui/zone_thumbnails/no_info"
+    item:t="ui/zone_thumbnails/no_info"
+    item:t="ui/zone_thumbnails/no_info"
+  }
+
+  "raid_description__mcImages:list<t>"{}
+  "raid_description__possibleLoot:list<t>"{
+    item:t="akm_47_gun"
+    item:t="sks_carbine_rust_gun"
+    item:t="makarov_gun"
+    item:t="knife_weapon"
+    item:t="small_backpack"
+    item:t="small_pouch"
+    item:t="armorplate_big_a"
+    item:t="helmet_pasgt"
+    item:t="flashlight_device"
+    item:t="item_healkit"
+    item:t="item_healing_ampoule"
+    item:t="box_7_62x39_magazine"
+  }
+}
+
+entity{
+  _template:t="wind"
+  wind__noiseScale:r=200
+  wind__noiseSpeed:r=11
+  wind__strength:r=3
+}
+
+entity{
+  _template:t="matching_utils"
+}
+
+entity{
+  _template:t="am_teams"
+  am_teams__players:t="am_player_on_base_team"
+}
+
+entity{
+  _template:t="static_cam"
+  camera__active:b=yes
+  transform:m=[[1, 0, 0] [-0, -4.37114e-08, 1] [0, -1, -4.37114e-08] [63, 13, -188]]
+}
+
+entity{
+  _template:t="settings_override_manager+settings_override_settings"
+  settings_override__useCustomSettings:b=yes
+
+  "settings_override__graphicsSettings:object"{
+    "graphics/dynamicShadowsMaxUpdatePerFrame":i=12
+  }
+}
+
+entity{
+  _template:t="water"
+  water__strength:r=3.8
+  water__wind_dir:r=70
+  water__level:r=0
+  water__flowmap:b=yes
+  water__flowmap_foam_power:r=1
+  water__flowmap_foam_scale:r=1.1
+  water__flowmap_foam_threshold:r=1
+  water__flowmap_foam_smoothness:r=0
+  water__flowmap_prebaked_speed:r=3
+  water__flowmap_prebaked_foam_scale:r=1
+  water__flowmap_prebaked_foam_power:r=1
+  water__flowmap_prebaked_foamfx:r=1
+  water__flowmap_min_distance:r=0.5
+  water__flowmap_max_distance:r=1
+  water__flowmap_simulated_speed:r=0.8
+  water__flowmap_simulated_foam_scale:r=1
+  water__flowmap_speed_depth_scale:r=0.2
+  water__flowmap_foam_speed_scale:r=0.2
+  water__flowmap_speed_depth_max:r=0.8
+  water__flowmap_foam_depth_max:r=0.4
+  water__flowmap_slope:r=2
+  water__flowmap_fading:r=1.5
+  foamfx__tile_uv_scale:r=0.271
+  foamfx__distortion_scale:r=0.5
+  foamfx__normal_scale:r=0.04
+  foamfx__pattern_gamma:r=1
+  foamfx__mask_gamma:r=1
+  foamfx__gradient_gamma:r=0.5
+  foamfx__underfoam_threshold:r=0.9
+  foamfx__overfoam_threshold:r=0.5
+  foamfx__underfoam_weight:r=0
+  foamfx__overfoam_weight:r=1
+  foamfx__tile_tex:t="foam_generator_a_tile_tex_n"
+  foamfx__gradient_tex:t="foam_generator_a_gradient_tex_n"
+  shore__parallelism_to_wind:r=0.2
+  shore__rivers_width:r=60
+  shore__waves_dist:p4=600, 1000, 0, 50
+  shore__wave_height_to_amplitude:r=0.3
+  shore__amplitude_to_length:r=30
+  shore__width_k:r=3
+  shore__enabled:b=yes
+}
+
+entity{
+  _template:t="onboarding_item_unique_id_holder"
+}
+
+entity{
+  _template:t="player_base_zone"
+  sphere_zone__radius:r=30
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [124.993, 18.9042, 10.129]]
+}
+
+entity{
+  _template:t="door_mult_ent_generator"
+  ri_extra_gen__blk:t="gamedata/onboarding_doors.blk"
+}
+
+entity{
+  _template:t="door_controller"
+  door_controller__name:t="southern_inner_gateway"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [125, 1.77409, 1.95999]]
+}
+
+entity{
+  _template:t="door_controller"
+  door_controller__name:t="monolith_gateway"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [125, 1.77409, 18.043]]
+}
+
+entity{
+  _template:t="door_controller"
+  door_controller__name:t="northern_outer_gateway"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [125, 1.77409, 25.9636]]
+}
+
+entity{
+  _template:t="door_controller"
+  door_controller__name:t="shooting_range_gateway"
+  transform:m=[[-0.707107, 0, 0.707107] [0, 1, 0] [-0.707107, 0, -0.707107] [109.73, 1.77417, 20.65]]
+}
+
+entity{
+  _template:t="door_controller"
+  door_controller__name:t="gym_gateway"
+  transform:m=[[-0.707107, 0, 0.707107] [0, 1, 0] [-0.707107, 0, -0.707107] [105.97, 1.77417, 24.1212]]
+}
+
+entity{
+  _template:t="door_controller"
+  door_controller__name:t="stash"
+  transform:m=[[-0.707107, 0, 0.707107] [0, 1, 0] [-0.707107, 0, -0.707107] [118.379, 1.77417, 16.6112]]
+}
+
+entity{
+  _template:t="door_controller"
+  door_controller__name:t="bedroom"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [132.503, 2.81144, 12.554]]
+}
+
+entity{
+  _template:t="door_controller"
+  door_controller__name:t="bathroom"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [119.243, 2.83267, 16.75]]
+}
+
+entity{
+  _template:t="door_controller"
+  door_controller__name:t="flasks"
+  transform:m=[[-0.707107, 0, -0.707107] [0, 1, 0] [0.707107, 0, -0.707107] [131.658, 1.4902, 16.6428]]
+}
+
+entity{
+  _template:t="ground_holes_updater"
+}
+
+entity{
+  _template:t="underground_zones_updater"
+}
+
+entity{
+  _template:t="shaderVars"
+
+  "shader_vars__vars:object"{
+    ocean1:c=90, 100, 150, 0
+    ocean0:c=100, 110, 150, 0
+    ocean_density:r=1
+    river1:c=26, 55, 36, 0
+    river0:c=34, 48, 40, 0
+    paint_details_tex:t="sovmod_building_colors_tex_palette*"
+    water_color_noise_size:r=71
+    river_density:r=2
+  }
+}
+
+entity{
+  _template:t="envi_cover_template"
+  envi_cover:b=yes
+  envi_cover_intensity_map_left_top_right_bottom:p4=-256, 256, 256, -256
+  envi_cover_intensity_map:t="am_monolyth_island_det_envi_cover_tex_m*"
+  envi_cover_albedo:p4=0.035, 0.035, 0.035, 0
+  envi_cover_translucency:r=0
+  envi_cover_reflectance:r=0.75
+  envi_cover_smoothness:r=0.2
+  envi_cover_normal_infl:r=-0.5
+  envi_cover_depth_smoothstep_max:r=1
+  envi_cover_depth_pow_exponent:r=1
+  envi_cover_noise_high_frequency:r=8
+  envi_cover_noise_low_frequency:r=0.4
+  envi_cover_noise_mask_factor:r=0.5
+  envi_cover_depth_mask_threshold:r=0.5
+  envi_cover_normal_mask_threshold:r=0.85
+  envi_cover_depth_mask_contrast:r=4
+  envi_cover_normal_mask_contrast:r=1
+  envi_cover_lowest_intensity:r=0
+}
+
+entity{
+  _template:t="clouds_hole_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-170, 15, 120]]
+  density:r=0.5
+}
+
+entity{
+  _template:t="dagdp_level_settings"
+  dagdp__max_objects:i=25000
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_stones_small_icelandic_medium_a"
+
+  "dagdp__params:object"{
+    orientation:t="normal"
+    rot_y:p2=0, 360
+    rot_x:p2=0, 30
+    rot_z:p2=0, 30
+    scale:p2=0.9, 0.5
+  }
+
+  "dagdp__assets:object"{
+    "stone_small_icelandic_sharp_j:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_i:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_h:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_c:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_b:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_a:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_g:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_f:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_e:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_d:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_stones_small_icelandic_small_a"
+
+  "dagdp__params:object"{
+    orientation:t="normal"
+    rot_y:p2=0, 360
+    rot_x:p2=0, 20
+    rot_z:p2=0, 20
+    scale:p2=0.65, 0.15
+  }
+
+  "dagdp__assets:object"{
+    "stone_small_icelandic_sharp_j:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_i:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_h:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_c:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_b:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_a:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_g:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_f:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_e:object"{
+      weight:r=1
+    }
+
+    "stone_small_icelandic_sharp_d:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_stones_small_icelandic_a"
+  dagdp__density:r=14
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_stones_small_icelandic_medium_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=0
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_stones_small_icelandic_b"
+  dagdp__density:r=2
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_stones_small_icelandic_medium_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=1
+    item:i=2
+    item:i=3
+    item:i=4
+    item:i=5
+    item:i=6
+    item:i=7
+    item:i=8
+    item:i=9
+    item:i=11
+    item:i=12
+    item:i=13
+    item:i=14
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_stones_small_icelandic_c"
+  dagdp__density:r=4
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_stones_small_icelandic_medium_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=10
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_stones_small_icelandic_d"
+  dagdp__density:r=2
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_stones_small_icelandic_small_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=15
+  }
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="invisibility_device_item"
+  transform:m=[[0.281784, -0.0455794, -0.958394] [0.25183, 0.967365, 0.0280361] [0.92584, -0.249253, 0.284066] [136.708, 33.3852, 8.37104]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="flamethrower_magazine"
+  transform:m=[[0.441704, 0.725279, -0.528079] [0.746225, 0.0297509, 0.66503] [0.498043, -0.687811, -0.52808] [135.788, 3.16712, 11.5421]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="crossbow_bolt_explosive_item"
+  transform:m=[[-0.090286, 1.10007e-07, 0.995916] [-9.80827e-08, 1, -1.1935e-07] [-0.995916, -1.08458e-07, -0.090286] [134.53, 33.1585, 11.5591]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="crossbow_bolt_explosive_item"
+  transform:m=[[0.0558265, 1.10007e-07, 0.998441] [-1.1443e-07, 1, -1.03781e-07] [-0.998441, -1.08458e-07, 0.0558265] [134.528, 33.1691, 11.5704]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="crossbow_bolt_item"
+  transform:m=[[-0.999098, 4.09167e-08, -0.0424682] [0.0424682, -1.48965e-07, -0.999098] [-4.7206e-08, -1, 1.47093e-07] [134.623, 33.1585, 11.6592]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="crossbow_bolt_item"
+  transform:m=[[-0.998855, 4.09167e-08, 0.0478384] [-0.0478384, -1.48965e-07, -0.998855] [-3.37436e-08, -1, 1.50752e-07] [134.628, 33.1585, 11.6217]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="crossbow_bolt_item"
+  transform:m=[[-0.999593, 4.09167e-08, 0.0284979] [-0.0284979, -1.48965e-07, -0.999593] [-3.66549e-08, -1, 1.50071e-07] [134.633, 33.1585, 11.6]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="scope_pulsar_n870"
+  transform:m=[[0.832997, 0, -0.553277] [0, 1, 0] [0.553277, -0, 0.832997] [138.808, 33.1351, 8.45175]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="scope_4x"
+  transform:m=[[0.243627, 0.956275, -0.161817] [-0.796575, 0.29247, 0.529085] [0.553277, 1.63913e-07, 0.832997] [138.648, 33.1523, 8.38863]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="scope_6x"
+  transform:m=[[0.204566, 0.969377, -0.135872] [-0.807489, 0.245578, 0.536334] [0.553277, -1.19209e-07, 0.832997] [138.516, 33.1542, 8.38251]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="scope_fastfire"
+  transform:m=[[0.707107, 0, -0.707107] [0, 1, 0] [0.707107, -0, 0.707107] [138.403, 33.161, 8.43096]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="pbs1_silencer"
+  transform:m=[[-0.127905, 0.258778, -0.95743] [0.0295472, 0.965926, 0.257127] [0.991346, 0.00459844, -0.131193] [137.867, 33.1733, 8.44248]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="cal_9_18_silencer"
+  transform:m=[[0.207715, 0, 0.978189] [0, 1, -0] [-0.978189, 0, 0.207715] [137.357, 33.1238, 8.45673]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="box_9mm_magazine"
+  transform:m=[[-0.989962, 0, -0.141334] [0, 1, 0] [0.141334, 0, -0.989962] [135.12, 33.1532, 8.4156]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="box_7_62x39_magazine"
+  transform:m=[[-1, 0, 0] [0, 1, 0] [0, 0, -1] [134.701, 33.1532, 8.42519]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="box_12_gauge_magazine"
+  transform:m=[[-1, 0, 0] [0, 1, 0] [0, 0, -1] [134.065, 33.1532, 8.43165]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="box_5_56_magazine"
+  transform:m=[[-1, 0, 0] [0, 1, 0] [0, 0, -1] [134.497, 33.1532, 8.43377]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="box_45_acp_magazine"
+  transform:m=[[-1, 0, 0] [0, 1, 0] [0, 0, -1] [134.928, 33.1532, 8.41399]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="fire_grenade_item"
+  transform:m=[[0, 1, -0.00057344] [0, -0.00057344, -1] [-1, 0, -0] [138.271, 33.1684, 8.46193]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="zarya_flash_grenade_item"
+  transform:m=[[-0.498691, 0.865978, 0.0372688] [-0.216586, -0.0828621, -0.972741] [-0.839284, -0.493169, 0.228881] [138.039, 33.1645, 8.48121]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="f1_grenade_item"
+  transform:m=[[0.00016428, 1, -0.000549404] [0.286481, -0.00057344, -0.958086] [-0.958086, 2.18279e-10, -0.286481] [138.129, 33.1698, 8.46777]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__noRacksItemTemplate:t="racked_item+flashlight_device_dynamic_material"
+  racked_item_slot__itemTemplate:t="flashlight_device"
+  transform:m=[[-0.0937083, 0.987873, -0.123789] [0.742931, 0.152155, 0.651846] [0.662777, -0.0308829, -0.74818] [136.201, 33.1741, 8.40306]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="night_vision_device"
+  transform:m=[[-0.57418, -0.0598247, 0.816541] [-0.0698806, 0.997269, 0.0239269] [-0.815742, -0.0433219, -0.576792] [135.888, 33.2748, 8.38652]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="loot_item_healkit_magazine_small"
+  transform:m=[[0.40542, -0.0326031, 0.913549] [-0.0153842, 0.99898, 0.0424793] [-0.914001, -0.0312761, 0.404504] [136.843, 33.1626, 11.6028]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="loot_item_healkit_magazine_avg"
+  transform:m=[[0.93184, -0.0503026, -0.359367] [0.0713553, 0.996411, 0.0455513] [0.355785, -0.0680892, 0.932084] [136.655, 33.1453, 11.5932]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="loot_item_healkit_magazine_big"
+  transform:m=[[0.206214, -0.0409909, -0.977648] [0.0548107, 0.998038, -0.0302847] [0.976971, -0.0473404, 0.208056] [136.381, 33.1421, 11.6173]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="item_painkiller"
+  transform:m=[[-0.952869, 0.153934, 0.261431] [-0.260175, 0.0286082, -0.965138] [-0.156046, -0.987667, 0.01279] [136.948, 33.1607, 11.6346]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="box_7_62x54_magazine"
+  transform:m=[[-0.997654, 0, 0.068455] [0, 1, 0] [-0.068455, 0, -0.997654] [134.271, 33.151, 8.4375]]
+}
+
+entity{
+  _template:t="racked_item_slot"
+  racked_item_slot__itemTemplate:t="box_416_barret_magazine"
+  transform:m=[[3.78552e-08, -1, 2.18557e-08] [-0.866025, -4.37114e-08, -0.5] [0.5, 0, -0.866025] [133.867, 33.1797, 8.43258]]
+}
+
+entity{
+  _template:t="extraction_inactive_portal_effect+open_console_menu_on_use"
+  open_console_menu_on_use__menuName:t="Raid"
+  item__setCustomUsePrompt:t="portal/press_to_raid"
+  transform:m=[[0.401475, 0, 0] [0, 0.494307, 0] [0, 0, 0.494307] [125.037, 4.63001, 30.6192]]
+}
+
+entity{
+  _template:t="open_console_menu_on_use"
+  item__setCustomUsePrompt:t="console/monolith_access"
+  open_console_menu_on_use__menuName:t="monolithAccessWnd"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [124.998, 4.44023, 31.3071]]
+}
+
+entity{
+  _template:t="loadout_console_menu_on_use"
+  transform:m=[[0.684826, 0, 0.728705] [-0, 1, 0] [-0.728705, -0, 0.684826] [113.752, 3.9, 18.9737]]
+}
+
+entity{
+  _template:t="loadout_console_menu_on_use"
+  transform:m=[[0.684826, 0, 0.728705] [-0, 1, 0] [-0.728705, -0, 0.684826] [117.174, 3.9, 19.9824]]
+}
+
+entity{
+  _template:t="loadout_console_menu_on_use"
+  transform:m=[[0.684826, 0, 0.728705] [-0, 1, 0] [-0.728705, -0, 0.684826] [118.446, 3.9, 18.7683]]
+}
+
+entity{
+  _template:t="loadout_console_menu_on_use"
+  transform:m=[[0.684826, 0, 0.728705] [-0, 1, 0] [-0.728705, -0, 0.684826] [116.285, 3.9, 16.6075]]
+}
+
+entity{
+  _template:t="loadout_console_menu_on_use"
+  transform:m=[[0.728705, 0, -0.684826] [0, 1, 0] [0.684826, -0, 0.728705] [115.082, 3.9, 17.8685]]
+}
+
+entity{
+  _template:t="spot_light"
+  transform:m=[[-0.707107, -2.98023e-08, 0.707107] [-0.353553, 0.866025, -0.353553] [-0.612373, -0.5, -0.612373] [105.075, 7.72801, 15.6807]]
+  spot_light__shadows:b=yes
+  spot_light__cone_angle:r=120
+  light__radius_scale:r=8
+  light__max_radius:r=40
+  light__brightness:r=20
+  light__affect_volumes:b=no
+  spot_light__inner_attenuation:r=0.5
+}
+
+entity{
+  _template:t="spot_light"
+  transform:m=[[-0.707107, -2.98023e-08, 0.707107] [-0.353553, 0.866025, -0.353553] [-0.612373, -0.5, -0.612373] [89.0495, 7.34735, -0.345105]]
+  spot_light__shadows:b=yes
+  spot_light__cone_angle:r=120
+  light__radius_scale:r=8
+  light__max_radius:r=40
+  light__brightness:r=20
+  light__affect_volumes:b=no
+  spot_light__inner_attenuation:r=0.5
+}
+
+entity{
+  _template:t="spot_light"
+  transform:m=[[-0.707107, -2.98023e-08, 0.707107] [-0.353553, 0.866025, -0.353553] [-0.612373, -0.5, -0.612373] [71.4969, 7.42743, -17.8977]]
+  spot_light__shadows:b=yes
+  spot_light__cone_angle:r=120
+  light__radius_scale:r=8
+  light__max_radius:r=40
+  light__brightness:r=20
+  light__affect_volumes:b=no
+  spot_light__inner_attenuation:r=0.5
+}
+
+entity{
+  _template:t="spot_light"
+  transform:m=[[-0.707107, -2.98023e-08, 0.707107] [-0.353553, 0.866025, -0.353553] [-0.612373, -0.5, -0.612373] [58.2603, 7.48406, -31.1343]]
+  spot_light__shadows:b=yes
+  spot_light__cone_angle:r=120
+  light__radius_scale:r=8
+  light__max_radius:r=40
+  light__brightness:r=20
+  light__affect_volumes:b=no
+  spot_light__inner_attenuation:r=0.5
+}
+
+entity{
+  _template:t="shooting_range_anchor+hierarchial_entity"
+  transform:m=[[-0.707106, 0, 0.707108] [0, 1, 0] [-0.707108, 0, -0.707106] [109.718, 2.48258, 20.6122]]
+  hierarchy_unresolved_id:i=2
+}
+
+entity{
+  _template:t="shooting_range_change_mannequins_panel+game_object+requires_trans_render+hierarchial_entity"
+  transform:m=[[-0.999999, 0, 5.96046e-08] [0, 1, 0] [-5.96046e-08, 0, -0.999999] [104.459, 2.53525, 21.074]]
+  hierarchy_unresolved_id:i=34
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="shooting_target_round+hierarchial_entity"
+  transform:m=[[0.707107, 0, -0.707107] [0, 1, 0] [0.707107, -0, 0.707107] [105.729, 3.55659, 9.95509]]
+  hierarchy_unresolved_id:i=17
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="pillar+hierarchial_entity"
+  transform:m=[[0.707107, 0, -0.707107] [0, 1, 0] [0.707107, -0, 0.707107] [105.694, 0.400002, 9.91973]]
+  hierarchy_unresolved_id:i=6
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="shooting_target_round+hierarchial_entity"
+  transform:m=[[0.707107, 0, -0.707107] [0, 1, 0] [0.707107, -0, 0.707107] [94.1937, 3.55659, -0.166218]]
+  hierarchy_unresolved_id:i=19
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="pillar+hierarchial_entity"
+  transform:m=[[0.707107, 0, -0.707107] [0, 1, 0] [0.707107, -0, 0.707107] [94.1584, 0.400002, -0.201565]]
+  hierarchy_unresolved_id:i=10
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="shooting_target_round+hierarchial_entity"
+  transform:m=[[0.707107, 0, -0.707107] [0, 1, 0] [0.707107, -0, 0.707107] [79.2179, 3.55659, -13.7278]]
+  hierarchy_unresolved_id:i=21
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="pillar+hierarchial_entity"
+  transform:m=[[0.707107, 0, -0.707107] [0, 1, 0] [0.707107, -0, 0.707107] [79.1825, 0.400002, -13.7632]]
+  hierarchy_unresolved_id:i=12
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="shooting_target_round+hierarchial_entity"
+  transform:m=[[0.707107, 0, -0.707107] [0, 1, 0] [0.707107, -0, 0.707107] [65.2751, 3.55659, -26.2564]]
+  hierarchy_unresolved_id:i=23
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="pillar+hierarchial_entity"
+  transform:m=[[0.707107, 0, -0.707107] [0, 1, 0] [0.707107, -0, 0.707107] [65.2397, 0.400002, -26.2917]]
+  hierarchy_unresolved_id:i=8
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="shooting_target_round+hierarchial_entity"
+  transform:m=[[0.707107, 0, -0.707107] [0, 1, 0] [0.707107, -0, 0.707107] [50.7837, 3.55659, -39.3336]]
+  hierarchy_unresolved_id:i=15
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="pillar+hierarchial_entity"
+  transform:m=[[0.707107, 0, -0.707107] [0, 1, 0] [0.707107, -0, 0.707107] [50.7484, 0.400002, -39.3689]]
+  hierarchy_unresolved_id:i=4
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="shooting_range_mannequin_position+hierarchial_entity"
+  transform:m=[[0.707107, 0, 0.707107] [0, 1, 0] [-0.707107, 0, 0.707107] [99.0378, 2.51504, 16.6463]]
+  hierarchy_unresolved_id:i=25
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="shooting_range_mannequin_position+hierarchial_entity"
+  transform:m=[[0.707107, 0, 0.707107] [0, 1, 0] [-0.707107, 0, 0.707107] [88.8434, 2.51504, 5.18398]]
+  hierarchy_unresolved_id:i=29
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="shooting_range_mannequin_position+hierarchial_entity"
+  transform:m=[[0.707107, 0, 0.707107] [0, 1, -0] [-0.707107, 0, 0.707107] [75.2299, 2.51504, -9.74052]]
+  hierarchy_unresolved_id:i=31
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="shooting_range_mannequin_position+hierarchial_entity"
+  transform:m=[[0.707107, 0, 0.707107] [0, 1, 0] [-0.707107, 0, 0.707107] [62.7221, 2.51504, -23.704]]
+  hierarchy_unresolved_id:i=27
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="shooting_range_mannequin_position+hierarchial_entity"
+  transform:m=[[0.707107, 0, 0.707107] [0, 1, -0] [-0.707107, 0, 0.707107] [49.9624, 2.51504, -38.5126]]
+  hierarchy_unresolved_id:i=33
+  hierarchy_unresolved_parent_id:i=2
+}
+
+entity{
+  _template:t="misc_ent_generator"
+  ri_extra_gen__blk:t="gamedata/player_base_consoles.blk"
+}
+
+entity{
+  _template:t="racked_gunwall_items_manager"
+}
+
+entity{
+  _template:t="player_base_state_manager"
+}
+
+entity{
+  _template:t="game_obj_to_ranked_item_slot_mapping"
+
+  "racked_item_mapping__gameObjs:list<t>"{
+    item:t="gunwall_m48_hammer"
+    item:t="gunwall_m48_spear"
+    item:t="gunwall_san_marco_dagger"
+    item:t="gunwall_axe"
+    item:t="gunwall_flamethrower"
+    item:t="gunwall_am_launcher"
+    item:t="gunwall_m1911_colt_nickel"
+    item:t="gunwall_scorpion_evo_iii"
+    item:t="gunwall_toz_b"
+    item:t="gunwall_pm63"
+    item:t="gunwall_m4"
+    item:t="gunwall_akm"
+    item:t="gunwall_hk_ump_45"
+    item:t="gunwall_ak_103"
+    item:t="gunwall_hk_mp5n"
+    item:t="gunwall_ak12"
+    item:t="gunwall_spas_12"
+    item:t="gunwall_ks_23"
+    item:t="gunwall_pp_19_vityaz"
+    item:t="gunwall_as_val"
+    item:t="gunwall_winchester_model_1912"
+    item:t="gunwall_winchester_model_1912_trench"
+    item:t="gunwall_barret_m82a1"
+    item:t="gunwall_m1911_colt"
+    item:t="gunwall_crossbow"
+    item:t="gunwall_makarov"
+    item:t="gunwall_fn_scar"
+    item:t="gunwall_sks_carbine"
+    item:t="gunwall_sks_carbine_hunt"
+    item:t="gunwall_steyr_aug_a1"
+    item:t="gunwall_mp_443"
+    item:t="gunwall_mosin_m44"
+    item:t="gunwall_mosin_m91"
+    item:t="gunwall_m1911_colt_mag"
+    item:t="gunwall_makarov_mag"
+    item:t="gunwall_mp_443_mag"
+    item:t="gunwall_ak12_mag"
+    item:t="gunwall_ak_103_mag"
+    item:t="gunwall_akm_mag"
+    item:t="gunwall_as_val_mag"
+    item:t="gunwall_steyr_aug_a1_mag"
+    item:t="gunwall_m4_mag"
+    item:t="gunwall_fn_scar_mag"
+    item:t="gunwall_hk_mp5n_mag"
+    item:t="gunwall_hk_ump_45_mag"
+    item:t="gunwall_pp_19_vityaz_mag"
+    item:t="gunwall_scorpion_evo_iii_mag"
+    item:t="gunwall_barret_m82a1_mag"
+  }
+
+  "racked_item_mapping__templates:list<t>"{
+    item:t="hammer_weapon"
+    item:t="spear_weapon"
+    item:t="knife_weapon"
+    item:t="axe_weapon"
+    item:t="flamethrower_corefan_gun"
+    item:t="gravity_hook"
+    item:t="m1911a1_colt_nickel_gun"
+    item:t="scorpion_evo_3_gun"
+    item:t="toz_b_gun"
+    item:t="m4_7_62_civil_gun"
+    item:t="akm_47_civil_gun"
+    item:t="hk_ump_45_gun"
+    item:t="ak_103_gun"
+    item:t="hk_mp5n_gun"
+    item:t="ak_12_gun"
+    item:t="spas_12_gun"
+    item:t="ks_23_gun"
+    item:t="pp_19_vityaz_gun"
+    item:t="as_val_gun"
+    item:t="winchester_civil_gun"
+    item:t="winchester_specops_gun"
+    item:t="mossberg_590_gun"
+    item:t="m1911_colt_gun"
+    item:t="crossbow_gun"
+    item:t="makarov_gun"
+    item:t="fn_scar_gun"
+    item:t="sks_carbine_gun"
+    item:t="sks_carbine_hunt_gun"
+    item:t="steyr_aug_a1_gun"
+    item:t="mp_443_gun"
+    item:t="mosin_m44_gun"
+    item:t="mosin_m91_gun"
+    item:t="m1911_colt_magazine"
+    item:t="makarov_magazine"
+    item:t="mp_443_magazine"
+    item:t="ak_12_magazine"
+    item:t="ak_103_magazine"
+    item:t="akm_47_magazine"
+    item:t="as_val_magazine"
+    item:t="steyr_aug_a1_magazine"
+    item:t="m4_magazine"
+    item:t="fn_scar_magazine"
+    item:t="hk_mp5n_magazine"
+    item:t="hk_ump_45_magazine"
+    item:t="pp_19_vityaz_magazine"
+    item:t="scorpion_evo_3_magazine"
+    item:t="barrett_m82a1_magazine"
+    item:t="svd_gun"
+  }
+}
+
+entity{
+  _template:t="block_spawn_on_level_load"
+}
+
+entity{
+  _template:t="spawnBase"
+  transform:m=[[0.125823, 6.00614e-08, 0.992053] [-7.55707e-09, 1, -5.95841e-08] [-0.992053, 2.4869e-14, 0.125823] [124.165, 2.52651, 5.45238]]
+  team:i=-1
+  spawnBase__teamSpawn:b=yes
+  spawnBase__spawnRadius:r=0
+}
+
+entity{
+  _template:t="transparent_partition"
+}
+
+entity{
+  _template:t="postfx_color_grading_tonemap_death_alive"
+}
+
+import{
+  scene:t="gamedata/scenes/_test_base_construction_b_phys_objects.blk"
+}
+
+entity{
+  _template:t="player_spawn_controller_default"
+}
+
+entity{
+  _template:t="text_on_start"
+  text_on_start_locId:t="text_on_player_base_loaded"
+  time_to_hide_text_after_animation:r=2.5
+}
+
+entity{
+  _template:t="stats_game_mode"
+  stats_game_mode__name:t="player_base"
+}
+
+entity{
+  _template:t="minimap"
+  mapTex:t=""
+  left_top:p2=-1024, 1024
+  right_bottom:p2=1024, -1024
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="monolith_door_red_creator"
+  transform:m=[[-1, 0, 0] [0, 1, 0] [0, 0, -1] [-169.35, 13.3, 120.58]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="monolith_door_red_outer_creator"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-170, 13.3, 120.45]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="monolith_door_blue_creator"
+  transform:m=[[-1, 0, 0] [0, 1, 0] [0, 0, -1] [-169.35, 13.3, 119.35]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="monolith_door_blue_outer_creator"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-170, 13.3, 119.45]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="onboarding_monolith_to_base_trigger_a"
+  transform:m=[[1, 0, 0] [0, 3.7, 0] [0, 0, 0.75] [-170, 14.6, 119.625]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="onboarding_monolith_to_base_trigger_b"
+  transform:m=[[1, 0, 0] [0, 3.7, 0] [0, 0, 0.75] [-170, 14.6, 120.375]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="monolith_bullet_catcher"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-170, 13, 120]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="monolith_bullet_catcher"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-170, 14.5, 120]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="monolith_bullet_catcher"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-170, 16, 120]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="monolith_bullet_catcher"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-170, 17.5, 120]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="monolith_bullet_catcher"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-170, 19, 120]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="monolith_bullet_catcher"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-170, 20.5, 120]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="monolith_bullet_catcher"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-170, 20.5, 120]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="monolith_bullet_catcher_huge"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-170, 70.5, 120]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="monolith_interactive_music"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-170, 13, 120]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  onboarding_monolith_marker__createTemplate:t="monolith_touch_distortion_creator"
+  transform:m=[[1.76998, 0, 0] [-0, -0.0306576, 1.00661] [0, -4.03633, -0.122932] [-170, 14.8, 120.65]]
+}
+
+entity{
+  _template:t="onboarding_monolith_marker"
+  transform:m=[[10, 0, 0] [0, 10, 0] [0, 0, 10] [-205, 3, 193]]
+  onboarding_monolith_marker__createTemplate:t="onboarding_monolith_wish_note_box"
+}
+
+entity{
+  _template:t="onboarding_monolith_spawn_location"
+  transform:m=[[0.500299, 0, -0.865853] [0.0461708, 0.998577, 0.026678] [0.864621, -0.0533241, 0.499587] [-205, 3, 193]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_spawn_location"
+  transform:m=[[-0.283913, 0, 0.958851] [0, 1, 0] [-0.958851, 0, -0.283913] [164.896, 30.2383, -147.141]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.119051, 27.3846, -0.000555012] [6.28998, -0.0273454, -0.0293238] [-0.0464313, 1.20758e-11, -9.95956] [149.3, 43.0969, -59.9882]]
+  grav_zone__boxBorderX:p2=5.3, 0
+  grav_zone__boxBorderY:p2=0, 1.5
+  grav_zone__boxBorderZ:p2=0, 0
+  gpu_object_placer__boxBorderX:p2=0, 0
+  gpu_object_placer__boxBorderY:p2=0, 0
+  gpu_object_placer__boxBorderZ:p2=0.75, 0
+  gpu_object_placer__use_strict_decal_placement:b=no
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.119051, 27.3846, -0.000555012] [6.28994, -0.0273452, -0.0293235] [-0.0274285, 7.13357e-12, -5.88344] [149.289, 43.097, -52.7949]]
+  grav_zone__boxBorderX:p2=5.3, 0
+  grav_zone__boxBorderY:p2=0, 1.5
+  grav_zone__boxBorderZ:p2=0, 0
+  gpu_object_placer__use_strict_decal_placement:b=no
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.119051, 27.3846, -0.000555012] [6.29002, -0.0273456, -0.0293241] [-0.0417171, 1.08497e-11, -8.94836] [149.275, 43.097, -42.9829]]
+  grav_zone__boxBorderX:p2=5.3, 0
+  grav_zone__boxBorderY:p2=0, 1.5
+  grav_zone__boxBorderZ:p2=0, 0
+  gpu_object_placer__boxBorderZ:p2=0, 4
+  gpu_object_placer__boxBorderY:p2=0, 0
+  gpu_object_placer__boxBorderX:p2=0, 0
+  gpu_object_placer__use_strict_decal_placement:b=no
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.0901616, 20.7393, -0.000420331] [12.2853, -0.05341, -0.0572741] [-0.0185992, 4.83724e-12, -3.98952] [147.013, 46.1393, -48.5999]]
+  gpu_object_placer__use_strict_decal_placement:b=no
+}
+
+entity{
+  _template:t="gravity_path_box_invisible"
+  transform:m=[[0.0126821, 2.91719, -5.91235e-05] [5.63997, -0.0245196, -0.0262934] [-0.0117634, 3.05941e-12, -2.52325] [148.581, 34.5902, -48.6026]]
+}
+
+entity{
+  _template:t="gravity_path_box_invisible"
+  transform:m=[[4.04827, -3.00039, -0.0489453] [3.9964, 5.39212, 5.70421e-08] [0.0257184, -0.0190614, 3.29566] [150.208, 33.1801, -48.6691]]
+  grav_zone__boxBorderX:p2=0, 1
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.0670878, 15.4318, -0.000312761] [9.24933, -0.0402111, -0.0431202] [-0.0694219, 1.80551e-11, -14.8911] [147.011, 49.7591, -35.1218]]
+  gpu_object_placer__boxBorderY:p2=3, 0
+  gpu_object_placer__boxBorderX:p2=1.5, 1
+  gpu_object_placer__boxBorderZ:p2=0, 1.5
+  gpu_object_placer__use_strict_decal_placement:b=no
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.0261824, 6.02259, -0.000122062] [9.24915, -0.0402103, -0.0431194] [-0.0439057, 1.14189e-11, -9.41781] [146.984, 45.5141, -23.6753]]
+  gpu_object_placer__boxBorderX:p2=1, 1
+  gpu_object_placer__boxBorderY:p2=1, 0
+  gpu_object_placer__use_strict_decal_placement:b=no
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.0522762, 12.0248, -0.000243711] [6.10023, -0.0265205, -0.0284392] [-0.0322818, 8.39581e-12, -6.92448] [148.612, 45.4761, -17.0782]]
+  gpu_object_placer__boxBorderZ:p2=1, 0
+  gpu_object_placer__boxBorderY:p2=3.62, 0
+  gpu_object_placer__boxBorderX:p2=0, 0
+  gpu_object_placer__use_strict_decal_placement:b=no
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-2.19954, 4.17039, -9.55559e-05] [5.16755, 2.72546, -0.0272362] [-0.028488, -0.0151838, -6.92447] [150.874, 39.0743, -17.0782]]
+  gpu_object_placer__boxBorderY:p2=0, 0
+  gpu_object_placer__boxBorderZ:p2=1, 1
+  gpu_object_placer__use_strict_decal_placement:b=no
+}
+
+entity{
+  _template:t="gravity_path_box_invisible"
+  transform:m=[[-3.59502, 3.05056, -9.55575e-05] [3.77997, 4.45461, -0.0272361] [-0.0207794, -0.0247049, -6.92447] [152.978, 36.313, -17.0782]]
+  grav_zone__boxBorderX:p2=1, 0
+}
+
+entity{
+  _template:t="locked_door_marker"
+  transform:m=[[1.70538, 0, 0] [0, 2.59053, 0] [0, 0, 2.37111] [164.088, 33.2982, -54.2253]]
+  locked_door_marker__template:t="onboarding_storage_door"
+}
+
+entity{
+  _template:t="player_base_onboarding_object_sound"
+  transform:m=[[0.522437, 0, 0.852677] [0, 1, -0] [-0.852677, 0, 0.522437] [123.301, 2.97176, 16.9162]]
+  player_base_onboarding_object__stepIndex:i=0
+  player_base_onboarding_object_sound__path:t="player/effects/powerup_pick"
+}
+
+entity{
+  _template:t="player_base_onboarding_object_sound"
+  transform:m=[[-0.80156, 0, -0.597912] [0, 1, 0] [0.597912, 0, -0.80156] [123.846, 7.23042, 8.53434]]
+  player_base_onboarding_object__stepIndex:i=1
+  player_base_onboarding_object_sound__path:t="env_effects/doors/coponier/coponier_power_up"
+}
+
+entity{
+  _template:t="player_base_onboarding_object_sound"
+  transform:m=[[-0.80156, 0, -0.597912] [0, 1, 0] [0.597912, 0, -0.80156] [126.846, 3.23042, 8.53434]]
+  player_base_onboarding_object__stepIndex:i=2
+  player_base_onboarding_object_sound__path:t="env_effects/doors/coponier/coponier_power_up"
+}
+
+entity{
+  _template:t="player_base_onboarding_object_sound"
+  transform:m=[[0.0122055, -9.57012e-22, 0.999925] [-0.0628338, 0.998024, 0.000766977] [-0.997949, -0.0628385, 0.0121814] [119.164, 3.8917, 10.1598]]
+  player_base_onboarding_object__stepIndex:i=3
+  player_base_onboarding_object_sound__path:t="impact/grenade_gravity"
+}
+
+entity{
+  _template:t="player_base_onboarding_object_sound"
+  transform:m=[[0.0495105, 1.53424e-06, -0.998774] [0.169695, 0.985461, 0.00841353] [0.984252, -0.169904, 0.0487904] [132.371, 3.65367, 7.31906]]
+  player_base_onboarding_object__stepIndex:i=4
+  player_base_onboarding_object_sound__path:t="player/effects/powerup_drop"
+}
+
+entity{
+  _template:t="onboarding_monolith_multimarker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-170, 13.9, 120]]
+
+  "onboarding_monolith_marker__createTemplates:list<t>"{
+    item:t="monolith_grav_zone"
+    item:t="monolith_transformation_trigger_zone"
+  }
+}
+
+entity{
+  _template:t="onboarding_note_first_bunker_visit_box_trigger"
+  transform:m=[[4.96388, 0, -0.186132] [0, 2.5579, 0] [0.186132, 0, 4.96388] [125.315, 2.85535, 5]]
+}
+
+entity{
+  _template:t="onboarding_note_contracts_box_trigger"
+  transform:m=[[4.96388, 0, -0.186132] [0, 9, 0] [0.186132, 0, 4.96388] [125.315, 2.85535, 5]]
+}
+
+entity{
+  _template:t="onboarding_note_miniraid_start_box_trigger"
+  transform:m=[[-1.0665, 0, 4.85153] [0, 2.5579, 0] [-4.85153, 0, -1.0665] [164.831, 30.2354, -147.051]]
+}
+
+entity{
+  _template:t="onboarding_note_miniraid_healing_box_trigger"
+  transform:m=[[-0.131842, 0, 4.96562] [0, 3.35084, 0] [-4.96562, 0, -0.131842] [185.52, 33.6808, -66.087]]
+}
+
+entity{
+  _template:t="onboarding_note_miniraid_wall_box_trigger"
+  transform:m=[[3.92433, 0, -0.0381186] [0, 7.14662, 0] [0.299927, 0, 30.8774] [147.971, 37.6538, -53.7202]]
+}
+
+entity{
+  _template:t="onboarding_note_miniraid_trap_box_trigger"
+  transform:m=[[10.4966, 0, 0.0123147] [0, 9.3484, -0] [-0.0209392, 0, 17.8476] [160.769, 36.0158, -21.2026]]
+}
+
+entity{
+  _template:t="onboarding_note_miniraid_portal_box_trigger"
+  transform:m=[[4.04279, 0, 1.61383] [0, 12.1336, -0] [-10.0355, 0, 25.1399] [191.526, 33.6986, -7.52753]]
+}
+
+entity{
+  _template:t="player_base_keycard"
+  transform:m=[[-0.453219, 0, 0.891399] [0, 1, 0] [-0.891399, 0, -0.453219] [123.371, 3.30717, 16.9847]]
+}
+
+entity{
+  _template:t="onboarding_killbox_processor"
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="killbox"
+  transform:m=[[97.0981, 0, -2.67587] [0, 7.34196, 0] [7.87469, -0, 285.746] [217.15, 4.63642, -84.6236]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="killbox"
+  transform:m=[[-37.4526, 0, 0.248947] [0, 7.34196, 0] [-0.217649, 0, -32.7439] [177.665, 18.6067, -162.776]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="killbox"
+  transform:m=[[-22.8125, 0, -7.78746] [0, 7.34196, 0] [10.4092, 0, -30.4924] [177.772, 14.513, -88.9446]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="killbox"
+  transform:m=[[-25.2323, 0, -24.3341] [0, 10.677, 0] [32.5263, 0, -33.727] [199.254, 15.6213, -37.4356]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="killbox"
+  transform:m=[[-52.2037, -0.366079, 17.5486] [2.33941, -3.16935e-07, 6.95928] [-0.292955, 46.497, 0.0984809] [188.021, 31.4395, -199.02]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="killbox"
+  transform:m=[[-27.1443, 0, 0.180428] [0, 7.34196, 0] [-0.34427, 0, -51.7932] [183.414, 18.7818, -122.374]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="static_dead_body_container_onboarding_first"
+  transform:m=[[0.99388, -0.0421358, 0.102116] [0.0514165, 0.994612, -0.0900254] [-0.0977729, 0.0947248, 0.990691] [159.848, 28.2132, -126.723]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="akm_47_gun+akm_47_initial_magazine+item_in_world"
+  transform:m=[[-0.590103, 0.108615, 0.799988] [0.764916, -0.241728, 0.597052] [0.258228, 0.964246, 0.0595627] [160.04, 27.2182, -126.929]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="onboarding_miniraid_enemy"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [156.123, 27.71, -99.018]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="onboarding_armor_container"
+  transform:m=[[0.395982, 0, 0.918258] [0, 1, -0] [-0.918258, 0, 0.395982] [155.669, 27.7487, -96.5288]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="akm_47_magazine+mod_item_in_world"
+  transform:m=[[0.169173, 0.985029, -0.0331371] [0.0492803, -0.0420337, -0.997901] [-0.984354, 0.167185, -0.0556535] [155.904, 27.7782, -97.0377]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="akm_47_magazine+mod_item_in_world"
+  transform:m=[[0.186278, 0.979747, -0.0734567] [-0.435305, 0.0152748, -0.900153] [-0.880802, 0.199655, 0.429335] [155.97, 27.7718, -97.0782]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="akm_47_magazine+mod_item_in_world"
+  transform:m=[[0.230693, 0.972615, -0.0283183] [-0.781187, 0.202482, 0.590548] [0.58011, -0.114113, 0.806505] [156.029, 27.7862, -96.9914]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="small_backpack+item_in_world"
+  transform:m=[[-0.0546256, 0.0193078, 0.99832] [0.951724, 0.303457, 0.0462071] [-0.302055, 0.952649, -0.0349522] [156.355, 27.5989, -96.7103]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="box_7_62x39_magazine+item_in_world"
+  transform:m=[[-0.277844, -0.0246251, -0.96031] [-0.0066698, 0.999696, -0.0237053] [0.960603, -0.000181289, -0.277924] [155.963, 27.7434, -97.2118]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="box_7_62x39_magazine+item_in_world"
+  transform:m=[[0.2798, 0.0283408, -0.959641] [-0.0161673, 0.999562, 0.0248059] [0.959923, 0.00857406, 0.280135] [156.039, 27.7511, -97.2638]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="item_healkit+item_in_world"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [156.11, 27.747, -96.8027]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="item_healkit+item_in_world"
+  transform:m=[[-0.644556, 0.0942916, -0.75872] [0.136145, 0.990661, 0.00745728] [0.752338, -0.0984892, -0.651374] [190.33, 32.1402, -53.4284]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="item_healkit+item_in_world"
+  transform:m=[[-0.651366, -0.00729834, -0.758728] [0.0037272, 0.999911, -0.0128181] [0.758754, -0.0111772, -0.651281] [178.563, 32.9115, -68.4016]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="static_dead_body_container_onboarding_keycard"
+  transform:m=[[0.581897, 0.05728, -0.811242] [-0.00900542, 0.997909, 0.0640007] [0.813213, -0.0299363, 0.581197] [182.464, 32.8092, -56.343]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="makarov_gun+item_in_world"
+  transform:m=[[0.00124457, -0.999999, 0.000718356] [0.76505, 0.000489556, -0.643971] [0.64397, 0.00135104, 0.76505] [182.258, 32.8381, -56.015]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="makarov_magazine+magazine_empty+mod_item_in_world"
+  transform:m=[[-0.0021578, 0.999896, 0.0142367] [-0.149833, -0.0143993, 0.988606] [0.988709, 8.73116e-08, 0.149848] [182.788, 32.8331, -56.8697]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="onboarding_storage_intercom_trigger"
+  transform:m=[[8.9407e-07, 0, -1] [0, 1, 0] [1, 0, 8.9407e-07] [164.421, 33.5246, -53.4159]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="onboarding_storage_door_trigger"
+  transform:m=[[8.9407e-07, 0, -1] [0, 1, 0] [1, 0, 8.9407e-07] [164.212, 32.528, -54.3874]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="onboarding_storage_intercom_lamps_a"
+  transform:m=[[-1, 0, -0.000270279] [0, 1, 0] [0.000270279, 0, -1] [164.404, 32.431, -53.4225]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="onboarding_storage_intercom_lamps_b_trigger"
+  transform:m=[[-1, 0, -0.000270279] [0, 1, 0] [0.000270279, 0, -1] [164.404, 32.431, -53.4246]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="onboarding_storage_door_sound"
+  transform:m=[[8.9407e-07, 0, -1] [0, 1, 0] [1, 0, 8.9407e-07] [164.212, 32.528, -54.3874]]
+}
+
+entity{
+  _template:t="dead_body_onboarding_changed_1"
+  transform:m=[[0.999917, 0, -0.0128978] [0, 1, 0] [0.0128978, -0, 0.999917] [184.517, 32.4, -61.4433]]
+}
+
+entity{
+  _template:t="dead_body_onboarding_changed_2"
+  transform:m=[[-0.691285, 0, -0.722582] [0, 1, 0] [0.722582, 0, -0.691285] [180.919, 32.3819, -59.0335]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="makarov_gun+item_in_world"
+  transform:m=[[0.00167988, -0.565541, -0.824719] [-0.164728, 0.813296, -0.558044] [0.986338, 0.136791, -0.091794] [184.519, 32.9813, -61.6262]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="makarov_magazine+magazine_empty+mod_item_in_world"
+  transform:m=[[-0.0102408, -0.999879, 0.0117253] [-0.65774, 0.0155678, 0.753084] [-0.753175, 9.31323e-10, -0.657819] [183.887, 32.4073, -61.3739]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="knife_weapon+item_in_world"
+  transform:m=[[-0.0489178, 0.998655, -0.0171588] [0.511474, 0.0102905, -0.859238] [-0.857906, -0.0508083, -0.51129] [181.766, 32.4054, -59.3105]]
+}
+
+entity{
+  _template:t="game_trigger_processor_show_screen_hint"
+  game_trigger_processor_show_hint__text:t="climbing_hint/text"
+  game_trigger_processor_show_hint__inputId:t="Human.Jump"
+  game_trigger_processor_show_hint__showOnTrigger:t="onboarding_starthint_climb"
+  game_trigger_processor_show_hint__hideOnTrigger:t="onboarding_stophint_climb"
+}
+
+entity{
+  _template:t="onboarding_hint_box"
+  game_trigger_box__onEnterEventTrigger:t="onboarding_starthint_climb"
+  game_trigger_box__onLeaveEventTrigger:t="onboarding_stophint_climb"
+  transform:m=[[2.91916, 0, 0] [0, 3.78188, 0] [0, 0, 1.41788] [185.693, 33.3789, -69.754]]
+}
+
+entity{
+  _template:t="game_trigger_processor_show_screen_hint"
+  game_trigger_processor_show_hint__text:t="crouch_hint/text"
+  game_trigger_processor_show_hint__inputId:t="Human.Crouch"
+  game_trigger_processor_show_hint__showOnTrigger:t="onboarding_starthint_sit"
+  game_trigger_processor_show_hint__hideOnTrigger:t="onboarding_stophint_sit"
+}
+
+entity{
+  _template:t="onboarding_hint_box"
+  game_trigger_box__onEnterEventTrigger:t="onboarding_starthint_sit"
+  game_trigger_box__onLeaveEventTrigger:t="onboarding_stophint_sit"
+  transform:m=[[2.21177, 0, 0] [0, 16.5293, 0] [0, 0, 2.7539] [148.009, 49.8317, -40.1017]]
+}
+
+entity{
+  _template:t="game_trigger_processor_show_screen_hint"
+  game_trigger_processor_show_hint__text:t="stone_throw_hint/text"
+  game_trigger_processor_show_hint__inputId:t="Human.StoneThrow"
+  game_trigger_processor_show_hint__showOnTrigger:t="onboarding_starthint_stone_throw"
+  game_trigger_processor_show_hint__hideOnTrigger:t="onboarding_stophint_stone_throw"
+}
+
+entity{
+  _template:t="onboarding_hint_box"
+  game_trigger_box__onEnterEventTrigger:t="onboarding_starthint_stone_throw"
+  game_trigger_box__onLeaveEventTrigger:t="onboarding_stophint_stone_throw"
+  transform:m=[[6.62085, 0, 2.66573] [0, 4.57638, -0] [-5.03731, 0, 12.5111] [165.21, 33.831, -23.1713]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="frog_trap_onboarding"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [171.463, 32.4, -14.4416]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="frog_trap_onboarding"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [171.246, 32.4, -17.4033]]
+}
+
+entity{
+  _template:t="onboarding_miniraid_marker"
+  onboarding_miniraid_marker__createTemplate:t="frog_trap_onboarding"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [173.158, 32.4, -11.5098]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="forklift"
+  transform:m=[[0.0268675, 0.466804, 0.883952] [0.0039656, 0.884215, -0.467063] [-0.999631, 0.0160542, 0.0219055] [149.46, 37.0779, -50.5154]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="metal_barrel_a"
+  transform:m=[[-4.37114e-08, -1, 0] [1, -4.37114e-08, 0] [-0, 0, 1] [148.047, 43.5098, -50.2697]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="metal_barrel_b"
+  transform:m=[[1, 0, 0] [-0, 0.751766, 0.65943] [0, -0.65943, 0.751766] [148.3, 42.7551, -50.0712]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="metal_barrel_b"
+  transform:m=[[0.261432, -0.965222, 0] [0.965222, 0.261432, 0] [-0, 0, 1] [149.034, 36.2882, -56.0581]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="metal_barrel_a"
+  transform:m=[[0.246063, -0.908477, 0.337821] [0.965222, 0.261432, -1.49012e-08] [-0.0883172, 0.326072, 0.94121] [148.862, 36.8813, -54.9994]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="metal_barrel_b"
+  transform:m=[[0.0977372, -0.360851, 0.927488] [-0.242475, 0.895232, 0.373853] [-0.965222, -0.261432, 1.11759e-07] [148.852, 38.0681, -55.3397]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="metal_barrel_a"
+  transform:m=[[0.998817, -0.0400347, 0.0276057] [0.0486297, 0.822281, -0.567] [0, 0.567672, 0.823255] [148.25, 44.8296, -47.554]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_wooden_box_a_2000_type_c"
+  transform:m=[[0.147423, -0.551946, 0.820745] [-0.211793, 0.792947, 0.571295] [-0.966132, -0.25805, -3.72529e-08] [148.91, 38.712, -46.6484]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_wooden_box_a_2000_type_c"
+  transform:m=[[-0.266389, 0, 0.963866] [0, 1, 0] [-0.963866, 0, -0.266389] [153.67, 31.9182, -45.8765]]
+}
+
+entity{
+  _template:t="showroom_item_place"
+  showroom_item_place__key:t="itemShowroom"
+  showroom_item_place__fov:r=70
+  transform:m=[[-1, 0, 0] [0, 1, 0] [0, 0, -1] [123.242, 2.37311, -20.691]]
+
+  "showroom_item_place__lights:object"{
+    showroom_light_3:m=[[1, -3.09086e-08, 7.462e-08] [-3.09086e-08, 0.707107, 0.707107] [-7.462e-08, -0.707107, 0.707107] [-0.00370026, 1.33832, -0.941069]]
+    showroom_light_2:m=[[-0.792938, 0.0140796, -1.21111] [-0.173484, 1.43132, 0.130223] [1.1987, 0.216463, -0.782297] [-1.11449, -0.327547, 0.826929]]
+    showroom_light_1:m=[[-0.761542, 0.0598769, 0.645345] [-0.317581, 0.833516, -0.452099] [-0.564975, -0.549241, -0.615741] [0.680214, 0.898753, 0.661913]]
+    showroom_light_4:m=[[0.746491, 0.191593, 0.600076] [0.106458, 0.878722, -0.412993] [-0.620859, 0.381036, 0.650688] [0.830208, 0.290682, -1.14507]]
+  }
+}
+
+entity{
+  _template:t="showroom_item_place"
+  showroom_item_place__key:t="alterShowroom"
+  showroom_item_place__fov:r=60
+  showroom_item_place__zoomBordersRng:p2=1.5, 2
+  transform:m=[[-1, 0, 0] [0, 1, 0] [0, 0, -1] [123.242, 2.37311, -20.691]]
+
+  "showroom_item_place__lights:object"{
+    showroom_light_3:m=[[1.52844, -3.43703e-08, 1.18568e-07] [-3.34892e-08, 1.29752, 0.807826] [-1.1882e-07, -0.807826, 1.29752] [0.0370636, 1.35536, -0.605463]]
+    showroom_light_2:m=[[-0.841603, 0.0140796, -1.17781] [-0.304897, 1.39562, 0.234546] [1.13775, 0.384416, -0.808381] [-1.03385, -0.327316, 1.14685]]
+    showroom_light_1:m=[[-1.34643, 0.0915183, 0.717549] [-0.389641, 1.18565, -0.882355] [-0.609453, -0.960206, -1.02113] [0.682922, 1.34897, 0.799067]]
+    showroom_light_4:m=[[0.891667, -0.0247508, 0.452016] [0.243795, 0.867592, -0.433415] [-0.381438, 0.496661, 0.779637] [0.929192, -0.18235, -1.34085]]
+  }
+}
+
+entity{
+  _template:t="showroom_item_place"
+  showroom_item_place__key:t="allAlterTubes"
+  showroom_item_place__fov:r=100
+  transform:m=[[0, 0, 10] [0, 2.5, 0] [-2.5, 0, 0] [119.26, 4.03, 10.11]]
+}
+
+entity{
+  _template:t="showroom_cam"
+}
+
+entity{
+  _template:t="replicator_device"
+  replicator_device__slotIdx:i=0
+  replicator_device__placeOnObject:t="am_crafter_unit_a"
+}
+
+entity{
+  _template:t="replicator_device"
+  replicator_device__slotIdx:i=1
+  replicator_device__placeOnObject:t="am_crafter_unit_b"
+}
+
+entity{
+  _template:t="replicator_device"
+  replicator_device__slotIdx:i=2
+  replicator_device__placeOnObject:t="am_crafter_unit_c"
+}
+
+entity{
+  _template:t="replicator_device"
+  replicator_device__slotIdx:i=3
+  replicator_device__placeOnObject:t="am_crafter_unit_d"
+}
+
+entity{
+  _template:t="game_trigger_processor_open_note_after_onboarding"
+  game_trigger_processor_open_note__note:t="note_shelter_replicator"
+  game_trigger_processor__onTrigger:t="show_shelter_note_replicator"
+}
+
+entity{
+  _template:t="game_trigger_processor_open_note_after_onboarding"
+  game_trigger_processor_open_note__note:t="note_shelter_refiner"
+  game_trigger_processor__onTrigger:t="show_shelter_note_refiner"
+}
+
+entity{
+  _template:t="game_trigger_processor_open_note_after_onboarding"
+  game_trigger_processor_open_note__note:t="note_shelter_alters"
+  game_trigger_processor__onTrigger:t="show_shelter_note_alters"
+}
+
+entity{
+  _template:t="game_trigger_processor_open_note_after_onboarding"
+  game_trigger_processor_open_note__note:t="note_shelter_market"
+  game_trigger_processor__onTrigger:t="show_shelter_note_market"
+}
+
+entity{
+  _template:t="game_trigger_processor_open_note_after_onboarding"
+  game_trigger_processor_open_note__note:t="note_shelter_storage"
+  game_trigger_processor__onTrigger:t="show_shelter_note_storage"
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[1, 0, 0] [0, 0, -1] [-0, 1, 0] [125, -5, 10]]
+  spot_light__shadows:b=yes
+  light__max_radius:r=10
+  light__brightness:r=60
+  light__color:c=120, 255, 210, 255
+  light__affect_volumes:b=no
+}
+
+entity{
+  _template:t="omni_light+player_base_light"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [125.03, 5.5481, 17.1899]]
+  light__color:c=255, 40, 0, 255
+  light__brightness:r=0.9
+  player_base_light__onboardingBrightness:r=0.65
+  light__use_box:b=no
+  omni_light__shadows:b=yes
+  omni_light__dynamic_obj_shadows:b=yes
+  light__contact_shadows:b=no
+  light__radius_scale:r=2
+  light__max_radius:r=4
+  light__dynamic_light:b=yes
+  light__force_affect_volfog:b=yes
+}
+
+entity{
+  _template:t="omni_light+player_base_light"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [132.254, 5.5481, 10.0093]]
+  light__color:c=255, 40, 0, 255
+  light__brightness:r=0.7
+  player_base_light__onboardingBrightness:r=0.65
+  light__use_box:b=no
+  omni_light__shadows:b=yes
+  omni_light__dynamic_obj_shadows:b=no
+  light__contact_shadows:b=no
+  light__radius_scale:r=2
+  light__max_radius:r=4
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[-0.295578, -0.677584, -0.673435] [0.772898, 0.244703, -0.585445] [0.561481, -0.693542, 0.451375] [117.921, 4.88788, 18.9927]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  light__affect_volumes:b=no
+  light__max_radius:r=2
+  light__radius_scale:r=1
+  spot_light__contact_shadows:b=no
+  spot_light__shadow_shrink:i=3
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[-0.295578, -0.677584, -0.673435] [0.772898, 0.244703, -0.585445] [0.561481, -0.693542, 0.451375] [118.265, 4.88788, 18.6483]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  light__affect_volumes:b=no
+  light__max_radius:r=2
+  light__radius_scale:r=1
+  spot_light__contact_shadows:b=no
+  spot_light__shadow_shrink:i=3
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[-0.191541, -0.677584, -0.710065] [0.85176, 0.244704, -0.463273] [0.487663, -0.693542, 0.530269] [118.629, 4.88788, 18.2849]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  light__affect_volumes:b=no
+  light__max_radius:r=2
+  light__radius_scale:r=1
+  spot_light__contact_shadows:b=no
+  spot_light__shadow_shrink:i=3
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[-0.295578, -0.677584, -0.673435] [0.772898, 0.244703, -0.585445] [0.561481, -0.693542, 0.451375] [117.014, 4.88788, 19.8999]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  light__affect_volumes:b=no
+  light__max_radius:r=2
+  light__radius_scale:r=1
+  spot_light__contact_shadows:b=no
+  spot_light__shadow_shrink:i=3
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[-0.295578, -0.677584, -0.673435] [0.772898, 0.244703, -0.585445] [0.561481, -0.693542, 0.451375] [116.669, 4.88788, 20.2443]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  light__affect_volumes:b=no
+  light__max_radius:r=2
+  light__radius_scale:r=1
+  spot_light__contact_shadows:b=no
+  spot_light__shadow_shrink:i=3
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[-0.191541, -0.677584, -0.710065] [0.85176, 0.244704, -0.463273] [0.487663, -0.693542, 0.530269] [117.376, 4.88788, 19.5372]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  light__affect_volumes:b=no
+  light__max_radius:r=2
+  light__radius_scale:r=1
+  spot_light__contact_shadows:b=no
+  spot_light__shadow_shrink:i=3
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[0.262023, -0.677584, 0.687186] [-0.800816, 0.244703, 0.546635] [-0.538549, -0.693542, -0.478503] [116.276, 4.88788, 16.6622]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  light__affect_volumes:b=no
+  light__max_radius:r=2
+  light__radius_scale:r=1
+  spot_light__contact_shadows:b=no
+  spot_light__shadow_shrink:i=3
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[0.262023, -0.677584, 0.687186] [-0.800816, 0.244703, 0.546635] [-0.538549, -0.693542, -0.478503] [115.944, 4.88788, 16.9945]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  light__affect_volumes:b=no
+  light__max_radius:r=2
+  light__radius_scale:r=1
+  spot_light__contact_shadows:b=no
+  spot_light__shadow_shrink:i=3
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[0.262023, -0.677584, 0.687186] [-0.800816, 0.244703, 0.546635] [-0.538549, -0.693542, -0.478503] [113.585, 4.88788, 19.3534]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  light__affect_volumes:b=no
+  light__max_radius:r=2
+  light__radius_scale:r=1
+  spot_light__contact_shadows:b=no
+  spot_light__shadow_shrink:i=3
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[0.262023, -0.677584, 0.687186] [-0.800816, 0.244703, 0.546635] [-0.538549, -0.693542, -0.478503] [113.929, 4.88788, 19.009]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  light__affect_volumes:b=no
+  light__max_radius:r=2
+  light__radius_scale:r=1
+  spot_light__contact_shadows:b=no
+  spot_light__shadow_shrink:i=3
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[0.191541, -0.677584, 0.710065] [-0.85176, 0.244704, 0.463273] [-0.487663, -0.693542, -0.530269] [114.276, 4.88788, 18.6626]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  light__affect_volumes:b=no
+  light__max_radius:r=2
+  light__radius_scale:r=1
+  spot_light__contact_shadows:b=no
+  spot_light__shadow_shrink:i=3
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[0.295578, -0.677584, 0.673435] [-0.772898, 0.244703, 0.585445] [-0.56148, -0.693542, -0.451375] [115.426, 4.88787, 17.4925]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  light__affect_volumes:b=no
+  light__max_radius:r=2
+  light__radius_scale:r=1
+  spot_light__contact_shadows:b=no
+  spot_light__shadow_shrink:i=3
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[0.295578, -0.677584, 0.673435] [-0.772898, 0.244703, 0.585445] [-0.56148, -0.693542, -0.451375] [115.082, 4.88787, 17.8369]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  light__affect_volumes:b=no
+  light__max_radius:r=2
+  light__radius_scale:r=1
+  spot_light__contact_shadows:b=no
+  spot_light__shadow_shrink:i=3
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[0.191541, -0.677584, 0.710065] [-0.85176, 0.244704, 0.463273] [-0.487663, -0.693542, -0.530269] [114.719, 4.88787, 18.1996]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  light__affect_volumes:b=no
+  light__max_radius:r=2
+  light__radius_scale:r=1
+  spot_light__contact_shadows:b=no
+  spot_light__shadow_shrink:i=3
+}
+
+entity{
+  _template:t="omni_light+player_base_light+player_base_onboarding_object"
+  transform:m=[[0.401475, 0, 0] [0, 0.494307, 0] [0, 0, 0.494307] [125.037, 3.45505, 9.96411]]
+  light__color:c=255, 40, 0, 255
+  light__brightness:r=0
+  player_base_light__onboardingBrightness:r=1
+  light__use_box:b=no
+  omni_light__shadows:b=yes
+  omni_light__dynamic_obj_shadows:b=no
+  light__contact_shadows:b=no
+  light__radius_scale:r=3
+  light__max_radius:r=6
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[-0.295578, -0.677584, -0.673435] [0.772898, 0.244703, -0.585445] [0.561481, -0.693542, 0.451375] [115.709, 4.4837, 21.4957]]
+  grid_obj__gridType:t="decor"
+  light__brightness:r=1
+  light__offset:p3=0, 0, 0
+  light__color:c=255, 200, 100, 255
+  light__max_radius:r=2
+  light__texture_name:t=""
+  light__affect_volumes:b=no
+  light__dynamic_light:b=no
+  light__render_gpu_objects:b=no
+  light__radius_scale:r=1
+  light__force_max_light_radius:b=no
+  player_base_light__defaultBrightness:r=1
+  player_base_light__onboardingBrightness:r=0
+  spot_light__dynamic_obj_shadows:b=no
+  spot_light__shadows:b=yes
+  spot_light__shadow_shrink:i=3
+  spot_light__dynamic_light:b=no
+  spot_light__contact_shadows:b=no
+  spot_light__cone_angle:r=-1
+  spot_light__inner_attenuation:r=0.1
+  net__scopeDistanceSq:r=108900
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[-0.295578, -0.677584, -0.673435] [0.772898, 0.244703, -0.585445] [0.561481, -0.693542, 0.451375] [116.053, 4.48371, 21.1513]]
+  grid_obj__gridType:t="decor"
+  light__brightness:r=1
+  light__offset:p3=0, 0, 0
+  light__color:c=255, 200, 100, 255
+  light__max_radius:r=2
+  light__texture_name:t=""
+  light__affect_volumes:b=no
+  light__dynamic_light:b=no
+  light__render_gpu_objects:b=no
+  light__radius_scale:r=1
+  light__force_max_light_radius:b=no
+  player_base_light__defaultBrightness:r=1
+  player_base_light__onboardingBrightness:r=0
+  spot_light__dynamic_obj_shadows:b=no
+  spot_light__shadows:b=yes
+  spot_light__shadow_shrink:i=3
+  spot_light__dynamic_light:b=no
+  spot_light__contact_shadows:b=no
+  spot_light__cone_angle:r=-1
+  spot_light__inner_attenuation:r=0.1
+  net__scopeDistanceSq:r=108900
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[-0.226394, -0.702021, -0.675213] [0.862432, 0.177722, -0.473945] [0.45272, -0.689624, 0.565211] [116.416, 4.48371, 20.7886]]
+  grid_obj__gridType:t="decor"
+  light__brightness:r=1
+  light__offset:p3=0, 0, 0
+  light__color:c=255, 200, 100, 255
+  light__max_radius:r=2
+  light__texture_name:t=""
+  light__affect_volumes:b=no
+  light__dynamic_light:b=no
+  light__render_gpu_objects:b=no
+  light__radius_scale:r=1
+  light__force_max_light_radius:b=no
+  player_base_light__defaultBrightness:r=1
+  player_base_light__onboardingBrightness:r=0
+  spot_light__dynamic_obj_shadows:b=no
+  spot_light__shadows:b=yes
+  spot_light__shadow_shrink:i=3
+  spot_light__dynamic_light:b=no
+  spot_light__contact_shadows:b=no
+  spot_light__cone_angle:r=-1
+  spot_light__inner_attenuation:r=0.1
+  net__scopeDistanceSq:r=108900
+}
+
+entity{
+  _template:t="omni_light+player_base_light"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [117.861, 5.5481, 10.0093]]
+  light__color:c=255, 40, 0, 255
+  light__brightness:r=0.7
+  player_base_light__onboardingBrightness:r=0.65
+  light__use_box:b=no
+  omni_light__shadows:b=yes
+  omni_light__dynamic_obj_shadows:b=no
+  light__contact_shadows:b=no
+  light__radius_scale:r=2
+  light__max_radius:r=4
+}
+
+entity{
+  _template:t="omni_light"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [124.998, 5.19676, 31.7371]]
+  light__color:c=200, 250, 255, 255
+  light__radius_scale:r=8
+  light__brightness:r=0.2
+  light__max_radius:r=4
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[-0.707107, 0, -0.707107] [0.707107, -4.37114e-08, -0.707107] [-3.09086e-08, -1, 3.09086e-08] [136.006, 5.83545, 21.024]]
+  spot_light__cone_angle:r=120
+  spot_light__shadows:b=yes
+  light__max_radius:r=6
+  light__radius_scale:r=8
+  light__brightness:r=0.8
+  light__color:c=200, 250, 255, 255
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[-0.707107, 0, -0.707107] [0.707107, -4.37114e-08, -0.707107] [-3.09086e-08, -1, 3.09086e-08] [140.238, 5.83545, 25.256]]
+  spot_light__cone_angle:r=120
+  spot_light__shadows:b=yes
+  light__max_radius:r=6
+  light__radius_scale:r=8
+  light__brightness:r=0.8
+  light__color:c=200, 250, 255, 255
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[-0.707107, 0, -0.707107] [0.707107, -4.37114e-08, -0.707107] [-3.09086e-08, -1, 3.09086e-08] [144.492, 5.83545, 29.51]]
+  spot_light__cone_angle:r=120
+  spot_light__shadows:b=yes
+  light__max_radius:r=6
+  light__radius_scale:r=8
+  light__brightness:r=0.8
+  light__color:c=200, 250, 255, 255
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[-0.707107, 0, -0.707107] [0.707107, -4.37114e-08, -0.707107] [-3.09086e-08, -1, 3.09086e-08] [148.745, 5.83545, 33.7627]]
+  spot_light__cone_angle:r=120
+  spot_light__shadows:b=yes
+  light__max_radius:r=6
+  light__radius_scale:r=8
+  light__brightness:r=0.8
+  light__color:c=200, 250, 255, 255
+}
+
+entity{
+  _template:t="spot_light+player_base_light"
+  transform:m=[[-0.707107, 0, -0.707107] [0.707107, -4.37114e-08, -0.707107] [-3.09086e-08, -1, 3.09086e-08] [152.99, 5.83545, 38.0076]]
+  spot_light__cone_angle:r=120
+  spot_light__shadows:b=yes
+  light__max_radius:r=6
+  light__radius_scale:r=8
+  light__brightness:r=0.8
+  light__color:c=200, 250, 255, 255
+}
+
+entity{
+  _template:t="spot_light+player_base_light+player_base_onboarding_object_2"
+  transform:m=[[0.654158, -1.49012e-08, 0.756358] [-0.534826, -0.707107, 0.46256] [0.534826, -0.707107, -0.46256] [121.974, 8.20049, 14.4542]]
+  light__color:c=255, 200, 140, 255
+  light__brightness:r=3
+  spot_light__inner_attenuation:r=0.3
+  spot_light__shadows:b=yes
+  spot_light__dynamic_obj_shadows:b=yes
+  light__max_radius:r=12
+  light__radius_scale:r=2
+}
+
+entity{
+  _template:t="spot_light+player_base_light+player_base_onboarding_object"
+  transform:m=[[1.26666e-07, -3.394e-08, 1] [-0.965926, 0.258819, 1.31134e-07] [-0.258819, -0.965926, -1.42109e-14] [120.539, 8.20049, 13.02]]
+  light__color:c=255, 200, 140, 255
+  light__brightness:r=3
+  spot_light__inner_attenuation:r=0.3
+  spot_light__shadows:b=yes
+  spot_light__dynamic_obj_shadows:b=yes
+  light__max_radius:r=8
+  light__radius_scale:r=2
+  spot_light__dynamic_light:b=yes
+  light__force_affect_volfog:b=yes
+}
+
+entity{
+  _template:t="spot_light+player_base_light+player_base_onboarding_object_2"
+  transform:m=[[1, 0, 0] [-0, 0.258819, 0.965926] [0, -0.965926, 0.258819] [127.987, 8.20049, 14.3983]]
+  light__color:c=255, 200, 140, 255
+  light__brightness:r=3
+  spot_light__inner_attenuation:r=0.3
+  spot_light__shadows:b=yes
+  spot_light__dynamic_obj_shadows:b=yes
+  light__max_radius:r=8
+  light__radius_scale:r=2
+  spot_light__dynamic_light:b=yes
+  light__force_affect_volfog:b=yes
+}
+
+entity{
+  _template:t="spot_light+player_base_light+player_base_onboarding_object_2"
+  transform:m=[[-4.37114e-08, 0.258819, -0.965926] [1, -4.62604e-08, -5.76488e-08] [-5.96047e-08, -0.965926, -0.258819] [129.43, 8.20049, 13.0071]]
+  light__color:c=255, 200, 140, 255
+  light__brightness:r=3
+  spot_light__inner_attenuation:r=0.3
+  spot_light__shadows:b=yes
+  spot_light__dynamic_obj_shadows:b=yes
+  light__max_radius:r=8
+  light__radius_scale:r=2
+}
+
+entity{
+  _template:t="omni_light+player_base_light"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [125.03, 5.5481, 2.90716]]
+  light__color:c=255, 40, 0, 255
+  light__brightness:r=0.9
+  player_base_light__onboardingBrightness:r=0.65
+  light__use_box:b=no
+  omni_light__shadows:b=yes
+  omni_light__dynamic_obj_shadows:b=no
+  light__contact_shadows:b=no
+  light__radius_scale:r=2
+  light__max_radius:r=4
+}
+
+entity{
+  _template:t="omni_light+player_base_light"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [123.19, 3.82392, 2.71777]]
+  light__color:c=255, 180, 100, 255
+  light__brightness:r=0.2
+  player_base_light__onboardingBrightness:r=0.65
+  light__use_box:b=no
+  omni_light__shadows:b=yes
+  omni_light__dynamic_obj_shadows:b=no
+  light__contact_shadows:b=no
+  light__radius_scale:r=4
+  light__max_radius:r=2
+}
+
+entity{
+  _template:t="spot_light+player_base_light+player_base_onboarding_object_2"
+  transform:m=[[0.866026, -0.5, 1.77636e-15] [-2.98023e-08, -5.16191e-08, 1] [-0.5, -0.866026, -5.96046e-08] [126.559, 4.07518, 2.78586]]
+  light__color:c=255, 150, 100, 255
+  light__brightness:r=1
+  spot_light__inner_attenuation:r=0.1
+  spot_light__shadows:b=yes
+  spot_light__dynamic_obj_shadows:b=yes
+  light__max_radius:r=3
+  light__radius_scale:r=4
+}
+
+entity{
+  _template:t="level"
+  level__blk:t="levels/am_monolyth_island.blk"
+  level__useGroundHolesCollision:b=yes
+
+  "level__timeVec:array"{
+    level__timeVec:r=11
+  }
+
+  "level__weatherChoice:object"{
+    weather_monolyth_island_poor:r=1
+    weather_monolyth_island_overcast:r=1
+  }
+}
+
+entity{
+  _template:t="spot_light+player_base_light+player_base_onboarding_object_2"
+  transform:m=[[-0.234459, -0.900843, -1.57269] [1.79365, 0.112379, -0.331771] [0.260249, -1.5861, 0.869726] [112.564, 5.74576, 20.6895]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=2.5
+  spot_light__inner_attenuation:r=0.4
+  spot_light__shadows:b=yes
+  spot_light__dynamic_light:b=yes
+  spot_light__dynamic_obj_shadows:b=yes
+  light__affect_volumes:b=yes
+}
+
+entity{
+  _template:t="spot_light+player_base_light+player_base_onboarding_object_2"
+  transform:m=[[-0.234459, -0.900843, -1.57269] [1.79365, 0.112379, -0.331771] [0.260249, -1.5861, 0.869726] [112.564, 5.74576, 20.6895]]
+  light__color:c=255, 200, 100, 255
+  light__brightness:r=2.5
+  spot_light__inner_attenuation:r=0.4
+  spot_light__shadows:b=yes
+  spot_light__dynamic_light:b=yes
+  spot_light__dynamic_obj_shadows:b=yes
+  light__affect_volumes:b=yes
+}
+
+entity{
+  _template:t="shooting_range_exit_haze"
+  transform:m=[[0.707107, 0, 0.707107] [0, 2.6975, -0] [-1.90742, 0, 1.90742] [109.547, 4.10829, 20.4539]]
+}
+
+entity{
+  _template:t="nexus_agency_loadouts"
+}
+
+entity{
+  _template:t="nexus_stats_scoresheet"
+}

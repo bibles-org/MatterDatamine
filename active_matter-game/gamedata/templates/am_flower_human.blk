@@ -1,0 +1,1645 @@
+flower_human_spot{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "flowerHumanSpot:tag"{}
+}
+
+flower_human_config{
+  flower_human_config__templateName:t="flower_human+flower_human_root_spawner"
+  flower_human_config__filling:r=0.5
+  _singleton:b=yes
+}
+
+flower_human_anim_state{
+  _use:t="navmesh_phys_move_anim"
+  _use:t="navmesh_phys_attack_anim"
+  _use:t="navmesh_phys_forced_anim_state"
+  anim_state__staticStateName:t="static_pose"
+  anim_state__staticState:i=-1
+  phys_move_anim__tscaleParamName:t="none"
+  phys_move_anim__runTimescale:r=1
+  phys_move_anim__walkTimescale:r=1
+
+  "anim_state__runStateName:list<t>"{
+    i:t="lower_run_01"
+  }
+}
+
+flowermen_random_awaker{
+  _tags:t="server"
+  flowermen_random_awaker__awakeChance:r=0.1
+  flowermen_random_awaker__awakerRadius:r=5
+  flowermen_random_awaker__updatePeriod:r=1
+  flowermen_random_awaker__nextUpdateAt:r=0
+}
+
+flower_human_ai{
+  _use:t="get_attract_position_ai"
+  _use:t="agent_dangers_bullet_reaction"
+  _use:t="agent_dangers_hit_reaction"
+  _use:t="get_reaction_offender_ai"
+  _use:t="track_visual_attract_points"
+  _use:t="get_visible_attract_position_ai"
+  _use:t="beh_tree_regular_check"
+  _use:t="flower_human_anim_state"
+  _use:t="corridor_walker"
+  _use:t="base_navmesh_agent_comp"
+  _use:t="obstacle_avoider"
+  _use:t="door_obstacle_handler"
+  _use:t="nphys_hit_tagging"
+  _use:t="zone_patroller"
+  _use:t="stuck_detector"
+  _use:t="personal_enemies"
+  _use:t="nphys_position_mapping"
+  stuck_detector__valueTau:r=0.2
+  stuck_detector_debug__enabled:b=yes
+  attract_point__searchRadius:r=15
+  attract_point__checkPath:b=no
+  visual_attract__maxDist:r=3
+  obstacle_avoider__updateInterval:r=0.2
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  navmesh_phys__maxWalkSpeed:r=6.5
+  navmesh_phys__hitTagPower:r=0.45
+  navmesh_phys__hitTagDuration:r=0.6
+  navmesh_phys__steeringAgentSineFactor:r=0.25
+  beh_tree__blackboard__enemyRadius:r=20
+  agent_dangers__hasTraceableDangers:b=no
+  _use:t="monster_danger_calc"
+  agent_dangers__tag:t="flower_human"
+  path_corridor_ai__slowDownCoef:r=1000
+  agent_dangers__maxDangerDist:r=90
+  agent_dangers__blindDistanceSq:r=400
+  sleep_mode__blindDistancesSq:p2=9, 8100
+  sleep_mode__wakeupDistancesSq:p2=9, 100
+  agent_dangers__frustumAngle:r=90
+  agent_dangers__projectileDist:r=4
+  agent_dangers__lastBulletReactionTime:r=-1
+  agent_dangers__nextBulletReactionTime:r=-1
+  agent_dangers__hmapTraceOffset:p3=0, -0.1, 0
+  agent_dangers__nextDangersCheckTime:r=0
+  agent_dangers__nextDangersTraceTime:r=0
+  agent_dangers__standShootPos:p3=0, 0, 0
+  agent_dangers__standShootDir:p3=0, 0, 0
+  flower_human__abandonAttackTimer:r=0
+  flower_human__forceGoHome:b=no
+
+  "flower_human__stationaryAttackAnimEid:eid"{}
+  "flower_human__stationaryConfusionAttackEid:eid"{}
+  "flower_human__stationaryConcussionAttackEid:eid"{}
+  "flower_human__stationaryDamageAttackEid:eid"{}
+  "flower_human__stationaryDamageAttack2Eid:eid"{}
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  agent_dangers{
+    _tags:t="server"
+  }
+
+  "flowerHuman:tag"{}
+}
+
+flower_human_animchar{
+  animchar__res:t="flowerman_remaster_a"
+  collres__res:t="flowerman_remaster_a_collision"
+  animchar_fast_phys__res:t="flowerman_remaster_a_fastphys"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+}
+
+flower_human_loot{
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="flowerman_remains_item"
+      dropChance:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="flowerman_remains_pristine_item"
+      dropChance:r=0.005
+    }
+  }
+}
+
+flower_human_hitpoints{
+  _use:t="base_dm_parts"
+  hitpoints__hp:r=56
+  hitpoints__maxHp:r=56
+  _skipInitialReplication:t="dm_parts__parts"
+
+  "allow_friendly_damage:tag"{}
+  "dm_parts__parts:object"{
+    "Bip01 Head:object"{
+      dmgMult:r=6
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 Neck:object"{
+      dmgMult:r=2
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 L Thigh:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 R Thigh:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 L Calf:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 R Calf:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 L Foot:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 R Foot:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 Pelvis:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 Spine:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 Spine1:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+  }
+}
+
+flower_human_hit_reactions{
+  human_hit_reaction__use:b=yes
+  hit_reaction__fifoNodeIdx:i=-1
+  hit_reaction__repeatNodeIdxs:ip2=-1, -1
+
+  "hit_reaction__animNodeIdxs:list<i>"{}
+  "hit_reaction__anims:shared:object"{
+    default:t="hit_front_shoulder_right"
+    repeat1:t="hit_front_shoulder_right"
+    repeat2:t="hit_front_shoulder_right"
+
+    "Bip01 Head:object"{
+      front:t="hit_front_head"
+      back:t="hit_back_head"
+      left:t="hit_left_head"
+      right:t="hit_right_head"
+    }
+
+    "Bip01 Neck:object"{
+      front:t="hit_front_head"
+      back:t="hit_back_head"
+      left:t="hit_left_head"
+      right:t="hit_right_head"
+    }
+
+    "Bip01 L Thigh:object"{
+      front:t="hit_front_leg_left"
+      back:t="hit_back_leg_left"
+      left:t="hit_side_leg_left"
+      right:t="hit_side_leg_left"
+    }
+
+    "Bip01 R Thigh:object"{
+      front:t="hit_front_leg_right"
+      back:t="hit_back_leg_right"
+      right:t="hit_side_leg_right"
+      right:t="hit_side_leg_right"
+    }
+
+    "Bip01 L Calf:object"{
+      front:t="hit_front_leg_left"
+      back:t="hit_back_leg_left"
+      left:t="hit_side_leg_left"
+      right:t="hit_side_leg_left"
+    }
+
+    "Bip01 R Calf:object"{
+      front:t="hit_front_leg_right"
+      back:t="hit_back_leg_right"
+      right:t="hit_side_leg_right"
+      right:t="hit_side_leg_right"
+    }
+
+    "Bip01 L Foot:object"{
+      front:t="hit_front_leg_left"
+      back:t="hit_back_leg_left"
+      left:t="hit_side_leg_left"
+      right:t="hit_side_leg_left"
+    }
+
+    "Bip01 R Foot:object"{
+      front:t="hit_front_leg_right"
+      back:t="hit_back_leg_right"
+      right:t="hit_side_leg_right"
+      right:t="hit_side_leg_right"
+    }
+
+    "Bip01 Pelvis:object"{
+      front:t="hit_front_chest"
+      back:t="hit_back_body"
+      right:t="hit_left_body"
+      right:t="hit_right_body"
+    }
+
+    "Bip01 Spine:object"{
+      front:t="hit_front_chest"
+      back:t="hit_back_body"
+      right:t="hit_left_body"
+      right:t="hit_right_body"
+    }
+
+    "Bip01 Spine1:object"{
+      front:t="hit_front_chest"
+      back:t="hit_back_body"
+      right:t="hit_left_body"
+      right:t="hit_right_body"
+    }
+
+    "Bip01 R Clavicle:object"{
+      front:t="hit_front_shoulder_right"
+      back:t="hit_back_shoulder_right"
+      left:t=""
+      right:t=""
+    }
+
+    "Bip01 L Clavicle:object"{
+      front:t="hit_front_shoulder_left"
+      back:t="hit_back_shoulder_left"
+      left:t=""
+      right:t=""
+    }
+
+    "Bip01 R UpperArm:object"{
+      front:t="hit_front_shoulder_right"
+      back:t="hit_back_shoulder_right"
+      left:t=""
+      right:t=""
+    }
+
+    "Bip01 L UpperArm:object"{
+      front:t="hit_front_shoulder_left"
+      back:t="hit_back_shoulder_left"
+      left:t=""
+      right:t=""
+    }
+
+    "Bip01 R Forearm:object"{}
+    "Bip01 L Forearm:object"{}
+    "Bip01 R Hand:object"{}
+    "Bip01 L Hand:object"{}
+  }
+}
+
+flower_human_climb{
+  _use:t="navmesh_phys_jumplinks_climb"
+  _use:t="navmesh_phys_jumplinks_climb_anim"
+}
+
+flower_human_jump{
+  _use:t="navmesh_phys_jumplinks_jump"
+  _use:t="navmesh_phys_jumplinks_jump_anim"
+}
+
+flower_human_awake_server{
+  _use:t="navmesh_phys_locomotion"
+  _use:t="monster_trigger_trap_activator"
+
+  "behTreeEnabler:tag"{}
+  "flower_human_awake_server:tag"{}
+}
+
+flower_human_awake_client{}
+flower_human_sleeping_server{
+  _use:t="ignored_ai_target"
+  entity_mods__receivedMeleeDamageMult:r=1.5
+  net__scopeDistanceSq:r=160000
+
+  "nphys__disabled:tag"{}
+  "sleeping_monster:tag"{}
+  "sleeping_animchar_update_toggle:tag"{}
+  "flower_human_sleeping_server:tag"{}
+  "loc_snaphots__disabled:tag"{}
+}
+
+flower_human_sleeping_client{
+  _use:t="flower_human_sleeping_sound"
+  entity_mods__receivedMeleeDamageMult:r=1.5
+
+  "nphys__disabled:tag"{}
+  "sleeping_animchar_update_toggle:tag"{}
+  "loc_snaphots__disabled:tag"{}
+}
+
+flower_human_attach_sleeping_client{
+  "sleeping_animchar_update_toggle:tag"{}
+}
+
+flower_human_preparing_for_sleep_server{
+  sleep_mode_preparing_for_sleep_server_sleepAt:r=0
+  sleep_mode_preparing_for_sleep_server_sleepDelay:r=1
+}
+
+flower_human_preparing_for_sleep_client{
+  "sleep_mode_preparing_for_sleep_client:tag"{}
+}
+
+flower_human_collision{
+  _use:t="nphys_pair_collision"
+  collision_damage__pushVelDeltaMult:r=4
+  collision_damage__velDeltaMult:r=2
+  collision_damage__pushThreshold:r=1
+  collision_damage__threshold:r=2
+}
+
+flower_human{
+  _use:t="am_navmesh_creature_base"
+  _use:t="net_ragdoll"
+  _use:t="navmesh_phys_jumplinks"
+  _use:t="flower_human_jump"
+  _use:t="nphys_homo_erectus"
+  _use:t="flower_human_collision"
+  _use:t="ai_target"
+  _use:t="flower_human_ai"
+  _use:t="sleepyhead"
+  _use:t="flower_human_animchar"
+  _use:t="flower_human_hitpoints"
+  _use:t="flower_human_hit_reactions"
+  _use:t="flower_human_sound"
+  _use:t="flower_human_loot"
+  _use:t="entity_bound_area"
+  _use:t="hit_wakeup_all_around"
+  _use:t="nphys_pushable"
+  _use:t="climbing_agent"
+  _use:t="flower_human_aura"
+  _use:t="human_deformation_bbox_receiver"
+  beh_tree__node:t="flower_human"
+  team:i=1
+  kill_tracking_tag:t="flower_human"
+  damage_model__blk:t="gamedata/units/humans/human.blk"
+  sleep_mode__awakeTemplateClient:t="flower_human_awake_client"
+  sleep_mode__awakeTemplateServer:t="flower_human_awake_server"
+  sleep_mode__sleepTemplateClient:t="flower_human_sleeping_client"
+  sleep_mode__attachesSleepTemplateClient:t="flower_human_attach_sleeping_client"
+  sleep_mode__sleepTemplateServer:t="flower_human_sleeping_server"
+  sleep_mode__preparingForSleepTemplateServer:t="flower_human_preparing_for_sleep_server"
+  sleep_mode__preparingForSleepTemplateClient:t="flower_human_preparing_for_sleep_client"
+  collres__centerNode:t="Bip01 Pelvis"
+  walker_agent__maxJumpSpeed:r=10
+  nphys__mass:r=80
+  navmesh_phys__acceleration:r=4
+  entity_mods__fireDamageMult:r=10
+  needsBlood:b=no
+  material:t="flowermanFlesh"
+  entity_bound_area__radius:r=6
+  entity_bound_area__name:t="POLYAREA_DANGER"
+  hit_verification__maxDistance:r=9
+  dm__bsphereRad:r=2
+  death_note__name:t="note_flowerman"
+
+  "kill_tracking__taggedPlayers:object"{}
+  "grid_obj__updateAlways:tag"{}
+  anim_phys{}
+  "flower_human__fallingFlowers:tag"{}
+  "flower_human__killSpawnTemplates:list<t>"{}
+  "dmgzoneVulnerable:tag"{}
+  "flower_human__initialAttachments:list<t>"{
+    i:t="flower_shell_head"
+    i:t="flower_shell_neck"
+    i:t="flower_shell_chest"
+    i:t="flower_shell_pelvis"
+    i:t="flower_shell_spine"
+    i:t="flower_shell_right_hand"
+    i:t="flower_shell_left_hand"
+    i:t="flower_shell_forearm_l"
+    i:t="flower_shell_forearm_r"
+    i:t="flower_shell_upper_arm_l"
+    i:t="flower_shell_upper_arm_r"
+    i:t="flower_shell_thigh_l"
+    i:t="flower_shell_thigh_r"
+    i:t="flower_shell_calf_l"
+    i:t="flower_shell_calf_r"
+    i:t="flower_shell_foot_l"
+    i:t="flower_shell_foot_r"
+  }
+
+  _group{
+    _tags:t="gameClient"
+    projectile_impulse__cinematicArtistryMult:r=0.1
+    projectile_impulse__cinematicArtistryMultDead:r=0
+    projectile_impulse__maxVelocity:r=2
+    projectile_impulse__maxOmega:r=3
+  }
+}
+
+flower_shell_base{
+  _use:t="animchar"
+  _use:t="slot_attachable"
+  flower_shell__addTemplateOnDestroy:t="flower_shell_phys"
+  flower_shell__collNodeId:i=-1
+  flower_shell__removed:b=no
+  item__armorAmount:r=0.8
+
+  "flowerShell:tag"{}
+  "slot_attach__destroyWithParent:tag"{}
+  "slot_attach__clientDestroyWithParent:tag"{}
+}
+
+flower_shell_phys{
+  _use:t="phys_sleepable"
+  net__physId:i=-1
+  phys_obj_net_phys__blk:t="gamedata/items/flower_shell.blk"
+  collres__res:t="medkit_collision"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_effect__timeToDestroy:r=2
+  game_effect__destroyAt:r=-1
+  phys_obj_thrust__thrust:r=3
+  phys_obj_thrust__direction:p3=1, 0, 0
+  phys_obj_thrust__offset:p3=-0.1, 0, 0
+  phys_obj_thrust__duration:r=10
+  phys_obj_thrust__endTime:r=0
+  collision_physMatId:i=-1
+  pair_collision__tag:t="collidableToPhysObj"
+
+  phys_obj_net_phys{}
+  base_net_phys_ptr{}
+  pair_collision__gridHolders{}
+  "pair_collision__gridNames:list<t>"{
+    h:t="humans"
+    h:t="vehicles"
+  }
+
+  "collidableToPhysObj:tag"{}
+  collres{}
+}
+
+flower_shell_head{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="costume_head"
+  animchar__res:t="flower_shell_head_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 Head"
+  }
+}
+
+flower_shell_neck{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="neck"
+  animchar__res:t="flower_shell_neck_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 Neck"
+  }
+}
+
+flower_shell_chest{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="chest"
+  animchar__res:t="flower_shell_chest_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 Spine"
+  }
+}
+
+flower_shell_pelvis{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="pelvis"
+  animchar__res:t="flower_shell_pelvis_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 Pelvis"
+  }
+}
+
+flower_shell_spine{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="spine"
+  animchar__res:t="flower_shell_spine_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 Spine"
+  }
+}
+
+flower_shell_right_hand{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="right_hand"
+  animchar__res:t="flower_shell_hand_r_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 R Hand"
+  }
+}
+
+flower_shell_left_hand{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="left_hand"
+  animchar__res:t="flower_shell_hand_l_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 L Hand"
+  }
+}
+
+flower_shell_forearm_l{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="lower_l_hand_gibs"
+  animchar__res:t="flower_shell_forearm_l_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 L Forearm"
+  }
+}
+
+flower_shell_forearm_r{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="lower_r_hand_gibs"
+  animchar__res:t="flower_shell_forearm_r_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 R Forearm"
+  }
+}
+
+flower_shell_upper_arm_l{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="upper_l_hand_gibs"
+  animchar__res:t="flower_shell_upper_arm_l_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 L UpperArm"
+  }
+}
+
+flower_shell_upper_arm_r{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="upper_r_hand_gibs"
+  animchar__res:t="flower_shell_upper_arm_r_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 R UpperArm"
+  }
+}
+
+flower_shell_thigh_l{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="leg_l_thigh"
+  animchar__res:t="flower_shell_thigh_l_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 L Thigh"
+  }
+}
+
+flower_shell_thigh_r{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="leg_r_thigh"
+  animchar__res:t="flower_shell_thigh_r_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 R Thigh"
+  }
+}
+
+flower_shell_calf_l{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="lower_l_leg_gibs"
+  animchar__res:t="flower_shell_calf_l_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 L Calf"
+  }
+}
+
+flower_shell_calf_r{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="lower_r_leg_gibs"
+  animchar__res:t="flower_shell_calf_r_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 R Calf"
+  }
+}
+
+flower_shell_foot_l{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="foot_left"
+  animchar__res:t="flower_shell_foot_l_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 L Foot"
+  }
+}
+
+flower_shell_foot_r{
+  _use:t="flower_shell_base"
+  slot_attach__slotName:t="foot_right"
+  animchar__res:t="flower_shell_foot_r_char"
+
+  "item__armoredParts:array"{
+    part:t="Bip01 R Foot"
+  }
+}
+
+flower_human_run_attack_anim{
+  _use:t="game_effect_with_duration"
+  _use:t="nphys_forced_anim_affect"
+  game_effect__nPhysForceAnimState:t="run_attack"
+  game_effect__timeToDestroy:r=1
+}
+
+flower_human_run_attack_anim_long{
+  _use:t="flower_human_run_attack_anim"
+  game_effect__timeToDestroy:r=2.4
+}
+
+flower_human_confusion_run_attack_long{
+  _use:t="flower_human_confusion_run_attack"
+  game_effect__timeToDestroy:r=2.2
+}
+
+flower_human_concussion_run_attack_long{
+  _use:t="flower_human_concussion_run_attack"
+  game_effect__timeToDestroy:r=2.2
+}
+
+flower_human_stationary_attack_anim{
+  _use:t="nphys_forced_anim_affect"
+  _use:t="nphys_forced_paramatric_anim"
+  game_effect__forcedParametricVarName:t="attack_progress"
+  game_effect__nPhysForceAnimState:t="stationary_attack_long"
+  game_effect__timeToDestroy:r=2.5
+}
+
+flower_human_stationary_attack_short_anim{
+  _use:t="nphys_forced_anim_affect"
+  _use:t="nphys_forced_paramatric_anim"
+  game_effect__forcedParametricVarName:t="attack_progress"
+  game_effect__nPhysForceAnimState:t="stationary_attack"
+  game_effect__timeToDestroy:r=1
+}
+
+flower_human_ranged_attack_anim{
+  _use:t="nphys_forced_anim_affect"
+  _use:t="nphys_forced_paramatric_anim"
+  game_effect__forcedParametricVarName:t="attack_progress"
+  game_effect__nPhysForceAnimState:t="unfreeze_attack"
+  game_effect__timeToDestroy:r=1.5
+}
+
+flower_human_shoot{
+  _use:t="game_effect_with_duration"
+  game_effect__timeToDestroy:r=1.75
+  game_effect__shootShellIndex:i=0
+
+  "game_effect__destroyWithOwner:tag"{}
+}
+
+flower_human_poisoned_effect{
+  disorient_poison__isAccumulated:b=yes
+  disorient_poison__curValue:r=0
+  disorient_poison__maxValue:r=0.5
+  disorient_poison__accumulateSpd:r=0.04
+  disorient_poison__confusionRange:p2=0.005, 0.04
+  disorient_poison__effectRefreshRateRange:p2=1.5, 0.5
+  disorient_poison__effectNextRefresh:r=-1
+}
+
+flower_human_polen_storm{
+  polen_storm__tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  polen_storm__cloudTemplate:t="flower_human_polen_storm_cloud"
+  polen_storm__duration:p2=4, 7
+  polen_storm__endsAt:r=0
+  polen_storm__expansionStages:i=2
+  polen_storm__focus:p3=0, 0, 0
+
+  "polen_storm__registry:list<ip3>"{}
+}
+
+flower_human_polen_storm_cloud{
+  _use:t="replicating"
+  _use:t="am_triggerable_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _replicated:t="transform"
+  polen_cloud__voxelIdx:ip3=0, 0, 0
+  polen_cloud__expandDelay:p2=0.8, 1.8
+  polen_cloud__expandAt:r=0
+  polen_cloud__expansionCharges:i=2
+  polen_cloud__expansionStagesLeft:i=0
+  polen_cloud__expansionProbability:r=0.05
+  game_effect__destroyAt:r=0
+  sphere_zone__radius:r=2
+  effect__scale:r=4
+  dmgzone__damage:r=1
+  dmgzone__lastUpdate:r=-1
+  dm__damageTypeId:i=5
+  disorient_trap__effectTemplate:t="disorient_polen_storm_effect"
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="char_flowerman_cloud_cmps_fx"
+  }
+
+  "disorient_trap_cloud:tag"{}
+  "humanTriggerable:tag"{}
+  "polen_cloud__ownerEid:eid"{}
+  "polen_storm_cloud:tag"{}
+}
+
+disorient_polen_storm_effect{
+  disorient_poison__isAccumulated:b=yes
+  disorient_poison__curValue:r=0
+  disorient_poison__maxValue:r=0.15
+  disorient_poison__accumulateSpd:r=0.05
+  disorient_poison__confusionRange:p2=0.005, 0.07
+  disorient_poison__effectRefreshRateRange:p2=1.5, 0.5
+  disorient_poison__effectNextRefresh:r=-1
+}
+
+flower_human_gun{
+  gun__propsId:i=-1
+  gun__blk:t="gamedata/weapons/flower_human_needle_gun.blk"
+  gun__projectileRayMatId:i=-1
+  gun__projectileRayMat:t="bulletRay"
+  gun__projectileTemplate:t="flower_human_projectile"
+  gun__ammo:i=0
+  unit__shootNodeName:t="Bip01 L Hand"
+  unit__shootNodeId:i=-1
+
+  gun_launch_events{}
+  gun__shell_prop_ids{}
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/flower_human_needle.blk"
+  }
+
+  gun{}
+  "gun__owner:eid"{}
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+  }
+}
+
+flower_human_attached_attack_base{
+  _use:t="game_effect_with_duration"
+  game_effect__timeToDestroy:r=0.8
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_effect__followTargetOffset:p3=0.5, 0, 0
+  sphere_zone__radius:r=0.55
+
+  "game_effect__ownerEid:eid"{}
+  "game_effect__followAiTargetNode:tag"{}
+  "game_effect__destroyWithOwner:tag"{}
+  "game_effect__customAffectUpdate:tag"{}
+  "game_effect__distanceLimit:tag"{}
+}
+
+flower_human_attack_affect{
+  _use:t="game_effect_with_duration"
+  _use:t="damage_target_single_affect"
+  game_effect__timeToDestroy:r=1
+  game_effect__damageTargetDeltaHp:r=5
+  _use:t="game_effect_sound"
+  game_effect_sound__enemy:t="enemy/walker/flower_human/voice_fx/attack"
+  game_effect_sound__hero:t="enemy/walker/flower_human/voice_fx/attack"
+}
+
+flower_human_unique_affect{
+  game_effect__affectUniqueKey:t=""
+}
+
+flower_human_run_attack{
+  _use:t="flower_human_attached_attack_base"
+  _use:t="delayed_affect_base"
+  game_effect__affectUniqueKeyName:t=""
+  game_effect__applyDelay:r=0
+  game_effect__applyUpdateInterval:r=0.1
+  game_effect__applyGameEffectTemplate:t="flower_human_attack_affect+flower_human_unique_affect"
+}
+
+flower_human_confusion_run_attack{
+  _use:t="flower_human_run_attack"
+  game_effect__applyGameEffectTemplate:t="confusion_single_affect+flower_human_attack_affect+flower_human_unique_affect"
+}
+
+flower_human_concussion_run_attack{
+  _use:t="flower_human_run_attack"
+  game_effect__applyGameEffectTemplate:t="concussion_single_affect+flower_human_attack_affect+flower_human_unique_affect"
+}
+
+flower_human_stationary_attack_affect{
+  _use:t="flower_human_attack_affect"
+  game_effect__damageTargetDeltaHp:r=2
+}
+
+flower_human_stationary_damage_attack{
+  _use:t="flower_human_attached_attack_base"
+  _use:t="persistent_affect_base"
+  game_effect__applyUpdateInterval:r=0.25
+  game_effect__timeToDestroy:r=1.2
+  game_effect__applyGameEffectTemplate:t="flower_human_stationary_attack_affect"
+}
+
+flower_human_stationary_confusion_attack{
+  _use:t="flower_human_stationary_damage_attack"
+  game_effect__applyGameEffectTemplate:t="confusion_single_affect+flower_human_stationary_attack_affect"
+}
+
+flower_human_stationary_concussion_attack{
+  _use:t="flower_human_stationary_damage_attack"
+  game_effect__applyGameEffectTemplate:t="concussion_single_affect+flower_human_stationary_attack_affect"
+}
+
+flower_human_root{
+  _use:t="decor_rendinst"
+  _use:t="zone_child"
+  ri_extra__name:t="flowerman_root_a"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+flower_human_root_spawner{
+  flower_human__rootTemplate:t="flower_human_root"
+}
+
+flower_human_delayed_spot{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  flower_human_delayer__spawnDelay:p2=20, 30
+  flower_human_delayer__spawnTemplate:t="flower_human"
+  flower_human_delayer__spawnAt:r=-1
+}
+
+flower_human_render_effect{
+  _use:t="replicated_game_effect"
+  _use:t="game_effect_geomtree_effects"
+
+  "game_effect__ownerEid:eid"{}
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="changed_render_distortion_effect"
+  }
+}
+
+flower_human_aura{
+  _use:t="monster_aura"
+
+  "monster_aura__enabledAliveAttachments:list<t>"{
+    i:t="flower_human_render_effect"
+  }
+
+  "monster_aura__enabledDeadAttachments:list<t>"{
+    i:t="flower_human_render_effect"
+  }
+}
+
+flower_corpse{
+  "animchar__physSymDependence:tag"{}
+  "flower_corpse__decorData:array"{
+    "decor:object"{
+      templateName:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+      scaleTm:r=1
+      timer:r=10
+    }
+
+    "decor:object"{
+      templateName:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+      scaleTm:r=2
+      timer:r=20
+    }
+
+    "decor:object"{
+      templateName:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+      scaleTm:r=3
+      timer:r=30
+    }
+  }
+
+  "flower_corpse__flowersData:array"{
+    "flower:object"{
+      templateName:t="attached_flower_corpse"
+      slot:t="corpse_flower_spine"
+      animchar:t="flower_shell_spine_char"
+      timer:r=35
+    }
+
+    "flower:object"{
+      templateName:t="attached_flower_corpse"
+      slot:t="corpse_flower_spine1"
+      animchar:t="flower_shell_spine_char"
+      timer:r=35
+    }
+
+    "flower:object"{
+      templateName:t="attached_flower_corpse"
+      slot:t="corpse_flower_backpack"
+      animchar:t="flower_shell_spine_char"
+      timer:r=35
+    }
+
+    "flower:object"{
+      templateName:t="attached_flower_corpse"
+      slot:t="corpse_flower_neck"
+      animchar:t="flower_shell_head_char"
+      timer:r=40
+    }
+
+    "flower:object"{
+      templateName:t="attached_flower_corpse"
+      slot:t="corpse_flower_pelvis"
+      animchar:t="flower_shell_pelvis_char"
+      timer:r=40
+    }
+
+    "flower:object"{
+      templateName:t="attached_flower_corpse"
+      slot:t="corpse_flower_head"
+      animchar:t="flower_shell_head_char"
+      timer:r=45
+    }
+
+    "flower:object"{
+      templateName:t="attached_flower_corpse"
+      slot:t="corpse_flower_r_calf"
+      animchar:t="flower_shell_head_char"
+      timer:r=45
+    }
+
+    "flower:object"{
+      templateName:t="attached_flower_corpse"
+      slot:t="corpse_flower_l_calf"
+      animchar:t="flower_shell_pelvis_char"
+      timer:r=45
+    }
+
+    "flower:object"{
+      templateName:t="attached_flower_corpse"
+      slot:t="corpse_flower_r_foot"
+      animchar:t="flower_shell_pelvis_char"
+      timer:r=45
+    }
+
+    "flower:object"{
+      templateName:t="attached_flower_corpse"
+      slot:t="corpse_flower_l_foot"
+      animchar:t="flower_shell_head_char"
+      timer:r=45
+    }
+
+    "flower:object"{
+      templateName:t="attached_flower_corpse"
+      slot:t="corpse_flower_r_twist"
+      animchar:t="flower_shell_pelvis_char"
+      timer:r=45
+    }
+
+    "flower:object"{
+      templateName:t="attached_flower_corpse"
+      slot:t="corpse_flower_l_twist"
+      animchar:t="flower_shell_head_char"
+      timer:r=45
+    }
+  }
+}
+
+attached_flower_corpse{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="slot_attachable"
+  animchar__res:t=""
+
+  "slot_attach__destroyWithParent:tag"{}
+  "attachedFlowerCorpse:tag"{}
+}
+
+flower_human_miniboss_hitpoints{
+  _use:t="flower_human_hitpoints"
+  hitpoints__hp:r=300
+  hitpoints__maxHp:r=300
+  entity_mods__fireDamageMult:r=2
+  hitpoints__shellSplashDmgMult:r=0.3
+  hitpoints__shellDmgMult:r=0.03
+  _skipInitialReplication:t="dm_parts__parts"
+
+  "dm_parts__parts:object"{
+    "Bip01 Head:object"{
+      dmgMult:r=3
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 Neck:object"{
+      dmgMult:r=2
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 L Thigh:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 R Thigh:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 L Calf:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 R Calf:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 L Foot:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 R Foot:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 Pelvis:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 Spine:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 Spine1:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+  }
+}
+
+flowerman_miniboss_aura_smoke_effect{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="flowerman_miniboss_aura_smoke_fx"
+  }
+}
+
+flowerman_miniboss_aura_distortion_effect{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="flowerman_miniboss_aura_distortion_fx"
+  }
+}
+
+flower_human_miniboss_alive_render_effect{
+  _use:t="replicated_game_effect"
+  _use:t="game_effect_geomtree_effects"
+  game_effect__showHideDistanceSq:p2=8100, 14400
+
+  "game_effect__ownerEid:eid"{}
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="flowerman_miniboss_aura_distortion_effect"
+    item:t="flowerman_miniboss_aura_smoke_effect"
+  }
+}
+
+flower_human_miniboss_dead_render_effect{
+  _use:t="replicated_game_effect"
+  _use:t="game_effect_geomtree_effects"
+  game_effect__showHideDistanceSq:p2=8100, 14400
+
+  "game_effect__ownerEid:eid"{}
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="changed_human_miniboss_render_distortion_effect"
+  }
+}
+
+flower_human_miniboss_render_smoke_sleeping_effect{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="flowerman_miniboss_aura_smoke_sleeping_fx"
+  }
+}
+
+flower_human_miniboss_sleeping_render_effect{
+  _use:t="replicated_game_effect"
+  _use:t="game_effect_geomtree_effects"
+  game_effect__showHideDistanceSq:p2=3600, 8100
+
+  "game_effect__ownerEid:eid"{}
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="changed_human_miniboss_render_distortion_sleeping_effect"
+    item:t="flower_human_miniboss_render_smoke_sleeping_effect"
+  }
+}
+
+flower_human_miniboss_tex_replace{
+  "animchar__objTexReplace:object"{
+    "flowerman_remaster_a_tex_d*":t="flowerman_remaster_miniboss_a_tex_d*"
+    "flowerman_leaves_flowers_a_tex_d*":t="flowerman_miniboss_leaves_flowers_a_tex_d*"
+    "flowerman_surface_tile_a_tex_d*":t="flowerman_miniboss_surface_tile_a_tex_d*"
+  }
+}
+
+flower_human_miniboss_attack_affect{
+  _use:t="flower_human_attack_affect"
+  game_effect__damageTargetDeltaHp:r=2.5
+  game_effect__damageTargetDeltaHpRandom:r=0.75
+}
+
+flower_human_miniboss_damage_attack{
+  _use:t="flower_human_stationary_damage_attack"
+  game_effect__applyGameEffectTemplate:t="flower_human_miniboss_attack_affect"
+  game_effect__timeToDestroy:r=0.3
+  sphere_zone__radius:r=0.85
+}
+
+flower_human_miniboss_awake_anim{
+  _use:t="nphys_forced_anim_affect"
+  game_effect__nPhysForceAnimState:t="awake_boss"
+  game_effect__timeToDestroy:r=2
+}
+
+flower_human_miniboss{
+  _use:t="flower_human"
+  _use:t="flower_human_miniboss_hitpoints"
+  _use:t="flower_human_miniboss_tex_replace"
+  animchar__res:t="flowerman_boss"
+  collres__res:t="flowerman_boss_collision"
+  animchar_fast_phys__res:t="flowerman_boss_fastphys"
+  miniboss__type:t="flower_human"
+  kill_tracking_tag:t="flower_miniboss"
+  collision_damage__pushVelDeltaMult:r=0.5
+  collision_damage__velDeltaMult:r=0.5
+  collision_damage__pushThreshold:r=1
+  collision_damage__threshold:r=3
+  corpse_am__templateForCreation:t="active_matter_pile_attached_to_corpse+item_in_world+coin_item_count_25"
+  sleep_mode__extraAwakeChance:r=0.5
+  loud_noise__muffledMultiplier:r=1
+  loud_noise__noisePercentPerAwake:r=1
+  loud_noise__awake:r=800
+  loud_noise__radius:r=7
+  navmesh_phys__quatVisc:r=0.1
+  nPhys__animcharScale:r=1.6
+  nPhys__animcharScaleRange:p2=1.6, 1.6
+  nphys__mass:r=200
+  navmesh_phys__rndWalkSpeed:p2=7.55, 7.55
+  navmesh_phys__walkSpeedModifier:r=0.4
+  navmesh_phys__climbSpeed:r=2
+  navmesh_phys__defaultClimbHeight:r=2.5
+  navmesh_phys__locomotionFactor:r=0.02
+  agent_dangers__loseTargetTimeout:r=150
+  beh_tree__blackboard__enemyRadius:r=70
+  agent_dangers__maxDangerDist:r=140
+  sleep_mode__blindDistancesSq:p2=2500, 14400
+  anim_state__staticStateName:t="static_boss_pose"
+  beh_tree__node:t="flower_human_miniboss"
+
+  "kill_tracking__taggedPlayers:object"{}
+  "anim_state__runStateName:list<t>"{
+    i:t="lower_run"
+  }
+
+  "monster_aura__enabledAliveAttachments:list<t>"{
+    i:t="flower_human_miniboss_alive_render_effect"
+  }
+
+  "monster_aura__enabledDeadAttachments:list<t>"{
+    i:t="flower_human_miniboss_dead_render_effect"
+  }
+
+  "monster_aura__disabledAliveAttachments:list<t>"{
+    i:t="flower_human_miniboss_sleeping_render_effect"
+  }
+
+  "flower_human__initialAttachments:list<t>"{
+    i:t="flower_human_miniboss_shell_head"
+    i:t="flower_human_miniboss_shell_neck"
+    i:t="flower_human_miniboss_shell_chest"
+    i:t="flower_human_miniboss_shell_pelvis"
+    i:t="flower_human_miniboss_shell_spine"
+    i:t="flower_human_miniboss_shell_right_hand"
+    i:t="flower_human_miniboss_shell_left_hand"
+    i:t="flower_human_miniboss_shell_forearm_l"
+    i:t="flower_human_miniboss_shell_forearm_r"
+    i:t="flower_human_miniboss_shell_upper_arm_l"
+    i:t="flower_human_miniboss_shell_upper_arm_r"
+    i:t="flower_human_miniboss_shell_thigh_l"
+    i:t="flower_human_miniboss_shell_thigh_r"
+    i:t="flower_human_miniboss_shell_calf_l"
+    i:t="flower_human_miniboss_shell_calf_r"
+    i:t="flower_human_miniboss_shell_foot_l"
+    i:t="flower_human_miniboss_shell_foot_r"
+  }
+}
+
+flower_human_minion_awake_anim{
+  _use:t="nphys_forced_anim_affect"
+  game_effect__nPhysForceAnimState:t="awake_minion"
+  game_effect__timeToDestroy:r=2
+}
+
+flower_human_minion{
+  _use:t="flower_human"
+  miniboss_minion__type:t="flower_human"
+  entity_mods__fireDamageMult:r=2.25
+  hitpoints__shellSplashDmgMult:r=0.3
+  hitpoints__shellDmgMult:r=0.03
+  hitpoints__hp:r=55
+  hitpoints__maxHp:r=55
+  sleep_mode__extraAwakeChance:r=0.5
+  loud_noise__muffledMultiplier:r=1
+  loud_noise__noisePercentPerAwake:r=1
+  loud_noise__awake:r=350
+  loud_noise__radius:r=3.5
+  nPhys__animcharScale:r=1.25
+  nPhys__animcharScaleRange:p2=1.25, 1.25
+  nphys__mass:r=100
+  navmesh_phys__rndWalkSpeed:p2=6, 7
+  agent_dangers__loseTargetTimeout:r=150
+  beh_tree__blackboard__enemyRadius:r=70
+  agent_dangers__maxDangerDist:r=140
+  sleep_mode__blindDistancesSq:p2=2500, 14400
+  anim_state__staticStateName:t="static_minion_pose"
+  beh_tree__node:t="flower_human_minion"
+
+  "miniboss_minion__bossEid:eid"{}
+}
+
+flower_human_minion_root_with_spawn_list{
+  _use:t="flower_human_root"
+  transform__scaleOnAppearRng:p2=0.9, 1.1
+
+  "spawn_entity_from_list__entitiesToSpawn:array"{
+    "i:object"{
+      name:t="flower_human_minion+am_inside_body_3"
+      chance:r=1
+    }
+  }
+}
+
+flower_human_minion_cirlce{
+  _use:t="spawn_circle"
+  _use:t="teaser_episode_entity"
+  spawn_circle__template:t="flower_human_minion_root_with_spawn_list"
+  spawn_circle__radius:r=2.2
+  spawn_circle__count:ip2=3, 4
+  spawn_circle__offsetRnd:p2=0.1, 0.35
+  spawn_circle__rotateType:i=1
+}
+
+flower_human_miniboss_treasure_root_with_spawn_list{
+  _use:t="flower_human_root"
+  transform__scaleOnAppearRng:p2=1.35, 1.55
+
+  "spawn_entity_from_list__entitiesToSpawn:array"{
+    "i:object"{
+      name:t="active_matter_pile+coin_item_count_1+item_in_world"
+      chance:r=0.35
+    }
+
+    "i:object"{
+      name:t="active_matter_pile+coin_item_count_2+item_in_world"
+      chance:r=0.25
+    }
+
+    "i:object"{
+      name:t="active_matter_pile+coin_item_count_5+item_in_world"
+      chance:r=0.15
+    }
+
+    "i:object"{
+      name:t=""
+      chance:r=0.2
+    }
+  }
+}
+
+flower_human_miniboss_treasure_cirlce{
+  _use:t="spawn_circle"
+  _use:t="teaser_episode_entity"
+  spawn_circle__template:t="flower_human_miniboss_treasure_root_with_spawn_list"
+  spawn_circle__radius:r=1.25
+  spawn_circle__count:ip2=10, 11
+  spawn_circle__offsetRnd:p2=0.1, 0.35
+  spawn_circle__rotateType:i=1
+}
+
+flower_human_miniboss_decor_root{
+  _use:t="flower_human_root"
+  transform__scaleOnAppearRng:p2=0.5, 0.9
+}
+
+flower_human_miniboss_decor_root_cirlce{
+  _use:t="spawn_circle"
+  _use:t="teaser_episode_entity"
+  spawn_circle__template:t="flower_human_miniboss_decor_root"
+  spawn_circle__radius:r=3
+  spawn_circle__count:ip2=50, 60
+  spawn_circle__offsetRnd:p2=0.1, 1
+  spawn_circle__rotateType:i=3
+}
+
+flower_human_miniboss_decor_gpu_cirlce{
+  _use:t="spawn_circle"
+  _use:t="teaser_episode_entity"
+  spawn_circle__template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+  spawn_circle__radius:r=4
+  spawn_circle__count:ip2=50, 60
+  spawn_circle__offsetRnd:p2=0.1, 2
+  spawn_circle__rotateType:i=3
+}
+
+flower_human_miniboss_trap_cirlce{
+  _use:t="spawn_circle"
+  _use:t="teaser_episode_entity"
+  spawn_circle__template:t="flowerman_trap_root_no_drop_on_ground+flowerman_wakeup_enemies_trap_no_drop_on_ground"
+  spawn_circle__radius:r=6
+  spawn_circle__count:ip2=40, 50
+  spawn_circle__offsetRnd:p2=0.1, 2
+  spawn_circle__rotateType:i=3
+}
+
+flower_human_miniboss_shell_base{
+  _use:t="flower_human_miniboss_tex_replace"
+  item__armorAmount:r=0.45
+}
+
+flower_human_miniboss_shell_head{
+  _use:t="flower_shell_head"
+  _use:t="flower_human_miniboss_shell_base"
+  slot_attach__slotName:t="costume_head_boss"
+}
+
+flower_human_miniboss_shell_neck{
+  _use:t="flower_shell_neck"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_chest{
+  _use:t="flower_shell_chest"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_pelvis{
+  _use:t="flower_shell_pelvis"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_spine{
+  _use:t="flower_shell_spine"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_right_hand{
+  _use:t="flower_shell_right_hand"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_left_hand{
+  _use:t="flower_shell_left_hand"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_forearm_l{
+  _use:t="flower_shell_forearm_l"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_forearm_r{
+  _use:t="flower_shell_forearm_r"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_upper_arm_l{
+  _use:t="flower_shell_upper_arm_l"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_upper_arm_r{
+  _use:t="flower_shell_upper_arm_r"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_thigh_l{
+  _use:t="flower_shell_thigh_l"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_thigh_r{
+  _use:t="flower_shell_thigh_r"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_calf_l{
+  _use:t="flower_shell_calf_l"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_calf_r{
+  _use:t="flower_shell_calf_r"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_foot_l{
+  _use:t="flower_shell_foot_l"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_miniboss_shell_foot_r{
+  _use:t="flower_shell_foot_r"
+  _use:t="flower_human_miniboss_shell_base"
+}
+
+flower_human_bush{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="am_navmesh_creature_base"
+  _use:t="flower_human_hitpoints"
+  _use:t="flower_human_collision"
+  _use:t="simple_hitpoints"
+  _use:t="human_grid_obj"
+  nphys__mass:r=40
+  collision_damage__pushVelDeltaMult:r=8
+  collision_damage__velDeltaMult:r=2
+  collision_damage__pushThreshold:r=0.3
+  collision_damage__threshold:r=1
+  hitpoints__hp:r=8
+  hitpoints__maxHp:r=8
+  animchar__res:t="flowerman_remaster_a"
+  collres__res:t="flowerman_remaster_a_collision"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar_render__enabled:b=no
+  anim_state__forceAnimState:t="static_pose"
+  anim_state__forceAnimStateId:i=-1
+  _tracked:t="anim_state__forceAnimState"
+  _replicated:t="anim_state__forceAnimStateId"
+  isAlive:b=yes
+  _tracked:t="isAlive"
+  _replicated:t="isAlive"
+  animchar__animSpeed:r=0
+  animchar__appliedAnimSpeed:r=0
+  needsBlood:b=no
+  death_game_effect__name:t="envir_destr_wood_med_cmps_fx"
+
+  "anim_state__animChannels:list<t>"{
+    channel:t="state"
+  }
+
+  "animchar__animState:object"{
+    state:i=-1
+  }
+
+  "animchar__animStateDirty:b"{
+    value:b=yes
+    _hide:b=yes
+  }
+
+  collres{}
+  "flower_human_bush:tag"{}
+  "flower_human__initialAttachments:list<t>"{
+    i:t="flower_shell_head"
+    i:t="flower_shell_neck"
+    i:t="flower_shell_chest"
+    i:t="flower_shell_pelvis"
+    i:t="flower_shell_spine"
+    i:t="flower_shell_right_hand"
+    i:t="flower_shell_left_hand"
+    i:t="flower_shell_forearm_l"
+    i:t="flower_shell_forearm_r"
+    i:t="flower_shell_upper_arm_l"
+    i:t="flower_shell_upper_arm_r"
+    i:t="flower_shell_thigh_l"
+    i:t="flower_shell_thigh_r"
+    i:t="flower_shell_calf_l"
+    i:t="flower_shell_calf_r"
+    i:t="flower_shell_foot_l"
+    i:t="flower_shell_foot_r"
+  }
+}
+
+flower_human_debug_log{
+  "flower_human_debug_log:tag"{}
+  "flower_human_debug_log__heroEid:eid"{}
+}

@@ -1,0 +1,309 @@
+sequencer{
+  name:t="sub.leave_obstacle"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=1
+      }
+
+      selector{
+        selectStrategy:t="ordered"
+        selectOnSuccess:b=yes
+
+        subTree{
+          treeName:t="sub.clearPath"
+        }
+
+        sequencer{
+          compareNode{
+            lhs:t="obstacle_avoider__penetration"
+            operator:t="<"
+            rhs:r=0.01
+          }
+
+          recalculateTree{}
+        }
+      }
+    }
+  }
+
+  compareNode{
+    lhs:t="obstacle_avoider__penetration"
+    operator:t=">"
+    rhs:r=0.2
+  }
+
+  ifThenElse{
+    compareNode{
+      lhs:t="walker_agent__targetEid"
+      operator:t="=="
+      rhs:i=0
+    }
+
+    nMeshFindRandomPointAroundPos{
+      posParam:t="walker_agent__targetPos"
+      dist:p2=3, 4
+      aroundPos:t="navmesh_phys__currentPos"
+    }
+
+    nMeshFindRandomPointAroundTarget{
+      posParam:t="walker_agent__targetPos"
+      dist:p2=3, 4
+      targetParam:t="walker_agent__targetEid"
+    }
+  }
+
+  nPhysCorridorMoveToPosWithNavmeshMapping{
+    posParam:t="walker_agent__targetPos"
+    stopDist:r=2
+    navLookAhead:r=0.75
+  }
+}
+
+sequencer{
+  name:t="sub.blindness"
+
+  isInBlindness{}
+  nMeshFindRandomPointAroundPos{
+    posParam:t="walker_agent__targetPos"
+    dist:p2=8, 10
+    aroundPos:t="navmesh_phys__prevPos"
+  }
+
+  parallel{
+    inBlindness{}
+    nPhysCorridorMoveToPosWithNavmeshMapping{
+      posParam:t="walker_agent__targetPos"
+      forceToWalk:b=no
+      stopDist:r=1
+      navLookAhead:r=0.75
+    }
+  }
+
+  modifyNode{
+    target:t="stuck_detector__value"
+    operator:t="="
+    arg:i=0
+  }
+}
+
+orderedSelector{
+  name:t="sub.attackReaction"
+
+  subTree{
+    treeName:t="sub.clearPath"
+  }
+
+  sequencer{
+    updateObstaclePenetration{}
+    compareNode{
+      lhs:t="obstacle_avoider__penetration"
+      operator:t=">"
+      rhs:r=0.2
+    }
+
+    selectNode{
+      name:t="leave_obstacle"
+    }
+  }
+
+  subTree{
+    treeName:t="sub.recalculateTreeOnStuck"
+  }
+
+  sequencer{
+    hasTimePassed{
+      from:t="agent_dangers__lastAgroTime"
+      duration:t="agent_dangers__loseTargetTimeout"
+    }
+
+    modifyNode{
+      target:t="walker_agent__targetEid"
+      operator:t="="
+      arg:i=0
+    }
+
+    recalculateTree{}
+  }
+
+  sequencer{
+    not{
+      checkTargetEcs{
+        targetParam:t="walker_agent__targetEid"
+      }
+    }
+
+    modifyNode{
+      target:t="walker_agent__targetEid"
+      operator:t="="
+      arg:i=0
+    }
+
+    recalculateTree{}
+  }
+}
+
+repeatUntilFail{
+  name:t="sub.door_opener"
+  count:i=1
+
+  orderedSelector{
+    sequencer{
+      name:t="try_push_open_door"
+
+      findDoorObstacleWithNavmeshMapping{
+        traceDist:r=2
+        pushableOnly:b=yes
+      }
+
+      success{
+        tryOpenDoor{
+          pushAgentAway:b=no
+        }
+      }
+
+      modifyNode{
+        target:t="stuck_detector__value"
+        operator:t="="
+        arg:i=0
+      }
+    }
+
+    repeatUntilFail{
+      name:t="attack_the_door"
+      count:i=4
+
+      findDestructableObstacleWithNavmeshMapping{
+        traceDist:r=2
+      }
+
+      orderedSelector{
+        sequencer{
+          compareNode{
+            lhs:t="destructable_obstacle_handler__isRi"
+            operator:t="!="
+            rhs:r=0
+          }
+
+          nPhysLookAtRiWithPositionMapping{
+            targetParam:t="destructable_obstacle_handler__targetEid"
+          }
+        }
+
+        nPhysLookAtEntityWithPositionMapping{
+          targetParam:t="destructable_obstacle_handler__targetEid"
+        }
+      }
+
+      speak{
+        phrase:t="attackDoor"
+        timeMinMax:p2=3, 6
+      }
+
+      modifyNode{
+        target:t="beh_tree__interruptDisabled"
+        operator:t="="
+        arg:i=1
+      }
+
+      runAction{
+        action:t="stand_melee"
+      }
+
+      wait{
+        range:p2=0.1, 0.4
+        resetable:b=yes
+      }
+
+      modifyNode{
+        target:t="beh_tree__interruptDisabled"
+        operator:t="="
+        arg:i=0
+      }
+
+      modifyNode{
+        target:t="stuck_detector__value"
+        operator:t="="
+        arg:i=0
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.recalculateTreeOnStuck"
+
+  isNphysEnabled{}
+  compareNode{
+    lhs:t="stuck_detector_debug__enabled"
+    operator:t=">"
+    rhs:r=0
+  }
+
+  compareNode{
+    lhs:t="stuck_detector__value"
+    operator:t=">"
+    rhs:r=0.55
+  }
+
+  modifyNode{
+    target:t="stuck_detector__value"
+    operator:t="="
+    arg:r=0
+  }
+
+  modifyNode{
+    target:t="walker_agent__targetEid"
+    operator:t="="
+    arg:r=0
+  }
+
+  setBlind{
+    duration:p2=2, 5
+  }
+
+  recalculateTree{}
+}
+
+sequencer{
+  name:t="sub.clearPath"
+
+  compareNode{
+    lhs:t="stuck_detector__value"
+    operator:t=">"
+    rhs:r=0.2
+  }
+
+  findDoorObstacleWithNavmeshMapping{
+    traceDist:r=2
+  }
+
+  selectNode{
+    name:t="sub.door_opener"
+  }
+}
+
+orderedSelector{
+  name:t="sub.return_to_navmesh"
+
+  not{
+    isOffNavMesh{}
+  }
+
+  sequencer{
+    nPhysLookAtDynPos{
+      posParam:t="walker_agent__climbingFrom"
+    }
+
+    jumpBackToNavmesh{}
+    wait{
+      range:p2=0.1, 0.1
+      resetable:b=yes
+    }
+  }
+}

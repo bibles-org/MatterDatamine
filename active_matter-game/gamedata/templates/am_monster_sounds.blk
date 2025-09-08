@@ -1,0 +1,813 @@
+am_monster_killed_ui_sound{
+  "am_monster_killed_ui_sound_path:shared:object"{
+    _tags:t="sound"
+  }
+}
+
+flower_human_managed_sound{
+  _use:t="base_managed_sound"
+
+  _group{
+    _tags:t="sound"
+    managed_sound__type:t="flowerhuman"
+  }
+}
+
+flower_human_sound{
+  _use:t="base_human_sound"
+  _use:t="flower_human_managed_sound"
+  _use:t="am_monster_killed_ui_sound"
+
+  "human_voice_effect__allOrderedEffects:shared:list<t>"{
+    _tags:t="sound"
+    id:t="dead"
+    id:t="underwater"
+    id:t="holdBreath"
+    id:t="downed"
+    id:t="sleep"
+  }
+
+  "sound_paths:shared:object"{
+    _tags:t="sound"
+  }
+
+  "human_voice_sound__path:shared:object"{
+    _tags:t="sound"
+    headIsUnderwater:b=no
+    enemy:t="enemy/walker/flower_human/voice_fx"
+  }
+
+  "human_voice_sound__descs:shared:object"{
+    _tags:t="sound"
+
+    "seeDanger:object"{
+      name:t="aggro"
+    }
+
+    "death:object"{
+      name:t="death"
+    }
+
+    "sleep:object"{
+      name:t="sleep"
+
+      "abandoner:object"{}
+      "end:object"{
+        name:t="awake"
+      }
+    }
+  }
+
+  "human_voice_sound__irqs:shared:object"{
+    _tags:t="sound"
+
+    "changed_attack_sound:object"{
+      name:t="attack"
+    }
+  }
+
+  "human_steps_sound__path:shared:object"{
+    _tags:t="sound"
+    enemy:t="enemy/walker/flower_human"
+  }
+
+  "human_steps_sound__irqs:shared:array"{
+    _tags:t="sound"
+
+    "irq:object"{
+      irq:t="left_sprint"
+      name:t="footstep"
+    }
+
+    "irq:object"{
+      irq:t="right_sprint"
+      name:t="footstep"
+    }
+
+    "irq:object"{
+      irq:t="left_run"
+      name:t="footstep"
+    }
+
+    "irq:object"{
+      irq:t="right_run"
+      name:t="footstep"
+    }
+
+    "irq:object"{
+      irq:t="left_walk"
+      name:t="footstep"
+    }
+
+    "irq:object"{
+      irq:t="right_walk"
+      name:t="footstep"
+    }
+  }
+
+  "am_monster_killed_ui_sound_path:shared:object"{
+    _tags:t="sound"
+    path:t="enemy/walker/flower_human/hit/ui/hitmark"
+  }
+}
+
+flower_human_sleeping_sound{
+  _use:t="human_voice_effect_assigned"
+
+  _group{
+    _tags:t="sound"
+    human_voice_effect_assigned:t="sleep"
+  }
+}
+
+changed_snapshot_blink_sound{
+  _group{
+    _tags:t="sound"
+    event_snapshot_blink_sound__path:t="enemy/effects/dash_affect"
+  }
+}
+
+changed_nphys_teleport_sound{
+  _group{
+    _tags:t="sound"
+    event_nphys_teleport_sound__path:t="enemy/effects/dash_affect"
+  }
+}
+
+changed_human_sound{
+  _use:t="base_human_sound"
+  _use:t="changed_snapshot_blink_sound"
+  _use:t="changed_nphys_teleport_sound"
+  _use:t="am_monster_killed_ui_sound"
+
+  "human_voice_effect__allOrderedEffects:shared:list<t>"{
+    _tags:t="sound"
+    id:t="dead"
+    id:t="underwater"
+    id:t="downed"
+    id:t="holdBreath"
+    id:t="deepSleep"
+    id:t="lightSleep"
+    id:t="awakening"
+    id:t="woken"
+  }
+
+  "sound_paths:shared:object"{
+    _tags:t="sound"
+
+    "climb:object"{
+      enemy:t="enemy/walker/changed/foley_mov/common/climb"
+    }
+
+    "collision_bushes:object"{
+      enemy:t="enemy/walker/am_trooper_male/collision/bush"
+    }
+
+    "burning:object"{
+      path:t="env_effects/fire/fire_character"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "swim_onwater:object"{
+      enemy:t="enemy/walker/changed/foley_mov/swim/hand"
+    }
+
+    "swim_still:object"{
+      enemy:t="enemy/walker/changed/foley_mov/swim/leg"
+    }
+  }
+
+  "human_hit_sound__paths:shared:object"{
+    _tags:t="sound"
+
+    "hit_dmgClaws:object"{
+      path:t="/walker/am_trooper_male/hit"
+    }
+
+    "hit_dmgMelee:object"{
+      name:t="melee"
+      enemy:t="enemy/walker/am_trooper_male/hit"
+    }
+
+    "hit_dmgProjectile:object"{
+      name:t="bullet_body"
+      enemy:t="enemy/walker/am_trooper_male/hit"
+    }
+  }
+
+  "human_steps_sound__path:shared:object"{
+    _tags:t="sound"
+    enemy:t="enemy/walker/changed/foley_mov"
+  }
+
+  "human_steps_sound__descs:shared:object"{
+    _tags:t="sound"
+
+    "jump:object"{
+      name:t="jump_start"
+    }
+
+    "land:object"{
+      name:t="jump_landing"
+    }
+  }
+
+  "human_steps_sound__irqs:shared:array"{
+    _tags:t="sound"
+
+    "irq:object"{
+      irq:t="left_sprint"
+      name:t="sprint"
+    }
+
+    "irq:object"{
+      irq:t="right_sprint"
+      name:t="sprint"
+    }
+
+    "irq:object"{
+      irq:t="left_run"
+      name:t="run"
+    }
+
+    "irq:object"{
+      irq:t="right_run"
+      name:t="run"
+    }
+
+    "irq:object"{
+      irq:t="left_walk"
+      name:t="run"
+    }
+
+    "irq:object"{
+      irq:t="right_walk"
+      name:t="run"
+    }
+
+    "irq:object"{
+      irq:t="left_turnOnSpot"
+      name:t="step"
+    }
+
+    "irq:object"{
+      irq:t="right_turnOnSpot"
+      name:t="step"
+    }
+
+    "irq:object"{
+      irq:t="left_crawl"
+      name:t="crawl"
+    }
+
+    "irq:object"{
+      irq:t="right_crawl"
+      name:t="crawl"
+    }
+
+    "irq:object"{
+      irq:t="left_crouchWalk"
+      name:t="step"
+    }
+
+    "irq:object"{
+      irq:t="right_crouchWalk"
+      name:t="step"
+    }
+
+    "irq:object"{
+      irq:t="left_crouchTurnOnSpot"
+      name:t="step"
+    }
+
+    "irq:object"{
+      irq:t="right_crouchTurnOnSpot"
+      name:t="step"
+    }
+  }
+
+  "human_voice_sound__path:shared:object"{
+    _tags:t="sound"
+    headIsUnderwater:b=no
+    path:t="/walker/changed/voice_fx"
+  }
+
+  "human_voice_sound__descs:shared:object"{
+    _tags:t="sound"
+
+    "death:object"{
+      name:t="death"
+    }
+
+    "seeDanger:object"{
+      name:t="seedanger"
+    }
+
+    "attackDoor:object"{
+      name:t="seedanger"
+    }
+
+    "disable:object"{}
+    "downed:object"{}
+    "underwater:object"{}
+    "holdBreath:object"{}
+    "deepSleep:object"{
+      "abandoner:object"{}
+    }
+
+    "lightSleep:object"{
+      name:t="idle"
+
+      "abandoner:object"{}
+    }
+
+    "awakening:object"{
+      name:t="awake"
+
+      "abandoner:object"{}
+    }
+
+    "woken:object"{
+      "abandoner:object"{}
+      "deepSleep:object"{
+        name:t="seedanger"
+      }
+
+      "lightSleep:object"{
+        name:t="seedanger"
+      }
+
+      "awakening:object"{
+        name:t="seedanger"
+      }
+    }
+
+    "hitCry:object"{
+      name:t="hit"
+    }
+  }
+
+  "human_voice_sound__irqs:shared:object"{
+    _tags:t="sound"
+
+    "changed_attack_sound:object"{
+      name:t="melee/hands"
+    }
+  }
+
+  "human_steps_sound__stepFx:shared:object"{
+    _tags:t="sound"
+
+    "walk:object"{
+      enemy:t="enemy/walker/changed/voice_fx/idle"
+    }
+
+    "sprint:object"{
+      enemy:t="enemy/walker/changed/voice_fx/run_to_player"
+    }
+  }
+
+  "net_sound__descs:shared:object"{
+    "migration_start:object"{
+      path:t="ui_sounds/wave_start_screams"
+    }
+  }
+
+  "am_monster_killed_ui_sound_path:shared:object"{
+    _tags:t="sound"
+    path:t="enemy/walker/changed/hit/ui/hitmark"
+  }
+}
+
+spider_sound{
+  _use:t="base_human_sound"
+  _use:t="am_monster_killed_ui_sound"
+
+  "am_monster_killed_ui_sound_path:shared:object"{
+    _tags:t="sound"
+    path:t="enemy/walker/spider/hit/ui/hitmark"
+  }
+}
+
+spider_swarm_sound{
+  _use:t="spider_sound"
+  _use:t="human_idle_active_sound"
+
+  "human_idle_sound__paths:shared:object"{
+    _tags:t="sound"
+
+    "idleState:object"{
+      enemy:t="enemy/walker/spider/voice_fx/idle"
+    }
+
+    "activeState:object"{}
+  }
+
+  "human_voice_sound__path:shared:object"{
+    _tags:t="sound"
+    enemy:t="enemy/walker/spider/voice_fx"
+  }
+
+  "human_voice_sound__descs:shared:object"{
+    _tags:t="sound"
+
+    "death:object"{
+      name:t="death"
+    }
+
+    "seeDanger:object"{
+      name:t="aggro"
+    }
+
+    "hitCry:object"{
+      name:t="hit"
+    }
+  }
+
+  "human_voice_sound__irqs:shared:object"{
+    _tags:t="sound"
+
+    "bite:object"{
+      name:t="attack"
+    }
+  }
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=20
+  }
+}
+
+invisible_man_sound{
+  _use:t="am_human_sound"
+  _use:t="am_monster_killed_ui_sound"
+  _use:t="human_death_sound"
+
+  "sound_paths:shared:object"{
+    _tags:t="sound"
+  }
+
+  "human_voice_sound__path:shared:object"{
+    _tags:t="sound"
+    headIsUnderwater:b=no
+    enemy:t="enemy/walker/invisible/voice_fx"
+  }
+
+  "human_voice_sound__descs:shared:object"{
+    _tags:t="sound"
+
+    "aggro:object"{
+      name:t="aggro"
+    }
+
+    "death:object"{
+      name:t="death"
+    }
+
+    "hitCry:object"{
+      name:t="hit"
+    }
+  }
+
+  "human_voice_sound__irqs:shared:object"{
+    _tags:t="sound"
+
+    "zombie_attack_sound:object"{
+      name:t="attack"
+    }
+  }
+
+  "am_monster_killed_ui_sound_path:shared:object"{
+    _tags:t="sound"
+    path:t="enemy/walker/invisible/hit/ui/hitmark"
+  }
+}
+
+skeleton_swarm_sound{
+  _use:t="sound_control"
+  _use:t="sound_event_group"
+  _use:t="sound_player_components"
+  _use:t="human_death_sound"
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=150
+  }
+
+  "swarmDeathSound:tag"{}
+  "swarmAttackSound:tag"{}
+  "swarmMovementSound:tag"{}
+  "skeletonSwarmSound:tag"{}
+  "sound_paths:shared:object"{
+    _tags:t="sound"
+
+    "movement:object"{
+      enemy:t="enemy/walker/skeleton_swarm/movement"
+    }
+
+    "attack:object"{
+      enemy:t="enemy/walker/skeleton_swarm/attack"
+    }
+
+    "transform:object"{
+      enemy:t="enemy/walker/skeleton_swarm/transform"
+    }
+  }
+
+  "human_voice_sound__path:shared:object"{
+    _tags:t="sound"
+    enemy:t="enemy/walker/skeleton_swarm"
+  }
+
+  "human_voice_sound__descs:shared:object"{
+    _tags:t="sound"
+
+    "death:object"{
+      name:t="death"
+    }
+  }
+}
+
+am_bees_swarm_cluster_sound{
+  _use:t="sound_control"
+  _use:t="sound_event_group"
+  _use:t="sound_player_components"
+  _use:t="human_death_sound"
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=150
+  }
+
+  "swarmDeathSound:tag"{}
+  "swarmAttackSound:tag"{}
+  "swarmMovementSound:tag"{}
+  "clusterSwarmSound:tag"{}
+  "sound_paths:shared:object"{
+    _tags:t="sound"
+
+    "movement:object"{
+      enemy:t="enemy/walker/swarm_cluster/movement"
+    }
+
+    "attack:object"{
+      enemy:t="enemy/walker/swarm_cluster/attack"
+    }
+  }
+
+  "human_voice_sound__path:shared:object"{
+    _tags:t="sound"
+    enemy:t="enemy/walker/swarm_cluster"
+  }
+
+  "human_voice_sound__descs:shared:object"{
+    _tags:t="sound"
+
+    "death:object"{
+      name:t="death"
+    }
+  }
+}
+
+xenohound_creature_sound{
+  _use:t="base_human_sound"
+  _use:t="possessable_human_sound"
+  _use:t="human_idle_active_sound"
+
+  "human_idle_sound__paths:shared:object"{
+    _tags:t="sound"
+
+    "idleState:object"{
+      hero:t="player/walker/swarm_xenos/voice_fx/idle"
+      enemy:t="enemy/walker/swarm_xenos/voice_fx/idle"
+    }
+
+    "activeState:object"{}
+  }
+
+  "sound_paths:shared:object"{
+    _tags:t="sound"
+
+    "climb:object"{
+      hero:t="player/walker/swarm_xenos/foley_mov/common/climb"
+      enemy:t="enemy/walker/swarm_xenos/foley_mov/common/climb"
+    }
+
+    "collision_fall:object"{}
+    "collision:object"{
+      path:t="/walker/am_trooper_male/collision/generic"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "bite:object"{
+      hero:t="player/walker/swarm_xenos/attack/bite"
+      enemy:t="enemy/walker/swarm_xenos/attack/bite"
+    }
+  }
+
+  "human_hit_sound__paths:shared:object"{
+    _tags:t="sound"
+
+    "hit_dmgClaws:object"{
+      path:t="/walker/am_trooper_male/hit"
+    }
+
+    "hit_dmgMelee:object"{
+      name:t="melee"
+      enemy:t="enemy/walker/swarm_xenos/hit"
+    }
+
+    "hit_dmgProjectile:object"{
+      name:t="bullet_body"
+      enemy:t="enemy/walker/swarm_xenos/hit"
+    }
+  }
+
+  "human_steps_sound__path:shared:object"{
+    _tags:t="sound"
+    enemy:t="enemy/walker/swarm_xenos/foley_mov"
+  }
+
+  "human_steps_sound__descs:shared:object"{
+    _tags:t="sound"
+
+    "jump:object"{
+      name:t="jump_start"
+    }
+
+    "land:object"{
+      name:t="jump_landing"
+    }
+  }
+
+  "human_steps_sound__irqs:shared:array"{
+    _tags:t="sound"
+
+    "irq:object"{
+      irq:t="left_sprint"
+      name:t="sprint"
+    }
+
+    "irq:object"{
+      irq:t="right_sprint"
+      name:t="sprint"
+    }
+
+    "irq:object"{
+      irq:t="left_run"
+      name:t="run"
+    }
+
+    "irq:object"{
+      irq:t="right_run"
+      name:t="run"
+    }
+
+    "irq:object"{
+      irq:t="left_walk"
+      name:t="run"
+    }
+
+    "irq:object"{
+      irq:t="right_walk"
+      name:t="run"
+    }
+  }
+
+  "human_voice_sound__path:shared:object"{
+    _tags:t="sound"
+    headIsUnderwater:b=no
+    hero:t="player/walker/swarm_xenos"
+    enemy:t="enemy/walker/swarm_xenos"
+  }
+
+  "human_voice_sound__descs:shared:object"{
+    _tags:t="sound"
+
+    "hitCry:object"{
+      name:t="hit/scream"
+    }
+
+    "death:object"{
+      name:t="hit/death"
+    }
+
+    "seeDanger:object"{
+      name:t="sprint/scream"
+    }
+  }
+}
+
+am_nesting_swarm_managed_sound{
+  _use:t="base_managed_sound"
+
+  _group{
+    _tags:t="sound"
+    managed_sound__type:t="nestingSwarmNest"
+    managed_sound__maxInstances:i=2
+  }
+}
+
+am_nesting_snake_managed_sound{
+  _use:t="base_managed_sound"
+
+  _group{
+    _tags:t="sound"
+    managed_sound__type:t="nestingSwarmSnake"
+    managed_sound__maxInstances:i=3
+  }
+}
+
+nesting_swarm_killed_ui_sound{
+  _use:t="am_monster_killed_ui_sound"
+
+  "am_monster_killed_ui_sound_path:shared:object"{
+    _tags:t="sound"
+    path:t="enemy/walker/wormhuman/hit/ui/hitmark"
+  }
+}
+
+nesting_swarm_snake_nest_sound{
+  _use:t="sound_control"
+  _use:t="sound_control_init_range"
+  _use:t="nesting_swarm_killed_ui_sound"
+  _use:t="am_nesting_swarm_managed_sound"
+
+  _group{
+    _tags:t="sound"
+    sound_control__initRange:t="enemy/walker/wormhuman/body"
+  }
+
+  _group{
+    _tags:t="sound"
+    nesting_swarm_snake_nest_aggression_sound__nextTimeAt:r=0
+    nesting_swarm_snake_nest_sound__path:t="enemy/walker/wormhuman/body"
+    nesting_swarm_snake_nest_aggression_sound__path:t="enemy/walker/wormhuman/agression"
+    nesting_swarm_snake_nest_aggression_sound__cooldown:r=5
+
+    "nesting_swarm_snake_nest_sound__event:SoundEvent"{}
+  }
+}
+
+nesting_swarm_snake_sound{
+  _use:t="sound_control"
+  _use:t="sound_control_init_range"
+  _use:t="nesting_swarm_killed_ui_sound"
+  _use:t="am_nesting_snake_managed_sound"
+
+  _group{
+    _tags:t="sound"
+    sound_control__initRange:t="enemy/walker/wormhuman/tentacles"
+  }
+
+  _group{
+    _tags:t="sound"
+    nesting_swarm_snake_wiz_sound__pos:p3=0, 0, 0
+    nesting_swarm_snake_wiz_sound__nextTimeAt:r=0
+    nesting_swarm_snake_sound__path:t="enemy/walker/wormhuman/tentacles"
+    nesting_swarm_snake_wiz_sound__path:t="enemy/walker/wormhuman/passby"
+    nesting_swarm_snake_wiz_sound__cooldown:r=3
+
+    "nesting_swarm_snake_sound__event:SoundEvent"{}
+  }
+}
+
+nesting_swarm_snake_segment_sound{
+  _group{
+    _tags:t="sound"
+    nesting_swarm_snake_segment_sound__humanHitPath:t="enemy/walker/wormhuman/dive"
+  }
+}
+
+am_firefly_managed_sound{
+  _use:t="base_managed_sound"
+
+  _group{
+    _tags:t="sound"
+    managed_sound__type:t="firefly"
+  }
+}
+
+firefly_sound{
+  _use:t="sound_effect"
+  _use:t="moveable_sound_effect_tag"
+  _use:t="sound_effect_speed_var"
+  _use:t="am_firefly_managed_sound"
+  _use:t="entity_hit_sound"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/traps/trap_mine"
+  }
+
+  _group{
+    _tags:t="sound"
+    entity_hit_sound__path:t="impact/bullet_mine"
+  }
+}

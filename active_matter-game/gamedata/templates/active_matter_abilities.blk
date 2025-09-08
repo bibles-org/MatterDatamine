@@ -1,0 +1,241 @@
+replicated_effect_with_duration{
+  _use:t="replicated_game_effect"
+  duration:r=0
+}
+
+color_graded_affect{
+  "game_effect__colorGrading:object"{
+    _tags:t="render"
+  }
+
+  "game_effect__cachedColorGrading:object"{}
+}
+
+dof_far_affect{
+  game_effect_dof__farDofAmountPercent:r=0.005
+  game_effect_dof__farDofStart:r=10
+  game_effect_dof__farDofEnd:r=1e+06
+  game_effect_dof__nearDofEnd:r=0.1
+  game_effect_dof__on:b=yes
+  _tags:t="render"
+}
+
+chromatic_aberration_affect{
+  game_effect__chromaticAberrationParams:p4=0.005, 0.002, 0, 0
+}
+
+highlight_dynamics_affect{
+  _group{
+    game_effect__highlightDynamics__color:p3=50, 0, 0
+    game_effect__highlightDynamics__dist:r=70
+    game_effect__highlightDynamics__center_gamma:r=0
+    game_effect__highlightDynamics__fog_effect:r=0
+    game_effect__highlightDynamics__center_add:r=1
+    _tags:t="render"
+  }
+}
+
+attached_replicated_effect_with_duration{
+  _use:t="replicated_effect_with_duration"
+  _use:t="slot_attachable"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  slot_attach__slotName:t="spine"
+
+  "slot_attach__followEffectAttach:tag"{}
+}
+
+activate_unarmed_affect{
+  "game_effect__activateUnarmed:tag"{}
+  "game_effect__hiddenWeapon:tag"{}
+}
+
+locked_weapon_lock_grenade_throwing_affect{
+  _use:t="attached_replicated_effect_with_duration"
+
+  "locked_weapon__grenadeThrowing:tag"{}
+}
+
+hit_tagging_mult_affect{
+  _use:t="replicated_effect_with_duration"
+  hitTaggingMult:r=0.2
+}
+
+locked_first_person_view{
+  _use:t="replicated_effect_with_duration"
+  locked_view__lockPersonView:i=1
+
+  "locked_view__lockZoom:tag"{}
+}
+
+locked_third_person_view{
+  _use:t="replicated_effect_with_duration"
+  locked_view__lockPersonView:i=3
+
+  "locked_view__lockZoom:tag"{}
+}
+
+locked_loot_pickup_affect{
+  _use:t="replicated_effect_with_duration"
+
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+}
+
+uncontrollable_affect{
+  _use:t="replicated_effect_with_duration"
+
+  "game_effect__uncontrollable:tag"{}
+}
+
+common_char_ability{
+  hero_ability__disableTimeStart:r=0
+  hero_ability__disableTimeEnd:r=0
+  hero_ability__lockAbilityUse:i=0
+  hero_ability__disabledIndefinitely:b=no
+  hero_ability__lastUsedAbility:t=""
+  hero_ability__ultimateActivated:b=no
+  hero_ability__ultimateActivePhase:b=no
+  hero_ability__firstUse:b=no
+  hero_ability__lockRecalculateUltCooldown:b=no
+  _replicated:t="hero_ability__lockRecalculateUltCooldown"
+  _replicated:t="hero_ability__abilitiesCooldown"
+  _tracked:t="hero_ability__abilitiesCooldown"
+  _replicated:t="hero_ability__abilitiesState"
+  _tracked:t="hero_ability__abilitiesState"
+  _replicated:t="hero_ability__abilitiesNextUseTime"
+  _tracked:t="hero_ability__abilitiesNextUseTime"
+  _replicated:t="hero_ability__abilitiesSpentCharges"
+  _tracked:t="hero_ability__abilitiesSpentCharges"
+  _replicated:t="hero_ability__disableTimeStart"
+  _tracked:t="hero_ability__disableTimeStart"
+  _replicated:t="hero_ability__disableTimeEnd"
+  _tracked:t="hero_ability__disableTimeEnd"
+  _replicated:t="hero_ability__ultimateActivated"
+  _tracked:t="hero_ability__ultimateActivated"
+  _replicated:t="hero_ability__disabledIndefinitely"
+  _tracked:t="hero_ability__disabledIndefinitely"
+  _replicated:t="hero_ability__firstUse"
+  _tracked:t="hero_ability__firstUse"
+
+  "hero_ability__abilitiesState:array"{}
+  "hero_ability__abilitiesCooldown:object"{}
+  "hero_ability__abilitiesActionHandles:list<i>"{}
+  "hero_ability__abilitiesSpentCharges:object"{}
+  "hero_ability__abilitiesNextUseTime:object"{}
+  "hero_ability__abilitiesLastEndTime:object"{}
+  "hero_ability__powerMultList:object"{}
+}
+
+locked_weapon_soldier{
+  human_weap__lockedWeaponSlot:i=-1
+  human_weap__lockWeaponReload:b=no
+  human_weap__lockedGrenadeThrowingCounter:i=0
+  _tracked:t="human_weap__lockedWeaponSlot"
+  _skipInitialReplication:t="human_weap__lockedGrenadeThrowingCounter"
+}
+
+locked_view_soldier{
+  human__lockPersonView:i=0
+  human__lockSwitchCamera:b=no
+  human__lockZoom:b=no
+  _tracked:t="human__lockPersonView"
+  _tracked:t="human__lockZoom"
+}
+
+uncontrollable_soldier{
+  human_net_phys__uncontrollable:b=no
+  _replicated:t="human_net_phys__uncontrollable"
+}
+
+locked_looting_soldier{
+  _use:t="locked_looting_soldier_base"
+  human__canSeeLootItems:b=yes
+}
+
+locked_human_state_soldier{
+  human_state__lockCrawl:b=no
+  human_state__lockCrouch:b=no
+  _tracked:t="human_state__lockCrawl"
+  _tracked:t="human_state__lockCrouch"
+}
+
+_componentFilters{
+  hero_ability__abilitiesCooldown:t="filter_possessed_and_spectated"
+  hero_ability__abilitiesSpentCharges:t="filter_possessed_and_spectated"
+  hero_ability__abilitiesNextUseTime:t="filter_possessed_and_spectated"
+  hero_ability__abilitiesLastEndTime:t="filter_possessed_and_spectated"
+  hero_ability__abilitiesState:t="filter_possessed_and_spectated"
+}
+
+push_around_effect{
+  _use:t="game_effect_base"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  push_around__radius:r=30
+  push_around__speed:r=10
+  push_around__pitch:r=30
+  push_around__distancePower:r=0.5
+  push_around__distancePowerScaleLimits:p2=0.75, 1
+  push_around__cameraShakePower:r=0.3
+  push_around__enemyEffectTemplate:t="push_affect"
+  push_around__enemyEffectTemplateTtl:r=2.5
+  push_around__craterRadius:r=1.2
+  push_around__vehicleEnergyScale:r=3000
+  push_around__vehiclePointOffset:p3=0, -3, 0
+}
+
+push_affect{
+  _use:t="replicated_game_effect"
+  _use:t="game_effect_sound"
+  game_effect__perkName:t="content/active_matter/gamedata/items/push_effect.blk"
+  game_effect_sound__hero:t="[pow=1]player/effects/tinnitus"
+  game_effect__destroyAt:r=0
+}
+
+ability_affect_base{
+  _use:t="replicated_effect_with_duration"
+  _use:t="game_effect_sound"
+  ability_affect__power:r=1
+}
+
+minion_creature{
+  _tracked:t="minion_creature__masterEid"
+  _replicated:t="minion_creature__masterEid"
+  minion_creature__standPos:p3=0, 0, 0
+
+  "minion_creature__masterEid:eid"{}
+  "minion_creature__lastDangerEid:eid"{}
+}
+
+minion_creature_alternate_targets{
+  minion_creature_alternate_targets__ignoreLastTargetFromTo:p2=0, 0
+  minion_creature_alternate_targets__attackTargetTime:r=5.5
+  minion_creature_alternate_targets__ignoreTargetTime:r=2
+  minion_creature_alternate_targets__maxAttackersPerTarget:i=2
+  minion_creature_alternate_targets__updateAt:r=0
+  minion_creature_alternate_targets__updateInterval:r=1
+}
+
+minion_creature_teleport_to_master{
+  minion_creature_teleport_to_master__cooldown:r=8
+  minion_creature_teleport_to_master__updateAt:r=0
+  minion_creature_teleport_to_master__updateInterval:r=2.5
+  minion_creature_teleport_to_master__distanceToTeleportSq:r=2500
+  minion_creature_teleport_to_master__pathLengthToTeleport:r=50
+  minion_creature_teleport_to_master__nearMasterTimestamp:r=0
+  minion_creature_teleport_to_master__nearMasterDistanceSq:r=100
+  minion_creature_teleport_to_master__farFromMasterTimeToTeleport:r=15
+}
+
+tamable_creature{
+  _use:t="minion_creature"
+  beh_tree__latencyLoadRequire:b=no
+  tamable_creature__behNode:t=""
+
+  "beh_tree__latencyLoadBlackBoard:object"{}
+}
+
+tamed_creature{
+  tamed_creature__tamedTo:r=-1
+  tamed_creature__prevBehNode:t=""
+  tamed_creature__prevTeam:i=-1
+}

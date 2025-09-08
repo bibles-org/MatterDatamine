@@ -1,0 +1,248 @@
+rendinst_base{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+  ri_extra__destroyed:b=no
+
+  "riExtraAuthority:tag"{
+    _tags:t="server"
+  }
+
+  "riOffender:eid"{
+    _tags:t="server"
+  }
+
+  ri_extra{}
+}
+
+rendinst_handle{
+  _use:t="rendinst_base"
+
+  "ri_extra__handle:u64"{
+    value:i64=-1
+  }
+}
+
+rendinst{
+  _use:t="rendinst_base"
+  ri_extra__name:t="sandbags_wall_medium_rounded_a"
+  ri_extra__bboxMin:p3=0, 0, 0
+  ri_extra__bboxMax:p3=0, 0, 0
+}
+
+animated_scripted_rendinst{
+  _use:t="rendinst"
+  _use:t="key_track_animated"
+  _use:t="set_rotation"
+}
+
+sandbags_ri{
+  _use:t="rendinst"
+  _use:t="replicating"
+}
+
+sandbags_wall_high_10x8_canopy_a{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="sandbags_wall_high_10x8_canopy_a"
+}
+
+sandbags_wall_low_l2000_a{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="sandbags_wall_low_l2000_a"
+}
+
+target_round_a{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="target_round_a"
+}
+
+target_round_b{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="target_round_b"
+}
+
+target_round_c{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="target_round_c"
+}
+
+target_silhouette_a{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="target_silhouette_a"
+}
+
+target_silhouette_b{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="target_silhouette_b"
+}
+
+target_silhouette_c{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="target_silhouette_c"
+}
+
+target_tank_a{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="target_tank_a"
+}
+
+target_tank_a_mission{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="target_tank_a_mission"
+}
+
+russia_red_onion{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="russia_red_onion"
+}
+
+russia_yellow_onion{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="russia_yellow_onion"
+}
+
+88mm_flak_36_canon_b{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="88mm_flak_36_canon_b"
+}
+
+150cm_flak_sw_37{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="150cm_flak_sw_37"
+}
+
+24kw_flak_generator{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="24kw_flak_generator"
+}
+
+bf_109g_14_a_destroyed{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="bf_109g_14_a_destroyed"
+}
+
+tree_spruce_christmas_c{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="tree_spruce_christmas_c"
+}
+
+animated_scene_rendinst{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  initialTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+  _use:t="key_track_animated"
+  _use:t="set_rotation"
+  _use:t="enable_ri_motion_on_dist_from_cam"
+  ri_extra__destroyed:b=no
+
+  ri_extra{}
+  "ri_extra__handle:u64"{
+    value:i64=-1
+  }
+}
+
+floating_rendinst_system{
+  _singleton:b=yes
+  floatingRiSystem__randomWavesAmplitude:r=0
+  floatingRiSystem__randomWavesLength:r=0.5
+  floatingRiSystem__randomWavesPeriod:r=1
+  floatingRiSystem__randomWavesVelocity:p2=0.6, 0.6
+
+  "floatingRiSystem__volumePresets:object"{
+    "default_1:array"{
+      volPos:p3=0, 0, 0
+    }
+
+    "default_4:array"{
+      volPos:p3=-1, 0, -1
+      volPos:p3=-1, 0, 1
+      volPos:p3=1, 0, -1
+      volPos:p3=1, 0, 1
+    }
+
+    "default_12:array"{
+      volPos:p3=-1, 0.5, 0
+      volPos:p3=1, 0.5, 0
+      volPos:p3=-0.8, 0, -1
+      volPos:p3=-0.4, 0, -1
+      volPos:p3=0, 0, -1
+      volPos:p3=0.4, 0, -1
+      volPos:p3=0.8, 0, -1
+      volPos:p3=-0.8, 0, 1
+      volPos:p3=-0.4, 0, 1
+      volPos:p3=0, 0, 1
+      volPos:p3=0.4, 0, 1
+      volPos:p3=0.8, 0, 1
+    }
+  }
+
+  "floatingRiSystem__userVolumePresets:object"{}
+}
+
+floating_rendinst_res_group{
+  floatingRiGroup__wreckageFloatDuration:r=15
+  floatingRiGroup__updateDistSq:r=1e+06
+  floatingRiGroup__interactionType:i=0
+  floatingRiGroup__interactionDistSq:r=0
+  floatingRiGroup__elasticity:r=0.1
+  floatingRiGroup__physUpdateDt:r=0.041667
+  floatingRiGroup__maxShiftDist:r=1000
+  floatingRiGroup__viscosity:r=0.57
+  floatingRiGroup__minDistToGround:r=-1e+06
+
+  _group{
+    _track:b=yes
+    floatingRiGroup__resName:t=""
+    floatingRiGroup__inertiaMult:p3=1, 1, 1
+    floatingRiGroup__volumesCount:i=-1
+    floatingRiGroup__volumePresetName:t=""
+    floatingRiGroup__density:r=500
+    floatingRiGroup__densityRandRange:r=0
+    floatingRiGroup__useBoxInertia:b=no
+  }
+
+  floatingRiGroup__riPhysFloatingModel{}
+}
+
+client_replaced_ri{
+  client_replaced_ri__name:t=""
+}
+
+riextra_hp_to_hitpoints{
+  riextra_hp_to_hitpoints__prevRiHp:r=0
+  hitpoints__hp:r=100
+  hitpoints__maxHp:r=100
+  isAlive:b=yes
+  _tracked:t="isAlive"
+}
+
+riextra_destroy_on_death{
+  "riextra_destroy_on_death:tag"{}
+}
+
+ri_preload_controller{
+  _use:t="replicating"
+
+  "ri_preload_controller__riList:list<t>"{}
+}
+
+ri_additional_entities_manager{
+  "ri_additional_entities_manager__list:object"{}
+}

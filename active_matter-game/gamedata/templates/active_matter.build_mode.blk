@@ -1,0 +1,200 @@
+import:t="active_matter.construction_blueprints.blk"
+
+build_mode_camera_input{
+  camera__input_enabled:b=no
+  build_mode_camera_input__rotateEnabled:b=no
+  _tracked:t="build_mode_camera_input__rotateEnabled"
+
+  "build_mode_camera_input__slide:u16"{
+    value:i=-1
+  }
+
+  "build_mode_camera_input__enableRotate:u16"{
+    value:i=-1
+  }
+
+  "build_mode_camera_input__rotate:u16"{
+    value:i=-1
+  }
+
+  "build_mode_camera_input__zoomIn:u16"{
+    value:i=-1
+  }
+
+  "build_mode_camera_input__zoomOut:u16"{
+    value:i=-1
+  }
+}
+
+build_mode_camera_target{
+  build_mode_camera_target__position:p3=0, 0, 0
+  build_mode_camera_target__offsetDistance:r=20
+  build_mode_camera_target__minMaxOffsetDistance:p2=5, 100
+  build_mode_camera_target__offsetDistanceMultiplier:r=1.25
+  build_mode_camera_target__oXzAngleDegrees:r=0
+  build_mode_camera_target__OyAngleDegrees:r=60
+  build_mode_camera_target__minMaxOyAngleDegrees:p2=10, 89.9
+  build_mode_camera_target__positionCurrent:p3=0, 0, 0
+  build_mode_camera_target__offsetDistanceCurrent:r=20
+  build_mode_camera_target__oXzAngleDegreesCurrent:r=0
+  build_mode_camera_target__OyAngleDegreesCurrent:r=60
+  build_mode_camera_target__animationDuration:r=0.2
+  build_mode_camera_target__animationTimePassed:r=0
+  build_mode_camera_target__exitOnAnimationFinish:b=no
+}
+
+build_mode_camera{
+  _use:t="build_mode_camera_input"
+  _use:t="build_mode_camera_target"
+  camera__active:b=no
+  fov:r=100
+  znear:r=0.01
+  zfar:r=10000
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  build_mode_camera__speed:r=20
+  build_mode_camera__rotationSensitivity:r=0.05
+  build_mode_camera__rotateAroundSelf:b=no
+
+  "camera_view:tag"{}
+}
+
+build_mode_input{
+  "build_mode_input__buildModeExit:u16"{
+    value:i=-1
+  }
+
+  "build_mode_input__moveGizmo:u16"{
+    value:i=-1
+  }
+
+  "build_mode_input__enableGizmoMove:u16"{
+    value:i=-1
+  }
+
+  "build_mode_input__rotateBuildingRight:u16"{
+    value:i=-1
+  }
+
+  "build_mode_input__rotateBuildingLeft:u16"{
+    value:i=-1
+  }
+
+  "build_mode_input__showBriefing:u16"{
+    value:i=-1
+  }
+
+  "build_mode_input__moveToStash:u16"{
+    value:i=-1
+  }
+
+  "build_mode_input__undo:u16"{
+    value:i=-1
+  }
+
+  "build_mode_input__enterMarket:u16"{
+    value:i=-1
+  }
+
+  "build_mode_drag_input__rotateBuildingRight:u16"{
+    value:i=-1
+  }
+
+  "build_mode_drag_input__rotateBuildingLeft:u16"{
+    value:i=-1
+  }
+}
+
+build_mode_camera_manager{
+  base_build_mode__cameraTemplate:t="build_mode_camera"
+
+  "base_build_mode__camera:eid"{}
+  "base_build_mode__cameraToReturn:eid"{}
+}
+
+base_build_mode_gizmo{
+  _use:t="primitive_sphere"
+  base_build_mode__gizmoHeightOffset:r=1
+
+  "base_build_mode__gizmoPreview:eid"{}
+}
+
+base_build_mode_controller_preview{
+  base_build_mode_preview__previousTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "base_build_mode_controller_preview:tag"{}
+  _group{
+    ui__node_pos:p3=0, 0, 0
+    _tags:t="ui"
+  }
+}
+
+base_build_mode_preview{
+  outline__enabled:b=yes
+  outline__always_visible:b=yes
+  outline__color:c=0, 200, 0, 255
+
+  "base_build_mode_preview:tag"{}
+}
+
+base_build_mode{
+  _singleton:b=yes
+  _use:t="build_mode_input"
+  _use:t="build_mode_camera_manager"
+  base_build_mode__active:b=no
+  _tracked:t="base_build_mode__active"
+  _tracked:t="base_build_mode__activePreview"
+  base_build_mode__isGizmoActive:b=no
+  _tracked:t="base_build_mode__isGizmoActive"
+  base_build_mode__isGizmoLocked:b=yes
+  base_build_mode__currentBuildingId:i=0
+  base_build_mode__constructionRotationStep:r=90
+  _tracked:t="base_build_mode__activeGrid"
+  _tracked:t="base_build_mode__unpoweredPreviews"
+
+  "base_build_mode:tag"{}
+  "input__enabled:b"{
+    _tags:t="gameClient"
+    value:b=yes
+  }
+
+  "base_build_mode__activeGizmo:eid"{}
+  "base_build_mode__activePreview:eid"{}
+  "base_build_mode__activeGrid:eid"{}
+  "base_build_mode__changes:array"{}
+  "base_build_mode__unpoweredPreviews:list<eid>"{}
+}
+
+base_build_mode_active_grid{
+  "base_build_mode_active_grid:tag"{}
+}
+
+base_build_mode_grid{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  base_build_mode_grid__dimentions:ip2=0, 0
+  base_build_mode_grid__step:r=2.5
+  base_build_mode_grid__yDrawOffset:r=0
+  base_build_mode_grid__id:i=-1
+
+  "base_build_mode_grid__cells:list<eid>"{}
+  "base_build_mode_grid__blockedAreas:array"{}
+  _group{
+    ui__node_pos:p3=0, 10, 0
+    _tags:t="ui"
+  }
+}
+
+base_build_mode_preset_loader{
+  base_build_mode_preset_loader__file:t=""
+  base_build_mode_preset_loader__buildingsToCreateLeft:i=0
+
+  "base_build_mode_preset_loader__activeBuildingsPositions:list<ip2>"{}
+  "base_build_mode_preset_loader__activeBuildingsRotations:list<i>"{}
+  "base_build_mode_preset_loader__activeBuildingsGridIds:list<i>"{}
+  "base_build_mode_preset_loader__activeBuildingsIds:list<i64>"{}
+  "base_build_mode_preset_loader__templates:list<t>"{}
+  "base_build_mode_preset_loader__basePower:object"{}
+}
+
+base_build_mode_preset_loader_building{
+  "base_build_mode_preset_loader_building__loaderEid:eid"{}
+}

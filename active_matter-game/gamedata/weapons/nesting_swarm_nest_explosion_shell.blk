@@ -1,0 +1,41 @@
+mass:r=10
+momentOfInertia:p3=0, 0, 0
+caliber:r=0.1
+speed:r=0
+speedPitch:r=0
+maxDistance:r=10
+physMat:t="walkRay"
+useFutureContacts:b=no
+logCCD:b=no
+frictionGround:r=100
+entityTemplate:t="antitank_mine_shell"
+entityPhysTemplate:t="antitank_mine_phys"
+explodeHitPower:r=12
+explodeArmorPower:r=3
+explodeRadius:p2=1, 1.45
+shutterDamage:b=yes
+shutterDamageRadius:r=10
+shutterAmount:i=200
+shutterArmorPower:r=3
+shutterHit:r=3
+
+collisionResource{
+  props{
+    volumeBox:t="box"
+  }
+}
+
+ccdSpheres{
+  ccd:p4=0, 0.05, 0, 0.015
+  ccd:p4=0, 0.2, 0, 0.015
+  ccd:p4=0, -0.05, 0, 0.015
+}
+
+explFx{
+  fxScale:p2=1, 1.05
+  effectTemplName:t="nesting_swarm_nest_explosion_effect"
+}
+
+solver{
+  energyConservation:r=0.65
+}

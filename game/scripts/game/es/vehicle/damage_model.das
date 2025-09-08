@@ -1,0 +1,34 @@
+require ecs
+require DngDm
+require game.events.events_game
+require game.utils.team
+require DngNet
+
+[es(tag=server, REQUIRE=damage_model, track=isAlive)]
+def damage_model_death_es(evt : Event;
+                          eid : EntityId;
+                          lastOffender : EntityId;
+                          team : int;
+                          isAlive : bool;
+                          last_offender__shellId : int = -1;
+                          last_offender__gunPropsId : int = -1)
+  if isAlive || !lastOffender || lastOffender == eid
+    return
+
+  var offenderPossessedByPlr = INVALID_ENTITY_ID
+  var offenderTeam = TEAM_UNASSIGNED
+
+  query(lastOffender) <| $ [es] (possessedByPlr : EntityId; team : int)
+    offenderPossessedByPlr = possessedByPlr
+    offenderTeam = team
+
+  let damageType = int(DamageType.DM_EXPLOSION)
+  let gunPropsId = last_offender__gunPropsId
+  let shellId = last_offender__shellId
+  let collNodeId = -1
+  send_net_event(eid, EventEntityDied(victim = eid, offender = lastOffender,
+    damageType = damageType, gunPropsId = gunPropsId, shellId = shellId, collNodeId = collNodeId, victimTeam = team, offenderTeam = offenderTeam))
+  print("[damage_model_death_es] entity died, victim={eid}, offender={lastOffender}")
+  broadcast_net_event(EventAnyEntityDied(victim = eid, offender = lastOffender, offenderPlayer = offenderPossessedByPlr, victimPlayer = INVALID_ENTITY_ID,
+                                           damageType = damageType, gunPropsId = gunPropsId, shellId = shellId,
+                                           collNodeId = collNodeId, victimTeam = team, offenderTeam = offenderTeam))

@@ -1,0 +1,808 @@
+explMats{
+  shader:t="explosion_patch_3tex"
+  needMaterialTex:b=yes
+  alphaMaskThresholdMin:r=0.01
+  alphaMaskThresholdMax:r=0.99
+  alphaMaskRangeMin:r=0.1
+  alphaMaskRangeMax:r=0.3
+  diffuseTextureSuffix:t="_tex_d"
+  normalTextureSuffix:t="_tex_n"
+  materialTextureSuffix:t="_tex_m"
+
+  brick_red{
+    kinetic_non_penetration{
+      blackMaterialTex:b=yes
+      sizeScale:r=12
+      useRandomAlphaMask:b=yes
+
+      textures{
+        tex:t="ddi_building_red_brick_a"
+      }
+    }
+
+    kinetic_sabot_non_penetration{
+      blackMaterialTex:b=yes
+      sizeScale:r=12
+      useRandomAlphaMask:b=yes
+
+      textures{
+        tex:t="ddi_building_red_brick_a"
+      }
+    }
+
+    explosive_non_penetration{
+      blackMaterialTex:b=yes
+      sizeScale:r=15
+
+      textures{
+        tex:t="ddi_building_red_brick_b"
+      }
+    }
+
+    heat_non_penetration{
+      blackMaterialTex:b=yes
+      sizeScale:r=15
+
+      textures{
+        tex:t="ddi_building_red_brick_b"
+      }
+    }
+  }
+
+  stone{
+    kinetic_non_penetration{
+      blackMaterialTex:b=yes
+      sizeScale:r=12
+
+      textures{
+        tex:t="ddi_building_conrete_a"
+        tex:t="ddi_building_conrete_b"
+      }
+    }
+
+    kinetic_sabot_non_penetration{
+      blackMaterialTex:b=yes
+      sizeScale:r=12
+
+      textures{
+        tex:t="ddi_building_conrete_a"
+        tex:t="ddi_building_conrete_b"
+      }
+    }
+
+    explosive_non_penetration{
+      blackMaterialTex:b=yes
+      sizeScale:r=13
+
+      textures{
+        tex:t="ddi_building_conrete_c"
+      }
+    }
+
+    heat_non_penetration{
+      blackMaterialTex:b=yes
+      sizeScale:r=13
+
+      textures{
+        tex:t="ddi_building_conrete_c"
+      }
+    }
+  }
+
+  concrete{
+    kinetic_non_penetration{
+      blackMaterialTex:b=yes
+      sizeScale:r=12
+
+      textures{
+        tex:t="ddi_building_conrete_a"
+        tex:t="ddi_building_conrete_b"
+      }
+    }
+
+    kinetic_sabot_non_penetration{
+      blackMaterialTex:b=yes
+      sizeScale:r=12
+
+      textures{
+        tex:t="ddi_building_conrete_a"
+        tex:t="ddi_building_conrete_b"
+      }
+    }
+
+    explosive_non_penetration{
+      blackMaterialTex:b=yes
+      sizeScale:r=13
+
+      textures{
+        tex:t="ddi_building_conrete_c"
+      }
+    }
+
+    heat_non_penetration{
+      blackMaterialTex:b=yes
+      sizeScale:r=13
+
+      textures{
+        tex:t="ddi_building_conrete_c"
+      }
+    }
+  }
+
+  wood{
+    kinetic_penetration{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_a"
+      }
+    }
+
+    explosive_penetration{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_a"
+      }
+    }
+
+    explosive_penetration_angled{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_a"
+      }
+    }
+
+    kinetic_sabot_penetration{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_a"
+      }
+    }
+
+    kinetic_discard_sabot_penetration_angled{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_a"
+      }
+    }
+
+    heat_penetration{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_a"
+      }
+    }
+
+    heat_penetration_angled{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_a"
+      }
+    }
+
+    kinetic_non_penetration{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_b"
+      }
+    }
+
+    kinetic_ricochet{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_b"
+      }
+    }
+
+    explosive_non_penetration{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_b"
+      }
+    }
+
+    explosive_non_penetration_angled{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_b"
+      }
+    }
+
+    kinetic_sabot_non_penetration{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_b"
+      }
+    }
+
+    explosive_non_penetration{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_b"
+      }
+    }
+
+    explosive_non_penetration{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_b"
+      }
+    }
+
+    heat_non_penetration{
+      sizeScale:r=10
+
+      textures{
+        tex:t="ddi_building_wood_b"
+      }
+    }
+
+    shrapnel_damage{
+      useHitDirectionForParallax:b=no
+      sizeScale:r=0.3
+
+      textures{
+        tex:t="ddi_building_wood_b"
+      }
+    }
+  }
+
+  steel{
+    default{
+      sizeScale:r=12
+
+      textures{
+        tex:t="ddi_vehicle_penetration_ap_steel_a"
+      }
+    }
+
+    kinetic_penetration{
+      sizeScale:r=7
+
+      textures{
+        tex:t="ddi_vehicle_penetration_ap_steel_a"
+      }
+    }
+
+    kinetic_non_penetration{
+      sizeScale:r=7
+      stretchMax:r=1.5
+
+      textures{
+        tex:t="ddi_vehicle_nonpenetration_ap_steel_a"
+      }
+    }
+
+    kinetic_ricochet{
+      sizeScale:r=8
+      useHitDirectionForParallax:b=no
+      angleLimit:r=10
+
+      textures{
+        tex:t="ddi_vehicle_ricochet_steel_a"
+      }
+    }
+
+    explosive_penetration{
+      sizeScale:r=14.5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_he_steel_a"
+      }
+    }
+
+    explosive_non_penetration{
+      sizeScale:r=14.5
+
+      textures{
+        tex:t="ddi_vehicle_nonpenetration_he_steel_a"
+      }
+    }
+
+    explosive_penetration_angled{
+      useHitDirectionForParallax:b=no
+      sizeScale:r=14.5
+      angleLimit:r=5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_he_steel_a"
+      }
+    }
+
+    explosive_non_penetration_angled{
+      sizeScale:r=14.5
+      angleLimit:r=5
+
+      textures{
+        tex:t="ddi_vehicle_nonpenetration_he_steel_a"
+      }
+    }
+
+    kinetic_sabot_penetration{
+      sizeScale:r=7
+
+      textures{
+        tex:t="ddi_vehicle_penetration_apcr_steel_a"
+      }
+    }
+
+    kinetic_sabot_non_penetration{
+      sizeScale:r=7
+
+      textures{
+        tex:t="ddi_vehicle_penetration_apcr_steel_a"
+      }
+    }
+
+    kinetic_discard_sabot_penetration{
+      sizeScale:r=12
+
+      textures{
+        tex:t="ddi_vehicle_noangle_penetration_apfsds_steel_a"
+      }
+    }
+
+    kinetic_discard_sabot_penetration_angled{
+      sizeScale:r=12
+      angleLimit:r=0
+
+      textures{
+        tex:t="ddi_vehicle_angle_penetration_apfsds_steel_a"
+      }
+    }
+
+    heat_penetration{
+      sizeScale:r=8.5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_heat_steel_a"
+      }
+    }
+
+    heat_non_penetration{
+      sizeScale:r=8.5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_heat_steel_a"
+      }
+    }
+
+    heat_penetration_angled{
+      sizeScale:r=8.5
+      angleLimit:r=5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_heat_steel_a"
+      }
+    }
+
+    shrapnel_damage{
+      useHitDirectionForParallax:b=no
+      sizeScale:r=1.2
+
+      textures{
+        tex:t="dds_steel_a"
+      }
+    }
+
+    grenade_explosion{
+      sizeScale:r=4
+
+      textures{
+        tex:t="ddi_vehicle_nonpenetration_he_steel_a"
+      }
+    }
+  }
+
+  metal{
+    default{
+      sizeScale:r=12
+
+      textures{
+        tex:t="ddi_vehicle_penetration_ap_steel_a"
+      }
+    }
+
+    kinetic_penetration{
+      sizeScale:r=7
+
+      textures{
+        tex:t="ddi_vehicle_penetration_ap_steel_a"
+      }
+    }
+
+    kinetic_non_penetration{
+      sizeScale:r=7
+      stretchMax:r=1.5
+
+      textures{
+        tex:t="ddi_vehicle_nonpenetration_ap_steel_a"
+      }
+    }
+
+    kinetic_ricochet{
+      sizeScale:r=8
+      useHitDirectionForParallax:b=no
+      angleLimit:r=10
+
+      textures{
+        tex:t="ddi_vehicle_ricochet_steel_a"
+      }
+    }
+
+    explosive_penetration{
+      sizeScale:r=14.5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_he_steel_a"
+      }
+    }
+
+    explosive_non_penetration{
+      sizeScale:r=14.5
+
+      textures{
+        tex:t="ddi_vehicle_nonpenetration_he_steel_a"
+      }
+    }
+
+    explosive_penetration_angled{
+      useHitDirectionForParallax:b=no
+      sizeScale:r=14.5
+      angleLimit:r=5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_he_steel_a"
+      }
+    }
+
+    explosive_non_penetration_angled{
+      sizeScale:r=14.5
+      angleLimit:r=5
+
+      textures{
+        tex:t="ddi_vehicle_nonpenetration_he_steel_a"
+      }
+    }
+
+    kinetic_sabot_penetration{
+      sizeScale:r=7
+
+      textures{
+        tex:t="ddi_vehicle_penetration_apcr_steel_a"
+      }
+    }
+
+    kinetic_sabot_non_penetration{
+      sizeScale:r=7
+
+      textures{
+        tex:t="ddi_vehicle_penetration_apcr_steel_a"
+      }
+    }
+
+    kinetic_discard_sabot_penetration{
+      sizeScale:r=12
+
+      textures{
+        tex:t="ddi_vehicle_noangle_penetration_apfsds_steel_a"
+      }
+    }
+
+    kinetic_discard_sabot_penetration_angled{
+      sizeScale:r=12
+      angleLimit:r=0
+
+      textures{
+        tex:t="ddi_vehicle_angle_penetration_apfsds_steel_a"
+      }
+    }
+
+    heat_penetration{
+      sizeScale:r=8.5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_heat_steel_a"
+      }
+    }
+
+    heat_non_penetration{
+      sizeScale:r=8.5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_heat_steel_a"
+      }
+    }
+
+    heat_penetration_angled{
+      sizeScale:r=8.5
+      angleLimit:r=5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_heat_steel_a"
+      }
+    }
+
+    shrapnel_damage{
+      useHitDirectionForParallax:b=no
+      sizeScale:r=1.2
+
+      textures{
+        tex:t="dds_steel_a"
+      }
+    }
+
+    grenade_explosion{
+      sizeScale:r=4
+
+      textures{
+        tex:t="ddi_vehicle_nonpenetration_he_steel_a"
+      }
+    }
+  }
+
+  aluminum_armor{
+    default{
+      sizeScale:r=12
+
+      textures{
+        tex:t="ddi_vehicle_penetration_ap_steel_a"
+      }
+    }
+
+    kinetic_penetration{
+      sizeScale:r=7
+
+      textures{
+        tex:t="ddi_vehicle_penetration_ap_steel_a"
+      }
+    }
+
+    kinetic_non_penetration{
+      sizeScale:r=7
+      stretchMax:r=1.5
+
+      textures{
+        tex:t="ddi_vehicle_nonpenetration_ap_steel_a"
+      }
+    }
+
+    kinetic_ricochet{
+      sizeScale:r=8
+      useHitDirectionForParallax:b=no
+      angleLimit:r=10
+
+      textures{
+        tex:t="ddi_vehicle_ricochet_steel_a"
+      }
+    }
+
+    explosive_penetration{
+      sizeScale:r=14.5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_he_steel_a"
+      }
+    }
+
+    explosive_non_penetration{
+      sizeScale:r=14.5
+
+      textures{
+        tex:t="ddi_vehicle_nonpenetration_he_steel_a"
+      }
+    }
+
+    explosive_penetration_angled{
+      useHitDirectionForParallax:b=no
+      sizeScale:r=14.5
+      angleLimit:r=5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_he_steel_a"
+      }
+    }
+
+    explosive_non_penetration_angled{
+      sizeScale:r=14.5
+      angleLimit:r=5
+
+      textures{
+        tex:t="ddi_vehicle_nonpenetration_he_steel_a"
+      }
+    }
+
+    kinetic_sabot_penetration{
+      sizeScale:r=7
+
+      textures{
+        tex:t="ddi_vehicle_penetration_apcr_steel_a"
+      }
+    }
+
+    kinetic_sabot_non_penetration{
+      sizeScale:r=7
+
+      textures{
+        tex:t="ddi_vehicle_penetration_apcr_steel_a"
+      }
+    }
+
+    kinetic_discard_sabot_penetration{
+      sizeScale:r=12
+
+      textures{
+        tex:t="ddi_vehicle_noangle_penetration_apfsds_steel_a"
+      }
+    }
+
+    kinetic_discard_sabot_penetration_angled{
+      sizeScale:r=12
+      angleLimit:r=0
+
+      textures{
+        tex:t="ddi_vehicle_angle_penetration_apfsds_steel_a"
+      }
+    }
+
+    heat_penetration{
+      sizeScale:r=8.5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_heat_steel_a"
+      }
+    }
+
+    heat_non_penetration{
+      sizeScale:r=8.5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_heat_steel_a"
+      }
+    }
+
+    heat_penetration_angled{
+      sizeScale:r=8.5
+      angleLimit:r=5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_heat_steel_a"
+      }
+    }
+
+    grenade_explosion{
+      sizeScale:r=4
+
+      textures{
+        tex:t="ddi_vehicle_nonpenetration_he_steel_a"
+      }
+    }
+
+    shrapnel_damage{
+      useHitDirectionForParallax:b=no
+      sizeScale:r=0.8
+
+      textures{
+        tex:t="dds_aluminium_a"
+      }
+    }
+  }
+
+  tank_structural_steel{
+    kinetic_penetration{
+      sizeScale:r=4
+
+      textures{
+        tex:t="ddi_vehicle_penetration_ap_aluminium_a"
+      }
+    }
+
+    kinetic_non_penetration{
+      sizeScale:r=4
+
+      textures{
+        tex:t="ddi_vehicle_penetration_ap_aluminium_a"
+      }
+    }
+
+    kinetic_sabot_penetration{
+      sizeScale:r=5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_ap_aluminium_a"
+      }
+    }
+
+    kinetic_sabot_non_penetration{
+      sizeScale:r=5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_ap_aluminium_a"
+      }
+    }
+
+    kinetic_discard_sabot_penetration{
+      sizeScale:r=5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_ap_aluminium_a"
+      }
+    }
+
+    kinetic_discard_sabot_non_penetration{
+      sizeScale:r=5
+
+      textures{
+        tex:t="ddi_vehicle_penetration_ap_aluminium_a"
+      }
+    }
+
+    explosive_penetration{
+      sizeScale:r=7.5
+      useHitDirectionForParallax:b=no
+
+      textures{
+        tex:t="ddi_vehicle_penetration_he_aluminium_a"
+      }
+    }
+
+    explosive_non_penetration{
+      sizeScale:r=7.5
+      useHitDirectionForParallax:b=no
+
+      textures{
+        tex:t="ddi_vehicle_penetration_he_aluminium_a"
+      }
+    }
+
+    heat_penetration{
+      sizeScale:r=7.5
+      useHitDirectionForParallax:b=no
+
+      textures{
+        tex:t="ddi_vehicle_penetration_he_aluminium_a"
+      }
+    }
+
+    heat_non_penetration{
+      sizeScale:r=7.5
+      useHitDirectionForParallax:b=no
+
+      textures{
+        tex:t="ddi_vehicle_penetration_he_aluminium_a"
+      }
+    }
+
+    shrapnel_damage{
+      useHitDirectionForParallax:b=no
+      sizeScale:r=0.8
+
+      textures{
+        tex:t="dds_aluminium_a"
+      }
+    }
+  }
+
+  glass{
+    default{
+      sizeScale:r=50
+
+      textures{
+        tex:t="ddi_vehicle_penetration_armorglass_a"
+      }
+    }
+  }
+}

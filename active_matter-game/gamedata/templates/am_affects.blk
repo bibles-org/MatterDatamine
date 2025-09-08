@@ -1,0 +1,131 @@
+nphys_forced_anim_affect{
+  _use:t="replicated_game_effect"
+  game_effect__nPhysForceAnimState:t=""
+  game_effect__nPhysForceAnimStateId:i=-1
+
+  "game_effect__destroyWithAttachedTo:tag"{}
+}
+
+nphys_forced_paramatric_anim{
+  _use:t="game_effect_with_duration"
+  _use:t="nphys_forced_anim_affect"
+  game_effect__forcedParametricVarName:t=""
+  game_effect__forcedParametricVarId:i=-1
+}
+
+confusion_single_affect{
+  _use:t="replicated_game_effect"
+
+  "game_effect__confusionAffect:tag"{}
+}
+
+confusion_persistent_affect{
+  _use:t="confusion_single_affect"
+  game_effect__applyUpdateInterval:r=1
+  game_effect__applyUpdateAt:r=0
+}
+
+concussion_single_affect{
+  _use:t="replicated_game_effect"
+
+  "game_effect__concussionAffect:tag"{}
+}
+
+disoriented_affect{
+  _use:t="replicated_game_effect"
+
+  "disorientedAnomalyEffect:tag"{}
+}
+
+damage_target_single_affect{
+  _use:t="game_effect_base"
+  game_effect__damageTargetDeltaHp:r=0
+
+  "game_effect__ownerEid:eid"{}
+}
+
+persistent_affect_base{
+  game_effect__applyUpdateInterval:r=0
+  game_effect__applyUpdateAt:r=0
+}
+
+delayed_affect_base{
+  _use:t="persistent_affect_base"
+  game_effect__applyDelay:r=0.1
+}
+
+client_delayed_affect_base{
+  game_effect__clientApplyUpdateInterval:r=0
+  game_effect__clientApplyUpdateAt:r=0
+  game_effect__clientApplyDelay:r=0.1
+}
+
+client_hero_affect_base{
+  _use:t="replicated_game_effect"
+  game_effect__clientHeroAffectTemplate:t=""
+
+  "game_effect__clientHeroAffectEid:eid"{}
+}
+
+client_destroy_in_5_sec{
+  game_effect__timeToDestroy:r=5
+  game_effect__clientDestroyAt:r=-1
+}
+
+client_destroy_in_half_sec{
+  game_effect__timeToDestroy:r=0.5
+  game_effect__clientDestroyAt:r=-1
+}
+
+server_destroy_now{
+  "server_destroy_now:tag"{}
+}
+
+server_destroy_in_3_sec{
+  game_effect__timeToDestroy:r=3
+  game_effect__destroyAt:r=-1
+}
+
+server_destroy_in_5_sec{
+  game_effect__timeToDestroy:r=5
+  game_effect__destroyAt:r=-1
+}
+
+server_destroy_in_15_sec{
+  _use:t="server_destroy_in_5_sec"
+  game_effect__timeToDestroy:r=15
+}
+
+server_destroy_in_25_sec{
+  _use:t="server_destroy_in_5_sec"
+  game_effect__timeToDestroy:r=25
+}
+
+server_destroy_in_3_min{
+  _use:t="server_destroy_in_5_sec"
+  game_effect__timeToDestroy:r=180
+  game_effect__destroyAt:r=-1
+}
+
+server_destroy_in_10_min{
+  _use:t="server_destroy_in_5_sec"
+  game_effect__timeToDestroy:r=600
+}
+
+poison_affect{
+  _use:t="damage_target_single_affect"
+  _use:t="persistent_affect_base"
+  game_effect__applyUpdateInterval:r=1.5
+  game_effect__timeToDestroy:r=10
+  game_effect__destroyAt:r=-1
+  _tracked:t="game_effect__destroyAt"
+  game_effect__damageTargetDeltaHp:r=3
+  game_effect__damageType:i=-1
+
+  "game_effect__poisonAffect:tag"{}
+}
+
+poison_visual_affect{
+  "game_effect__confusionAffect:tag"{}
+  "game_effect__concussionAffect:tag"{}
+}

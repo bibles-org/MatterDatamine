@@ -1,0 +1,278 @@
+am_teams{
+  am_teams__xenos:t="am_xenos_team"
+  am_teams__players:t="raid_player_team"
+  am_teams__bots:t="bot_team"
+  am_teams__encounter:t=""
+}
+
+bot_team{
+  _use:t="base_team"
+  team__capacity:i=0
+  team__markSpawnBase:b=yes
+
+  "net__notInInitialScope:tag"{}
+  "team__unitTemplates:object"{
+    am_militant_with_builtin_suit:r=1
+  }
+
+  "bot_team:tag"{}
+}
+
+am_player_team_for_tests{
+  _use:t="raid_player_team"
+  team__capacity:i=1
+
+  "team__unitTemplates:object"{
+    "am_militant_with_attachable_suit+spawn_sequence_controller_simple+autorespawn+allow_friendly_damage":r=1
+  }
+}
+
+am_player_team_for_tests_fa{
+  _use:t="raid_player_team"
+  team__capacity:i=1
+
+  "team__unitTemplates:object"{
+    "am_militant_with_attachable_suit_fa+spawn_sequence_controller+allow_friendly_damage":r=1
+  }
+}
+
+test_hidden_slots{
+  human_inventory__showSuitSlot:b=yes
+  _tracked:t="human_inventory__showSuitSlot"
+  human_inventory__showCorticalVaultSlot:b=yes
+  _tracked:t="human_inventory__showCorticalVaultSlot"
+
+  "test_hidden_slots:tag"{}
+}
+
+am_player_team_for_test_all{
+  _use:t="raid_player_team"
+  team__capacity:i=1
+
+  "team__unitTemplates:object"{
+    "am_militant_with_attachable_suit+spawn_sequence_controller_simple+equip_cortical_vault+autorespawn+allow_friendly_damage":r=1
+  }
+}
+
+am_player_team_america{
+  _use:t="raid_player_team"
+  team__capacity:i=1
+  team__markSpawnBase:b=yes
+
+  "net__notInInitialScope:tag"{}
+  "team__unitTemplates:object"{
+    am_militant_america:r=1
+  }
+
+  "player_team:tag"{}
+}
+
+player_base_stash_inventory{
+  _use:t="base_inventory"
+  inventory__name:t="stash"
+  profile_server__slotName:t="stash"
+  uniqueId:t="0"
+  human_inventory__maxVolume:r=-1
+
+  "human_inventory__alwaysRecognizedItems:tag"{}
+  "stash_inventory__heroEid:eid"{}
+}
+
+disable_shooting_and_melee_game_effect{
+  _use:t="game_effect_base"
+
+  "game_effect__disableShooting:tag"{}
+  "game_effect__disableMelee:tag"{}
+}
+
+player_on_base_components{
+  human_weap__lockedGrenadeThrowingCounter:i=1
+  player_on_base_components__onBaseDisableGameEffectTemplate:t="disable_shooting_and_melee_game_effect"
+  human_inventory__dropsLoot:b=no
+  _tracked:t="player_on_base_components__stashEid"
+  player_on_base_components__stashTemplate:t="player_base_stash_inventory"
+  uniqueId:t="0"
+  _tracked:t="uniqueId"
+  profile_server__slotName:t="inventory"
+  human_inventory__itemHolderLoadingMult:r=10000
+  human_inventory__dropTimeCoef:r=0
+  human_inventory__instantReload:b=yes
+  player_on_base_components__baseExtractionEffectTemplate:t="menu_extraction_sequence_affect"
+  player_on_base__itemsToBeMoved:i=0
+  _tracked:t="player_on_base__itemsToBeMoved"
+
+  "player_on_base_components__onBaseDisableGameEffect:eid"{}
+  "infinite_heal_items:tag"{}
+  "player_on_base_components__stashEid:eid"{}
+  "dont_give_suit_on_respawn:tag"{}
+  "player_on_base__playerPreset:object"{}
+}
+
+am_player_on_base_team{
+  _use:t="base_team"
+  team__capacity:i=1
+  team__markSpawnBase:b=yes
+
+  "net__notInInitialScope:tag"{}
+  "team__unitTemplates:object"{
+    "am_militant_healthless+human_damage_model+net_ragdoll+am_militant_suit_controller+spawn_sequence_controller_simple+player_on_base_components":r=1
+  }
+
+  "player_team:tag"{}
+}
+
+am_player_raid_team{
+  _use:t="base_team"
+  team__capacity:i=3
+  team__markSpawnBase:b=yes
+  team__spawnGroupId:i=-1
+  _replicated:t="team__spawnGroupId"
+  team__firstKillConfirmed:b=no
+
+  "net__notInInitialScope:tag"{}
+  "team__unitTemplates:object"{
+    "am_militant_with_attachable_suit+spawn_sequence_controller+equip_cortical_vault+allow_friendly_damage":r=1
+  }
+
+  "player_team:tag"{}
+  "team__confirmedDailyContract:object"{}
+}
+
+encounter_team{
+  _use:t="base_team"
+  team__capacity:i=0
+  team__markSpawnBase:b=no
+  team__spawnGroupId:i=-1
+  _replicated:t="team__spawnGroupId"
+
+  "encounter_team:tag"{}
+  "team__incognito:tag"{}
+  "net__notInInitialScope:tag"{}
+  "team__unitTemplates:object"{}
+}
+
+am_xenos_team{
+  _use:t="base_team"
+  team__capacity:i=-1
+  team__spawnGroupId:i=-1
+  _replicated:t="team__spawnGroupId"
+
+  "xenos_team:tag"{}
+  "team__incognito:tag"{}
+}
+
+am_respawn_raid{
+  _use:t="spawnBase"
+  _use:t="monster_generator_forbidden_zone"
+  spawnBase__teamSpawn:b=no
+  team:i=-1
+  spawnBase__spawnRadius:r=3
+  respbase__skipSpawnPosValidation:b=no
+  respawn_raid__unmarkAfterSpawns:i=-1
+}
+
+am_mindcontrolled_spawn{
+  _use:t="spawnBase"
+  _use:t="monster_generator_forbidden_zone"
+  spawnBase__teamSpawn:b=no
+  team:i=-1
+  spawnBase__spawnGroupId:i=1
+  spawnBase__spawnRadius:r=1
+}
+
+am_respawn_group_0{
+  _use:t="am_respawn_raid"
+  spawnBase__spawnGroupId:i=1
+}
+
+am_respawn_group_1{
+  _use:t="am_respawn_raid"
+  spawnBase__spawnGroupId:i=2
+}
+
+am_respawn_group_2{
+  _use:t="am_respawn_raid"
+  spawnBase__spawnGroupId:i=3
+}
+
+am_respawn_group_3{
+  _use:t="am_respawn_raid"
+  spawnBase__spawnGroupId:i=4
+}
+
+am_respawn_group_4{
+  _use:t="am_respawn_raid"
+  spawnBase__spawnGroupId:i=5
+}
+
+am_respawn_group_5{
+  _use:t="am_respawn_raid"
+  spawnBase__spawnGroupId:i=6
+}
+
+am_respawn_raid_visual{
+  _use:t="replicating"
+  _use:t="rendinst"
+  ri_extra__name:t="outpost_props_laptop"
+}
+
+select_resurrection_target_invoice{
+  _use:t="base_interactable_invoice_with_piemenu"
+  interactable_invoice__icon:t="powerup_absorber.svg"
+  interactable_invoice__name:t=""
+  interactable_invoice__nameSrc:t="action/resurrect_player_name"
+  interactable_invoice__visibleToSpectators:b=no
+  _tracked:t="resurrection__targetPlayerEid"
+  _replicated:t="resurrection__targetPlayerEid"
+
+  "resurrection__targetPlayerEid:eid"{}
+  "resurrection__selectAction:tag"{}
+}
+
+debug_spawn_points{
+  debug_spawn_points__groupId:i=-1
+}
+
+ribbon_colors{
+  _use:t="replicating"
+  ribbonInvalidColor:p4=0.7, 0.7, 0.7, 1
+  ribbonNexusEnemyColor:ip2=0, 1
+  ribbonNexusAllyColor:ip2=10, 6
+  ribbonInvalidColorName:t="grey"
+
+  "ribbonColorsList:list<p4>"{
+    value:p4=0.984, 0.341, 0, 1
+    value:p4=1, 0, 0, 1
+    value:p4=0.898, 0.2, 0.263, 1
+    value:p4=0.839, 0.145, 0.6, 1
+    value:p4=0.639, 0.278, 0.765, 1
+    value:p4=0, 0.275, 0.859, 1
+    value:p4=0, 1, 1, 1
+    value:p4=0, 0.698, 0.514, 1
+    value:p4=0.592, 0.843, 0, 1
+    value:p4=0, 0.588, 0.224, 1
+    value:p4=0.2, 0.173, 0.149, 1
+  }
+
+  "ribbonColorsListNames:list<t>"{
+    value:t="orange"
+    value:t="red"
+    value:t="raspberry"
+    value:t="pink"
+    value:t="purple"
+    value:t="blue"
+    value:t="bright_cyan"
+    value:t="cyan"
+    value:t="qiwi"
+    value:t="green"
+    value:t="black"
+  }
+}
+
+squad{
+  "squad__squadId:u32"{
+    value:i=0
+  }
+
+  "squad__memberUserIds:list<u64>"{}
+}

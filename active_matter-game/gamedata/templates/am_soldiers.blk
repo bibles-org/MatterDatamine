@@ -1,0 +1,959 @@
+am_injured_speed_reducer{
+  injured_effects__hitpointsThreshold:r=0.8
+  injured_effects__hitpointsMin:r=0.2
+  injured_effects__speedMinMult:r=0.7
+  injured_effects__sprintHitpointsThreshold:r=0.5
+}
+
+am_camera_shake{
+  human_weap__extraGunSpeedOnJump:r=0.1
+  camName:t="shooter_cam_bodycam"
+
+  _group{
+    _tags:t="gameClient"
+    camera_shake__jumpMaxPunch:r=10
+    camera_shake__jumpMinSpeed:r=4
+    camera_shake__jumpMaxSpeed:r=8
+    camera_shake__breakWindowTrauma:r=1
+    camera_shake__swingTime:r=0
+    camera_shake__swingAmplitude:r=0
+    camera_shake__sprintSwingMaxPitch:r=0.25
+    camera_shake__sprintSwingMaxYaw:r=0
+    camera_shake__sprintSwingMaxRoll:r=0.5
+    camera_shake__sprintSwingOmega:p3=15, 10, 10
+    camera_shake__sprintSwingMinVelocity:r=3.5
+    camera_shake__sprintSwingMaxVelocity:r=4.5
+    camera_shake__sprintSwingTau:r=0.2
+    camera_shake__sprintSwingTime:r=0
+    camera_shake__walkSwingMaxPitch:r=0.1
+    camera_shake__walkSwingMaxYaw:r=0
+    camera_shake__walkSwingMaxRoll:r=0.5
+    camera_shake__walkSwingOmega:p3=15, 10, 10
+    camera_shake__walkSwingMinVelocity:r=1
+    camera_shake__walkSwingMaxVelocity:r=2.5
+    camera_shake__walkSwingTau:r=0.2
+  }
+
+  "camNames:array"{
+    camNames:t="shooter_cam_bodycam"
+  }
+}
+
+am_hit_tagging{
+  human_hit_tagging__tagStart:r=-1
+  human_hit_tagging__tagEnd:r=-1
+  human_hit_tagging__currentTagPower:r=1
+  human_hit_tagging__tagPower:r=0.4
+  human_hit_tagging__tagTime:r=2
+  human_hit_tagging__maxTime:r=3
+  human_hit_tagging__mult:r=0.5
+}
+
+player_name_marker{
+  _use:t="replicating"
+
+  _group{
+    ui__geom_node_idx:i=-1
+    ui__node_pos:p3=0, 0, 0
+    ui__geom_node_name:t="Bip01 Head"
+    _tags:t="ui"
+  }
+}
+
+am_emotes{
+  human_sec_anim__setup:t=""
+  human_sec_anim__a2d:t=""
+  human_sec_anim__hideMelee:b=no
+  human_sec_anim__hideWeapon:b=no
+  human_sec_anim__duration:r=1
+  _replicated:t="human_sec_anim__setup"
+  _replicated:t="human_sec_anim__a2d"
+  _tracked:t="human_sec_anim__a2d"
+  _replicated:t="human_sec_anim__hideMelee"
+  _replicated:t="human_sec_anim__hideWeapon"
+  _replicated:t="human_sec_anim__duration"
+  show_name__emote:t="*am_gesture_me"
+
+  "human_sec_anim__config:shared:array"{
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_one"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_two"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_three"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_four"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_five"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_you"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_me"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_come"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_listen"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_watch"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_hurry_up"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_stop"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_freeze"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_attention"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_enemy"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_rally_point"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_elminate"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_rally"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_crouch"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_cover"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_window"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_door"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_roger_that"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_negative"
+    }
+
+    "option:object"{
+      setup:t="gamedata/emotes/default.anim.blk"
+      a2d:t="*am_gesture_go_go_go"
+    }
+  }
+}
+
+storm_zone_decay_affect{
+  _use:t="replicated_game_effect"
+  _use:t="game_effect_geomtree_effects"
+
+  "game_effect__geomtreeEffectTemplates:list<t>"{}
+}
+
+storm_affect{
+  _use:t="anomaly_affect_base"
+  screen_bleed_effect__template:t="indoor_darkness_anomaly_screen_bleed"
+}
+
+am_storm_zone_ignore_affect{
+  _use:t="replicated_game_effect"
+
+  "am_storm_zone_ignore_affect:tag"{}
+}
+
+am_storm_effect{
+  inStormZone:b=no
+  _tracked:t="inStormZone"
+
+  "storm_zone__affectTemplates:list<t>"{
+    i:t="storm_affect"
+  }
+
+  "storm_zone__affectEids:list<eid>"{}
+  "storm_zone__aliveAffectEids:list<eid>"{}
+}
+
+human_corruption{
+  human_corruption__value:r=0
+  human_corruption__seconds:r=0
+  human_corruption__recoverMult:r=1.2
+  human_corruption__lastTime:r=0
+  human_corruption__isInCorruption:b=no
+  human_corruption__nextUpdateAt:r=0
+  human_corruption__updateInterval:r=1
+  _replicated:t="human_corruption__value"
+  _replicated:t="human_corruption__isInCorruption"
+  _tracked:t="human_corruption__value"
+  _tracked:t="human_corruption__isInCorruption"
+  _tracked:t="human_corruption__relativeIntensity"
+
+  _group{
+    _tags:t="gameClient"
+    human_corruption__criticalDamage:r=3.5
+    human_corruption__relativeIntensity:r=0
+    human_corruption__relativeIntensityRng:p2=0, 0.3
+  }
+}
+
+corruption_effect{
+  _use:t="screen_effect_generic"
+  screen_effect__texture_res:t="liquid_screen_splatter_tile_tex_n"
+  screen_effect__roughness:r=0.2
+  screen_effect__opacity:r=0.4
+
+  "corruption_effect:tag"{}
+}
+
+hero_am_syphon{
+  am_syphon__updateAt:r=0
+  am_syphon__period:r=1
+  _replicated:t="am_syphon__extractionSource"
+  _tracked:t="am_syphon__extractionSource"
+
+  "am_syphon__extractionSource:eid"{}
+}
+
+climbing_hint{
+  _singleton:b=yes
+  climbing_hint__delay:r=1.5
+  climbing_hint__tick:r=0
+  climbing_hint__dot:r=0.9
+  climbing_hint__maxDistBetweenHints:r=0.1
+  climbing_hint__loc:t="climbing_hint/text"
+  climbing_hint__locNoStamina:t="climbing_hint/no_have_enough_stamina_text"
+  climbing_hint__locOverObstacle:t="climbing_hint/over_obstacle_text"
+
+  _group{
+    _track:b=yes
+    transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+    climbing_hint__hide:b=no
+    climbing_hint__haveEnoughStamina:b=yes
+    climbing_hint__overObstacle:b=no
+  }
+}
+
+human_climbing_hint{
+  human_climbing_hint__hintTemplate:t="climbing_hint"
+
+  _group{
+    _track:b=yes
+    human_climbing_hint__enabled:b=yes
+  }
+}
+
+am_militant_suit_controller{
+  _use:t="attachable_suit_controller"
+  _use:t="attachable_suit_decorator"
+  animchar__res:t="am_trooper_empty_model_male_char"
+  collres__res:t="am_trooper_empty_model_male_collision"
+
+  "attachable_suit_controller__mainAnimcharConfig:array"{
+    "male:object"{
+      animchar:t="am_trooper_empty_model_male_char"
+      collres:t="am_trooper_empty_model_male_collision"
+    }
+
+    "female:object"{
+      animchar:t="am_trooper_empty_model_female_char"
+      collres:t="am_trooper_empty_model_female_collision"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    item:t="pouches_1"
+    item:t="pouches_2"
+    item:t="pouches_3"
+  }
+}
+
+trap_logger{
+  trap_logger__lastTrapActivationTime:r=0
+  _replicated:t="trap_logger__lastTrapActivationTime"
+}
+
+am_portal_user{
+  _group{
+    _tags:t="gameClient"
+    nexus_militant__channelingNodeName:t="Bip01 L Hand"
+    nexus_militant__channelingNodeId:i=-1
+
+    "nexus_militant__capturingBeaconEid:eid"{}
+    "nexus_militant__channelingAnimEffect:eid"{}
+    "nexus_militant__channelingVisualEffect:eid"{}
+  }
+}
+
+militant_coll_damage{
+  human_coll_damage__minDmgSpd:r=10
+  human_coll_damage__hpCoeff:r=5
+  collision_damage__threshold:r=3
+  collision_damage__velDeltaMult:r=2
+  collision_damage__velDeltaPower:r=2
+}
+
+militant_inventory{
+  _use:t="base_inventory"
+  _use:t="hammerspace_inventory_owner"
+  _use:t="inventories_owner"
+  inventory__name:t="itemContainer"
+  human_inventory__dropLootOffset:p3=0.7, 0.6, -0.3
+  human_inventory__maxVolume:r=10
+  human_inventory__lookNodeName:t="reye"
+  human_inventory__lookNodeId:i=-1
+  human_inventory__dropsLoot:b=yes
+  human_inventory__dropVolumePerSec:r=10
+  human_inventory__lastDropAt:r=-1
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+
+    "militant_extra_inventories__backpackEid:eid"{}
+    "militant_extra_inventories__safepackEid:eid"{}
+  }
+
+  "inventory__supportsQuickUse:tag"{}
+  "human_inventory__selectConvex:list<p4>"{}
+  "human_inventory__selectTpsConvex:list<p4>"{}
+  "human_inventory__deathDrop:array"{}
+  "human_inventory__dropFromInventoryEid:eid"{}
+  "human_inventory__dropToInventoryEid:eid"{}
+}
+
+militant_use_interactables{
+  human_use_object__interactableMinDot:r=0.92
+  interactables__nextQueryAt:r=0
+  interactables__queryInterval:r=1
+  interactables__queryRadius:r=15
+  interactables__pingDuration:r=5
+  _tracked:t="interactables__nearby"
+  _tracked:t="interactables__pingged"
+  _tracked:t="human_use_object__currentInteractable"
+  _replicated:t="human_use_object__currentInteractable"
+
+  "human_use_object__currentInteractable:eid"{}
+  "interactables__nearby:list<eid>"{}
+  "interactables__pingged:array"{}
+}
+
+militant_actions{
+  action__running:b=no
+  _replicated:t="actions__actions_enabled"
+  _replicated:t="actions__enabled"
+  actions__enabled:b=yes
+
+  actions{}
+  "actions__actions:array"{
+    "action:object"{
+      name:t="pickup"
+      state:t="pickup_item"
+      actionTime:r=0.6
+      applyAt:r=0.3
+      props:t="gamedata/actions/pickup.blk"
+      irq:t="pickup_act"
+      varName:t="action_progress"
+    }
+  }
+
+  "actions__actions_enabled:array"{
+    enables:b=yes
+  }
+}
+
+militant_weap{
+  human_weap__fastThrowExclusive:b=no
+
+  "human_weap__initialWeaponTemplates:object"{
+    grenade:t="xvp_grenade_thrower"
+  }
+}
+
+militant_node_collapser{
+  _use:t="node_collapser"
+
+  _group{
+    _tags:t="render"
+
+    "animchar_node_collapser__nodes:object"{
+      "Bip01 Head":t="Bip01 Neck"
+      "Bip01 Neck":t=""
+    }
+  }
+}
+
+militant_swarm_target{
+  "swarmTarget:tag"{
+    _tags:t="render"
+  }
+
+  "swarmObstacle:tag"{
+    _tags:t="render"
+  }
+}
+
+militant_items_around{
+  _tracked:t="itemsAround"
+
+  "itemsAround:list<eid>"{
+    _tags:t="ui"
+  }
+}
+
+barbwire_damage{
+  _tags:t="server"
+  barbwire_damage__matName:t="barbwire"
+  barbwire_damage__matId:i=-1
+  barbwire_damage__damagePerSecond:r=1
+}
+
+militant_drone{
+  drone_deploying__interactionRadius:r=2
+
+  _group{
+    _tags:t="gameClient"
+    human_input__droneDeploying:i=-1
+    human_input__cancelDroneDeploying:i=-1
+    human_input__startDroneDeploying:i=-1
+
+    "drone_deploying__previewEid:eid"{}
+  }
+
+  _group{
+    _replicate:b=yes
+    _track:b=yes
+    drone_deploying__deploying:b=no
+    drone_deploying__operating:b=no
+  }
+}
+
+am_militant_ribbons{
+  _tracked:t="shader_color__colors"
+
+  "shader_color__shaderVarNames:list<t>"{
+    name:t="primary_color"
+    name:t="secondary_color"
+  }
+
+  "shader_color__colors:list<p4>"{
+    value:p4=1, 0, 0, 1
+    value:p4=0, 1, 0, 1
+  }
+}
+
+allow_friendly_damage{
+  "allow_friendly_damage:tag"{}
+}
+
+am_militant_base{
+  _use:t="base_entity_mods"
+  _use:t="teammate_raiser"
+  _use:t="am_hit_tagging"
+  _use:t="vehicle_fuel_container_owner"
+  _use:t="equipment_char_flags"
+  _use:t="resources_gatherer_hero"
+  _use:t="sleep_disturber"
+  _use:t="firefly_disturber"
+  _use:t="human_loud_noise"
+  _use:t="human_dodge"
+  _use:t="human_stone_throw"
+  _use:t="human_lean"
+  _use:t="human_phys_trigger_trap_activator"
+  _use:t="trap_logger"
+  _use:t="loading_ammo_controller"
+  _use:t="human_pain"
+  _use:t="default_stub_melee_controller"
+  _use:t="default_stub_equipment_controller"
+  _use:t="another_dimension_visitor_default"
+  _use:t="am_portal_user"
+  _use:t="shooter_human"
+  _use:t="human_breath"
+  _use:t="human_item_use"
+  _use:t="human_inventory_postponed_usage"
+  _use:t="human_anim_threephase_action"
+  _use:t="zones_visitor"
+  _use:t="militant_coll_damage"
+  _use:t="militant_inventory"
+  _use:t="militant_dm_parts"
+  _use:t="militant_actions"
+  _use:t="militant_weap"
+  _use:t="locked_weapon_soldier"
+  _use:t="locked_view_soldier"
+  _use:t="locked_looting_soldier"
+  _use:t="locked_use_objects_soldier_base"
+  _use:t="locked_human_state_soldier"
+  _use:t="barbwire_damage"
+  _use:t="uncontrollable_soldier"
+  _use:t="am_militant_sound"
+  _use:t="militant_net_ragdoll"
+  _use:t="cortical_vault_human_controller"
+  _use:t="blood_footprint_emitter"
+  team:i=1
+  camera__relative_angle:p2=0, 0
+  camera__isRotateInGlobal:b=yes
+  ai_target__handleGrenadesAsShoot:b=no
+  human_net_phys__leanSpeed:r=240
+  human_net_phys__blk:t="gamedata/units/militant.blk"
+  start_vel:p3=0, 0, 0
+  precomp_weapon_pos__weapon:t="akm_47"
+  human_unarmed__hiddenWeapon:b=no
+  human_unarmed__active:b=no
+  spawn_immunity__timer:r=0
+  human_breath__staleBreath:b=no
+  isShootingAllowed:b=yes
+  isMeleeAllowed:b=yes
+  _tracked:t="human_equipment__slots"
+  _skipInitialReplication:t="human_equipment__slots"
+  _tracked:t="human_equipment__slotsFlags"
+  meleeHitThroughRi:b=yes
+  offender_marks__updateOffenderPos:b=no
+  gun_aim_offset__reyeOffsetFwd0Id:i=-1
+  gun_aim_offset__gunOffsetAlongId:i=-1
+  gun_aim_offset__gunOffsetAcrossId:i=-1
+  gun_aim_offset__gunOffsetUpId:i=-1
+  gun_aim_offset__animcharTraceCenterNodeName:t="n_body_front_A"
+  gun_aim_offset__animcharTraceCenterNodeId:i=-1
+  gun_aim_offset__gunOffsetCurrent:p3=0, 0, 0
+  gun_aim_offset__gunOffsetApproachViscosity:r=0.07
+  gun_aim_offset__gunOffsetAddNearWalls:p3=0, -0.1, -0.05
+  gun_aim_offset__leanAngles:p2=0.35, 0.15
+  gun_aim_offset__gunShootOffsetAdd:p3=0, 0, -0.02
+  gun_aim_offset__gunShootOffsetEnable:b=no
+  gun_aim_offset__lastShootAt:r=0
+  gun_aim_offset__gunCollisionLinksShootPeriod:r=0.3
+  gun_aim_offset__gunShootOffsetWaitTime:r=0.6
+  gun_aim_offset__gunShootOffsetReturnAt:r=-1
+  human_net_phys__stopAfterClimbingIfAbyssAhead:b=yes
+
+  "canDropGrenadeInDowned:tag"{}
+  "human_unarmed__disableSwitchWeaponEffect:eid"{}
+  "ragdoll__keepAnimcharUpdateOnRagdoll:tag"{}
+  "box_anomaly__target:tag"{}
+  "am_militant:tag"{}
+  "invisible_man_target:tag"{}
+  precomp_weapon_pos{}
+  "slots_holder__slotTemplates:shared:object"{
+    backpack:t="backpack_slot"
+    safepack:t="safepack_slot"
+    flashlight:t="flashlight_slot"
+    pouch:t="pouch_slot"
+    helmet:t="helmet_slot"
+    chronogene_primary_1:t="chronogene_primary_slot"
+    passive_chronogenes_stash:t="passive_chronogenes_stash_slot"
+    cortical_vault:t="cortical_vault_slot"
+    chronogene_secondary_1:t="chronogene_secondary_slot"
+    chronogene_secondary_2:t="chronogene_secondary_slot"
+    chronogene_secondary_3:t="chronogene_secondary_slot"
+    chronogene_secondary_4:t="chronogene_secondary_slot"
+    primary:t="primary_secondary_slot"
+    secondary:t="primary_secondary_slot"
+    tertiary:t="tertiary_slot"
+    melee:t="melee_slot"
+  }
+
+  "slots_holder__itemsInSlots:object"{}
+  "human_equipment__slots:object"{
+    "backpack:eid"{}
+    "safepack:eid"{}
+    "flashlight:eid"{}
+    "pouch:eid"{}
+    "helmet:eid"{}
+    "chronogene_primary_1:eid"{}
+    "passive_chronogenes_stash:eid"{}
+    "cortical_vault:eid"{}
+    "chronogene_secondary_1:eid"{}
+    "chronogene_secondary_2:eid"{}
+    "chronogene_secondary_3:eid"{}
+    "chronogene_secondary_4:eid"{}
+  }
+
+  "human_equipment__slotsFlags:object"{}
+  "human_equipment__ignoreSlotsOnExtraction:list<t>"{
+    i:t="cortical_vault"
+  }
+
+  "actions__actions:array"{
+    "action:object"{
+      name:t="stand_melee"
+      state:t="upper_melee"
+      class:t="melee"
+      actionTime:r=1
+      applyAt:r=0.3
+      props:t="gamedata/actions/melee.blk"
+      irq:t="melee"
+      varName:t="action_progress"
+    }
+
+    "action:object"{
+      name:t="crawl_melee"
+      state:t="crawl_melee"
+      class:t="melee"
+      actionTime:r=1
+      applyAt:r=0.3
+      props:t="gamedata/actions/melee.blk"
+      irq:t="melee"
+      varName:t="action_progress"
+    }
+
+    "action:object"{
+      name:t="pickup"
+      state:t="pickup_item"
+      actionTime:r=0.6
+      applyAt:r=0.3
+      props:t="gamedata/actions/pickup.blk"
+      irq:t="pickup_act"
+      varName:t="action_progress"
+    }
+
+    "action:object"{
+      name:t="operate_door"
+      state:t="operate_door"
+      actionTime:r=0.6
+      applyAt:r=0.3
+      props:t="gamedata/actions/open_door.blk"
+      irq:t="door_act"
+      varName:t="action_progress"
+    }
+  }
+
+  "actions__actions_enabled:array"{
+    enabled:b=yes
+    enabled:b=yes
+    enabled:b=yes
+    enabled:b=yes
+  }
+
+  "gun_aim_offset__gunOffsetAddWish:object"{}
+}
+
+gun_aim_offset_debug{
+  "gun_aim_offset_debug:tag"{}
+}
+
+extraction_items{
+  extraction_items__costBase:i=15
+  _replicated:t="extraction_items__itemContainer"
+  _tracked:t="extraction_items__itemContainer"
+  extraction_items__active:b=no
+  _tracked:t="extraction_items__active"
+  _replicated:t="extraction_items__active"
+  _tracked:t="extraction_items__pointEid"
+  _replicated:t="extraction_items__pointEid"
+
+  "extraction_items__itemContainer:list<eid>"{}
+  "extraction_items__pointEid:eid"{}
+}
+
+am_militant_landing{
+  landing_effect_template:t="human_parachute_control_effect"
+
+  "landing_control_effect__eid:eid"{}
+  _group{
+    _tags:t="gameClient"
+
+    "human_parachute_effect__eid:eid"{}
+  }
+}
+
+quick_use_slots{
+  _tracked:t="quick_use__slots"
+  quick_use__objective:t=""
+  _tracked:t="quick_use__objective"
+  quick_use__objectiveCheckTime:r=0.5
+  quick_use__objectiveNextCheckAt:r=0
+
+  "quick_use__slots:list<t>"{
+    "one:t"{}
+    "two:t"{}
+    "three:t"{}
+    "four:t"{}
+    "five:t"{}
+  }
+}
+
+awake_sleepers_on_am_pickup{
+  _tags:t="server"
+  awake_sleepers_on_am_pickup__radius:r=25
+  awake_sleepers_on_am_pickup__awakeUnitsAround:i=4
+  awake_sleepers_on_am_pickup__nextUpdateSleepModeAdd:r=5
+}
+
+find_player_target{
+  find_player_target__cooldown:r=300
+  find_player_target__lastSuccessAt:r=0
+}
+
+am_militant_ai_target{
+  _use:t="flanking_ai_target"
+  _use:t="ai_target_visibility_controller"
+}
+
+am_militant_healthless{
+  _use:t="am_militant_base"
+  _use:t="am_storm_effect"
+  _use:t="human_corruption"
+  _use:t="antigrav_character"
+  _use:t="am_militant_ai_target"
+  _use:t="external_inventory_interactor"
+  _use:t="awake_sleepers_on_am_pickup"
+  _use:t="loc_snapshots_hero_awareness"
+  _use:t="find_player_target"
+  _use:t="am_emotes"
+  _use:t="human_climbing_hint"
+  _use:t="player_name_marker"
+  _use:t="check_ammo_controller"
+  _use:t="binoculars_controller"
+  _use:t="quick_use_slots"
+  _use:t="militant_items_around"
+  _use:t="militant_use_interactables"
+  _use:t="base_throw_trajectory"
+  _use:t="human_cocussed_vision"
+  _use:t="human_limited_visibility"
+  _use:t="human_pickup_frustum"
+  _use:t="human_cam"
+  _use:t="hud_actions"
+  _use:t="stamina_view"
+  _use:t="am_camera_shake"
+  _use:t="am_militant_base_ability"
+  _use:t="sleeping_animchar_update_toggle_by_distance_origin"
+  _use:t="loud_noise_meter"
+  _use:t="am_heartrate"
+  _use:t="militant_swarm_target"
+  _use:t="awake_changed_around"
+  _use:t="ammo_count_knowledge_controller"
+  _use:t="hero_extraction"
+  _use:t="stalker_statue_target"
+  _use:t="fog_of_war_clearer"
+  _use:t="block_aim_in_air"
+  kill_tracking_tag:t="militant"
+  item__setCustomUsePrompt:t="hud/revive_teammate"
+  human_inventory__pickupRadius:r=1.5
+  human_inventory__pickupHeight:r=1.5
+  human_inventory__pickupRemoveRadius:r=1.7
+  human_inventory__pickupRemoveHeight:r=1.7
+  loud_noise__noisePerMeleeHit:r=50
+  loud_noise__noisePerMeleeAction:r=30
+  loud_noise__radius:r=15
+  flanking_ai_target__maxCount:i=9
+  flanking_ai_target__interval:r=0.3
+  flanking_ai_target__radius:r=14
+  flanking_ai_target__debug:b=no
+  nphys_obstacle__radius:r=0.25
+  nphys_obstacle__numSegments:i=6
+  hunter_vision_target__radius:r=30
+  _tracked:t="hunter_vision_target__fxEid"
+  _replicated:t="hunter_vision_target__keepFxUntil"
+  _tracked:t="hunter_vision_target__keepFxUntil"
+  hunter_vision_target__fxDurationMult:r=1
+  hunter_vision_target__fxNodeId:i=-1
+  hunter_vision_target__fxNodeName:t="Bip01 Spine1"
+  hunter_vision_target__destroyTemplate:t="monster_vision_fx_destroy"
+
+  "heroForPlayer:tag"{}
+  "createObstacle:tag"{}
+  "kill_tracking__taggedPlayers:object"{}
+  "nestedSwarmTarget:tag"{}
+  "chargesgeyserAnomaly:tag"{}
+  _group{
+    _tags:t="gameClient"
+    item__setCustomLongUseHint:t="hud/reviving_teammate_hint"
+  }
+
+  _group{
+    _tags:t="gameClient"
+    _track:b=yes
+    ui__hasSelfRevives:b=no
+    ui__hasInjectors:b=no
+    ui__hasAmpoules:b=no
+  }
+
+  "hunter_vision_target__fxEid:eid"{}
+  "hunter_vision_target__keepFxUntil:object"{}
+  _group{
+    _tags:t="render"
+    night_light__lightMult:r=0.004
+    night_light__lightDistanceMult:r=0.4
+    teleportation__fxNameIn:t="teleport_effect_in"
+    teleportation__fxNameOut:t="teleport_effect_out"
+    teleportation__fxOffset:p3=0, 1.2, 0
+  }
+}
+
+block_aim_in_air{
+  "block_aim_in_air:tag"{}
+}
+
+am_militant{
+  _use:t="am_militant_healthless"
+  _use:t="human_damage_model"
+  _use:t="am_storage"
+  _use:t="hero_am_syphon"
+  _use:t="quick_use_slots"
+  _use:t="flowermen_random_awaker"
+  am_storage__maxValue:i=100
+  am_syphon__period:r=4
+  truce_id:i=-1
+
+  "victimDoesntBreakTruce:tag"{}
+}
+
+am_militant_with_attachable_suit{
+  _use:t="am_militant"
+  _use:t="am_militant_suit_controller"
+
+  "dontBodyCleanupOnDeath:tag"{}
+}
+
+am_militant_with_attachable_suit_fa{
+  _use:t="am_militant"
+  _use:t="am_militant_suit_controller"
+  human_weight_influence__maxWeightAccelerationMult:r=0.8
+  human_weight_influence__maxWeightJumpMult:r=0.65
+  human_weight_influence__maxWeightSpeedMult:r=0.65
+  human_weight_influence__maxWeight:r=100
+
+  "dontBodyCleanupOnDeath:tag"{}
+}
+
+am_militant_with_builtin_suit{
+  _use:t="am_militant"
+  _use:t="am_militant_suit_base"
+  _use:t="militant_node_collapser"
+  _tracked:t="animchar__objTexReplace"
+
+  "dontBodyCleanupOnDeath:tag"{}
+  "animchar__objTexReplace:object"{}
+}
+
+am_militant_mindcontrolled{
+  _use:t="am_militant_healthless"
+  _use:t="human_damage_model"
+  _use:t="quick_use_slots"
+  kill_tracking_tag:t="turned_soldier"
+
+  "dontBodyCleanupOnDeath:tag"{}
+  "human_equipment__slots:object"{
+    "backpack:eid"{}
+    "flashlight:eid"{}
+    "pouch:eid"{}
+    "chronogene_primary_1:eid"{}
+  }
+
+  "human_equipment__ignoreSlotsOnExtraction:list<t>"{}
+  "militantMindcontrolled:tag"{}
+  "kill_tracking__taggedPlayers:object"{}
+  "cortical_hack_disabled:tag"{}
+}
+
+am_militant_america{
+  _use:t="am_militant_with_builtin_suit"
+  animchar__res:t="am_trooper_03_male_char"
+  collres__res:t="am_trooper_03_male_collision"
+  animchar_fast_phys__res:t="am_trooper_03_male_fastphys"
+}
+
+gathering_am_anim{
+  _use:t="game_effect_base"
+  game_effect__forceAnimUpperState:t="pickup_am"
+  game_effect__forceAnimUpperStateId:i=-1
+
+  "game_effect__disableShooting:tag"{}
+  "game_effect__disableMelee:tag"{}
+  "game_effect__activateUnarmed:tag"{}
+  "state__disableStoneThrow:tag"{}
+}
+
+gathering_am_sound{
+  _group{
+    _tags:t="sound"
+    gathering_am_sound__path:t="env_effects/artifacts/active_matter_gather"
+
+    "gathering_am_sound__event:SoundEvent"{}
+  }
+}
+
+lair_gen_inside_moving{
+  "lair_gen__useMovingZone:tag"{}
+}
+
+agent_switchable_collision{
+  agent_switchable_collision__collisionEnabled:b=yes
+  _tracked:t="agent_switchable_collision__collisionEnabled"
+  agent_switchable_collision__collisionTemplate:t=""
+}
+
+human_animchar_attachable_part{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="slot_attachable_no_slotname"
+  _use:t="skeleton_attached"
+  animchar__res:t=""
+  animchar_render__enabled:b=yes
+  slot_attach__visible:b=yes
+}
+
+human_animchar_parts{
+  human_animchar_parts__enabled:b=yes
+  human_animchar_parts__partTemplate:t="human_animchar_attachable_part"
+
+  "human_animchar_parts__partsGenerator:shared:object"{}
+  "human_animchar_parts__ignoreParts:list<t>"{}
+}

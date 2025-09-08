@@ -1,0 +1,441 @@
+entity{
+  _template:t="gravity_zone_sphere_rad_with_visual"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1485.2, 148.19, -296.523]]
+  grav_zone__innerRadius:r=15
+  grav_zone__outerRadius:r=17.5
+}
+
+entity{
+  _template:t="gravity_zone_sphere_rad_with_visual"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1510.37, 145.16, -232.322]]
+  grav_zone__innerRadius:r=7
+  grav_zone__outerRadius:r=7.5
+}
+
+entity{
+  _template:t="gravity_zone_sphere_rad_with_visual"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1556.14, 145.16, -248.934]]
+  grav_zone__innerRadius:r=7
+  grav_zone__outerRadius:r=7.5
+}
+
+entity{
+  _template:t="gravity_zone_sphere_rad_with_visual"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1537.77, 145.16, -351.284]]
+  grav_zone__innerRadius:r=7
+  grav_zone__outerRadius:r=7.5
+}
+
+entity{
+  _template:t="gravity_zone_sphere_rad_with_visual"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1556.73, 142.675, -296.65]]
+  grav_zone__innerRadius:r=8.5
+  grav_zone__outerRadius:r=9
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0353307, 1.23591e-11, 3.01956] [2.64163, 0.00153449, 0.0309086] [-0.00942587, 16.2289, -0.000110288] [1312.12, 18.764, -817.591]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.7, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0353305, 1.2359e-11, 3.01955] [2.56239, 0.00148846, 0.0299815] [-0.00641406, 11.0433, -7.50484e-05] [1305.05, 32.4296, -803.234]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 0.5
+  grav_zone__boxBorderZ:p2=2.5, 0
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0353314, -2.51583, 1.66995] [3.01898, -0.0284606, 0.0209964] [-0.00801543, 7.63221, 11.4979] [1304.26, 38.7309, -796.798]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.0207066, -3.01964, -0.00554532] [-0.00145616, -0.00471592, 2.56256] [-7.5157, -0.0515294, -0.00436558] [1301.28, 42.2769, -790.808]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.063565, 1.37323e-11, -3.0191] [-2.64123, 0.00153449, -0.0556091] [0.0118146, 20.3447, 0.000248748] [1261.18, 20.3065, -728.009]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=1.2, 0
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.063565, -1.13363, -2.79818] [-2.64122, -0.0194583, -0.0521162] [0.00556629, 8.88381, -3.59899] [1261.18, 32.2097, -729.266]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[3.01904, 1.37323e-11, 0.066382] [0.0580736, 0.00153449, -2.64117] [-0.000123636, 9.68287, 0.00562293] [1267.56, 31.2418, -743.837]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=1.4, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.093723, 1.09859e-11, 3.01831] [2.64054, 0.00153449, 0.0819926] [-0.010047, 17.3055, -0.000311973] [1244.01, 35.1468, -758.334]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.8, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[3.01922, 8.23939e-12, 0.0575125] [0.0503142, 0.00153449, -2.64133] [-0.000199791, 18.0603, 0.0104884] [1199.41, 17.8302, -794.456]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=2.5, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[2.56137, -1.59882, 0.0575161] [0.0504628, -0.0294005, -3.06453] [9.95985, 15.9564, 0.0109236] [1228.52, 30.4271, -805.451]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=2, 0
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[1.88603, -2.35767, 0.0575126] [0.0326282, -0.038331, -2.64133] [9.91857, 7.9346, 0.00737649] [1236.29, 39.94, -804.901]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0225881, 8.23939e-12, 3.01968] [2.64174, 0.00153449, 0.0197609] [-0.00972546, 16.744, -7.2749e-05] [1159.02, 18.5561, -835.54]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=1.5, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0225881, 8.23939e-12, 3.01968] [2.64174, 0.00153449, 0.0197609] [-0.0121538, 20.9247, -9.09135e-05] [1149.48, 36.5137, -835.54]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=2.15, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[3.01971, 8.23939e-12, 0.0194162] [0.016986, 0.00153449, -2.64176] [-7.49277e-05, 20.0627, 0.0116531] [1215.93, 36.9541, -716.466]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.8, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[3.01969, 6.86616e-12, 0.0211358] [0.0184904, 0.00153449, -2.64174] [-7.08794e-05, 17.4346, 0.0101266] [1210.96, 18.27, -724.735]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=1.65, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0181855, 8.23939e-12, -3.01971] [-2.64176, 0.00153449, 0.0159094] [0.0116071, 19.9833, -6.99008e-05] [1365.84, 16.8855, -721.308]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=2.5, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.000778345, 8.23939e-12, -3.01977] [-2.64181, 0.00153449, -0.000680927] [0.0121541, 20.9247, 3.13278e-06] [1372.59, 36.4364, -716.774]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=2.5, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-3.01974, 8.23939e-12, 0.0138047] [0.0120769, 0.00153449, 2.64178] [-5.55617e-05, 20.9248, -0.012154] [1349.28, 36.4364, -825.667]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=2.25, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-3.01905, 1.37323e-11, 0.0658814] [0.0576356, 0.00153449, 2.64118] [-0.00023836, 18.8097, -0.010923] [1347.34, 17.4911, -820.214]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=3.5, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0456554, 1.09859e-11, -3.01942] [-2.64151, 0.00153449, 0.0399411] [0.00812843, 13.9957, -0.000122907] [1260.35, 16.6643, -853.447]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=1.2, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-3.01974, 8.23939e-12, 0.0138047] [0.0120769, 0.00153449, 2.64178] [-4.86443e-05, 18.3197, -0.0106408] [1264.47, 32.5646, -869.254]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=1.05, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0139151, 7.5409, 0.0214439] [1.33836, 0.0083347, -2.06249] [-2.00532, 0, -1.30126] [620.015, 13.1116, -1126.89]]
+  grav_zone__boxBorderX:p2=2, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.047473, 14.5685, -0.0136132] [2.63346, 0.00928704, 0.755154] [0.508152, -9.2169e-09, -1.77209] [636.206, 17.1192, -1030.84]]
+  grav_zone__boxBorderX:p2=2, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0223609, 6.93477, -0.00725471] [1.84178, 0.00656388, 0.597539] [0.47059, -1.11134e-08, -1.45049] [636.948, 25.7068, -1030.75]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.015996, 5.50423, -0.00960641] [1.14718, 0.00453624, 0.688941] [2.21418, 2.0229e-09, -3.68691] [711.838, 11.8635, -956.748]]
+  grav_zone__boxBorderX:p2=2.75, 1
+  grav_zone__boxBorderY:p2=0, 0.5
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.146626, 7.64535, -0.104808] [-1.75903, 0.0439134, 0.742451] [1.80851, 0.0240345, 4.28334] [745.987, 13.1054, -861.622]]
+  grav_zone__boxBorderX:p2=2.75, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0396681, 13.7866, -0.0247113] [1.86667, 0.00745524, 1.16284] [1.37115, 3.3454e-10, -2.20106] [595.736, 15.6767, -873.938]]
+  grav_zone__boxBorderX:p2=2.5, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.0413255, 14.4431, 0.0262565] [-1.85626, 0.00745525, -1.17939] [-1.39066, 3.3454e-10, 2.18878] [527.516, 15.459, -930.927]]
+  grav_zone__boxBorderX:p2=3.8, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[12.514, 0.082223, 3.97462] [0.662372, 0.0074752, -2.08562] [-0.00979356, 1.39858, 0.0019024] [449.583, 13.2919, -1013.27]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[12.514, 0.082223, 3.97462] [0.662372, 0.0074752, -2.08562] [-0.00979356, 1.39858, 0.0019024] [437.324, 13.2919, -1017.07]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[12.514, 0.082223, 3.97462] [0.662372, 0.0074752, -2.08562] [-0.00979356, 1.39858, 0.0019024] [424.94, 13.2919, -1021.06]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.0337597, 10.0139, 0.00355442] [-2.18714, 0.00745521, -0.230275] [-0.271527, -5.48314e-10, 2.57895] [608.965, 63.4193, -534.684]]
+  grav_zone__boxBorderX:p2=3.5, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.0341187, 10.0998, 0.00284998] [-2.19159, 0.00745522, -0.183067] [-0.215862, 5.0181e-10, 2.58421] [626.409, 63.374, -486.923]]
+  grav_zone__boxBorderX:p2=3.75, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0132164, 10.7668, 0.034022] [0.796351, 0.00745523, -2.04999] [-2.41722, 0, -0.93901] [763.319, 53.0312, -487.291]]
+  grav_zone__boxBorderX:p2=4.5, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.00818663, 14.8978, 0.0498345] [-0.339912, 0.00710828, -2.06915] [-5.9181, 0, 0.972206] [723.266, 56.26, -394.182]]
+  grav_zone__boxBorderX:p2=4.5, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0253875, 10.8981, 0.0268389] [1.75321, 0.00864861, -1.85344] [-2.21824, 3.93911e-10, -2.09829] [973.302, 69.0818, -298.115]]
+  grav_zone__boxBorderX:p2=3.75, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0389165, 11.8215, 0.00956193] [2.13571, 0.00745522, -0.524751] [-0.618757, -8.53081e-09, -2.5183] [638.516, 79.0827, 25.3792]]
+  grav_zone__boxBorderX:p2=4, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.0379871, 11.55, -0.00948662] [-2.1337, 0.00745522, 0.532854] [0.628312, -8.86535e-09, 2.51594] [577.27, 79.2101, 19.545]]
+  grav_zone__boxBorderX:p2=3.5, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0093484, 10.6595, -0.0349048] [0.568961, 0.00745521, 2.12436] [2.50492, -9.19989e-09, -0.670887] [548.966, 78.5393, -69.8749]]
+  grav_zone__boxBorderX:p2=3.75, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[1.0204, -0.00343616, 2.66197] [1.99424, -0.00845039, -0.76445] [0.0209552, 5.07888, -0.00147664] [1150.22, 66.8053, -461.139]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=3.5, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-4.68862, -0.00693966, 3.34161] [2.79621, -0.0190624, 3.92333] [0.0222275, 16.9049, 0.0662944] [1466.46, 48.0498, -1156.75]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 3
+  grav_zone__boxBorderZ:p2=3, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[2.97433, -0.00622663, 4.22384] [1.98746, -0.00961778, -1.39954] [0.0326197, 8.30223, -0.0107312] [1533.61, 42.8229, -1259.88]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=3.5, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-1.84197, -0.00225696, 0.33683] [0.437262, -0.00961773, 2.39112] [-0.00771792, 16.2854, 0.0669155] [1638.84, 46.7524, -1279.8]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=3.5, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.068209, -0.00373507, -2.53603] [-2.42941, 0.0145003, -0.0653625] [0.0839159, 13.9769, -0.0183282] [1647.86, 44.9557, -1460.38]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=3.5, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-3.69088, -0.00445016, 0.0958603] [0.0631235, -0.00961783, 2.42998] [-0.011117, 10.0864, 0.0402106] [1784.7, 17.1454, -671.368]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=3.5, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[3.69212, -0.00445016, 0.00788167] [0.00517749, -0.00961785, -2.4308] [0.0137161, 11.3005, -0.0446833] [1705.72, 23.832, -735.312]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=4, 1
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.00253545, 12.2088, -0.0413091] [-0.13473, 0.00745522, 2.1951] [2.58833, -5.85446e-10, 0.158865] [576.666, 64.9588, -542.577]]
+  grav_zone__boxBorderX:p2=2.5, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0377495, 11.1398, -0.00101925] [2.19843, 0.00745522, 0.0593582] [0.0699917, -5.2272e-10, -2.59226] [212.671, 84.0439, -505.258]]
+  grav_zone__boxBorderX:p2=3.5, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0401777, 11.8564, -0.00108481] [2.19784, 0.00745322, 0.0593422] [0.0422923, -3.15852e-10, -1.56637] [172.227, 84.6819, -632.111]]
+  grav_zone__boxBorderX:p2=3, 1
+  grav_zone__boxBorderY:p2=0, 1
+  grav_zone__boxBorderZ:p2=0.2, 0.2
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0803884, -7.24611, 0.0419338] [0.0027384, -0.0307049, -5.30052] [27.7466, -0.307727, 0.0161173] [1282.81, 41.9506, -688.817]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.0803914, -7.24639, 0.0419354] [0.00419745, -0.0470649, -8.1247] [23.318, -0.258612, 0.0135448] [1306.28, 42.0872, -689.947]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.0111839, -0.0719279, -7.87795] [-0.0133893, -3.34058, 0.0304815] [-4.8106, 0.0192172, -0.00700482] [1732.24, 49.7336, -1447.33]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-0.227273, 0.016045, 3.33674] [2.42133, 1.42489, 0.158071] [-7.82927, 13.3707, -0.597563] [811.56, 58.3432, -607.254]]
+  grav_zone__boxBorderX:p2=0.2, 0.2
+  grav_zone__boxBorderY:p2=0, 0.75
+  grav_zone__boxBorderZ:p2=4, 0
+}
+
+entity{
+  _template:t="gravity_path_box_invisible"
+  transform:m=[[3.5873, -0.244832, 9.94649] [4.44173, -1.32075, -1.63446] [3.64284, 13.4667, -0.982345] [810.404, 69.4039, -610.594]]
+  grav_zone__boxBorderX:p2=0, 0
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-7.36995, -10.4907, 1.21521] [-0.585042, 0.636741, 1.94873] [-1.91565, 1.23252, -0.977831] [663.489, 17.5839, -1182.67]]
+  grav_zone__boxBorderX:p2=0, 2
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=0, 0
+}

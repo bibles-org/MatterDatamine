@@ -1,0 +1,53 @@
+mass:r=3.5
+momentOfInertia:p3=0.04, 0.008, 0.04
+caliber:r=0.1
+speed:r=15
+speedPitch:r=10
+maxDistance:r=12
+physMat:t="walkRay"
+useFutureContacts:b=yes
+logCCD:b=no
+frictionGround:r=15
+angularDamping:r=0.85
+noSleepAtTheSlopeCos:r=0.766
+entityTemplate:t="explosion_pack"
+entityPhysTemplate:t="explosion_pack_phys"
+explodeHitPower:r=250
+explodeArmorPower:r=35
+explodeRadius:p2=1, 2.5
+shutterDamage:b=yes
+shutterDamageRadius:r=15
+shutterAmount:i=200
+shutterArmorPower:r=10
+shutterHit:r=25
+
+collisionResource{
+  props{
+    volumeBox:t="box"
+  }
+}
+
+ccdSpheres{
+  ccd:p4=0, 0.05, 0, 0.015
+  ccd:p4=0, 0.2, 0, 0.015
+  ccd:p4=0, -0.05, 0, 0.015
+}
+
+detonation{
+  onHit:b=no
+  timer:r=5
+}
+
+explFx{
+  fxScale:p2=2.8, 2.9
+  effectTemplName:t="explosion_effect_extra_large+disable_effect_sfx"
+}
+
+shellSound{
+  explosionPath:t="impact/grenade"
+  activatePath:t="/weapon/explosive/activate"
+}
+
+solver{
+  energyConservation:r=0.85
+}

@@ -1,0 +1,23 @@
+movable_darkness_anomaly_spawn_box{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "darknessAnomalySpot:tag"{}
+  "anomalySpot:tag"{}
+}
+
+movable_darkness_anomaly_spawn_config{
+  movable_anomaly_config__templateName:t="movable_darkness_anomaly"
+  movable_anomaly_config__filling:r=1
+  movable_anomaly_config__zLength:p2=4, 10
+  _singleton:b=yes
+}
+
+movable_darkness_anomaly{
+  _use:t="box_darkness_anomaly"
+  darkness_anomaly__maxZOffset:r=0
+  darkness_anomaly__moveZDir:i=0
+  darkness_anomaly__moveZSpeed:p2=0.05, 0.2
+  darkness_anomaly__currentMoveZSpeed:r=0.1
+
+  "darkness_anomaly__spotEid:eid"{}
+}

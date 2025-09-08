@@ -1,0 +1,59 @@
+entity{
+  _template:t="firefly_star_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-280.736, 50.0858, -1081.02]]
+}
+
+entity{
+  _template:t="firefly_star_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-210.711, 38.0616, -817.542]]
+}
+
+entity{
+  _template:t="firefly_star_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-332.224, 39.9177, -741.64]]
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="trap_region_generator"
+      genType:t="region_traps"
+      count:i=5
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="forest_dogorsk_01"
+    r:t="forest_dogorsk_02"
+    r:t="forest_dogorsk_03"
+    r:t="forest_dogorsk_04"
+    r:t="forest_dogorsk_05"
+  }
+}
+
+entity{
+  _template:t="am_core_spawn_pos"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-205.814, 38.7, -1046.76]]
+}
+
+entity{
+  _template:t="am_core_spawn_pos"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-424.399, 30.0196, -923.385]]
+}
+
+entity{
+  _template:t="am_core_spawn_pos"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-576.187, 34.5107, -823.078]]
+}
+
+entity{
+  _template:t="am_core_spawn_pos"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-513.041, 58.6393, -705.212]]
+}
+
+entity{
+  _template:t="am_core_spawn_pos"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-360.02, 60.9324, -655.477]]
+}

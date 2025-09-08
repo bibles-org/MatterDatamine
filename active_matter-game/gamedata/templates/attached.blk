@@ -1,0 +1,68 @@
+node_attached_base{
+  node_attached__nodeId:i=-1
+
+  "node_attached__entity:eid"{}
+}
+
+node_attached_tm_base{
+  node_attached__localTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+node_attached_pos_base{
+  node_attached__localPos:p3=0, 0, 0
+}
+
+node_attached_itm{
+  _use:t="node_attached_base"
+  _use:t="node_attached_tm_base"
+}
+
+node_attached_pos{
+  _use:t="node_attached_base"
+  _use:t="node_attached_pos_base"
+}
+
+attached_base{
+  "attached__entity:eid"{}
+}
+
+attached_pos{
+  _use:t="attached_base"
+  attached__localPos:p3=0, 0, 0
+}
+
+composit_spawn{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "composit_spawn__nodes:array"{}
+}
+
+composit_holder{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+
+  "composit_holder__childrenEids:list<eid>"{}
+}
+
+composit_object{
+  _use:t="composit_spawn"
+  _use:t="composit_holder"
+}
+
+transform_attached{
+  transform_attached__localTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "transform_attached__entityEid:eid"{}
+}
+
+rendinst_attach_destroyable{
+  "rendinst_attach__riexHandle:u64"{
+    value:i64=-1
+  }
+}
+
+rendinst_attach_rotatable{
+  rendinst_attach__localTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "rendinst_attach__riexEid:eid"{}
+}

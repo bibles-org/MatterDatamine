@@ -1,0 +1,94 @@
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house changeds"
+  monster_gen_gen__householdCount:i=21
+  monster_gen_gen__minHouseholdVolume:r=225
+  monster_gen_gen__useHouseholdsOnEuclid:b=no
+
+  "monster_gen_gen__genTemplates:object"{
+    household_milbase_changed_monster_generator:i=60
+    household_traps_generator:i=40
+  }
+
+  "monster_gen_gen__excludeBoxes:list<m>"{
+    t:m=[[53.3289, 0, -13.8569] [0, 10.2502, 0] [8.2603, 0, 31.79] [606.857, 79.175, 18.3538]]
+  }
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=0.0004, 0.0004
+  transform:m=[[53.3289, 0, -13.8569] [0, 10.2502, 0] [8.2603, 0, 31.79] [606.857, 79.175, 18.3538]]
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="changed_group_region_generator"
+      genType:t="field changed"
+      count:i=3
+    }
+
+    "generator:object"{
+      template:t="field_trap_region_generator"
+      genType:t="field traps"
+      count:i=3
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="field_01"
+    r:t="field_02"
+    r:t="field_03"
+    r:t="field_04"
+    r:t="field_05"
+    r:t="field_06"
+  }
+}
+
+entity{
+  _template:t="wandering_core_embryo"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [668.233, 76.7923, -54.3665]]
+}
+
+entity{
+  _template:t="distorted_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [589.194, 74.989, -99.7578]]
+  objective_static_target__tag:t="distorted_zone_1"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="distorted_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [677.149, 75.0041, -0.0360737]]
+  objective_static_target__tag:t="distorted_zone_2"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="distorted_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [731.703, 75.0046, 243.275]]
+  objective_static_target__tag:t="distorted_zone_3"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="invisible_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [691.479, 74.989, 82.2394]]
+  objective_static_target__tag:t="invisible_zone_1"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="invisible_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [595.519, 74.989, -16.6734]]
+  objective_static_target__tag:t="invisible_zone_2"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}

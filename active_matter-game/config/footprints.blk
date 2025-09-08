@@ -1,0 +1,28 @@
+NameToTexIdMap{
+  default:i=0
+  sand:i=1
+  mud:i=2
+  stone:i=3
+}
+
+PhysmatFootprintType{
+  default:t="default"
+  concrete:t="stone"
+  stone:t="stone"
+  soil:t="default"
+  mud:t="mud"
+  dirt:t="default"
+  roadSoil:t="default"
+  sand:t="sand"
+  quarrySand:t="sand"
+  sand_slope:t="sand"
+  roadSand:t="sand"
+  quickSand:t="sand"
+  snow:t="default"
+  ice:t="mud"
+  snowLower:t="default"
+  roadSnow:t="mud"
+  rocks:t="stone"
+  rocksSlippery:t="stone"
+  gravel:t="stone"
+}

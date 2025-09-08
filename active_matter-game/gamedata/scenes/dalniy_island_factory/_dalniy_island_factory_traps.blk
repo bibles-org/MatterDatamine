@@ -1,0 +1,68 @@
+entity{
+  _template:t="am_core_spawn_pos"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1505.81, 40.0276, -1228.77]]
+}
+
+entity{
+  _template:t="am_core_spawn_pos"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1648.96, 39.9974, -1332.47]]
+}
+
+entity{
+  _template:t="frog_trap_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1619.46, 40.0408, -1384.6]]
+}
+
+entity{
+  _template:t="frog_trap_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1680.6, 39.3036, -1377.93]]
+}
+
+entity{
+  _template:t="frog_trap_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1738.29, 39.9664, -1376.07]]
+}
+
+entity{
+  _template:t="frog_trap_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1500.06, 41.0139, -1326.2]]
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="frog_trap_cluster_region_generator"
+      genType:t="region_traps"
+      count:i=3
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="forest_factory_01"
+    r:t="forest_factory_02"
+    r:t="forest_factory_03"
+  }
+}
+
+entity{
+  _template:t="wandering_core"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1469.02, 49.909, -1167.46]]
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="power_station_wandering_core"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[-50000, 0, 0] [0, 0, 50000] [0, 50000, 0] [0, 0, 0]]
+  loot_generator__lootPreset:t="factory_power_station_wandering_core_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="monster_conversion"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [1590, 1, -1410]]
+  loot_generator__lootPreset:t="factory_monster_conversion_loot_preset"
+}

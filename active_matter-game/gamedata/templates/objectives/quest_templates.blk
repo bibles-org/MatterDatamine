@@ -1,0 +1,320 @@
+quest_target_geometry_sphere{
+  quest_target_geometry_sphere__radius:r=1
+}
+
+photographing_target{
+  _use:t="replicating"
+  _use:t="map_component_marker"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  photographing_target__normals:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  objective_static_target__tag:t=""
+  photographing_target__name:t="photo/uknown_target"
+  photographing_target__minDot:r=0.99
+  photographing_target__detectDot:r=0.75
+  photographing_target__alwaysVisible:b=yes
+  photographing_target__traceMinSuccesses:i=3
+  photographing_target__traceDensity:r=4
+  photographing_target__debugTraces:b=no
+
+  "photographingTarget:tag"{}
+  "showMapObjectOnQuestTargetAssignition:tag"{}
+}
+
+photographing_stand_target{
+  _use:t="replicating"
+  _use:t="map_component_zone"
+  map_object_zone__radius:r=10
+  quest_target_geometry_sphere__radius:r=10
+  objective_static_target__tag:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="guarded_zone"
+  guarded_zone__maxGuardsCount:i=6
+
+  "showMapObjectOnQuestTargetAssignition:tag"{}
+  "photographing_stand_target:tag"{}
+  "useObjectTarget:tag"{}
+}
+
+place_for_device_target{
+  _use:t="replicating"
+  _use:t="map_component_zone"
+  map_object_zone__radius:r=10
+  quest_target_geometry_sphere__radius:r=10
+  objective_static_target__tag:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "showMapObjectOnQuestTargetAssignition:tag"{}
+  "placeForDeviceTarget:tag"{}
+  "useObjectTarget:tag"{}
+}
+
+checkpoint_target{
+  _use:t="replicating"
+  _use:t="map_component_zone"
+  map_object_zone__radius:r=10
+  quest_target_geometry_sphere__radius:r=10
+  objective_static_target__tag:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "checkpointTarget:tag"{}
+}
+
+base_container_quest_target{
+  "container_target__generatedForPlayers:list<eid>"{}
+  "container_target__discoveredItemTemplates:list<t>"{}
+}
+
+base_readonly_container_quest_target{
+  _use:t="base_container_quest_target"
+  _use:t="read_only_inventory"
+}
+
+base_gather_samples_zone_target{
+  _use:t="replicating"
+  _use:t="map_component_zone"
+  _use:t="external_inventory_container"
+  _use:t="base_readonly_container_quest_target"
+  map_object_zone__radius:r=10
+  quest_target_geometry_sphere__radius:r=10
+  objective_static_target__tag:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  gather_samples_target__accesspointsCountRng:ip2=4, 6
+  gather_samples_target__accesspointTemplate:t=""
+
+  "showMapObjectOnQuestTargetAssignition:tag"{}
+  _group{
+    _replicate:b=yes
+
+    "gather_samples_target__accesspointEids:list<eid>"{}
+  }
+}
+
+ground_gather_samples_zone_target{
+  _use:t="base_gather_samples_zone_target"
+  gather_samples_target__accesspointTemplate:t="ground_gather_samples_accesspoint"
+  _use:t="guarded_zone"
+  guarded_zone__maxGuardsCount:i=8
+
+  "groundGatherSamplesZoneTarget:tag"{}
+  "container_target__discoveredItemTemplates:list<t>"{
+    i:t="quest_flask_with_ground_item"
+  }
+}
+
+ozernoe_samples{
+  "container_target__discoveredItemTemplates:list<t>"{
+    i:t="quest_ozernoe_flask_with_ground_item"
+  }
+}
+
+water_gather_samples_zone_target{
+  _use:t="base_gather_samples_zone_target"
+  gather_samples_target__accesspointTemplate:t="water_gather_samples_accesspoint"
+
+  "waterGatherSamplesZoneTarget:tag"{}
+  "container_target__discoveredItemTemplates:list<t>"{
+    i:t="quest_flask_with_water_item"
+  }
+}
+
+base_gather_samples_accesspoint{
+  _use:t="replicating"
+  _use:t="external_inventory_accesspoint"
+  _use:t="usable_object_base"
+  use_object__enabled:b=yes
+  use_object__minDot:r=-1
+  use_object__offset:p3=0, 0, 0
+  item__useActionHintType:i=1
+  item_world_marker__offset:p3=0, 0.1, 0
+  item_world_marker__riColliderPoint:p3=0.5, 0.5, 0.5
+  item_world_marker__riColliderPointOffset:p3=0, 0, 0
+  net__scopeDistanceSq:r=108900
+  grid_obj__gridType:t="interactable"
+
+  "getherSamplesContainerAccesspoint:tag"{}
+  "usableObject:tag"{}
+  "item_world_marker__copyOffsetToUseObject:tag"{}
+  grid_obj{}
+}
+
+ground_gather_samples_accesspoint{
+  _use:t="gpu_object_placer_box"
+  _use:t="base_gather_samples_accesspoint"
+  ri_gpu_object__name:t="am_anomaly_soil_column_a"
+  item__setCustomUsePrompt:t="hud/gather_ground_samples"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__place_on_geometry:b=yes
+    gpu_object_placer__object_density:r=1
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__object_max_count:i=2
+  }
+}
+
+water_gather_samples_accesspoint{
+  _use:t="base_gather_samples_accesspoint"
+  effect__scale:r=1
+  item__setCustomUsePrompt:t="hud/gather_water_samples"
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="water_pollution_spot_fx"
+  }
+}
+
+stay_around_target{
+  _use:t="replicating"
+  _use:t="map_component_zone"
+  map_object_zone__radius:r=10
+  quest_target_geometry_sphere__radius:r=10
+  objective_static_target__tag:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "showMapObjectOnQuestTargetAssignition:tag"{}
+}
+
+stay_in_box_target{
+  _use:t="replicating"
+  _use:t="map_component_zone"
+  map_object_zone__radius:r=10
+  objective_static_target__tag:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "showMapObjectOnQuestTargetAssignition:tag"{}
+}
+
+base_ri_container_target{
+  _use:t="replicating"
+  _use:t="placeable_rendinst"
+  _use:t="openable_external_inventory_container_ri"
+  _use:t="iteractable_drop_on_ri_destroy"
+  _use:t="base_container_quest_target"
+  ri_extra__name:t="ammunition_box_n"
+  openable_ri__closed:t="ammunition_box_n"
+  ri_preload__name:t="ammunition_box_n_open"
+  objective_static_target__tag:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="ui"
+    itemContainer__uiItemsMergeEnabled:b=no
+    itemContainer__uiItemsSortingEnabled:b=yes
+    itemContainer__uiItemsOverrideSortingPriority:b=yes
+  }
+
+  "showMapObjectOnQuestTargetAssignition:tag"{}
+  "net__alwaysInScope:tag"{}
+}
+
+test_container_target{
+  _use:t="base_ri_container_target"
+  _use:t="map_component_marker"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="test_quest_item"
+  }
+}
+
+quest_container{
+  _use:t="base_ri_container_target"
+  _use:t="map_component_marker"
+  map_object_marker__iconName:t="!ui/skin#bagpack_icon.svg"
+  objective_static_target__tag:t=""
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t=""
+  }
+}
+
+quest_container_locked{
+  _use:t="quest_container"
+  _use:t="locked"
+
+  "locked__keyTags:list<t>"{}
+}
+
+quest_container_secret{
+  _use:t="base_ri_container_target"
+  objective_static_target__tag:t=""
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t=""
+  }
+}
+
+quest_monster_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="invisible monsters"
+  monster_gen__density:p2=0.5, 0.5
+  monster_gen__onlyAccessiblePolygons:b=no
+  monster_gen__ignoreForbiddenZones:b=yes
+  monster_gen__checkPlayersRadius:r=0
+  monster_gen__spawnInterval:r=5
+
+  "monster_gen__templates:list<t>"{
+    i:t="invisible_man"
+  }
+}
+
+quest_invisible_monster_generator{
+  _use:t="invisible_monsters_quest_generator"
+  monster_gen__density:p2=0.06, 0.06
+  monster_gen__spawnInterval:r=5
+  monster_gen__respawnInterval:r=10
+  monster_gen__inLandingZoneSpawnKoef:r=1
+  monster_gen__closeToLandingZoneSpawnKoef:r=1
+  monster_gen__farToLandingZoneSpawnKoef:r=1
+  monster_gen__onlyAccessiblePolygons:b=no
+  monster_gen__ignoreForbiddenZones:b=yes
+  monster_gen__checkPlayersRadius:r=0
+}
+
+car_delivery_point_target{
+  _use:t="replicating"
+  _use:t="map_component_zone"
+  map_object_zone__radius:r=10
+  quest_target_geometry_sphere__radius:r=10
+  objective_static_target__tag:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "carDeliveryPointTarget:tag"{}
+  "showMapObjectOnQuestTargetAssignition:tag"{}
+}
+
+car_delivery_target{
+  _use:t="replicating"
+  _use:t="map_component_marker"
+  map_object_marker__iconName:t="!ui/skin#vehicle_icon_map.svg"
+  objective_static_target__tag:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  car_delivery_target__carTemplate:t=""
+
+  "car_delivery_target__carEid:eid"{}
+  "showMapObjectOnQuestTargetAssignition:tag"{}
+}
+
+secret_quest_item_generator{
+  secret_quest_item_generator__objectiveTemplate:t=""
+  secret_quest_item_generator__itemTemplate:t=""
+  secret_quest_item_generator__tag:t=""
+  secret_quest_item_generator__objectiveName:t=""
+
+  "secret_quest_item_generator__generatedForPlayers:list<eid>"{}
+  "secret_quest_item_generator__itemEids:list<eid>"{}
+}
+
+spherical_quest_zone{
+  quest_target_geometry_sphere__radius:r=20
+  objective_static_target__tag:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}

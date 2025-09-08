@@ -1,0 +1,31 @@
+player_base{
+  _use:t="replicating"
+
+  "player_base:tag"{}
+}
+
+raid_mode{
+  _singleton:b=yes
+  _use:t="replicating"
+
+  "player_session:tag"{}
+  "raid_mode:tag"{}
+  "game_mode__lockEquipment:b"{
+    _tags:t="server"
+    value:b=yes
+  }
+}
+
+nexus_mode{
+  _singleton:b=yes
+  _use:t="replicating"
+
+  "player_session:tag"{}
+  "nexus_mode:tag"{}
+  "report_kills:tag"{}
+  "report_hits:tag"{}
+  "game_mode__lockEquipment:b"{
+    _tags:t="server"
+    value:b=no
+  }
+}

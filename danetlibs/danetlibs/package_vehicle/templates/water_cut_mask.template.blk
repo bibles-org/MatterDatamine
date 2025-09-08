@@ -1,0 +1,9 @@
+vehicle_water_cut_mask_renderer{
+  _singleton:b=yes
+  _tags:t="render"
+
+  "water_cut_mask_fg_node:dafg::NodeHandle"{}
+  "water_cut_mask_entities:list<eid>"{}
+  "water_cut_mask_nodeMaskOffsets:list<i>"{}
+  "water_cut_mask_nodeMasks:list<u8>"{}
+}

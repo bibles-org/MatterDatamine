@@ -1,0 +1,20 @@
+endgame_controller{
+  _use:t="replicating"
+  _tracked:t="endgame_controller__state"
+
+  _group{
+    _tags:t="gameClient"
+    endgame_controller__state:i=0
+    endgame_controller__deathFadeInTime:r=4.5
+    endgame_controller__fadeInTime:r=2
+    endgame_controller__fadeInColor:c=5, 7, 5, 255
+    endgame_controller__fadeOutTime:r=0.75
+    endgame_controller__deathFadeDelay:r=1.5
+    endgame_controller__nextStateAt:r=-1
+    endgame_controller__debriefing__showDelay:r=0.75
+    endgame_controller__debriefing__reason:i=0
+    endgame_controller__debriefing__team:i=0
+    endgame_controller__debriefing__allowSpectate:b=no
+    endgame_controller__debriefing__autoExit:b=no
+  }
+}

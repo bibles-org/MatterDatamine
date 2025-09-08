@@ -1,0 +1,557 @@
+box_anomaly_base{
+  _use:t="editor_selected_box_preview"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  box_anomaly__nextUpdateAt:r=0
+  box_anomaly__nextUpdateInterval:r=0.3
+  box_anomaly__targetsTag:t="box_anomaly__target"
+  indoor_spawner__inflatedBox:p3=0, 0, 0
+  box_anomaly__affectTemplate:t=""
+
+  "box_anomaly__targetEids:list<eid>"{}
+}
+
+box_anomaly_with_global_affect{
+  "box_anomaly__globalAffectEids:list<eid>"{}
+  "box_anomaly__globalAffectTemplate:list<t>"{}
+}
+
+box_anomaly_preview{
+  "box_anomaly__preview:tag"{}
+}
+
+box_anomaly_effect_preview{
+  "box_anomaly_effect__preview:tag"{}
+}
+
+anomaly_affect_base{
+  _use:t="replicated_game_effect"
+  game_effect__attachedAt:r=-1
+
+  "anomaly_effect__ownerAnomalyEid:eid"{}
+}
+
+box_darkness_anomaly{
+  _use:t="box_anomaly_base"
+  box_anomaly__affectTemplate:t="darkness_anomaly_affect"
+
+  "darknessAnomaly:tag"{}
+}
+
+darkness_anomaly_affect{
+  _use:t="anomaly_affect_base"
+
+  "darknessAnomalyEffect:tag"{}
+}
+
+disoriented_anomaly_trap{
+  _use:t="replicating"
+  _use:t="am_triggerable_zone"
+  sphere_zone__radius:r=6
+  disoriented_anomaly__affectTemplate:t="disoriented_anomaly_affect"
+  disoriented_anomaly__angle:r=0.5
+  disoriented_anomaly__sprintMultiplier:r=1.8
+  effect__scale:r=1
+  _tracked:t="effect__scale"
+
+  "humanTriggerable:tag"{}
+  "disorientedAnomalyTrap:tag"{}
+  "anomalySpot:tag"{}
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="fire_molotov_p_sparks_fx"
+  }
+}
+
+disoriented_anomaly_affect{
+  _use:t="anomaly_affect_base"
+  _use:t="disoriented_affect"
+}
+
+sprite_glare_manager{
+  _use:t="replicating"
+  _singleton:b=yes
+
+  _group{
+    _track:b=yes
+    sprite_glare_settings__sprite_texture:t="glare_star_a_tex_d"
+    sprite_glare_settings__sprite_layer_cnt:i=3
+    sprite_glare_settings__sprite_layer_offset:i=1
+    sprite_glare_settings__sprite_size:r=10
+    _tags:t="render"
+  }
+
+  "sprite_glare_manager:SpriteGlare"{
+    _tags:t="render"
+  }
+}
+
+sprite_glare_effect{
+  _use:t="replicated_game_effect"
+
+  _group{
+    _track:b=yes
+    sprite_glare__intensity:r=0
+    sprite_glare__min_luminance:r=3
+    sprite_glare__max_luminance:r=10
+    sprite_glare__luminance_parent_transition:r=1
+    sprite_glare__luminance_merging_threshold:r=0.5
+    sprite_glare__luminance_merging_threshold_offset:r=0
+    sprite_glare__luminance_pre_scale:r=1
+  }
+
+  "spriteGlareEffect:tag"{}
+}
+
+screen_bleed{
+  _singleton:b=yes
+  _use:t="replicated_game_effect"
+  screen_bleed__simulate_speed:i=1
+  screen_bleed__simulate_decay:r=0.965
+  screen_bleed__process_frame_mul:r=0.3
+  screen_bleed__vector_field_speed:r=0.0025
+  screen_bleed__motion_vector_lerp_mul:r=30
+
+  _group{
+    _track:b=yes
+    screen_bleed__horizontal_tiling:r=2.5
+    screen_bleed__threshold_dark:r=0.01
+    screen_bleed__threshold_bright:r=0.75
+    screen_bleed__addition_mode:i=1
+    screen_bleed__process_mode:i=0
+    screen_bleed__threshold_normal:r=0.9
+    screen_bleed__second_layer_uv_mul:r=1
+    screen_bleed__use_reprojection:b=no
+    screen_bleed__use_motion_vector_lerp:b=yes
+  }
+
+  _group{
+    _tags:t="render"
+    screen_bleed__vector_texture_res:t="postfx_vortex_vectormap_tex_f"
+    screen_bleed__vector_texture_var:t="vector_field_tex"
+    screen_bleed__vector_field_offset:p2=0, 0
+
+    "screen_bleed__vector_texture:SharedTexHolder"{}
+    "screen_bleed__node_handle:dafg::NodeHandle"{}
+  }
+
+  "screenBleedEffect:tag"{}
+}
+
+anomaly_screen_bleed_affect_base{
+  _use:t="anomaly_affect_base"
+  _use:t="screen_bleed"
+  screen_bleed__simulate_decay:r=0.0001
+  game_effect__screenBleedSimulateDecaySmooth:p2=0.0001, 0.965
+  screen_bleed__process_frame_mul:r=0
+  game_effect__screenBleedProcessFrameMulSmooth:p2=0, 0.3
+}
+
+indoor_darkness_anomaly_trap{
+  _use:t="box_anomaly_base"
+  _use:t="darkness_indoor_volfog"
+  _use:t="area_decor_darkness"
+  box_anomaly__affectTemplate:t="indoor_darkness_anomaly_affect"
+}
+
+indoor_darkness_anomaly_affect{
+  _use:t="anomaly_affect_base"
+  _use:t="client_hero_affect_base"
+  darkness_anomaly__staleBreathAvailableTime:r=4
+  screen_bleed_effect__template:t="indoor_darkness_anomaly_screen_bleed"
+}
+
+indoor_darkness_anomaly_screen_bleed{
+  _use:t="screen_bleed"
+  screen_bleed__simulate_decay:r=0.0001
+  screen_bleed__use_motion_vector_lerp:b=yes
+  screen_bleed__simulate_speed:i=1
+  screen_bleed__second_layer_uv_mul:r=1
+  screen_bleed__process_frame_mul:r=0.3
+  screen_bleed__motion_vector_lerp_mul:r=30
+  screen_bleed__threshold_dark:r=0.01
+  screen_bleed__process_mode:i=0
+  screen_bleed__threshold_bright:r=0.001
+  screen_bleed__vector_field_speed:r=0.0025
+  screen_bleed__threshold_normal:r=1
+  screen_bleed__use_reprojection:b=no
+  screen_bleed__addition_mode:i=1
+  screen_bleed__enabled:b=yes
+  _tracked:t="screen_bleed__enabled"
+  game_effect__screenBleedSimulateDecaySmooth:p2=0.0001, 0.965
+  game_effect__screenBleedProcessFrameMulSmooth:p2=0, 0.3
+  game_effect__attachedAt:r=0
+  screen_bleed_effect__destrTemplate:t="client_destroy_in_5_sec"
+}
+
+darkness_indoor_volfog{
+  _use:t="nbs_sphere"
+  transform__inflateNBSSphereRadius:r=1
+
+  _group{
+    _tags:t="render"
+    nbs_sphere__class_name:t="channel8"
+  }
+}
+
+indoor_spawner_exclude{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "box_zone:tag"{}
+  "indoor_spawner__excludeZone:tag"{}
+}
+
+indoor_spawner_inside_moving{
+  "indoor_spawner__useMovingZone:tag"{}
+}
+
+indoor_disoriented_anomaly_trap{
+  _use:t="box_anomaly_base"
+  box_anomaly__affectTemplate:t="indoor_disoriented_anomaly_affect"
+  disoriented_anomaly__angle:r=0.5
+  disoriented_anomaly__sprintMultiplier:r=1.8
+}
+
+indoor_disoriented_anomaly_trap_fx{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  effect__scale:r=0.5
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="fire_molotov_p_sparks_fx"
+  }
+}
+
+indoor_disoriented_anomaly_affect{
+  _use:t="disoriented_anomaly_affect"
+}
+
+indoor_confusion_anomaly_trap{
+  _use:t="box_anomaly_base"
+  _use:t="confusion_indoor_volfog"
+  box_anomaly__affectTemplate:t="indoor_confusion_anomaly_affect"
+  disoriented_anomaly__angle:r=0.5
+  disoriented_anomaly__sprintMultiplier:r=1.8
+}
+
+indoor_confusion_anomaly_affect{
+  _use:t="anomaly_affect_base"
+  _use:t="disoriented_anomaly_affect"
+  _use:t="client_hero_affect_base"
+  game_effect__clientHeroAffectTemplate:t="indoor_confusion_anomaly_screen_bleed"
+  game_effect__clientHeroAffectUniqueTag:t="screenBleedEffect"
+  game_effect__clientHeroAffectDestroyTemplate:t="client_destroy_in_5_sec"
+}
+
+indoor_confusion_anomaly_screen_bleed{
+  _use:t="anomaly_screen_bleed_affect_base"
+  screen_bleed__use_motion_vector_lerp:b=yes
+  screen_bleed__simulate_speed:i=2
+  screen_bleed__second_layer_uv_mul:r=0.4
+  screen_bleed__process_frame_mul:r=0
+  game_effect__screenBleedProcessFrameMulSmooth:p2=0, 0.9
+  screen_bleed__motion_vector_lerp_mul:r=30
+  screen_bleed__threshold_dark:r=0.001
+  screen_bleed__process_mode:i=1
+  screen_bleed__threshold_bright:r=0.01
+  screen_bleed__vector_field_speed:r=0.0025
+  screen_bleed__threshold_normal:r=1
+  screen_bleed__use_reprojection:b=no
+  screen_bleed__addition_mode:i=0
+}
+
+confusion_indoor_volfog{
+  _use:t="nbs_sphere"
+  transform__inflateNBSSphereRadius:r=1
+
+  _group{
+    _tags:t="render"
+    nbs_sphere__class_name:t="channel9"
+  }
+}
+
+indoor_metal_heat_anomaly_trap{
+  _use:t="box_anomaly_base"
+  _use:t="box_anomaly_with_global_affect"
+  _use:t="area_decor_metal_heat"
+  _use:t="metal_heat_indoor_volfog"
+  _use:t="indoor_metal_heat_anomaly_trap_sound"
+  box_anomaly__affectTemplate:t="indoor_metal_heat_anomaly_affect"
+  box_anomaly__affectDestroyTemplate:t="server_destroy_in_5_sec"
+  metal_heat__affectBoostSpeed:r=0.1
+  metal_heat__affectCooldownSpeed:r=0.04
+  metal_heat__affectPower:r=0
+
+  "box_anomaly__globalAffectTemplates:list<t>"{
+    it:t="indoor_metal_heat_anomaly_global_affect"
+    it:t="metal_heat_light"
+  }
+
+  "box_anomaly__globalAffectDestroyTemplates:list<t>"{
+    it:t="server_destroy_in_25_sec"
+    it:t="server_destroy_in_25_sec"
+  }
+}
+
+indoor_metal_heat_anomaly_affect{
+  _use:t="anomaly_affect_base"
+  _use:t="indoor_metal_heat_anomaly_affect_sound"
+  metal_heat__affectProgress:r=0
+  metal_heat__affectProgressCooldownSpeed:r=0.2
+  metal_heat__punchChance:p2=0.004, 0.4
+  metal_heat__shootChance:p2=0.5, 0.8
+  metal_heat__dropGunChance:p2=0, 0
+  metal_heat__punchTime:p2=0.1, 0.2
+  metal_heat__punchStrength:p2=0.02, 0.3
+  metal_heat__damageChance:p2=0.1, 0.8
+  metal_heat__burningChance:p2=0.001, 0.01
+  metal_heat__damagePower:p2=0.01, 1
+  metal_heat__nextUpdateAt:r=-1
+  metal_heat__reqShoot:b=no
+  metal_heat__reqDropGun:b=no
+  _replicated:t="metal_heat__reqShoot"
+  _replicated:t="metal_heat__reqDropGun"
+
+  "anomaly_effect__ownerAnomalyEid:eid"{}
+}
+
+metal_heat_indoor_volfog{
+  _use:t="nbs_sphere"
+
+  _group{
+    _tags:t="render"
+    nbs_sphere__class_name:t="channel10"
+    nbs_sphere__radius:r=8
+  }
+}
+
+metal_heat_light{
+  _use:t="attached_omni_light"
+  game_effect__attachedAt:r=0
+  _replicated:t="game_effect__attachedAt"
+  light__contact_shadows:b=no
+  light__max_radius:r=6
+  light__offset:p3=0, 0, 0
+  light__color:c=255, 10, 1, 255
+  light__brightness:r=0.1
+  game_effect__lightBrightnessSmooth:p2=0.1, 5
+  metal_heat_light__movePosOffset:p3=0, 0, 0
+  metal_heat_light__movePosMaxOffset:p3=0.1, 0.1, 0.1
+  metal_heat_light__movePosSpeed:p3=20, 21, -29
+  game_effect__destroyAt:r=-1
+  _replicated:t="game_effect__destroyAt"
+}
+
+indoor_metal_heat_anomaly_global_affect{
+  _use:t="temperature_anomaly"
+  _use:t="indoor_metal_heat_anomaly_global_affect_sound"
+  temperature_anomaly__intensity:r=0
+  temperature_anomaly__radius:r=0
+  temperature_anomaly__initialScale:r=1
+  game_effect__temperatureAnomalyIntensitySmooth:p2=0.0001, 1
+  game_effect__attachedAt:r=0
+  _replicated:t="game_effect__attachedAt"
+  game_effect__destroyAt:r=-1
+  _replicated:t="game_effect__destroyAt"
+
+  "anomaly_effect__ownerAnomalyEid:eid"{}
+  _group{
+    _tags:t="render"
+    metal_heat__hazeEffectTemplate:t="metal_heat_trap_haze_effect"
+    metal_heat__hazeEffectsMaxCount:i=5
+    metal_heat__hazeEffectsSpawnAt:r=0
+  }
+}
+
+metal_heat_trap_haze_effect{
+  _use:t="client_destroy_in_5_sec"
+  game_effect__timeToDestroy:r=5
+  effect__scale:r=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "game_effect__attachedTo:eid"{}
+  "metal_heat__hazeEffect:tag"{}
+  effect{
+    _tags:t="render"
+  }
+
+  "effects:object"{
+    anomaly_heat_haze_a_fx:r=1
+    anomaly_heat_sparks_a_fx:r=1
+  }
+}
+
+wakeup_trigger_affect{
+  game_effect__timeToDestroy:r=10
+  game_effect__destroyAt:r=-1
+  _use:t="attract_point_zone_affect"
+
+  "game_effect__attachedTo:eid"{}
+  "entity_mod_effects:object"{
+    "attractionMult+mult_diminishing":r=2
+  }
+}
+
+invisible_wakeup_enemies_trigger{
+  _use:t="box_anomaly_base"
+  _use:t="box_anomaly_with_global_affect"
+  _use:t="entity_bound_area"
+  box_anomaly__checkBoxMin:p3=-0.85, 0, -0.85
+  box_anomaly__checkBoxMax:p3=0.85, 2, 0.85
+  box_anomaly__affectTemplate:t="wakeup_trigger_affect"
+  entity_bound_area__radius:r=0.5
+  entity_bound_area__name:t="POLYAREA_DANGER"
+
+  "box_anomaly__accuracyCheck:tag"{}
+  "box_anomaly__contactTrigger:tag"{}
+  "box_anomaly__globalAffectTemplates:list<t>"{
+    it:t="wakeup_all_around"
+  }
+}
+
+flowerman_trap_wakeup_enemies_light{
+  _use:t="attached_omni_light"
+  game_effect__attachedAt:r=0
+  _replicated:t="game_effect__attachedAt"
+  light__contact_shadows:b=no
+  light__max_radius:r=6
+  light__offset:p3=0, 0, 0
+  light__color:c=187, 255, 1, 255
+  light__brightness:r=0.1
+  game_effect__lightBrightnessSmooth:p2=0.1, 1
+  metal_heat_light__movePosOffset:p3=0, 0, 0
+  metal_heat_light__movePosMaxOffset:p3=0.1, 0.1, 0.1
+  metal_heat_light__movePosSpeed:p3=10, 11, -19
+  game_effect__destroyAt:r=-1
+  game_effect__timeToDestroy:r=2.5
+  _replicated:t="game_effect__destroyAt"
+}
+
+flowerman_trap_wakeup_enemies_fx{
+  _use:t="replicating"
+  game_effect__attachedAt:r=0
+  _replicated:t="game_effect__attachedAt"
+  effect__scale:r=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_effect__destroyAt:r=-1
+  game_effect__timeToDestroy:r=5
+  _replicated:t="game_effect__destroyAt"
+
+  _group{
+    _tags:t="sound"
+    on_appear_sound__path:t="enemy/walker/skeleton_swarm/attack"
+  }
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="char_flowerman_signal_trap_cmps_fx"
+  }
+}
+
+flowerman_trap_wakeup_enemies_trigger{
+  _use:t="flowerman_trap_wakeup_enemies_trigger_no_drop_on_ground"
+  transform__dropOnGroundOffset:r=0.5
+
+  "transform__dropOnGroundOnAppear:tag"{}
+}
+
+flowerman_trap_wakeup_enemies_trigger_no_drop_on_ground{
+  _use:t="invisible_wakeup_enemies_trigger"
+
+  "box_anomaly__globalAffectTemplates:list<t>"{
+    it:t="flowerman_trap_wakeup_all_around"
+    it:t="flowerman_trap_wakeup_enemies_fx"
+  }
+
+  "box_anomaly__globalAffectDestroyTemplates:list<t>"{
+    it:t="server_destroy_in_5_sec"
+    it:t="server_destroy_in_5_sec"
+  }
+}
+
+flowerman_wakeup_enemies_trap_no_drop_on_ground{
+  _use:t="invisible_wakeup_enemies_flowerman_trap"
+}
+
+flowerman_wakeup_enemies_trap{
+  _use:t="invisible_wakeup_enemies_flowerman_trap"
+  transform__dropOnGroundOffset:r=0.3
+
+  "transform__dropOnGroundOnAppear:tag"{}
+}
+
+flowerman_trap_root{
+  _use:t="flowerman_trap_root_no_drop_on_ground"
+
+  "transform__dropOnGroundOnAppear:tag"{}
+}
+
+flowerman_trap_root_no_drop_on_ground{
+  _use:t="decor_rendinst"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  transform__randomInitialScale:p2=0.4, 1.2
+  ri_extra__name:t="flowerman_trap_a"
+}
+
+flower_human_root_with_spawn_list{
+  _use:t="flower_human_root"
+
+  "spawn_entity_from_list__entitiesToSpawn:array"{
+    "i:object"{
+      name:t="flower_human"
+      chance:r=0.6
+    }
+
+    "i:object"{
+      name:t="active_matter_pile+coin_item_count_5+item_in_world"
+      chance:r=0.15
+    }
+
+    "i:object"{
+      name:t=""
+      chance:r=0.35
+    }
+  }
+}
+
+gd_dust{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  effect__scale:r=1
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="gd_island_decor_composite_fx"
+  }
+}
+
+gd_dust_small{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  effect__scale:r=1
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="gd_anomaly_small_decor_composite_fx"
+  }
+}

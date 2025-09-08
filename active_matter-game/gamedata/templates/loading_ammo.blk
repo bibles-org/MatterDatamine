@@ -1,0 +1,71 @@
+loading_ammo_controller{
+  _use:t="loading_ammo_controller_sound"
+  loading_ammo_controller__state:i=0
+  _tracked:t="loading_ammo_controller__state"
+  _replicated:t="loading_ammo_controller__state"
+  human_anim__loadingAmmoProgressVarId:i=-1
+  human_anim__loadingAmmoTypeVarId:i=-1
+  _tracked:t="loading_ammo_controller__loadingAffectEid"
+  _replicated:t="loading_ammo_controller__loadingAffectEid"
+  loading_ammo_controller__loadingAnimationStateStart:r=0
+  loading_ammo_controller__loadingAnimationStateLoopStart:r=1
+  loading_ammo_controller__loadingAnimationStateLoopEnd:r=2
+  loading_ammo_controller__loadingAnimationStateEnd:r=3
+  loading_ammo_controller__unloadingAnimationStateStart:r=4
+  loading_ammo_controller__unloadingAnimationStateLoopStart:r=5
+  loading_ammo_controller__unloadingAnimationStateLoopEnd:r=6
+  loading_ammo_controller__unloadingAnimationStateEnd:r=7
+
+  "loading_ammo_controller__loadingProcessEid:eid"{}
+  "loading_ammo_controller__loadingAffectEid:eid"{}
+}
+
+base_loading_ammo_affect{
+  _use:t="replicated_game_effect"
+  loading_ammo_affect__totalAmmoToLoad:i=0
+  loading_ammo_affect__wishToLoad:b=no
+
+  "loading_ammo_affect:tag"{}
+  "loading_ammo_affect__holderEid:eid"{}
+  "locked_weapon__aim:tag"{}
+  "locked_view__lockZoom:tag"{}
+  "game_effect__disableActions:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockSprayDraw:tag"{}
+  "locked_use_object__lockSprayFill:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "locked_use_object__lockGrenadeRethrowing:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_use_object__limitJetpackUse:tag"{}
+}
+
+magazine_loading_ammo_affect{
+  _use:t="base_loading_ammo_affect"
+  _use:t="slot_attachable"
+  _use:t="animchar"
+  animchar__res:t="akm_ammo_char"
+  slot_attach__slotName:t="mag_to_load"
+  game_effect__forceAnimUpperNonCrawlState:t="loading_ammo"
+  game_effect__forceAnimUpperNonCrawlStateId:i=-1
+  game_effect__forceAnimUpperCrawlState:t="loading_ammo_crawl"
+  game_effect__forceAnimUpperCrawlStateId:i=-1
+
+  "slot_attach__followEffectAttach:tag"{}
+  _group{
+    _tags:t="render"
+    magazine_anim__curNumAmmoParamId:i=-1
+  }
+
+  "animchar__objTexReplace:object"{}
+}
+
+loading_ammo_controller_sound{
+  _group{
+    _tags:t="sound"
+    loading_ammo_controller_sound__bulletLoadedIrq:t="bullet_loaded"
+    loading_ammo_controller_sound__bulletLoadedIrqId:i=-1
+    loading_ammo_controller_sound__bulletUnloadedIrq:t="bullet_unloaded"
+    loading_ammo_controller_sound__bulletUnloadedIrqId:i=-1
+  }
+}

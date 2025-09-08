@@ -1,0 +1,55 @@
+connectivity_status{
+  _use:t="replicating"
+  _singleton:b=yes
+  ui_state__connectivity:i=0
+  _tracked:t="ui_state__connectivity"
+  _tags:t="ui"
+}
+
+perf_stats{
+  _use:t="replicating"
+  _singleton:b=yes
+  _tags:t="ui"
+
+  ui_perf_stats{
+    _tags:t="ui"
+  }
+
+  _group{
+    _tags:t="ui"
+    _track:b=yes
+    ui_perf_stats__low_fps_warn:i=0
+    ui_perf_stats__latency_warn:i=0
+    ui_perf_stats__packet_loss_warn:i=0
+    ui_perf_stats__latency_variation_warn:i=0
+    ui_perf_stats__server_tick_warn:i=0
+    ui_perf_stats__low_tickrate_warn:i=0
+  }
+
+  _group{
+    _tags:t="ui"
+    ui_perf_stats__server_tick_thr:p2=30, 100
+    ui_perf_stats__low_fps_thr:p2=29, 14
+    ui_perf_stats__latency_thr:p2=200, 350
+    ui_perf_stats__packet_loss_thr:p2=7, 15
+    ui_perf_stats__fps_drop_thr:r=0.5
+  }
+}
+
+level_is_loading{
+  _use:t="replicating"
+  level_is_loading:b=no
+  _tracked:t="level_is_loading"
+}
+
+minimap_context{
+  _use:t="replicating"
+  _singleton:b=yes
+  _tags:t="ui"
+
+  "minimap_context:tag"{}
+}
+
+visualConsole{
+  "visualConsoleObject:tag"{}
+}

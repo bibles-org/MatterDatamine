@@ -1,0 +1,1463 @@
+nexus_team{
+  _use:t="raid_player_team"
+  team__capacity:i=30
+  team__id:i=-1
+  team__unitTemplate:t="nexus_militant+spawn_sequence_controller+allow_friendly_damage"
+  nexus_team__colorIndices:ip2=-1, -1
+
+  "team__unitTemplates:object"{}
+  "nexus_team:tag"{}
+}
+
+nexus_first_team{
+  team:i=2
+}
+
+nexus_second_team{
+  team:i=3
+}
+
+nexus_endgame_controller{
+  _use:t="endgame_controller"
+
+  _group{
+    _tags:t="gameClient"
+    endgame_controller__fadeInTime:r=1.5
+  }
+}
+
+channeling_nexus_militant_effect{
+  _use:t="game_effect_base"
+  game_effect__forceAnimUpperState:t="pickup_am"
+  game_effect__forceAnimUpperStateId:i=-1
+
+  "game_effect__activateUnarmed:tag"{}
+  "state__interruptItemUsage:tag"{}
+  "state__interruptReload:tag"{}
+  "locked_weapon__reload:tag"{}
+}
+
+nexus_player_loadout{
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    nexus_player_loadout__chosenIndex:i=0
+  }
+
+  _group{
+    _replicate:b=yes
+    nexus_player_loadout__takenIndex:i=-1
+    nexus_player_loadout__canChangeAt:r=-1
+  }
+}
+
+nexus_player{
+  _use:t="active_matter_player"
+  _use:t="nexus_player_loadout"
+
+  "nexus_player:tag"{}
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    nexus_player__spawned:b=no
+  }
+}
+
+nexus_players_bots_spawner{
+  _tags:t="server"
+  nexus_bots_spawner__updateInterval:r=-1
+  nexus_bots_spawner__nextSpawnAt:r=-1
+  nexus_bots_spawner__finishSpawnAt:r=-1
+  nexus_bots_spawner__startSpawnAt:r=-1
+}
+
+nexus_players_controller{
+  _use:t="replicating"
+
+  "nexus_players_controller:tag"{}
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    nexus_players_controller__numPlayersExpected:i=-1
+    nexus_players_controller__numPlayersConnected:i=0
+  }
+
+  _group{
+    _tags:t="server"
+
+    "nexus_players_controller__players:list<eid>"{}
+  }
+}
+
+nexus_game_start{
+  _use:t="replicating"
+
+  _group{
+    _track:b=yes
+    nexus_game_start__numPlayersLeftToStart:i=-1
+    nexus_game_start__numPlayersNeedToStart:i=-1
+  }
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    nexus_game_start__state:i=-1
+    nexus_game_start__stateEndAt:r=-1
+  }
+
+  _group{
+    _tags:t="server"
+    _track:b=yes
+    nexus_game_start__jipTime:r=-1
+  }
+
+  _group{
+    _tags:t="server"
+    nexus_game_start__startAfterWaitWithInsufficientPlayers:b=yes
+    nexus_game_start__waitForLastPlayerTime:r=-1
+    nexus_game_start__botWaitTime:r=5
+    nexus_game_start__warmUpMaxTime:r=15
+  }
+}
+
+nexus_game_start_by_player_proportion{
+  nexus_game_start__playersProportionToStart:r=0.7
+}
+
+nexus_game_start_by_player_count{
+  nexus_game_start__playersCountToStart:i=10
+}
+
+nexus_game_end{
+  _use:t="replicating"
+  nexus_game_end__debriefingTime:r=20
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    nexus_game_end__state:i=-1
+    nexus_game_end__stateEndAt:r=-1
+    nexus_game_end__winnerTeam:i=-1
+  }
+
+  _group{
+    _tags:t="server"
+    nexus_game_end__delayAfterGameEnd:r=5
+    nexus_game_end__clientsLeaveTime:r=2
+  }
+}
+
+nexus_warm_up_controller{
+  _use:t="nexus_warm_up_lock_shooting"
+  _use:t="replicating"
+
+  "nexus_warm_up_controller:tag"{}
+  _group{
+    _tags:t="server"
+    nexus_warm_up__active:b=no
+    nexus_warm_up__spawnDealy:r=2
+
+    "nexus_warm_up__spawnController:eid"{}
+  }
+}
+
+nexus_warm_up_spawn_without_choosing_loadout{
+  "nexus_warm_up_spawn_without_choosing_loadout:tag"{}
+}
+
+nexus_warm_up_god_mode{
+  "nexus_warm_up_god_mode:tag"{}
+}
+
+nexus_warm_up_remove_militants_at_end{
+  "nexus_warm_up_remove_militants_at_end:tag"{}
+}
+
+nexus_warm_up_disable_friendly_damage{
+  "nexus_warm_up_disable_friendly_damage:tag"{}
+}
+
+nexus_warm_up_lock_shooting{
+  "nexus_warm_up_lock_shooting:tag"{}
+}
+
+nexus_warm_up{
+  "nexus_warm_up:tag"{}
+}
+
+nexus_warm_up_player_destroy_possessed_at_end{
+  "nexus_warm_up_player_destroy_possessed_at_end:tag"{}
+}
+
+nexus_auto_create_protect_spheres{
+  nexus_auto_create_protect_spheres__radius:r=10
+  nexus_auto_create_protect_spheres__template:t="nexus_protect_sphere"
+}
+
+nexus_protect_sphere_allow_allies_to_exit{
+  "nexus_protect_sphere_allow_allies_to_exit:tag"{}
+}
+
+nexus_bulletproof_sphere{
+  _use:t="replicating"
+  _use:t="traceable_sphere"
+  _use:t="traceable_sphere_hit_effect"
+  traceable_sphere_hit_effect__name:t="sparks_armor_hit_a_fx"
+  material:t="steel"
+  grid_obj__gridType:t="traceable_spheres"
+
+  _group{
+    _track:b=yes
+    sphere_zone__radius:r=1
+  }
+
+  grid_obj{}
+}
+
+nexus_protect_sphere_fadeout{
+  _tags:t="render"
+  nexus_protect_sphere_fadeout__targetAbberationShift:p4=1, 0, 0, 0
+  nexus_protect_sphere_fadeout__createEffectsInTimeBeforeStart:r=1.01
+  nexus_protect_sphere_fadeout__abberationStrength:r=0
+  nexus_protect_sphere_fadeout__createEffectsAt:r=-1
+
+  "nexus_protect_sphere_fadeout__effectTemplates:list<t>"{
+    i:t="nexus_protect_sphere_fadeout_abberation_effect"
+    i:t="nexus_protect_sphere_fadeout_fade_effect"
+  }
+
+  "nexus_protect_sphere_fadeout__effects:list<eid>"{}
+}
+
+nexus_protect_sphere_fadeout_abberation_effect{
+  _use:t="animate_float_component"
+  animate_float_component__componentName:t="nexus_protect_sphere_fadeout__abberationStrength"
+
+  "animate_float_component__curve:array"{
+    "key:object"{
+      t:r=0
+      v:r=0
+    }
+
+    "key:object"{
+      t:r=0.5
+      v:r=0
+    }
+
+    "key:object"{
+      t:r=1
+      v:r=0.5
+    }
+  }
+}
+
+nexus_protect_sphere_fadeout_fade_effect{
+  _use:t="animate_float_component"
+  animate_float_component__componentName:t="forcefield__fadeMaxDist"
+
+  "animate_float_component__curve:array"{
+    "key:object"{
+      t:r=0
+      v:r=5
+    }
+
+    "key:object"{
+      t:r=1
+      v:r=0
+    }
+  }
+}
+
+nexus_protect_sphere_active{
+  _use:t="nexus_protect_sphere_fadeout"
+
+  "nexus_protect_sphere_active:tag"{}
+  _group{
+    _tags:t="render"
+    forcefield__fadeMaxDist:r=5
+    forcefield__shiningBorderMaxHeight:r=100
+    forcefield__shiningFlamesMaxHeight:r=60
+    forcefield__distortionStrength:r=700000
+  }
+}
+
+nexus_protect_sphere{
+  _use:t="replicating"
+  _use:t="nexus_bulletproof_sphere"
+  nexus_protect_sphere__enemyRadiusSq:r=-1
+  nexus_protect_sphere__allyRadiusSq:r=-1
+  nexus_protect_sphere__enemyClosestDistance:r=1
+  nexus_protect_sphere__allyClosestDistance:r=1
+  nexus_protect_sphere__deltaToPush:r=0.01
+  nexus_protect_sphere__activeTemplate:t="render_forcefield+nexus_protect_sphere_active"
+  nexus_protect_sphere__hintSphereTemplate:t="nexus_protect_sphere_hint"
+
+  "nexus_protect_sphere:tag"{}
+  _group{
+    _replicate:b=yes
+    nexus_protect_sphere__team:i=-1
+  }
+
+  _group{
+    _track:b=yes
+    sphere_zone__radius:r=1
+  }
+
+  _group{
+    _tags:t="gameClient"
+    nexus_protect_sphere__allyCollor:p4=0, 1, 0, 0
+    nexus_protect_sphere__enemyCollor:p4=1, 0, 0, 0
+  }
+}
+
+nexus_kill_sphere{
+  _use:t="replicating"
+  _use:t="traceable_sphere"
+  _use:t="render_forcefield"
+  nexus_kill_sphere__radiusExpansionPerSec:r=30
+
+  "nexus_kill_sphere:tag"{}
+  _group{
+    _replicate:b=yes
+    nexus_kill_sphere__creationTime:r=-1
+  }
+
+  _group{
+    _tags:t="server"
+    nexus_kill_sphere__killTeam:i=-1
+  }
+
+  _group{
+    _tags:t="render"
+    forcefield__fadeMaxDist:r=10000
+    forcefield__shiningBorderMaxHeight:r=100
+    forcefield__shiningFlamesMaxHeight:r=60
+    forcefield__distortionStrength:r=700000
+  }
+
+  _group{
+    _track:b=yes
+    sphere_zone__radius:r=0
+  }
+}
+
+nexus_battle_item_unique_id_holder{
+  nexus_battle_item_unique_id_holder__nextUniqueId:i64=0
+}
+
+nexus_spawn_controller{
+  _use:t="replicating"
+  _use:t="nexus_battle_item_unique_id_holder"
+
+  "nexus_spawn_controller:tag"{}
+  "spawn_rules__customLevelLoadedRespawn:tag"{}
+  _group{
+    _tags:t="server"
+    nexus_spawn_controller__spawnSequenceDelay:r=0.35
+    player_template__override:t="nexus_player"
+
+    "nexus_spawn_controller__playersController:eid"{}
+    "nexus_spawn_controller__spawnedPlayers:list<eid>"{}
+    "nexus_spawn_controller__spawningPlayers:list<eid>"{}
+  }
+
+  _group{
+    _tags:t="gameClient"
+    nexus_spawn_controller__spawnSequenceFadeColor:c=5, 7, 5, 255
+  }
+}
+
+nexus_spawn_scheduled{
+  _tags:t="server"
+  nexus_spawn_scheduled__spawnAtTime:r=-1
+  nexus_spawn_scheduled__startSequenceAtTime:r=-1
+  nexus_spawn_scheduled__replaceForced:b=no
+  nexus_spawn_scheduled__destroyPreviousPossessed:b=no
+
+  "nexus_spawn_scheduled__spawnController:eid"{}
+  "nexus_spawn_scheduled__player:eid"{}
+}
+
+nexus_loadout_controller{
+  _use:t="replicating"
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    nexus_loadout_controller__canChange:b=no
+  }
+}
+
+nexus_militant{
+  _use:t="am_militant_with_attachable_suit"
+  _use:t="equip_cortical_vault"
+  am_storage__maxValue:i=100
+
+  "nexus_militant:tag"{}
+  _group{
+    _tags:t="gameClient"
+    nexus_militant__channelingNodeName:t="Bip01 L Hand"
+    nexus_militant__channelingNodeId:i=-1
+    nexus_militant__onAppearEffect:t="teleport_effect_out"
+
+    "nexus_militant__capturingBeaconEid:eid"{}
+    "nexus_militant__channelingAnimEffect:eid"{}
+    "nexus_militant__channelingVisualEffect:eid"{}
+  }
+
+  _group{
+    _tags:t="sound"
+    nexus_militant__onAppearSoundHero:t="player/effects/teleport_enter"
+    nexus_militant__onAppearSoundOther:t="enemy/effects/teleport_enter"
+  }
+}
+
+nexus_portal_light_effect{
+  _use:t="attached_omni_light"
+  light__max_radius:r=4
+  light__offset:p3=0, 0, 0
+  light__color:c=122, 166, 186, 255
+  light__brightness:r=0.1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _replicated:t="transform"
+
+  "net__alwaysInScope:tag"{}
+  "nexus_portal_light:tag"{}
+}
+
+nexus_mode_disable_shooting{
+  _use:t="replicating"
+  _use:t="game_effect_base"
+
+  "nexus_mode_disable_shooting:tag"{}
+  "locked_weapon__reload:tag"{}
+  "locked_weapon__aim:tag"{}
+  "locked_view__lockZoom:tag"{}
+  "game_effect__disableActions:tag"{}
+  "game_effect__disableShooting:tag"{}
+  "game_effect__disableMelee:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+}
+
+nexus_mode_disable_input{
+  _use:t="replicating"
+  _use:t="game_effect_base"
+
+  "nexus_mode_disable_input:tag"{}
+  "state__deactivateInput:tag"{}
+  "state__lockMove:tag"{}
+  "state__disableJump:tag"{}
+  "locked_weapon__reload:tag"{}
+  "locked_weapon__aim:tag"{}
+  "locked_view__lockZoom:tag"{}
+  "game_effect__disableActions:tag"{}
+  "game_effect__disableShooting:tag"{}
+  "game_effect__disableMelee:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "state__disableWeaponSwitch:tag"{}
+  "state__disableStoneThrow:tag"{}
+}
+
+nexus_mode_disable_movement{
+  _use:t="replicating"
+  _use:t="game_effect_base"
+
+  "nexus_mode_disable_movement:tag"{}
+  "state__lockMove:tag"{}
+  "state__disableJump:tag"{}
+  "locked_weapon__reload:tag"{}
+  "locked_weapon__aim:tag"{}
+  "locked_view__lockZoom:tag"{}
+  "game_effect__disableActions:tag"{}
+  "game_effect__disableShooting:tag"{}
+  "game_effect__disableMelee:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "state__disableStoneThrow:tag"{}
+}
+
+nexus_beacon{
+  _use:t="replicating"
+  _use:t="nexus_beacon_random_capture_devices"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item_world_marker__enabled:b=yes
+  item_world_marker__offset:p3=0, 0, 0
+  nexus_beacon__id:i=1
+  nexus_beacon__name:t="Capture Point"
+  nexus_beacon__symbol:t="A"
+  nexus_beacon__progressToCapture:r=100
+  nexus_beacon__progressCapturePerSec:r=20
+  nexus_beacon__progressCooldownPerSec:r=30
+  nexus_beacon__progressResetPerSec:r=50
+
+  "nexus_beacon:tag"{}
+  _group{
+    _track:b=yes
+    nexus_beacon__progress:r=0
+  }
+
+  _group{
+    _replicate:b=yes
+    _track:b=yes
+    nexus_beacon__controllingTeam:i=-1
+    nexus_beacon__state:i=0
+    nexus_beacon__captureTeam:i=-1
+    nexus_beacon__captureDeviceAdvantage:i=0
+    nexus_beacon__lastSyncProgress:r=0
+    nexus_beacon__lastSyncTime:r=0
+  }
+
+  _group{
+    _replicate:b=yes
+
+    "nexus_beacon__captureMilitants:list<eid>"{}
+    "nexus_beacon__captureDevices:list<eid>"{}
+  }
+
+  _group{
+    _tags:t="gameClient"
+    _track:b=yes
+    nexus_beacon__progressVisual:r=0
+    nexus_beacon__progressVisualSpeedPerSec:r=0.6
+  }
+
+  _group{
+    _tags:t="gameClient"
+    nexus_beacon__controlledByAllies:b=no
+  }
+}
+
+nexus_beacon_capture_device{
+  _use:t="replicating"
+  _use:t="nexus_beacon_capture_device_effect_sound"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__useActionHintType:i=1
+  item__setCustomUsePrompt:t="nexus_beacon_capture_device/start_capture"
+  item__useActionAvailable:b=yes
+  nexus_beacon_capture_device__parentId:i=1
+  nexus_beacon_capture_device__interactionDistance:r=4
+  nexus_beacon_capture_device__interactionRadius:r=1.2
+
+  "nexus_beacon_capture_device:tag"{}
+  _group{
+    _replicate:b=yes
+    _track:b=yes
+    nexus_beacon_capture_device__capturingTeam:i=-1
+
+    "composit_holder__childrenEids:list<eid>"{}
+    "nexus_beacon_capture_device__beacon:eid"{}
+    "nexus_beacon_capture_device__animchar:eid"{}
+    "nexus_beacon_capture_device__light:eid"{}
+    "nexus_beacon_capture_device__capturingMilitant:eid"{}
+  }
+
+  _group{
+    _tags:t="gameClient"
+    nexus_beacon_capture_device__progressVisual:r=0
+    nexus_beacon_capture_device__emissionColor:c=33, 19, 9, 25
+    nexus_beacon_capture_device__lightColor:c=33, 19, 9, 25
+    nexus_beacon_capture_device__emissionInactiveColor:c=33, 19, 9, 55
+    nexus_beacon_capture_device__lightInactiveColor:c=33, 19, 9, 55
+    nexus_beacon_capture_device__emissionCooldownColor:c=239, 204, 96, 75
+    nexus_beacon_capture_device__lightCooldownColor:c=239, 204, 96, 75
+    nexus_beacon_capture_device__emissionAllyColor:c=42, 147, 255, 155
+    nexus_beacon_capture_device__lightAllyColor:c=42, 147, 255, 155
+    nexus_beacon_capture_device__emissionEnemyColor:c=255, 22, 2, 100
+    nexus_beacon_capture_device__lightEnemyColor:c=255, 22, 2, 100
+    nexus_beacon_capture_device__activationPrompt:t="nexus_beacon_capture_device/start_capture"
+    nexus_beacon_capture_device__continuePrompt:t="nexus_beacon_capture_device/continue_capture"
+    nexus_beacon_capture_device__inUsePrompt:t="nexus_beacon_capture_device/in_use"
+    nexus_beacon_capture_device__capturedPrompt:t="nexus_beacon_capture_device/captured"
+  }
+
+  "composit_spawn__nodes:array"{
+    "node:object"{
+      type:t="entity"
+      template:t="nexus_beacon_capture_device_animchar"
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, -0.8, 0]]
+    }
+
+    "node:object"{
+      type:t="entity"
+      template:t="nexus_beacon_capture_device_light"
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+    }
+  }
+}
+
+nexus_beacon_capture_device_animchar{
+  _use:t="replicating"
+  _use:t="animchar_with_dynamic_emission"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="nexus_device_00_char"
+  animchar_render__enabled:b=yes
+
+  "nexus_beacon_capture_device_animchar:tag"{}
+}
+
+nexus_beacon_capture_device_light{
+  _use:t="undestroyable_omni_light"
+  light__max_radius:r=6
+  light__offset:p3=0, 0, 0
+  light__color:c=255, 10, 10, 255
+  light__brightness:r=2
+  light__contact_shadows:b=no
+  light__texture_name:t="ies_ceiling_smooth_a"
+  light__use_box:b=no
+
+  "nexus_beacon_capture_device_light:tag"{}
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    _replicate:b=yes
+    omni_light__shadows:b=yes
+    omni_light__dynamic_obj_shadows:b=no
+    omni_light__shadow_quality:i=2
+  }
+}
+
+nexus_beacon_capture_device_effect_sound{
+  _use:t="sound_effect"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/nexus_device"
+    nexus_beacon_capture_device_effect_sound__progress:r=-1
+  }
+}
+
+nexus_beacon_precaptured{
+  nexus_beacon__precapturedForTeam:i=-1
+}
+
+nexus_beacon_precaptured_first_team{
+  nexus_beacon__precapturedForTeam:i=2
+}
+
+nexus_beacon_precaptured_second_team{
+  nexus_beacon__precapturedForTeam:i=3
+}
+
+nexus_beacon_random_capture_devices{
+  nexus_beacon__randomCaptureDevicesCount:i=1
+  nexus_beacon__allCaptureDevicesCount:i=1
+}
+
+nexus_beacon_capture_device_inactive{
+  "nexus_beacon_capture_device_inactive:tag"{}
+}
+
+nexus_game_controller{
+  "nexus_game_controller:tag"{}
+  _group{
+    _replicate:b=yes
+    nexus_game_controller__isGameStarted:b=no
+    nexus_game_controller__isGameFinished:b=no
+  }
+
+  _group{
+    _tags:t="server"
+
+    "nexus_game_controller__spawnController:eid"{}
+  }
+}
+
+nexus_loadouts{
+  _use:t="replicating"
+
+  _group{
+    _replicate:b=yes
+
+    "nexus_loadouts__owner:eid"{}
+  }
+
+  _group{
+    _replicate:b=yes
+    _track:b=yes
+
+    "nexus_loadouts__allLoadouts:array"{}
+  }
+}
+
+nexus_battle_initial_am{
+  _tags:t="server"
+  nexus_battle_initial_am__value:i=0
+
+  "nexus_battle_initial_am__playersGiven:list<eid>"{}
+}
+
+nexus_battle_initial_loot{
+  team:i=-1
+
+  "nexus_battle_initial_loot:tag"{}
+  "nexus_battle_loot__loot:array"{
+    "item:object"{
+      templateName:t="knife_weapon"
+      count:i=20
+    }
+
+    "item:object"{
+      templateName:t="m4_gun"
+      count:i=5
+    }
+
+    "item:object"{
+      templateName:t="box_9mm_magazine"
+      count:i=100
+    }
+
+    "item:object"{
+      templateName:t="suit_militant_heavy_a_item"
+      count:i=2
+    }
+
+    "item:object"{
+      templateName:t="flashlight_device"
+      count:i=10
+    }
+
+    "item:object"{
+      templateName:t="hammer_weapon"
+      count:i=2
+    }
+
+    "item:object"{
+      templateName:t="spas_12_gun"
+      count:i=2
+    }
+
+    "item:object"{
+      templateName:t="small_pouch"
+      count:i=38
+    }
+
+    "item:object"{
+      templateName:t="helmet_c"
+      count:i=20
+    }
+
+    "item:object"{
+      templateName:t="flashlight_device"
+      count:i=38
+    }
+
+    "item:object"{
+      templateName:t="small_backpack"
+      count:i=38
+    }
+
+    "item:object"{
+      templateName:t="suit_militant_light_a_item"
+      count:i=24
+    }
+
+    "item:object"{
+      templateName:t="armorplate_big_a"
+      count:i=34
+    }
+
+    "item:object"{
+      templateName:t="hk_mp5n_gun"
+      count:i=20
+    }
+
+    "item:object"{
+      templateName:t="hk_mp5n_magazine"
+      count:i=80
+    }
+
+    "item:object"{
+      templateName:t="makarov_gun"
+      count:i=34
+    }
+
+    "item:object"{
+      templateName:t="makarov_magazine"
+      count:i=68
+    }
+
+    "item:object"{
+      templateName:t="knife_weapon"
+      count:i=34
+    }
+
+    "item:object"{
+      templateName:t="box_9mm_magazine"
+      count:i=142
+    }
+
+    "item:object"{
+      templateName:t="helmet_f"
+      count:i=14
+    }
+
+    "item:object"{
+      templateName:t="suit_militant_light_b_item"
+      count:i=10
+    }
+
+    "item:object"{
+      templateName:t="armorplate_small_a"
+      count:i=40
+    }
+
+    "item:object"{
+      templateName:t="m4_gun"
+      count:i=10
+    }
+
+    "item:object"{
+      templateName:t="m4_magazine"
+      count:i=50
+    }
+
+    "item:object"{
+      templateName:t="f1_grenade_item"
+      count:i=20
+    }
+
+    "item:object"{
+      templateName:t="box_5_56_magazine"
+      count:i=40
+    }
+
+    "item:object"{
+      templateName:t="akm_47_civil_gun"
+      count:i=4
+    }
+
+    "item:object"{
+      templateName:t="scope_pso1"
+      count:i=4
+    }
+
+    "item:object"{
+      templateName:t="akm_47_magazine"
+      count:i=20
+    }
+
+    "item:object"{
+      templateName:t="mp_443_gun"
+      count:i=4
+    }
+
+    "item:object"{
+      templateName:t="mp_443_magazine"
+      count:i=12
+    }
+
+    "item:object"{
+      templateName:t="box_7_62x39_magazine"
+      count:i=12
+    }
+
+    "item:object"{
+      templateName:t="rdgm_smoke_grenade_item"
+      count:i=12
+    }
+
+    "item:object"{
+      templateName:t="helmet_a"
+      count:i=4
+    }
+
+    "item:object"{
+      templateName:t="suit_militant_heavy_a_item"
+      count:i=4
+    }
+
+    "item:object"{
+      templateName:t="armorplate_small_c"
+      count:i=20
+    }
+
+    "item:object"{
+      templateName:t="armorplate_big_c"
+      count:i=12
+    }
+
+    "item:object"{
+      templateName:t="spas_12_gun"
+      count:i=4
+    }
+
+    "item:object"{
+      templateName:t="hammer_weapon"
+      count:i=4
+    }
+
+    "item:object"{
+      templateName:t="box_12_gauge_magazine"
+      count:i=32
+    }
+
+    "item:object"{
+      templateName:t="zarya_flash_grenade_item"
+      count:i=8
+    }
+
+    "item:object"{
+      templateName:t="item_healing_ampoule"
+      count:i=320
+    }
+
+    "item:object"{
+      templateName:t="item_injector_hot"
+      count:i=100
+    }
+  }
+}
+
+nexus_revive_machine{
+  _use:t="placeable_rendinst"
+  _use:t="usable_object_base"
+  _use:t="map_component_marker"
+  ri_extra__name:t="outpost_props_laptop"
+  use_object__offset:p3=0, 0, 0
+  use_object__obbMin:p3=0, 0, 0
+  use_object__obbMax:p3=0, 0, 0
+  use_object__selectedTemplate:t="selected_lootable_container"
+  item__useActionHintType:i=1
+  item_world_marker__offset:p3=0, 0, 0
+  item_world_marker__riColliderPoint:p3=0.5, 0.65, 0.4
+  item_world_marker__riColliderPointOffset:p3=0, 0, 0
+  map_object_marker__iconName:t="!ui/skin#antenna.svg"
+  map_object_marker__tooltip:t="hint/nexusReviveMachineMarker"
+  map_object_marker__activeColor:p3=235, 135, 235
+  map_object_marker__hoverColor:p3=255, 175, 255
+  map_object__show:b=yes
+  map_object_marker__clampToBorder:b=no
+  _tracked:t="interaction_menu_available"
+  nexus_revive_machine__spawnOffset:r=1.25
+
+  _group{
+    _tags:t="gameClient"
+    interaction_menu_available:b=yes
+
+    "interaction_menu_header:array"{}
+    "interaction_menu:array"{}
+  }
+
+  "nexus_revive_machine:tag"{}
+}
+
+nexus_battle_container_item_initialize_tracker{
+  "nexus_battle_container_item_initialize_tracker:tag"{}
+}
+
+nexus_mode_storm_zone{
+  _use:t="storm_zone_with_forcefield"
+
+  "dmgzone__ignoreInvisibleTargets:tag"{}
+}
+
+human_nexus_channeling_effect_point{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  "effects:object"{
+    am_absorbtion_flow_flare_fx:r=1
+    am_absorbtion_flow_pinch_fx:r=1
+  }
+}
+
+human_nexus_channeling_effect{
+  human_nexus_channeling_effect__goal:p3=0, 0, 0
+  human_nexus_channeling_effect__flySpeed:r=6
+  human_nexus_channeling_effect__requiredDistanceToTarget:r=0.5
+
+  "human_nexus_channeling_effect__owner:eid"{}
+  "human_nexus_channeling_effect__pointEid:eid"{}
+}
+
+nexus_portal_debug{
+  "nexus_portal_debug:tag"{}
+}
+
+nexus_militant_debug_bot{
+  _use:t="am_militant_with_builtin_suit"
+
+  "nexus_militant:tag"{}
+}
+
+init_nexus_bot_loadouts{
+  init_nexus_bot_loadouts__file:t="gamedata/loadouts/nexus_bot_loadouts.json"
+}
+
+nexus_battle_debug_bot_spawner{
+  _use:t="am_bot_spawner_names"
+  bot_spawner__playerTemplate:t="nexus_player"
+
+  "bot_spawner__heroTemplates:list<t>"{
+    i:t="nexus_militant_debug_bot"
+  }
+}
+
+nexus_supply_backpack{
+  _use:t="small_backpack"
+
+  "item__cantBeCorrupted:tag"{}
+  "human_inventory__alwaysRecognizedItems:tag"{}
+  "human_inventory__tooltipItems:tag"{}
+}
+
+nexus_smoke_grenades_supply_backpack_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="rdgm_smoke_grenade_item"
+      number:ip2=40, 40
+    }
+  }
+}
+
+nexus_smoke_grenades_supply_backpack{
+  _use:t="nexus_supply_backpack"
+  item__proto:t="nexus_smoke_grenades_supply_backpack"
+  item__name:t="items/nexus_smoke_grenades_supply_backpack"
+  loot_drop_system__lootPreset:t="nexus_smoke_grenades_supply_backpack_loot_preset"
+}
+
+nexus_frag_grenades_supply_backpack_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="f1_grenade_item"
+      number:ip2=40, 40
+    }
+  }
+}
+
+nexus_frag_grenades_supply_backpack{
+  _use:t="nexus_supply_backpack"
+  item__proto:t="nexus_frag_grenades_supply_backpack"
+  item__name:t="items/nexus_frag_grenades_supply_backpack"
+  loot_drop_system__lootPreset:t="nexus_frag_grenades_supply_backpack_loot_preset"
+}
+
+nexus_ammo_supply_backpack_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=4, 4
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="box_12_gauge_magazine"
+      number:ip2=8, 8
+    }
+
+    "item:object"{
+      template_name:t="box_9mm_magazine"
+      number:ip2=8, 8
+    }
+
+    "item:object"{
+      template_name:t="box_7_62x54_magazine"
+      number:ip2=8, 8
+    }
+
+    "item:object"{
+      template_name:t="box_5_45x39_magazine"
+      number:ip2=8, 8
+    }
+  }
+}
+
+nexus_ammo_supply_backpack{
+  _use:t="nexus_supply_backpack"
+  item__proto:t="nexus_ammo_supply_backpack"
+  item__name:t="items/nexus_ammo_supply_backpack"
+  loot_drop_system__lootPreset:t="nexus_ammo_supply_backpack_loot_preset"
+  item__iconPitch:r=-40
+  item__iconRoll:r=90
+  item__iconYaw:r=-20
+}
+
+nexus_healkit_supply_backpack_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=8, 8
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_healkit"
+      number:ip2=10, 10
+    }
+  }
+}
+
+nexus_healkit_supply_backpack{
+  _use:t="nexus_supply_backpack"
+  item__proto:t="nexus_healkit_supply_backpack"
+  item__name:t="items/nexus_healkit_supply_backpack"
+  loot_drop_system__lootPreset:t="nexus_healkit_supply_backpack_loot_preset"
+}
+
+nexus_battle_container_supplies_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=5, 5
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="nexus_smoke_grenades_supply_backpack"
+      number:i=3
+    }
+
+    "item:object"{
+      template_name:t="nexus_frag_grenades_supply_backpack"
+      number:i=3
+    }
+
+    "item:object"{
+      template_name:t="nexus_ammo_supply_backpack"
+      number:i=3
+    }
+
+    "item:object"{
+      template_name:t="nexus_healkit_supply_backpack"
+      number:i=3
+    }
+  }
+}
+
+nexus_battle_container{
+  _use:t="placeable_rendinst"
+  _use:t="openable_external_inventory_container_ri"
+  _use:t="iteractable_drop_on_ri_destroy"
+  team:i=-1
+  nexus_battle_container__team:i=-1
+  human_inventory__maxVolume:r=1000
+  ri_extra__name:t="server_crate_a_draft"
+  openable_ri__closed:t="server_crate_a_draft"
+  ri_preload__name:t="server_crate_a_draft"
+  loot_drop_system__lootPreset:t="nexus_battle_container_supplies_preset"
+
+  "nexus_battle_container:tag"{}
+  "human_inventory__alwaysRecognizedItems:tag"{}
+  _group{
+    _tags:t="ui"
+    itemContainer__uiItemsMergeEnabled:b=yes
+    itemContainer__uiItemsSortingEnabled:b=yes
+    itemContainer__uiItemsOverrideSortingPriority:b=yes
+  }
+}
+
+nexus_history_active{
+  "nexus_history_active:tag"{}
+}
+
+nexus_history_beacon_capture{
+  _use:t="replicating"
+  nexus_history__at:r=-1
+  nexus_history__team:i=-1
+
+  "nexus_history:tag"{}
+  "nexus_history_beacon_capture:tag"{}
+  "nexus_history__participants:list<eid>"{}
+}
+
+nexus_history_beacon_reset{
+  _use:t="replicating"
+  nexus_history__at:r=-1
+  nexus_history__team:i=-1
+
+  "nexus_history:tag"{}
+  "nexus_history_beacon_reset:tag"{}
+  "nexus_history__participants:list<eid>"{}
+}
+
+nexus_history_winner{
+  _use:t="replicating"
+  nexus_history__team:i=-1
+  nexus_history__at:r=-1
+
+  "nexus_history:tag"{}
+  "nexus_history_winner:tag"{}
+}
+
+nexus_history_winner_reason{
+  nexus_history__winReason:i=-1
+}
+
+nexus_history_offender_local{
+  "nexus_history_offender_local:tag"{}
+}
+
+nexus_history_victim_local{
+  "nexus_history_victim_local:tag"{}
+}
+
+nexus_history_assist_local{
+  "nexus_history_assist_local:tag"{}
+}
+
+nexus_history_participant_local{
+  "nexus_history_participant_local:tag"{}
+}
+
+nexus_history_hit{
+  _use:t="replicating"
+  nexus_history__damage:r=0
+  nexus_history__at:r=0
+
+  "nexus_history:tag"{}
+  "nexus_history_hit:tag"{}
+  "nexus_history__offender:eid"{}
+  "nexus_history__victim:eid"{}
+}
+
+nexus_history_hit_self{
+  "nexus_history_hit_self:tag"{}
+}
+
+nexus_history_hit_team{
+  "nexus_history_hit_team:tag"{}
+}
+
+nexus_history_kill{
+  _use:t="replicating"
+  nexus_history__at:r=0
+  nexus_history__weapon:t=""
+
+  "nexus_history:tag"{}
+  "nexus_history_kill:tag"{}
+  "nexus_history__offender:eid"{}
+  "nexus_history__victim:eid"{}
+  "nexus_history__killGroupEid:eid"{}
+  "nexus_history__assists:list<eid>"{}
+}
+
+nexus_history_kill_grenade{
+  "nexus_history_kill_grenade:tag"{}
+}
+
+nexus_history_kill_melee{
+  "nexus_history_kill_melee:tag"{}
+}
+
+nexus_history_kill_longshot{
+  nexus_history__killDistance:r=-1
+
+  "nexus_history_kill_longshot:tag"{}
+}
+
+nexus_history_kill_headshot{
+  "nexus_history_kill_headshot:tag"{}
+}
+
+nexus_history_kill_teamkill{
+  "nexus_history_kill_teamkill:tag"{}
+}
+
+nexus_history_kill_suicide{
+  "nexus_history_kill_suicide:tag"{}
+}
+
+nexus_history_kill_group{
+  _use:t="replicating"
+
+  "nexus_history:tag"{}
+  "nexus_history_kill_group:tag"{}
+  "nexus_history__offender:eid"{}
+  _group{
+    _tags:t="server"
+    nexus_history_kill_group__previousKillCount:i=-1
+  }
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+
+    "nexus_history_kill_group__killEntries:list<eid>"{}
+  }
+}
+
+nexus_stats{
+  _use:t="replicating"
+  nexus_stats__team:i=-1
+
+  "nexus_stats__owner:eid"{}
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    nexus_stats__kills:i=0
+    nexus_stats__doubleKills:i=0
+    nexus_stats__tripleKills:i=0
+    nexus_stats__multipleKills:i=0
+    nexus_stats__teamKills:i=0
+    nexus_stats__meleeKills:i=0
+    nexus_stats__grenadeKills:i=0
+    nexus_stats__longshotKills:i=0
+    nexus_stats__headshotKills:i=0
+    nexus_stats__hits:i=0
+    nexus_stats__assists:i=0
+    nexus_stats__beaconCaptures:i=0
+    nexus_stats__beaconResets:i=0
+    nexus_stats__deaths:i=0
+    nexus_stats__score:i=0
+    nexus_stats__credits:i=0
+  }
+}
+
+nexus_stats_total{
+  "nexus_stats_total:tag"{}
+}
+
+nexus_stats_local{
+  "nexus_stats_local:tag"{}
+}
+
+nexus_stats_scoresheet{
+  "nexus_stats__scoresheet:object"{
+    "undefined:object"{
+      score:i=0
+      credits:i=0
+    }
+
+    "kill:object"{
+      score:i=200
+      credits:i=200
+    }
+
+    "grenade_kill:object"{
+      score:i=200
+      credits:i=200
+    }
+
+    "melee_kill:object"{
+      score:i=250
+      credits:i=250
+    }
+
+    "longshot_kill:object"{
+      score:i=250
+      credits:i=250
+    }
+
+    "headshot_kill:object"{
+      score:i=300
+      credits:i=300
+    }
+
+    "double_kill:object"{
+      score:i=400
+      credits:i=400
+    }
+
+    "triple_kill:object"{
+      score:i=600
+      credits:i=600
+    }
+
+    "multiple_kill:object"{
+      score:i=800
+      credits:i=800
+    }
+
+    "team_kill:object"{
+      score:i=-500
+      credits:i=-500
+    }
+
+    "hit:object"{
+      score:i=1
+      credits:i=1
+    }
+
+    "assist:object"{
+      score:i=100
+      credits:i=100
+    }
+
+    "beacon_capture:object"{
+      score:i=375
+      credits:i=375
+    }
+
+    "beacon_reset:object"{
+      score:i=125
+      credits:i=125
+    }
+
+    "death:object"{
+      score:i=0
+      credits:i=0
+    }
+  }
+}
+
+nexus_stats_rules{
+  nexus_stats_rules__longshotKillDistance:r=25
+  nexus_stats_rules__longshotKillDistanceSq:r=-1
+  nexus_stats_rules__groupKillTime:r=3
+}
+
+nexus_mvp{
+  nexus_mvp__reason:i=-1
+  nexus_mvp__score:i=0
+
+  "nexus_mvp__owner:eid"{}
+  "nexus_mvp__stats:eid"{}
+}
+
+nexus_mvp_total{
+  "nexus_mvp_total:tag"{}
+}
+
+nexus_mvp_team{
+  nexus_mvp__team:i=-1
+}
+
+nexus_team_abandoned_timer{
+  _use:t="replicating"
+  nexus_team_abandoned_timer__finishAt:r=-1
+  _tracked:t="nexus_team_abandoned_timer__finishAt"
+
+  _group{
+    _tags:t="server"
+    nexus_team_abandoned_timer__delay:r=60
+
+    "nexus_team_abandoned_timer:tag"{}
+  }
+}
+
+nexus_agency_loadouts{
+  "nexus_agency_loadouts__generators:list<t>"{
+    generator:t="nexus_trooper_equipment_generator"
+    generator:t="nexus_cqb_equipment_generator"
+    generator:t="nexus_sniper_equipment_generator"
+    generator:t="nexus_bomber_equipment_generator"
+    generator:t="nexus_epic_equipment_generator"
+  }
+
+  "nexus_agency_loadouts__names:list<t>"{
+    generator:t="items/nexus_loadout_trooper"
+    generator:t="items/nexus_loadout_cqb"
+    generator:t="items/nexus_loadout_sniper"
+    generator:t="items/nexus_loadout_bomber"
+    generator:t="items/nexus_loadout_epic"
+  }
+}
+
+nexus_disable{
+  "nexus_disable:tag"{}
+}
+
+nexus_player_effect{
+  nexus_player_effect__template:t=""
+  nexus_player_effect__requestersCount:i=0
+
+  "nexus_player_effect__owner:eid"{}
+  "nexus_player_effect__possessedEffect:eid"{}
+}

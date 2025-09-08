@@ -1,0 +1,25 @@
+mass:r=0.1
+useFutureContacts:b=yes
+logCCD:b=no
+addToWorld:b=no
+skipUpdateOnSleep:b=no
+sleepUpdateFrequency:i=0
+frictionGround:r=1.5
+physMat:t="walkRay"
+
+collision{
+  body{
+    sphere{
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+      rad:r=0.01
+    }
+  }
+}
+
+ccdSpheres{
+  ccd:p4=0, 0, 0, 0.01
+}
+
+solver{
+  energyConservation:r=0.9
+}

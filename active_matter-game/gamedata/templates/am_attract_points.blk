@@ -1,0 +1,87 @@
+attract_point_zone{
+  attract_point_zone__affectTemplate:t="attract_point_zone_affect"
+  attract_point_zone__radius:r=10
+  attract_point_zone__nextCheckTime:r=-1
+  attract_point_zone__checkDuration:r=1
+  attract_point_zone__effectName:t="attract_zone_affect"
+}
+
+attract_point_zone_affect{
+  game_effect__timeToDestroy:r=1.5
+  game_effect__destroyAt:r=-1
+
+  "game_effect__attachedTo:eid"{}
+}
+
+grenades_attract_point{
+  grenades_attract_point__templateName:t="grenade_attract_point"
+  grenades_attract_point__referenceRadius:r=20
+  grenades_attract_point__ttl:r=30
+  grenades_attract_point__radius:r=0
+}
+
+grenade_attract_point{
+  _use:t="shrinkable_attract_point"
+  attractRatioMult:r=1
+}
+
+attraction_grenade_attract_point{
+  _use:t="replicating"
+  _use:t="shrinkable_attract_point"
+  _use:t="attraction_grenade_attract_point_zone"
+  attractRatioMult:r=300
+  game_effect__timeToDestroy:r=60
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="fire_molotov_p_sparks_fx"
+  }
+
+  "smellAttractPoint:tag"{}
+}
+
+attraction_grenade_attract_point_zone{
+  _use:t="attract_point_zone"
+  attract_point_zone__affectTemplate:t="attraction_grenade_attract_point_zone_affect"
+  attract_point_zone__effectName:t="grenade"
+}
+
+attraction_grenade_attract_point_zone_affect{
+  _use:t="attract_point_zone_affect"
+
+  "entity_mod_effects:object"{
+    "attractionMult+mult_diminishing":r=2
+  }
+}
+
+shoot_attract_point{
+  _use:t="shrinkable_attract_point"
+
+  "shootAttractPoint:tag"{}
+}
+
+pickup_attract_point_creator{
+  pickup_attract_point_creator__templateName:t="pickup_attract_point"
+}
+
+pickup_attract_point{
+  _use:t="shrinkable_attract_point"
+  attract_point__magnitude:r=5
+}
+
+personal_attract_point{
+  _use:t="base_invis_item"
+  folower_attraction_point__endTimeAt:r=0
+  folower_attraction_point__nextTickAt:r=0
+  folower_attraction_point__templateForRemove:t="personal_attract_point"
+  folower_attraction_point__wakeupNextUpdateSleepModeAdd:r=0.5
+  folower_attraction_point__radiusAttraction:r=1.5
+  folower_attraction_point__checkSleepSleepModeAdd:r=3
+  folower_attraction_point__awakeUnitsAround:i=2
+
+  "personalAttractPoint:tag"{}
+}

@@ -1,0 +1,780 @@
+encounter_unknown_storage{
+  _use:t="encounter_zone"
+  _use:t="loot_generator_forbidden_zone"
+  encounter_zone__name:t="unknown_storage"
+  encounter_unknown_storage__group:t=""
+  encounter_unknown_storage__doorsLockedReason:t="encounter/locked_door_no_power"
+
+  "encounter_unknown_storage:tag"{}
+}
+
+encounter_unknown_storages_loot_generator{
+  _use:t="box_loot_generator_by_loot_preset"
+  loot_generator__allowSpawnInForbiddenZone:b=yes
+}
+
+encounter_unknown_storages_loot_generator_good_a_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
+      number:ip2=10, 12
+    }
+
+    "item:object"{
+      template_name:t="military_ammo_t2_lootable_rendinst"
+      number:ip2=6, 10
+    }
+  }
+}
+
+encounter_unknown_storages_loot_generator_bad_a_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_close_range_weapons_t2_lootable_rendinst"
+      number:ip2=10, 12
+    }
+
+    "item:object"{
+      template_name:t="military_ammo_t2_lootable_rendinst"
+      number:ip2=5, 8
+    }
+  }
+}
+
+encounter_unknown_storages_loot_generator_good_a{
+  _use:t="encounter_unknown_storages_loot_generator"
+  loot_generator__gameObjType:t="loot_box_special_a"
+  loot_generator__lootPreset:t="encounter_unknown_storages_loot_generator_good_a_loot_preset"
+}
+
+encounter_unknown_storages_loot_generator_bad_a{
+  _use:t="encounter_unknown_storages_loot_generator"
+  loot_generator__gameObjType:t="loot_box_special_a"
+  loot_generator__lootPreset:t="encounter_unknown_storages_loot_generator_bad_a_loot_preset"
+}
+
+encounter_unknown_storages_lootable_rendinst_manager{
+  _use:t="lootable_rendinst_manager"
+  lootable_rendinsts__allowSpawnInForbiddenZone:b=yes
+  lootable_rendinsts__restrictToBoundingBox:b=yes
+}
+
+encounter_unknown_storages_lootable_rendinst_manager_good{
+  _use:t="encounter_unknown_storages_lootable_rendinst_manager"
+
+  "lootable_rendinsts__list:array"{
+    "i:object"{
+      ri_name:t="ammunition_box_a"
+      ri_after_loot_name:t="ammunition_box_a_open"
+      container_capacity:r=5
+      loot_preset:t="military_ammo_t1_loot_preset"
+      drop_preset:t="drop_in_places_ammo_box"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_b"
+      ri_after_loot_name:t="ammunition_box_b_open"
+      container_capacity:r=15
+      loot_preset:t="medical_items_t2_loot_preset"
+      drop_preset:t="drop_in_places_medical_box"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_c"
+      ri_after_loot_name:t="ammunition_box_c_open"
+      container_capacity:r=8
+      loot_preset:t="grenade_box_loot_preset"
+      drop_preset:t="drop_in_places_grenade_box"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_d"
+      ri_after_loot_name:t=""
+      container_capacity:r=5
+      loot_preset:t="soviet_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_e"
+      ri_after_loot_name:t=""
+      container_capacity:r=5
+      loot_preset:t="soviet_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_f"
+      ri_after_loot_name:t=""
+      container_capacity:r=15
+      loot_preset:t="military_ammo_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_g"
+      ri_after_loot_name:t=""
+      container_capacity:r=10
+      loot_preset:t="military_ammo_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_h"
+      ri_after_loot_name:t=""
+      container_capacity:r=50
+      loot_preset:t="long_range_soviet_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_i"
+      ri_after_loot_name:t=""
+      container_capacity:r=8
+      loot_preset:t="military_ammo_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_j"
+      ri_after_loot_name:t=""
+      container_capacity:r=16
+      loot_preset:t="close_range_soviet_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_k"
+      ri_after_loot_name:t=""
+      container_capacity:r=45
+      loot_preset:t="soviet_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_l"
+      ri_after_loot_name:t=""
+      container_capacity:r=50
+      loot_preset:t="long_range_soviet_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_m"
+      ri_after_loot_name:t=""
+      container_capacity:r=50
+      loot_preset:t="long_range_soviet_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_n"
+      ri_after_loot_name:t="ammunition_box_n_open"
+      container_capacity:r=40
+      loot_preset:t="long_range_soviet_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_places_big_weapon_box"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_o"
+      ri_after_loot_name:t="ammunition_box_o_open"
+      container_capacity:r=60
+      loot_preset:t="soviet_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_places_big_items_box"
+    }
+  }
+}
+
+encounter_unknown_storages_lootable_rendinst_manager_bad{
+  _use:t="encounter_unknown_storages_lootable_rendinst_manager"
+
+  "lootable_rendinsts__list:array"{
+    "i:object"{
+      ri_name:t="ammunition_box_a"
+      ri_after_loot_name:t="ammunition_box_a_open"
+      container_capacity:r=5
+      loot_preset:t="military_ammo_t1_loot_preset"
+      drop_preset:t="drop_in_places_ammo_box"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_b"
+      ri_after_loot_name:t="ammunition_box_b_open"
+      container_capacity:r=15
+      loot_preset:t="medical_items_t1_loot_preset"
+      drop_preset:t="drop_in_places_medical_box"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_c"
+      ri_after_loot_name:t="ammunition_box_c_open"
+      container_capacity:r=8
+      loot_preset:t="grenade_box_loot_preset"
+      drop_preset:t="drop_in_places_grenade_box"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_d"
+      ri_after_loot_name:t=""
+      container_capacity:r=5
+      loot_preset:t="soviet_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_e"
+      ri_after_loot_name:t=""
+      container_capacity:r=5
+      loot_preset:t="soviet_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_f"
+      ri_after_loot_name:t=""
+      container_capacity:r=15
+      loot_preset:t="military_ammo_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_g"
+      ri_after_loot_name:t=""
+      container_capacity:r=10
+      loot_preset:t="military_ammo_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_h"
+      ri_after_loot_name:t=""
+      container_capacity:r=50
+      loot_preset:t="long_range_soviet_weapons_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_i"
+      ri_after_loot_name:t=""
+      container_capacity:r=8
+      loot_preset:t="military_ammo_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_j"
+      ri_after_loot_name:t=""
+      container_capacity:r=16
+      loot_preset:t="close_range_soviet_weapons_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_k"
+      ri_after_loot_name:t=""
+      container_capacity:r=45
+      loot_preset:t="soviet_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_l"
+      ri_after_loot_name:t=""
+      container_capacity:r=50
+      loot_preset:t="long_range_soviet_weapons_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_m"
+      ri_after_loot_name:t=""
+      container_capacity:r=50
+      loot_preset:t="long_range_soviet_weapons_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_n"
+      ri_after_loot_name:t="ammunition_box_n_open"
+      container_capacity:r=40
+      loot_preset:t="long_range_soviet_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_places_big_weapon_box"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_o"
+      ri_after_loot_name:t="ammunition_box_o_open"
+      container_capacity:r=60
+      loot_preset:t="soviet_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_places_big_items_box"
+    }
+  }
+}
+
+encounter_unknown_storages_controller{
+  "encounter_unknown_storages_controller:tag"{}
+  "encounter_unknown_storages_controller__storagesSetupByGroup:object"{
+    "default:object"{
+      "presets:array"{
+        "preset:object"{
+          name:t="bad_preset"
+          count:i=1
+
+          "loot_generators:object"{
+            "loot_generators:array"{
+              item:t="encounter_unknown_storages_lootable_rendinst_manager_bad"
+              item:t="encounter_unknown_storages_loot_generator_bad_a"
+            }
+          }
+
+          "items_generator:object"{
+            "generatableObjects:array"{
+              "slot:object"{
+                type:t="loot_box_special_a"
+                countRange:p2=5, 9
+
+                "items:array"{
+                  "slot:object"{
+                    template:t="loot_item_healkit_magazine_small"
+                  }
+                }
+              }
+
+              "slot:object"{
+                type:t="loot_box_special_a"
+                countRange:p2=2, 4
+
+                "items:array"{
+                  "slot:object"{
+                    template:t="loot_item_healkit_magazine_big"
+                  }
+                }
+              }
+
+              "slot:object"{
+                type:t="loot_box"
+                countRange:p2=5, 9
+
+                "items:array"{
+                  "slot:object"{
+                    template:t="loot_item_healkit_magazine_small"
+                  }
+                }
+              }
+
+              "slot:object"{
+                type:t="loot_box"
+                countRange:p2=2, 4
+
+                "items:array"{
+                  "slot:object"{
+                    template:t="loot_item_healkit_magazine_big"
+                  }
+                }
+              }
+
+              "slot:object"{
+                type:t="loot_box"
+                countRange:p2=2, 3
+
+                "items:array"{
+                  "slot:object"{
+                    template:t="medium_pouch"
+                  }
+                }
+              }
+
+              "slot:object"{
+                type:t="loot_box_special_a"
+                countRange:p2=9, 14
+
+                "items:array"{
+                  "slot:object"{
+                    template:t="box_9mm_magazine"
+                  }
+
+                  "slot:object"{
+                    template:t="box_5_56_magazine"
+                  }
+
+                  "slot:object"{
+                    template:t="box_7_62x39_magazine"
+                  }
+
+                  "slot:object"{
+                    template:t="box_12_gauge_magazine"
+                  }
+                }
+              }
+
+              "slot:object"{
+                type:t="loot_box"
+                countRange:p2=9, 14
+
+                "items:array"{
+                  "slot:object"{
+                    template:t="box_9mm_magazine"
+                  }
+
+                  "slot:object"{
+                    template:t="box_5_56_magazine"
+                  }
+
+                  "slot:object"{
+                    template:t="box_7_62x39_magazine"
+                  }
+
+                  "slot:object"{
+                    template:t="box_12_gauge_magazine"
+                  }
+                }
+              }
+            }
+          }
+
+          "entities_generator:object"{
+            "generatableObjects:array"{
+              "slot:object"{
+                type:t="anomaly_zone_flowerman"
+                countRange:p2=1, 1
+
+                "entities:array"{
+                  "slot:object"{
+                    template:t="anomaly_encounter_flowerman"
+                  }
+                }
+              }
+
+              "slot:object"{
+                type:t="anomaly_zone_flowerman_small"
+                countRange:p2=2, 4
+
+                "entities:array"{
+                  "slot:object"{
+                    template:t="anomaly_encounter_flowerman_small"
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        "preset:object"{
+          name:t="good_preset"
+          count:i=1
+
+          "loot_generators:object"{
+            "loot_generators:array"{
+              item:t="encounter_unknown_storages_lootable_rendinst_manager_good"
+              item:t="encounter_unknown_storages_loot_generator_good_a"
+            }
+          }
+
+          "items_generator:object"{
+            "generatableObjects:array"{
+              "slot:object"{
+                type:t="loot_box_special_a"
+                countRange:p2=7, 14
+
+                "items:array"{
+                  "slot:object"{
+                    template:t="loot_item_healkit_magazine_small"
+                  }
+                }
+              }
+
+              "slot:object"{
+                type:t="loot_box_special_a"
+                countRange:p2=4, 8
+
+                "items:array"{
+                  "slot:object"{
+                    template:t="loot_item_healkit_magazine_big"
+                  }
+                }
+              }
+
+              "slot:object"{
+                type:t="loot_box"
+                countRange:p2=7, 14
+
+                "items:array"{
+                  "slot:object"{
+                    template:t="loot_item_healkit_magazine_small"
+                  }
+                }
+              }
+
+              "slot:object"{
+                type:t="loot_box"
+                countRange:p2=4, 8
+
+                "items:array"{
+                  "slot:object"{
+                    template:t="loot_item_healkit_magazine_big"
+                  }
+                }
+              }
+
+              "slot:object"{
+                type:t="loot_box"
+                countRange:p2=4, 6
+
+                "items:array"{
+                  "slot:object"{
+                    template:t="medium_pouch"
+                  }
+                }
+              }
+
+              "slot:object"{
+                type:t="loot_box_special_a"
+                countRange:p2=15, 22
+
+                "items:array"{
+                  "slot:object"{
+                    template:t="box_9mm_magazine"
+                  }
+
+                  "slot:object"{
+                    template:t="box_5_56_magazine"
+                  }
+
+                  "slot:object"{
+                    template:t="box_7_62x39_magazine"
+                  }
+
+                  "slot:object"{
+                    template:t="box_12_gauge_magazine"
+                  }
+                }
+              }
+
+              "slot:object"{
+                type:t="loot_box"
+                countRange:p2=15, 22
+
+                "items:array"{
+                  "slot:object"{
+                    template:t="box_9mm_magazine"
+                  }
+
+                  "slot:object"{
+                    template:t="box_5_56_magazine"
+                  }
+
+                  "slot:object"{
+                    template:t="box_7_62x39_magazine"
+                  }
+
+                  "slot:object"{
+                    template:t="box_12_gauge_magazine"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+encounter_caponier_gate_sound{
+  _group{
+    _tags:t="sound"
+    encounter_caponier_gate_sound__path:t="env_effects/doors/coponier/coponier_gates"
+    encounter_caponier_gate_sound__localPos:p3=12.5, 0, 0
+
+    "encounter_caponier_gate_sound__event:SoundEvent"{}
+  }
+}
+
+encounter_caponier_gate_rotating_rendinst{
+  _use:t="rotating_rendinst"
+  _use:t="encounter_caponier_gate_sound"
+}
+
+encounter_caponier_gate{
+  _use:t="encounter_door"
+  door_operations__openOnUnlock:b=yes
+  door_operations__closeOnLock:b=yes
+  rendinst_axis_rotation__subTemplate:t="encounter_caponier_gate_rotating_rendinst"
+
+  "net__alwaysInScope:tag"{}
+}
+
+encounter_caponier_gate_left{
+  _use:t="caponier_gate_left"
+  _use:t="encounter_caponier_gate"
+  door_operations__openedAngle:r=-79
+  door_operations__closedAngle:r=-90
+}
+
+encounter_caponier_gate_right{
+  _use:t="caponier_gate_right"
+  _use:t="encounter_caponier_gate"
+  door_operations__openedAngle:r=62
+  door_operations__closedAngle:r=90
+}
+
+encounter_fuse_block_slot{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "net_sound__descs:shared:object"{
+    "insert:object"{
+      path:t="env_effects/doors/coponier/coponier_power_up"
+      range:r=30
+    }
+  }
+}
+
+encounter_fuse_block{
+  _use:t="replicating"
+  _use:t="animchar"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="injections_medkit_a_char"
+  collres__res:t="injections_medkit_a_collision"
+}
+
+encounter_power_hum_sound{
+  _use:t="sound_effect"
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/doors/coponier/coponier_power_hum"
+  }
+}
+
+encounter_caponier_alarm{
+  _use:t="replicating"
+  _use:t="sound_effect"
+  _use:t="sound_destroy_timer"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/doors/coponier/coponier_alarm"
+    sound_effect__abandonOnReset:b=yes
+  }
+
+  _group{
+    _tags:t="server"
+    sound_destroy_timer__duration:r=60
+  }
+}
+
+encounter_decorative_am_core{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="am_core_hitpoints"
+  _use:t="am_core_light"
+  _use:t="am_core_sound"
+  am_core__effectTemplate:t="am_core_effect"
+  light__max_radius:r=20
+  light__color:c=153, 50, 204, 255
+  animchar__res:t="am_core_b_char"
+  collres__res:t="am_core_b_collision"
+  material:t="steel"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "capsule_approximation__nodeNames:array"{
+    node:t="am_core_b_dynmodel.lod00"
+  }
+
+  _group{
+    _replicate:b=yes
+    ballistic_phys__omega:p3=0.25, 0.25, 0.25
+  }
+}
+
+encounter_nearest_caponier_alarm{
+  _use:t="encounter_caponier_alarm"
+
+  _group{
+    _tags:t="server"
+    sound_destroy_timer__duration:r=145
+  }
+}
+
+encounter_far_caponier_alarm{
+  _use:t="encounter_caponier_alarm"
+
+  _group{
+    _tags:t="server"
+    sound_destroy_timer__duration:r=205
+  }
+}
+
+encounter_nearest_caponier_trigger_timer{
+  _use:t="game_trigger_timer"
+  game_trigger_processor_timer__time:r=120
+  game_trigger_processor_timer__eventTrigger:t="lock_nearest_caponier"
+}
+
+encounter_far_caponier_trigger_timer{
+  _use:t="game_trigger_timer"
+  game_trigger_processor_timer__time:r=180
+  game_trigger_processor_timer__eventTrigger:t="lock_far_caponier"
+}
+
+encounter_random_teleport_in_fx{
+  _use:t="replicating"
+  effect__scale:r=1.5
+  game_effect__timeToDestroy:r=3
+  game_effect__destroyAt:r=0
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="teleport_a_composite_fx"
+  }
+}
+
+encounter_random_teleport_out_fx{
+  _use:t="replicating"
+  _use:t="encounter_random_teleport_in_fx"
+  effect__scale:r=1.5
+
+  _group{
+    _tags:t="render"
+    effect__name:t="teleport_a_composite_fx"
+  }
+}
+
+encounter_random_teleport_zone{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  encounter_random_teleport_zone__teleportInEffectName:t="encounter_random_teleport_in_fx"
+  encounter_random_teleport_zone__teleportOutEffectName:t="encounter_random_teleport_out_fx"
+
+  "encounter_random_teleport_zone:tag"{}
+}
+
+encounter_caponiers_random_teleport_zone{
+  _use:t="encounter_random_teleport_zone"
+  game_effect__timeToDestroy:r=3
+  game_effect__destroyAt:r=-1
+}
+
+encounter_nearest_caponier_trigger_create_teleport_timer{
+  _use:t="game_trigger_timer"
+  game_trigger_processor_timer__time:r=30.5
+  game_trigger_processor_timer__eventTrigger:t="nearest_caponier_teleport"
+}
+
+encounter_far_caponier_trigger_create_teleport_timer{
+  _use:t="game_trigger_timer"
+  game_trigger_processor_timer__time:r=30.5
+  game_trigger_processor_timer__eventTrigger:t="far_caponier_teleport"
+}

@@ -1,0 +1,321 @@
+external_inventory_interactor{
+  _tracked:t="external_inventory_interactor__accesspointEid"
+  _replicated:t="external_inventory_interactor__accesspointEid"
+  _tracked:t="external_inventory_interactor__inventoryEid"
+  _replicated:t="external_inventory_interactor__inventoryEid"
+  external_inventory_interactor__extraUseDist:r=0.5
+
+  "external_inventory_interactor__accesspointEid:eid"{}
+  "external_inventory_interactor__inventoryEid:eid"{}
+}
+
+external_inventory_accesspoint{
+  external_inventory_accesspoint__useDistance:r=3
+
+  "external_inventory_accesspoint:tag"{}
+  "external_inventory_accesspoint__inventoryEid:eid"{}
+}
+
+external_inventory_container{
+  _use:t="replicating"
+  _use:t="base_inventory"
+  itemContainer__name:t="inventory/externalItemContainer"
+  itemContainer__type:t="externalItemContainer"
+
+  "external_inventory_container:tag"{}
+  "human_inventory__autoCalculateCapacities:tag"{}
+}
+
+openable_ri{
+  openable_ri__closed:t=""
+  openable_ri__isOpened:b=no
+  _tracked:t="openable_ri__isOpened"
+  _replicated:t="openable_ri__isOpened"
+  ri_preload__name:t=""
+  ri_extra__isBeingReplaced:b=no
+
+  "ri_preload__preloadOnLevelLoaded:tag"{}
+}
+
+rendinst_resource_preload{
+  RendinstResourcePreload{}
+}
+
+openable_external_inventory_container_ri{
+  _use:t="external_inventory_accesspoint"
+  _use:t="external_inventory_container"
+  _use:t="usable_object_base"
+  _use:t="openable_ri"
+  use_object__offset:p3=0, 0, 0
+  use_object__obbMin:p3=0, 0, 0
+  use_object__obbMax:p3=0, 0, 0
+  use_object__selectedTemplate:t="selected_lootable_container"
+  item__useActionHintType:i=1
+  item_world_marker__offset:p3=0, 0, 0
+  item_world_marker__riColliderPoint:p3=0.5, 0.5, 0.5
+  item_world_marker__riColliderPointOffset:p3=0, 0, 0
+  net__scopeDistanceSq:r=108900
+
+  "openable_external_inventory_container_ri:tag"{}
+  "usableObject:tag"{}
+  "item_world_marker__copyOffsetToUseObject:tag"{}
+}
+
+inventory_chest_test_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=5, 5
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="makarov_gun"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="cal_9_18_silencer"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="box_9mm_magazine"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="makarov_magazine"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_avg"
+      number:i=2
+    }
+  }
+}
+
+inventory_chest_test{
+  _use:t="placeable_rendinst"
+  _use:t="openable_external_inventory_container_ri"
+  _use:t="iteractable_drop_on_ri_destroy"
+  _use:t="wooden_chest_openable_ri_sound"
+  human_inventory__maxVolume:r=65
+  ri_extra__name:t="ammunition_box_n"
+  openable_ri__closed:t="ammunition_box_n"
+  ri_preload__name:t="ammunition_box_n_open"
+  use_object__offset:p3=0, 0, 0
+  use_object__obbMin:p3=0, 0, 0
+  use_object__obbMax:p3=0, 0, 0
+  use_object__selectedTemplate:t="selected_lootable_container"
+  item__useActionHintType:i=1
+  item_world_marker__offset:p3=0, 0, 0
+  item_world_marker__riColliderPoint:p3=0.5, 0.5, 0.5
+  item_world_marker__riColliderPointOffset:p3=0, 0, 0
+  loot_drop_system__lootPreset:t="inventory_chest_test_loot_preset"
+  loot_drop_system_delayed_loot_generation__generated:b=no
+  itemContainer__name:t="container/supplyCrate"
+  itemContainer__type:t="supplyCrate"
+
+  "usableObject:tag"{}
+  _group{
+    _tags:t="ui"
+    itemContainer__uiItemsMergeEnabled:b=no
+    itemContainer__uiItemsSortingEnabled:b=yes
+    itemContainer__uiItemsOverrideSortingPriority:b=yes
+  }
+}
+
+inventory_chest_test_endless{
+  _use:t="inventory_chest_test"
+
+  "regenerateLoot:tag"{}
+}
+
+closed_inventory_chest_test_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=13, 13
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="ak_12_gun"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="ak_12_magazine"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="box_5_56_magazine"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="f1_grenade_item"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="helmet_ussr_ssh40"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="makarov_gun"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="makarov_magazine"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="cal_9_18_silencer"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="box_9mm_magazine"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="pbs1_silencer"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="scope_fastfire"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_avg"
+      number:i=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_melee_stash_preset"
+      number:i=1
+    }
+  }
+}
+
+closed_inventory_chest_test{
+  _use:t="placeable_rendinst"
+  _use:t="openable_external_inventory_container_ri"
+  _use:t="iteractable_drop_on_ri_destroy"
+  _use:t="wooden_chest_openable_ri_sound"
+  human_inventory__maxVolume:r=75
+  ri_extra__name:t="ammunition_box_n"
+  openable_ri__closed:t="ammunition_box_n"
+  ri_preload__name:t="ammunition_box_n_open"
+  loot_drop_system__lootPreset:t="closed_inventory_chest_test_loot_preset"
+  loot_drop_system_delayed_loot_generation__generated:b=no
+  itemContainer__name:t="container/supplyCrate"
+  itemContainer__type:t="supplyCrate"
+
+  _group{
+    _tags:t="ui"
+    itemContainer__uiItemsMergeEnabled:b=no
+    itemContainer__uiItemsSortingEnabled:b=yes
+    itemContainer__uiItemsOverrideSortingPriority:b=yes
+  }
+}
+
+small_sovmod_backpack_lootable_preset_test{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=5, 5
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="small_sovmod_backpack_lootable_preset"
+      weight:r=35
+    }
+  }
+}
+
+small_sovmod_backpack_lootable_test{
+  _use:t="small_sovmod_backpack"
+  loot_drop_system__lootPreset:t="small_sovmod_backpack_lootable_preset_test"
+}
+
+read_only_inventory{
+  "readOnlyInventory:tag"{}
+}
+
+static_dead_body_container{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="usable_object_base"
+  _use:t="external_inventory_accesspoint"
+  _use:t="external_inventory_container"
+  _use:t="simple_hitpoints"
+  hitpoints__maxHp:r=1e+07
+  needsBlood:b=yes
+  item__useActionHintType:i=1
+  item__setCustomUsePrompt:t="lootingBag/search"
+  item_world_marker__enabled:b=yes
+  item_world_marker__attachToNode:t="Bip01 Spine1"
+  item_world_marker__attachToNodeIdx:i=-1
+  item_world_marker__pos:p3=0, 0, 0
+  _tracked:t="item_world_marker__pos"
+  human_inventory__maxVolume:r=-1
+  animchar__res:t="am_soldier_corrupted_male_a_char"
+  collres__res:t="am_soldier_corrupted_male_a_collision"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__animStateDirty:b=no
+  animchar__appliedAnimSpeed:r=0
+  animchar__forceAnimState:t="dead_pose"
+  animchar__forceAnimStateId:i=-1
+  loot_drop_system__lootPreset:t="small_sovmod_backpack_lootable_preset_test"
+  loot_drop_system_delayed_loot_generation__generated:b=no
+  use_object__selectedTemplate:t="selected_lootable_container"
+
+  "net_sound__descs:shared:object"{
+    "start_search:object"{
+      path:t="player/walker/am_trooper_male/items/healing/pick"
+    }
+
+    "success_search:object"{
+      path:t="player/walker/am_trooper_male/items/other/drop"
+    }
+  }
+
+  collres{}
+  _group{
+    _tags:t="ui"
+    itemContainer__uiItemsMergeEnabled:b=no
+    itemContainer__uiItemsSortingEnabled:b=yes
+    itemContainer__uiItemsOverrideSortingPriority:b=yes
+  }
+
+  "usableObject:tag"{}
+  phys_vars{}
+  anim_phys{}
+  "grid_obj__updateAlways:tag"{}
+  "animchar__animState:object"{
+    upper:i=-1
+    lower:i=-1
+  }
+
+  "animchar__forceVarValues:object"{
+    dead_body_pos_num:r=0
+  }
+}
+
+static_dead_body_quest_container{
+  _use:t="static_dead_body_container"
+  _use:t="base_container_quest_target"
+  _use:t="map_component_marker"
+  map_object_marker__iconName:t="!ui/skin#bagpack_icon.svg"
+  objective_static_target__tag:t=""
+  use_object__offset:p3=0, 0.25, 0
+
+  "showMapObjectOnQuestTargetAssignition:tag"{}
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t=""
+  }
+}

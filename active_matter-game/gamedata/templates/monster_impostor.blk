@@ -1,0 +1,71 @@
+monstrify_impostor_sequence_spawn_effect{
+  _use:t="replicated_effect_with_duration"
+  monstrify_effect__template:t="monstrified_impostor_human+monstrify_spawn_sequence_controller"
+}
+
+monstrify_impostor_sequence{
+  _use:t="game_effect_sequence"
+
+  "spawn_sequence__fxEid:eid"{}
+  "locked_weapon__reload:tag"{}
+  "state__interruptReload:tag"{}
+  "entity_mod_effects:object"{
+    "hitpointsDmgMult+mult_diminishing":r=0
+  }
+
+  "game_effect_sequence__stages:array"{
+    "stage:object"{
+      affectTemplate:t="monstrify_extraction_sequence_init"
+      duration:r=0.25
+    }
+
+    "stage:object"{
+      affectTemplate:t="monstrify_sequence_portal_opens"
+      duration:r=0.1
+      setupTransform:b=yes
+    }
+
+    "stage:object"{
+      affectTemplate:t="monstrify_extraction_sequence_soldier_disappears+trans_portal_affect_start_sound"
+      duration:r=0.7
+    }
+
+    "stage:object"{
+      affectTemplate:t="monstrify_impostor_sequence_spawn_effect"
+      duration:r=0.5
+    }
+  }
+}
+
+impostor_monster_effect{
+  _use:t="replicated_game_effect"
+
+  "state__disableAmGather:tag"{}
+}
+
+monstrified_impostor_human{
+  _use:t="monstrified_human_base"
+  _use:t="am_militant_with_attachable_suit"
+  _use:t="equipped_bot"
+  equipped_bot__equipmentGeneratorName:t="ordinary_equipment_mindcontrolled_mixed_generator"
+  corpse_am__amStorageToAttachedPile:t=""
+
+  "game_effect__initialAttachmentsServer:list<t>"{
+    item:t="impostor_monster_effect"
+  }
+}
+
+impostor_controller{
+  impostor_controller__initDelay:r=40
+  impostor_controller__initAt:r=0
+  impostor_controller__inited:b=no
+  impostor_controller__guardImpostorsCount:ip2=1, 3
+  impostor_controller__guardDisclosureTime:p2=300, 600
+
+  "impostor_controller:tag"{}
+}
+
+bot_impostor{
+  bot_impostor__behNode:t="nmesh_mapped_loot_raider"
+  bot_impostor__disclosureAt:r=0
+}

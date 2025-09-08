@@ -1,0 +1,31 @@
+am_poi_generator{
+  _use:t="ri_extra_generator"
+  ri_extra_gen__blk:t="gamedata/geisel_library_poi_gen.blk"
+  ri_extra_gen__createEntityWhenDone:t="active_matter_poi_is_done"
+}
+
+active_matter_poi_is_done{
+  "poiGenerationIsDone:tag"{}
+}
+
+base_poi_prototype{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  poi_prototype__targetTemplate:t="point_of_interest"
+  poi_prototype__status:i=0
+
+  "poiPrototype:tag"{}
+  "poi_prototype__matchedEid:eid"{}
+  "ri_extra__handle:u64"{
+    value:i64=-1
+  }
+}
+
+not_matched_poi_prototype{
+  _use:t="base_poi_prototype"
+  poi_prototype__status:i=3
+}
+
+indoor_poi_prototype{
+  _use:t="base_poi_prototype"
+  poi_prototype__targetTemplate:t="indoor_point_of_interest"
+}

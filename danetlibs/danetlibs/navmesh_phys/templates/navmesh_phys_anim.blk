@@ -1,0 +1,63 @@
+navmesh_phys_move_anim{
+  animchar__animSpeed:r=0
+  animchar__appliedAnimSpeed:r=0
+  phys_move_anim__tscaleParamName:t=":move_tscale"
+  phys_move_anim__tscaleParamId:i=-1
+  phys_move_anim__runTimescale:r=1
+  phys_move_anim__walkTimescale:r=1
+
+  "anim_state__standStateName:list<t>"{
+    i:t="lower_stand"
+  }
+
+  "anim_state__walkStateName:list<t>"{
+    i:t="lower_walk"
+  }
+
+  "anim_state__runStateName:list<t>"{
+    i:t="lower_run"
+  }
+
+  "anim_state__standState:list<i>"{}
+  "anim_state__walkState:list<i>"{}
+  "anim_state__runState:list<i>"{}
+  "anim_state__animChannels:list<t>"{
+    channel:t="state"
+  }
+
+  "animchar__animState:object"{
+    state:i=-1
+  }
+
+  "animchar__animStateDirty:b"{
+    value:b=yes
+    _hide:b=yes
+  }
+}
+
+navmesh_phys_rotate_anim{
+  anim_state__rotateLeftName:t="lower_rotate_left"
+  anim_state__rotateRightName:t="lower_rotate_right"
+  anim_state__rotateLeftState:i=-1
+  anim_state__rotateRightState:i=-1
+  animchar__rotationAnimMoveSpeedThreshold:r=1
+  animchar__rotationAnimAngularSpeedThreshold:r=0.4
+  navmesh_phys__lookDirAngularSpeed:p3=0, 0, 0
+}
+
+navmesh_phys_death_anim{
+  anim_state__deathStateName:t="death"
+  anim_state__deathState:i=-1
+}
+
+navmesh_phys_attack_anim{
+  anim_state__attackStateName:t="attack"
+  anim_state__attackState:i=-1
+}
+
+navmesh_phys_forced_anim_state{
+  anim_state__forceAnimState:t=""
+  anim_state__forceAnimStateId:i=-1
+  _tracked:t="anim_state__forceAnimState"
+  _replicated:t="anim_state__forceAnimStateId"
+}

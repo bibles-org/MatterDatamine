@@ -1,0 +1,123 @@
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house_monsters"
+  monster_gen_gen__householdCount:i=19
+  monster_gen_gen__minHouseholdVolume:r=225
+  monster_gen_gen__useHouseholdsOnEuclid:b=no
+
+  "monster_gen_gen__genTemplates:object"{
+    household_changed_monster_generator:i=40
+    anomaly_encounter_flowerman_indoor:i=20
+    household_traps_generator:i=10
+    anomaly_encounter_changed_indoor_small:i=15
+    anomaly_encounter_statues_cairns_indoor_small:i=15
+  }
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_monster+am_inside_body_3"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1690.88, 39.7698, -1447.5]]
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_human_mini+changed_human_collision+sleeping_monster+am_inside_body_3"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1688.14, 38.4728, -1454.79]]
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset+loot_generator_monster_gen"
+  loot_generator__customGameObjName:t="worm_nest"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__projAttempts:i=0
+  transform:m=[[-50000, 0, 0] [0, 0, 50000] [0, 50000, 0] [0, 0, 0]]
+  loot_generator__lootPreset:t="factory_adv_worm_nest_loot_preset"
+}
+
+entity{
+  _template:t="distorted_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1730.2, 39.2854, -1403.02]]
+  objective_static_target__tag:t="distorted_zone_1"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="distorted_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1490.46, 40.3088, -1303.25]]
+  objective_static_target__tag:t="distorted_zone_2"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="distorted_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1592.84, 40.0407, -1252.14]]
+  objective_static_target__tag:t="distorted_zone_3"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="flowermen_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1659.63, 38.5197, -1405.11]]
+  objective_static_target__tag:t="flowermen_zone_1"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="flowermen_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1402.44, 33.5064, -1432.39]]
+  objective_static_target__tag:t="flowermen_zone_2"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="flowermen_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1517.11, 39.9963, -1197.75]]
+  objective_static_target__tag:t="flowermen_zone_3"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="invisible_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1568.43, 40.0329, -1411.59]]
+  objective_static_target__tag:t="invisible_zone_1"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="invisible_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1710.18, 39.3869, -1358.92]]
+  objective_static_target__tag:t="invisible_zone_2"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="turned_soldier_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1537.08, 40.0798, -1281.58]]
+  objective_static_target__tag:t="turned_soldier_zone_1"
+  quest_target_geometry_sphere__radius:r=15
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="turned_soldier_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1651.66, 40.0798, -1305.7]]
+  objective_static_target__tag:t="turned_soldier_zone_2"
+  quest_target_geometry_sphere__radius:r=15
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="turned_soldier_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1457.03, 40.0799, -1199.93]]
+  objective_static_target__tag:t="turned_soldier_zone_3"
+  quest_target_geometry_sphere__radius:r=15
+  map_object_zone__radius:r=15
+}

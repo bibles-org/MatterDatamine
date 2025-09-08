@@ -1,0 +1,7 @@
+require ecs
+require game.es.state_machine_common
+
+
+[es(on_appear, REQUIRE=state_machine_transition_trigger_immediate)]
+def state_machine_transition_trigger_immediate(evt : Event; state_machine_transition_trigger__parentTransition : EntityId)
+  trigger_state_machine_transition(state_machine_transition_trigger__parentTransition)

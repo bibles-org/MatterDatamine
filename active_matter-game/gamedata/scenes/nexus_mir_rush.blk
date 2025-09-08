@@ -1,0 +1,43 @@
+entity{
+  _template:t="raid_description"
+  raid_description__raidType:t="pvp_clash"
+  raid_description__difficulty:t="dif_hard"
+
+  "raid_description__enemies:list<t>"{
+    item:t="operative"
+  }
+
+  "raid_description__images:list<t>"{
+    item:t="ui/zone_thumbnails/nexus_mir_factory_rash_1"
+    item:t="ui/zone_thumbnails/nexus_mir_factory_rash_2"
+    item:t="ui/zone_thumbnails/nexus_mir_factory_rash_3"
+  }
+
+  "raid_description__mcImages:list<t>"{}
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_mir_point_b.blk"
+}
+
+entity{
+  _template:t="static_cam"
+  camera__active:b=yes
+  transform:m=[[-0.851422, 0.018971, 0.524141] [-0.134376, 0.9581, -0.252961] [-0.506977, -0.285807, -0.813195] [29.28, 15.7, -7.7]]
+}
+
+entity{
+  _template:t="spawnBase+nexus_first_team"
+  transform:m=[[0.340409, 0, 0.940278] [0, 1, -0] [-0.940278, 0, 0.340409] [-19.9837, 10.1768, -56.7894]]
+  spawnBase__spawnRadius:r=2.5
+}
+
+entity{
+  _template:t="spawnBase+nexus_second_team"
+  transform:m=[[-0.0123815, -0.011331, -0.99986] [-0.0134556, 0.999848, -0.0111642] [0.999832, 0.0133154, -0.012532] [21.5333, 13.3871, 25.1477]]
+  spawnBase__spawnRadius:r=2.5
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_mir_common.blk"
+}

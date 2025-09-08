@@ -1,0 +1,1397 @@
+sequencer{
+  name:t="sub.changed.runToAndAttack"
+
+  setTime{
+    to:t="agent_dangers__lastAgroTime"
+  }
+
+  orderedSelector{
+    compareNode{
+      lhs:t="walker_agent__targetEid"
+      operator:t="!="
+      rhs:i=0
+    }
+
+    findFlankableTarget{
+      useLargeRadius:b=no
+      minDanger:r=0.1
+    }
+  }
+
+  success{
+    sequencer{
+      name:t="run_to_target"
+
+      speak{
+        effect:t="seeDanger"
+        timeMinMax:p2=6, 10
+      }
+
+      not{
+        checkDistanceToTarget{
+          targetParam:t="walker_agent__targetEid"
+          radius:r=10
+        }
+      }
+
+      pursueTargetWithBlinks{
+        targetParam:t="walker_agent__targetEid"
+        forceToWalk:b=no
+        stopDist:r=2
+        navLookAhead:r=0.75
+        useFlank:b=no
+      }
+    }
+  }
+
+  setTime{
+    to:t="agent_dangers__lastAgroTime"
+  }
+
+  orderedSelector{
+    name:t="try_attack"
+
+    repeatUntilFail{
+      count:i=3
+
+      orderedSelector{
+        name:t="follow_target"
+
+        sequencer{
+          compareNode{
+            lhs:t="changed__meleeBlinkChance"
+            operator:t="=="
+            rhs:r=0
+          }
+
+          checkDistanceToTarget{
+            targetParam:t="walker_agent__targetEid"
+            radius:r=2
+          }
+        }
+
+        sequencer{
+          isOffNavMesh{}
+          subTree{
+            treeName:t="sub.return_to_navmesh"
+          }
+        }
+
+        pursueTargetWithBlinks{
+          targetParam:t="walker_agent__targetEid"
+          forceToWalk:b=no
+          stopDist:r=0.6
+          navLookAhead:r=1.5
+          loseInvisibleTarget:b=no
+        }
+
+        checkDistanceToTarget{
+          targetParam:t="walker_agent__targetEid"
+          radius:r=2
+        }
+
+        sequencer{
+          tryOpportunisticClimbing{
+            name:t="tryOpportunisticClimbing"
+          }
+
+          nPhysCorridorMoveToPosWithNavmeshMapping{
+            posParam:t="walker_agent__climbingFrom"
+            forceToWalk:b=no
+            stopDist:r=0.6
+          }
+
+          nPhysLookAtEntityWithPositionMapping{
+            targetParam:t="walker_agent__targetEid"
+          }
+
+          performClimbing{
+            name:t="performClimbing"
+          }
+
+          pursueTargetWithBlinks{
+            targetParam:t="walker_agent__targetEid"
+            forceToWalk:b=no
+            stopDist:r=0.6
+            navLookAhead:r=1.5
+            loseInvisibleTarget:b=no
+          }
+        }
+
+        sequencer{
+          limitPerPeriod{
+            tag:t="limitJumping"
+            period:r=3
+            maxCount:i=5
+          }
+
+          nPhysPrepareJumpingBetweenNMeshIslands{
+            name:t="nPhysPrepareJumpingBetweenNMeshIslands"
+          }
+
+          nPhysCorridorMoveToPosWithNavmeshMapping{
+            posParam:t="walker_agent__climbingFrom"
+            forceToWalk:b=no
+            stopDist:r=0.6
+          }
+
+          nPhysLookAtEntityWithPositionMapping{
+            targetParam:t="walker_agent__targetEid"
+          }
+
+          performJumping{
+            name:t="performJumping"
+          }
+
+          pursueTargetWithBlinks{
+            targetParam:t="walker_agent__targetEid"
+            forceToWalk:b=no
+            stopDist:r=0.6
+            navLookAhead:r=1.5
+            loseInvisibleTarget:b=no
+          }
+        }
+
+        sequencer{
+          limitPerPeriod{
+            tag:t="limitOffmeshJump"
+            period:r=3
+            maxCount:i=2
+          }
+
+          nPhysPrepareOffmeshJumping{
+            name:t="nPhysPrepareJumpingBetweenNMeshIslands"
+          }
+
+          nPhysCorridorMoveToPosWithNavmeshMapping{
+            posParam:t="walker_agent__climbingFrom"
+            forceToWalk:b=no
+            stopDist:r=0.6
+          }
+
+          nPhysLookAtEntityWithPositionMapping{
+            targetParam:t="walker_agent__targetEid"
+          }
+
+          performOffmeshJumping{
+            name:t="performJumping"
+          }
+        }
+      }
+
+      modifyNode{
+        target:t="changed__meleeBlinkChance"
+        operator:t="="
+        arg:i=0
+      }
+
+      orderedSelector{
+        sequencer{
+          name:t="do_attack"
+
+          compareNode{
+            lhs:t="flanking_ai__priority"
+            operator:t="=="
+            rhs:i=0
+          }
+
+          checkDistanceToTarget{
+            targetParam:t="walker_agent__targetEid"
+            radius:r=2
+          }
+
+          setTime{
+            to:t="agent_dangers__lastAgroTime"
+          }
+
+          orderedSelector{
+            sequencer{
+              name:t="melee_powerfull_attack"
+
+              ignoreChance{
+                chance:r=0.7
+              }
+
+              hasMeleeWeaponEquipped{
+                targetParam:t="walker_agent__targetEid"
+              }
+
+              limitPerPeriod{
+                tag:t="limitPowerAttack"
+                period:r=2.5
+                maxCount:i=1
+              }
+
+              parallel{
+                nPhysStareAtEntityWithPositionMapping{
+                  targetParam:t="walker_agent__targetEid"
+                }
+
+                wait{
+                  range:p2=0.3, 0.4
+                  resetable:b=yes
+                }
+              }
+
+              modifyNode{
+                target:t="customizable_melee_attack__isPowerfullAttack"
+                operator:t="="
+                arg:b=yes
+              }
+
+              modifyNode{
+                target:t="beh_tree__interruptDisabled"
+                operator:t="="
+                arg:i=1
+              }
+
+              runAction{
+                action:t="stand_melee_powerfull"
+              }
+
+              parallel{
+                nPhysStareAtEntityWithPositionMapping{
+                  targetParam:t="walker_agent__targetEid"
+                }
+
+                wait{
+                  range:p2=0.7, 0.7
+                  resetable:b=yes
+                }
+              }
+
+              modifyNode{
+                target:t="beh_tree__interruptDisabled"
+                operator:t="="
+                arg:i=0
+              }
+
+              parallel{
+                repeatUntilFail{
+                  orderedSelector{
+                    checkDistanceToTarget{
+                      targetParam:t="walker_agent__targetEid"
+                      radius:r=2
+                    }
+
+                    failed{
+                      interruptActions{}
+                    }
+                  }
+                }
+
+                wait{
+                  range:p2=0.7, 0.7
+                  resetable:b=yes
+                }
+              }
+            }
+
+            sequencer{
+              parallel{
+                nPhysStareAtEntityWithPositionMapping{
+                  targetParam:t="walker_agent__targetEid"
+                }
+
+                wait{
+                  range:p2=0.3, 0.4
+                  resetable:b=yes
+                }
+              }
+
+              modifyNode{
+                target:t="customizable_melee_attack__isPowerfullAttack"
+                operator:t="="
+                arg:b=no
+              }
+
+              modifyNode{
+                target:t="beh_tree__interruptDisabled"
+                operator:t="="
+                arg:i=1
+              }
+
+              runAction{
+                action:t="stand_melee"
+              }
+
+              parallel{
+                nPhysStareAtEntityWithPositionMapping{
+                  targetParam:t="walker_agent__targetEid"
+                }
+
+                wait{
+                  range:p2=1.2, 1.2
+                  resetable:b=yes
+                }
+              }
+
+              modifyNode{
+                target:t="beh_tree__interruptDisabled"
+                operator:t="="
+                arg:i=0
+              }
+            }
+          }
+
+          success{
+            sequencer{
+              name:t="wait_turn"
+
+              ignoreChance{
+                chance:r=0.5
+              }
+
+              checkAlive{
+                targetParam:t="walker_agent__targetEid"
+              }
+
+              nMeshFindPointNearTargetWithNavmeshMapping{
+                posParam:t="walker_agent__targetPos"
+                dist:p2=1, 2.5
+                targetParam:t="walker_agent__targetEid"
+              }
+
+              randomSelector{
+                moveToPosWithBlinks{
+                  posParam:t="walker_agent__targetPos"
+                }
+
+                nPhysCorridorMoveToPosWithNavmeshMapping{
+                  posParam:t="walker_agent__targetPos"
+                  forceToWalk:b=no
+                  navLookAhead:r=0.75
+                }
+              }
+
+              parallel{
+                nPhysStareAtEntityWithPositionMapping{
+                  targetParam:t="walker_agent__targetEid"
+                }
+
+                wait{
+                  range:p2=0.75, 1.35
+                  resetable:b=yes
+                }
+              }
+            }
+          }
+        }
+
+        failed{
+          subTree{
+            treeName:t="sub.return_to_navmesh"
+          }
+        }
+
+        sequencer{
+          name:t="wait_turn"
+
+          compareNode{
+            lhs:t="flanking_ai__priority"
+            operator:t="!="
+            rhs:i=0
+          }
+
+          nMeshFindPointNearTargetWithNavmeshMapping{
+            posParam:t="walker_agent__targetPos"
+            dist:p2=5, 6
+            targetParam:t="walker_agent__targetEid"
+          }
+
+          randomSelector{
+            moveToPosWithBlinks{
+              posParam:t="walker_agent__targetPos"
+            }
+
+            nPhysCorridorMoveToPosWithNavmeshMapping{
+              posParam:t="walker_agent__targetPos"
+              forceToWalk:b=no
+              navLookAhead:r=0.75
+            }
+          }
+
+          parallel{
+            nPhysStareAtEntityWithPositionMapping{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            wait{
+              range:p2=1.25, 2.35
+              resetable:b=yes
+            }
+          }
+
+          findFlankableTarget{
+            useLargeRadius:b=no
+            minDanger:r=0.1
+          }
+        }
+      }
+
+      checkTargetEcs{
+        targetParam:t="walker_agent__targetEid"
+      }
+    }
+
+    failed{
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        arg:i=0
+      }
+    }
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.return_to_navmesh"
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.changed.moveToAttraction"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=1
+      }
+
+      selector{
+        selectStrategy:t="ordered"
+        selectOnSuccess:b=yes
+
+        subTree{
+          treeName:t="sub.clearPath"
+        }
+
+        subTree{
+          treeName:t="sub.recalculateTreeOnStuck"
+        }
+      }
+    }
+  }
+
+  compareNode{
+    lhs:t="walker_agent__targetEid"
+    operator:t="=="
+    rhs:r=0
+  }
+
+  repeatUntilFail{
+    nFindAttractPosition{
+      posParam:t="walker_agent__targetPos"
+    }
+
+    mapComponentPosition{
+      from:t="walker_agent__targetPos"
+      to:t="walker_agent__targetPos"
+    }
+
+    nMeshFindRandomPointAroundPos{
+      posParam:t="walker_agent__targetPos"
+      aroundPos:t="walker_agent__targetPos"
+      dist:p2=3, 4
+    }
+
+    unmapComponentPosition{
+      from:t="walker_agent__targetPos"
+      to:t="walker_agent__targetPos"
+    }
+
+    nPhysCorridorMoveToPosWithNavmeshMapping{
+      posParam:t="walker_agent__targetPos"
+      forceToWalk:b=no
+      navLookAhead:r=0.75
+    }
+
+    wait{
+      range:p2=0.2, 0.7
+      resetable:b=yes
+    }
+
+    traceAgentDangers{
+      forceRetrace:b=yes
+    }
+
+    findDanger{
+      paramName:t="enemy"
+      radiusParamName:t="enemyRadiusLarge"
+      minDanger:r=0.6
+      tag:t="human"
+    }
+
+    setTime{
+      to:t="changed__loseInterestAt"
+    }
+
+    modifyNode{
+      target:t="changed__loseInterestAt"
+      operator:t="+"
+      arg:t="changed__agroOnAwakened"
+    }
+
+    selectNode{
+      name:t="attack"
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.changed.findDanger"
+
+  setTime{
+    to:t="agent_dangers__time"
+  }
+
+  selector{
+    selectStrategy:t="ordered"
+    selectOnSuccess:b=yes
+
+    sequencer{
+      compareNode{
+        lhs:t="agent_dangers__time"
+        operator:t="<"
+        rhs:t="agent_dangers__triggeredUntil"
+      }
+
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadiusTriggered"
+        minDanger:r=0.6
+        tag:t="human"
+      }
+
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        argIntParam:t="enemy"
+      }
+
+      setTime{
+        to:t="changed__loseInterestAt"
+      }
+
+      modifyNode{
+        target:t="changed__loseInterestAt"
+        operator:t="+"
+        arg:t="changed__agroOnAwakened"
+      }
+
+      selectNode{
+        name:t="attack"
+      }
+    }
+
+    sequencer{
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.6
+        tag:t="human"
+      }
+
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        argIntParam:t="enemy"
+      }
+
+      setTime{
+        to:t="changed__loseInterestAt"
+      }
+
+      modifyNode{
+        target:t="changed__loseInterestAt"
+        operator:t="+"
+        arg:t="changed__agroOnAwakened"
+      }
+
+      selectNode{
+        name:t="attack"
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.changed.goToOrigin"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=1
+      }
+
+      subTree{
+        treeName:t="sub.clearPath"
+      }
+
+      sequencer{
+        hasTimePassed{
+          from:t="changed__targetLostAt"
+          duration:t="changed__targetIndifferenceTime"
+        }
+
+        orderedSelector{
+          sequencer{
+            checkDistanceToPos{
+              posParam:t="changed__origin"
+              radius:r=20
+            }
+
+            findDanger{
+              paramName:t="enemy"
+              radiusParamName:t="enemyRadius"
+              minDanger:r=0.1
+            }
+          }
+
+          findDanger{
+            paramName:t="enemy"
+            radiusParamName:t="enemyRadiusMicro"
+            minDanger:r=0.6
+            tag:t="human"
+          }
+        }
+
+        modifyNode{
+          target:t="walker_agent__targetEid"
+          operator:t="="
+          argIntParam:t="enemy"
+        }
+
+        setTime{
+          to:t="changed__loseInterestAt"
+        }
+
+        modifyNode{
+          target:t="changed__loseInterestAt"
+          operator:t="+"
+          arg:t="changed__agroOnAwakened"
+        }
+
+        selectNode{
+          name:t="attack"
+        }
+      }
+
+      sequencer{
+        nFindAttractPosition{
+          posParam:t="walker_agent__targetPos"
+        }
+
+        selectNode{
+          name:t="moveToAttraction"
+        }
+      }
+
+      subTree{
+        treeName:t="sub.recalculateTreeOnStuck"
+      }
+    }
+  }
+
+  orderedSelector{
+    orderedSelector{
+      not{
+        checkDistanceToPos{
+          posParam:t="changed__origin"
+          radius:r=20
+        }
+      }
+
+      not{
+        findDanger{
+          paramName:t="enemy"
+          radiusParamName:t="enemyRadius"
+          minDanger:r=0.1
+        }
+      }
+    }
+
+    setTime{
+      to:t="changed__awakenAt"
+    }
+  }
+
+  subTree{
+    treeName:t="sub.return_to_navmesh"
+  }
+
+  setTime{
+    to:t="changed__targetLostAt"
+  }
+
+  moveToPosWithBlinks{
+    posParam:t="changed__origin"
+    forceToWalk:b=yes
+    navLookAhead:r=0.75
+    blinkPeriod:p2=0.1, 0.7
+  }
+
+  nPhysForceAnimState{
+    animState:t="lie_down"
+    duration:r=1.1
+  }
+
+  addTemplate{
+    name:t="sleeping_monster"
+  }
+}
+
+sequencer{
+  name:t="sub.aimlessly_walk_around_after_awaken"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=1
+      }
+
+      selector{
+        selectStrategy:t="ordered"
+        selectOnSuccess:b=yes
+
+        subTree{
+          treeName:t="sub.clearPath"
+        }
+
+        subTree{
+          treeName:t="sub.recalculateTreeOnStuck"
+        }
+      }
+    }
+  }
+
+  setTime{
+    to:t="agent_dangers__time"
+  }
+
+  modifyNode{
+    target:t="agent_dangers__time"
+    operator:t="-"
+    arg:r=3
+  }
+
+  compareNode{
+    lhs:t="changed__awakenAt"
+    operator:t=">"
+    rhs:t="agent_dangers__time"
+  }
+
+  wait{
+    range:p2=0.1, 0.3
+    resetable:b=yes
+  }
+
+  nMeshFindRandomPointAroundPos{
+    posParam:t="walker_agent__targetPos"
+    dist:p2=3, 5
+    aroundPos:t="navmesh_phys__prevPos"
+  }
+
+  parallel{
+    nPhysCorridorMoveToPosWithNavmeshMapping{
+      posParam:t="walker_agent__targetPos"
+      forceToWalk:b=yes
+      stopDist:r=0.75
+      navLookAhead:r=0.75
+    }
+
+    wait{
+      range:p2=4.5, 4.5
+      resetable:b=yes
+    }
+  }
+
+  not{
+    findFlankableTarget{
+      useLargeRadius:b=no
+      minDanger:r=0.1
+    }
+  }
+
+  wait{
+    range:p2=0.3, 0.7
+    resetable:b=yes
+  }
+
+  ignoreChance{
+    chance:r=0.1
+  }
+
+  nMeshFindRandomPointAroundPos{
+    posParam:t="walker_agent__targetPos"
+    dist:p2=3, 6
+    aroundPos:t="walker_agent__targetPos"
+  }
+
+  parallel{
+    nPhysCorridorMoveToPosWithNavmeshMapping{
+      posParam:t="walker_agent__targetPos"
+      forceToWalk:b=yes
+      stopDist:r=0.45
+      navLookAhead:r=0.75
+    }
+
+    wait{
+      range:p2=4.5, 4.5
+      resetable:b=yes
+    }
+  }
+
+  not{
+    findFlankableTarget{
+      useLargeRadius:b=yes
+      minDanger:r=0.1
+    }
+  }
+
+  wait{
+    range:p2=0.2, 0.5
+    resetable:b=yes
+  }
+
+  ignoreChance{
+    chance:r=0.3
+  }
+
+  nMeshFindRandomPointAroundPos{
+    posParam:t="walker_agent__targetPos"
+    dist:p2=3, 7
+    aroundPos:t="walker_agent__targetPos"
+  }
+
+  parallel{
+    nPhysCorridorMoveToPosWithNavmeshMapping{
+      posParam:t="walker_agent__targetPos"
+      forceToWalk:b=yes
+      stopDist:r=0.45
+      navLookAhead:r=0.75
+    }
+
+    wait{
+      range:p2=4.5, 4.5
+      resetable:b=yes
+    }
+  }
+
+  not{
+    findFlankableTarget{
+      useLargeRadius:b=no
+      minDanger:r=0.1
+    }
+  }
+
+  wait{
+    range:p2=0.2, 0.5
+    resetable:b=yes
+  }
+
+  ignoreChance{
+    chance:r=0.5
+  }
+
+  nMeshFindRandomPointAroundPos{
+    posParam:t="walker_agent__targetPos"
+    dist:p2=3, 8
+    aroundPos:t="walker_agent__targetPos"
+  }
+
+  parallel{
+    nPhysCorridorMoveToPosWithNavmeshMapping{
+      posParam:t="walker_agent__targetPos"
+      forceToWalk:b=yes
+      stopDist:r=0.45
+      navLookAhead:r=0.75
+    }
+
+    wait{
+      range:p2=4.5, 4.5
+      resetable:b=yes
+    }
+  }
+
+  not{
+    findFlankableTarget{
+      useLargeRadius:b=yes
+      minDanger:r=0.1
+    }
+  }
+
+  wait{
+    range:p2=0.2, 0.5
+    resetable:b=yes
+  }
+}
+
+sequencer{
+  name:t="sub.reaction.changed.on_hit"
+
+  orderedSelector{
+    compareNode{
+      lhs:t="beh_tree__interruptDisabled"
+      operator:t="=="
+      rhs:r=1
+    }
+
+    sequencer{
+      findFlankableTarget{
+        useLargeRadius:b=yes
+        backupTarget:t="agent_dangers__lastHitReactionOffenderEid"
+        minDanger:r=0.1
+      }
+
+      selectNode{
+        name:t="attack"
+      }
+    }
+
+    sequencer{
+      setBlind{
+        duration:p2=2, 5
+      }
+
+      recalculateTree{}
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.reaction.changed.on_bullet_nearby"
+
+  compareNode{
+    lhs:t="beh_tree__interruptDisabled"
+    operator:t="=="
+    rhs:r=0
+  }
+
+  findFlankableTarget{
+    useLargeRadius:b=yes
+    minDanger:r=0.1
+  }
+
+  selectNode{
+    name:t="attack"
+  }
+}
+
+sequencer{
+  name:t="sub.reaction.changed.on_blindness"
+
+  modifyNode{
+    target:t="beh_tree__interruptDisabled"
+    operator:t="="
+    arg:i=0
+  }
+
+  recalculateTree{}
+}
+
+sequencer{
+  name:t="sub.changed.mini.run_to_target_and_attack"
+
+  setTime{
+    to:t="agent_dangers__lastAgroTime"
+  }
+
+  orderedSelector{
+    compareNode{
+      lhs:t="walker_agent__targetEid"
+      operator:t="!="
+      rhs:i=0
+    }
+
+    findFlankableTarget{
+      useLargeRadius:b=no
+      minDanger:r=0.1
+    }
+  }
+
+  success{
+    sequencer{
+      name:t="run_to_target"
+
+      speak{
+        effect:t="seeDanger"
+        timeMinMax:p2=6, 10
+      }
+
+      not{
+        checkDistanceToTarget{
+          targetParam:t="walker_agent__targetEid"
+          radius:r=10
+        }
+      }
+
+      pursueTargetWithBlinks{
+        targetParam:t="walker_agent__targetEid"
+        forceToWalk:b=no
+        stopDist:r=2
+        navLookAhead:r=0.75
+        useFlank:b=no
+      }
+    }
+  }
+
+  setTime{
+    to:t="agent_dangers__lastAgroTime"
+  }
+
+  orderedSelector{
+    name:t="try_attack"
+
+    sequencer{
+      name:t="energy attack"
+
+      ignoreChance{
+        chance:r=0.33
+      }
+
+      subTree{
+        treeName:t="sub.nchanged_outdoor_mini_energy_attack"
+      }
+    }
+
+    repeatUntilFail{
+      count:i=2
+
+      orderedSelector{
+        name:t="follow_target"
+
+        sequencer{
+          compareNode{
+            lhs:t="changed__meleeBlinkChance"
+            operator:t="=="
+            rhs:r=0
+          }
+
+          checkDistanceToTarget{
+            targetParam:t="walker_agent__targetEid"
+            radius:r=2
+          }
+        }
+
+        sequencer{
+          isOffNavMesh{}
+          subTree{
+            treeName:t="sub.return_to_navmesh"
+          }
+        }
+
+        pursueTargetWithBlinks{
+          targetParam:t="walker_agent__targetEid"
+          forceToWalk:b=no
+          stopDist:r=0.6
+          navLookAhead:r=1.5
+          loseInvisibleTarget:b=no
+        }
+
+        checkDistanceToTarget{
+          targetParam:t="walker_agent__targetEid"
+          radius:r=2
+        }
+
+        sequencer{
+          tryOpportunisticClimbing{
+            name:t="tryOpportunisticClimbing"
+          }
+
+          nPhysCorridorMoveToPosWithNavmeshMapping{
+            posParam:t="walker_agent__climbingFrom"
+            forceToWalk:b=no
+            stopDist:r=0.6
+          }
+
+          nPhysLookAtEntityWithPositionMapping{
+            targetParam:t="walker_agent__targetEid"
+          }
+
+          performClimbing{
+            name:t="performClimbing"
+          }
+
+          pursueTargetWithBlinks{
+            targetParam:t="walker_agent__targetEid"
+            forceToWalk:b=no
+            stopDist:r=0.6
+            navLookAhead:r=1.5
+            loseInvisibleTarget:b=no
+          }
+        }
+
+        sequencer{
+          limitPerPeriod{
+            tag:t="limitJumping"
+            period:r=3
+            maxCount:i=5
+          }
+
+          nPhysPrepareJumpingBetweenNMeshIslands{
+            name:t="nPhysPrepareJumpingBetweenNMeshIslands"
+          }
+
+          nPhysCorridorMoveToPosWithNavmeshMapping{
+            posParam:t="walker_agent__climbingFrom"
+            forceToWalk:b=no
+            stopDist:r=0.6
+          }
+
+          nPhysLookAtEntityWithPositionMapping{
+            targetParam:t="walker_agent__targetEid"
+          }
+
+          performJumping{
+            name:t="performJumping"
+          }
+
+          pursueTargetWithBlinks{
+            targetParam:t="walker_agent__targetEid"
+            forceToWalk:b=no
+            stopDist:r=0.6
+            navLookAhead:r=1.5
+            loseInvisibleTarget:b=no
+          }
+        }
+
+        sequencer{
+          limitPerPeriod{
+            tag:t="limitOffmeshJump"
+            period:r=3
+            maxCount:i=2
+          }
+
+          nPhysPrepareOffmeshJumping{
+            name:t="nPhysPrepareJumpingBetweenNMeshIslands"
+          }
+
+          nPhysCorridorMoveToPosWithNavmeshMapping{
+            posParam:t="walker_agent__climbingFrom"
+            forceToWalk:b=no
+            stopDist:r=0.6
+          }
+
+          nPhysLookAtEntityWithPositionMapping{
+            targetParam:t="walker_agent__targetEid"
+          }
+
+          performOffmeshJumping{
+            name:t="performJumping"
+          }
+        }
+      }
+
+      modifyNode{
+        target:t="changed__meleeBlinkChance"
+        operator:t="="
+        arg:i=0
+      }
+
+      orderedSelector{
+        sequencer{
+          name:t="do_attack"
+
+          compareNode{
+            lhs:t="flanking_ai__priority"
+            operator:t="=="
+            rhs:i=0
+          }
+
+          success{
+            sequencer{
+              checkDistanceToTarget{
+                targetParam:t="walker_agent__targetEid"
+                radius:r=2
+              }
+
+              setTime{
+                to:t="agent_dangers__lastAgroTime"
+              }
+
+              orderedSelector{
+                sequencer{
+                  name:t="melee_powerfull_attack"
+
+                  ignoreChance{
+                    chance:r=0.95
+                  }
+
+                  hasMeleeWeaponEquipped{
+                    targetParam:t="walker_agent__targetEid"
+                  }
+
+                  limitPerPeriod{
+                    tag:t="limitPowerAttack"
+                    period:r=2.5
+                    maxCount:i=1
+                  }
+
+                  modifyNode{
+                    target:t="customizable_melee_attack__isPowerfullAttack"
+                    operator:t="="
+                    arg:b=yes
+                  }
+
+                  modifyNode{
+                    target:t="beh_tree__interruptDisabled"
+                    operator:t="="
+                    arg:i=1
+                  }
+
+                  success{
+                    sequencer{
+                      runAction{
+                        action:t="stand_melee_powerfull"
+                      }
+
+                      parallel{
+                        nPhysStareAtEntityWithPositionMapping{
+                          targetParam:t="walker_agent__targetEid"
+                        }
+
+                        wait{
+                          range:p2=0.7, 0.7
+                          resetable:b=yes
+                        }
+                      }
+
+                      parallel{
+                        repeatUntilFail{
+                          orderedSelector{
+                            checkDistanceToTarget{
+                              targetParam:t="walker_agent__targetEid"
+                              radius:r=2
+                            }
+
+                            failed{
+                              interruptActions{}
+                            }
+                          }
+                        }
+
+                        wait{
+                          range:p2=0.7, 0.7
+                          resetable:b=yes
+                        }
+                      }
+                    }
+                  }
+
+                  modifyNode{
+                    target:t="beh_tree__interruptDisabled"
+                    operator:t="="
+                    arg:i=0
+                  }
+                }
+
+                sequencer{
+                  modifyNode{
+                    target:t="customizable_melee_attack__isPowerfullAttack"
+                    operator:t="="
+                    arg:b=no
+                  }
+
+                  modifyNode{
+                    target:t="beh_tree__interruptDisabled"
+                    operator:t="="
+                    arg:i=1
+                  }
+
+                  success{
+                    sequencer{
+                      runAction{
+                        action:t="stand_melee"
+                      }
+
+                      parallel{
+                        nPhysStareAtEntityWithPositionMapping{
+                          targetParam:t="walker_agent__targetEid"
+                        }
+
+                        wait{
+                          range:p2=1.2, 1.2
+                          resetable:b=yes
+                        }
+                      }
+                    }
+                  }
+
+                  modifyNode{
+                    target:t="beh_tree__interruptDisabled"
+                    operator:t="="
+                    arg:i=0
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        sequencer{
+          name:t="wait_turn"
+
+          nMeshFindPointNearTargetWithNavmeshMapping{
+            posParam:t="walker_agent__targetPos"
+            dist:p2=5, 6
+            targetParam:t="walker_agent__targetEid"
+          }
+
+          randomSelector{
+            moveToPosWithBlinks{
+              posParam:t="walker_agent__targetPos"
+            }
+
+            nPhysCorridorMoveToPosWithNavmeshMapping{
+              posParam:t="walker_agent__targetPos"
+              forceToWalk:b=no
+              navLookAhead:r=0.75
+            }
+          }
+
+          parallel{
+            nPhysStareAtEntityWithPositionMapping{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            wait{
+              range:p2=1.25, 2.35
+              resetable:b=yes
+            }
+          }
+
+          findFlankableTarget{
+            useLargeRadius:b=no
+            minDanger:r=0.1
+          }
+        }
+      }
+
+      checkTargetEcs{
+        targetParam:t="walker_agent__targetEid"
+      }
+    }
+
+    failed{
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        arg:i=0
+      }
+    }
+  }
+}

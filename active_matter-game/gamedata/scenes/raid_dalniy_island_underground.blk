@@ -1,0 +1,294 @@
+import{
+  scene:t="gamedata/scenes/_raid_mode_base_config.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_dalniy_island_sparse_water_calm.blk"
+}
+
+entity{
+  _template:t="pfg_ambient_sound"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel8"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel9"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel10"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel11"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel12"
+}
+
+entity{
+  _template:t="door_mult_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_doors.blk"
+}
+
+entity{
+  _template:t="misc_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_misc.blk"
+}
+
+entity{
+  _template:t="transparent_partition"
+}
+
+import{
+  scene:t="gamedata/scenes/_dalniy_island_nmesh_mapping_zones.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_dalniy_island_nmesh_mapping_negation_zones.blk"
+}
+
+entity{
+  _template:t="am_core_spawn_manager"
+}
+
+entity{
+  _template:t="postfx_color_grading_tonemap_death_alive"
+}
+
+entity{
+  _template:t="ground_holes_updater"
+}
+
+entity{
+  _template:t="underground_zones_updater"
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_underground_depo_a_lights.blk"
+}
+
+entity{
+  _template:t="shaderVars"
+
+  "shader_vars__vars:object"{
+    river1:c=142, 137, 71, 0
+    river0:c=76, 63, 5, 0
+    river_density:r=2
+    water_color_noise_size:r=71
+    ocean1:c=142, 137, 71, 0
+    ocean0:c=76, 63, 5, 0
+    ocean_density:r=1
+    paint_details_tex:t="sovmod_building_colors_tex_palette*"
+    river0:c=30, 81, 63, 0
+    river1:c=41, 104, 83, 0
+    ocean0:c=100, 110, 150, 0
+    ocean1:c=90, 100, 150, 0
+  }
+}
+
+entity{
+  _template:t="activity_helper_manager"
+  activity_helper_checks__noActivityMaxTime:r=60
+}
+
+entity{
+  _template:t="am_bot_spawner"
+  bot_spawner__spawnInterval:r=20
+  bot_spawner__botsPerGroupMinMax:ip2=1, 3
+}
+
+entity{
+  _template:t="zone_weather"
+}
+
+entity{
+  _template:t="civil_lootable_rendinst_manager"
+}
+
+entity{
+  _template:t="navmesh_isle_marker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  navmesh_isle_marker__expectedNumTriangles:i=392
+}
+
+entity{
+  _template:t="static_cam"
+  camera__active:b=yes
+  transform:m=[[0.28062, 0, -0.959819] [0.0325116, 0.999426, 0.00950534] [0.959268, -0.0338726, 0.280459] [-238.13, 243.647, -7.98908]]
+  fov:r=1
+  znear:r=0.01
+  zfar:r=100
+}
+
+entity{
+  _template:t="navmesh_battle_area"
+  transform:m=[[400, 0, 0] [0, 400, 0] [0, 0, 400] [0, 0, 0]]
+}
+
+entity{
+  _template:t="raid_description"
+  raid_description__raidType:t="collect"
+  raid_description__difficulty:t="dif_hard"
+  raid_description__drawSpawnsAsPoints:b=no
+  raid_description__drawSpawnsAsPoly:b=yes
+  raid_description__drawSpawnsAlpha:r=60
+  raid_description__drawSpawnsRadius:r=28
+
+  "raid_description__enemies:list<t>"{
+    item:t="distorted"
+    item:t="invisible"
+    item:t="gravity_trap"
+  }
+
+  "raid_description__images:list<t>"{
+    item:t="ui/zone_thumbnails/raid_scrapyard_1"
+    item:t="ui/zone_thumbnails/raid_scrapyard_2"
+    item:t="ui/zone_thumbnails/raid_scrapyard_3"
+  }
+
+  "raid_description__mcImages:list<t>"{}
+  "raid_description__possibleLoot:list<t>"{
+    item:t="rpk_74_gun"
+    item:t="ak_74_gun"
+    item:t="aks_74u_gun"
+    item:t="tkb_22_gun"
+    item:t="sks_carbine_hunt_gun"
+    item:t="mc_21_12_gun"
+    item:t="ks_23_gun"
+    item:t="sks_carbine_gun"
+    item:t="pm_63_rak_gun"
+    item:t="pp_91_kedr_gun"
+    item:t="m1911_colt_gun"
+    item:t="large_sovmod_backpack"
+    item:t="medium_sovmod_backpack"
+  }
+}
+
+entity{
+  _template:t="clouds_hole_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [980, 60, -330]]
+  density:r=0.5
+}
+
+entity{
+  _template:t="storm_zone_with_forcefield"
+  sphere_zone__radius:r=300
+  moving_zone__manual_activation:b=no
+  moving_zone__sourcePos:p3=0, 0, 0
+  moving_zone__sleepingTime:r=1800
+  moving_zone__movingVelocity:r=1.8
+}
+
+entity{
+  _template:t="tiled_map"
+  tiled_map__leftTop:p2=-2304, -2304
+  tiled_map__rightBottom:p2=2304, 2304
+  tiled_map__leftTopBorder:p2=-3000, -3000
+  tiled_map__rightBottomBorder:p2=3000, 3000
+  tiled_map__visibleRange:p2=144, 4000
+  tiled_map__tileWidth:i=512
+  tiled_map__zlevels:i=5
+  tiled_map__northAngle:r=0
+  tiled_map__tilesPath:t="maps/dalniy_island_sparse"
+  tiled_map__backgroundColor:c=35, 128, 97, 255
+  fog_of_war__enabled:b=yes
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_regions.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_minimap_regions.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_custom_points.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_spawn_points.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_extraction_points.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_monsters.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_traps.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_gravity_zones.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_locked_doors.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_encounters.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_waypoints.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_quest_objects.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_portals.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_hive_spawn_points.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_underground/_dalniy_island_underground_loot_generators.blk"
+}
+
+entity{
+  _template:t="military_lootable_rendinst_manager_t1"
+}
+
+entity{
+  _template:t="unique_item_location_marker"
+  transform:m=[[42.5949, -3.03239e-06, -19.8227] [2.64029e-06, 48.9205, -1.22873e-06] [13.8148, 0, 61.1189] [681.175, 11.6947, -1051.88]]
+  unique_item_location_marker__location:t="spy_trailer"
+}
+
+entity{
+  _template:t="level+level_synced_environment"
+  level__blk:t="levels/nexus_underground_depo_a.blk"
+  level__useGroundHolesCollision:b=yes
+  level_synced_environment__timeOfDaySeed:i=1
+  level_synced_environment__weatherSeed:i=2
+  level_synced_environment__timeOfDayChangeInterval:i=342
+  level_synced_environment__weatherChangeInterval:i=404
+
+  "level__weatherChoice:object"{
+    weather_dalniy_island_overcast:r=1
+    weather_dalniy_island_cloudy:r=1
+  }
+
+  "level__timeVec:array"{
+    level_timeVec:r=0
+  }
+}

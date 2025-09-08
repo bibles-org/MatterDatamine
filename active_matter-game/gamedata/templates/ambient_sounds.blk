@@ -1,0 +1,130 @@
+africa_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/africa"
+  }
+}
+
+mir_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/mir"
+  }
+}
+
+nexus_vanilla_mall_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/vanilla_mall"
+  }
+}
+
+europe_summer_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/europe_summer"
+  }
+}
+
+europe_spring_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/europe_spring"
+  }
+}
+
+field_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/field"
+  }
+}
+
+dalniy_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/dalniy"
+  }
+}
+
+ancient_ruins_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/ancient_ruins"
+  }
+}
+
+pfg_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/pfg"
+  }
+}
+
+ocean_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/positioned/ocean"
+  }
+}
+
+jungle_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/jungle"
+  }
+}
+
+base_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/base_roomtone"
+  }
+}
+
+login_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/login_screen"
+    ambient_sound__abandonOnReset:b=yes
+  }
+}

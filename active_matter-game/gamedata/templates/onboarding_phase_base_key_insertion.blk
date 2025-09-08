@@ -1,0 +1,67 @@
+onboarding_phase_base_key_insertion{
+  _use:t="state_machine_state"
+
+  "onboarding_phase_base_key_insertion:tag"{}
+  "state_machine_state__createEntitiesWhenCurrent:list<t>"{
+    item:t="onboarding_teleport_hero_to_base"
+    item:t="onboarding_heal_hero"
+    item:t="onboarding_note_contracts_processor"
+    item:t="onboarding_note_monolith_processor"
+    item:t="onboarding_monolith_enable_interaction_processor"
+    item:t="onboarding_respawn_effect_creator"
+    item:t="onboarding_note_bunker_end_processor"
+    item:t="onboarding_contract_trigger"
+    item:t="onboarding_monolith_access_trigger"
+    item:t="onboarding_restore_pulse_and_stamina"
+    item:t="disable_player_profile"
+  }
+}
+
+onboarding_note_contracts_processor{
+  _use:t="game_trigger_processor_open_note"
+  game_trigger_processor_open_note__note:t="note_onboarding_contracts"
+  game_trigger_processor__onTrigger:t="onboarding_note_contracts"
+}
+
+onboarding_note_monolith_processor{
+  _use:t="game_trigger_processor_open_note"
+  game_trigger_processor_open_note__note:t="note_onboarding_monolith"
+  game_trigger_processor__onTrigger:t="onboarding_contract_completed"
+  game_trigger_processor_open_note__delay:r=1.5
+}
+
+onboarding_monolith_enable_interaction_processor{
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor__onTrigger:t="onboarding_contract_completed"
+
+  "onboarding_monolith_enable_interaction:tag"{}
+}
+
+onboarding_note_contracts_box_trigger{
+  _use:t="onboarding_open_note_box_trigger"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_trigger_box__onEnterEventTrigger:t="onboarding_note_contracts"
+}
+
+onboarding_note_bunker_end_processor{
+  _use:t="game_trigger_processor_open_note"
+  game_trigger_processor_open_note__note:t="note_onboarding_bunker_end"
+  game_trigger_processor__onTrigger:t="onboarding_monolith_access_bought"
+  game_trigger_processor_open_note__delay:r=3.5
+}
+
+onboarding_contract_trigger{
+  onboarding_contract_trigger__emitTrigger:t="onboarding_contract_completed"
+}
+
+onboarding_monolith_access_trigger{
+  onboarding_monolith_access_trigger__emitTrigger:t="onboarding_monolith_access_bought"
+}
+
+onboarding_base_activated{
+  _use:t="state_machine_transition_trigger"
+  game_trigger_processor__onTrigger:t="onboarding_monolith_access_bought"
+  game_trigger_processor__onTriggerHash:i=0
+
+  "trigger_transition_on_game_trigger:tag"{}
+}

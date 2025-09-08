@@ -1,0 +1,14 @@
+grenade_trajectory_node{
+  _singleton:b=yes
+  _tags:t="render"
+  trajectory_renderer_shader_name:t="trajectory_renderer"
+
+  "grenade_trajectory_node:dafg::NodeHandle"{}
+  "trajectory_renderer_shader:ShadersECS"{}
+  "trajectory_start_gravity:ShaderVar"{}
+  "trajectory_gravity_dir:ShaderVar"{}
+  "trajectory_vel_time:ShaderVar"{}
+  "trajectory_center:ShaderVar"{}
+  "trajectory_border:ShaderVar"{}
+  "trajectory_total_thickness_gamma:ShaderVar"{}
+}

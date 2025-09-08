@@ -1,0 +1,76 @@
+replicating{
+  replication{
+    _tags:t="net"
+  }
+}
+
+msg_sink{
+  _use:t="replicating"
+  _singleton:b=yes
+
+  msg_sink{}
+}
+
+loc_snapshots{
+  loc_snapshots__timeOffset:r=0.15
+  loc_snapshots__targetTimeOffset:r=0.15
+  loc_snapshots__inited:b=no
+  loc_snapshots__blink:b=no
+  loc_snapshots__extrapolationCursor:r=0
+  loc_snapshots__extrapolationDiscrepancy:p3=0, 0, 0
+  loc_snapshots__isInExtrapolation:b=no
+  loc_snapshots__sendExtraSnap:b=no
+  loc_snapshots__compensationSpeed:p2=0, 0
+  loc_snapshots__lastSnapTime:r=0
+
+  loc_snapshots__snapshotData{
+    _tags:t="net"
+  }
+
+  "lag_compensation__unknownEntity:tag"{}
+  "loc_snapshots__dynamicInterpTime:tag"{}
+}
+
+loc_snapshots_wait_lock{
+  "loc_snapshots__dontUpdate:tag"{}
+  "loc_snapshots_wait_lock:tag"{}
+}
+
+loc_snapshots_hero_awareness{
+  hero_awareness__rangeStep:r=25
+  hero_awareness__rangeCount:i=12
+  hero_awareness__rateStep:r=0.058
+  hero_awareness__updateAt:r=0
+  hero_awareness__lastUpdateAt:r=0
+  hero_awareness__startDelay:r=5
+  hero_awareness_debug__enabled:b=no
+  hero_awareness_debug__tallyAt:r=0
+  hero_awareness_debug__tallyInterval:r=6.5
+
+  "hero_awareness__rates:shared:list<i>"{
+    i:i=1
+    i:i=2
+    i:i=3
+    i:i=5
+    i:i=8
+    i:i=12
+    i:i=17
+    i:i=23
+  }
+
+  "hero_awareness_debug__eids:list<eid>"{}
+  "hero_awareness_debug__snapsCount:list<i>"{}
+  "hero_awareness_debug__eidsCount:list<i>"{}
+}
+
+loc_snapshots_debug{
+  "loc_snapshots_debug:tag"{}
+}
+
+loc_snapshots_debug_registry{
+  loc_snapshots_debug__reportAt:r=0
+  loc_snapshots_debug__reportInterval:r=240
+
+  "loc_snapshots_debug__countByType:object"{}
+  "loc_snapshots_debug__countByRange:list<i>"{}
+}

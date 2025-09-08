@@ -1,0 +1,133 @@
+repeat{
+  name:t="firefly"
+  selectStrategy:t="ordered"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      sequencer{
+        compareNode{
+          lhs:t="walker_agent__targetEid"
+          operator:t="!="
+          rhs:r=0
+        }
+
+        orderedSelector{
+          not{
+            checkDistanceToTarget{
+              targetParam:t="walker_agent__targetEid"
+              radiusParam:t="firefly__pursueRadius"
+            }
+          }
+
+          not{
+            checkDistanceToPos{
+              posParam:t="firefly__origin"
+              radiusParam:t="firefly__originRadius"
+            }
+          }
+
+          not{
+            checkAlive{
+              targetParam:t="walker_agent__targetEid"
+            }
+          }
+        }
+
+        modifyNode{
+          target:t="walker_agent__targetEid"
+          operator:t="="
+          arg:r=0
+        }
+
+        recalculateTree{}
+      }
+
+      sequencer{
+        compareNode{
+          lhs:t="walker_agent__targetEid"
+          operator:t="=="
+          rhs:r=0
+        }
+
+        checkDistanceToPos{
+          posParam:t="firefly__origin"
+          radiusParam:t="firefly__originRadius"
+        }
+
+        fireflyFindTarget{}
+        recalculateTree{}
+      }
+    }
+  }
+
+  sequencer{
+    name:t="attack"
+
+    compareNode{
+      lhs:t="walker_agent__targetEid"
+      operator:t="!="
+      rhs:r=0
+    }
+
+    parallel{
+      nPhysCorridorMoveToTargetWithNavmeshMapping{
+        targetParam:t="walker_agent__targetEid"
+        stopDist:r=0
+        navLookAhead:r=0.75
+      }
+
+      repeat{
+        setTime{
+          to:t="firefly__lastTriggerAt"
+        }
+      }
+    }
+  }
+
+  sequencer{
+    name:t="wander"
+
+    not{
+      hasTimePassed{
+        from:t="firefly__lastTriggerAt"
+        duration:t="spawnling__triggeredDuration"
+      }
+    }
+
+    compareNode{
+      lhs:t="walker_agent__targetEid"
+      operator:t="=="
+      rhs:r=0
+    }
+
+    nMeshFindRandomPointAroundPosWithNavmeshMapping{
+      posParam:t="walker_agent__targetPos"
+      dist:p2=0, 10
+      aroundPos:t="firefly__origin"
+    }
+
+    nPhysCorridorMoveToPosWithNavmeshMapping{
+      posParam:t="walker_agent__targetPos"
+      forceToWalk:b=no
+      stopDist:r=1.2
+    }
+  }
+
+  sequencer{
+    name:t="goto sleep"
+
+    hasTimePassed{
+      from:t="firefly__lastTriggerAt"
+      duration:t="spawnling__triggeredDuration"
+    }
+
+    nPhysCorridorMoveToPosWithNavmeshMapping{
+      posParam:t="firefly__origin"
+      forceToWalk:b=no
+    }
+
+    fireflySleep{}
+  }
+}

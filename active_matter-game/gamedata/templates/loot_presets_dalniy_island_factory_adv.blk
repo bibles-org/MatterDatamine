@@ -1,0 +1,582 @@
+factory_adv_vehicle_civic_spawn_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="gaz_67+vehicle_state_randomizer"
+      number:ip2=1, 2
+    }
+  }
+}
+
+factory_adv_vehicle_outdoor_spawn_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="gaz_67+vehicle_state_randomizer"
+      number:i=2
+    }
+  }
+}
+
+factory_adv_fuel_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="canister_gasoline_item+item_in_world"
+      number:ip2=5, 10
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_big_item+item_in_world"
+      number:ip2=1, 2
+    }
+  }
+}
+
+factory_adv_vehicle_parts_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="canister_gasoline_item+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_big_item+item_in_world"
+      number:ip2=0, 1
+    }
+
+    "item:object"{
+      template_name:t="soviet_repair_kit_item+item_in_world"
+      number:ip2=5, 10
+    }
+  }
+}
+
+factory_adv_secret_stash_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="secret_stash_lootable_rendinst_1"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="secret_stash_lootable_rendinst_2"
+      number:i=1
+    }
+  }
+}
+
+factory_adv_hangar_17_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_close_range_weapons_t2_lootable_rendinst"
+      number:i=8
+    }
+
+    "item:object"{
+      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
+      number:i=8
+    }
+
+    "item:object"{
+      template_name:t="military_equipment_t2_lootable_rendinst"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="military_medical_t2_lootable_rendinst"
+      number:i=3
+    }
+  }
+}
+
+factory_adv_hangar_18_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_close_range_weapons_t2_lootable_rendinst"
+      number:i=8
+    }
+
+    "item:object"{
+      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
+      number:i=8
+    }
+
+    "item:object"{
+      template_name:t="military_equipment_t2_lootable_rendinst"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="military_medical_t2_lootable_rendinst"
+      number:i=3
+    }
+  }
+}
+
+factory_adv_overall_zone_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="small_sovmod_backpack_lootable+item_in_world"
+      number:ip2=10, 20
+    }
+
+    "item:object"{
+      template_name:t="medium_sovmod_backpack_lootable+item_in_world"
+      number:ip2=8, 10
+    }
+
+    "item:object"{
+      template_name:t="large_sovmod_backpack_lootable+item_in_world"
+      number:ip2=0, 4
+    }
+
+    "item:object"{
+      template_name:t="toz_b_gun+item_in_world"
+      number:ip2=3, 5
+      template_sub_preset:t="toz_b_gun_template_sub_preset"
+    }
+
+    "item:object"{
+      template_name:t="sks_carbine_rust_gun+item_in_world"
+      number:ip2=2, 3
+      template_sub_preset:t="sks_carbine_rust_gun_template_sub_preset"
+    }
+
+    "item:object"{
+      template_name:t="pp_91_kedr_gun+item_in_world"
+      number:ip2=0, 2
+      template_sub_preset:t="pp_91_kedr_gun_template_sub_preset"
+    }
+
+    "item:object"{
+      template_name:t="encounter_battery_item+item_in_world"
+      number:ip2=20, 25
+    }
+
+    "item:object"{
+      template_name:t="civil_lootable_rendinst_1"
+      number:ip2=40, 50
+    }
+
+    "item:object"{
+      template_name:t="civil_lootable_rendinst_2"
+      number:ip2=40, 50
+    }
+
+    "item:object"{
+      template_name:t="sovmod_flashlight_device+item_in_world"
+      number:ip2=13, 17
+    }
+
+    "item:object"{
+      template_name:t="sovmod_diver_flashlight+item_in_world"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="soviet_repair_kit_item+item_in_world"
+      number:ip2=10, 20
+    }
+
+    "item:object"{
+      template_name:t="axe_weapon+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="wrench_weapon+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="screwdriver_a_weapon+item_in_world"
+      number:ip2=10, 12
+    }
+
+    "item:object"{
+      template_name:t="screwdriver_b_weapon+item_in_world"
+      number:ip2=10, 12
+    }
+
+    "item:object"{
+      template_name:t="chisel_a_weapon+item_in_world"
+      number:ip2=10, 12
+    }
+
+    "item:object"{
+      template_name:t="chisel_b_weapon+item_in_world"
+      number:ip2=10, 12
+    }
+
+    "item:object"{
+      template_name:t="cooking_knife_weapon+item_in_world"
+      number:ip2=10, 20
+    }
+
+    "item:object"{
+      template_name:t="cooking_cleaver_weapon+item_in_world"
+      number:ip2=1, 5
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_player_blue+item_in_world"
+      number:ip2=5, 10
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_player_red+item_in_world"
+      number:ip2=5, 10
+    }
+
+    "item:object"{
+      template_name:t="item_legend404_tape_recorder_a+item_in_world"
+      number:ip2=5, 10
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_1+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_2+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_3+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_4+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_5+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_6+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_a+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_e+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_g+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_h+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_i+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_k+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_l+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_m+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_01+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_02+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_03+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_04+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_05+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_06+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_07+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_08+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_09+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_10+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_secret_note+item_in_world"
+      number:i=3
+    }
+  }
+}
+
+factory_adv_loot_indoor_shelves_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="corrupted_iron_item+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="electronics+item_in_world"
+      number:ip2=10, 15
+    }
+  }
+}
+
+factory_adv_loot_indoor_table_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="corrupted_iron_item+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="electronics+item_in_world"
+      number:ip2=10, 15
+    }
+  }
+}
+
+factory_adv_loot_indoor_floor_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="corrupted_iron_item+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="electronics+item_in_world"
+      number:ip2=10, 15
+    }
+  }
+}
+
+factory_adv_tower_sensor_5_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="small_backpack_tower_sensor_5_lootable+item_in_world"
+      number:i=1
+    }
+  }
+}
+
+factory_adv_institute_basement_post_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="dead_body_container_factory_basement_key"
+      number:i=1
+    }
+  }
+}
+
+factory_adv_lab_am_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_5+item_in_world"
+      number:i=4
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_10+item_in_world"
+      number:i=1
+    }
+  }
+}
+
+factory_adv_military_uaz_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_uaz_lootable_rendinst_1"
+      number:i=8
+    }
+  }
+}
+
+factory_adv_gravizone_am_pile_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_2+item_in_world"
+      number:i=20
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_1+item_in_world"
+      number:i=25
+    }
+  }
+}
+
+factory_adv_construction_site_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
+      number:i=3
+    }
+  }
+}
+
+factory_adv_patrol_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_guards_group_cluster"
+      number:i=3
+    }
+  }
+}
+
+factory_adv_worm_nest_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="nesting_swarm_snake_nest_placer"
+      number:i=2
+    }
+  }
+}
+
+factory_adv_small_med_random_encounter_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="encounter_small_changed_guard_box"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_frog_trap_box"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_mindcontrolled_guard_box"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_box_pile"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_minefield_raf"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_bmp_guards"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_trap_container"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_minefield_box"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_crashed_uaz"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_frog_trap_box"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_changed_guard_uaz"
+      number:i=1
+    }
+  }
+}

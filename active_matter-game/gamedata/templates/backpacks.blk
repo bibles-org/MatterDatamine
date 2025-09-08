@@ -1,0 +1,655 @@
+attachable_backpack_animchar{
+  _use:t="suit_attachable_animchar"
+  _use:t="am_militant_ribbons"
+
+  "attachable_backpack_animchar:tag"{}
+}
+
+usable_backpack{
+  _use:t="replicating"
+  _use:t="external_inventory_accesspoint"
+  _use:t="external_inventory_container"
+  _use:t="equipable_item"
+  _use:t="slot_attachable"
+  _use:t="base_inventory"
+  _use:t="item_weight_from_human_inventory_weight"
+  _use:t="suit_attachable_item_base"
+  inventory__name:t="backpack"
+  item__lootType:t="bag"
+  profile_server__slotName:t="inventory"
+  slot_attach__slotName:t="backpack"
+  item__filterType:t="equipment"
+  inventory__itemRecognitionEnabled:b=no
+  external_inventory_accesspoint__accessOnUse:b=no
+  use_object__offset:p3=0, 0.15, 0
+  use_object__obbMin:p3=0, 0, 0
+  use_object__obbMax:p3=0, 0, 0
+  use_object__selectedTemplate:t="selected_lootable_container"
+  item__setCustomUseAltPrompt:t="hud/search"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+
+  "item__equipmentSlots:list<t>"{
+    slot:t="backpack"
+  }
+
+  "human_inventory__autoCalculateCapacities:tag"{}
+  "equipment_item:tag"{}
+  "usable_backpack:tag"{}
+  "usableObject:tag"{}
+  _group{
+    _tags:t="ui"
+    itemContainer__uiItemsMergeEnabled:b=yes
+    itemContainer__uiItemsSortingEnabled:b=yes
+    itemContainer__uiItemsOverrideSortingPriority:b=yes
+  }
+
+  "item__chronotracesProgressionInfo:object"{
+    "repeatedly:object"{
+      extract:i=100
+    }
+  }
+}
+
+usable_safepack{
+  _use:t="replicating"
+  _use:t="external_inventory_accesspoint"
+  _use:t="external_inventory_container"
+  _use:t="equipable_item"
+  _use:t="slot_attachable"
+  _use:t="base_inventory"
+  _use:t="item_weight_from_human_inventory_weight"
+  inventory__name:t="backpack"
+  profile_server__slotName:t="inventory"
+  slot_attach__slotName:t="backpack"
+  item__filterType:t="equipment"
+  inventory__itemRecognitionEnabled:b=no
+  external_inventory_accesspoint__accessOnUse:b=no
+  use_object__offset:p3=0, 0.15, 0
+  use_object__obbMin:p3=0, 0, 0
+  use_object__obbMax:p3=0, 0, 0
+  use_object__selectedTemplate:t="selected_lootable_container"
+  item__setCustomUseAltPrompt:t="hud/search"
+  showroom_item__customZoom:r=1.8
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+
+  "item__equipmentSlots:list<t>"{
+    slot:t="backpack"
+  }
+
+  "human_inventory__autoCalculateCapacities:tag"{}
+  "equipment_item:tag"{}
+  "usable_backpack:tag"{}
+  "usableObject:tag"{}
+  _group{
+    _tags:t="ui"
+    itemContainer__uiItemsMergeEnabled:b=yes
+    itemContainer__uiItemsSortingEnabled:b=yes
+    itemContainer__uiItemsOverrideSortingPriority:b=yes
+  }
+
+  "mintBannedItem:tag"{}
+}
+
+small_backpack_attachable_animchar_male{
+  _use:t="attachable_backpack_animchar"
+  animchar__res:t="am_trooper_male_backpack_small_a_char"
+}
+
+small_backpack_attachable_animchar_female{
+  _use:t="attachable_backpack_animchar"
+  animchar__res:t="am_trooper_female_backpack_small_a_char"
+}
+
+small_backpack{
+  _use:t="usable_backpack"
+  item__proto:t="small_backpack"
+  item__name:t="items/small_backpack"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__marketPrice:i=800
+  item__iconPitch:r=30
+  item__iconRoll:r=90
+  item__iconYaw:r=0
+  animchar__res:t="am_trooper_static_backpack_small_a_char"
+  collres__res:t="am_trooper_static_backpack_small_a_collision"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  human_inventory__maxVolume:r=40
+  item_weight_from_human_inventory_weight__baseWeight:r=1.1
+  item__volume:r=41
+
+  "suit_attachable_item__suitTypeBasedAnimcharTemplates:list<t>"{
+    male:t="small_backpack_attachable_animchar_male"
+    female:t="small_backpack_attachable_animchar_female"
+  }
+}
+
+small_backpack_carbon_skull{
+  _use:t="small_backpack"
+  profile_server_data__enrichmentResearchAlias:t="small_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_small_a_tex_d*":t="backpack_small_black_carbon_skull_tex_d*"
+    "am_trooper_male_backpack_small_a_tex_n*":t="backpack_small_black_carbon_skull_tex_n*"
+    "am_trooper_male_backpack_small_a_tex_ao*":t="backpack_small_black_carbon_skull_tex_ao*"
+  }
+}
+
+small_backpack_woodland_camo{
+  _use:t="small_backpack"
+  profile_server_data__enrichmentResearchAlias:t="small_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_small_a_tex_d*":t="backpack_small_camo_green_tex_d*"
+    "am_trooper_male_backpack_small_a_tex_n*":t="backpack_small_camo_green_tex_n*"
+    "am_trooper_male_backpack_small_a_tex_ao*":t="backpack_small_camo_green_tex_ao*"
+  }
+}
+
+small_backpack_camo_skull{
+  _use:t="small_backpack"
+  profile_server_data__enrichmentResearchAlias:t="small_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_small_a_tex_d*":t="backpack_small_camo_grey_skull_tex_d*"
+    "am_trooper_male_backpack_small_a_tex_n*":t="backpack_small_camo_grey_skull_tex_n*"
+    "am_trooper_male_backpack_small_a_tex_ao*":t="backpack_small_camo_grey_skull_tex_ao*"
+  }
+}
+
+small_backpack_flaming_skull{
+  _use:t="small_backpack"
+  profile_server_data__enrichmentResearchAlias:t="small_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_small_a_tex_d*":t="backpack_small_fire_skull_tex_d*"
+    "am_trooper_male_backpack_small_a_tex_n*":t="backpack_small_fire_skull_tex_n*"
+    "am_trooper_male_backpack_small_a_tex_ao*":t="backpack_small_fire_skull_tex_ao*"
+  }
+}
+
+small_backpack_carbon_gold{
+  _use:t="small_backpack"
+  profile_server_data__enrichmentResearchAlias:t="small_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_small_a_tex_d*":t="backpack_small_gold_carbon_tex_d*"
+    "am_trooper_male_backpack_small_a_tex_n*":t="backpack_small_gold_carbon_tex_n*"
+    "am_trooper_male_backpack_small_a_tex_ao*":t="backpack_small_gold_carbon_tex_ao*"
+  }
+}
+
+small_backpack_carbon_gold_skull{
+  _use:t="small_backpack"
+  profile_server_data__enrichmentResearchAlias:t="small_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_small_a_tex_d*":t="backpack_small_gold_carbon_skull_tex_d*"
+    "am_trooper_male_backpack_small_a_tex_n*":t="backpack_small_gold_carbon_skull_tex_n*"
+    "am_trooper_male_backpack_small_a_tex_ao*":t="backpack_small_gold_carbon_skull_tex_ao*"
+  }
+}
+
+small_backpack_green_skull{
+  _use:t="small_backpack"
+  profile_server_data__enrichmentResearchAlias:t="small_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_small_a_tex_d*":t="backpack_small_scout_green_skull_tex_d*"
+    "am_trooper_male_backpack_small_a_tex_n*":t="backpack_small_scout_green_skull_tex_n*"
+    "am_trooper_male_backpack_small_a_tex_ao*":t="backpack_small_scout_green_skull_tex_ao*"
+  }
+}
+
+small_backpack_acupat_camo{
+  _use:t="small_backpack"
+  profile_server_data__enrichmentResearchAlias:t="small_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_small_a_tex_d*":t="backpack_small_urban_tex_d*"
+    "am_trooper_male_backpack_small_a_tex_n*":t="backpack_small_urban_tex_n*"
+    "am_trooper_male_backpack_small_a_tex_ao*":t="backpack_small_urban_tex_ao*"
+  }
+}
+
+medium_backpack_attachable_animchar_male{
+  _use:t="attachable_backpack_animchar"
+  animchar__res:t="am_trooper_male_backpack_medium_a_char"
+}
+
+medium_backpack_attachable_animchar_female{
+  _use:t="attachable_backpack_animchar"
+  animchar__res:t="am_trooper_female_backpack_medium_a_char"
+}
+
+medium_backpack{
+  _use:t="small_backpack"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="medium_backpack"
+  item__name:t="items/medium_backpack"
+  animchar__res:t="am_trooper_static_backpack_medium_a_char"
+  collres__res:t="am_trooper_static_backpack_medium_a_collision"
+  human_inventory__maxVolume:r=60
+  item_weight_from_human_inventory_weight__baseWeight:r=1.3
+  item__volume:r=61
+  item__marketPrice:i=2500
+  item__iconScale:r=1.2
+
+  "suit_attachable_item__suitTypeBasedAnimcharTemplates:list<t>"{
+    male:t="medium_backpack_attachable_animchar_male"
+    female:t="medium_backpack_attachable_animchar_female"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+medium_backpack_carbon_skull{
+  _use:t="medium_backpack"
+  profile_server_data__enrichmentResearchAlias:t="medium_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_medium_a_tex_d*":t="backpack_medium_black_carbon_skull_tex_d*"
+    "am_trooper_male_backpack_medium_a_tex_n*":t="backpack_medium_black_carbon_skull_tex_n*"
+    "am_trooper_male_backpack_medium_a_tex_ao*":t="backpack_medium_black_carbon_skull_tex_ao*"
+  }
+}
+
+medium_backpack_woodland_camo{
+  _use:t="medium_backpack"
+  profile_server_data__enrichmentResearchAlias:t="medium_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_medium_a_tex_d*":t="backpack_medium_camo_green_tex_d*"
+    "am_trooper_male_backpack_medium_a_tex_n*":t="backpack_medium_camo_green_tex_n*"
+    "am_trooper_male_backpack_medium_a_tex_ao*":t="backpack_medium_camo_green_tex_ao*"
+  }
+}
+
+medium_backpack_camo_skull{
+  _use:t="medium_backpack"
+  profile_server_data__enrichmentResearchAlias:t="medium_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_medium_a_tex_d*":t="backpack_medium_camo_grey_skull_tex_d*"
+    "am_trooper_male_backpack_medium_a_tex_n*":t="backpack_medium_camo_grey_skull_tex_n*"
+    "am_trooper_male_backpack_medium_a_tex_ao*":t="backpack_medium_camo_grey_skull_tex_ao*"
+  }
+}
+
+medium_backpack_flaming_skull{
+  _use:t="medium_backpack"
+  profile_server_data__enrichmentResearchAlias:t="medium_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_medium_a_tex_d*":t="backpack_medium_fire_skull_tex_d*"
+    "am_trooper_male_backpack_medium_a_tex_n*":t="backpack_medium_fire_skull_tex_n*"
+    "am_trooper_male_backpack_medium_a_tex_ao*":t="backpack_medium_fire_skull_tex_ao*"
+  }
+}
+
+medium_backpack_carbon_gold{
+  _use:t="medium_backpack"
+  profile_server_data__enrichmentResearchAlias:t="medium_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_medium_a_tex_d*":t="backpack_medium_gold_carbon_tex_d*"
+    "am_trooper_male_backpack_medium_a_tex_n*":t="backpack_medium_gold_carbon_tex_n*"
+    "am_trooper_male_backpack_medium_a_tex_ao*":t="backpack_medium_gold_carbon_tex_ao*"
+  }
+}
+
+medium_backpack_carbon_gold_skull{
+  _use:t="medium_backpack"
+  profile_server_data__enrichmentResearchAlias:t="medium_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_medium_a_tex_d*":t="backpack_medium_gold_carbon_skull_tex_d*"
+    "am_trooper_male_backpack_medium_a_tex_n*":t="backpack_medium_gold_carbon_skull_tex_n*"
+    "am_trooper_male_backpack_medium_a_tex_ao*":t="backpack_medium_gold_carbon_skull_tex_ao*"
+  }
+}
+
+medium_backpack_green_skull{
+  _use:t="medium_backpack"
+  profile_server_data__enrichmentResearchAlias:t="medium_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_medium_a_tex_d*":t="backpack_medium_scout_green_skull_tex_d*"
+    "am_trooper_male_backpack_medium_a_tex_n*":t="backpack_medium_scout_green_skull_tex_n*"
+    "am_trooper_male_backpack_medium_a_tex_ao*":t="backpack_medium_scout_green_skull_tex_ao*"
+  }
+}
+
+medium_backpack_acupat_camo{
+  _use:t="medium_backpack"
+  profile_server_data__enrichmentResearchAlias:t="medium_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_male_backpack_medium_a_tex_d*":t="backpack_medium_urban_tex_d*"
+    "am_trooper_male_backpack_medium_a_tex_n*":t="backpack_medium_urban_tex_n*"
+    "am_trooper_male_backpack_medium_a_tex_ao*":t="backpack_medium_urban_tex_ao*"
+  }
+}
+
+large_backpack_attachable_animchar_male{
+  _use:t="attachable_backpack_animchar"
+  animchar__res:t="am_trooper_male_backpack_big_a_char"
+}
+
+large_backpack_attachable_animchar_female{
+  _use:t="attachable_backpack_animchar"
+  animchar__res:t="am_trooper_female_backpack_big_a_char"
+}
+
+large_backpack{
+  _use:t="medium_backpack"
+  _use:t="item_rarity_rare"
+  item__proto:t="large_backpack"
+  item__name:t="items/large_backpack"
+  animchar__res:t="am_trooper_static_backpack_big_a_char"
+  collres__res:t="am_trooper_static_backpack_big_a_collision"
+  human_inventory__maxVolume:r=90
+  item_weight_from_human_inventory_weight__baseWeight:r=1.5
+  item__volume:r=91
+  item__marketPrice:i=5100
+
+  "suit_attachable_item__suitTypeBasedAnimcharTemplates:list<t>"{
+    male:t="large_backpack_attachable_animchar_male"
+    female:t="large_backpack_attachable_animchar_female"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+large_backpack_carbon_skull{
+  _use:t="large_backpack"
+  profile_server_data__enrichmentResearchAlias:t="large_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_backpack_big_a_tex_d*":t="backpack_big_black_carbon_skull_tex_d*"
+    "am_trooper_backpack_big_a_tex_n*":t="backpack_big_black_carbon_skull_tex_n*"
+    "am_trooper_backpack_big_a_tex_ao*":t="backpack_big_black_carbon_skull_tex_ao*"
+  }
+}
+
+large_backpack_woodland_camo{
+  _use:t="large_backpack"
+  profile_server_data__enrichmentResearchAlias:t="large_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_backpack_big_a_tex_d*":t="backpack_big_camo_green_tex_d*"
+    "am_trooper_backpack_big_a_tex_n*":t="backpack_big_camo_green_tex_n*"
+    "am_trooper_backpack_big_a_tex_ao*":t="backpack_big_camo_green_tex_ao*"
+  }
+}
+
+large_backpack_camo_skull{
+  _use:t="large_backpack"
+  profile_server_data__enrichmentResearchAlias:t="large_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_backpack_big_a_tex_d*":t="backpack_big_camo_grey_skull_tex_d*"
+    "am_trooper_backpack_big_a_tex_n*":t="backpack_big_camo_grey_skull_tex_n*"
+    "am_trooper_backpack_big_a_tex_ao*":t="backpack_big_camo_grey_skull_tex_ao*"
+  }
+}
+
+large_backpack_flaming_skull{
+  _use:t="large_backpack"
+  profile_server_data__enrichmentResearchAlias:t="large_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_backpack_big_a_tex_d*":t="backpack_big_fire_skull_tex_d*"
+    "am_trooper_backpack_big_a_tex_n*":t="backpack_big_fire_skull_tex_n*"
+    "am_trooper_backpack_big_a_tex_ao*":t="backpack_big_fire_skull_tex_ao*"
+  }
+}
+
+large_backpack_carbon_gold{
+  _use:t="large_backpack"
+  profile_server_data__enrichmentResearchAlias:t="large_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_backpack_big_a_tex_d*":t="backpack_big_gold_carbon_tex_d*"
+    "am_trooper_backpack_big_a_tex_n*":t="backpack_big_gold_carbon_tex_n*"
+    "am_trooper_backpack_big_a_tex_ao*":t="backpack_big_gold_carbon_tex_ao*"
+  }
+}
+
+large_backpack_carbon_gold_skull{
+  _use:t="large_backpack"
+  profile_server_data__enrichmentResearchAlias:t="large_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_backpack_big_a_tex_d*":t="backpack_big_gold_carbon_skull_tex_d*"
+    "am_trooper_backpack_big_a_tex_n*":t="backpack_big_gold_carbon_skull_tex_n*"
+    "am_trooper_backpack_big_a_tex_ao*":t="backpack_big_gold_carbon_skull_tex_ao*"
+  }
+}
+
+large_backpack_green_skull{
+  _use:t="large_backpack"
+  profile_server_data__enrichmentResearchAlias:t="large_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_backpack_big_a_tex_d*":t="backpack_big_scout_green_skull_tex_d*"
+    "am_trooper_backpack_big_a_tex_n*":t="backpack_big_scout_green_skull_tex_n*"
+    "am_trooper_backpack_big_a_tex_ao*":t="backpack_big_scout_green_skull_tex_ao*"
+  }
+}
+
+large_backpack_acupat_camo{
+  _use:t="large_backpack"
+  profile_server_data__enrichmentResearchAlias:t="large_backpack"
+
+  "animchar__objTexReplace:object"{
+    "am_trooper_backpack_big_a_tex_d*":t="backpack_big_urban_tex_d*"
+    "am_trooper_backpack_big_a_tex_n*":t="backpack_big_urban_tex_n*"
+    "am_trooper_backpack_big_a_tex_ao*":t="backpack_big_urban_tex_ao*"
+  }
+}
+
+small_sovmod_backpack_attachable_animchar_male{
+  _use:t="attachable_backpack_animchar"
+  animchar__res:t="am_trooper_male_backpack_old_a_char"
+}
+
+small_sovmod_backpack_attachable_animchar_female{
+  _use:t="attachable_backpack_animchar"
+  animchar__res:t="am_trooper_female_backpack_old_a_char"
+}
+
+small_sovmod_backpack{
+  _use:t="usable_backpack"
+  item__proto:t="small_sovmod_backpack"
+  item__name:t="items/small_sovmod_backpack"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__iconRoll:r=0
+  item__iconYaw:r=210
+  item__iconPitch:r=0
+  animchar__res:t="am_trooper_static_backpack_old_a_char"
+  collres__res:t="am_trooper_static_backpack_old_a_collision"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  human_inventory__maxVolume:r=35
+  item_weight_from_human_inventory_weight__baseWeight:r=0.8
+  item__volume:r=36
+  item__marketPrice:i=200
+  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentAMCount:ip2=20, 30
+
+  "suit_attachable_item__suitTypeBasedAnimcharTemplates:list<t>"{
+    male:t="small_sovmod_backpack_attachable_animchar_male"
+    female:t="small_sovmod_backpack_attachable_animchar_female"
+  }
+}
+
+medium_sovmod_backpack_attachable_animchar_male{
+  _use:t="attachable_backpack_animchar"
+  animchar__res:t="am_trooper_male_backpack_old_b_char"
+}
+
+medium_sovmod_backpack_attachable_animchar_female{
+  _use:t="attachable_backpack_animchar"
+  animchar__res:t="am_trooper_female_backpack_old_b_char"
+}
+
+medium_sovmod_backpack{
+  _use:t="usable_backpack"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="medium_sovmod_backpack"
+  item__name:t="items/medium_sovmod_backpack"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__iconRoll:r=0
+  item__iconYaw:r=200
+  item__iconPitch:r=0
+  animchar__res:t="am_trooper_static_backpack_old_b_char"
+  collres__res:t="am_trooper_static_backpack_old_b_collision"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  human_inventory__maxVolume:r=65
+  item_weight_from_human_inventory_weight__baseWeight:r=0.95
+  item__volume:r=66
+  item__marketPrice:i=200
+  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentAMCount:ip2=50, 60
+
+  "suit_attachable_item__suitTypeBasedAnimcharTemplates:list<t>"{
+    male:t="medium_sovmod_backpack_attachable_animchar_male"
+    female:t="medium_sovmod_backpack_attachable_animchar_female"
+  }
+}
+
+large_sovmod_backpack_attachable_animchar_male{
+  _use:t="attachable_backpack_animchar"
+  animchar__res:t="am_backpack_ermak_char"
+}
+
+large_sovmod_backpack_attachable_animchar_female{
+  _use:t="attachable_backpack_animchar"
+  animchar__res:t="am_backpack_ermak_female_char"
+}
+
+large_sovmod_backpack{
+  _use:t="usable_backpack"
+  _use:t="item_rarity_rare"
+  item__proto:t="large_sovmod_backpack"
+  item__name:t="items/large_sovmod_backpack"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__iconPitch:r=160
+  item__iconRoll:r=-90
+  item__iconYaw:r=0
+  animchar__res:t="am_backpack_ermak_static_char"
+  collres__res:t="am_backpack_ermak_static_collision"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  human_inventory__maxVolume:r=80
+  item_weight_from_human_inventory_weight__baseWeight:r=1.6
+  item__volume:r=81
+  item__marketPrice:i=200
+  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentAMCount:ip2=80, 90
+
+  "suit_attachable_item__suitTypeBasedAnimcharTemplates:list<t>"{
+    male:t="large_sovmod_backpack_attachable_animchar_male"
+    female:t="large_sovmod_backpack_attachable_animchar_female"
+  }
+}
+
+small_safepack_attachable_animchar_male{
+  _use:t="attachable_backpack_animchar"
+  animchar__res:t="biomaterial_container_can_medium_rugged_char"
+}
+
+small_safepack_attachable_animchar_female{
+  _use:t="attachable_backpack_animchar"
+  animchar__res:t="biomaterial_container_can_medium_rugged_char"
+}
+
+small_safepack{
+  _use:t="usable_safepack"
+  _use:t="item_rarity_rare"
+  _use:t="block_item_move_to_item_container"
+  _use:t="block_item_move_to_safepack"
+  _use:t="block_item_move_to_backpack"
+  _use:t="block_item_move_to_ground"
+  item__proto:t="small_safepack"
+  inventory__name:t="safepack"
+  slot_attach__slotName:t="slot_safe_pack"
+  item__name:t="items/small_safepack"
+  item__desc:t="items/small_safepack/desc"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__iconYaw:r=25
+  item__iconScale:r=0.8
+  animchar__res:t="am_safepouch_a_char"
+  collres__res:t="am_safepouch_a_collision"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  human_inventory__maxVolume:r=5
+  item_weight_from_human_inventory_weight__baseWeight:r=1.1
+  item__volume:r=6
+  item__marketPrice:i=2900
+  safepack__remainsTemplate:t="safepack_remains_item+item_enriched"
+  safepack__destroyEffect:t="safepack_destroy_effect"
+  safepack__visualYSize:i=1
+
+  "item__equipmentSlots:list<t>"{
+    slot:t="safepack"
+  }
+
+  "suit_attachable_item__suitTypeBasedAnimcharTemplates:list<t>"{
+    male:t="small_safepack_attachable_animchar_male"
+    female:t="small_safepack_attachable_animchar_female"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+medium_safepack{
+  _use:t="small_safepack"
+  item__name:t="items/medium_safepack"
+  item__desc:t="items/medium_safepack/desc"
+  item_weight_from_human_inventory_weight__baseWeight:r=1.5
+  item__volume:r=8
+  item__marketPrice:i=10000
+  safepack__visualYSize:i=2
+  item__proto:t="medium_safepack"
+}
+
+large_safepack{
+  _use:t="small_safepack"
+  item__name:t="items/large_safepack"
+  item__desc:t="items/large_safepack/desc"
+  item_weight_from_human_inventory_weight__baseWeight:r=1.8
+  item__volume:r=10
+  item__marketPrice:i=15000
+  safepack__visualYSize:i=2
+  item__proto:t="large_safepack"
+}
+
+passive_chronogenes_stash{
+  _use:t="base_item"
+  _use:t="base_inventory"
+  item__id:i=0
+  _replicated:t="item__id"
+  item__recreateOnGround:t=""
+  item__recreateInWorldPhys:t=""
+  item__recreateInInventory:t="base_invis_item"
+  item__recreateInEquipment:t="item_in_equipment_hided_on_doll"
+  uniqueId:t="-1"
+  item__weight:r=0
+  item__volume:r=0
+  animchar__res:t="biomaterial_container_can_small_char"
+  collres__res:t="biomaterial_container_can_small_collision"
+  inventory__name:t="passive_chronogenes_stash"
+  slot_attach__slotName:t="backpack"
+  equipable_item__curSlot:t=""
+  _tracked:t="equipable_item__curSlot"
+  _replicated:t="equipable_item__curSlot"
+
+  "item__dontUnequipOnDeath:tag"{}
+  "item__permanentItem:tag"{}
+  "item__cantBeCorrupted:tag"{}
+  "item__cantBeReplica:tag"{}
+  "slot_attach__attachedTo:eid"{}
+  "item__equipmentSlots:list<t>"{
+    slot:t="passive_chronogenes_stash"
+  }
+
+  "passive_chronogenes_stash:tag"{}
+  "mintBannedItem:tag"{}
+}

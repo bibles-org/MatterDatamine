@@ -1,0 +1,255 @@
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house changeds"
+  monster_gen_gen__householdCount:i=150
+  monster_gen_gen__minHouseholdVolume:r=225
+  monster_gen_gen__useHouseholdsOnEuclid:b=no
+
+  "monster_gen_gen__genTemplates:object"{
+    household_changed_monster_generator:i=30
+    anomaly_encounter_flowerman_indoor:i=25
+    household_traps_generator:i=25
+    anomaly_encounter_changed_indoor_small:i=20
+  }
+}
+
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house changeds"
+  monster_gen_gen__householdCount:i=16
+  monster_gen_gen__minHouseholdVolume:r=200
+  monster_gen_gen__useHouseholdsOnEuclid:b=yes
+
+  "monster_gen_gen__genTemplates:object"{
+    household_euclid_changed_monster_generator:i=100
+  }
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="changed_group_region_generator"
+      genType:t="forest_changed_groups"
+      count:i=27
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="forest_custom_00"
+    r:t="forest_custom_01"
+    r:t="forest_custom_02"
+    r:t="forest_custom_03"
+    r:t="forest_custom_04"
+    r:t="forest_custom_05"
+    r:t="forest_custom_06"
+    r:t="forest_custom_07"
+    r:t="forest_custom_08"
+    r:t="forest_custom_09"
+    r:t="forest_custom_10"
+    r:t="forest_custom_11"
+    r:t="forest_custom_12"
+    r:t="forest_custom_13"
+    r:t="forest_custom_14"
+    r:t="forest_custom_15"
+    r:t="forest_custom_16"
+    r:t="forest_custom_17"
+    r:t="forest_custom_18"
+    r:t="forest_custom_19"
+    r:t="forest_custom_20"
+    r:t="forest_custom_21"
+    r:t="forest_custom_22"
+    r:t="forest_custom_23"
+    r:t="forest_custom_24"
+    r:t="forest_custom_25"
+    r:t="forest_custom_26"
+  }
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="anomaly_zone_flowerman_forest_generator"
+      genType:t="forest_flowerman"
+      count:i=22
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="forest_custom_00"
+    r:t="forest_custom_01"
+    r:t="forest_custom_02"
+    r:t="forest_custom_03"
+    r:t="forest_custom_04"
+    r:t="forest_custom_05"
+    r:t="forest_custom_06"
+    r:t="forest_custom_07"
+    r:t="forest_custom_08"
+    r:t="forest_custom_09"
+    r:t="forest_custom_10"
+    r:t="forest_custom_11"
+    r:t="forest_custom_12"
+    r:t="forest_custom_13"
+    r:t="forest_custom_14"
+    r:t="forest_custom_15"
+    r:t="forest_custom_16"
+    r:t="forest_custom_17"
+    r:t="forest_custom_18"
+    r:t="forest_custom_19"
+    r:t="forest_custom_20"
+    r:t="forest_custom_21"
+    r:t="forest_custom_22"
+    r:t="forest_custom_23"
+    r:t="forest_custom_24"
+    r:t="forest_custom_25"
+    r:t="forest_custom_26"
+  }
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=5e-06, 5e-06
+  transform:m=[[-184.623, 0, 1.3011] [0.85874, 0, 121.853] [0, 107.849, -0] [1255.18, 18.6519, -790.293]]
+}
+
+entity{
+  _template:t="outdoor_invisible_monster_generator"
+  monster_gen__density:p2=5e-06, 5e-06
+  transform:m=[[-92.1964, 0, -1.58867] [-2.61013, 0, 151.476] [0, 43.742, 0] [1290.44, 8.74489, -596.657]]
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset+loot_generator_monster_gen"
+  loot_generator__customGameObjName:t="tunnel_monster"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[-358.741, 0, -6.1816] [-3.34956, 0, 194.388] [0, 136.86, 0] [430.584, 55.8058, -498.809]]
+  loot_generator__lootPreset:t="euclid_tunnel_monster_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset+loot_generator_monster_gen"
+  loot_generator__customGameObjName:t="worm_nest"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__projAttempts:i=0
+  transform:m=[[-50000, 0, 0] [0, 0, 50000] [0, 50000, 0] [0, 0, 0]]
+  loot_generator__lootPreset:t="euclid_worm_nest_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset+loot_generator_monster_gen"
+  loot_generator__customGameObjName:t="worm_nest_euclid"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__projAttempts:i=0
+  transform:m=[[-50000, 0, 0] [0, 0, 50000] [0, 50000, 0] [0, 0, 0]]
+  loot_generator__lootPreset:t="euclid_worm_nest_euclid_loot_preset"
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="changed_group_region_generator"
+      genType:t="field changed"
+      count:i=6
+    }
+
+    "generator:object"{
+      template:t="anomaly_zone_flowerman_generator"
+      genType:t="field flowermen"
+      count:i=7
+    }
+
+    "generator:object"{
+      template:t="field_trap_region_generator"
+      genType:t="field traps"
+      count:i=8
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="field_01"
+    r:t="field_02"
+    r:t="field_03"
+    r:t="field_04"
+    r:t="field_05"
+    r:t="field_06"
+    r:t="field_07"
+    r:t="field_08"
+    r:t="field_09"
+    r:t="field_10"
+    r:t="field_11"
+    r:t="field_12"
+    r:t="field_13"
+    r:t="field_14"
+    r:t="field_15"
+    r:t="field_16"
+    r:t="field_17"
+    r:t="field_18"
+    r:t="field_19"
+    r:t="field_20"
+    r:t="field_21"
+  }
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="changed_spiked_region_generator"
+      genType:t="changed_spiked"
+      count:i=20
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="shore_01"
+    r:t="shore_02"
+    r:t="shore_03"
+    r:t="shore_04"
+    r:t="shore_05"
+    r:t="shore_06"
+    r:t="shore_07"
+    r:t="shore_08"
+    r:t="shore_09"
+    r:t="shore_10"
+    r:t="shore_11"
+    r:t="shore_12"
+    r:t="shore_13"
+    r:t="shore_14"
+    r:t="shore_15"
+    r:t="shore_16"
+    r:t="shore_17"
+    r:t="shore_18"
+    r:t="shore_19"
+    r:t="shore_20"
+  }
+}
+
+entity{
+  _template:t="changed_group_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1311.18, 55.3735, -613.169]]
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset+loot_generator_monster_gen"
+  loot_generator__customGameObjName:t="armory_key_guard"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__projAttempts:i=0
+  transform:m=[[-50000, 0, 0] [0, 0, 50000] [0, 50000, 0] [0, 0, 0]]
+  loot_generator__lootPreset:t="euclid_armory_key_guard_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset+loot_generator_monster_gen"
+  loot_generator__customGameObjName:t="military_base_patrol"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[-50000, 0, 0] [0, 0, 50000] [0, 50000, 0] [0, 0, 0]]
+  loot_generator__lootPreset:t="euclid_military_base_patrol_loot_preset"
+}

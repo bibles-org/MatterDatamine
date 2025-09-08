@@ -1,0 +1,169 @@
+VehiclePhys{
+  skipUpdateOnSleep:b=yes
+  useFutureContacts:b=no
+
+  Mass{
+    Empty:r=1320
+    Fuel:r=43
+    TakeOff:r=1320
+    momentOfInertia:p3=1.1, 2, 2
+    CenterOfGravity:p3=0, 0.5, 0
+    CenterOfGravityClampY:p2=0, 0.5
+    AdvancedMass:b=no
+    trackMass:r=4
+    engineInertialMass:r=5
+  }
+
+  tracks{
+    animationMultiplier:r=0.5
+    height:r=0
+    width:r=0.4
+    fricFrontal:p2=2.5, 2
+    fricSideRot:p4=6.5, 0, 1.17, 0.39
+    trackPhysMat:t="wheel"
+  }
+
+  collisionProps{
+    cls_body_01:t="convex_hull"
+    cls_body_02:t="convex_hull"
+    collisionMaterial:t="walkRay"
+  }
+
+  engine{
+    horsePowers:r=225
+    maxRPM:r=3800
+    minRPM:r=1200
+    rpmTau:r=0.1
+    minTorqueLimiter:r=0
+    brakeOnBrokenEngine:b=no
+  }
+
+  mechanics{
+    maxBrakeForce:r=7900
+    driveGearRadius:r=0.45
+    mainGearRatio:r=4.444
+    sideGearRatio:r=1
+    tracked:b=no
+    gearType:t="differential"
+
+    gearRatios{
+      ratio:r=-7.82
+      ratio:r=0
+      ratio:r=6.4
+      ratio:r=3.09
+      ratio:r=1.69
+      ratio:r=1
+      ratio:r=0.7
+    }
+  }
+
+  suspension{
+    suspensionOffsets:p3=-0.25, -0.2, 0.2
+    defaultGearRadius:r=0.45
+    defaultDampeningForce:p2=30000, 30000
+    hasSuspensionOnDriveGear:b=yes
+    dampeningRelaxationRatio:r=0.3
+    dampeningCompressionRatio:r=0.3
+    brokenWheelSteeringDeflection:r=-15
+    suspensionVisualExtensionSpeed:r=10
+    suspensionVisualCompressionSpeed:r=10
+    recalcWtms:b=yes
+
+    suspensionNodes{
+      wheel_l_01:t="wheel_hub_front_l"
+      wheel_r_01:t="wheel_hub_front_r"
+      wheel_l_drive:t="wheel_hub_back_l"
+      wheel_r_drive:t="wheel_hub_back_r"
+    }
+
+    steeringNodes{
+      wheel_l_01:t="wheel_hub_front_axis_l"
+      wheel_r_01:t="wheel_hub_front_axis_r"
+    }
+
+    steeringDeflection{
+      wheel_l_01:r=45
+      wheel_r_01:r=45
+      steeringTau:r=10
+      steeringSpd:r=1.2
+      steeringNeutralSpd:r=1.8
+      steeringNegativeMult:r=3
+      steeringSpdMult:p4=70, 90, 1, 0.5
+    }
+
+    toeDeflection{
+      wheel_l_01:r=-0.5
+      wheel_r_01:r=0.5
+    }
+
+    ackermanFactor{
+      wheel_l_01:r=1
+      wheel_r_01:r=1
+    }
+
+    wheelsWidth{
+      wheel_l_01:r=0.6
+      wheel_l_drive:r=0.6
+      wheel_r_01:r=0.6
+      wheel_r_drive:r=0.6
+    }
+
+    driven{
+      wheel_l_01:b=yes
+      wheel_r_01:b=yes
+      wheel_l_drive:b=yes
+      wheel_r_drive:b=yes
+    }
+
+    handBraken{
+      wheel_l_drive:b=yes
+      wheel_r_drive:b=yes
+    }
+  }
+}
+
+DamageParts{
+  formatVersion:i=2
+  armorClass:t="RHA_tank"
+  hp:r=300
+
+  body{
+    body{
+      createSecondaryShatters:b=no
+      armorThickness:r=0.1
+      armorThrough:r=0.15
+    }
+  }
+
+  engine{
+    hp:r=50
+
+    engine{
+      createSecondaryShatters:b=no
+      armorThickness:r=0.3
+      armorThrough:r=10
+      fireProtectionHp:r=100
+    }
+  }
+
+  transmission{
+    hp:r=50
+
+    transmission{
+      createSecondaryShatters:b=no
+      armorThickness:r=0.3
+      armorThrough:r=10
+    }
+  }
+}
+
+DamageEffects{
+  part{
+    name:t="engine"
+
+    onKill{
+      fire:r=1
+      fHitCritical:b=yes
+    }
+  }
+}

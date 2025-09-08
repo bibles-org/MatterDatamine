@@ -1,0 +1,43 @@
+base_monster_game_effect{
+  _use:t="replicated_game_effect"
+  game_effect__switchToWeaponSlot:i=3
+
+  "base_monster_game_effect:tag"{}
+  "state__disableStoneThrow:tag"{}
+  "state__disableAmGather:tag"{}
+}
+
+player_controlled_monster{
+  _use:t="monster_trigger_trap_activator"
+  player_controlled_monster__inventoryEnabled:b=yes
+  player_controlled_monster__weaponsEnabled:b=yes
+
+  "mindcontrolled:tag"{}
+  "player_controlled_monster:tag"{}
+}
+
+monstrified_human_base{
+  _use:t="player_controlled_monster"
+  _use:t="equip_cortical_vault"
+  _use:t="cortical_vault_human_controller"
+
+  "monstrified_human_conclude_truce_with_zone_on_appear:tag"{}
+  "ignore_initial_items:tag"{}
+}
+
+monstrified_human_locked_melee_only{
+  player_controlled_monster__weaponsEnabled:b=no
+
+  "human_weap__gunSlotFlags:list<i>"{
+    f:i=1
+    f:i=1
+    f:i=1
+    f:i=2
+    f:i=1
+    f:i=1
+    f:i=1
+    f:i=1
+  }
+
+  "human_weap__initialWeaponTemplates:object"{}
+}

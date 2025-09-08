@@ -1,0 +1,229 @@
+entity{
+  _template:t="encounter_unknown_storages_controller"
+}
+
+entity{
+  _template:t="encounter_unknown_storage"
+  transform:m=[[48.7421, 0, -70.5026] [0, 28.3612, 0] [58.4926, -0, 40.4389] [92.6721, 133.23, 89.7494]]
+  encounter_zone__name:t="far_caponier"
+  encounter_unknown_storage__group:t="caponiers"
+}
+
+entity{
+  _template:t="encounter_unknown_storage"
+  transform:m=[[11.4984, 0, -17.1954] [0, 28.3612, 0] [25.2308, -0, 16.8716] [81.6075, 133.23, 110.058]]
+  encounter_zone__name:t="far_caponier"
+  encounter_unknown_storage__group:t="caponiers"
+}
+
+entity{
+  _template:t="game_trigger_processor_doors_locks+game_trigger_processor_create_entity"
+  transform:m=[[-42.6753, 0, 61.2666] [0, 28.3612, 0] [-38.2176, 0, -26.6205] [94.0047, 133.23, 89.0588]]
+  game_trigger_processor_doors_locks__unlock:b=yes
+  game_trigger_processor__onTrigger:t="fuse_box_placed_far_caponier"
+  game_trigger_processor_create_entity__template:t="encounter_far_caponier_trigger_timer"
+  game_trigger_processor_create_entity__initTransform:b=no
+}
+
+entity{
+  _template:t="game_trigger_processor_doors_locks+game_trigger_processor_create_entity"
+  transform:m=[[-42.6753, 0, 61.2666] [0, 28.3612, 0] [-38.2176, 0, -26.6205] [94.0047, 133.23, 89.0588]]
+  game_trigger_processor_doors_locks__unlock:b=no
+  game_trigger_processor__onTrigger:t="lock_far_caponier"
+  game_trigger_processor_create_entity__template:t="encounter_far_caponier_trigger_create_teleport_timer"
+  game_trigger_processor_create_entity__initTransform:b=no
+}
+
+entity{
+  _template:t="game_trigger_processor_create_entity"
+  transform:m=[[-42.6753, 0, 61.2666] [0, 28.3612, 0] [-38.2176, 0, -26.6205] [94.0047, 133.23, 89.0588]]
+  game_trigger_processor__onTrigger:t="far_caponier_teleport"
+  game_trigger_processor_create_entity__template:t="encounter_caponiers_random_teleport_zone"
+}
+
+entity{
+  _template:t="encounter_decorative_am_core"
+  transform:m=[[2, 0, 0] [0, 2, 0] [0, 0, 2] [98.0841, 127.124, 79.4143]]
+}
+
+entity{
+  _template:t="encounter_unknown_storage"
+  transform:m=[[61.0514, 0, 34.7046] [0, 28.3612, -0] [-35.2227, 0, 61.9628] [199.374, 123.23, -114.247]]
+  encounter_zone__name:t="nearest_caponier"
+  encounter_unknown_storage__group:t="caponiers"
+}
+
+entity{
+  _template:t="encounter_unknown_storage"
+  transform:m=[[17.9777, 0, 10.2321] [0, 28.3612, -0] [-15.0136, 0, 26.3787] [224.746, 123.23, -103.019]]
+  encounter_zone__name:t="nearest_caponier"
+  encounter_unknown_storage__group:t="caponiers"
+}
+
+entity{
+  _template:t="game_trigger_processor_doors_locks+game_trigger_processor_create_entity"
+  transform:m=[[65.3517, 0, 36.11] [0, 28.3612, -0] [-22.5251, 0, 40.7659] [204.587, 123.23, -114.958]]
+  game_trigger_processor_doors_locks__unlock:b=yes
+  game_trigger_processor__onTrigger:t="fuse_box_placed_nearest_caponier"
+  game_trigger_processor_create_entity__template:t="encounter_nearest_caponier_trigger_timer"
+  game_trigger_processor_create_entity__initTransform:b=no
+}
+
+entity{
+  _template:t="game_trigger_processor_doors_locks+game_trigger_processor_create_entity"
+  transform:m=[[65.3517, 0, 36.11] [0, 28.3612, -0] [-22.5251, 0, 40.7659] [204.587, 123.23, -114.958]]
+  game_trigger_processor_doors_locks__unlock:b=no
+  game_trigger_processor__onTrigger:t="lock_nearest_caponier"
+  game_trigger_processor_create_entity__template:t="encounter_nearest_caponier_trigger_create_teleport_timer"
+  game_trigger_processor_create_entity__initTransform:b=no
+}
+
+entity{
+  _template:t="game_trigger_processor_create_entity"
+  transform:m=[[65.3517, 0, 36.11] [0, 28.3612, -0] [-22.5251, 0, 40.7659] [204.587, 123.23, -114.958]]
+  game_trigger_processor__onTrigger:t="nearest_caponier_teleport"
+  game_trigger_processor_create_entity__template:t="encounter_caponiers_random_teleport_zone"
+}
+
+entity{
+  _template:t="encounter_decorative_am_core"
+  transform:m=[[2, 0, 0] [0, 2, 0] [0, 0, 2] [194.766, 117.124, -116.148]]
+}
+
+entity{
+  _template:t="game_interactable_object"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [109.22, 111.52, -144.048]]
+  game_interactable_object__eventTrigger:t="fuse_box_placed_nearest_caponier"
+  item__setCustomUsePrompt:t="encounter/place_fuse_box_nearest_caponier"
+  game_interactable_object__requiredItemTag:t="encounter_fuse_block_item"
+  game_interactable_object__requiredItemMissingPrompt:t="encounter/fuse_box_required"
+}
+
+entity{
+  _template:t="encounter_fuse_block_slot+game_trigger_processor_create_entity+game_trigger_processor_sound_oneshot+game_trigger_processor_start_effect"
+  transform:m=[[0.860064, 0, 0.510186] [0, 1, -0] [-0.510186, 0, 0.860064] [109.119, 111.142, -144.164]]
+  game_trigger_processor__onTrigger:t="fuse_box_placed_nearest_caponier"
+  game_trigger_processor_create_entity__template:t="encounter_fuse_block+encounter_power_hum_sound"
+  game_trigger_processor_sound_oneshot__soundName:t="insert"
+  game_trigger_processor_start_effect__name:t="sparks_fuse_box_placed_fx"
+}
+
+entity{
+  _template:t="bunker_lamp_wall_a_off_rendinst+game_trigger_processor_self_destroy"
+  transform:m=[[0.875219, 0.0368256, 0.482323] [-0.483012, 0.0123456, 0.875527] [0.0262873, -0.999246, 0.0285923] [108.908, 111.298, -143.944]]
+  game_trigger_processor__onTrigger:t="fuse_box_placed_nearest_caponier"
+  ri_extra__destroyed:b=yes
+}
+
+entity{
+  _template:t="game_trigger_processor_create_entity"
+  transform:m=[[0.875219, 0.0368256, 0.482323] [-0.483012, 0.0123456, 0.875527] [0.0262873, -0.999246, 0.0285923] [108.908, 111.298, -143.944]]
+  game_trigger_processor__onTrigger:t="fuse_box_placed_nearest_caponier"
+  game_trigger_processor_create_entity__template:t="bunker_lamp_wall_a_rendinst"
+}
+
+entity{
+  _template:t="game_interactable_object"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [111.502, 111.512, -138.677]]
+  game_interactable_object__eventTrigger:t="fuse_box_placed_far_caponier"
+  item__setCustomUsePrompt:t="encounter/place_fuse_box_far_caponier"
+  game_interactable_object__requiredItemTag:t="encounter_fuse_block_item"
+  game_interactable_object__requiredItemMissingPrompt:t="encounter/fuse_box_required"
+}
+
+entity{
+  _template:t="encounter_fuse_block_slot+game_trigger_processor_create_entity+game_trigger_processor_sound_oneshot+game_trigger_processor_start_effect"
+  transform:m=[[-0.532394, 0, 1.03065] [0, 1.16004, 0] [-1.03065, 0, -0.532394] [111.653, 111.215, -138.838]]
+  game_trigger_processor__onTrigger:t="fuse_box_placed_far_caponier"
+  game_trigger_processor_create_entity__template:t="encounter_fuse_block+encounter_power_hum_sound"
+  game_trigger_processor_sound_oneshot__soundName:t="insert"
+  game_trigger_processor_start_effect__name:t="sparks_fuse_box_placed_fx"
+}
+
+entity{
+  _template:t="bunker_lamp_wall_a_off_rendinst+game_trigger_processor_self_destroy"
+  transform:m=[[-0.462195, 0.0368256, 0.886013] [-0.886337, 0.0123456, -0.462877] [-0.0279841, -0.999246, 0.0269338] [111.394, 111.412, -139.069]]
+  game_trigger_processor__onTrigger:t="fuse_box_placed_far_caponier"
+  ri_extra__destroyed:b=yes
+}
+
+entity{
+  _template:t="game_trigger_processor_create_entity"
+  transform:m=[[-0.462195, 0.0368256, 0.886013] [-0.886337, 0.0123456, -0.462877] [-0.0279841, -0.999246, 0.0269338] [111.394, 111.412, -139.069]]
+  game_trigger_processor__onTrigger:t="fuse_box_placed_far_caponier"
+  game_trigger_processor_create_entity__template:t="bunker_lamp_wall_a_rendinst"
+}
+
+entity{
+  _template:t="game_trigger_processor_create_entity"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [198, 121, -114]]
+  game_trigger_processor__onTrigger:t="fuse_box_placed_nearest_caponier"
+  game_trigger_processor_create_entity__template:t="encounter_nearest_caponier_alarm"
+}
+
+entity{
+  _template:t="game_trigger_processor_create_entity"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [96, 134, 81]]
+  game_trigger_processor__onTrigger:t="fuse_box_placed_far_caponier"
+  game_trigger_processor_create_entity__template:t="encounter_far_caponier_alarm"
+}
+
+entity{
+  _template:t="encounter_additional_game_object_point"
+  encounter_additional_game_object_point__type:t="anomaly_zone_flowerman"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [213.297, 110.066, -107.291]]
+}
+
+entity{
+  _template:t="encounter_additional_game_object_point"
+  encounter_additional_game_object_point__type:t="anomaly_zone_flowerman_small"
+  transform:m=[[-0.620742, -0.000149291, -0.784015] [-0.000149294, 1, -7.22162e-05] [0.784015, 7.22208e-05, -0.620742] [225.412, 110.066, -100.515]]
+}
+
+entity{
+  _template:t="encounter_additional_game_object_point"
+  encounter_additional_game_object_point__type:t="anomaly_zone_flowerman_small"
+  transform:m=[[-0.19147, -0.000127242, 0.981498] [4.34901e-05, 1, 0.000138124] [-0.981499, 6.91321e-05, -0.19147] [240.262, 110, -92.7374]]
+}
+
+entity{
+  _template:t="encounter_additional_game_object_point"
+  encounter_additional_game_object_point__type:t="anomaly_zone_flowerman_small"
+  transform:m=[[-0.837326, -0.000252099, -0.546704] [-0.000288279, 1, -1.96006e-05] [0.546704, 0.000141191, -0.837326] [201.175, 110, -90.3597]]
+}
+
+entity{
+  _template:t="encounter_additional_game_object_point"
+  encounter_additional_game_object_point__type:t="anomaly_zone_flowerman_small"
+  transform:m=[[-0.985976, 6.08067e-05, 0.16689] [0.000104721, 1, 0.000254335] [-0.16689, 0.000268245, -0.985976] [175.936, 110, -101.997]]
+}
+
+entity{
+  _template:t="encounter_additional_game_object_point"
+  encounter_additional_game_object_point__type:t="anomaly_zone_flowerman"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [99.3673, 120.067, 79.6532]]
+}
+
+entity{
+  _template:t="encounter_additional_game_object_point"
+  encounter_additional_game_object_point__type:t="anomaly_zone_flowerman_small"
+  transform:m=[[0.758138, -0.00011906, 0.652094] [0.000118965, 1, 4.42694e-05] [-0.652094, 4.40142e-05, 0.758138] [80.7982, 120.084, 115.375]]
+}
+
+entity{
+  _template:t="encounter_additional_game_object_point"
+  encounter_additional_game_object_point__type:t="anomaly_zone_flowerman_small"
+  transform:m=[[-0.965196, 0.000102154, -0.261528] [0.000102154, 1, 1.35953e-05] [0.261528, -1.3594e-05, -0.965196] [71.2594, 120, 123.154]]
+}
+
+entity{
+  _template:t="encounter_additional_game_object_point"
+  encounter_additional_game_object_point__type:t="anomaly_zone_flowerman_small"
+  transform:m=[[0.554899, 0.000169301, -0.831918] [-0.000169235, 1, 9.06249e-05] [0.831918, 9.05021e-05, 0.554899] [71.3002, 120, 84.2569]]
+}
+
+entity{
+  _template:t="encounter_additional_game_object_point"
+  encounter_additional_game_object_point__type:t="anomaly_zone_flowerman_small"
+  transform:m=[[0.618539, 0.000150786, -0.785754] [0.000150788, 1, 0.000310599] [0.785754, -0.0003106, 0.618539] [85.9963, 120, 60.0353]]
+}

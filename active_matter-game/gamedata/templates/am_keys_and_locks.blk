@@ -1,0 +1,842 @@
+locked{
+  _tracked:t="locked__isLocked"
+  userstats_name:t="locked_door"
+
+  _group{
+    _replicate:b=yes
+    locked__isLocked:b=yes
+    locked__reason:t=""
+    locked__statusTip:t="status_tip_door_locked"
+
+    "locked__keyTags:list<t>"{}
+  }
+}
+
+locked_door_marker{
+  _use:t="editor_box_preview"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  locked_door_marker__template:t="locked"
+
+  "locked_door_marker__keyTags:list<t>"{}
+}
+
+adhock_locked_door_marker{
+  _use:t="locked_door_marker"
+  locked_door_marker__scale:r=10
+
+  "locked_door_marker__keyTags:list<t>"{
+    i:t="developer_key"
+  }
+
+  "locked_door_marker__adhock:tag"{}
+}
+
+base_quest_key_marker{
+  _use:t="map_component_marker"
+  map_object_marker__iconName:t="!ui/uiskin/itemFilter/keys.svg"
+
+  "quest_item__playerEid:eid"{}
+  "quest_item_in_container_marker:tag"{}
+}
+
+base_quest_key{
+  _use:t="base_quest_key_marker"
+  _use:t="base_not_extractable_quest_item"
+  _use:t="block_item_move_to_ground"
+  _use:t="base_consumable_key_item"
+  _use:t="item_rarity_rare"
+  item__weight:r=0
+  item__volume:r=0
+
+  "questItemTooltip:tag"{}
+  "item__cantBeCorrupted:tag"{}
+}
+
+base_key_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  item__lootType:t="key"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="base_key_item"
+  item__name:t="items/base_key_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.05, 0]]
+  item__weight:r=0.02
+  item__volume:r=1
+  item__iconRoll:r=80
+
+  "item__alwaysUseful:tag"{}
+  "key__tags:list<t>"{
+    i:t="developer_key"
+  }
+}
+
+base_consumable_key_item{
+  _use:t="base_key_item"
+  item__amount:i=1
+  _replicated:t="item__amount"
+  _tracked:t="item__amount"
+  item__filterType:t="keys"
+
+  "item__cantBeReplica:tag"{}
+}
+
+red_key_item{
+  _use:t="base_consumable_key_item"
+  item__proto:t="red_key_item"
+  item__name:t="items/red_key_item"
+
+  "key__tags:list<t>"{
+    i:t="developer_key"
+    i:t="red_key"
+  }
+}
+
+key_hangar_148_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="key_hangar_148_item"
+  item__name:t="items/keyHangar148"
+
+  "key__tags:list<t>"{
+    i:t="hangar_148"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_military_base_statues.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_hangar_209_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="key_hangar_209_item"
+  item__name:t="items/keyHangar209"
+
+  "key__tags:list<t>"{
+    i:t="hangar_209"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_military_base_statues.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_hangar_84_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="key_hangar_84_item"
+  item__name:t="items/key_hangar_84_item"
+
+  "key__tags:list<t>"{
+    i:t="hangar_84"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/nexus_scrapyard.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_hangar_17_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="key_hangar_17_item"
+  item__name:t="items/key_hangar_17_item"
+
+  "key__tags:list<t>"{
+    i:t="hangar_17"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_factory.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_factory_adv.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_factory_hive.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_hangar_18_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="key_hangar_18_item"
+  item__name:t="items/key_hangar_18_item"
+
+  "key__tags:list<t>"{
+    i:t="hangar_18"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_factory.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_factory_adv.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_factory_hive.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_hangar_29_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="key_hangar_29_item"
+  item__name:t="items/key_hangar_29_item"
+
+  "key__tags:list<t>"{
+    i:t="hangar_29"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_dogorsk.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_hangar_35_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="key_hangar_35_item"
+  item__name:t="items/key_hangar_35_item"
+
+  "key__tags:list<t>"{
+    i:t="hangar_35"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_dogorsk.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_weapon_room_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_c_char"
+  collres__res:t="junk_keys_c_collision"
+  item__proto:t="key_weapon_room_item"
+  item__name:t="items/keyWeaponRoom"
+
+  "key__tags:list<t>"{
+    i:t="weapon_room"
+  }
+}
+
+key_garages_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_garages_item"
+  item__name:t="items/keyGarages"
+
+  "key__tags:list<t>"{
+    i:t="garages"
+  }
+}
+
+locked_garage_door{
+  _use:t="locked_door_marker"
+
+  "locked_door_marker__keyTags:list<t>"{
+    i:t="garages"
+  }
+}
+
+key_medical_safe_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_medical_safe_item"
+  item__name:t="items/keyMedicalSafe"
+
+  "key__tags:list<t>"{
+    i:t="medical_safe"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+  }
+}
+
+key_euclid_diary_safe_item{
+  _use:t="base_quest_key"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_euclid_diary_safe_item"
+  item__name:t="items/key_euclid_diary_safe_item"
+  map_object_marker__tag:t="euclid_diary_safe_keys"
+  map_object_marker__tooltip:t="items/key_euclid_diary_safe_item"
+
+  "key__tags:list<t>"{
+    i:t="euclid_diary_safe_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+  }
+}
+
+key_ozernoe_firestation_safe_item{
+  _use:t="base_quest_key"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_ozernoe_firestation_safe_item"
+  item__name:t="items/key_ozernoe_firestation_safe_item"
+  map_object_marker__tag:t="ozernoe_firestation_safe_keys"
+  map_object_marker__tooltip:t="items/key_ozernoe_firestation_safe_item"
+
+  "key__tags:list<t>"{
+    i:t="ozernoe_firestation_safe_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_ozernoe.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_ozernoe_adv.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_ozernoe_overgrowth.blk"
+  }
+}
+
+key_euclid_armory_1_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_euclid_armory_1_item"
+  item__name:t="items/key_euclid_armory_1_item"
+
+  "key__tags:list<t>"{
+    i:t="euclid_armory_1_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_military_base.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_military_base_statues.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_euclid_armory_2_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_euclid_armory_2_item"
+  item__name:t="items/key_euclid_armory_2_item"
+
+  "key__tags:list<t>"{
+    i:t="euclid_armory_2_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_military_base.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_military_base_statues.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_secret_ship_safe_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_secret_ship_safe_item"
+  item__name:t="items/key_secret_ship_safe_item"
+
+  "key__tags:list<t>"{
+    i:t="secret_ship_safe_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_smuggler_garage_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_smuggler_garage_item"
+  item__name:t="items/key_smuggler_garage_item"
+
+  "key__tags:list<t>"{
+    i:t="smuggler_garage_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_test_first_floor_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="key_hangar_209_item"
+  item__name:t="items/test_first_floor_key"
+
+  "key__tags:list<t>"{
+    i:t="test_first_floor"
+  }
+}
+
+key_euclid_docs_stash_safe_item{
+  _use:t="base_quest_key"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_euclid_docs_stash_safe_item"
+  item__name:t="items/key_euclid_docs_stash_safe_item"
+  map_object_marker__tag:t="euclid_docs_stash_safe_keys"
+  map_object_marker__tooltip:t="items/key_euclid_docs_stash_safe_item"
+
+  "key__tags:list<t>"{
+    i:t="euclid_docs_stash_safe_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+  }
+}
+
+key_euclid_hospital_docs_safe_item{
+  _use:t="base_quest_key"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_euclid_hospital_docs_safe_item"
+  item__name:t="items/key_euclid_hospital_docs_safe_item"
+  map_object_marker__tag:t="euclid_hospital_docs_safe_keys"
+  map_object_marker__tooltip:t="items/key_euclid_hospital_docs_safe_item"
+
+  "key__tags:list<t>"{
+    i:t="euclid_hospital_docs_safe_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+  }
+}
+
+key_spike_room_safe_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_spike_room_safe_item"
+  item__name:t="items/key_spike_room_safe_item"
+
+  "key__tags:list<t>"{
+    i:t="spike_room_safe_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_shegolskoe_house_item{
+  _use:t="base_quest_key"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_shegolskoe_house_item"
+  item__name:t="items/key_shegolskoe_house_item"
+  map_object_marker__tag:t="shegolskoe_house_keys"
+  map_object_marker__tooltip:t="items/key_shegolskoe_house_item"
+
+  "key__tags:list<t>"{
+    i:t="shegolskoe_house_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_adv.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_distortion.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_overgrowth.blk"
+  }
+}
+
+key_shegolskoe_apartment_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_shegolskoe_apartment_item"
+  item__name:t="items/key_shegolskoe_apartment_item"
+
+  "key__tags:list<t>"{
+    i:t="shegolskoe_apartment_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_adv.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_distortion.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_overgrowth.blk"
+  }
+}
+
+key_factory_basement_item{
+  _use:t="base_quest_key"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_factory_basement_item"
+  item__name:t="items/key_factory_basement_item"
+  map_object_marker__tag:t="factory_basement_keys"
+  map_object_marker__tooltip:t="items/key_factory_basement_item"
+
+  "key__tags:list<t>"{
+    i:t="factory_basement_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_factory.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_factory_adv.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_factory_hive.blk"
+  }
+}
+
+key_factory_lab_item{
+  _use:t="base_quest_key"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_factory_lab_item"
+  item__name:t="items/key_factory_lab_item"
+  map_object_marker__tag:t="factory_lab_keys"
+  map_object_marker__tooltip:t="items/key_factory_lab_item"
+
+  "key__tags:list<t>"{
+    i:t="factory_lab_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_factory.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_factory_adv.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_factory_hive.blk"
+  }
+}
+
+key_hangar_epicenter_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_hangar_epicenter_item"
+  item__name:t="items/key_hangar_epicenter_item"
+
+  "key__tags:list<t>"{
+    i:t="hangar_epicenter"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_epicenter.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_dogorsk_cinema_storage_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="key_dogorsk_cinema_storage_item"
+  item__name:t="items/key_dogorsk_cinema_storage_item"
+
+  "key__tags:list<t>"{
+    i:t="cinema_storage"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_dogorsk.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_cargoport_anomaly_crane_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="key_cargoport_anomaly_crane_item"
+  item__name:t="items/key_cargoport_anomaly_crane_item"
+
+  "key__tags:list<t>"{
+    i:t="anomaly_crane"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_cargoport.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_cargoport_dark.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_cargoport_anomaly_barge_small_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="key_cargoport_anomaly_barge_small_item"
+  item__name:t="items/key_cargoport_anomaly_barge_small_item"
+
+  "key__tags:list<t>"{
+    i:t="anomaly_barge_container_small_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_cargoport.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_cargoport_dark.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_cargoport_anomaly_barge_big_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="key_cargoport_anomaly_barge_big_item"
+  item__name:t="items/key_cargoport_anomaly_barge_big_item"
+
+  "key__tags:list<t>"{
+    i:t="anomaly_barge_container_big_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_cargoport.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_cargoport_dark.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_cargoport_crane_operator_house_item{
+  _use:t="base_quest_key"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_cargoport_crane_operator_house_item"
+  item__name:t="items/key_cargoport_crane_operator_house_item"
+  map_object_marker__tag:t="cargoport_evidence_keys"
+  map_object_marker__tooltip:t="items/key_cargoport_crane_operator_house_item"
+
+  "key__tags:list<t>"{
+    i:t="crane_operator_house_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_cargoport.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_cargoport_dark.blk"
+  }
+}
+
+key_cargoport_chief_stash_item{
+  _use:t="base_quest_key"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="key_cargoport_chief_stash_item"
+  item__name:t="items/key_cargoport_chief_stash_item"
+  map_object_marker__tag:t="cargoport_stolen_device_keys"
+  map_object_marker__tooltip:t="items/key_cargoport_chief_stash_item"
+
+  "key__tags:list<t>"{
+    i:t="chief_stash_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_cargoport.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_cargoport_dark.blk"
+  }
+}
+
+key_shegolskoe_4_attic_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_shegolskoe_4_attic_item"
+  item__name:t="items/key_shegolskoe_4_attic_item"
+
+  "key__tags:list<t>"{
+    i:t="shegolskoe_4_attic_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_adv.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_distortion.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_overgrowth.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_shegolskoe_8_attic_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_shegolskoe_8_attic_item"
+  item__name:t="items/key_shegolskoe_8_attic_item"
+
+  "key__tags:list<t>"{
+    i:t="shegolskoe_8_attic_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_adv.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_distortion.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_overgrowth.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_shegolskoe_11_attic_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_shegolskoe_11_attic_item"
+  item__name:t="items/key_shegolskoe_11_attic_item"
+
+  "key__tags:list<t>"{
+    i:t="shegolskoe_11_attic_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_adv.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_distortion.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_overgrowth.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_shegolskoe_15_attic_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_shegolskoe_15_attic_item"
+  item__name:t="items/key_shegolskoe_15_attic_item"
+
+  "key__tags:list<t>"{
+    i:t="shegolskoe_15_attic_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_adv.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_distortion.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_overgrowth.blk"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+key_dam_wing_1_shortcut_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_dam_wing_1_shortcut_item"
+  item__name:t="items/key_dam_wing_1_shortcut_item"
+
+  "item__cantBeCorrupted:tag"{}
+  "key__tags:list<t>"{
+    i:t="wing_1_shortcut_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_dam.blk"
+  }
+}
+
+key_dam_wing_1_progress_item{
+  _use:t="base_consumable_key_item"
+  _use:t="block_item_move_to_ground"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_dam_wing_1_progress_item"
+  item__name:t="items/key_dam_wing_1_progress_item"
+
+  "questItemTooltip:tag"{}
+  "item__cantBeCorrupted:tag"{}
+  "key__tags:list<t>"{
+    i:t="wing_1_progress_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_dam.blk"
+  }
+}
+
+key_dam_wing_2_progress_item{
+  _use:t="base_consumable_key_item"
+  _use:t="block_item_move_to_ground"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_dam_wing_2_progress_item"
+  item__name:t="items/key_dam_wing_2_progress_item"
+
+  "questItemTooltip:tag"{}
+  "item__cantBeCorrupted:tag"{}
+  "key__tags:list<t>"{
+    i:t="wing_2_progress_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_dam.blk"
+  }
+}
+
+key_dam_wing_3_progress_item{
+  _use:t="base_consumable_key_item"
+  _use:t="block_item_move_to_ground"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_dam_wing_3_progress_item"
+  item__name:t="items/key_dam_wing_3_progress_item"
+
+  "questItemTooltip:tag"{}
+  "item__cantBeCorrupted:tag"{}
+  "key__tags:list<t>"{
+    i:t="wing_3_progress_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_dam.blk"
+  }
+}
+
+key_dam_optional_bonus_item{
+  _use:t="base_consumable_key_item"
+  animchar__res:t="junk_keys_a_char"
+  collres__res:t="junk_keys_a_collision"
+  item__proto:t="key_dam_optional_bonus_item"
+  item__name:t="items/key_dam_optional_bonus_item"
+
+  "item__cantBeCorrupted:tag"{}
+  "key__tags:list<t>"{
+    i:t="dam_optional_bonus_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_dam.blk"
+  }
+}

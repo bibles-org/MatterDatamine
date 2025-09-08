@@ -1,0 +1,1516 @@
+skies_settings{
+  _use:t="replicating"
+  _singleton:b=yes
+  skies_settings__locName:t="weather/unknown"
+  skies_settings__iconType:t="unknown"
+
+  _group{
+    _track:b=yes
+    skies_settings__weatherSeed:i=13
+    randomize_seed_button:b=no
+    clouds_rendering__forward_eccentricity:r=0.8
+    clouds_rendering__back_eccentricity:r=0.5
+    clouds_rendering__forward_eccentricity_weight:r=0.5
+    clouds_rendering__erosion_noise_size:r=25.3
+    clouds_rendering__ambient_desaturation:r=0.5
+    clouds_rendering__ms_contribution:r=0.7
+    clouds_rendering__ms_attenuation:r=0.3
+    clouds_rendering__ms_ecc_attenuation:r=0.6
+    clouds_rendering__erosionWindSpeed:r=0.6
+    strata_clouds__amount:p2=0.8, 0.8
+    strata_clouds__altitude:p2=8, 8
+    strata_clouds__tex:t="strata_clouds_simple"
+    clouds_form__extinction:p2=0.75, 0.75
+    clouds_form__turbulenceStrength:p2=0.21, 0.21
+    clouds_form__shapeNoiseScale:i=9
+    clouds_form__cumulonimbusShapeScale:i=4
+    clouds_form__turbulenceFreq:i=2
+    clouds_settings__maximum_averaging_ratio:r=0.75
+    clouds_settings__force_panorama:b=no
+    clouds_settings__quality:i=2
+    clouds_settings__target_quality:i=2
+    clouds_settings__competitive_advantage:b=no
+    clouds_settings__fastEvolution:b=no
+    clouds_weather_gen__epicness:r=0
+    clouds_weather_gen__cumulonimbusCoverage:p2=0, 0
+    clouds_weather_gen__cumulonimbusSeed:p2=0, 0
+    clouds_weather_gen__worldSize:r=65536
+    sky_atmosphere__average_ground_albedo:r=0.6
+    sky_settings__haze_strength:r=1
+    sky_settings__haze_min_angle:r=0
+    sky_settings__haze_peak_hour_offset:r=2
+    sky_atmosphere__min_ground_offset:r=0
+    sky_atmosphere__ground_color:p3=1, 0.9, 0.8
+    sky_atmosphere__mie2_thickness:p2=0.4, 0.4
+    sky_atmosphere__mie2_altitude:p2=0.2, 0.2
+    sky_atmosphere__mie2_scale:p2=0, 0
+    sky_atmosphere__mie_height:p2=1.2, 1.2
+    sky_atmosphere__mie_scale:p2=1, 1
+    sky_atmosphere__mie_absorption_scale:p2=1, 1
+    sky_atmosphere__mie_scattering_color:p3=1, 1, 1
+    sky_atmosphere__mie_absorption_color:p3=1, 1, 1
+    sky_atmosphere__mie_assymetry:p2=0.8, 0.8
+    sky_atmosphere__mie_back_assymetry:p2=0.2, 0.2
+    sky_atmosphere__planet_scale:r=1
+    sky_atmosphere__atmosphere_scale:r=1
+    sky_atmosphere__rayleigh_scale:p2=1, 1
+    sky_atmosphere__rayleigh_alt_scale:p2=1, 1
+    sky_atmosphere__rayleigh_color:p3=1, 1, 1
+    sky_atmosphere__multiple_scattering_factor:r=1
+    sky_atmosphere__ozone_alt_dist:r=1
+    sky_atmosphere__ozone_max_alt:r=1
+    sky_atmosphere__ozone_scale:p2=1, 1
+    sky_atmosphere__sun_brightness:r=1
+    sky_atmosphere__moon_brightness:r=1
+    sky_atmosphere__moon_color:p3=1, 1, 1
+    use_clouds_hole:b=yes
+
+    "clouds_form__layers:array"{
+      "layer:object"{
+        startAt:p2=0.8, 0.8
+        thickness:p2=8, 8
+        density:p2=1, 1
+        clouds_type:p2=0.5, 0.5
+        clouds_type_variance:p2=0.5, 0.5
+      }
+
+      "layer:object"{
+        startAt:p2=8, 8
+        thickness:p2=4, 4
+        density:p2=0.5, 0.5
+        clouds_type:p2=0, 0
+        clouds_type_variance:p2=0.5, 0.5
+      }
+    }
+
+    "clouds_weather_gen__layers:array"{
+      "layer:object"{
+        coverage:p2=0.5, 0.5
+        freq:p2=2, 2
+        seed:p2=0, 0
+      }
+
+      "layer:object"{
+        coverage:p2=0.5, 0.5
+        freq:p2=3, 3
+        seed:p2=0.5, 0.5
+      }
+    }
+  }
+
+  "skies_settings_tag:tag"{
+    _tags:t="render"
+  }
+}
+
+clouds_hole_target{
+  _use:t="replicating"
+  _singleton:b=yes
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  density:r=0
+  _tracked:t="transform"
+  _tracked:t="density"
+
+  "clouds_hole_tag:tag"{
+    _tags:t="render"
+  }
+}
+
+weather_almost_clear{
+  clouds_rendering__erosion_noise_size:r=45
+  clouds_rendering__erosionWindSpeed:r=50
+  strata_clouds__amount:p2=0.1, 0.5
+  strata_clouds__altitude:p2=10, 12
+  sky_atmosphere__mie_height:p2=1.2, 1.5
+  sky_atmosphere__mie_scale:p2=0.5, 1
+  sky_atmosphere__mie_absorption_scale:p2=1, 1
+  sky_atmosphere__multiple_scattering_factor:r=1.5
+  clouds_weather_gen__epicness:r=0.35
+  clouds_weather_gen__cumulonimbusSeed:p2=0, 100
+  clouds_form__extinction:p2=1, 2
+  clouds_form__turbulenceStrength:p2=0, 2
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=2
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.05, 0.15
+      seed:p2=0, 100
+      freq:p2=3, 3
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.25, 0.35
+      seed:p2=0, 100
+      freq:p2=7, 7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.6, 1
+      clouds_type_variance:p2=1, 1
+      startAt:p2=0.7, 2
+      clouds_type:p2=0.25, 0.5
+      thickness:p2=3, 6
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.5, 0.55
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=5, 8
+      clouds_type:p2=0.1, 0.25
+      thickness:p2=3, 5
+    }
+  }
+}
+
+weather_clear{
+  clouds_rendering__erosion_noise_size:r=45
+  clouds_rendering__erosionWindSpeed:r=50
+  strata_clouds__amount:p2=0.5, 0.5
+  strata_clouds__altitude:p2=10, 10
+  sky_atmosphere__mie_height:p2=1.2, 1.2
+  sky_atmosphere__mie_scale:p2=0.5, 1
+  sky_atmosphere__mie_absorption_scale:p2=1, 1
+  sky_atmosphere__multiple_scattering_factor:r=1.5
+  clouds_weather_gen__cumulonimbusCoverage:p2=0, 0
+  clouds_weather_gen__cumulonimbusSeed:p2=0, 100
+  clouds_form__extinction:p2=1, 2
+  clouds_form__turbulenceStrength:p2=0, 2
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=2
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0, 0
+      seed:p2=0, 100
+      freq:p2=3, 3
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0, 0.2
+      seed:p2=0, 100
+      freq:p2=7, 7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.6, 1
+      clouds_type_variance:p2=1, 1
+      startAt:p2=0.7, 2
+      clouds_type:p2=0.5, 0.5
+      thickness:p2=3, 6
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.5, 0.55
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=5, 8
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 5
+    }
+  }
+}
+
+weather_clouds{
+  clouds_rendering__erosion_noise_size:r=45
+  clouds_rendering__erosionWindSpeed:r=50
+  strata_clouds__amount:p2=0.5, 0.5
+  strata_clouds__altitude:p2=10, 10
+  sky_atmosphere__mie_height:p2=1.2, 2
+  sky_atmosphere__mie_scale:p2=1, 3
+  sky_atmosphere__mie_absorption_scale:p2=1, 2
+  sky_atmosphere__multiple_scattering_factor:r=1.5
+  clouds_weather_gen__epicness:r=0.8
+  clouds_weather_gen__cumulonimbusCoverage:p2=0, 0.15
+  clouds_weather_gen__cumulonimbusSeed:p2=0, 1000
+  clouds_form__extinction:p2=1.5, 3
+  clouds_form__turbulenceStrength:p2=0, 2
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=2
+  skies_settings__locName:t="weather/clouds"
+  skies_settings__iconType:t="clouds"
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.1, 0.3
+      seed:p2=100, 1000
+      freq:p2=0, 2
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.2, 0.8
+      seed:p2=0, 1000
+      freq:p2=0, 7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.6, 1
+      clouds_type_variance:p2=0, 2
+      startAt:p2=0.7, 2
+      clouds_type:p2=0.5, 0.5
+      thickness:p2=4, 6
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.5, 0.55
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=6.5, 8
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3.5, 3.5
+    }
+  }
+}
+
+weather_dalniy_island_overcast{
+  _use:t="skies_settings"
+  strata_clouds__altitude:p2=10, 10
+  strata_clouds__amount:p2=0.9, 0.9
+  sky_atmosphere__mie_height:p2=0.8, 0.8
+  sky_atmosphere__mie_scale:p2=8, 8
+  sky_atmosphere__mie_absorption_scale:p2=8, 8
+  sky_atmosphere__multiple_scattering_factor:r=2
+  sky_atmosphere__ozone_scale:p2=0.9, 0.9
+  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
+  clouds_form__extinction:p2=3, 3
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=5
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.3, 0.3
+  clouds_rendering__erosion_noise_size:r=47.31
+  skies_settings__locName:t="weather/overcast"
+  skies_settings__iconType:t="overcast"
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.8, 0.8
+      seed:p2=1, 1
+      freq:p2=1, 1
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1, 1
+      seed:p2=1, 1
+      freq:p2=1.7, 1.7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.9, 0.9
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=0.5, 0.5
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=4, 4
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.7, 0.7
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=5, 5
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 3
+    }
+  }
+}
+
+weather_dalniy_island_clear{
+  _use:t="skies_settings"
+  strata_clouds__altitude:p2=10, 10
+  strata_clouds__amount:p2=0.9, 0.9
+  sky_atmosphere__mie_height:p2=0.8, 0.8
+  sky_atmosphere__mie_scale:p2=8, 8
+  sky_atmosphere__mie_absorption_scale:p2=8, 8
+  sky_atmosphere__multiple_scattering_factor:r=2
+  sky_atmosphere__ozone_scale:p2=0.9, 0.9
+  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
+  clouds_form__extinction:p2=3, 3
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=5
+  clouds_weather_gen__cumulonimbusCoverage:p2=0, 0
+  clouds_rendering__erosion_noise_size:r=47.31
+  skies_settings__locName:t="weather/overcast"
+  skies_settings__iconType:t="overcast"
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0, 0
+      seed:p2=1, 1
+      freq:p2=1, 1
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0, 0
+      seed:p2=1, 1
+      freq:p2=1.7, 1.7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.5, 0.5
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=1, 1
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=2.9, 2.9
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.2, 0.2
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=3, 3
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 3
+    }
+  }
+}
+
+weather_dalniy_island_almost_clear{
+  _use:t="skies_settings"
+  strata_clouds__altitude:p2=10, 10
+  strata_clouds__amount:p2=0.9, 0.9
+  sky_atmosphere__mie_height:p2=0.8, 0.8
+  sky_atmosphere__mie_scale:p2=8, 8
+  sky_atmosphere__mie_absorption_scale:p2=8, 8
+  sky_atmosphere__multiple_scattering_factor:r=2
+  sky_atmosphere__ozone_scale:p2=0.9, 0.9
+  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
+  clouds_form__extinction:p2=3, 3
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=5
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.3, 0.3
+  clouds_rendering__erosion_noise_size:r=47.31
+  clouds_weather_gen__epicness:r=0.8
+  skies_settings__locName:t="weather/overcast"
+  skies_settings__iconType:t="overcast"
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.1, 0.1
+      seed:p2=1, 1
+      freq:p2=1, 1
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.3, 0.3
+      seed:p2=1, 1
+      freq:p2=1.7, 1.7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.5, 0.5
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=1, 1
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=2.9, 2.9
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.2, 0.2
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=3, 3
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 3
+    }
+  }
+}
+
+weather_dalniy_island_cloudy{
+  _use:t="skies_settings"
+  strata_clouds__altitude:p2=10, 10
+  strata_clouds__amount:p2=0.9, 0.9
+  sky_atmosphere__mie_height:p2=0.8, 0.8
+  sky_atmosphere__mie_scale:p2=8, 8
+  sky_atmosphere__mie_absorption_scale:p2=8, 8
+  sky_atmosphere__multiple_scattering_factor:r=2
+  sky_atmosphere__ozone_scale:p2=0.9, 0.9
+  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
+  clouds_form__extinction:p2=3, 3
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=5
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.3, 0.3
+  clouds_rendering__erosion_noise_size:r=47.31
+  clouds_weather_gen__epicness:r=0.3
+  skies_settings__locName:t="weather/clouds"
+  skies_settings__iconType:t="clouds"
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.5, 0.5
+      seed:p2=1, 1
+      freq:p2=1, 1
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.7, 0.7
+      seed:p2=1, 1
+      freq:p2=1.7, 1.7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.9, 0.9
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=0.5, 0.5
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=4, 4
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.7, 0.7
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=5, 5
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 3
+    }
+  }
+}
+
+weather_dalniy_island_poor{
+  _use:t="skies_settings"
+  strata_clouds__altitude:p2=10, 10
+  strata_clouds__amount:p2=0.9, 0.9
+  sky_atmosphere__mie_height:p2=0.8, 0.8
+  sky_atmosphere__mie_scale:p2=8, 8
+  sky_atmosphere__mie_absorption_scale:p2=8, 8
+  sky_atmosphere__multiple_scattering_factor:r=2
+  sky_atmosphere__ozone_scale:p2=0.9, 0.9
+  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
+  clouds_form__extinction:p2=4, 4
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=5
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.1, 0.1
+  clouds_rendering__erosion_noise_size:r=47.31
+  clouds_weather_gen__epicness:r=0
+  use_clouds_hole:b=no
+  skies_settings__locName:t="weather/overcast"
+  skies_settings__iconType:t="overcast"
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.98, 0.98
+      seed:p2=1, 1
+      freq:p2=1.6, 1.6
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1, 1
+      seed:p2=1, 1
+      freq:p2=1.7, 1.7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=1, 1
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=0.5, 0.5
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=5, 5
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.9, 0.9
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=6, 6
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=4, 4
+    }
+  }
+}
+
+weather_dalniy_island_rain{
+  _use:t="skies_settings"
+  strata_clouds__altitude:p2=10, 10
+  strata_clouds__amount:p2=0.9, 0.9
+  sky_atmosphere__mie_height:p2=0.8, 0.8
+  sky_atmosphere__mie_scale:p2=14, 14
+  sky_atmosphere__mie_absorption_scale:p2=8, 8
+  sky_atmosphere__multiple_scattering_factor:r=2
+  sky_atmosphere__ozone_scale:p2=0.9, 0.9
+  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
+  clouds_form__extinction:p2=4, 4
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=5
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.1, 0.1
+  clouds_rendering__erosion_noise_size:r=47.31
+  clouds_weather_gen__epicness:r=0
+  use_clouds_hole:b=no
+  skies_settings__locName:t="weather/overcast"
+  skies_settings__iconType:t="overcast"
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.98, 0.98
+      seed:p2=1, 1
+      freq:p2=1.6, 1.6
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1, 1
+      seed:p2=1, 1
+      freq:p2=1.7, 1.7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=1, 1
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=0.5, 0.5
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=5, 5
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.9, 0.9
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=6, 6
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=4, 4
+    }
+  }
+}
+
+weather_dalniy_island_map_gen{
+  _use:t="skies_settings"
+  clouds_form__extinction:p2=4, 4
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=5
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_rendering__erosion_noise_size:r=47.31
+  clouds_settings__force_panorama:b=yes
+  clouds_weather_gen__cumulonimbusCoverage:p2=0, 0
+  clouds_weather_gen__epicness:r=0
+  skies_settings__weatherSeed:i=43
+  sky_atmosphere__mie_absorption_scale:p2=8, 8
+  sky_atmosphere__mie_height:p2=0.8, 0.8
+  sky_atmosphere__mie_scale:p2=8, 8
+  sky_atmosphere__multiple_scattering_factor:r=2
+  sky_atmosphere__ozone_scale:p2=0.9, 0.9
+  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
+  strata_clouds__altitude:p2=10, 10
+  strata_clouds__amount:p2=1, 1
+  use_clouds_hole:b=no
+  skies_settings__locName:t="weather/overcast"
+  skies_settings__iconType:t="overcast"
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1, 1
+      seed:p2=1, 1
+      freq:p2=1.6, 1.6
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1, 1
+      seed:p2=1, 1
+      freq:p2=1.7, 1.7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=1, 1
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=0.5, 0.5
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=0.6, 0.6
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=1, 1
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=6, 6
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=0.6, 0.6
+    }
+  }
+}
+
+weather_dalniy_island_night{
+  _use:t="skies_settings"
+  strata_clouds__altitude:p2=10, 10
+  strata_clouds__amount:p2=0.9, 0.9
+  sky_atmosphere__mie_height:p2=0.6, 0.6
+  sky_atmosphere__mie_scale:p2=32, 32
+  sky_atmosphere__mie_absorption_scale:p2=32, 32
+  sky_atmosphere__multiple_scattering_factor:r=2
+  sky_atmosphere__ozone_scale:p2=0.7, 0.7
+  sky_atmosphere__rayleigh_alt_scale:p2=2, 2
+  sky_atmosphere__moon_brightness:r=4
+  sky_atmosphere__moon_color:p3=0.6, 0.8, 1
+  clouds_form__extinction:p2=2, 2
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=5
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.3, 0.3
+  clouds_rendering__erosion_noise_size:r=47.31
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.3, 0.3
+      seed:p2=1, 1
+      freq:p2=1, 1
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.8, 0.8
+      seed:p2=1, 1
+      freq:p2=1.7, 1.7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.6, 0.6
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=0.7, 0.7
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=4, 4
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.7, 0.7
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=5, 5
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 3
+    }
+  }
+}
+
+weather_dalniy_island_overcast_teaser{
+  _use:t="weather_dalniy_island_overcast"
+  skies_settings__weatherSeed:i=11328
+}
+
+weather_monolyth_island_poor{
+  _use:t="skies_settings"
+  strata_clouds__altitude:p2=10, 10
+  strata_clouds__amount:p2=0.9, 0.9
+  sky_atmosphere__mie_height:p2=0.4, 0.4
+  sky_atmosphere__mie_scale:p2=1, 1
+  sky_atmosphere__mie_absorption_scale:p2=32, 32
+  sky_atmosphere__multiple_scattering_factor:r=2
+  sky_atmosphere__ozone_scale:p2=0.7, 0.7
+  sky_atmosphere__rayleigh_alt_scale:p2=2, 2
+  clouds_form__extinction:p2=2, 2
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=5
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.3, 0.3
+  clouds_rendering__erosion_noise_size:r=47.31
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.95, 0.95
+      seed:p2=1, 1
+      freq:p2=1, 1
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1, 1
+      seed:p2=1, 1
+      freq:p2=1.7, 1.7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.6, 0.6
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=0.5, 0.5
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=4, 4
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.7, 0.7
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=4.5, 4.5
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 3
+    }
+  }
+}
+
+weather_monolyth_island_overcast{
+  _use:t="skies_settings"
+  strata_clouds__altitude:p2=10, 10
+  strata_clouds__amount:p2=0.9, 0.9
+  sky_atmosphere__mie_height:p2=0.4, 0.4
+  sky_atmosphere__mie_scale:p2=32, 32
+  sky_atmosphere__mie_absorption_scale:p2=32, 32
+  sky_atmosphere__multiple_scattering_factor:r=2
+  sky_atmosphere__ozone_scale:p2=0.7, 0.7
+  sky_atmosphere__rayleigh_alt_scale:p2=2, 2
+  clouds_form__extinction:p2=2, 2
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=5
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.3, 0.3
+  clouds_rendering__erosion_noise_size:r=47.31
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.9, 0.9
+      seed:p2=1, 1
+      freq:p2=1, 1
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.95, 0.95
+      seed:p2=1, 1
+      freq:p2=1.7, 1.7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.6, 0.6
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=0.5, 0.5
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=4, 4
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.7, 0.7
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=4.5, 4.5
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 3
+    }
+  }
+}
+
+weather_medium_overcast_foggy{
+  _use:t="skies_settings"
+  clouds_settings__competitive_advantage:b=yes
+  sky_atmosphere__mie2_thickness:p2=400, 400
+  sky_atmosphere__mie2_altitude:p2=200, 200
+  sky_atmosphere__mie_height:p2=2.6, 2.3
+  sky_atmosphere__mie_scale:p2=4.3, 2.5
+  sky_atmosphere__mie_back_assymetry:p2=0.15, 0.15
+  strata_clouds__amount:p2=10, 10
+  strata_clouds__altitude:p2=11.2, 11.2
+  clouds_weather_gen__epicness:r=0.32
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.22, 0.36
+  clouds_form__extinction:p2=2.89, 1.5
+  clouds_form__turbulenceStrength:p2=0.77, 1.33
+  clouds_form__shapeNoiseScale:i=10
+  clouds_form__turbulenceFreq:i=3
+  clouds_rendering__forward_eccentricity_weight:r=0.8
+  clouds_rendering__erosion_noise_size:r=37.8
+  clouds_rendering__ms_ecc_attenuation:r=0.3
+  clouds_rendering__erosionWindSpeed:r=50
+  skies_settings__locName:t="weather/foggy"
+  skies_settings__iconType:t="foggy"
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.8, 0.8
+      seed:p2=1, 0
+      freq:p2=1, 1
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1, 1
+      seed:p2=1, 0
+      freq:p2=5, 5
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.8, 0.8
+      clouds_type_variance:p2=1, 1
+      startAt:p2=0.7, 0.7
+      clouds_type:p2=0.8, 0.8
+      thickness:p2=2.9, 2.9
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.5, 0.5
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=6, 6
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 3
+    }
+  }
+}
+
+weather_siberia_clear{
+  clouds_rendering__erosion_noise_size:r=45
+  clouds_rendering__erosionWindSpeed:r=50
+  strata_clouds__amount:p2=0.5, 0.5
+  strata_clouds__altitude:p2=10, 10
+  sky_atmosphere__mie_height:p2=0.1, 0.2
+  sky_atmosphere__mie_scale:p2=16, 18
+  sky_atmosphere__mie_absorption_scale:p2=1, 1
+  sky_atmosphere__multiple_scattering_factor:r=1.5
+  clouds_weather_gen__cumulonimbusSeed:p2=0, 100
+  clouds_form__extinction:p2=1, 2
+  clouds_form__turbulenceStrength:p2=0, 2
+  clouds_form__shapeNoiseScale:i=7
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0, 0
+      seed:p2=0, 100
+      freq:p2=3, 3
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0, 0.2
+      seed:p2=0, 100
+      freq:p2=7, 7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.6, 1
+      clouds_type_variance:p2=1, 1
+      startAt:p2=0.7, 2
+      clouds_type:p2=0.5, 0.5
+      thickness:p2=3, 6
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.5, 0.55
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=5, 8
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 5
+    }
+  }
+}
+
+weather_siberia_almost_clear{
+  clouds_rendering__erosion_noise_size:r=45
+  clouds_rendering__erosionWindSpeed:r=50
+  strata_clouds__amount:p2=0.1, 0.5
+  strata_clouds__altitude:p2=10, 12
+  sky_atmosphere__mie_height:p2=0.1, 0.2
+  sky_atmosphere__mie_scale:p2=20, 28
+  sky_atmosphere__mie_absorption_scale:p2=1, 1
+  sky_atmosphere__multiple_scattering_factor:r=1.5
+  clouds_weather_gen__epicness:r=0.35
+  clouds_weather_gen__cumulonimbusSeed:p2=0, 100
+  clouds_form__extinction:p2=1, 2
+  clouds_form__turbulenceStrength:p2=0, 2
+  clouds_form__shapeNoiseScale:i=7
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.05, 0.15
+      seed:p2=0, 100
+      freq:p2=3, 3
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.25, 0.35
+      seed:p2=0, 100
+      freq:p2=7, 7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.6, 1
+      clouds_type_variance:p2=1, 1
+      startAt:p2=0.7, 2
+      clouds_type:p2=0.25, 0.5
+      thickness:p2=3, 6
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.5, 0.55
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=5, 8
+      clouds_type:p2=0.1, 0.25
+      thickness:p2=3, 5
+    }
+  }
+}
+
+weather_small_overcast{
+  clouds_rendering__erosion_noise_size:r=45
+  clouds_rendering__erosionWindSpeed:r=50
+  strata_clouds__amount:p2=0.5, 0.5
+  strata_clouds__altitude:p2=10, 10
+  sky_atmosphere__mie_height:p2=1.2, 2
+  sky_atmosphere__mie_scale:p2=1, 3
+  sky_atmosphere__mie_absorption_scale:p2=1, 2
+  sky_atmosphere__multiple_scattering_factor:r=1.5
+  clouds_weather_gen__epicness:r=0.8
+  clouds_weather_gen__cumulonimbusCoverage:p2=0, 0.15
+  clouds_weather_gen__cumulonimbusSeed:p2=0, 100
+  clouds_form__extinction:p2=1.5, 3
+  clouds_form__turbulenceStrength:p2=0, 2
+  clouds_form__shapeNoiseScale:i=7
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.4, 0.5
+      seed:p2=0, 100
+      freq:p2=3, 3
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.6, 0.8
+      seed:p2=0, 100
+      freq:p2=7, 7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.6, 1
+      clouds_type_variance:p2=1, 1
+      startAt:p2=0.7, 2
+      clouds_type:p2=0.5, 0.5
+      thickness:p2=4, 6
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.5, 0.55
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=6.5, 8
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3.5, 3.5
+    }
+  }
+}
+
+weather_small_overcast_cave{
+  _use:t="weather_small_overcast"
+  _use:t="skies_settings"
+
+  _group{
+    _track:b=yes
+    sky_disable_sky_influence:b=yes
+  }
+}
+
+weather_poor{
+  clouds_rendering__erosion_noise_size:r=45
+  clouds_rendering__erosionWindSpeed:r=50
+  strata_clouds__amount:p2=0.5, 0.5
+  strata_clouds__altitude:p2=10, 10
+  sky_atmosphere__mie_height:p2=1.2, 2
+  sky_atmosphere__mie_scale:p2=1, 10
+  sky_atmosphere__mie_absorption_scale:p2=1, 10
+  sky_atmosphere__multiple_scattering_factor:r=1.5
+  clouds_weather_gen__epicness:r=1
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.2, 0.6
+  clouds_weather_gen__cumulonimbusSeed:p2=0, 100
+  clouds_form__extinction:p2=1.5, 3
+  clouds_form__turbulenceStrength:p2=0, 2
+  clouds_form__shapeNoiseScale:i=7
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1, 1
+      seed:p2=0, 100
+      freq:p2=3, 3
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1, 1
+      seed:p2=0, 100
+      freq:p2=7, 7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.8, 2
+      clouds_type_variance:p2=1, 1
+      startAt:p2=0.5, 1
+      clouds_type:p2=0.5, 0.5
+      thickness:p2=6, 8
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.5, 0.8
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=4, 8
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=6.7, 6.7
+    }
+  }
+}
+
+weather_overcast{
+  clouds_rendering__erosion_noise_size:r=45
+  clouds_rendering__erosionWindSpeed:r=50
+  strata_clouds__amount:p2=0.5, 0.5
+  strata_clouds__altitude:p2=10, 10
+  sky_atmosphere__mie_height:p2=1.2, 2
+  sky_atmosphere__mie_scale:p2=1, 8
+  sky_atmosphere__mie_absorption_scale:p2=1, 6
+  sky_atmosphere__multiple_scattering_factor:r=1.5
+  clouds_weather_gen__epicness:r=1
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.3, 0.3
+  clouds_weather_gen__cumulonimbusSeed:p2=0, 100
+  clouds_form__extinction:p2=1, 2
+  clouds_form__turbulenceStrength:p2=0, 2
+  clouds_form__shapeNoiseScale:i=7
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.78, 1
+      seed:p2=0, 100
+      freq:p2=3, 3
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.9, 1
+      seed:p2=0, 100
+      freq:p2=7, 7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.6, 1
+      clouds_type_variance:p2=1, 1
+      startAt:p2=0.7, 2
+      clouds_type:p2=0.5, 0.5
+      thickness:p2=4, 7
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.5, 0.55
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=5, 8
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 5
+    }
+  }
+}
+
+weather_cloudy_f{
+  _use:t="skies_settings"
+  _singleton:b=yes
+
+  _group{
+    _track:b=yes
+    skies_settings__weatherSeed:i=-1
+    randomize_seed_button:b=no
+    clouds_rendering__forward_eccentricity:r=0.8
+    clouds_rendering__back_eccentricity:r=0.5
+    clouds_rendering__forward_eccentricity_weight:r=0.5
+    clouds_rendering__erosion_noise_size:r=25.3
+    clouds_rendering__ambient_desaturation:r=0.5
+    clouds_rendering__ms_contribution:r=0.7
+    clouds_rendering__ms_attenuation:r=0.3
+    clouds_rendering__ms_ecc_attenuation:r=0.6
+    clouds_rendering__erosionWindSpeed:r=0.6
+    strata_clouds__amount:p2=0.8, 0.8
+    strata_clouds__altitude:p2=8, 8
+    clouds_form__extinction:p2=0.75, 0.75
+    clouds_form__turbulenceStrength:p2=0.21, 0.21
+    clouds_form__shapeNoiseScale:i=6
+    clouds_form__cumulonimbusShapeScale:i=4
+    clouds_form__turbulenceFreq:i=3
+    clouds_settings__maximum_averaging_ratio:r=0.75
+    clouds_settings__force_panorama:b=yes
+    clouds_settings__quality:i=2
+    clouds_settings__target_quality:i=2
+    clouds_settings__competitive_advantage:b=no
+    clouds_settings__fastEvolution:b=no
+    clouds_weather_gen__epicness:r=0
+    clouds_weather_gen__cumulonimbusCoverage:p2=0, 0
+    clouds_weather_gen__cumulonimbusSeed:p2=0, 0
+    clouds_weather_gen__worldSize:r=65536
+    sky_atmosphere__average_ground_albedo:r=0.1
+    sky_settings__haze_strength:r=1
+    sky_settings__haze_min_angle:r=0
+    sky_settings__haze_peak_hour_offset:r=2
+    sky_atmosphere__min_ground_offset:r=0
+    sky_atmosphere__ground_color:p3=1, 1, 1
+    sky_atmosphere__mie2_thickness:p2=0.4, 0.4
+    sky_atmosphere__mie2_altitude:p2=0.2, 0.2
+    sky_atmosphere__mie2_scale:p2=0, 0
+    sky_atmosphere__mie_height:p2=1.2, 1.2
+    sky_atmosphere__mie_scale:p2=1, 1
+    sky_atmosphere__mie_absorption_scale:p2=1, 1
+    sky_atmosphere__mie_scattering_color:p3=1, 1, 1
+    sky_atmosphere__mie_absorption_color:p3=1, 1, 1
+    sky_atmosphere__mie_assymetry:p2=0.8, 0.8
+    sky_atmosphere__mie_back_assymetry:p2=0.2, 0.2
+    sky_atmosphere__planet_scale:r=1
+    sky_atmosphere__atmosphere_scale:r=1
+    sky_atmosphere__rayleigh_scale:p2=1, 1
+    sky_atmosphere__rayleigh_alt_scale:p2=1, 1
+    sky_atmosphere__rayleigh_color:p3=1, 1, 1
+    sky_atmosphere__multiple_scattering_factor:r=1
+    sky_atmosphere__ozone_alt_dist:r=1
+    sky_atmosphere__ozone_max_alt:r=1
+    sky_atmosphere__ozone_scale:p2=1, 1
+    sky_atmosphere__sun_brightness:r=1
+    sky_atmosphere__moon_brightness:r=1
+    sky_atmosphere__moon_color:p3=1, 1, 1
+
+    "clouds_form__layers:array"{
+      "layer:object"{
+        startAt:p2=0.8, 0.8
+        thickness:p2=9, 9
+        density:p2=1, 1
+        clouds_type:p2=0.5, 0.5
+        clouds_type_variance:p2=0.5, 0.5
+      }
+
+      "layer:object"{
+        startAt:p2=8, 8
+        thickness:p2=3, 3
+        density:p2=0.8, 0.8
+        clouds_type:p2=0, 0
+        clouds_type_variance:p2=0.5, 0.5
+      }
+    }
+
+    "clouds_weather_gen__layers:array"{
+      "layer:object"{
+        coverage:p2=0.7, 0.7
+        freq:p2=2, 2
+        seed:p2=0, 0
+      }
+
+      "layer:object"{
+        coverage:p2=0.25, 0.25
+        freq:p2=3, 3
+        seed:p2=0.5, 0.5
+      }
+    }
+  }
+
+  "skies_settings_tag:tag"{
+    _tags:t="render"
+  }
+}
+
+weather_overcast_c{
+  _use:t="weather_cloudy_f"
+  skies_settings__weatherSeed:i=21838
+  clouds_rendering__erosion_noise_size:r=45.3
+  clouds_form__turbulenceFreq:i=9
+  sky_atmosphere__rayleigh_alt_scale:p2=4, 4
+  clouds_rendering__ms_contribution:r=0.1
+  clouds_rendering__ms_attenuation:r=0.1
+  clouds_form__extinction:p2=0.3, 0.3
+  sky_atmosphere__rayleigh_color:p3=1.35, 1, 1
+  clouds_rendering__ms_ecc_attenuation:r=0.7
+  sky_atmosphere__mie_scale:p2=55, 55
+  clouds_rendering__forward_eccentricity:r=0.4
+  clouds_rendering__back_eccentricity:r=0.97
+  clouds_rendering__forward_eccentricity_weight:r=0.2
+  sky_atmosphere__mie_height:p2=0.8, 0.8
+  strata_clouds__amount:p2=1, 1
+  strata_clouds__altitude:p2=1, 1
+  clouds_weather_gen__epicness:r=0.75
+  sky_atmosphere__mie_assymetry:p2=0.79, 0.79
+  sky_atmosphere__atmosphere_scale:r=2.4
+  sky_atmosphere__atmosphere_average_ground_albedo:r=0.1
+  sky_atmosphere__average_ground_albedo:r=0.1
+  sky_atmosphere__ground_color:p3=0.9, 1.1, 1.01
+  use_clouds_hole:b=yes
+  sky_atmosphere__mie2_thickness:p2=275, 275
+  sky_atmosphere__mie2_scale:p2=4, 4
+  sky_atmosphere__mie2_altitude:p2=100, 100
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.95, 0.95
+  clouds_weather_gen__cumulonimbusSeed:p2=0.9, 0.9
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.1, 0.1
+      seed:p2=0, 0
+      freq:p2=1, 1
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.1, 0.1
+      seed:p2=0.5, 0.5
+      freq:p2=1, 1
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=1, 1.1
+      clouds_type_variance:p2=0.25, 0.25
+      startAt:p2=0.8, 0.8
+      clouds_type:p2=1.5, 1.5
+      thickness:p2=40, 40
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=1, 1
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=8, 8
+      clouds_type:p2=0.5, 0.5
+      thickness:p2=40, 40
+    }
+  }
+}
+
+weather_overcast_c_mir_factory{
+  _use:t="weather_cloudy_f"
+  skies_settings__weatherSeed:i=21838
+  clouds_rendering__erosion_noise_size:r=45.3
+  clouds_form__turbulenceFreq:i=9
+  sky_atmosphere__rayleigh_alt_scale:p2=4, 4
+  clouds_rendering__ms_contribution:r=0.1
+  clouds_rendering__ms_attenuation:r=0.1
+  clouds_form__extinction:p2=0.3, 0.3
+  sky_atmosphere__rayleigh_color:p3=1.35, 1, 1
+  clouds_rendering__ms_ecc_attenuation:r=0.7
+  sky_atmosphere__mie_scale:p2=55, 55
+  clouds_rendering__forward_eccentricity:r=0.4
+  clouds_rendering__back_eccentricity:r=0.97
+  clouds_rendering__forward_eccentricity_weight:r=0.2
+  sky_atmosphere__mie_height:p2=0.8, 0.8
+  strata_clouds__amount:p2=1, 1
+  strata_clouds__altitude:p2=8, 8
+  clouds_weather_gen__epicness:r=0.75
+  sky_atmosphere__mie_assymetry:p2=0.79, 0.79
+  sky_atmosphere__atmosphere_scale:r=0.6
+  sky_atmosphere__atmosphere_average_ground_albedo:r=1.1
+  sky_atmosphere__average_ground_albedo:r=1.1
+  sky_atmosphere__ground_color:p3=0.9, 0.9, 1.01
+  use_clouds_hole:b=no
+  sky_atmosphere__mie2_thickness:p2=275, 275
+  sky_atmosphere__mie2_scale:p2=4, 4
+  sky_atmosphere__mie2_altitude:p2=100, 100
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.95, 0.95
+  clouds_weather_gen__cumulonimbusSeed:p2=0.9, 0.9
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1, 1
+      seed:p2=0, 0
+      freq:p2=1, 1
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1, 1
+      seed:p2=0.5, 0.5
+      freq:p2=1, 1
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=1, 1.1
+      clouds_type_variance:p2=0.25, 0.25
+      startAt:p2=0.8, 0.8
+      clouds_type:p2=1.5, 1.5
+      thickness:p2=40, 40
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=1, 1
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=8, 8
+      clouds_type:p2=0.5, 0.5
+      thickness:p2=40, 40
+    }
+  }
+}
+
+weather_overcast_d{
+  _use:t="skies_settings"
+  strata_clouds__amount:p2=1, 1
+  clouds_form__extinction:p2=3, 3
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=9
+  clouds_weather_gen__epicness:r=0
+  clouds_weather_gen__cumulonimbusCoverage:p2=0, 0
+  sky_atmosphere__mie2_thickness:p2=275, 275
+  sky_atmosphere__mie2_scale:p2=4, 4
+  sky_atmosphere__mie2_altitude:p2=100, 100
+  sky_atmosphere__mie_height:p2=4.8, 4.8
+  sky_atmosphere__mie_scale:p2=3, 3
+  sky_atmosphere__mie_absorption_scale:p2=2, 2
+  sky_atmosphere__mie_assymetry:p2=0.8, 0.8
+  sky_atmosphere__mie_back_assymetry:p2=0.17, 0.17
+  skies_settings__weatherSeed:i=131
+  clouds_weather_gen__worldSize:r=32768
+  clouds_rendering__erosion_noise_size:r=28
+  strata_clouds__altitude:p2=8, 8
+  clouds_form__turbulenceFreq:i=2
+  clouds_rendering__ms_contribution:r=0.5
+  clouds_rendering__ms_attenuation:r=0.4
+  sky_atmosphere__scale:r=2.5
+  sky_atmosphere__ground_color:p3=0.7, 1, 0.7
+  sky_atmosphere__average_ground_albedo:r=0.9
+  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
+  use_clouds_hole:b=no
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.4, 0.4
+      clouds_type_variance:p2=1, 1
+      startAt:p2=1, 1
+      clouds_type:p2=0.5, 0.5
+      thickness:p2=3.9, 3.9
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.5, 0.5
+      clouds_type_variance:p2=1, 1
+      startAt:p2=5, 5
+      clouds_type:p2=0.2, 0.2
+      thickness:p2=5, 5
+    }
+  }
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1.5, 1.5
+      seed:p2=2, 2
+      freq:p2=2, 2
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1.15, 1.15
+      seed:p2=20, 20
+      freq:p2=1.2, 1.2
+    }
+  }
+}
+
+weather_itzal_kutan{
+  _use:t="skies_settings"
+  strata_clouds__amount:p2=1, 1
+  clouds_form__extinction:p2=3, 3
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=9
+  clouds_weather_gen__epicness:r=0
+  clouds_weather_gen__cumulonimbusCoverage:p2=0, 0
+  sky_atmosphere__mie2_thickness:p2=275, 275
+  sky_atmosphere__mie2_scale:p2=4, 4
+  sky_atmosphere__mie2_altitude:p2=100, 100
+  sky_atmosphere__mie_height:p2=4.8, 4.8
+  sky_atmosphere__mie_scale:p2=3, 3
+  sky_atmosphere__mie_absorption_scale:p2=2, 2
+  sky_atmosphere__mie_assymetry:p2=0.8, 0.8
+  sky_atmosphere__mie_back_assymetry:p2=0.17, 0.17
+  skies_settings__weatherSeed:i=131
+  clouds_weather_gen__worldSize:r=32768
+  clouds_rendering__erosion_noise_size:r=28
+  strata_clouds__altitude:p2=8, 8
+  clouds_form__turbulenceFreq:i=2
+  clouds_rendering__ms_contribution:r=0.5
+  clouds_rendering__ms_attenuation:r=0.4
+  sky_atmosphere__scale:r=2.5
+  sky_atmosphere__ground_color:p3=0.7, 1, 0.7
+  sky_atmosphere__average_ground_albedo:r=0.9
+  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
+  use_clouds_hole:b=no
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.15, 0.15
+      clouds_type_variance:p2=1, 1
+      startAt:p2=1, 1
+      clouds_type:p2=0.5, 0.5
+      thickness:p2=2.9, 2.9
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.3, 0.3
+      clouds_type_variance:p2=1, 1
+      startAt:p2=5, 5
+      clouds_type:p2=0.2, 0.2
+      thickness:p2=4, 4
+    }
+  }
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1.5, 1.5
+      seed:p2=2, 2
+      freq:p2=2, 2
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1.15, 1.15
+      seed:p2=20, 20
+      freq:p2=1.2, 1.2
+    }
+  }
+}
+
+nexus_vanilla_weather{
+  _use:t="skies_settings"
+  strata_clouds__altitude:p2=10, 10
+  strata_clouds__amount:p2=0.9, 0.9
+  sky_atmosphere__mie_height:p2=1.8, 1.8
+  sky_atmosphere__mie_scale:p2=8, 8
+  sky_atmosphere__mie_absorption_scale:p2=8, 8
+  sky_atmosphere__multiple_scattering_factor:r=2
+  sky_atmosphere__ozone_scale:p2=0.9, 0.9
+  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
+  clouds_form__extinction:p2=3, 3
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=5
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.3, 0.3
+  clouds_rendering__erosion_noise_size:r=47.31
+  sky_atmosphere__atmosphere_scale:r=1.7
+  sky_atmosphere__average_ground_albedo:r=1.6
+  sky_atmosphere__mie2_altitude:p2=1.2, 1.2
+  sky_atmosphere__mie2_scale:p2=400, 400
+  sky_atmosphere__mie_absorption_color:p3=1.1, 1.3, 1
+  skies_settings__locName:t="weather/overcast"
+  skies_settings__iconType:t="overcast"
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.3, 0.3
+      seed:p2=1, 1
+      freq:p2=1, 1
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.3, 0.3
+      seed:p2=1, 1
+      freq:p2=1.7, 1.7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.9, 0.9
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=0.5, 0.5
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=4, 4
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.7, 0.7
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=5, 5
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 3
+    }
+  }
+}

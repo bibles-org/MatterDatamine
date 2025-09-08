@@ -1,0 +1,62 @@
+mass:r=0.6
+momentOfInertia:p3=0.04, 0.008, 0.04
+caliber:r=0.04
+speed:r=18.5
+speedPitch:r=10
+maxDistance:r=5
+physMat:t="walkRay"
+useFutureContacts:b=yes
+logCCD:b=no
+entityTemplate:t="xvp_grenade"
+entityPhysTemplate:t="xvp_grenade_phys"
+shutterDamage:b=yes
+shutterDamageRadius:r=5
+shutterAmount:i=100
+shutterArmorPower:r=10
+shutterHit:r=10
+
+detonation{
+  onHit:b=no
+  timer:r=4
+}
+
+splashDamage{
+  radius:p2=1, 7
+  penetration:p2=15, 2
+  damage:r=50
+  dmgOffset:p3=0, 0.25, 0
+}
+
+splash{
+  innerRadius:r=1
+  outerRadius:r=7
+  penetration:r=10
+  damage:r=50
+  dmgOffset:p3=0, 0.25, 0
+}
+
+explFx{
+  fxScale:p2=0.8, 0.9
+  effectTemplName:t="explosion_effect_small+disable_effect_sfx"
+}
+
+shellSound{
+  explosionPath:t="impact/grenade"
+  activatePath:t="/weapon/throwable/grenade/activate"
+}
+
+collisionResource{
+  props{
+    volumeBox:t="box"
+  }
+}
+
+ccdSpheres{
+  ccd:p4=0, 0.05, 0, 0.015
+  ccd:p4=0, 0.2, 0, 0.015
+  ccd:p4=0, -0.05, 0, 0.015
+}
+
+solver{
+  energyConservation:r=0.85
+}

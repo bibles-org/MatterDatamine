@@ -1,0 +1,62 @@
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [40.1715, 15.5452, -1363.01]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_park_zone_1"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [279.071, 11.9091, -1168.33]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_park_zone_2"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [236.576, 7.4526, -1467.68]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_park_zone_3"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [340.147, 7.82858, -1270.36]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_park_zone_4"
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [213.645, 12.2535, -1167.86]]
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_water_park_zone_1"
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [392.801, 0.482788, -1421]]
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_water_park_zone_2"
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [272.705, 0.482788, -1508.73]]
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_water_park_zone_3"
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+}

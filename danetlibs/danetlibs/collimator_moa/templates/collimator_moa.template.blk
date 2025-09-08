@@ -1,0 +1,53 @@
+collimator_moa_image{
+  _singleton:b=yes
+  _tags:t="render"
+  _tracked:t="collimator_moa_image__shapes"
+  collimator_moa_image__valid:b=no
+
+  "collimator_moa_image__shapes:array"{}
+}
+
+scope_collimator_moa{
+  _tracked:t="gunmod__collimator_moa_img_template"
+  gunmod__collimator_moa_img_template:t=""
+  gunmod__collimator_moa_parallax_plane_dist:r=10
+  gunmod__collimator_moa_reticle_offset_y:r=0
+  gunmod__collimator_moa_color:p4=1, 0, 0, 1
+  gunmod__collimator_moa_noise_scale:r=0.8
+  gunmod__collimator_moa_noise_offset:p2=0, 0
+  gunmod__collimator_moa_noise_filling:r=0
+  gunmod__collimator_moa_noise_color_scale:r=0.01
+  gunmod__collimator_moa_subnoise_intensity:r=0.9
+
+  "gunmod__collimator_moa_img_eid:eid"{}
+}
+
+collimator_moa_render{
+  _singleton:b=yes
+  _tags:t="render"
+  collimator_moa_render__active_shapes_count:i=0
+  collimator_moa_render__shapes_buf_reg_count:i=0
+  collimator_moa_render__relem_update_required:b=no
+  collimator_moa_render__calibration_range_cm:r=14.6
+
+  "collimator_moa_render__active_image_eid:eid"{}
+  "collimator_moa_render__current_shapes_buf:UniqueBufHolder"{}
+  "collimator_moa_render__lens_setup_node:dafg::NodeHandle"{}
+  "collimator_moa_render__lens_render_node:dafg::NodeHandle"{}
+  "collimator_moa_render__gun_mod_eid:eid"{}
+  "collimator_moa_render__rigid_id:i"{}
+  "collimator_moa_render__relem_id:i"{}
+  "dcm_lens_up:ShaderVar"{}
+  "dcm_lens_right:ShaderVar"{}
+  "dcm_lens_forward:ShaderVar"{}
+  "dcm_eye_to_lens_aligned_origin:ShaderVar"{}
+  "dcm_eye_to_plane_origin:ShaderVar"{}
+  "dcm_color:ShaderVar"{}
+  "dcm_noise_scale_offsetxy_filling:ShaderVar"{}
+  "dcm_noise_color_scale_subnoise_intensity:ShaderVar"{}
+  "dcm_shapes_buf:ShaderVar"{}
+  "dcm_shapes_count:ShaderVar"{}
+  "dcm_shapes_buf_reg_count:ShaderVar"{}
+  "dcm_render_mode:ShaderVar"{}
+  "dcm_inv_screen_size:ShaderVar"{}
+}

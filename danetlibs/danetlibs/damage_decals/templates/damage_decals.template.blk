@@ -1,0 +1,103 @@
+vehicle_damage_decals{
+  _tags:t="render"
+  damage_decals__minCaliberForShrapnelDecals:r=0.035
+  damage_decals__maxShrapnelDecalsPerPart:i=4
+
+  "damage_decals__collNodeId:list<i>"{}
+  "damage_decals__nodeMatrixId:list<u32>"{}
+  "damage_decals__projectileHitDecalId:list<i>"{}
+  "damage_decals__projectileHitCollNodeId:list<i>"{}
+  "damage_decals__projectileHitLocalPos:list<p3>"{}
+  "damage_decals__projectileHitCaliber:list<r>"{}
+  "damage_decals__collNodesWithBurning:list<i>"{}
+  "damage_decals__shrapnelDecalId:list<i>"{}
+  "damage_decals__shrapnelDecalPartId:list<i>"{}
+  "damage_decals__shrapnelDecalLocalPos:list<p3>"{}
+  "damage_decals__shrapnelDecalLocalHitDirTemp:list<p3>"{}
+  "damage_decals__shrapnelDecalLocalNormalTemp:list<p3>"{}
+  "damage_decals__explosionPos:list<p3>"{}
+  "damage_decals__explosionNumTraces:list<i>"{}
+  "damage_decals__explosionMaxTraceLen:list<r>"{}
+}
+
+vehicle_damage_decals_decor{
+  _tags:t="render"
+
+  "damage_decals_decor__projectileHitCollNodeName:list<t>"{}
+  "damage_decals_decor__projectileHitLocalPos:list<p3>"{}
+  "damage_decals_decor__projectileHitLocalDir:list<p3>"{}
+  "damage_decals_decor__projectileHitLocalNormal:list<p3>"{}
+  "damage_decals_decor__projectileHitCaliber:list<r>"{}
+  "damage_decals_decor__projectileHitDamageType:list<t>"{}
+  "damage_decals_decor__shrapnelDecalCollNodeName:list<t>"{}
+  "damage_decals_decor__shrapnelDecalLocalPos:list<p3>"{}
+  "damage_decals_decor__shrapnelDecalLocalDir:list<p3>"{}
+  "damage_decals_decor__shrapnelDecalLocalNormal:list<p3>"{}
+}
+
+vehicle_damage_decals_decor_debug{
+  _tags:t="render"
+
+  "damageDecalDecorDebug:tag"{}
+}
+
+shrapnel_decals_debug{
+  _tags:t="dev"
+  damage_decals__prevExplosionPos:p3=0, 0, 0
+  damage_decals__prevExplosionRadius:r=0
+  damage_decals__prevExplosionTraceLen:r=0
+
+  "damage_decals__prevExplosionTraces:list<p3>"{}
+}
+
+rendinst_shatter_decals_params{
+  _singleton:b=yes
+  _tags:t="render"
+  ri_shatter_decals__traceCountPerFrame:i=5
+  ri_shatter_decals__minTraceDistance:r=0.3
+
+  "ri_shatter_decals__maxRadiusToTraceLen:list<p2>"{
+    item:p2=1.5, 2.5
+    item:p2=10, 5
+    item:p2=70, 11
+    item:p2=120, 15
+  }
+
+  "ri_shatter_decals__maxRadiusToTraceCount:list<p2>"{
+    item:p2=1.5, 5
+    item:p2=10, 20
+    item:p2=70, 50
+    item:p2=120, 75
+  }
+}
+
+rendinst_shatter_decals_tracer{
+  _use:t="ecs_no_debug"
+  _tags:t="render"
+  ri_shatter_decals__traceCount:i=0
+  ri_shatter_decals__traceLen:r=0
+  ri_shatter_decals__explosionPos:p3=0, 0, 0
+}
+
+rendinst_shatter_decals_debug{
+  _tags:t="dev"
+
+  "ri_shatter_decals__traceFrom:list<p3>"{}
+  "ri_shatter_decals__traceTo:list<p3>"{}
+  "ri_shatter_decals__traceHit:list<u8>"{}
+}
+
+glass_decals_renderer{
+  _singleton:b=yes
+  _tags:t="render"
+
+  _group{
+    _track:b=yes
+    glass_decals__hole_render:b=yes
+  }
+
+  "glass_decals__render_node:dafg::NodeHandle"{}
+  "glass_decals__hole_mask_node:dafg::NodeHandle"{}
+  "glass_decals__depth_copy_node:dafg::NodeHandle"{}
+  "glass_decals__rename_node:dafg::NodeHandle"{}
+}

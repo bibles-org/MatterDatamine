@@ -1,0 +1,187 @@
+monstrify_sequence_fade_in{
+  _use:t="replicated_effect_with_duration"
+  _use:t="base_postfx_fade_affect"
+  extraction_sequence__soldierDisappearsAffect:t="militant_extraction_sequence_fov_affect"
+  postfx_fade_affect__layerName:t="monstrify_trap"
+  postfx_fade_affect__fadeInTime:r=0.55
+  postfx_fade_affect__fadeColor:c=5, 7, 5, 255
+  postfx_fade_affect__affectOnlyLocal:b=yes
+}
+
+monstrify_trap{
+  _use:t="anomaly_trap"
+  _use:t="optimised_visual_effect_source"
+  _use:t="monstrify_trap_sound"
+  _use:t="entity_bound_area"
+  entity_bound_area__name:t="POLYAREA_DANGER"
+  entity_bound_area__radius:r=2
+  trigger_trap__allowBots:b=no
+  monstrify_trap__group:t="default"
+  monstrify_trap__icon:t="!ui/uiskin/raid_info/distorted.svg"
+  monstrify_trap__sequenceTemplate:t="monstrify_sequence"
+  trigger_trap__triggered:b=no
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  sphere_zone__radius:r=1
+  grid_obj__gridType:t="traceable_spheres"
+  optimised_effect_source__template:t="monstrify_trap_visual_fx_controller"
+
+  "trigger_trap__maskItems:shared:list<t>"{
+    i:t="HUMAN"
+  }
+
+  "trigger_trap__mask:u32"{
+    value:i=0
+  }
+
+  "net__alwaysInScope:tag"{}
+  grid_obj{}
+  _group{
+    _tags:t="gameClient"
+    anomaly_trap__triggerFx:t="explosion_anomaly_frog_trap_cmps_fx"
+    anomaly_trap__triggerFxScale:r=0.2
+    anomaly_trap__triggerFxOffset:p3=0, 0.1, 0
+  }
+}
+
+monstrify_trap_controller{
+  monstrify_trap_controller__group:t="default"
+  monstrify_trap_controller__activeCount:i=5
+  monstrify_trap_controller__triggerCount:i=0
+  monstrify_trap_controller__maxTriggerCount:i=2
+}
+
+anomaly_transmutation_composite_fx{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="anomaly_transmutation_composite_fx"
+
+    effect{}
+  }
+}
+
+monstrify_trap_visual_fx_controller{
+  _use:t="anomaly_trap_visual_fx_controller"
+
+  _group{
+    _tags:t="gameClient"
+
+    "anomaly_trap_visual_fx_controller__fxTemplates:list<t>"{
+      item:t="anomaly_transmutation_composite_fx"
+    }
+  }
+}
+
+militant_suit_sequence_fov_normalizer_affect{
+  _use:t="human_cam_magnification_normalizer_affect"
+  human_cam_magnification_normalizer_affect__normalizationSpeed:r=1.4
+}
+
+militant_suit_sequence_fov_affect{
+  _use:t="militant_extraction_sequence_fov_affect"
+  militant_extraction_sequence_fov_affect__endMagnification:r=0.15
+  militant_extraction_sequence_fov_affect__normalizerTemplate:t="militant_suit_sequence_fov_normalizer_affect"
+}
+
+monstrify_suit_sequence_fade_in{
+  _use:t="monstrify_sequence_fade_in"
+  extraction_sequence__soldierDisappearsAffect:t="militant_suit_sequence_fov_affect"
+}
+
+monster_suit_affect{
+  _use:t="replicated_game_effect"
+
+  "state__disableAmGather:tag"{}
+}
+
+monstrify_suit_sequence_fade_out{
+  _use:t="replicated_effect_with_duration"
+  _use:t="base_postfx_fade_affect"
+  postfx_fade_affect__layerName:t="monstrify_trap"
+  postfx_fade_affect__fadeOutTime:r=0.5
+  postfx_fade_affect__fadeColor:c=5, 7, 5, 255
+  postfx_fade_affect__affectOnlyLocal:b=yes
+}
+
+monstrify_extraction_sequence_soldier_disappears{
+  _use:t="extraction_sequence_soldier_disappears"
+  postfx_fade_affect__fadeInTime:r=0.75
+}
+
+monstrify_extraction_sequence_portal{
+  _use:t="extraction_sequence_portal"
+  portal__scales:p2=0.025, 1.1
+  portal__openCloseTime:p2=0.85, 0.95
+}
+
+monstrify_sequence_portal_opens{
+  _use:t="replicated_effect_with_duration"
+  spawn_sequence__fxTempl:t="monstrify_extraction_sequence_portal"
+  spawn_sequence__fxOffset:p3=0, 1.4, 0
+}
+
+monstrify_spawn_sequence_portal{
+  _use:t="spawn_sequence_portal"
+  portal__scales:p2=0.025, 1.1
+  portal__openCloseTime:p2=0.85, 0.65
+}
+
+monstrify_spawn_sequence_portal_opens{
+  _use:t="spawn_sequence_portal_opens"
+  spawn_sequence__fxTempl:t="monstrify_spawn_sequence_portal"
+  spawn_sequence__fxOffset:p3=0, 1.4, 0
+}
+
+monstrify_spawn_sequence_soldier_appears{
+  _use:t="spawn_sequence_soldier_appears"
+
+  "spawn_sequence_game_effect__gameClientAffects:array"{}
+}
+
+monstrify_spawn_sequence_affect{
+  _use:t="spawn_sequence_affect"
+
+  "game_effect_sequence__stages:array"{
+    "stage:object"{
+      affectTemplate:t="monstrify_spawn_sequence_portal_opens"
+      setupTransform:b=yes
+      duration:r=0.1
+    }
+
+    "stage:object"{
+      affectTemplate:t="spawn_sequence_light_appear"
+      setupTransform:b=yes
+      duration:r=0.05
+    }
+
+    "stage:object"{
+      affectTemplate:t="spawn_sequence_portal_is_open"
+      setupTransform:b=yes
+      duration:r=0.1
+    }
+
+    "stage:object"{
+      affectTemplate:t="monstrify_spawn_sequence_soldier_appears"
+      setupTransform:b=yes
+      duration:r=1.55
+    }
+
+    "out_stage:object"{
+      affectTemplate:t="spawn_sequence_give_control"
+      setupTransform:b=yes
+      duration:r=0.1
+    }
+  }
+}
+
+monstrify_spawn_sequence_controller{
+  _use:t="spawn_sequence_controller"
+  spawn_sequence_controller__sequenceAffect:t="monstrify_spawn_sequence_affect"
+}
+
+monstrify_extraction_sequence_init{
+  _use:t="extraction_sequence_init"
+
+  "spawn_sequence_game_effect__gameClientAffects:array"{}
+}

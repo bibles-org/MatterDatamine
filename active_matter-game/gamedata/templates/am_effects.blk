@@ -1,0 +1,133 @@
+attached_effect_world_space_scaled{
+  _use:t="ecs_no_debug"
+  _use:t="node_attached_itm"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  effect__scale:r=1
+  _tracked:t="effect__scale"
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t=""
+  }
+
+  "box_zone:tag"{}
+  "node_attached__destroyWithParent:tag"{}
+}
+
+attached_effect_world_space_no_scale{
+  _use:t="attached_effect_world_space_scaled"
+  effect__scaleInvTmScale:r=1
+}
+
+attached_effect_local_space_scaled{
+  _use:t="attached_effect_world_space_scaled"
+
+  "attachedEffect:tag"{}
+}
+
+attached_effect_local_space_no_scale{
+  _use:t="attached_effect_world_space_scaled"
+  effect__scaleInvTmScale:r=1
+
+  "attachedEffect:tag"{}
+}
+
+game_effect_geomtree_effects{
+  _use:t="game_effect_base"
+  game_effect__showHideDistanceSq:p2=900, 1600
+
+  "game_effect__geomtreeEffectEntities:list<eid>"{}
+  "game_effect__geomtreeEffectTemplates:list<t>"{}
+  "game_effect_geomtree_effects_queue__ctm:list<m>"{}
+  "game_effect_geomtree_effects_queue__templ:list<t>"{}
+  "game_effect_geomtree_effects_queue__nodeIdx:list<i>"{}
+  "game_effect_geomtree_effects_queue__flags:list<i>"{}
+}
+
+game_effect_geomtree_effects_delayed_init{
+  "game_effect_geomtree_effects_delayed_init:tag"{}
+}
+
+game_effect_geomtree_nodes_cache{
+  "game_effect_geomtree_nodes_cache:tag"{}
+  "game_effect_geomtree_nodes_cache__ctm:list<m>"{}
+  "game_effect_geomtree_nodes_cache__ctmVolume:list<r>"{}
+  "game_effect_geomtree_nodes_cache__nodeIdx:list<i>"{}
+}
+
+snapshot_blink_geomtree_transition_effect{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  snapshot_blink_geomtree_transition_effect__fromPos:p3=0, 0, 0
+  snapshot_blink_geomtree_transition_effect__toPos:p3=0, 0, 0
+  snapshot_blink_geomtree_transition_effect__timer:r=0
+  snapshot_blink_geomtree_transition_effect__time:r=0.2
+  snapshot_blink_geomtree_transition_effect__lerpPow:r=1
+}
+
+snapshot_blink_geomtree_effect_controller{
+  snapshot_blink_geomtree_effect_controller__fromEffectName:t=""
+  snapshot_blink_geomtree_effect_controller__fromEffectType:i=-1
+  snapshot_blink_geomtree_effect_controller__toEffectName:t=""
+  snapshot_blink_geomtree_effect_controller__toEffectType:i=-1
+  snapshot_blink_geomtree_effect_controller__volumePerEffect:r=0.015
+  snapshot_blink_geomtree_effect_controller__distanceToCameraSq:r=2500
+
+  "snapshot_blink_geomtree_effect_controller__transitionTemplates:list<t>"{}
+}
+
+teleport_effect_controller{
+  teleport_effect_controller__volumePerEffect:r=0.015
+  teleport_effect_controller__fromEffectName:t="changed_blink_from_composite_fx"
+  teleport_effect_controller__fromEffectType:i=-1
+  teleport_effect_controller__toEffectName:t="changed_blink_to_composite_fx"
+  teleport_effect_controller__toEffectType:i=-1
+}
+
+visual_effects_optimiser{
+  visual_effects_optimiser__updateAt:r=0
+  visual_effects_optimiser__interval:r=1
+  visual_effects_optimiser__gridIdx:i=0
+  visual_effects_optimiser__radius:r=70
+
+  "visual_effects_optimiser__grids:list<t>"{
+    i:t="traceable_spheres"
+  }
+
+  "visual_effects_optimiser__enabledEids:list<eid>"{}
+}
+
+disable_optimised_visual_effect{
+  "disable_optimised_visual_effect:tag"{}
+}
+
+optimised_visual_effect_source{
+  optimised_effect_source__template:t=""
+
+  "optimised_effect_source__effectEid:eid"{}
+}
+
+local_tone_mapping_affect{
+  local_tone_mapping_affect__prev_hq_shadows_multiplier:r=-1
+  local_tone_mapping_affect__hq_shadows_multiplier:r=1
+  local_tone_mapping_affect__prev_hq_highlights_multiplier:r=-1
+  local_tone_mapping_affect__hq_highlights_multiplier:r=1
+}
+
+game_effect_outline{
+  _use:t="replicated_game_effect"
+  game_effect_outline__disableAt:r=0
+}
+
+vehicle_fx{
+  vehicle_fx__effectType:i=-1
+  vehicle_fx__id:i=-1
+
+  "vehicle_fx_node__fxTemplateName:list<t>"{}
+  "vehicle_fx_node__nodeId:list<i>"{}
+  "vehicle_fx__dmPartId:list<i>"{}
+  "vehicle_fx__ownerVehicleEid:eid"{}
+}

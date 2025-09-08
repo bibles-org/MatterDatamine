@@ -1,0 +1,91 @@
+from "%ui/ui_library.nut" import *
+
+let { matchingCall } = require("%ui/matchingClient.nut")
+
+function reportError(resp, _silent=false) {
+  if (resp?.error == 0)
+    return false
+  log(resp)
+  return true
+}
+
+let STANDARD_CB_PARAMS = {
+  onAnyResult = null 
+  onSuccess = null   
+  onFailure = null   
+  isSilent = false
+}
+
+let makePerformCallback = @(cbParams = STANDARD_CB_PARAMS)
+  function(resp) {
+    cbParams = STANDARD_CB_PARAMS.__merge(cbParams)
+    let isSuccess = !reportError(resp, cbParams.isSilent)
+    if (cbParams.onAnyResult)
+      cbParams.onAnyResult(resp)
+    else if (isSuccess && cbParams.onSuccess)
+      cbParams.onSuccess(resp)
+    else if (!isSuccess && cbParams.onFailure)
+      cbParams.onFailure(resp)
+  }
+
+let MSquadAPI = {
+  performOnSuccess = @(cb) function(resp) { if (resp.error == 0) cb(resp) }
+
+  createSquad = @(cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.create_squad", makePerformCallback(cbParams))
+
+  disbandSquad = @(cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.disband_squad", makePerformCallback(cbParams))
+
+  getSquadInfo = @(cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.get_info", makePerformCallback(cbParams))
+
+  setMemberData = @(data, cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.set_member_data", makePerformCallback(cbParams), data)
+
+  getMemberData = @(userId, cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.get_member_data", makePerformCallback(cbParams), { userId })
+
+  invitePlayer = @(userId, cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.invite_player", makePerformCallback(cbParams), { userId })
+
+  revokeInvite = @(userId, cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.revoke_invite", makePerformCallback(cbParams), { userId })
+
+  dismissMember = @(userId, cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.dismiss_member", makePerformCallback(cbParams), { userId })
+
+  transferSquad = @(userId, cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.transfer_squad", makePerformCallback(cbParams), { userId })
+
+  setSquadData = @(data, cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.set_squad_data", makePerformCallback(cbParams), data)
+
+  acceptMembership = @(userId, cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.accept_membership", makePerformCallback(cbParams), { userId })
+
+  denyMembership = @(userId, cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.deny_membership", makePerformCallback(cbParams), { userId })
+
+  acceptInvite = @(squadId, cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.accept_invite", makePerformCallback(cbParams), { squadId })
+
+  rejectInvite = @(squadId, cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.reject_invite", makePerformCallback(cbParams), { squadId })
+
+  requestMembership = @(squadId, cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.request_membership", makePerformCallback(cbParams), { squadId })
+
+  requestJoin = @(userId, cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.join_player", makePerformCallback(cbParams), { userId })
+
+  revokeMembershipRequest = @(squadId, cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.revoke_membership_request", makePerformCallback(cbParams), { squadId })
+
+  leaveSquad = @(cbParams = STANDARD_CB_PARAMS)
+    matchingCall("msquad.leave_squad", makePerformCallback(cbParams))
+}
+
+console_register_command(@() MSquadAPI.disbandSquad(), "msquad.disbandSquad")
+
+return MSquadAPI

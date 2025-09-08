@@ -1,0 +1,11 @@
+import{
+  scene:t="gamedata/scenes/dalniy_island_factory/_dalniy_island_factory_random_encounter_points_adv.blk"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="small_med_random_encounter"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [1580, 40, -1380]]
+  loot_generator__lootPreset:t="factory_adv_small_med_random_encounter_loot_preset"
+}

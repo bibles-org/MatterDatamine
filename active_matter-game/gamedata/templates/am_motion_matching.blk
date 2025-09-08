@@ -1,0 +1,29 @@
+am_motion_matching_test_target{
+  _use:t="animation_test_target"
+  test_target__active:b=yes
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "test_target__followerEid:eid"{}
+}
+
+am_changed_mm_component{
+  _use:t="motion_matching_animchar_component"
+  _tags:t="render"
+  motion_matching__dataBaseTemplateName:t="am_changed_mm_database"
+  mm_trajectory__historyLength:i=4
+  mm_trajectory__wishLinearVelocity:p3=0, 0, 0
+  mm_trajectory__wishAngularVelocity:p3=0, 0, 0
+  motion_matching__blendTimeToAnimtree:r=0.3
+  motion_matching__minLinearVelocityToEnableMM:r=2.5
+}
+
+am_changed_mm_database{
+  _use:t="motion_matching_animation_database"
+  _tags:t="render"
+  _singleton:b=yes
+  weightsPath:t="gamedata/motion_matching/am_changed_mm_weights.blk"
+
+  "data_bases_paths:list<t>"{
+    path:t="gamedata/motion_matching/am_changed_mm_animation_list.blk"
+  }
+}

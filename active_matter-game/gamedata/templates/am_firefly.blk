@@ -1,0 +1,288 @@
+base_star_cluster{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  star_cluster__seed:i=0
+  star_cluster__inited:b=no
+  star_cluster__initAttemptsLeft:i=0
+  star_cluster__angle:r=0
+  star_cluster__radius:r=40
+  star_cluster__startingSeed:i=0
+  star_cluster__initAttemptsPerSpawn:i=10
+  star_cluster__updateAt:r=0
+  star_cluster__interval:r=5
+  star_cluster__initInterval:r=0.2
+  star_cluster__rayCount:i=5
+  star_cluster__minProximity:r=2
+  star_cluster__rndSpawnRadius:r=3
+  star_cluster__playerCheckRadius:r=100
+  star_cluster__spawnCount:i=25
+  star_cluster__grid:t="creatures"
+  star_cluster__allowIsleSpawns:b=no
+  star_cluster__curCount:i=0
+
+  "star_cluster__spawnTemplates:list<t>"{
+    i:t="firefly+sleeping_firefly"
+  }
+}
+
+firefly_star_cluster{
+  _use:t="base_star_cluster"
+  star_cluster__radius:r=40
+  star_cluster__startingSeed:i=0
+  star_cluster__initAttemptsPerSpawn:i=10
+  star_cluster__updateAt:r=0
+  star_cluster__interval:r=5
+  star_cluster__initInterval:r=0.2
+  star_cluster__rayCount:i=5
+  star_cluster__minProximity:r=2
+  star_cluster__rndSpawnRadius:r=3
+  star_cluster__playerCheckRadius:r=100
+  star_cluster__spawnCount:i=25
+  star_cluster__grid:t="creatures"
+  firefly_cluster__triggeredUntil:r=0
+  star_cluster__triggeredDuration:r=60
+  firefly_cluster__delayPerMeter:r=0.08
+  firefly_cluster__minDelayDiff:r=0.05
+
+  "star_cluster__spawnTemplates:list<t>"{
+    i:t="firefly+sleeping_firefly"
+  }
+
+  "firefly_cluster__triggerQueueEids:list<eid>"{}
+  "firefly_cluster__triggerQueueTimes:list<r>"{}
+}
+
+firefly_field_debug{
+  _use:t="firefly_star_cluster"
+  star_cluster__radius:r=2
+  star_cluster__seed:i=4
+  star_cluster__rndSpawnRadius:r=0
+  star_cluster__spawnCount:i=1
+}
+
+firefly_field_small{
+  _use:t="firefly_star_cluster"
+  star_cluster__radius:r=20
+  star_cluster__spawnCount:i=20
+  star_cluster__minProximity:r=1.5
+}
+
+firefly_field_random_encounter{
+  _use:t="firefly_star_cluster"
+  star_cluster__radius:r=20
+  star_cluster__spawnCount:i=10
+  star_cluster__minProximity:r=1.5
+}
+
+firefly_ai{
+  _use:t="beh_tree_regular_check"
+  _use:t="corridor_walker"
+  _use:t="base_navmesh_agent_comp"
+  _use:t="nphys_position_mapping"
+  _use:t="obstacle_avoider"
+  _use:t="door_obstacle_handler"
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  beh_tree__node:t="firefly"
+  navmesh_phys__maxWalkSpeed:r=4
+  navmesh_phys__acceleration:r=1.75
+  path_corridor_ai__slowDownCoef:r=1000
+  nphys__ccdOffset:p3=0, 0, 0
+  firefly__originRadius:r=50
+  firefly__searchRadius:r=20
+  firefly__pursueRadius:r=30
+
+  "nphys__noLookDir:tag"{}
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+}
+
+firefly_light{
+  _use:t="attached_omni_light"
+  light__max_radius:r=1.5
+  light__offset:p3=0, 0, 0
+  light__color:c=255, 5, 1, 0
+  light__brightness:r=0
+  light__radius_scale:r=4
+  firefly_light__maxBrightness:r=0.4
+  firefly_light__maxBrightnessRange:p2=0.3, 0.5
+  firefly_ligh__flickerStartsAt:r=0
+  firefly_ligh__flickerDurationRange:p2=1, 2.5
+  firefly_ligh__flickerDuration:r=0
+  firefly_ligh__countRange:ip2=-5, 30
+
+  "firefly_ligh__flickerValues:list<r>"{}
+}
+
+firefly{
+  _use:t="am_navmesh_creature_base"
+  _use:t="firefly_ai"
+  _use:t="nphys_levitating"
+  _use:t="base_dm_parts"
+  _use:t="nphys_pushable"
+  _use:t="navmesh_phys_jumplinks"
+  _use:t="navmesh_phys_jumplinks_jump"
+  _use:t="movable_entity_bound_area"
+  _use:t="firefly_sound"
+  _use:t="non_burnable"
+  non_burnable__fireDmgMult:r=1.75
+  grid_obj__gridType:t="creatures"
+  animchar__res:t="mine_pollen_b_char"
+  collres__res:t="mine_pollen_b_collision"
+  hitpoints__hp:r=18
+  hitpoints__maxHp:r=18
+  _tracked:t="hitpoints__hp"
+  firefly__deathAt:r=0
+  firefly__explosionDeathRndDelay:p2=0.01, 0.5
+  needsBlood:b=no
+  hitpoints__shellSplashDmgMult:r=1.25
+  nphys_levitating__prefferedElevation:r=0.8
+  nphys_levitating__elevationChangeSpeed:r=0.75
+  material:t="steel"
+  loc_snapshots__addPeriod:i=1
+  navmesh_phys__climbSpeed:r=4
+  navmesh_phys__climbJumpMaxDistSq:r=9
+  navmesh_phys__climbJumpStartSpeed:r=7
+  firefly__triggerRadius:r=3.5
+  firefly__explodeRadius:r=1.4
+  firefly__explodeTemplate:t="activated_firefly_explosion"
+  firefly__lastTriggerAt:r=0
+  spawnling__triggeredDuration:r=0
+  firefly__origin:p3=0, 0, 0
+  firefly__sleepTemplate:t="sleeping_firefly"
+  firefly__activeTemplate:t="active_firefly"
+  firefly__activeElevation:r=1
+  firefly__passiveElevation:r=0.35
+  firefly__elevationRnd:r=0.3
+  firefly__speedRnd:r=2
+  firefly__accelRnd:r=0.4
+  firefly__oscillationAmplitudeRnd:r=0.2
+  firefly__oscillationAmplitude:r=0.75
+  firefly__oscillationAmplitudePassiveMult:r=0.33
+  firefly__oscillationFreqRnd:r=0.04
+  firefly__oscillationFreq:r=0.125
+  firefly__scaleViscosity:r=0.15
+  firefly__scale:r=1
+  _tracked:t="firefly__scale"
+  _replicated:t="firefly__scale"
+  firefly__clientScale:r=1
+  firefly__clientScaleOvershoot:r=1.8
+  firefly__minMaxScale:p2=1, 2
+  firefly__dmgPushUp:r=0.15
+  firefly__dmgPushStrength:r=1
+  firefly__explosionPushStrength:r=0.5
+  firefly__spinSpeedFreq:r=0.4
+  firefly__spinAxisSpeed:r=5
+  firefly__spinSpeed:r=10
+  firefly__spinCutoff:r=0.2
+  firefly__spinAxis:p3=0, 1, 0
+  firefly__spinSpeedOffset:r=0
+  firefly__spinEuAngles:p3=0, 0, 0
+  firefly__spinQuat:p4=0, 1, 0, 0
+  death_note__name:t="note_seeds"
+
+  "capsule_approximation__nodeNames:array"{
+    capsule_approximation__nodeNames:t="body"
+  }
+
+  "capsule_approximation__complexNodeNames:array"{}
+  "firefly:tag"{}
+  "spawnling__clusterEid:eid"{}
+  "preloadSpawnActivatedShellProps:list<t>"{
+    template:t="activated_firefly_explosion"
+  }
+
+  "firefly__dropOnExplosion:array"{
+    "loot:object"{
+      proto:t="active_matter_pile+item_in_world"
+      chance:r=0.7
+    }
+  }
+}
+
+active_firefly{
+  _use:t="firefly_light"
+  _use:t="base_effect"
+  firefly__elevationChangeSpeed:p2=5, 0.75
+  firefly__elevationChangeSpeedTau:r=0.3
+
+  _group{
+    _tags:t="render"
+    effect__name:t="am_crystal_distortion_shards_fx"
+
+    effect{}
+  }
+}
+
+sleeping_firefly{
+  beh_tree__enabled:b=no
+  net__scopeDistanceSq:r=160000
+
+  "sleeping_trap:tag"{}
+  "sleeping_monster:tag"{}
+  "sleeping_animchar_update_toggle:tag"{}
+  "nphys__disabled:tag"{}
+  "loc_snaphots__disabled:tag"{}
+}
+
+firefly_disturber{
+  firefly_disturber__radius:r=3
+  firefly_disturber__updateAt:r=0
+  firefly_disturber__interval:r=0.47
+}
+
+activated_firefly_explosion{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  on_create__spawnActivatedShellBlk:t="gamedata/weapons/grenades/firefly.blk"
+
+  "ownerEid:eid"{}
+}
+
+firefly_explosion_effect{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  wind_emitter__radius:r=1
+  wind_emitter__duration:r=1
+  wind_emitter__strength:r=1
+
+  "attachedEffect:tag"{}
+  effect{
+    _tags:t="render"
+  }
+
+  "wind_emitter__omni:tag"{}
+  "effects:object"{
+    am_mine_explosion_distortion_fx:r=1
+    am_mine_explosion_flare_fx:r=1
+  }
+}
+
+firefly_explosion_flash{
+  _use:t="default_explosion_flash"
+  light__color:c=180, 240, 255, 255
+  flash__startBrightness:r=16
+
+  _group{
+    _tags:t="render"
+    omni_light__shadows:b=yes
+  }
+
+  _group{
+    _tags:t="sound"
+    on_appear_sound__path:t="impact/trap_mine"
+  }
+}
+
+firefly_grenade{
+  _use:t="shell"
+  animchar__res:t="am_crystal_c_char"
+  animchar__updatable:b=no
+  animchar_render__enabled:b=no
+  shell__expl_node:t="am_crystal_c_dynmodel.lod00"
+}
+
+firefly_grenade_phys{
+  _use:t="firefly_grenade"
+  _use:t="projectile"
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_firefly_explosion"
+  explosion_flash__template:t="firefly_explosion_flash"
+}

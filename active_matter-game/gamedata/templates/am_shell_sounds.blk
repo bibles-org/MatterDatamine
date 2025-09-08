@@ -1,0 +1,205 @@
+shell_fly_sound{
+  _group{
+    _tags:t="sound"
+    shell_fly_sound__path:t=""
+
+    "shell_fly_sound__event:SoundEvent"{}
+  }
+}
+
+projectile_hit_entity_fx_sound{
+  _group{
+    _tags:t="sound"
+
+    "projectile_hit_entity_fx_sound__paths:shared:object"{}
+  }
+}
+
+projectile_sound{
+  _group{
+    _tags:t="sound"
+    projectile_sound__shellCaliberThreshold:r=0.025
+    projectile_sound__ricoThreshold:r=0
+
+    "projectile_sound__paths:shared:object"{
+      hitBullet:t="impact/bullet"
+      hitShell:t="impact/shell"
+      explodeBullet:t="impact/bullet"
+      explodeShell:t="impact/shell"
+      ricoBullet:t="impact/rico_bullet"
+      ricoShell:t="enemy/vehicle/tank/impacts/rico_mid"
+    }
+  }
+}
+
+bullet_projectile_sound{
+  _use:t="projectile_sound"
+}
+
+rocket_projectile_sound{
+  _use:t="projectile_sound"
+}
+
+projectile_lifetime_sound{
+  _group{
+    _tags:t="sound"
+    projectile_lifetime_sound__path:t=""
+
+    "projectile_lifetime_sound__event:SoundEvent"{}
+  }
+}
+
+shell_appear_sound{
+  _group{
+    _tags:t="sound"
+    shell_appear_sound__hero:t=""
+    shell_appear_sound__enemy:t=""
+  }
+
+  "shell__owner:eid"{}
+}
+
+grenade_throw_sound{
+  _use:t="shell_appear_sound"
+
+  _group{
+    _tags:t="sound"
+    shell_appear_sound__hero:t="player/weapon/throwable/grenade/throw"
+    shell_appear_sound__enemy:t="enemy/weapon/throwable/grenade/throw"
+  }
+}
+
+fire_grenade_throw_sound{
+  _use:t="shell_appear_sound"
+
+  _group{
+    _tags:t="sound"
+    shell_appear_sound__hero:t="player/weapon/throwable/grenade/throw"
+    shell_appear_sound__enemy:t="enemy/weapon/throwable/grenade/throw"
+  }
+}
+
+explosion_pack_throw_sound{
+  _use:t="shell_appear_sound"
+
+  _group{
+    _tags:t="sound"
+    shell_appear_sound__hero:t="player/weapon/throwable/explosive/throw"
+    shell_appear_sound__enemy:t="enemy/weapon/throwable/explosive/throw"
+  }
+}
+
+molotov_throw_sound{
+  _use:t="shell_appear_sound"
+
+  _group{
+    _tags:t="sound"
+    shell_appear_sound__hero:t="player/weapon/throwable/molotov/throw"
+    shell_appear_sound__enemy:t="enemy/weapon/throwable/molotov/throw"
+  }
+}
+
+shell_launch_sound{
+  _group{
+    _tags:t="sound"
+    shell_launch_sound__name:t=""
+  }
+
+  "shell__owner:eid"{}
+}
+
+grenade_phys_collision_sound{
+  _use:t="phys_obj_collision_sound"
+
+  _group{
+    _tags:t="sound"
+    phys_obj_collision_sound__path:t="player/weapon/throwable/grenade/drop"
+    phys_obj_collision_sound__threshold:p2=10, 10
+    phys_obj_collision_sound__lifetime:r=0.5
+    phys_obj_collision_sound__time:r=-0.25
+    phys_obj_collision_sound__maxImpulse:r=0
+    phys_obj_collision_sound__omegaMul:r=0
+  }
+}
+
+explosion_pack_phys_collision_sound{
+  _use:t="grenade_phys_collision_sound"
+
+  _group{
+    _tags:t="sound"
+    phys_obj_collision_sound__path:t="player/weapon/throwable/explosive/drop"
+  }
+}
+
+xvp_grenade_phys_collision_sound{
+  _use:t="grenade_phys_collision_sound"
+
+  _group{
+    _tags:t="sound"
+    phys_obj_collision_sound__path:t="player/weapon/throwable/grenade/drop"
+  }
+}
+
+fire_grenade_explode_sound{
+  _use:t="on_appear_sound"
+
+  _group{
+    _tags:t="sound"
+    on_appear_sound__path:t="impact/grenade"
+  }
+}
+
+molotov_explode_sound{
+  _use:t="on_appear_sound"
+
+  _group{
+    _tags:t="sound"
+    on_appear_sound__path:t="impact/molotov"
+  }
+}
+
+smoke_grenade_phys_sound_effect{
+  _use:t="sound_effect"
+  _use:t="moveable_sound_effect_tag"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/fire/grenade_smoke"
+  }
+}
+
+mortyr_grenade_launcher_shell_launch_sound{
+  _use:t="shell_launch_sound"
+
+  _group{
+    _tags:t="sound"
+    shell_launch_sound__name:t="weapon/antivehicle/mortyr_grenade_launcher/shot_single"
+  }
+}
+
+throwing_stone_phys_sound{
+  _use:t="phys_obj_collision_sound"
+  _use:t="on_appear_sound"
+
+  _group{
+    _tags:t="sound"
+    phys_obj_collision_sound__path:t="enemy/walker/am_trooper_male/items/screw/drop"
+    phys_obj_collision_sound__threshold:p2=10, 10
+    phys_obj_collision_sound__lifetime:r=0.5
+    phys_obj_collision_sound__omegaMul:r=0
+  }
+
+  _group{
+    _tags:t="sound"
+    on_appear_sound__path:t="enemy/weapon/melee/throw/whoosh"
+  }
+}
+
+flash_grenade_explosion_net_sound{
+  _use:t="oneshot_scene_net_sound"
+
+  _group{
+    _tags:t="server"
+    oneshot_scene_net_sound__desc:t="explGrenadeFlash"
+  }
+}

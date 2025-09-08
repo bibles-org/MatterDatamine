@@ -1,0 +1,88 @@
+zone_weather_postfx_color_grading{
+  zone_weather_postfx_color_grading__name:t=""
+  zone_weather_postfx_color_grading__gradingTime:r=1
+  zone_weather_postfx_color_grading__gradingFactor:r=0.5
+  zone_weather_postfx_color_grading__state:i=0
+  zone_weather_postfx_color_grading__gradingProgress:r=0
+  zone_weather_postfx_color_grading__gradingSpeed:r=0
+
+  "zone_weather_postfx_color_grading__colorGrading:object"{
+    gradingFactor:r=0
+  }
+
+  "zone_weather_postfx_color_grading__nameHash:u32"{
+    value:i=-1
+  }
+
+  _group{
+    _tags:t="dev"
+    zone_weather_postfx_color_grading__testMode:b=no
+  }
+}
+
+zone_weather_postfx_color_grading_storm{
+  _use:t="zone_weather_postfx_color_grading"
+  zone_weather_postfx_color_grading__name:t="zone_weather_postfx_color_grading_storm"
+
+  "zone_weather_postfx_color_grading__colorGrading:object"{
+    colorGain:p4=2, 0.75, 0.2, 1
+    colorGamma:p4=1.4, 0.8, 0.35, 0.95
+    colorContrast:p4=1.2, 1, 0.7, 2
+    colorSaturation:p4=1.4, 0.5, 0.4, 0.2
+    gradingFactor:r=1
+    priority:i=10000
+  }
+}
+
+zone_weather{
+  _use:t="replicating"
+  zone_weather__state:i=0
+  _tracked:t="zone_weather__state"
+  zone_weather__stateChangedAt:r=-1
+  zone_weather__stateFinalTimeAt:r=-1
+  zone_weather__riseTime:r=920
+  zone_weather__recoveryTime:r=30
+
+  _group{
+    _tags:t="render"
+    zone_weather__stormColorGradingTemplate:t="zone_weather_postfx_color_grading_storm"
+    zone_weather__noize__factorStorm:r=0.65
+    zone_weather__noize__enabled:b=no
+    zone_weather__noize__factor:r=0
+    zone_weather__noize__speed:r=0
+    zone_weather__wind__strengthStorm:r=3.5
+    zone_weather__wind__noiseScaleStorm:r=50
+    zone_weather__wind__strengthDefault:r=0
+    zone_weather__wind__noiseScaleDefault:r=0
+    zone_weather__wind__strengthFromTo:p2=0, 0
+    zone_weather__wind__noiseScaleFromTo:p2=0, 0
+    zone_weather__forcefield__aberrationShiftStorm:p4=0.009, 0, 0, 0
+    zone_weather__forcefield__fadeMaxDistStorm:r=1700
+    zone_weather__forcefield__shiningBorderMaxHeightStorm:r=30
+    zone_weather__forcefield__shiningFlamesMaxHeightStorm:r=40
+    zone_weather__forcefield__colorStorm:p4=5, 1, 0, 0
+    zone_weather__forcefield__waveSpeedStorm:r=0.1
+    zone_weather__forcefield__distortionStrengthStorm:r=3000
+    zone_weather__forcefield__waveLengthStorm:r=1
+    zone_weather__forcefield__aberrationShiftDefault:p4=0, 0, 0, 0
+    zone_weather__forcefield__fadeMaxDistDefault:r=1
+    zone_weather__forcefield__shiningBorderMaxHeightDefault:r=0
+    zone_weather__forcefield__shiningFlamesMaxHeightDefault:r=0
+    zone_weather__forcefield__colorDefault:p4=0, 0, 0, 0
+    zone_weather__forcefield__waveSpeedDefault:r=0
+    zone_weather__forcefield__distortionStrengthDefault:r=0
+    zone_weather__forcefield__waveLengthDefault:r=1
+    zone_weather__forcefield__aberrationShiftFrom:p4=0, 0, 0, 0
+    zone_weather__forcefield__aberrationShiftTo:p4=0, 0, 0, 0
+    zone_weather__forcefield__fadeMaxDistFromTo:p2=1, 1
+    zone_weather__forcefield__shiningBorderMaxHeightFromTo:p2=0, 0
+    zone_weather__forcefield__shiningFlamesMaxHeightFromTo:p2=0, 0
+    zone_weather__forcefield__colorFrom:p4=0, 0, 0, 0
+    zone_weather__forcefield__colorTo:p4=0, 0, 0, 0
+    zone_weather__forcefield__waveSpeedFromTo:p2=0, 0
+    zone_weather__forcefield__distortionStrengthFromTo:p2=0, 0
+    zone_weather__forcefield__waveLengthFromTo:p2=1, 1
+
+    "zone_weather__currentColorGradingEid:eid"{}
+  }
+}

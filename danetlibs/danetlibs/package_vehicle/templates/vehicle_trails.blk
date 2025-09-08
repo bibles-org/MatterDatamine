@@ -1,0 +1,19 @@
+vehicle_trails_manager{
+  _tags:t="render"
+  _singleton:b=yes
+  vehicle_trails__clipmapInvalidateTimer:r=0
+  vehicle_trails__clipmapInvalidatePeriod:r=0.1
+
+  "vehicle_trails__detail_params_buffer:UniqueBufHolder"{}
+}
+
+vehicle_trails{
+  _tags:t="render"
+  vehicle_trails__surface_pressure_mult:r=1
+
+  "vehicle_trails__nodeIds:list<i>"{}
+  "vehicle_trails__nodesFilter:list<u8>"{}
+  "vehicle_trails__emitter_id:list<i>"{}
+  "vehicle_trails__emitter_to_wheel_map:list<i>"{}
+  "vehicle_trails__previous_physmat_ids:list<i>"{}
+}

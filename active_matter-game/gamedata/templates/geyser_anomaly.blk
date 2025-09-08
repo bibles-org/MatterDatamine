@@ -1,0 +1,31 @@
+geyser_anomaly{
+  geyser_anomaly__instanceTemplate:t="geyser_instance"
+  geyser_anomaly__maxCharge:r=100
+  geyser_anomaly__damagingCharge:r=70
+  geyser_anomaly__fade:r=4
+  geyser_anomaly__fadeOnHitMult:r=0.5
+  geyser_anomaly__chargePerHumanMeter:r=4
+  geyser_anomaly__chargePerVehicleMeter:r=10
+  geyser_anomaly__updateAt:r=0
+  geyser_anomaly__interval:r=0.4
+  geyser_anomaly__maxFrequency:r=1.5
+  geyser_anomaly__safetyRadius:r=2.5
+  geyser_anomaly__maxRadius:r=10
+  geyser_anomaly__minFrontSectorDot:r=0.4
+  sphere_zone__radius:r=20
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "geyser_anomaly__trackedPos:list<p3>"{}
+  "geyser_anomaly__trackedVelocity:list<p3>"{}
+  "geyser_anomaly__trackedEid:list<eid>"{}
+  "geyser_anomaly__trackedCharge:list<r>"{}
+  "geyser_anomaly__trackedScheduled:list<r>"{}
+  "geyser_anomaly__trackedFire:list<r>"{}
+}
+
+geyser_instance{
+  _use:t="fast_fire_source"
+  _use:t="fire_grenade_explode_sound"
+  dmgzone__maxRadius:r=2.5
+  dmgzone__updateInterval:r=0.3
+}

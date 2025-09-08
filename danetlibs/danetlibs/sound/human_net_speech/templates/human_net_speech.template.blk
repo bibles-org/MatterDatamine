@@ -1,0 +1,29 @@
+human_speech{
+  _group{
+    _tags:t="sound"
+    human_speech__canSpeak:b=no
+    human_speech__isSpeaking:b=no
+    human_speech__queue:ip2=-1, -1
+    human_speech__voiceIdx:i=0
+    human_speech__locale:t="en"
+    human_speech__playerVoice:t=""
+
+    "human_speech__event:SoundEvent"{}
+    "human_speech__enemyVoices:list<t>"{}
+  }
+
+  _group{
+    _tags:t="server"
+    human_net_speech__defaultRcptFRange:r=40
+    human_net_speech__defaultRcptFRangeEnemy:r=40
+
+    "human_net_speech__lastNextTime:list<p2>"{}
+  }
+
+  "human_speech__speeches:shared:array"{}
+  "humanNetSpeech:tag"{}
+}
+
+human_speech_disable{
+  "humanSpeechDisable:tag"{}
+}

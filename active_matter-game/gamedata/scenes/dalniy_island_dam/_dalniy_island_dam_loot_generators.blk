@@ -1,0 +1,49 @@
+entity{
+  _template:t="key_dam_wing_1_progress_item+item_in_world"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1047.52, 94.6589, 748.315]]
+}
+
+entity{
+  _template:t="quest_omni_light+light_blinker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1047.52, 94.85, 748.315]]
+  light__color:c=255, 0, 0, 255
+  light__max_radius:r=0.25
+  light__brightness:r=3
+  light_blinker__brightnessRange:p2=0, 3
+  light_blinker__brightnessBlinkInterval:r=0.5
+}
+
+entity{
+  _template:t="key_dam_wing_1_shortcut_item+item_in_world"
+  transform:m=[[1, 0, 0] [0, -4.37114e-08, -1] [0, 1, -4.37114e-08] [1047.9, 94.7896, 753.32]]
+}
+
+entity{
+  _template:t="key_dam_wing_2_progress_item+item_in_world"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [991.631, 71.5321, 760.202]]
+}
+
+entity{
+  _template:t="quest_omni_light+light_blinker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [991.631, 71.7321, 760.202]]
+  light__color:c=255, 0, 0, 255
+  light__max_radius:r=0.25
+  light__brightness:r=3
+  light_blinker__brightnessRange:p2=0, 3
+  light_blinker__brightnessBlinkInterval:r=0.5
+}
+
+entity{
+  _template:t="key_dam_wing_3_progress_item+item_in_world"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [906.043, 93.797, 769.233]]
+}
+
+entity{
+  _template:t="quest_omni_light+light_blinker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [906.043, 94, 769.233]]
+  light__color:c=255, 0, 0, 255
+  light__max_radius:r=0.25
+  light__brightness:r=3
+  light_blinker__brightnessRange:p2=0, 3
+  light_blinker__brightnessBlinkInterval:r=0.5
+}

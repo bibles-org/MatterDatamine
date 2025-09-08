@@ -1,0 +1,12 @@
+transparent_partition{
+  _singleton:b=yes
+  _use:t="replicating"
+  _tags:t="render"
+
+  "partition_sphere:PartitionSphere"{}
+  "early_rendinst_node:dafg::NodeHandle"{}
+  "particles_partition_node:dafg::NodeHandle"{}
+  "early_particles_node:dafg::NodeHandle"{}
+  "early_particles_lowres_prepare_node:dafg::NodeHandle"{}
+  "early_particles_lowres_render_node:dafg::NodeHandle"{}
+}

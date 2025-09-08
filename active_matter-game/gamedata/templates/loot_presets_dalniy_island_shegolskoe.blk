@@ -1,0 +1,747 @@
+shegolskoe_vehicle_civic_spawn_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="gaz_67+vehicle_state_randomizer"
+      number:ip2=3, 5
+      margin:p3=2, 0, 0.4
+      tmMod:m=[[0, 0, -1] [0, 1, 0] [1, 0, 0] [0, 0, 0]]
+    }
+  }
+}
+
+shegolskoe_fuel_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="canister_gasoline_item+item_in_world"
+      number:ip2=5, 10
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_big_item+item_in_world"
+      number:ip2=1, 2
+    }
+  }
+}
+
+shegolskoe_vehicle_parts_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="canister_gasoline_item+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_big_item+item_in_world"
+      number:ip2=0, 1
+    }
+
+    "item:object"{
+      template_name:t="soviet_repair_kit_item+item_in_world"
+      number:ip2=5, 10
+    }
+  }
+}
+
+shegolskoe_shop_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_avg+item_in_world"
+      number:ip2=2, 5
+    }
+
+    "item:object"{
+      template_name:t="item_legend404_tape_recorder_a+item_in_world"
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="item_mk52_calculator+item_in_world"
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="civil_lootable_rendinst_1"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="sovmod_flashlight_device+item_in_world"
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="sovmod_diver_flashlight+item_in_world"
+      number:ip2=0, 1
+    }
+  }
+}
+
+shegolskoe_overall_zone_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="small_sovmod_backpack_lootable+item_in_world"
+      number:ip2=8, 10
+    }
+
+    "item:object"{
+      template_name:t="medium_sovmod_backpack_lootable+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="large_sovmod_backpack_lootable+item_in_world"
+      number:ip2=0, 1
+    }
+
+    "item:object"{
+      template_name:t="encounter_fuse_item+item_in_world"
+      number:ip2=8, 10
+    }
+
+    "item:object"{
+      template_name:t="encounter_battery_item+item_in_world"
+      number:ip2=10, 13
+    }
+
+    "item:object"{
+      template_name:t="civil_lootable_rendinst_1"
+      number:ip2=43, 53
+    }
+
+    "item:object"{
+      template_name:t="civil_lootable_rendinst_2"
+      number:ip2=38, 45
+    }
+
+    "item:object"{
+      template_name:t="sovmod_flashlight_device+item_in_world"
+      number:ip2=7, 8
+    }
+
+    "item:object"{
+      template_name:t="sovmod_diver_flashlight+item_in_world"
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="soviet_repair_kit_item+item_in_world"
+      number:ip2=5, 10
+    }
+
+    "item:object"{
+      template_name:t="axe_weapon+item_in_world"
+      number:ip2=10, 13
+    }
+
+    "item:object"{
+      template_name:t="wrench_weapon+item_in_world"
+      number:ip2=10, 13
+    }
+
+    "item:object"{
+      template_name:t="screwdriver_a_weapon+item_in_world"
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="screwdriver_b_weapon+item_in_world"
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="chisel_a_weapon+item_in_world"
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="chisel_b_weapon+item_in_world"
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="cooking_knife_weapon+item_in_world"
+      number:ip2=10, 20
+    }
+
+    "item:object"{
+      template_name:t="cooking_cleaver_weapon+item_in_world"
+      number:ip2=1, 3
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_player_blue+item_in_world"
+      number:ip2=3, 5
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_player_red+item_in_world"
+      number:ip2=3, 5
+    }
+
+    "item:object"{
+      template_name:t="item_legend404_tape_recorder_a+item_in_world"
+      number:ip2=3, 5
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_1+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_2+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_3+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_4+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_5+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_6+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_a+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_e+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_g+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_h+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_i+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_k+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_l+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_m+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_a+item_in_world"
+      number:ip2=3, 5
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_b+item_in_world"
+      number:ip2=3, 5
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_c+item_in_world"
+      number:ip2=3, 5
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_d+item_in_world"
+      number:ip2=3, 5
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_e+item_in_world"
+      number:ip2=3, 5
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_f+item_in_world"
+      number:ip2=3, 5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_01+item_in_world"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_02+item_in_world"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_03+item_in_world"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_04+item_in_world"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_05+item_in_world"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_06+item_in_world"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_07+item_in_world"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_08+item_in_world"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_09+item_in_world"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_10+item_in_world"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="item_secret_note+item_in_world"
+      number:i=3
+    }
+  }
+}
+
+shegolskoe_loot_indoor_shelves_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="corrupted_iron_item+item_in_world"
+      number:ip2=5, 5
+    }
+
+    "item:object"{
+      template_name:t="electronics+item_in_world"
+      number:ip2=5, 5
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_player_blue+item_in_world"
+      number:ip2=5, 5
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_player_red+item_in_world"
+      number:ip2=5, 5
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_speaker_blue+item_in_world"
+      number:ip2=5, 5
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_speaker_red+item_in_world"
+      number:ip2=5, 5
+    }
+
+    "item:object"{
+      template_name:t="item_aurora_cam_a+item_in_world"
+      number:ip2=5, 5
+    }
+
+    "item:object"{
+      template_name:t="item_legend404_tape_recorder_a+item_in_world"
+      number:ip2=5, 5
+    }
+
+    "item:object"{
+      template_name:t="item_mk52_calculator+item_in_world"
+      number:ip2=5, 5
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_1+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_2+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_3+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_4+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_5+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_6+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_a+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_e+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_g+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_h+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_i+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_k+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_l+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_m+item_in_world"
+      number:ip2=5, 8
+    }
+
+    "item:object"{
+      template_name:t="item_book_a+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_book_b+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_book_c+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_book_d+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_book_e+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_book_f+item_in_world"
+      number:i=5
+    }
+  }
+}
+
+shegolskoe_loot_indoor_table_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="corrupted_iron_item+item_in_world"
+      number:ip2=5, 10
+    }
+
+    "item:object"{
+      template_name:t="electronics+item_in_world"
+      number:ip2=10, 15
+    }
+  }
+}
+
+shegolskoe_loot_indoor_floor_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="corrupted_iron_item+item_in_world"
+      number:ip2=5, 10
+    }
+
+    "item:object"{
+      template_name:t="electronics+item_in_world"
+      number:ip2=10, 15
+    }
+  }
+}
+
+shegolskoe_secret_stash_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="secret_stash_lootable_rendinst_1"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="secret_stash_lootable_rendinst_2"
+    }
+  }
+}
+
+shegolskoe_apartment_room_keys_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="key_shegolskoe_apartment_item+item_in_world"
+    }
+  }
+}
+
+shegolskoe_military_uaz_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_uaz_lootable_rendinst_1"
+      number:i=6
+    }
+  }
+}
+
+shegolskoe_attic_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="attic_chest_1_lootable_rendinst"
+    }
+
+    "item:object"{
+      template_name:t="attic_chest_2_lootable_rendinst"
+    }
+
+    "item:object"{
+      template_name:t="attic_chest_3_lootable_rendinst"
+    }
+
+    "item:object"{
+      template_name:t="attic_chest_4_lootable_rendinst"
+    }
+  }
+}
+
+shegolskoe_gravizone_am_pile_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_2+item_in_world"
+      number:i=9
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_1+item_in_world"
+      number:i=13
+    }
+  }
+}
+
+shegolskoe_gravihouse_am_pile_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_2+item_in_world"
+      number:i=6
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_1+item_in_world"
+      number:i=12
+    }
+  }
+}
+
+shegolskoe_euclid_guns_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_close_range_weapons_t2_lootable_rendinst"
+    }
+
+    "item:object"{
+      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
+    }
+  }
+}
+
+shegolskoe_small_random_encounter_preset{
+  _use:t="full_loot_preset"
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="encounter_small_changed_guard_box"
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_frog_trap_box"
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_box_pile"
+    }
+  }
+}
+
+shegolskoe_debris_generator_preset{
+  _use:t="loot_preset"
+  loot_preset__allowRepeat:b=yes
+  loot_preset__numSamples:ip2=100, 100
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="debris_trash_wood_plank_a"
+      weight:r=4
+    }
+
+    "item:object"{
+      template_name:t="debris_trash_wood_plank_b"
+      weight:r=4
+    }
+
+    "item:object"{
+      template_name:t="debris_brick_c"
+    }
+
+    "item:object"{
+      template_name:t="debris_brick_d"
+    }
+
+    "item:object"{
+      template_name:t="debris_brick_e"
+    }
+
+    "item:object"{
+      template_name:t="debris_brick_f"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="debris_brick_g"
+    }
+
+    "item:object"{
+      template_name:t="debris_brick_h"
+    }
+
+    "item:object"{
+      template_name:t="debris_brick_i"
+    }
+
+    "item:object"{
+      template_name:t="debris_brick_j"
+    }
+
+    "item:object"{
+      template_name:t="debris_brick_k"
+    }
+
+    "item:object"{
+      template_name:t="debris_brick_l"
+    }
+
+    "item:object"{
+      template_name:t="debris_brick_m"
+      weight:r=2
+    }
+  }
+}
+
+shegolskoe_monster_conversion_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="monster_hunter_artifact_item+item_in_world"
+      number:i=3
+    }
+  }
+}

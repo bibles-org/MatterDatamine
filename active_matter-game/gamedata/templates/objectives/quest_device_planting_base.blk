@@ -1,0 +1,100 @@
+base_quest_device_planting_human{
+  _use:t="diy_input"
+  diy__resultTempl:t="quest_sensor"
+  diy__previewTempl:t="base_quest_device_preview_ri"
+  diy__appearEffect:t="diy_appear_effect"
+  diy__abilityName:t=""
+  diy__enabled:b=yes
+  diy__cancelAfterUse:b=yes
+  diy__rotationEnabled:b=no
+}
+
+quest_device_planting_disable_actions{
+  game_effect__enableFlag:t="human_use_object__lockVehicleUse"
+
+  "locked_weapon__reload:tag"{}
+  "locked_weapon__aim:tag"{}
+  "locked_view__lockZoom:tag"{}
+  "game_effect__disableShooting:tag"{}
+  "game_effect__disableMelee:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockSprayDraw:tag"{}
+  "locked_use_object__lockSprayFill:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "locked_use_object__lockGrenadeRethrowing:tag"{}
+  "locked_use_object__lockVehicleUse:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_use_object__limitJetpackUse:tag"{}
+}
+
+base_quest_device_planting_preview_phase{
+  _use:t="replicated_game_effect"
+  _use:t="quest_device_planting_disable_actions"
+  game_effect__switchToWeaponSlot:i=6
+  game_effect__attachedTemplate:t="base_quest_device_planting_human"
+  hero_ability__name:t=""
+  _tracked:t="diy__previewEid"
+  _replicated:t="diy__previewEid"
+
+  "hero_ability__cancelOnSwitchedAwayFromUnarmed:tag"{}
+  "diy__previewEid:eid"{}
+}
+
+quest_device_planting_finishing_phase{
+  _use:t="replicated_game_effect"
+  _use:t="quest_device_planting_disable_actions"
+}
+
+base_quest_device_animchar{
+  _use:t="replicating"
+  _use:t="animchar"
+  animchar_render__enabled:b=no
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "questDevice:tag"{}
+  "playerOwnerEid:eid"{}
+  "quest_device__objectives:list<eid>"{}
+  "net__alwaysInScope:tag"{}
+}
+
+base_quest_device_preview_animchar{
+  _use:t="animchar_diy_preview"
+  preview__radius:r=1.85
+  preview__angleLimit:r=0.55
+
+  "questDevicePreview:tag"{}
+  _group{
+    _tags:t="render"
+    semi_transparent__lod:i=1
+  }
+
+  "diyNormalizeGround:tag"{}
+}
+
+base_quest_device_ri{
+  _use:t="replicating"
+  _use:t="rendinst"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "questDevice:tag"{}
+  "playerOwnerEid:eid"{}
+  "quest_device__objectives:list<eid>"{}
+  "diy_stand_disabled:tag"{}
+  "net__alwaysInScope:tag"{}
+}
+
+base_quest_device_preview_ri{
+  _use:t="rendinst_diy_preview"
+  preview__radius:r=1.85
+  preview__angleLimit:r=0.55
+  preview__allowedMinAngle:r=80
+
+  "questDevicePreview:tag"{}
+  _group{
+    _tags:t="render"
+    semi_transparent__lod:i=1
+  }
+
+  "diyNormalizeGround:tag"{}
+}

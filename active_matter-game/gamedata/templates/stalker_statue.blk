@@ -1,0 +1,396 @@
+stalker_statue{
+  _use:t="stalker_statue_base_comp"
+  _use:t="stalker_statue_ai"
+  _use:t="nphys_pair_collision"
+  _use:t="stalker_statue_sound"
+  _use:t="stalker_statue_dm"
+  _use:t="stalker_statue_hitpoints"
+  _use:t="stalker_statue_geomtree_effect_controller"
+  animchar__res:t="moving_statue_a"
+  collres__res:t="moving_statue_a_collision"
+  nphys__mass:r=900000
+  nphys_coll__capsuleRadius:r=0.55
+  nphys_coll__capsuleHeight:r=1.8
+  nphys_obstacle__radius:r=0.4
+  nphys_obstacle__numSegments:i=6
+  stalker_statue__lastPos:p3=0, 0, 0
+  stalker_statue__prevTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  stalker_statue__origin:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  stalker_statue__maxVisionDot:r=0.6
+  stalker_statue__medPrecisionDot:r=0.92
+  stalker_statue__highPrecisionDot:r=0.96
+  stalker_statue__size:p3=0.41, 1.9, 0.41
+  stalker_statue__traceBudget:i=30
+  stalker_statue__consequtiveFails:i=0
+  stalker_statue__traceDstThresholdsSq:p4=9, 64, 400, 6400
+  stalker_statue__zoomVisionDstMulti:r=2
+  stalker_statue__zoomVisionDotMulti:r=0.8
+  stalker_statue__deathFx:t="stalker_statue_death_effect"
+  stalker_statue__destroyEntityAt:r=-1
+  stalker_statue__destroyTimer:r=3
+  stalker_statue__attackFx:t="stalker_statue_attack_effect"
+  stalker_statue__angleVariation:p2=-0.8, -0.1
+  stalker_statue__attackFrom:p3=0.75, 1.2, 0
+
+  "stalker_statue:tag"{}
+  "createObstacle:tag"{}
+  "stalker_statue__lastCoveredPath:list<p3>"{}
+  "stalker_statue__boundingPoints:list<p3>"{
+    item:p3=0.43, 0, 0.43
+    item:p3=-0.43, 0, -0.43
+    item:p3=-0.43, 0, 0.43
+    item:p3=0.43, 0, -0.43
+    item:p3=-0.43, 1.95, 0.43
+    item:p3=0.43, 1.95, -0.43
+    item:p3=0.43, 1.95, 0.43
+    item:p3=-0.43, 1.95, -0.43
+    item:p3=0.43, 0.975, 0.43
+    item:p3=0.43, 0.975, -0.43
+    item:p3=-0.43, 0.975, 0.43
+    item:p3=-0.43, 0.975, -0.43
+    item:p3=0, 1, 0
+  }
+
+  "stalker_statue__poseNames:list<t>"{
+    i:t="pose1"
+    i:t="pose2"
+    i:t="pose3"
+  }
+
+  "stalker_statue__poseIds:list<i>"{}
+}
+
+stalker_statue_target{
+  "stalkerStatueTarget:tag"{}
+}
+
+stalker_statue_not_target{
+  "stalkerStatue_Not_Target:tag"{}
+}
+
+stalker_statues_ignore_vision{
+  "stalkerStatuesIgnoreVision:tag"{}
+}
+
+sleeping_statue_tmpl{
+  _use:t="ignored_ai_target"
+  net__scopeDistanceSq:r=160000
+  sleeping_statue__updateAt:r=0
+  sleeping_statue__interval:r=5
+
+  "sleeping_monster:tag"{}
+  "behTreeDisabler:tag"{}
+}
+
+stalker_statue_base_comp{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="animchar_turn_dir"
+  _use:t="human_grid_obj"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar_render__enabled:b=yes
+  collres__centerNode:t="Bip01 Pelvis"
+  collision_physMatId:i=-1
+  collision_physMatName:t="walker"
+  pairCollisionTag:t="collidableToHuman"
+  isAlive:b=yes
+  navmesh_phys__currentWalkVelocity:p3=0, 0, 0
+
+  "grid_obj__updateAlways:tag"{}
+  "dm_parts__parts:object"{}
+  phys_vars{}
+  "collidableToVehicle:tag"{}
+  "collidableToPhysObj:tag"{}
+  "collidableToHuman:tag"{}
+  collres{}
+  capsule_approximation{}
+  "aliveCreature:tag"{}
+  "capsule_approximation__nodeNames:array"{
+    node:t="Bip01 L Calf"
+    node:t="Bip01 L Thigh"
+    node:t="Bip01 L UpperArm"
+    node:t="Bip01 L Forearm"
+    node:t="Bip01 R Calf"
+    node:t="Bip01 R Thigh"
+    node:t="Bip01 R UpperArm"
+    node:t="Bip01 R Forearm"
+    node:t="Bip01 Head"
+  }
+
+  "capsule_approximation__complexNodeNames:array"{
+    "node:array"{
+      node:t="Bip01 Spine"
+      node:t="Bip01 Spine1"
+    }
+  }
+}
+
+stalker_statue_ai{
+  _use:t="beh_tree_regular_check"
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  walker_agent__standShootLocalPos:p3=0, 1.4, 0
+  beh_tree__node:t="stalker_statue"
+  team:i=1
+  stalker_statue__checkVision:b=yes
+  stalker_statue__searchRadius:r=30
+  stalker_statue__nextMoveAt:r=0
+  stalker_statue__moveInterval:p2=0.1, 1.4
+  stalker_statue__moveIntervalSmall:p2=0.05, 0.2
+  stalker_statue__speed:r=2.8
+  stalker_statue__accumulatedTime:r=0
+  stalker_statue__maxAccumulatedTime:r=3
+  stalker_statue__hitPos:p3=0, 1.5, 0
+  stalker_statue__damage:p2=8, 12
+  stalker_statue__attackDelay:r=0.3
+  stalker_statue__chaseRadius:p2=30, 40
+  stalker_statue__chaseIdx:i=1
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  "walker_agent__targetEid:eid"{}
+  "walker_agent__anotherTargetEid:eid"{}
+}
+
+stalker_statue_dm{
+  _use:t="base_dm_parts"
+  dm__bsphereRad:r=3
+
+  "dm_parts__parts:object"{}
+}
+
+stalker_statue_hitpoints{
+  team:i=1
+  isAlive:b=yes
+  _tracked:t="isAlive"
+  _replicated:t="isAlive"
+  hitpoints__regenPerSec:r=0
+  hitpoints__shellDmgMult:r=8
+  hitpoints__shellSplashDmgMult:r=4
+  needsBlood:b=no
+  grid_obj__gridType:t="humans"
+  material:t="stone"
+  hitpoints__hp:r=2500
+  hitpoints__maxHp:r=2500
+  _replicated:t="hitpoints__hp"
+  kill_tracking_tag:t="statue"
+  death_note__name:t="note_statue"
+  hit_verification__maxDistance:r=9
+
+  "killer:eid"{}
+  grid_obj{}
+  collres{}
+  "kill_tracking__taggedPlayers:object"{}
+}
+
+stalker_statue_attack_effect{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  statue_fx__attackOrigin:p3=0, 0, 0
+  statue_fx__attackRadius:r=1.6
+  statue_fx__attackDuration:r=0.4
+  statue_fx__startedAt:r=0
+
+  effect{
+    _tags:t="render"
+  }
+
+  "effects:object"{
+    am_absorbtion_composite_fx:r=1
+  }
+}
+
+stalker_statue_sound{
+  _group{
+    _tags:t="sound"
+    stalker_statue_sound__moveUntil:r=0
+    stalker_statue_sound__isOn:b=no
+    stalker_statue_sound__movePath:t="enemy/walker/statue/move"
+    stalker_statue_sound__preAttackPath:t="enemy/walker/statue/voice_fx/aggro"
+    stalker_statue_sound__hitPath:t="enemy/walker/statue/melee/hands"
+
+    "stalker_statue_sound__event:SoundEvent"{}
+  }
+}
+
+cairn_trap_a{
+  _use:t="anomaly_trap"
+  _use:t="rendinst"
+  _use:t="entity_bound_area"
+  trigger_trap__triggered:b=no
+  trigger_trap__triggerPoint:p3=0, 0.1, 0
+  trigger_trap__radius:r=0.75
+  trigger_trap__allowBots:b=yes
+  trigger_trap__ignoreTraceRay:b=yes
+  ri_extra__name:t="moving_statue_cairn_stones_tower_a"
+  entity_bound_area__name:t="POLYAREA_DANGER"
+  entity_bound_area__radius:r=2
+  material:t="stone"
+  needsBlood:b=no
+  grid_obj__gridType:t="traceable_spheres"
+  net__scopeDistanceSq:r=108900
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  loud_noise__radius:r=20
+  loud_noise__noiseValue:r=60
+  ri_extra__destroyed:b=no
+  cairn_trap__spawnerTemplate:t="stalker_statue_event_spawner"
+  cairn_trap__spawnCount:ip2=1, 1
+
+  "cairn_trap:tag"{}
+  "trigger_trap__mask:u32"{
+    value:i=-1
+  }
+
+  grid_obj{}
+  "isRendinstDestr:tag"{
+    _tags:t="render"
+  }
+
+  "riOffender:eid"{
+    _tags:t="server"
+  }
+
+  ri_extra{}
+  "ri_extra__handle:u64"{
+    value:i64=-1
+  }
+
+  "cairn_trap__templates:list<t>"{
+    i:t="stalker_statue_male_a"
+    i:t="stalker_statue_male_b"
+    i:t="stalker_statue_male_c"
+    i:t="stalker_statue_female_a"
+  }
+}
+
+stalker_statue_event_spawner{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  statue_spawner__radius:p2=8, 20
+  statue_spawner__template:t=""
+  statue_spawner__updateAt:r=0
+  statue_spawner__interval:r=0.1
+  statue_spawner__attemptsLeft:i=20
+  statue_spawner__stalker_statue__traceDstThresholdsSq:p4=0, 0, 0, 0
+  statue_spawner__stalker_statue__zoomVisionDstMulti:r=0
+  statue_spawner__stalker_statue__zoomVisionDotMulti:r=0
+  statue_spawner__stalker_statue__highPrecisionDot:r=0
+  statue_spawner__stalker_statue__traceBudget:i=0
+  statue_spawner__stalker_statue__maxVisionDot:r=0
+
+  "statue_spawner__stalker_statue__boundingPoints:list<p3>"{}
+}
+
+cairn_trap_b{
+  _use:t="cairn_trap_a"
+  ri_extra__name:t="moving_statue_cairn_stones_tower_b"
+}
+
+cairn_trap_c{
+  _use:t="cairn_trap_a"
+  ri_extra__name:t="moving_statue_cairn_stones_tower_c"
+}
+
+cairn_trap_d{
+  _use:t="cairn_trap_a"
+  ri_extra__name:t="moving_statue_cairn_stones_tower_d"
+}
+
+cairn_trap_e{
+  _use:t="cairn_trap_a"
+  ri_extra__name:t="moving_statue_cairn_stones_tower_e"
+}
+
+cairn_trap_f{
+  _use:t="cairn_trap_a"
+  ri_extra__name:t="moving_statue_cairn_stones_tower_f"
+}
+
+stalker_statue_male_a{
+  _use:t="stalker_statue"
+  animchar__res:t="moving_statue_a"
+  collres__res:t="moving_statue_a_collision"
+}
+
+stalker_statue_male_b{
+  _use:t="stalker_statue"
+  animchar__res:t="moving_statue_b"
+  collres__res:t="moving_statue_b_collision"
+}
+
+stalker_statue_male_c{
+  _use:t="stalker_statue"
+  animchar__res:t="moving_statue_c"
+  collres__res:t="moving_statue_c_collision"
+}
+
+stalker_statue_female_a{
+  _use:t="stalker_statue"
+  animchar__res:t="moving_statue_female_a"
+  collres__res:t="moving_statue_female_a_collision"
+}
+
+stalker_statue_geomtree_effect_controller{
+  _use:t="snapshot_blink_geomtree_effect_controller"
+  snapshot_blink_geomtree_effect_controller__fromEffectName:t="changed_blink_from_composite_fx"
+  snapshot_blink_geomtree_effect_controller__toEffectName:t="changed_blink_to_composite_fx"
+  snapshot_blink_geomtree_effect_controller__volumePerEffect:r=0.015
+
+  "snapshot_blink_geomtree_effect_controller__transitionTemplates:list<t>"{
+    item:t="changed_snapshot_blink_geomtree_transition_effect_local_space"
+    item:t="changed_snapshot_blink_geomtree_transition_effect_world_space"
+  }
+}
+
+stalker_statue_death_fx_effect{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="char_statue_death_cmps_fx"
+  }
+}
+
+stalker_statue_stones_fx_effect{
+  _use:t="attached_effect_local_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="char_statue_p_stones_fx"
+  }
+}
+
+stalker_statue_death_effect{
+  _use:t="client_game_effect_with_duration"
+  _use:t="client_delayed_affect_base"
+  game_effect__affectUniqueKeyName:t=""
+  game_effect__clientApplyDelay:r=0.05
+  game_effect__clientApplyUpdateInterval:r=0
+  game_effect__clientApplyGameEffectTemplate:t="stalker_statue_death_animchar_render_disabler"
+  game_effect__timeToDestroy:r=3
+  _use:t="game_effect_geomtree_effects"
+
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="stalker_statue_death_fx_effect"
+    item:t="stalker_statue_stones_fx_effect"
+  }
+
+  "game_effect__geomtreeEffectIgnoreCapsuleScale:list<b>"{
+    ignore:b=yes
+    ignore:b=no
+  }
+}
+
+stalker_statue_death_animchar_render_disabler{
+  _use:t="replicated_game_effect"
+
+  "game_effect__disableFlags:list<t>"{
+    item:t="animchar_render__enabled"
+  }
+}
+
+stalker_statue_death_vfx_test{
+  stalker_statue_death_vfx_test__effect:t="stalker_statue_death_effect"
+
+  "stalker_statue_death_vfx_test:tag"{}
+}

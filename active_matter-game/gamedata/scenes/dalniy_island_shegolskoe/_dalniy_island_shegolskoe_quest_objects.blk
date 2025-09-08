@@ -1,0 +1,216 @@
+entity{
+  _template:t="photographing_target"
+  transform:m=[[8.00452, 0, -12.4792] [0, 14.5335, 0] [18.7376, -0, 12.0188] [596.662, 13.9036, -1038.46]]
+  objective_static_target__tag:t="photo_quest_house"
+  photographing_target__name:t="photo/photo_house_target_name"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="photographing_stand_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [597.08, 10.9552, -1038.63]]
+  objective_static_target__tag:t="photo_area_house_1"
+  map_object_zone__radius:r=35
+  quest_target_geometry_sphere__radius:r=35
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [782.627, 9.10835, -1168.28]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=30, 30
+  objective_static_target__tag:t="gather_soil_shegolskoe_zone_1"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [678.075, 9.10837, -1009.9]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=30, 30
+  objective_static_target__tag:t="gather_soil_shegolskoe_zone_2"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [571.54, 9.10837, -1185.95]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=30, 30
+  objective_static_target__tag:t="gather_soil_shegolskoe_zone_3"
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [486.707, 10.9552, -1125.54]]
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_water_shegolskoe_zone_1"
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [727.143, -2.75518, -1176.24]]
+  gather_samples_target__accesspointsCountRng:ip2=10, 10
+  objective_static_target__tag:t="gather_water_shegolskoe_zone_2"
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+}
+
+entity{
+  _template:t="spherical_quest_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [635.587, 19.1931, -962.816]]
+  quest_target_geometry_sphere__radius:r=30
+  objective_static_target__tag:t="monolith_plant_item_zone_1"
+}
+
+entity{
+  _template:t="spherical_quest_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [703.724, 19.193, -970.179]]
+  quest_target_geometry_sphere__radius:r=30
+  objective_static_target__tag:t="monolith_plant_item_zone_2"
+}
+
+entity{
+  _template:t="spherical_quest_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [683.713, 10.3878, -1121.57]]
+  quest_target_geometry_sphere__radius:r=30
+  objective_static_target__tag:t="monolith_plant_item_zone_3"
+}
+
+entity{
+  _template:t="quest_container+safe_openable_ri_sound"
+  transform:m=[[-0.823103, 0, -0.567892] [0, 1, 0] [0.567892, 0, -0.823103] [594.776, 14.419, -1036.99]]
+  ri_extra__name:t="sovmod_safe_type_c_loot"
+  openable_ri__closed:t="sovmod_safe_type_c_loot"
+  ri_preload__name:t="sovmod_safe_type_c_loot_open"
+  objective_static_target__tag:t="shegolskoe_house_safe"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_surveillance_house_docs"
+  }
+}
+
+entity{
+  _template:t="quest_container_secret+drawer_openable_ri_sound"
+  transform:m=[[0.876545, 0, 0.48132] [0, 1, -0] [-0.48132, 0, 0.876545] [588.904, 14.4106, -1041.07]]
+  ri_extra__name:t="suitcase_leather_a"
+  openable_ri__closed:t="suitcase_leather_a"
+  ri_preload__name:t="suitcase_leather_a"
+  objective_static_target__tag:t="shegolskoe_house_keys"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="key_shegolskoe_house_item"
+  }
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_antenna_a"
+  transform:m=[[0.867069, 0, -0.498188] [0, 1, 0] [0.498188, -0, 0.867069] [592.204, 18.5878, -1034.6]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_antenna_b"
+  transform:m=[[-0.0977137, 0, 0.995215] [0, 1, 0] [-0.995215, 0, -0.0977137] [589.53, 20.233, -1036.29]]
+}
+
+entity{
+  _template:t="quest_container+safe_openable_ri_sound"
+  transform:m=[[0.849811, 0, 0.527087] [-0, 1, 0] [-0.527087, -0, 0.849811] [527.585, 18.6, -928.042]]
+  ri_extra__name:t="sovmod_safe_type_c_loot"
+  openable_ri__closed:t="sovmod_safe_type_c_loot"
+  ri_preload__name:t="sovmod_safe_type_c_loot_open"
+  objective_static_target__tag:t="shegolskoe_apartment_safe"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_surveillance_apartment_docs"
+  }
+}
+
+entity{
+  _template:t="decor_liaz_677"
+  transform:m=[[-0.713602, 0.675789, 0.18461] [-0.64978, -0.736983, 0.186126] [0.261836, 0.0128639, 0.965027] [621.428, 18.3234, -999.999]]
+}
+
+entity{
+  _template:t="decor_liaz_677"
+  transform:m=[[0.468356, -0.276478, 0.839168] [-0.478147, -0.877994, -0.0224069] [0.74298, -0.390751, -0.54341] [615.215, 23.2697, -1004.48]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="suitcase_leather_a"
+  transform:m=[[0.0639372, 0.551187, -0.831928] [-0.977831, -0.131963, -0.162581] [-0.199396, 0.82388, 0.53053] [619.726, 15.9857, -1002.33]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="suitcase_leather_b"
+  transform:m=[[0.421047, 0.638671, 0.644064] [0.834895, -0.550409, 0] [0.354498, 0.537726, -0.764971] [619.933, 16.6488, -1003.69]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="suitcase_leather_b"
+  transform:m=[[0.589416, 0.651766, 0.477274] [-0.0271257, -0.574509, 0.818049] [0.807374, -0.495118, -0.320945] [623.19, 18.1212, -997.27]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="suitcase_leather_a"
+  transform:m=[[0.685731, -0.431678, -0.586027] [-0.570637, 0.180956, -0.801017] [0.451826, 0.883691, -0.122244] [622.213, 18.9771, -996.466]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="suitcase_leather_b"
+  transform:m=[[-0.140109, -0.859491, -0.491574] [0.520252, 0.35851, -0.775119] [0.842442, -0.364343, 0.396921] [614.18, 20.3405, -1008.05]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="suitcase_leather_a"
+  transform:m=[[-0.910592, 0.353208, 0.214632] [-0.0215241, 0.478073, -0.878056] [-0.412746, -0.804171, -0.427727] [615.446, 20.6309, -1007.24]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="suitcase_leather_b"
+  transform:m=[[-0.399475, -0.4087, 0.8206] [-0.550463, 0.82273, 0.141791] [-0.733083, -0.395068, -0.553635] [612.475, 20.4474, -1001.82]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="suitcase_leather_a"
+  transform:m=[[0.986243, -0.0212316, 0.163936] [-0.0376148, 0.936877, 0.347629] [-0.160968, -0.349012, 0.92319] [611.582, 20.2302, -1003.04]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_clothes_a"
+  transform:m=[[0.568354, -0.806821, -0.161287] [0.625737, 0.551139, -0.551996] [0.534254, 0.212806, 0.818099] [613.104, 19.7873, -1000.97]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_clothes_b"
+  transform:m=[[0.255993, -0.966452, -0.0209407] [0.963235, 0.256848, -0.0787932] [0.0815284, -3.241e-07, 0.996671] [610.309, 22.1278, -1005.62]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_clothes_c"
+  transform:m=[[0.87957, 0.24722, 0.406496] [-0.475763, 0.452348, 0.754342] [0.00261089, -0.856892, 0.51549] [618.12, 18.4123, -1002.73]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_clothes_d"
+  transform:m=[[0.549742, 0.210781, -0.808304] [0.652603, -0.712394, 0.258076] [-0.521434, -0.669377, -0.52919] [615.854, 19.0374, -1005.4]]
+}

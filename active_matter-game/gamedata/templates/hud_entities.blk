@@ -1,0 +1,162 @@
+arc_trajectory{
+  "trajectory__enabled:b"{
+    value:b=yes
+    _hide:b=yes
+  }
+
+  "trajectory__start:p3"{
+    value:p3=0, 0, 0
+    _hide:b=yes
+  }
+
+  "trajectory__vel:p3"{
+    value:p3=0, 1, 0
+    _hide:b=yes
+  }
+
+  "trajectory__gravity_dir:p3"{
+    value:p3=0, -1, 0
+    _hide:b=yes
+  }
+
+  "trajectory__time:r"{
+    value:r=1
+    _hide:b=yes
+  }
+
+  "trajectory__color_gamma:r"{
+    value:r=4
+    _hide:b=yes
+  }
+
+  "trajectory__center:c"{
+    value:c=155, 55, 55, 55
+    _hide:b=yes
+  }
+
+  "trajectory__border:c"{
+    value:c=255, 255, 255, 255
+    _hide:b=yes
+  }
+
+  "trajectory__wide_start:r"{
+    value:r=0.4
+    _hide:b=yes
+  }
+
+  "trajectory__wide_end:r"{
+    value:r=0.1
+    _hide:b=yes
+  }
+}
+
+map_user_point{
+  _use:t="replicating"
+  _replicated:t="transform"
+  _replicated:t="team"
+  pointGroup:i=-1
+  countPoint:i=5
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  team:i=-1
+  silentAppearance:b=no
+  userPointType:t=""
+  userPointCustomIcon:t=""
+  timer__start:r=-1
+  timer__destroy:r=-1
+  timer__delta:r=1200
+  deleteAngle:r=0.01
+  userPointName:t=""
+  _replicated:t="userPointName"
+  _tracked:t="userPointName"
+
+  "hudUserPoint:tag"{}
+  "userPointOwner:eid"{}
+  _group{
+    hud_marker__max_distance:r=1500
+    _tags:t="ui"
+  }
+}
+
+user_point_entities_tracker{
+  countUserMark:i=1
+
+  "userPointTracker:tag"{}
+}
+
+ui_disabled{
+  ui__disabled:b=yes
+  something:b=yes
+  _singleton:b=yes
+}
+
+minimap{
+  _use:t="replicating"
+  mapTex:t=""
+  left_top:p2=-512, 512
+  right_bottom:p2=512, -512
+  northAngle:r=0
+  _singleton:b=yes
+}
+
+fog_of_war{
+  fog_of_war__dataGen:i=0
+  _tracked:t="fog_of_war__dataGen"
+  fog_of_war__enabled:b=no
+  fog_of_war__leftTop:p2=0, 0
+  fog_of_war__rightBottom:p2=0, 0
+  fog_of_war__resolution:r=5
+  fog_of_war__score:i=0
+  fog_of_war__thresholdScore:i=0
+  fog_of_war__thresholdMultiplier:r=0.9
+  fog_of_war__revealed:b=no
+
+  "fog_of_war__data:list<i>"{}
+}
+
+fog_of_war_clearer{
+  fog_of_war_clearer__radius:r=30
+}
+
+fog_of_war_reveal_effect{
+  _use:t="fog_of_war_clearer"
+  _use:t="client_game_effect_with_duration"
+  _singleton:b=yes
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  fog_of_war_clearer__radius:r=0
+  fog_of_war_reveal_effect__max_radius:r=0
+  game_effect__timeToDestroy:r=10
+
+  "fog_of_war_reveal_effect:tag"{}
+}
+
+tiled_map{
+  _use:t="replicating"
+  _use:t="fog_of_war"
+  _singleton:b=yes
+  tiled_map__leftTop:p2=0, 0
+  tiled_map__rightBottom:p2=0, 0
+  tiled_map__leftTopBorder:p2=0, 0
+  tiled_map__rightBottomBorder:p2=0, 0
+  tiled_map__visibleRange:p2=10, 1000
+  tiled_map__tileWidth:i=1024
+  tiled_map__zlevels:i=1
+  tiled_map__northAngle:r=0
+  tiled_map__tilesPath:t=""
+  tiled_map__genExposure:r=1
+  tiled_map__genHeight:r=-1
+  tiled_map__backgroundColor:c=0, 0, 0, 140
+
+  "tiled_map:tag"{}
+}
+
+crosshair{
+  _use:t="replicating"
+  _singleton:b=yes
+  _tags:t="ui"
+
+  _group{
+    _tags:t="ui"
+    _track:b=yes
+    ui_crosshair_state__isAiming:b=no
+  }
+}

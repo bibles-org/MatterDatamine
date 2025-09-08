@@ -1,0 +1,33 @@
+stat_name:t="melee"
+selWeaponVar:t="big_wrench"
+
+melee{
+  hitPower:r=20
+  armorPower:r=0.7
+  impulsePower:r=25
+  node:t="Bip01 Neck"
+  hitFxPreset:t="big_wrench"
+}
+
+volume{
+  frustum{
+    znear:r=0.5
+    zfar:r=1.7
+    fovx:r=30
+    fovy:r=45
+    tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-0.5, 0, 0]]
+  }
+}
+
+ridmg{
+  node:t="Bip01 Pelvis"
+  nodeOffset:p3=0.7, 0.5, -0.15
+  hitPower:r=12
+  rayLen:r=1.5
+  rad:r=0.2
+  backoffFactor:r=0.6
+}
+
+actionSound{
+  humanHitSoundName:t="melee_wrench"
+}

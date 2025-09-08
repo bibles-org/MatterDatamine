@@ -1,0 +1,62 @@
+crosshair_debug_draw{
+  "crosshairDebug:tag"{}
+}
+
+base_map_component{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "map_object__show:b"{
+    value:b=no
+    _track:b=yes
+  }
+}
+
+map_component_marker{
+  _use:t="base_map_component"
+  map_object_marker__iconName:t=""
+  _tracked:t="map_object__parentContainerEid"
+
+  "map_object__parentContainerEid:eid"{}
+}
+
+map_component_zone{
+  _use:t="base_map_component"
+  map_object_zone__radius:r=1
+}
+
+map_component_approximate_zone_no_transform{
+  map_object_zone__radius:r=10
+  map_object_zone__prevOffset:p3=0, 0, 0
+  map_object_zone__overridePos:p3=0, 0, 0
+  _tracked:t="map_object_zone__overridePos"
+  map_object_zone__updateAt:r=0
+
+  "map_object__show:b"{
+    value:b=no
+    _track:b=yes
+  }
+}
+
+raid_description{
+  raid_description__raidType:t=""
+  raid_description__difficulty:t=""
+  raid_description__overrideMoreLootNum:i=-1
+  raid_description__drawSpawnsAsPoints:b=no
+  raid_description__drawSpawnsAsPoly:b=no
+  raid_description__drawSpawnsAlpha:r=100
+  raid_description__drawSpawnsRadius:r=20
+  raid_description__drawSpawnsClampParam:p2=0, 0
+
+  "raid_description:tag"{}
+  "raid_description__enemies:list<t>"{}
+  "raid_description__images:list<t>"{}
+  "raid_description__mcImages:list<t>"{}
+  "raid_description__possibleLoot:list<t>"{}
+}
+
+text_on_start{
+  _replicated:t="text_on_start_locId"
+  _replicated:t="time_to_hide_text_after_animation"
+  text_on_start_locId:t=""
+  time_to_hide_text_after_animation:r=0
+}

@@ -1,0 +1,497 @@
+import:t="onboarding_phase_monolith.blk"
+import:t="onboarding_phase_base_first_time.blk"
+import:t="onboarding_phase_miniraid.blk"
+import:t="onboarding_phase_base_key_insertion.blk"
+import:t="onboarding_memory.blk"
+import:t="onboarding_island_sounds.blk"
+
+override_respawn_base{
+  override_respawn_base__createAtEntityWithTag:t=""
+  override_respawn_base__newBaseTemplate:t=""
+
+  "override_respawn_base__oldBases:list<eid>"{}
+  "override_respawn_base__base:eid"{}
+}
+
+onboarding_hero_irq_reactor{
+  onboarding_hero_irq_reactor__irqName:t=""
+}
+
+onboarding_hero_game_effect{
+  _use:t="game_effect_base"
+  onboarding_hero_game_effect__actualEffectTemplate:t=""
+  onboarding_hero_game_effect__additionalTemplate:t="onboarding_effect_guaranteed_destroy"
+
+  "onboarding_hero_game_effect__effect:eid"{}
+}
+
+onboarding_effect_guaranteed_destroy{
+  "onboarding_effect_guaranteed_destroy:tag"{}
+}
+
+hide_ui_game_effect{
+  _use:t="game_effect_base"
+
+  "hide_ui_game_effect:tag"{}
+  "game_effect__disableClimbingHint:tag"{}
+}
+
+onboarding_hide_player_base{
+  onboarding_hide_player_base__wasPlayerBase:b=no
+}
+
+onboarding_hud_disable_effect_creator{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="hide_ui_game_effect"
+  game_trigger_processor__onTrigger:t="onboarding_watch_cutscene_finished"
+  game_trigger_processor__onTriggerHash:i=0
+
+  "game_trigger_processor_self_destroy:tag"{}
+}
+
+onboarding_restore_pulse_and_stamina_game_effect{
+  _use:t="oneshot_set_pulse_effect"
+  oneshot_set_pulse_effect__pulse:r=70
+  oneshot_set_pulse_effect__stamina:r=100
+}
+
+onboarding_restore_pulse_and_stamina{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_restore_pulse_and_stamina_game_effect"
+}
+
+onboarding_look_around{
+  onboarding_look_around__angles:p2=0, 0
+  onboarding_look_around__smoothStart:b=no
+  onboarding_look_around__smoothStartThreshold:r=0.01
+  onboarding_look_around__smoothStartViscosity:r=0.1
+  onboarding_look_around__initialVertDir:p3=0, 0, 0
+  onboarding_look_around__initialForwardDir:p3=0, 0, 0
+  onboarding_look_around__horizontalAngleDegreeLimits:p2=-10, 10
+  onboarding_look_around__verticalAngleDegreeLimits:p2=-10, 10
+
+  "onboarding_look_around__lookAroundAction:u16"{
+    value:i=-1
+  }
+}
+
+onboarding_phase_temporary_entity{
+  "onboarding_phase_temporary_entity:tag"{}
+}
+
+onboarding_custom_action{
+  onboarding_custom_action__name:t=""
+  onboarding_custom_action__hintText:t=""
+  onboarding_custom_action__hintDelay:r=1
+  onboarding_custom_action__showHint:b=yes
+  _tracked:t="onboarding_custom_action__showHint"
+
+  "onboarding_custom_action__handle:u16"{
+    value:i=-1
+  }
+}
+
+onboarding_look_around_wait_for_action{
+  _use:t="game_effect_base"
+  _use:t="onboarding_destroy_on_custom_action"
+
+  "onboarding_look_around_wait_for_action:tag"{}
+}
+
+onboarding_destroy_on_custom_action{
+  game_trigger_processor__onTrigger:t="onboarding_custom_action"
+  game_trigger_processor__onTriggerHash:i=0
+
+  "game_trigger_processor_self_destroy:tag"{}
+}
+
+onboarding_show_action_hint{
+  _use:t="game_effect_base"
+
+  "onboarding_show_action_hint:tag"{}
+}
+
+onboarding_look_around_with_continue_option{
+  _use:t="onboarding_show_action_hint"
+  _use:t="onboarding_look_around_wait_for_action"
+}
+
+onboarding_remove_base_components{
+  _use:t="game_effect_base"
+  game_effect__temporarilyRemoveTemplate:t="player_on_base_components"
+}
+
+onboarding_remove_base_components_from_hero{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_remove_base_components"
+}
+
+onboarding_hint_box{
+  _use:t="game_trigger_box"
+
+  "game_trigger__includeGrids:list<t>"{
+    item:t="humans"
+  }
+
+  "game_trigger__requireComponents:list<t>"{
+    item:t="hero"
+  }
+}
+
+onboarding_killbox_processor{
+  _use:t="killbox_processor"
+  dm__damageType:t="collision"
+}
+
+onboarding_respbase{
+  _use:t="spawnBase"
+  spawnBase__spawnRadius:r=0.1
+  team:i=2
+}
+
+onboarding_open_note_box_trigger{
+  _use:t="game_trigger_box"
+
+  "game_trigger__includeGrids:list<t>"{
+    item:t="humans"
+  }
+
+  "game_trigger__requireComponents:list<t>"{
+    item:t="hero"
+  }
+}
+
+onboarding_item_unique_id_holder{
+  onboarding_item_unique_id_holder__nextUniqueId:i64=0
+}
+
+onboarding_respawn_on_disappear{
+  "onboarding_respawn_on_disappear__oldHeroEid:eid"{}
+}
+
+onboarding_afterdeath_respawn_in_5_sec{
+  _use:t="onboarding_respawn_on_disappear"
+  _use:t="client_destroy_in_5_sec"
+}
+
+onboarding_cleanup_items_in_world_on_appear{
+  "onboarding_cleanup_items_in_world_on_appear:tag"{}
+}
+
+onboarding_default_death_processor{
+  onboarding_death_processor__template:t="onboarding_afterdeath_respawn_in_5_sec+onboarding_cleanup_items_in_world_on_appear"
+}
+
+onboarding_respawn_attached_template{
+  _use:t="game_effect_base"
+  game_effect__attachedTemplate:t="onboarding_default_death_processor"
+}
+
+onboarding_respawn_effect_creator{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_respawn_attached_template"
+}
+
+onboarding_set_hero_loadout{
+  onboarding_set_hero_loadout__file:t="gamedata/loadouts/onboarding_loadouts.json"
+  onboarding_set_hero_loadout__loadoutName:t=""
+}
+
+onboarding_empty_hero_loadout{
+  _use:t="onboarding_set_hero_loadout"
+  onboarding_set_hero_loadout__loadoutName:t="Empty"
+}
+
+onboarding_heal_hero{
+  "onboarding_heal_hero:tag"{}
+}
+
+override_weather_preset{
+  override_weather_preset__newPreset:t=""
+  override_weather_preset__newSkiesTime:r=-1
+  override_weather_preset__newCloudHoleTargetDensity:r=-1
+  override_weather_preset__oldPreset:t=""
+  override_weather_preset__oldSkiesTime:r=-1
+  override_weather_preset__oldCloudHoleTargetDensity:r=-1
+}
+
+phase_temporary_entities{
+  "phase_temporary_entities__list:list<eid>"{}
+}
+
+fake_in_battle_ui_state{
+  "fake_in_battle_ui_state:tag"{}
+}
+
+disable_player_profile{
+  "disable_player_profile:tag"{}
+}
+
+enable_player_profile{
+  "enable_player_profile:tag"{}
+}
+
+end_onboarding{
+  "end_onboarding:tag"{}
+}
+
+onboarding_erase_all_bullet_holes{
+  "onboarding_erase_all_bullet_holes:tag"{}
+}
+
+onboarding_disable_input_game_effect{
+  _use:t="game_effect_base"
+
+  "effect_disable_action_sets__actionSetList:list<t>"{
+    item:t="Human"
+    item:t="HUDBase"
+  }
+}
+
+onboarding_forced_animation_effect{
+  _use:t="game_effect_base"
+  game_effect__forceAnimState:t=""
+  game_effect__forceAnimStateId:i=-1
+
+  "effect_disable_action_sets__actionSetList:list<t>"{
+    item:t="Human"
+    item:t="HUDBase"
+  }
+}
+
+onboarding_forced_parametrized_animation_effect{
+  _use:t="onboarding_forced_animation_effect"
+  game_effect__forceAnimStateProgressVarName:t="onboarding_action_progress"
+  game_effect__forceAnimStateProgressVarId:i=-1
+  game_effect__forceAnimStateProgressTime:r=1
+  game_effect__forceAnimStateFinishAt:r=0
+  game_effect__forceAnimStateStartedAt:r=0
+  game_effect__forceAnimStateProgressFromTo:p2=0, 1
+}
+
+onboarding_teleport_to_base{
+  _use:t="game_effect_base"
+  game_effect__teleportToEntityWithTag:t="respbase"
+
+  "game_effect__tempDisableSsr:tag"{}
+}
+
+onboarding_teleport_hero_to_base{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_teleport_to_base"
+}
+
+onboarding_phase_finished{
+  _use:t="state_machine_state"
+
+  "onboarding_phase_finished:tag"{}
+  "state_machine_state__createEntitiesWhenCurrent:list<t>"{
+    item:t="enable_player_profile"
+    item:t="end_onboarding"
+  }
+}
+
+onboarding_phase_finished_alt{
+  _use:t="state_machine_state"
+
+  "onboarding_phase_finished_alt:tag"{}
+  "state_machine_state__createEntitiesWhenCurrent:list<t>"{
+    item:t="onboarding_teleport_hero_to_base"
+    item:t="enable_player_profile"
+    item:t="end_onboarding"
+    item:t="onboarding_heal_hero"
+    item:t="onboarding_restore_pulse_and_stamina"
+  }
+}
+
+onboarding_portal_activated{
+  _use:t="state_machine_transition_trigger"
+
+  "onboarding_portal_activated:tag"{}
+}
+
+onboarding_fame_door_trigger{
+  _use:t="onboarding_phase_temporary_entity"
+
+  "onboarding_fame_door_trigger:tag"{}
+}
+
+onboarding_fame_door_selected{
+  _use:t="state_machine_transition_trigger"
+
+  "onboarding_fame_door_selected:tag"{}
+}
+
+onboarding_trigger_on_monolith_selection_death{
+  _use:t="state_machine_transition_trigger"
+  game_trigger_processor__onTrigger:t="onboarding_monolith_selection_death"
+  game_trigger_processor__onTriggerHash:i=0
+
+  "trigger_transition_on_game_trigger:tag"{}
+}
+
+onboarding_load_from_profile_server{
+  _use:t="state_machine_transition"
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="state_machine_transition_trigger_immediate"
+  }
+
+  "onboarding_load_from_profile_server:tag"{}
+  "onboarding_load_from_profile_server__stageList:list<t>"{
+    item:t="onboarding_phase_monolith"
+    item:t="onboarding_phase_base_first_time"
+    item:t="onboarding_phase_miniraid"
+    item:t="onboarding_phase_base_key_insertion"
+  }
+}
+
+transition_monolith_to_base_first_time{
+  _use:t="state_machine_transition"
+  state_machine_transition__advanceProfileOnboardingTo:t="onboarding_base_first_time"
+  state_machine_transition__savePlayerItems:b=no
+
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{
+    item:t="onboarding_phase_monolith"
+  }
+
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_phase_base_first_time"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="onboarding_portal_activated"
+  }
+}
+
+transition_monolith_selection_to_finished{
+  _use:t="state_machine_transition"
+
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{
+    item:t="onboarding_phase_monolith_selection"
+  }
+
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_phase_finished_alt"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="onboarding_fame_door_selected"
+    item:t="onboarding_trigger_on_monolith_selection_death"
+  }
+}
+
+transition_monolith_selection_to_base_first_time{
+  _use:t="state_machine_transition"
+  state_machine_transition__advanceProfileOnboardingTo:t="onboarding_base_first_time"
+  state_machine_transition__savePlayerItems:b=no
+
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{
+    item:t="onboarding_phase_monolith_selection"
+  }
+
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_phase_base_first_time"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="onboarding_portal_activated"
+  }
+}
+
+transition_base_first_time_to_miniraid{
+  _use:t="state_machine_transition"
+  state_machine_transition__advanceProfileOnboardingTo:t="onboarding_miniraid"
+  state_machine_transition__savePlayerItems:b=no
+
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{
+    item:t="onboarding_phase_base_first_time"
+  }
+
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_phase_miniraid"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="onboarding_miniraid_activated"
+  }
+}
+
+transition_failed_miniraid_to_base_first_time{
+  _use:t="state_machine_transition"
+
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{
+    item:t="onboarding_phase_miniraid"
+  }
+
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_phase_base_first_time"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="onboarding_miniraid_failed"
+  }
+}
+
+transition_miniraid_to_base_key_insertion{
+  _use:t="state_machine_transition"
+  state_machine_transition__advanceProfileOnboardingTo:t="onboarding_base_key_insertion"
+  state_machine_transition__savePlayerItems:b=yes
+
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{
+    item:t="onboarding_phase_miniraid"
+  }
+
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_phase_base_key_insertion"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="onboarding_miniraid_extraction"
+  }
+}
+
+transition_base_key_insertion_to_finished{
+  _use:t="state_machine_transition"
+  state_machine_transition__advanceProfileOnboardingTo:t="onboarding_finished"
+  state_machine_transition__savePlayerItems:b=no
+
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{
+    item:t="onboarding_phase_base_key_insertion"
+  }
+
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_phase_finished"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="onboarding_base_activated"
+  }
+}
+
+onboarding_state_machine{
+  _use:t="state_machine"
+
+  "onboarding_state_machine:tag"{}
+  "hide_base_ambient_sound:tag"{}
+  "state_machine__stateTemplates:list<t>"{
+    item:t="onboarding_phase_monolith"
+    item:t="onboarding_phase_monolith_selection"
+    item:t="onboarding_phase_finished_alt"
+    item:t="onboarding_phase_base_first_time"
+    item:t="onboarding_phase_miniraid"
+    item:t="onboarding_phase_base_key_insertion"
+    item:t="onboarding_phase_finished"
+  }
+
+  "state_machine__transitionTemplates:list<t>"{
+    item:t="onboarding_load_from_profile_server"
+    item:t="transition_monolith_to_base_first_time"
+    item:t="transition_monolith_selection_to_base_first_time"
+    item:t="transition_monolith_selection_to_finished"
+    item:t="transition_base_first_time_to_miniraid"
+    item:t="transition_failed_miniraid_to_base_first_time"
+    item:t="transition_miniraid_to_base_key_insertion"
+    item:t="transition_base_key_insertion_to_finished"
+  }
+}

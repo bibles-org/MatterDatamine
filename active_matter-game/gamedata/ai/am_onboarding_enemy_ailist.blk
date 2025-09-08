@@ -1,0 +1,361 @@
+repeat{
+  name:t="onboarding_enemy"
+
+  reaction{
+    event:t="onHit"
+
+    sequencer{
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+      }
+
+      recalculateTree{}
+    }
+  }
+
+  reaction{
+    event:t="onBulletNearby"
+
+    sequencer{
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+      }
+
+      recalculateTree{}
+    }
+  }
+
+  sequencer{
+    name:t="empty_gun"
+
+    not{
+      hasAmmoInGun{}
+    }
+
+    subTree{
+      treeName:t="sub.reload"
+    }
+  }
+
+  sequencer{
+    name:t="self_extinguish"
+
+    reaction{
+      event:t="regularCheck"
+    }
+
+    isBurning{}
+    parallel{
+      success{
+        sequencer{
+          findDanger{
+            paramName:t="shootEnemy"
+            radiusParamName:t="enemyRadius"
+            minDanger:r=0.1
+          }
+
+          findFallbackNavmeshPoint{
+            posParam:t="hidePosition"
+            dist:r=10
+            targetParam:t="shootEnemy"
+          }
+
+          moveToPos{
+            posParam:t="hidePosition"
+            sprintTimerRange:p2=10, 20
+            minDistToSprint:r=10
+            lookVisc:r=0.1
+          }
+        }
+      }
+
+      extinguish{}
+    }
+
+    extinguish{}
+    wait{
+      range:p2=0.05, 0.1
+      resetable:b=yes
+    }
+  }
+
+  sequencer{
+    name:t="self_heal"
+
+    reaction{
+      event:t="onAttract"
+
+      recalculateTree{}
+    }
+
+    orderedSelector{
+      successChance{
+        chance:r=0.8
+      }
+
+      findDanger{
+        paramName:t="hideFromEnemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+        tag:t="human"
+        canBeInVehicle:b=no
+      }
+
+      subTree{
+        treeName:t="sub.trySelfHeal"
+      }
+    }
+  }
+
+  sequencer{
+    name:t="hide_or_melee"
+
+    findDanger{
+      paramName:t="hideFromEnemy"
+      radiusParamName:t="enemyRadius"
+      minDanger:r=0.1
+      tag:t="human"
+      canBeInVehicle:b=no
+    }
+
+    not{
+      chooseBestWeapon{
+        targetParam:t="hideFromEnemy"
+      }
+    }
+
+    orderedSelector{
+      sequencer{
+        reaction{
+          name:t="melee_reaction"
+          event:t="regularCheck"
+
+          orderedSelector{
+            failed{
+              findObstaclesAlongsidePath{}
+            }
+
+            subTree{
+              treeName:t="sub.mindcontrolledReactions"
+            }
+          }
+        }
+
+        setPosFromEntity{
+          to:t="enemyPosition"
+          from:t="hideFromEnemy"
+        }
+
+        checkDistance{
+          posParam:t="enemyPosition"
+          radiusParam:t="maxMeleeRadius"
+        }
+
+        not{
+          isInstallingWeaponMod{}
+        }
+
+        changeWeapon{
+          param:t="meleeWeaponSlot"
+        }
+
+        moveToTarget{
+          targetUnitParam:t="hideFromEnemy"
+          stopDistRange:p2=3, 3
+          aimToTarget:b=yes
+        }
+
+        meleeAttack{
+          targetUnitParam:t="hideFromEnemy"
+          timeToAttack:r=1
+          attackDist:r=1.5
+        }
+      }
+
+      sequencer{
+        reaction{
+          name:t="hide_reaction"
+          event:t="regularCheck"
+
+          orderedSelector{
+            failed{
+              findObstaclesAlongsidePath{}
+            }
+
+            subTree{
+              treeName:t="sub.mindcontrolledReactions"
+            }
+          }
+        }
+
+        reaction{
+          event:t="onAttract"
+
+          recalculateTree{}
+        }
+
+        isAgentInsideZone{}
+        findFallbackNavmeshPoint{
+          posParam:t="hidePosition"
+          dist:r=30
+          targetParam:t="hideFromEnemy"
+        }
+
+        orderedSelector{
+          sequencer{
+            successChance{
+              chance:r=0
+            }
+
+            moveToPos{
+              posParam:t="hidePosition"
+              minStance:i=1
+              lookVisc:r=0.1
+              deflectPath:b=yes
+              maxDeflectionAngle:r=1.047
+              minCurvedPathlenThreshold:r=20
+            }
+          }
+
+          zigZagEscape{
+            wishPosParam:t="hidePosition"
+            stepDistRange:p2=5, 8
+            scatterMultiplierRange:p2=0.5, 0.75
+            sprintTimerRange:p2=10, 20
+            minDistToSprint:r=0.5
+            lookVisc:r=0.1
+          }
+        }
+      }
+    }
+  }
+
+  sequencer{
+    name:t="enemy_attack"
+
+    subTree{
+      treeName:t="sub.attackEnemy"
+    }
+  }
+
+  exitHandler{
+    name:t="investigate_enemy"
+
+    sequencer{
+      reaction{
+        name:t="investigate_reaction"
+        event:t="regularCheck"
+
+        subTree{
+          treeName:t="sub.mindcontrolledReactions"
+        }
+      }
+
+      not{
+        isVarsIntEqual{
+          lhs:t="lastKnownEnemy"
+          rhs_value:i=0
+        }
+      }
+
+      not{
+        isVarsIntEqual{
+          lhs:t="lastKnownEnemy"
+          rhs_value:i=-1
+        }
+      }
+
+      moveToPos{
+        posParam:t="laskKnownEnemyPosition"
+        minStance:i=1
+        distThreshold:r=2.5
+        lookVisc:r=0.1
+        targetParam:t="lastShootEnemy"
+        timeToLookAtTarget:r=4
+        dangerPosParam:t="enemyPos"
+        dangerValidParam:t="enemyPosValid"
+        dangerLookRange:p2=1.5, 2.5
+      }
+    }
+
+    setIntVar{
+      to:t="lastKnownEnemy"
+      value:i=0
+    }
+  }
+
+  sequencer{
+    name:t="go_to_attract"
+
+    reaction{
+      name:t="go_to_attract_reaction"
+      event:t="regularCheck"
+
+      orderedSelector{
+        findObstaclesAlongsidePath{}
+        subTree{
+          treeName:t="sub.mindcontrolledReactions"
+        }
+      }
+    }
+
+    getAttractionPosition{}
+    modifyNode{
+      targetIntParam:t="attractPointEntity"
+      operator:t="="
+      arg:t="attract_point__eid"
+    }
+
+    setPosFromEntity{
+      to:t="attractPosition"
+      from:t="attractPointEntity"
+    }
+
+    moveToPos{
+      posParam:t="attractPosition"
+      minStance:i=1
+      distThreshold:r=2.5
+      lookVisc:r=0.1
+      targetParam:t="lastShootEnemy"
+      timeToLookAtTarget:r=4
+      tryClimbing:b=yes
+      dangerPosParam:t="enemyPos"
+      dangerValidParam:t="enemyPosValid"
+      dangerLookRange:p2=1.5, 2.5
+    }
+
+    wait{
+      range:p2=0.5, 1
+      resetable:b=yes
+    }
+  }
+
+  repeatUntilFail{
+    name:t="load_ammo_magazines"
+
+    reaction{
+      name:t="load_ammo_reaction"
+      event:t="regularCheck"
+
+      orderedSelector{
+        failed{
+          chooseBestWeapon{}
+        }
+
+        subTree{
+          treeName:t="sub.mindcontrolledReactions"
+        }
+      }
+    }
+
+    loadMagazine{}
+    wait{
+      range:p2=0.5, 1
+      resetable:b=yes
+    }
+  }
+}

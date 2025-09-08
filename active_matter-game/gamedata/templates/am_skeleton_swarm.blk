@@ -1,0 +1,267 @@
+skeleton_swarm_spot{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "skeletonSwarmSpot:tag"{}
+}
+
+skeleton_swarm_config{
+  skeleton_swarm_config__templateName:t="skeleton_swarm"
+  skeleton_swarm_config__filling:r=0.5
+  _singleton:b=yes
+}
+
+skeleton_swarm_util_vars{
+  util_vars__ready:b=no
+  util_vars__isSleeping:b=no
+  util_vars__visibleTargets:r=0
+  util_vars__offenderHitCoef:r=0
+  util_vars__lastBulletReactionCoef:r=0
+  util_vars__visibleAttractPoints:r=0
+  util_vars__attractPointRatio:r=0
+  util_vars__inSkeletonState:b=no
+
+  "skeletonSwarmUtilVars:tag"{}
+}
+
+skeleton_swarm_anim_state{
+  _use:t="navmesh_phys_move_anim"
+  _use:t="navmesh_phys_attack_anim"
+
+  "anim_state__standStateName:list<t>"{
+    i:t="stationary_attack"
+  }
+
+  "anim_state__walkStateName:list<t>"{
+    i:t="run_attack"
+  }
+
+  "anim_state__runStateName:list<t>"{
+    i:t="run_attack"
+  }
+}
+
+skeleton_swarm_ai{
+  _use:t="get_attract_position_ai"
+  _use:t="agent_dangers_bullet_reaction"
+  _use:t="agent_dangers_hit_reaction"
+  _use:t="get_reaction_offender_ai"
+  _use:t="track_visual_attract_points"
+  _use:t="get_visible_attract_position_ai"
+  _use:t="beh_tree_regular_check"
+  _use:t="skeleton_swarm_util_vars"
+  _use:t="base_navmesh_agent_comp"
+  attract_point__searchRadius:r=30
+  visual_attract__maxDist:r=30
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  human_net_phys__isSimplifiedPhys:b=yes
+  beh_tree__blackboard__enemyRadius:r=20
+  agent_dangers__hasTraceableDangers:b=no
+  _use:t="monster_danger_calc"
+  agent_dangers__tag:t="skeleton_swarm"
+  agent_dangers__maxDangerDist:r=90
+  agent_dangers__frustumAngle:r=180
+  agent_dangers__projectileDist:r=4
+  agent_dangers__lastBulletReactionTime:r=-1
+  agent_dangers__nextBulletReactionTime:r=-1
+  agent_dangers__hmapTraceOffset:p3=0, -0.1, 0
+  agent_dangers__nextDangersCheckTime:r=0
+  agent_dangers__nextDangersTraceTime:r=0
+  agent_dangers__standShootPos:p3=0, 0, 0
+  agent_dangers__standShootDir:p3=0, 0, 0
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  agent_dangers{
+    _tags:t="server"
+  }
+
+  "skeletonSwarm:tag"{}
+}
+
+skeleton_swarm_animchar{
+  animchar__res:t="flower_man_a"
+  collres__res:t="flower_man_a_collision"
+}
+
+skeleton_swarm_actions{
+  actions__animLayer:t="state"
+  actions__enabled:b=yes
+
+  actions{}
+  anim_phys{}
+  "actions__actions:array"{
+    "action:object"{
+      name:t="stand_melee"
+      state:t="stationary_attack"
+      actionTime:r=1
+      applyAt:r=0.3
+      props:t="gamedata/actions/skeleton_swarm_bite.blk"
+      irq:t="melee"
+      varName:t="attack_progress"
+    }
+  }
+
+  "actions__actions_enabled:array"{
+    enabled:b=yes
+  }
+}
+
+skeleton_swarm_loot{
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_2"
+      dropChance:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_3"
+      dropChance:r=0.4
+    }
+  }
+}
+
+skeleton_swarm_hitpoints{
+  hitpoints__hp:r=100
+  _tracked:t="hitpoints__hp"
+  hitpoints__maxHp:r=100
+}
+
+skeleton_swarm{
+  _use:t="am_navmesh_creature_base"
+  _use:t="navmesh_phys_jumplinks"
+  _use:t="nphys_homo_erectus"
+  _use:t="ai_target"
+  _use:t="skeleton_swarm_ai"
+  _use:t="skeleton_swarm_animchar"
+  _use:t="skeleton_swarm_actions"
+  _use:t="skeleton_swarm_loot"
+  _use:t="skeleton_swarm_hitpoints"
+  _use:t="corridor_walker"
+  _use:t="skeleton_swarm_anim_state"
+  _use:t="skeleton_swarm_sound"
+  _use:t="zone_patroller"
+  _use:t="nphys_hit_tagging"
+  _use:t="sleepyhead"
+  beh_tree__node:t="skeleton_swarm"
+  beh_tree__enabled:b=yes
+  team:i=1
+  animchar_render__enabled:b=no
+  nPhys__animcharScale:r=1.4
+  burning__decrease:r=0.5
+  kill_tracking_tag:t="skeleton_swarm"
+  skeleton_swarm__aiState:i=0
+  _replicated:t="skeleton_swarm__aiState"
+  _tracked:t="skeleton_swarm__aiState"
+
+  "kill_tracking__taggedPlayers:object"{}
+  "loc_snapshots__scaledTransform:tag"{}
+  "burning__effectTemplate:t"{
+    _tags:t="render"
+    value:t=""
+  }
+
+  "dmgzoneVulnerable:tag"{}
+  "capsule_approximation__nodeNames:array"{
+    node:t="Bip01 L Calf"
+    node:t="Bip01 L Thigh"
+    node:t="Bip01 L UpperArm"
+    node:t="Bip01 L Forearm"
+    node:t="Bip01 R Calf"
+    node:t="Bip01 R Thigh"
+    node:t="Bip01 R UpperArm"
+    node:t="Bip01 R Forearm"
+    node:t="Bip01 Head"
+  }
+
+  "capsule_approximation__complexNodeNames:array"{
+    "node:array"{
+      node:t="Bip01 Pelvis"
+      node:t="Bip01 Spine"
+      node:t="Bip01 Spine1"
+      node:t="Bip01 Spine2"
+      node:t="Bip01 Spine3"
+    }
+  }
+
+  "game_effect__initialAttachmentsServer:list<t>"{
+    i:t="attached_skeleton_swarm"
+  }
+}
+
+attached_skeleton_swarm_render{
+  _use:t="swarm_render_base"
+  animchar__res:t="blackworm_a_char"
+}
+
+attached_skeleton_swarm_boid_element{
+  _use:t="boidElement"
+  _use:t="trajectoryBoid"
+  boid__size:r=0.09
+  boid__targetPosition:p3=0, 0, 0
+  boid__nodeIdx:i=0
+  boid__nodeTime:r=0
+  boid__nodeTimeStep:r=0
+  boid__radius:r=0
+  boid__angle:r=0
+  boid__angleStep:r=0
+  boid__avoidProjectile:b=no
+  boid__radiusRange:p2=0.15, 0.5
+
+  "attachedSkeletonBoid:tag"{}
+  "customSteeringBoid:tag"{}
+}
+
+attached_skeleton_swarm_dead_boid_element{
+  _use:t="deadBoid"
+  _use:t="attached_skeleton_swarm_boid_element"
+}
+
+swarm_custom_steering{
+  "swarmCustomSteering:tag"{}
+}
+
+attached_skeleton_swarm{
+  _use:t="flying_swarm_base"
+  _use:t="game_effect_base"
+  _use:t="swarm_distance_optimization"
+  swarm__updatableBoidRatio:r=0
+  swarmRenderTemplate:t="attached_skeleton_swarm_render"
+  swarm__attackAttractors:b=no
+  swarm__boidTemplateName:t="attached_skeleton_swarm_boid_element"
+  swarm__deadBoidTemplateName:t="attached_skeleton_swarm_dead_boid_element"
+  count:i=100
+  swarm__initialBoidsCount:i=0
+  attached_skeleton__minBoidsCount:i=50
+  radius:r=2
+  swarm__moveSpeed:r=4
+  swarm__rotSpeed:r=12
+  swarm__trajectoryLength:r=2.5
+  trajectoryHistory:i=20
+  swarm_cluster__targetPos:p3=0, 0, 0
+  attached_skeleton__standMoveSpeed:r=4
+  attached_skeleton__moveSpeed:r=6
+  attached_skeleton__resetSkeleton:b=yes
+  attached_skeleton__wishFlyOffset:p3=0, 0, 0
+  attached_skeleton__currentflyOffset:p3=0, 0, 0
+  attached_skeleton__forciblyMoveDistSq:r=100
+  swarm__heightBits:i=3
+  swarm__cellSize:r=0.4
+  swarm__minStayTime:r=1
+  swarm__heightCellSize:r=0.4
+  swarm__obstacleAversionDistance:r=0
+  swarm__groundAvoidanceDistStart:r=0
+  swarm__groundAvoidanceMin:r=0
+  swarm__traceGridOffset:r=1
+  swarm__heightGridCreationPos:p3=0, 0, 0
+
+  "attachedSkeletonSwarm:tag"{}
+  _group{
+    attached_skeleton__burningEffectTemplate:t="standalone_burning_effect"
+    _tags:t="render"
+
+    "attached_skeleton__burningEffectEid:eid"{}
+  }
+}

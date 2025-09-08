@@ -1,0 +1,332 @@
+small_sovmod_backpack_lootable_default_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="civil_loot_soviet_ammobox_preset"
+      weight:r=0.3
+    }
+
+    "item:object"{
+      template_name:t="f1_grenade_item"
+      weight:r=0.1
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="ussr_molotov_item"
+      weight:r=0.1
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_healkit_preset"
+      weight:r=0.05
+    }
+
+    "item:object"{
+      sub_preset:t="civil_melee_stash_preset"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_makarov_stash_preset"
+      weight:r=0.05
+    }
+
+    "item:object"{
+      template_name:t="b7_binoculars_item"
+      weight:r=0.01
+    }
+  }
+}
+
+small_sovmod_backpack_lootable_med_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="civil_loot_healkit_preset"
+      weight:r=1
+    }
+  }
+}
+
+small_sovmod_backpack_lootable_ammo_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="box_9mm_magazine"
+      weight:r=2
+      number:ip2=3, 7
+    }
+
+    "item:object"{
+      template_name:t="box_7_62x39_magazine"
+      weight:r=1
+      number:ip2=3, 7
+    }
+
+    "item:object"{
+      template_name:t="box_12_gauge_magazine"
+      weight:r=2
+      number:ip2=3, 7
+    }
+
+    "item:object"{
+      template_name:t="box_5_56_magazine"
+      weight:r=1
+      number:ip2=3, 7
+    }
+
+    "item:object"{
+      template_name:t="box_45_acp_magazine"
+      weight:r=1
+      number:ip2=3, 7
+    }
+
+    "item:object"{
+      template_name:t="box_7_62x54_magazine"
+      weight:r=1
+      number:ip2=3, 7
+    }
+  }
+}
+
+small_sovmod_backpack_lootable_grenades_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 3
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="f1_grenade_item"
+      weight:r=1
+    }
+  }
+}
+
+small_sovmod_backpack_lootable_molotov_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 3
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="ussr_molotov_item"
+      weight:r=1
+    }
+  }
+}
+
+small_sovmod_backpack_lootable_akm_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="akm_47_magazine"
+      weight:r=1
+    }
+  }
+}
+
+small_sovmod_backpack_lootable_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="small_sovmod_backpack_lootable_default_preset"
+      weight:r=35
+    }
+
+    "item:object"{
+      sub_preset:t="small_sovmod_backpack_lootable_med_preset"
+      weight:r=0.2
+    }
+
+    "item:object"{
+      sub_preset:t="small_sovmod_backpack_lootable_ammo_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="small_sovmod_backpack_lootable_grenades_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="small_sovmod_backpack_lootable_molotov_preset"
+      weight:r=1
+    }
+  }
+}
+
+medium_sovmod_backpack_lootable_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="small_sovmod_backpack_lootable_default_preset"
+      weight:r=35
+    }
+
+    "item:object"{
+      sub_preset:t="small_sovmod_backpack_lootable_med_preset"
+      weight:r=0.2
+    }
+
+    "item:object"{
+      sub_preset:t="small_sovmod_backpack_lootable_ammo_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="small_sovmod_backpack_lootable_grenades_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="small_sovmod_backpack_lootable_molotov_preset"
+      weight:r=1
+    }
+  }
+}
+
+small_backpack_secret_sniper_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="box_7_62x39_magazine"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_secret_sniper"
+      weight:r=1
+    }
+  }
+}
+
+small_backpack_tower_sensor_1_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="f1_grenade_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_tower_sensor_1"
+      weight:r=1
+    }
+  }
+}
+
+small_backpack_tower_sensor_2_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="box_7_62x39_magazine"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_tower_sensor_1"
+      weight:r=1
+    }
+  }
+}
+
+small_backpack_tower_sensor_4_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=3, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="civil_loot_healkit_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_tower_sensor_1"
+      weight:r=1
+    }
+  }
+}
+
+small_backpack_tower_sensor_5_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="civil_makarov_stash_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_tower_sensor_1"
+      weight:r=1
+    }
+  }
+}
+
+small_backpack_smuggler_garage_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="key_smuggler_garage_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_smuggler_garage_1"
+      weight:r=1
+    }
+  }
+}
+
+small_backpack_quarry_camp_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=3, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="ussr_molotov_item"
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_small"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_quarry_camp"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+module data_common shared
+
+
+let
+  PROFILE_LOADOUT_PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD4aLxMTwNr+EfaJJoIVacCQhcWxxEniN2vbjnGvbnPoOZ5gzNZLdOX/iwH9ntibIPAerrcGge+zSPukIwaZWQ6r/qfG0fa9kMwtEuMeyMxEhlPROKDIMgPrPPccojn3k9w9rHrM3gHNKtu4S9TigIH+JBlxvfgAps5+noyDfWN8QIDAQAB"

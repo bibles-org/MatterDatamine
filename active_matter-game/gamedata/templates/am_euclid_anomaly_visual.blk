@@ -1,0 +1,127 @@
+euclid_central_sphere_lightning_effect{
+  _use:t="lightning_effect"
+
+  _group{
+    _tags:t="sound"
+    on_appear_sound__path:t="env_effects/euclid/lightning"
+  }
+}
+
+euclid_central_sphere_lightning_emitter{
+  _use:t="lightning_emitter"
+  lightning_emitter__templateName:t="euclid_central_sphere_lightning_effect"
+}
+
+euclid_central_sphere{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="euclid_central_sphere_lightning_emitter"
+  animchar__res:t="gd_central_anomaly_black_sphere_char"
+  animchar__use_precise_shadow_culling:b=yes
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+  euclid_anomaly_visual__rotateSpd:r=0.4
+  euclid_anomaly_visual__curRotationAxisIdx:i=0
+  euclid_anomaly_visual__rotationAxisTime:r=0.05
+  euclid_anomaly_visual__nextRotationAxisAt:r=0
+
+  _group{
+    _tags:t="render"
+    animchar_render__dist_sq:r=9e+06
+  }
+
+  "net__alwaysInScope:tag"{}
+  "euclid_anomaly_visual__subObjects:array"{
+    "i:object"{
+      templateName:t="euclid_distortion_spike"
+      creationTemplate:t="sphere"
+      count:i=20
+    }
+
+    "i:object"{
+      templateName:t="euclid_distortion_effect"
+      creationTemplate:t="none"
+      count:i=1
+    }
+  }
+}
+
+euclid_distortion_spike{
+  _use:t="animchar"
+  animchar__res:t="gd_central_anomaly_distortion_spike_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  euclid_anomaly_visual__scaleAxisIdx:i=1
+  euclid_anomaly_visual__scaleAxis:p3=0, 0, 0
+  euclid_anomaly_visual__curScaleVal:r=0
+  euclid_anomaly_visual__scaleRng:p2=0.6, 1
+  euclid_anomaly_visual__scaleSpd:r=1.5
+
+  "requires_distortion_render:tag"{}
+  _group{
+    _tags:t="render"
+    animchar_render__dist_sq:r=9e+06
+  }
+
+  "euclid_anomaly_visual__parentEid:eid"{}
+}
+
+euclid_distortion_spike_small{
+  _use:t="animchar"
+  animchar__res:t="gd_central_anomaly_distortion_spike_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  euclid_anomaly_visual__scaleAxisIdx:i=1
+  euclid_anomaly_visual__scaleAxis:p3=0, 0, 0
+  euclid_anomaly_visual__curScaleVal:r=0
+  euclid_anomaly_visual__scaleRng:p2=0.3, 0.5
+  euclid_anomaly_visual__scaleSpd:r=1.5
+
+  "requires_distortion_render:tag"{}
+  _group{
+    _tags:t="render"
+    animchar_render__dist_sq:r=9e+06
+  }
+
+  "euclid_anomaly_visual__parentEid:eid"{}
+}
+
+euclid_distortion_effect{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="gd_central_anomaly_distortion_a_fx"
+  }
+
+  "euclid_anomaly_visual__parentEid:eid"{}
+}
+
+indoor_euclid_central_sphere{
+  _use:t="replicating"
+  _use:t="animchar"
+  animchar__res:t="am_core_a_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+  transform__randomInitialScale:p2=0.25, 0.25
+  euclid_anomaly_visual__rotateSpd:r=0.4
+  euclid_anomaly_visual__curRotationAxisIdx:i=0
+  euclid_anomaly_visual__rotationAxisTime:r=0.05
+  euclid_anomaly_visual__nextRotationAxisAt:r=0
+
+  "euclid_anomaly_visual__subObjects:array"{
+    "i:object"{
+      templateName:t="indoor_euclid_distortion_spike"
+      creationTemplate:t="sphere"
+      count:i=16
+    }
+  }
+}
+
+indoor_euclid_distortion_spike{
+  _use:t="euclid_distortion_spike"
+  euclid_anomaly_visual__scaleRng:p2=0.005, 0.008
+  euclid_anomaly_visual__totalScale:r=0.01
+}

@@ -1,0 +1,41 @@
+entity{
+  _template:t="nexus_round_mode_team"
+  team__id:i=2
+  nexus_team__colorIndices:ip2=0, 3
+}
+
+entity{
+  _template:t="nexus_round_mode_team"
+  team__id:i=3
+  nexus_team__colorIndices:ip2=10, 6
+}
+
+entity{
+  _template:t="nexus_mode+nexus_endgame_controller+nexus_stats_scoresheet+nexus_stats_rules+nexus_game_start+nexus_game_start_by_player_proportion+nexus_game_end+nexus_loadout_controller+nexus_players_controller+nexus_battle_initial_am+nexus_battle_debug_bot_spawner+nexus_round_mode_spawn_controller+nexus_round_mode_game_controller+nexus_warm_up_controller+nexus_round_mode+nexus_auto_create_protect_spheres"
+  nexus_battle_initial_am__value:i=0
+  bot_spawner__playerTemplate:t="nexus_round_mode_bot_player+init_nexus_bot_loadouts"
+}
+
+entity{
+  _template:t="nexus_agency_loadouts"
+}
+
+entity{
+  _template:t="zone_force_field"
+}
+
+entity{
+  _template:t="postfx_color_grading_tonemap_death_alive"
+}
+
+entity{
+  _template:t="transparent_partition"
+}
+
+entity{
+  _template:t="killbox_processor"
+}
+
+entity{
+  _template:t="nexus_show_sphere_hint_processor"
+}

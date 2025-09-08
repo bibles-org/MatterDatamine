@@ -1,0 +1,224 @@
+backpack_slot{
+  _use:t="base_slot_holder"
+  mod_slot__icon:t="uiskin/backpack_slot_icon.svg"
+  mod_slot__tooltip:t="slots/backpack"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="small_backpack"
+    i:t="small_backpack_carbon_skull"
+    i:t="small_backpack_woodland_camo"
+    i:t="small_backpack_camo_skull"
+    i:t="small_backpack_flaming_skull"
+    i:t="small_backpack_carbon_gold"
+    i:t="small_backpack_carbon_gold_skull"
+    i:t="small_backpack_green_skull"
+    i:t="small_backpack_acupat_camo"
+    i:t="medium_backpack"
+    i:t="medium_backpack_carbon_skull"
+    i:t="medium_backpack_woodland_camo"
+    i:t="medium_backpack_camo_skull"
+    i:t="medium_backpack_flaming_skull"
+    i:t="medium_backpack_carbon_gold"
+    i:t="medium_backpack_carbon_gold_skull"
+    i:t="medium_backpack_green_skull"
+    i:t="medium_backpack_acupat_camo"
+    i:t="large_backpack"
+    i:t="large_backpack_carbon_skull"
+    i:t="large_backpack_woodland_camo"
+    i:t="large_backpack_camo_skull"
+    i:t="large_backpack_flaming_skull"
+    i:t="large_backpack_carbon_gold"
+    i:t="large_backpack_carbon_gold_skull"
+    i:t="large_backpack_green_skull"
+    i:t="large_backpack_acupat_camo"
+    i:t="small_sovmod_backpack"
+    i:t="medium_sovmod_backpack"
+    i:t="large_sovmod_backpack"
+  }
+}
+
+safepack_slot{
+  _use:t="base_slot_holder"
+  mod_slot__icon:t="uiskin/safebox.svg"
+  mod_slot__tooltip:t="slots/safepack"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="small_safepack"
+  }
+}
+
+flashlight_slot{
+  _use:t="base_slot_holder"
+  mod_slot__icon:t="uiskin/flashlight_slot_icon.svg"
+  mod_slot__tooltip:t="slots/flashlight"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="flashlight_device"
+  }
+}
+
+helmet_slot{
+  _use:t="base_slot_holder"
+  mod_slot__icon:t="uiskin/helmet_slot_icon.svg"
+  mod_slot__tooltip:t="slots/helmet"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="helmet_ussr_ssh40"
+    i:t="helmet_ussr_ssh40_rust"
+    i:t="helmet_a"
+    i:t="helmet_b"
+    i:t="helmet_c"
+    i:t="helmet_d"
+    i:t="helmet_e"
+    i:t="helmet_f"
+    i:t="helmet_g"
+    i:t="helmet_h"
+    i:t="helmet_kiver"
+    i:t="helmet_galvion_viper_a3"
+    i:t="helmet_fast_sf"
+    i:t="helmet_pasgt"
+    i:t="helmet_pasgt_tactical"
+    i:t="helmet_k6_3"
+  }
+}
+
+pouch_slot{
+  _use:t="base_slot_holder"
+  mod_slot__icon:t="uiskin/pouches_slot_icon.svg"
+  mod_slot__tooltip:t="slots/pouch"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="small_pouch"
+    i:t="medium_pouch"
+    i:t="large_pouch"
+  }
+}
+
+chronogene_primary_slot{
+  _use:t="base_slot_holder"
+  mod_slot__icon:t="uiskin/chronogene.svg"
+  mod_slot__tooltip:t="Suit slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="suit_militant_light_a_item"
+    i:t="suit_militant_light_b_item"
+    i:t="suit_militant_light_b_prem_item"
+    i:t="suit_militant_light_c_item"
+    i:t="suit_militant_light_d_item"
+    i:t="suit_militant_light_e_item"
+    i:t="suit_militant_light_f_item"
+    i:t="suit_militant_light_i_item"
+    i:t="suit_militant_heavy_a_item"
+    i:t="suit_militant_heavy_b_item"
+    i:t="suit_militant_heavy_c_item"
+    i:t="suit_militant_female_light_a_item"
+    i:t="suit_militant_female_light_b_item"
+    i:t="suit_militant_female_light_c_item"
+    i:t="suit_militant_female_heavy_a_item"
+    i:t="suit_encounter_guard_item"
+    i:t="native_sector_militant_suit_1_item"
+    i:t="native_sector_militant_suit_2_item"
+    i:t="native_sector_militant_suit_3_item"
+    i:t="modern_pmc_suit_1_item"
+    i:t="modern_pmc_suit_2_item"
+    i:t="modern_pmc_suit_3_item"
+    i:t="suit_mindcontrolled_militant_a_item"
+    i:t="suit_mindcontrolled_militant_b_item"
+    i:t="suit_mindcontrolled_militant_c_item"
+    i:t="suit_mindcontrolled_soldier_heavy_a_item"
+    i:t="suit_mindcontrolled_soldier_a_item"
+    i:t="suit_mindcontrolled_soldier_a2_item"
+    i:t="suit_mindcontrolled_soldier_b_item"
+    i:t="suit_mindcontrolled_soldier_b2_item"
+    i:t="suit_mindcontrolled_soldier_c_item"
+    i:t="suit_mindcontrolled_soldier_d_item"
+    i:t="suit_mindcontrolled_soldier_e_item"
+    i:t="suit_mindcontrolled_soldier_g_item"
+    i:t="suit_mindcontrolled_snork_a_item"
+    i:t="suit_mindcontrolled_snork_a2_item"
+  }
+}
+
+passive_chronogenes_stash_slot{
+  _use:t="base_slot_holder"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="passive_chronogenes_stash"
+  }
+}
+
+cortical_vault_slot{
+  _use:t="base_slot_holder"
+  mod_slot__icon:t="uiskin/chronogene.svg"
+  mod_slot__tooltip:t="Cortical vault slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="cortical_vault"
+  }
+}
+
+chronogene_secondary_slot{
+  _use:t="base_slot_holder"
+  mod_slot__icon:t="uiskin/chronogene.svg"
+  mod_slot__tooltip:t="slots/chronogene"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="speed_mult_chronogene_t1"
+    i:t="speed_mult_chronogene_t2"
+    i:t="speed_mult_chronogene_t3"
+    i:t="jump_mult_chronogene_t1"
+    i:t="jump_mult_chronogene_t2"
+    i:t="jump_mult_chronogene_t3"
+    i:t="weight_penalty_reduction_chronogene_t1"
+    i:t="weight_penalty_reduction_chronogene_t2"
+    i:t="weight_penalty_reduction_chronogene_t3"
+    i:t="active_matter_gathering_mult_chronogene_t1"
+    i:t="active_matter_gathering_mult_chronogene_t2"
+    i:t="active_matter_gathering_mult_chronogene_t3"
+    i:t="item_usage_speed_chronogene_t1"
+    i:t="item_usage_speed_chronogene_t2"
+    i:t="item_usage_speed_chronogene_t3"
+    i:t="item_recognition_speed_chronogene_t1"
+    i:t="item_recognition_speed_chronogene_t2"
+    i:t="item_recognition_speed_chronogene_t3"
+    i:t="melee_strength_chronogene_t1"
+    i:t="melee_strength_chronogene_t2"
+    i:t="melee_strength_chronogene_t3"
+    i:t="bullet_proof_chronogene_t1"
+    i:t="bullet_proof_chronogene_t2"
+    i:t="bullet_proof_chronogene_t3"
+    i:t="melee_proof_chronogene_t1"
+    i:t="melee_proof_chronogene_t2"
+    i:t="melee_proof_chronogene_t3"
+    i:t="shock_reduction_chronogene_t1"
+    i:t="shock_reduction_chronogene_t2"
+    i:t="shock_reduction_chronogene_t3"
+    i:t="heal_improvement_chronogene_t1"
+    i:t="heal_improvement_chronogene_t2"
+    i:t="heal_improvement_chronogene_t3"
+    i:t="stamina_chronogene_t1"
+    i:t="stamina_chronogene_t2"
+    i:t="stamina_chronogene_t3"
+    i:t="stamina_regeneration_chronogene_t1"
+    i:t="stamina_regeneration_chronogene_t2"
+    i:t="stamina_regeneration_chronogene_t3"
+    i:t="observation_chronogene_t1"
+    i:t="calming_effect_chronogene_t1"
+    i:t="parkour_chronogene_t1"
+    i:t="soft_steps_chronogene_t1"
+    i:t="limb_regeneration_chronogene_t1"
+    i:t="berserk_chronogene_t1"
+    i:t="tenacious_chronogene_t1"
+    i:t="conduit_chronogene_t1"
+    i:t="weapon_expert_chronogene_t1"
+    i:t="gunslinger_chronogene_t1"
+    i:t="night_owl_chronogene_t1"
+    i:t="trap_sensing_chronogene_t1"
+    i:t="knife_master_chronogene_t1"
+    i:t="am_locator_chronogene_t1"
+    i:t="monster_detector_chronogene_t1"
+    i:t="motion_detector_chronogene_t1"
+    i:t="sharp_memory_chronogene_t1"
+    i:t="reanimator_chronogene_t1"
+  }
+}

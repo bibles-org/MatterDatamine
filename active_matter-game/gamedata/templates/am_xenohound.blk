@@ -1,0 +1,528 @@
+xenohound_event{
+  xenohound_event__updateAt:r=0
+  xenohound_event__interval:r=2
+  xenohound_event__scaledDifficulty:i=0
+  xenohound_event__spawnPerDifficulty:i=2
+  xenohound_event__durationPerDifficulty:i=6
+  xenohound_event__spawnsPerPlayer:ip2=5, 8
+  xenohound_event__spawnsPerPortal:ip2=3, 5
+  xenohound_event__radius:p2=18, 36
+  xenohound_event__minDstBetweenPortalsSq:r=64
+  xenohound_event__portalTemplate:t="xenohound_portal"
+  xenohound_event__xenoTemplate:t="xenohound_creature+am_xenohound_mm+xenohound_scale_on_appear+am_inside_body_1"
+  xenohound_event__duration:p2=24, 45
+  xenohound_event__state:i=0
+  xenohound_event__leftToSpawn:i=0
+  xenohound_event__seed:i=0
+
+  "xenohound_event__targetEid:eid"{}
+}
+
+xenohound_scale_on_appear{
+  xenohound_scale_on_appear__scaleTime:r=1
+  xenohound_scale_on_appear__finishAt:r=-1
+  xenohound_scale_on_appear__initialScale:r=1
+  xenohound_scale_on_appear__minScale:r=0.01
+}
+
+xenohound_portal_teleport_effect{
+  _use:t="teleport_trap_affect"
+  teleport_trap_affect__radiusRng:p2=10, 20
+  teleport_trap_affect__heightRng:p2=1.35, 5.35
+  teleport_trap_affect__pullPower:r=50
+}
+
+xenohound_teleport_trap{
+  _use:t="anomaly_trap"
+  _use:t="sphere_trigger_trap"
+  _use:t="entity_bound_area"
+  _use:t="invulnerable"
+  entity_bound_area__name:t="POLYAREA_DANGER"
+  entity_bound_area__radius:r=2
+  net__scopeDistanceSq:r=108900
+  sphere_zone__radius:r=0.9
+  sphere_trigger_trap__triggerRadius:r=0.9
+  trigger_trap__affectRadius:r=1.2
+  trigger_trap__addSubTemplateOnTrigger:t="trigger_trap_reset_in_5_sec"
+  teleport_trap__affectTemplate:t="xenohound_portal_teleport_effect"
+  teleport_trap__physObjAffectTemplate:t="teleport_trap_phys_obj_affect"
+  teleport_trap__centerOffset:p3=0, 0.35, 0
+  loud_noise__radius:r=10
+  loud_noise__noiseValue:r=30
+
+  "trigger_trap__ignoreMaskItems:list<t>"{
+    i:t="HOUND"
+  }
+
+  "trigger_trap__ignoreMask:u32"{
+    value:i=0
+  }
+
+  "trigger_trap__humanAffectTemplates:list<t>"{
+    i:t="concussion_affect"
+    i:t="confusion_affect"
+  }
+
+  "teleport_trap:tag"{}
+  _group{
+    _tags:t="gameClient"
+    anomaly_trap__triggerFx:t="explosion_anomaly_teleport_trap_cmps_fx"
+    anomaly_trap__triggerFxScale:r=1.5
+    anomaly_trap__triggerFxOffset:p3=0, 1, 0
+  }
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/traps/trap_teleport"
+  }
+
+  _group{
+    _tags:t="sound"
+    trap_trigger_sound__path:t="impact/trap_teleport"
+  }
+}
+
+xenohound_portal{
+  _use:t="replicating"
+  _use:t="xenohound_portal_visuals"
+  _use:t="xenohound_teleport_trap"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  xenohound_portal__updateAt:r=0
+  xenohound_portal__endAt:r=0
+  xenohound_portal__interval:r=1
+  xenohound_portal__spawnsLeft:i=0
+  xenohound_portal__spawnCooldown:p2=0.4, 5
+  xenohound_portal__xenoTemplate:t=""
+
+  "xenohound_portal__eventEid:eid"{}
+  "xenohound_portal__targetEid:eid"{}
+  "xenohound_portal__spawnlings:list<eid>"{}
+}
+
+xenohound_creature{
+  _use:t="am_navmesh_creature_base"
+  _use:t="navmesh_aligned_phys_base"
+  _use:t="base_dm_parts"
+  _use:t="ai_target"
+  _use:t="navmesh_phys_move_anim"
+  _use:t="navmesh_phys_jumplinks_jump"
+  _use:t="xenohound_ai"
+  _use:t="human_open_door"
+  _use:t="navmesh_phys_jumplinks"
+  _use:t="nphys_hit_tagging"
+  _use:t="xenohound_anim_state"
+  _use:t="xenohound_dm"
+  _use:t="xenohound_actions"
+  _use:t="net_ragdoll"
+  _use:t="nphys_pushable"
+  _use:t="agent_switchable_collision"
+  _use:t="movable_entity_bound_area"
+  _use:t="melee_hit_camera_punch"
+  _use:t="trigger_trap_activator"
+  _use:t="human_deformation_bbox_receiver"
+  _use:t="xenohound_creature_sound"
+  _use:t="non_human_phys_ik"
+  _use:t="trigger_trap_activator"
+  _use:t="xenohound_aura"
+  deform_bbox__bmax:p3=0.3, 0.1, 0.1
+  deform_bbox__bmin:p3=-0.3, -0.1, -0.1
+  nPhys__animcharScale:r=1
+  nPhys__animcharScaleRange:p2=0.9, 1.1
+  animchar__res:t="xenos_dog_char"
+  collres__res:t="xenos_dog_collision"
+  animchar_fast_phys__res:t="xenos_dog_fastphys"
+  kill_tracking_tag:t="hellhound"
+  needsBlood:b=no
+  material:t="changedFlesh"
+  collres__centerNode:t="Bip01 Pelvis"
+  agent_switchable_collision__collisionTemplate:t="xenohound_collision"
+  navmesh_phys__hitTagPower:r=0.3
+  navmesh_phys__hitTagDuration:r=0.6
+  navmesh_phys__rndWalkSpeed:p2=4.5, 5.5
+  navmesh_phys__walkSpeedModifier:r=0.5
+  nphys__mass:r=40
+  hit_verification__maxDistance:r=9
+  dm__bsphereRad:r=9
+  death_note__name:t="note_hellhound"
+
+  "trigger_trap_activator__maskItems:shared:list<t>"{
+    i:t="MONSTER"
+    i:t="HOUND"
+  }
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+
+  anim_phys{}
+  "xenohound:tag"{}
+  "kill_tracking__taggedPlayers:object"{}
+  "grid_obj__updateAlways:tag"{}
+  "human_operate_door_action__noAnimation:tag"{}
+  "spawnling__parentEid:eid"{}
+  projectile_impulse{
+    _tags:t="gameClient"
+  }
+
+  _group{
+    projectile_impulse__cinematicArtistryMult:r=10
+    projectile_impulse__cinematicArtistryMultDead:r=5
+    projectile_impulse__maxVelocity:r=10
+    projectile_impulse__maxOmega:r=3
+    _tags:t="gameClient"
+  }
+
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="hellhound_remains_item"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="hellhound_remains_pristine_item"
+      dropChance:r=0.005
+      dropHeight:r=1
+    }
+  }
+}
+
+xenohound_ai{
+  _use:t="beh_tree_regular_check"
+  _use:t="agent_dangers_bullet_reaction"
+  _use:t="agent_dangers_hit_reaction"
+  _use:t="get_reaction_offender_ai"
+  _use:t="base_navmesh_agent_comp"
+  _use:t="corridor_walker"
+  _use:t="monster_danger_calc"
+  _use:t="obstacle_avoider"
+  _use:t="door_obstacle_handler"
+  _use:t="destructable_obstacle_handler"
+  _use:t="stuck_detector"
+  _use:t="nphys_position_mapping"
+  _use:t="flanking_ai"
+  xenohound_creature__pursueRadius:r=40
+  xenohound_creature__abandonOnRecallRadius:r=7
+  xenohound_creature__recallAt:r=0
+  beh_tree__blackboard__enemyRadius:r=30
+  beh_tree__blackboard__enemyRadiusLarge:r=60
+  beh_tree__interruptDisabled:b=no
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  agent_dangers__blindDistanceSq:r=3600
+  agent_dangers__maxDangerDist:r=60
+  agent_dangers__hasTraceableDangers:b=no
+  agent_dangers__frustumAngle:r=40
+  agent_dangers__projectileDist:r=4
+  agent_dangers__decrease:r=5
+  agent_dangers__timeFromDetection:r=3
+  agent_dangers__lastBulletReactionTime:r=-1
+  agent_dangers__nextBulletReactionTime:r=-1
+  agent_dangers__hmapTraceOffset:p3=0, -0.1, 0
+  agent_dangers__nextDangersCheckTime:r=0
+  agent_dangers__nextDangersTraceTime:r=0
+  agent_dangers__dangerIncrease:r=5
+  agent_dangers__dangerOutIncrease:r=0
+  agent_dangers__maxDangerDistMult:r=0.3
+  agent_dangers__standShootPos:p3=0, 0, 0
+  agent_dangers__standShootDir:p3=0, 0, 0
+  agent_dangers__tag:t="xenos"
+  agent_dangers__time:r=0
+  walker_agent__standShootLocalPos:p3=1, 0.6, 0
+  obstacle_avoider__avoidsDamageZones:b=no
+  obstacle_avoider__escapeOffset:r=0.4
+  obstacle_avoider__horBuffer:r=4
+  obstacle_avoider__vertBuffer:r=1
+  obstacle_avoider__maxPathDst:r=10
+  stuck_detector_debug__enabled:b=yes
+  flanking_ai__radius:r=1.8
+  flanking_ai__attackFromSide:b=no
+  flanking_ai__maxCount:i=24
+  beh_tree__node:t="xenohound_hit_n_run"
+  team:i=1
+  navmesh_phys__maxWalkSpeed:r=1
+  navmesh_phys__steeringAgentSineFactor:r=0.25
+  path_corridor_ai__slowDownCoef:r=40
+
+  "walker_agent__prevTargetEid:eid"{}
+  "attract_point__eid:eid"{}
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  agent_dangers{
+    _tags:t="server"
+  }
+}
+
+xenohound_anim_state{
+  _use:t="navmesh_phys_move_anim"
+  _use:t="navmesh_phys_attack_anim"
+
+  "anim_state__standStateName:list<t>"{
+    i:t="stand"
+  }
+
+  "anim_state__walkStateName:list<t>"{
+    i:t="walk"
+  }
+
+  "anim_state__runStateName:list<t>"{
+    i:t="run"
+  }
+
+  "anim_state__animChannels:list<t>"{
+    channel:t="body"
+  }
+
+  "animchar__animState:object"{
+    upper:i=-1
+  }
+}
+
+xenohound_dm{
+  _use:t="base_dm_parts"
+  hitpoints__hp:r=12
+  hitpoints__maxHp:r=12
+
+  "dm_parts__parts:object"{
+    "Bip01 Head:object"{
+      dmgMult:r=1.8
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 Neck:object"{
+      dmgMult:r=2
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 L Thigh:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 R Thigh:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 L Calf:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 R Calf:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 Pelvis:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 Spine:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 Spine1:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+  }
+
+  "capsule_approximation__nodeNames:array"{
+    node:t="Bip01 L Calf"
+    node:t="Bip01 L Thigh"
+    node:t="Bip01 L UpperArm"
+    node:t="Bip01 L Forearm"
+    node:t="Bip01 R Calf"
+    node:t="Bip01 R Thigh"
+    node:t="Bip01 R UpperArm"
+    node:t="Bip01 R Forearm"
+  }
+
+  "capsule_approximation__complexNodeNames:array"{
+    "node:array"{
+      node:t="Bip01 Neck"
+      node:t="Bip01 Neck1"
+      node:t="Bip01 Head"
+    }
+
+    "node:array"{
+      node:t="Bip01 Spine"
+      node:t="Bip01 Spine1"
+    }
+  }
+}
+
+xenohound_actions{
+  actions__animLayer:t="body"
+  action__running:b=no
+  actions__enabled:b=yes
+  _replicated:t="actions__actions_enabled"
+  _replicated:t="actions__enabled"
+
+  actions{}
+  "actions__actions:array"{
+    "action:object"{
+      name:t="stand_melee"
+      state:t="attack"
+      actionTime:r=1
+      applyAt:r=0.3
+      props:t="gamedata/actions/xenobite.blk"
+      irq:t="melee"
+      varName:t="attack_progress"
+    }
+  }
+
+  "actions__actions_enabled:array"{
+    enabled:b=yes
+  }
+}
+
+xenohound_aura{
+  _use:t="monster_aura"
+
+  "monster_aura__watchedAttachments:list<t>"{
+    i:t="watched_changed_render_effect"
+  }
+
+  "monster_aura__enabledAliveAttachments:list<t>"{
+    i:t="changed_render_effect"
+  }
+
+  "monster_aura__enabledDeadAttachments:list<t>"{
+    i:t="changed_render_effect"
+  }
+}
+
+xenohound_collision{
+  _use:t="nphys_pair_collision"
+  pair_collision__tag:t="collidableToHuman"
+  nphys_coll__capsuleRadius:r=0.45
+
+  pair_collision__gridHolders{}
+  "pair_collision__gridNames:list<t>"{
+    h:t="humans"
+    h:t="vehicles"
+  }
+
+  "collidableToHuman:tag"{}
+}
+
+xenohound_portal_visuals{
+  _use:t="optimised_visual_effect_source"
+  optimised_effect_source__template:t="monstrify_trap_visual_fx_controller"
+  grid_obj__gridType:t="traceable_spheres"
+
+  grid_obj{}
+}
+
+xenohound_portal_distortion_opening{
+  _use:t="portal_dynmodel_distortion"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__origin:p3=0, 0, 0
+  euler_sinusoidal_oscillation__amplitude:p3=0.4, 0.4, 0.4
+  euler_sinusoidal_oscillation__frequency:p3=2, 2, 2
+}
+
+xenohound_portal_effect{
+  _use:t="replicating"
+  _use:t="nexus_beacon_capture_device_effect_sound"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "net__alwaysInScope:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_portal_a_composite_fx"
+
+    effect{}
+  }
+}
+
+xenohound_mm_database{
+  _use:t="motion_matching_animation_database"
+  _tags:t="render"
+  _singleton:b=yes
+  weightsPath:t="gamedata/motion_matching/am_xenohound_mm_weights.blk"
+  rootMotionPath:t="gamedata/motion_matching/am_xenohound_mm_root_motion.blk"
+  main_database__nodeMasksPath:t="gamedata/motion_matching/am_xenohound_mm_node_masks.blk"
+  main_database__footLockerCtrlName:t="mm_foot_locker"
+
+  "data_bases_paths:list<t>"{
+    path:t="gamedata/motion_matching/am_xenohound_mm_animation_list.blk"
+  }
+
+  "main_database__pbcWeightOverrides:object"{
+    mm_foot_locker:r=1
+  }
+
+  "main_database__availableTags:list<t>"{
+    tag:t="default"
+    tag:t="attack"
+    tag:t="idle"
+  }
+
+  "main_database__footLockerNodes:list<t>"{
+    node:t="Bip01 L Toe0"
+    node:t="Bip01 R Toe0"
+    node:t="Bip01 L Finger3"
+    node:t="Bip01 R Finger3"
+  }
+}
+
+am_xenohound_mm{
+  _use:t="motion_matching_animchar_component"
+  mm_trajectory__wishRotation:p4=0, 0, 0, 1
+  navmesh_phys__rotationSpeed:p4=0.2, 1, 16, 10
+  _tags:t="render"
+  motion_matching__dataBaseTemplateName:t="xenohound_mm_database"
+
+  "mm_trajectory__customUpdate:tag"{}
+}
+
+am_xenohound_animtree{
+  _use:t="animchar_phys_var_walk_dir"
+  animchar_phys_var__walkDir:t="spines_yaw"
+}
+
+xenohound_portal_guard{
+  _use:t="xenohound_portal"
+  xenohound_portal__spawnsLeft:i=3
+  xenohound_portal__endAt:r=999999
+  xenohound_portal__xenoTemplate:t="xenohound_creature+am_xenohound_mm+am_inside_body_1"
+}

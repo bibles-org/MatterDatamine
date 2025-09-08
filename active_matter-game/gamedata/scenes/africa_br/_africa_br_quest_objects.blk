@@ -1,0 +1,361 @@
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [316.324, 29.7713, -857.517]]
+  objective_static_target__tag:t="place_africa_locator_1"
+  map_object_zone__radius:r=30
+  quest_target_geometry_sphere__radius:r=30
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [581.606, 35.1697, -658.997]]
+  objective_static_target__tag:t="place_africa_locator_2"
+  map_object_zone__radius:r=25
+  quest_target_geometry_sphere__radius:r=25
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [429.752, 28.9842, -1169.19]]
+  objective_static_target__tag:t="place_africa_locator_3"
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="photographing_stand_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [612.299, 43.4765, -1375.84]]
+  objective_static_target__tag:t="photo_africa_quest_1"
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="photographing_target"
+  transform:m=[[4.62785, 0, -2.161] [0, 7.15676, 0] [3.66101, -0, 7.84018] [582.991, 47.7309, -1379.63]]
+  objective_static_target__tag:t="photo_africa_quest_1"
+  photographing_target__name:t="photo/photo_africa_quest_1"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  map_object__show:b=no
+  photographing_target__alwaysVisible:b=no
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="nissan_sunny_door_left_back_a"
+  transform:m=[[0.291567, -0.341985, -0.893328] [0.476206, 0.861844, -0.174507] [0.829588, -0.374528, 0.41414] [582.56, 48.8989, -1381.74]]
+}
+
+entity{
+  _template:t="area_decor_spikes"
+  transform:m=[[7.76645, 0, -3.2089] [0, 7.45385, 0] [3.73588, -0, 9.04189] [582.401, 48.1588, -1379.24]]
+}
+
+entity{
+  _template:t="area_decor_distortion"
+  transform:m=[[7.76645, 0, -3.2089] [0, 7.45385, 0] [3.73588, -0, 9.04189] [582.401, 48.1588, -1379.24]]
+}
+
+entity{
+  _template:t="photographing_stand_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [646.631, 32.8503, -831.179]]
+  objective_static_target__tag:t="photo_africa_quest_2"
+  map_object_zone__radius:r=12
+  quest_target_geometry_sphere__radius:r=12
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="photographing_target"
+  transform:m=[[4.08168, 0, -3.07031] [0, 7.15676, 0] [5.20151, -0, 6.9149] [636.856, 35.7093, -810.425]]
+  objective_static_target__tag:t="photo_africa_quest_2"
+  photographing_target__name:t="photo/photo_africa_quest_2"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  map_object__show:b=no
+  photographing_target__alwaysVisible:b=no
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="nissan_sunny_door_left_back_a"
+  transform:m=[[-0.922867, -0.379647, 0.0646853] [-0.298655, 0.599462, -0.742597] [0.243148, -0.704637, -0.666608] [636.518, 36.3083, -810.411]]
+}
+
+entity{
+  _template:t="area_decor_spikes"
+  transform:m=[[6.82364, 0, -4.90437] [0, 7.45385, 0] [5.70979, -0, 7.94424] [636.405, 35.2609, -810.388]]
+}
+
+entity{
+  _template:t="area_decor_distortion"
+  transform:m=[[6.82364, 0, -4.90437] [0, 7.45385, 0] [5.70979, -0, 7.94424] [636.405, 35.2609, -810.388]]
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [167.524, 32.8504, -880.012]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=25, 25
+  objective_static_target__tag:t="gather_soil_africa_headquarters_zone_1"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [446.61, 28.83, -1312.45]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=25, 25
+  objective_static_target__tag:t="gather_soil_africa_headquarters_zone_2"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [874.073, 52.4524, -1175.33]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=25, 25
+  objective_static_target__tag:t="gather_soil_africa_headquarters_zone_3"
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[27.5182, 0, -11.0816] [0, 13.1129, 0] [12.8097, -0, 31.8096] [391.165, 50.6826, -1686.83]]
+  objective_static_target__tag:t="daily_africa_headquarters_research_sensor_1"
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=0
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[15.1834, 0, 25.4856] [0, 13.1129, -0] [-29.4601, 0, 17.5513] [462.005, 57.6138, -543.096]]
+  objective_static_target__tag:t="daily_africa_headquarters_research_sensor_2"
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=0
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="photographing_stand_target"
+  transform:m=[[9.58182, 0, -8.73982] [0, 4.28436, 0] [8.1791, -0, 8.96708] [481.765, 37.0717, -679.525]]
+  objective_static_target__tag:t="daily_photo_africa_quest_1"
+  map_object_zone__radius:r=9
+  quest_target_geometry_sphere__radius:r=0
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="photographing_target"
+  transform:m=[[2.84217, 0, -2.71815] [0, 1.77368, 0] [0.24912, -0, 0.260487] [478.319, 37.3517, -684.175]]
+  objective_static_target__tag:t="daily_photo_africa_quest_1"
+  photographing_target__name:t="photo/daily_photo_africa_quest_1"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  map_object__show:b=no
+  photographing_target__alwaysVisible:b=no
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_m"
+  transform:m=[[-3.60667, 0, 3.60667] [3.60667, -2.22955e-07, 3.60667] [1.57653e-07, 5.10061, 1.57653e-07] [479.574, 37.3049, -685.727]]
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_n"
+  transform:m=[[-5.04935, 0, 5.04935] [3.60667, -2.22955e-07, 3.60667] [1.57653e-07, 5.10061, 1.57653e-07] [478.344, 38.1516, -684.496]]
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_p"
+  transform:m=[[-6.20499, 0, 6.20499] [3.60667, -2.22955e-07, 3.60667] [1.57653e-07, 5.10061, 1.57653e-07] [478.01, 36.5429, -684.162]]
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_o"
+  transform:m=[[-3.23585, -2.25272, 3.23585] [3.60667, -2.28015e-07, 3.60667] [-1.59291, 4.57618, 1.59291] [476.59, 38.0848, -682.743]]
+}
+
+entity{
+  _template:t="photographing_stand_target"
+  transform:m=[[11.4416, 0, -8.78564] [0, 4.14592, 0] [18.1015, -0, 23.5738] [584.019, 34.1492, -1057.2]]
+  objective_static_target__tag:t="daily_photo_africa_quest_2"
+  map_object_zone__radius:r=9
+  quest_target_geometry_sphere__radius:r=0
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="photographing_target"
+  transform:m=[[3.1801, 0, -2.3137] [0, 1.77368, 0] [0.212052, -0, 0.291459] [597.213, 35.5156, -1048.07]]
+  objective_static_target__tag:t="daily_photo_africa_quest_2"
+  photographing_target__name:t="photo/daily_photo_africa_quest_2"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  map_object__show:b=no
+  photographing_target__alwaysVisible:b=no
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_l"
+  transform:m=[[4.1384, 3.28906e-08, -3.07427] [-2.38311, -1.72813e-07, -3.20799] [-1.59344e-07, 5.15534, -1.59344e-07] [595.95, 36.0779, -1046.68]]
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_i"
+  transform:m=[[4.1384, 3.28906e-08, -3.07427] [-2.38311, -1.72813e-07, -3.20799] [-1.59344e-07, 5.15534, -1.59344e-07] [597.02, 35.0259, -1047.47]]
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_k"
+  transform:m=[[7.74082, 6.15215e-08, -5.75039] [-2.38311, -1.72813e-07, -3.20799] [-1.59344e-07, 5.15534, -1.59344e-07] [598.298, 35.8437, -1048.42]]
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_j"
+  transform:m=[[5.38915, -3.31287, -4.00341] [-2.38311, -1.19099e-07, -3.20799] [1.83133, 4.62309, -1.36043] [598.513, 34.7586, -1048.58]]
+}
+
+entity{
+  _template:t="photographing_stand_target"
+  transform:m=[[17.1373, 0, 8.54284] [0, 7.06986, -0] [-5.19244, 0, 10.4162] [187.472, 22.783, -1434.76]]
+  objective_static_target__tag:t="daily_photo_africa_quest_3"
+  map_object_zone__radius:r=9
+  quest_target_geometry_sphere__radius:r=0
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="photographing_target"
+  transform:m=[[3.52816, 0.000742936, 1.73735] [-0.00154394, 1.77368, 0.00237691] [-0.159229, -0.000571937, 0.323358] [184.438, 22.3227, -1428.66]]
+  objective_static_target__tag:t="daily_photo_africa_quest_3"
+  photographing_target__name:t="photo/daily_photo_africa_quest_3"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  map_object__show:b=no
+  photographing_target__alwaysVisible:b=no
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_e"
+  transform:m=[[3.6527, 1.25042, 2.10889] [2.19961, -9.83303e-08, -3.80984] [-1.0829, 4.21777, -0.625211] [181.767, 21.5416, -1429.63]]
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_f"
+  transform:m=[[4.77925, 2.71918, 2.7593] [2.19961, 0, -3.80984] [-1.68391, 3.94619, -0.972204] [183.198, 22.0127, -1428.93]]
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_g"
+  transform:m=[[6.59071, 0.633919, 3.80515] [2.19961, -6.55536e-08, -3.80984] [-0.251878, 3.49163, -0.145422] [185.063, 22.6209, -1427.94]]
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_h"
+  transform:m=[[5.35049, -0.637286, 3.08911] [1.78897, -3.99867e-08, -3.09859] [0.253216, 2.83458, 0.146194] [186.818, 22.6217, -1427.23]]
+}
+
+entity{
+  _template:t="photographing_stand_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [773.031, 53.1065, -1215.64]]
+  objective_static_target__tag:t="daily_photo_africa_quest_4"
+  map_object_zone__radius:r=18
+  quest_target_geometry_sphere__radius:r=18
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="photographing_target"
+  transform:m=[[-0.736389, 0, -1.82241] [0, 1.77368, 0] [0.334185, 0, -0.135036] [789.787, 54.4115, -1223.96]]
+  objective_static_target__tag:t="daily_photo_africa_quest_4"
+  photographing_target__name:t="photo/daily_photo_africa_quest_4"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  map_object__show:b=no
+  photographing_target__alwaysVisible:b=no
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_a"
+  transform:m=[[-0.981239, -1.03108e-07, -2.14507] [-2.14507, -1.03108e-07, 0.981239] [-1.36655e-07, 2.35885, -5.08727e-08] [790.244, 54.9295, -1223.52]]
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_b"
+  transform:m=[[-1.30954, -1.22011, -2.86277] [-2.14507, -1.05449e-07, 0.981239] [-0.354602, 2.19943, -0.77519] [789.851, 54.8354, -1224.38]]
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_c"
+  transform:m=[[-1.21162, 0.569624, -2.6487] [-2.14507, -8.78739e-08, 0.981239] [0.188331, 2.31499, 0.411707] [790.198, 54.0072, -1223.62]]
+}
+
+entity{
+  _template:t="am_lore_decal_scribble_distorted_d"
+  transform:m=[[-1.42042, -0.417261, -3.10515] [-2.14507, -1.05449e-07, 0.981239] [-0.119021, 2.34143, -0.260189] [789.79, 54.1258, -1224.51]]
+}
+
+entity{
+  _template:t="dead_body_container_africa_headquarters_commander_1"
+  transform:m=[[0.923504, -0.383589, 0] [0.383589, 0.923504, 0] [-0, 0, 1] [582.057, 37.4303, -724.235]]
+}
+
+entity{
+  _template:t="africa_flashdrive_2_safe_lootable_rendinst"
+  transform:m=[[-0.256409, 0, -0.966568] [0, 1, 0] [0.966568, 0, -0.256409] [376.673, 34.0436, -867.912]]
+}
+
+entity{
+  _template:t="africa_flashdrive_3_safe_lootable_rendinst"
+  transform:m=[[-0.53136, 0, 0.847146] [0, 1, 0] [-0.847146, 0, -0.53136] [407.505, 44.2942, -1679.81]]
+}
+
+entity{
+  _template:t="dead_body_container_secret_africa_headquarters_commander_4"
+  transform:m=[[1, 0, 0] [0, 0.784222, -0.62048] [-0, 0.62048, 0.784223] [855.861, 79.0694, -1516.01]]
+}
+
+entity{
+  _template:t="africa_flashdrive_5_safe_lootable_rendinst"
+  transform:m=[[-0.862452, 0, 0.506138] [0, 1, 0] [-0.506138, 0, -0.862452] [458.376, 46.3883, -529.419]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="dc_diagnostic_stand_a"
+  transform:m=[[-4.37114e-08, 0, -1] [0, 1, 0] [1, 0, -4.37114e-08] [265.309, 36.4647, -1069.95]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="modern_pc_keyboard_a"
+  transform:m=[[-4.37114e-08, 0, -1] [0, 1, 0] [1, 0, -4.37114e-08] [265.312, 37.4191, -1070.4]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="modern_pc_mouse_a"
+  transform:m=[[-0.174827, 0, 0.984599] [0, 1, 0] [-0.984599, 0, -0.174827] [265.61, 37.4145, -1070.42]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="dc_diagnostic_stand_a_monitor_scr_b"
+  transform:m=[[-4.37114e-08, 0, -1] [0, 1, 0] [1, 0, -4.37114e-08] [265.32, 37.9444, -1070.02]]
+}
+
+entity{
+  _template:t="quest_container"
+  transform:m=[[-4.37114e-08, 0, -1] [0, 1, 0] [1, 0, -4.37114e-08] [265.32, 37.9444, -1070.02]]
+  ri_extra__name:t="dc_diagnostic_stand_a_monitor"
+  openable_ri__closed:t="dc_diagnostic_stand_a_monitor"
+  ri_preload__name:t="dc_diagnostic_stand_a_monitor"
+  objective_static_target__tag:t="africa_headquarters_bunker_data"
+  itemContainer__name:t="container/headquarters_computer"
+  map_object_marker__iconName:t="!ui/skin#datacard_solid.svg"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_africa_headquarters_bunker_data"
+  }
+}

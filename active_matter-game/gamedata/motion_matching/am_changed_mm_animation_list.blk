@@ -1,0 +1,10 @@
+clips{
+  default_animation_mask:t="full_body"
+
+  changed_run_motion_maching{
+    play_speed_multiplier_range:p2=0.5, 2
+    endLabel:t="end"
+
+    use_foot_ik_locker{}
+  }
+}

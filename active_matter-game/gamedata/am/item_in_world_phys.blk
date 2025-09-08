@@ -1,0 +1,36 @@
+mass:r=5
+useFutureContacts:b=yes
+shouldTraceGround:b=yes
+logCCD:b=no
+addToWorld:b=yes
+gravityMult:r=0.95
+frictionGround:r=0.1
+linearDamping:r=0.1
+angularDamping:r=0.1
+bouncing:r=0.5
+bouncingGround:r=0.5
+skipUpdateOnSleep:b=yes
+sleepUpdateFrequency:i=0
+sleepDelay:r=0.5
+ccdClipVelocityMult:r=1
+
+collisionResource{
+  forceConvexHull:b=yes
+}
+
+collision{
+  props{
+    box{
+      width:p3=0.01, 0.01, 0.01
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.01, 0]]
+    }
+  }
+}
+
+ccdSpheres{
+  ccd:p4=0, 0.01, 0, 0.005
+}
+
+solver{
+  energyConservation:r=0.95
+}

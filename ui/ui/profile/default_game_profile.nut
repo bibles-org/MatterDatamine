@@ -1,0 +1,1836 @@
+let defaultRaidProfile = {
+  rentedEquipmentSeed = ""
+  playerContracts = []
+  loadoutItems = [
+    {
+      itemId = "5"
+      templateName = "hk_mp5n_magazine"
+      parentItemId = "1"
+      slotName = "magazine"
+    }
+    {
+      itemId = "1"
+      templateName = "hk_mp5n_gun"
+      parentItemId = "0"
+      slotName = "weapon_0"
+    }
+    {
+      itemId = "2"
+      templateName = "knife_weapon"
+      parentItemId = "0"
+      slotName = "weapon_3"
+    }
+    {
+      itemId = "3"
+      templateName = "small_pouch"
+      parentItemId = "0"
+      slotName = "equipment_pouch"
+    }
+    {
+      itemId = "4"
+      templateName = "box_9mm_magazine"
+      parentItemId = "0"
+      slotName = "inventory"
+    }
+    {
+      itemId = "6"
+      templateName = "hk_mp5n_magazine"
+      parentItemId = "0"
+      slotName = "inventory"
+    }
+    {
+      itemId = "7"
+      templateName = "item_healkit"
+      parentItemId = "0"
+      slotName = "inventory"
+    }
+    {
+      itemId = "8"
+      templateName = "item_healkit"
+      parentItemId = "0"
+      slotName = "inventory"
+    }
+    {
+      itemId = "11"
+      templateName = "hk_mp5n_magazine"
+      parentItemId = "9"
+      slotName = "inventory"
+    }
+    {
+      itemId = "9"
+      templateName = "small_backpack"
+      parentItemId = "0"
+      slotName = "equipment_backpack"
+    }
+    {
+      itemId = "10"
+      templateName = "item_healkit"
+      parentItemId = "9"
+      slotName = "inventory"
+    }
+    {
+      itemId = "12"
+      templateName = "flashlight_device"
+      parentItemId = "0"
+      slotName = "equipment_flashlight"
+    }
+    {
+      itemId = "13"
+      templateName = "suit_militant_light_b_item"
+      parentItemId = "0"
+      slotName = "equipment_chronogene_primary_1"
+    }
+    {
+      itemId = "14"
+      templateName = "helmet_a"
+      parentItemId = "0"
+      slotName = "equipment_helmet"
+    }
+  ]
+  mints = [
+    {
+      locked = true
+      name = "Set: Light Scout",
+      charges = 30,
+      items = [
+        {
+          isCorrupted = false,
+          itemId = "1",
+          parentItemId = "0",
+          slotName = "equipment_flashlight",
+          templateName = "flashlight_device"
+        },
+        {
+          isCorrupted = false,
+          itemId = "2",
+          parentItemId = "0",
+          slotName = "equipment_pouch",
+          templateName = "medium_pouch"
+        },
+        {
+          isCorrupted = false,
+          itemId = "3",
+          parentItemId = "0",
+          slotName = "equipment_backpack",
+          templateName = "small_backpack"
+        },
+        {
+          isCorrupted = false,
+          itemId = "4",
+          parentItemId = "0",
+          slotName = "equipment_helmet",
+          charges = 200,
+          templateName = "helmet_galvion_viper_a3"
+        },
+        {
+          isCorrupted = false,
+          itemId = "5",
+          parentItemId = "0",
+          slotName = "equipment_chronogene_primary_1",
+          templateName = "suit_militant_light_a_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "6",
+          parentItemId = "5",
+          slotName = "equipment_mod_body_0",
+          charges = 280,
+          templateName = "armorplate_big_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "7",
+          parentItemId = "5",
+          slotName = "equipment_mod_left_leg_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "8",
+          parentItemId = "5",
+          slotName = "equipment_mod_right_leg_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "9",
+          parentItemId = "0",
+          slotName = "weapon_0",
+          templateName = "hk_mp5n_gun"
+        },
+        {
+          isCorrupted = false,
+          itemId = "10",
+          parentItemId = "9",
+          slotName = "magazine",
+          charges = 30,
+          templateName = "hk_mp5n_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "11",
+          parentItemId = "9",
+          slotName = "silencer",
+          templateName = "banish_45_suppressor"
+        },
+        {
+          isCorrupted = false,
+          itemId = "12",
+          parentItemId = "0",
+          slotName = "weapon_2",
+          templateName = "m45a1_gun"
+        },
+        {
+          isCorrupted = false,
+          itemId = "13",
+          parentItemId = "12",
+          slotName = "silencer",
+          templateName = "banish_45_ext_suppressor"
+        },
+        {
+          isCorrupted = false,
+          itemId = "14",
+          parentItemId = "12",
+          slotName = "magazine",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "15",
+          parentItemId = "0",
+          slotName = "weapon_3",
+          templateName = "knife_weapon"
+        },
+        {
+          isCorrupted = false,
+          itemId = "16",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "17",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "18",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "hk_mp5n_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "19",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "hk_mp5n_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "20",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "hk_mp5n_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "21",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "22",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 1,
+          templateName = "item_injector_hot"
+        },
+        {
+          isCorrupted = false,
+          itemId = "23",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "item_painkiller"
+        },
+        {
+          isCorrupted = false,
+          itemId = "24",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "item_healkit"
+        },
+        {
+          isCorrupted = false,
+          itemId = "25",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "26",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "27",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "28",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "29",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "30",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "31",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "hk_mp5n_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "32",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "hk_mp5n_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "33",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "hk_mp5n_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "34",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "hk_mp5n_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "36",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 1,
+          templateName = "item_injector_hot"
+        },
+        {
+          isCorrupted = false,
+          itemId = "38",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "item_painkiller"
+        },
+        {
+          isCorrupted = false,
+          itemId = "40",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "item_healkit"
+        },
+        {
+          isCorrupted = false,
+          itemId = "42",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "43",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "44",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "hk_mp5n_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "101",
+          parentItemId = "5",
+          slotName = "equipment_mod_pocket_0",
+          templateName = "zarya_flash_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "102",
+          parentItemId = "5",
+          slotName = "equipment_mod_pocket_1",
+          templateName = "zarya_flash_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "103",
+          parentItemId = "2",
+          slotName = "equipment_mod_pocket_0",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "104",
+          parentItemId = "2",
+          slotName = "equipment_mod_pocket_1",
+          templateName = "item_painkiller"
+        }
+      ]
+    },
+    {
+      locked = true
+      name = "Set: Trooper",
+      charges = 30,
+      items = [
+        {
+          isCorrupted = false,
+          itemId = "1",
+          parentItemId = "0",
+          slotName = "equipment_flashlight",
+          templateName = "flashlight_device"
+        },
+        {
+          isCorrupted = false,
+          itemId = "2",
+          parentItemId = "0",
+          slotName = "equipment_pouch",
+          templateName = "medium_pouch"
+        },
+        {
+          isCorrupted = false,
+          itemId = "3",
+          parentItemId = "0",
+          slotName = "equipment_backpack",
+          templateName = "small_backpack"
+        },
+        {
+          isCorrupted = false,
+          itemId = "4",
+          parentItemId = "0",
+          slotName = "equipment_helmet",
+          charges = 200,
+          templateName = "helmet_galvion_viper_a3"
+        },
+        {
+          isCorrupted = false,
+          itemId = "5",
+          parentItemId = "0",
+          slotName = "equipment_chronogene_primary_1",
+          templateName = "suit_militant_light_b_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "6",
+          parentItemId = "5",
+          slotName = "equipment_mod_body_0",
+          charges = 280,
+          templateName = "armorplate_big_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "7",
+          parentItemId = "5",
+          slotName = "equipment_mod_left_leg_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "8",
+          parentItemId = "5",
+          slotName = "equipment_mod_right_leg_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "9",
+          parentItemId = "5",
+          slotName = "equipment_mod_left_hand_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "10",
+          parentItemId = "5",
+          slotName = "equipment_mod_right_hand_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "11",
+          parentItemId = "0",
+          slotName = "weapon_0",
+          templateName = "ak_12_gun"
+        },
+        {
+          isCorrupted = false,
+          itemId = "12",
+          parentItemId = "11",
+          slotName = "scope",
+          templateName = "scope_eotech_exps3"
+        },
+        {
+          isCorrupted = false,
+          itemId = "13",
+          parentItemId = "11",
+          slotName = "magazine",
+          charges = 30,
+          templateName = "ak_12_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "14",
+          parentItemId = "0",
+          slotName = "weapon_2",
+          templateName = "m45a1_gun"
+        },
+        {
+          isCorrupted = false,
+          itemId = "15",
+          parentItemId = "14",
+          slotName = "magazine",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "16",
+          parentItemId = "0",
+          slotName = "weapon_3",
+          templateName = "knife_weapon"
+        },
+        {
+          isCorrupted = false,
+          itemId = "17",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "18",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "19",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "ak_12_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "20",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "ak_12_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "21",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "ak_12_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "22",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "23",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 1,
+          templateName = "item_injector_hot"
+        },
+        {
+          isCorrupted = false,
+          itemId = "24",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "item_painkiller"
+        },
+        {
+          isCorrupted = false,
+          itemId = "25",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "item_healkit"
+        },
+        {
+          isCorrupted = false,
+          itemId = "26",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "27",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "28",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "29",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "30",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "31",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "32",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "ak_12_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "34",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "ak_12_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "35",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "ak_12_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "36",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "ak_12_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "37",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 1,
+          templateName = "item_injector_hot"
+        },
+        {
+          isCorrupted = false,
+          itemId = "39",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "item_painkiller"
+        },
+        {
+          isCorrupted = false,
+          itemId = "41",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "item_healkit"
+        },
+        {
+          isCorrupted = false,
+          itemId = "43",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "44",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "45",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 30,
+          templateName = "ak_12_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "101",
+          parentItemId = "5",
+          slotName = "equipment_mod_pocket_0",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "102",
+          parentItemId = "5",
+          slotName = "equipment_mod_pocket_1",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "103",
+          parentItemId = "2",
+          slotName = "equipment_mod_pocket_0",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "104",
+          parentItemId = "2",
+          slotName = "equipment_mod_pocket_1",
+          templateName = "item_painkiller"
+        }
+      ]
+    },
+    {
+      locked = true
+      name = "Set: Sniper",
+      charges = 30,
+      items = [
+        {
+          isCorrupted = false,
+          itemId = "1",
+          parentItemId = "0",
+          slotName = "equipment_flashlight",
+          templateName = "flashlight_device"
+        },
+        {
+          isCorrupted = false,
+          itemId = "2",
+          parentItemId = "0",
+          slotName = "equipment_pouch",
+          templateName = "medium_pouch"
+        },
+        {
+          isCorrupted = false,
+          itemId = "3",
+          parentItemId = "0",
+          slotName = "equipment_backpack",
+          templateName = "small_backpack"
+        },
+        {
+          isCorrupted = false,
+          itemId = "4",
+          parentItemId = "0",
+          slotName = "equipment_helmet",
+          charges = 200,
+          templateName = "helmet_galvion_viper_a3"
+        },
+        {
+          isCorrupted = false,
+          itemId = "5",
+          parentItemId = "0",
+          slotName = "equipment_chronogene_primary_1",
+          templateName = "suit_militant_female_light_c_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "6001",
+          parentItemId = "5",
+          slotName = "equipment_mod_body_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "6002",
+          parentItemId = "5",
+          slotName = "equipment_mod_body_1",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "8",
+          parentItemId = "0",
+          slotName = "weapon_0",
+          templateName = "svd_gun"
+        },
+        {
+          isCorrupted = false,
+          itemId = "11611",
+          parentItemId = "8",
+          slotName = "scope",
+          templateName = "scope_pso1"
+        },
+        {
+          isCorrupted = false,
+          itemId = "7",
+          parentItemId = "8",
+          slotName = "magazine",
+          charges = 10,
+          templateName = "svd_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "11",
+          parentItemId = "0",
+          slotName = "weapon_1",
+          templateName = "pp_91_kedr_gun"
+        },
+        {
+          isCorrupted = false,
+          itemId = "12",
+          parentItemId = "11",
+          slotName = "magazine",
+          charges = 20,
+          templateName = "pp_91_kedr_20_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "13",
+          parentItemId = "0",
+          slotName = "weapon_3",
+          templateName = "knife_weapon"
+        },
+        {
+          isCorrupted = false,
+          itemId = "14",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "15",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "16",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "svd_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "17",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "svd_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "18",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 20,
+          templateName = "pp_91_kedr_20_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "20",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 1,
+          templateName = "item_injector_hot"
+        },
+        {
+          isCorrupted = false,
+          itemId = "21",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "item_painkiller"
+        },
+        {
+          isCorrupted = false,
+          itemId = "22",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "item_healkit"
+        },
+        {
+          isCorrupted = false,
+          itemId = "23",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "24",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "25",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "26",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "27",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "svd_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "28",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "svd_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "29",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "svd_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "30",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "svd_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "31",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 20,
+          templateName = "pp_91_kedr_20_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "34",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 1,
+          templateName = "item_injector_hot"
+        },
+        {
+          isCorrupted = false,
+          itemId = "35",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "svd_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "36",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "item_painkiller"
+        },
+        {
+          isCorrupted = false,
+          itemId = "37",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 20,
+          templateName = "pp_91_kedr_20_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "38",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "item_healkit"
+        },
+        {
+          isCorrupted = false,
+          itemId = "40",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "zarya_flash_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "41",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "zarya_flash_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "42",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "svd_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "43",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "svd_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "44",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 20,
+          templateName = "pp_91_kedr_20_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "101",
+          parentItemId = "5",
+          slotName = "equipment_mod_pocket_0",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "102",
+          parentItemId = "5",
+          slotName = "equipment_mod_pocket_1",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "103",
+          parentItemId = "2",
+          slotName = "equipment_mod_pocket_0",
+          templateName = "zarya_flash_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "104",
+          parentItemId = "2",
+          slotName = "equipment_mod_pocket_1",
+          templateName = "item_painkiller"
+        }
+      ]
+    },
+    {
+      locked = true
+      name = "Set: Close Combat",
+      charges = 30,
+      items = [
+        {
+          isCorrupted = false,
+          itemId = "1",
+          parentItemId = "0",
+          slotName = "equipment_flashlight",
+          templateName = "flashlight_device"
+        },
+        {
+          isCorrupted = false,
+          itemId = "2",
+          parentItemId = "0",
+          slotName = "equipment_pouch",
+          templateName = "medium_pouch"
+        },
+        {
+          isCorrupted = false,
+          itemId = "3",
+          parentItemId = "0",
+          slotName = "equipment_backpack",
+          templateName = "medium_backpack"
+        },
+        {
+          isCorrupted = false,
+          itemId = "4",
+          parentItemId = "0",
+          slotName = "equipment_helmet",
+          charges = 280,
+          templateName = "helmet_g"
+        },
+        {
+          isCorrupted = false,
+          itemId = "5",
+          parentItemId = "0",
+          slotName = "equipment_chronogene_primary_1",
+          templateName = "suit_militant_heavy_a_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "6",
+          parentItemId = "5",
+          slotName = "equipment_mod_body_0",
+          charges = 280,
+          templateName = "armorplate_big_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "106",
+          parentItemId = "5",
+          slotName = "equipment_mod_body_1",
+          charges = 280,
+          templateName = "armorplate_big_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "107",
+          parentItemId = "5",
+          slotName = "equipment_mod_left_leg_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "1071",
+          parentItemId = "5",
+          slotName = "equipment_mod_left_leg_1",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "108",
+          parentItemId = "5",
+          slotName = "equipment_mod_right_leg_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "1081",
+          parentItemId = "5",
+          slotName = "equipment_mod_right_leg_1",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "1107",
+          parentItemId = "5",
+          slotName = "equipment_mod_left_hand_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "11071",
+          parentItemId = "5",
+          slotName = "equipment_mod_left_hand_1",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "1108",
+          parentItemId = "5",
+          slotName = "equipment_mod_right_hand_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "11081",
+          parentItemId = "5",
+          slotName = "equipment_mod_right_hand_1",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "8",
+          parentItemId = "0",
+          slotName = "weapon_0",
+          charges = 8,
+          templateName = "spas_12_gun"
+        },
+        {
+          isCorrupted = false,
+          itemId = "11",
+          parentItemId = "0",
+          slotName = "weapon_2",
+          templateName = "m45a1_gun"
+        },
+        {
+          isCorrupted = false,
+          itemId = "12",
+          parentItemId = "11",
+          slotName = "magazine",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "13",
+          parentItemId = "0",
+          slotName = "weapon_3",
+          templateName = "hammer_weapon"
+        },
+        {
+          isCorrupted = false,
+          itemId = "14",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "zarya_flash_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "15",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "zarya_flash_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "16",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 12,
+          templateName = "box_12_gauge_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "17",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 12,
+          templateName = "box_12_gauge_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "118",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "20",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 1,
+          templateName = "item_injector_hot"
+        },
+        {
+          isCorrupted = false,
+          itemId = "21",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "item_painkiller"
+        },
+        {
+          isCorrupted = false,
+          itemId = "22",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "item_healkit"
+        },
+        {
+          isCorrupted = false,
+          itemId = "23",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "zarya_flash_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "24",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "zarya_flash_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "25",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "26",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "27",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 12,
+          templateName = "box_12_gauge_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "28",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 12,
+          templateName = "box_12_gauge_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "29",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 12,
+          templateName = "box_12_gauge_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "30",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 12,
+          templateName = "box_12_gauge_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "31",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 12,
+          templateName = "box_12_gauge_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "1131",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "34",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 1,
+          templateName = "item_injector_hot"
+        },
+        {
+          isCorrupted = false,
+          itemId = "35",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "36",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "item_painkiller"
+        },
+        {
+          isCorrupted = false,
+          itemId = "38",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "item_healkit"
+        },
+        {
+          isCorrupted = false,
+          itemId = "40",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "41",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "101",
+          parentItemId = "5",
+          slotName = "equipment_mod_pocket_0",
+          templateName = "zarya_flash_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "102",
+          parentItemId = "5",
+          slotName = "equipment_mod_pocket_1",
+          templateName = "zarya_flash_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "103",
+          parentItemId = "2",
+          slotName = "equipment_mod_pocket_0",
+          templateName = "f1_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "104",
+          parentItemId = "2",
+          slotName = "equipment_mod_pocket_1",
+          templateName = "item_painkiller"
+        }
+      ]
+    },
+    {
+      locked = true
+      name = "Set: Heavy Gunner",
+      charges = 30,
+      items = [
+        {
+          isCorrupted = false,
+          itemId = "1",
+          parentItemId = "0",
+          slotName = "equipment_flashlight",
+          templateName = "flashlight_device"
+        },
+        {
+          isCorrupted = false,
+          itemId = "2",
+          parentItemId = "0",
+          slotName = "equipment_pouch",
+          templateName = "medium_pouch"
+        },
+        {
+          isCorrupted = false,
+          itemId = "3",
+          parentItemId = "0",
+          slotName = "equipment_backpack",
+          templateName = "medium_backpack"
+        },
+        {
+          isCorrupted = false,
+          itemId = "4",
+          parentItemId = "0",
+          slotName = "equipment_helmet",
+          charges = 200,
+          templateName = "helmet_galvion_viper_a3"
+        },
+        {
+          isCorrupted = false,
+          itemId = "5",
+          parentItemId = "0",
+          slotName = "equipment_chronogene_primary_1",
+          templateName = "suit_militant_light_c_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "6",
+          parentItemId = "5",
+          slotName = "equipment_mod_body_0",
+          charges = 180,
+          templateName = "armorplate_big_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "8",
+          parentItemId = "5",
+          slotName = "equipment_mod_left_leg_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "9",
+          parentItemId = "5",
+          slotName = "equipment_mod_right_leg_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "10",
+          parentItemId = "5",
+          slotName = "equipment_mod_left_hand_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "11",
+          parentItemId = "5",
+          slotName = "equipment_mod_right_hand_0",
+          charges = 180,
+          templateName = "armorplate_small_a"
+        },
+        {
+          isCorrupted = false,
+          itemId = "12",
+          parentItemId = "0",
+          slotName = "weapon_0",
+          templateName = "rpk_74_gun"
+        },
+        {
+          isCorrupted = false,
+          itemId = "13",
+          parentItemId = "12",
+          slotName = "magazine",
+          charges = 45,
+          templateName = "rpk_74_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "14",
+          parentItemId = "12",
+          slotName = "scope",
+          templateName = "scope_1p87"
+        },
+        {
+          isCorrupted = false,
+          itemId = "15",
+          parentItemId = "0",
+          slotName = "weapon_2",
+          templateName = "m45a1_gun"
+        },
+        {
+          isCorrupted = false,
+          itemId = "16",
+          parentItemId = "15",
+          slotName = "magazine",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "17",
+          parentItemId = "0",
+          slotName = "weapon_3",
+          templateName = "knife_weapon"
+        },
+        {
+          isCorrupted = false,
+          itemId = "18",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "ussr_molotov_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "19",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "ussr_molotov_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "20",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "21",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "22",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 45,
+          templateName = "rpk_74_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "23",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 45,
+          templateName = "rpk_74_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "24",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 45,
+          templateName = "rpk_74_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "25",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "26",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 1,
+          templateName = "item_injector_hot"
+        },
+        {
+          isCorrupted = false,
+          itemId = "27",
+          parentItemId = "0",
+          slotName = "inventory",
+          templateName = "item_painkiller"
+        },
+        {
+          isCorrupted = false,
+          itemId = "28",
+          parentItemId = "0",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "item_healkit"
+        },
+        {
+          isCorrupted = false,
+          itemId = "29",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "30",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "31",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "ussr_molotov_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "32",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "ussr_molotov_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "33",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 45,
+          templateName = "rpk_74_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "34",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 45,
+          templateName = "rpk_74_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "35",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 45,
+          templateName = "rpk_74_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "36",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 45,
+          templateName = "rpk_74_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "37",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 1,
+          templateName = "item_injector_hot"
+        },
+        {
+          isCorrupted = false,
+          itemId = "39",
+          parentItemId = "3",
+          slotName = "inventory",
+          templateName = "item_painkiller"
+        },
+        {
+          isCorrupted = false,
+          itemId = "41",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 10,
+          templateName = "item_healkit"
+        },
+        {
+          isCorrupted = false,
+          itemId = "43",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 120,
+          templateName = "armorplate_small_b"
+        },
+        {
+          isCorrupted = false,
+          itemId = "44",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 120,
+          templateName = "armorplate_small_b"
+        },
+        {
+          isCorrupted = false,
+          itemId = "45",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 45,
+          templateName = "rpk_74_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "47",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "48",
+          parentItemId = "3",
+          slotName = "inventory",
+          charges = 7,
+          templateName = "m1911_colt_magazine"
+        },
+        {
+          isCorrupted = false,
+          itemId = "101",
+          parentItemId = "5",
+          slotName = "equipment_mod_pocket_0",
+          templateName = "ussr_molotov_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "102",
+          parentItemId = "5",
+          slotName = "equipment_mod_pocket_1",
+          templateName = "ussr_molotov_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "103",
+          parentItemId = "2",
+          slotName = "equipment_mod_pocket_0",
+          templateName = "rdgm_smoke_grenade_item"
+        },
+        {
+          isCorrupted = false,
+          itemId = "104",
+          parentItemId = "2",
+          slotName = "equipment_mod_pocket_1",
+          templateName = "item_painkiller"
+        }
+      ]
+    }
+  ]
+}
+
+return defaultRaidProfile

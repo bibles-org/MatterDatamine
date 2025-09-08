@@ -1,0 +1,285 @@
+repeat{
+  name:t="woodlouse_swarm"
+  selectStrategy:t="ordered"
+
+  utilitySelector{
+    utilVars{
+      updateTimeStep:r=0.05
+      ready:t="util_vars__ready"
+      var:t="util_vars__aggressionLevel"
+      var:t="util_vars__visibleTargets"
+      var:t="util_vars__offenderHitCoef"
+      var:t="util_vars__lastBulletReactionCoef"
+    }
+
+    sequencer{
+      utilFn:t="0.25f / (1f + visibleTargets)"
+      name:t="patrol"
+
+      patroller{}
+      nPhysCorridorMoveToPos{
+        posParam:t="patroller__currentWaypoint"
+        forceToWalk:b=yes
+        sprintTimerRange:p2=0, 0
+        stopDist:r=0.5
+      }
+
+      wait{
+        range:p2=5, 10
+        resetable:b=yes
+      }
+    }
+
+    exitHandler{
+      name:t="shoo"
+      utilFn:t="visibleTargets * (1f + saturate(0.5 - aggressionLevel))"
+
+      sequencer{
+        findDanger{
+          paramName:t="enemy"
+          radiusParamName:t="enemyRadius"
+          minDanger:r=0.1
+          tag:t="human"
+        }
+
+        modifyNode{
+          target:t="walker_agent__targetEid"
+          operator:t="="
+          argIntParam:t="enemy"
+        }
+
+        speak{
+          effect:t="seeDanger"
+          timeMinMax:p2=3, 5
+        }
+
+        success{
+          orderedSelector{
+            checkDistanceToTarget{
+              targetParam:t="walker_agent__targetEid"
+              radius:r=2
+            }
+
+            sequencer{
+              nMeshFindPointNearTarget{
+                posParam:t="walker_agent__targetPos"
+                tries:i=2
+                dist:p2=1.5, 2
+                targetParam:t="walker_agent__targetEid"
+              }
+
+              nPhysCorridorMoveToPos{
+                posParam:t="walker_agent__targetPos"
+                forceToWalk:b=no
+              }
+            }
+          }
+        }
+
+        parallel{
+          nPhysStareAtEntity{
+            targetParam:t="walker_agent__targetEid"
+          }
+
+          wait{
+            range:p2=0.4, 0.6
+            resetable:b=yes
+          }
+        }
+      }
+
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        arg:i=0
+      }
+    }
+
+    exitHandler{
+      name:t="attack"
+      utilFn:t="visibleTargets * (1f + saturate(aggressionLevel - 0.4999))"
+
+      sequencer{
+        findDanger{
+          paramName:t="enemy"
+          radiusParamName:t="enemyRadius"
+          minDanger:r=0.1
+          tag:t="human"
+        }
+
+        modifyNode{
+          target:t="walker_agent__targetEid"
+          operator:t="="
+          argIntParam:t="enemy"
+        }
+
+        success{
+          sequencer{
+            name:t="run_to_target"
+
+            speak{
+              effect:t="seeDanger"
+              timeMinMax:p2=3, 5
+            }
+
+            checkDistanceToTarget{
+              targetParam:t="walker_agent__targetEid"
+              radius:r=10
+            }
+
+            nPhysCorridorMoveToTarget{
+              targetParam:t="walker_agent__targetEid"
+              stopDist:r=3
+            }
+          }
+        }
+
+        repeatUntilFail{
+          count:i=5
+
+          nPhysCorridorMoveToTarget{
+            targetParam:t="walker_agent__targetEid"
+            stopDist:r=1
+          }
+
+          success{
+            sequencer{
+              ignoreChance{
+                chance:r=0.8
+              }
+
+              nPhysCorridorMoveToTarget{
+                targetParam:t="walker_agent__targetEid"
+                forceToWalk:b=no
+                stopDist:r=2
+              }
+
+              runAction{
+                action:t="stand_melee"
+              }
+
+              parallel{
+                nPhysStareAtEntity{
+                  targetParam:t="walker_agent__targetEid"
+                }
+
+                wait{
+                  range:p2=1, 2
+                  resetable:b=yes
+                }
+              }
+            }
+          }
+
+          parallel{
+            nPhysStareAtEntity{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            wait{
+              range:p2=0.4, 0.6
+              resetable:b=yes
+            }
+          }
+
+          checkTarget{
+            targetUnitParam:t="enemy"
+          }
+        }
+      }
+
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        arg:i=0
+      }
+    }
+
+    exitHandler{
+      name:t="aggressive_attack"
+      utilFn:t="visibleTargets * (offenderHitCoef + lastBulletReactionCoef + saturate(aggressionLevel - 1f))"
+
+      sequencer{
+        findDanger{
+          paramName:t="enemy"
+          radiusParamName:t="enemyRadius"
+          minDanger:r=0.1
+          tag:t="human"
+        }
+
+        modifyNode{
+          target:t="walker_agent__targetEid"
+          operator:t="="
+          argIntParam:t="enemy"
+        }
+
+        success{
+          sequencer{
+            name:t="run_to_target"
+
+            speak{
+              effect:t="seeDanger"
+              timeMinMax:p2=3, 5
+            }
+
+            checkDistanceToTarget{
+              targetParam:t="walker_agent__targetEid"
+              radius:r=10
+            }
+
+            nPhysCorridorMoveToTarget{
+              targetParam:t="walker_agent__targetEid"
+              stopDist:r=3
+            }
+          }
+        }
+
+        repeatUntilFail{
+          count:i=2
+
+          nPhysCorridorMoveToTarget{
+            targetParam:t="walker_agent__targetEid"
+            forceToWalk:b=no
+            stopDist:r=3
+          }
+
+          runAction{
+            action:t="stand_melee"
+          }
+
+          parallel{
+            nPhysStareAtEntity{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            wait{
+              range:p2=1, 2
+              resetable:b=yes
+            }
+          }
+
+          parallel{
+            nPhysStareAtEntity{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            wait{
+              range:p2=0.4, 0.6
+              resetable:b=yes
+            }
+          }
+
+          checkTarget{
+            targetUnitParam:t="enemy"
+          }
+        }
+      }
+
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        arg:i=0
+      }
+    }
+  }
+}

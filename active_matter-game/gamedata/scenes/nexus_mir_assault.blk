@@ -1,0 +1,47 @@
+entity{
+  _template:t="raid_description"
+  raid_description__raidType:t="pvp_assault"
+  raid_description__difficulty:t="dif_hard"
+
+  "raid_description__enemies:list<t>"{
+    item:t="operative"
+  }
+
+  "raid_description__images:list<t>"{
+    item:t="ui/zone_thumbnails/nexus_mir_factory_assault_1"
+    item:t="ui/zone_thumbnails/nexus_mir_factory_assault_2"
+    item:t="ui/zone_thumbnails/nexus_mir_factory_assault_3"
+  }
+
+  "raid_description__mcImages:list<t>"{}
+}
+
+entity{
+  _template:t="static_cam"
+  camera__active:b=yes
+  transform:m=[[-0.851422, 0.018971, 0.524141] [-0.134376, 0.9581, -0.252961] [-0.506977, -0.285807, -0.813195] [29.28, 15.7, -7.7]]
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_mir_point_a_precaptured.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_mir_point_c_precaptured.blk"
+}
+
+entity{
+  _template:t="spawnBase+nexus_first_team"
+  transform:m=[[-0.0123815, -0.011331, -0.99986] [-0.0134556, 0.999848, -0.0111642] [0.999832, 0.0133154, -0.012532] [-26.6098, 11.2337, 23.3337]]
+  spawnBase__spawnRadius:r=2
+}
+
+entity{
+  _template:t="spawnBase+nexus_second_team"
+  transform:m=[[0.383085, 0, 0.923714] [0, 1, -0] [-0.923714, 0, 0.383085] [29.9362, 5.63943, -52.5627]]
+  spawnBase__spawnRadius:r=2
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_mir_common.blk"
+}

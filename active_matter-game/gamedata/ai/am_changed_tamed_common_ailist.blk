@@ -1,0 +1,628 @@
+sequencer{
+  name:t="sub.changed.tamed.run_to_master"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=1
+      }
+
+      subTree{
+        treeName:t="sub.clearPath"
+      }
+
+      subTree{
+        treeName:t="sub.recalculateTreeOnStuck"
+      }
+    }
+  }
+
+  checkAlive{
+    targetParam:t="minion_creature__masterEid"
+  }
+
+  orderedSelector{
+    sequencer{
+      nMeshFindDirectionalPointNearTargetWithNavmeshMapping{
+        posParam:t="walker_agent__targetPos"
+        tries:i=2
+        dist:p2=1.85, 4.5
+        targetParam:t="minion_creature__masterEid"
+        tracerayNavmesh:b=yes
+        directionAngle:r=0
+        angleRangeSpread:p2=-85, 85
+      }
+
+      success{
+        orderedSelector{
+          sequencer{
+            checkDistanceToTarget{
+              targetParam:t="minion_creature__masterEid"
+              radius:r=10
+            }
+
+            parallel{
+              nPhysCorridorMoveToPosWithNavmeshMapping{
+                posParam:t="walker_agent__targetPos"
+                forceToWalk:b=yes
+                stopDist:r=1.5
+              }
+
+              wait{
+                range:p2=4.3, 6.4
+                resetable:b=yes
+              }
+            }
+          }
+
+          sequencer{
+            ignoreChance{
+              chance:r=0.1
+            }
+
+            checkDistanceToTarget{
+              targetParam:t="minion_creature__masterEid"
+              radius:r=20
+            }
+
+            parallel{
+              nPhysCorridorMoveToPosWithNavmeshMapping{
+                posParam:t="walker_agent__targetPos"
+                forceToWalk:b=no
+                stopDist:r=1.25
+              }
+
+              wait{
+                range:p2=7.3, 9.4
+                resetable:b=yes
+              }
+            }
+          }
+
+          pursueTargetWithBlinks{
+            targetParam:t="minion_creature__masterEid"
+            forceToWalk:b=no
+            stopDist:r=2
+            navLookAhead:r=1.5
+            loseInvisibleTarget:b=no
+          }
+        }
+      }
+
+      nPhysLookAtEntityWithPositionMapping{
+        targetParam:t="minion_creature__masterEid"
+      }
+
+      wait{
+        range:p2=0.3, 1.4
+        resetable:b=yes
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.changed.tamed.check_should_run_to_master"
+
+  checkAlive{
+    targetParam:t="minion_creature__masterEid"
+  }
+
+  orderedSelector{
+    not{
+      checkDistanceToTarget{
+        targetParam:t="minion_creature__masterEid"
+        radius:r=25
+      }
+    }
+
+    sequencer{
+      not{
+        orderedSelector{
+          checkAlive{
+            targetParam:t="walker_agent__targetEid"
+          }
+
+          checkAlive{
+            targetParam:t="minion_creature__lastDangerEid"
+          }
+        }
+      }
+
+      not{
+        checkDistanceToTarget{
+          targetParam:t="minion_creature__masterEid"
+          radius:r=6
+        }
+      }
+    }
+  }
+
+  orderedSelector{
+    compareNode{
+      lhs:t="walker_agent__targetEid"
+      operator:t="=="
+      rhs:i=0
+    }
+
+    compareNode{
+      lhs:t="changed__loseInterestAt"
+      operator:t="<"
+      rhs:t="agent_dangers__time"
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.changed.tamed.run_to_walk_mark"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=1
+      }
+
+      subTree{
+        treeName:t="sub.clearPath"
+      }
+
+      subTree{
+        treeName:t="sub.recalculateTreeOnStuck"
+      }
+    }
+  }
+
+  checkAlive{
+    targetParam:t="minion_creature__masterEid"
+  }
+
+  minionCreatureFindStandPos{
+    posParam:t="minion_creature__standPos"
+    walkMarksOnly:b=yes
+  }
+
+  orderedSelector{
+    sequencer{
+      checkDistanceToPos{
+        posParam:t="minion_creature__standPos"
+        radius:r=10
+      }
+
+      parallel{
+        nPhysCorridorMoveToPosWithNavmeshMapping{
+          posParam:t="minion_creature__standPos"
+          forceToWalk:b=no
+          stopDist:r=0.5
+        }
+
+        wait{
+          range:p2=7.3, 9.4
+          resetable:b=yes
+        }
+      }
+    }
+
+    moveToPosWithBlinks{
+      posParam:t="minion_creature__standPos"
+      forceToWalk:b=no
+      navLookAhead:r=0.75
+      blinkPeriod:p2=0.7, 2
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.changed.tamed.check_should_run_to_walk_mark"
+
+  checkAlive{
+    targetParam:t="minion_creature__masterEid"
+  }
+
+  minionCreatureFindStandPos{
+    posParam:t="minion_creature__standPos"
+    walkMarksOnly:b=yes
+  }
+
+  orderedSelector{
+    not{
+      checkDistanceToPos{
+        posParam:t="minion_creature__standPos"
+        radius:r=15
+      }
+    }
+
+    sequencer{
+      not{
+        orderedSelector{
+          checkAlive{
+            targetParam:t="walker_agent__targetEid"
+          }
+
+          checkAlive{
+            targetParam:t="minion_creature__lastDangerEid"
+          }
+        }
+      }
+
+      not{
+        checkDistanceToPos{
+          posParam:t="minion_creature__standPos"
+          radius:r=6
+        }
+      }
+    }
+  }
+
+  orderedSelector{
+    compareNode{
+      lhs:t="walker_agent__targetEid"
+      operator:t="=="
+      rhs:i=0
+    }
+
+    compareNode{
+      lhs:t="changed__loseInterestAt"
+      operator:t="<"
+      rhs:t="agent_dangers__time"
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.reaction.changed.tamed.check_out_of_stand_pos"
+
+  orderedSelector{
+    compareNode{
+      lhs:t="beh_tree__interruptDisabled"
+      operator:t="=="
+      rhs:r=1
+    }
+
+    ifThenElse{
+      minionCreatureIsWalkMarkExists{}
+      sequencer{
+        subTree{
+          treeName:t="sub.changed.tamed.check_should_run_to_walk_mark"
+        }
+
+        selectNode{
+          name:t="sub.changed.tamed.go_to_stand_pos_if_required"
+        }
+      }
+
+      sequencer{
+        subTree{
+          treeName:t="sub.changed.tamed.check_should_run_to_master"
+        }
+
+        selectNode{
+          name:t="sub.changed.tamed.go_to_stand_pos_if_required"
+        }
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.changed.tamed.aimlessly_walk_around"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=1
+      }
+
+      subTree{
+        treeName:t="sub.reaction.changed.tamed.check_out_of_stand_pos"
+      }
+
+      subTree{
+        treeName:t="sub.attackReaction"
+      }
+
+      subTree{
+        treeName:t="sub.clearPath"
+      }
+
+      subTree{
+        treeName:t="sub.recalculateTreeOnStuck"
+      }
+    }
+  }
+
+  ignoreChance{
+    chance:r=0.25
+  }
+
+  checkAlive{
+    targetParam:t="minion_creature__masterEid"
+  }
+
+  not{
+    minionCreatureFindDanger{
+      paramName:t="enemy"
+      radiusParamName:t="enemyRadius"
+      minDanger:r=0.1
+      idleCheck:b=yes
+    }
+  }
+
+  modifyNode{
+    target:t="walker_agent__targetEid"
+    operator:t="="
+    arg:i=0
+  }
+
+  setTime{
+    to:t="agent_dangers__time"
+  }
+
+  modifyNode{
+    target:t="agent_dangers__time"
+    operator:t="-"
+    arg:r=3
+  }
+
+  wait{
+    range:p2=0.1, 0.3
+    resetable:b=yes
+  }
+
+  checkAlive{
+    targetParam:t="minion_creature__masterEid"
+  }
+
+  minionCreatureFindStandPos{
+    posParam:t="minion_creature__standPos"
+  }
+
+  nMeshFindRandomPointAroundPosWithNavmeshMapping{
+    posParam:t="walker_agent__targetPos"
+    tries:i=2
+    dist:p2=3.5, 8.5
+    aroundPos:t="minion_creature__standPos"
+  }
+
+  parallel{
+    nPhysCorridorMoveToPosWithNavmeshMapping{
+      posParam:t="walker_agent__targetPos"
+      forceToWalk:b=yes
+      stopDist:r=1
+      navLookAhead:r=0.75
+    }
+
+    wait{
+      range:p2=4.5, 4.5
+      resetable:b=yes
+    }
+  }
+
+  not{
+    findFlankableTarget{
+      useLargeRadius:b=no
+      minDanger:r=0.1
+    }
+  }
+
+  randomSelector{
+    wait{
+      range:p2=1.3, 7.7
+      resetable:b=yes
+    }
+
+    sequencer{
+      ignoreChance{
+        chance:r=0.4
+      }
+
+      wait{
+        range:p2=0.5, 1.7
+        resetable:b=yes
+      }
+
+      parallel{
+        nPhysStareAtEntityWithPositionMapping{
+          targetParam:t="minion_creature__masterEid"
+        }
+
+        wait{
+          range:p2=2.7, 7.7
+          resetable:b=yes
+        }
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.changed.tamed.stare_at_master"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=1
+      }
+
+      subTree{
+        treeName:t="sub.reaction.changed.tamed.check_out_of_stand_pos"
+      }
+
+      subTree{
+        treeName:t="sub.attackReaction"
+      }
+
+      subTree{
+        treeName:t="sub.clearPath"
+      }
+
+      subTree{
+        treeName:t="sub.recalculateTreeOnStuck"
+      }
+    }
+  }
+
+  ignoreChance{
+    chance:r=0.6
+  }
+
+  not{
+    minionCreatureFindDanger{
+      paramName:t="enemy"
+      radiusParamName:t="enemyRadius"
+      minDanger:r=0.1
+      idleCheck:b=yes
+    }
+  }
+
+  modifyNode{
+    target:t="walker_agent__targetEid"
+    operator:t="="
+    arg:i=0
+  }
+
+  checkAlive{
+    targetParam:t="minion_creature__masterEid"
+  }
+
+  parallel{
+    nPhysStareAtEntityWithPositionMapping{
+      targetParam:t="minion_creature__masterEid"
+    }
+
+    wait{
+      range:p2=2.7, 8.7
+      resetable:b=yes
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.changed.tamed.go_to_stand_pos_if_required"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=1
+      }
+
+      subTree{
+        treeName:t="sub.clearPath"
+      }
+
+      sequencer{
+        hasTimePassed{
+          from:t="changed__targetLostAt"
+          duration:t="changed__targetIndifferenceTime"
+        }
+
+        modifyNode{
+          target:t="walker_agent__targetEid"
+          operator:t="="
+          arg:i=0
+        }
+
+        minionCreatureFindDanger{
+          paramName:t="enemy"
+          radiusParamName:t="enemyRadius"
+          minDanger:r=0.1
+          idleCheck:b=yes
+        }
+
+        modifyNode{
+          target:t="walker_agent__targetEid"
+          operator:t="="
+          argIntParam:t="enemy"
+        }
+
+        setTime{
+          to:t="changed__loseInterestAt"
+        }
+
+        modifyNode{
+          target:t="changed__loseInterestAt"
+          operator:t="+"
+          arg:t="changed__agroOnAwakened"
+        }
+
+        selectNode{
+          name:t="attack"
+        }
+      }
+
+      subTree{
+        treeName:t="sub.recalculateTreeOnStuck"
+      }
+    }
+  }
+
+  subTree{
+    treeName:t="sub.return_to_navmesh"
+  }
+
+  setTime{
+    to:t="changed__targetLostAt"
+  }
+
+  ifThenElse{
+    minionCreatureIsWalkMarkExists{}
+    sequencer{
+      subTree{
+        treeName:t="sub.changed.tamed.check_should_run_to_walk_mark"
+      }
+
+      subTree{
+        treeName:t="sub.changed.tamed.run_to_walk_mark"
+      }
+    }
+
+    sequencer{
+      subTree{
+        treeName:t="sub.changed.tamed.check_should_run_to_master"
+      }
+
+      subTree{
+        treeName:t="sub.changed.tamed.run_to_master"
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.reaction.changed.tamed.attack_regular_check"
+
+  orderedSelector{
+    compareNode{
+      lhs:t="beh_tree__interruptDisabled"
+      operator:t="=="
+      rhs:r=1
+    }
+
+    subTree{
+      treeName:t="sub.reaction.changed.tamed.check_out_of_stand_pos"
+    }
+
+    subTree{
+      treeName:t="sub.attackReaction"
+    }
+  }
+}

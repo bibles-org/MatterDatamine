@@ -1,0 +1,29 @@
+server_no_players_timer{
+  _singleton:b=yes
+
+  "server_no_players_timer__handle:u64"{
+    value:i64=0
+    _tags:t="server"
+  }
+}
+
+server_stats_controller{
+  _use:t="replicating"
+  _singleton:b=yes
+  server_stats_controller__fps:r=0
+  _tracked:t="server_stats_controller__fps"
+  _replicated:t="server_stats_controller__fps"
+  server_stats_controller__dtMinMaxAvg:p3=0, 0, 0
+  _tracked:t="server_stats_controller__dtMinMaxAvg"
+  _replicated:t="server_stats_controller__dtMinMaxAvg"
+
+  "server_stats_controller:tag"{}
+  _group{
+    _tags:t="server"
+    server_stats_controller__updateInterval:r=1
+    server_stats_controller__framesCounter:i=0
+    server_stats_controller__dtMinMaxAvgCounter:p3=0, 0, 0
+    server_stats_controller__lastUpdateAt:r=0
+    server_stats_controller__updateAt:r=0
+  }
+}

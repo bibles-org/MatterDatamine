@@ -1,0 +1,478 @@
+import:t="vehicle_sounds/am_ground_vehicle_sounds.blk"
+import:t="vehicle_sounds/am_ship_vehicle_sounds.blk"
+import:t="vehicle_sounds/am_plane_vehicle_sounds.blk"
+
+reverb_sound{
+  _use:t="base_reverb_sound"
+
+  _group{
+    _tags:t="sound"
+
+    "reverb_sound__physmatAbsorption:array"{
+      "metal:object"{
+        valueMinMax:p2=0, 0
+
+        "physmats:list<t>"{
+          item:t="steel"
+          item:t="metal"
+          item:t="train"
+          item:t="softSteelDoor"
+          item:t="glass"
+        }
+      }
+
+      "stone:object"{
+        valueMinMax:p2=0.2, 0.2
+
+        "physmats:list<t>"{
+          item:t="concrete"
+          item:t="stone"
+          item:t="buildings"
+          item:t="ceramic"
+          item:t="rocks"
+          item:t="rocksSlippery"
+          item:t="ice"
+        }
+      }
+
+      "default:object"{
+        valueMinMax:p2=0.2, 0.2
+
+        "physmats:list<t>"{
+          item:t="default"
+          item:t="horLandMesh"
+          item:t="verLandMesh"
+          item:t="small_debris"
+          item:t="small_decor"
+          item:t="bullet_transparent"
+        }
+      }
+
+      "soil:object"{
+        valueMinMax:p2=0.5, 0.5
+
+        "physmats:list<t>"{
+          item:t="soil"
+          item:t="roadSoil"
+          item:t="road"
+        }
+      }
+
+      "wood:object"{
+        valueMinMax:p2=0.8, 0.8
+
+        "physmats:list<t>"{
+          item:t="wood"
+          item:t="wood_railway"
+          item:t="window_wood"
+          item:t="softWoodDoor"
+          item:t="paper"
+        }
+      }
+
+      "max_absorption:object"{
+        valueMinMax:p2=1, 1
+
+        "physmats:list<t>"{
+          item:t="waterPuddle"
+          item:t="water3d"
+          item:t="water"
+          item:t="bushes"
+          item:t="barbwire"
+          item:t="cactus"
+          item:t="flesh"
+          item:t="quickSand"
+          item:t="hay"
+          item:t="sand"
+          item:t="roadSand"
+          item:t="quarrySand"
+          item:t="sand_slope"
+          item:t="fabric"
+          item:t="rubber"
+          item:t="plastic"
+          item:t="snow"
+          item:t="snowLower"
+          item:t="roadSnow"
+          item:t="mud"
+          item:t="dirt"
+          item:t="walker"
+          item:t="walkRay"
+          item:t="climbAiRay"
+          item:t="walkerBot"
+          item:t="bulletRay"
+          item:t="aimRay"
+          item:t="cameraRay"
+          item:t="tankTrack"
+          item:t="wheel"
+          item:t="spraySpawnerRay"
+          item:t="bombCraterCast"
+          item:t="gunRay"
+          item:t="build_ray"
+          item:t="changedFlesh"
+          item:t="bushes_wall"
+          item:t="bushesTransparent"
+          item:t="activeMatterCore"
+          item:t="aiRay"
+        }
+      }
+    }
+  }
+}
+
+music_player{
+  _use:t="sound_banks_state"
+  _use:t="replicating"
+  _singleton:b=yes
+  _tracked:t="music_player__volume"
+  _tracked:t="music_player__track"
+  _tracked:t="music_player__trackLength"
+  _tracked:t="music_player__isPlaying"
+  _tracked:t="music_player__readyToPlay"
+
+  _group{
+    _tags:t="sound"
+    music_player__volume:r=1
+    music_player__readyToPlay:b=no
+    music_player__trackLength:i=0
+    music_player__pos:i=0
+    music_player__track:t=""
+    music_player__isPlaying:b=no
+
+    "music_player__event:SoundEvent"{}
+  }
+}
+
+shell_shatters_sounds{
+  _use:t="replicating"
+  shell_shatters_sounds__nextTime:r=0
+  shell_shatters_sounds__cooldown:r=4
+  _singleton:b=yes
+}
+
+oneshot_scene_net_sound{
+  _group{
+    _tags:t="server"
+    oneshot_scene_net_sound__desc:t=""
+  }
+}
+
+game_effect_server_sound_appear{
+  game_effect_server_sound__appear:t=""
+}
+
+entity_hit_sound{
+  _group{
+    _tags:t="sound"
+    entity_hit_sound__nextAt:r=0
+    entity_hit_sound__cooldown:r=1
+    entity_hit_sound__path:t=""
+  }
+}
+
+turret_sound{
+  _group{
+    _tags:t="sound"
+    turret_sound__path:t="player/vehicle/tank/common/turret"
+
+    "turret_sound__event:SoundEvent"{}
+  }
+}
+
+turret_sound_with_group{
+  _use:t="turret_sound"
+
+  "turret_sound_group:tag"{}
+}
+
+sound_with_destroyable_ri_extra{
+  ri_extra__destroyed:b=no
+
+  ri_extra{}
+  "ri_extra__handle:u64"{
+    value:i64=-1
+  }
+}
+
+destroyable_sound_effect{
+  _use:t="sound_effect"
+  _use:t="sound_with_destroyable_ri_extra"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+sound_effect_generator{
+  _use:t="replicating"
+  ri_extra_gen__blk:t=""
+
+  ri_extra_gen{
+    _tags:t="server"
+  }
+}
+
+am_human_melee_impact_sound_physmat{
+  _use:t="human_melee_impact_sound_physmat"
+
+  _group{
+    _tags:t="sound"
+
+    "sound_physmat__soundMaterials:list<t>"{
+      mat:t="default"
+      mat:t="concrete"
+      mat:t="water"
+      mat:t="wood"
+      mat:t="metal"
+      mat:t="cactus"
+      mat:t="plastic"
+      mat:t="rubber"
+      mat:t="glass"
+    }
+
+    "sound_physmat__physmatToSoundmat:object"{
+      concrete:t="concrete"
+      stone:t="concrete"
+      buildings:t="concrete"
+      rocks:t="concrete"
+      rocksSlippery:t="concrete"
+      gravel:t="concrete"
+      ceramic:t="concrete"
+      water:t="water"
+      water3d:t="water"
+      waterPuddle:t="water"
+      wood:t="wood"
+      wood_railway:t="wood"
+      wood_solid:t="wood"
+      window_wood:t="wood"
+      cactus:t="cactus"
+      softWoodDoor:t="wood"
+      metal:t="metal"
+      steel:t="metal"
+      train:t="metal"
+      softSteelDoor:t="metal"
+      plastic:t="plastic"
+      rubber:t="rubber"
+      glass:t="glass"
+      flesh:t=""
+    }
+  }
+}
+
+am_sound_step_settings{
+  _use:t="sound_step_settings"
+
+  _group{
+    _tags:t="sound"
+
+    "sound_physmat__soundMaterials:list<t>"{
+      mat:t="grass"
+      mat:t="concrete"
+      mat:t="water"
+      mat:t="wood"
+      mat:t="metal"
+      mat:t="mud"
+      mat:t="highgrass"
+      mat:t="fabric"
+      mat:t="snow"
+      mat:t="sand"
+      mat:t="barbwire"
+      mat:t="ice"
+      mat:t="gravel"
+      mat:t="leaves"
+      mat:t="plastic"
+      mat:t="glass"
+    }
+
+    "sound_physmat__physmatToSoundmat:object"{
+      barbwire:t="barbwire"
+      buildings:t="concrete"
+      bushes_dead:t="highgrass"
+      bushes_fall:t="highgrass"
+      bushes_palm:t="highgrass"
+      bushes_snow:t="highgrass"
+      bushes_wall:t="highgrass"
+      bushes:t="highgrass"
+      bushesTransparent:t="highgrass"
+      cactus:t="wood"
+      ceramic:t="glass"
+      changedFlesh:t="mud"
+      concrete:t="concrete"
+      dirt:t="grass"
+      fabric:t="fabric"
+      flesh:t="mud"
+      flowermanFlesh:t="mud"
+      glass:t="glass"
+      gravel:t="gravel"
+      hay:t="highgrass"
+      ice:t="ice"
+      invisibleManFlesh:t="mud"
+      metal_grid:t="metal"
+      metal:t="metal"
+      mud:t="mud"
+      paper:t="concrete"
+      pebbles:t="gravel"
+      plastic:t="plastic"
+      quarrySand:t="sand"
+      quickSand:t="sand"
+      road:t="concrete"
+      roadAsphalt:t="concrete"
+      roadConcrete:t="concrete"
+      roadGravel:t="gravel"
+      roadMud:t="mud"
+      roadSand:t="sand"
+      roadSnow:t="snow"
+      roadSoil:t="grass"
+      rocks:t="concrete"
+      rocksSlippery:t="concrete"
+      rubber:t="fabric"
+      sand_slope:t="sand"
+      sand:t="sand"
+      sandbag:t="fabric"
+      small_debris:t="gravel"
+      small_decor:t="concrete"
+      snow:t="snow"
+      snowLower:t="snow"
+      softSteelDoor:t="metal"
+      softWoodDoor:t="wood"
+      soil:t="grass"
+      steel:t="metal"
+      stone:t="concrete"
+      train:t="metal"
+      water:t="water"
+      water3d:t="water"
+      waterPuddle:t="water"
+      window_wood:t="wood"
+      wood_dead_solid:t="wood"
+      wood_dead:t="wood"
+      wood_fall_solid:t="wood"
+      wood_fall:t="wood"
+      wood_palm_solid:t="wood"
+      wood_palm:t="wood"
+      wood_railway:t="wood"
+      wood_snow_solid:t="wood"
+      wood_snow:t="wood"
+      wood_solid:t="wood"
+      wood:t="wood"
+    }
+  }
+}
+
+am_projectile_sound_physmat{
+  _use:t="projectile_sound_physmat"
+
+  _group{
+    _tags:t="sound"
+
+    "sound_physmat__soundMaterials:list<t>"{
+      mat:t="default"
+      mat:t="concrete"
+      mat:t="water"
+      mat:t="wood"
+      mat:t="metal"
+      mat:t="cactus"
+      mat:t="plastic"
+      mat:t="rubber"
+      mat:t="glass"
+    }
+
+    "sound_physmat__physmatToSoundmat:object"{
+      dirt:t="default"
+      concrete:t="concrete"
+      stone:t="concrete"
+      buildings:t="concrete"
+      rocks:t="concrete"
+      rocksSlippery:t="concrete"
+      gravel:t="concrete"
+      ceramic:t="concrete"
+      water:t="water"
+      water3d:t="water"
+      waterPuddle:t="water"
+      wood:t="wood"
+      wood_railway:t="wood"
+      wood_solid:t="wood"
+      window_wood:t="wood"
+      cactus:t="cactus"
+      softWoodDoor:t="wood"
+      metal:t="metal"
+      steel:t="metal"
+      train:t="metal"
+      softSteelDoor:t="metal"
+      plastic:t="plastic"
+      rubber:t="rubber"
+      glass:t="glass"
+    }
+  }
+}
+
+am_projectile_sound_settings{
+  _use:t="am_projectile_sound_physmat"
+  _use:t="wiz_sound_settings"
+  _use:t="shell_shatter_sound_settings"
+}
+
+am_traps_managed_sound{
+  _use:t="base_managed_sound"
+
+  _group{
+    _tags:t="sound"
+    managed_sound__type:t="traps"
+  }
+}
+
+am_fx_managed_sound{
+  _use:t="base_managed_sound"
+
+  _group{
+    _tags:t="sound"
+    managed_sound__type:t="fx"
+    managed_sound__maxInstances:i=3
+  }
+}
+
+fire_source_managed_sound_effect{
+  _use:t="sound_effect"
+  _use:t="moveable_sound_effect_tag"
+  _use:t="am_fx_managed_sound"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/fire/fire_molotov"
+  }
+}
+
+sliding_rendinst_moving_sound{
+  _group{
+    _tags:t="sound"
+    sliding_rendinst_moving_sound__slidedState:b=no
+    sliding_rendinst_moving_sound__forwardPath:t=""
+    sliding_rendinst_moving_sound__backwardPath:t=""
+
+    "sliding_rendinst_moving_sound__event:SoundEvent"{}
+  }
+}
+
+using_item_irq_sound{
+  _group{
+    _tags:t="sound"
+
+    "using_item_irq_sound__paths:shared:object"{}
+  }
+}
+
+am_scene_net_sounds{
+  _use:t="scene_net_sounds"
+
+  "net_sound__descs:shared:object"{
+    "gravityHookZoneSound:object"{
+      path:t="impact/grenade_gravity"
+      range:r=0
+    }
+
+    "explGrenadeFlash:object"{
+      path:t="impact/grenade_flash"
+      range:r=50
+    }
+
+    "screamAffect:object"{
+      path:t="enemy/walker/changed/voice_fx/ability"
+      range:r=1000
+    }
+  }
+}

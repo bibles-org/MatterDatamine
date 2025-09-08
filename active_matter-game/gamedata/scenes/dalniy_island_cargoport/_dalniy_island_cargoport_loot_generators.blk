@@ -1,0 +1,123 @@
+entity{
+  _template:t="used_game_objects_registry"
+  used_game_objects__type:t="loot_box"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box"
+  loot_generator__lootPreset:t="cargoport_overall_zone_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="military_container_loot_box"
+  transform:m=[[-11.6978, 0, -0.0432262] [0, 8.02605, 0] [0.132425, 0, -35.8365] [1172.53, 8.89022, 1573.63]]
+  loot_generator__referenceGridCellsNum:i=-1
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="cargoport_hangar_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="container_t2"
+  transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [950, 6, 1832]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="cargoport_military_t2_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="container_t3"
+  transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [950, 6, 1832]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="cargoport_military_t3_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="cafe_heal"
+  transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [950, 6, 1832]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="cargoport_cafe_heal_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box_anomaly"
+  transform:m=[[1500, 0, 0] [0, 1500, 0] [0, 0, 1500] [807.03, 101.337, 1990.07]]
+  loot_generator__referenceGridCellsNum:i=-1
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="cargoport_anomaly_loot_preset"
+}
+
+entity{
+  _template:t="military_uaz_lootable_rendinst_1"
+  transform:m=[[-0.506806, -0.487797, 0.710775] [-0.859122, 0.353815, -0.369763] [-0.071114, -0.79804, -0.598393] [893.649, 74.9895, 2028.21]]
+}
+
+entity{
+  _template:t="military_uaz_lootable_rendinst_1"
+  transform:m=[[-0.486456, -0.789005, 0.375276] [-0.859122, 0.353815, -0.369763] [0.158966, -0.502281, -0.849967] [894.805, 72.3576, 2023.01]]
+}
+
+entity{
+  _template:t="military_barge_small_lootable_rendinst"
+  transform:m=[[0.294671, -0.116323, -0.948493] [-0.365318, -0.930883, 0.000668555] [-0.883013, 0.346304, -0.316799] [833.771, 196.117, 2002.51]]
+}
+
+entity{
+  _template:t="military_barge_small_lootable_rendinst"
+  transform:m=[[0.862409, -0.338716, -0.376193] [-0.365318, -0.930883, 0.000668555] [-0.350418, 0.136853, -0.926541] [832.704, 196.533, 1997.98]]
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="anomaly_barge_7"
+  transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [807.03, 101.337, 1990.07]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="cargoport_anomaly_barge_7_loot_preset"
+}
+
+entity{
+  _template:t="military_ural"
+  transform:m=[[0.988681, -0.0101187, 0.149693] [0.00946769, 0.999943, 0.00506069] [-0.149735, -0.00358616, 0.98872] [815.033, 4.97068, 1597.37]]
+}
+
+entity{
+  _template:t="ural_flatbed"
+  transform:m=[[0.998698, 0.00388266, 0.0508658] [-0.00324523, 0.999915, -0.0126081] [-0.0509105, 0.0124266, 0.998626] [637.52, 4.99234, 1798.88]]
+}
+
+entity{
+  _template:t="ural_flatbed"
+  transform:m=[[-0.976552, 0.00465191, -0.21523] [0.00230237, 0.999935, 0.0111658] [0.215268, 0.0104085, -0.9765] [1006.67, 5.07942, 1926.4]]
+}
+
+entity{
+  _template:t="military_ural"
+  transform:m=[[-0.0404192, -0.00672594, -0.99916] [0.0339777, 0.99939, -0.00810199] [0.998605, -0.0342766, -0.040166] [1213.37, 5.01364, 1916.41]]
+}
+
+entity{
+  _template:t="ural_flatbed"
+  transform:m=[[-0.993644, 0.0102865, -0.112098] [0.0108577, 0.999931, -0.00448644] [0.112044, -0.00567505, -0.993687] [869.011, 4.98119, 1762.2]]
+}
+
+entity{
+  _template:t="military_ural"
+  transform:m=[[-0.191861, -0.0100338, 0.981371] [-0.0128813, 0.999887, 0.00770482] [-0.981338, -0.011163, -0.191968] [1029.86, 4.92044, 1670.37]]
+}
+
+entity{
+  _template:t="military_ural"
+  transform:m=[[0.979112, 0.00477883, -0.203265] [-0.0150363, 0.998688, -0.0489495] [0.202764, 0.0509834, 0.977899] [817.949, 31.299, 1309.29]]
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="gravizone_am_pile"
+  loot_generator__lootPreset:t="cargoport_gravizone_am_pile_loot_preset"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2000, 0, 0] [0, 2000, 0] [0, 0, 2000] [888.5, 6, 1678.5]]
+}

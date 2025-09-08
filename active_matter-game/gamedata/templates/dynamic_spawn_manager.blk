@@ -1,0 +1,35 @@
+dynamic_spawn_manager{
+  _use:t="loot_drop_system"
+  dynamic_spawn_manager__updateDt:r=20
+  dynamic_spawn_manager__beforeSuccessUpdateDt:r=3
+  dynamic_spawn_manager__hasSuccess:b=no
+  dynamic_spawn_manager__nextUpdateAtTime:r=-1
+  dynamic_spawn_manager__entitiesInWorldNumLimits:ip2=0, 1
+  dynamic_spawn_manager__spawnPosTag:t=""
+}
+
+dynamic_spawn_item{
+  "dynamic_spawn_item__managerEid:eid"{}
+}
+
+base_spawn_preset{
+  _use:t="base_drop_preset"
+  _use:t="ecs_no_debug"
+}
+
+random_spawn_preset{
+  _use:t="base_spawn_preset"
+
+  "spawn_preset__randomSpawn:tag"{}
+}
+
+spawn_far_from_people{
+  _use:t="base_spawn_preset"
+  spawn_preset__searchForHumansRadius:r=100
+}
+
+base_spawn_pos{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "spawn_pos__managedEntityEid:eid"{}
+}

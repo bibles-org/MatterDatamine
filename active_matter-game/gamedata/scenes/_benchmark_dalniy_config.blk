@@ -1,0 +1,88 @@
+import{
+  scene:t="gamedata/scenes/_dalniy_island_sparse_water_calm.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_dalniy_island_sounds.blk"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel8"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel9"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel10"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel11"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel12"
+}
+
+import{
+  scene:t="gamedata/scenes/_dalniy_island_sparse_shadervars.blk"
+}
+
+entity{
+  _template:t="wind"
+  wind__noiseScale:r=100
+  wind__noiseSpeed:r=4
+  wind__strength:r=2
+}
+
+entity{
+  _template:t="door_mult_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_doors.blk"
+}
+
+entity{
+  _template:t="misc_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_misc.blk"
+}
+
+entity{
+  _template:t="transparent_partition"
+}
+
+import{
+  scene:t="gamedata/scenes/_dalniy_island_nmesh_mapping_zones.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_dalniy_island_nmesh_mapping_negation_zones.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_dalniy_island_nature_common.blk"
+}
+
+entity{
+  _template:t="postfx_color_grading_tonemap_death_alive"
+}
+
+entity{
+  _template:t="ground_holes_updater"
+}
+
+entity{
+  _template:t="underground_zones_updater"
+}
+
+entity{
+  _template:t="am_bot_spawner"
+  bot_spawner__spawnAt:r=1e+07
+  bot_spawner__spawnInterval:r=20
+  bot_spawner__botsPerGroupMinMax:ip2=1, 3
+}

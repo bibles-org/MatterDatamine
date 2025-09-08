@@ -1,0 +1,287 @@
+gravity_zones_grid{
+  editableObj:b=no
+  _use:t="replicating"
+  _singleton:b=yes
+  grid_holder__type:t="gravity_zones"
+  grid_holder__typeHash:i=0
+  grid_holder__cellSize:i=32
+
+  grid_holder{}
+}
+
+gravity_zones_grid_obj{
+  grid_obj__gridType:t="gravity_zones"
+  grid_obj__hidden:i=0
+  grid_obj__fixedTmScale:r=-1
+  _replicated:t="grid_obj__hidden"
+  _tracked:t="grid_obj__hidden"
+
+  grid_obj{}
+  "grid_obj__scaledBoxBounding:tag"{}
+  "net__alwaysInScope:tag"{}
+}
+
+gravity_zone_base{
+  _use:t="replicating"
+  _use:t="gravity_zones_grid_obj"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  grav_zone__itm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  grav_zone__precalcScale:p3=1, 1, 1
+  _tracked:t="transform"
+  grav_zone__type:i=0
+  grav_zone__isImportant:b=no
+  grav_zone__level:i=1
+  grav_zone__weight:r=1
+}
+
+gravity_zone_sphere{
+  _use:t="gravity_zone_base"
+  grav_zone__innerRadius:r=100
+  grav_zone__outerRadius:r=200
+}
+
+gravity_zone_box{
+  _use:t="gravity_zone_base"
+  gravity_zone__boxSize:p3=1, 1, 1
+  grav_zone__boxBorderX:p2=0, 0
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=0, 0
+}
+
+gravity_zone_cylinder{
+  _use:t="gravity_zone_base"
+  grav_zone__length:r=5
+  grav_zone__radius:r=5
+  grav_zone__type:i=3
+}
+
+gravity_zone_sphere_rad{
+  _use:t="gravity_zone_sphere"
+  grav_zone__type:i=1
+}
+
+gravity_zone_15m{
+  _use:t="gravity_zone_sphere"
+  grav_zone__innerRadius:r=15
+  grav_zone__outerRadius:r=20
+}
+
+gravity_zone_25m{
+  _use:t="gravity_zone_sphere"
+  grav_zone__innerRadius:r=25
+  grav_zone__outerRadius:r=32.5
+}
+
+gravity_zone_40m{
+  _use:t="gravity_zone_sphere"
+  grav_zone__innerRadius:r=40
+  grav_zone__outerRadius:r=50
+}
+
+gravity_zone_box_gd_island{
+  _use:t="gravity_zone_box"
+  grav_zone__boxBorderX:p2=2, 2
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=2, 2
+}
+
+antigrav_character{
+  camera__isStabilized:b=no
+
+  "grav_zones_affected:tag"{}
+}
+
+indoor_grav_zone{
+  _singleton:b=yes
+  _use:t="replicating"
+  _use:t="gravity_zone_box"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _replicated:t="gravity_zone__boxSize"
+  gravity_zone__boxSize:p3=1, 1, 1
+  indoor_grav_zone__duration:r=0
+  indoor_grav_zone__timeLeft:r=0
+  _replicated:t="indoor_grav_zone__timeLeft"
+  _replicated:t="indoor_grav_zone__duration"
+
+  _group{
+    _tags:t="server"
+    indoor_grav_zone__visualTempl:t="indoor_euclid_central_sphere"
+    indoor_grav_zone__curPlaceIdx:i=-1
+    indoor_grav_zone__minMaxDuration:p2=10, 120
+
+    "indoor_grav_zone_mgr__places:array"{}
+  }
+
+  "indoor_grav_zone__visualEid:eid"{}
+}
+
+gravity_zone_sphere_rad_with_visual{
+  _use:t="replicating"
+  _use:t="gravity_zone_sphere_rad"
+
+  _group{
+    _tags:t="server"
+    grav_zone__visualTempl:t="indoor_euclid_central_sphere"
+
+    "grav_zone__visualEid:eid"{}
+  }
+}
+
+gravity_path_box{
+  _use:t="gpu_object_placer_box"
+  _use:t="gravity_zone_base"
+  gravity_zone__boxSize:p3=1, 1, 1
+  grav_zone__boxBorderX:p2=0, 0
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=0, 0
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_gpu_object__name:t="gravity_well_crystals"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__ri_asset_idx:i=-1
+    gpu_object_placer__object_density:r=5
+    gpu_object_placer__min_scale_radius:r=100
+    gpu_object_placer__object_up_vector_threshold:p4=0, 0, 0, 0.1
+    gpu_object_placer__current_distance_squared:r=0
+    gpu_object_placer__filled:b=no
+    gpu_object_placer__buffer_offset:i=-1
+    gpu_object_placer__buffer_size:i=-1
+    gpu_object_placer__show_geometry:b=no
+    gpu_object_placer__place_on_geometry:b=yes
+    gpu_object_placer__min_gathered_triangle_size:r=0.01
+    gpu_object_placer__opaque:b=yes
+    gpu_object_placer__decal:b=yes
+    gpu_object_placer__use_strict_decal_placement:b=yes
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_based_scale:p2=1.2, 0.4
+    gpu_object_placer__object_scale_range:p2=0.5, 2
+    gpu_object_placer__object_max_count:i=400
+    gpu_object_placer__visible_distance_squared:r=10000
+  }
+}
+
+gravity_path_box_sparse{
+  _use:t="gpu_object_placer_box"
+  _use:t="gravity_zone_base"
+  gravity_zone__boxSize:p3=1, 1, 1
+  grav_zone__boxBorderX:p2=0, 0
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=0, 0
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_gpu_object__name:t="gravity_well_crystals"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__ri_asset_idx:i=-1
+    gpu_object_placer__object_density:r=0.75
+    gpu_object_placer__min_scale_radius:r=100
+    gpu_object_placer__object_up_vector_threshold:p4=0, 0, 0, 0.1
+    gpu_object_placer__current_distance_squared:r=0
+    gpu_object_placer__filled:b=no
+    gpu_object_placer__buffer_offset:i=-1
+    gpu_object_placer__buffer_size:i=-1
+    gpu_object_placer__show_geometry:b=no
+    gpu_object_placer__place_on_geometry:b=yes
+    gpu_object_placer__min_gathered_triangle_size:r=0.01
+    gpu_object_placer__opaque:b=yes
+    gpu_object_placer__decal:b=yes
+    gpu_object_placer__use_strict_decal_placement:b=yes
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_based_scale:p2=1.2, 0.4
+    gpu_object_placer__object_scale_range:p2=0.5, 2
+    gpu_object_placer__object_max_count:i=100
+    gpu_object_placer__visible_distance_squared:r=1500
+  }
+}
+
+gravity_path_box_invisible{
+  _use:t="gravity_zone_base"
+  gravity_zone__boxSize:p3=1, 1, 1
+  grav_zone__boxBorderX:p2=0, 0
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=0, 0
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+gravity_zone_crystals{
+  _use:t="gpu_object_placer_box"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_gpu_object__name:t="gravity_well_crystals"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__ri_asset_idx:i=-1
+    gpu_object_placer__object_density:r=5
+    gpu_object_placer__min_scale_radius:r=100
+    gpu_object_placer__object_up_vector_threshold:p4=0, 0, 0, 0.1
+    gpu_object_placer__current_distance_squared:r=0
+    gpu_object_placer__filled:b=no
+    gpu_object_placer__buffer_offset:i=-1
+    gpu_object_placer__buffer_size:i=-1
+    gpu_object_placer__show_geometry:b=no
+    gpu_object_placer__place_on_geometry:b=yes
+    gpu_object_placer__min_gathered_triangle_size:r=0.01
+    gpu_object_placer__opaque:b=yes
+    gpu_object_placer__decal:b=yes
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_based_scale:p2=1.2, 0.4
+    gpu_object_placer__object_scale_range:p2=0.5, 2
+    gpu_object_placer__object_max_count:i=400
+    gpu_object_placer__visible_distance_squared:r=10000
+  }
+}
+
+gravity_zone_visual_effect{
+  effect__scale:r=0.83
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  "effects:object"{
+    gravity_border_flat_distortion_a_fx:r=1
+  }
+
+  "gravity_zone_visual_effect:tag"{}
+}
+
+gravity_zone_with_visual_effect{
+  "gravity_zone_with_visual_effect__effect:eid"{}
+}
+
+gravity_zone_visual_effect_enabler{
+  gravity_zone_border__maxRadius:r=2
+  gravity_zone_border__effectName:t="gravity_zone_visual_effect"
+}
+
+allow_inner_gravity_zones_visual_effects{
+  "allow_inner_gravity_zones_visual_effects:tag"{}
+}
+
+gravity_zone_gd_flat{
+  _use:t="gravity_zone_box"
+}
+
+dafx_gravity_zone_buffer_gpu{
+  _tags:t="render"
+  _singleton:b=yes
+  dafg_gravity_zone__camera_pos_last:p3=0, 0, 0
+  dafg_gravity_zone__camera_pos_threshold:r=5
+
+  "dafx_gravity_zone_buffer_gpu:UniqueBufHolder"{}
+}

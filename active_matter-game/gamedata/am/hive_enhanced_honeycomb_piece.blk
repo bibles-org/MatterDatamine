@@ -1,0 +1,27 @@
+mass:r=10
+useFutureContacts:b=yes
+logCCD:b=no
+addToWorld:b=yes
+gravityMult:r=1
+frictionGround:r=0.1
+linearDamping:r=0.1
+angularDamping:r=0.1
+bouncing:r=0.1
+bouncingGround:r=0.1
+skipUpdateOnSleep:b=yes
+sleepUpdateFrequency:i=0
+sleepDelay:r=0.1
+
+ccdSpheres{
+  ccd:p4=0, 0, 0, 0.08
+}
+
+collisionResource{
+  props{
+    Sphere004:t="convex_hull"
+  }
+}
+
+solver{
+  energyConservation:r=0.95
+}

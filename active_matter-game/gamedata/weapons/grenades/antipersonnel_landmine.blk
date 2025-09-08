@@ -1,0 +1,66 @@
+mass:r=3.5
+momentOfInertia:p3=0, 0, 0
+caliber:r=0.1
+speed:r=0
+speedPitch:r=0
+maxDistance:r=12
+physMat:t="walkRay"
+useFutureContacts:b=no
+logCCD:b=no
+frictionGround:r=100000
+linearDamping:r=100000
+angularDamping:r=100000
+noSleepAtTheSlopeCos:r=0.766
+physLayer:i=16
+physMask:i=0
+ignoreCollision:b=yes
+gravityMult:r=0
+explosiveType:t="tnt"
+explosiveMass:r=0.06
+
+collisionResource{
+  props{
+    volumeBox_03:t="box"
+  }
+}
+
+detonation{
+  onHit:b=no
+  timer:r=5
+}
+
+explFx{
+  fxScale:p2=1.7, 1.8
+  effectTemplName:t="explosion_effect_small+disable_effect_sfx"
+}
+
+shellSound{
+  explosionPath:t="impact/grenade"
+  activatePath:t="/weapon/explosive/activate"
+}
+
+splashDamage{
+  radius:p2=1, 10
+  penetration:p2=15, 2
+  damage:r=90
+  dmgOffset:p3=0, 0.25, 0
+}
+
+splash{
+  innerRadius:r=1
+  outerRadius:r=10
+  penetration:r=10
+  damage:r=90
+  dmgOffset:p3=0, 0.25, 0
+}
+
+damage{
+  explosive{
+    strengthEquivalent:r=1
+    brisanceEquivalent:r=1
+  }
+}
+
+solver{
+  energyConservation:r=0
+}

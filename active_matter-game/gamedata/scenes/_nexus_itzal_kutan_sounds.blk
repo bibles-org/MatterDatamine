@@ -1,0 +1,56 @@
+entity{
+  _template:t="nexus_ancient_ruins_sound_occlusion"
+}
+
+entity{
+  _template:t="ancient_ruins_ambient_sound"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="ancient_ruins_instruments_sphere"
+  compound_ambient_sound_type__path:t="ambient/positioned/ancient_ruins_instruments"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="ancient_ruins_market_sphere"
+  compound_ambient_sound_type__path:t="ambient/positioned/ancient_ruins_market"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="ancient_ruins_stadium_sphere"
+  compound_ambient_sound_type__path:t="ambient/positioned/ancient_ruins_stadium"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="ancient_ruins_dungeon_box"
+  compound_ambient_sound_type__path:t="ambient/positioned/ancient_ruins_dungeon"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="ancient_ruins_temple_box"
+  compound_ambient_sound_type__path:t="ambient/positioned/ancient_ruins_temple"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="ancient_ruins_altar_box"
+  compound_ambient_sound_type__path:t="ambient/positioned/ancient_ruins_altar"
+}
+
+entity{
+  _template:t="compound_ambient_sound_controller"
+
+  "compound_ambient_sound_controller__soundTypes:list<t>"{
+    name:t="ancient_ruins_instruments_sphere"
+    name:t="ancient_ruins_market_sphere"
+    name:t="ancient_ruins_stadium_sphere"
+    name:t="ancient_ruins_dungeon_box"
+    name:t="ancient_ruins_temple_box"
+    name:t="ancient_ruins_altar_box"
+  }
+}

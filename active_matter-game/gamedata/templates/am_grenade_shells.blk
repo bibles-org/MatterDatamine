@@ -1,0 +1,166 @@
+xvp_grenade_shell{
+  animchar__res:t="spaceMarine_grenade_char"
+  _use:t="shell"
+}
+
+xvp_grenade_base{
+  _use:t="xvp_grenade_shell"
+  animchar__res:t="spaceMarine_grenade_char"
+  gun_attach__slot:t="r_hand"
+  gun_attach__mainSlotId:i=-1
+}
+
+xvp_grenade{
+  _use:t="projectile_with_shell"
+  _use:t="xvp_grenade_base"
+  slot_attach__visible:b=yes
+  _tracked:t="slot_attach__visible"
+
+  "animchar__actOnDemand:tag"{}
+}
+
+xvp_grenade_phys{
+  _use:t="xvp_grenade_base"
+  _use:t="projectile_phys_with_shell"
+  _use:t="grenades_attract_point"
+  _use:t="xvp_grenade_phys_collision_sound"
+  _use:t="shell_trap_activator"
+  _use:t="zones_visitor"
+  start_omega:p3=3, 0, -15
+  collres__res:t="spaceMarine_grenade_collision"
+  active:b=no
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/he_grenade.blk"
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_grenade_explosion"
+  _tracked:t="active"
+  explosion_flash__template:t="default_explosion_flash"
+  ai_target_node__node:t="weaponRoot"
+  item__setCustomUsePrompt:t="hud/throw_back"
+  grenade_rethrow__lockRethrowDuration:r=2
+  loud_noise__noisePerExplosion:r=160
+  loud_noise__radius:r=40
+  zones_visitor__triggerTag:t="throwingItemsTriggerable"
+
+  "ai_target_node__nodeId:i"{
+    value:i=-1
+    _tags:t="server"
+  }
+
+  "retardable:tag"{}
+  "grav_zones_affected:tag"{}
+  "teleportation__once:tag"{}
+  _group{
+    _tags:t="render"
+    teleportation__fxNameIn:t="teleport_effect_in"
+    teleportation__fxNameOut:t="teleport_effect_out"
+  }
+}
+
+attack_grenade_phys{
+  _use:t="xvp_grenade_phys"
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/attack_grenade.blk"
+  loud_noise__noisePerExplosion:r=160
+  loud_noise__radius:r=40
+}
+
+zarya_flash_grenade_shock_params{
+  disorientated__tinnitusRad:p2=4, 16
+  disorientated__flashRad:p2=4, 40
+  disorientated__tinnitusPower:p2=2, 1.01
+  disorientated__flashPower:p2=150, 12
+  disorientated__flashDistExp:r=1
+  disorientated__tinnitusDistExp:r=0.1
+  loud_noise__noisePerExplosion:r=180
+  loud_noise__radius:r=60
+}
+
+zarya_flash_grenade{
+  _use:t="m24_grenade"
+  _use:t="zarya_grenade_char"
+  _use:t="zarya_flash_grenade_shock_params"
+}
+
+zarya_flash_grenade_phys{
+  _use:t="xvp_grenade_phys"
+  _use:t="zarya_flash_grenade_shock_params"
+  _use:t="zarya_grenade_active_char"
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/zarya_flash_grenade.blk"
+}
+
+xvp_fire_grenade{
+  _use:t="ussr_molotov"
+  animchar__res:t="spaceMarine_grenade_char"
+}
+
+xvp_fire_grenade_phys{
+  _use:t="ussr_molotov_phys"
+  _use:t="fire_grenade_throw_sound"
+  animchar__res:t="spaceMarine_grenade_char"
+  collres__res:t="spaceMarine_grenade_collision"
+  grenade_rethrow__lockRethrowDuration:r=2
+
+  "grav_zones_affected:tag"{}
+}
+
+fire_grenade_phys{
+  _use:t="xvp_fire_grenade_phys"
+  on_exploded__create:t="fast_fire_source+fire_grenade_explode_sound"
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/fire_grenade.blk"
+}
+
+rdgm_smoke_grenade{
+  _use:t="base_grenade"
+  _use:t="rdg_m_grenade_char"
+  loud_noise__noisePerExplosion:r=120
+  loud_noise__radius:r=40
+}
+
+rdgm_smoke_grenade_phys{
+  _use:t="rdg1_smoke_grenade_phys"
+  _use:t="rdg_m_grenade_active_char"
+  smokeFadeTime:r=10
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/rdgm_smoke_grenade.blk"
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_smoke_grenade_explosion"
+}
+
+attraction_grenade_base{
+  slot_attach__visible:b=yes
+  _tracked:t="slot_attach__visible"
+  gun_attach__slot:t="r_hand"
+  gun_attach__mainSlotId:i=-1
+}
+
+attraction_grenade{
+  _use:t="projectile"
+  _use:t="attraction_grenade_base"
+  animchar__res:t="spaceMarine_grenade_char"
+  item__name:t="items/xvp_attraction_grenade"
+  shell__explNodeIdx:i=-1
+
+  "animchar__actOnDemand:tag"{}
+}
+
+attraction_grenade_phys{
+  _use:t="attraction_grenade_base"
+  _use:t="projectile_phys"
+  _use:t="impact_shell"
+  _use:t="molotov_throw_sound"
+  _use:t="grenades_attract_point"
+  start_omega:p3=3, 0, -15
+  active:b=no
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/attraction_grenade.blk"
+  _tracked:t="active"
+  effect__scale:r=1
+  ai_target_node__node:t="weaponRoot"
+  animchar__res:t="spaceMarine_grenade_char"
+  collres__res:t="spaceMarine_grenade_collision"
+  explosion_flash__template:t="default_explosion_flash"
+  grenades_attract_point__templateName:t="attraction_grenade_attract_point"
+  grenades_attract_point__radius:r=50
+
+  "ai_target_node__nodeId:i"{
+    value:i=-1
+    _tags:t="server"
+  }
+
+  "grav_zones_affected:tag"{}
+}

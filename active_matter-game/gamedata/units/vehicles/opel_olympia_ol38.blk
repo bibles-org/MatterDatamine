@@ -1,0 +1,146 @@
+VehiclePhys{
+  skipUpdateOnSleep:b=yes
+  deformViscCoeff:r=500
+  deformViscMaxSpeed:r=55
+
+  Mass{
+    Empty:r=1280
+    Fuel:r=28
+    TakeOff:r=1280
+    momentOfInertia:p3=0.306395, 1.10896, 1.07067
+    CenterOfGravity:p3=-0.1, 0.5, 0
+    CenterOfGravityClampY:p2=0, 0.5
+    AdvancedMass:b=no
+    trackMass:r=4
+    engineInertialMass:r=5
+  }
+
+  tracks{
+    animationMultiplier:r=0.5
+    height:r=0
+    width:r=0.125
+    trackPhysMat:t="wheel"
+  }
+
+  collisionProps{
+    cls_body_01:t="convex_hull"
+    cls_body_02:t="convex_hull"
+    collisionMaterial:t="walkRay"
+  }
+
+  engine{
+    horsePowers:r=54
+    maxRPM:r=3400
+    minRPM:r=1000
+    rpmTau:r=0.1
+    minTorqueLimiter:r=0
+    brakeOnBrokenEngine:b=no
+  }
+
+  mechanics{
+    brakeToMassKoeff:r=0.34
+    driveGearRadius:r=0.3
+    mainGearRatio:r=3.5
+    sideGearRatio:r=1
+    tracked:b=no
+    gearType:t="differential"
+
+    gearRatios{
+      ratio:r=-4.21
+      ratio:r=0
+      ratio:r=6
+      ratio:r=2.47
+      ratio:r=1.49
+      ratio:r=1
+    }
+  }
+
+  suspension{
+    suspensionOffsets:p3=-0.15, -0.1, 0.12
+    defaultGearRadius:r=0.3
+    sinkableDist:r=0.07
+    defaultDampeningForce:p2=12000, 12000
+    hasSuspensionOnDriveGear:b=yes
+    dampeningRelaxationRatio:r=0.8
+    dampeningCompressionRatio:r=0.8
+    recalcWtms:b=yes
+
+    steeringDeflection{
+      wheel_l_01:r=45
+      wheel_r_01:r=45
+      steeringTau:r=10
+      steeringSpd:r=1.2
+      steeringNeutralSpd:r=1.8
+      steeringNegativeMult:r=3
+      steeringSpdMult:p4=10, 50, 1, 0.3
+    }
+
+    toeDeflection{
+      wheel_l_01:r=-0.5
+      wheel_r_01:r=0.5
+    }
+
+    wheelsWidth{
+      wheel_l_01:r=0.125
+      wheel_l_drive:r=0.125
+      wheel_r_01:r=0.125
+      wheel_r_drive:r=0.125
+    }
+
+    driven{
+      wheel_l_drive:b=yes
+      wheel_r_drive:b=yes
+    }
+
+    handBraken{
+      wheel_l_drive:b=yes
+      wheel_r_drive:b=yes
+    }
+  }
+}
+
+DamageParts{
+  formatVersion:i=2
+  armorClass:t="RHA_tank"
+  hp:r=300
+
+  body{
+    body{
+      createSecondaryShatters:b=no
+      armorThickness:r=0.1
+      armorThrough:r=0.15
+    }
+  }
+
+  engine{
+    hp:r=50
+
+    engine{
+      createSecondaryShatters:b=no
+      armorThickness:r=0.3
+      armorThrough:r=10
+      fireProtectionHp:r=100
+    }
+  }
+
+  transmission{
+    hp:r=50
+
+    transmission{
+      createSecondaryShatters:b=no
+      armorThickness:r=0.3
+      armorThrough:r=10
+    }
+  }
+}
+
+DamageEffects{
+  part{
+    name:t="engine"
+
+    onKill{
+      fire:r=1
+      fHitCritical:b=yes
+    }
+  }
+}

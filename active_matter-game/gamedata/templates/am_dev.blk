@@ -1,0 +1,238 @@
+point_of_interest_validator{
+  poi_validator__poiIndex:i=0
+
+  "poi_validator__validPos:list<p3>"{}
+  "poi_validator__validPosNext:list<p3>"{}
+  "poi_validator__poiEids:list<eid>"{}
+}
+
+point_of_interest_nav_data{
+  poi__pos:p3=0, 0, 0
+  poi__radius:r=1.5
+  poi__isValid:b=no
+  poi__inaccessible:b=no
+
+  "pointOfInterestNavData:tag"{}
+  "poi__eid:eid"{}
+  "poi__navPos:list<p3>"{}
+}
+
+resurrect_after_death{
+  bodyCleanupTime:r=10
+  resurrect_after_death__timeToResurrect:r=5
+  resurrect_template:t=""
+}
+
+resurrect_timer{
+  resurrect_timer__resurrectAt:r=0
+  resurrect_timer__templateToResurrect:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  beh_tree__enabled:b=no
+}
+
+cursor_tm{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  cursor_tm__color:c=215, 215, 0, 100
+  cursor_tm__p1:p3=0, 0, 0
+  cursor_tm__p2:p3=0, 0, 0
+  cursor_tm__alpha:r=0.7
+  _tracked:t="cursor_tm__alpha"
+
+  "cursor_tm:tag"{}
+}
+
+cursor_3d{
+  cursor__pos:p3=0, 0, 0
+  cursor__camDst:r=8.1
+  cursor__enabled:b=yes
+}
+
+cursor_input{
+  _group{
+    _tags:t="dev"
+    dev_input__cursorFrom:i=-1
+    dev_input__cursorTo:i=-1
+  }
+}
+
+save_point{
+  save_point__tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "save_point__playerEid:eid"{}
+}
+
+autorespawn{
+  "autorespawn:tag"{}
+}
+
+animation_demonstration_parametric{
+  animation_demonstration__varName:t=""
+  animation_demonstration__varId:i=-1
+  animation_demonstration__animTime:r=1
+  animation_demonstration__curAnimTime:r=0
+  animation_demonstration__paramName:t=""
+  animation_demonstration__paramId:i=-1
+  animation_demonstration__curParamIdx:i=-1
+
+  "animation_demonstration__paramValuesList:list<r>"{}
+}
+
+animation_demonstration_repeat{
+  animation_demonstration__repeatAt:r=-1
+  animation_demonstration__pauseAt:r=-1
+  animation_demonstration__repeatTime:r=1
+  animation_demonstration__pauseTime:r=1
+  animation_demonstration__repeatStateName:t=""
+}
+
+am_militant_teammate_test{
+  _use:t="am_militant_with_attachable_suit"
+  team:i=2
+}
+
+hitpoints_god_mode_on_appear{
+  "hitpoints_god_mode_on_appear:tag"{}
+}
+
+hitpoints_percent_on_appear{
+  hitpoints_percent_on_appear:r=1
+}
+
+infinite_ammo_on_appear{
+  "infinite_ammo_on_appear:tag"{}
+}
+
+am_immortal_damage_test_bot{
+  _use:t="am_militant_with_builtin_suit"
+  _use:t="hitpoints_god_mode_on_appear"
+  team:i=-256
+  animchar__res:t="am_soldier_corrupted_male_d_char"
+  collres__res:t="am_soldier_corrupted_male_d_collision"
+}
+
+navmesh_isle_marker{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  navmesh_isle_marker__syncWithZone:b=yes
+  navmesh_isle_marker__radius:r=200
+  navmesh_isle_marker__origin:p3=0, 0, 0
+  navmesh_isle_marker__expectedNumTriangles:i=0
+
+  "navmesh_isle_marker:tag"{}
+}
+
+navmesh_isle_marker_no_zone{
+  _use:t="navmesh_isle_marker"
+  navmesh_isle_marker__syncWithZone:b=no
+  navmesh_isle_marker__radius:r=1500
+}
+
+additional_walkable_area_marker{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  sphere_zone__radius:r=0
+
+  "additional_walkable_area_marker:tag"{}
+}
+
+blank_object{
+  "blank_object:object"{}
+}
+
+blank_array{
+  "blank_array:array"{}
+}
+
+draw_tm_trajectory{
+  draw_tm_trajectory__prevPos:p3=0, 0, 0
+  draw_tm_trajectory__color:c=255, 255, 255, 255
+  draw_tm_trajectory__duration:i=1200
+}
+
+debug_in_web_ui{
+  "beh_tree__debugInWebUI:tag"{}
+}
+
+beh_tree_debug{
+  beh_tree__debug:b=yes
+}
+
+system_affects_entity_tracker{
+  "system_affects_entity_tracker__counts:object"{}
+  "system_affects_entity_tracker__eids:object"{}
+}
+
+draw_me{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  draw_me__color:c=255, 255, 255, 255
+}
+
+loot_highlight_debug{
+  _singleton:b=yes
+  loot_debug__highlightTempl:t="selected_lootable_container"
+  loot_debug__highlightColorForRendInst:c=12, 0, 73, 73
+  loot_debug__highlightColorForLoot:c=12, 255, 73, 73
+  loot_debug__highlightColorForAM:c=255, 255, 255, 255
+}
+
+pathfinding_benchmark{
+  pathfinding_benchmark__agentTemplate:t=""
+  pathfinding_benchmark__behTree:t=""
+  pathfinding_benchmark__agentCount:i=100
+  pathfinding_benchmark__pointsCount:i=1000
+  pathfinding_benchmark__pointsPerAgent:i=100
+  pathfinding_benchmark__spawnsLeft:i=0
+  pathfinding_benchmark__seed:i=12345
+
+  "pathfinding_benchmark__points:list<p3>"{}
+}
+
+benchmarked_agent{
+  _use:t="stuck_detector"
+  _use:t="door_obstacle_handler"
+  _use:t="destructable_obstacle_handler"
+  beh_tree__interruptDisabled:b=no
+  human_operate_door_action__alternativeAction:b=no
+  benchmarked_agent__idx:i=0
+  benchmarked_agent__targetPos:p3=0, 0, 0
+
+  "human_operate_door_action__noAnimation:tag"{}
+  "human_anim__doorAnimEid:eid"{}
+  "benchmarked_agent__points:list<p3>"{}
+}
+
+dev_draw{
+  dev_draw__agents:b=no
+  dev_draw__humanPhysAgents:b=no
+  dev_draw__playerAgents:b=no
+  dev_draw__traps:b=no
+  dev_draw__frogTraps:b=no
+  dev_draw__teleportTraps:b=no
+  dev_draw__flowerTraps:b=no
+  dev_draw__cairdTraps:b=no
+  dev_draw__monstrifyTraps:b=no
+  dev_draw__firefly:b=no
+  dev_draw__changedHuman:b=no
+  dev_draw__flowerHuman:b=no
+  dev_draw__invisibleHuman:b=no
+  dev_draw__statue:b=no
+  dev_draw__boss:b=no
+  dev_draw__wanderingCore:b=no
+  dev_draw__nest:b=no
+  dev_draw__bees:b=no
+  dev_draw__slots:b=no
+  dev_draw__obstacles:b=no
+  dev_draw__gravity_zone:b=no
+  dev_draw__attract_points:b=no
+  dev_draw__navmesh_mapping_zones:b=no
+  dev_draw__households:b=no
+  dev_draw__quest_zones:b=no
+  dev_draw__teleports:b=no
+  dev_draw__notes:b=no
+  dev_draw__secret_ri:b=no
+  dev_draw__rendinsts:b=no
+  dev_draw__vehicle:b=no
+  dev_draw__active_matter:b=no
+  dev_draw__portals:b=no
+  dev_draw__respbases:b=no
+  dev_draw__extraction:b=no
+  dev_draw__ladders:b=no
+}

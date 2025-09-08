@@ -1,0 +1,254 @@
+repeat{
+  name:t="nesting_swarm_snake"
+  selectStrategy:t="ordered"
+
+  sequencer{
+    name:t="chase_enemy"
+
+    checkAlive{
+      targetParam:t="walker_agent__targetEid"
+    }
+
+    sequencer{
+      reaction{
+        name:t="too_far_reaction"
+        event:t="regularCheck"
+
+        orderedSelector{
+          sequencer{
+            setTime{
+              to:t="swarm_warrior__lastActionAt"
+            }
+
+            not{
+              isSwarmWithinNestRange{}
+            }
+
+            modifyNode{
+              target:t="walker_agent__targetEid"
+              operator:t="="
+              arg:i=0
+            }
+
+            copyEntityPos{
+              pos:t="nesting_swarm_snake__targetPos"
+              eid:t="swarm_warrior__primaryNest"
+            }
+
+            modifyNode{
+              target:t="nesting_swarm_snake__state"
+              operator:t="="
+              arg:i=2
+            }
+
+            recalculateTree{}
+          }
+        }
+      }
+
+      modifyNode{
+        target:t="nesting_swarm_snake__state"
+        operator:t="="
+        arg:i=2
+      }
+
+      parallel{
+        not{
+          repeatUntilFail{
+            not{
+              checkDistanceToPos{
+                posParam:t="nesting_swarm_snake__targetPos"
+                radiusParam:t="stride__approachTargetDistance"
+              }
+            }
+          }
+        }
+
+        wait{
+          range:p2=30, 30
+          resetable:b=yes
+        }
+      }
+
+      copyEntityPos{
+        pos:t="nesting_swarm_snake__targetSavedPos"
+        eid:t="walker_agent__targetEid"
+      }
+
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        arg:i=0
+      }
+
+      modifyNode{
+        target:t="nesting_swarm_snake__state"
+        operator:t="="
+        arg:i=3
+      }
+
+      copyEntityPos{
+        pos:t="nesting_swarm_snake__targetPos"
+        eid:t="swarm_warrior__primaryNest"
+      }
+
+      wait{
+        range:p2=2.25, 2.5
+        resetable:b=yes
+      }
+
+      modifyNode{
+        target:t="nesting_swarm_snake__state"
+        operator:t="="
+        arg:i=2
+      }
+
+      subTree{
+        treeName:t="sub.nesting_swarm_snake_find_target_or_come_back_home"
+      }
+    }
+  }
+
+  subTree{
+    treeName:t="sub.nesting_swarm_snake_find_target_or_come_back_home"
+  }
+
+  sequencer{
+    name:t="investigate_pos"
+
+    not{
+      checkAlive{
+        targetParam:t="walker_agent__targetEid"
+      }
+    }
+
+    parallel{
+      not{
+        repeatUntilFail{
+          not{
+            checkDistanceToPos{
+              posParam:t="nesting_swarm_snake__targetPos"
+              radiusParam:t="stride__approachPosDistance"
+            }
+          }
+        }
+      }
+
+      wait{
+        name:t="wait (moving to target)"
+        range:p2=30, 30
+        resetable:b=yes
+      }
+    }
+
+    modifyNode{
+      target:t="nesting_swarm_snake__state"
+      operator:t="="
+      arg:i=1
+    }
+
+    wait{
+      name:t="wait (before find target)"
+      range:p2=3.2, 4.2
+      resetable:b=yes
+    }
+
+    subTree{
+      treeName:t="sub.nesting_swarm_snake_find_target_or_come_back_home"
+    }
+
+    wait{
+      name:t="wait (after find target)"
+      range:p2=0.5, 0.5
+      resetable:b=yes
+    }
+  }
+
+  sequencer{
+    name:t="attempt to teleport"
+
+    compareNode{
+      lhs:t="swarm_warrior__teleportDesire"
+      operator:t=">"
+      rhs:i=1
+    }
+
+    teleportNestingSwarmNest{}
+  }
+}
+
+orderedSelector{
+  name:t="sub.nesting_swarm_snake_find_target_or_come_back_home"
+  selectOnSuccess:b=yes
+
+  sequencer{
+    modifyNode{
+      target:t="walker_agent__targetEid"
+      operator:t="="
+      arg:i=0
+    }
+
+    checkDistanceToTarget{
+      targetParam:t="swarm_warrior__primaryNest"
+      radius:r=3
+    }
+
+    nestingSwarmSnakeFindDanger{
+      paramName:t="enemy"
+      radiusParamName:t="enemyRadius"
+    }
+
+    modifyNode{
+      target:t="walker_agent__targetEid"
+      operator:t="="
+      argIntParam:t="enemy"
+    }
+
+    modifyNode{
+      targetIntParam:t="enemy"
+      operator:t="="
+      arg:i=0
+    }
+
+    modifyNode{
+      target:t="nesting_swarm_snake__state"
+      operator:t="="
+      arg:i=2
+    }
+
+    setTime{
+      to:t="swarm_warrior__lastActionAt"
+    }
+  }
+
+  sequencer{
+    compareNode{
+      lhs:t="swarm_warrior__investigationsLeft"
+      operator:t="=="
+      rhs:i=1
+    }
+
+    modifyNode{
+      target:t="swarm_warrior__investigationsLeft"
+      operator:t="="
+      arg:i=0
+    }
+  }
+
+  sequencer{
+    compareNode{
+      lhs:t="swarm_warrior__teleportDesire"
+      operator:t=">"
+      rhs:i=1
+    }
+
+    teleportNestingSwarmNest{}
+  }
+
+  sequencer{
+    copyEntityPos{
+      pos:t="nesting_swarm_snake__targetPos"
+      eid:t="swarm_warrior__primaryNest"
+    }
+  }
+}

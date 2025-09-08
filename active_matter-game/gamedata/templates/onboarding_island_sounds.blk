@@ -1,0 +1,168 @@
+onboarding_phase_monolith_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/lake"
+  }
+}
+
+onboarding_island_net_sounds{
+  _use:t="scene_net_sound_descs"
+  _use:t="replicating"
+
+  "net_sound__descs:shared:object"{
+    "monolithDoorAppear:object"{
+      path:t="cutscenes/intro/door_appear"
+      range:r=0
+    }
+  }
+}
+
+monolith_interactive_music{
+  _use:t="sound_effect_with_transform"
+  _use:t="replicating"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="music/interactive/monument"
+    sound_effect__abandonOnReset:b=yes
+  }
+}
+
+monolith_door_appear_sound{
+  _use:t="oneshot_scene_net_sound"
+
+  _group{
+    _tags:t="server"
+    oneshot_scene_net_sound__desc:t="monolithDoorAppear"
+  }
+}
+
+monolith_door_is_speaking_sound{
+  _use:t="sound_effect"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="cutscenes/intro/monolith_speaking"
+    sound_effect__abandonOnReset:b=yes
+  }
+
+  _group{
+    _tags:t="sound"
+    sound_control__allowSound:b=no
+  }
+
+  "monolithDoorSpeakingSound:tag"{
+    _tags:t="sound"
+  }
+
+  _group{
+    _tags:t="sound"
+    rotating_door_sound__isClosed:b=yes
+  }
+}
+
+monolith_door_sound{
+  _use:t="monolith_door_appear_sound"
+  _use:t="monolith_door_is_speaking_sound"
+}
+
+onboarding_island_arrival_sound{
+  _group{
+    _tags:t="sound"
+    onboarding_island_arrival_sound__path:t="cutscenes/intro/player_appear"
+    onboarding_island_arrival_sound__isArrived:b=no
+  }
+}
+
+onboarding_interactive_music_trigger_shooting{
+  _group{
+    _tags:t="sound"
+    onboarding_interactive_music_trigger_shooting__shotAtTime:r=0
+    onboarding_interactive_music_trigger_shooting__rangeThreshold:r=100
+    onboarding_interactive_music_trigger_shooting__cooldown:r=0.5
+    onboarding_interactive_music_trigger_shooting__heat:r=25
+  }
+}
+
+onboarding_interactive_music_trigger_hit{
+  _group{
+    _tags:t="sound"
+    onboarding_interactive_music_trigger_hit__selfHeat:r=100
+    onboarding_interactive_music_trigger_hit__otherHeat:r=50
+  }
+}
+
+onboarding_interactive_music{
+  _use:t="sound_banks_state"
+  _use:t="replicating"
+  _use:t="onboarding_interactive_music_trigger_shooting"
+  _use:t="onboarding_interactive_music_trigger_hit"
+
+  _group{
+    _tags:t="sound"
+    onboarding_interactive_music__active:b=no
+    onboarding_interactive_music__temperature:r=0
+    onboarding_interactive_music__path:t="music/interactive/raid"
+    onboarding_interactive_music__param:t="state"
+    onboarding_interactive_music__drain:r=5
+    onboarding_interactive_music__activateThreshold:r=90
+    onboarding_interactive_music__deactivateThreshold:r=10
+
+    "onboarding_interactive_music__event:SoundEvent"{}
+  }
+}
+
+onboarding_phase_miniraid_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/onboarding_island"
+  }
+}
+
+onboarding_phase_base_first_time_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/base_roomtone"
+  }
+}
+
+onboarding_island__onboarding_industrial__compound_ambient_sound{
+  _use:t="compound_ambient_sound_type"
+  _singleton:b=yes
+  compound_ambient_sound_type__soundType:t="onboarding_industrial"
+  compound_ambient_sound_type__path:t="ambient/positioned/onboarding_industrial"
+}
+
+onboarding_island__onboarding_rocks__compound_ambient_sound{
+  _use:t="compound_ambient_sound_type"
+  _singleton:b=yes
+  compound_ambient_sound_type__soundType:t="onboarding_rocks"
+  compound_ambient_sound_type__path:t="ambient/positioned/onboarding_rocks"
+}
+
+onboarding_island__onboarding_caves__compound_ambient_sound{
+  _use:t="compound_ambient_sound_type"
+  _singleton:b=yes
+  compound_ambient_sound_type__soundType:t="onboarding_caves"
+  compound_ambient_sound_type__path:t="ambient/positioned/cave"
+}
+
+onboarding_island_compound_ambient_sound_controller{
+  _use:t="compound_ambient_sound_controller"
+  _singleton:b=yes
+
+  "compound_ambient_sound_controller__soundTypes:list<t>"{
+    name:t="onboarding_industrial"
+    name:t="onboarding_rocks"
+    name:t="onboarding_caves"
+  }
+}

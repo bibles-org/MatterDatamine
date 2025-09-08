@@ -1,0 +1,834 @@
+item_artifact_am{
+  _use:t="item"
+  collres__res:t="medkit_collision"
+  item__weight:r=0.5
+  item__volume:r=1
+
+  "item_artifact_am:tag"{}
+  "item__alwaysUseful:tag"{}
+}
+
+sensor{
+  sensor__searchRange:p2=10, 30
+  sensor__searchRadExtensionMult:r=1.5
+  sensor__directionPerSensors:i=3
+}
+
+sensor_item{
+  _use:t="sensor"
+  sensor__itemSearchTag:t=""
+}
+
+sensor_enemy{
+  _use:t="sensor"
+  sensor__enemySearchTag:t=""
+}
+
+sensor_artifact_sensor{
+  _use:t="sensor_item"
+  sensor__searchRange:p2=30, 60
+  sensor__itemSearchTag:t="item_artifact_am"
+}
+
+sensor_flower_human_sensor{
+  _use:t="sensor_enemy"
+  sensor__enemySearchTag:t="flowerHuman"
+}
+
+sensor_skeleton_swarm_sensor{
+  _use:t="sensor_enemy"
+  sensor__enemySearchTag:t="skeletonSwarm"
+}
+
+artifact_crystal_model{
+  animchar__res:t="sample_crystal_char"
+  collres__res:t="sample_crystal_collision"
+}
+
+artifact_grape_model{
+  animchar__res:t="sample_grape_char"
+  collres__res:t="sample_grape_collision"
+}
+
+artifact_neuron_model{
+  animchar__res:t="sample_neuron_char"
+  collres__res:t="sample_neuron_collision"
+}
+
+artifact_spidereye_model{
+  animchar__res:t="sample_spidereye_char"
+  collres__res:t="sample_spidereye_collision"
+}
+
+flower_human_sensor{
+  _use:t="item_artifact_am"
+  _use:t="sensor_flower_human_sensor"
+  _use:t="artifact_spidereye_model"
+  item__proto:t="flower_human_sensor"
+  item__name:t="items/flower_human_sensor"
+}
+
+skeleton_swarm_sensor{
+  _use:t="item_artifact_am"
+  _use:t="sensor_skeleton_swarm_sensor"
+  _use:t="artifact_neuron_model"
+  item__proto:t="skeleton_swarm_sensor"
+  item__name:t="items/skeleton_swarm_sensor"
+}
+
+artifact_sensor{
+  _use:t="item_artifact_am"
+  _use:t="sensor_artifact_sensor"
+  _use:t="artifact_grape_model"
+  item__proto:t="artifact_sensor"
+  item__name:t="items/artifact_sensor"
+}
+
+artifact_legendary{
+  _use:t="item_artifact_am"
+  _use:t="artifact_crystal_model"
+  item__proto:t="artifact_legendary"
+  item__name:t="items/artifact_legendary"
+}
+
+artifact_legendary_effect{
+  _use:t="base_effect"
+  effect__spawnRate:r=1
+  effect__scale:r=1
+
+  _group{
+    _tags:t="render"
+    effect__name:t="fire_molotov_p_sparks_fx"
+  }
+}
+
+extracting_item{
+  "itemExtracting:tag"{}
+}
+
+extractable_item{
+  _use:t="animchar"
+  outline__enabled:b=no
+  grid_obj__gridType:t="interactable"
+  grid_obj__fixedTmScale:r=-1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  artifact__subTemplateInWorking:t="extracting_item"
+  artifact__extractionTime:r=120
+  artifact__extractionTimeAt:r=0
+  artifact__reloadTime:r=600
+  artifact__isReloading:b=no
+  artifact__isExtracting:b=no
+  artifact__reloadAt:r=0
+  _replicated:t="artifact__isExtracting"
+  _tracked:t="artifact__isExtracting"
+  _replicated:t="artifact__extractionTimeAt"
+  _tracked:t="artifact__extractionTimeAt"
+
+  grid_obj{}
+  "artifact__extractable:tag"{}
+}
+
+increasing_attract_point{
+  _use:t="attract_point"
+  game_effect__timeToDestroy:r=60
+  attract_point__magnitude:r=1.5
+  attract_point__magnitudeLimits:p2=0.4, 2
+}
+
+artifact_active_mattery_base{
+  _use:t="replicating"
+  _use:t="extractable_item"
+  _use:t="attached_omni_light"
+  _use:t="artifact_wakeup_all_around"
+  artifact__attractPointTemplateName:t="increasing_attract_point"
+  artifact__extractionPrize:t="active_matter_pile"
+  artifact__extractionPrizeLimits:ip2=3, 3
+  artifact__extractionPrizeCoinCount:ip2=20, 30
+  artifact__moveTo:p3=0, 0, 0
+  artifact__offset:p3=0, 1.2, 0
+  artifact__curScale:r=4
+  artifact__scalesLimits:p2=4, 0.1
+  animchar__res:t="am_crystal_i_char"
+  collres__res:t="am_crystal_i_collision"
+  light__max_radius:r=5
+  light__color:c=255, 0, 153, 255
+  light__brightness:r=20
+
+  "artifact__attractPointEid:eid"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="am_crystal_distortion_a_fx"
+
+    effect{}
+  }
+
+  collres{}
+}
+
+artifact_stand{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="replicating"
+  _use:t="rendinst"
+  ri_extra__name:t="am_crystal_central_ground_decor_a"
+  _replicated:t="transform"
+  _tracked:t="transform"
+}
+
+artifact_active_mattery{
+  _use:t="item_artifact_am"
+  animchar__res:t="medication_e_char"
+  item__proto:t="artifact_active_mattery"
+  item__name:t="items/artifact_active_mattery"
+  item__weight:r=0.1
+  item__volume:r=2
+  item__scaleMult:r=0.5
+}
+
+active_matter_pile_light{
+  _use:t="attached_omni_light"
+  _use:t="range_pauseable_light"
+  light__render_range_limit:r=100
+  light__max_radius:r=2
+  light__force_max_light_radius:b=yes
+  light__offset:p3=0, 0, 0
+  light__color:c=180, 255, 200, 255
+  light__brightness:r=0.02
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+active_matter_pile_effect{
+  _use:t="base_effect"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="am_crystal_distortion_waves_fx"
+
+    effect{}
+  }
+
+  "effects:object"{
+    am_crystal_glare_fx:r=1
+    am_crystal_flare_fx:r=1
+  }
+}
+
+active_matter_gather_effect{
+  active_matter_gather_effect__flySpeed:r=7.5
+  active_matter_gather_effect__pilePos:p3=0, 0, 0
+  active_matter_gather_effect__gatherPos:p3=0, 0, 0
+  active_matter_gather_effect__requiredDistanceToTarget:r=0.1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  "effects:object"{
+    am_absorbtion_flow_flare_fx:r=1
+    am_absorbtion_flow_pinch_fx:r=1
+  }
+}
+
+am_pile_sound{
+  _use:t="replicating"
+  _use:t="sound_banks_state"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    am_pile_sound__range:r=0
+    am_pile_sound__path:t="env_effects/artifacts/active_matter_pile"
+    am_pile_sound__pitchFarNear:p2=0.15, 3
+
+    "am_pile_sound__event:SoundEvent"{}
+  }
+}
+
+am_pile_sound_source{
+  _group{
+    _tags:t="sound"
+
+    "amPileSoundSource:tag"{}
+  }
+}
+
+alarm_on_pickup{
+  _use:t="pickup_attract_point_creator"
+  _use:t="pickup_wakeup_all_around"
+  item__recreateInInventory:t="personal_attract_point"
+}
+
+am_shell_move_down_effect{
+  am_shell_move_down_effect__timer:r=10
+
+  _group{
+    _replicate:b=yes
+    am_shell_move_down_effect__timerEndAt:r=0
+  }
+}
+
+shell_free_fall_effect{
+  ballistic_phys__velocity:p3=0, 0, 0
+
+  "shell_free_fall_effect:tag"{}
+}
+
+artifact_sensor_shell_free_fall{
+  _use:t="replicating"
+  ballistic_phys__velocity:p3=0, 0, 0
+  shell_free_fall_effect__recreateOnFallTemplate:t="artifact_sensor+item_in_world"
+  shell_free_fall_effect__addHeight:r=0.1
+  shell_free_fall_effect__fallOn:p3=0, 0, 0
+  _replicated:t="shell_free_fall_effect__fallOn"
+}
+
+artifact_sensor_shell{
+  _use:t="animchar"
+  _use:t="artifact_sensor_shell_free_fall"
+  animchar__res:t="sample_grape_char"
+  collres__res:t="sample_grape_collision"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+am_core_part_shell_free_fall{
+  _use:t="replicating"
+  ballistic_phys__velocity:p3=0, 0, 0
+  shell_free_fall_effect__recreateOnFallTemplate:t="am_core_part+item_in_world"
+  shell_free_fall_effect__addHeight:r=0.09
+  shell_free_fall_effect__fallOn:p3=0, 0, 0
+  _replicated:t="shell_free_fall_effect__fallOn"
+}
+
+am_core_part_shell{
+  _use:t="animchar"
+  _use:t="am_core_part_shell_free_fall"
+  animchar__res:t="am_crystal_e_char"
+  collres__res:t="am_crystal_e_collision"
+  transform:m=[[0.878216, -0.397037, -0.266642] [0.405538, 0.322661, 0.855236] [-0.253525, -0.859216, 0.44438] [0, 0, 0]]
+}
+
+am_core_part{
+  _use:t="item"
+  dropTm:m=[[0.878216, -0.397037, -0.266642] [0.405538, 0.322661, 0.855236] [-0.253525, -0.859216, 0.44438] [0, 0.09, 0]]
+  animchar__res:t="am_crystal_e_char"
+  collres__res:t="am_crystal_e_collision"
+  item__proto:t="am_core_part"
+  item__name:t="items/am_core_part"
+  item__weight:r=0.1
+  item__volume:r=1
+
+  "item__alwaysUseful:tag"{}
+}
+
+active_matter_pile_shell_free_fall{
+  _use:t="replicating"
+  ballistic_phys__velocity:p3=0, 0, 0
+  shell_free_fall_effect__recreateOnFallTemplate:t="active_matter_pile+item_in_world"
+  shell_free_fall_effect__addHeight:r=0.3
+  shell_free_fall_effect__fallOn:p3=0, 0, 0
+  _replicated:t="shell_free_fall_effect__fallOn"
+}
+
+am_shell_core_companion{
+  _use:t="am_core_companion"
+  _use:t="am_shell_move_down_effect"
+  am_core_companion__speed:r=0.005
+  am_core_companion__scaleRng:p2=1, 1
+}
+
+active_matter_pile_shell{
+  _use:t="animchar"
+  _use:t="active_matter_pile_shell_free_fall"
+  animchar__res:t="am_crystal_c_char"
+  collres__res:t="am_crystal_c_collision"
+  item__scaleMultRng:p2=0.5, 1
+  item__scaleMultCountRng:p2=1, 10
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+base_active_matter_pile{
+  _use:t="invisible_item"
+  animchar__res:t="am_crystal_c_char"
+  collres__res:t="am_crystal_c_collision"
+  item__weight:r=0
+  item__volume:r=0
+  item__count:i=1
+  item__lootType:t="coin"
+  item__recreateOnGround:t="item_in_world"
+  item__recreateInWorldPhys:t="item_in_world_phys"
+  item__proto:t="active_matter_pile"
+  item__name:t="items/active_matter_pile"
+  item__disablePickup:b=yes
+  active_matter_pile__locked:b=yes
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.3, 0]]
+  _replicated:t="item__count"
+  _tracked:t="item__count"
+
+  "item__nonDroppable:tag"{}
+  "item__am:tag"{}
+  "item__noVisibilityUpdate:tag"{}
+}
+
+active_matter_pile_attached_to_corpse{
+  _use:t="base_active_matter_pile"
+  _use:t="usable_object_base"
+  am_pile_visual__velMult:r=2
+  am_pile_visual__influenceEffectName:t="active_matter_gather_effect"
+  item__useActionHintType:i=1
+  item__setCustomUsePrompt:t="items/active_matter_pile/pickup"
+  item_world_marker__pos:p3=0, 0, 0
+  _tracked:t="item_world_marker__pos"
+  item_world_marker__attachToNode:t="Bip01 Spine1"
+  item_world_marker__attachToNodeIdx:i=-1
+  item__disablePickup:b=yes
+  active_matter_pile__locked:b=no
+
+  "am_pile_attached_to_corpse__corpseEid:eid"{}
+  "am_pile_visual__influenceFromGatherers:list<p3>"{}
+  "am_pile_visual__influenceFromGatherersEffects:list<eid>"{}
+  "usableObject:tag"{}
+  "item_world_marker__attachedToEid:eid"{}
+}
+
+active_matter_pile_provider{
+  am_pile_visual__velMult:r=2
+  am_pile_visual__influenceEffectName:t="active_matter_gather_effect"
+  active_matter_pile_provider__team:i=-1
+
+  "active_matter_pile_provider:tag"{}
+  "active_matter_pile_provider__amSourceEid:eid"{}
+  "am_pile_visual__influenceFromGatherers:list<p3>"{}
+  "am_pile_visual__influenceFromGatherersEffects:list<eid>"{}
+}
+
+active_matter_pile_attached_to_obj_effect{
+  _use:t="replicated_game_effect"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="item_aura_composite_fx"
+
+    effect{}
+  }
+}
+
+active_matter_pile_attached_to_obj{
+  _use:t="base_active_matter_pile"
+  _use:t="usable_object_base"
+  _use:t="active_matter_pile_attached_to_obj_effect"
+  _use:t="item_in_world"
+  item__count:i=0
+  am_pile_visual__velMult:r=2
+  am_pile_visual__influenceEffectName:t="active_matter_gather_effect"
+  item__useActionHintType:i=1
+  item__setCustomUsePrompt:t="items/active_matter_pile/pickup"
+  item__disablePickup:b=yes
+  active_matter_pile__locked:b=no
+
+  "server_transform_from_transform:tag"{}
+  "am_pile_attached_to_obj__objEid:eid"{}
+  "am_pile_visual__influenceFromGatherers:list<p3>"{}
+  "am_pile_visual__influenceFromGatherersEffects:list<eid>"{}
+  "usableObject:tag"{}
+}
+
+attach_am_to_obj_on_appear{
+  attach_am_to_obj_on_appear__template:t="active_matter_pile_attached_to_obj"
+  attach_am_to_obj_on_appear__count:ip2=1, 1
+}
+
+active_matter_pile{
+  _use:t="base_active_matter_pile"
+  item__useActionHintType:i=1
+  item__setCustomUsePrompt:t="items/active_matter_pile/pickup"
+  item__disablePickup:b=yes
+  active_matter_pile__emissionFieldTemplate:t="am_emission_field"
+  am_pile__visualItemPosOffset:p3=0, 0.3, 0
+
+  "usableObject:tag"{}
+  "chargesWanderingCore:tag"{}
+  _group{
+    _tags:t="gameClient"
+    active_matter_pile__visualTemplate:t="am_pile_visual"
+    active_matter_pile__lightTemplate:t="active_matter_pile_light"
+    am_pile__visualItemSalt:r=-1
+    am_pile__visualItemAxisMaxAngle:r=15
+
+    "active_matter_pile__lightEid:eid"{}
+    "active_matter_pile__visualEid:eid"{}
+    "active_matter_pile__sleepingVisualEid:eid"{}
+    "active_matter_pile__animchars:shared:array"{
+      "animchar:object"{
+        countRnd:ip2=1, 1
+        animchar_res:t="am_crystal_q1_char"
+      }
+
+      "animchar:object"{
+        countRnd:ip2=2, 4
+        animchar_res:t="am_crystal_q2_char"
+      }
+
+      "animchar:object"{
+        countRnd:ip2=5, 9
+        animchar_res:t="am_crystal_q3_char"
+      }
+
+      "animchar:object"{
+        countRnd:ip2=10, 19
+        animchar_res:t="am_crystal_q4_char"
+      }
+
+      "animchar:object"{
+        countRnd:ip2=20, 1000
+        animchar_res:t="am_crystal_q5_char"
+      }
+    }
+  }
+}
+
+am_pile_visual{
+  _use:t="animchar"
+  _use:t="am_pile_sound_source"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="am_crystal_c_char"
+  collres__res:t="am_crystal_c_collision"
+  animchar_render__enabled:b=yes
+  am_pile_visual__salt:r=-1
+  am_pile_visual__verticalMoveAltitude:r=0.05
+  am_pile_visual__verticalMoveFrequency:r=0.17
+  am_pile_visual__influenceEffectName:t="active_matter_gather_effect"
+  am_pile_visual__rotationFrequency:r=0.1
+  am_pile_visual__rotInStateStep:r=0
+  am_pile_visual__rotOutStateStep:r=0
+  am_pile_visual__rotationFrequencyDrift:r=0.331
+  am_pile_visual__rotationFrequencyCurDrift:r=0
+  am_pile_visual__rotationFrequencyDriftSpeed:r=0.67
+  am_pile_visual__curRotAngle:r=0
+  am_pile_visual__rotationFrequencyAdd:r=0
+  am_pile_visual__gatherRotationFreqMult:r=3
+  am_pile_visual__gatherRotationFreqChangeTime:r=0.5
+  am_pile_visual__precessionMaxAngle:r=45
+  am_pile_visual__precessionCurAngle:r=180
+  am_pile_visual__precessionTime:r=100
+  am_pile_visual__precessionOscillationCurAngle:r=0
+  am_pile_visual__precessionOscillationAngle:r=45
+  am_pile_visual__precessionOscillationSpeed:r=0.513
+  am_pile_visual__pulsInStateStep:r=0
+  am_pile_visual__pulsOutStateStep:r=0
+  am_pile_visual__scale:r=0.01
+  am_pile_visual__gatherPulsationMult:r=1.3
+  am_pile_visual__gatherPulsationInOutTime:p2=1.5, 0.5
+  am_pile_visual__scaleMult:r=1
+  am_pile_visual__minScaleProc:r=0.8
+  am_pile_visual__startScaleMult:r=0
+  am_pile_visual__startScaleDelay:r=0.2
+  am_pile_visual__startScaleStartAt:r=0
+  am_pile_visual__startScaleSpeed:r=2
+  am_pile_visual__sleep:b=no
+  am_pile_visual__sleepWishScale:r=0.1
+  am_pile_visual__sleepScale:r=1
+  am_pile_visual__sleepScaleSpeed:r=1
+  am_pile_visual__changeAnimcharTime:r=-1
+  am_pile_visual__changeAnimcharTimeDuration:r=1
+  am_pile_visual__renderRadius:r=50
+  am_pile_visual__nextCheckRenderTime:r=0
+  am_pile_visual__nextCheckRenderTimeDuration:r=3
+  am_pile_visual__effectsDisabled:b=yes
+  am_pile_visual__effectsTemplate:t="active_matter_pile_effect"
+  _tracked:t="am_pile_visual__sleep"
+  am_pile_visual__originalTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  am_pile_visual__startOffset:p3=0, 0, 0
+
+  "am_crystal_random_noise_offset:tag"{}
+  "requires_distortion_render:tag"{}
+  "am_pile_visual__attachedTo:eid"{}
+  "am_pile_visual__influenceFromGatherers:list<p3>"{}
+  "am_pile_visual__influenceFromGatherersEffects:list<eid>"{}
+}
+
+am_pile_visual_destroying{
+  am_pile_visual_destroying__speed:r=10
+}
+
+item_freefalling{
+  item_freefalling__stopAt:r=0
+  item_freefalling__updateAt:r=0
+  item_freefalling__updateInterval:r=0
+  item_freefalling__addHeight:r=0.01
+  item_freefalling__targetY:r=0
+  item_freefalling__speed:r=4
+}
+
+coin_item_count_1{
+  item__count:i=1
+  animchar__res:t="am_crystal_c_char"
+  collres__res:t="am_crystal_c_collision"
+}
+
+coin_item_count_2{
+  item__count:i=2
+  animchar__res:t="am_crystal_c_char"
+  collres__res:t="am_crystal_c_collision"
+}
+
+coin_item_count_3{
+  item__count:i=3
+  animchar__res:t="am_crystal_b_char"
+  collres__res:t="am_crystal_b_collision"
+}
+
+coin_item_count_5{
+  item__count:i=5
+  animchar__res:t="am_crystal_a_char"
+  collres__res:t="am_crystal_a_collision"
+}
+
+coin_item_count_10{
+  item__count:i=10
+  animchar__res:t="am_crystal_g_char"
+  collres__res:t="am_crystal_g_collision"
+}
+
+coin_item_count_15{
+  item__count:i=15
+  animchar__res:t="am_crystal_f_char"
+  collres__res:t="am_crystal_f_collision"
+}
+
+coin_item_count_20{
+  item__count:i=20
+  animchar__res:t="am_crystal_h_char"
+  collres__res:t="am_crystal_h_collision"
+}
+
+coin_item_count_25{
+  item__count:i=25
+  animchar__res:t="am_crystal_h_char"
+  collres__res:t="am_crystal_h_collision"
+}
+
+coin_item_count_30{
+  item__count:i=30
+  animchar__res:t="am_crystal_h_char"
+  collres__res:t="am_crystal_h_collision"
+}
+
+coin_item_count_50{
+  item__count:i=50
+  animchar__res:t="am_crystal_d_char"
+  collres__res:t="am_crystal_d_collision"
+}
+
+coin_item_count_100{
+  item__count:i=100
+  animchar__res:t="am_crystal_j_char"
+  collres__res:t="am_crystal_j_collision"
+}
+
+sensor_abilities_sound{
+  sensor_abilities_sound__timeMult:r=20
+  sensor_abilities_sound__updateTime:r=1
+  sensor_abilities_sound__nextUpdateTime:r=0
+  sensor_abilities_sound__enable:b=no
+
+  "sensor_abilities_sound__types:object"{
+    "flower_human_sensor:object"{
+      path:t="am/ui/flower_human_sensor"
+      lastPlayedTime:r=0
+      intensity:r=0
+      volumeRng:p2=0.1, 0.3
+    }
+
+    "skeleton_swarm_sensor:object"{
+      path:t="am/ui/skeleton_swarm_sensor"
+      lastPlayedTime:r=0
+      intensity:r=0
+      volumeRng:p2=0.1, 0.3
+    }
+
+    "artifact_sensor:object"{
+      path:t="am/ui/artifact_sensor"
+      lastPlayedTime:r=0
+      intensity:r=0
+      volumeRng:p2=0.1, 0.3
+    }
+  }
+
+  "sensor_abilities_sound__pulsesPerSenseValue:shared:array"{
+    "node:object"{
+      senseValueMin:r=0.75
+      pulseCount:i=1
+      pauseCount:i=0
+      pause:b=no
+    }
+
+    "node:object"{
+      senseValueMin:r=0.5
+      pulseCount:i=3
+      pauseCount:i=4
+      pause:b=yes
+    }
+
+    "node:object"{
+      senseValueMin:r=0.25
+      pulseCount:i=2
+      pauseCount:i=4
+      pause:b=yes
+    }
+
+    "node:object"{
+      senseValueMin:r=0
+      pulseCount:i=1
+      pauseCount:i=4
+      pause:b=yes
+    }
+  }
+}
+
+sensor_abilities{
+  _use:t="sensor_abilities_sound"
+  sensor_abilities__updateTime:r=1
+  sensor_abilities__nextUpdateTime:r=0
+  _replicated:t="sensor_abilities__abilitiesProps"
+  _replicated:t="sensor_abilities__abilitiesStates"
+  _tracked:t="sensor_abilities__abilitiesStates"
+
+  "sensor_abilities__abilitiesProps:array"{}
+  "sensor_abilities__abilitiesStates:array"{}
+}
+
+am_emission_field{
+  _use:t="replicating"
+  _use:t="animchar"
+  animchar__res:t="am_emission_field_a_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_effect__timeToDestroy:r=0.8
+  game_effect__destroyAt:r=-1
+  am_emission_field__scaleMult:r=0
+  am_emission_field__wishScaleMult:r=1
+  am_emmision_field__scaleRng:p2=1, 0
+
+  "requires_distortion_render:tag"{}
+  "am_emission_field__ownerEid:eid"{}
+}
+
+am_emission_field_effect_base{
+  _use:t="base_effect"
+  game_effect__timeToDestroy:r=0.8
+  game_effect__clientDestroyAt:r=-1
+}
+
+item_aura_distortion{
+  _use:t="base_effect"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="item_aura_distortion_fx"
+
+    effect{}
+  }
+}
+
+am_emission_field_distortion{
+  _use:t="am_emission_field_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="am_emission_distortion_waves_fx"
+
+    effect{}
+  }
+}
+
+am_emission_field_flare{
+  _use:t="am_emission_field_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="am_emission_flare_fx"
+
+    effect{}
+  }
+}
+
+am_emission_field_glare{
+  _use:t="am_emission_field_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="am_emission_glare_fx"
+
+    effect{}
+  }
+}
+
+base_portal_effect{
+  _use:t="base_effect"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_portal_a_composite_fx"
+
+    effect{}
+  }
+}
+
+alter_tube_flat_distortion{
+  _use:t="base_effect"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="alter_tube_flat_distortion_a_fx"
+  }
+}
+
+alter_tube_flow_distortion{
+  _use:t="base_effect"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="alter_tube_flow_distortion_a_fx"
+  }
+}
+
+am_inside_body{
+  bodyCleanupTime:r=99999
+  am_inside_body__emptyBodyCleanupTime:r=120
+}
+
+am_inside_body_1{
+  _use:t="am_inside_body"
+  corpse_am__templateForCreation:t="active_matter_pile_attached_to_corpse+item_in_world+coin_item_count_1"
+}
+
+am_inside_body_2{
+  _use:t="am_inside_body"
+  corpse_am__templateForCreation:t="active_matter_pile_attached_to_corpse+item_in_world+coin_item_count_2"
+}
+
+am_inside_body_3{
+  _use:t="am_inside_body"
+  corpse_am__templateForCreation:t="active_matter_pile_attached_to_corpse+item_in_world+coin_item_count_3"
+}
+
+am_inside_body_5{
+  _use:t="am_inside_body"
+  corpse_am__templateForCreation:t="active_matter_pile_attached_to_corpse+item_in_world+coin_item_count_5"
+}
+
+am_inside_body_20{
+  _use:t="am_inside_body"
+  corpse_am__templateForCreation:t="active_matter_pile_attached_to_corpse+item_in_world+coin_item_count_20"
+}
+
+safepack_destroy_effect{
+  _use:t="base_effect"
+  _use:t="server_destroy_in_5_sec"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="nesting_swarm_nest_explosion_aura_composite_fx"
+
+    effect{}
+  }
+}

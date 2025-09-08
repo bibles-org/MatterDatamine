@@ -1,0 +1,28 @@
+require ecs
+require ecs.common
+require DngHumanAnim
+require game.events.events_active_matter
+require AnimV20
+
+[es(tag=render, before=(animchar_es, net_phys_update_es), parallel_for=64)]
+def update_animchar_dtThreshold_es(info : ParallelUpdateFrameDelayed;
+                                   animchar__visible : bool;
+                                   var animchar__dtThreshold : float&;
+                                   animchar__invisDtThreshold : float = 0.4;
+                                   animchar__minDtThreshold : float = 0.0;
+                                   animchar__actWhenInvisible = false)
+  animchar__dtThreshold = animchar__visible || animchar__actWhenInvisible ? animchar__minDtThreshold : max(animchar__invisDtThreshold, animchar__minDtThreshold)
+
+
+[es(tag=render, before=(animchar_es, net_phys_update_es, update_animchar_dtThreshold_es), parallel_for=64)]
+def update_animchar_visibility_es(info : UpdateStageInfoAct;
+                                  var animchar__visible : bool&;
+                                  animchar_visbits : animchar_visbits_t;
+                                  animchar_render__enabled : bool = true)
+  if !animchar_render__enabled
+    animchar__visible = false
+    return
+
+  animchar__visible = (int(animchar_visbits) & (int(AnimcharVisbits.VISFLG_MAIN_CAMERA_RENDERED) |
+                       int(AnimcharVisbits.VISFLG_CSM_SHADOW_RENDERED) | int(AnimcharVisbits.VISFLG_COCKPIT_VISIBLE) |
+                       int(AnimcharVisbits.VISFLG_SEMI_TRANS_RENDERED) | int(AnimcharVisbits.VISFLG_RENDER_CUSTOM))) != 0

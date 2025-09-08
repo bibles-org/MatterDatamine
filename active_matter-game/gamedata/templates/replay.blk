@@ -1,0 +1,120 @@
+base_replay_meta{
+  replay__startAt:r=0
+
+  "replay__keyFrameTimes:list<i>"{}
+  "replay__timeLabels:array"{}
+}
+
+replay_track{
+  replay_track__debug:b=no
+  replay_track__useBezierInterp:b=yes
+  replay_track__playRotation:b=yes
+  replay_track__playPosition:b=yes
+  replay_track__playRoll:b=yes
+  replay_track__playFov:b=yes
+
+  "replay_track:tag"{}
+  _group{
+    _track:b=yes
+    replay_track__currentKeyFrame:i=-1
+  }
+
+  "replay_track__time:list<r>"{}
+  "replay_track__position:list<p3>"{}
+  "replay_track__direction:list<p3>"{}
+  "replay_track__up:list<p3>"{}
+  "replay_track__roll:list<r>"{}
+  "replay_track__fov:list<r>"{}
+}
+
+post_production_entity{
+  post_production_entity__savingTemplate:t="post_production_saving_entity"
+
+  "postProductionEntity:tag"{}
+}
+
+post_production_saving_entity{
+  saving_entity__creationTime:r=0
+  saving_entity__template:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  saving_entity__isAutoDestroy:b=no
+
+  "postProductionEntityToSave:tag"{}
+}
+
+post_production_creating_entity{
+  creating_entity__creationTime:r=0
+  creating_entity__template:t=""
+  creating_entity__transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "postProductionEntityToCreate:tag"{}
+}
+
+replay_post_production{
+  replay_post_production__creatingTemplate:t="post_production_creating_entity"
+
+  "replay_post_production__creationTime:list<r>"{}
+  "replay_post_production__template:list<t>"{}
+  "replay_post_production__transform:list<m>"{}
+  "replay_post_production__isAutoDestroy:list<b>"{}
+  "replayPostProduction:tag"{}
+}
+
+replay_meta{
+  _use:t="base_replay_meta"
+  _use:t="replay_track"
+  _use:t="replay_post_production"
+  replay__maxSpeed:r=16
+  replay__minSpeed:r=0.125
+  replay__speedMult:r=2
+  replay__speed:r=1
+  replay__curTime:r=0
+  replay__playTime:r=0
+  _tracked:t="replay__speed"
+  _tracked:t="replay__curTime"
+  replay__vehicleFov:r=70
+  replay__humanFov:r=100
+  replay__isKeyFrameRewind:b=no
+  replay__isRewinding:b=no
+  _tags:t="playingReplay"
+
+  "replayIsPlaying:tag"{}
+  "replay_cameras:list<t>"{
+    cam:t="replay_camera_tps"
+    cam:t="replay_camera_tps_free"
+    cam:t="replay_camera_operator"
+    cam:t="replay_camera_track"
+  }
+
+  "replay__prevCam:eid"{}
+  "replay__curCam:eid"{}
+  "replay__savedState:object"{}
+}
+
+replay_input{
+  _tracked:t="input__enabled"
+
+  _group{
+    replay_input__next:i=0
+    replay_input__prev:i=0
+    replay_input__pause:i=0
+    replay_input__speedUp:i=0
+    replay_input__speedDown:i=0
+    replay_input__toggleCamera:i=0
+    replay_track_input__saveKeyFrame:i=0
+    replay_track_input__deleteCurrentKeyFrame:i=0
+    replay_track_input__clearAllKeyFrames:i=0
+    replay_track_input__loadKeyFrames:i=0
+    replay_track_input__toggleInterp:i=0
+    replay_track_input__playRotation:i=0
+    replay_track_input__playPosition:i=0
+    replay_track_input__playRoll:i=0
+    replay_track_input__playFov:i=0
+    _tags:t="input"
+  }
+
+  "input__enabled:b"{
+    _tags:t="gameClient"
+    value:b=yes
+  }
+}

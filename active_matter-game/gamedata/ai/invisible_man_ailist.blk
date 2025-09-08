@@ -1,0 +1,1561 @@
+repeat{
+  name:t="invisible_man"
+
+  success{
+    sequencer{
+      once{}
+      wait{
+        range:p2=2, 2.5
+        resetable:b=yes
+      }
+
+      subTree{
+        treeName:t="sub.invisible_man_go_to_invisible_form"
+      }
+
+      wait{
+        range:p2=0.75, 1.5
+        resetable:b=yes
+      }
+    }
+  }
+
+  utilitySelector{
+    utilVars{
+      updateTimeStep:r=0.05
+      ready:t="util_vars__ready"
+      var:t="util_vars__aggressionLevel"
+      var:t="util_vars__visibleTargets"
+      var:t="util_vars__inAttackState"
+      var:t="util_vars__inShowState"
+      var:t="util_vars__visibleAttractPoints"
+      var:t="util_vars__attractPointRatio"
+    }
+
+    sequencer{
+      name:t="patrol_or_vanish"
+      utilFn:t="0.25f / (1f + visibleTargets)"
+
+      not{
+        checkAlive{
+          targetParam:t="invisible_man__mainEnemyEid"
+        }
+      }
+
+      sequencer{
+        name:t="patrol"
+
+        subTree{
+          treeName:t="sub.invisible_man_go_to_invisible_form"
+        }
+
+        patrollerWithNavmeshMapping{}
+        parallel{
+          nPhysCorridorMoveToPosWithNavmeshMapping{
+            posParam:t="patroller__currentWaypoint"
+            forceToWalk:b=yes
+            sprintTimerRange:p2=0, 0
+            stopDist:r=0.8
+          }
+
+          wait{
+            range:p2=5, 10
+            resetable:b=yes
+          }
+        }
+
+        orderedSelector{
+          sequencer{
+            name:t="Hunter wait"
+
+            compareNode{
+              lhs:t="invisible_man__type"
+              operator:t="=="
+              rhs:i=0
+            }
+
+            wait{
+              range:p2=5, 10
+              resetable:b=yes
+            }
+          }
+
+          sequencer{
+            name:t="Guard wait"
+
+            compareNode{
+              lhs:t="invisible_man__type"
+              operator:t="=="
+              rhs:i=1
+            }
+
+            wait{
+              range:p2=0, 3
+              resetable:b=yes
+            }
+          }
+
+          sequencer{
+            name:t="Defender wait"
+
+            compareNode{
+              lhs:t="invisible_man__type"
+              operator:t="=="
+              rhs:i=2
+            }
+
+            wait{
+              range:p2=0, 1.5
+              resetable:b=yes
+            }
+
+            success{
+              sequencer{
+                ignoreChance{
+                  chance:r=0.8
+                }
+
+                subTree{
+                  treeName:t="sub.invisible_man_go_to_visible_form"
+                }
+
+                wait{
+                  range:p2=1, 5.5
+                  resetable:b=yes
+                }
+
+                success{
+                  sequencer{
+                    ignoreChance{
+                      chance:r=0.5
+                    }
+
+                    subTree{
+                      treeName:t="sub.invisible_man_go_to_invisible_form"
+                    }
+                  }
+                }
+
+                patrollerWithNavmeshMapping{}
+                parallel{
+                  nPhysCorridorMoveToPosWithNavmeshMapping{
+                    posParam:t="patroller__currentWaypoint"
+                    forceToWalk:b=yes
+                    sprintTimerRange:p2=0, 0
+                    stopDist:r=0.8
+                  }
+
+                  wait{
+                    range:p2=5, 10
+                    resetable:b=yes
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        sequencer{
+          name:t="force_vanish"
+
+          compareNode{
+            lhs:t="invisible_man__forceVanish"
+            operator:t="=="
+            rhs:i=1
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_vanish"
+          }
+        }
+      }
+
+      success{
+        sequencer{
+          name:t="vanish"
+
+          compareNode{
+            lhs:t="invisible_man__type"
+            operator:t="=="
+            rhs:i=0
+          }
+
+          not{
+            checkAlive{
+              targetParam:t="invisible_man__mainEnemyEid"
+            }
+          }
+
+          not{
+            findDangerByEcsTag{
+              targetParam:t="walker_agent__targetEid"
+              radiusParamName:t="enemyRadius"
+              minDanger:r=0.1
+              tag:t="invisible_man_target"
+            }
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_vanish"
+          }
+        }
+      }
+    }
+
+    exitHandler{
+      name:t="attack"
+      utilFn:t="visibleTargets * (1f + saturate(aggressionLevel - 0.4999))"
+      canExitFn:t="inAttackState ? 0. : (inShowState ? 0. : 1.)"
+
+      orderedSelector{
+        sequencer{
+          name:t="force_vanish"
+
+          compareNode{
+            lhs:t="invisible_man__forceVanish"
+            operator:t="=="
+            rhs:i=1
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_vanish"
+          }
+        }
+
+        exitHandler{
+          sequencer{
+            name:t="jump_attack"
+
+            subTree{
+              treeName:t="sub.invisible_man_find_danger"
+            }
+
+            not{
+              checkDistanceToTarget{
+                targetParam:t="walker_agent__targetEid"
+                radius:r=3
+              }
+            }
+
+            nPhysPrepareJumping{
+              minMaxDistanceFromLandToTarget:p2=0.5, 2.5
+            }
+
+            success{
+              subTree{
+                treeName:t="sub.invisible_man_go_to_invisible_form"
+              }
+            }
+
+            nPhysTeleportWithNavmeshMapping{
+              posParam:t="walker_agent__climbingFrom"
+            }
+
+            nPhysLookAtEntityWithPositionMapping{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            subTree{
+              treeName:t="sub.invisible_man_go_to_visible_form_fast"
+            }
+
+            wait{
+              range:p2=1, 2
+              resetable:b=yes
+            }
+
+            copyEcsValue{
+              ecsName:t="walker_agent__climbingTo"
+              blackboardName:t="climbTo"
+            }
+
+            modifyNode{
+              targetIntParam:t="targetEid"
+              operator:t="="
+              arg:t="walker_agent__targetEid"
+            }
+
+            setPosFromEntity{
+              to:t="targetPos"
+              from:t="targetEid"
+            }
+
+            checkDistanceBetweenPositions{
+              pos1:t="climbTo"
+              pos2:t="targetPos"
+              distance:r=5
+            }
+
+            speak{
+              effect:t="aggro"
+              timeMinMax:p2=6, 10
+            }
+
+            performJumping{
+              name:t="performJumping"
+            }
+
+            checkAlive{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            parallel{
+              name:t="follow_enemy_after_jump"
+
+              nPhysCorridorMoveToTargetWithNavmeshMapping{
+                targetParam:t="walker_agent__targetEid"
+                forceToWalk:b=no
+                stopDist:r=1.5
+              }
+
+              failed{
+                wait{
+                  range:p2=5, 10
+                  resetable:b=yes
+                }
+              }
+            }
+
+            nPhysLookAtEntityWithPositionMapping{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            checkDistanceToTarget{
+              targetParam:t="walker_agent__targetEid"
+              radius:r=2
+            }
+
+            subTree{
+              treeName:t="sub.invisible_man_try_forward_attack"
+            }
+
+            subTree{
+              treeName:t="sub.invisible_man_go_to_invisible_form"
+            }
+
+            checkAlive{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            nMeshFindRandomPointAroundTargetWithNavmeshMapping{
+              posParam:t="walker_agent__targetPos"
+              targetParam:t="walker_agent__targetEid"
+              dist:p2=7, 12
+            }
+
+            nPhysTeleportWithNavmeshMapping{
+              posParam:t="walker_agent__targetPos"
+            }
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_go_to_invisible_form_immediate"
+          }
+        }
+
+        sequencer{
+          name:t="hunt"
+
+          subTree{
+            treeName:t="sub.invisible_man_find_danger"
+          }
+
+          compareNode{
+            lhs:t="invisible_man__type"
+            operator:t="=="
+            rhs:i=0
+          }
+
+          not{
+            checkDistanceToTarget{
+              targetParam:t="walker_agent__targetEid"
+              radius:r=20
+            }
+          }
+
+          orderedSelector{
+            sequencer{
+              checkDistanceToTarget{
+                targetParam:t="walker_agent__targetEid"
+                radius:r=45
+              }
+            }
+
+            sequencer{
+              subTree{
+                treeName:t="sub.invisible_man_vanish"
+              }
+            }
+          }
+
+          parallel{
+            nPhysCorridorMoveToTargetWithNavmeshMapping{
+              targetParam:t="walker_agent__targetEid"
+              forceToWalk:b=no
+              stopDist:r=1
+            }
+
+            wait{
+              range:p2=5, 10
+              resetable:b=yes
+            }
+          }
+        }
+
+        sequencer{
+          name:t="backstab_attack"
+
+          compareNode{
+            lhs:t="invisible_man__forceForwardAttack"
+            operator:t="=="
+            rhs:i=0
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_find_danger"
+          }
+
+          ignoreChance{
+            chance:r=0.5
+          }
+
+          repeatUntilFail{
+            count:i=2
+
+            subTree{
+              treeName:t="sub.chance_to_hiding_distant_teleport"
+            }
+
+            checkAlive{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            nMeshFindDirectionalPointNearTargetWithNavmeshMapping{
+              posParam:t="walker_agent__targetPos"
+              tries:i=2
+              dist:p2=1.5, 2
+              targetParam:t="walker_agent__targetEid"
+              tracerayNavmesh:b=yes
+              directionAngle:r=180
+              angleRangeSpread:p2=-30, 30
+            }
+
+            success{
+              sequencer{
+                not{
+                  checkInsideAnotherDimension{
+                    targetParam:t="walker_agent__targetEid"
+                  }
+                }
+
+                subTree{
+                  treeName:t="sub.invisible_man_run_behind_target"
+                }
+
+                nPhysLookAtEntityWithPositionMapping{
+                  targetParam:t="walker_agent__targetEid"
+                }
+
+                subTree{
+                  treeName:t="sub.invisible_man_go_to_visible_form"
+                }
+
+                parallel{
+                  nPhysStareAtEntityWithPositionMapping{
+                    targetParam:t="walker_agent__targetEid"
+                  }
+
+                  wait{
+                    range:p2=0.05, 0.15
+                    resetable:b=yes
+                  }
+                }
+
+                subTree{
+                  treeName:t="sub.invisible_man_try_backstab_attack"
+                }
+
+                success{
+                  sequencer{
+                    ignoreChance{
+                      chance:r=0.65
+                    }
+
+                    subTree{
+                      treeName:t="sub.invisible_man_try_backstab_attack"
+                    }
+                  }
+                }
+
+                parallel{
+                  nPhysStareAtEntityWithPositionMapping{
+                    targetParam:t="walker_agent__targetEid"
+                  }
+
+                  wait{
+                    range:p2=0.2, 0.3
+                    resetable:b=yes
+                  }
+                }
+
+                orderedSelector{
+                  not{
+                    amIsTargetLookingInMyDirection{
+                      targetParam:t="walker_agent__targetEid"
+                      sectorAngle:r=30
+                    }
+                  }
+
+                  sequencer{
+                    ignoreChance{
+                      chance:r=0.1
+                    }
+
+                    subTree{
+                      treeName:t="sub.invisible_man_go_to_invisible_form"
+                    }
+                  }
+
+                  sequencer{
+                    subTree{
+                      treeName:t="sub.chance_to_hiding_distant_teleport"
+                    }
+
+                    subTree{
+                      treeName:t="sub.invisible_man_go_to_invisible_form"
+                    }
+                  }
+                }
+
+                parallel{
+                  nPhysStareAtEntityWithPositionMapping{
+                    targetParam:t="walker_agent__targetEid"
+                  }
+
+                  wait{
+                    range:p2=0.2, 0.3
+                    resetable:b=yes
+                  }
+                }
+
+                orderedSelector{
+                  not{
+                    amIsTargetLookingInMyDirection{
+                      targetParam:t="walker_agent__targetEid"
+                      sectorAngle:r=30
+                    }
+                  }
+
+                  subTree{
+                    treeName:t="sub.invisible_man_go_to_invisible_form"
+                  }
+                }
+              }
+            }
+
+            success{
+              sequencer{
+                ignoreChance{
+                  chance:r=0.75
+                }
+
+                subTree{
+                  treeName:t="sub.invisible_man_walk_around"
+                }
+              }
+            }
+
+            checkTargetEcs{
+              targetParam:t="walker_agent__targetEid"
+            }
+          }
+        }
+
+        sequencer{
+          name:t="forward_attack"
+
+          ignoreChance{
+            chance:r=0.5
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_find_danger"
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_go_to_invisible_form"
+          }
+
+          subTree{
+            treeName:t="sub.chance_to_forward_teleport"
+          }
+
+          parallel{
+            nPhysCorridorMoveToTargetWithNavmeshMapping{
+              targetParam:t="walker_agent__targetEid"
+              forceToWalk:b=no
+              stopDist:r=1.2
+            }
+
+            sequencer{
+              wait{
+                range:p2=8, 14
+                resetable:b=yes
+              }
+
+              failed{}
+            }
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_go_to_visible_form_fast"
+          }
+
+          parallel{
+            nPhysStareAtEntityWithPositionMapping{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            wait{
+              range:p2=0.3, 0.4
+              resetable:b=yes
+            }
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_try_forward_attack"
+          }
+
+          success{
+            sequencer{
+              ignoreChance{
+                chance:r=0.5
+              }
+
+              subTree{
+                treeName:t="sub.invisible_man_try_forward_attack"
+              }
+            }
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_go_to_invisible_form"
+          }
+
+          parallel{
+            nPhysStareAtEntityWithPositionMapping{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            wait{
+              range:p2=0.1, 0.3
+              resetable:b=yes
+            }
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_run_around"
+          }
+
+          checkTargetEcs{
+            targetParam:t="walker_agent__targetEid"
+          }
+        }
+
+        sequencer{
+          name:t="teleport_and_backstab"
+
+          ignoreChance{
+            chance:r=0.5
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_find_danger"
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_go_to_invisible_form"
+          }
+
+          not{
+            checkInsideAnotherDimension{
+              targetParam:t="walker_agent__targetEid"
+            }
+          }
+
+          wait{
+            range:p2=0.4, 0.8
+            resetable:b=yes
+          }
+
+          nPhysTeleportAlongTargetLookDirWithNavmeshMapping{
+            targetParam:t="walker_agent__targetEid"
+            distance:p2=-0.5, -1
+          }
+
+          nPhysLookAtEntityWithPositionMapping{
+            targetParam:t="walker_agent__targetEid"
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_go_to_visible_form"
+          }
+
+          parallel{
+            nPhysStareAtEntityWithPositionMapping{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            wait{
+              range:p2=0.1, 0.25
+              resetable:b=yes
+            }
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_try_backstab_attack"
+          }
+
+          parallel{
+            nPhysStareAtEntityWithPositionMapping{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            wait{
+              range:p2=0.4, 0.8
+              resetable:b=yes
+            }
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_go_to_invisible_form"
+          }
+
+          parallel{
+            nPhysStareAtEntityWithPositionMapping{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            wait{
+              range:p2=1, 2.5
+              resetable:b=yes
+            }
+          }
+        }
+
+        sequencer{
+          name:t="shoo"
+
+          subTree{
+            treeName:t="sub.invisible_man_run_around"
+          }
+
+          wait{
+            range:p2=0, 1.5
+            resetable:b=yes
+          }
+        }
+      }
+
+      sequencer{
+        modifyNode{
+          target:t="util_vars__inAttackState"
+          operator:t="="
+          arg:i=0
+        }
+
+        modifyNode{
+          target:t="util_vars__inShowState"
+          operator:t="="
+          arg:i=0
+        }
+      }
+    }
+
+    sequencer{
+      name:t="runToVisibleAttrackPoint"
+      utilFn:t="visibleAttractPoints > 0f ? 0.5 : 0f"
+
+      not{
+        subTree{
+          treeName:t="sub.invisible_man_find_danger"
+        }
+      }
+
+      getVisibleAttractionPosition{}
+      nPhysCorridorMoveToPosWithNavmeshMapping{
+        posParam:t="visual_attract__nearestNavPos"
+        forceToWalk:b=no
+        sprintTimerRange:p2=0, 0
+      }
+
+      wait{
+        range:p2=1, 2
+        resetable:b=yes
+      }
+
+      subTree{
+        treeName:t="sub.invisible_man_patroll_around_attract_pos"
+      }
+    }
+
+    sequencer{
+      name:t="runToAttrackPoint"
+      utilFn:t="attractPointRatio"
+
+      not{
+        subTree{
+          treeName:t="sub.invisible_man_find_danger"
+        }
+      }
+
+      orderedSelector{
+        sequencer{
+          compareNode{
+            lhs:t="attract_point__distanceTime"
+            operator:t=">="
+            rhs:r=0.5
+          }
+
+          parallel{
+            nPhysStareAtEntityWithPositionMapping{
+              targetParam:t="attract_point__eid"
+            }
+
+            wait{
+              range:p2=3, 6
+              resetable:b=yes
+            }
+          }
+        }
+
+        sequencer{
+          nPhysCorridorMoveToPosWithNavmeshMapping{
+            posParam:t="attract_point__targetPos"
+          }
+
+          wait{
+            range:p2=1, 2
+            resetable:b=yes
+          }
+
+          subTree{
+            treeName:t="sub.invisible_man_patroll_around_attract_pos"
+          }
+        }
+      }
+    }
+  }
+}
+
+repeat{
+  name:t="sub.invisible_man_patroll_around_attract_pos"
+  count:i=4
+
+  sequencer{
+    ignoreChance{
+      chance:r=0.5
+    }
+
+    subTree{
+      treeName:t="sub.invisible_man_go_to_invisible_form"
+    }
+
+    nMeshFindRandomPointAroundPos{
+      posParam:t="patroller__currentWaypoint"
+      dist:p2=5, 7
+      aroundPos:t="attract_point__targetPos"
+    }
+
+    randomSelector{
+      nPhysCorridorMoveToPosWithNavmeshMapping{
+        posParam:t="patroller__currentWaypoint"
+      }
+
+      nPhysCorridorMoveToPosWithNavmeshMapping{
+        posParam:t="patroller__currentWaypoint"
+        forceToWalk:b=yes
+        sprintTimerRange:p2=0, 0
+      }
+    }
+
+    wait{
+      range:p2=1, 2
+      resetable:b=yes
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.hiding_distant_teleport"
+
+  success{
+    sequencer{
+      not{
+        checkInsideAnotherDimension{
+          targetParam:t="walker_agent__targetEid"
+        }
+      }
+
+      subTree{
+        treeName:t="sub.invisible_man_find_danger"
+      }
+
+      subTree{
+        treeName:t="sub.invisible_man_go_to_invisible_form"
+      }
+
+      wait{
+        range:p2=0.6, 1.5
+        resetable:b=yes
+      }
+
+      checkAlive{
+        targetParam:t="walker_agent__targetEid"
+      }
+
+      nMeshFindDirectionalPointNearTargetWithNavmeshMapping{
+        posParam:t="walker_agent__targetPos"
+        tries:i=2
+        dist:p2=7.5, 15.5
+        targetParam:t="walker_agent__targetEid"
+        tracerayNavmesh:b=yes
+        directionAngle:r=180
+        angleRangeSpread:p2=-120, 120
+      }
+
+      nPhysTeleportWithNavmeshMapping{
+        posParam:t="walker_agent__targetPos"
+      }
+
+      nPhysLookAtEntityWithPositionMapping{
+        targetParam:t="walker_agent__targetEid"
+      }
+
+      wait{
+        range:p2=1.5, 2.5
+        resetable:b=yes
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.chance_to_hiding_distant_teleport"
+
+  success{
+    sequencer{
+      ignoreChance{
+        chance:r=0.9
+      }
+
+      subTree{
+        treeName:t="sub.hiding_distant_teleport"
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.chance_to_forward_teleport"
+
+  success{
+    sequencer{
+      ignoreChance{
+        chance:r=0.5
+      }
+
+      not{
+        checkInsideAnotherDimension{
+          targetParam:t="walker_agent__targetEid"
+        }
+      }
+
+      subTree{
+        treeName:t="sub.invisible_man_find_danger"
+      }
+
+      subTree{
+        treeName:t="sub.invisible_man_go_to_invisible_form"
+      }
+
+      wait{
+        range:p2=0.5, 1
+        resetable:b=yes
+      }
+
+      checkAlive{
+        targetParam:t="walker_agent__targetEid"
+      }
+
+      nMeshFindDirectionalPointNearTargetWithNavmeshMapping{
+        posParam:t="walker_agent__targetPos"
+        tries:i=2
+        dist:p2=2.5, 5.5
+        targetParam:t="walker_agent__targetEid"
+        tracerayNavmesh:b=yes
+        directionAngle:r=0
+        angleRangeSpread:p2=-120, 120
+      }
+
+      nPhysTeleportWithNavmeshMapping{
+        posParam:t="walker_agent__targetPos"
+      }
+
+      nPhysLookAtEntityWithPositionMapping{
+        targetParam:t="walker_agent__targetEid"
+      }
+
+      wait{
+        range:p2=0.25, 0.5
+        resetable:b=yes
+      }
+
+      subTree{
+        treeName:t="sub.invisible_man_go_to_visible_form"
+      }
+
+      wait{
+        range:p2=0.1, 0.225
+        resetable:b=yes
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.invisible_man_run_behind_target"
+
+  sequencer{
+    name:t="run_behind_target"
+
+    subTree{
+      treeName:t="sub.invisible_man_find_danger"
+    }
+
+    orderedSelector{
+      sequencer{
+        not{
+          amIsTargetLookingInMyDirection{
+            targetParam:t="walker_agent__targetEid"
+            sectorAngle:r=90
+          }
+        }
+
+        checkDistanceToTarget{
+          targetParam:t="walker_agent__targetEid"
+          radius:r=6
+        }
+
+        parallel{
+          nPhysCorridorMoveToPosWithNavmeshMapping{
+            posParam:t="walker_agent__targetPos"
+            stopDist:r=0.25
+          }
+
+          wait{
+            range:p2=2, 3
+            resetable:b=yes
+          }
+        }
+      }
+
+      sequencer{
+        success{
+          sequencer{
+            subTree{
+              treeName:t="sub.invisible_man_go_to_invisible_form"
+            }
+
+            checkAlive{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            amIsTargetLookingInMyDirection{
+              targetParam:t="walker_agent__targetEid"
+              sectorAngle:r=120
+            }
+
+            randomSelector{
+              nMeshFindDirectionalPointNearTargetWithNavmeshMapping{
+                posParam:t="walker_agent__targetPos"
+                tries:i=2
+                dist:p2=2.5, 5
+                targetParam:t="walker_agent__targetEid"
+                tracerayNavmesh:b=yes
+                directionAngle:r=90
+                angleRangeSpread:p2=-30, 30
+              }
+
+              nMeshFindDirectionalPointNearTargetWithNavmeshMapping{
+                posParam:t="walker_agent__targetPos"
+                tries:i=2
+                dist:p2=2.5, 5
+                targetParam:t="walker_agent__targetEid"
+                tracerayNavmesh:b=yes
+                directionAngle:r=-90
+                angleRangeSpread:p2=-30, 30
+              }
+
+              sequencer{
+                subTree{
+                  treeName:t="sub.hiding_distant_teleport"
+                }
+
+                failed{}
+              }
+            }
+
+            parallel{
+              nPhysCorridorMoveToPosWithNavmeshMapping{
+                posParam:t="walker_agent__targetPos"
+                stopDist:r=0.25
+              }
+
+              wait{
+                range:p2=3, 8
+                resetable:b=yes
+              }
+            }
+
+            checkAlive{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            not{
+              amIsTargetLookingInMyDirection{
+                targetParam:t="walker_agent__targetEid"
+                sectorAngle:r=45
+              }
+            }
+
+            sequencer{
+              nMeshFindDirectionalPointNearTargetWithNavmeshMapping{
+                posParam:t="walker_agent__targetPos"
+                tries:i=2
+                dist:p2=2.5, 5
+                targetParam:t="walker_agent__targetEid"
+                tracerayNavmesh:b=yes
+                directionAngle:r=180
+                angleRangeSpread:p2=-30, 30
+              }
+            }
+
+            subTree{
+              treeName:t="sub.invisible_man_go_to_invisible_form"
+            }
+
+            parallel{
+              nPhysCorridorMoveToPosWithNavmeshMapping{
+                posParam:t="walker_agent__targetPos"
+                stopDist:r=0.25
+              }
+
+              wait{
+                range:p2=3, 8
+                resetable:b=yes
+              }
+            }
+          }
+        }
+
+        checkAlive{
+          targetParam:t="walker_agent__targetEid"
+        }
+
+        not{
+          amIsTargetLookingInMyDirection{
+            targetParam:t="walker_agent__targetEid"
+            sectorAngle:r=120
+          }
+        }
+
+        sequencer{
+          nMeshFindDirectionalPointNearTargetWithNavmeshMapping{
+            posParam:t="walker_agent__targetPos"
+            tries:i=2
+            dist:p2=1.5, 2
+            targetParam:t="walker_agent__targetEid"
+            tracerayNavmesh:b=yes
+            directionAngle:r=180
+            angleRangeSpread:p2=-30, 30
+          }
+        }
+
+        subTree{
+          treeName:t="sub.invisible_man_go_to_invisible_form"
+        }
+
+        parallel{
+          nPhysCorridorMoveToPosWithNavmeshMapping{
+            posParam:t="walker_agent__targetPos"
+            stopDist:r=0.25
+          }
+
+          wait{
+            range:p2=3, 8
+            resetable:b=yes
+          }
+        }
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.invisible_man_find_danger"
+
+  sequencer{
+    name:t="find_danger"
+
+    findDangerByEcsTag{
+      targetParam:t="walker_agent__targetEid"
+      radiusParamName:t="enemyRadius"
+      minDanger:r=0.1
+      tag:t="invisible_man_target"
+    }
+
+    orderedSelector{
+      not{
+        checkAlive{
+          targetParam:t="invisible_man__mainEnemyEid"
+        }
+      }
+
+      checkInsideAnotherDimension{
+        targetParam:t="invisible_man__mainEnemyEid"
+      }
+
+      compareNode{
+        lhs:t="invisible_man__mainEnemyFirstPriority"
+        operator:t="=="
+        rhs:i=0
+      }
+
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        arg:t="invisible_man__mainEnemyEid"
+      }
+    }
+
+    checkAlive{
+      targetParam:t="walker_agent__targetEid"
+    }
+  }
+}
+
+success{
+  name:t="sub.invisible_man_attack"
+
+  sequencer{
+    name:t="attack"
+
+    modifyNode{
+      target:t="util_vars__inAttackState"
+      operator:t="="
+      arg:i=1
+    }
+
+    success{
+      sequencer{
+        parallel{
+          join{
+            applyGameAffect{
+              templateName:t="invisible_man_attack_anim"
+              duration:p2=0.9, 1.1
+            }
+
+            applyGameAffect{
+              templateName:t="invisible_man_attack"
+              delay:p2=0.4, 0.46
+            }
+
+            applyGameAffect{
+              templateName:t="invisible_man_attack"
+              delay:p2=0.66, 0.76
+            }
+          }
+
+          nPhysStareAtEntityWithPositionMapping{
+            targetParam:t="walker_agent__targetEid"
+          }
+        }
+
+        wait{
+          range:p2=0.15, 0.5
+          resetable:b=yes
+        }
+      }
+    }
+
+    modifyNode{
+      target:t="util_vars__inAttackState"
+      operator:t="="
+      arg:i=0
+    }
+  }
+}
+
+success{
+  name:t="sub.invisible_man_try_backstab_attack"
+
+  sequencer{
+    name:t="try_backstab_attack"
+
+    subTree{
+      treeName:t="sub.invisible_man_find_danger"
+    }
+
+    not{
+      checkInsideAnotherDimension{
+        targetParam:t="walker_agent__targetEid"
+      }
+    }
+
+    subTree{
+      treeName:t="sub.invisible_man_attack"
+    }
+  }
+}
+
+success{
+  name:t="sub.invisible_man_try_forward_attack"
+
+  sequencer{
+    name:t="try_forward_attack"
+
+    subTree{
+      treeName:t="sub.invisible_man_find_danger"
+    }
+
+    checkDistanceToTarget{
+      targetParam:t="walker_agent__targetEid"
+      radius:r=2
+    }
+
+    not{
+      checkInsideAnotherDimension{
+        targetParam:t="walker_agent__targetEid"
+      }
+    }
+
+    subTree{
+      treeName:t="sub.invisible_man_attack"
+    }
+  }
+}
+
+success{
+  name:t="sub.invisible_man_walk_around"
+
+  sequencer{
+    name:t="walk_around"
+
+    compareNode{
+      lhs:t="invisible_man__idleDisabled"
+      operator:t="=="
+      rhs:i=0
+    }
+
+    nMeshFindRandomPointAroundTargetWithNavmeshMapping{
+      posParam:t="walker_agent__targetPos"
+      dist:p2=6, 14
+      targetParam:t="eid"
+    }
+
+    subTree{
+      treeName:t="sub.invisible_man_go_to_invisible_form"
+    }
+
+    parallel{
+      nPhysCorridorMoveToPosWithNavmeshMapping{
+        posParam:t="walker_agent__targetPos"
+        forceToWalk:b=yes
+        stopDist:r=1.5
+      }
+
+      wait{
+        range:p2=4, 8
+        resetable:b=yes
+      }
+    }
+
+    success{
+      sequencer{
+        ignoreChance{
+          chance:r=0.95
+        }
+
+        subTree{
+          treeName:t="sub.invisible_man_go_to_visible_form"
+        }
+
+        wait{
+          range:p2=0.25, 0.35
+          resetable:b=yes
+        }
+      }
+    }
+  }
+}
+
+success{
+  name:t="sub.invisible_man_run_around"
+
+  sequencer{
+    name:t="run_around"
+
+    compareNode{
+      lhs:t="invisible_man__idleDisabled"
+      operator:t="=="
+      rhs:i=0
+    }
+
+    nMeshFindRandomPointAroundTargetWithNavmeshMapping{
+      posParam:t="walker_agent__targetPos"
+      dist:p2=6, 16
+      targetParam:t="eid"
+    }
+
+    subTree{
+      treeName:t="sub.invisible_man_go_to_invisible_form"
+    }
+
+    parallel{
+      nPhysCorridorMoveToPosWithNavmeshMapping{
+        posParam:t="walker_agent__targetPos"
+        forceToWalk:b=no
+        stopDist:r=1.5
+      }
+
+      wait{
+        range:p2=4, 8
+        resetable:b=yes
+      }
+    }
+  }
+}
+
+success{
+  name:t="sub.invisible_man_go_to_invisible_form"
+
+  sequencer{
+    name:t="go_to_invisible_form"
+
+    subTree{
+      treeName:t="sub.invisible_man_go_to_invisible_form_immediate"
+    }
+
+    wait{
+      range:p2=0.4, 0.45
+      resetable:b=yes
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.invisible_man_go_to_invisible_form_immediate"
+
+  compareNode{
+    lhs:t="another_dimension_visitor__inside"
+    operator:t="=="
+    rhs:i=0
+  }
+
+  compareNode{
+    lhs:t="invisible_man__anotherDimensionAvailable"
+    operator:t="=="
+    rhs:i=1
+  }
+
+  modifyNode{
+    target:t="another_dimension_visitor__inside"
+    operator:t="="
+    arg:i=1
+  }
+}
+
+success{
+  name:t="sub.invisible_man_go_to_visible_form_fast"
+
+  sequencer{
+    name:t="go_to_visible_form_fast"
+
+    compareNode{
+      lhs:t="another_dimension_visitor__inside"
+      operator:t="=="
+      rhs:i=1
+    }
+
+    modifyNode{
+      target:t="another_dimension_visitor__inside"
+      operator:t="="
+      arg:i=0
+    }
+
+    wait{
+      range:p2=0.25, 0.3
+      resetable:b=yes
+    }
+  }
+}
+
+success{
+  name:t="sub.invisible_man_go_to_visible_form"
+
+  sequencer{
+    name:t="go_to_visible_form"
+
+    compareNode{
+      lhs:t="another_dimension_visitor__inside"
+      operator:t="=="
+      rhs:i=1
+    }
+
+    subTree{
+      treeName:t="sub.invisible_man_go_to_visible_form_fast"
+    }
+
+    modifyNode{
+      target:t="util_vars__inShowState"
+      operator:t="="
+      arg:i=1
+    }
+
+    success{
+      applyGameAffect{
+        templateName:t="invisible_man_show_anim"
+        duration:p2=0.45, 0.45
+      }
+    }
+
+    modifyNode{
+      target:t="util_vars__inShowState"
+      operator:t="="
+      arg:i=0
+    }
+  }
+}
+
+success{
+  name:t="sub.invisible_man_vanish"
+
+  sequencer{
+    name:t="vanish"
+
+    subTree{
+      treeName:t="sub.invisible_man_go_to_invisible_form"
+    }
+
+    destroyEntity{}
+  }
+}
+
+repeat{
+  name:t="invisible_man_demonstration"
+
+  subTree{
+    treeName:t="sub.invisible_man_go_to_invisible_form"
+  }
+}

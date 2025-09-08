@@ -1,0 +1,10 @@
+dam_optional_bonus_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="encounter_dam_optional_bonus"
+      number:i=4
+    }
+  }
+}

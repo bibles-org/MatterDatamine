@@ -1,0 +1,13 @@
+spawnBase{
+  _use:t="replicating"
+  active:b=yes
+  _tracked:t="active"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  team:i=0
+  _replicated:t="team"
+  spawnBase__teamSpawn:b=no
+  spawnBase__spawnGroupId:i=-1
+  spawnBase__spawnRadius:r=10
+
+  "respbase:tag"{}
+}

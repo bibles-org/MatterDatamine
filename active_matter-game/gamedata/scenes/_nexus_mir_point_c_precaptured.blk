@@ -1,0 +1,18 @@
+entity{
+  _template:t="nexus_round_mode_beacon+nexus_beacon_precaptured_second_team"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [35.3654, 6.42737, -45.4525]]
+  nexus_beacon__id:i=3
+  nexus_beacon__name:t="Club"
+  nexus_beacon__symbol:t="C"
+}
+
+entity{
+  _template:t="nexus_round_mode_beacon_capture_device"
+  transform:m=[[0.997937, 0, 0.064203] [0, 1, -0] [-0.064203, 0, 0.997937] [35.3725, 5.33303, -45.4396]]
+  nexus_beacon_capture_device__parentId:i=3
+  item__setCustomUsePrompt:t="nexus_portal/Club"
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_mir_point_c_decorations.blk"
+}

@@ -1,0 +1,204 @@
+base_damage_model_effect{
+  _use:t="replicated_game_effect"
+
+  "damageModelEffect:tag"{}
+}
+
+base_damage_model_effect_with_duration{
+  _use:t="replicated_game_effect_with_duration"
+
+  "damageModelEffect:tag"{}
+}
+
+damage_model_effect_immediate_death{
+  _use:t="base_damage_model_effect"
+
+  "damageModelEffectImmediateDeath:tag"{}
+}
+
+damage_model_effect_down_state{
+  _use:t="base_damage_model_effect"
+  downed_effect__vehicleAnimTemplate:t="downed_anim_state_effect_in_vehicle"
+
+  "state__interruptReload:tag"{}
+  "state__disableStoneThrow:tag"{}
+  "state__disableAmGather:tag"{}
+  "damageModelEffectDownState:tag"{}
+  "downed_effect__passengerAnims:list<t>"{
+    item:t="contusion_1_avto_passenger"
+    item:t="contusion_2_avto_passenger"
+    item:t="contusion_3_avto_passenger"
+  }
+
+  "downed_effect__driverAnims:list<t>"{
+    item:t="contusion_1_avto_driver"
+    item:t="contusion_2_avto_driver"
+    item:t="contusion_3_avto_driver"
+  }
+}
+
+downed_anim_state_effect_in_vehicle{
+  downed_effect__templateName:t="downed_anim_state_effect_in_vehicle"
+  game_effect__forceAnimState:t=""
+  game_effect__forceAnimStateId:i=-1
+}
+
+damage_model_effect_stamina_sprint_drain_mult_15{
+  _use:t="base_damage_model_effect"
+
+  "entity_mod_effects:object"{
+    "hrStaminaDrainMulti+mult_diminishing":r=1.15
+  }
+}
+
+damage_model_effect_stamina_sprint_drain_mult_15_body{
+  _use:t="base_damage_model_effect"
+
+  "entity_mod_effects:object"{
+    "hrStaminaDrainMulti+mult_diminishing":r=1.15
+  }
+}
+
+damage_model_effect_recoil_mult_5{
+  _use:t="base_damage_model_effect"
+
+  "entity_mod_effects:object"{
+    "recoilMult+mult_diminishing":r=5
+  }
+}
+
+damage_model_effect_recoil_mult_1_2{
+  _use:t="base_damage_model_effect"
+
+  "entity_mod_effects:object"{
+    "recoilMult+mult_diminishing":r=1.2
+  }
+}
+
+damage_model_effect_breath_amplitude_mult_7{
+  _use:t="base_damage_model_effect"
+
+  "entity_mod_effects:object"{
+    "breathAmplitudeMult+mult":r=7
+  }
+}
+
+damage_model_effect_lock_aim{
+  _use:t="base_damage_model_effect"
+
+  "damage_model_effect__lockAim:tag"{}
+}
+
+damage_model_effect_collision_damage_speed_mult_0_7{
+  _use:t="base_damage_model_effect"
+  damage_model_effect__collisionDamageSpeedMult:r=0.7
+}
+
+damage_model_effect_collision_damage_speed_mult_0_5{
+  _use:t="base_damage_model_effect"
+  damage_model_effect__collisionDamageSpeedMult:r=0.5
+}
+
+damage_model_effect_lock_jump{
+  _use:t="base_damage_model_effect"
+
+  "state__disableJump:tag"{}
+}
+
+damage_model_effect_lock_hold_breath{
+  _use:t="base_damage_model_effect"
+
+  "damage_model_effect__lockHoldBreath:tag"{}
+}
+
+damage_model_effect_speed_mult_0_5{
+  _use:t="base_damage_model_effect"
+
+  "entity_mod_effects:object"{
+    "speedMult+mult_diminishing":r=0.5
+  }
+}
+
+damage_model_effect_injured_animation{
+  _use:t="base_damage_model_effect"
+  damage_model_effect__injuredVarName:t="is_injured"
+}
+
+damage_model_effect_activator_pain_on_sprint_2{
+  _use:t="base_damage_model_effect"
+  damage_model_effect__addPainProgress:r=2
+
+  "damageModelEffectActivatorPainOnSprint:tag"{}
+}
+
+damage_model_effect_activator_pain_on_sprint_3{
+  _use:t="base_damage_model_effect"
+  damage_model_effect__addPainProgress:r=3
+
+  "damageModelEffectActivatorPainOnSprint:tag"{}
+}
+
+damage_model_effect_activator_pain_on_ladder{
+  _use:t="base_damage_model_effect"
+  damage_model_effect__addPainProgress:r=5
+
+  "damageModelEffectActivatorPainOnLadder:tag"{}
+}
+
+damage_model_effect_activator_pain_on_climb{
+  _use:t="base_damage_model_effect"
+  damage_model_effect__addPainProgress:r=5
+
+  "damageModelEffectActivatorPainOnClimb:tag"{}
+}
+
+damage_model_effect_activator_pain_on_aim_0_3{
+  _use:t="base_damage_model_effect"
+  damage_model_effect__addPainProgress:r=0.3
+
+  "damageModelEffectActivatorPainOnAim:tag"{}
+}
+
+damage_model_effect_activator_pain_on_aim_0_7{
+  _use:t="base_damage_model_effect"
+  damage_model_effect__addPainProgress:r=0.7
+
+  "damageModelEffectActivatorPainOnAim:tag"{}
+}
+
+damage_model_effect_activator_pain_on_shoot_0_1{
+  _use:t="base_damage_model_effect"
+  damage_model_effect__addPainProgress:r=0.1
+
+  "damageModelEffectActivatorPainOnShoot:tag"{}
+}
+
+damage_model_effect_activator_pain_on_two_handed_melee_0_1{
+  _use:t="base_damage_model_effect"
+  damage_model_effect__addPainProgress:r=0.1
+
+  "damageModelEffectActivatorPainOnTwoHandedMelee:tag"{}
+}
+
+damage_model_effect_activator_pain_on_melee_0_1{
+  _use:t="base_damage_model_effect"
+  damage_model_effect__addPainProgress:r=0.1
+
+  "damageModelEffectActivatorPainOnMelee:tag"{}
+}
+
+damage_model_effect_activator_pain_on_landing_0_3{
+  _use:t="base_damage_model_effect"
+  damage_model_effect__addPainProgress:r=0.3
+  damage_model_effect__velCondition:r=3
+
+  "damageModelEffectActivatorPainOnLanding:tag"{}
+}
+
+damage_model_effect_activator_pain_on_landing_0_7{
+  _use:t="base_damage_model_effect"
+  damage_model_effect__addPainProgress:r=0.7
+  damage_model_effect__velCondition:r=3
+
+  "damageModelEffectActivatorPainOnLanding:tag"{}
+}

@@ -1,0 +1,20 @@
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="trap_region_generator"
+      genType:t="region_traps"
+      count:i=6
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="park_trees_01"
+    r:t="park_trees_02"
+    r:t="park_trees_03"
+    r:t="park_trees_04"
+    r:t="park_trees_05"
+    r:t="park_trees_05"
+  }
+}

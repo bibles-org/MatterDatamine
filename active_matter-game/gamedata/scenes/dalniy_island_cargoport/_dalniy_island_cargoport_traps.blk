@@ -1,0 +1,85 @@
+entity{
+  _template:t="frog_trap_generator"
+  monster_gen__density:p2=0.001, 0.001
+  transform:m=[[64.5821, 0, 0] [0, 9.39544, 0] [0, 0, 49.5001] [1164.63, 5.00012, 1571.66]]
+}
+
+entity{
+  _template:t="frog_trap_generator"
+  monster_gen__density:p2=0.001, 0.001
+  transform:m=[[56.9022, 0, 0] [0, 9.39544, 0] [0, 0, 76.4124] [1044.98, 5.00012, 1743.1]]
+}
+
+entity{
+  _template:t="frog_trap_generator"
+  monster_gen__density:p2=0.001, 0.001
+  transform:m=[[68.8733, 0, 0] [0, 9.39544, 0] [0, 0, 76.4124] [871.891, 5.00012, 1796.09]]
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="trap_region_generator"
+      genType:t="region_traps"
+      count:i=3
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="port_forest_1"
+    r:t="port_forest_2"
+    r:t="port_forest_3"
+  }
+}
+
+entity{
+  _template:t="am_core_spawn_pos"
+  wandering_core_spawn__radius:r=15
+  transform:m=[[103.256, 0, 0] [0, 9.39544, 0] [0, 0, 76.4124] [895.391, 4.99577, 1812.75]]
+}
+
+entity{
+  _template:t="am_core_spawn_pos"
+  wandering_core_spawn__radius:r=15
+  transform:m=[[103.256, 0, 0] [0, 9.39544, 0] [0, 0, 76.4124] [881.539, 4.99577, 1764.14]]
+}
+
+entity{
+  _template:t="am_core_spawn_pos"
+  wandering_core_spawn__radius:r=15
+  transform:m=[[103.256, 0, 0] [0, 9.39544, 0] [0, 0, 76.4124] [888.9, 4.9818, 1603.34]]
+}
+
+entity{
+  _template:t="am_core_spawn_pos"
+  wandering_core_spawn__radius:r=15
+  transform:m=[[103.256, 0, 0] [0, 9.39544, 0] [0, 0, 76.4124] [888.87, 5.01903, 1424.68]]
+}
+
+entity{
+  _template:t="am_core_spawn_pos"
+  wandering_core_spawn__radius:r=15
+  transform:m=[[103.256, 0, 0] [0, 9.39544, 0] [0, 0, 76.4124] [1253.32, 4.9845, 1901.77]]
+}
+
+entity{
+  _template:t="am_core_spawn_pos"
+  wandering_core_spawn__radius:r=15
+  transform:m=[[103.256, 0, 0] [0, 9.39544, 0] [0, 0, 76.4124] [665.704, 3.14079, 1609.44]]
+}
+
+entity{
+  _template:t="am_core_spawn_pos"
+  wandering_core_spawn__radius:r=15
+  transform:m=[[103.256, 0, 0] [0, 9.39544, 0] [0, 0, 76.4124] [1069.53, 4.99638, 1686.62]]
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="monster_conversion"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [950, 6, 1832]]
+  loot_generator__lootPreset:t="cargoport_monster_conversion_loot_preset"
+}

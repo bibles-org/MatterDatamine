@@ -1,0 +1,315 @@
+navmesh_phys_state_base{
+  navmesh_phys__maxWalkSpeed:r=5
+  navmesh_phys__acceleration:r=5
+  navmesh_phys__friction:r=4
+  navmesh_phys__frictionThresSpdMult:r=0.35
+}
+
+navmesh_phys_locomotion{
+  navmesh_phys__prevLocoAcceleration:p3=0, 0, 0
+  navmesh_phys__prevLocoVelocity:p3=0, 0, 0
+  navmesh_phys__accVisc:r=0.4
+  navmesh_phys__quatVisc:r=0.35
+  navmesh_phys__locomotionFactor:r=0.05
+  navmesh_phys__prevLocoQuat:p4=0, 0, 0, 1
+}
+
+navmesh_phys_base{
+  _use:t="navmesh_phys_state_base"
+  navmesh_phys__atTime:r=0
+  _tracked:t="navmesh_phys__atTime"
+  navmesh_phys__prevTime:r=0
+  navmesh_phys__timeStep:r=0.0666
+  navmesh_phys__wishWalkDir:p3=0, 0, 0
+  navmesh_phys__wishWalkSpeed:r=0
+  navmesh_phys__walkSpeedMult:r=1
+  navmesh_phys__wishLookDir:p3=0, 0, 0
+  navmesh_phys__currentPoly:i64=0
+  navmesh_phys__prevPos:p3=0, 0, 0
+  navmesh_phys__currentPos:p3=0, 0, 0
+  navmesh_phys__prevLookDir:p3=0, 0, 0
+  navmesh_phys__currentLookDir:p3=0, 0, 0
+  navmesh_phys__currentWalkVelocity:p3=0, 0, 0
+  navmesh_phys__navLookAhead:r=0.75
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "navmesh_phys__walkSpeedMods:object"{}
+  "navmeshPhys:tag"{}
+}
+
+navmesh_phys_jumplinks{
+  path_corridor__overJumpLink:b=no
+  path_corridor__jumpLinkStart:p3=0, 0, 0
+  path_corridor__jumpLinkEnd:p3=0, 0, 0
+  path_corridor__prevDstToJLEndSq:r=0
+}
+
+navmesh_phys_jumplinks_climb{
+  navmesh_phys__climbMinHeight:r=0.5
+  navmesh_phys__climbSpeed:r=0.9
+  navmesh_phys__defaultClimbHeight:r=2
+  navmesh_phys__climbJumpMaxDistSq:r=0
+  navmesh_phys__climbJumpMaxUpHeight:r=2.5
+  path_corridor__overJumpLinkStart:b=no
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    navmesh_phys__shouldClimbUp:b=no
+    path_corridor__isClimbing:b=no
+  }
+}
+
+navmesh_phys_jumplinks_climb_anim{
+  _use:t="navmesh_phys_forced_anim_state"
+  anim_state__climbStateName:t="climb_01"
+  anim_state__climbState:i=-1
+  anim_state__climbProgressVarName:t="climb_progress"
+  anim_state__climbProgressVarId:i=-1
+}
+
+navmesh_phys_jumplinks_jump{
+  _use:t="navmesh_phys_jumplinks_climb"
+  navmesh_phys__climbJumpMaxDistSq:r=4
+  navmesh_phys__climbJumpStartVelocity:p3=0, 0, 0
+  navmesh_phys__climbJumpStartSpeed:r=6
+  path_corridor__overJumpLinkStart:b=no
+}
+
+navmesh_phys_jumplinks_jump_anim{
+  _use:t="navmesh_phys_jumplinks_climb_anim"
+  anim_state__climbStateName:t="jump_01"
+  anim_state__climbProgressVarName:t="jump_progress"
+  anim_state__climbJumpSpeedMult:r=3
+  anim_state__climbJumpProgressVarOffset:r=-0.24
+}
+
+navmesh_aligned_phys_base{
+  navmesh_aligned_phys__prevPolyNormQuat:p4=0, 0, 0.707107, 0.707107
+  navmesh_aligned_phys__currentPolyNormQuat:p4=0, 0, 0.707107, 0.707107
+  navmesh_aligned_phys__prevPos:p3=0, 0, 0
+
+  "navmeshAlignedPhys:tag"{}
+}
+
+corridor_walker{
+  path_corridor__failsCount:i=0
+  path_corridor__failsMax:i=20
+
+  "corridorWalker:tag"{}
+  "path_corridor:dtPathCorridor"{
+    _tags:t="server"
+  }
+
+  "path_corridor__corners:list<p3>"{}
+}
+
+corridor_walker_debug{
+  _use:t="replicating"
+  _use:t="loc_snapshots"
+  _use:t="navmesh_phys_base"
+  _use:t="navmesh_aligned_phys_base"
+  _use:t="corridor_walker"
+
+  "corridorWalkerDebug:tag"{}
+}
+
+obstacle_avoider{
+  obstacle_avoider__updateAt:r=0
+  obstacle_avoider__updateInterval:r=0.5
+  obstacle_avoider__penetration:r=0
+  obstacle_avoider__avoidsDamageZones:b=yes
+
+  agent_obstacles{}
+}
+
+door_obstacle_handler{
+  navmesh_phys__doorOpenerDist:r=0.75
+
+  "door_obstacle_handler__immediateDoor:eid"{}
+  "navmesh_phys__doorObstacleEid:eid"{}
+}
+
+destructable_obstacle_handler{
+  destructable_obstacle_handler__isRi:b=no
+
+  "destructable_obstacle_handler__targetEid:eid"{}
+}
+
+stuck_detector{
+  stuck_detector__avgPos:p3=0, 0, 0
+  stuck_detector__value:r=0
+}
+
+stuck_detector_debug{
+  "stuck_detector_debug:tag"{}
+}
+
+navmesh_phys_ai{
+  _use:t="navmesh_phys_base"
+  agent_dangers__standShootPos:p3=0, 0, 0
+  agent_dangers__standShootDir:p3=0, 0, 0
+  path_corridor_ai__corridorResult:i=0
+  path_corridor_ai__nextCorridorUpdate:r=0
+  path_corridor_ai__corridorUpdateStep:r=3
+  path_corridor_ai__validCorridorTargetPos:p3=-100000, -100000, -100000
+}
+
+agent_dangers_hit_reaction{
+  agent_dangers__lastHitReactionTime:r=0
+  agent_dangers__lastHitReactionDir:p3=0, 0, 0
+
+  "agent_dangers__lastHitReactionOffenderEid:eid"{}
+}
+
+agent_dangers_bullet_reaction{
+  agent_dangers__lastBulletReactionTime:r=0
+  agent_dangers__lastBulletReactionDir:p3=0, 0, 0
+
+  "agent_dangers__lastBulletReactionOffenderEid:eid"{}
+}
+
+get_reaction_offender_ai{
+  "agent_dangers__lastReactionOffender:eid"{}
+}
+
+ai_target{
+  _replicated:t="ai_target__invisibleTimeTo"
+  ai_target__invisibleTimeTo:r=0
+  ai_target__bulletInvisibleDist:r=40
+  ai_target_node__node:t="Bip01 Spine1"
+  ai_target__noiseLevel:r=0
+
+  ai_target{
+    _tags:t="server"
+  }
+
+  "ai_target_node__nodeId:i"{
+    value:i=-1
+    _tags:t="server"
+  }
+}
+
+navmesh_creature_base{
+  _use:t="replicating"
+  _use:t="base_hitpoints"
+  _use:t="base_burning"
+  _use:t="animchar_turn_dir"
+  _use:t="navmesh_phys_base"
+  _use:t="navmesh_phys_ai"
+  _use:t="loc_snapshots"
+  _use:t="human_grid_obj"
+  _replicated:t="killer"
+  _tracked:t="killer"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  pairCollisionTag:t="collidableToHuman"
+  slot_attach__calcAnim:b=yes
+  animchar_render__enabled:b=yes
+  animchar__res:t=""
+  hitpoints__maxHp:r=10
+  hitpoints__scaleHp:r=10
+  hitpoints__hp:r=10
+  hitpoints__dmgMult:r=1
+  hitpoints__shellSplashDmgMult:r=1
+  hitpoints__hpThreshold:r=4.5
+  hitpoints__stoppingPowerThreshold:r=6
+  collision_damage__threshold:r=5
+  collision_damage__velDeltaMult:r=2
+  collision_damage__velDeltaPower:r=2
+  collision_damage__pushThreshold:r=5
+  collision_damage__pushVelDeltaMult:r=1
+  collision_damage__pushVelDeltaPower:r=2
+  collision_damage__friendDamageMult:r=0.1
+  collision_damage__lastVehicleImmunity:r=1
+  collision_damage__inVehicleDamageMult:r=0.3
+  collision_damage__crawlMult:r=3
+  collision_damage__downedMult:r=3
+  lastDamageType:i=0
+  lastDamagedNode:i=-1
+  lastGunPropsIdDamagedWith:i=-1
+  _replicated:t="lastDamageType"
+  _replicated:t="lastDamagedNode"
+  _replicated:t="lastGunPropsIdDamagedWith"
+  downedMaxAngles:p2=20, 20
+  isAlive:b=yes
+  underground_teleporter__timeToCheck:r=0.5
+  underground_teleporter__timeBetweenChecks:r=0.5
+  bodyCleanupTime:r=60
+  ragdoll__use_ccd:b=no
+  collres__res:t=""
+  navmesh_phys__immediateObstacleIdx:i=-1
+  ragdoll__applyParams:b=no
+
+  phys_vars{}
+  "collidableToVehicle:tag"{}
+  "collidableToPhysObj:tag"{}
+  "attaches_list:list<eid>"{}
+  animchar_attaches_bbox{
+    _tags:t="render"
+  }
+
+  animchar_attaches_bbox_precalculated{
+    _tags:t="render"
+  }
+
+  ragdoll{
+    _tags:t="render"
+  }
+
+  "ragdoll__isAllowed:b"{
+    _tags:t="render"
+    value:b=yes
+  }
+
+  projectile_impulse{
+    _tags:t="gameClient"
+  }
+
+  collres{}
+  capsule_approximation{}
+  "killer:eid"{}
+  "aliveCreature:tag"{}
+}
+
+base_navmesh_agent_comp{
+  walker_agent__standShootLocalPos:p3=0, 1.2, 0
+  walker_agent__targetPos:p3=0, 0, 0
+
+  "walker_agent__potentialTargetEid:eid"{}
+  "walker_agent__targetEid:eid"{}
+}
+
+nphys_pair_collision{
+  nphys_coll__capsuleRadius:r=0.65
+  nphys_coll__capsuleHeight:r=1
+  nphys__mass:r=1
+
+  "nphysPairCollision:tag"{}
+}
+
+nphys_homo_erectus{
+  "npys_homoErectus:tag"{}
+}
+
+nphys_pushable{
+  nphys_pushable__prevElevation:r=0
+  nphys_pushable__elevation:r=0
+  nphys_pushable__unlockMovementAt:r=0
+  nphys_pushable__lockDuration:r=0.5
+  nphys__ccdOffset:p3=0, 1, 0
+
+  "npysPushable:tag"{}
+}
+
+nphys_pushable_by_bullet{
+  _use:t="nphys_pushable"
+  _use:t="obstacle_avoider"
+
+  "npysPushableByBullet:tag"{}
+}
+
+nphys_levitating{
+  nphys_levitating__elevation:r=0
+  nphys_levitating__prefferedElevation:r=1
+  nphys_levitating__elevationChangeSpeed:r=0.1
+}

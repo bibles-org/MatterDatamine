@@ -1,0 +1,59 @@
+require ecs
+require ecs.safe
+require ecs.common
+require DagorSystem
+require AnimV20
+require game.es.vehicle.vehicle_seats_common
+require debug.logerr_once
+
+def set_seat_owner_anim_state(seatEid)
+  query(seatEid) <| $ [es] (seat__ownerEid : EntityId;
+                            seat_anim__upper : string;
+                            seat_anim__lower : string)
+    query(seat__ownerEid) <| $ [es] (animchar : AnimcharBaseComponent;
+                                     var human_vehicle_anim__upperId : int&;
+                                     var human_vehicle_anim__lowerId : int&)
+      let animGraph = animchar.animGraph
+      if animGraph == null
+        return
+      human_vehicle_anim__upperId = *animGraph |> anim_graph_getStateIdx(seat_anim__upper)
+      human_vehicle_anim__lowerId = *animGraph |> anim_graph_getStateIdx(seat_anim__lower)
+
+      if human_vehicle_anim__upperId < 0
+        logerr_once("Anim state '{seat_anim__upper}' not found in '{getEntityTemplateName(seat__ownerEid)}'")
+      if human_vehicle_anim__lowerId < 0
+        logerr_once("Anim state '{seat_anim__lower}' not found in '{getEntityTemplateName(seat__ownerEid)}'")
+
+[es(tag=server, on_appear)]
+def seat_anim_init_es(evt : Event;
+                      seat__id : int;
+                      seat__vehicleEid : EntityId;
+                      var seat_anim__upper : das_string;
+                      var seat_anim__lower : das_string)
+  query(seat__vehicleEid) <| $ [es] (@shared_comp vehicle_seats__seats : Array)
+    let seat = vehicle_seats__seats[seat__id] as Object
+    if seat != null
+      let defUpper = string(seat_anim__upper)
+      let defLower = string(seat_anim__lower)
+      seat_anim__upper := get_string(seat, "seatAnimUpper", defUpper)
+      seat_anim__lower := get_string(seat, "seatAnimLower", defLower)
+
+// Try to bind animation to the owner on seat's creation
+[es(tag=render, track=seat__ownerEid, REQUIRE=seat__ownerEid, on_appear)]
+def seat_human_anim_init_es(evt : Event; eid : EntityId)
+  set_seat_owner_anim_state(eid)
+
+// Try to bind animation to the owner on owner creation
+[es(tag=render, track=human_anim__vehicleSelected, on_appear)]
+def human_seat_anim_init_es(evt : Event;
+                            eid : EntityId;
+                            human_anim__vehicleSelected : EntityId)
+  query(human_anim__vehicleSelected) <| $ [es] (vehicle_seats__seatEids : EidList)
+    let seatEid = find_seat_eid_with_owner(eid, vehicle_seats__seatEids)
+    set_seat_owner_anim_state(seatEid)
+
+// Try to bind animation to the owner on vehicle's creation
+[es(tag=render, on_appear)]
+def vehicle_seat_owners_anim_init_es(evt : Event; vehicle_seats__seatEids : EidList)
+  for seatEid in vehicle_seats__seatEids
+    set_seat_owner_anim_state(seatEid)

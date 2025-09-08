@@ -1,0 +1,6 @@
+execute_console_commands{
+  _tags:t="dev"
+
+  "execute_cmds_on_load:list<t>"{}
+  "execute_cmds_on_spawn:list<t>"{}
+}

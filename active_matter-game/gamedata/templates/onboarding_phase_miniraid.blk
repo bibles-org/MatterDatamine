@@ -1,0 +1,669 @@
+onboarding_miniraid_fake_player_contracts{
+  "onboarding_miniraid_fake_player_contracts__contracts:array"{
+    "contract:object"{
+      name:t="contract_onboarding_raid"
+      handledByGameTemplate:t="objective_onboarding_collect_item_with_name"
+      currentValue:i=0
+      requireValue:i=1
+      requireExtraction:b=yes
+      id:i=0
+
+      "params:array"{
+        "contract:object"{
+          name:t="itemTemplate"
+          value:t="key_miniraid_item"
+        }
+      }
+    }
+  }
+}
+
+miniraid_trigger_on_gun_equip{
+  miniraid_trigger_on_gun_equip__triggerName:t="miniraid_start_ammo_inspection_hint"
+}
+
+miniraid_ammo_inspection_hint_effect{
+  _use:t="game_effect_base"
+  _use:t="game_trigger_processor_self_destroy"
+  game_effect__attachedTemplate:t="miniraid_trigger_on_gun_equip"
+  game_trigger_processor__onTrigger:t="miniraid_start_ammo_inspection_hint"
+}
+
+miniraid_ammo_inspection_hint_effect_creator{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="miniraid_ammo_inspection_hint_effect"
+}
+
+miniraid_check_ammo_hint{
+  _use:t="game_trigger_processor_show_screen_hint"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor_show_hint__text:t="controls/Human.CheckAmmo"
+  game_trigger_processor_show_hint__inputId:t="Human.CheckAmmo"
+  game_trigger_processor_show_hint__showOnTrigger:t="miniraid_start_ammo_inspection_hint"
+  game_trigger_processor_show_hint__hideOnTrigger:t="miniraid_stop_ammo_inspection_hint"
+  game_trigger_processor__onTrigger:t="miniraid_stop_ammo_inspection_hint"
+}
+
+miniraid_ammo_inspection_timer{
+  _use:t="game_trigger_timer"
+  game_trigger_processor_timer__time:r=5
+  game_trigger_processor_timer__eventTrigger:t="miniraid_stop_ammo_inspection_hint"
+}
+
+miniraid_ammo_inspection_timer_starter{
+  _use:t="game_trigger_processor_create_entity"
+  game_trigger_processor__onTrigger:t="miniraid_start_ammo_inspection_hint"
+  game_trigger_processor_create_entity__template:t="miniraid_ammo_inspection_timer"
+  game_trigger_processor_create_entity__initTransform:b=no
+}
+
+onboarding_miniraid_clear_am_piles_in_world{
+  "onboarding_miniraid_clear_am_piles_in_world:tag"{}
+}
+
+onboarding_miniraid_enemy{
+  _use:t="am_militant_with_attachable_suit"
+  _use:t="am_militant_bot_ai"
+  beh_tree__node:t="onboarding_enemy"
+  equipped_bot__equipmentGeneratorName:t="miniraid_enemy_equipment_generator"
+  equipped_bot__equipmentGeneratorCorruptionChance:r=1
+  refill_magazines__refillVolumeRng:p2=0.5, 0.8
+
+  "cortical_hack_disabled:tag"{}
+}
+
+relock_on_miniraid_start{
+  "relock_on_miniraid_start:tag"{}
+}
+
+relock_miniraid_doors{
+  "relock_miniraid_doors:tag"{}
+}
+
+create_miniraid_marker_entities{
+  "create_miniraid_marker_entities:tag"{}
+}
+
+onboarding_miniraid_marker{
+  onboarding_miniraid_marker__createTemplate:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "onboarding_miniraid_marker__entity:eid"{}
+}
+
+onboarding_miniraid_extraction{
+  _use:t="state_machine_transition_trigger"
+
+  "onboarding_miniraid_extraction:tag"{}
+}
+
+onboarding_teleport_hero_to_miniraid{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_teleport_to_miniraid"
+}
+
+onboarding_teleport_to_miniraid{
+  _use:t="game_effect_base"
+  game_effect__teleportToEntityWithTag:t="onboarding_miniraid_spawn_location"
+}
+
+am_storage_miniraid{
+  _use:t="am_storage"
+  am_storage__maxValue:i=100
+}
+
+miniraid_death_effect{
+  _use:t="onboarding_respawn_on_disappear"
+
+  "miniraid_death_effect:tag"{}
+}
+
+miniraid_death_processor{
+  onboarding_death_processor__template:t="miniraid_death_effect"
+}
+
+onboarding_miniraid_hero_attached_death_effect{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_miniraid_attached_death_effect"
+}
+
+onboarding_miniraid_hero_attached_storage{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_miniraid_attached_storage"
+}
+
+onboarding_miniraid_attached_death_effect{
+  _use:t="game_effect_base"
+  game_effect__attachedTemplate:t="miniraid_death_processor"
+}
+
+onboarding_miniraid_attached_storage{
+  _use:t="game_effect_base"
+  game_effect__attachedTemplate:t="am_storage_miniraid"
+}
+
+miniraid_weather{
+  _use:t="override_weather_preset"
+  override_weather_preset__newPreset:t="weather_monolyth_island_overcast"
+  override_weather_preset__newSkiesTime:r=6.5
+  override_weather_preset__newCloudHoleTargetDensity:r=0.3
+}
+
+onboarding_note_miniraid_start_box_trigger{
+  _use:t="onboarding_open_note_box_trigger"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_trigger_box__onEnterEventTrigger:t="onboarding_note_miniraid_start"
+}
+
+onboarding_note_miniraid_start_processor{
+  _use:t="game_trigger_processor_open_note"
+  game_trigger_processor_open_note__note:t="note_onboarding_miniraid_start"
+  game_trigger_processor__onTrigger:t="onboarding_note_miniraid_start"
+}
+
+onboarding_note_miniraid_healing_box_trigger{
+  _use:t="onboarding_open_note_box_trigger"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_trigger_box__onEnterEventTrigger:t="onboarding_note_miniraid_healing"
+}
+
+onboarding_note_miniraid_healing_processor{
+  _use:t="game_trigger_processor_open_note"
+  game_trigger_processor_open_note__note:t="note_onboarding_miniraid_healing"
+  game_trigger_processor__onTrigger:t="onboarding_note_miniraid_healing"
+}
+
+onboarding_note_miniraid_body_processor{
+  _use:t="game_trigger_processor_open_note"
+  game_trigger_processor_open_note__note:t="note_onboarding_miniraid_body"
+  game_trigger_processor__onTrigger:t="onboarding_note_miniraid_body"
+}
+
+onboarding_note_miniraid_wall_box_trigger{
+  _use:t="onboarding_open_note_box_trigger"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_trigger_box__onEnterEventTrigger:t="onboarding_note_miniraid_wall"
+}
+
+onboarding_note_miniraid_wall_processor{
+  _use:t="game_trigger_processor_open_note"
+  game_trigger_processor_open_note__note:t="note_onboarding_miniraid_wall"
+  game_trigger_processor__onTrigger:t="onboarding_note_miniraid_wall"
+}
+
+onboarding_note_miniraid_trap_box_trigger{
+  _use:t="onboarding_open_note_box_trigger"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_trigger_box__onEnterEventTrigger:t="onboarding_note_miniraid_trap"
+}
+
+onboarding_note_miniraid_trap_processor{
+  _use:t="game_trigger_processor_open_note"
+  game_trigger_processor_open_note__note:t="note_onboarding_miniraid_trap"
+  game_trigger_processor__onTrigger:t="onboarding_note_miniraid_trap"
+}
+
+onboarding_note_trap_triggered_processor{
+  _use:t="game_trigger_processor_open_note"
+  game_trigger_processor_open_note__note:t="note_onboarding_miniraid_am"
+  game_trigger_processor__onTrigger:t="miniraid_trap_triggered"
+}
+
+onboarding_note_miniraid_portal_box_trigger{
+  _use:t="onboarding_open_note_box_trigger"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_trigger_box__onEnterEventTrigger:t="onboarding_note_miniraid_portal"
+}
+
+onboarding_note_miniraid_portal_processor{
+  _use:t="game_trigger_processor_open_note"
+  game_trigger_processor_open_note__note:t="note_onboarding_miniraid_portal"
+  game_trigger_processor__onTrigger:t="onboarding_note_miniraid_portal"
+}
+
+onboarding_phase_miniraid{
+  _use:t="state_machine_state"
+
+  "onboarding_phase_miniraid:tag"{}
+  "state_machine_state__createEntitiesWhenCurrent:list<t>"{
+    item:t="onboarding_erase_all_bullet_holes"
+    item:t="miniraid_ammo_inspection_hint_effect_creator"
+    item:t="onboarding_miniraid_override_respbase"
+    item:t="fake_in_battle_ui_state"
+    item:t="onboarding_teleport_hero_to_miniraid"
+    item:t="onboarding_restore_pulse_and_stamina"
+    item:t="onboarding_miniraid_extraction_point"
+    item:t="onboarding_miniraid_hero_attached_death_effect"
+    item:t="onboarding_miniraid_hero_attached_storage"
+    item:t="miniraid_weather"
+    item:t="disable_player_profile"
+    item:t="onboarding_empty_hero_loadout"
+    item:t="onboarding_miniraid_fake_player_contracts"
+    item:t="onboarding_create_endgame_controller"
+    item:t="onboarding_note_miniraid_start_processor"
+    item:t="onboarding_note_miniraid_healing_processor"
+    item:t="onboarding_note_miniraid_body_processor"
+    item:t="onboarding_note_miniraid_wall_processor"
+    item:t="onboarding_note_miniraid_trap_processor"
+    item:t="onboarding_note_miniraid_portal_processor"
+    item:t="relock_miniraid_doors"
+    item:t="create_miniraid_marker_entities"
+    item:t="raid_mode"
+    item:t="onboarding_hide_player_base"
+    item:t="onboarding_remove_base_components_from_hero"
+    item:t="onboarding_cleanup_items_in_world"
+    item:t="phase_temporary_entities"
+    item:t="miniraid_ammo_inspection_timer_starter"
+    item:t="miniraid_check_ammo_hint"
+    item:t="onboarding_note_trap_triggered_processor"
+    item:t="onboarding_storage_door_first_failed_use_processor"
+    item:t="clear_miniraid_memory_items"
+    item:t="onboarding_miniraid_clear_am_piles_in_world"
+    item:t="onboarding_check_have_keycard"
+    item:t="onboarding_miniraid_disarm_traps_before_removal"
+    item:t="zone_force_field"
+    item:t="onboarding_miniraid_storm_zone"
+    item:t="onboarding_island__onboarding_industrial__compound_ambient_sound"
+    item:t="onboarding_island__onboarding_rocks__compound_ambient_sound"
+    item:t="onboarding_island__onboarding_caves__compound_ambient_sound"
+    item:t="onboarding_island_compound_ambient_sound_controller"
+    item:t="onboarding_phase_miniraid_ambient_sound"
+    item:t="onboarding_island_net_sounds"
+    item:t="onboarding_interactive_music"
+  }
+}
+
+onboarding_cleanup_items_in_world{
+  "onboarding_cleanup_items_in_world:tag"{}
+}
+
+onboarding_miniraid_disarm_traps_before_removal{
+  "onboarding_miniraid_disarm_traps_before_removal:tag"{}
+}
+
+onboarding_miniraid_storm_zone{
+  _use:t="storm_zone_with_forcefield"
+  sphere_zone__radius:r=120
+  shrinkZoneRadius:r=120
+  moving_zone__minZone:p2=-504, -445
+  moving_zone__maxZone:p2=396, 455
+  moving_zone__manual_activation:b=yes
+  moving_zone__sourcePos:p3=187, 48, -55
+  moving_zone__targetPos:p3=187, 48, -55
+  corruption_zone__doublingTime:r=1.2
+}
+
+onboarding_endgame_controller{
+  _use:t="endgame_controller"
+
+  _group{
+    _tags:t="gameClient"
+    endgame_controller__deathFadeInTime:r=2.6
+
+    "endgame_controller_ignore_possess:tag"{}
+  }
+}
+
+onboarding_create_endgame_controller{
+  onboarding_create_on_appear__template:t="onboarding_endgame_controller"
+}
+
+onboarding_miniraid_activated{
+  _use:t="state_machine_transition_trigger"
+
+  "onboarding_miniraid_activated:tag"{}
+}
+
+onboarding_miniraid_failed{
+  _use:t="state_machine_transition_trigger"
+
+  "onboarding_miniraid_failed:tag"{}
+}
+
+onboarding_extraction_sequence_final_stage{
+  _use:t="game_effect_base"
+  _use:t="extraction_sequence_invisibility"
+  _use:t="extraction_sequence_soldier_disappears"
+  game_effect__clientReplaceTemplateFrom:t="extraction_sequence_hero_client"
+  game_effect__clientReplaceTemplateTo:t="human_hero_components_local"
+  game_effect__subtractTemplate:t="extraction_sequence_hero_server"
+
+  "onboarding_extraction_sequence_final_stage:tag"{}
+}
+
+onboarding_extraction_sequence_affect{
+  _use:t="extraction_sequence_affect"
+  game_effect_server_sound__appear:t="onBattleStart"
+
+  "effect_disable_action_sets__actionSetList:list<t>"{
+    item:t="Human"
+    item:t="HUDBase"
+  }
+
+  "extraction_sequence_affect__finalStage:object"{
+    affectTemplate:t="onboarding_extraction_sequence_final_stage"
+    duration:r=0.85
+  }
+
+  "extraction_sequence_affect__finalStageTest:object"{
+    affectTemplate:t="onboarding_extraction_sequence_final_stage"
+    duration:r=0.85
+  }
+}
+
+onboarding_miniraid_extraction_sequence_final_stage{
+  _use:t="onboarding_extraction_sequence_final_stage"
+  _use:t="extraction_sequence_soldier_disappears"
+
+  "onboarding_miniraid_extraction_sequence_final_stage:tag"{}
+}
+
+onboarding_miniraid_extraction_sequence_affect{
+  _use:t="onboarding_extraction_sequence_affect"
+
+  "extraction_sequence_affect__finalStage:object"{
+    affectTemplate:t="onboarding_miniraid_extraction_sequence_final_stage"
+    waitForDestruction:b=yes
+  }
+
+  "extraction_sequence_affect__finalStageTest:object"{
+    affectTemplate:t="onboarding_miniraid_extraction_sequence_final_stage"
+    waitForDestruction:b=yes
+  }
+}
+
+onboarding_miniraid_extraction_point{
+  _use:t="extraction_point"
+  extraction__extractionTime:r=10
+  extraction__extractionSequenceTemplate:t="onboarding_miniraid_extraction_sequence_affect"
+  transform:m=[[-0.845369, 0, -0.534182] [0, 1, 0] [0.534182, 0, -0.845369] [197.273, 32.4, -5.58664]]
+
+  "extraction_for_everyone:tag"{}
+  "final_extraction_point:tag"{}
+}
+
+onboarding_miniraid_spawn_location{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "onboarding_miniraid_spawn_location:tag"{}
+}
+
+onboarding_miniraid_override_respbase{
+  _use:t="override_respawn_base"
+  override_respawn_base__createAtEntityWithTag:t="onboarding_miniraid_spawn_location"
+  override_respawn_base__newBaseTemplate:t="onboarding_respbase"
+}
+
+key_miniraid_item{
+  _use:t="base_key_item"
+  _use:t="block_item_move_to_ground"
+  animchar__res:t="am_keycard_a_char"
+  collres__res:t="am_keycard_a_collision"
+  item__proto:t="key_miniraid_item"
+  item__name:t="items/key_miniraid"
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "key_miniraid_item:tag"{}
+  "item__cantBeCorrupted:tag"{}
+  "questItemTooltip:tag"{}
+}
+
+onboarding_miniraid_ragdoll_phys{
+  _use:t="ragdoll_phys_obj"
+  _use:t="lootable_ragdoll_container"
+  use_object__enabled:b=yes
+  phys_obj_net_phys__blk:t="gamedata/templates/bound_ragdoll_phys.blk"
+  item_world_marker__offset:p3=0, -1, 0
+  use_object__offset:p3=0, 0, 0
+  ragdoll_phys_obj__ragdollSyncVelMult:r=15
+
+  "item_world_marker__copyOffsetToUseObject:tag"{}
+  "ragdoll_phys_obj__links:array"{
+    "right_foot:object"{
+      nodeIdx:i=-1
+      nodeName:t="Bip01 R Foot"
+      offset:p3=0, 0, 0
+    }
+
+    "left_foot:object"{
+      nodeIdx:i=-1
+      nodeName:t="Bip01 L Foot"
+      offset:p3=0.0387878, 0, 0.0477753
+    }
+  }
+}
+
+onboarding_first_dead_body_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="akm_47_magazine"
+    }
+
+    "item:object"{
+      template_name:t="flashlight_device"
+    }
+  }
+}
+
+magazine_empty{
+  item__currentBoxedItemCount:i=0
+}
+
+static_dead_body_container_onboarding_first{
+  _use:t="static_dead_body_container"
+  animchar__res:t="am_soldier_corrupted_h_dead_pose_char"
+  collres__res:t="am_soldier_corrupted_h_dead_pose_collision"
+  loot_drop_system__lootPreset:t="onboarding_first_dead_body_loot_preset"
+  itemContainer__name:t="container/deadBody"
+  itemContainer__type:t="deadBody"
+}
+
+onboarding_armor_container_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="helmet_pasgt"
+    }
+
+    "item:object"{
+      template_name:t="item_healing_ampoule"
+      number:i=5
+    }
+  }
+}
+
+onboarding_armor_container{
+  _use:t="lootable_rendinst"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="case_modern_a_closed"
+  openable_ri__closed:t="case_modern_a_closed"
+  ri_preload__name:t="case_modern_a_open"
+  human_inventory__maxVolume:r=60
+  loot_drop_system__lootPreset:t="onboarding_armor_container_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_big_weapon_box"
+
+  ri_extra{}
+}
+
+onboarding_keycard_dead_body_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="key_miniraid_item"
+    }
+  }
+}
+
+static_dead_body_container_onboarding_keycard{
+  _use:t="static_dead_body_container"
+  _use:t="game_trigger_on_external_inventory_close"
+  animchar__res:t="am_player_trooper_male_light_b_prem_char"
+  collres__res:t="am_player_trooper_male_light_b_prem_collision"
+  game_trigger_on_external_inventory_close__eventTrigger:t="onboarding_note_miniraid_body"
+  loot_drop_system__lootPreset:t="onboarding_keycard_dead_body_loot_preset"
+  use_object__offset:p3=0, 0.25, 0
+  itemContainer__name:t="container/deadBody"
+  itemContainer__type:t="deadBody"
+
+  "animchar__forceVarValues:object"{
+    dead_body_pos_num:r=4
+  }
+}
+
+dead_body_onboarding_changed{
+  _use:t="dead_body_noninteractive"
+  _use:t="changed_human_animchar_parts"
+
+  "animchar__physSymDependence:tag"{}
+  "attaches_list:list<eid>"{}
+}
+
+onboarding_dead_enemy_1_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="makarov_magazine"
+    }
+
+    "item:object"{
+      template_name:t="item_healing_ampoule"
+      number:i=1
+    }
+  }
+}
+
+onboarding_dead_enemy_2_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="armorplate_big_a"
+    }
+
+    "item:object"{
+      template_name:t="item_healing_ampoule"
+      number:i=2
+    }
+  }
+}
+
+dead_body_onboarding_changed_1{
+  _use:t="static_dead_body_container"
+  animchar__res:t="am_soldier_corrupted_male_a_char"
+  collres__res:t="am_soldier_corrupted_male_a_collision"
+  loot_drop_system__lootPreset:t="onboarding_dead_enemy_1_loot_preset"
+  itemContainer__name:t="container/deadBody"
+  itemContainer__type:t="deadBody"
+
+  "animchar__forceVarValues:object"{
+    dead_body_pos_num:r=10
+  }
+}
+
+dead_body_onboarding_changed_2{
+  _use:t="static_dead_body_container"
+  animchar__res:t="am_soldier_corrupted_male_c_char"
+  collres__res:t="am_soldier_corrupted_male_c_collision"
+  loot_drop_system__lootPreset:t="onboarding_dead_enemy_2_loot_preset"
+  itemContainer__name:t="container/deadBody"
+  itemContainer__type:t="deadBody"
+
+  "animchar__forceVarValues:object"{
+    dead_body_pos_num:r=3
+  }
+}
+
+onboarding_storage_intercom_lamps_a{
+  _use:t="animchar"
+  _use:t="game_trigger_processor_self_destroy"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="intercom_d_lamp_a_char"
+  game_trigger_processor__onTrigger:t="onboarding_storage_door_opened"
+}
+
+onboarding_storage_intercom_lamps_b{
+  _use:t="animchar"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="intercom_d_lamp_b_char"
+}
+
+onboarding_storage_intercom_lamps_b_trigger{
+  _use:t="game_trigger_processor_create_entity"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_trigger_processor__onTrigger:t="onboarding_storage_door_opened"
+  game_trigger_processor_create_entity__template:t="onboarding_storage_intercom_lamps_b"
+  game_trigger_processor_create_entity__initTransform:b=yes
+  game_trigger_processor_create_entity__destroyEntityOnDisappear:b=yes
+}
+
+onboarding_storage_intercom_trigger{
+  _use:t="game_interactable_object"
+  _use:t="game_trigger_processor_self_destroy"
+  use_object__offset:p3=-0.25, 0, 0.5
+  game_trigger_processor__onTrigger:t="onboarding_storage_door_opened"
+  game_interactable_object__eventTrigger:t="onboarding_storage_open_door"
+  item__setCustomUsePrompt:t="onboarding/insert_accesscard"
+  game_interactable_object__requiredItemTag:t="key_miniraid_item"
+  game_interactable_object__requiredItemMissingPrompt:t="onboarding/accesscard_required"
+  game_interactable_object__requiredItemIsConsumable:b=no
+}
+
+onboarding_storage_door{
+  _use:t="locked"
+  _use:t="encounter_door"
+  _use:t="relock_on_miniraid_start"
+  _use:t="game_trigger_on_locked_changed"
+  use_object__minDot:r=0.9
+  locked__reason:t=""
+  locked__statusTip:t="status_tip_onboarding_door_locked"
+  game_trigger_on_locked_changed__eventTrigger:t="onboarding_storage_door_opened"
+  game_trigger_on_usage_blocked__emitEvent:t="onboarding_storage_door_failed_use"
+}
+
+onboarding_storage_door_trigger{
+  _use:t="game_trigger_processor_doors_locks"
+  _use:t="game_trigger_processor_doors_open"
+  game_trigger_processor_doors_locks__unlock:b=yes
+  game_trigger_processor_doors_locks__open:b=no
+  game_trigger_processor__onTrigger:t="onboarding_storage_open_door"
+}
+
+onboarding_storage_door_sound{
+  _use:t="game_trigger_processor_sound_oneshot"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_trigger_processor__onTrigger:t="onboarding_storage_door_opened"
+  game_trigger_processor_sound_oneshot__soundName:t="accesscard_inserted"
+
+  "net_sound__descs:shared:object"{
+    "accesscard_inserted:object"{
+      path:t="env_effects/accesscard_inserted"
+      range:r=30
+    }
+  }
+}
+
+onboarding_check_have_keycard{
+  onboarding_check_have_keycard__onTrigger:t="onboarding_storage_door_failed_use"
+  onboarding_check_have_keycard__sendTrigger:t="play_no_keycard_hint"
+}
+
+onboarding_storage_door_first_failed_use_processor{
+  _use:t="game_trigger_processor_play_assistant_script"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor_play_assistant_script__name:t="note_onboarding_blocked_door"
+  game_trigger_processor_play_assistant_script__skipBeepSound:b=yes
+  game_trigger_processor__onTrigger:t="play_no_keycard_hint"
+}

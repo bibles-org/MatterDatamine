@@ -1,0 +1,45 @@
+base_hitpoints{
+  _replicated:t="hitpoints__lastHitNodeId"
+  hitpoints__lastOffenderTime:r=-1
+  hitpoints__shellDmgMult:r=0.08
+  hitpoints__lastHitNodeId:i=-1
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    isAlive:b=yes
+  }
+
+  _group{
+    _tags:t="gameClient"
+    hitpoints__lastShellHitDir:p3=0, 0, 0
+  }
+
+  _group{
+    _tags:t="server"
+    death_desc__damageType:i=-1
+    death_desc__gunPropsId:i=-1
+    death_desc__shellId:i=-1
+    death_desc__collNodeId:i=-1
+    death_desc__victimTeam:i=-1
+    death_desc__offenderTeam:i=-1
+
+    "hitpoints:tag"{}
+  }
+
+  "lastCriticalOffender:eid"{}
+  "hitpoints__lastOffender:eid"{}
+  "hitpoints__lastOffenderWeapon:eid"{}
+  "hitpoints__lastOffenderPlayer:eid"{}
+  "hitpoints__lastVictimPlayer:eid"{}
+}
+
+downabled_hitpoints{
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    isDowned:b=no
+    hitpoints__downedEndTime:r=-1
+    hitpoints__revivingCount:i=0
+  }
+}

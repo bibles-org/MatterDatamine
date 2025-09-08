@@ -1,0 +1,346 @@
+import{
+  scene:t="gamedata/scenes/_dalniy_island_sounds.blk"
+}
+
+entity{
+  _template:t="pathfinding_benchmark"
+  pathfinding_benchmark__agentTemplate:t="am_area_guard"
+  pathfinding_benchmark__behTree:t="benchmark_human_phys"
+  pathfinding_benchmark__agentCount:i=200
+  pathfinding_benchmark__seed:i=12345
+  pathfinding_benchmark__pointsCount:i=10000
+}
+
+entity{
+  _template:t="raid_mode"
+}
+
+entity{
+  _template:t="player_raid_session_finisher"
+}
+
+entity{
+  _template:t="endgame_controller"
+}
+
+entity{
+  _template:t="navmesh_isle_marker_no_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1300, 61, -600]]
+  navmesh_isle_marker__expectedNumTriangles:i=1048500
+  navmesh_isle_marker__radius:r=1500
+}
+
+entity{
+  _template:t="additional_walkable_area_marker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [2017.27, 200.101, -1122.58]]
+  sphere_zone__radius:r=220
+}
+
+entity{
+  _template:t="additional_walkable_area_marker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1429.98, 200.028, -1421.41]]
+  sphere_zone__radius:r=220
+}
+
+entity{
+  _template:t="additional_walkable_area_marker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [775.034, 200.61, -650.478]]
+  sphere_zone__radius:r=220
+}
+
+entity{
+  _template:t="additional_walkable_area_marker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [385.529, 200.514, -95.072]]
+  sphere_zone__radius:r=220
+}
+
+entity{
+  _template:t="additional_walkable_area_marker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [763.234, 200.217, -696.069]]
+  sphere_zone__radius:r=220
+}
+
+entity{
+  _template:t="additional_walkable_area_marker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [772.1, 200.185, -1144.69]]
+  sphere_zone__radius:r=220
+}
+
+entity{
+  _template:t="additional_walkable_area_marker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1050.16, 199.32, -23.8301]]
+  sphere_zone__radius:r=220
+}
+
+entity{
+  _template:t="loc_snapshots_debug_registry"
+}
+
+entity{
+  _template:t="static_cam"
+  camera__active:b=yes
+  transform:m=[[0.28062, 0, -0.959819] [0.0325116, 0.999426, 0.00950534] [0.959268, -0.0338726, 0.280459] [-238.13, 243.647, -7.98908]]
+  fov:r=1
+  znear:r=0.01
+  zfar:r=100
+}
+
+entity{
+  _template:t="navmesh_battle_area"
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+}
+
+import{
+  scene:t="gamedata/scenes/_dalniy_island_sparse_water_calm.blk"
+}
+
+entity{
+  _template:t="raid_description"
+  raid_description__raidType:t="defend"
+  raid_description__difficulty:t="dif_norm"
+
+  "raid_description__enemies:list<t>"{
+    item:t="distorted"
+    item:t="turned"
+    item:t="flower"
+    item:t="worms"
+    item:t="mosquito"
+    item:t="boss"
+  }
+
+  "raid_description__images:list<t>"{
+    item:t="ui/zone_thumbnails/raid_euclid_1"
+    item:t="ui/zone_thumbnails/raid_euclid_2"
+    item:t="ui/zone_thumbnails/raid_euclid_3"
+  }
+
+  "raid_description__mcImages:list<t>"{
+    item:t="ui/zone_thumbnails/raid_euclid_4"
+    item:t="ui/zone_thumbnails/raid_euclid_5"
+    item:t="ui/zone_thumbnails/raid_euclid_6"
+  }
+}
+
+entity{
+  _template:t="ground_holes_updater"
+}
+
+entity{
+  _template:t="underground_zones_updater"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel8"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel9"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel10"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel11"
+}
+
+entity{
+  _template:t="nbs_spheres_manager"
+  nbs_spheres_manager__class_name:t="channel12"
+}
+
+import{
+  scene:t="gamedata/scenes/_dalniy_island_sparse_shadervars.blk"
+}
+
+entity{
+  _template:t="wind"
+  wind__noiseScale:r=100
+  wind__noiseSpeed:r=4
+  wind__strength:r=2
+}
+
+entity{
+  _template:t="door_mult_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_doors.blk"
+}
+
+entity{
+  _template:t="misc_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_misc.blk"
+}
+
+entity{
+  _template:t="clouds_hole_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1976.24, 158.129, -848.099]]
+  density:r=0.7
+}
+
+entity{
+  _template:t="session_finalizer"
+  session_finalizer__timer:r=10
+}
+
+entity{
+  _template:t="am_teams"
+  am_teams__players:t="am_player_raid_team"
+}
+
+entity{
+  _template:t="transparent_partition"
+}
+
+entity{
+  _template:t="zone_force_field"
+}
+
+entity{
+  _template:t="storm_zone_with_forcefield"
+  sphere_zone__radius:r=1300
+  moving_zone__manual_activation:b=no
+  moving_zone__sourcePos:p3=1300, 0, -600
+  moving_zone__sleepingTime:r=2700
+  moving_zone__movingVelocity:r=2.5
+}
+
+entity{
+  _template:t="tiled_map"
+  tiled_map__leftTop:p2=-2304, -2304
+  tiled_map__rightBottom:p2=2304, 2304
+  tiled_map__leftTopBorder:p2=-3000, -3000
+  tiled_map__rightBottomBorder:p2=3000, 3000
+  tiled_map__visibleRange:p2=144, 4000
+  tiled_map__tileWidth:i=512
+  tiled_map__zlevels:i=5
+  tiled_map__northAngle:r=0
+  tiled_map__tilesPath:t="maps/dalniy_island_sparse"
+  tiled_map__backgroundColor:c=35, 128, 97, 255
+  fog_of_war__enabled:b=no
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_euclid/_dalniy_island_euclid_spawn_points.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_euclid/_dalniy_island_euclid_extraction_points.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_euclid/_dalniy_island_euclid_gravity_zones.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_euclid/_dalniy_island_euclid_locked_doors.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_dalniy_island_nmesh_mapping_zones.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_dalniy_island_nmesh_mapping_negation_zones.blk"
+}
+
+entity{
+  _template:t="dynamic_ri_covers"
+}
+
+entity{
+  _template:t="am_bot_spawner_names"
+}
+
+entity{
+  _template:t="am_bot_spawner"
+  bot_spawner__spawnInterval:r=20
+  bot_spawner__botsPerGroupMinMax:ip2=2, 3
+  bot_spawner__spawnAt:r=1e+07
+}
+
+entity{
+  _template:t="postfx_color_grading_tonemap_death_alive"
+}
+
+entity{
+  _template:t="stats_game_mode"
+  stats_game_mode__name:t="raid"
+}
+
+entity{
+  _template:t="unique_item_location_marker"
+  transform:m=[[42.5949, -3.03239e-06, -19.8227] [2.64029e-06, 48.9205, -1.22873e-06] [13.8148, 0, 61.1189] [681.175, 11.6947, -1051.88]]
+  unique_item_location_marker__location:t="spy_trailer"
+}
+
+entity{
+  _template:t="gravity_zone_sphere_rad+allow_inner_gravity_zones_visual_effects"
+  grav_zone__innerRadius:r=120
+  grav_zone__outerRadius:r=140
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1779.72, 123.5, -884.595]]
+}
+
+entity{
+  _template:t="euclid_central_sphere"
+  transform:m=[[0.5, 0, 0] [0, 0.5, 0] [0, 0, 0.5] [1779.72, 123.5, -884.595]]
+
+  "euclid_anomaly_visual__subObjects:array"{
+    "i:object"{
+      templateName:t="euclid_distortion_spike_small"
+      creationTemplate:t="sphere"
+      count:i=10
+    }
+
+    "i:object"{
+      templateName:t="euclid_distortion_effect"
+      creationTemplate:t="none"
+      count:i=1
+    }
+  }
+}
+
+entity{
+  _template:t="ri_preload_controller"
+}
+
+entity{
+  _template:t="heatmap_data"
+}
+
+entity{
+  _template:t="player_spawn_controller_default"
+}
+
+entity{
+  _template:t="zone_weather"
+}
+
+entity{
+  _template:t="mapped_navmesh_rescue"
+  transform:m=[[990.576, 0, 0] [0, 100, 0] [0, 0, 871.086] [1574.45, 235.715, 135.233]]
+}
+
+entity{
+  _template:t="level+level_synced_environment"
+  level__blk:t="levels/dalniy_island_sparse.blk"
+  level__useGroundHolesCollision:b=yes
+  level_synced_environment__timeOfDaySeed:i=775646
+  level_synced_environment__weatherSeed:i=272564
+  level_synced_environment__timeOfDayChangeInterval:i=350
+  level_synced_environment__weatherChangeInterval:i=450
+
+  "level__weatherChoice:object"{
+    weather_dalniy_island_overcast:r=1
+    weather_dalniy_island_cloudy:r=1
+  }
+
+  "level__timeVec:array"{
+    level_timeVec:r=5
+    level_timeVec:r=11
+    level_timeVec:r=19
+  }
+}

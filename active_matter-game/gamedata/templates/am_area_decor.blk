@@ -1,0 +1,322 @@
+area_decor_flowerman{
+  _use:t="gpu_object_placer_box"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_gpu_object__name:t="flowerman_area_decor_vegetation"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__ri_asset_idx:i=-1
+    gpu_object_placer__object_density:r=10
+    gpu_object_placer__min_scale_radius:r=4
+    gpu_object_placer__object_up_vector_threshold:p4=0, 0, 0, 0.1
+    gpu_object_placer__current_distance_squared:r=0
+    gpu_object_placer__filled:b=no
+    gpu_object_placer__buffer_offset:i=-1
+    gpu_object_placer__buffer_size:i=-1
+    gpu_object_placer__show_geometry:b=no
+    gpu_object_placer__place_on_geometry:b=yes
+    gpu_object_placer__min_gathered_triangle_size:r=1.2
+    gpu_object_placer__opaque:b=yes
+    gpu_object_placer__decal:b=yes
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_based_scale:p2=1.2, 0.4
+    gpu_object_placer__object_scale_range:p2=0.3, 0.7
+    gpu_object_placer__object_max_count:i=400
+    gpu_object_placer__visible_distance_squared:r=900
+  }
+}
+
+area_decor_overgrowth{
+  _use:t="gpu_object_placer_box"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_gpu_object__name:t="flowerman_area_decor_vegetation"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__ri_asset_idx:i=-1
+    gpu_object_placer__object_density:r=1
+    gpu_object_placer__min_scale_radius:r=1
+    gpu_object_placer__object_up_vector_threshold:p4=0, 0, 0, 0.1
+    gpu_object_placer__current_distance_squared:r=0
+    gpu_object_placer__filled:b=no
+    gpu_object_placer__buffer_offset:i=-1
+    gpu_object_placer__buffer_size:i=-1
+    gpu_object_placer__show_geometry:b=no
+    gpu_object_placer__place_on_geometry:b=yes
+    gpu_object_placer__min_gathered_triangle_size:r=0.01
+    gpu_object_placer__opaque:b=yes
+    gpu_object_placer__decal:b=yes
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_based_scale:p2=1.2, 0.4
+    gpu_object_placer__object_scale_range:p2=0.9, 1.25
+    gpu_object_placer__object_max_count:i=300
+    gpu_object_placer__visible_distance_squared:r=1600
+  }
+}
+
+area_decor_overgrowth_car{
+  _use:t="area_decor_overgrowth"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__object_density:r=3
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__object_scale_range:p2=0.5, 0.75
+    gpu_object_placer__object_max_count:i=50
+    gpu_object_placer__visible_distance_squared:r=900
+  }
+}
+
+area_decor_flower_anomaly{
+  _use:t="gpu_object_placer_box"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_gpu_object__name:t="flowerman_trap_a"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__ri_asset_idx:i=-1
+    gpu_object_placer__object_density:r=0.5
+    gpu_object_placer__min_scale_radius:r=5
+    gpu_object_placer__object_up_vector_threshold:p4=0, 0, 0, 0.1
+    gpu_object_placer__current_distance_squared:r=0
+    gpu_object_placer__filled:b=no
+    gpu_object_placer__buffer_offset:i=-1
+    gpu_object_placer__buffer_size:i=-1
+    gpu_object_placer__show_geometry:b=no
+    gpu_object_placer__place_on_geometry:b=yes
+    gpu_object_placer__min_gathered_triangle_size:r=1.2
+    gpu_object_placer__opaque:b=yes
+    gpu_object_placer__decal:b=yes
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_based_scale:p2=1.2, 0.4
+    gpu_object_placer__object_scale_range:p2=0.75, 1.5
+    gpu_object_placer__object_max_count:i=100
+    gpu_object_placer__visible_distance_squared:r=1000
+  }
+}
+
+area_decor_rosin{
+  _use:t="gpu_object_placer_box"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_gpu_object__name:t="am_rosin_decor"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__ri_asset_idx:i=-1
+    gpu_object_placer__object_density:r=10
+    gpu_object_placer__min_scale_radius:r=4
+    gpu_object_placer__object_up_vector_threshold:p4=0, 0, 0, 0.1
+    gpu_object_placer__current_distance_squared:r=0
+    gpu_object_placer__filled:b=no
+    gpu_object_placer__buffer_offset:i=-1
+    gpu_object_placer__buffer_size:i=-1
+    gpu_object_placer__show_geometry:b=no
+    gpu_object_placer__place_on_geometry:b=yes
+    gpu_object_placer__min_gathered_triangle_size:r=0.01
+    gpu_object_placer__opaque:b=yes
+    gpu_object_placer__decal:b=yes
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_based_scale:p2=1.5, 0.4
+    gpu_object_placer__object_scale_range:p2=1, 1.25
+    gpu_object_placer__object_max_count:i=250
+    gpu_object_placer__visible_distance_squared:r=10000
+  }
+}
+
+area_decor_darkness{
+  _use:t="gpu_object_placer_box"
+  ri_gpu_object__name:t="blackout_wall_decor_stripes_a"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__render_into_shadows:b=yes
+    gpu_object_placer__min_scale_radius:r=2
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_based_scale:p2=1, 0.5
+    gpu_object_placer__object_scale_range:p2=0.8, 1
+  }
+}
+
+area_decor_confusion{
+  _use:t="gpu_object_placer_box"
+  ri_gpu_object__name:t="confusion_wall_decor_mushrooms_a"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__object_density:r=5
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_based_scale:p2=1, 0.3
+    gpu_object_placer__object_scale_range:p2=0.5, 1
+    gpu_object_placer__object_max_count:i=400
+  }
+}
+
+area_decor_metal_heat{
+  _use:t="gpu_object_placer_box"
+  ri_gpu_object__name:t="heat_wall_decor_flowers_a"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__object_density:r=4
+    gpu_object_placer__min_gathered_triangle_size:r=0.01
+    gpu_object_placer__decal:b=yes
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_based_scale:p2=1, 0.3
+    gpu_object_placer__object_scale_range:p2=0.5, 2
+    gpu_object_placer__object_max_count:i=400
+  }
+}
+
+area_decor_skeleton_swarm{
+  _use:t="area_decor_darkness"
+}
+
+area_decor_spikes{
+  _use:t="gpu_object_placer_box"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_gpu_object__name:t="changed_wall_decor_spikes"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__ri_asset_idx:i=-1
+    gpu_object_placer__object_density:r=5
+    gpu_object_placer__min_scale_radius:r=100
+    gpu_object_placer__object_up_vector_threshold:p4=0, 0, 0, 0.1
+    gpu_object_placer__current_distance_squared:r=0
+    gpu_object_placer__filled:b=no
+    gpu_object_placer__buffer_offset:i=-1
+    gpu_object_placer__buffer_size:i=-1
+    gpu_object_placer__show_geometry:b=no
+    gpu_object_placer__place_on_geometry:b=yes
+    gpu_object_placer__min_gathered_triangle_size:r=0.01
+    gpu_object_placer__opaque:b=yes
+    gpu_object_placer__decal:b=yes
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_based_scale:p2=1.2, 0.4
+    gpu_object_placer__object_scale_range:p2=0.5, 2
+    gpu_object_placer__object_max_count:i=400
+    gpu_object_placer__visible_distance_squared:r=900
+  }
+}
+
+area_decor_spikes_small{
+  _use:t="area_decor_spikes"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__object_density:r=10
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_based_scale:p2=1, 0.6
+    gpu_object_placer__object_scale_range:p2=0.7, 0.85
+    gpu_object_placer__object_max_count:i=1000
+  }
+}
+
+area_decor_spikes_small_sparse{
+  _use:t="area_decor_spikes"
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_based_scale:p2=1, 0.6
+    gpu_object_placer__object_scale_range:p2=0.7, 0.85
+    gpu_object_placer__object_max_count:i=250
+  }
+}
+
+area_decor_spikes_dense{
+  _use:t="area_decor_spikes"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__object_density:r=10
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__object_max_count:i=850
+  }
+}
+
+area_decor_distortion{
+  _use:t="gpu_object_placer_box"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_gpu_object__name:t="distortion_wall_decor_shards"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_object_placer__ri_asset_idx:i=-1
+    gpu_object_placer__object_density:r=5
+    gpu_object_placer__min_scale_radius:r=100
+    gpu_object_placer__object_up_vector_threshold:p4=0, 0, 0, 0.1
+    gpu_object_placer__current_distance_squared:r=0
+    gpu_object_placer__filled:b=no
+    gpu_object_placer__buffer_offset:i=-1
+    gpu_object_placer__buffer_size:i=-1
+    gpu_object_placer__show_geometry:b=no
+    gpu_object_placer__place_on_geometry:b=yes
+    gpu_object_placer__min_gathered_triangle_size:r=0.01
+    gpu_object_placer__opaque:b=yes
+    gpu_object_placer__decal:b=yes
+    gpu_object_placer__distorsion:b=yes
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_based_scale:p2=1.2, 0.4
+    gpu_object_placer__object_scale_range:p2=0.5, 2.5
+    gpu_object_placer__object_max_count:i=150
+    gpu_object_placer__visible_distance_squared:r=900
+  }
+}
+
+area_decor_distortion_sparse{
+  _use:t="area_decor_distortion"
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__object_max_count:i=20
+    gpu_object_placer__visible_distance_squared:r=400
+  }
+}

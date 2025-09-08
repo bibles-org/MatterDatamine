@@ -1,0 +1,58 @@
+entity{
+  _template:t="hive_clusters_manager"
+  hivesToSpawnRng:ip2=2, 2
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [634.151, 25.6122, -1031.37]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_water_tower_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [164.312, 100.846, -626.737]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_church_dome_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[-0.47707, 0, -0.570522] [0, 0.743701, 0] [0.570522, 0, -0.47707] [-84.766, 95.6229, -747.566]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_big_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[-0.339358, 0, 0.940657] [0, 1, 0] [-0.940657, 0, -0.339358] [471.729, 81.6118, -359.035]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[0.995147, 0, 0.0984019] [0, 1, -0] [-0.0984019, 0, 0.995147] [527.512, 66.615, -479.215]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[-0.959943, 0, 0.280194] [0, 1, 0] [-0.280194, 0, -0.959943] [708.137, 81.9809, -123.237]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}

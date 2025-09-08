@@ -1,0 +1,1009 @@
+spider_anim_states{
+  anim_state__rotateLeftName:t="rotate_left"
+  anim_state__rotateRightName:t="rotate_right"
+  animchar__rotationAnimMoveSpeedThreshold:r=1
+  animchar__rotationAnimAngularSpeedThreshold:r=0.4
+
+  "anim_state__standStateName:list<t>"{
+    i:t="idle"
+  }
+
+  "anim_state__walkStateName:list<t>"{
+    i:t="walk"
+  }
+
+  "anim_state__runStateName:list<t>"{
+    i:t="walk"
+  }
+}
+
+spider_base{
+  _use:t="base_dm_parts"
+  _use:t="am_navmesh_creature_base"
+  _use:t="navmesh_aligned_phys_base"
+  _use:t="ai_target"
+  _use:t="navmesh_phys_move_anim"
+  _use:t="navmesh_phys_rotate_anim"
+  _use:t="navmesh_phys_death_anim"
+  _use:t="spider_sound"
+  _use:t="outline"
+  _use:t="spider_anim_states"
+  _use:t="animchar_phys_var_walk_dir"
+  animchar__res:t="spider_basic_a"
+  collres__res:t="spider_basic_a_collision"
+  hitpoints__hp:r=2
+  hitpoints__maxHp:r=2
+  ai_target_node__node:t="Head"
+  deform_bbox__bmin:p3=-0.1, -0.1, -0.1
+  deform_bbox__bmax:p3=0.1, 0.1, 0.1
+  trajectory__startNodeName:t="spider"
+  backstab__nodeName:t="spider"
+  action__running:b=no
+  _replicated:t="actions__enabled"
+  spawn_immunity__initialPos:p3=0, 0, 0
+  spawn_immunity__immuneDistance:r=0.1
+  spawn_immunity__timer:r=0.1
+  kill_tracking_tag:t="spider"
+  actions__animLayer:t="state"
+  actions__enabled:b=yes
+  hit_verification__maxDistance:r=9
+  dm__bsphereRad:r=9
+  _skipInitialReplication:t="dm_parts__parts"
+
+  "kill_tracking__taggedPlayers:object"{}
+  "dm_parts__parts:object"{
+    "Head:object"{
+      dmgMult:r=0.37
+      armor:r=0
+    }
+
+    "Body:object"{
+      dmgMult:r=0.5
+      armor:r=0
+    }
+
+    "Bone140:object"{
+      dmgMult:r=0.32
+      armor:r=0
+    }
+
+    "Bone141:object"{
+      dmgMult:r=0.37
+      armor:r=0
+    }
+
+    "Bone142:object"{
+      dmgMult:r=0.47
+      armor:r=0
+    }
+
+    "Bone025:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone028:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone029:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone041:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone044:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone045:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone057:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone060:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone061:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone073:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone076:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone077:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone098:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone101:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone102:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone106:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone109:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone110:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone114:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone117:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone118:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone122:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone125:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+
+    "Bone126:object"{
+      dmgMult:r=0.15
+      armor:r=0
+    }
+  }
+
+  "dmgzoneVulnerable:tag"{}
+  "spider:tag"{}
+  anim_phys{}
+  actions{}
+  "capsule_approximation__nodeNames:array"{
+    node:t="Head"
+    node:t="Body"
+    node:t="Bone140"
+  }
+
+  "capsule_approximation__complexNodeNames:array"{
+    "node:array"{
+      node:t="Head"
+      node:t="Body"
+    }
+
+    "node:array"{
+      node:t="Bone140"
+    }
+
+    "node:array"{
+      node:t="Bone098"
+      node:t="Bone025"
+    }
+
+    "node:array"{
+      node:t="Bone122"
+      node:t="Bone073"
+    }
+  }
+}
+
+spider_util_vars{
+  util_vars__ready:b=no
+  util_vars__visibleTargets:r=0
+  util_vars__offenderHitCoef:r=0
+  util_vars__aggressionLevel:r=0
+  util_vars__lastBulletReactionCoef:r=0
+  util_vars__visibleAttractPoints:r=0
+  util_vars__attractPointRatio:r=0
+
+  "spiderUtilVars:tag"{}
+}
+
+spiders_offensive_zone{
+  offensive_zone__radius:r=10
+  offensive_zone__nextCheck:r=0
+  offensive_zone__checkInterval:r=0.5
+
+  "spidersOffensiveZone:tag"{}
+  "offensive_zone__inside:list<eid>"{}
+}
+
+spider_ai{
+  _use:t="patroller_ai"
+  _use:t="get_attract_position_ai"
+  _use:t="beh_tree_regular_check"
+  _use:t="beh_tree_patroller"
+  _use:t="agent_dangers_bullet_reaction"
+  _use:t="agent_dangers_hit_reaction"
+  _use:t="get_reaction_offender_ai"
+  _use:t="track_visual_attract_points"
+  _use:t="get_visible_attract_position_ai"
+  _use:t="corridor_walker"
+  _use:t="spider_util_vars"
+  _use:t="base_navmesh_agent_comp"
+  _use:t="zone_patroller"
+  attract_point__searchRadius:r=30
+  visual_attract__maxDist:r=30
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  beh_tree__blackboard__enemyRadius:r=30
+  agent_dangers__hasTraceableDangers:b=no
+  _use:t="monster_danger_calc"
+  agent_dangers__tag:t="spider"
+  ai_target_node__node:t="Head"
+  agent_dangers__maxDangerDist:r=90
+  agent_dangers__frustumAngle:r=90
+  agent_dangers__projectileDist:r=4
+  agent_dangers__decrease:r=5
+  agent_dangers__timeFromDetection:r=3
+  agent_dangers__lastBulletReactionTime:r=-1
+  agent_dangers__nextBulletReactionTime:r=-1
+  agent_dangers__hmapTraceOffset:p3=0, -0.1, 0
+  agent_dangers__nextDangersCheckTime:r=0
+  agent_dangers__nextDangersTraceTime:r=0
+  agent_dangers__dangerIncrease:r=5
+  agent_dangers__dangerOutIncrease:r=0
+  agent_dangers__maxDangerDistMult:r=0.3
+  agent_dangers__standShootPos:p3=0, 0, 0
+  agent_dangers__standShootDir:p3=0, 0, 0
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  agent_dangers{
+    _tags:t="server"
+  }
+}
+
+spider_loot_minor{
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_2"
+      dropChance:r=0.1
+    }
+  }
+}
+
+spider_loot_major{
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_3"
+      dropChance:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_5"
+      dropChance:r=0.5
+    }
+  }
+}
+
+spider{
+  _use:t="spider_base"
+  _use:t="spider_ai"
+  team:i=1
+}
+
+spider_indoor{
+  _use:t="spider"
+  _use:t="indoor_patroller"
+}
+
+spider_basic_hit_reactions{
+  human_hit_reaction__use:b=yes
+  hit_reaction__fifoNodeIdx:i=-1
+  hit_reaction__repeatNodeIdxs:ip2=-1, -1
+
+  "hit_reaction__animNodeIdxs:list<i>"{}
+  "hit_reaction__anims:shared:object"{
+    default:t="hit_front"
+    repeat1:t="hit_front"
+    repeat2:t="hit_front"
+
+    "Head:object"{
+      front:t="hit_front"
+      back:t="hit_back"
+      left:t="hit_left_front"
+      right:t="hit_right_front"
+    }
+
+    "Body:object"{
+      front:t="hit_front"
+      back:t="hit_back"
+      left:t="hit_left_front"
+      right:t="hit_right_front"
+    }
+
+    "Bone140:object"{
+      front:t="hit_front"
+      back:t="hit_back"
+      left:t="hit_left_back"
+      right:t="hit_right_back"
+    }
+
+    "Bone141:object"{
+      front:t="hit_front"
+      back:t="hit_back"
+      left:t="hit_left_back"
+      right:t="hit_right_back"
+    }
+
+    "Bone142:object"{
+      front:t="hit_front"
+      back:t="hit_back"
+      left:t="hit_left_back"
+      right:t="hit_right_back"
+    }
+
+    "Bone025:object"{
+      front:t="hit_left_front"
+      back:t="hit_left_front"
+      left:t="hit_left_front"
+      right:t="hit_left_front"
+    }
+
+    "Bone028:object"{
+      front:t="hit_left_front"
+      back:t="hit_left_front"
+      left:t="hit_left_front"
+      right:t="hit_left_front"
+    }
+
+    "Bone029:object"{
+      front:t="hit_left_front"
+      back:t="hit_left_front"
+      left:t="hit_left_front"
+      right:t="hit_left_front"
+    }
+
+    "Bone041:object"{
+      front:t="hit_left"
+      back:t="hit_left"
+      left:t="hit_left"
+      right:t="hit_left"
+    }
+
+    "Bone044:object"{
+      front:t="hit_left"
+      back:t="hit_left"
+      left:t="hit_left"
+      right:t="hit_left"
+    }
+
+    "Bone045:object"{
+      front:t="hit_left"
+      back:t="hit_left"
+      left:t="hit_left"
+      right:t="hit_left"
+    }
+
+    "Bone057:object"{
+      front:t="hit_left"
+      back:t="hit_left"
+      left:t="hit_left"
+      right:t="hit_left"
+    }
+
+    "Bone060:object"{
+      front:t="hit_left"
+      back:t="hit_left"
+      left:t="hit_left"
+      right:t="hit_left"
+    }
+
+    "Bone061:object"{
+      front:t="hit_left"
+      back:t="hit_left"
+      left:t="hit_left"
+      right:t="hit_left"
+    }
+
+    "Bone073:object"{
+      front:t="hit_left_back"
+      back:t="hit_left_back"
+      left:t="hit_left_back"
+      right:t="hit_left_back"
+    }
+
+    "Bone076:object"{
+      front:t="hit_left_back"
+      back:t="hit_left_back"
+      left:t="hit_left_back"
+      right:t="hit_left_back"
+    }
+
+    "Bone077:object"{
+      front:t="hit_left_back"
+      back:t="hit_left_back"
+      left:t="hit_left_back"
+      right:t="hit_left_back"
+    }
+
+    "Bone098:object"{
+      front:t="hit_right_front"
+      back:t="hit_right_front"
+      left:t="hit_right_front"
+      right:t="hit_right_front"
+    }
+
+    "Bone101:object"{
+      front:t="hit_right_front"
+      back:t="hit_right_front"
+      left:t="hit_right_front"
+      right:t="hit_right_front"
+    }
+
+    "Bone102:object"{
+      front:t="hit_right_front"
+      back:t="hit_right_front"
+      left:t="hit_right_front"
+      right:t="hit_right_front"
+    }
+
+    "Bone106:object"{
+      front:t="hit_right"
+      back:t="hit_right"
+      left:t="hit_right"
+      right:t="hit_right"
+    }
+
+    "Bone109:object"{
+      front:t="hit_right"
+      back:t="hit_right"
+      left:t="hit_right"
+      right:t="hit_right"
+    }
+
+    "Bone110:object"{
+      front:t="hit_right"
+      back:t="hit_right"
+      left:t="hit_right"
+      right:t="hit_right"
+    }
+
+    "Bone114:object"{
+      front:t="hit_right"
+      back:t="hit_right"
+      left:t="hit_right"
+      right:t="hit_right"
+    }
+
+    "Bone117:object"{
+      front:t="hit_right"
+      back:t="hit_right"
+      left:t="hit_right"
+      right:t="hit_right"
+    }
+
+    "Bone118:object"{
+      front:t="hit_right"
+      back:t="hit_right"
+      left:t="hit_right"
+      right:t="hit_right"
+    }
+
+    "Bone122:object"{
+      front:t="hit_right_back"
+      back:t="hit_right_back"
+      left:t="hit_right_back"
+      right:t="hit_right_back"
+    }
+
+    "Bone125:object"{
+      front:t="hit_right_back"
+      back:t="hit_right_back"
+      left:t="hit_right_back"
+      right:t="hit_right_back"
+    }
+
+    "Bone126:object"{
+      front:t="hit_right_back"
+      back:t="hit_right_back"
+      left:t="hit_right_back"
+      right:t="hit_right_back"
+    }
+  }
+}
+
+spider_cub_hit_reactions{
+  human_hit_reaction__use:b=yes
+  hit_reaction__fifoNodeIdx:i=-1
+  hit_reaction__repeatNodeIdxs:ip2=-1, -1
+
+  "hit_reaction__animNodeIdxs:list<i>"{}
+  "hit_reaction__anims:shared:object"{
+    default:t="hit_front"
+    repeat1:t="hit_front"
+    repeat2:t="hit_front"
+
+    "Body:object"{
+      front:t="hit_front"
+      back:t="hit_back"
+      left:t="hit_left_front"
+      right:t="hit_right_front"
+    }
+
+    "Bone140:object"{
+      front:t="hit_front"
+      back:t="hit_back"
+      left:t="hit_left_back"
+      right:t="hit_right_back"
+    }
+
+    "Bone025:object"{
+      front:t="hit_left_front"
+      back:t="hit_left_front"
+      left:t="hit_left_front"
+      right:t="hit_left_front"
+    }
+
+    "Bone028:object"{
+      front:t="hit_left_front"
+      back:t="hit_left_front"
+      left:t="hit_left_front"
+      right:t="hit_left_front"
+    }
+
+    "Bone041:object"{
+      front:t="hit_left"
+      back:t="hit_left"
+      left:t="hit_left"
+      right:t="hit_left"
+    }
+
+    "Bone044:object"{
+      front:t="hit_left"
+      back:t="hit_left"
+      left:t="hit_left"
+      right:t="hit_left"
+    }
+
+    "Bone057:object"{
+      front:t="hit_left"
+      back:t="hit_left"
+      left:t="hit_left"
+      right:t="hit_left"
+    }
+
+    "Bone060:object"{
+      front:t="hit_left"
+      back:t="hit_left"
+      left:t="hit_left"
+      right:t="hit_left"
+    }
+
+    "Bone073:object"{
+      front:t="hit_left_back"
+      back:t="hit_left_back"
+      left:t="hit_left_back"
+      right:t="hit_left_back"
+    }
+
+    "Bone076:object"{
+      front:t="hit_left_back"
+      back:t="hit_left_back"
+      left:t="hit_left_back"
+      right:t="hit_left_back"
+    }
+
+    "Bone098:object"{
+      front:t="hit_right_front"
+      back:t="hit_right_front"
+      left:t="hit_right_front"
+      right:t="hit_right_front"
+    }
+
+    "Bone101:object"{
+      front:t="hit_right_front"
+      back:t="hit_right_front"
+      left:t="hit_right_front"
+      right:t="hit_right_front"
+    }
+
+    "Bone106:object"{
+      front:t="hit_right"
+      back:t="hit_right"
+      left:t="hit_right"
+      right:t="hit_right"
+    }
+
+    "Bone109:object"{
+      front:t="hit_right"
+      back:t="hit_right"
+      left:t="hit_right"
+      right:t="hit_right"
+    }
+
+    "Bone114:object"{
+      front:t="hit_right"
+      back:t="hit_right"
+      left:t="hit_right"
+      right:t="hit_right"
+    }
+
+    "Bone117:object"{
+      front:t="hit_right"
+      back:t="hit_right"
+      left:t="hit_right"
+      right:t="hit_right"
+    }
+
+    "Bone122:object"{
+      front:t="hit_right_back"
+      back:t="hit_right_back"
+      left:t="hit_right_back"
+      right:t="hit_right_back"
+    }
+
+    "Bone125:object"{
+      front:t="hit_right_back"
+      back:t="hit_right_back"
+      left:t="hit_right_back"
+      right:t="hit_right_back"
+    }
+  }
+}
+
+spider_swarm{
+  _use:t="spider"
+  _use:t="spider_swarm_sound"
+  _use:t="spider_basic_hit_reactions"
+  _use:t="spider_loot_minor"
+  nPhys__animcharScale:r=0.3
+  hitpoints__hp:r=90
+  hitpoints__maxHp:r=90
+  beh_tree__node:t="spider_swarm"
+  animchar__res:t="spider_cub_a"
+  collres__res:t="spider_cub_a_collision"
+  _replicated:t="actions__actions_enabled"
+
+  "loc_snapshots__scaledTransform:tag"{}
+  "actions__actions:array"{
+    "action:object"{
+      name:t="stand_melee"
+      state:t="attack"
+      actionTime:r=0.5
+      applyAt:r=0.3
+      props:t="gamedata/actions/spiderbite.blk"
+      irq:t="melee"
+      varName:t="attack_progress"
+    }
+  }
+
+  "actions__actions_enabled:array"{
+    enabled:b=yes
+  }
+}
+
+spider_mother{
+  _use:t="spider"
+  _use:t="spider_swarm_sound"
+  _use:t="spider_basic_hit_reactions"
+  _use:t="spider_loot_major"
+  beh_tree__node:t="spider_mother"
+  animchar__res:t="spider_basic_a"
+  collres__res:t="spider_basic_a_collision"
+  nPhys__animcharScale:r=1.3
+  nPhys__animcharScaleRange:p2=1.25, 1.35
+  hitpoints__hp:r=60
+  hitpoints__maxHp:r=60
+  navmesh_phys__steeringAgentSize:r=1
+  navmesh_phys__strafeWalkSpeedMult:r=0.75
+  navmesh_phys__backwardWalkSpeedMult:r=0.85
+  collres__centerNode:t="Body"
+  _replicated:t="actions__actions_enabled"
+
+  "util_vars__personalAggression:tag"{}
+  "grid_obj__updateAlways:tag"{}
+  "loc_snapshots__scaledTransform:tag"{}
+  "actions__actions:array"{
+    "action:object"{
+      name:t="stand_melee"
+      state:t="attack"
+      actionTime:r=0.5
+      applyAt:r=0.3
+      props:t="gamedata/actions/spider_mother_bite.blk"
+      irq:t="melee"
+      varName:t="attack_progress"
+    }
+  }
+
+  "actions__actions_enabled:array"{
+    enabled:b=yes
+  }
+}
+
+spider_mother_shooter_shoot_anim{
+  _use:t="nphys_forced_anim_affect"
+  _use:t="nphys_forced_paramatric_anim"
+  game_effect__forcedParametricVarName:t="attack_progress"
+  game_effect__nPhysForceAnimState:t="attack"
+  game_effect__timeToDestroy:r=1.75
+}
+
+spider_mother_shooter_shoot{
+  _use:t="game_effect_with_duration"
+  game_effect__timeToDestroy:r=1.75
+  game_effect__shootShellIndex:i=0
+
+  "game_effect__destroyWithOwner:tag"{}
+}
+
+spider_mother_shooter{
+  _use:t="spider_mother"
+  _use:t="navmesh_phys_forced_anim_state"
+  gun__propsId:i=-1
+  gun__blk:t="gamedata/weapons/spider_mother_needle_gun.blk"
+  gun__projectileRayMatId:i=-1
+  gun__projectileRayMat:t="bulletRay"
+  gun__projectileTemplate:t="spider_needle_projectile"
+  gun__ammo:i=0
+  unit__shootNodeName:t="Head"
+  unit__shootNodeId:i=-1
+  beh_tree__node:t="spider_mother_shooter"
+  util_vars__inShootState:b=no
+
+  gun_launch_events{}
+  gun__shell_prop_ids{}
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/spider_mother_needle.blk"
+  }
+
+  gun{}
+  "gun__owner:eid"{}
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+  }
+}
+
+spider_minion_jump{
+  _use:t="navmesh_phys_forced_anim_state"
+  _use:t="navmesh_phys_jumplinks_jump"
+  _use:t="navmesh_phys_jumplinks_jump_anim"
+  anim_state__climbJumpProgressVarOffset:r=-0.1
+  navmesh_phys__climbJumpMaxDistSq:r=0
+  navmesh_phys__climbJumpStartSpeed:r=5
+  navmesh_phys__climbJumpMaxUpHeight:r=0.8
+}
+
+spider_minion{
+  _use:t="spider"
+  ai_target_node__node:t="Body"
+  _use:t="spider_swarm_sound"
+  _use:t="spider_cub_hit_reactions"
+  _use:t="spider_loot_minor"
+  _use:t="navmesh_phys_jumplinks"
+  _use:t="spider_minion_jump"
+  beh_tree__node:t="spider_minion"
+  animchar__res:t="spider_cub_a"
+  collres__res:t="spider_cub_a_collision"
+  nPhys__animcharScale:r=0.3
+  nPhys__animcharScaleRange:p2=0.25, 0.35
+  hitpoints__hp:r=9
+  hitpoints__maxHp:r=9
+  navmesh_phys__maxWalkSpeed:r=5.4
+  navmesh_phys__steeringAgentSize:r=0.2
+  navmesh_phys__strafeWalkSpeedMult:r=0.5
+  navmesh_phys__backwardWalkSpeedMult:r=0.7
+  collres__centerNode:t="Body"
+  grid_obj__fixedTmScale:r=0.01
+  _replicated:t="actions__actions_enabled"
+
+  "util_vars__personalAggression:tag"{}
+  "unit__masterEid:eid"{}
+  "grid_obj__updateAlways:tag"{}
+  "capsule_approximation__nodeNames:array"{
+    node:t="Body"
+    node:t="Bone140"
+  }
+
+  "capsule_approximation__complexNodeNames:array"{
+    "node:array"{
+      node:t="Body"
+      node:t="Bone140"
+    }
+
+    "node:array"{
+      node:t="Bone098"
+      node:t="Bone025"
+    }
+
+    "node:array"{
+      node:t="Bone122"
+      node:t="Bone073"
+    }
+  }
+
+  "loc_snapshots__scaledTransform:tag"{}
+  "actions__actions:array"{
+    "action:object"{
+      name:t="stand_melee"
+      state:t="attack"
+      actionTime:r=0.5
+      applyAt:r=0.3
+      props:t="gamedata/actions/spider_minion_bite.blk"
+      irq:t="melee"
+      varName:t="attack_progress"
+    }
+  }
+
+  "actions__actions_enabled:array"{
+    enabled:b=yes
+  }
+}
+
+spider_minion_explosive_suicide_anim{
+  _use:t="nphys_forced_anim_affect"
+  _use:t="nphys_forced_paramatric_anim"
+  game_effect__forcedParametricVarName:t="attack_progress"
+  game_effect__nPhysForceAnimState:t="attack"
+  game_effect__timeToDestroy:r=2.5
+}
+
+spider_minion_explosive_suicide{
+  _use:t="game_effect_with_duration"
+  game_effect__timeToDestroy:r=2
+
+  "game_effect__suicide:tag"{}
+  "game_effect__destroyWithOwner:tag"{}
+}
+
+spider_minion_explosive_explosion{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  on_create__spawnActivatedShellBlk:t="gamedata/weapons/grenades/spider_minion_explosion.blk"
+  on_create__spawnShellTimer:r=0.1
+
+  "ownerEid:eid"{}
+}
+
+spider_minion_explosive_fire_source{
+  _use:t="molotov_fire"
+  dmgzone__fireAffect:r=-1
+  dmgzone__damage:r=1
+  fire_source__startTime:r=2.25
+  fire_source__spreadTime:r=0.1
+  fire_source__fullForceTime:r=0.5
+  fire_source__maxFullForceTime:r=0.5
+  dmgzone__maxRadius:r=1.17
+  fire_source__effectScale:r=0.4
+  fire_source__effectMinScale:r=0.15
+  sphere_zone__radius:r=0.2
+  minScale:r=0.2
+  maxScale:r=0.4
+}
+
+spider_minion_explosive{
+  _use:t="spider_minion"
+  _use:t="navmesh_phys_forced_anim_state"
+  hitpoints__hp:r=2
+  hitpoints__maxHp:r=2
+  nPhys__animcharScaleRange:p2=0.35, 0.45
+  navmesh_phys__maxWalkSpeed:r=5.2
+  navmesh_phys__steeringAgentSize:r=0.4
+  beh_tree__node:t="spider_minion_explosive"
+  util_vars__inSuicideState:r=0
+  animchar__res:t="spider_expl_a"
+  collres__res:t="spider_expl_a_collision"
+
+  "unit__deathSpawner:list<t>"{
+    it:t="spider_minion_explosive_explosion"
+    it:t="spider_minion_explosive_fire_source"
+  }
+
+  "preloadSpawnActivatedShellProps:list<t>"{
+    template:t="spider_minion_explosive_explosion"
+  }
+}
+
+spider_lair_gen{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  lair_gen__templateToSpawn:t="spider_swarm"
+  lair_gen__dist:r=20
+  lair_gen__numToSpawn:i=380
+}
+
+spider_lair_mother_gen{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  lair_gen__templateToSpawn:t="spider_mother"
+  lair_gen__dist:r=1
+  lair_gen__numToSpawn:i=1
+}
+
+spider_lair_indoor_gen{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  lair_gen__templateToSpawn:t="spider_swarm+beh_tree_indoor_patroller+indoor_patroller"
+  lair_gen__dist:r=20
+  lair_gen__numToSpawn:i=380
+}
+
+spider_lair_indoor_mother_gen{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  lair_gen__templateToSpawn:t="spider_mother+beh_tree_indoor_patroller+indoor_patroller"
+  lair_gen__dist:r=1
+  lair_gen__numToSpawn:i=1
+}
+
+spider_lair_clamped_mother_shooter_gen{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  lair_gen__templateToSpawn:t="spider_mother_shooter+beh_tree_clamped_patroller+indoor_patroller"
+  lair_gen__dist:r=1
+  lair_gen__numToSpawn:i=1
+}
+
+spider_lair_outdoor_mother_shooter_gen{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  lair_gen__templateToSpawn:t="spider_mother_shooter+beh_tree_outdoor_patroller"
+  lair_gen__dist:r=1
+  lair_gen__numToSpawn:i=1
+}
+
+spider_lair_indoor_minion_gen{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  lair_gen__templateToSpawn:t="spider_minion+beh_tree_indoor_patroller+indoor_patroller"
+  lair_gen__dist:r=1
+  lair_gen__numToSpawn:i=10
+}
+
+spider_lair_clamped_minion_explosive_gen{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  lair_gen__templateToSpawn:t="spider_minion_explosive+beh_tree_clamped_patroller+indoor_patroller"
+  lair_gen__dist:r=1
+  lair_gen__numToSpawn:i=10
+}
+
+spider_lair_outdoor_minion_explosive_gen{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  lair_gen__templateToSpawn:t="spider_minion_explosive+beh_tree_outdoor_patroller"
+  lair_gen__dist:r=1
+  lair_gen__numToSpawn:i=10
+}

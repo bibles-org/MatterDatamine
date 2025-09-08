@@ -1,0 +1,731 @@
+award_weapons_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="makarov_gun_loot_preset"
+    }
+
+    "item:object"{
+      sub_preset:t="m1911_colt_gun_loot_preset"
+    }
+  }
+}
+
+ak_47_big_weapon_box_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="akm_47_civil_gun_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="akm_47_corrupted_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="akm_47_broken_item"
+      weight:r=3
+    }
+  }
+}
+
+sks_big_weapon_box_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="sks_carbine_rust_gun_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="sks_carbine_gun_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="sks_carbine_corrupted_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="sks_carbine_hunt_gun_loot_preset"
+      weight:r=3
+    }
+
+    "item:object"{
+      template_name:t="sks_carbine_broken_item"
+      weight:r=3
+    }
+  }
+}
+
+valuable_military_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="large_pouch"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="f1_grenade_item"
+      weight:r=3
+    }
+
+    "item:object"{
+      template_name:t="helmet_ussr_ssh40"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="helmet_d"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="helmet_k6_3"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      template_name:t="b7_binoculars_item"
+      weight:r=0.05
+    }
+
+    "item:object"{
+      sub_preset:t="keys_loot_preset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_healkit_preset"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      template_name:t="box_9mm_magazine"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_painkiller"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="box_12_gauge_magazine"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="box_5_56_magazine"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="armorplate_big_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="armorplate_big_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="armorplate_small_a"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="armorplate_small_b"
+      weight:r=0.5
+    }
+  }
+}
+
+grenade_box_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 4
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="f1_grenade_item"
+      weight:r=1.5
+    }
+
+    "item:object"{
+      template_name:t="ussr_molotov_item"
+      weight:r=1
+    }
+  }
+}
+
+grenade_box_modern_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 4
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="f1_grenade_item"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="ussr_molotov_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="rdgm_smoke_grenade_item"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="zarya_flash_grenade_item"
+      weight:r=1
+    }
+  }
+}
+
+hidden_colt_nickel_gun_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=3, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="m1911a1_colt_nickel_gun"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="m1911_colt_magazine"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_award_certificate_1"
+      weight:r=1
+    }
+  }
+}
+
+soviet_armor_t1_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="armorplate_small_a"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="armorplate_big_a"
+      weight:r=2.5
+    }
+
+    "item:object"{
+      template_name:t="helmet_ussr_ssh40"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="helmet_ussr_ssh40_rust"
+      weight:r=1
+    }
+  }
+}
+
+soviet_armor_t2_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="armorplate_small_b"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="armorplate_big_a"
+      weight:r=2.5
+    }
+
+    "item:object"{
+      template_name:t="armorplate_big_b"
+      weight:r=2.5
+    }
+
+    "item:object"{
+      template_name:t="helmet_ussr_ssh40"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="helmet_d"
+      weight:r=3
+    }
+  }
+}
+
+soviet_armor_t3_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="armorplate_small_b"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="armorplate_big_b"
+      weight:r=2.5
+    }
+
+    "item:object"{
+      template_name:t="helmet_d"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="helmet_k6_3"
+      weight:r=3
+    }
+  }
+}
+
+soviet_bags_t1_subpreset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="small_sovmod_backpack"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="small_pouch"
+      weight:r=5
+    }
+  }
+}
+
+soviet_bags_t2_subpreset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="small_sovmod_backpack"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="medium_sovmod_backpack"
+      weight:r=2.5
+    }
+
+    "item:object"{
+      template_name:t="large_sovmod_backpack"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="small_pouch"
+      weight:r=5
+    }
+  }
+}
+
+soviet_equipment_t1_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="soviet_bags_t1_subpreset"
+      weight:r=2.5
+    }
+
+    "item:object"{
+      sub_preset:t="soviet_armor_t1_subpreset"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="sovmod_diver_flashlight"
+      weight:r=2
+    }
+  }
+}
+
+soviet_equipment_t2_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="soviet_bags_t2_subpreset"
+      weight:r=2.5
+    }
+
+    "item:object"{
+      sub_preset:t="soviet_armor_t2_subpreset"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="sovmod_diver_flashlight"
+      weight:r=2
+    }
+  }
+}
+
+soviet_equipment_t3_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="soviet_bags_t2_subpreset"
+      weight:r=2.5
+    }
+
+    "item:object"{
+      sub_preset:t="soviet_armor_t3_subpreset"
+      weight:r=5
+    }
+  }
+}
+
+modern_armor_t1_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="armorplate_small_a"
+      weight:r=8
+    }
+
+    "item:object"{
+      template_name:t="armorplate_big_a"
+      weight:r=4
+    }
+
+    "item:object"{
+      template_name:t="armorplate_small_b"
+      weight:r=6
+    }
+
+    "item:object"{
+      template_name:t="armorplate_big_b"
+      weight:r=3
+    }
+
+    "item:object"{
+      template_name:t="armorplate_small_c"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="armorplate_big_c"
+      weight:r=5
+    }
+  }
+}
+
+modern_armor_t2_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="armorplate_small_a"
+      weight:r=8
+    }
+
+    "item:object"{
+      template_name:t="armorplate_big_a"
+      weight:r=4
+    }
+
+    "item:object"{
+      template_name:t="armorplate_small_b"
+      weight:r=6
+    }
+
+    "item:object"{
+      template_name:t="armorplate_big_b"
+      weight:r=3
+    }
+
+    "item:object"{
+      template_name:t="helmet_pasgt"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="helmet_pasgt_tactical"
+      weight:r=10
+    }
+  }
+}
+
+modern_armor_t3_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="helmet_d"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="helmet_pasgt"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="helmet_pasgt_tactical"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="helmet_kiver"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="helmet_k6_3"
+      weight:r=5
+    }
+  }
+}
+
+modern_bags_t1_subpreset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="small_backpack"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="small_backpack_woodland_camo"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="small_backpack_acupat_camo"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="small_sovmod_backpack"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="small_pouch"
+      weight:r=5
+    }
+  }
+}
+
+modern_bags_t2_subpreset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="small_backpack"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="small_backpack_woodland_camo"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="small_backpack_acupat_camo"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_woodland_camo"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_acupat_camo"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="small_pouch"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="medium_pouch"
+      weight:r=5
+    }
+  }
+}
+
+modern_equipment_t1_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="modern_armor_t1_subpreset"
+      weight:r=10
+    }
+
+    "item:object"{
+      sub_preset:t="modern_bags_t1_subpreset"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="flashlight_device"
+      weight:r=5
+    }
+  }
+}
+
+modern_equipment_t2_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="modern_armor_t2_subpreset"
+      weight:r=10
+    }
+
+    "item:object"{
+      sub_preset:t="modern_bags_t2_subpreset"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="flashlight_device"
+      weight:r=5
+    }
+  }
+}
+
+modern_equipment_t3_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="modern_armor_t3_subpreset"
+      weight:r=10
+    }
+
+    "item:object"{
+      sub_preset:t="modern_bags_t2_subpreset"
+      weight:r=5
+    }
+  }
+}
+
+attic_weapons_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=3, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="ak_74_gun_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="pp_91_kedr_gun_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="svd_gun_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="ks_23_gun_loot_preset"
+      weight:r=1
+    }
+  }
+}
+
+attic_chest_weapon_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=3, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="attic_weapons_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="attic_bags_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="keys_armory_loot_subpreset"
+      weight:r=1
+    }
+  }
+}

@@ -1,0 +1,18 @@
+from "%ui/ui_library.nut" import *
+
+let { get_setting_by_blk_path } = require("settings")
+let auth  = require("auth")
+
+function addQueryParam(url, name, value) {
+  let delimiter = url.contains("?") ? "&" : "?"
+  return "".concat(url,delimiter, name, "=", value)
+}
+
+
+let distrStr = auth?.get_distr() ?? ""
+let defRegUrl = get_setting_by_blk_path("registerUrl") ?? "https://login.gaijin.net/profile/register"
+let registerUrl = distrStr != "" ? addQueryParam(defRegUrl, "distr", distrStr) : defRegUrl
+
+return {
+  registerUrl
+}

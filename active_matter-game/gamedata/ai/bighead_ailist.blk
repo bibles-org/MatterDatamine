@@ -1,0 +1,52 @@
+repeat{
+  name:t="bighead_develop"
+
+  reaction{
+    event:t="regularCheck"
+
+    sequencer{
+      success{
+        bigheadUpdateVictims{}
+      }
+
+      success{
+        bigheadChooseVictims{}
+      }
+    }
+  }
+
+  wait{
+    range:p2=3.25, 3.35
+    resetable:b=yes
+  }
+
+  bigheadChooseWanderingPosition{}
+  bigheadFlyToPosition{
+    positionComponent:t="bighead_wandering__position"
+  }
+
+  wait{
+    range:p2=0.1, 0.1
+    resetable:b=yes
+  }
+
+  bigHeadAttack{
+    objectsToThrow:i=1
+    prepareTime:r=1
+  }
+
+  wait{
+    range:p2=0.1, 0.1
+    resetable:b=yes
+  }
+
+  bigHeadAttack{
+    objectsToThrow:i=2
+    prepareTime:r=2
+  }
+
+  wait{
+    range:p2=0.1, 0.1
+    resetable:b=yes
+  }
+}

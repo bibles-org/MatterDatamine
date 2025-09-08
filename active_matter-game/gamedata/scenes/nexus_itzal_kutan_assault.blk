@@ -1,0 +1,47 @@
+entity{
+  _template:t="raid_description"
+  raid_description__raidType:t="pvp_assault"
+  raid_description__difficulty:t="dif_hard"
+
+  "raid_description__enemies:list<t>"{
+    item:t="operative"
+  }
+
+  "raid_description__images:list<t>"{
+    item:t="ui/zone_thumbnails/nexus_itzal_kutan_1"
+    item:t="ui/zone_thumbnails/nexus_itzal_kutan_2"
+    item:t="ui/zone_thumbnails/nexus_itzal_kutan_3"
+  }
+
+  "raid_description__mcImages:list<t>"{}
+}
+
+entity{
+  _template:t="static_cam"
+  camera__active:b=yes
+  transform:m=[[-0.991786, 0.124482, 0.0293955] [0.127731, 0.975911, 0.176871] [-0.00667026, 0.179173, -0.983796] [0.00567579, 39.3512, 9.86503]]
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_itzal_kutan_point_a_precaptured.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_itzal_kutan_point_c_precaptured.blk"
+}
+
+entity{
+  _template:t="spawnBase+nexus_first_team"
+  transform:m=[[-0.992585, 4.70318e-08, 0.121544] [0.121426, 0.0441922, 0.991617] [-0.00537127, 0.999023, -0.0438646] [27.7772, 40.9581, 24.5951]]
+  spawnBase__spawnRadius:r=2
+}
+
+entity{
+  _template:t="spawnBase+nexus_second_team"
+  transform:m=[[-0.505707, -6.25776e-09, 0.862706] [-4.28224e-09, 1, 4.74345e-09] [-0.862706, -1.29552e-09, -0.505707] [10.925, 41.5209, -31.0423]]
+  spawnBase__spawnRadius:r=2
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_itzal_kutan_common.blk"
+}

@@ -1,0 +1,12 @@
+decalTypes{
+  explosion{
+    diffuse_tex:t="explosion_patch_ground_displacement_c"
+    normal_tex:t="explosion_patch_ground_n"
+    alpha_threshold:i=22
+    displacementMin:r=-0.1
+    displacementMax:r=0.2
+    reflectance:r=0.15
+    microdetail:i=102
+    decalsCount:i=1000
+  }
+}

@@ -1,0 +1,254 @@
+repeat{
+  name:t="corpse_attached_bee_swarm"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      sequencer{
+        corpseAttachedSwarmDoesCorpseExist{}
+        not{
+          checkDistanceToTarget{
+            targetParam:t="corpse_attached_swarm__corpseEid"
+            radiusParam:t="corpse_attached_swarm__returnRadius"
+          }
+        }
+
+        selectNode{
+          name:t="swarm_around_corpse"
+        }
+      }
+
+      sequencer{
+        flyingSwarmFindDanger{}
+        corpseAttachedSwarmDoesCorpseExist{}
+        recalculateTree{}
+      }
+    }
+  }
+
+  reaction{
+    event:t="swarmRepelled"
+
+    recalculateTree{}
+  }
+
+  sequencer{
+    name:t="repel_away"
+
+    isTimerInProgress{
+      target:t="corpse_attached_swarm__detractUntil"
+    }
+
+    corpseAttachedSwarmChooseRepelPosition{}
+    parallel{
+      flyingSwarmMoveToTargetSimple{
+        setAttackState:b=no
+      }
+
+      wait{
+        range:p2=20, 40
+        resetable:b=yes
+      }
+
+      repeat{
+        wait{
+          range:p2=1, 1
+          resetable:b=yes
+        }
+
+        isTimerInProgress{
+          target:t="corpse_attached_swarm__detractUntil"
+        }
+      }
+    }
+  }
+
+  sequencer{
+    name:t="corpse_doesnt_exist"
+
+    reaction{
+      event:t="newCorpseFound"
+
+      recalculateTree{}
+    }
+
+    not{
+      corpseAttachedSwarmDoesCorpseExist{}
+    }
+
+    sequencer{
+      name:t="fly_around"
+
+      flyingSwarmPatroller{}
+      flyingSwarmSetWaypointTarget{}
+      parallel{
+        flyingSwarmMoveToTargetSimple{
+          setAttackState:b=no
+        }
+
+        sequencer{
+          repeat{
+            flyingSwarmRecoveryPopulation{}
+          }
+
+          wait{
+            range:p2=60, 120
+            resetable:b=yes
+          }
+        }
+      }
+    }
+  }
+
+  sequencer{
+    name:t="attack_around_corpse"
+
+    compareNode{
+      lhs:t="swarm_cluster__serverCount"
+      operator:t=">="
+      rhs:t="swarm_cluster__minHealthyCount"
+    }
+
+    corpseAttachedSwarmDoesCorpseExist{}
+    checkDistanceToTarget{
+      targetParam:t="corpse_attached_swarm__corpseEid"
+      radiusParam:t="swarm_cluster__agroRange"
+    }
+
+    parallel{
+      name:t="corpse_swarm_do_attack"
+
+      wait{
+        range:p2=20, 30
+        resetable:b=yes
+      }
+
+      subTree{
+        treeName:t="sub.find_and_attack_enemies"
+      }
+    }
+  }
+
+  sequencer{
+    name:t="swarm_around_corpse"
+
+    subTree{
+      treeName:t="sub.move_to_attached_corpse"
+    }
+
+    wait{
+      range:p2=0.5, 1
+      resetable:b=yes
+    }
+
+    not{
+      flyingSwarmFindDanger{}
+    }
+
+    parallel{
+      wait{
+        range:p2=60, 120
+        resetable:b=yes
+      }
+
+      repeat{
+        corpseAttachedSwarmGatherAm{}
+      }
+
+      repeat{
+        flyingSwarmRecoveryPopulation{}
+      }
+
+      corpseAttachedSwarmEatCorpse{}
+      repeat{
+        flyingSwarmDamageInArea{}
+      }
+    }
+
+    not{
+      flyingSwarmFindDanger{}
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.move_to_attached_corpse"
+
+  corpseAttachedSwarmDoesCorpseExist{}
+  modifyNode{
+    target:t="swarm_cluster__target"
+    operator:t="="
+    arg:t="corpse_attached_swarm__corpseEid"
+  }
+
+  flyingSwarmSetTargetPosFromTarget{
+    minHeightFromTarget:r=25
+  }
+
+  orderedSelector{
+    checkDistanceToTarget{
+      targetParam:t="corpse_attached_swarm__corpseEid"
+      radius:r=20
+    }
+
+    sequencer{
+      parallel{
+        flyingSwarmMoveToTargetSimple{
+          setAttackState:b=no
+          updateTargetPos:b=yes
+          minHeight:r=50
+          stopDistance:r=15
+        }
+
+        failed{
+          wait{
+            range:p2=20, 20
+            resetable:b=yes
+          }
+        }
+      }
+
+      wait{
+        range:p2=90, 120
+        resetable:b=yes
+      }
+    }
+  }
+
+  corpseAttachedSwarmApproachCorpse{
+    speedMultiplier:r=0.2
+  }
+}
+
+parallel{
+  name:t="sub.find_and_attack_enemies"
+
+  repeatUntilFail{
+    compareNode{
+      lhs:t="swarm_cluster__serverCount"
+      operator:t=">="
+      rhs:t="swarm_cluster__minHealthyCount"
+    }
+
+    flyingSwarmFindDanger{}
+    parallel{
+      flyingSwarmMoveToTarget{}
+      failed{
+        wait{
+          range:p2=20, 20
+          resetable:b=yes
+        }
+      }
+    }
+
+    wait{
+      range:p2=1, 1
+      resetable:b=yes
+    }
+  }
+
+  repeat{
+    flyingSwarmDamageInArea{}
+  }
+}

@@ -1,0 +1,367 @@
+repeat{
+  name:t="curious_core"
+  selectStrategy:t="ordered"
+
+  sequencer{
+    name:t="aggressive"
+
+    reaction{
+      event:t="regularCheck"
+
+      orderedSelector{
+        sequencer{
+          compareNode{
+            lhs:t="wandering_core__agro"
+            operator:t="<"
+            rhs:t="wandering_core__agroThreshold"
+          }
+
+          modifyNode{
+            target:t="wandering_core__targetEid"
+            operator:t="="
+            arg:i=0
+          }
+
+          recalculateTree{}
+        }
+
+        sequencer{
+          compareNode{
+            lhs:t="stuck_detector__value"
+            operator:t=">"
+            rhs:r=0.8
+          }
+
+          modifyNode{
+            target:t="wandering_core__targetEid"
+            operator:t="="
+            arg:i=0
+          }
+
+          modifyNode{
+            target:t="curious_core__curiosityCell"
+            operator:t="="
+            arg:i=-1
+          }
+
+          modifyNode{
+            target:t="wandering_core__waypointIdx"
+            operator:t="="
+            arg:i=-1
+          }
+
+          recalculateTree{}
+        }
+      }
+    }
+
+    compareNode{
+      lhs:t="wandering_core__targetEid"
+      operator:t="!="
+      rhs:i=0
+    }
+
+    nMeshFindPointNearTarget{
+      posParam:t="wandering_core__targetPos"
+      dist:p2=2, 7
+      targetParam:t="wandering_core__targetEid"
+      angleRangeSpread:p2=-180, 180
+      extents:p3=1, 3, 1
+    }
+
+    nPhysCorridorMoveToPosWithNavmeshMapping{
+      posParam:t="wandering_core__targetPos"
+      forceToWalk:b=no
+    }
+
+    orderedSelector{
+      sequencer{
+        findWanderingCoreTarget{}
+        modifyNode{
+          target:t="wandering_core__agro"
+          operator:t="+"
+          arg:t="wandering_core__agroOnTargetFound"
+        }
+      }
+
+      modifyNode{
+        target:t="wandering_core__targetEid"
+        operator:t="="
+        arg:i=0
+      }
+    }
+  }
+
+  sequencer{
+    name:t="curious"
+
+    reaction{
+      event:t="regularCheck"
+
+      orderedSelector{
+        sequencer{
+          compareNode{
+            lhs:t="wandering_core__agro"
+            operator:t=">"
+            rhs:t="wandering_core__agroThreshold"
+          }
+
+          sequencer{
+            orderedSelector{
+              findWanderingCoreTarget{}
+              modifyNode{
+                target:t="wandering_core__agro"
+                operator:t="="
+                arg:r=0
+              }
+            }
+
+            modifyNode{
+              target:t="wandering_core__agro"
+              operator:t="+"
+              arg:t="wandering_core__agroOnTargetFound"
+            }
+          }
+
+          recalculateTree{}
+        }
+
+        sequencer{
+          ignoreChance{
+            chance:r=0.75
+          }
+
+          compareNode{
+            lhs:t="wandering_core__charge"
+            operator:t=">"
+            rhs:r=50
+          }
+
+          selectNode{
+            name:t="cool_down"
+          }
+        }
+
+        sequencer{
+          compareNode{
+            lhs:t="stuck_detector__value"
+            operator:t=">"
+            rhs:r=0.8
+          }
+
+          modifyNode{
+            target:t="wandering_core__targetEid"
+            operator:t="="
+            arg:i=0
+          }
+
+          modifyNode{
+            target:t="curious_core__curiosityCell"
+            operator:t="="
+            arg:i=-1
+          }
+
+          modifyNode{
+            target:t="wandering_core__waypointIdx"
+            operator:t="="
+            arg:i=-1
+          }
+
+          recalculateTree{}
+        }
+      }
+    }
+
+    compareNode{
+      lhs:t="wandering_core__targetEid"
+      operator:t="=="
+      rhs:i=0
+    }
+
+    compareNode{
+      lhs:t="curious_core__curiosityCell"
+      operator:t=">="
+      rhs:i=0
+    }
+
+    findPosInCuriosityCell{
+      posParam:t="wandering_core__targetPos"
+    }
+
+    success{
+      repeat{
+        count:i=15
+
+        nMeshFindRandomPointAroundPos{
+          posParam:t="wandering_core__targetPos"
+          dist:p2=15, 25
+          aroundPos:t="wandering_core__targetPos"
+        }
+
+        nPhysCorridorMoveToPosWithNavmeshMapping{
+          posParam:t="wandering_core__targetPos"
+          forceToWalk:b=no
+          stopDist:r=2
+        }
+
+        ignoreChance{
+          chance:r=0.2
+        }
+      }
+    }
+
+    modifyNode{
+      target:t="curious_core__curiosityCell"
+      operator:t="="
+      arg:i=-1
+    }
+  }
+
+  sequencer{
+    name:t="endless_curiosity"
+
+    compareNode{
+      lhs:t="wandering_core__patrolRadius"
+      operator:t=">"
+      rhs:i=0
+    }
+
+    compareNode{
+      lhs:t="curious_core__curiosityCell"
+      operator:t="<"
+      rhs:i=0
+    }
+
+    initCuriosityCell{}
+  }
+
+  sequencer{
+    name:t="wander"
+
+    reaction{
+      event:t="regularCheck"
+
+      orderedSelector{
+        sequencer{
+          compareNode{
+            lhs:t="wandering_core__agro"
+            operator:t=">"
+            rhs:t="wandering_core__agroThreshold"
+          }
+
+          sequencer{
+            orderedSelector{
+              findWanderingCoreTarget{}
+              modifyNode{
+                target:t="wandering_core__agro"
+                operator:t="="
+                arg:r=0
+              }
+            }
+
+            modifyNode{
+              target:t="wandering_core__agro"
+              operator:t="+"
+              arg:t="wandering_core__agroOnTargetFound"
+            }
+          }
+
+          recalculateTree{}
+        }
+
+        sequencer{
+          compareNode{
+            lhs:t="curious_core__curiosityCell"
+            operator:t=">="
+            rhs:i=0
+          }
+
+          recalculateTree{}
+        }
+
+        sequencer{
+          ignoreChance{
+            chance:r=0.75
+          }
+
+          compareNode{
+            lhs:t="wandering_core__charge"
+            operator:t=">"
+            rhs:r=50
+          }
+
+          selectNode{
+            name:t="cool_down"
+          }
+        }
+
+        sequencer{
+          compareNode{
+            lhs:t="stuck_detector__value"
+            operator:t=">"
+            rhs:r=0.8
+          }
+
+          modifyNode{
+            target:t="wandering_core__targetEid"
+            operator:t="="
+            arg:i=0
+          }
+
+          modifyNode{
+            target:t="curious_core__curiosityCell"
+            operator:t="="
+            arg:i=-1
+          }
+
+          modifyNode{
+            target:t="wandering_core__waypointIdx"
+            operator:t="="
+            arg:i=-1
+          }
+
+          recalculateTree{}
+        }
+      }
+    }
+
+    compareNode{
+      lhs:t="wandering_core__targetEid"
+      operator:t="=="
+      rhs:i=0
+    }
+
+    compareNode{
+      lhs:t="curious_core__curiosityCell"
+      operator:t="<"
+      rhs:i=0
+    }
+
+    findNextWaypoint{
+      posParam:t="wandering_core__targetPos"
+    }
+
+    nPhysCorridorMoveToPosWithNavmeshMapping{
+      posParam:t="wandering_core__targetPos"
+      forceToWalk:b=no
+      stopDist:r=1.2
+    }
+  }
+
+  sequencer{
+    name:t="cool_down"
+
+    orderedSelector{
+      compareNode{
+        lhs:t="wandering_core__charge"
+        operator:t="<"
+        rhs:r=50
+      }
+
+      wait{
+        range:p2=5, 9
+        resetable:b=yes
+      }
+    }
+  }
+}

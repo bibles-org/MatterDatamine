@@ -1,0 +1,19 @@
+entityMods{
+  modProps:t="gamedata/items/game_effect_fastrun.blk"
+
+  mult{
+    human_coll_damage__minDmgSpd:r=100
+  }
+
+  add{
+    entity_mods__fireDamageMult:r=-1
+  }
+}
+
+sprintMult{
+  mult:r=1
+}
+
+speedMult{
+  amount:r=1.5
+}

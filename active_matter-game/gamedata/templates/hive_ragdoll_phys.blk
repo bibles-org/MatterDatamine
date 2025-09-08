@@ -1,0 +1,31 @@
+mass:r=100
+momentOfInertia:p3=0.015, 0.015, 0.015
+centerOfMass:p3=-0.25, -0.125, 0
+useFutureContacts:b=yes
+physMat:t="ragdoll"
+logCCD:b=no
+skipUpdateOnSleep:b=yes
+sleepUpdateFrequency:i=0
+noSleepAtTheSlopeCos:r=0.766
+useMovementDamping:b=yes
+movementDampingThreshold:r=0.05
+sleepDelay:r=1
+
+collision{
+  torso{
+    capsule{
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+      height:r=0.5
+      rad:r=0.1
+    }
+  }
+}
+
+ccdSpheres{
+  ccd:p4=0, 0.24, 0, 0.05
+  ccd:p4=0, -0.24, 0, 0.05
+}
+
+solver{
+  energyConservation:r=0.85
+}

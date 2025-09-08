@@ -1,0 +1,207 @@
+quest_sensor_device{
+  _use:t="base_quest_device_ri"
+  ri_extra__name:t="am_powerstake_research_device_c"
+}
+
+quest_sensor_device_preview{
+  _use:t="base_quest_device_preview_ri"
+  ri_preview__name:t="am_powerstake_research_device_c"
+}
+
+quest_sensor_device_planting_human{
+  _use:t="base_quest_device_planting_human"
+  diy__resultTempl:t="quest_sensor_device"
+  diy__previewTempl:t="quest_sensor_device_preview"
+}
+
+quest_sensor_device_planting_preview_phase{
+  _use:t="base_quest_device_planting_preview_phase"
+  game_effect__attachedTemplate:t="quest_sensor_device_planting_human"
+}
+
+quest_scanner_device{
+  _use:t="base_quest_device_ri"
+  ri_extra__name:t="am_powerstake_research_device_b"
+}
+
+quest_scanner_device_preview{
+  _use:t="base_quest_device_preview_ri"
+  ri_preview__name:t="am_powerstake_research_device_b"
+}
+
+quest_scanner_device_planting_human{
+  _use:t="base_quest_device_planting_human"
+  diy__resultTempl:t="quest_scanner_device"
+  diy__previewTempl:t="quest_scanner_device_preview"
+}
+
+quest_scanner_device_planting_preview_phase{
+  _use:t="base_quest_device_planting_preview_phase"
+  game_effect__attachedTemplate:t="quest_scanner_device_planting_human"
+}
+
+quest_info_collector_device{
+  _use:t="replicating"
+  _use:t="dont_create_nphys_obstacle"
+  _use:t="base_quest_device_ri"
+  _use:t="simple_ai_target"
+  _use:t="targetable_ri_construction"
+  _use:t="riextra_hp_to_hitpoints"
+  _use:t="riextra_destroy_on_death"
+  _use:t="placeable_rendinst"
+  _use:t="attached_omni_light"
+  _use:t="openable_external_inventory_container_ri"
+  _use:t="iteractable_drop_on_ri_destroy"
+  _use:t="read_only_inventory"
+  _use:t="use_object_enabled"
+  hitpoints__hp:r=150
+  hitpoints__maxHp:r=150
+  ri_extra__name:t="am_powerstake_research_device_a"
+  ri_preload__name:t="am_powerstake_research_device_a"
+  quest_device__timer:r=30
+  use_object__enabled:b=no
+  quest_device__monsterGenTemplate:t="quest_monster_generator"
+  quest_device__monsterGenBoundingBox:p3=5, 5, 5
+  attraction__overrideAttractionMult:r=100
+  quest_device__activatedColor:c=0, 255, 0, 255
+  quest_device__diactivatedColor:c=255, 0, 0, 255
+  quest_device__baseLightBrightness:r=1000
+  quest_device__blinkingFrequency:r=10
+  light__color:c=255, 0, 0, 255
+  light__max_radius:r=0.0375
+  light__brightness:r=999
+  light__offset:p3=0.12, 1.765, 0
+
+  "ai_target__alwaysVisible:tag"{}
+  "quest_device__activated:b"{
+    value:b=no
+    _track:b=yes
+    _replicate:b=yes
+  }
+
+  "quest_device__monsterGenEid:eid"{}
+  "dontCompleteObjectiveOnPlanting:tag"{}
+  "quest_device__questItemTemplates:list<t>"{
+    item:t="test_quest_item"
+  }
+
+  _group{
+    _tags:t="ui"
+    itemContainer__uiItemsMergeEnabled:b=no
+    itemContainer__uiItemsSortingEnabled:b=yes
+    itemContainer__uiItemsOverrideSortingPriority:b=yes
+  }
+
+  "invisible_man_target:tag"{}
+}
+
+quest_info_collector_device_preview{
+  _use:t="base_quest_device_preview_ri"
+  ri_preview__name:t="am_powerstake_research_device_a"
+}
+
+quest_info_collector_device_planting_human{
+  _use:t="base_quest_device_planting_human"
+  diy__resultTempl:t="quest_info_collector_device"
+  diy__previewTempl:t="quest_info_collector_device_preview"
+}
+
+quest_info_collector_device_planting_preview_phase{
+  _use:t="base_quest_device_planting_preview_phase"
+  game_effect__attachedTemplate:t="quest_info_collector_device_planting_human"
+}
+
+euclid_car_locator{
+  _use:t="quest_info_collector_device"
+  quest_device__timer:r=60
+  quest_device__monsterGenTemplate:t="quest_invisible_monster_generator"
+  quest_device__monsterGenBoundingBox:p3=10, 5, 10
+
+  "quest_device__questItemTemplates:list<t>"{}
+}
+
+euclid_car_locator_planting_human{
+  _use:t="base_quest_device_planting_human"
+  diy__resultTempl:t="euclid_car_locator"
+  diy__previewTempl:t="quest_info_collector_device_preview"
+}
+
+euclid_car_locator_planting_preview_phase{
+  _use:t="base_quest_device_planting_preview_phase"
+  game_effect__attachedTemplate:t="euclid_car_locator_planting_human"
+}
+
+quest_bomb_device{
+  _use:t="replicating"
+  _use:t="base_quest_device_animchar"
+  _use:t="projectile_phys_with_shell"
+  _use:t="explosion_pack_shell"
+  _use:t="explosion_pack_throw_sound"
+  _use:t="explosion_pack_phys_collision_sound"
+  shell__shell_id__shell_id:i=-1
+  shell__shell_id__damage_id:i=-1
+  shell__shell_id__ballistics_id:i=-1
+  active:b=no
+  animchar__res:t="tnt_explosive_char"
+  collres__res:t="tnt_explosive_collision"
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/planted_bomb.blk"
+  planted_bomb__explTime:r=10
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "questBombDevice:tag"{}
+  "dontCompleteObjectiveOnPlanting:tag"{}
+}
+
+quest_bomb_device_preview{
+  _use:t="base_quest_device_preview_animchar"
+  animchar__res:t="tnt_explosive_char"
+  collres__res:t="tnt_explosive_collision"
+}
+
+quest_bomb_device_planting_human{
+  _use:t="base_quest_device_planting_human"
+  diy__resultTempl:t="quest_bomb_device"
+  diy__previewTempl:t="quest_bomb_device_preview"
+}
+
+quest_bomb_device_planting_preview_phase{
+  _use:t="base_quest_device_planting_preview_phase"
+  game_effect__attachedTemplate:t="quest_bomb_device_planting_human"
+}
+
+quest_monster_trap_device{
+  _use:t="base_quest_device_ri"
+  _use:t="usable_object_base"
+  _use:t="use_object_enabled"
+  ri_extra__name:t="outpost_props_capsule_antenna"
+  quest_monster_trap__radius:r=2
+  use_object__offset:p3=0, 0, 0
+  use_object__obbMin:p3=0, 0, 0
+  use_object__obbMax:p3=0, 0, 0
+  use_object__selectedTemplate:t="selected_lootable_container"
+  use_object__enabled:b=no
+
+  "quest_monster_trap__caughtMonsterEid:eid"{
+    _track:b=yes
+  }
+
+  "dontCompleteObjectiveOnPlanting:tag"{}
+  "usableObject:tag"{}
+  "monsterTrapDevice:tag"{}
+}
+
+quest_monster_trap_device_preview{
+  _use:t="base_quest_device_preview_ri"
+  ri_preview__name:t="outpost_props_capsule_antenna"
+}
+
+quest_monster_trap_device_planting_human{
+  _use:t="base_quest_device_planting_human"
+  diy__resultTempl:t="quest_monster_trap_device"
+  diy__previewTempl:t="quest_monster_trap_device_preview"
+}
+
+quest_monster_trap_device_planting_preview_phase{
+  _use:t="base_quest_device_planting_preview_phase"
+  game_effect__attachedTemplate:t="quest_monster_trap_device_planting_human"
+}

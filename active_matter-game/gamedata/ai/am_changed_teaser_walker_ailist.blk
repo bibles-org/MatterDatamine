@@ -1,0 +1,16 @@
+repeat{
+  name:t="nchanged_teaser_walker"
+  selectStrategy:t="ordered"
+
+  sequencer{
+    name:t="run_to_face"
+
+    parallel{
+      nPhysCorridorMoveToPosWithNavmeshMapping{
+        posParam:t="walker_agent__targetPos"
+        stopDist:r=0.05
+        lookInMoveDir:b=yes
+      }
+    }
+  }
+}

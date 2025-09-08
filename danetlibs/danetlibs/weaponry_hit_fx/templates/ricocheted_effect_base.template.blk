@@ -1,0 +1,11 @@
+ricocheted_effect_base{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  paint_color:p4=1, 1, 1, 1
+  effect__colorMult:c=255, 255, 255, 255
+
+  _group{
+    _tags:t="render"
+
+    effect{}
+  }
+}

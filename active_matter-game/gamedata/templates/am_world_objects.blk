@@ -1,0 +1,69 @@
+navmesh_nearest_pos{
+  navmesh__nearestPosRadius:r=3
+  navmesh__hasNearestPos:b=no
+  navmesh__nearestPos:p3=0, 0, 0
+
+  "navmesh__potentialNearestPos:list<p3>"{}
+}
+
+disorient_trap_carrier{
+  disorient_trap_carrier__curSporeCount:r=10
+  disorient_trap_carrier__maxSporeCount:r=10
+  disorient_trap_carrier__sporeRestoreSpd:r=0.1
+  disorient_trap_carrier__trapCost:r=10
+  _use:t="am_triggerable_zone"
+  sphere_zone__radius:r=5
+  initialTransformMod:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "humanTriggerable:tag"{}
+}
+
+disorient_trap_cloud{
+  _use:t="replicating"
+  effect__scale:r=4
+  _use:t="am_triggerable_zone"
+  sphere_zone__radius:r=3
+  game_effect__timeToDestroy:r=30
+  game_effect__destroyAt:r=0
+  disorient_trap__effectTemplate:t="disorient_spore_poisoned_effect"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _replicated:t="transform"
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="char_flowerman_cloud_cmps_fx"
+  }
+
+  "disorient_trap_cloud:tag"{}
+  "humanTriggerable:tag"{}
+}
+
+disorient_spore_poisoned_effect{
+  disorient_poison__isAccumulated:b=yes
+  disorient_poison__curValue:r=0
+  disorient_poison__maxValue:r=1
+  disorient_poison__accumulateSpd:r=0.05
+  disorient_poison__confusionRange:p2=0.005, 0.07
+  disorient_poison__effectRefreshRateRange:p2=2, 1
+  disorient_poison__effectNextRefresh:r=-1
+}
+
+disorient_spore_concussion_affect{
+  _use:t="replicated_game_effect"
+  ingame_rumble__onEffectAttach:t="concussion"
+  concussion__handsShakeMagnitude:r=5
+  concussion__handsShakeSpeedMult:r=6
+  concussion__handsShakeFadeTime:r=5
+  concussion__duration:r=0.9
+  concussion__startedAtTime:r=0
+  concussion__replaced:b=no
+
+  "concussionAffect:tag"{}
+  "concussionHandsShake:tag"{}
+  "concussionSoundSuppression:tag"{}
+  "concussionScreenEffect:tag"{}
+}

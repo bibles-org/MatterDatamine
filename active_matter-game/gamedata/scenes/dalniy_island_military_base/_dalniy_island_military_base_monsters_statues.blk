@@ -1,0 +1,190 @@
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house changeds"
+  monster_gen_gen__householdCount:i=21
+  monster_gen_gen__minHouseholdVolume:r=225
+  monster_gen_gen__useHouseholdsOnEuclid:b=no
+
+  "monster_gen_gen__genTemplates:object"{
+    anomaly_encounter_statues_cairns_dense_small:i=100
+  }
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=0.0008, 0.0008
+  transform:m=[[53.3289, 0, -13.8569] [0, 10.2502, 0] [8.2603, 0, 31.79] [606.857, 79.175, 18.3538]]
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=0.0008, 0.0008
+  transform:m=[[10.3132, 0, 38.4893] [0, 7.448, 0] [-19.4036, 0, 5.19918] [565.04, 79.0403, -32.0549]]
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=0.0008, 0.0008
+  transform:m=[[10.3132, 0, 38.4893] [0, 7.448, 0] [-19.4036, 0, 5.19918] [549.002, 79.0403, -91.9084]]
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=0.0008, 0.0008
+  transform:m=[[-7.66713, 0, -28.6141] [0, 4.13045, 0] [43.4058, 0, -11.6306] [650.396, 78.0319, -143.516]]
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=0.0008, 0.0008
+  transform:m=[[37.7415, 0, -9.82742] [0, 5.07812, 0] [3.4018, 0, 13.0644] [692.448, 75.4554, 59.7391]]
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=0.0008, 0.0008
+  transform:m=[[37.7415, 0, -9.82742] [0, 3.42255, 0] [3.4018, 0, 13.0644] [682.445, 75.8725, 22.8982]]
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=0.0008, 0.0008
+  transform:m=[[-4.43285, 0, 10.8473] [0, 7.968, 0] [-24.7052, 0, -10.096] [785.06, 79.0291, 245.555]]
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=0.0008, 0.0008
+  transform:m=[[39.3173, 0, 16.2765] [0, 7.64018, 0] [-5.16797, 0, 12.4837] [791.406, 78.8707, 173.196]]
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="changed_group_region_generator"
+      genType:t="field changed"
+      count:i=6
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="field_01"
+    r:t="field_02"
+    r:t="field_03"
+    r:t="field_04"
+    r:t="field_05"
+    r:t="field_06"
+  }
+}
+
+entity{
+  _template:t="am_core_spawn_pos"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [683.972, 74.989, -60.5876]]
+}
+
+entity{
+  _template:t="stalker_statue_male_a"
+  transform:m=[[-0.724683, 0, 0.689083] [0, 1, 0] [-0.689083, 0, -0.724683] [696.325, 75.3799, -43.2983]]
+}
+
+entity{
+  _template:t="stalker_statue_male_b"
+  transform:m=[[-0.638344, 0, 0.769751] [0, 1, 0] [-0.769751, 0, -0.638344] [687.246, 74.989, -67.7735]]
+}
+
+entity{
+  _template:t="stalker_statue_male_c"
+  transform:m=[[-0.925626, 0, 0.37844] [0, 1, 0] [-0.37844, 0, -0.925626] [684.829, 74.989, -77.2086]]
+}
+
+entity{
+  _template:t="stalker_statue_female_a"
+  transform:m=[[0.926679, 0, -0.375853] [-0, 1, 0] [0.375853, 0, 0.926679] [647.207, 76.7657, -30.0586]]
+}
+
+entity{
+  _template:t="stalker_statue_male_b"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [642.557, 74.9821, -66.9895]]
+}
+
+entity{
+  _template:t="outdoor_statues_tm_generator"
+  transform:m=[[35.5706, 0, 14.9184] [0, 2.40919, -0] [-14.9184, 0, 35.5706] [742.141, 74.989, 147.699]]
+}
+
+entity{
+  _template:t="outdoor_statues_tm_generator"
+  transform:m=[[35.5706, 0, 14.9184] [0, 2.40919, -0] [-7.50155, 0, 17.8863] [793.212, 74.989, 230.434]]
+}
+
+entity{
+  _template:t="outdoor_statues_tm_generator"
+  transform:m=[[35.5706, 0, 14.9184] [0, 2.40919, -0] [-7.50155, 0, 17.8863] [720.971, 74.989, 189.466]]
+}
+
+entity{
+  _template:t="outdoor_statues_tm_generator"
+  transform:m=[[35.5706, 0, 14.9184] [0, 2.40919, -0] [-16.7712, 0, 39.9883] [655.857, 74.9891, 188.902]]
+}
+
+entity{
+  _template:t="outdoor_statues_tm_generator"
+  transform:m=[[35.5706, 0, 14.9184] [0, 2.40919, -0] [-16.7712, 0, 39.9883] [654.062, 74.9891, 52.7703]]
+}
+
+entity{
+  _template:t="outdoor_statues_tm_generator"
+  transform:m=[[35.5706, 0, 14.9184] [0, 2.40919, -0] [-16.7712, 0, 39.9883] [587.09, 74.9891, -72.7188]]
+}
+
+entity{
+  _template:t="outdoor_statues_tm_generator"
+  transform:m=[[35.5706, 0, 14.9184] [0, 2.40919, -0] [-16.7712, 0, 39.9883] [730.105, 74.9891, -5.37988]]
+}
+
+entity{
+  _template:t="outdoor_statues_tm_generator"
+  transform:m=[[21.3565, 0, 8.95694] [0, 2.40919, -0] [-16.7712, 0, 39.9883] [839.073, 74.9892, 179.074]]
+}
+
+entity{
+  _template:t="distorted_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [589.194, 74.989, -99.7578]]
+  objective_static_target__tag:t="distorted_zone_1"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="distorted_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [677.149, 75.0041, -0.0360737]]
+  objective_static_target__tag:t="distorted_zone_2"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="distorted_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [731.703, 75.0046, 243.275]]
+  objective_static_target__tag:t="distorted_zone_3"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="invisible_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [691.479, 74.989, 82.2394]]
+  objective_static_target__tag:t="invisible_zone_1"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="invisible_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [595.519, 74.989, -16.6734]]
+  objective_static_target__tag:t="invisible_zone_2"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}

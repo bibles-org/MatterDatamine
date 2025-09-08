@@ -1,0 +1,792 @@
+am_bot_spawner_names{
+  bot_names__nextNameId:i=0
+  bot_spawner__engNamesPath:t="gamedata/bot_names/am_bot_name_eng.blk"
+  bot_spawner__chiNamesPath:t="gamedata/bot_names/am_bot_name_chi.blk"
+  bot_spawner__botSuffix:t=" "
+
+  "bot_spawner__generatedNames:list<t>"{}
+}
+
+am_bot_spawner{
+  bot_spawner__playerTemplate:t="active_matter_bot_player"
+  bot_spawner__spawnAt:r=0
+  bot_spawner__botsPerGroupMinMax:ip2=2, 3
+  bot_spawner__spawnInterval:r=15
+  bot_spawner__squadSpawnCountRange:ip2=1, 2
+  bot_spawner__mindcontrolledSpawnCooldown:r=40
+  bot_spawner__mindcontrolledSpawnCooldownAfterFilled:r=70
+  bot_spawner__stopOnZoneShrinkStart:b=yes
+
+  "bot_spawner__heroTemplates:list<t>"{
+    i:t="am_militant_bot+equipped_bot+spawn_sequence_controller+equip_cortical_vault+allow_friendly_damage"
+    i:t="am_militant_bot_female+equipped_bot_female+spawn_sequence_controller+equip_cortical_vault+allow_friendly_damage"
+  }
+
+  "bot_spawner__mindcontrolledHeroTemplates:list<t>"{
+    i:t="am_mindcontrolled_militant_land_bot+spawn_sequence_controller_mindcontrolled+mindcontrolled"
+  }
+
+  "bot_spawner__allowedTeams:list<i>"{}
+  "bot_spawner__teamName:list<t>"{}
+  "bot_spawner__teamMaxGroups:list<i>"{}
+  "bot_spawner__teamJipEndAt:list<r>"{}
+  "bot_spawner__teamBotsPerGroupMinMax:list<ip2>"{}
+  "bot_spawner__teamSpawnGroupId:list<i>"{}
+  "bot_spawner__teamLastSpawnedAt:list<r>"{}
+}
+
+bot_spawner_dummy{
+  bot_spawner__playerTemplate:t="active_matter_bot_player"
+}
+
+bot_squad_leader{
+  _tags:t="server"
+
+  "bot_squad_leader:tag"{}
+}
+
+am_militant_bot{
+  _use:t="am_militant_with_attachable_suit"
+  _use:t="am_militant_bot_ai"
+  _use:t="find_player_node"
+  find_player__radius:r=200
+  am_storage__startingValue:ip2=0, 15
+
+  "am_militant_bot:tag"{}
+}
+
+am_militant_bot_female{
+  _use:t="am_militant_bot"
+  _use:t="default_female_character_sound"
+  attachable_suit_controller__suitType:i=1
+  animchar__res:t="am_trooper_empty_model_female_char"
+  collres__res:t="am_trooper_empty_model_female_collision"
+}
+
+am_mindcontrolled_militant_land_bot{
+  _use:t="am_militant_with_attachable_suit"
+  _use:t="am_militant_bot_ai"
+  _use:t="find_player_node"
+  beh_tree__node:t="mindcontrolled_raider"
+  beh_tree__refs__goToPlayer:t="sub.go_to_player"
+  beh_tree__refs__wander:t="sub.wanderAroundRegions"
+  beh_tree__blackboard__maxMeleeRadius:r=3
+  am_bot__attractRegionMinStayTime:r=10
+  am_bot__attractPosMinStayTime:r=10
+  kill_tracking_tag:t="turned_soldier"
+  equipped_bot__equipmentGeneratorName:t="ordinary_equipment_mindcontrolled_land_generator"
+  equipped_bot__equipmentGeneratorCorruptionChance:r=1
+
+  "kill_tracking__taggedPlayers:object"{}
+  "cortical_hack_disabled:tag"{}
+  "am_militant_bot:tag"{}
+  "customBotSpawner:tag"{}
+}
+
+am_mindcontrolled_militant_mixed_bot{
+  _use:t="am_mindcontrolled_militant_land_bot"
+  equipped_bot__equipmentGeneratorName:t="ordinary_equipment_mindcontrolled_mixed_generator"
+}
+
+am_mindcontrolled_militant_bot_female{
+  _use:t="am_mindcontrolled_militant_land_bot"
+  attachable_suit_controller__suitType:i=1
+  animchar__res:t="am_trooper_empty_model_female_char"
+  collres__res:t="am_trooper_empty_model_female_collision"
+  equipped_bot__equipmentGeneratorName:t="ordinary_equipment_mindcontrolled_land_generator"
+}
+
+am_militant_sector_dweller{
+  _use:t="am_militant_base"
+  _use:t="antigrav_character"
+  _use:t="flanking_ai_target"
+  _use:t="external_inventory_interactor"
+  _use:t="awake_sleepers_on_am_pickup"
+  _use:t="human_damage_model"
+  _use:t="block_aim_in_air"
+  _use:t="am_heartrate"
+  _use:t="am_emotes"
+  kill_tracking_tag:t="militant"
+  human_inventory__pickupRadius:r=1.5
+  human_inventory__pickupHeight:r=1.5
+  human_inventory__pickupRemoveRadius:r=1.7
+  human_inventory__pickupRemoveHeight:r=1.7
+  loud_noise__noisePerMeleeHit:r=50
+  loud_noise__noisePerMeleeAction:r=30
+  loud_noise__radius:r=15
+  flanking_ai_target__maxCount:i=3
+  flanking_ai_target__interval:r=1
+  flanking_ai_target__radius:r=14
+  nphys_obstacle__radius:r=0.25
+  nphys_obstacle__numSegments:i=6
+
+  "dontBodyCleanupOnDeath:tag"{}
+  "createObstacle:tag"{}
+  "kill_tracking__taggedPlayers:object"{}
+}
+
+bot_allies{
+  _group{
+    _tags:t="server"
+    bot_allies__radius:r=10
+    bot_allies__updateInterval:r=5
+    bot_allies__updateAt:r=-1
+
+    "bot_allies__eids:list<eid>"{}
+    "bot_allies__closest:eid"{}
+  }
+}
+
+bot_gestures_limiter{
+  bot_gestures_limiter__nextGestureAt:r=0
+  bot_gestures_limiter__gestureInterval:r=5
+}
+
+truce_controller{
+  _singleton:b=yes
+  truce_controller__truceCounter:i=1
+
+  "truce_controller__masks:list<u64>"{}
+}
+
+truce_zone_creature{
+  truce_id:i=0
+}
+
+am_guard_base{
+  _use:t="am_militant_sector_dweller"
+  _use:t="am_militant_bot_ai"
+  _use:t="bot_allies"
+  _use:t="bot_gestures_limiter"
+  _use:t="truce_zone_creature"
+  beh_tree__node:t="encounter_guard"
+  beh_tree__blackboard__wanderTarget:p3=0, 0, 0
+  beh_tree__blackboard__maxMeleeRadius:r=100
+  team:i=1
+  agent_dangers__blindDistanceSq:r=15000
+  human_net_phys__isSimplifiedPhys:b=yes
+  equipped_bot__equipmentGeneratorName:t="sector_equipment_generator"
+  equipped_bot__equipmentGeneratorCorruptionChance:r=1
+  refill_magazines__refillVolumeRng:p2=0.5, 0.8
+  countAsAlive:b=no
+  find_player__radius:r=100
+  obstacle_avoider__avoidTriggers:b=yes
+  kill_tracking_tag:t="turned_soldier"
+  death_note__name:t="note_turned_soldier"
+
+  "find_player__ignoreEids:list<eid>"{}
+  "find_player__resultEid:eid"{}
+  "encounter_guard:tag"{}
+  "encounter_item__encounterEid:eid"{}
+  "kill_tracking__taggedPlayers:object"{}
+  "cortical_hack_disabled:tag"{}
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="turned_soldier_remains_item"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="turned_soldier_remains_pristine_item"
+      dropChance:r=0.005
+      dropHeight:r=1
+    }
+  }
+}
+
+am_modern_pmc_guard{
+  _use:t="am_guard_base"
+  _use:t="am_militant_suit_controller"
+  beh_tree__blackboard__patrolRadius:r=12
+  equipped_bot__equipmentGeneratorName:t="modern_pmc_equipment_generator"
+
+  "area_guard__setOriginOnSpawn:tag"{}
+}
+
+am_modern_pmc_encounter_guard{
+  _use:t="am_guard_base"
+  _use:t="am_militant_suit_controller"
+  beh_tree__blackboard__patrolRadius:r=8
+  equipped_bot__equipmentGeneratorName:t="modern_pmc_equipment_generator"
+}
+
+am_dendroid_encounter_guard{
+  _use:t="am_guard_base"
+  _use:t="am_militant_suit_controller"
+  beh_tree__blackboard__patrolRadius:r=8
+  equipped_bot__equipmentGeneratorName:t="tree_horde_equipment_generator"
+  kill_tracking_tag:t="dendroid"
+  death_note__name:t="note_dendroid"
+
+  "kill_tracking__taggedPlayers:object"{}
+  "cortical_hack_disabled:tag"{}
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="dendroid_remains_item"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="dendroid_remains_pristine_item"
+      dropChance:r=0.005
+      dropHeight:r=1
+    }
+  }
+}
+
+am_mindcontrolled_encounter_guard{
+  _use:t="am_guard_base"
+  _use:t="am_militant_suit_controller"
+  beh_tree__blackboard__patrolRadius:r=8
+}
+
+am_area_guard{
+  _use:t="am_guard_base"
+  _use:t="am_militant_suit_controller"
+  beh_tree__blackboard__patrolRadius:r=12
+  equipped_bot__equipmentGeneratorName:t="military_guard_equipment_generator"
+
+  "area_guard__setOriginOnSpawn:tag"{}
+  "am_area_guard:tag"{}
+}
+
+am_dendroid_area_guard{
+  _use:t="am_dendroid_encounter_guard"
+  beh_tree__blackboard__patrolRadius:r=6
+
+  "area_guard__setOriginOnSpawn:tag"{}
+  "am_area_guard:tag"{}
+}
+
+am_corrupted_boss_game_effect{
+  _use:t="replicated_game_effect"
+
+  "game_effect__disableFlags:list<t>"{
+    item:t="human_net_phys__canSprint"
+  }
+}
+
+am_corrupted_boss_heavy_a{
+  _use:t="am_guard_base"
+  _use:t="am_militant_suit_base"
+  beh_tree__blackboard__patrolRadius:r=12
+  equipped_bot__equipmentGeneratorName:t="corrupted_boss_a_equipment_generator"
+  nphys__mass:r=300
+  collision_damage__pushVelDeltaMult:r=0.5
+  collision_damage__velDeltaMult:r=0.5
+  collision_damage__pushThreshold:r=1
+  collision_damage__threshold:r=3
+  animchar__res:t="am_soldier_corrupted_male_heavy_a_char"
+  collres__res:t="am_soldier_corrupted_male_heavy_a_collision"
+  animchar_fast_phys__res:t="am_soldier_corrupted_male_heavy_a_fastphys"
+  human_net_phys__blk:t="gamedata/units/corrupted_boss.blk"
+  refill_magazines__refillVolumeRng:p2=0.65, 0.95
+  human_inventory__maxVolume:r=100
+
+  "area_guard__setOriginOnSpawn:tag"{}
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+
+  "game_effect__initialAttachmentsServer:list<t>"{
+    i:t="am_corrupted_boss_game_effect"
+  }
+
+  "human_damage_model__parts:object"{
+    "head:object"{
+      maxHp:r=1000
+      hp:r=1000
+      isInjured:b=no
+      removeInjuryHp:r=10
+      explosionImpact:b=yes
+      collisionImpact:b=no
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="head"
+
+      "list:list<t>"{
+        node:t="Bip01 Head"
+        node:t="Bip01 Neck"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+
+    "body:object"{
+      maxHp:r=2500
+      hp:r=2500
+      isInjured:b=no
+      removeInjuryHp:r=10
+      explosionImpact:b=yes
+      collisionImpact:b=no
+      holdBreathImpact:b=no
+      barbwireImpact:b=no
+      name:t="body"
+
+      "list:list<t>"{
+        node:t="Bip01 Spine1"
+        node:t="Bip01 Spine"
+        node:t="Bip01 Pelvis"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{}
+    }
+
+    "right_hand:object"{
+      maxHp:r=1500
+      hp:r=1500
+      isInjured:b=no
+      removeInjuryHp:r=10
+      distributionDamageMult:r=0.75
+      explosionImpact:b=yes
+      collisionImpact:b=no
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="right_hand"
+
+      "list:list<t>"{
+        node:t="Bip01 R Clavicle"
+        node:t="Bip01 R UpperArm"
+        node:t="Bip01 R Forearm"
+        node:t="Bip01 R Hand"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+
+    "left_hand:object"{
+      maxHp:r=1500
+      hp:r=1500
+      isInjured:b=no
+      removeInjuryHp:r=10
+      distributionDamageMult:r=0.75
+      explosionImpact:b=yes
+      collisionImpact:b=no
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="left_hand"
+
+      "list:list<t>"{
+        node:t="Bip01 L Clavicle"
+        node:t="Bip01 L UpperArm"
+        node:t="Bip01 L Forearm"
+        node:t="Bip01 L Hand"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+
+    "right_leg:object"{
+      maxHp:r=1500
+      hp:r=1500
+      isInjured:b=no
+      removeInjuryHp:r=10
+      distributionDamageMult:r=1.25
+      explosionImpact:b=yes
+      collisionImpact:b=yes
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="right_leg"
+
+      "list:list<t>"{
+        node:t="Bip01 R Thigh"
+        node:t="Bip01 R Calf"
+        node:t="Bip01 R Foot"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+
+    "left_leg:object"{
+      maxHp:r=1500
+      hp:r=1500
+      isInjured:b=no
+      removeInjuryHp:r=10
+      distributionDamageMult:r=1.25
+      explosionImpact:b=yes
+      collisionImpact:b=yes
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="left_leg"
+
+      "list:list<t>"{
+        node:t="Bip01 L Thigh"
+        node:t="Bip01 L Calf"
+        node:t="Bip01 L Foot"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+  }
+}
+
+sleeping_guard{
+  _use:t="ignored_ai_target"
+  _use:t="ai_danger_update_disabled"
+  sleeping_monster__template:t="sleeping_guard"
+  sleeping_monster__templateAdd:t=""
+  sleeping_guard__checkForHumanEnemyRadius:r=100
+  sleeping_guard__checkForAIEnemyRadius:r=50
+  sleeping_guard__updateAt:r=0
+  sleeping_guard__updateInterval:r=5
+  sleeping_guard__awakeOnHitRadius:r=30
+  net__scopeDistanceSq:r=160000
+
+  "sleeping_monster:tag"{}
+  "sleeping_animchar_update_toggle:tag"{}
+  "behTreeDisabler:tag"{}
+  "disableUpdate:tag"{}
+}
+
+sleeping_weapon{
+  "sleeping_weapon:tag"{}
+  "sleeping_animchar_update_toggle:tag"{}
+}
+
+sleeping_animchar_update_toggle_by_distance{
+  sleeping_animchar__disableByDistance:b=no
+
+  "sleeping_animchar_update_toggle:tag"{}
+}
+
+sleeping_animchar_update_toggle_by_distance_origin{
+  sleeping_animchar_update_toggle_origin__interval:r=2
+  sleeping_animchar_update_toggle_origin__updateAt:r=0
+  sleeping_animchar_update_toggle_origin__radius:r=200
+}
+
+suit_encounter_guard_item{
+  _use:t="suit_militant_item_base"
+  item__proto:t="suit_encounter_guard_item"
+  item__name:t="items/suit_encounter_guard_item"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_soldier_corrupted_male_a_char"
+  collres__res:t="am_soldier_corrupted_male_a_collision"
+  dm_part_armor__partName:t="*"
+
+  "equipment_mods__slots:shared:object"{}
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0
+    DM_MELEE:r=0
+    DM_EXPLOSION:r=0
+    DM_ZONE:r=0
+    DM_COLLISION:r=0
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0
+  }
+}
+
+equipped_bot{
+  equipped_bot__equipmentGeneratorName:t="ordinary_equipment_generator"
+  equipped_bot__equipmentGeneratorCorruptionChance:r=0.5
+}
+
+equipped_bot_female{
+  _use:t="equipped_bot"
+  equipped_bot__equipmentGeneratorName:t="ordinary_equipment_female_generator"
+}
+
+create_bot_player_for_hero{
+  "create_bot_player_for_hero:tag"{}
+}
+
+bind_player_to_hero{
+  "bind_player_to_hero:tag"{}
+}
+
+dynamic_ri_covers{
+  _singleton:b=yes
+
+  "dynamic_ri_covers__allowed:list<u32>"{
+    "cover:u32"{
+      value:i=-1887380556
+    }
+
+    "cover:u32"{
+      value:i=-249737814
+    }
+
+    "cover:u32"{
+      value:i=-249737813
+    }
+
+    "cover:u32"{
+      value:i=1895453920
+    }
+
+    "cover:u32"{
+      value:i=1895453922
+    }
+
+    "cover:u32"{
+      value:i=1895453923
+    }
+
+    "cover:u32"{
+      value:i=948183018
+    }
+
+    "cover:u32"{
+      value:i=948183016
+    }
+
+    "cover:u32"{
+      value:i=948183019
+    }
+
+    "cover:u32"{
+      value:i=-525604358
+    }
+
+    "cover:u32"{
+      value:i=-948803762
+    }
+
+    "cover:u32"{
+      value:i=-948803763
+    }
+  }
+}
+
+bot_with_ri_covers{
+  bot_with_ri_covers__currentCoverPos:p3=0, 0, 0
+  bot_with_ri_covers__currentCoverRad:r=0
+  bot_with_ri_covers__lastPos:p3=0, 0, 0
+  bot_with_ri_covers__isBehindCover:b=no
+  bot_with_ri_covers__coverExpireAt:r=-1
+}
+
+am_militant_bot_ai{
+  _use:t="get_attract_position_ai"
+  _use:t="beh_tree_regular_check"
+  _use:t="agent_dangers_bullet_reaction"
+  _use:t="agent_dangers_hit_reaction"
+  _use:t="get_reaction_offender_ai"
+  _use:t="walker_agent_danger_calc"
+  _use:t="bot_with_ri_covers"
+  _use:t="position_mapping"
+  _use:t="walker_agent_with_nphys_obstacles"
+  _use:t="personal_enemies"
+  am_bot__lootCount:i=0
+  am_bot__extractAtLootCount:i=10000
+  am_bot__targetAttractRegionPos:p3=0, 0, 0
+  am_bot__attractRegionStayTimer:r=0
+  am_bot__attractRegionMinStayTime:r=120
+  am_bot__attractPosMinStayTime:r=30
+  am_bot__playerBotherPos:p3=0, 0, 0
+  walker_agent__velViscosity:r=0.3
+  walker_agent__velFactor:r=1
+  walker_agent__aimViscosity:r=0.2
+  walker_agent__minShootAngle:r=6
+  walker_agent__aiMinShootAngle:r=5
+  walker_agent__maxShootDistToTarget:r=10
+  walker_agent__aiMaxShootDistToTarget:r=1.2
+  walker_agent__predictMult:r=0.5
+  walker_agent__aimSpeed:r=1050
+  agent_dangers__blindDistanceSq:r=6400
+  agent_dangers_calc__dangerMeterMult:r=1
+  beh_tree__node:t="nmesh_mapped_loot_raider"
+  beh_tree__latencyLoadRequire:b=no
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  beh_tree__blackboard__enemyRadius:r=150
+  beh_tree__blackboard__lastShootEnemy:i=0
+  agent_dangers__minTraceableRatio:r=2.5
+  agent_dangers__maxDangerDist:r=50
+  agent_dangers__frustumAngle:r=90
+  agent_dangers__projectileDist:r=4
+  agent_dangers__decrease:r=5
+  agent_dangers__timeFromDetection:r=3
+  agent_dangers__lastBulletReactionTime:r=-1
+  agent_dangers__nextBulletReactionTime:r=-1
+  agent_dangers__hmapTraceOffset:p3=0, -0.1, 0
+  agent_dangers__nextDangersCheckTime:r=0
+  agent_dangers__nextDangersTraceTime:r=0
+  agent_dangers__dangerIncrease:r=5
+  agent_dangers__dangerOutIncrease:r=0
+  agent_dangers__maxDangerDistMult:r=0.3
+  agent_dangers__standShootPos:p3=0, 0, 0
+  agent_dangers__standShootDir:p3=0, 0, 0
+  beh_tree__blackboard__meleeWeaponSlot:i=3
+  beh_tree__blackboard__unarmedWeaponSlot:i=6
+
+  "allow_friendly_damage:tag"{}
+  "beh_tree__latencyLoadBlackBoard:object"{}
+  "navigation__areasCost:list<p2>"{
+    it:p2=6, 10
+  }
+
+  "beh_tree__debugState:t"{
+    _tags:t="dev"
+    value:t=""
+  }
+
+  walker_agent{
+    _tags:t="server"
+  }
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  agent_dangers{
+    _tags:t="server"
+  }
+
+  "am_bot__visitedAttractRegions:list<p3>"{}
+  "walker_agent__distanceToShootError:shared:array"{
+    "error:object"{
+      distance:r=0
+      min:p2=0, 0
+      max:p2=0.3, 0.45
+      maxEnd:p2=0.2, 0.3
+    }
+
+    "error:object"{
+      distance:r=5
+      min:p2=0, 0
+      max:p2=0.6, 0.9
+      maxEnd:p2=0.3, 0.45
+    }
+
+    "error:object"{
+      distance:r=12
+      min:p2=0, 0
+      max:p2=0.9, 1.35
+      maxEnd:p2=0.45, 0.7
+    }
+
+    "error:object"{
+      distance:r=25
+      min:p2=0.3, 0.5
+      max:p2=2, 3
+      maxEnd:p2=0.6, 0.9
+    }
+
+    "error:object"{
+      distance:r=60
+      min:p2=1, 1.5
+      max:p2=3, 4
+      maxEnd:p2=1, 1.5
+    }
+  }
+
+  "walker_agent__aiDistanceToShootError:shared:array"{
+    "error:object"{
+      distance:r=0
+      min:p2=0, 0
+      max:p2=0.25, 0.5
+      maxEnd:p2=0, 0
+    }
+
+    "error:object"{
+      distance:r=25
+      min:p2=0, 0
+      max:p2=0.25, 0.5
+      maxEnd:p2=0, 0
+    }
+
+    "error:object"{
+      distance:r=50
+      min:p2=0, 0
+      max:p2=0.8, 0.8
+      maxEnd:p2=0.25, 0.5
+    }
+
+    "error:object"{
+      distance:r=100
+      min:p2=0, 0
+      max:p2=0.8, 0.8
+      maxEnd:p2=0.8, 0.8
+    }
+  }
+}
+
+indoor_information{
+  militant__indoorLastTime:r=0
+  militant__indoor:b=no
+  militant__indoorCheckAt:r=0
+  militant__indoorStepCheckAt:r=1
+  militant__alreadyOutside:r=0.25
+  _tracked:t="militant__indoor"
+  _replicated:t="militant__indoor"
+}
+
+bot_flashlight{
+  _use:t="indoor_information"
+  bot_flashlight__enabled:b=no
+  bot_flashlight__nextAtTime:r=0
+}
+
+create_bot_look_pos{
+  create_bot_look_pos__offsetComponent:t=""
+  create_bot_look_pos__eidBb:i=0
+  transform:m=[[0, 0, 0] [0, 0, 0] [0, 0, 0] [0, 0, 0]]
+  _tracked:t="transform"
+
+  "create_bot_look_pos__eid:eid"{}
+}
+
+bot_look_pos{
+  transform:m=[[0, 0, 0] [0, 0, 0] [0, 0, 0] [0, 0, 0]]
+
+  "bot_look_pos:tag"{}
+}
+
+walker_agent_with_nphys_obstacles{
+  walker_agent__standShootLocalPos:p3=0, 1.4, 0
+  obstacle_avoider__escapeOffset:r=0
+
+  "path_corridor__corners:list<p3>"{}
+  "door_obstacle_handler__immediateDoor:eid"{}
+  agent_obstacles{}
+}
+
+suicide_effect{
+  _use:t="game_effect_with_duration"
+  game_effect__timeToDestroy:r=180
+
+  "game_effect__suicide:tag"{}
+}
+
+suicide_effect_in_1_sec{
+  _use:t="suicide_effect"
+  game_effect__applyUpdateAt:r=0
+  game_effect__applyDelay:r=1
+}
+
+am_militant_suicide_bot{
+  _use:t="am_militant_bot"
+  _use:t="equipped_bot"
+  _use:t="equip_cortical_vault"
+  _use:t="create_bot_player_for_hero"
+  beh_tree__enabled:b=no
+  bodyCleanupTime:r=500000
+
+  "human_voice_sound__descs:shared:object"{
+    _tags:t="sound"
+  }
+
+  "game_effect__initialAttachmentsServer:list<t>"{
+    i:t="suicide_effect_in_1_sec"
+  }
+}

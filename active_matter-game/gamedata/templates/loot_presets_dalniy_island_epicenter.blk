@@ -1,0 +1,385 @@
+epicenter_hungar_1_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_close_range_weapons_t2_lootable_rendinst"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="military_equipment_t2_lootable_rendinst"
+      number:ip2=4, 5
+    }
+
+    "item:object"{
+      template_name:t="military_ammo_t1_lootable_rendinst"
+      number:ip2=4, 5
+    }
+
+    "item:object"{
+      template_name:t="military_medical_t2_lootable_rendinst"
+      number:ip2=4, 5
+    }
+  }
+}
+
+epicenter_hungar_2_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_close_range_weapons_t2_lootable_rendinst"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="military_equipment_t2_lootable_rendinst"
+      number:ip2=4, 5
+    }
+
+    "item:object"{
+      template_name:t="military_ammo_t1_lootable_rendinst"
+      number:ip2=4, 5
+    }
+
+    "item:object"{
+      template_name:t="military_medical_t2_lootable_rendinst"
+      number:ip2=4, 5
+    }
+  }
+}
+
+epicenter_hungar_3_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_close_range_weapons_t2_lootable_rendinst"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="military_equipment_t2_lootable_rendinst"
+      number:ip2=4, 5
+    }
+
+    "item:object"{
+      template_name:t="military_ammo_t1_lootable_rendinst"
+      number:ip2=4, 5
+    }
+
+    "item:object"{
+      template_name:t="military_medical_t2_lootable_rendinst"
+      number:ip2=4, 5
+    }
+  }
+}
+
+epicenter_hungar_4_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_close_range_weapons_t2_lootable_rendinst"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="military_equipment_t2_lootable_rendinst"
+      number:ip2=4, 5
+    }
+
+    "item:object"{
+      template_name:t="military_ammo_t1_lootable_rendinst"
+      number:ip2=4, 5
+    }
+
+    "item:object"{
+      template_name:t="military_medical_t2_lootable_rendinst"
+      number:ip2=4, 5
+    }
+  }
+}
+
+epicenter_hungar_5_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_long_range_weapons_t3_lootable_rendinst"
+      number:ip2=5, 7
+    }
+
+    "item:object"{
+      template_name:t="military_close_range_weapons_t2_lootable_rendinst"
+      number:ip2=5, 7
+    }
+
+    "item:object"{
+      template_name:t="military_equipment_t3_lootable_rendinst"
+      number:ip2=5, 7
+    }
+
+    "item:object"{
+      template_name:t="military_ammo_t2_lootable_rendinst"
+      number:ip2=5, 7
+    }
+
+    "item:object"{
+      template_name:t="military_medical_t3_lootable_rendinst"
+      number:ip2=5, 7
+    }
+
+    "item:object"{
+      template_name:t="military_grenades_t1_lootable_rendinst"
+      number:ip2=2, 3
+    }
+  }
+}
+
+epicenter_overall_zone_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="key_hangar_epicenter_item+item_in_world"
+      number:i=10
+    }
+
+    "item:object"{
+      template_name:t="small_sovmod_backpack_lootable+item_in_world"
+      number:ip2=20, 40
+    }
+
+    "item:object"{
+      template_name:t="medium_sovmod_backpack_lootable+item_in_world"
+      number:ip2=5, 10
+    }
+
+    "item:object"{
+      template_name:t="large_sovmod_backpack_lootable+item_in_world"
+      number:ip2=3, 5
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_avg+item_in_world"
+      number:i=25
+    }
+
+    "item:object"{
+      template_name:t="makarov_gun+item_in_world"
+      number:i=5
+      template_sub_preset:t="makarov_gun_template_sub_preset"
+    }
+
+    "item:object"{
+      template_name:t="makarov_rust_gun+item_in_world"
+      number:i=10
+      template_sub_preset:t="makarov_rust_gun_template_sub_preset"
+    }
+
+    "item:object"{
+      template_name:t="toz_b_gun+item_in_world"
+      number:i=10
+      template_sub_preset:t="toz_b_gun_template_sub_preset"
+    }
+
+    "item:object"{
+      template_name:t="encounter_fuse_item+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="civil_lootable_rendinst_1"
+      number:i=100
+    }
+
+    "item:object"{
+      template_name:t="civil_lootable_rendinst_2"
+      number:ip2=80, 90
+    }
+
+    "item:object"{
+      template_name:t="sovmod_flashlight_device+item_in_world"
+      number:ip2=13, 17
+    }
+
+    "item:object"{
+      template_name:t="sovmod_diver_flashlight+item_in_world"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="axe_weapon+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="wrench_weapon+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="screwdriver_a_weapon+item_in_world"
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="screwdriver_b_weapon+item_in_world"
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="chisel_a_weapon+item_in_world"
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="chisel_b_weapon+item_in_world"
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="sov_knife_nr_40_weapon+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="ak_bayonet_weapon+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="mpl50_shovel+item_in_world"
+      number:ip2=5, 7
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_01+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_02+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_03+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_04+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_05+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_06+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_07+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_08+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_09+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_10+item_in_world"
+      number:i=5
+    }
+  }
+}
+
+epicenter_random_encounter_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="encounter_small_changed_guard_box"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_frog_trap_box"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_core_guard"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_box_pile"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_trap_container"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_frog_trap_box"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_changed_guard_uaz"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_crashed_uaz"
+      number:i=1
+    }
+  }
+}
+
+epicenter_worm_nest_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="nesting_swarm_snake_nest_placer"
+      number:i=9
+    }
+  }
+}

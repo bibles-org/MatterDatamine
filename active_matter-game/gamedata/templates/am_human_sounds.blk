@@ -1,0 +1,1045 @@
+common_human_sound_components{
+  _use:t="watched_by_player_sound"
+  _use:t="sound_event_group"
+  _use:t="sound_control"
+  _use:t="sound_player_components"
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=100
+  }
+
+  "human_animchar_sound:HumanAnimcharSound"{
+    _tags:t="sound"
+  }
+
+  "humanSound:tag"{
+    _tags:t="sound"
+  }
+}
+
+base_human_sound{
+  _use:t="common_human_sound_components"
+  _use:t="human_voice_effects"
+  _use:t="human_melee_sound"
+  _use:t="base_human_melee_impact_sound"
+  _use:t="base_human_steps_sound"
+  _use:t="human_hit_net_sound"
+  _use:t="base_human_voice_sound"
+  _use:t="human_death_sound"
+  _use:t="human_hit_cry_sound"
+  _use:t="sound_banks_state"
+
+  _group{
+    _tags:t="sound"
+    human_steps_sound__friendVolume:r=0.2
+  }
+
+  "human_voice_effect__allOrderedEffects:shared:list<t>"{
+    _tags:t="sound"
+    id:t="dead"
+    id:t="underwater"
+    id:t="holdBreath"
+    id:t="downed"
+    id:t="pain"
+    id:t="burn"
+    id:t="heavyBreath"
+  }
+
+  _group{
+    _tags:t="sound"
+    human_sound_landmesh_queries__puddleQueryToDepth:p4=0.5, 0.8, 0, 0.05
+  }
+}
+
+human_melee_sound{
+  _group{
+    _tags:t="sound"
+    human_melee_sound__repeatThreshold:r=0.1
+    human_melee_sound__repeatTime:r=0
+
+    "human_melee_sound__irqs:shared:object"{}
+  }
+}
+
+base_human_melee_impact_sound{
+  _group{
+    _tags:t="sound"
+    human_melee_impact_sound__path:t="impact/melee"
+  }
+}
+
+human_hit_net_sound{
+  _group{
+    _tags:t="server"
+    human_hit_net_sound__nextSoundAt:r=0
+    human_hit_net_sound__cooldown:r=1
+    human_hit_net_sound__range:r=40
+  }
+
+  _group{
+    _tags:t="sound"
+
+    "human_hit_sound__paths:shared:object"{}
+  }
+}
+
+offender_hits_human_sound{
+  _group{
+    _tags:t="sound"
+
+    "offender_hits_human_sound__path:shared:object"{}
+  }
+}
+
+base_human_voice_sound{
+  _group{
+    _tags:t="sound"
+    human_voice_sound__voiceTag:t=""
+
+    "human_voice_sound__path:shared:object"{}
+    "human_voice_sound__descs:shared:object"{}
+    "human_voice_sound__irqs:shared:object"{}
+  }
+}
+
+human_hit_cry_sound{
+  _group{
+    _tags:t="sound"
+    human_hit_cry_sound__nextTime:r=0
+    human_hit_cry_sound__cooldown:r=0.5
+  }
+}
+
+human_fall_wind_sound{
+  _group{
+    _tags:t="sound"
+    human_fall_wind_sound__path:t="player/effects/fall_wind"
+    human_fall_wind_sound__startSpeed:r=5
+
+    "human_fall_wind_sound__event:SoundEvent"{}
+  }
+}
+
+human_gun_sounds_preload{
+  _group{
+    _tags:t="sound"
+
+    "human_gun_sounds_preload:SoundEventsPreload"{}
+  }
+}
+
+heartrate_sound{
+  _group{
+    _tags:t="sound"
+    heartrate_sound__updateAt:r=0
+    heartrate_sound__path:t="player/effects/blood_pressure"
+    heartrate_sound__startFrom:r=120
+    heartrate_sound__updateInterval:r=0.5
+
+    "heartrate_sound__event:SoundEvent"{}
+  }
+}
+
+human_breath_sound{
+  _group{
+    _tags:t="sound"
+    human_breath_sound__enabled:b=no
+    human_breath_sound__heartrateMinMax:p2=110, 160
+    human_breath_sound__breathShortnessMul:r=0.5
+  }
+}
+
+base_human_collision_hit_sound{
+  _group{
+    _tags:t="sound"
+    human_collision_hit_sound__forceMax:r=0
+    human_collision_hit_sound__spdSummaryToForce:p4=0.4, 4, 0, 1
+    human_collision_hit_sound__vertSpeedThreshold:r=0.5
+
+    "human_collision_hit_sound__path:shared:object"{
+      path:t="/walker/am_trooper_male/collision/generic"
+    }
+  }
+}
+
+human_collision_hit_sound{
+  _use:t="base_human_collision_hit_sound"
+}
+
+human_collision_scrape_sound{
+  _use:t="base_human_collision_scrape_sound"
+
+  _group{
+    _tags:t="sound"
+
+    "human_collision_scrape_sound__descs:shared:array"{
+      "bush:object"{
+        path:t="/walker/am_trooper_male/collision/bush"
+      }
+
+      "bushesFall:object"{
+        path:t="/walker/am_trooper_male/collision/bush"
+      }
+
+      "bushesPalm:object"{
+        path:t="/walker/am_trooper_male/collision/bush"
+      }
+
+      "bushesDead:object"{
+        path:t="/walker/am_trooper_male/collision/bush"
+      }
+
+      "bushesSnow:object"{
+        path:t="/walker/am_trooper_male/collision/bush"
+      }
+    }
+  }
+}
+
+human_parachute_sound{
+  _group{
+    _tags:t="sound"
+    human_parachute_sound__openPath:t="player/effects/parachute_open"
+    human_parachute_sound__closePath:t="player/effects/parachute_landing"
+    human_parachute_sound__path:t="player/effects/parachute_flight"
+  }
+}
+
+possessable_human_sound{
+  _use:t="heartrate_sound"
+  _use:t="human_breath_sound"
+  _use:t="human_collision_hit_sound"
+  _use:t="human_collision_scrape_sound"
+  _use:t="human_fall_wind_sound"
+  _use:t="attach_reverb_sound_to_watchable"
+}
+
+human_loot_sound{
+  _group{
+    _tags:t="sound"
+    loot_sound__time:r=0
+  }
+}
+
+human_voice_effect_burning{
+  "humanVoiceEffectBurning:tag"{
+    _tags:t="sound"
+  }
+}
+
+human_voice_effect_hold_breath{}
+human_sound_paths{
+  "sound_paths:shared:object"{
+    _tags:t="sound"
+
+    "suicide:object"{
+      path:t="/walker/am_trooper_male/hit/melee"
+    }
+
+    "climb:object"{
+      "options:array"{
+        "changed:object"{
+          changedAffect:b=yes
+          path:t="/walker/changed/foley_mov/common/climb"
+        }
+
+        "default:object"{
+          path:t="/walker/am_trooper_male/foley_mov/common/climb"
+        }
+      }
+    }
+
+    "repair:object"{
+      path:t="/vehicle/common/repair"
+    }
+
+    "extinguish:object"{
+      path:t="/vehicle/common/extinguish"
+    }
+
+    "collision_bushes:object"{
+      path:t="/walker/am_trooper_male/collision/bush"
+    }
+
+    "installWeapMod:object"{
+      hero:t="ui_sounds/weapon_mods/install_common"
+    }
+
+    "uninstallWeapMod:object"{
+      hero:t="ui_sounds/weapon_mods/deinstall_common"
+    }
+
+    "burningPuttingOut:object"{
+      hero:t="player/walker/am_trooper_male/items/fire_extinguish/activate"
+    }
+
+    "burning:object"{
+      path:t="env_effects/fire/fire_character"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "grenade_take:object"{
+      type:t="grenadeActivate"
+    }
+
+    "climb_ladder:object"{
+      path:t="/walker/am_trooper_male/foley_mov/common/climb_stair"
+
+      "playBackward:object"{}
+    }
+
+    "swim_onwater:object"{
+      path:t="/walker/am_trooper_male/foley_mov/swim/hand"
+    }
+
+    "swim_still:object"{
+      path:t="/walker/am_trooper_male/foley_mov/swim/leg"
+    }
+
+    "monolith_start:object"{
+      path:t="cutscenes/intro/shimmer_start"
+    }
+
+    "smartwatch_tap_tap:object"{
+      path:t="am/ui/flower_human_sensor"
+    }
+
+    "monolith_touch:object"{
+      path:t="cutscenes/intro/touch"
+    }
+
+    "monolith_blastoff:object"{
+      path:t="cutscenes/intro/punch"
+    }
+
+    "monolith_end:object"{
+      path:t="cutscenes/intro/explosion_shimmer_end"
+    }
+
+    "monolith_step:object"{
+      path:t="player/walker/am_trooper_male/foley_mov/run"
+    }
+
+    "unfold:object"{
+      hero:t="player/weapon/melee/knife_pocket/open"
+    }
+
+    "sndMedPrepare:object"{
+      type:t="humanUsingItem"
+    }
+
+    "sndMedInject:object"{
+      type:t="humanUsingItem"
+    }
+
+    "sndMedRemove:object"{
+      type:t="humanUsingItem"
+    }
+
+    "weaponChangeGet_am_pocket_knife:object"{
+      path:t="/walker/_common_foley/pocket_knife/open"
+    }
+
+    "weaponChangePut_am_pocket_knife:object"{
+      path:t="/walker/_common_foley/pocket_knife/close"
+    }
+  }
+}
+
+human_steps_sound_paths{
+  "human_steps_sound__path:shared:object"{
+    _tags:t="sound"
+
+    "options:array"{
+      "changed:object"{
+        changedAffect:b=yes
+        path:t="/walker/changed/foley_mov"
+      }
+
+      "default:object"{
+        path:t="/walker/am_trooper_male/foley_mov"
+      }
+    }
+  }
+
+  "human_steps_sound__descs:shared:object"{
+    _tags:t="sound"
+
+    "jump:object"{
+      name:t="jump_start"
+    }
+
+    "land:object"{
+      name:t="jump_landing"
+    }
+
+    "downKnee:object"{
+      name:t="down_knee"
+    }
+
+    "upKnee:object"{
+      name:t="up_knee"
+    }
+
+    "downGround:object"{
+      name:t="down_ground"
+    }
+
+    "upGround:object"{
+      name:t="up_ground"
+    }
+  }
+
+  "human_steps_sound__irqs:shared:array"{
+    _tags:t="sound"
+
+    "irq:object"{
+      irq:t="left_sprint"
+      name:t="sprint"
+    }
+
+    "irq:object"{
+      irq:t="right_sprint"
+      name:t="sprint"
+    }
+
+    "irq:object"{
+      irq:t="left_run"
+      name:t="run"
+    }
+
+    "irq:object"{
+      irq:t="right_run"
+      name:t="run"
+    }
+
+    "irq:object"{
+      irq:t="left_walk"
+      name:t="run"
+    }
+
+    "irq:object"{
+      irq:t="right_walk"
+      name:t="run"
+    }
+
+    "irq:object"{
+      irq:t="left_turnOnSpot"
+      name:t="step"
+    }
+
+    "irq:object"{
+      irq:t="right_turnOnSpot"
+      name:t="step"
+    }
+
+    "irq:object"{
+      irq:t="left_crawl"
+      name:t="crawl"
+    }
+
+    "irq:object"{
+      irq:t="right_crawl"
+      name:t="crawl"
+    }
+
+    "irq:object"{
+      irq:t="left_crouchWalk"
+      name:t="step"
+    }
+
+    "irq:object"{
+      irq:t="right_crouchWalk"
+      name:t="step"
+    }
+
+    "irq:object"{
+      irq:t="left_crouchTurnOnSpot"
+      name:t="step"
+    }
+
+    "irq:object"{
+      irq:t="right_crouchTurnOnSpot"
+      name:t="step"
+    }
+  }
+}
+
+projectile_hit_human_fx_sound{
+  _use:t="projectile_hit_entity_fx_sound"
+
+  "projectile_hit_entity_fx_sound__paths:shared:object"{
+    _tags:t="sound"
+
+    "bullet:object"{
+      "part_head:object"{
+        hero:t="player/walker/am_trooper_male/hit/head/bullet"
+        enemy:t="enemy/walker/am_trooper_male/hit/head/bullet"
+
+        "steel:object"{
+          hero:t="[armored=1]player/walker/am_trooper_male/hit/head/bullet"
+          enemy:t="[armored=1]enemy/walker/am_trooper_male/hit/head/bullet"
+        }
+      }
+
+      "part_torso:object"{
+        hero:t="player/walker/am_trooper_male/hit/body/bullet"
+        enemy:t="enemy/walker/am_trooper_male/hit/body/bullet"
+
+        "steel:object"{
+          hero:t="[armored=1]player/walker/am_trooper_male/hit/body/bullet"
+          enemy:t="[armored=1]enemy/walker/am_trooper_male/hit/body/bullet"
+        }
+      }
+
+      "part_r_leg:object"{
+        hero:t="player/walker/am_trooper_male/hit/limbs/bullet"
+        enemy:t="enemy/walker/am_trooper_male/hit/limbs/bullet"
+
+        "steel:object"{
+          hero:t="[armored=1]player/walker/am_trooper_male/hit/limbs/bullet"
+          enemy:t="[armored=1]enemy/walker/am_trooper_male/hit/limbs/bullet"
+        }
+      }
+
+      "part_l_leg:object"{
+        hero:t="player/walker/am_trooper_male/hit/limbs/bullet"
+        enemy:t="enemy/walker/am_trooper_male/hit/limbs/bullet"
+
+        "steel:object"{
+          hero:t="[armored=1]player/walker/am_trooper_male/hit/limbs/bullet"
+          enemy:t="[armored=1]enemy/walker/am_trooper_male/hit/limbs/bullet"
+        }
+      }
+
+      "part_r_hand:object"{
+        hero:t="player/walker/am_trooper_male/hit/limbs/bullet"
+        enemy:t="enemy/walker/am_trooper_male/hit/limbs/bullet"
+
+        "steel:object"{
+          hero:t="[armored=1]player/walker/am_trooper_male/hit/limbs/bullet"
+          enemy:t="[armored=1]enemy/walker/am_trooper_male/hit/limbs/bullet"
+        }
+      }
+
+      "part_l_hand:object"{
+        hero:t="player/walker/am_trooper_male/hit/limbs/bullet"
+        enemy:t="enemy/walker/am_trooper_male/hit/limbs/bullet"
+
+        "steel:object"{
+          hero:t="[armored=1]player/walker/am_trooper_male/hit/limbs/bullet"
+          enemy:t="[armored=1]enemy/walker/am_trooper_male/hit/limbs/bullet"
+        }
+      }
+    }
+
+    "shell:object"{
+      hero:t="impact/shell"
+      enemy:t="impact/shell"
+    }
+  }
+}
+
+human_hit_sound_paths{
+  "human_hit_sound__paths:shared:object"{
+    _tags:t="sound"
+
+    "hit_dmgClaws:object"{
+      path:t="/walker/am_trooper_male/hit"
+    }
+
+    "hit_dmgMelee:object"{
+      name:t="melee"
+      path:t="/walker/am_trooper_male/hit"
+    }
+
+    "hit_dmgExplosion:object"{
+      name:t="tinnitus"
+      hero:t="[pow=1]player/effects"
+    }
+
+    "hit_dmgAsphyxiation:object"{
+      name:t="drown"
+
+      "options:array"{
+        "drown:object"{
+          hero:t="player/walker/am_trooper_female/voice_fx"
+          femaleVoice:b=yes
+        }
+
+        "drown:object"{
+          hero:t="player/walker/am_trooper_male/voice_fx"
+        }
+      }
+    }
+  }
+}
+
+human_voice_sound_paths{
+  "human_voice_sound__path:shared:object"{
+    _tags:t="sound"
+
+    "options:array"{
+      "asphyxiation:object"{
+        headIsUnderwater:b=yes
+      }
+
+      "changed:object"{
+        changedAffect:b=yes
+        path:t="/walker/changed/voice_fx"
+      }
+
+      "mothman:object"{
+        mothmanAffect:b=yes
+        path:t="/walker/mothman/voice_fx"
+      }
+
+      "female:object"{
+        femaleVoice:b=yes
+        voice3:b=yes
+        hero:t="player/walker/am_trooper_female/voice_fx"
+        enemy:t="enemy/walker/am_trooper_female03/voice_fx"
+      }
+
+      "female:object"{
+        femaleVoice:b=yes
+        voice2:b=yes
+        hero:t="player/walker/am_trooper_female/voice_fx"
+        enemy:t="enemy/walker/am_trooper_female02/voice_fx"
+      }
+
+      "female:object"{
+        femaleVoice:b=yes
+        hero:t="player/walker/am_trooper_female/voice_fx"
+        enemy:t="enemy/walker/am_trooper_female01/voice_fx"
+      }
+
+      "default:object"{
+        voice3:b=yes
+        hero:t="player/walker/am_trooper_male/voice_fx"
+        enemy:t="enemy/walker/am_trooper_male03/voice_fx"
+      }
+
+      "default:object"{
+        voice2:b=yes
+        hero:t="player/walker/am_trooper_male/voice_fx"
+        enemy:t="enemy/walker/am_trooper_male02/voice_fx"
+      }
+
+      "default:object"{
+        hero:t="player/walker/am_trooper_male/voice_fx"
+        enemy:t="enemy/walker/am_trooper_male01/voice_fx"
+      }
+    }
+  }
+
+  "human_voice_sound__descs:shared:object"{
+    _tags:t="sound"
+
+    "death:object"{
+      name:t="death"
+    }
+
+    "downed:object"{
+      name:t="downed"
+    }
+
+    "pain:object"{
+      name:t="hit"
+    }
+
+    "concussed:object"{
+      name:t="contused"
+    }
+
+    "heavyBreath:object"{
+      name:t="breath/heavy"
+    }
+
+    "holdBreath:object"{}
+    "holdBreathStart:object"{
+      name:t="breath/aim_on"
+
+      "heavyBreath:object"{}
+    }
+
+    "holdBreathEnd:object"{
+      name:t="breath/aim_off"
+
+      "holdBreath:object"{}
+    }
+
+    "underwater:object"{
+      "start:object"{
+        hero:t="breath/in"
+      }
+
+      "end:object"{
+        hero:t="breath/out"
+      }
+    }
+
+    "burn:object"{
+      name:t="burning"
+    }
+
+    "hitCry:object"{
+      name:t="hit"
+
+      "downed:object"{}
+      "concussed:object"{}
+      "pain:object"{}
+    }
+  }
+}
+
+am_solo_human_voice_type_no_speech{
+  _group{
+    _tags:t="sound"
+    am_solo_human_voice_type_no_speech__maxVoices:i=3
+  }
+}
+
+human_melee_sound_paths{
+  "human_melee_sound__irqs:shared:object"{
+    _tags:t="sound"
+
+    "melee_sound:object"{
+      "weapons:object"{
+        "rifle:object"{
+          path:t="/weapon/melee/rifle/whoosh"
+          delay:i=150
+          voiceName:t="melee"
+          voiceDelay:i=100
+          voiceChance:i=33
+        }
+
+        "mgun:object"{
+          path:t="/weapon/melee/mgun/whoosh"
+          delay:i=150
+          voiceName:t="melee"
+          voiceDelay:i=100
+          voiceChance:i=33
+        }
+
+        "pistol:object"{
+          path:t="/weapon/melee/pistol/whoosh"
+          voiceName:t="melee"
+          voiceDelay:i=100
+          voiceChance:i=33
+        }
+
+        "knife:object"{
+          path:t="/weapon/melee/knife/whoosh"
+          voiceName:t="melee"
+          voiceDelay:i=0
+          voiceChance:i=33
+        }
+
+        "knife_pocket:object"{
+          path:t="/weapon/melee/knife_pocket/whoosh"
+          voiceName:t="melee"
+          voiceDelay:i=0
+          voiceChance:i=33
+        }
+
+        "knife_cooking:object"{
+          path:t="/weapon/melee/knife_cooking/whoosh"
+          voiceName:t="melee"
+          voiceDelay:i=0
+          voiceChance:i=33
+        }
+
+        "shovel:object"{
+          path:t="/weapon/melee/shovel/whoosh"
+          voiceName:t="melee"
+          voiceDelay:i=100
+          voiceChance:i=33
+        }
+
+        "screwdriver:object"{
+          path:t="/weapon/melee/screwdriver/whoosh"
+          voiceName:t="melee"
+          voiceDelay:i=0
+          voiceChance:i=33
+        }
+
+        "axe:object"{
+          path:t="/weapon/melee/axe/whoosh"
+          voiceName:t="melee"
+          voiceDelay:i=100
+          voiceChance:i=33
+        }
+
+        "spear:object"{
+          path:t="/weapon/melee/spear/whoosh"
+          voiceName:t="melee"
+          voiceDelay:i=100
+          voiceChance:i=33
+        }
+
+        "hammer:object"{
+          path:t="/weapon/melee/hammer/whoosh"
+          voiceName:t="melee"
+          voiceDelay:i=100
+          voiceChance:i=33
+        }
+
+        "wrench:object"{
+          path:t="/weapon/melee/wrench/whoosh"
+          voiceName:t="melee"
+          voiceDelay:i=100
+          voiceChance:i=33
+        }
+
+        "hands:object"{
+          path:t="/weapon/melee/hands/whoosh"
+          voiceName:t="melee"
+          voiceDelay:i=0
+          voiceChance:i=50
+        }
+
+        "flashlight:object"{
+          path:t="/weapon/melee/flashlight/whoosh"
+          voiceName:t="melee"
+          voiceDelay:i=0
+          voiceChance:i=50
+        }
+      }
+    }
+  }
+}
+
+human_weapon_change_sound{
+  _group{
+    _tags:t="sound"
+    human_weapon_change_sound__weapEquipCurState:i=-1
+
+    "human_weapon_change_sound__paths:shared:object"{
+      "holstering:object"{
+        hero:t="player/walker/am_trooper_male/foley_mov/common/wpn_change_start"
+      }
+
+      "equiping:object"{
+        hero:t="player/walker/am_trooper_male/foley_mov/common/wpn_change_end"
+      }
+    }
+  }
+}
+
+human_net_sound{
+  _use:t="net_sound_descs"
+
+  "net_sound__descs:shared:object"{
+    "tinnitus:object"{
+      hero:t="player/effects/tinnitus"
+      var:t="pow"
+    }
+
+    "uiMap_main:object"{
+      hero:t="ui_sounds/set_point_notify"
+      enemy:t="ui_sounds/set_point_notify_enemy"
+    }
+
+    "uiMap_item:object"{
+      hero:t="ui_sounds/mark_item"
+      enemy:t="ui_sounds/mark_item_3d"
+    }
+
+    "uiMap_enemy:object"{
+      hero:t="ui_sounds/mark_enemy"
+      enemy:t="ui_sounds/mark_enemy_3d"
+    }
+
+    "uiMap_way_point:object"{
+      hero:t="ui_sounds/set_point_notify"
+      enemy:t="ui_sounds/set_point_notify_enemy"
+    }
+
+    "pick_healing:object"{
+      hero:t="player/walker/am_trooper_male/items/healing/pick"
+      enemy:t="enemy/walker/am_trooper_male/items/healing/pick"
+    }
+
+    "pick_ammo:object"{
+      hero:t="player/walker/am_trooper_male/items/ammo/pick"
+      enemy:t="enemy/walker/am_trooper_male/items/ammo/pick"
+    }
+
+    "pick_armor:object"{
+      hero:t="player/walker/am_trooper_male/items/armor/pick"
+      enemy:t="enemy/walker/am_trooper_male/items/armor/pick"
+    }
+
+    "pick_grenade:object"{
+      hero:t="player/walker/am_trooper_male/items/grenade/pick"
+      enemy:t="enemy/walker/am_trooper_male/items/grenade/pick"
+    }
+
+    "pick_weapon:object"{
+      hero:t="player/walker/am_trooper_male/items/gun/pick"
+      enemy:t="enemy/walker/am_trooper_male/items/gun/pick"
+    }
+
+    "pick_powerup:object"{
+      hero:t="player/effects/powerup_pick"
+      enemy:t="enemy/walker/am_trooper_male/items/other/pick"
+    }
+
+    "pick_fake_powerup:object"{
+      hero:t="player/effects/frog"
+      enemy:t="player/effects/frog"
+    }
+
+    "pick_magazine:object"{
+      hero:t="player/walker/am_trooper_male/items/magazine/pick"
+      enemy:t="enemy/walker/am_trooper_male/items/magazine/pick"
+    }
+
+    "pick_other:object"{
+      hero:t="player/walker/am_trooper_male/items/other/pick"
+      enemy:t="enemy/walker/am_trooper_male/items/other/pick"
+    }
+
+    "drop_healing:object"{
+      hero:t="player/walker/am_trooper_male/items/healing/drop"
+    }
+
+    "drop_ammo:object"{
+      hero:t="player/walker/am_trooper_male/items/ammo/drop"
+    }
+
+    "drop_armor:object"{
+      hero:t="player/walker/am_trooper_male/items/armor/drop"
+    }
+
+    "drop_grenade:object"{
+      hero:t="player/walker/am_trooper_male/items/grenade/drop"
+    }
+
+    "drop_weapon:object"{
+      hero:t="player/walker/am_trooper_male/items/gun/drop"
+    }
+
+    "drop_powerup:object"{
+      hero:t="player/effects/powerup_drop"
+    }
+
+    "drop_magazine:object"{
+      hero:t="player/walker/am_trooper_male/items/magazine/drop"
+      enemy:t="enemy/walker/am_trooper_male/items/magazine/drop"
+    }
+
+    "drop_other:object"{
+      hero:t="player/walker/am_trooper_male/items/other/drop"
+    }
+
+    "use_healing:object"{
+      hero:t="player/walker/am_trooper_male/items/healing/use"
+    }
+
+    "use_ammo:object"{
+      hero:t="player/walker/am_trooper_male/items/ammo/use"
+    }
+
+    "use_armor:object"{
+      hero:t="player/walker/am_trooper_male/items/armor/use"
+    }
+
+    "use_grenade:object"{
+      hero:t="player/walker/am_trooper_male/items/grenade/use"
+    }
+
+    "use_weapon:object"{
+      hero:t="player/walker/am_trooper_male/items/gun/use"
+    }
+
+    "use_powerup:object"{}
+    "use_other:object"{
+      hero:t="player/walker/am_trooper_male/items/other/use"
+    }
+
+    "pushAround:object"{
+      hero:t="player/effects/pushback_shield"
+    }
+
+    "adrenalineBoosterEffect:object"{
+      path:t="player/effects/adrenaline_booster"
+    }
+
+    "onBattleStart:object"{
+      path:t="am/objects/teleport/teleport_start_1"
+    }
+  }
+}
+
+human_ammo_loading_sound{
+  _group{
+    _tags:t="sound"
+
+    "human_ammo_loading_sound__path:shared:object"{
+      path:t="/walker/am_trooper_male/items/ammo/pick"
+    }
+
+    "human_ammo_unloading_sound__path:shared:object"{
+      path:t="/walker/am_trooper_male/items/ammo/pick"
+    }
+  }
+}
+
+human_teleportation_sound{
+  _group{
+    _tags:t="sound"
+    human_teleportation_sound__heroPath:t="player/effects/teleport_enter"
+    human_teleportation_sound__inPath:t="enemy/effects/teleport_enter"
+    human_teleportation_sound__outPath:t="enemy/effects/teleport_enter"
+  }
+}
+
+am_human_sound{
+  _use:t="base_human_sound"
+  _use:t="possessable_human_sound"
+  _use:t="human_loot_sound"
+  _use:t="human_voice_effect_burning"
+  _use:t="human_voice_effect_hold_breath"
+  _use:t="human_sound_paths"
+  _use:t="human_steps_sound_paths"
+  _use:t="projectile_hit_human_fx_sound"
+  _use:t="human_hit_sound_paths"
+  _use:t="human_voice_sound_paths"
+  _use:t="human_melee_sound_paths"
+  _use:t="human_weapon_change_sound"
+  _use:t="human_net_sound"
+  _use:t="human_ammo_loading_sound"
+  _use:t="human_teleportation_sound"
+  _use:t="human_gun_sounds_preload"
+  _use:t="am_monster_killed_ui_sound"
+
+  _group{
+    _tags:t="sound"
+    human_steps_sound_generator__walkRunSprint_stand_intervals:p3=1.15, 0.85, 1.65
+    human_steps_sound_generator__walkRunSprint_crouch_intervals:p3=0.95, 0.95, 0.95
+    human_steps_sound_generator__enableForVisible:b=no
+    human_steps_sound_generator__enableForInvisible:b=yes
+  }
+
+  "am_monster_killed_ui_sound_path:shared:object"{
+    _tags:t="sound"
+
+    "options:array"{
+      "changed:object"{
+        changedAffect:b=yes
+        path:t="enemy/walker/changed/hit/ui/hitmark"
+      }
+    }
+  }
+}
+
+am_militant_sound{
+  _use:t="am_human_sound"
+  _use:t="am_solo_human_voice_type_no_speech"
+}

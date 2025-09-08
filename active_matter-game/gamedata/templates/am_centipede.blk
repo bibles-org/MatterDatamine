@@ -1,0 +1,85 @@
+centipede_util_vars{
+  util_vars__ready:b=no
+  util_vars__visibleAttractPoints:r=0
+  util_vars__attractPointRatio:r=0
+}
+
+centipede_ai{
+  _use:t="patroller_ai"
+  _use:t="beh_tree_regular_check"
+  _use:t="get_attract_position_ai"
+  _use:t="track_visual_attract_points"
+  _use:t="get_visible_attract_position_ai"
+  _use:t="corridor_walker"
+  _use:t="centipede_util_vars"
+  _use:t="base_navmesh_agent_comp"
+  patroller__radius:r=50
+  attract_point__searchRadius:r=100
+  visual_attract__maxDist:r=100
+  attract_point__checkPath:b=no
+  walker_agent__standShootLocalPos:p3=0, 0.3, 0
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+}
+
+centipede_head{
+  _use:t="replicating"
+  _use:t="navmesh_phys_base"
+  _use:t="navmesh_phys_ai"
+  _use:t="loc_snapshots"
+  navmesh_phys__maxWalkSpeed:r=10
+  navmesh_phys__acceleration:r=15
+  navmesh_phys__wriggleAmplitude:r=1.8
+  navmesh_phys__wriggleFrequency:r=3
+  _use:t="human_grid_obj"
+  _use:t="centipede_ai"
+  team:i=1
+  beh_tree__node:t="centipede"
+  animchar__res:t="centipede_head_char"
+  collres__res:t="centipede_head_collision"
+  collres__centerNode:t="Bip01 Pelvis"
+  _use:t="animchar_turn_dir"
+  centipede__segmentTempl:t="centipede_segment"
+  centipede__tailTempl:t="centipede_tail"
+  centipede__segmentsCount:i=15
+  centipede__segmentDist:r=0.36
+  nPhys__animcharScale:r=3
+
+  "grid_obj__updateAlways:tag"{}
+  "loc_snapshots__scaledTransform:tag"{}
+  phys_vars{}
+  "centipede:tag"{}
+  "aliveCreature:tag"{}
+  anim_phys{}
+  "centipede__childSegment:eid"{}
+}
+
+centipede_tail{
+  _use:t="replicating"
+  animchar__turnDir:b=yes
+  centipede__segmentDist:r=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="animchar"
+  animchar__res:t="centipede_tail_char"
+  collres__res:t="centipede_tail_collision"
+  nPhys__animcharScale:r=3
+
+  "centipede__childSegment:eid"{}
+}
+
+centipede_segment{
+  _use:t="replicating"
+  animchar__turnDir:b=yes
+  centipede__segmentDist:r=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="animchar"
+  animchar__res:t="centipede_segment_char"
+  collres__res:t="centipede_segment_collision"
+  nPhys__animcharScale:r=3
+
+  "centipede__childSegment:eid"{}
+}

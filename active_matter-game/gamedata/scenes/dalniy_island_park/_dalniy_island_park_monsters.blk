@@ -1,0 +1,32 @@
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house monsters"
+  monster_gen_gen__householdCount:i=14
+  monster_gen_gen__minHouseholdVolume:r=225
+  monster_gen_gen__useHouseholdsOnEuclid:b=no
+
+  "monster_gen_gen__genTemplates:object"{
+    anomaly_encounter_flowerman_indoor:i=100
+  }
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="anomaly_zone_flowerman_park_generator"
+      genType:t="forest_flowerman"
+      count:i=6
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="park_trees_01"
+    r:t="park_trees_02"
+    r:t="park_trees_03"
+    r:t="park_trees_04"
+    r:t="park_trees_05"
+    r:t="park_trees_06"
+  }
+}

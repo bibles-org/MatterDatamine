@@ -1,0 +1,2137 @@
+global_hit_fx_info{
+  _use:t="global_hit_fx_info_base"
+  _use:t="gun_environment_fx"
+
+  _group{
+    _hide:b=yes
+    global_shatter_fx__countToTraceCount:p4=10, 1000, 0, 100
+    global_shatter_fx__radiusToTraceRadius:p4=2, 100, 3.7, 15
+    global_shatter_fx__minRadiusRatio:r=0.5
+    global_shatter_fx__maxDistance:r=30
+
+    "global_hit_fx__bulletTypeGroups:object"{
+      "smoke:list<t>"{
+        type:t="smoke_tank"
+        type:t="smoke_grenade_tank"
+      }
+
+      "non_explosive:list<t>"{
+        type:t="ball"
+        type:t="ball_M2"
+        type:t="i"
+        type:t="i_t"
+        type:t="ap"
+        type:t="ap_i"
+        type:t="ap_t"
+        type:t="ap_i_t"
+        type:t="aphe"
+        type:t="apcr_t"
+        type:t="i_ball"
+        type:t="i_ball_M1"
+        type:t="i_t_ball"
+        type:t="t_ball"
+        type:t="ap_ball"
+        type:t="ap_ball_M2"
+        type:t="ap_i_ball"
+        type:t="ap_t_ball"
+        type:t="ap_i_t_ball"
+        type:t="ap_i_t_ball_M20"
+        type:t="apcr_i_ball"
+        type:t="apcr_t_ball"
+        type:t="apcr_i_t_ball"
+        type:t="t_shell"
+        type:t="t_ball_M1"
+        type:t="ball_shell"
+        type:t="ap_tank"
+        type:t="apc_tank"
+        type:t="apbc_tank"
+        type:t="apcr_tank"
+        type:t="aphe_tank"
+        type:t="apcbc_solid_medium_caliber_tank"
+        type:t="aphebc_tank"
+        type:t="apbc_usa_tank"
+        type:t="apc_solid_medium_caliber_tank"
+        type:t="apds_tank"
+        type:t="apcbc_tank"
+        type:t="apbc_tank"
+        type:t="ac_shell_tank"
+        type:t="apds_autocannon"
+        type:t="sapi"
+      }
+
+      "explosive:list<t>"{
+        type:t="he_ball"
+        type:t="he_i_ball"
+        type:t="he_t_ball"
+        type:t="he_i_t_ball"
+        type:t="he_i"
+        type:t="he_t"
+        type:t="he_i_t"
+        type:t="he_i_t_n_mine"
+        type:t="he_i_mine"
+        type:t="he_frag"
+        type:t="he_frag_i"
+        type:t="he_frag_t"
+        type:t="he_frag_i_t"
+        type:t="frag_i"
+        type:t="frag_t"
+        type:t="frag_i_t"
+        type:t="he_tank"
+        type:t="cumulative_tank"
+        type:t="he_frag_tank"
+        type:t="heat_tank"
+        type:t="shrapnel_tank"
+        type:t="heat_fs_tank"
+        type:t="he_frag_dist_fuse"
+        type:t="he_frag_radio_fuse"
+        type:t="rocket_tank"
+      }
+    }
+
+    "global_hit_fx__bulletTypeIdToGroupIdMap:list<i>"{}
+    "global_hit_fx__bulletTypeGroupNameToIdMap:object"{}
+    "global_hit_fx__effectGroups:array"{
+      "group:object"{
+        name:t="nothing"
+      }
+
+      "group:object"{
+        name:t="tank_grenades_smoke"
+        defaultFx:t="explosion_tank_grenades_smoke_effect"
+      }
+
+      "group:object"{
+        name:t="tiny"
+        defaultFx:t="hit_handgun_tiny_ap_sand_effect"
+        defaultPenetrationFx:t="hit_handgun_tiny_ap_sand_effect"
+        defaultRicochetFx:t="hit_handgun_tiny_ap_sand_effect"
+        defaultRicochetedFxType:t="tracer_ricocheted_small_effect"
+        defaultRicochetedFxChance:r=0.3
+        defaultRicochetedFxVelocity:r=10
+        defaultRicochetedFxAngularSpeed:r=5
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="hit_handgun_tiny_ap_wood_effect"
+            penetrationFx:t="hit_handgun_tiny_ap_wood_effect"
+            ricochetFx:t="hit_handgun_tiny_ap_wood_effect"
+          }
+
+          "group__mud:object"{
+            fx:t="hit_handgun_tiny_ap_mud_effect"
+            penetrationFx:t="hit_handgun_tiny_ap_mud_effect"
+            ricochetFx:t="hit_handgun_tiny_ap_mud_effect"
+          }
+
+          "group__dirt:object"{
+            fx:t="hit_handgun_tiny_ap_sand_effect"
+            penetrationFx:t="hit_handgun_tiny_ap_sand_effect"
+            ricochetFx:t="hit_handgun_tiny_ap_sand_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="hit_handgun_tiny_ap_metal_effect"
+            penetrationFx:t="hit_handgun_tiny_ap_metal_effect"
+            ricochetFx:t="hit_ricochet_tiny_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="hit_handgun_tiny_ap_stone_effect"
+            penetrationFx:t="hit_handgun_tiny_ap_stone_effect"
+            ricochetFx:t="hit_handgun_tiny_ap_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="hit_handgun_tiny_ap_snow_effect"
+            penetrationFx:t="hit_handgun_tiny_ap_snow_effect"
+            ricochetFx:t="hit_handgun_tiny_ap_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="hit_water_bullet_effect"
+            penetrationFx:t="hit_water_bullet_effect"
+            ricochetFx:t="hit_water_medium_effect"
+          }
+
+          "glass:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t=""
+            penetrationFx:t=""
+          }
+
+          "changedFlesh:object"{
+            fx:t="hit_blood_entry_black_effect"
+            penetrationFx:t="hit_blood_entry_black_effect"
+          }
+
+          "invisibleManFlesh:object"{
+            fx:t="hit_blood_entry_black_effect"
+            penetrationFx:t="hit_blood_entry_black_effect"
+          }
+
+          "flowermanFlesh:object"{
+            fx:t="hit_blood_entry_flower_effect"
+            penetrationFx:t="hit_blood_entry_flower_effect"
+          }
+
+          "fabric:object"{
+            fx:t="hit_basic_cloth_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="hit_basic_bush_green_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="hit_basic_bush_fall_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="hit_basic_bush_palm_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="hit_basic_bush_dead_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="hit_basic_bush_snow_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+
+          "cactus:object"{
+            fx:t="hit_basic_cactus_effect"
+            penetrationFx:t="hit_basic_cactus_effect"
+          }
+
+          "hay:object"{
+            fx:t="hit_basic_hay_effect"
+            penetrationFx:t="hit_basic_hay_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="small"
+        defaultFx:t="hit_handgun_small_ap_sand_effect"
+        defaultPenetrationFx:t="hit_handgun_tiny_ap_sand_effect"
+        defaultRicochetFx:t="hit_handgun_tiny_ap_sand_effect"
+        defaultRicochetedFxType:t="tracer_ricocheted_small_effect"
+        defaultRicochetedFxChance:r=0.3
+        defaultRicochetedFxVelocity:r=10
+        defaultRicochetedFxAngularSpeed:r=5
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="hit_handgun_small_ap_wood_effect"
+            penetrationFx:t="hit_handgun_tiny_ap_wood_effect"
+            ricochetFx:t="hit_handgun_tiny_ap_wood_effect"
+          }
+
+          "group__mud:object"{
+            fx:t="hit_handgun_small_ap_mud_effect"
+            penetrationFx:t="hit_handgun_tiny_ap_mud_effect"
+            ricochetFx:t="hit_handgun_tiny_ap_mud_effect"
+          }
+
+          "group__dirt:object"{
+            fx:t="hit_handgun_small_ap_sand_effect"
+            penetrationFx:t="hit_handgun_tiny_ap_sand_effect"
+            ricochetFx:t="hit_handgun_tiny_ap_sand_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="hit_handgun_small_ap_metal_effect"
+            penetrationFx:t="hit_handgun_tiny_ap_metal_effect"
+            ricochetFx:t="hit_ricochet_tiny_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="hit_handgun_small_ap_stone_effect"
+            penetrationFx:t="hit_handgun_tiny_ap_stone_effect"
+            ricochetFx:t="hit_handgun_tiny_ap_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="hit_handgun_small_ap_snow_effect"
+            penetrationFx:t="hit_handgun_tiny_ap_snow_effect"
+            ricochetFx:t="hit_handgun_tiny_ap_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="hit_water_bullet_effect"
+            penetrationFx:t="hit_water_bullet_effect"
+            ricochetFx:t="hit_water_medium_effect"
+          }
+
+          "glass:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t=""
+            penetrationFx:t=""
+          }
+
+          "changedFlesh:object"{
+            fx:t="hit_blood_entry_black_effect"
+            penetrationFx:t="hit_blood_entry_black_effect"
+          }
+
+          "invisibleManFlesh:object"{
+            fx:t="hit_blood_entry_black_effect"
+            penetrationFx:t="hit_blood_entry_black_effect"
+          }
+
+          "flowermanFlesh:object"{
+            fx:t="hit_blood_entry_flower_effect"
+            penetrationFx:t="hit_blood_entry_flower_effect"
+          }
+
+          "fabric:object"{
+            fx:t="hit_basic_cloth_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="hit_basic_bush_green_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="hit_basic_bush_fall_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="hit_basic_bush_palm_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="hit_basic_bush_dead_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="hit_basic_bush_snow_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+
+          "cactus:object"{
+            fx:t="hit_basic_cactus_effect"
+            penetrationFx:t="hit_basic_cactus_effect"
+          }
+
+          "hay:object"{
+            fx:t="hit_basic_hay_effect"
+            penetrationFx:t="hit_basic_hay_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="medium"
+        defaultFx:t="hit_handgun_med_ap_sand_effect"
+        defaultPenetrationFx:t="hit_handgun_small_ap_sand_effect"
+        defaultRicochetFx:t="hit_handgun_small_ap_sand_effect"
+        defaultRicochetedFxType:t="tracer_ricocheted_small_effect"
+        defaultRicochetedFxChance:r=0.3
+        defaultRicochetedFxVelocity:r=10
+        defaultRicochetedFxAngularSpeed:r=5
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="hit_handgun_med_ap_wood_effect"
+            penetrationFx:t="hit_handgun_small_ap_wood_effect"
+            ricochetFx:t="hit_handgun_small_ap_wood_effect"
+          }
+
+          "group__mud:object"{
+            fx:t="hit_handgun_med_ap_mud_effect"
+            penetrationFx:t="hit_handgun_small_ap_mud_effect"
+            ricochetFx:t="hit_handgun_small_ap_mud_effect"
+          }
+
+          "group__dirt:object"{
+            fx:t="hit_handgun_med_ap_sand_effect"
+            penetrationFx:t="hit_handgun_small_ap_sand_effect"
+            ricochetFx:t="hit_handgun_small_ap_sand_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="hit_handgun_med_ap_metal_effect"
+            penetrationFx:t="hit_handgun_small_ap_metal_effect"
+            ricochetFx:t="hit_ricochet_tiny_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="hit_handgun_med_ap_stone_effect"
+            penetrationFx:t="hit_handgun_small_ap_stone_effect"
+            ricochetFx:t="hit_handgun_small_ap_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="hit_handgun_med_ap_snow_effect"
+            penetrationFx:t="hit_handgun_small_ap_snow_effect"
+            ricochetFx:t="hit_handgun_small_ap_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="hit_water_bullet_effect"
+            penetrationFx:t="hit_water_bullet_effect"
+            ricochetFx:t="hit_water_bullet_effect"
+          }
+
+          "glass:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t=""
+            penetrationFx:t=""
+          }
+
+          "changedFlesh:object"{
+            fx:t="hit_blood_entry_black_effect"
+            penetrationFx:t="hit_blood_entry_black_effect"
+          }
+
+          "invisibleManFlesh:object"{
+            fx:t="hit_blood_entry_black_effect"
+            penetrationFx:t="hit_blood_entry_black_effect"
+          }
+
+          "flowermanFlesh:object"{
+            fx:t="hit_blood_entry_flower_effect"
+            penetrationFx:t="hit_blood_entry_flower_effect"
+          }
+
+          "fabric:object"{
+            fx:t="hit_basic_cloth_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="hit_basic_bush_green_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="hit_basic_bush_fall_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="hit_basic_bush_palm_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="hit_basic_bush_dead_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="hit_basic_bush_snow_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+
+          "cactus:object"{
+            fx:t="hit_basic_cactus_effect"
+            penetrationFx:t="hit_basic_cactus_effect"
+          }
+
+          "hay:object"{
+            fx:t="hit_basic_hay_effect"
+            penetrationFx:t="hit_basic_hay_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="big"
+        defaultFx:t="hit_handgun_big_ap_sand_effect"
+        defaultPenetrationFx:t="hit_handgun_med_ap_sand_effect"
+        defaultRicochetFx:t="hit_handgun_med_ap_sand_effect"
+        defaultRicochetedFxType:t="tracer_ricocheted_small_effect"
+        defaultRicochetedFxChance:r=0.3
+        defaultRicochetedFxVelocity:r=10
+        defaultRicochetedFxAngularSpeed:r=5
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="hit_handgun_big_ap_wood_effect"
+            penetrationFx:t="hit_handgun_med_ap_wood_effect"
+            ricochetFx:t="hit_handgun_med_ap_wood_effect"
+          }
+
+          "group__mud:object"{
+            fx:t="hit_handgun_big_ap_mud_effect"
+            penetrationFx:t="hit_handgun_med_ap_mud_effect"
+            ricochetFx:t="hit_handgun_med_ap_mud_effect"
+          }
+
+          "group__dirt:object"{
+            fx:t="hit_handgun_big_ap_sand_effect"
+            penetrationFx:t="hit_handgun_med_ap_sand_effect"
+            ricochetFx:t="hit_handgun_med_ap_sand_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="hit_handgun_big_ap_metal_effect"
+            penetrationFx:t="hit_handgun_med_ap_metal_effect"
+            ricochetFx:t="hit_ricochet_tiny_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="hit_handgun_big_ap_stone_effect"
+            penetrationFx:t="hit_handgun_med_ap_stone_effect"
+            ricochetFx:t="hit_handgun_med_ap_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="hit_handgun_big_ap_snow_effect"
+            penetrationFx:t="hit_handgun_med_ap_snow_effect"
+            ricochetFx:t="hit_handgun_med_ap_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="hit_water_medium_big_effect"
+            penetrationFx:t="hit_water_medium_big_effect"
+            ricochetFx:t="hit_water_bullet_effect"
+          }
+
+          "glass:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t=""
+            penetrationFx:t=""
+          }
+
+          "changedFlesh:object"{
+            fx:t="hit_blood_entry_black_effect"
+            penetrationFx:t="hit_blood_entry_black_effect"
+          }
+
+          "invisibleManFlesh:object"{
+            fx:t="hit_blood_entry_black_effect"
+            penetrationFx:t="hit_blood_entry_black_effect"
+          }
+
+          "flowermanFlesh:object"{
+            fx:t="hit_blood_entry_flower_effect"
+            penetrationFx:t="hit_blood_entry_flower_effect"
+          }
+
+          "fabric:object"{
+            fx:t="hit_basic_cloth_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="hit_basic_bush_green_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="hit_basic_bush_fall_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="hit_basic_bush_palm_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="hit_basic_bush_dead_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="hit_basic_bush_snow_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+
+          "cactus:object"{
+            fx:t="hit_basic_cactus_effect"
+            penetrationFx:t="hit_basic_cactus_effect"
+          }
+        }
+
+        "hay:object"{
+          fx:t="hit_basic_hay_effect"
+          penetrationFx:t="hit_basic_hay_effect"
+        }
+      }
+
+      "group:object"{
+        name:t="20_60mm_rapid"
+        defaultFx:t="hit_20_60mm_rapid_sand_effect"
+        defaultPenetrationFx:t="hit_handgun_big_ap_sand_effect"
+        defaultRicochetFx:t="hit_handgun_big_ap_sand_effect"
+        defaultRicochetedFxType:t="tracer_ricocheted_small_effect"
+        defaultRicochetedFxChance:r=0.3
+        defaultRicochetedFxVelocity:r=10
+        defaultRicochetedFxAngularSpeed:r=5
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="hit_20_60mm_rapid_wood_effect"
+            penetrationFx:t="hit_handgun_big_ap_wood_effect"
+            ricochetFx:t="hit_handgun_big_ap_wood_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="hit_20_60mm_rapid_metal_effect"
+            penetrationFx:t="hit_handgun_big_ap_metal_effect"
+            ricochetFx:t="hit_ricochet_tiny_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="hit_20_60mm_rapid_stone_effect"
+            penetrationFx:t="hit_handgun_big_ap_stone_effect"
+            ricochetFx:t="hit_handgun_big_ap_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="hit_20_60mm_rapid_snow_effect"
+            penetrationFx:t="hit_handgun_big_ap_snow_effect"
+            ricochetFx:t="hit_handgun_big_ap_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="hit_water_medium_big_effect"
+            penetrationFx:t="hit_water_medium_big_effect"
+            ricochetFx:t="hit_water_bullet_effect"
+          }
+
+          "glass:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t=""
+            penetrationFx:t=""
+          }
+
+          "fabric:object"{
+            fx:t="hit_basic_cloth_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="hit_basic_bush_green_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="hit_basic_bush_fall_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="hit_basic_bush_palm_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="hit_basic_bush_dead_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="hit_basic_bush_snow_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+
+          "cactus:object"{
+            fx:t="hit_basic_cactus_effect"
+            penetrationFx:t="hit_basic_cactus_effect"
+          }
+
+          "hay:object"{
+            fx:t="hit_basic_hay_effect"
+            penetrationFx:t="hit_basic_hay_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="20_60mm_smoke"
+        defaultFx:t="explosion_grenades_smoke_shell_effect"
+        defaultPenetrationFx:t="hit_20_60mm_rapid_sand_effect"
+        defaultRicochetFx:t="hit_20_60mm_rapid_sand_effect"
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_rapid_wood_effect"
+            ricochetFx:t="hit_20_60mm_rapid_wood_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_rapid_metal_effect"
+            ricochetFx:t="hit_ricochet_small_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_rapid_stone_effect"
+            ricochetFx:t="hit_20_60mm_rapid_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_rapid_snow_effect"
+            ricochetFx:t="hit_20_60mm_rapid_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_water_medium_big_effect"
+            ricochetFx:t="hit_water_medium_big_effect"
+          }
+
+          "glass:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t=""
+          }
+
+          "fabric:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="20_60mm_he"
+        defaultFx:t="hit_20_60mm_he_sand_effect"
+        defaultPenetrationFx:t="hit_20_60mm_rapid_sand_effect"
+        defaultRicochetFx:t="hit_20_60mm_rapid_sand_effect"
+        defaultRicochetedFxType:t="tracer_ricocheted_medium_effect"
+        defaultRicochetedFxChance:r=0.5
+        defaultRicochetedFxVelocity:r=12
+        defaultRicochetedFxAngularSpeed:r=5
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="hit_20_60mm_he_wood_effect"
+            penetrationFx:t="hit_20_60mm_rapid_wood_effect"
+            ricochetFx:t="hit_20_60mm_rapid_wood_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="hit_20_60mm_he_metal_effect"
+            penetrationFx:t="hit_20_60mm_rapid_metal_effect"
+            ricochetFx:t="hit_ricochet_small_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="hit_20_60mm_he_stone_effect"
+            penetrationFx:t="hit_20_60mm_rapid_stone_effect"
+            ricochetFx:t="hit_20_60mm_rapid_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="hit_20_60mm_he_snow_effect"
+            penetrationFx:t="hit_20_60mm_rapid_snow_effect"
+            ricochetFx:t="hit_20_60mm_rapid_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="hit_water_big_effect"
+            penetrationFx:t="hit_water_big_effect"
+            ricochetFx:t="hit_water_medium_big_effect"
+          }
+
+          "glass:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t="hit_20_60mm_he_sand_effect"
+            penetrationFx:t=""
+          }
+
+          "fabric:object"{
+            fx:t="hit_basic_cloth_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="hit_basic_bush_green_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="hit_basic_bush_fall_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="hit_basic_bush_palm_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="hit_basic_bush_dead_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="hit_basic_bush_snow_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+
+          "cactus:object"{
+            fx:t="hit_basic_cactus_effect"
+            penetrationFx:t="hit_basic_cactus_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="20_60mm_ap"
+        defaultFx:t="hit_20_60mm_ap_sand_effect"
+        defaultPenetrationFx:t="hit_20_60mm_rapid_sand_effect"
+        defaultRicochetFx:t="hit_20_60mm_rapid_sand_effect"
+        defaultRicochetedFxType:t="tracer_ricocheted_medium_effect"
+        defaultRicochetedFxChance:r=0.5
+        defaultRicochetedFxVelocity:r=12
+        defaultRicochetedFxAngularSpeed:r=5
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="hit_20_60mm_ap_wood_effect"
+            penetrationFx:t="hit_20_60mm_rapid_wood_effect"
+            ricochetFx:t="hit_20_60mm_rapid_wood_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="hit_20_60mm_ap_metal_effect"
+            penetrationFx:t="hit_20_60mm_rapid_metal_effect"
+            ricochetFx:t="hit_ricochet_small_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="hit_20_60mm_ap_stone_effect"
+            penetrationFx:t="hit_20_60mm_rapid_stone_effect"
+            ricochetFx:t="hit_20_60mm_rapid_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="hit_20_60mm_ap_snow_effect"
+            penetrationFx:t="hit_20_60mm_rapid_snow_effect"
+            ricochetFx:t="hit_20_60mm_rapid_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="hit_water_medium_big_effect"
+            penetrationFx:t="hit_water_medium_big_effect"
+            ricochetFx:t="hit_water_medium_big_effect"
+          }
+
+          "glass:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t=""
+            penetrationFx:t=""
+          }
+
+          "fabric:object"{
+            fx:t="hit_basic_cloth_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="hit_basic_bush_green_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="hit_basic_bush_fall_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="hit_basic_bush_palm_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="hit_basic_bush_dead_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="hit_basic_bush_snow_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+
+          "cactus:object"{
+            fx:t="hit_basic_cactus_effect"
+            penetrationFx:t="hit_basic_cactus_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="60_100mm_smoke"
+        defaultFx:t="explosion_grenades_smoke_shell_effect"
+        defaultPenetrationFx:t="hit_20_60mm_ap_sand_effect"
+        defaultRicochetFx:t="hit_20_60mm_ap_sand_effect"
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_ap_wood_effect"
+            ricochetFx:t="hit_20_60mm_ap_wood_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_ap_metal_effect"
+            ricochetFx:t="hit_ricochet_med_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_ap_stone_effect"
+            ricochetFx:t="hit_20_60mm_ap_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_ap_snow_effect"
+            ricochetFx:t="hit_20_60mm_ap_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_water_medium_big_effect"
+            ricochetFx:t="hit_water_medium_big_effect"
+          }
+
+          "glass:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t=""
+          }
+
+          "fabric:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="60_100mm_he"
+        defaultFx:t="hit_60_100mm_he_sand_effect"
+        defaultPenetrationFx:t="hit_20_60mm_ap_sand_effect"
+        defaultRicochetFx:t="hit_20_60mm_ap_sand_effect"
+        defaultRicochetedFxType:t="tracer_ricocheted_medium_effect"
+        defaultRicochetedFxChance:r=0.5
+        defaultRicochetedFxVelocity:r=14
+        defaultRicochetedFxAngularSpeed:r=5
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="hit_60_100mm_he_wood_effect"
+            penetrationFx:t="hit_20_60mm_ap_wood_effect"
+            ricochetFx:t="hit_20_60mm_ap_wood_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="hit_60_100mm_he_metal_effect"
+            penetrationFx:t="hit_20_60mm_ap_metal_effect"
+            ricochetFx:t="hit_ricochet_med_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="hit_60_100mm_he_stone_effect"
+            penetrationFx:t="hit_20_60mm_ap_stone_effect"
+            ricochetFx:t="hit_20_60mm_ap_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="hit_60_100mm_he_snow_effect"
+            penetrationFx:t="hit_20_60mm_ap_snow_effect"
+            ricochetFx:t="hit_20_60mm_ap_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="hit_water_big_effect"
+            penetrationFx:t="hit_water_big_effect"
+            ricochetFx:t="hit_water_medium_big_effect"
+          }
+
+          "glass:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t="hit_60_100mm_he_sand_effect"
+            penetrationFx:t=""
+          }
+
+          "fabric:object"{
+            fx:t="hit_basic_cloth_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="hit_basic_bush_green_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="hit_basic_bush_fall_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="hit_basic_bush_palm_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="hit_basic_bush_dead_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="hit_basic_bush_snow_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+
+          "cactus:object"{
+            fx:t="hit_basic_cactus_effect"
+            penetrationFx:t="hit_basic_cactus_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="60_100mm_ap"
+        defaultFx:t="hit_60_100mm_ap_sand_effect"
+        defaultPenetrationFx:t="hit_20_60mm_ap_sand_effect"
+        defaultRicochetFx:t="hit_20_60mm_ap_sand_effect"
+        defaultRicochetedFxType:t="tracer_ricocheted_medium_effect"
+        defaultRicochetedFxChance:r=0.5
+        defaultRicochetedFxVelocity:r=14
+        defaultRicochetedFxAngularSpeed:r=5
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="hit_60_100mm_ap_wood_effect"
+            penetrationFx:t="hit_20_60mm_ap_wood_effect"
+            ricochetFx:t="hit_20_60mm_ap_wood_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="hit_60_100mm_ap_metal_effect"
+            penetrationFx:t="hit_20_60mm_ap_metal_effect"
+            ricochetFx:t="hit_ricochet_med_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="hit_60_100mm_ap_stone_effect"
+            penetrationFx:t="hit_20_60mm_ap_stone_effect"
+            ricochetFx:t="hit_20_60mm_ap_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="hit_60_100mm_ap_snow_effect"
+            penetrationFx:t="hit_20_60mm_ap_snow_effect"
+            ricochetFx:t="hit_20_60mm_ap_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="hit_water_medium_big_effect"
+            penetrationFx:t="hit_water_medium_big_effect"
+            ricochetFx:t="hit_water_medium_big_effect"
+          }
+
+          "glass:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t=""
+            penetrationFx:t=""
+          }
+
+          "fabric:object"{
+            fx:t="hit_basic_cloth_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="hit_basic_bush_green_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="hit_basic_bush_fall_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="hit_basic_bush_palm_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="hit_basic_bush_dead_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="hit_basic_bush_snow_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+
+          "cactus:object"{
+            fx:t="hit_basic_cactus_effect"
+            penetrationFx:t="hit_basic_cactus_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="100_150mm_smoke"
+        defaultFx:t="explosion_grenades_smoke_shell_effect"
+        defaultPenetrationFx:t="hit_20_60mm_ap_sand_effect"
+        defaultRicochetFx:t="hit_20_60mm_ap_sand_effect"
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_ap_wood_effect"
+            ricochetFx:t="hit_20_60mm_ap_wood_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_ap_metal_effect"
+            ricochetFx:t="hit_ricochet_med_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_ap_stone_effect"
+            ricochetFx:t="hit_20_60mm_ap_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_ap_snow_effect"
+            ricochetFx:t="hit_20_60mm_ap_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_water_medium_big_effect"
+            ricochetFx:t="hit_water_medium_big_effect"
+          }
+
+          "glass:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t=""
+          }
+
+          "fabric:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="100_150mm_he"
+        defaultFx:t="hit_100_150mm_he_sand_effect"
+        defaultPenetrationFx:t="hit_20_60mm_ap_sand_effect"
+        defaultRicochetFx:t="hit_20_60mm_ap_sand_effect"
+        waterSplashOnExplosion:b=yes
+        defaultRicochetedFxType:t="tracer_ricocheted_big_effect"
+        defaultRicochetedFxChance:r=0.5
+        defaultRicochetedFxVelocity:r=14
+        defaultRicochetedFxAngularSpeed:r=5
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="hit_100_150mm_he_wood_effect"
+            penetrationFx:t="hit_20_60mm_ap_wood_effect"
+            ricochetFx:t="hit_20_60mm_ap_wood_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="hit_100_150mm_he_metal_effect"
+            penetrationFx:t="hit_20_60mm_ap_metal_effect"
+            ricochetFx:t="hit_ricochet_med_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="hit_100_150mm_he_stone_effect"
+            penetrationFx:t="hit_20_60mm_ap_stone_effect"
+            ricochetFx:t="hit_20_60mm_ap_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="hit_100_150mm_he_snow_effect"
+            penetrationFx:t="hit_20_60mm_ap_snow_effect"
+            ricochetFx:t="hit_20_60mm_ap_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="hit_water_massive_effect"
+            penetrationFx:t="hit_water_massive_effect"
+            ricochetFx:t="hit_water_big_effect"
+          }
+
+          "glass:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t="hit_100_150mm_he_sand_effect"
+            penetrationFx:t=""
+          }
+
+          "fabric:object"{
+            fx:t="hit_basic_cloth_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="hit_basic_bush_green_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="hit_basic_bush_fall_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="hit_basic_bush_palm_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="hit_basic_bush_dead_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="hit_basic_bush_snow_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+
+          "cactus:object"{
+            fx:t="hit_basic_cactus_effect"
+            penetrationFx:t="hit_basic_cactus_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="100_150mm_ap"
+        defaultFx:t="hit_100_150mm_ap_sand_effect"
+        defaultPenetrationFx:t="hit_20_60mm_ap_sand_effect"
+        defaultRicochetFx:t="hit_20_60mm_ap_sand_effect"
+        defaultRicochetedFxType:t="tracer_ricocheted_big_effect"
+        defaultRicochetedFxChance:r=0.5
+        defaultRicochetedFxVelocity:r=14
+        defaultRicochetedFxAngularSpeed:r=5
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="hit_100_150mm_ap_wood_effect"
+            penetrationFx:t="hit_20_60mm_ap_wood_effect"
+            ricochetFx:t="hit_20_60mm_ap_wood_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="hit_100_150mm_ap_metal_effect"
+            penetrationFx:t="hit_20_60mm_ap_metal_effect"
+            ricochetFx:t="hit_ricochet_med_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="hit_100_150mm_ap_stone_effect"
+            penetrationFx:t="hit_20_60mm_ap_stone_effect"
+            ricochetFx:t="hit_20_60mm_ap_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="hit_100_150mm_ap_snow_effect"
+            penetrationFx:t="hit_20_60mm_ap_snow_effect"
+            ricochetFx:t="hit_20_60mm_ap_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="hit_water_big_effect"
+            penetrationFx:t="hit_water_big_effect"
+            ricochetFx:t="hit_water_big_effect"
+          }
+
+          "glass:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t=""
+            penetrationFx:t=""
+          }
+
+          "fabric:object"{
+            fx:t="hit_basic_cloth_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="hit_basic_bush_green_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="hit_basic_bush_fall_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="hit_basic_bush_palm_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="hit_basic_bush_dead_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="hit_basic_bush_snow_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+
+          "cactus:object"{
+            fx:t="hit_basic_cactus_effect"
+            penetrationFx:t="hit_basic_cactus_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="artillery_smoke"
+        defaultFx:t="explosion_grenades_smoke_shell_effect"
+        defaultPenetrationFx:t="hit_20_60mm_ap_sand_effect"
+        defaultRicochetFx:t="hit_20_60mm_ap_sand_effect"
+
+        "info:object"{
+          "group__wood:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_ap_wood_effect"
+            ricochetFx:t="hit_20_60mm_ap_wood_effect"
+          }
+
+          "group__metal:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_ap_metal_effect"
+            ricochetFx:t="hit_ricochet_med_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_ap_stone_effect"
+            ricochetFx:t="hit_20_60mm_ap_stone_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_20_60mm_ap_snow_effect"
+            ricochetFx:t="hit_20_60mm_ap_snow_effect"
+          }
+
+          "group__water:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_water_medium_big_effect"
+            ricochetFx:t="hit_water_medium_big_effect"
+          }
+
+          "glass:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t=""
+          }
+
+          "fabric:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="explosion_grenades_smoke_shell_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="artillery_he"
+        defaultFx:t="hit_artillery_sand_effect"
+        defaultPenetrationFx:t="hit_artillery_sand_effect"
+        defaultRicochetFx:t="hit_artillery_sand_effect"
+        waterSplashOnExplosion:b=yes
+
+        "info:object"{
+          "group__dirt_and_mud:object"{
+            fx:t="hit_artillery_dirt_effect"
+            penetrationFx:t="hit_artillery_dirt_effect"
+            ricochetFx:t="hit_artillery_dirt_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="hit_artillery_snow_effect"
+            penetrationFx:t="hit_artillery_snow_effect"
+            ricochetFx:t="hit_artillery_snow_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="hit_artillery_stone_effect"
+            penetrationFx:t="hit_artillery_stone_effect"
+            ricochetFx:t="hit_artillery_stone_effect"
+          }
+
+          "group__water:object"{
+            fx:t="hit_water_big_effect"
+            penetrationFx:t="hit_water_big_effect"
+            ricochetFx:t="hit_water_big_effect"
+          }
+
+          "group__wood:object"{
+            fx:t="hit_100_150mm_he_wood_effect"
+            penetrationFx:t="hit_20_60mm_ap_wood_effect"
+            ricochetFx:t="hit_20_60mm_ap_wood_effect"
+          }
+
+          "glass:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "window_wood:object"{
+            fx:t="hit_basic_glass_effect"
+            penetrationFx:t="hit_basic_glass_effect"
+          }
+
+          "flesh:object"{
+            fx:t="hit_artillery_sand_effect"
+            penetrationFx:t=""
+          }
+
+          "fabric:object"{
+            fx:t="hit_basic_cloth_effect"
+            penetrationFx:t="hit_basic_cloth_effect"
+          }
+
+          "bushes:object"{
+            fx:t="hit_basic_bush_green_effect"
+            penetrationFx:t="hit_basic_bush_green_effect"
+          }
+
+          "bushes_fall:object"{
+            fx:t="hit_basic_bush_fall_effect"
+            penetrationFx:t="hit_basic_bush_fall_effect"
+          }
+
+          "bushes_palm:object"{
+            fx:t="hit_basic_bush_palm_effect"
+            penetrationFx:t="hit_basic_bush_palm_effect"
+          }
+
+          "bushes_dead:object"{
+            fx:t="hit_basic_bush_dead_effect"
+            penetrationFx:t="hit_basic_bush_dead_effect"
+          }
+
+          "bushes_snow:object"{
+            fx:t="hit_basic_bush_snow_effect"
+            penetrationFx:t="hit_basic_bush_snow_effect"
+          }
+
+          "cactus:object"{
+            fx:t="hit_basic_cactus_effect"
+            penetrationFx:t="hit_basic_cactus_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="expl_50_100kg"
+        defaultFx:t="explosion_50_100kg_sand_effect"
+        waterSplashOnExplosion:b=yes
+
+        "info:object"{
+          "group__dirt_and_mud:object"{
+            fx:t="explosion_50_100kg_dirt_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="explosion_50_100kg_snow_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="explosion_50_100kg_stone_effect"
+          }
+
+          "group__water:object"{
+            fx:t="explosion_50_100kg_water_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="expl_100_250kg"
+        defaultFx:t="explosion_100_250kg_sand_effect"
+        waterSplashOnExplosion:b=yes
+
+        "info:object"{
+          "group__dirt_and_mud:object"{
+            fx:t="explosion_100_250kg_dirt_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="explosion_100_250kg_snow_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="explosion_100_250kg_stone_effect"
+          }
+
+          "group__water:object"{
+            fx:t="explosion_100_250kg_water_effect"
+          }
+        }
+      }
+
+      "group:object"{
+        name:t="expl_250_500kg"
+        defaultFx:t="explosion_250_500kg_sand_effect"
+        waterSplashOnExplosion:b=yes
+
+        "info:object"{
+          "group__dirt_and_mud:object"{
+            fx:t="explosion_250_500kg_dirt_effect"
+          }
+
+          "group__snow:object"{
+            fx:t="explosion_250_500kg_snow_effect"
+          }
+
+          "group__stone:object"{
+            fx:t="explosion_250_500kg_stone_effect"
+          }
+
+          "group__water:object"{
+            fx:t="explosion_250_500kg_water_effect"
+          }
+        }
+      }
+    }
+
+    "global_hit_fx__effectPresets:array"{
+      "preset:object"{
+        name:t="bomb_hit"
+        keyType:t="impulse"
+        defaultValue:t="100_150mm_ap"
+
+        "keys:list<r>"{
+          key:r=3000
+        }
+
+        "values:array"{
+          value:t="20_60mm_ap"
+        }
+      }
+
+      "preset:object"{
+        name:t="bomb_expl"
+        keyType:t="expl_mass"
+        defaultValue:t="expl_250_500kg"
+
+        "keys:list<r>"{
+          key:r=1
+          key:r=5
+          key:r=50
+          key:r=150
+        }
+
+        "values:array"{
+          value:t="60_100mm_he"
+          value:t="100_150mm_he"
+          value:t="expl_50_100kg"
+          value:t="expl_100_250kg"
+        }
+      }
+
+      "preset:object"{
+        name:t="artillery"
+        keyType:t="bullet_type"
+        defaultValue:t="artillery_he"
+
+        "keys:list<t>"{
+          key:t="smoke"
+        }
+
+        "values:array"{
+          value:t="artillery_smoke"
+        }
+      }
+
+      "preset:object"{
+        name:t="20_60mm"
+        keyType:t="bullet_type"
+        defaultValue:t="20_60mm_ap"
+
+        "keys:list<t>"{
+          key:t="smoke"
+          key:t="explosive"
+        }
+
+        "values:array"{
+          value:t="20_60mm_smoke"
+          value:t="20_60mm_he"
+        }
+      }
+
+      "preset:object"{
+        name:t="60_100mm"
+        keyType:t="bullet_type"
+        defaultValue:t="60_100mm_ap"
+
+        "keys:list<t>"{
+          key:t="smoke"
+          key:t="explosive"
+        }
+
+        "values:array"{
+          value:t="60_100mm_smoke"
+          value:t="60_100mm_he"
+        }
+      }
+
+      "preset:object"{
+        name:t="100_150mm"
+        keyType:t="bullet_type"
+        defaultValue:t="100_150mm_ap"
+
+        "keys:list<t>"{
+          key:t="smoke"
+          key:t="explosive"
+        }
+
+        "values:array"{
+          value:t="100_150mm_smoke"
+          value:t="100_150mm_he"
+        }
+      }
+
+      "preset:object"{
+        name:t="turret"
+        keyType:t="caliber"
+        defaultValue:t="preset:100_150mm"
+
+        "keys:list<r>"{
+          key:r=8
+          key:r=12
+          key:r=15
+          key:r=26
+          key:r=60
+          key:r=100
+        }
+
+        "values:array"{
+          value:t="small"
+          value:t="medium"
+          value:t="big"
+          value:t="20_60mm_rapid"
+          value:t="preset:20_60mm"
+          value:t="preset:60_100mm"
+        }
+      }
+    }
+
+    "global_shatter_fx__maxShellMasses:list<r>"{
+      mass:r=3
+      mass:r=30
+      mass:r=1e+06
+    }
+
+    "global_shatter_fx__effectGroups:list<t>"{
+      group:t="tiny"
+      group:t="small"
+      group:t="medium"
+    }
+
+    "global_shatter_fx__effectDescriptors:list<i>"{}
+    "global_hit_fx__canopyEffects:object"{
+      bushes:t="hit_basic_bush_green_effect"
+      bushes_fall:t="hit_basic_bush_fall_effect"
+      bushes_palm:t="hit_basic_bush_palm_effect"
+      bushes_dead:t="hit_basic_bush_dead_effect"
+      bushes_snow:t="hit_basic_bush_snow_effect"
+      wood:t="hit_basic_bush_green_effect"
+      wood_fall:t="hit_basic_bush_fall_effect"
+      wood_palm:t="hit_basic_bush_palm_effect"
+      wood_dead:t="hit_basic_bush_dead_effect"
+      wood_snow:t="hit_basic_bush_snow_effect"
+      wood_solid:t="hit_basic_bush_green_effect"
+      wood_fall_solid:t="hit_basic_bush_fall_effect"
+      wood_palm_solid:t="hit_basic_bush_palm_effect"
+      wood_dead_solid:t="hit_basic_bush_dead_effect"
+      wood_snow_solid:t="hit_basic_bush_snow_effect"
+    }
+
+    "global_ground_wave_fx__maxImpulses:list<r>"{
+      maxImpulse:r=10
+      maxImpulse:r=100
+      maxImpulse:r=1e+06
+    }
+
+    "global_ground_wave_fx__effectGroups:array"{
+      "group:object"{}
+      "group:object"{
+        maxDistanceFromGun:r=3
+        defaultFx:t="hit_ground_wave_medium_dirt_effect"
+
+        "info:object"{
+          group__dirt_and_mud:t="hit_ground_wave_medium_dirt_effect"
+          group__sand:t="hit_ground_wave_medium_sand_effect"
+          group__snow:t="hit_ground_wave_medium_snow_effect"
+          group__stone:t="hit_ground_wave_medium_stone_effect"
+        }
+      }
+
+      "group:object"{
+        maxDistanceFromGun:r=4
+        leavesCheckRadius:r=4
+        defaultFx:t="hit_ground_wave_big_dirt_effect"
+        grassFx:t="hit_ground_wave_big_grass_effect"
+        leavesFx:t="hit_ground_wave_big_leaves_effect"
+
+        "info:object"{
+          group__dirt_and_mud:t="hit_ground_wave_big_dirt_effect"
+          group__sand:t="hit_ground_wave_big_sand_effect"
+          group__snow:t="hit_ground_wave_big_snow_effect"
+          group__stone:t="hit_ground_wave_big_stone_effect"
+        }
+      }
+    }
+
+    "am_global_hit_fx__fleshEffects:array"{
+      "i:object"{
+        key:t="tiny"
+        hitEntryFx:t="hit_blood_handgun_tiny_entry_effect"
+        hitSideFx:t="hit_blood_flow_light_effect"
+        hitExitFx:t="hit_blood_handgun_tiny_exit_effect"
+      }
+
+      "i:object"{
+        key:t="small"
+        hitEntryFx:t="hit_blood_handgun_small_entry_effect"
+        hitSideFx:t="hit_blood_flow_light_effect"
+        hitExitFx:t="hit_blood_handgun_small_exit_effect"
+      }
+
+      "i:object"{
+        key:t="medium"
+        hitEntryFx:t="hit_blood_handgun_medium_entry_effect"
+        hitSideFx:t="hit_blood_flow_light_effect"
+        hitExitFx:t="hit_blood_handgun_medium_exit_effect"
+      }
+
+      "i:object"{
+        key:t="big"
+        hitEntryFx:t="hit_blood_handgun_big_entry_effect"
+        hitSideFx:t="hit_blood_flow_light_effect"
+        hitExitFx:t="hit_blood_handgun_big_exit_effect"
+      }
+    }
+
+    "am_global_hit_fx__projectileFleshEffectPresets:array"{
+      "i:object"{
+        key:t="tiny"
+
+        "effectsPerEnergy:array"{
+          "i:object"{
+            upToEnergy:r=500
+            effectKey:t="tiny"
+          }
+
+          "i:object"{
+            effectKey:t="small"
+          }
+        }
+      }
+
+      "i:object"{
+        key:t="small"
+
+        "effectsPerEnergy:array"{
+          "i:object"{
+            upToEnergy:r=1000
+            effectKey:t="small"
+          }
+
+          "i:object"{
+            effectKey:t="medium"
+          }
+        }
+      }
+
+      "i:object"{
+        key:t="medium"
+
+        "effectsPerEnergy:array"{
+          "i:object"{
+            upToEnergy:r=5000
+            effectKey:t="medium"
+          }
+
+          "i:object"{
+            effectKey:t="big"
+          }
+        }
+      }
+
+      "i:object"{
+        key:t="big"
+
+        "effectsPerEnergy:array"{
+          "i:object"{
+            effectKey:t="big"
+          }
+        }
+      }
+    }
+  }
+}
+
+shatter_fx{
+  _tags:t="render"
+  shatter_fx__traceCount:i=0
+  shatter_fx__traceCountPerFrame:i=3
+  shatter_fx__explosionOffsettedPos:p3=0, 0, 0
+  shatter_fx__effectDescriptor:i=0
+  shatter_fx__explosionNorm:p3=0, 0, 0
+  shatter_fx__belowExplosionProbability:r=0.5
+  shatter_fx__belowExplosionMinTheta:r=0
+  shatter_fx__belowExplosionMaxTheta:r=0
+  shatter_fx__minRadius:r=0
+  shatter_fx__radius:r=0
+}
+
+hit_effect_flesh_base{
+  gun_hit_fx__fleshPresetKey:t=""
+  gun_hit_fx__fleshPresetIndex:i=-1
+}
+
+hit_effect_flesh_tiny{
+  _use:t="hit_effect_flesh_base"
+  gun_hit_fx__fleshPresetKey:t="tiny"
+}
+
+hit_effect_flesh_small{
+  _use:t="hit_effect_flesh_base"
+  gun_hit_fx__fleshPresetKey:t="small"
+}
+
+hit_effect_flesh_medium{
+  _use:t="hit_effect_flesh_base"
+  gun_hit_fx__fleshPresetKey:t="medium"
+}
+
+hit_effect_flesh_big{
+  _use:t="hit_effect_flesh_base"
+  gun_hit_fx__fleshPresetKey:t="big"
+}
+
+hit_effect_group_tiny{
+  _use:t="hit_effect_flesh_tiny"
+  gun_hit_fx__hitEffectGroupName:t="tiny"
+  gun_hit_fx__hitEffectDescriptor:i=0
+  gun_hit_fx__fleshEffectCaliberGroup:r=6
+}
+
+hit_effect_group_small{
+  _use:t="hit_effect_flesh_small"
+  gun_hit_fx__hitEffectGroupName:t="small"
+  gun_hit_fx__hitEffectDescriptor:i=0
+  gun_hit_fx__fleshEffectCaliberGroup:r=8
+}
+
+hit_effect_group_medium{
+  _use:t="hit_effect_flesh_medium"
+  gun_hit_fx__hitEffectGroupName:t="medium"
+  gun_hit_fx__hitEffectDescriptor:i=0
+  gun_hit_fx__fleshEffectCaliberGroup:r=12
+}
+
+hit_effect_group_big{
+  _use:t="hit_effect_flesh_big"
+  gun_hit_fx__hitEffectGroupName:t="medium"
+  gun_hit_fx__hitEffectDescriptor:i=0
+  gun_hit_fx__fleshEffectCaliberGroup:r=12
+}
+
+hit_effect_group_melee{
+  _tags:t="render"
+  melee_fx__default:t="hit_melee_wood_effect"
+
+  "melee_fx__info:object"{
+    buildings:t="hit_melee_sand_effect"
+    cactus:t="hit_basic_cactus_effect"
+    ceramic:t="hit_melee_stone_effect"
+    changedFlesh:t="hit_blood_entry_black_effect"
+    concrete:t="hit_melee_stone_effect"
+    dirt:t="hit_melee_sand_effect"
+    fabric:t="hit_melee_sand_effect"
+    flesh:t="hit_blood_entry_effect"
+    glass:t="hit_basic_glass_effect"
+    ice:t="hit_melee_snow_effect"
+    invisibleManFlesh:t="hit_blood_entry_black_effect"
+    flowermanFlesh:t="hit_blood_entry_flower_effect"
+    metal_grid:t="hit_melee_metal_effect"
+    metal:t="hit_melee_metal_effect"
+    mud:t="hit_melee_mud_effect"
+    sand:t="hit_melee_sand_effect"
+    snow:t="hit_melee_snow_effect"
+    softSteelDoor:t="hit_melee_metal_effect"
+    softWoodDoor:t="hit_melee_wood_effect"
+    soil:t="hit_melee_sand_effect"
+    steel:t="hit_melee_metal_effect"
+    stone:t="hit_melee_stone_effect"
+    train:t="hit_melee_metal_effect"
+    water3d:t="hit_melee_snow_effect"
+    window_wood:t="hit_melee_wood_effect"
+    wood_railway:t="hit_melee_wood_effect"
+    wood:t="hit_melee_wood_effect"
+  }
+}

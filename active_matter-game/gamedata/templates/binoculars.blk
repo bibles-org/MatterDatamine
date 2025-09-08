@@ -1,0 +1,215 @@
+binoculars_net_phys{
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    human_inventory__canUseItems:b=yes
+    human_net_phys__canClimb:b=yes
+    human_net_phys__canJump:b=yes
+    human_net_phys__canSprint:b=yes
+    human_net_phys__canCrawl:b=yes
+  }
+}
+
+binoculars_controller_client{
+  _group{
+    _tags:t="gameClient"
+    binoculars_controller_client__fadeActive:b=no
+    binoculars_controller_client__fadeColor:c=5, 7, 5, 255
+  }
+}
+
+binoculars_controller{
+  _use:t="binoculars_net_phys"
+  _use:t="binoculars_controller_client"
+  binoculars_controller__useState:i=0
+  _tracked:t="binoculars_controller__useState"
+  _replicated:t="binoculars_controller__useState"
+  binoculars_controller__useProgress:r=0
+  binoculars_controller__useInOutSpeed:p2=2, 2.4
+  binoculars_controller__useAffectTemplate:t="binoculars_use_game_effect"
+  binoculars_controller__useProgressToStartWatchingSM:r=0.5
+  binoculars_controller__useProgressWatchingStart:r=1
+  binoculars_controller__useProgressOutStart:r=2
+  binoculars_controller__useProgressDownIdleStart:r=3
+  binoculars_controller__useProgressEnd:r=4
+  binoculars_controller__useRequest:b=no
+  _tracked:t="binoculars_controller__useRequest"
+  _replicated:t="binoculars_controller__useRequest"
+  binoculars_controller__watchingRequest:b=yes
+  _tracked:t="binoculars_controller__watchingRequest"
+  _replicated:t="binoculars_controller__watchingRequest"
+  binoculars_controller__watchingBlocked:b=no
+  _tracked:t="binoculars_controller__watchingBlocked"
+  _replicated:t="binoculars_controller__watchingBlocked"
+  binoculars_controller__watchingBlockedUntil:r=-1
+  _tracked:t="binoculars_controller__attachedAnimcharEid"
+  _replicated:t="binoculars_controller__attachedAnimcharEid"
+  binoculars_controller__watchingState:i=0
+  _tracked:t="binoculars_controller__watchingState"
+  _replicated:t="binoculars_controller__watchingState"
+  binoculars_controller__watchingNextStateAt:r=-1
+  binoculars_controller__watchingFadeInIdleOutTime:p3=0.35, 0.075, 0.35
+
+  "binoculars_controller__useAffectEid:eid"{}
+  "binoculars_controller__attachedAnimcharEid:eid"{}
+  "binoculars_controller__binocularsAffectEid:eid"{}
+}
+
+binoculars_attached_animchar{
+  _use:t="replicating"
+  _use:t="slot_attachable"
+  _use:t="animchar"
+  _use:t="human_anim_threephase_action"
+  animchar__res:t="digital_binoculars_char"
+  slot_attach__slotName:t="weapon"
+  binoculars_attached_animchar__cameraViewNode:t="weapon"
+  binoculars_attached_animchar__cameraViewNodeId:i=-1
+  binoculars_attached_animchar__cameraViewNodeOffset:p3=0, -0.2, 0
+  slot_attach__visible:b=no
+  _tracked:t="slot_attach__visible"
+  _replicated:t="slot_attach__visible"
+  animchar_render__enabled:b=no
+
+  phys_vars{}
+  anim_phys{}
+  "slot_attach__followEffectAttach:tag"{}
+  "binoculars_attached_animchar:tag"{}
+  "attachmentUpdate:tag"{}
+}
+
+binoculars_use_game_effect{
+  _use:t="replicated_game_effect"
+  game_effect__forceAnimUpperState:t="use_binoculars"
+  game_effect__forceAnimUpperStateId:i=-1
+  game_effect__enableFlag:t="human_use_object__lockVehicleUse"
+
+  "binoculars_use_game_effect:tag"{}
+  "game_effect__activateUnarmed:tag"{}
+  "game_effect__hiddenWeapon:tag"{}
+  "locked_weapon__reload:tag"{}
+  "locked_weapon__aim:tag"{}
+  "locked_view__lockZoom:tag"{}
+  "game_effect__disableActions:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockSprayDraw:tag"{}
+  "locked_use_object__lockSprayFill:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "locked_use_object__lockGrenadeRethrowing:tag"{}
+  "locked_use_object__lockVehicleUse:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_use_object__limitJetpackUse:tag"{}
+  "game_effect__disableFlags:list<t>"{
+    item:t="human_inventory__canUseItems"
+    item:t="human_net_phys__canClimb"
+    item:t="human_net_phys__canSprint"
+    item:t="human_net_phys__canCrawl"
+  }
+
+  "game_effect__disableShooting:tag"{}
+  "game_effect__disableMelee:tag"{}
+}
+
+base_binoculars_item{
+  _use:t="item"
+  _use:t="base_equipment_mod"
+  binoculars_item__attachedAnimcharTemplate:t="binoculars_attached_animchar"
+  binoculars_item__binocularsAffectTemplate:t=""
+  binoculars_item__useRequestBlockedUntil:r=-1
+  _replicated:t="binoculars_item__useRequestBlockedUntil"
+  item__lootType:t="item"
+  item__unarmedUsage:b=yes
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+
+  "binoculars_item:tag"{}
+  "item__customDoubleUseCall:tag"{}
+  "item__closeInventoryOnUsage:tag"{}
+  "item__ignoreShootInputInterrupt:tag"{}
+  "item__ignoreMeleeInputInterrupt:tag"{}
+  "item__ignoreZoomViewInputInterrupt:tag"{}
+  "item__isDirectlyUsable:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "item__notConsumedWhenUsed:tag"{}
+  "item__interruptOnCrawl:tag"{}
+  "item__incompatibleWithNightVisionDevice:tag"{}
+}
+
+binoculars_watching_affect{
+  _use:t="replicated_game_effect"
+  human_cam_magnification_affect__magnification:r=8
+  postfx_vignette_affect__factor:r=0.75
+
+  "game_effect__colorGrading:object"{
+    colorContrast:p4=1, 1, 1, 0.9
+    colorGain:p4=1, 1, 1, 1
+    colorGamma:p4=1, 1, 1, 0.94
+    colorSaturation:p4=1, 1, 1, 0.75
+    _tags:t="render"
+  }
+}
+
+binoculars_item{
+  _use:t="base_binoculars_item"
+  item__name:t="items/binoculars_item"
+  item__proto:t="binoculars_item"
+  animchar__res:t="digital_binoculars_char"
+  collres__res:t="digital_binoculars_collision"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  binoculars_item__binocularsAffectTemplate:t="binoculars_watching_affect"
+  item__volume:r=3
+  item__weight:r=1
+  item__marketPrice:i=600
+  item__iconYaw:r=155
+  item__iconPitch:r=0
+  item__iconRoll:r=15
+}
+
+b7_binoculars_watching_affect{
+  _use:t="binoculars_watching_affect"
+  human_cam_magnification_affect__magnification:r=7
+  postfx_vignette_affect__factor:r=0.9
+}
+
+b7_binoculars_item{
+  _use:t="binoculars_item"
+  item__name:t="items/b7_binoculars_item"
+  item__proto:t="b7_binoculars_item"
+  animchar__res:t="b7_binoculars_char"
+  collres__res:t="b7_binoculars_collision"
+  binoculars_item__binocularsAffectTemplate:t="b7_binoculars_watching_affect"
+  item__volume:r=4
+  item__weight:r=1.38
+  item__marketPrice:i=460
+  item__iconPitch:r=20
+  item__iconRoll:r=50
+  item__iconYaw:r=20
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "item__chronotracesProgressionInfo:object"{
+    "repeatedly:object"{
+      extract:i=100
+    }
+  }
+}
+
+modern_binoculars_watching_affect{
+  _use:t="binoculars_watching_affect"
+  human_cam_magnification_affect__magnification:r=10
+  postfx_vignette_affect__factor:r=0.9
+}
+
+modern_binoculars_item{
+  _use:t="binoculars_item"
+  item__name:t="items/modern_binoculars_item"
+  item__proto:t="modern_binoculars_item"
+  animchar__res:t="item_binoculars_char"
+  collres__res:t="item_binoculars_collision"
+  binoculars_item__binocularsAffectTemplate:t="modern_binoculars_watching_affect"
+  item__volume:r=4
+  item__weight:r=1.2
+  item__marketPrice:i=460
+  item__iconPitch:r=20
+  item__iconRoll:r=50
+  item__iconYaw:r=20
+  profile_server_data__enrichmentResearchAddChance:r=1
+}

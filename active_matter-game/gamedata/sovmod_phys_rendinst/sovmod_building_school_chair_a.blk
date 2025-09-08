@@ -1,0 +1,27 @@
+mass:r=3
+momentOfInertia:p3=1, 0.1, 0.1
+centerOfMass:p3=-0.05, 0.3, 0
+physMat:t="bulletRay"
+useFutureContacts:b=yes
+logCCD:b=no
+addToWorld:b=yes
+skipUpdateOnSleep:b=yes
+sleepUpdateFrequency:i=0
+physLayer:i=8
+physMask:i=2
+
+collisionResource{
+  props{
+    customBoxCollisions{
+      box{
+        minPoint:p3=-0.19, 0, -0.16
+        maxPoint:p3=0.2, 0.37, 0.16
+      }
+
+      box{
+        minPoint:p3=-0.22, 0.3, -0.16
+        maxPoint:p3=-0.16, 0.66, 0.16
+      }
+    }
+  }
+}

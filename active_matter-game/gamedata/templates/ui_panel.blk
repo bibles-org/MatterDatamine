@@ -1,0 +1,17 @@
+ui_panel{
+  panel_name:t="default"
+  canvasWidth:i=800
+  worldSize:p2=1.6, 0.9
+  worldAngles:p3=0, 0, 0
+  worldOffset:p3=0, 0, 0
+  worldRenderFeatures:i=2
+  worldBrightness:r=0.6
+  worldSmoothness:r=-1
+  worldReflectance:r=0.2
+  worldMetalness:r=0
+}
+
+dynamic_screen_ui_panel{
+  _use:t="ui_panel"
+  dynamic_screen_ui_panel__index:i=-1
+}

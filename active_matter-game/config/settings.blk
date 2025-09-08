@@ -1,0 +1,874 @@
+log_lut:b=yes
+texStreamingFile:t="config/tex_streaming.settings.blk"
+onlineStorageLabel:t="active_matter"
+__allow_force_apply_all:b=no
+es_order:t="config/es_order.blk"
+entitiesPath:t="gamedata/templates/active_matter.entities.blk"
+windowTitle:t="Active Matter"
+contactsGameId:t="active_matter"
+achievementsUrl:t=""
+bgImage:t="ui/login_am_bg_04; ui/login_am_bg_07; ui/login_am_bg_08;"
+scene:t="gamedata/scenes/player_onboarding_island.blk"
+parallel_logic_mode:b=yes
+allowEmptyScenes:b=yes
+nvidia_app_id:i=103400568
+playerTemplateName:t="active_matter_player"
+pc_app_id:i=1182
+pc_circuit:t="am-production"
+metaItemsJWTMaxAge:i=604800
+jwtPubKey:t="MIIBKDANBgkqhkiG9w0BAQEFAAOCARUAMIIBEAKCAQcAy9WagPn8/uLbbPHebobAftDiwrGpi23Ed0fQsSCZfGYupBkYl3mZD3fgOMgmLSYsTqFHDe0CMTQKpHYGFfT3EuvTHKwwyo2ckpaLNI/flZysDXRuoWXvwd6FzGBx3l2/I1Yw+cAle/aWB9YZnQtXfy3j3k/fJfiv7+72Sm95h3Dg715XuBILC4vSYVqvCn+UlQyrJkAZrIahWR9Gzsm6ovxSaduvosn83Hx1ZixD+U5wcn1hoTT0niwnrqiPuEUV3wC887JIR4KzMXYpyzvFnEhlqTKoGN7oGS7vqN4tCH6/l3hAomxfVGT+5UHGugQEauNqccYq44Hfu3t3tY1rj+eTYc35NQIDAQAB"
+soundSettingsBlk:t="config/sound_settings.blk"
+aiList:t="gamedata/ai/common_ailist.blk"
+aiList:t="gamedata/ai/spider_ailist.blk"
+aiList:t="gamedata/ai/spider_mother_ailist.blk"
+aiList:t="gamedata/ai/spider_mother_shooter_ailist.blk"
+aiList:t="gamedata/ai/spider_minion_ailist.blk"
+aiList:t="gamedata/ai/spider_minion_explosive_ailist.blk"
+aiList:t="gamedata/ai/invisible_man_ailist.blk"
+aiList:t="gamedata/ai/invisible_man_teaser_ailist.blk"
+aiList:t="gamedata/ai/flower_human_ailist.blk"
+aiList:t="gamedata/ai/flower_human_minion_ailist.blk"
+aiList:t="gamedata/ai/flower_human_miniboss_ailist.blk"
+aiList:t="gamedata/ai/am_bees_swarm_ailist.blk"
+aiList:t="gamedata/ai/corpse_swarm_ailist.blk"
+aiList:t="gamedata/ai/am_jellyfish_swarm_ailist.blk"
+aiList:t="gamedata/ai/woodlouse_ailist.blk"
+aiList:t="gamedata/ai/centipede_ailist.blk"
+aiList:t="gamedata/ai/skeleton_swarm_ailist.blk"
+aiList:t="gamedata/ai/nesting_swarm_ailist.blk"
+aiList:t="gamedata/ai/nesting_swarm_snake_ailist.blk"
+aiList:t="gamedata/ai/kamikaze_ailist.blk"
+aiList:t="gamedata/ai/am_loot_raider_ailist.blk"
+aiList:t="gamedata/ai/tree_horde_ailist.blk"
+aiList:t="gamedata/ai/nexus_round_mode_ailist.blk"
+aiList:t="gamedata/ai/am_mindcontrolled_ailist.blk"
+aiList:t="gamedata/ai/am_onboarding_enemy_ailist.blk"
+aiList:t="gamedata/ai/am_guard_ailist.blk"
+aiList:t="gamedata/ai/am_teaser_guard_ailist.blk"
+aiList:t="gamedata/ai/bighead_ailist.blk"
+aiList:t="gamedata/ai/test_level_ailist.blk"
+aiList:t="gamedata/ai/nmesh_mapped_loot_raider_ailist.blk"
+aiList:t="gamedata/ai/am_protectron_ailist.blk"
+aiList:t="gamedata/ai/am_static_sniper_ailist.blk"
+aiList:t="gamedata/ai/corrupted_militant_ailist.blk"
+aiList:t="gamedata/ai/am_common_ailist.blk"
+aiList:t="gamedata/ai/am_changed_common_ailist.blk"
+aiList:t="gamedata/ai/benchmark_ailist.blk"
+aiList:t="gamedata/ai/am_changed_tamed_common_ailist.blk"
+aiList:t="gamedata/ai/am_changed_wander_ailist.blk"
+aiList:t="gamedata/ai/am_changed_teaser_walker_ailist.blk"
+aiList:t="gamedata/ai/am_changed_house_ailist.blk"
+aiList:t="gamedata/ai/am_changed_outdoor_sleeper_ailist.blk"
+aiList:t="gamedata/ai/am_changed_outdoor_minion_ailist.blk"
+aiList:t="gamedata/ai/am_changed_mini_ailist.blk"
+aiList:t="gamedata/ai/am_changed_tamed_ailist.blk"
+aiList:t="gamedata/ai/am_changed_mini_tamed_ailist.blk"
+aiList:t="gamedata/ai/am_changed_monster_minion_ailist.blk"
+aiList:t="gamedata/ai/am_changed_monster_minion_mini_ailist.blk"
+aiList:t="gamedata/ai/firefly_ailist.blk"
+aiList:t="gamedata/ai/wandering_core_ailist.blk"
+aiList:t="gamedata/ai/xenohound_ailist.blk"
+aiList:t="gamedata/ai/stalker_statue_ailist.blk"
+aiList:t="gamedata/ai/debug_ailist.blk"
+aiList:t="gamedata/ai/am_benchmark_ailist.blk"
+aiList:t="gamedata/ai/am_mimic_ailist.blk"
+game_sq_script:t="%scripts/game/onGameScriptLoad.nut"
+game_das_gen_2_make_syntax:b=yes
+game_das_enable_serialization:b=yes
+game_das_serialization_remove_cache:b=no
+game_das_loading_threads:i=2
+game_das_reload_threads:i=2
+game_das_project:t="%scripts/project.das_project"
+game_das_script:t="%scripts/active_matter.das"
+game_das_script_init:t="%scripts/active_matter_init.das"
+game_das_script_thread_init:t="%scripts/active_matter_thread_init.das"
+game_das_sandbox_project:t=""
+physMapDecals:b=yes
+rendinstDmg:t="config/rendinst_dmg.blk"
+registerUrl:t="https://login.gaijin.net/profile/register"
+legalsUrl:t="https://legal.gaijin.net/"
+gaijinSupportUrl:t="https://support.gaijin.net/"
+gaijinForumUrl:t="https://forum.activematter.game/"
+
+graphics{
+  spotShadowBias:p4=-6e-05, -0.1, 0.01, 0.015
+  shadowCascadeZExpansion_znearOffset:r=200
+  dynamicShadowsQualityScale:r=2
+  dafx:t="cpu"
+  coloredHaze:b=yes
+  useFoamFx:b=yes
+  rendinstTesselation:b=yes
+  chromaticAberration:b=yes
+  filmGrain:b=yes
+  motionBlurStrength:r=50
+  forceEnableMotionVectors:b=yes
+  grass_eraser_sdf_height:r=1
+  preset:t="ultra"
+  gamma_correction:r=1.05
+  shadowsQuality:t="ultra"
+  dynamicShadowsQuality:t="ultra"
+  giAlgorithm:t="high"
+  giAlgorithmQuality:r=0.8
+  skiesQuality:t="high"
+  aoQuality:t="high"
+  ssrQuality:t="high"
+  ssssQuality:t="high"
+  anisotropy:i=16
+  cloudsQuality:t="volumetric"
+  volumeFogQuality:t="far"
+  waterQuality:t="high"
+  fftWaterQuality:t="ultra"
+  environmentDetailsQuality:t="high"
+  groundDisplacementQuality:i=2
+  groundDeformations:t="high"
+  fxTarget:t="highres"
+  scopeImageQuality:i=3
+  rendinstDistMul:r=1
+  riExtraMulScale:r=1
+  dynamicShadowsMaxUpdatePerFrame:i=5
+
+  foamFxTexDividers{
+    divider:i=4
+    divider:i=2
+    divider:i=1
+  }
+}
+
+pcGraphicalPresets{
+  minimum{
+    graphics{
+      texquality:t="low"
+    }
+  }
+
+  low{
+    graphics{
+      texquality:t="medium"
+    }
+  }
+
+  medium{
+    graphics{
+      texquality:t="high"
+    }
+  }
+
+  high{
+    graphics{
+      texquality:t="high"
+    }
+  }
+
+  ultra{
+    graphics{
+      texquality:t="high"
+    }
+  }
+}
+
+screenshots{
+  dir:t="Screenshots"
+  hdr_screenshot:t="no"
+  movie_sequence:b=no
+}
+
+video{
+  resolution:t="auto"
+  overrideAAforAutoResolution:b=yes
+  autoResolutionUpscalerThreshold:r=1.5
+  mode:t="fullscreenwindowed"
+  monitor:t="auto"
+  instancing:t="geom"
+  vsync:b=no
+  max_genmip_tex_sz:i=0
+  maxTexCount:i=65534
+  enableNonAutoDriver:b=no
+
+  hdrSupport{
+    "DirectX 11":b=no
+  }
+}
+
+directx{
+  debug:b=no
+  minimumFeatureLevel:t="11_0"
+  flushOnPresent:b=yes
+  maxPendingFrames:i=1
+}
+
+ps4{
+  garlic_size_mb:i=3172
+  neo_garlic_size_mb:i=3472
+  onion_size_mb:i=312
+  garlic_blocks:i=16384
+  onion_blocks:i=16384
+  dcb_size_mb:i=4
+  ccb_size_mb:i=4
+  max_genmip_tex_sz:i=0
+  mem_reserve_mb:i=256
+  resolution_config:b=yes
+  min_res:t="1920x1080"
+  min_res_4k:t="3200x1800"
+  max_res_4k:t="3200x1800"
+  neo_4k_scale:i=167
+}
+
+ps5{
+  dcb_size_mb:i=8
+  mem_direct_size_mb:i=6144
+  mem_shader_heap_size_kb:i=8192
+  max_genmip_tex_sz:i=0
+  mem_reserve_mb:i=256
+  enable_defrag:b=yes
+  resolution_config:b=yes
+  min_res:t="1920x1080"
+  min_res_4k:t="3200x1800"
+  max_res_4k:t="3200x1800"
+}
+
+phys{
+  fixedTimeStepHz:i=-60
+  maxSubSteps:i=3
+}
+
+physJolt{
+  htFieldBuildActiveEdges:b=no
+  maxBodiesNum:i=32768
+  maxCollisionSeparationDistance:r=0.005
+}
+
+clipmap{}
+aviWriter{
+  quality:i=100
+  folder:t="Screenshots"
+  fileLimit:i=2100000000
+  frameRate:r=60
+}
+
+tracers{
+  tail_texture:t="tracer_tail_density"
+}
+
+daEditor{
+  disable:b=no
+
+  input{
+    maxCamera{
+      moveSensXY:r=0.05
+      rotSensXY:r=0.005
+      moveSensZ:r=0.02
+      fineMoveScale:r=0.05
+      turboMoveScale:r=20
+    }
+  }
+}
+
+sound{}
+folders{
+  webcache:t="{downloads}/webcache"
+  online_storage:t="{downloads}/online_storage"
+  pubcfg:t="{downloads}/pubcfg"
+}
+
+network{
+  publicConfigsUrls{
+    url:t="https://public-configs.gaijin.net"
+    url:t="https://public-configs-active_matter-gcore.cdn.gaijin.net"
+  }
+}
+
+__allowedConfigOverrides{
+  launchCnt:i=0
+  disableMenu:b=yes
+  circuit:t="yes"
+  scene:t="yes"
+  region:t="yes"
+  ps4_submission_circuit:t="yes"
+  ps5_submission_circuit:t="yes"
+  xboxOne_submission_circuit:t="yes"
+  acceptedEulaVersionBeforeLogin:i=-1
+  xboxScarlett_submission_circuit:t="yes"
+  hadFirstLaunchGammaSetting:b=no
+  language:t=""
+
+  logging{
+    __allow_all_params:b=yes
+  }
+
+  createRoom{
+    __allow_all_params:b=yes
+  }
+
+  ai{
+    __allow_all_params:b=yes
+  }
+
+  last{
+    __allow_all_params:b=yes
+  }
+
+  screenshots{
+    __allow_all_params:b=yes
+  }
+
+  quickMatch{
+    __allow_all_params:b=yes
+  }
+
+  aviWriter{
+    __allow_all_params:b=yes
+  }
+
+  gameplay{
+    __allow_all_params:b=yes
+  }
+
+  streaming{
+    __allow_all_params:b=yes
+  }
+
+  video{
+    resolution:t=""
+    overrideAAforAutoResolution:b=yes
+    autoResolutionUpscalerThreshold:r=1.5
+    staticResolutionScale:b=yes
+    temporalUpsamplingRatio:b=yes
+    antiAliasingMode:b=yes
+    mode:t=""
+    monitor:t=""
+    vsync:b=yes
+    fpsLimit:b=yes
+    safeArea:b=yes
+    driver:t=""
+    frameSkip:i=0
+    vsync_tearing_tolerance_percents:i=0
+    latency:i=0
+    perfMetrics:i=1
+    enableHdr:b=no
+    paperWhiteNits:i=200
+    fsr:t="off"
+    dlssQuality:i=0
+    dlssFrameGenerationCount:i=0
+    forbidTrueFullscreen:b=no
+    enableNonAutoDriver:b=no
+  }
+
+  graphics{
+    __allow_all_params:b=yes
+
+    __exclude_allow{
+      shouldRenderWaterRipples:b=yes
+      supportsIndoorProbes:b=yes
+      grassGridSizeMultiplier:r=1
+      forcefield_bilateral_upscale_enabled:b=yes
+      lodDistanceScaleBase:r=1.3
+      rain_numParticles_multiplier:r=1
+      rain_particleBox_multiplier:r=1
+      rendinstImpostorsFarDistAddMul:r=1
+      rendinstImpostorsDistAddMul:r=1
+      hmapSubdivCellSize:r=1
+      impostorMaxTexSize:i=256
+      impostorMinTexSize:i=8
+      impostorTexCount:i=2
+      rendinstImpostorTex1:t="argb8_srgb"
+      rendinstImpostorCompressedTex1:t="dxt5_srgb"
+      rendinstImpostorClearColor1:c=0, 0, 0, 0
+      sw_occlusion:b=yes
+      sw_hmap_occlusion:b=yes
+      resolveHZBBeforeDynamic:b=yes
+      use_occlusion_for_shadows:b=yes
+      riSimplifiedRender:b=no
+      shader_reload_allowed:b=no
+      staticShadowsInvalidationGroupingUs:i=0
+      tsrQuality:i=1
+    }
+
+    gi{
+      __allow_all_params:b=yes
+    }
+  }
+
+  directx{
+    debug:b=yes
+    throwDebugLayerExceptions:b=yes
+  }
+
+  renderFeatures{
+    android{
+      SSAO:b=yes
+      decals:b=yes
+    }
+  }
+
+  voice{
+    __allow_all_params:b=yes
+  }
+
+  debug{
+    enableRawInput:b=yes
+    das_log_aot_errors:b=yes
+    dasStackOnLogerr:b=yes
+    pollThreadDelayMsec:i=8
+
+    watchdog{
+      __allow_all_params:b=yes
+    }
+  }
+
+  dx12{
+    __allow_all_params:b=yes
+  }
+
+  input{
+    __allow_all_params:b=yes
+  }
+
+  tracers{
+    tail_texture:t=""
+  }
+
+  daEditor{
+    __allow_all_params:b=yes
+  }
+
+  texStreaming{
+    enableStreaming:b=no
+    logLevel:i=0
+    forceGpuMemMB:i=0
+    maxQuotaOverdraftMB:i=0
+
+    win32{
+      enableStreaming:b=no
+    }
+
+    win64{
+      enableStreaming:b=no
+    }
+
+    linux64{
+      enableStreaming:b=no
+    }
+
+    macosx{
+      enableStreaming:b=no
+    }
+
+    ps4{
+      enableStreaming:b=no
+    }
+
+    xboxOne{
+      enableStreaming:b=no
+    }
+
+    android{
+      enableStreaming:b=no
+    }
+  }
+
+  sound{
+    __allow_all_params:b=yes
+
+    volume{
+      __allow_all_params:b=yes
+    }
+
+    output_device{
+      __allow_all_params:b=yes
+    }
+
+    record_device{
+      __allow_all_params:b=yes
+    }
+  }
+}
+
+langAlias{
+  SChinese:t="Chinese"
+  TChinese:t="Chinese"
+}
+
+dx12{
+  max_genmip_tex_sz:i=0
+  previous_run_crash_fallback_enabled:b=no
+  pso_app_key:t="active_matter"
+  pso_cache_enabled:b=yes
+
+  gpuDriver{
+    vendor{
+      id:i=4318
+      minVersion:t="27.21.14.6140"
+      blacklist:t="27.21.14.6172"
+    }
+
+    vendor{
+      id:i=32902
+      minVersion:t="26.20.0.0"
+    }
+  }
+}
+
+scenes{
+  folder:t="gamedata/scenes"
+}
+
+addons{
+  folder:t="content/active_matter"
+  folder:t="content.hq/hq_tex"
+  folder:t="content/dev"
+  folder:t="content.hq/dev_hq"
+  folder:t="content/lshaders_{SHADER_SUFFIX}"
+}
+
+vromList{
+  pack{
+    path:t="content/active_matter/fonts.vromfs.bin"
+    mnt:t="ui/"
+    optional:b=yes
+  }
+}
+
+localizationVroms{
+  loc{
+    vrom:t="content/active_matter/lang.vromfs.bin"
+    path:t="lang"
+  }
+}
+
+mountPoints{
+  "%darg"{
+    forSource:t="../../prog/scripts/sq/daRg"
+    forVromfs:t="daRg"
+  }
+
+  "%sqstd"{
+    forSource:t="../../prog/scripts/sq/std"
+    forVromfs:t="std"
+  }
+
+  "%daeditor"{
+    forSource:t="../../prog/scripts/sq/daeditor"
+    forVromfs:t="daeditor"
+  }
+
+  "%dngscripts"{
+    forSource:t="../../prog/daNetGame/scripts/globals"
+    forVromfs:t="daNetGame/qscripts"
+  }
+
+  "%dngdas"{
+    forSource:t="../../prog/daNetGame/scripts/das"
+    forVromfs:t="das"
+  }
+
+  "%daslib"{
+    forSource:t="../../prog/1stPartyLibs/daScript/daslib"
+    forVromfs:t="daslib"
+  }
+
+  "%dasImgui"{
+    forSource:t="../../prog/1stPartyLibs/daScript/modules/dasImgui/daslib"
+    forVromfs:t="daslib"
+  }
+
+  "%dasGameLibs"{
+    forSource:t="../../prog/gameLibs/das"
+    forVromfs:t="das"
+  }
+
+  "%sqGlob"{
+    forSource:t="../prog/sq_globals"
+    forVromfs:t="sq_globals"
+  }
+
+  "%ui"{
+    forSource:t="../prog/ui"
+    forVromfs:t="ui"
+  }
+
+  "%scripts"{
+    forSource:t="../prog/scripts"
+    forVromfs:t="scripts"
+  }
+
+  "%danetlibs"{
+    forSource:t="../../prog/daNetGameLibs"
+    forVromfs:t="danetlibs"
+  }
+
+  "%gameBase"{
+    forSource:t="../prog/gameBase"
+    forVromfs:t=""
+  }
+}
+
+addonBasePath{
+  addon{
+    src:t="../prog/gameBase"
+    vrom:t="content/active_matter/active_matter-game.vromfs.bin"
+  }
+
+  addon{
+    src:t="../prog/gamebase_dev"
+    vrom:t="content/dev/dev.vromfs.bin"
+    vromOptional:b=yes
+  }
+
+  addon{
+    vrom:t="content/active_matter/uiskin.vromfs.bin"
+    mountAsPack:b=yes
+    vromOptionalForServer:b=yes
+    src:t="../develop/gui"
+  }
+
+  addon{
+    vrom:t="content/active_matter/maps.vromfs.bin"
+    mountAsPack:b=yes
+    vromOptionalForServer:b=yes
+    src:t="../develop/gui"
+  }
+
+  addon{
+    vrom:t="ui.vromfs.bin"
+    vromOptionalForServer:b=yes
+    src:t="../prog/scripts"
+  }
+
+  addon{
+    vrom:t="sqcommon.vromfs.bin"
+  }
+
+  addon{
+    vrom:t="game.vromfs.bin"
+  }
+
+  addon{
+    vrom:t="danetlibs.vromfs.bin"
+  }
+}
+
+embeddedUpdater{
+  reload{
+    overlay_ui:b=yes
+    gameSq:b=yes
+    gameDas:b=yes
+  }
+}
+
+game_das_serialization_scan_paths{
+  it:t="%danetlibs"
+  it:t="%scripts"
+  it:t="%daslib"
+  it:t="%dngdas"
+  it:t="%dasImgui"
+  it:t="%dasGameLibs"
+}
+
+ui{
+  script:t=""
+  overlay_ui_script:t="%ui/root.nut"
+}
+
+chat{
+  ircServer:t="chat-lw-nl-01.enlisted.net:443"
+  useTamVoice:b=yes
+  vivoxServerURL:t="https://not.used"
+  vivoxEcho:t="tamvchn://echo123"
+  enableVoiceChat:b=yes
+}
+
+vulkan{
+  cachefile:t="cache/vulkan.bin"
+  cachestatefile:t="cache/vulkan.state.bin"
+  enableBindless:b=yes
+  bindlessBufferCountMin:i=10
+  tempBufferOverAllocWaitMs:i=20
+
+  vendor{
+    default{
+      driverProps{
+        bufferSuballocation{
+          enable:b=yes
+        }
+      }
+    }
+  }
+
+  allocators{
+    ring{
+      pageSizeMb:i=16
+    }
+  }
+}
+
+debug{
+  toolsPathWin:t="../../tools/dagor_cdk/windows-x86_64"
+}
+
+shadersWarmup{
+  linux64:b=yes
+  win64:b=yes
+  win32:b=yes
+  Vulkan:b=yes
+  "DirectX 11":b=yes
+
+  graphics{
+    billboard_decals:b=yes
+    dafx_modfx_bboard_render:b=yes
+    dafx_modfx_bboard_render_atest:b=yes
+    projective_decal_decals:b=yes
+    smoke_tracers_head:b=yes
+    smoke_tracers_tail:b=yes
+    dafx_modfx_ribbon_render_side_only:b=yes
+    esm_blur:b=yes
+    esm_depth:b=yes
+    esm_ao_decal_render:b=yes
+    water_nv2:b=yes
+    water_nv2_heightmap:b=yes
+    rendinst_refraction:b=yes
+    dynamic_simple_glass:b=yes
+    rendinst_simple_glass:b=yes
+    rendinst_tree_perlin_layered:b=yes
+    rendinst_tree_colored_alpha_split:b=yes
+    scope_lens:b=yes
+    distortion_postfx:b=yes
+    dof_gather:b=yes
+    postfx:b=yes
+    dynamic_painted_by_mask:b=yes
+    dafx_modfx_bboard_render_fom:b=yes
+    screen_effect:b=yes
+    blood_on_screen:b=yes
+    sparks_ps:b=yes
+    dynamic_refraction:b=yes
+    dafx_modfx_bboard_volfog_injection:b=yes
+    rendinst_cliff:b=yes
+    rendinst_landclass:b=yes
+    dynamic_hair:b=yes
+    billboard_glass_decals:b=yes
+    heightmap:b=yes
+  }
+
+  compute{
+    dafx_modfx_emission:b=yes
+    dafx_modfx_simulation:b=yes
+    dafx_modfx_emission_adv:b=yes
+    dafx_modfx_simulation_adv:b=yes
+    compute_full_tonemap:b=yes
+    skies_generate_transmittance_cs:b=yes
+    skies_approximate_ms_lut_cs:b=yes
+    indirect_irradiance_ms_cs:b=yes
+    gen_curl_clouds_2d:b=yes
+    gen_cloud_field:b=yes
+    downsample_cloud_field:b=yes
+    clouds_refine_altitudes:b=yes
+    clouds_hole_cs:b=yes
+    clouds_hole_pos_cs:b=yes
+    skies_integrate_froxel_scattering_cs:b=yes
+    skies_prepare_transmittance_for_altitude_cs:b=yes
+    spherical_harmonics_reduction_cs:b=yes
+    final_harmonics_reduction_cs:b=yes
+    clear_fx_keyframe_boundary:b=yes
+    gen_cloud_field_cmpr:b=yes
+    gen_cloud_shadows_volume_cs:b=yes
+    gen_clouds_light_texture_cs:b=yes
+    deform_hmap_clearmask_cs:b=yes
+    deform_hmap_deform_cs:b=yes
+    deform_hmap_clearindirect_cs:b=yes
+    deform_hmap_dispatcher_cs:b=yes
+    deform_hmap_edge_detect_cs:b=yes
+    deform_hmap_blur_cs:b=yes
+    deform_hmap_clearer_cs:b=yes
+    update_h0_cs:b=yes
+    fftH_cs:b=yes
+    fftV_cs:b=yes
+    water_gradient_cs:b=yes
+    water_gradient_mip_cs:b=yes
+    light_probes_clusterization_cs:b=yes
+    grass_create_indirect:b=yes
+    grass_generate_cs:b=yes
+    heightmap_holes_process_cs:b=yes
+    froxel_fog_occlusion_cs:b=yes
+    volfog_df_start_weight_mipgen_cs:b=yes
+    volfog_df_fx_mipgen_cs:b=yes
+    calc_gi_froxels_irradiance_cs:b=yes
+    world_sdf_from_gbuf_cs:b=yes
+    dagi_albedo_scene_from_gbuf_cs:b=yes
+    dagi_media_scene_from_gbuf_cs:b=yes
+    dagi_fix_empty_alpha_cs:b=yes
+    local_tone_mapping_downsample:b=yes
+    local_tone_mapping_upsample:b=yes
+    GenerateHistogramCenterWeightedFromSourceCS:b=yes
+    accumulate_hist_cs:b=yes
+    AdaptExposureCS:b=yes
+    clipmap_clear_histogram_cs:b=yes
+    clipmap_process_feedback_cs:b=yes
+    clipmap_build_tile_info_cs:b=yes
+    water_foam_blur_cs:b=yes
+    water_gradient_foam_combine_cs:b=yes
+    gpu_obj_clear_counter_and_bbox_cs:b=yes
+    fill_fx_keyframe_boundary_opt_start:b=yes
+    fill_fx_keyframe_boundary_opt:b=yes
+    fill_fx_keyframe_boundary_opt_end:b=yes
+    world_sdf_from_gbuf_remove_cs:b=yes
+    find_max_depth_2d:b=yes
+    deferred_shadow_classify_tiles:b=yes
+    deferred_shadow_prepare_indirect_args:b=yes
+    fluid_wind_clear:b=yes
+    fluid_motor_omni:b=yes
+    fluid_wind_divergence:b=yes
+    fluid_wind_jaccobi3d:b=yes
+    fluid_wind_project3d:b=yes
+    fluid_wind_advect:b=yes
+    dagi_clear_albedo_freelist_cs:b=yes
+    dagi_clear_albedo_texture_cs:b=yes
+    dagi_albedo_fix_insufficient_cs:b=yes
+    dagi_albedo_toroidal_movement_cs:b=yes
+    dagi_albedo_after_toroidal_movement_create_indirect_cs:b=yes
+    dagi_albedo_allocate_after_toroidal_movement_cs:b=yes
+    dagi_albedo_allocate_after_toroidal_movement_pass2_cs:b=yes
+    dagi_media_scene_reset_cs:b=yes
+    dagi_media_toroidal_movement_cs:b=yes
+    dagi_voxel_scene_reset_cs:b=yes
+    world_sdf_clear_cs:b=yes
+    world_sdf_ping_pong_cs:b=yes
+    world_sdf_ping_pong_final_cs:b=yes
+    world_sdf_copy_slice_cs:b=yes
+    dagi_radiance_grid_clear_temporal_cs:b=yes
+    dagi_radiance_grid_toroidal_movement_cs:b=yes
+    dagi_irradiance_grid_toroidal_movement_interpolate_cs:b=yes
+    dagi_irradiance_grid_toroidal_movement_trace_cs:b=yes
+    dagi_irradiance_grid_spatial_filter_cs:b=yes
+    gpu_objects_gather_matrices_cs:b=yes
+    dagi_radiance_grid_select_temporal_cs:b=yes
+    dagi_radiance_grid_create_indirect_cs:b=yes
+    dagi_radiance_grid_calc_temporal_cs:b=yes
+    puddle_query_cs:b=yes
+    biome_query_cs:b=yes
+    dagi_irradiance_grid_select_temporal_cs:b=yes
+    dagi_irradiance_grid_calc_temporal_cs:b=yes
+    clear_indirect_buffers:b=yes
+    billboard_decals_generator:b=yes
+    dagi_voxel_lit_scene_from_gbuf_cs:b=yes
+    heightmap_query_cs:b=yes
+    gpu_objects_box_placer_gather_triangles_cs:b=yes
+    gpu_objects_compute_terrain_objects_count_cs:b=yes
+    gpu_objects_get_group_count_cs:b=yes
+    gpu_objects_sum_area_cs:b=yes
+    deferred_shadow_compute:b=yes
+    froxel_fog_light_calc_propagate_cs:b=yes
+    create_tracer_commands_cs:b=yes
+    cull_tracers_cs:b=yes
+  }
+}
+
+contentUpdater{
+  totalTimeoutMs:i=120000
+  noProgressTimeoutMs:i=30000
+  flag:t="--noupdate"
+  flag:t="--norespatch"
+  flag:t="--onlypacks"
+  flag:t="--force_check"
+  flag:t="--clear"
+  flag:t="--enable_tag"
+  flag:t="update"
+}

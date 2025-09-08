@@ -1,0 +1,171 @@
+guarded_zone{
+  guarded_zone__active:b=no
+  guarded_zone__curGuardsCount:i=0
+  guarded_zone__maxGuardsCount:i=0
+  guarded_zone__regenerationTime:p2=120, 180
+  guarded_zone__regenerationForce:b=no
+  guarded_zone__regenerationPart:r=0.33
+  guarded_zone__nextRegenerationAt:r=-1
+  guarded_zone__playersCheckRadMult:r=2
+
+  "guarded_zone__guardTemplateNames:object"{}
+}
+
+guarded_zone_guard{
+  guarded_zone_guard__noticedAboutDeath:b=no
+
+  "guarded_zone_guard__zoneEid:eid"{}
+}
+
+guarded_zones_avaliable_monsters{
+  "guarded_zones_avaliable_monsters__templateBuckets:array"{
+    "bucket:object"{
+      difficultyMult:r=1
+
+      "bucketTemplates:object"{
+        "outdoor_sleeper_changed_human_mini+sleeping_monster+am_inside_body_1":r=20
+        "outdoor_sleeper_changed_human+sleeping_monster+am_inside_body_1":r=80
+      }
+    }
+
+    "bucket:object"{
+      difficultyMult:r=0.5
+
+      "bucketTemplates:object"{
+        invisible_man_extraction_point_defender:r=100
+      }
+    }
+
+    "bucket:object"{
+      difficultyMult:r=0.4
+
+      "bucketTemplates:object"{
+        "flower_human+flower_human_root_spawner+am_inside_body_2":r=100
+      }
+    }
+  }
+}
+
+guarded_zone_on_map{
+  _use:t="map_component_zone"
+  _use:t="replicating"
+  map_object_zone__radius:r=10
+  objective_static_target__tag:t=""
+
+  "showMapObjectOnQuestTargetAssignition:tag"{}
+}
+
+distorted_guarded_zone{
+  _use:t="guarded_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  quest_target_geometry_sphere__radius:r=10
+  guarded_zone__active:b=yes
+  guarded_zone__maxGuardsCount:i=6
+  guarded_zone__playersCheckRadMult:r=6
+  guarded_zone__regenerationTime:p2=90, 120
+
+  "guarded_zone__guardTemplateNames:object"{
+    "outdoor_sleeper_changed_human_mini+sleeping_monster+am_inside_body_1":r=20
+    "outdoor_sleeper_changed_human+sleeping_monster+am_inside_body_1":r=80
+  }
+}
+
+distorted_contract_zone{
+  _use:t="distorted_guarded_zone"
+  _use:t="guarded_zone_on_map"
+}
+
+flowermen_guarded_zone{
+  _use:t="guarded_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  quest_target_geometry_sphere__radius:r=10
+  guarded_zone__active:b=yes
+  guarded_zone__maxGuardsCount:i=4
+  guarded_zone__playersCheckRadMult:r=6
+  guarded_zone__regenerationTime:p2=90, 120
+
+  "guarded_zone__guardTemplateNames:object"{
+    "flower_human+flower_human_root_spawner+am_inside_body_2":r=100
+  }
+}
+
+flowermen_contract_zone{
+  _use:t="flowermen_guarded_zone"
+  _use:t="guarded_zone_on_map"
+}
+
+invisible_guarded_zone{
+  _use:t="guarded_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  quest_target_geometry_sphere__radius:r=10
+  guarded_zone__active:b=yes
+  guarded_zone__maxGuardsCount:i=3
+  guarded_zone__playersCheckRadMult:r=6
+  guarded_zone__regenerationTime:p2=90, 120
+
+  "guarded_zone__guardTemplateNames:object"{
+    invisible_man_guard:r=100
+  }
+}
+
+invisible_contract_zone{
+  _use:t="invisible_guarded_zone"
+  _use:t="guarded_zone_on_map"
+}
+
+xenohound_guarded_zone{
+  _use:t="guarded_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  quest_target_geometry_sphere__radius:r=10
+  guarded_zone__active:b=yes
+  guarded_zone__maxGuardsCount:i=3
+  guarded_zone__playersCheckRadMult:r=6
+  guarded_zone__regenerationTime:p2=90, 120
+
+  "guarded_zone__guardTemplateNames:object"{
+    xenohound_portal_guard:r=100
+  }
+}
+
+xenohound_contract_zone{
+  _use:t="xenohound_guarded_zone"
+  _use:t="guarded_zone_on_map"
+}
+
+turned_soldier_guarded_zone{
+  _use:t="guarded_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  quest_target_geometry_sphere__radius:r=15
+  guarded_zone__active:b=yes
+  guarded_zone__maxGuardsCount:i=2
+  guarded_zone__playersCheckRadMult:r=5
+  guarded_zone__regenerationTime:p2=180, 240
+
+  "guarded_zone__guardTemplateNames:object"{
+    am_area_guard:r=100
+  }
+}
+
+turned_soldier_contract_zone{
+  _use:t="turned_soldier_guarded_zone"
+  _use:t="guarded_zone_on_map"
+}
+
+turned_soldier_modern_guarded_zone{
+  _use:t="guarded_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  quest_target_geometry_sphere__radius:r=15
+  guarded_zone__active:b=yes
+  guarded_zone__maxGuardsCount:i=2
+  guarded_zone__playersCheckRadMult:r=5
+  guarded_zone__regenerationTime:p2=180, 240
+
+  "guarded_zone__guardTemplateNames:object"{
+    am_modern_pmc_guard:r=100
+  }
+}
+
+turned_soldier_modern_contract_zone{
+  _use:t="turned_soldier_modern_guarded_zone"
+  _use:t="guarded_zone_on_map"
+}

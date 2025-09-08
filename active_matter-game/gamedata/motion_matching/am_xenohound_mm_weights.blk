@@ -1,0 +1,56 @@
+nodes_name{
+  node:t="Bip01 R Hand"
+  node:t="Bip01 L Hand"
+  node:t="Bip01 R Toe0"
+  node:t="Bip01 L Toe0"
+}
+
+prediction_times{
+  time:r=0.1
+  time:r=0.3
+  time:r=0.5
+}
+
+default{
+  animationBlendTime:r=0.1
+  linearVelocityViscosity:r=0.1
+  angularVelocityViscosity:r=0.05
+  metricaToleranceMin:r=0.3
+  metricaToleranceMax:r=2.5
+  metricaToleranceDecayTime:r=0.4
+
+  node{
+    position_weight:r=1
+    velocity_weight:r=1
+  }
+
+  node{
+    position_weight:r=1
+    velocity_weight:r=1
+  }
+
+  node{
+    position_weight:r=1
+    velocity_weight:r=1
+  }
+
+  node{
+    position_weight:r=1
+    velocity_weight:r=1
+  }
+
+  point{
+    position_weight:r=1
+    direction_weight:r=1
+  }
+
+  point{
+    position_weight:r=1
+    direction_weight:r=1
+  }
+
+  point{
+    position_weight:r=1
+    direction_weight:r=1
+  }
+}

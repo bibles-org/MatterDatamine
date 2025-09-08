@@ -1,0 +1,64 @@
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house_monsters"
+  monster_gen_gen__householdCount:i=23
+  monster_gen_gen__minHouseholdVolume:r=225
+  monster_gen_gen__useHouseholdsOnEuclid:b=no
+
+  "monster_gen_gen__genTemplates:object"{
+    household_changed_monster_t1_generator:i=50
+    anomaly_encounter_changed_indoor_t1_small:i=30
+    household_traps_generator:i=20
+  }
+
+  "monster_gen_gen__excludeBoxes:list<m>"{
+    t:m=[[-23.2016, 0, -14.3866] [0, 12.6, 0] [9.90726, 0, -15.9777] [536.714, 15.4, -917.943]]
+    t:m=[[-26.6836, 0, -16.5457] [0, 12.6399, 0] [9.89198, 0, -15.953] [561.7, 15.4, -902.45]]
+    t:m=[[-23.1167, 0, -14.3339] [0, 12.6, 0] [9.90199, 0, -15.9692] [586.594, 15.4, -887.014]]
+  }
+}
+
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house changeds"
+  monster_gen_gen__householdCount:i=3
+  monster_gen_gen__minHouseholdVolume:r=200
+  monster_gen_gen__useHouseholdsOnEuclid:b=yes
+
+  "monster_gen_gen__genTemplates:object"{
+    household_euclid_changed_monster_generator:i=100
+  }
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=0.0014, 0.0014
+  transform:m=[[-23.2016, 0, -14.3866] [0, 12.6, 0] [9.90726, 0, -15.9777] [536.714, 15.4, -917.943]]
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=0.0014, 0.0014
+  transform:m=[[-26.6836, 0, -16.5457] [0, 12.6399, 0] [9.89198, 0, -15.953] [561.7, 15.4, -902.45]]
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=0.0014, 0.0014
+  transform:m=[[-23.1167, 0, -14.3339] [0, 12.6, 0] [9.90199, 0, -15.9692] [586.594, 15.4, -887.014]]
+}
+
+entity{
+  _template:t="am_area_guard"
+  transform:m=[[0.892608, 0, 0.450834] [0, 1, 0] [-0.450834, 0, 0.892608] [581.387, 10.0037, -933.877]]
+}
+
+entity{
+  _template:t="am_area_guard"
+  transform:m=[[0.892608, 0, 0.450834] [0, 1, 0] [-0.450834, 0, 0.892608] [650.479, 9.90991, -1039.35]]
+}
+
+entity{
+  _template:t="am_area_guard"
+  transform:m=[[0.892608, 0, 0.450834] [0, 1, 0] [-0.450834, 0, 0.892608] [630.621, 9.99702, -1189.13]]
+}

@@ -1,0 +1,312 @@
+spawn_sequence_controller{
+  spawn_sequence_controller__state:i=0
+  _tracked:t="spawn_sequence_controller__state"
+  _replicated:t="spawn_sequence_controller__state"
+  spawn_sequence_controller__initAffect:t="spawn_sequence_init"
+  spawn_sequence_controller__timeoutAt:r=0
+  spawn_sequence_controller__flags:i=0
+  spawn_sequence_controller__sequenceAffect:t="spawn_sequence_affect"
+
+  "spawn_sequence_controller__initAffectEid:eid"{}
+}
+
+spawn_sequence_affect{
+  _use:t="game_effect_sequence"
+
+  "spawn_sequence_affect:tag"{}
+  "spawn_sequence__fxEid:eid"{}
+  "game_effect_sequence__stages:array"{
+    "stage:object"{
+      affectTemplate:t="spawn_sequence_portal_opens"
+      setupTransform:b=yes
+      duration:r=0.1
+    }
+
+    "stage:object"{
+      affectTemplate:t="spawn_sequence_light_appear"
+      setupTransform:b=yes
+      duration:r=0.05
+    }
+
+    "stage:object"{
+      affectTemplate:t="spawn_sequence_portal_is_open"
+      setupTransform:b=yes
+      duration:r=0.1
+    }
+
+    "stage:object"{
+      affectTemplate:t="spawn_sequence_soldier_appears"
+      setupTransform:b=yes
+      duration:r=1.55
+    }
+
+    "out_stage:object"{
+      affectTemplate:t="spawn_sequence_give_control"
+      setupTransform:b=yes
+      duration:r=0.1
+    }
+  }
+}
+
+spawn_sequence_init{
+  _use:t="replicated_effect_with_duration"
+  _use:t="base_postfx_fade_affect"
+  postfx_fade_immediate__color:c=5, 7, 5, 255
+
+  "spawn_sequence__invisibilityStart:tag"{}
+  "spawn_sequence_init:tag"{}
+}
+
+spawn_sequence_portal_opens{
+  _use:t="replicated_effect_with_duration"
+  spawn_sequence__fxTempl:t="spawn_sequence_portal"
+  spawn_sequence__fxOffset:p3=0, 2.5, 0
+  game_effect__clientReplaceTemplateFrom:t="human_hero_components_local"
+  game_effect__clientReplaceTemplateTo:t="spawn_sequence_hero_client"
+  game_effect__addTemplate:t="spawn_sequence_hero_server"
+  _use:t="game_effect_sound"
+  game_effect_sound__hero:t="player/effects/spawn/portal_opens"
+  game_effect_sound__enemy:t="enemy/effects/spawn/portal_opens"
+}
+
+spawn_sequence_light_appear{
+  _use:t="replicated_effect_with_duration"
+  spawn_sequence__fxTempl:t="spawn_sequence_light"
+  spawn_sequence__fxOffset:p3=0, 5, 0
+}
+
+spawn_sequence_portal_is_open{
+  _use:t="replicated_effect_with_duration"
+}
+
+spawn_sequence_soldier_appears{
+  _use:t="replicated_effect_with_duration"
+  _use:t="base_postfx_fade_affect"
+  postfx_fadeout_affect__time:r=2.1
+  _use:t="game_effect_sound"
+  game_effect_sound__hero:t=""
+  game_effect_sound__enemy:t="enemy/effects/spawn/soldier_appears"
+
+  "spawn_sequence__invisibilityEnd:tag"{}
+  "spawn_sequence__soldierAppears:tag"{}
+  "spawn_sequence_game_effect__gameClientAffects:array"{
+    "human_extraction_aura_affect:object"{
+      fps:t="human_extraction_aura_affect_fps"
+      tps:t="human_extraction_aura_affect_tps"
+      time:r=7.5
+    }
+  }
+}
+
+spawn_sequence_give_control{
+  _use:t="replicated_effect_with_duration"
+  game_effect__clientReplaceTemplateFrom:t="spawn_sequence_hero_client"
+  game_effect__clientReplaceTemplateTo:t="human_hero_components_local"
+  game_effect__subtractTemplate:t="spawn_sequence_hero_server"
+
+  "spawn_sequence__syncChoosenWeapon:tag"{}
+}
+
+spawn_sequence_hero_client{
+  "hero:tag"{}
+  "suspendedPlayerControl:tag"{}
+  "spawn_sequence_hero:tag"{}
+}
+
+spawn_sequence_hero_server{
+  _use:t="invulnerable"
+}
+
+spawn_sequence_portal_effect{
+  _use:t="ecs_no_debug"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  effect__scale:r=1
+  _tracked:t="effect__scale"
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_character_a_composite_fx"
+  }
+}
+
+spawn_sequence_portal_base{
+  _use:t="replicating"
+  portal__scales:p2=0.1, 2
+  portal__wishScale:r=0
+  portal__curScale:r=0
+  portal__openCloseTime:p2=0, 0
+  portal__scalingSpd:r=0
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_portal_a_composite_fx"
+
+    effect{}
+  }
+}
+
+spawn_sequence_portal{
+  _use:t="extraction_visual_effect"
+  _use:t="spawn_sequence_portal_base"
+  _use:t="spawn_sequence_portal_effect"
+  portal__scales:p2=0.025, 1.1
+  portal__openCloseTime:p2=1.425, 0.3
+  portal__radiusOffset:r=0.2
+  hero_spawn_portal__scaleAnimationTemplate:t="militant_spawn_sequence_scale_animation"
+
+  "hero_spawn_portal__openEffects:object"{}
+  "hero_spawn_portal__effects:list<eid>"{}
+  "hero_spawn_portal:tag"{}
+}
+
+spawn_sequence_light{
+  _use:t="aurora_down_active_effect"
+  game_effect__destroyAt:r=-1
+  game_effect__timeToDestroy:r=30
+}
+
+human_extraction_distortion_effect_tps{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_character_body_distortion_fx"
+  }
+}
+
+human_extraction_distortion_effect_fps{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_character_body_distortion_fx"
+  }
+}
+
+human_extraction_aura_affect_tps{
+  _use:t="replicated_game_effect"
+  game_effect__clientDestroyAt:r=-1
+  _use:t="game_effect_geomtree_effects"
+
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="human_extraction_distortion_effect_tps"
+  }
+}
+
+human_extraction_aura_affect_fps{
+  _use:t="human_extraction_aura_affect_tps"
+
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="human_extraction_distortion_effect_fps"
+  }
+
+  "game_effect__geomtreeEffectIgnoreNodeNames:list<t>"{
+    item:t="Bip01 Head"
+    item:t="Bip01 Spine"
+    item:t="Bip01 L Clavicle"
+    item:t="Bip01 R Clavicle"
+    item:t="Bip01 L UpperArm"
+    item:t="Bip01 R UpperArm"
+  }
+
+  "game_effect__geomtreeEffectIgnoreNodeIndices:list<i>"{}
+}
+
+militant_sequence_scale_animation{
+  _use:t="scaled_net_phys"
+
+  "militant_sequence_scale_animation__portalEid:eid"{}
+}
+
+militant_spawn_sequence_scale_animation{
+  _use:t="militant_sequence_scale_animation"
+  militant_spawn_sequence_scale_animation__initialOffset:r=0
+  militant_spawn_sequence_scale_animation__endOffset:r=0.85
+  militant_spawn_sequence_scale_animation__time:r=0.75
+  militant_spawn_sequence_scale_animation__initialDelay:r=0.3
+  militant_spawn_sequence_scale_animation__initialScale:r=0.1
+  militant_spawn_sequence_scale_animation__progress:r=0
+  militant_spawn_sequence_scale_animation__finalDelay:r=0.3
+}
+
+militant_spawn_sequence_fov_affect{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=1
+  militant_spawn_sequence_fov_affect__initialMagnification:r=0.01
+}
+
+spawn_sequence_simple_finished{
+  _use:t="replicated_effect_with_duration"
+  _use:t="base_postfx_fade_affect"
+  postfx_fadeout_affect__time:r=2.5
+
+  "spawn_sequence__invisibilityEnd:tag"{}
+  "spawn_sequence__syncChoosenWeapon:tag"{}
+}
+
+spawn_sequence_affect_simple{
+  _use:t="game_effect_sequence"
+
+  "spawn_sequence_affect:tag"{}
+  "game_effect_sequence__stages:array"{
+    "out_stage:object"{
+      affectTemplate:t="spawn_sequence_simple_finished"
+      duration:r=0.1
+    }
+  }
+}
+
+spawn_sequence_controller_simple{
+  _use:t="spawn_sequence_controller"
+  spawn_sequence_controller__sequenceAffect:t="spawn_sequence_affect_simple"
+}
+
+spawn_sequence_mindcontrolled_init{
+  _use:t="spawn_sequence_init"
+}
+
+spawn_sequence_mindcontrolled_finished{
+  _use:t="spawn_sequence_simple_finished"
+  postfx_fadeout_affect__time:r=3
+}
+
+spawn_sequence_mindcontrolled_finished_postfx{
+  _use:t="replicated_effect_with_duration"
+
+  "game_effect__colorGrading:object"{
+    colorContrast:p4=1.2, 1, 1.2, 0.65
+    colorGain:p4=1, 0.75, 2, 1
+    colorGamma:p4=0.5, 0.8, 0.65, 0.7
+    colorSaturation:p4=0.5, 1.2, 1.3, 0.2
+    timings:p3=0, 0, 15
+    _tags:t="render"
+  }
+}
+
+spawn_sequence_affect_mindcontrolled{
+  _use:t="game_effect_sequence"
+
+  "spawn_sequence_affect:tag"{}
+  "game_effect_sequence__stages:array"{
+    "out_stage:object"{
+      affectTemplate:t="spawn_sequence_mindcontrolled_finished"
+      duration:r=0.3
+    }
+
+    "postfx_stage:object"{
+      affectTemplate:t="spawn_sequence_mindcontrolled_finished_postfx"
+      duration:r=0.3
+    }
+  }
+}
+
+spawn_sequence_controller_mindcontrolled{
+  _use:t="spawn_sequence_controller"
+  spawn_sequence_controller__initAffect:t="spawn_sequence_mindcontrolled_init"
+  spawn_sequence_controller__sequenceAffect:t="spawn_sequence_affect_mindcontrolled"
+}

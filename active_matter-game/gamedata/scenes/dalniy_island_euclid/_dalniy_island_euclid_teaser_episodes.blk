@@ -1,0 +1,1583 @@
+entity{
+  _template:t="hive_clusters_manager"
+  hivesToSpawnRng:ip2=3, 3
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Village"
+  teaser_episode__index:i=1
+  teaser_episode__levelTime:r=19
+  teaser_episode__triggersCount:i=2
+  transform:m=[[-0.819379, -3.72544e-09, -0.573252] [-3.05255e-09, 1, -2.13561e-09] [0.573252, 0, -0.819379] [708.713, 10.0349, -939.1]]
+}
+
+entity{
+  _template:t="teaser_outdoor_sleeper_changed_human+am_inside_body_3+sleeping_monster"
+  transform:m=[[-0.807403, 9.11406e-08, -0.590001] [7.35872e-08, 1, 5.3773e-08] [0.590001, 0, -0.807403] [697.93, 10.0899, -943.035]]
+  teaser_episode_entity__episodeIndex:i=1
+}
+
+entity{
+  _template:t="teaser_outdoor_sleeper_changed_human+am_inside_body_3+sleeping_monster"
+  transform:m=[[-0.764612, 0, -0.644491] [0, 1, 0] [0.644491, 0, -0.764612] [702.9, 10.035, -947.998]]
+  teaser_episode_entity__episodeIndex:i=1
+}
+
+entity{
+  _template:t="teaser_outdoor_sleeper_changed_human+am_inside_body_3+sleeping_monster"
+  transform:m=[[-0.877558, 0, -0.479471] [0, 1, 0] [0.479471, 0, -0.877558] [690.547, 10.0427, -948.477]]
+  teaser_episode_entity__episodeIndex:i=1
+}
+
+entity{
+  _template:t="teaser_outdoor_sleeper_changed_human+am_inside_body_3+sleeping_monster"
+  transform:m=[[-0.711877, 2.47846e-07, -0.702304] [1.76436e-07, 1, 1.74063e-07] [0.702304, 0, -0.711877] [690.308, 10.0403, -956.289]]
+  teaser_episode_entity__episodeIndex:i=1
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[-0.756944, 0, -0.65348] [0, 1, 0] [0.65348, 0, -0.756944] [685.682, 10.0193, -955.6]]
+  teaser_episode_trigger_zone__episodeIndex:i=1
+  teaser_episode_trigger_zone__triggerIndex:i=0
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[-0.756944, 0, -0.65348] [0, 1, 0] [0.65348, 0, -0.756944] [685.279, 10.0193, -956.362]]
+  teaser_episode_trigger_zone__episodeIndex:i=1
+  teaser_episode_trigger_zone__triggerIndex:i=1
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  transform:m=[[0.883588, 0, 0.468265] [-0, 1, 0] [-0.468265, -0, 0.883588] [677.993, 10.0193, -959.65]]
+  teaser_episode_create_entity_point__episodeIndex:i=1
+  teaser_episode_create_entity_point__triggerIndex:i=0
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_guard"
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  transform:m=[[0.792381, 0, 0.610027] [-0, 1, 0] [-0.610027, -0, 0.792381] [678.581, 10.0193, -962.172]]
+  teaser_episode_create_entity_point__episodeIndex:i=1
+  teaser_episode_create_entity_point__triggerIndex:i=1
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_guard"
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Hospital"
+  teaser_episode__index:i=2
+  teaser_episode__levelTime:r=24
+  teaser_episode__triggersCount:i=1
+  transform:m=[[-0.999836, 0, -0.0181126] [0, 1, 0] [0.0181126, 0, -0.999836] [557.804, 61, -556.019]]
+}
+
+entity{
+  _template:t="navmesh_waypoints"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [531.758, 60.9888, -544.071]]
+  navmesh_waypoints__localSpace:b=yes
+  navmesh_waypoints__looped:b=no
+
+  "navmesh_waypoints__waypoints:list<p3>"{
+    item:p3=0, 0, 0
+    item:p3=-1.06702, 0, -6.54199
+    item:p3=-0.724976, 0, -13.916
+    item:p3=-0.513977, 0, -19.742
+    item:p3=0.30603, 0, -26.523
+    item:p3=7.27301, -0.0155983, -33.579
+    item:p3=16.377, -0.0312004, -34.181
+  }
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[-0.996193, 0, -0.087174] [0, 1, 0] [0.087174, 0, -0.996193] [550.62, 60.9993, -557.009]]
+  teaser_episode_trigger_zone__episodeIndex:i=2
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [531.758, 59.9888, -544.071]]
+  teaser_episode_create_entity_point__episodeIndex:i=2
+  teaser_episode_create_entity_point__template:t="wandering_core_follow_waypoints"
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Bunker"
+  teaser_episode__index:i=3
+  teaser_episode__levelTime:r=0.5
+  transform:m=[[0.493393, 0, 0.869807] [-0, 1, 0] [-0.869807, -0, 0.493393] [174.682, 110.067, -130.076]]
+}
+
+entity{
+  _template:t="teaser_outdoor_sleeper_changed_human_cirlce"
+  transform:m=[[0.802178, 1.96419e-07, 0.597085] [-1.57563e-07, 1, -1.17279e-07] [-0.597085, -0, 0.802178] [201.082, 110.066, -111.069]]
+  teaser_episode_entity__episodeIndex:i=3
+}
+
+entity{
+  _template:t="teaser_anomaly_sphere"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [201.082, 111.066, -111.069]]
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Scrapyard"
+  teaser_episode__index:i=4
+  teaser_episode__levelTime:r=17.5
+  teaser_episode__triggersCount:i=1
+  transform:m=[[0.9875, 4.48447e-08, 0.157621] [-4.42841e-08, 1, -7.06848e-09] [-0.157621, -0, 0.9875] [970.827, 64.9967, -261.157]]
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[-0.960516, 1.22464e-07, -0.278225] [1.17629e-07, 1, 3.40726e-08] [0.278225, 0, -0.960516] [974.577, 64.9967, -262.224]]
+  teaser_episode_trigger_zone__episodeIndex:i=4
+  sphere_zone__radius:r=1.5
+}
+
+entity{
+  _template:t="teaser_fake_target"
+  transform:m=[[0.00767727, 1.59644e-29, -0.0397122] [0.00156034, 0.0404163, 0.00030165] [0.0396816, -0.00158924, 0.00767136] [975.505, 67.1381, -259.198]]
+}
+
+entity{
+  _template:t="teaser_fake_target"
+  transform:m=[[0.00767727, 1.59644e-29, -0.0397122] [0.00156034, 0.0404163, 0.00030165] [0.0396816, -0.00158924, 0.00767136] [976.698, 67.6714, -260.537]]
+}
+
+entity{
+  _template:t="teaser_fake_target"
+  transform:m=[[0.00767727, 1.59644e-29, -0.0397122] [0.00156034, 0.0404163, 0.00030165] [0.0396816, -0.00158924, 0.00767136] [975.24, 65.9559, -264.214]]
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_7+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.875005, 0, 0.484114] [0, 1, 0] [-0.484114, 0, -0.875005] [992.504, 67.6786, -270.182]]
+  teaser_episode_entity__episodeIndex:i=4
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_7+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.961426, 0, -0.275065] [0, 1, 0] [0.275065, 0, -0.961426] [1001.4, 72.2799, -255.308]]
+  teaser_episode_entity__episodeIndex:i=4
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_7+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.247312, 0, -0.968936] [0, 1, 0] [0.968936, 0, -0.247312] [981.565, 68.3553, -242.247]]
+  teaser_episode_entity__episodeIndex:i=4
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_7+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.813711, 0, -0.581269] [0, 1, 0] [0.581269, 0, -0.813711] [996.391, 72.295, -246.945]]
+  teaser_episode_entity__episodeIndex:i=4
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_7+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.895975, 0, -0.444104] [0, 1, 0] [0.444104, 0, -0.895975] [998.97, 72.2855, -251.285]]
+  teaser_episode_entity__episodeIndex:i=4
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_7+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.0491119, 9.14822e-08, -0.998793] [4.49286e-09, 1, 9.13718e-08] [0.998793, 0, -0.0491119] [978.467, 68.0976, -241.383]]
+  teaser_episode_entity__episodeIndex:i=4
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_7+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.851591, 4.49391e-08, 0.524207] [3.82697e-08, 1, -2.35573e-08] [-0.524207, 0, -0.851591] [993.893, 67.5772, -272.998]]
+  teaser_episode_entity__episodeIndex:i=4
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Fire Station"
+  teaser_episode__index:i=5
+  teaser_episode__levelTime:r=3.4
+  teaser_episode__triggersCount:i=1
+  transform:m=[[-0.62296, 1.4903e-08, -0.782254] [9.28397e-09, 1, 1.16579e-08] [0.782254, 0, -0.62296] [-74.7966, 79.9969, -727.937]]
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[-0.659671, 0, -0.751554] [0, 1, 0] [0.751554, 0, -0.659671] [-78.566, 80.1376, -732.405]]
+  teaser_episode_trigger_zone__episodeIndex:i=5
+  sphere_zone__radius:r=2.5
+}
+
+entity{
+  _template:t="teaser_wander_target"
+  transform:m=[[0.649466, 0, 0.760391] [-0, 1, 0] [-0.760391, -0, 0.649466] [-86.3532, 80.2047, -737.885]]
+}
+
+entity{
+  _template:t="teaser_wander_target"
+  transform:m=[[0.649466, 0, 0.760391] [-0, 1, 0] [-0.760391, -0, 0.649466] [-82.6981, 80.2047, -742.473]]
+}
+
+entity{
+  _template:t="teaser_mindcontrolled_encounter_guard+teaser_episode_bot+ai_danger_update_disabled"
+  transform:m=[[0.649466, 0, 0.760391] [-0, 1, 0] [-0.760391, -0, 0.649466] [-85.4565, 80.2047, -740.459]]
+  teaser_episode_entity__episodeIndex:i=5
+}
+
+entity{
+  _template:t="teaser_mindcontrolled_encounter_guard+teaser_episode_bot+ai_danger_update_disabled"
+  transform:m=[[0.99371, 5.99982e-08, 0.111986] [-5.96208e-08, 1, -6.71894e-09] [-0.111986, -0, 0.99371] [-79.6489, 80.2047, -736.332]]
+  teaser_episode_entity__episodeIndex:i=5
+}
+
+entity{
+  _template:t="teaser_mindcontrolled_encounter_guard+teaser_episode_bot+ai_danger_update_disabled"
+  transform:m=[[0.0801144, 6.02077e-08, 0.996786] [-4.8235e-09, 1, -6.00142e-08] [-0.996786, -0, 0.0801144] [-88.0791, 80.2047, -736.168]]
+  teaser_episode_entity__episodeIndex:i=5
+}
+
+entity{
+  _template:t="teaser_mindcontrolled_encounter_guard+teaser_episode_bot+ai_danger_update_disabled"
+  transform:m=[[-0.669459, 2.47099e-07, 0.742849] [1.65422e-07, 1, -1.83557e-07] [-0.74285, 0, -0.669459] [-87.8551, 80.2047, -741.967]]
+  teaser_episode_entity__episodeIndex:i=5
+}
+
+entity{
+  _template:t="teaser_mindcontrolled_encounter_guard+teaser_episode_bot+ai_danger_update_disabled"
+  transform:m=[[-0.395429, 5.62758e-07, 0.918497] [2.22531e-07, 1, -5.16892e-07] [-0.918497, 0, -0.395429] [-83.3761, 80.8698, -746.778]]
+  teaser_episode_entity__episodeIndex:i=5
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Forrest"
+  teaser_episode__index:i=6
+  teaser_episode__levelTime:r=20
+  teaser_episode__hasReset:b=no
+  transform:m=[[-0.808183, 0, 0.588931] [0, 1, 0] [-0.588931, 0, -0.808183] [-136.437, 113.423, 5.45348]]
+}
+
+entity{
+  _template:t="teaser_anomaly_zone_flowerman_forest"
+  transform:m=[[-0.749818, 2.60871e-08, 0.661644] [1.95606e-08, 1, -1.72604e-08] [-0.661644, 0, -0.749818] [-145.102, 113.595, 15.2374]]
+  teaser_episode_entity__episodeIndex:i=6
+}
+
+entity{
+  _template:t="teaser_anomaly_zone_flowerman_forest"
+  transform:m=[[-0.825661, 9.05604e-08, 0.564167] [7.47722e-08, 1, -5.10912e-08] [-0.564167, 0, -0.825661] [-145.076, 114.448, 4.90761]]
+  teaser_episode_entity__episodeIndex:i=6
+}
+
+entity{
+  _template:t="teaser_anomaly_zone_flowerman_forest"
+  transform:m=[[-0.769975, 6.0223e-08, 0.638074] [4.63702e-08, 1, -3.84267e-08] [-0.638074, 0, -0.769975] [-157.526, 113.429, 13.375]]
+  teaser_episode_entity__episodeIndex:i=6
+}
+
+entity{
+  _template:t="teaser_anomaly_zone_flowerman_forest"
+  transform:m=[[-0.542452, 0, 0.840087] [0, 1, 0] [-0.840087, 0, -0.542452] [-159.246, 115.244, 24.8315]]
+  teaser_episode_entity__episodeIndex:i=6
+}
+
+entity{
+  _template:t="teaser_anomaly_zone_flowerman_forest"
+  transform:m=[[-0.813512, 9.09162e-08, 0.581548] [7.39614e-08, 1, -5.28721e-08] [-0.581548, 0, -0.813512] [-173.038, 115.137, 26.6848]]
+  teaser_episode_entity__episodeIndex:i=6
+}
+
+entity{
+  _template:t="teaser_anomaly_zone_flowerman_forest"
+  transform:m=[[-0.746491, 0, 0.665395] [0, 1, 0] [-0.665395, 0, -0.746491] [-182.514, 117.814, 36.109]]
+  teaser_episode_entity__episodeIndex:i=6
+}
+
+entity{
+  _template:t="teaser_anomaly_zone_flowerman_forest"
+  transform:m=[[0.679024, 0, 0.734116] [-0, 1, 0] [-0.734116, -0, 0.679024] [-153.099, 114.253, 9.98524]]
+  teaser_episode_entity__episodeIndex:i=6
+}
+
+entity{
+  _template:t="teaser_anomaly_zone_flowerman_forest"
+  transform:m=[[-0.789594, 2.4619e-07, 0.61363] [1.9439e-07, 1, -1.5107e-07] [-0.61363, 0, -0.789594] [-148.188, 115.243, 24.5144]]
+  teaser_episode_entity__episodeIndex:i=6
+}
+
+entity{
+  _template:t="teaser_anomaly_zone_flowerman_forest"
+  transform:m=[[-0.588968, -3.49246e-10, 0.808156] [-2.05695e-10, 1, 2.82245e-10] [-0.808156, 0, -0.588968] [-160.328, 116.854, 36.4813]]
+  teaser_episode_entity__episodeIndex:i=6
+}
+
+entity{
+  _template:t="teaser_anomaly_zone_flowerman_forest"
+  transform:m=[[-0.724436, 0, 0.689342] [0, 1, 0] [-0.689342, 0, -0.724436] [-174.309, 116.667, 35.4186]]
+  teaser_episode_entity__episodeIndex:i=6
+}
+
+entity{
+  _template:t="teaser_anomaly_zone_flowerman_forest"
+  transform:m=[[-0.356872, 0, 0.934153] [0, 1, 0] [-0.934153, 0, -0.356872] [-153.948, 114.93, -0.208842]]
+  teaser_episode_entity__episodeIndex:i=6
+}
+
+entity{
+  _template:t="teaser_anomaly_zone_flowerman_forest"
+  transform:m=[[-0.484183, -6.98493e-10, 0.874967] [-3.38199e-10, 1, 6.11158e-10] [-0.874967, 0, -0.484183] [-133.794, 113.677, 9.07719]]
+  teaser_episode_entity__episodeIndex:i=6
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Grav Zone"
+  teaser_episode__index:i=7
+  teaser_episode__levelTime:r=5
+  teaser_episode__hasReset:b=yes
+  transform:m=[[0.963421, 0, -0.267992] [0, -1, 0] [-0.267992, -0, -0.963421] [639.421, 79.7356, -136.629]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-60, 0, 0] [0, -6, 0] [0, 0, 50] [653.631, 77.4756, -140.537]]
+}
+
+entity{
+  _template:t="teaser_outdoor_sleeper_changed_human_generator"
+  transform:m=[[35, 0, 0] [0, 6, 0] [0, 0, 35] [653.631, 77.4756, -140.537]]
+  teaser_episode_entity__episodeIndex:i=7
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Street"
+  teaser_episode__index:i=8
+  teaser_episode__levelTime:r=7
+  teaser_episode__hasReset:b=yes
+  teaser_episode__triggersCount:i=1
+  transform:m=[[-0.980807, 1.82207e-07, -0.19498] [1.7871e-07, 1, 3.55266e-08] [0.19498, 0, -0.980807] [-401.517, 34.9962, -839.657]]
+}
+
+entity{
+  _template:t="door_controller_opened_state"
+  door_controller__name:t="street_door"
+  transform:m=[[-0.0871554, 0, 0.996195] [0, 1, 0] [-0.996195, 0, -0.0871554] [-418.154, 35.5, -833.411]]
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[-0.0503862, 0, 0.99873] [0, 1, 0] [-0.99873, 0, -0.0503862] [-417.282, 34.9505, -844.173]]
+  teaser_episode_trigger_zone__episodeIndex:i=8
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  transform:m=[[0.216094, 0, -0.976373] [0, 1, 0] [0.976373, -0, 0.216094] [-419.209, 35.5, -831.053]]
+  teaser_episode_create_entity_point__episodeIndex:i=8
+  teaser_episode_create_entity_point__template:t="regional_changed_human+teaser_episode_entity"
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Frog Trap"
+  teaser_episode__index:i=10
+  teaser_episode__levelTime:r=4
+  teaser_episode__hasReset:b=yes
+  teaser_episode__triggersCount:i=0
+  transform:m=[[0.816807, 0, 0.576911] [-0, 1, 0] [-0.576911, -0, 0.816807] [131.384, 89.0873, -391.699]]
+}
+
+entity{
+  _template:t="teaser_frog_trap_region_monster_generator_dense+teaser_episode_entity"
+  transform:m=[[30, 0, 0] [0, 3, 0] [0, 0, 30] [150.935, 88.756, -383.471]]
+  teaser_episode_entity__episodeIndex:i=10
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Euclid (Run)"
+  teaser_episode__index:i=11
+  teaser_episode__levelTime:r=17
+  teaser_episode__hasReset:b=yes
+  teaser_episode__triggersCount:i=1
+  transform:m=[[-0.989908, -0.13931, 0.0259695] [-0.128338, 0.95903, 0.25257] [-0.060091, 0.246688, -0.96723] [-1603.31, 11.553, 898.569]]
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[-0.965797, -0.177127, -0.189371] [-0.225113, 0.935206, 0.273339] [0.128685, 0.30662, -0.943093] [-1614.34, 10.4844, 897.388]]
+  teaser_episode_trigger_zone__episodeIndex:i=11
+  sphere_zone__radius:r=4
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  transform:m=[[-0.992973, 0, -0.118341] [0, 1, 0] [0.118341, 0, -0.992973] [-1572, 14.0167, 904.33]]
+  teaser_episode_create_entity_point__episodeIndex:i=11
+  teaser_episode_create_entity_point__template:t="teaser_euclid_changed_human+teaser_episode_entity"
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  transform:m=[[-0.999802, 0, -0.0199124] [0, 1, 0] [0.0199124, 0, -0.999802] [-1566.02, 14.1467, 902.666]]
+  teaser_episode_create_entity_point__episodeIndex:i=11
+  teaser_episode_create_entity_point__template:t="teaser_euclid_changed_human+teaser_episode_entity"
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  transform:m=[[-0.999899, 5.9735e-08, -0.0141938] [5.9729e-08, 1, 8.47865e-10] [0.0141938, 0, -0.999899] [-1565.03, 14.1522, 907.18]]
+  teaser_episode_create_entity_point__episodeIndex:i=11
+  teaser_episode_create_entity_point__template:t="teaser_euclid_changed_human+teaser_episode_entity"
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  transform:m=[[-0.977736, 0, -0.20984] [0, 1, 0] [0.20984, 0, -0.977736] [-1568.19, 14.1151, 906.961]]
+  teaser_episode_create_entity_point__episodeIndex:i=11
+  teaser_episode_create_entity_point__template:t="teaser_euclid_changed_human+teaser_episode_entity"
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  transform:m=[[-0.979407, 0, -0.201896] [0, 1, 0] [0.201896, 0, -0.979407] [-1577.36, 13.7692, 906.361]]
+  teaser_episode_create_entity_point__episodeIndex:i=11
+  teaser_episode_create_entity_point__template:t="teaser_euclid_changed_human+teaser_episode_entity"
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Cinema"
+  teaser_episode__index:i=12
+  teaser_episode__levelTime:r=0.5
+  transform:m=[[0.00901699, 0, -0.999959] [0, 1, 0] [0.999959, -0, 0.00901699] [-194.984, 41.8648, -1012.82]]
+}
+
+entity{
+  _template:t="teaser_outdoor_sleeper_changed_human_cirlce_2"
+  transform:m=[[-0.681047, 1.24173e-07, -0.73224] [8.45676e-08, 1, 9.09244e-08] [0.73224, 0, -0.681047] [-192.114, 39.2, -1029.5]]
+  teaser_episode_entity__episodeIndex:i=12
+}
+
+entity{
+  _template:t="teaser_anomaly_sphere"
+  transform:m=[[-0.681047, 1.24173e-07, -0.73224] [8.45676e-08, 1, 9.09244e-08] [0.73224, 0, -0.681047] [-192.114, 40.2, -1029.5]]
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Greenhouse"
+  teaser_episode__index:i=13
+  teaser_episode__levelTime:r=16
+  transform:m=[[0.781212, 0, 0.624265] [-0, 1, 0] [-0.624265, -0, 0.781212] [108.234, 25.499, -1446.34]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.0712042, -11.6315, 0.0829423] [-1.03373, -0.0149147, -1.20415] [1.20286, 6.39813e-10, -1.03263] [127.856, 20.2126, -1422.63]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.0712042, -11.6315, 0.0829423] [-1.03373, -0.0149147, -1.20415] [1.20286, 6.39813e-10, -1.03263] [136.428, 20.2126, -1430.79]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[12.3113, -0.0529105, -11.2255] [-0.0228791, -1.58701, -0.0176119] [-1.53897, 0.0409192, -1.68802] [130.819, 24.6721, -1426.7]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-11.2414, -0.0529105, -12.2968] [-0.0175823, -1.58701, 0.0229018] [-1.68603, 0.0409192, 1.54114] [119.19, 24.6721, -1425.67]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[-11.2414, -0.0529105, -12.2968] [-0.0175823, -1.58701, 0.0229018] [-1.68603, 0.0409192, 1.54114] [109.221, 24.6721, -1436.91]]
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Monument"
+  teaser_episode__index:i=14
+  teaser_episode__levelTime:r=20.5
+  transform:m=[[-0.547559, -1.91687e-07, -0.836767] [-1.0496e-07, 1, -1.60397e-07] [0.836767, 0, -0.547559] [-187.159, 50.5753, -1143.4]]
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[0.753008, 9.31323e-10, -0.658011] [0.0112541, 0.999854, 0.0128789] [0.657915, -0.0171032, 0.752898] [-231.635, 110.467, -1179.69]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_water_tower_preset"
+  }
+
+  "hive_point__avaliableBeesPresets:list<t>"{
+    item:t="teaser_bees_swarm_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[-0.637738, 6.03497e-07, -0.770254] [0.135706, 0.984358, -0.112358] [0.758205, -0.176183, -0.627762] [-203.651, 115.748, -1200.43]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_big_wall_preset"
+  }
+
+  "hive_point__avaliableBeesPresets:list<t>"{
+    item:t="teaser_bees_swarm_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[0.796064, 5.88596e-07, -0.605214] [0.106628, 0.984358, 0.140253] [0.595747, -0.176183, 0.783611] [-234.042, 100.745, -1179.52]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+
+  "hive_point__avaliableBeesPresets:list<t>"{
+    item:t="teaser_bees_swarm_preset"
+  }
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Epic Battle (Factory)"
+  teaser_episode__index:i=15
+  teaser_episode__levelTime:r=18
+  teaser_episode__hasReset:b=yes
+  teaser_episode__triggersCount:i=2
+  transform:m=[[-0.655322, 0, 0.75535] [0, 1, 0] [-0.75535, 0, -0.655322] [-228.759, 89.9199, -398.205]]
+}
+
+entity{
+  _template:t="gaz_67+teaser_car"
+  transform:m=[[-0.699491, 0.00721838, 0.714605] [-0.0019789, 0.999926, -0.0120375] [-0.714639, -0.00983426, -0.699425] [-225.794, 89.8073, -401.413]]
+  teaser_car__episodeIndex:i=15
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[0.783992, 0, -0.620772] [0, 1, 0] [0.620772, -0, 0.783992] [-236.83, 89.9736, -389.835]]
+  teaser_episode_trigger_zone__episodeIndex:i=15
+  sphere_zone__radius:r=4
+}
+
+entity{
+  _template:t="teaser_extraction_point"
+  transform:m=[[-0.761591, -4.65662e-10, 0.648058] [-3.54644e-10, 1, 3.01776e-10] [-0.648058, 0, -0.761591] [-275.605, 89.9893, -359.083]]
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  transform:m=[[-0.737277, 0, -0.67559] [0, 1, 0] [0.67559, 0, -0.737277] [-232.408, 90.0594, -391.115]]
+  teaser_episode_create_entity_point__episodeIndex:i=15
+  teaser_episode_create_entity_point__triggerIndex:i=1
+  teaser_episode_create_entity_point__template:t="sovmod_fence_brick_b_door_b_rot_r"
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  transform:m=[[0.737277, 0, 0.67559] [0, 1, 0] [-0.67559, 0, 0.737277] [-235.784, 90.0573, -394.212]]
+  teaser_episode_create_entity_point__episodeIndex:i=15
+  teaser_episode_create_entity_point__triggerIndex:i=1
+  teaser_episode_create_entity_point__template:t="sovmod_fence_brick_b_door_b_rot_l"
+}
+
+entity{
+  _template:t="teaser_bot_guard_blind+create_teaser_bot_player_colors_2+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[0.570117, 0, -0.821563] [0, 1, 0] [0.821563, -0, 0.570117] [-317.88, 89.9893, -317.021]]
+  teaser_episode_entity__episodeIndex:i=15
+}
+
+entity{
+  _template:t="teaser_bot_guard_blind+create_teaser_bot_player_colors_2+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[0.0670926, 0, -0.997747] [0, 1, 0] [0.997747, -0, 0.0670926] [-315.622, 90.0001, -307.931]]
+  teaser_episode_entity__episodeIndex:i=15
+}
+
+entity{
+  _template:t="teaser_bot_guard_blind+create_teaser_bot_player_colors_2+teaser_episode_bot"
+  transform:m=[[0.126534, 9.05434e-08, -0.991962] [-1.14568e-08, 1, 8.98157e-08] [0.991962, -0, 0.126534] [-323.632, 89.9893, -309.71]]
+  teaser_episode_entity__episodeIndex:i=15
+}
+
+entity{
+  _template:t="teaser_bot_guard_blind+create_teaser_bot_player_colors_3+teaser_episode_bot+teaser_bot_team_2"
+  transform:m=[[0.654277, 0, 0.756255] [-0, 1, 0] [-0.756255, -0, 0.654277] [-298.385, 90.3649, -398.271]]
+  teaser_episode_entity__episodeIndex:i=15
+}
+
+entity{
+  _template:t="teaser_bot_guard_blind+create_teaser_bot_player_colors_3+teaser_episode_bot+teaser_bot_team_2"
+  transform:m=[[0.332729, 2.79398e-09, 0.943023] [-9.29637e-10, 1, -2.63479e-09] [-0.943023, -0, 0.332729] [-284.272, 90.0049, -389.602]]
+  teaser_episode_entity__episodeIndex:i=15
+}
+
+entity{
+  _template:t="teaser_bot_guard_blind+create_teaser_bot_player_colors_3+teaser_episode_bot+teaser_bot_team_2"
+  transform:m=[[0.238913, 0, 0.971041] [-0, 1, 0] [-0.971041, -0, 0.238913] [-272.092, 89.9893, -399.207]]
+  teaser_episode_entity__episodeIndex:i=15
+}
+
+entity{
+  _template:t="teaser_bot_guard_very_blind+create_teaser_bot_player_colors_4+teaser_episode_bot+teaser_bot_team_3"
+  transform:m=[[-0.668024, 0, -0.74414] [0, 1, 0] [0.74414, 0, -0.668024] [-222.883, 90.04, -323.117]]
+  teaser_episode_entity__episodeIndex:i=15
+}
+
+entity{
+  _template:t="teaser_bot_guard_very_blind+create_teaser_bot_player_colors_4+teaser_episode_bot+teaser_bot_team_3"
+  transform:m=[[-0.669431, 0, -0.742874] [0, 1, 0] [0.742874, 0, -0.669431] [-232.299, 89.9917, -312.608]]
+  teaser_episode_entity__episodeIndex:i=15
+}
+
+entity{
+  _template:t="teaser_bot_guard_very_blind+create_teaser_bot_player_colors_4+teaser_episode_bot+teaser_bot_team_3"
+  transform:m=[[0.709817, 0, -0.704386] [0, 1, 0] [0.704386, -0, 0.709817] [-225.823, 90.5, -327.572]]
+  teaser_episode_entity__episodeIndex:i=15
+}
+
+entity{
+  _template:t="teaser_bot_guard_blind+create_teaser_bot_player_colors_5+teaser_episode_bot+teaser_bot_team_4"
+  transform:m=[[0.913718, 0, 0.406348] [-0, 1, 0] [-0.406348, -0, 0.913718] [-329.077, 89.9893, -387.454]]
+  teaser_episode_entity__episodeIndex:i=15
+}
+
+entity{
+  _template:t="teaser_bot_guard_blind+create_teaser_bot_player_colors_5+teaser_episode_bot+teaser_bot_team_4"
+  transform:m=[[0.815436, 5.5883e-09, 0.578848] [-4.5569e-09, 1, -3.23478e-09] [-0.578848, -0, 0.815436] [-343.361, 89.9893, -393.082]]
+  teaser_episode_entity__episodeIndex:i=15
+}
+
+entity{
+  _template:t="teaser_bot_guard_blind+create_teaser_bot_player_colors_5+teaser_episode_bot+teaser_bot_team_4"
+  transform:m=[[0.836477, 6.03312e-08, 0.548003] [-5.04657e-08, 1, -3.30617e-08] [-0.548003, -0, 0.836477] [-334.055, 89.9893, -383.465]]
+  teaser_episode_entity__episodeIndex:i=15
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Cinema (Basement)"
+  teaser_episode__index:i=16
+  teaser_episode__levelTime:r=0
+  teaser_episode__hasReset:b=yes
+  teaser_episode__triggersCount:i=1
+  transform:m=[[-0.803297, 0, 0.595579] [0, 1, 0] [-0.595579, 0, -0.803297] [-160.163, 38, -1002.2]]
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[-0.777391, 2.13682e-07, 0.629017] [1.66115e-07, 1, -1.3441e-07] [-0.629017, 0, -0.777391] [-167.418, 38, -998.051]]
+  teaser_episode_trigger_zone__episodeIndex:i=16
+  sphere_zone__radius:r=3.5
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_human+sleeping_monster+teaser_awake_on_trigger"
+  transform:m=[[0.681533, 0, -0.731788] [0, 1, 0] [0.731788, -0, 0.681533] [-167.173, 38, -995.142]]
+  teaser_episode_entity__episodeIndex:i=16
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_human+sleeping_monster+teaser_awake_on_trigger"
+  transform:m=[[0.805105, 1.24202e-07, -0.593133] [-9.99958e-08, 1, 7.36684e-08] [0.593133, -0, 0.805105] [-168.595, 38, -997.316]]
+  teaser_episode_entity__episodeIndex:i=16
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_human+sleeping_monster+teaser_awake_on_trigger"
+  transform:m=[[0.861016, 4.8353e-07, -0.508578] [-4.16327e-07, 1, 2.45912e-07] [0.508578, -0, 0.861016] [-167.536, 38, -999.361]]
+  teaser_episode_entity__episodeIndex:i=16
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Children Garden"
+  teaser_episode__index:i=17
+  teaser_episode__levelTime:r=22
+  teaser_episode__triggersCount:i=0
+  teaser_episode__hasReset:b=yes
+  transform:m=[[0.136194, 0, -0.990682] [0, 1, 0] [0.990682, -0, 0.136194] [-385.002, 35.2009, -883.255]]
+}
+
+entity{
+  _template:t="teaser_tape_recorder"
+  transform:m=[[-0.796241, 0, -0.889998] [0, 1.19419, 0] [0.889998, 0, -0.796241] [-384.275, 35.6491, -885.047]]
+}
+
+entity{
+  _template:t="teaser_audio_cassette"
+  transform:m=[[-0.797611, -0.00420418, -0.88876] [0.88776, -0.0606192, -0.796428] [-0.0423112, -1.19265, 0.0436135] [-384.305, 35.7451, -885.02]]
+}
+
+entity{
+  _template:t="teaser_spot_light"
+  transform:m=[[0.800425, 0.467233, -0.375517] [0.505636, -0.18981, 0.841608] [0.32195, -0.86352, -0.388179] [-384.852, 36.7834, -884.78]]
+  light__max_radius:r=2.5
+  light__radius_scale:r=0.1
+  light__brightness:r=0.125
+  light__color:c=80, 200, 255, 255
+  spot_light__contact_shadows:b=yes
+  spot_light__dynamic_obj_shadows:b=yes
+  spot_light__shadows:b=yes
+  light__force_max_light_radius:b=yes
+  spot_light__inner_attenuation:r=0.5
+}
+
+entity{
+  _template:t="teaser_sovmod_kindergarten_doll_d"
+  transform:m=[[-0.84431, -0.371246, -0.386415] [0.507658, -0.323329, -0.798588] [0.171534, -0.870422, 0.461456] [-385.428, 35.5643, -885.45]]
+}
+
+entity{
+  _template:t="teaser_recorder_spider+teaser_episode_entity"
+  transform:m=[[-0.0345596, 0, 0.00553506] [0, 0.035, 0] [-0.00553506, 0, -0.0345596] [-384.182, 35.8141, -884.948]]
+  teaser_episode_entity__episodeIndex:i=17
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Euclid (Final)"
+  teaser_episode__index:i=18
+  teaser_episode__levelTime:r=9
+  teaser_episode__triggersCount:i=5
+  teaser_episode__hasReset:b=yes
+  transform:m=[[-0.599388, 0.341036, -0.724175] [0.748435, -0.0820603, -0.658112] [-0.283866, -0.936462, -0.206057] [-1807.06, 161.739, 994.143]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[16.9887, 27.1114, 11.6818] [26.6928, -8.35056, -19.4389] [-12.6089, 18.8507, -25.4121] [-1812.18, 166.199, 982.776]]
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=1
+  teaser_episode_create_entity_point__template:t="final_euclid_changed_human_looker_3"
+  transform:m=[[0.572775, 0.203689, 0.794003] [0.819368, -0.114189, -0.56178] [-0.023762, 0.972354, -0.2323] [-1816, 166.166, 979.532]]
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=1
+  teaser_episode_create_entity_point__template:t="final_euclid_changed_human_looker_4"
+  transform:m=[[0.0760869, -0.874, 0.479933] [0.783691, -0.24517, -0.570719] [0.616473, 0.419543, 0.666292] [-1812.85, 169.478, 982.2]]
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=1
+  teaser_episode_create_entity_point__template:t="final_euclid_changed_human_looker_2"
+  transform:m=[[0.370062, -0.553664, 0.745997] [0.783691, -0.245169, -0.57072] [0.498882, 0.795832, 0.343173] [-1814.23, 167.861, 981.122]]
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=1
+  teaser_episode_create_entity_point__template:t="final_euclid_changed_human_looker_6"
+  transform:m=[[0.543951, 0.502774, 0.671815] [0.807917, -0.0975148, -0.581172] [-0.226686, 0.8589, -0.459243] [-1814.7, 163.844, 982.509]]
+}
+
+entity{
+  _template:t="final_euclid_teaser_params"
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=1
+  teaser_episode_create_entity_point__template:t="final_euclid_changed_human_looker_1"
+  transform:m=[[0.248535, -0.786333, 0.565606] [0.816601, -0.143958, -0.558963] [0.520955, 0.600796, 0.606342] [-1815.05, 170.282, 978.749]]
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=1
+  teaser_episode_create_entity_point__template:t="final_euclid_changed_human_looker_5"
+  transform:m=[[-0.0796922, -0.989361, 0.12171] [0.792617, -0.136936, -0.594144] [0.604489, 0.0491211, 0.795098] [-1811.76, 169.308, 983.776]]
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=3
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_2"
+  transform:m=[[0.249295, -0.797575, 0.549297] [0.807456, -0.141965, -0.572591] [0.534665, 0.586277, 0.608615] [-1813.76, 170.001, 980.669]]
+  teaser_episode_create_entity_point__delay:p2=0.3, 0.3
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=3
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_3"
+  transform:m=[[0.492536, -0.360908, 0.791931] [0.817073, -0.121563, -0.563573] [0.299667, 0.924645, 0.235014] [-1815.52, 167.187, 979.678]]
+  teaser_episode_create_entity_point__delay:p2=0.6, 0.6
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=3
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_4"
+  transform:m=[[0.0760869, -0.874, 0.479933] [0.783691, -0.24517, -0.570719] [0.616473, 0.419543, 0.666292] [-1812.85, 169.478, 982.2]]
+  teaser_episode_create_entity_point__delay:p2=0.8, 0.8
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=3
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_8"
+  transform:m=[[0.403816, -0.617737, 0.674784] [0.800634, -0.118238, -0.587371] [0.442626, 0.777445, 0.446835] [-1813.23, 166.722, 983.069]]
+  teaser_episode_create_entity_point__delay:p2=1.5, 1.5
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=3
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_6"
+  transform:m=[[0.572403, -0.078083, 0.816246] [0.808406, -0.11287, -0.577702] [0.137238, 0.990537, -0.00148405] [-1814.44, 165.978, 981.781]]
+  teaser_episode_create_entity_point__delay:p2=1.2, 1.2
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=3
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_7"
+  transform:m=[[-0.21127, -0.975634, -0.0591829] [0.791546, -0.135255, -0.595953] [0.573428, -0.172753, 0.800835] [-1811.58, 169.066, 984.005]]
+  teaser_episode_create_entity_point__delay:p2=1.4, 1.4
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=3
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_1"
+  transform:m=[[0.248535, -0.786333, 0.565606] [0.816601, -0.143958, -0.558963] [0.520955, 0.600796, 0.606342] [-1815.05, 170.282, 978.749]]
+  teaser_episode_create_entity_point__delay:p2=0, 0
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=3
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_5"
+  transform:m=[[-0.118553, -0.989278, 0.0852903] [0.793946, -0.146028, -0.590191] [0.596317, -0.00225317, 0.802746] [-1811.79, 170.561, 983.1]]
+  teaser_episode_create_entity_point__delay:p2=1, 1
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=4
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_2"
+  transform:m=[[0.249295, -0.797575, 0.549297] [0.807456, -0.141965, -0.572591] [0.534665, 0.586277, 0.608615] [-1813.76, 170.001, 980.669]]
+  teaser_episode_create_entity_point__delay:p2=0.3, 0.3
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=4
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_3"
+  transform:m=[[0.492536, -0.360908, 0.791931] [0.817073, -0.121563, -0.563573] [0.299667, 0.924645, 0.235014] [-1815.52, 167.187, 979.678]]
+  teaser_episode_create_entity_point__delay:p2=0.6, 0.6
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=4
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_4"
+  transform:m=[[0.0760869, -0.874, 0.479933] [0.783691, -0.24517, -0.570719] [0.616473, 0.419543, 0.666292] [-1812.85, 169.478, 982.2]]
+  teaser_episode_create_entity_point__delay:p2=0.8, 0.8
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=4
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_8"
+  transform:m=[[0.403816, -0.617737, 0.674784] [0.800634, -0.118238, -0.587371] [0.442626, 0.777445, 0.446835] [-1813.23, 166.722, 983.069]]
+  teaser_episode_create_entity_point__delay:p2=1.5, 1.5
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=4
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_6"
+  transform:m=[[0.572403, -0.078083, 0.816246] [0.808406, -0.11287, -0.577702] [0.137238, 0.990537, -0.00148405] [-1814.44, 165.978, 981.781]]
+  teaser_episode_create_entity_point__delay:p2=1.2, 1.2
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=4
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_7"
+  transform:m=[[-0.21127, -0.975634, -0.0591829] [0.791546, -0.135255, -0.595953] [0.573428, -0.172753, 0.800835] [-1811.58, 169.066, 984.005]]
+  teaser_episode_create_entity_point__delay:p2=1.4, 1.4
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=4
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_9"
+  transform:m=[[0.248535, -0.786333, 0.565606] [0.816601, -0.143958, -0.558963] [0.520955, 0.600796, 0.606342] [-1815.05, 170.282, 978.749]]
+  teaser_episode_create_entity_point__delay:p2=0, 0
+}
+
+entity{
+  _template:t="teaser_episode_create_entity_point"
+  teaser_episode_create_entity_point__episodeIndex:i=18
+  teaser_episode_create_entity_point__triggerIndex:i=4
+  teaser_episode_create_entity_point__template:t="teaser_invisible_man_looker_5"
+  transform:m=[[-0.118553, -0.989278, 0.0852903] [0.793946, -0.146028, -0.590191] [0.596317, -0.00225317, 0.802746] [-1811.79, 170.561, 983.1]]
+  teaser_episode_create_entity_point__delay:p2=1, 1
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+teaser_episode_bot+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.0384876, 0.368402, 0.92887] [0.985254, -0.169072, 0.0262324] [0.16671, 0.914163, -0.369477] [-1833.57, 172.921, 896.444]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+teaser_episode_bot+hitpoints_god_mode_on_appear"
+  transform:m=[[-0.0313775, -0.0475939, 0.998374] [0.978667, -0.204373, 0.0210154] [0.203041, 0.977735, 0.0529913] [-1832.1, 177.586, 897.163]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+teaser_episode_bot+hitpoints_god_mode_on_appear"
+  transform:m=[[0.0541175, 0.403449, 0.9134] [0.991006, -0.133819, 0.000392336] [0.122389, 0.905164, -0.407062] [-1835.04, 168.235, 899.947]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear"
+  transform:m=[[-0.0951799, -0.116497, -0.98862] [0.980108, -0.18471, -0.0725947] [-0.174151, -0.975864, 0.13176] [-1832.9, 175.047, 909.844]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear"
+  transform:m=[[-0.174903, -0.655115, -0.735006] [0.976468, -0.211081, -0.0442236] [-0.126174, -0.725444, 0.676617] [-1831.66, 178.46, 905.963]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.369002, -0.155907, -0.916259] [0.875785, -0.271745, 0.398942] [-0.311187, -0.949657, 0.0362662] [-1822.22, 187.923, 844.326]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear"
+  transform:m=[[0.309906, -0.394628, -0.865001] [0.855686, -0.280811, 0.434679] [-0.414438, -0.874879, 0.250653] [-1819.29, 189.146, 839.404]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear"
+  transform:m=[[-0.475656, 0.249951, 0.843372] [0.813891, -0.238631, 0.529752] [0.333666, 0.938392, -0.0899264] [-1814.9, 183.689, 825.211]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear"
+  transform:m=[[-0.512107, 0.253107, 0.820782] [0.798253, -0.212517, 0.563585] [0.317077, 0.943808, -0.0932118] [-1813.66, 180.26, 819.751]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear"
+  transform:m=[[-0.590859, 0.0445946, 0.805542] [0.775165, -0.245372, 0.582161] [0.223619, 0.968403, 0.110412] [-1810.6, 185.009, 816.938]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_3+teaser_episode_bot+teaser_bot_team_3+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.704146, 0.32484, -0.631393] [0.678325, -0.570588, 0.46293] [-0.209887, -0.75426, -0.622124] [-1794.59, 229.571, 835.443]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_3+teaser_episode_bot+teaser_bot_team_3+hitpoints_god_mode_on_appear"
+  transform:m=[[0.708915, 0.411306, -0.572946] [0.693762, -0.552953, 0.461451] [-0.127015, -0.724618, -0.677345] [-1796.87, 227.212, 835.565]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_3+teaser_episode_bot+teaser_bot_team_3+hitpoints_god_mode_on_appear"
+  transform:m=[[0.683676, 0.410474, -0.603405] [0.71578, -0.538369, 0.444767] [-0.142289, -0.735982, -0.66188] [-1799.49, 224.828, 838.181]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[-0.905766, -0.181738, 0.38283] [0.40039, -0.662959, 0.632592] [0.138835, 0.726262, 0.673252] [-1755.73, 242.27, 811.956]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear"
+  transform:m=[[-0.935777, -0.188102, 0.298226] [0.345067, -0.662378, 0.664969] [0.0724559, 0.725171, 0.684746] [-1748.06, 242.259, 807.38]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear"
+  transform:m=[[-0.947322, -0.178651, 0.265827] [0.31306, -0.691754, 0.650745] [0.0676305, 0.699685, 0.711243] [-1743.67, 246.499, 809.221]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_4+teaser_episode_bot+teaser_bot_team_4+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.575791, 0.813552, -0.0812262] [0.648623, -0.394049, 0.651163] [0.497748, -0.427619, -0.754579] [-1791.71, 205.714, 807.933]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_4+teaser_episode_bot+teaser_bot_team_4+hitpoints_god_mode_on_appear"
+  transform:m=[[0.605624, 0.77908, -0.162029] [0.6826, -0.403972, 0.608985] [0.408994, -0.479417, -0.776456] [-1797.59, 207.753, 812.938]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+teaser_episode_bot+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.977882, 0.180695, 0.105337] [0.134377, -0.928703, 0.34562] [0.160279, -0.323821, -0.932443] [-1718.86, 280.371, 851.482]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+teaser_episode_bot+hitpoints_god_mode_on_appear"
+  transform:m=[[0.980331, 0.190894, 0.0501136] [0.1644, -0.930328, 0.327816] [0.1092, -0.31313, -0.943412] [-1723.13, 280.866, 853.887]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+teaser_episode_bot+hitpoints_god_mode_on_appear"
+  transform:m=[[0.977384, 0.172487, -0.122351] [0.201349, -0.935906, 0.28903] [-0.0646546, -0.307128, -0.949469] [-1728.3, 281.565, 859.37]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[-0.98542, 0.0960633, -0.140424] [-0.132789, -0.950245, 0.281783] [-0.106368, 0.296322, 0.949147] [-1681.49, 282.49, 860.712]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear"
+  transform:m=[[-0.986462, 0.141451, -0.0829761] [-0.159833, -0.94252, 0.293445] [-0.0366985, 0.302735, 0.952368] [-1677.7, 281.519, 859.053]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear"
+  transform:m=[[-0.991814, 0.104557, -0.073306] [-0.12312, -0.935295, 0.331761] [-0.0338746, 0.338071, 0.940511] [-1682.83, 280.438, 853.732]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[-0.925194, 0.0897075, -0.368738] [-0.0500336, -0.992012, -0.1158] [-0.376181, -0.0886886, 0.922292] [-1692.96, 289.663, 916.303]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear"
+  transform:m=[[-0.793912, 0.116976, -0.596674] [-0.0179784, -0.985407, -0.169265] [-0.607767, -0.123654, 0.784429] [-1697.48, 288.374, 923.769]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_3+teaser_episode_bot+teaser_bot_team_3+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.727755, 0.180886, 0.661553] [0.21146, -0.976779, 0.034455] [0.652424, 0.114817, -0.749106] [-1729.69, 287.131, 895.163]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_3+teaser_episode_bot+teaser_bot_team_3+hitpoints_god_mode_on_appear"
+  transform:m=[[0.845348, 0.245419, 0.474507] [0.273534, -0.961809, 0.0101456] [0.458875, 0.121218, -0.880193] [-1738.45, 285.205, 898.574]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[-0.797603, -0.424192, 0.428824] [0.39851, -0.904265, -0.153279] [0.45279, 0.048635, 0.89029] [-1756.23, 277.6, 921.629]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_3+teaser_episode_bot+teaser_bot_team_3+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.608415, 0.689457, -0.39304] [0.628865, -0.720935, -0.291173] [-0.484108, -0.0700148, -0.872203] [-1788.34, 251.269, 940.901]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_3+teaser_episode_bot+teaser_bot_team_3+hitpoints_god_mode_on_appear"
+  transform:m=[[0.647154, 0.697185, -0.308422] [0.647419, -0.716218, -0.26054] [-0.402542, -0.0310687, -0.914874] [-1790.14, 249.717, 936.274]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_3+teaser_episode_bot+teaser_bot_team_3+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.666119, 0.641269, -0.380867] [0.689827, -0.72387, -0.0123113] [-0.283593, -0.254531, -0.924548] [-1792.86, 247.44, 901.657]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_4+teaser_episode_bot+teaser_bot_team_4+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[-0.804588, -0.548771, 0.22691] [0.569954, -0.820902, 0.035657] [0.166703, 0.158017, 0.973263] [-1776.81, 260.624, 895.195]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_4+teaser_episode_bot+teaser_bot_team_4+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.12388, -0.432909, 0.892885] [0.26542, -0.852574, -0.450189] [0.956141, 0.292759, 0.00928593] [-1736.84, 268.329, 962.482]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_4+teaser_episode_bot+teaser_bot_team_4+hitpoints_god_mode_on_appear"
+  transform:m=[[-0.169351, -0.530733, 0.830447] [0.248752, -0.838355, -0.48506] [0.953647, 0.12443, 0.273997] [-1735, 267.975, 968.258]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[-0.175985, 0.624045, -0.761313] [0.227494, -0.726665, -0.648232] [-0.957745, -0.287273, -0.0140849] [-1732.21, 252.881, 991.777]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear"
+  transform:m=[[-0.210705, 0.533342, -0.819237] [0.245979, -0.78216, -0.572469] [-0.946096, -0.322138, 0.0336137] [-1734.57, 259.939, 980.465]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+teaser_bot_crouch+create_teaser_bot_player_colors_2+teaser_episode_bot+hitpoints_god_mode_on_appear+teaser_bot_team_2+infinite_ammo_on_appear"
+  transform:m=[[-0.731502, 0.584831, -0.35054] [0.633728, 0.772849, -0.0330544] [0.251584, -0.246327, -0.935964] [-1785.32, 45.9502, 904.45]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+teaser_bot_crouch+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+infinite_ammo_on_appear+hitpoints_percent_on_appear"
+  transform:m=[[-0.609973, 0.513069, 0.603898] [0.674037, 0.73665, 0.0549634] [-0.416661, 0.440576, -0.795164] [-1790.69, 50.8895, 892.605]]
+  teaser_episode_entity__episodeIndex:i=18
+  hitpoints_percent_on_appear:r=3
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+teaser_bot_crouch+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_percent_on_appear"
+  transform:m=[[-0.695594, 0.615032, 0.37133] [0.662973, 0.74864, 0.0019457] [-0.276796, 0.247535, -0.928499] [-1789.08, 49.404, 899.739]]
+  teaser_episode_entity__episodeIndex:i=18
+  hitpoints_percent_on_appear:r=2.5
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.347225, -0.937349, -0.028494] [0.937781, 0.347107, 0.00913635] [0.00132653, -0.0298935, 0.999552] [-1826.53, 103.166, 898.767]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear"
+  transform:m=[[0.261805, -0.953542, -0.149048] [0.963624, 0.26686, -0.0146295] [0.0537247, -0.139796, 0.988722] [-1829.47, 114.146, 901.965]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear"
+  transform:m=[[-0.193515, 0.952978, -0.233207] [0.979617, 0.200739, 0.00741457] [0.0538797, -0.227019, -0.972399] [-1831.82, 122.987, 899.002]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_1+teaser_episode_bot+teaser_bot_team_1+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.525032, -0.684712, -0.505481] [0.768805, 0.636331, -0.0634192] [0.365077, -0.355319, 0.860504] [-1804.43, 63.5624, 908.615]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_1+teaser_episode_bot+teaser_bot_team_1+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.407857, -0.582109, -0.703421] [0.76568, 0.63774, -0.0837994] [0.49738, -0.504417, 0.705816] [-1804.12, 63.2746, 911.396]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_1+teaser_episode_bot+teaser_bot_team_1+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.635977, -0.739646, -0.22013] [0.753683, 0.656608, -0.0287691] [0.165818, -0.147612, 0.975046] [-1801.98, 61.1588, 903.892]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_1+teaser_episode_bot+teaser_bot_team_1+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[-0.500992, 0.858195, -0.11184] [0.864799, 0.501434, -0.0261924] [0.0336021, -0.109841, -0.993381] [-1820.27, 80.2627, 903.643]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_1+teaser_episode_bot+teaser_bot_team_1+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[-0.465505, 0.834025, 0.296155] [0.879041, 0.474606, 0.0451268] [-0.10292, 0.281339, -0.954073] [-1821.48, 84.409, 893.763]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_1+teaser_episode_bot+teaser_bot_team_1+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[-0.506581, 0.857706, 0.0878443] [0.862171, 0.503218, 0.0585839] [0.00604288, 0.105414, -0.99441] [-1820.24, 79.8173, 891.829]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_1+teaser_episode_bot+teaser_bot_team_1+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.039425, -0.971089, 0.235441] [0.997445, 0.0522946, 0.0486679] [-0.0595731, 0.232921, 0.970669] [-1837.1, 142.812, 893.31]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_episode_bot+teaser_bot_team_2+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[0.144496, -0.968698, 0.201853] [0.973202, 0.176005, 0.147989] [-0.178884, 0.17506, 0.968171] [-1824.45, 127.494, 881.076]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_1+teaser_episode_bot+teaser_bot_team_1+hitpoints_god_mode_on_appear+infinite_ammo_on_appear"
+  transform:m=[[-0.346244, 0.902249, -0.257027] [0.916633, 0.383694, 0.112085] [0.199748, -0.196791, -0.959882] [-1817.32, 100.892, 885.655]]
+  teaser_episode_entity__episodeIndex:i=18
+}
+
+entity{
+  _template:t="teaser_fake_target"
+  transform:m=[[0.0146054, 9.31323e-10, -0.999893] [0.629995, 0.776545, 0.00920233] [0.776462, -0.630062, 0.0113418] [-1787.48, 50.4733, 895.918]]
+}
+
+entity{
+  _template:t="teaser_fake_target"
+  transform:m=[[0.449114, 0, -0.893474] [0.700992, 0.620042, 0.352361] [0.553991, -0.784569, 0.278469] [-1780.9, 43.8629, 901.898]]
+}
+
+entity{
+  _template:t="teaser_fake_target"
+  transform:m=[[-0.114406, 0.116443, -0.986586] [0.681096, 0.732157, 0.00743334] [0.723201, -0.671109, -0.163072] [-1791.02, 52.7454, 899.23]]
+}
+
+entity{
+  _template:t="teaser_fake_target"
+  transform:m=[[-0.286949, 0.276745, 0.9171] [0.590156, 0.80518, -0.05832] [-0.75457, 0.524497, -0.394368] [-1796.68, 58.1671, 898.297]]
+}
+
+entity{
+  _template:t="teaser_fake_target"
+  transform:m=[[-0.261227, 0.385389, 0.885006] [0.571516, 0.800618, -0.179946] [-0.777901, 0.458788, -0.429399] [-1813.3, 73.0547, 900.465]]
+}
+
+entity{
+  _template:t="teaser_fake_target"
+  transform:m=[[-0.163244, 0.144885, -0.975889] [0.902679, 0.421122, -0.0884755] [0.398149, -0.895357, -0.19953] [-1777.34, 39.2113, 896.705]]
+}
+
+entity{
+  _template:t="teaser_fake_target"
+  transform:m=[[-0.0447666, 0, -0.998997] [0.683729, 0.729092, -0.030639] [0.728361, -0.684415, -0.032639] [-1786.56, 52.3644, 892.082]]
+}
+
+entity{
+  _template:t="teaser_fake_target"
+  transform:m=[[-0.114406, 0.116443, -0.986586] [0.681096, 0.732157, 0.00743334] [0.723201, -0.671109, -0.163072] [-1788.32, 51.6129, 899.118]]
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Shootout (Scrapyard)"
+  teaser_episode__index:i=20
+  teaser_episode__levelTime:r=9
+  teaser_episode__triggersCount:i=1
+  teaser_episode__hasReset:b=yes
+  transform:m=[[0.764858, 0, -0.644199] [0, 1, 0] [0.644199, -0, 0.764858] [962.398, 64.9967, -307.512]]
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[0.753825, 0, -0.657075] [0, 1, 0] [0.657075, -0, 0.753825] [965.978, 64.9967, -310.054]]
+  teaser_episode_trigger_zone__episodeIndex:i=20
+}
+
+entity{
+  _template:t="teaser_bot_guard+teaser_episode_bot"
+  transform:m=[[-0.876996, 1.49112e-08, 0.480498] [1.30771e-08, 1, -7.16481e-09] [-0.480498, 0, -0.876996] [974.428, 64.9967, -315.012]]
+  teaser_episode_entity__episodeIndex:i=20
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.890967, 1.22395e-07, 0.454069] [1.0905e-07, 1, -5.55758e-08] [-0.454069, 0, -0.890967] [980.901, 67.4291, -319.163]]
+  teaser_episode_entity__episodeIndex:i=20
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.441585, 0, 0.89722] [0, 1, 0] [-0.89722, 0, -0.441585] [971.668, 64.9967, -324.196]]
+  teaser_episode_entity__episodeIndex:i=20
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Itsy Bitsy Spider"
+  teaser_episode__index:i=19
+  teaser_episode__levelTime:r=11
+  teaser_episode__triggersCount:i=3
+  teaser_episode__hasReset:b=yes
+  transform:m=[[-0.988312, 0, -0.152446] [0, 1, 0] [0.152446, 0, -0.988312] [-338.439, 34.9962, -818.755]]
+}
+
+entity{
+  _template:t="gravity_path_box"
+  transform:m=[[0.0435368, 19.9446, 0.00761576] [2.74138, -0.00616723, 0.479541] [0.801652, 3.75767e-10, -4.58279] [-463.111, 44.1592, -824.936]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[0.0435367, 19.9446, 0.00761575] [2.27795, -0.00512464, 0.398474] [1.59526, 7.47762e-10, -9.11956] [-344.897, 44.5375, -820.88]]
+}
+
+entity{
+  _template:t="teaser_spider"
+  transform:m=[[-0.000331087, 0.05994, 0.00266127] [0.0591025, -0.000132553, 0.0103384] [0.0103339, 0.00267851, -0.0590427] [-345.824, 44.9841, -819.948]]
+  teaser_spider__episodeIndex:i=19
+}
+
+entity{
+  _template:t="teaser_spider_walker"
+  transform:m=[[2.49277e-05, 0.0599967, 0.000629052] [0.0591024, -0.000132954, 0.0103386] [0.0103394, 0.000615348, -0.0590992] [-345.798, 41.9651, -820.094]]
+  teaser_episode_entity__episodeIndex:i=19
+  teaser_spider_walker__triggerIndex:i=2
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Shootout (Gas Station)"
+  teaser_episode__index:i=22
+  teaser_episode__levelTime:r=12
+  teaser_episode__triggersCount:i=1
+  teaser_episode__hasReset:b=yes
+  transform:m=[[-0.210838, 6.01489e-08, 0.977521] [1.26817e-08, 1, -5.87968e-08] [-0.977521, 0, -0.210838] [988.647, 75.305, 61.7518]]
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[-0.135004, 0, 0.990845] [0, 1, 0] [-0.990845, 0, -0.135004] [988.856, 75.3236, 66.0946]]
+  teaser_episode_trigger_zone__episodeIndex:i=22
+}
+
+entity{
+  _template:t="teaser_bot_guard+create_teaser_bot_player_colors_3+teaser_episode_bot"
+  transform:m=[[0.285928, 0, -0.958251] [0, 1, 0] [0.958251, -0, 0.285928] [983.935, 75.168, 82.115]]
+  teaser_episode_entity__episodeIndex:i=22
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_3+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[0.0796048, 0, -0.996827] [0, 1, 0] [0.996827, -0, 0.0796048] [988.024, 75.282, 88.7394]]
+  teaser_episode_entity__episodeIndex:i=22
+}
+
+entity{
+  _template:t="teaser_bot_guard+create_teaser_bot_player_colors_3+teaser_episode_bot"
+  transform:m=[[-0.573715, 1.04861e-07, -0.819055] [6.01603e-08, 1, 8.58869e-08] [0.819055, 0, -0.573715] [994.362, 75.1848, 83.1177]]
+  teaser_episode_entity__episodeIndex:i=22
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Shootout (Military Base)"
+  teaser_episode__index:i=23
+  teaser_episode__levelTime:r=17
+  teaser_episode__triggersCount:i=1
+  teaser_episode__hasReset:b=yes
+  transform:m=[[0.369998, 1.04935e-07, -0.929032] [-3.88259e-08, 1, 9.74883e-08] [0.929032, -0, 0.369998] [790.296, 74.989, 188.299]]
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[0.348838, 0, -0.937183] [0, 1, 0] [0.937183, -0, 0.348838] [791.994, 74.989, 183.779]]
+  teaser_episode_trigger_zone__episodeIndex:i=23
+  sphere_zone__radius:r=3
+  teaser_episode_trigger_zone__triggerAllZones:b=yes
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[-0.36256, 0, 0.93196] [0, 1, 0] [-0.931961, 0, -0.36256] [782.768, 74.989, 159.944]]
+  teaser_episode_trigger_zone__episodeIndex:i=23
+  sphere_zone__radius:r=3
+  teaser_episode_trigger_zone__triggerAllZones:b=yes
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[-0.371127, 0, 0.928582] [0, 1, 0] [-0.928582, 0, -0.371127] [790.416, 75.0496, 163.722]]
+  teaser_episode_trigger_zone__episodeIndex:i=23
+  sphere_zone__radius:r=3
+  teaser_episode_trigger_zone__triggerAllZones:b=yes
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[-0.435769, 1.8155e-07, 0.900058] [7.91139e-08, 1, -1.63406e-07] [-0.900058, 0, -0.435769] [798.878, 74.989, 166.434]]
+  teaser_episode_trigger_zone__episodeIndex:i=23
+  sphere_zone__radius:r=3
+  teaser_episode_trigger_zone__triggerAllZones:b=yes
+}
+
+entity{
+  _template:t="teaser_bot_guard+create_teaser_bot_player_colors_1+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.980527, -7.45083e-09, -0.196384] [-7.30574e-09, 1, -1.46322e-09] [0.196384, 0, -0.980527] [788.836, 75.2203, 173.531]]
+  teaser_episode_entity__episodeIndex:i=23
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_1+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.985123, 0, -0.171852] [0, 1, 0] [0.171852, 0, -0.985123] [796.822, 75.6373, 172.229]]
+  teaser_episode_entity__episodeIndex:i=23
+}
+
+entity{
+  _template:t="teaser_bot_guard+create_teaser_bot_player_colors_1+teaser_episode_bot"
+  transform:m=[[-0.884876, -4.49244e-08, -0.465827] [-3.97525e-08, 1, -2.0927e-08] [0.465827, 0, -0.884876] [804.082, 75.2214, 181.145]]
+  teaser_episode_entity__episodeIndex:i=23
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_1+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.946639, 0, -0.322295] [0, 1, 0] [0.322295, 0, -0.946639] [804.042, 76.2684, 177.177]]
+  teaser_episode_entity__episodeIndex:i=23
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_bot_crouch+teaser_episode_bot+teaser_bot_team_2"
+  transform:m=[[0.809014, -8.98272e-08, 0.58779] [7.26714e-08, 1, 5.27995e-08] [-0.58779, 0, 0.809014] [779.379, 76.2777, 161.938]]
+  teaser_episode_entity__episodeIndex:i=23
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_2+teaser_bot_crouch+teaser_episode_bot+teaser_bot_team_2"
+  transform:m=[[0.970277, 0, 0.241995] [-0, 1, 0] [-0.241995, -0, 0.970277] [771.932, 76.9352, 169.848]]
+  teaser_episode_entity__episodeIndex:i=23
+}
+
+entity{
+  _template:t="teaser_bot_guard+create_teaser_bot_player_colors_2+teaser_bot_crouch+teaser_episode_bot+teaser_bot_team_2"
+  transform:m=[[0.841366, 9.06895e-08, 0.540465] [-7.63031e-08, 1, -4.90145e-08] [-0.540465, -0, 0.841366] [774.893, 79.738, 161.384]]
+  teaser_episode_entity__episodeIndex:i=23
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Shootout (Church)"
+  teaser_episode__index:i=24
+  teaser_episode__levelTime:r=16
+  teaser_episode__triggersCount:i=1
+  teaser_episode__hasReset:b=yes
+  transform:m=[[0.910767, 0, -0.412921] [0, 1, 0] [0.412921, -0, 0.910767] [126.703, 79.9594, -637.402]]
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[0.89641, 0, -0.443227] [0, 1, 0] [0.443227, -0, 0.89641] [130.731, 79.9969, -641.232]]
+  teaser_episode_trigger_zone__episodeIndex:i=24
+  sphere_zone__radius:r=2.5
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_3+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.888221, 0, -0.459416] [0, 1, 0] [0.459416, 0, -0.888221] [149.261, 79.9969, -636.515]]
+  teaser_episode_entity__episodeIndex:i=24
+}
+
+entity{
+  _template:t="teaser_bot_guard+create_teaser_bot_player_colors_3+teaser_episode_bot"
+  transform:m=[[-0.916131, 0, 0.40088] [0, 1, 0] [-0.40088, 0, -0.916131] [156.233, 80.0985, -647.083]]
+  teaser_episode_entity__episodeIndex:i=24
+}
+
+entity{
+  _template:t="teaser_bot_guard+create_teaser_bot_player_colors_3+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.872583, -2.9855e-08, 0.488467] [-2.6051e-08, 1, 1.45832e-08] [-0.488467, 0, -0.872583] [145.263, 80.034, -650.257]]
+  teaser_episode_entity__episodeIndex:i=24
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_3+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.410859, 0, 0.911699] [0, 1, 0] [-0.911699, 0, -0.410859] [137.607, 80.0482, -655.674]]
+  teaser_episode_entity__episodeIndex:i=24
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="Shootout (Caponier)"
+  teaser_episode__index:i=25
+  teaser_episode__levelTime:r=13
+  teaser_episode__triggersCount:i=1
+  teaser_episode__hasReset:b=yes
+  transform:m=[[0.880982, 0, 0.47315] [-0, 1, 0] [-0.47315, -0, 0.880982] [232.057, 110.038, -106.136]]
+}
+
+entity{
+  _template:t="teaser_episode_trigger_zone"
+  transform:m=[[0.873918, 4.49467e-08, 0.486073] [-3.92798e-08, 1, -2.18474e-08] [-0.486073, -0, 0.873918] [236.016, 110.038, -103.894]]
+  teaser_episode_trigger_zone__episodeIndex:i=25
+  sphere_zone__radius:r=2
+}
+
+entity{
+  _template:t="teaser_bot_guard+create_teaser_bot_player_colors_1+teaser_episode_bot"
+  transform:m=[[-0.822911, 0, -0.56817] [0, 1, 0] [0.56817, 0, -0.822911] [242.704, 110, -98.3886]]
+  teaser_episode_entity__episodeIndex:i=25
+}
+
+entity{
+  _template:t="teaser_bot_guard+create_teaser_bot_player_colors_1+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[-0.186698, 0, -0.982417] [0, 1, 0] [0.982417, 0, -0.186698] [238.228, 110.5, -95.1251]]
+  teaser_episode_entity__episodeIndex:i=25
+}
+
+entity{
+  _template:t="teaser_bot_static_sniper+create_teaser_bot_player_colors_1+teaser_bot_crouch+teaser_episode_bot"
+  transform:m=[[0.502626, 5.5607e-07, -0.864504] [-2.79495e-07, 1, 4.80725e-07] [0.864504, -0, 0.502626] [235.003, 114.759, -93.4256]]
+  teaser_episode_entity__episodeIndex:i=25
+}
+
+entity{
+  _template:t="teaser_episode"
+  teaser_episode__name:t="West Euclid"
+  teaser_episode__index:i=100000
+  teaser_episode__levelTime:r=17
+  teaser_episode__triggersCount:i=0
+  teaser_episode__hasReset:b=no
+  transform:m=[[-0.971777, -0.23195, -0.043009] [-0.233282, 0.971975, 0.0290463] [0.0350664, 0.0382597, -0.998652] [-1665.51, 7.71719, 897.893]]
+}

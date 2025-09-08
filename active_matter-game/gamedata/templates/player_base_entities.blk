@@ -1,0 +1,400 @@
+racked_item{
+  _use:t="animchar"
+  animchar__res:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "racked_item__itemEid:eid"{}
+  "racked_item__slotEid:eid"{}
+}
+
+racked_item_slot{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  racked_item_slot__noRacksItemTemplate:t="racked_item"
+  racked_item_slot__itemTemplate:t=""
+  racked_item_slot__itemId:i=0
+
+  "racked_item_slot__rackedItemEid:eid"{}
+}
+
+item_on_rack{
+  item_on_rack__cellCoord:ip2=0, 0
+  item_on_rack__cellDim:ip2=0, 0
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+
+  "item_on_rack__gunwallEid:eid"{}
+}
+
+gunwall{
+  gunwall__size:p3=0, 0, 0
+  gunwall__tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  gunwall__cellSize:p2=0, 0
+  gunwall__cellDim:ip2=8, 10
+
+  "gunwall__cells:list<eid>"{}
+}
+
+racked_gunwall_items_manager{
+  gunwall_obj_name:t="gunwall_surface_a"
+  gunwall_template:t="gunwall"
+}
+
+game_obj_to_ranked_item_slot_mapping{
+  racked_item_mapping__slotTemplate:t="racked_item_slot"
+
+  "racked_item_mapping__gameObjs:list<t>"{}
+  "racked_item_mapping__templates:list<t>"{}
+}
+
+player_base_light{
+  player_base_light__defaultBrightness:r=0
+  player_base_light__onboardingBrightness:r=0
+}
+
+player_base_animchar_with_dynamic_emission{
+  _use:t="animchar_with_dynamic_emission"
+  animchar_render__enabled:b=yes
+  player_base_animchar_with_dynamic_emission__defaultBrightness:r=1
+  player_base_animchar_with_dynamic_emission__onboardingBrightness:r=0
+  player_base_animchar_with_dynamic_emission__defaultColor:c=0, 0, 0, 0
+  player_base_animchar_with_dynamic_emission__onboardingColor:c=0, 0, 0, 0
+}
+
+clonetube_lamps{
+  _use:t="player_base_animchar_with_dynamic_emission"
+  animchar__res:t="clonetube_lamps_char"
+}
+
+am_clonetube_monitor_a_lamps{
+  _use:t="player_base_animchar_with_dynamic_emission"
+  animchar__res:t="am_clonetube_monitor_a_lamp_char"
+}
+
+am_clonetube_monitor_b_lamps{
+  _use:t="player_base_animchar_with_dynamic_emission"
+  animchar__res:t="am_clonetube_monitor_b_lamp_char"
+}
+
+am_clonetube_monitor_c_lamps{
+  _use:t="player_base_animchar_with_dynamic_emission"
+  animchar__res:t="am_clonetube_monitor_c_lamp_char"
+}
+
+am_crafter_c_a_lamps{
+  _use:t="player_base_animchar_with_dynamic_emission"
+  animchar__res:t="am_crafter_c_a_lamp_char"
+}
+
+am_recycler_d_a_lamps{
+  _use:t="player_base_animchar_with_dynamic_emission"
+  animchar__res:t="am_recycler_d_a_lamp_char"
+}
+
+floodlight_block_top_lamps{
+  _use:t="player_base_animchar_with_dynamic_emission"
+  animchar__res:t="floodlight_block_top_lamp_char"
+}
+
+floodlight_ceiling_a_lamps{
+  _use:t="player_base_animchar_with_dynamic_emission"
+  animchar__res:t="floodlight_ceiling_a_lamp_char"
+}
+
+floodlight_ceiling_b_lamps{
+  _use:t="player_base_animchar_with_dynamic_emission"
+  animchar__res:t="floodlight_ceiling_b_lamp_char"
+}
+
+intercom_c_lamps{
+  _use:t="player_base_animchar_with_dynamic_emission"
+  animchar__res:t="intercom_c_lamp_char"
+}
+
+monitor_wall_lamps{
+  _use:t="player_base_animchar_with_dynamic_emission"
+  animchar__res:t="monitor_wall_lamp_char"
+}
+
+portal_platform_b_center_lamps{
+  _use:t="player_base_animchar_with_dynamic_emission"
+  animchar__res:t="portal_platform_b_center_lamp_char"
+  player_base_animchar_with_dynamic_emission__onboardingBrightness:r=1
+  player_base_animchar_with_dynamic_emission__onboardingColor:c=255, 19, 0, 255
+}
+
+portal_platform_b_column_lamps_a{
+  _use:t="player_base_animchar_with_dynamic_emission"
+  animchar__res:t="portal_platform_b_column_lamp_a_char"
+  player_base_animchar_with_dynamic_emission__onboardingBrightness:r=1
+  player_base_animchar_with_dynamic_emission__onboardingColor:c=255, 0, 0, 255
+  player_base_animchar_with_dynamic_emission__defaultBrightness:r=0
+}
+
+portal_platform_b_column_lamps_b{
+  _use:t="animchar_with_dynamic_emission"
+  animchar__res:t="portal_platform_b_column_lamp_b_char"
+}
+
+player_base_ri_additional_entities_manager{
+  _use:t="ri_additional_entities_manager"
+
+  "ri_additional_entities_manager__list:object"{
+    "clonetube:object"{
+      "templates:list<t>"{
+        i:t="clonetube_lamps+player_base_onboarding_object_3"
+      }
+    }
+
+    "am_crafter_c_a:object"{
+      "templates:list<t>"{
+        i:t="am_crafter_c_a_lamps+player_base_onboarding_object_4"
+      }
+    }
+
+    "am_recycler_d_a:object"{
+      "templates:list<t>"{
+        i:t="am_recycler_d_a_lamps+player_base_onboarding_object_4"
+      }
+    }
+
+    "floodlight_block_top:object"{
+      "templates:list<t>"{
+        i:t="floodlight_block_top_lamps+player_base_onboarding_object_2"
+      }
+    }
+
+    "floodlight_ceiling_a:object"{
+      "templates:list<t>"{
+        i:t="floodlight_ceiling_a_lamps+player_base_onboarding_object_1"
+      }
+    }
+
+    "floodlight_ceiling_b:object"{
+      "templates:list<t>"{
+        i:t="floodlight_ceiling_b_lamps+player_base_onboarding_object_1"
+      }
+    }
+
+    "intercom_c:object"{
+      "templates:list<t>"{
+        i:t="intercom_c_lamps+player_base_onboarding_object_4"
+      }
+    }
+
+    "monitor_wall:object"{
+      "templates:list<t>"{
+        i:t="monitor_wall_lamps+player_base_onboarding_object_4"
+      }
+    }
+
+    "portal_platform_b_center:object"{
+      "templates:list<t>"{
+        i:t="portal_platform_b_center_lamps+player_base_onboarding_object"
+      }
+    }
+
+    "portal_platform_b_column:object"{
+      "templates:list<t>"{
+        i:t="portal_platform_b_column_lamps_b"
+      }
+    }
+  }
+}
+
+player_base_onboarding_object{
+  player_base_onboarding_object__stepIndex:i=0
+}
+
+player_base_onboarding_object_1{
+  _use:t="player_base_onboarding_object"
+  player_base_onboarding_object__stepIndex:i=1
+}
+
+player_base_onboarding_object_2{
+  _use:t="player_base_onboarding_object"
+  player_base_onboarding_object__stepIndex:i=2
+}
+
+player_base_onboarding_object_3{
+  _use:t="player_base_onboarding_object"
+  player_base_onboarding_object__stepIndex:i=3
+}
+
+player_base_onboarding_object_4{
+  _use:t="player_base_onboarding_object"
+  player_base_onboarding_object__stepIndex:i=4
+}
+
+player_base_onboarding_object_sound{
+  _use:t="player_base_onboarding_object"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="sound"
+    player_base_onboarding_object_sound__path:t=""
+  }
+}
+
+player_base_state_onboarding_to_normal_step{
+  _use:t="replicated_game_effect"
+  player_base_state_onboarding_to_normal_step__index:i=0
+}
+
+player_base_state_onboarding_to_normal_step_1{
+  _use:t="player_base_state_onboarding_to_normal_step"
+  player_base_state_onboarding_to_normal_step__index:i=1
+}
+
+player_base_state_onboarding_to_normal_step_2{
+  _use:t="player_base_state_onboarding_to_normal_step"
+  player_base_state_onboarding_to_normal_step__index:i=2
+}
+
+player_base_state_onboarding_to_normal_step_3{
+  _use:t="player_base_state_onboarding_to_normal_step"
+  player_base_state_onboarding_to_normal_step__index:i=3
+}
+
+player_base_state_onboarding_to_normal_step_4{
+  _use:t="player_base_state_onboarding_to_normal_step"
+  player_base_state_onboarding_to_normal_step__index:i=4
+}
+
+player_base_state_onboarding_to_normal_finish{
+  _use:t="replicated_game_effect"
+
+  "player_base_state_onboarding_to_normal_finish:tag"{}
+}
+
+player_base_state_onboarding_to_normal_sequence{
+  _use:t="game_effect_sequence"
+  game_effect_sequence__autoDestroy:b=yes
+
+  "game_effect_sequence__stages:array"{
+    "step_0:object"{
+      affectTemplate:t="player_base_state_onboarding_to_normal_step"
+      duration:r=1
+    }
+
+    "step_4:object"{
+      affectTemplate:t="player_base_state_onboarding_to_normal_step_4"
+      duration:r=1
+    }
+
+    "step_3:object"{
+      affectTemplate:t="player_base_state_onboarding_to_normal_step_3"
+      duration:r=1
+    }
+
+    "step_2:object"{
+      affectTemplate:t="player_base_state_onboarding_to_normal_step_2"
+      duration:r=1
+    }
+
+    "step_1:object"{
+      affectTemplate:t="player_base_state_onboarding_to_normal_step_1"
+      duration:r=0.75
+    }
+
+    "finish:object"{
+      affectTemplate:t="player_base_state_onboarding_to_normal_finish"
+      duration:r=1
+    }
+  }
+}
+
+player_base_state_manager{
+  _use:t="player_base_ri_additional_entities_manager"
+  player_base_state_manager__state:i=0
+  _tracked:t="player_base_state_manager__state"
+  player_base_state_manager__onboardingToNormalStateEffect:t="player_base_state_onboarding_to_normal_sequence"
+
+  "player_base_state_manager__stateEffectEid:eid"{}
+}
+
+player_base_keycard{
+  _use:t="animchar"
+  animchar__res:t="am_keycard_a_char"
+  collres__res:t="am_keycard_a_collision"
+  animchar_render__enabled:b=yes
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "player_base_keycard:tag"{}
+}
+
+gate_portal{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="am_artefact_gate_ring_a"
+  am_core_protective_sphere__rotationSpd:p3=0, 30, 0
+
+  effect{
+    _tags:t="render"
+  }
+
+  "effects:object"{
+    gate_portal_a_composite_fx:r=1
+  }
+}
+
+player_base_enable_shooting{
+  _singleton:b=yes
+  _use:t="game_effect_base"
+  game_effect__saveWeaponSlot:i=-1
+
+  "player_base_enable_shooting:tag"{}
+}
+
+shooting_range_fade{
+  _use:t="postfx_fade_affect"
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=0.7
+  postfx_fade_affect__fadeInTime:r=0.1
+  postfx_fade_affect__fadeColor:c=5, 7, 5, 255
+}
+
+player_profile{
+  _use:t="replicating"
+
+  "player_base_ecs_inventory:tag"{}
+  _group{
+    _tags:t="gameClient"
+    _track:b=yes
+    player_profile__isLoaded:b=no
+    player_profile__creditsCount:i=0
+    player_profile__monolithTokensCount:i=0
+    player_profile__stashMaxVolume:r=0
+    player_profile__applyTransactionsInProgress:b=no
+    player_profile__amResource:i=0
+    player_profile__replicatorDevicesCount:i=0
+    player_profile__amCleaningDevicesCount:i=0
+    player_profile__alterIdsChanged:b=no
+
+    "player_profile__unlocks:list<t>"{}
+    "player_profile__allItems:array"{}
+    "player_profile__loadout:array"{}
+    "player_profile__queuedTransactions:array"{}
+    "player_profile__itemAdditionQueue:array"{}
+    "player_profile__itemDeletionQueue:array"{}
+    "player_profile__itemUpdateQueue:array"{}
+    "player_profile__currentContracts:array"{}
+    "player_profile__activeBuildingsPositions:list<ip2>"{}
+    "player_profile__activeBuildingsRotations:list<i>"{}
+    "player_profile__activeBuildingsGridIds:list<i>"{}
+    "player_profile__activeBuildingsIds:list<t>"{}
+    "player_profile__basePower:object"{}
+    "player_profile__reserveEndAt:u64"{
+      value:i64=0
+    }
+
+    "player_profile__allBuilds:array"{}
+  }
+
+  _group{
+    _tags:t="gameClient"
+    player_profile__am2CreditsConversionRate:r=100
+    player_profile__currentContractsUpdatePeriod:i=86400
+    player_profile__disableTransaction:b=no
+
+    "player_profile__alterIds:list<t>"{}
+  }
+}

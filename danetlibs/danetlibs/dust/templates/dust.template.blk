@@ -1,0 +1,14 @@
+dafx_dust{
+  _singleton:b=yes
+  _use:t="falling_weather_effect_template"
+
+  _group{
+    _track:b=yes
+    dust__length:r=1
+    dust__speed:r=1
+    dust__width:r=1
+    dust__density:r=10
+    dust__alpha:r=1
+    dust__maxDensity:r=10
+  }
+}

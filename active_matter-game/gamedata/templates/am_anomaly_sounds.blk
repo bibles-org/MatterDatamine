@@ -1,0 +1,76 @@
+anomaly_trap_sound{
+  _use:t="sound_effect"
+  _use:t="am_traps_managed_sound"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/traps/trap_gravity"
+  }
+}
+
+triggerable_anomaly_trap_sound{
+  _use:t="anomaly_trap_sound"
+
+  _group{
+    _tags:t="sound"
+    trap_trigger_sound__path:t=""
+  }
+}
+
+monstrify_trap_sound{
+  _use:t="triggerable_anomaly_trap_sound"
+
+  _group{
+    _tags:t="sound"
+    trap_trigger_sound__path:t="am/objects/core/core_start_1"
+  }
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/traps/trap_monstrify"
+  }
+}
+
+anomaly_sound_effect_with_vars{
+  "anomalySoundEffectWithVars:tag"{
+    _tags:t="sound"
+  }
+}
+
+affect_anomaly_sound{
+  _group{
+    _tags:t="sound"
+    affect_anomaly_sound__var:t=""
+  }
+}
+
+indoor_metal_heat_anomaly_trap_sound{
+  _use:t="anomaly_trap_sound"
+  _use:t="anomaly_sound_effect_with_vars"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/traps/trap_burning"
+  }
+}
+
+indoor_metal_heat_anomaly_global_affect_sound{
+  _use:t="affect_anomaly_sound"
+
+  _group{
+    _tags:t="sound"
+    affect_anomaly_sound__var:t="is_active"
+  }
+}
+
+indoor_metal_heat_anomaly_affect_sound{
+  _use:t="offender_hits_human_sound"
+
+  _group{
+    _tags:t="sound"
+
+    "offender_hits_human_sound__path:shared:object"{
+      path:t="impact/trap_burning"
+    }
+  }
+}

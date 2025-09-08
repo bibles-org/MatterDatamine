@@ -1,0 +1,46 @@
+extraction_point_defence_controller{
+  extraction_point_defence_controller__enabled:b=yes
+  extraction_point_defence_controller__updateInterval:r=3
+  extraction_point_defence_controller__updateAt:r=0
+  extraction_point_defence_controller__defendersSpawnBlockedUntil:r=0
+  extraction_point_defence_controller__defendersSpawnBlockedInitial:p2=420, 600
+  extraction_point_defence_controller__defenderKilledSpawnBlock:p2=40, 80
+  extraction_point_defence_controller__defenderSpawnedSpawnBlock:p2=8, 20
+  extraction_point_defence_controller__defenderVanishedSpawnBlock:p2=2, 4
+  extraction_point_defence_controller__heroExtractedSpawnBlock:p2=8, 18
+  extraction_point_defence_controller__defendersCountRequired:i=0
+  extraction_point_defence_controller__defendersCountInitial:ip2=1, 2
+  extraction_point_defence_controller__defendersCountMinMax:ip2=1, 6
+  extraction_point_defence_controller__defendersSpawnRadius:r=3
+
+  "extraction_point_defence_controller__defendersList:list<eid>"{}
+  "extraction_point_defence_controller__defenderTemplates:list<t>"{
+    item:t="invisible_man_extraction_point_defender"
+  }
+}
+
+invisible_man_extraction_point_defender{
+  _use:t="invisible_man"
+  invisible_man__type:i=2
+  invisible_man__inRage:b=yes
+  invisible_man__inRageVanishChance:r=0
+  patroller__radius:r=12
+  patroller__maxWaypoints:i=4
+  agent_dangers__maxDangerDist:r=30
+  agent_dangers__blindDistanceSq:r=900
+
+  "invisible_man_extraction_point_defender:tag"{}
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_1"
+      dropChance:r=0.8
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_1"
+      dropChance:r=0.2
+      dropHeight:r=1
+    }
+  }
+}

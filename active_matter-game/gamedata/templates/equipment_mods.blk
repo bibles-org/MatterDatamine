@@ -1,0 +1,324 @@
+equipment_with_mods{
+  _tracked:t="equipment_mods__curModInSlots"
+  _skipInitialReplication:t="equipment_mods__curModInSlots"
+
+  "equipment_mods__curModInSlots:object"{}
+}
+
+equipment_mod_icon{
+  item__iconYaw:r=45
+  item__iconPitch:r=0
+  item__iconRoll:r=45
+  item__iconOffset:p2=0, 0
+  item__iconScale:r=1
+}
+
+invisible_item_in_equipment_mod{
+  _use:t="base_invis_item"
+
+  "equipmentMod:tag"{}
+}
+
+visible_item_in_equipment_mod{
+  _use:t="base_vis_item"
+
+  "equipmentMod:tag"{}
+}
+
+base_equipment_mod{
+  _use:t="equipment_mod_icon"
+  _use:t="base_item"
+  item__id:i=0
+  _replicated:t="item__id"
+  item__ui_priority:i=0
+  item__recreateOnGround:t="item_in_world"
+  item__recreateInWorldPhys:t="item_in_world_phys"
+  item__recreateInInventory:t="base_invis_item"
+  item__recreateInEquipmentModSlot:t="invisible_item_in_equipment_mod"
+  uniqueId:t="-1"
+  equipmentAttachable__slotName:t=""
+  _tracked:t="equipmentAttachable__slotName"
+  _replicated:t="equipmentAttachable__slotName"
+  _tracked:t="slot_attach__attachedTo"
+  _replicated:t="slot_attach__attachedTo"
+
+  "equipment_mod_item:tag"{}
+  "slot_attach__attachedTo:eid"{}
+}
+
+base_equipment_mod_slot{
+  _use:t="base_mod_slot"
+}
+
+pocket_slot{
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/empty_quickslot.svg"
+  mod_slot__tooltip:t="pockets/emptyPocketTooltip"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="item_healing_ampoule"
+    i:t="item_injector_hot"
+    i:t="item_painkiller"
+    i:t="item_injector_streaming"
+    i:t="loot_item_healkit_magazine_avg"
+    i:t="loot_item_healkit_magazine_small"
+    i:t="item_big_healkit"
+    i:t="item_healkit"
+    i:t="loot_item_healkit_magazine_big"
+    i:t="first_aid_item"
+    i:t="rdgm_smoke_grenade_item"
+    i:t="f1_grenade_item"
+    i:t="ussr_molotov_item"
+    i:t="zarya_flash_grenade_item"
+    i:t="m14_incendiary_grenade_item"
+    i:t="binoculars_item"
+    i:t="b7_binoculars_item"
+    i:t="resurrect_device_item"
+  }
+}
+
+dm_part_armor{
+  dm_part_armor__protectionMinHpKoef:r=0.3
+  dm_part_armor__partName:t=""
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0
+    DM_MELEE:r=0
+    DM_EXPLOSION:r=0
+    DM_ZONE:r=0
+  }
+}
+
+armor_mod_base{
+  _use:t="base_equipment_mod"
+  _use:t="dm_part_armor"
+
+  _group{
+    _tags:t="sound"
+    item_destroyed_sound__path:t="env_effects/object_crash/metal_grid_fall"
+  }
+}
+
+armorplate_base{
+  _use:t="armor_mod_base"
+  _use:t="item_hitpoints"
+  item__minDamageGap:r=0.25
+  item__filterType:t="equipment"
+  showroom_item__customZoom:r=1.8
+  showroom_item__customZoomBordersRng:p2=1.4, 2.2
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+
+  "item__chronotracesProgressionInfo:object"{
+    "once:object"{
+      damaged:i=25
+    }
+
+    "repeatedly:object"{
+      extract:i=100
+    }
+  }
+}
+
+armorplate_small_a{
+  _use:t="armorplate_base"
+  animchar__res:t="am_armorplate_small_a_char"
+  collres__res:t="am_armorplate_small_a_collision"
+  item__iconYaw:r=-65
+  item__iconPitch:r=20
+  item__iconScale:r=0.8
+  item__proto:t="armorplate_small_a"
+  item__weight:r=1.5
+  item__volume:r=4
+  item__name:t="items/armorplate_small_a"
+  item__userstats__pickupName:t="pickup_armorplate_small_a"
+  item__marketPrice:i=750
+  item__hp:r=185
+  item__maxHp:r=185
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.35
+    DM_MELEE:r=0.45
+    DM_EXPLOSION:r=0.25
+  }
+
+  "armorplate_small:tag"{}
+}
+
+damaged_armorplate_small_a{
+  _use:t="armorplate_small_a"
+  item__initDamageKoefs:p2=0.1, 1
+}
+
+armorplate_small_b{
+  _use:t="armorplate_small_a"
+  animchar__res:t="am_armorplate_small_b_char"
+  collres__res:t="am_armorplate_small_b_collision"
+  item__proto:t="armorplate_small_b"
+  item__weight:r=1.9
+  item__volume:r=4
+  item__name:t="items/armorplate_small_b"
+  item__userstats__pickupName:t="pickup_armorplate_small_b"
+  item__marketPrice:i=900
+  item__hp:r=175
+  item__maxHp:r=175
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.5
+    DM_MELEE:r=0.6
+    DM_EXPLOSION:r=0.4
+  }
+
+  "armorplate_small:tag"{}
+}
+
+damaged_armorplate_small_b{
+  _use:t="armorplate_small_b"
+  item__initDamageKoefs:p2=0.1, 1
+}
+
+armorplate_small_c{
+  _use:t="armorplate_small_a"
+  animchar__res:t="am_armorplate_small_c_char"
+  collres__res:t="am_armorplate_small_c_collision"
+  item__proto:t="armorplate_small_c"
+  item__weight:r=0.8
+  item__volume:r=4
+  item__name:t="items/armorplate_small_c"
+  item__userstats__pickupName:t="pickup_armorplate_small_c"
+  item__marketPrice:i=600
+  item__hp:r=160
+  item__maxHp:r=160
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.25
+    DM_MELEE:r=0.35
+    DM_EXPLOSION:r=0.15
+  }
+
+  "armorplate_small:tag"{}
+  "item__cantBeCorrupted:tag"{}
+}
+
+damaged_armorplate_small_c{
+  _use:t="armorplate_small_c"
+  item__initDamageKoefs:p2=0.1, 1
+}
+
+armorplate_big_a{
+  _use:t="armorplate_base"
+  animchar__res:t="am_armorplate_big_a_char"
+  collres__res:t="am_armorplate_big_b_collision"
+  item__iconYaw:r=-65
+  item__iconPitch:r=20
+  item__iconScale:r=1
+  item__proto:t="armorplate_big_a"
+  item__weight:r=2.5
+  item__volume:r=7
+  item__name:t="items/armorplate_big_a"
+  item__userstats__pickupName:t="pickup_armorplate_big_a"
+  item__marketPrice:i=1500
+  item__hp:r=280
+  item__maxHp:r=280
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.4
+    DM_MELEE:r=0.5
+    DM_EXPLOSION:r=0.3
+  }
+
+  "armorplate_big:tag"{}
+}
+
+damaged_armorplate_big_a{
+  _use:t="armorplate_big_a"
+  item__initDamageKoefs:p2=0.1, 1
+}
+
+armorplate_big_b{
+  _use:t="armorplate_big_a"
+  animchar__res:t="am_armorplate_big_b_char"
+  collres__res:t="am_armorplate_big_b_collision"
+  item__proto:t="armorplate_big_b"
+  item__weight:r=3.2
+  item__volume:r=7
+  item__name:t="items/armorplate_big_b"
+  item__userstats__pickupName:t="pickup_armorplate_big_b"
+  item__marketPrice:i=1800
+  item__hp:r=260
+  item__maxHp:r=260
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.6
+    DM_MELEE:r=0.7
+    DM_EXPLOSION:r=0.5
+  }
+
+  "armorplate_big:tag"{}
+}
+
+damaged_armorplate_big_b{
+  _use:t="armorplate_big_b"
+  item__initDamageKoefs:p2=0.1, 1
+}
+
+armorplate_big_c{
+  _use:t="armorplate_big_a"
+  animchar__res:t="am_armorplate_big_c_char"
+  collres__res:t="am_armorplate_big_b_collision"
+  item__proto:t="armorplate_big_c"
+  item__weight:r=1.3
+  item__volume:r=7
+  item__name:t="items/armorplate_big_c"
+  item__userstats__pickupName:t="pickup_armorplate_big_c"
+  item__marketPrice:i=1200
+  item__hp:r=240
+  item__maxHp:r=240
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.3
+    DM_MELEE:r=0.4
+    DM_EXPLOSION:r=0.2
+  }
+
+  "armorplate_big:tag"{}
+  "item__cantBeCorrupted:tag"{}
+}
+
+damaged_armorplate_big_c{
+  _use:t="armorplate_big_c"
+  item__initDamageKoefs:p2=0.1, 1
+}
+
+armorplate_small_slot{
+  _use:t="base_equipment_mod_slot"
+  mod_slot__icon:t="uiskin/small_armor_plate_slot.svg"
+  mod_slot__tooltip:t="slots/small_armor_plate"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="armorplate_small_a"
+    i:t="armorplate_small_b"
+    i:t="armorplate_small_c"
+    i:t="damaged_armorplate_small_a"
+    i:t="damaged_armorplate_small_b"
+    i:t="damaged_armorplate_small_c"
+  }
+}
+
+armorplate_big_slot{
+  _use:t="base_equipment_mod_slot"
+  mod_slot__icon:t="uiskin/large_armor_plate_slot.svg"
+  mod_slot__tooltip:t="slots/large_armor_plate"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="armorplate_big_a"
+    i:t="armorplate_big_b"
+    i:t="armorplate_big_c"
+    i:t="damaged_armorplate_big_a"
+    i:t="damaged_armorplate_big_b"
+    i:t="damaged_armorplate_big_c"
+  }
+}

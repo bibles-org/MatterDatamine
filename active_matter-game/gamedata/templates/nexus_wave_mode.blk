@@ -1,0 +1,33 @@
+nexus_wave_mode_game_draw{
+  _group{
+    _tags:t="server"
+    nexus_wave_mode_game_controller__timeBeforeDraw:r=1800
+    nexus_wave_mode_game_controller__drawAt:r=-1
+    nexus_wave_mode_game_controller__onDrawZoneCollapseTime:r=10
+    nexus_wave_mode_game_controller__activateDrawZoneAt:r=-1
+  }
+}
+
+nexus_wave_mode_additional_waves_spawn_controller{
+  _use:t="replicating"
+  team:i=-1
+  nexus_wave_mode_additional_waves_spawn_controller__numWaves:i=3
+
+  _group{
+    _tags:t="server"
+    nexus_spawn_controller__spawnSequenceDelay:r=0.35
+    nexus_wave_mode_additional_waves_spawn_controller__spawnDelay:r=15
+  }
+
+  _group{
+    _replicate:b=yes
+    nexus_wave_mode_additional_waves_spawn_controller__wavesSpawned:i=0
+    nexus_wave_mode_additional_waves_spawn_controller__spawnAt:r=-1
+  }
+}
+
+nexus_wave_mode{
+  _use:t="replicating"
+
+  "nexus_wave_mode:tag"{}
+}

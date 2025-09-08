@@ -1,0 +1,5339 @@
+fn_scar_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="fn_scar_magazine"
+    i:t="m4_magazine"
+    i:t="m4a1_magazine"
+    i:t="m4_rust_magazine"
+  }
+}
+
+fn_scar_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_assault_rifle"
+  _use:t="big_gun_icon"
+  _use:t="ww2_rifle_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="assault_rifle_rapid_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_medium"
+  _use:t="assault_rifle_preset"
+  _use:t="gun_check_weapon_magazine"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="fn_scar_char"
+  collres__res:t="fn_scar_collision"
+  gun__blk:t="gamedata/weapons/fn_scar.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="fn_scar_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="fn_scar_gun"
+  item__name:t="items/fn_scar"
+  item__weapType:t="assault_rifle"
+  item__baseWeight:r=3.3
+  item__volume:r=26
+  item__marketPrice:i=7350
+  item__iconRecalcAnimation:b=yes
+  gun__hitTagPower:r=0.9
+  gun__length:r=0.36
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.041
+  gun__recoilControlMult:r=0.4
+  gun__recoilDirAmount:r=0.65
+  gun__recoilDir:r=0.25
+  gun__visualRecoilMult:r=1.4
+  gun_boxed_ammo_reload__batchReloadTime:r=2.3
+  gun__shotFreq:r=10.416
+  gun__sightsDistance:r=0.3
+  gun__statName:t="assault_rifle"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.019
+  weapon__aimNodeOffset:r=0.15
+  gun__rotationSpringMult:p3=1, 2, 2
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_5_56_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="mgun_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[3.57628e-07, 0, 1] [0, 1, 0] [-1, 0, 3.57628e-07] [-0.183281, 0.0443459, -0.0651373]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    silencer:t="556_silencer_slot"
+    scope:t="scope_picatinny_long_slot"
+    magazine:t="fn_scar_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/5.56x45.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/mgun/fn_scar/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/mgun/fn_scar/change_mode"
+
+    "gun_sound__shotPath:shared:object"{
+      "options:array"{
+        "silenced:object"{
+          gunSilenced:b=yes
+          path:t="/weapon/mgun/fn_scar_silenced"
+        }
+
+        "default:object"{
+          path:t="/weapon/mgun/fn_scar"
+        }
+      }
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/fn_scar/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/fn_scar/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/fn_scar/reload3/change_ammo"
+    }
+
+    "reload4:object"{
+      path:t="/weapon/mgun/fn_scar/reload4/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="fn_scar_magazine"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=1.5
+    alt:r=1.5
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=2.5
+    alt:r=2
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1
+    alt:r=1
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2
+    alt:r=1.5
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.08, -0.07, -0.07
+    crouch:p3=0.08, -0.07, -0.07
+    crawl:p3=0.08, -0.07, -0.02
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.18663, 0.0351562, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [0.0861816, 0.0453682, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+m4_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="m4_magazine"
+    i:t="m4a1_magazine"
+    i:t="m4_rust_magazine"
+    i:t="fn_scar_magazine"
+  }
+}
+
+m4_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_assault_rifle"
+  _use:t="big_gun_icon"
+  _use:t="ww2_rifle_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="assault_rifle_rapid_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_medium"
+  _use:t="assault_rifle_preset"
+  _use:t="camera_shake_on_shot_high_freq"
+  _use:t="gun_check_weapon_magazine"
+  animchar__res:t="m4_char"
+  collres__res:t="m4_collision"
+  gun__blk:t="gamedata/weapons/m4.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="m4_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="m4_gun"
+  item__name:t="items/m4"
+  item__weapType:t="assault_rifle"
+  item__baseWeight:r=2.7
+  item__volume:r=26
+  item__marketPrice:i=6300
+  item__iconRecalcAnimation:b=yes
+  gun__shotFreq:r=13.75
+  gun__ammoInspectionInOutDuration:p2=2.3, 1.5
+  gun__ammoInspectionIdleLoopDuration:r=8.3
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
+  gun__length:r=0.37
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.045
+  gun__recoilDirAmount:r=0.5
+  gun__recoilDir:r=0
+  gun__visualRecoilMult:r=1.4
+  gun__recoilControlMult:r=0.25
+  gun_boxed_ammo_reload__batchReloadTime:r=2.67
+  gun__sightsDistance:r=0.3
+  gun__statName:t="assault_rifle"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.014
+  weapon__aimNodeOffset:r=0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_5_56_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="mgun_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.101898, 0.0205688, -0.0644531]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    silencer:t="556_silencer_slot"
+    magazine:t="m4_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/5.56x45.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=3
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="semi_auto_3_shots"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/mgun/m4/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/mgun/m4/change_mode"
+
+    "gun_sound__shotPath:shared:object"{
+      "options:array"{
+        "silenced:object"{
+          gunSilenced:b=yes
+          path:t="/weapon/mgun/m4_silenced"
+        }
+
+        "default:object"{
+          path:t="/weapon/mgun/m4"
+        }
+      }
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/m4/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/m4/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/m4/reload3/change_ammo"
+    }
+
+    "reload4:object"{
+      path:t="/weapon/mgun/m4/reload4/change_ammo"
+    }
+
+    "reload5:object"{
+      hero:t="player/weapon/mgun/m4/reload5/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="mesh_bullet_1"
+    n:t="mesh_bullet_2"
+    n:t="mesh_bullet_3"
+    n:t="mesh_bullet_4"
+    n:t="mesh_bullet_5"
+    n:t="mesh_bullet_6"
+    n:t="mesh_bullet_7"
+    n:t="mesh_bullet_8"
+    n:t="mesh_bullet_9"
+    n:t="ar15_mag_30rd"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=1.56
+    alt:r=1.43
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=2.56
+    alt:r=2.39
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=0.9
+    alt:r=0.83
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=1.96
+    alt:r=1.86
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.07, -0.06, -0.01
+    crouch:p3=0.07, -0.06, -0.01
+    crawl:p3=0.07, -0.06, -0.01
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.123108, 0.0624084, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.261383, 0.0717163, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+m4a1_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_assault_rifle"
+  _use:t="big_gun_icon"
+  _use:t="ww2_rifle_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim_v2"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="assault_rifle_rapid_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_medium"
+  _use:t="assault_rifle_preset"
+  _use:t="camera_shake_on_shot_high_freq"
+  _use:t="gun_check_weapon_magazine"
+  _use:t="gun_jamming"
+  animchar__res:t="m4a1_char"
+  collres__res:t="m4a1_collision"
+  gun__blk:t="gamedata/weapons/m4a1.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="m4a1_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="m4a1_gun"
+  item__name:t="items/m4a1"
+  item__weapType:t="assault_rifle"
+  item__baseWeight:r=2.7
+  item__volume:r=26
+  item__marketPrice:i=6300
+  item__iconRecalcAnimation:b=yes
+  gun__shotFreq:r=12.5
+  gun__ammoInspectionInOutDuration:p2=2.3, 1.5
+  gun__ammoInspectionIdleLoopDuration:r=8.3
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
+  gun__length:r=0.37
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.045
+  gun__recoilDirAmount:r=0.5
+  gun__recoilDir:r=0
+  gun__visualRecoilMult:r=1.4
+  gun__recoilControlMult:r=0.25
+  gun_boxed_ammo_reload__batchReloadTime:r=2.67
+  gun__sightsDistance:r=0.3
+  gun__statName:t="assault_rifle"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.014
+  weapon__aimNodeOffset:r=0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_5_56_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="mgun_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.115544, 0.0205688, -0.0644531]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    silencer:t="556_silencer_slot"
+    magazine:t="m4_magazine_slot"
+    scope:t="scope_picatinny_short_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/5.56x45.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/mgun/m4/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/mgun/m4/change_mode"
+
+    "gun_sound__shotPath:shared:object"{
+      "options:array"{
+        "silenced:object"{
+          gunSilenced:b=yes
+          path:t="/weapon/mgun/m4_silenced"
+        }
+
+        "default:object"{
+          path:t="/weapon/mgun/m4"
+        }
+      }
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/m4/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/m4/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/m4/reload3/change_ammo"
+    }
+
+    "reload4:object"{
+      path:t="/weapon/mgun/m4/reload4/change_ammo"
+    }
+
+    "reload5:object"{
+      path:t="/weapon/mgun/m4/reload5/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="mesh_bullet_1"
+    n:t="mesh_bullet_2"
+    n:t="mesh_bullet_3"
+    n:t="mesh_bullet_4"
+    n:t="mesh_bullet_5"
+    n:t="mesh_bullet_6"
+    n:t="mesh_bullet_7"
+    n:t="mesh_bullet_8"
+    n:t="mesh_bullet_9"
+    n:t="ar15_mag_30rd"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=1.56
+    alt:r=1.43
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=2.56
+    alt:r=2.39
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=0.9
+    alt:r=0.83
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=1.96
+    alt:r=1.86
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.07, -0.06, -0.02
+    crouch:p3=0.07, -0.06, -0.02
+    crawl:p3=0.07, -0.06, 0.03
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.138415, 0.0624084, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.244081, 0.0717163, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+m4_rust_gun{
+  _use:t="m4_gun"
+  item__proto:t="m4_rust_gun"
+  item__weapTemplate:t="m4_rust_gun"
+  item__name:t="items/m4_rust"
+  item__marketPrice:i=100
+  gun_boxed_ammo_reload__batchReloadTime:r=3.1
+  gun__shotFreq:r=11.3
+  gun__kineticDamageMult:r=0.8
+  gun_spread__maxDeltaAngle:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentResearchAlias:t="m4a1_gun"
+
+  "animchar__objTexReplace:object"{
+    "m4_d*":t="m4_rust_tex_d*"
+    "m4_n*":t="m4_rust_tex_n*"
+  }
+
+  "gun_mods__slots:shared:object"{
+    magazine:t="m4_magazine_slot"
+  }
+}
+
+m4_civil_gun{
+  _use:t="m4_gun"
+  item__weapTemplate:t="m4_civil_gun"
+  item__name:t="items/m4_civil"
+  gun_boxed_ammo_reload__batchReloadTime:r=3.67
+  item__proto:t="m4_civil_gun"
+  item__marketPrice:i=3400
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="semi_auto"
+  }
+}
+
+m4_7_62_civil_gun{
+  _use:t="m4_gun"
+  _use:t="hit_effect_group_small"
+  item__weapTemplate:t="m4_7_62_civil_gun"
+  item__name:t="items/m4_7_62_civil"
+  gun_boxed_ammo_reload__batchReloadTime:r=3.67
+  item__proto:t="m4_7_62_civil_gun"
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="semi_auto"
+  }
+}
+
+m16a4_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_assault_rifle"
+  _use:t="big_gun_icon"
+  _use:t="ww2_rifle_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="assault_rifle_rapid_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_medium"
+  _use:t="assault_rifle_preset"
+  _use:t="camera_shake_on_shot_high_freq"
+  _use:t="gun_check_weapon_magazine"
+  animchar__res:t="m16a4_char"
+  collres__res:t="m16a4_collision"
+  gun__blk:t="gamedata/weapons/m16a4.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="m16a4_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="m16a4_gun"
+  item__name:t="items/m16a4"
+  item__weapType:t="assault_rifle"
+  item__baseWeight:r=3.4
+  gun__adsSpeedMult:r=0.6
+  item__volume:r=28
+  item__marketPrice:i=7200
+  item__iconRecalcAnimation:b=yes
+  gun__shotFreq:r=13.33
+  gun__ammoInspectionInOutDuration:p2=2.3, 1.5
+  gun__ammoInspectionIdleLoopDuration:r=8.3
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
+  gun__length:r=0.51
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.041
+  gun__recoilDirAmount:r=0.5
+  gun__recoilDir:r=0
+  gun__visualRecoilMult:r=1.4
+  gun__recoilControlMult:r=0.27
+  gun_boxed_ammo_reload__batchReloadTime:r=2.67
+  gun__sightsDistance:r=0.3
+  gun__statName:t="assault_rifle"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.011
+  weapon__aimNodeOffset:r=0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_5_56_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="mgun_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1.1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[4.76837e-07, 0, 1] [0.00872653, 0.999962, -4.65661e-09] [-0.999962, 0.00872653, 4.76837e-07] [-0.18, 0.02, -0.0644531]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    silencer:t="556_silencer_slot"
+    scope:t="scope_picatinny_long_slot"
+    magazine:t="m4_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/5.56x45.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=3
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="semi_auto_3_shots"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/mgun/m4/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/mgun/m4/change_mode"
+
+    "gun_sound__shotPath:shared:object"{
+      "options:array"{
+        "silenced:object"{
+          gunSilenced:b=yes
+          path:t="/weapon/mgun/m4_silenced"
+        }
+
+        "default:object"{
+          path:t="/weapon/mgun/m16a4"
+        }
+      }
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/m4/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/m4/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/m4/reload3/change_ammo"
+    }
+
+    "reload5:object"{
+      hero:t="player/weapon/mgun/m4/reload5/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="handguard_mesh"
+    n:t="mag_mesh"
+    n:t="und_cover_01_mesh"
+    n:t="und_cover_01_lmesh"
+    n:t="und_cover_01_rmesh"
+    n:t="und_cover_03_mesh"
+    n:t="und_handguard_mesh"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=1.56
+    alt:r=1.43
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=2.56
+    alt:r=2.39
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=0.9
+    alt:r=0.83
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=1.96
+    alt:r=1.86
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.07, -0.1, 0
+    crouch:p3=0.07, -0.1, 0
+    crawl:p3=0.05, -0.07, 0.06
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.19, 0.05, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.33, 0.0717163, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hk416_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="fn_scar_magazine"
+    i:t="m4_magazine"
+    i:t="m4a1_magazine"
+    i:t="m4_rust_magazine"
+  }
+}
+
+hk416a5_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_assault_rifle"
+  _use:t="big_gun_icon"
+  _use:t="ww2_rifle_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="assault_rifle_rapid_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_medium"
+  _use:t="assault_rifle_preset"
+  _use:t="camera_shake_on_shot_high_freq"
+  _use:t="gun_check_weapon_magazine"
+  _use:t="item_rarity_rare"
+  animchar__res:t="hk_416_a5_char"
+  collres__res:t="hk_416_a5_collision"
+  gun__blk:t="gamedata/weapons/hk416a5.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="hk416a5_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="hk416a5_gun"
+  item__name:t="items/hk416a5"
+  item__weapType:t="assault_rifle"
+  item__baseWeight:r=3.49
+  item__volume:r=26
+  item__marketPrice:i=12100
+  item__iconRecalcAnimation:b=yes
+  gun__shotFreq:r=14.15
+  gun__ammoInspectionInOutDuration:p2=2.3, 1.5
+  gun__ammoInspectionIdleLoopDuration:r=8.3
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
+  gun__length:r=0.37
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.044
+  gun__recoilDirAmount:r=0.64
+  gun__recoilDir:r=0
+  gun__visualRecoilMult:r=1.4
+  gun__recoilControlMult:r=0.26
+  gun_boxed_ammo_reload__batchReloadTime:r=2.67
+  gun__sightsDistance:r=0.3
+  gun__statName:t="assault_rifle"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.014
+  weapon__aimNodeOffset:r=0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_5_56_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="mgun_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.101898, 0.0205688, -0.0644531]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    silencer:t="556_silencer_slot"
+    magazine:t="m4_magazine_slot"
+    scope:t="scope_picatinny_long_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/5.56x45.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/mgun/hk_416/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/mgun/hk_416/change_mode"
+
+    "gun_sound__shotPath:shared:object"{
+      "options:array"{
+        "silenced:object"{
+          gunSilenced:b=yes
+          path:t="/weapon/mgun/hk_416_silenced"
+        }
+
+        "default:object"{
+          path:t="/weapon/mgun/hk_416"
+        }
+      }
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/hk_416/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/hk_416/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/hk_416/reload3/change_ammo"
+    }
+
+    "reload4:object"{
+      hero:t="player/weapon/mgun/hk_416/reload4/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{}
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=1.56
+    alt:r=1.43
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=2.56
+    alt:r=2.39
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=0.9
+    alt:r=0.83
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=1.96
+    alt:r=1.86
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.07, -0.08, -0.04
+    crouch:p3=0.07, -0.08, -0.04
+    crawl:p3=0.07, -0.08, 0.03
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.123108, 0.0624084, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.261383, 0.0717163, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+steyr_aug_a1_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="steyr_aug_a1_magazine"
+  }
+}
+
+steyr_aug_a1_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_assault_rifle"
+  _use:t="big_gun_icon"
+  _use:t="ww2_rifle_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="assault_rifle_rapid_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_medium"
+  _use:t="assault_rifle_preset"
+  _use:t="gun_check_weapon_magazine"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="steyr_aug_a1_char"
+  collres__res:t="steyr_aug_a1_collision"
+  gun__blk:t="gamedata/weapons/steyr_aug_a1.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="steyr_aug_a1_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="steyr_aug_a1_gun"
+  item__name:t="items/steyr_aug_a1"
+  item__weapType:t="assault_rifle"
+  item__baseWeight:r=3.3
+  item__volume:r=26
+  item__marketPrice:i=9750
+  gun__hitTagDurationMult:r=1.5
+  gun__hitTagPower:r=0.9
+  gun__length:r=0.42
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.038
+  gun__recoilControlMult:r=0.34
+  gun__recoilDirAmount:r=0.63
+  gun__recoilDir:r=0.15
+  gun__visualRecoilMult:r=1.3
+  gun_boxed_ammo_reload__batchReloadTime:r=2.5
+  gun__shotFreq:r=10.8333
+  gun__sightsDistance:r=0.25
+  gun__statName:t="assault_rifle"
+  gun__useLocalPlayerTracer:b=no
+  gun__integratedScope:b=yes
+  gunmod__camNode:t="scope_view"
+  gunmod__lensNode:t="lens_close"
+  gunmod__crosshairNode:t="crosshair"
+  gunmod__lensActive:b=yes
+  gunmod__deviationMult:r=0.5
+  gunmod__zoomFactor:r=3.5
+  gunmod__camShiftMin:r=0.13
+  gunmod__camShiftMax:r=0.13
+  gunmod__camFovMin:r=28
+  gunmod__camFovMax:r=19
+  gunmod__focusPlaneShift:r=0.5
+  gunmod__dofNearAmountPercent:r=50
+  gunmod__dofFarAmountPercent:r=0.02
+  gunmod__lensBrightness:r=0.7
+  gunmod__distortionParams:p3=0.09, 1.7, 0.15
+  gun_spread__maxDeltaAngle:r=0.014
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_5_56_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="mgun_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.141235, 0.0600739, -0.0654297]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    magazine:t="steyr_aug_a1_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/5.56x45.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/mgun/steyr_aug/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/mgun/steyr_aug/change_mode"
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/mgun/steyr_aug"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/steyr_aug/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/steyr_aug/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/steyr_aug/reload3/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="mesh_bullet_1"
+    n:t="mesh_bullet_2"
+    n:t="mesh_bullet_3"
+    n:t="mesh_bullet_4"
+    n:t="mesh_bullet_5"
+    n:t="steyr_aug_a1_magazine"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=1.8
+    alt:r=1.8
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=2.5
+    alt:r=2
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1
+    alt:r=1
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2
+    alt:r=1.3
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.08, -0.04, -0.04
+    crouch:p3=0.08, -0.04, -0.04
+    crawl:p3=0.08, -0.04, 0.01
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.273735, -0.0630422, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.18409, 0.0653949, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+spas_12_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="gun_with_builtin_ammo_holder"
+  _use:t="gun_check_weapon_no_magazine"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_shotgun"
+  _use:t="gun_icon"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="gun_anim"
+  _use:t="weapon_slot_indexed"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="shotgun_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_medium"
+  _use:t="shotgun_preset"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="spas_12_char"
+  collres__res:t="spas_12_collision"
+  gun__blk:t="gamedata/weapons/spas_12.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  gun_shell_ejection__templateName:t="12_cal_ejected_shell"
+  item__proto:t="spas_12_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="spas_12_gun"
+  item__name:t="items/spas_12"
+  item__weapType:t="shotgun"
+  item__baseWeight:r=4.4
+  item__volume:r=24
+  item__marketPrice:i=3740
+  gun__ammoInspectionInOutDuration:p2=1.13, 1.2
+  gun__ammoInspectionIdleLoopDuration:r=4.66
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
+  gun_shell_ejection__timeMult:r=0.35
+  gun__chokeSpread:r=1
+  gun__length:r=0.55
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.2
+  gun__recoilDirAmount:r=0.64
+  gun__recoilDir:r=0.15
+  gun__visualRecoilMult:r=1.3
+  gun__recoilOffsMult:r=0.2
+  gun__shotFreq:r=1.7
+  gun__sightsDistance:r=0.05
+  gun__statName:t="shotgun"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.05
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="directly_use_boxed_ammo"
+  gun__maxAmmo:i=8
+  gun__boxedAmmoHolderTemplate:t="box_12_gauge_magazine"
+  gun_boxed_ammo_reload__loadPrepareTime:r=0.73
+  gun_boxed_ammo_reload__loadLoopTime:r=0.8
+  gun_boxed_ammo_reload__loadPostTime:r=0.73
+  gun_boxed_ammo_reload__onEmptyPostTime:r=1.23
+  gun_boxed_ammo_reload__unloadPrepareTime:r=0.26
+  gun_boxed_ammo_reload__unloadLoopTime:r=0.4
+  gun_boxed_ammo_reload__unloadPostTime:r=0.33
+  _use:t="gun_sound_with_animchar"
+  _use:t="rifle_gun_aim_sound"
+  _use:t="rifle_gun_shot_dry_sound"
+  meleeSoundType:t="rifle"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1.1, 0, 0] [0, 0.25, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[4.76837e-07, 0, 1] [0, 1, 0] [-1, 0, 4.76837e-07] [-0.26, 0.042, -0.0648708]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun__ammoHolders:list<t>"{
+    ammoHolders:t="box_12_gauge_magazine"
+  }
+
+  "gun_boxed_ammo_reload__unloadEnabled:tag"{}
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/12_gauge.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="bolt_action"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_sound__forceOneshot:b=yes
+    gun_sound__forceOneshotEnemy:b=yes
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/rifle/spas_12"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/rifle/spas_12/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/rifle/spas_12/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/rifle/spas_12/reload3/change_ammo"
+    }
+
+    "boltAction:object"{
+      path:t="/weapon/rifle/spas_12/bolt_action"
+    }
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.08, -0.06, -0.08
+    crouch:p3=0.08, -0.06, -0.08
+    crawl:p3=0.08, -0.06, -0.08
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.21, 0.04, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.36, 0.06, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hk_mp5n_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="hk_mp5n_magazine"
+  }
+}
+
+hk_mp5n_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_smg"
+  _use:t="gun_icon"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="smg_move_inertion"
+  _use:t="camera_shake_on_shot_high_freq"
+  _use:t="smg_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_small"
+  _use:t="smg_preset"
+  _use:t="gun_check_weapon_magazine"
+  animchar__res:t="hk_mp5n_char"
+  collres__res:t="hk_mp5n_collision"
+  gun__blk:t="gamedata/weapons/hk_mp5n.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="hk_mp5n_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="hk_mp5n_gun"
+  item__name:t="items/hk_mp5n"
+  item__weapType:t="submachine_gun"
+  item__baseWeight:r=3.08
+  item__volume:r=18
+  item__marketPrice:i=2915
+  gun_shell_ejection__templateName:t="9x19_brass_ejected_shell"
+  gun__ammoInspectionInOutDuration:p2=2.53, 1.36
+  gun__ammoInspectionIdleLoopDuration:r=9
+  gun__length:r=0.225
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.032
+  gun__recoilControlMult:r=0.3
+  gun__recoilDirAmount:r=0.62
+  gun__recoilDir:r=0
+  gun__visualRecoilMult:r=1.4
+  gun_boxed_ammo_reload__batchReloadTime:r=3.5
+  gun__shotFreq:r=13.3333
+  gun__sightsDistance:r=0.25
+  gun__statName:t="submachine_gun"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.06
+  weapon__aimNodeOffset:r=0.1
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_9x19_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="mgun_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.0544373, 0.0600779, -0.0634766]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    silencer:t="9_19_silencer_slot"
+    magazine:t="hk_mp5n_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/9x19.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/mgun/hk_mp5/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/mgun/hk_mp5/change_mode"
+
+    "gun_sound__shotPath:shared:object"{
+      "options:array"{
+        "silenced:object"{
+          gunSilenced:b=yes
+          path:t="/weapon/mgun/hk_mp5_silenced"
+        }
+
+        "default:object"{
+          path:t="/weapon/mgun/hk_mp5"
+        }
+      }
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/hk_mp5/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/hk_mp5/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/hk_mp5/reload3/change_ammo"
+    }
+
+    "reload4:object"{
+      path:t="/weapon/mgun/hk_mp5/reload4/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="mesh_bullet_1"
+    n:t="mesh_bullet_2"
+    n:t="mesh_bullet_3"
+    n:t="mesh_bullet_4"
+    n:t="mesh_bullet_5"
+    n:t="mp_5_magazine"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=4.09
+    alt:r=1.83
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3.86
+    alt:r=2.49
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=2.26
+    alt:r=1
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2.4
+    alt:r=1.73
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.08, -0.05, -0.06
+    crouch:p3=0.08, -0.05, -0.06
+    crawl:p3=0.08, -0.05, -0.02
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.0855722, 0.0550647, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.248938, 0.0656845, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hk_mp5n_civil_gun{
+  _use:t="hk_mp5n_gun"
+  item__weapTemplate:t="hk_mp5n_civil_gun"
+  item__name:t="items/hk_mp5n_civil"
+  gun_boxed_ammo_reload__batchReloadTime:r=5.5
+  item__proto:t="hk_mp5n_civil_gun"
+  item__marketPrice:i=2100
+  gun__recoilControlMult:r=0.5
+  gun__recoilAmount:r=0.075
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="semi_auto"
+  }
+}
+
+hk_ump_45_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="hk_ump_45_magazine"
+  }
+}
+
+hk_ump_45_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_smg"
+  _use:t="gun_icon"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="smg_move_inertion"
+  _use:t="camera_shake_on_shot_high_freq"
+  _use:t="smg_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_small"
+  _use:t="smg_preset"
+  _use:t="gun_check_weapon_magazine"
+  animchar__res:t="hk_ump_45_char"
+  collres__res:t="hk_ump_45_collision"
+  gun__blk:t="gamedata/weapons/hk_ump_45.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="hk_ump_45_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="hk_ump_45_gun"
+  item__name:t="items/hk_ump_45"
+  item__weapType:t="submachine_gun"
+  item__baseWeight:r=2.3
+  item__volume:r=18
+  item__marketPrice:i=3450
+  gun__ammoInspectionInOutDuration:p2=3.53, 2.36
+  gun__ammoInspectionIdleLoopDuration:r=9
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
+  gun__length:r=0.2
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.045
+  gun__recoilControlMult:r=0.6
+  gun__recoilDirAmount:r=0.72
+  gun__recoilDir:r=0
+  gun__visualRecoilMult:r=0.8
+  gun_boxed_ammo_reload__batchReloadTime:r=3.5
+  gun__shotFreq:r=10
+  gun__sightsDistance:r=0.25
+  gun__statName:t="submachine_gun"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.1
+  weapon__aimNodeOffset:r=0.3
+  gun_shell_ejection__templateName:t="45acp_ejected_shell"
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_45_acp_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.4, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.0970001, 0.0562134, -0.0649414]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    silencer:t="45_silencer_slot"
+    scope:t="scope_picatinny_short_slot"
+    magazine:t="hk_ump_45_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/45_acp.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=2
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+    mode:t="semi_auto_2_shots"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/mgun/hk_ump/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/mgun/hk_ump/change_mode"
+
+    "gun_sound__shotPath:shared:object"{
+      "options:array"{
+        "silenced:object"{
+          gunSilenced:b=yes
+          path:t="/weapon/mgun/hk_ump_silenced"
+        }
+
+        "default:object"{
+          path:t="/weapon/mgun/hk_ump"
+        }
+      }
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/hk_ump/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/hk_ump/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/hk_ump/reload3/change_ammo"
+    }
+
+    "reload4:object"{
+      path:t="/weapon/mgun/hk_ump/reload4/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="mesh_bullet_1"
+    n:t="mesh_bullet_2"
+    n:t="mesh_bullet_3"
+    n:t="mesh_bullet_4"
+    n:t="mesh_bullet_5"
+    n:t="hk_ump_45_mag"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=4.09
+    alt:r=1.83
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3.86
+    alt:r=2.49
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=2.26
+    alt:r=1
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2.4
+    alt:r=1.73
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.08, -0.09, -0.09
+    crouch:p3=0.08, -0.09, -0.09
+    crawl:p3=0.08, -0.09, 0.01
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.119873, 0.0744553, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.155121, 0.0822449, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hk_ump_9_gun{
+  _use:t="hk_ump_45_gun"
+  _use:t="hit_effect_group_small"
+  item__proto:t="hk_ump_9_gun"
+  item__weapTemplate:t="hk_ump_9_gun"
+  item__name:t="items/hk_ump_9"
+}
+
+hk_g3a4_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="hk_g3a4_magazine"
+  }
+}
+
+hk_g3a4_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_assault_rifle"
+  _use:t="big_gun_icon"
+  _use:t="ww2_stg_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="assault_rifle_rapid_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_big"
+  _use:t="assault_rifle_preset"
+  _use:t="gun_check_weapon_magazine"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="g3a4_char"
+  collres__res:t="g3a4_collision"
+  gun__blk:t="gamedata/weapons/hk_g3a4.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="hk_g3a4_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="hk_g3a4_gun"
+  item__name:t="items/hk_g3a4"
+  item__weapType:t="assault_rifle"
+  item__baseWeight:r=4.6
+  item__volume:r=26
+  item__marketPrice:i=6800
+  gun__altReloadTime:r=1.8
+  gun__ammoInspectionInOutDuration:p2=1.4, 2.3
+  gun__ammoInspectionIdleLoopDuration:r=8.2
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
+  gun__length:r=0.45
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.112
+  gun__recoilDir:r=0.36
+  gun__recoilDirAmount:r=0.71
+  gun__visualRecoilMult:r=1.6
+  gun_boxed_ammo_reload__batchReloadTime:r=2.3
+  gun__shotFreq:r=9.15
+  gun__sightsDistance:r=0.3
+  gun__statName:t="assault_rifle"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.025
+  weapon__aimNodeOffset:r=0.3
+  gun_shell_ejection__templateName:t="762_51_nato_ejected_shell"
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.05, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_7_62x51_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="mgun_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[0.000815562, -0.032988, 0.999456] [-0.0111868, 0.999393, 0.0329952] [-0.999937, -0.0112075, 0.000446039] [-0.123653, 0.0580902, -0.0644531]]
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    scope:t="scope_picatinny_long_slot"
+    magazine:t="hk_g3a4_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/7.62x51.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/rifle/m110a1/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_sound__forceOneshotEnemy:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/rifle/m110a1/change_mode"
+
+    "gun_sound__shotPath:shared:object"{
+      "options:array"{
+        "silenced:object"{
+          gunSilenced:b=yes
+          path:t="/weapon/rifle/m110a1_silenced"
+        }
+
+        "default:object"{
+          path:t="/weapon/rifle/hk_g3a4"
+        }
+      }
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "foley_start:object"{
+      path:t="/weapon/rifle/hk_g3a4/reload_foley_start"
+    }
+
+    "mag_out:object"{
+      path:t="/weapon/rifle/hk_g3a4/reload_mag_out"
+    }
+
+    "mag_in:object"{
+      path:t="/weapon/rifle/hk_g3a4/reload_mag_in"
+    }
+
+    "shutter_in:object"{
+      path:t="/weapon/rifle/hk_g3a4/reload_shutter_in"
+    }
+
+    "shutter_out:object"{
+      path:t="/weapon/rifle/hk_g3a4/reload_shutter_out"
+    }
+
+    "foley_end:object"{
+      path:t="/weapon/rifle/hk_g3a4/reload_foley_end"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="mesh_bullet_1"
+    n:t="mesh_bullet_2"
+    n:t="mesh_bullet_3"
+    n:t="mesh_bullet_4"
+    n:t="mag_mesh"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=2.9
+    alt:r=1.6
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3.1
+    alt:r=2
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1.6
+    alt:r=0.8
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2.2
+    alt:r=1.6
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.03, -0.07, 0.1
+    crouch:p3=0.03, -0.07, 0.1
+    crawl:p3=0.02, -0.03, 0.2
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.176025, 0.0596466, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.165039, 0.0829163, 0]]
+    }
+  }
+}
+
+barrett_m82a1_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="barrett_m82a1_magazine"
+  }
+}
+
+barrett_m82a1_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_rifle"
+  _use:t="big_gun_icon"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="long_rifle_move_inertion"
+  _use:t="antimaterial_rifle_deviation_preset"
+  _use:t="heavy_sniper_rifle_preset"
+  _use:t="camera_shake_on_shot_heavy"
+  _use:t="high_caliber_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_big"
+  _use:t="gun_check_weapon_magazine"
+  _use:t="item_rarity_rare"
+  animchar__res:t="barrett_m82a1_char"
+  collres__res:t="barrett_m82a1_collision"
+  gun__blk:t="gamedata/weapons/barrett_m82a1.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="barrett_m82a1_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="barrett_m82a1_gun"
+  item__name:t="items/barrett_m82a1"
+  item__weapType:t="semiauto"
+  item__baseWeight:r=13.5
+  item__volume:r=42
+  item__marketPrice:i=28800
+  item__iconRecalcAnimation:b=yes
+  gun_shell_ejection__templateName:t="ptrd_41_ejected_shell"
+  gun__adsSpeedMult:r=0.4
+  gun__boltFreq:r=5.5
+  gun__ammoInspectionInOutDuration:p2=3, 2.5
+  gun__ammoInspectionIdleLoopDuration:r=9.6
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.85
+  gun__deviationInFireReady:r=2
+  gun__disableToggleAim:b=yes
+  gun__hitTagDurationMult:r=4
+  gun__hitTagPower:r=0.5
+  gun__length:r=0.74
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.45
+  gun__recoilControlMult:r=0.5
+  gun__recoilDirAmount:r=0.5
+  gun__recoilDir:r=0
+  gun__visualRecoilMult:r=1.6
+  gun_boxed_ammo_reload__batchReloadTime:r=2.5
+  gun__shotFreq:r=10.8333
+  gun__sightsDistance:r=0.25
+  gun__statName:t="rifle"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.007
+  loud_noise__noisePerShot:r=180
+  combatFiringRange:p2=50, 70
+  combatShootTime:p2=0.2, 0.3
+  combatCooldownTime:p2=0.1, 0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_7_62x39_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="rifle_gun_aim_sound"
+  _use:t="rifle_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1.5, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[5.14692e-05, 3.70182e-07, 1] [-0.00714479, 0.999974, -2.32831e-09] [-0.999974, -0.00714479, 5.14705e-05] [-0.428045, -0.0552216, -0.0693359]]
+
+  "animchar__actOnDemand:tag"{}
+  "isCameraAlwaysOnScope:tag"{}
+  "gun_mods__slots:shared:object"{
+    magazine:t="barrett_m82a1_magazine_slot"
+    scope:t="scope_picatinny_long_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/50_bmg.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/rifle/barrett_m82a1/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_sound__forceOneshotEnemy:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/_common/firing_mode_rifle"
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/rifle/barrett_m82a1"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/rifle/barrett_m82a1/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/rifle/barrett_m82a1/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/rifle/barrett_m82a1/reload3/change_ammo"
+    }
+
+    "reload4:object"{
+      path:t="/weapon/rifle/barrett_m82a1/reload4/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="mesh_bullet_1"
+    n:t="mesh_bullet_2"
+    n:t="mesh_bullet_3"
+    n:t="mesh_bullet_4"
+    n:t="mesh_bullet_5"
+    n:t="ammo_mesh"
+    n:t="ammo"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=1.72
+    alt:r=1.89
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3.99
+    alt:r=3.59
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1.06
+    alt:r=1.23
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=3.33
+    alt:r=2.93
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.08, -0.13, -0.04
+    crouch:p3=0.08, -0.13, -0.04
+    crawl:p3=0.08, -0.13, -0.04
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.443771, -0.000926495, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0, 0, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+winchester_civil_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="gun_with_builtin_ammo_holder"
+  _use:t="gun_check_weapon_no_magazine"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_shotgun"
+  _use:t="gun_icon"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="gun_anim"
+  _use:t="weapon_slot_indexed"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="assault_rifle_rapid_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_medium"
+  _use:t="shotgun_preset"
+  animchar__res:t="winchester_model_1912_char"
+  collres__res:t="winchester_model_1912_collision"
+  gun__blk:t="gamedata/weapons/winchester_model_1912.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  gun_shell_ejection__templateName:t="12_cal_ejected_shell"
+  item__proto:t="winchester_civil_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="winchester_civil_gun"
+  item__name:t="items/winchester_civil"
+  item__weapType:t="shotgun"
+  item__baseWeight:r=3.6
+  item__volume:r=28
+  item__marketPrice:i=2550
+  gun_shell_ejection__timeMult:r=0.35
+  gun__chokeSpread:r=2
+  gun__length:r=0.51
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.2
+  gun__recoilDirAmount:r=0.64
+  gun__recoilDir:r=0.15
+  gun__visualRecoilMult:r=1
+  gun__recoilOffsMult:r=0.2
+  gun__shotFreq:r=1.4
+  gun__sightsDistance:r=0.05
+  gun__statName:t="shotgun"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.05
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="directly_use_boxed_ammo"
+  gun__maxAmmo:i=6
+  gun__boxedAmmoHolderTemplate:t="box_12_gauge_magazine"
+  gun_boxed_ammo_reload__loadLoopTime:r=0.7
+  gun_boxed_ammo_reload__loadPrepareTime:r=0.7
+  gun_boxed_ammo_reload__loadPostTime:r=1.5
+  _use:t="gun_sound_with_animchar"
+  _use:t="rifle_gun_aim_sound"
+  _use:t="rifle_gun_shot_dry_sound"
+  meleeSoundType:t="rifle"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.241333, 0.0137253, -0.0693359]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun__ammoHolders:list<t>"{
+    ammoHolders:t="winchester_model_1912_magazine"
+    ammoHolders:t="box_12_gauge_magazine"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/12_gauge.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="bolt_action"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_sound__forceOneshot:b=yes
+    gun_sound__forceOneshotEnemy:b=yes
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/rifle/winchester_1912"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/rifle/winchester_1912/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/rifle/winchester_1912/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/rifle/winchester_1912/reload3/change_ammo"
+    }
+
+    "boltAction:object"{
+      path:t="/weapon/rifle/winchester_1912/bolt_action"
+    }
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.06, -0.11, -0.08
+    crouch:p3=0.06, -0.11, -0.08
+    crawl:p3=0.06, -0.11, -0.08
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.226196, 0.0101318, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.279323, 0.0603867, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+winchester_specops_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="gun_with_builtin_ammo_holder"
+  _use:t="gun_check_weapon_no_magazine"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_shotgun"
+  _use:t="gun_icon"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="gun_anim"
+  _use:t="weapon_slot_indexed"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="assault_rifle_rapid_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_medium"
+  _use:t="shotgun_preset"
+  animchar__res:t="winchester_model_1912_trench_char"
+  collres__res:t="winchester_model_1912_trench_collision"
+  gun__blk:t="gamedata/weapons/winchester_model_1912_trench.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  gun_shell_ejection__templateName:t="12_cal_ejected_shell"
+  item__proto:t="winchester_specops_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="winchester_specops_gun"
+  item__name:t="items/winchester_specops"
+  item__weapType:t="shotgun"
+  item__baseWeight:r=3.6
+  item__volume:r=28
+  item__marketPrice:i=2700
+  gun_shell_ejection__timeMult:r=0.35
+  gun__chokeSpread:r=2
+  gun__length:r=0.51
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.15
+  gun__recoilDirAmount:r=0.64
+  gun__recoilDir:r=0.15
+  gun__visualRecoilMult:r=1
+  gun__recoilOffsMult:r=0.2
+  gun__shotFreq:r=1.4
+  gun__sightsDistance:r=0.05
+  gun__statName:t="shotgun"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.05
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="directly_use_boxed_ammo"
+  gun__maxAmmo:i=6
+  gun__boxedAmmoHolderTemplate:t="box_12_gauge_magazine"
+  gun_boxed_ammo_reload__loadLoopTime:r=0.5
+  gun_boxed_ammo_reload__loadPrepareTime:r=0.5
+  gun_boxed_ammo_reload__loadPostTime:r=1.2
+  _use:t="gun_sound_with_animchar"
+  _use:t="rifle_gun_aim_sound"
+  _use:t="rifle_gun_shot_dry_sound"
+  meleeSoundType:t="rifle"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[3.57628e-07, 0, 1] [0, 1, 0] [-1, 0, 3.57628e-07] [-0.25, 0.0137253, -0.0693359]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun__ammoHolders:list<t>"{
+    ammoHolders:t="winchester_model_1912_magazine"
+    ammoHolders:t="box_12_gauge_magazine"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/12_gauge.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="bolt_action"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_sound__forceOneshot:b=yes
+    gun_sound__forceOneshotEnemy:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/_common/firing_mode_rifle"
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/rifle/winchester_1912"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/rifle/winchester_1912/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/rifle/winchester_1912/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/rifle/winchester_1912/reload3/change_ammo"
+    }
+
+    "boltAction:object"{
+      path:t="/weapon/rifle/winchester_1912/bolt_action"
+    }
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.07, -0.1, -0.08
+    crouch:p3=0.07, -0.1, -0.08
+    crawl:p3=0.07, -0.1, -0.08
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.227297, 0.0101318, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.278222, 0.0603867, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+mossberg_590_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="gun_with_builtin_ammo_holder"
+  _use:t="gun_check_weapon_no_magazine"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_shotgun"
+  _use:t="gun_icon"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="gun_anim"
+  _use:t="weapon_slot_indexed"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="assault_rifle_rapid_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_medium"
+  _use:t="shotgun_preset"
+  animchar__res:t="mossberg_590_char"
+  collres__res:t="mossberg_590_collision"
+  gun__blk:t="gamedata/weapons/mossberg_590.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  gun_shell_ejection__templateName:t="12_cal_ejected_shell"
+  item__proto:t="mossberg_590_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="mossberg_590_gun"
+  item__name:t="items/mossberg_590"
+  item__weapType:t="shotgun"
+  item__baseWeight:r=3.3
+  item__volume:r=28
+  item__marketPrice:i=2700
+  gun_shell_ejection__timeMult:r=0.35
+  gun__chokeSpread:r=1.2
+  gun__length:r=0.51
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.15
+  gun__recoilDirAmount:r=0.64
+  gun__recoilDir:r=0.15
+  gun__visualRecoilMult:r=1
+  gun__recoilOffsMult:r=0.2
+  gun__shotFreq:r=1.4
+  gun__sightsDistance:r=0.05
+  gun__statName:t="shotgun"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.05
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="directly_use_boxed_ammo"
+  gun__maxAmmo:i=6
+  gun__boxedAmmoHolderTemplate:t="box_12_gauge_magazine"
+  gun_boxed_ammo_reload__loadPrepareTime:r=0.5
+  gun_boxed_ammo_reload__loadLoopTime:r=0.83
+  gun_boxed_ammo_reload__loadPostTime:r=0.63
+  gun_boxed_ammo_reload__firstBulletPrepareTime:r=0
+  gun_boxed_ammo_reload__firstBulletLoopTime:r=2
+  gun_boxed_ammo_reload__unloadPrepareTime:r=0.33
+  gun_boxed_ammo_reload__unloadLoopTime:r=0.8
+  gun_boxed_ammo_reload__unloadPostTime:r=0.33
+  gun__ammoInspectionInOutDuration:p2=1.6, 1.2
+  _use:t="gun_sound_with_animchar"
+  _use:t="rifle_gun_aim_sound"
+  _use:t="rifle_gun_shot_dry_sound"
+  meleeSoundType:t="rifle"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1.1, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[5.96046e-07, 0, 1] [0.00523596, 0.999986, -2.79397e-09] [-0.999986, 0.00523596, 5.96046e-07] [-0.221135, 0.0213644, -0.0667149]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun__ammoHolders:list<t>"{
+    ammoHolders:t="box_12_gauge_magazine"
+  }
+
+  "gun_boxed_ammo_reload__unloadEnabled:tag"{}
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/12_gauge.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="bolt_action"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/rifle/mossberg_590/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_sound__forceOneshotEnemy:b=yes
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/rifle/mossberg_590"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "shutter_in:object"{
+      path:t="/weapon/rifle/mossberg_590/reload1/change_ammo"
+    }
+
+    "shell_in:object"{
+      path:t="/weapon/rifle/mossberg_590/reload2/change_ammo"
+    }
+
+    "shutter_out:object"{
+      path:t="/weapon/rifle/mossberg_590/reload3/change_ammo"
+    }
+
+    "shell_out:object"{
+      path:t="/weapon/rifle/mossberg_590/reload4/change_ammo"
+    }
+
+    "foley_start:object"{
+      hero:t="player/weapon/rifle/mossberg_590/foley"
+    }
+
+    "foley_end:object"{
+      hero:t="player/weapon/rifle/mossberg_590/foley"
+    }
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.07, -0.08, -0.01
+    crouch:p3=0.07, -0.08, -0.01
+    crawl:p3=0.07, -0.08, -0.01
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.26, 0.01, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.38, 0.05, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+scorpion_evo_3_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="scorpion_evo_3_magazine"
+  }
+}
+
+scorpion_evo_3_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_smg"
+  _use:t="gun_icon"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="smg_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_small"
+  _use:t="smg_preset"
+  _use:t="camera_shake_on_shot_high_freq"
+  _use:t="gun_check_weapon_magazine"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="scorpion_evo_iii_char"
+  collres__res:t="scorpion_evo_iii_collision"
+  gun__blk:t="gamedata/weapons/scorpion_evo_3.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="scorpion_evo_3_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="scorpion_evo_3_gun"
+  item__name:t="items/scorpion_evo_3"
+  item__weapType:t="submachine_gun"
+  item__baseWeight:r=2.77
+  item__volume:r=18
+  item__marketPrice:i=7000
+  gun__boltFreq:r=13
+  gun__length:r=0.2
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.034
+  gun__recoilControlMult:r=0.6
+  gun__recoilDirAmount:r=0.79
+  gun__recoilDir:r=0
+  gun__visualRecoilMult:r=1.3
+  gun_spread__maxDeltaAngle:r=0.1
+  gun_boxed_ammo_reload__batchReloadTime:r=3
+  gun__shotFreq:r=18
+  gun__sightsDistance:r=0.25
+  gun__statName:t="submachine_gun"
+  gun__useLocalPlayerTracer:b=no
+  gun_shell_ejection__templateName:t="9x19_brass_ejected_shell"
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_9x19_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.0746002, 0.0452271, -0.0693359]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    scope:t="scope_picatinny_short_slot"
+    magazine:t="scorpion_evo_3_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/9x19.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=3
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+    mode:t="semi_auto_3_shots"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/mgun/scorpion_evo_3/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/mgun/scorpion_evo_3/change_mode"
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/mgun/scorpion_evo_3"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/scorpion_evo_3/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/scorpion_evo_3/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/scorpion_evo_3/reload3/change_ammo"
+    }
+
+    "reload4:object"{
+      path:t="/weapon/mgun/scorpion_evo_3/reload4/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="mesh_bullet_1"
+    n:t="mesh_bullet_2"
+    n:t="mesh_bullet_3"
+    n:t="mesh_bullet_4"
+    n:t="mesh_bullet_5"
+    n:t="scorpion_evo_magazine"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=2
+    alt:r=2
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3
+    alt:r=2.8
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1.5
+    alt:r=1.5
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2.5
+    alt:r=2.4
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.11, -0.07, -0.05
+    crouch:p3=0.11, -0.07, -0.05
+    crawl:p3=0.11, -0.07, 0.05
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.095459, 0.0655518, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [0.111328, 0.055, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+m1911_colt_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="m1911_colt_magazine"
+  }
+}
+
+m1911_colt_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="pistol_weap_slots"
+  _use:t="ironsights_open_pistol"
+  _use:t="small_gun_icon_reverted"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="pistol_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_small"
+  _use:t="pistol_preset"
+  _use:t="gun_check_weapon_magazine"
+  animchar__res:t="m1911_colt_char"
+  collres__res:t="m1911_colt_collision"
+  gun__blk:t="gamedata/weapons/m1911_colt.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="m1911_colt_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="m1911_colt_gun"
+  item__name:t="items/m1911_colt"
+  item__weapType:t="pistol"
+  item__baseWeight:r=1.1
+  item__volume:r=7
+  item__marketPrice:i=1050
+  gun__adsSpeedMult:r=1.2
+  gun__deviationInFireReady:r=2.5
+  gun__length:r=0.13
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.138
+  gun__recoilDirAmount:r=0.6
+  gun__recoilDir:r=0
+  gun_spread__maxDeltaAngle:r=0.15
+  gun__visualRecoilMult:r=1.3
+  weapon__aimNodeOffset:r=0.17
+  gun_boxed_ammo_reload__batchReloadTime:r=2
+  gun__shotFreq:r=6
+  gun__sightsDistance:r=0.1
+  gun__statName:t="pistol"
+  gun__useLocalPlayerTracer:b=no
+  gun_aim_offset__gunShootOffsetCustomAdd:p3=0, 0, -0.01
+  gun_shell_ejection__templateName:t="45acp_ejected_shell"
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_45_acp_magazine"
+  _use:t="gun_sound_with_animchar"
+  meleeSoundType:t="pistol"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[0.25, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[-5.96046e-08, -0.29467, 0.955599] [0.378832, 0.884374, 0.272707] [-0.925466, 0.362011, 0.11163] [-0.0755386, 0.0289307, -0.0759888]]
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 3
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    silencer:t="45_silencer_slot"
+    magazine:t="m1911_colt_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/45_acp.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/pistol/m1911/shot_dry"
+
+    "gun_sound__shotPath:shared:object"{
+      "options:array"{
+        "silenced:object"{
+          gunSilenced:b=yes
+          path:t="/weapon/pistol/m1911_silenced"
+        }
+
+        "default:object"{
+          path:t="/weapon/pistol/m1911"
+        }
+      }
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/pistol/m1911/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/pistol/m1911/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/pistol/m1911/reload3/change_ammo"
+    }
+
+    "reload4:object"{
+      path:t="/weapon/pistol/m1911/reload4/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="mesh_bullet_1"
+    n:t="mesh_bullet_2"
+    n:t="mesh_bullet_3"
+    n:t="mesh_bullet_4"
+    n:t="mesh_bullet_5"
+    n:t="mesh_bullet_6"
+    n:t="mesh_bullet_7"
+    n:t="ammo_mesh"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=2
+    alt:r=2
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3
+    alt:r=2.2
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1
+    alt:r=1
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2
+    alt:r=1.3
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.07, -0.04, 0.04
+    crouch:p3=0.07, -0.04, 0.04
+    crawl:p3=0.07, -0.04, 0.04
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_c"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0, 0.0528564, 0]]
+    }
+  }
+}
+
+m1911a1_colt_nickel_gun{
+  _use:t="m1911_colt_gun"
+  _use:t="item_rarity_rare"
+  item__proto:t="m1911a1_colt_nickel_gun"
+  item__weapTemplate:t="m1911a1_colt_nickel_gun"
+  item__name:t="items/m1911a1_colt_nickel"
+  item__marketPrice:i=1350
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "animchar__objTexReplace:object"{
+    "m1911_colt_tex_d*":t="m_1911_a1_chrome_tex_d*"
+    "m1911_colt_tex_n*":t="m_1911_a1_chrome_tex_n*"
+  }
+}
+
+m45a1_gun{
+  _use:t="m1911_colt_gun"
+  _use:t="hit_effect_group_small"
+  animchar__res:t="m45a1_cqbp_char"
+  collres__res:t="m45a1_cqbp_collision"
+  gun__blk:t="gamedata/weapons/m1911_colt.blk"
+  item__proto:t="m45a1_gun"
+  item__weapTemplate:t="m45a1_gun"
+  item__name:t="items/m45a1"
+  item__marketPrice:i=1735
+  racked_weapon__gunwallVolumeBox:m=[[0.25, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[-0.00786796, -0.292061, 0.956367] [0.262603, 0.922226, 0.283795] [-0.964872, 0.253377, 0.0694398] [-0.0765209, 0.0273249, -0.0759888]]
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_c"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0, 0.0528564, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+m9_bazooka_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="gun_with_builtin_ammo_holder"
+  _use:t="gun_check_weapon_no_magazine"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_launchers"
+  _use:t="gun_icon"
+  _use:t="gun_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="gun_entity_mods"
+  _use:t="gun_anim"
+  _use:t="weapon_slot_indexed"
+  _use:t="antitank_launcher_muzzle_preset"
+  _use:t="camera_shake_on_reload_rpg_7"
+  _use:t="antimaterial_rifle_deviation_preset"
+  _use:t="camera_shake_on_shot_heavy"
+  animchar__res:t="m1a1_bazooka_char"
+  collres__res:t="m1a1_bazooka_collision"
+  gun__blk:t="gamedata/weapons/m9_bazooka.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="m9_bazooka_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="m9_bazooka_gun"
+  item__name:t="items/m9_bazooka"
+  item__weapType:t="launcher"
+  item__baseWeight:r=7.2
+  item__volume:r=10
+  gun__adsSpeedMult:r=0.5
+  gun__deviationInFireReady:r=2.5
+  gun__length:r=0.6
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.1
+  gun__recoilDirAmount:r=0.5
+  gun_boxed_ammo_reload__batchReloadTime:r=2.8
+  gun__shotFreq:r=0.8
+  gun__sightsDistance:r=0.1
+  gun__statName:t="launcher"
+  gun__useLocalPlayerTracer:b=no
+  gun__visualRecoilMult:r=1.2
+  gun_spread__maxDeltaAngle:r=0.05
+  combatFiringRange:p2=40, 60
+  combatShootTime:p2=0.2, 1
+  combatCooldownTime:p2=0.1, 0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  weap__sprintLerpFactor:r=0
+  _use:t="directly_use_boxed_ammo"
+  _use:t="batch_reload"
+  gun__maxAmmo:i=1
+  gun__boxedAmmoHolderTemplate:t="m6a1_bazooka_item"
+  _use:t="gun_sound_with_animchar"
+  _use:t="antivehicle_gun_aim_sound"
+  _use:t="launcher_gun_shot_dry_sound"
+  meleeSoundType:t="rifle"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+
+  "animchar__actOnDemand:tag"{}
+  "gun__ammoHolders:list<t>"{
+    ammoHolders:t="m6a1_bazooka_item"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/shell/m6a1_bazooka.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="manual"
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="bolt_action"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_sound__forceOneshot:b=yes
+    gun_sound__forceOneshotEnemy:b=yes
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/antivehicle/m1_bazooka"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/antivehicle/m1_bazooka/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/antivehicle/m1_bazooka/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/antivehicle/m1_bazooka/reload3/change_ammo"
+    }
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.05, 0.05, 0.1
+    crouch:p3=0.05, 0.05, 0.1
+    crawl:p3=0.05, 0.05, 0.1
+  }
+}
+
+luger_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="luger_magazine"
+  }
+}
+
+luger_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="pistol_weap_slots"
+  _use:t="ironsights_open_pistol"
+  _use:t="small_gun_icon_reverted"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="hit_effect_group_small"
+  _use:t="pistol_preset"
+  _use:t="gun_check_weapon_magazine"
+  animchar__res:t="p08_luger_char"
+  collres__res:t="p08_luger_collision"
+  gun__blk:t="gamedata/weapons/m1911_colt.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="luger_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="luger_gun"
+  item__name:t="items/luger"
+  item__weapType:t="pistol"
+  item__baseWeight:r=0.88
+  item__volume:r=6
+  item__marketPrice:i=300
+  gun__adsSpeedMult:r=1.2
+  gun__boltFreq:r=8
+  gun__deviationInFireReady:r=2.5
+  gun__length:r=0.25
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.12
+  gun__recoilDirAmount:r=0.6
+  gun__recoilOriMultInAim:p3=0.3, 1, 1
+  gun__recoilRotationMean:p3=30, 0, 500
+  gun_boxed_ammo_reload__batchReloadTime:r=2
+  gun__rotationSpringMult:p3=1, 1, 0.2
+  gun__rotInertia:p3=0.1, 0.1, 0.1
+  gun__shotFreq:r=6
+  gun__sightsDistance:r=0.1
+  gun__statName:t="pistol"
+  gun__useLocalPlayerTracer:b=no
+  gun__visualBoltRecoilMult:r=0.1
+  gun__visualRecoilMult:r=0.1
+  gun__zeroingAngle:r=-1
+  gun__zeroingDistance:r=100
+  gun_deviation__extraDeviationTau:r=0.15
+  gun_deviation__maxDeviation:r=15
+  gun_deviation__movementDevInc:p2=0, 15
+  gun_deviation__movementRange:p2=2.1, 4
+  gun_deviation__omegaDevInc:p2=0.1, 0.7
+  gun_deviation__omegaRange:p2=30, 90
+  gun_deviation__onShotDeviationChange:r=0
+  gun_deviation__shotTau:r=0.1
+  gun_spread__maxDeltaAngle:r=0.15
+  gun_aim_offset__gunShootOffsetCustomAdd:p3=0, 0, -0.01
+  combatFiringRange:p2=25, 50
+  combatShootTime:p2=0.2, 1
+  combatCooldownTime:p2=0.1, 0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_9x19_magazine"
+  _use:t="gun_sound_with_animchar"
+  meleeSoundType:t="pistol"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    magazine:t="luger_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/9x19.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/pistol/m1911"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/pistol/m1911/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/pistol/m1911/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/pistol/m1911/reload3/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="ammo_mesh"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=2
+    alt:r=2
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3
+    alt:r=2.2
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1
+    alt:r=1
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2
+    alt:r=1.3
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0, 0, 0.2
+    crouch:p3=0, 0, 0.2
+    crawl:p3=0, 0, 0.2
+  }
+}
+
+beretta_m9_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="beretta_m9_magazine"
+  }
+}
+
+beretta_m9_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="pistol_weap_slots"
+  _use:t="ironsights_open_pistol"
+  _use:t="small_gun_icon_reverted"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="pistol_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_small"
+  _use:t="pistol_preset"
+  _use:t="gun_check_weapon_magazine"
+  animchar__res:t="beretta_m9_char"
+  collres__res:t="beretta_m9_collision"
+  gun__blk:t="gamedata/weapons/beretta_m9.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="beretta_m9_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="beretta_m9_gun"
+  item__name:t="items/beretta_m9"
+  item__weapType:t="pistol"
+  item__baseWeight:r=0.95
+  item__volume:r=7
+  item__marketPrice:i=1050
+  gun__adsSpeedMult:r=1.2
+  gun__deviationInFireReady:r=2.5
+  gun__length:r=0.125
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.09
+  gun__recoilDirAmount:r=0.5
+  gun__recoilDir:r=0
+  gun_spread__maxDeltaAngle:r=0.15
+  gun__visualRecoilMult:r=1.3
+  weapon__aimNodeOffset:r=0.17
+  gun_boxed_ammo_reload__batchReloadTime:r=2
+  gun__shotFreq:r=6
+  gun__sightsDistance:r=0.1
+  gun__statName:t="pistol"
+  gun__useLocalPlayerTracer:b=no
+  gun_aim_offset__gunShootOffsetCustomAdd:p3=0, 0, -0.01
+  gun_shell_ejection__templateName:t="9x19_brass_ejected_shell"
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_9x19_magazine"
+  _use:t="gun_sound_with_animchar"
+  meleeSoundType:t="pistol"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[0.25, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[-0.015613, -0.191174, 0.981432] [0.355484, 0.916362, 0.184154] [-0.934553, 0.351759, 0.0536521] [-0.0706607, 0.0257428, -0.0785769]]
+  item__iconPitch:r=0
+  item__iconRoll:r=-10
+  item__iconYaw:r=50
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 3
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    magazine:t="beretta_m9_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/9x19.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/pistol/beretta_m9/shot_dry"
+
+    "gun_sound__shotPath:shared:object"{
+      "options:array"{
+        "silenced:object"{
+          gunSilenced:b=yes
+          path:t="/weapon/pistol/beretta_m9_silenced"
+        }
+
+        "default:object"{
+          path:t="/weapon/pistol/beretta_m9"
+        }
+      }
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/pistol/beretta_m9/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/pistol/beretta_m9/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/pistol/beretta_m9/reload3/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="ammo_mesh"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=2
+    alt:r=2
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3
+    alt:r=2.2
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1
+    alt:r=1
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2
+    alt:r=1.3
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.07, -0.04, 0.04
+    crouch:p3=0.07, -0.04, 0.04
+    crawl:p3=0.07, -0.04, 0.04
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_c"
+      tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [0.00319732, 0.0444336, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+glock_17_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="glock_17_magazine"
+  }
+}
+
+glock_17_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="small_gun_icon"
+  item__filterType:t="weapons"
+  animchar__res:t="am_weapon_crate_char"
+  collres__res:t="am_weapon_crate_collision"
+  item__iconPitch:r=0
+  item__iconRoll:r=25
+  item__iconYaw:r=210
+  gun__blk:t="gamedata/weapons/m1911_colt.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="glock_17_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="glock_17_gun"
+  item__name:t="items/glock_17"
+  item__weapType:t="pistol"
+  item__baseWeight:r=0.83
+  item__volume:r=7
+  item__marketPrice:i=500
+  gun__adsSpeedMult:r=1.2
+  gun__deviationInFireReady:r=2.5
+  gun__length:r=0.25
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.1
+  gun__recoilDirAmount:r=0.6
+  gun__recoilOriMultInAim:p3=0.3, 1, 1
+  gun__recoilRotationMean:p3=30, 0, 500
+  gun_boxed_ammo_reload__batchReloadTime:r=2
+  gun__rotationSpringMult:p3=1, 1, 0.2
+  gun__rotInertia:p3=0.1, 0.1, 0.1
+  gun__shotFreq:r=6
+  gun__sightsDistance:r=0.1
+  gun__statName:t="pistol"
+  gun__useLocalPlayerTracer:b=no
+  gun__visualBoltRecoilMult:r=0.1
+  gun__visualRecoilMult:r=0.1
+  gun__zeroingAngle:r=-1
+  gun__zeroingDistance:r=100
+  gun_deviation__extraDeviationTau:r=0.15
+  gun_deviation__maxDeviation:r=15
+  gun_deviation__movementDevInc:p2=0, 15
+  gun_deviation__movementRange:p2=2.1, 4
+  gun_deviation__omegaDevInc:p2=0.1, 0.7
+  gun_deviation__omegaRange:p2=30, 90
+  gun_deviation__onShotDeviationChange:r=0
+  gun_deviation__shotTau:r=0.1
+  gun_spread__maxDeltaAngle:r=0.15
+  gun_aim_offset__gunShootOffsetCustomAdd:p3=0, 0, -0.01
+  combatFiringRange:p2=25, 50
+  combatShootTime:p2=0.2, 1
+  combatCooldownTime:p2=0.1, 0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  gun__boxedAmmoHolderTemplate:t="box_45_acp_magazine"
+  _use:t="gun_sound_with_animchar"
+  meleeSoundType:t="pistol"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+
+  "animchar__actOnDemand:tag"{}
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/9x19.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/pistol/glock/shot_dry"
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/pistol/glock"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/pistol/glock/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/pistol/glock/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/pistol/glock/reload3/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="ammo_mesh"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=2
+    alt:r=2
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3
+    alt:r=2.2
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1
+    alt:r=1
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2
+    alt:r=1.3
+  }
+
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0, 0, 0.2
+    crouch:p3=0, 0, 0.2
+    crawl:p3=0, 0, 0.2
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+pm_63_rak_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="pm_63_rak_magazine"
+  }
+}
+
+pm_63_rak_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_smg"
+  _use:t="gun_icon"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="smg_move_inertion"
+  _use:t="camera_shake_on_shot_high_freq"
+  _use:t="smg_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_small"
+  _use:t="smg_preset"
+  _use:t="gun_check_weapon_magazine"
+  animchar__res:t="pm63_char"
+  collres__res:t="pm63_collision"
+  gun__blk:t="gamedata/weapons/pm_63_rak.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="pm_63_rak_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="pm_63_rak_gun"
+  item__name:t="items/pm_63_rak"
+  item__weapType:t="submachine_gun"
+  item__baseWeight:r=1.6
+  item__volume:r=14
+  item__marketPrice:i=3000
+  gun__ammoInspectionInOutDuration:p2=2.8, 1.7
+  gun__ammoInspectionIdleLoopDuration:r=10
+  gun__length:r=0.152
+  gun__recoilControlMult:r=0.5
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.05
+  gun__recoilDirAmount:r=0.5
+  gun_boxed_ammo_reload__batchReloadTime:r=3.5
+  gun__shotFreq:r=10.83
+  gun__sightsDistance:r=0.25
+  gun__statName:t="submachine_gun"
+  gun__useLocalPlayerTracer:b=no
+  gun__visualRecoilMult:r=1
+  gun_spread__maxDeltaAngle:r=0.25
+  gun_shell_ejection__templateName:t="9x18_ejected_shell"
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_9mm_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="mgun_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[0.6, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [0.059092, 0.017294, -0.0657705]]
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    magazine:t="pm_63_rak_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/9x18.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/mgun/pm_63/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/_common/firing_mode_smg"
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/mgun/pm_63"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/pm_63/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/pm_63/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/pm_63/reload3/change_ammo"
+    }
+
+    "reload4:object"{
+      path:t="/weapon/mgun/pm_63/reload4/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="mp_5_magazine"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=3.8
+    alt:r=2.3
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=4
+    alt:r=2.5
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=2.4
+    alt:r=1.2
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2.4
+    alt:r=1.5
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.075, -0.065, 0.03
+    crouch:p3=0.075, -0.065, 0.03
+    crawl:p3=0.075, -0.065, 0.17
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.0410406, 0.0653636, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.167729, 0.0547691, 0]]
+    }
+  }
+}
+
+uzi_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="uzi_magazine"
+  }
+}
+
+uzi_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="gun_icon"
+  item__filterType:t="weapons"
+  animchar__res:t="am_weapon_crate_char"
+  collres__res:t="am_weapon_crate_collision"
+  item__iconPitch:r=0
+  item__iconRoll:r=25
+  item__iconYaw:r=210
+  gun__blk:t="gamedata/weapons/hk_mp5n.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="uzi_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="uzi_gun"
+  item__name:t="items/uzi"
+  item__weapType:t="submachine_gun"
+  item__baseWeight:r=3.08
+  item__volume:r=18
+  item__marketPrice:i=2500
+  gun__adsSpeedMult:r=0.8
+  gun__ammoInspectionInOutDuration:p2=2.8, 1.7
+  gun__ammoInspectionIdleLoopDuration:r=10
+  gun__deviationInFireReady:r=2
+  gun__length:r=0.44
+  gun__recoilControlMult:r=0.5
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.05
+  gun__recoilDirAmount:r=0.5
+  gun_boxed_ammo_reload__batchReloadTime:r=3.5
+  gun__shotFreq:r=13.3333
+  gun__sightsDistance:r=0.25
+  gun__statName:t="submachine_gun"
+  gun__useLocalPlayerTracer:b=no
+  gun__visualRecoilMult:r=0.1
+  gun__zeroingAngle:r=-1
+  gun__zeroingDistance:r=100
+  gun_deviation__extraDeviationTau:r=0.2
+  gun_deviation__maxDeviation:r=20
+  gun_deviation__movementDevInc:p2=0, 15
+  gun_deviation__movementRange:p2=2.1, 4
+  gun_deviation__omegaDevInc:p2=0.07, 0.5
+  gun_deviation__omegaRange:p2=30, 90
+  gun_deviation__onShotDeviationChange:r=0
+  gun_deviation__shotTau:r=0.1
+  gun_spread__maxDeltaAngle:r=0.25
+  combatFiringRange:p2=50, 70
+  combatShootTime:p2=0.2, 0.3
+  combatCooldownTime:p2=0.1, 0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_9x19_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="mgun_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    magazine:t="uzi_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/9x19.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/_common/firing_mode_smg"
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/mgun/hk_mp5"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/hk_mp5/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/hk_mp5/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/hk_mp5/reload3/change_ammo"
+    }
+
+    "reload4:object"{
+      path:t="/weapon/mgun/hk_mp5/reload4/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="mp_5_magazine"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=3.8
+    alt:r=2.3
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=4
+    alt:r=2.5
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=2.4
+    alt:r=1.2
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2.4
+    alt:r=1.5
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.05, -0.1, -0.07
+    crouch:p3=0.05, -0.1, -0.07
+    crawl:p3=0.05, -0.1, -0.07
+  }
+}
+
+kriss_vector_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="kriss_vector_magazine"
+    i:t="kriss_vector_30_magazine"
+  }
+}
+
+kriss_vector_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_smg"
+  _use:t="gun_icon"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="smg_move_inertion"
+  _use:t="camera_shake_on_shot_high_freq"
+  _use:t="smg_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_small"
+  _use:t="smg_preset"
+  _use:t="gun_check_weapon_magazine"
+  _use:t="item_rarity_rare"
+  animchar__res:t="kriss_vector_char"
+  collres__res:t="kriss_vector_collision"
+  gun__blk:t="gamedata/weapons/kriss_vector.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="kriss_vector_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="kriss_vector_gun"
+  item__name:t="items/kriss_vector"
+  item__weapType:t="submachine_gun"
+  item__baseWeight:r=2.7
+  item__volume:r=18
+  item__marketPrice:i=9000
+  gun__ammoInspectionInOutDuration:p2=1.5, 1.85
+  gun__ammoInspectionIdleLoopDuration:r=7.9
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
+  gun__length:r=0.17
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.037
+  gun__recoilControlMult:r=0.45
+  gun__recoilDirAmount:r=0.65
+  gun__recoilDir:r=0
+  gun__visualRecoilMult:r=0.8
+  gun_boxed_ammo_reload__batchReloadTime:r=3.5
+  gun__shotFreq:r=20
+  gun__sightsDistance:r=0.25
+  gun__statName:t="submachine_gun"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.13
+  weapon__aimNodeOffset:r=0.2
+  gun_shell_ejection__templateName:t="45acp_ejected_shell"
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_45_acp_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.4, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.0970001, 0.0562134, -0.0649414]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    silencer:t="45_silencer_slot"
+    scope:t="scope_picatinny_short_slot"
+    magazine:t="kriss_vector_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/45_acp.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=2
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+    mode:t="semi_auto_2_shots"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/mgun/kriss_vector/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/mgun/kriss_vector/change_mode"
+
+    "gun_sound__shotPath:shared:object"{
+      "options:array"{
+        "silenced:object"{
+          gunSilenced:b=yes
+          path:t="/weapon/mgun/kriss_vector_silenced"
+        }
+
+        "default:object"{
+          path:t="/weapon/mgun/kriss_vector"
+        }
+      }
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/kriss_vector/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/kriss_vector/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/kriss_vector/reload3/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="bullet_01_mesh"
+    n:t="bullet_02_mesh"
+    n:t="bullet_03_mesh"
+    n:t="bullet_04_mesh"
+    n:t="bullet_05_mesh"
+    n:t="bullet_06_mesh"
+    n:t="bullet_07_mesh"
+    n:t="bullet_08_mesh"
+    n:t="bullet_09_mesh"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=1.9
+    alt:r=1.9
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3.4
+    alt:r=2.8
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1.3
+    alt:r=1.3
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2.6
+    alt:r=2
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.07, -0.03, 0.03
+    crouch:p3=0.07, -0.03, 0.03
+    crawl:p3=0.07, -0.03, 0.03
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.119873, 0.0744553, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.155121, 0.0822449, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+origin_12_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="origin_12_magazine"
+  }
+}
+
+origin_12_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="gun_icon"
+  item__filterType:t="weapons"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="origin_12_char"
+  collres__res:t="origin_12_collision"
+  gun__blk:t="gamedata/weapons/spas_12.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  gun_shell_ejection__templateName:t="12_cal_ejected_shell"
+  item__proto:t="origin_12_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="origin_12_gun"
+  item__name:t="items/origin_12"
+  item__weapType:t="shotgun"
+  item__baseWeight:r=4.4
+  item__volume:r=24
+  item__marketPrice:i=5400
+  gun_shell_ejection__timeMult:r=0.35
+  gun__adsSpeedMult:r=0.8
+  gun__chokeSpread:r=1
+  gun__deviationInFireReady:r=2
+  gun__length:r=0.6
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.35
+  gun__recoilControlMult:r=0.5
+  gun__recoilDirAmount:r=0.7
+  gun__recoilOffsMult:r=1
+  gun_boxed_ammo_reload__batchReloadTime:r=3.5
+  gun__shotFreq:r=2.27
+  gun__sightsDistance:r=0.05
+  gun__statName:t="shotgun"
+  gun__useLocalPlayerTracer:b=no
+  gun__visualRecoilMult:r=1
+  gun__zeroingAngle:r=-1
+  gun__zeroingDistance:r=100
+  gun_deviation__extraDeviationTau:r=0.3
+  gun_deviation__maxDeviation:r=30
+  gun_deviation__movementDevInc:p2=0, 15
+  gun_deviation__movementRange:p2=2.1, 4
+  gun_deviation__omegaDevInc:p2=0.1, 0.6
+  gun_deviation__omegaRange:p2=30, 90
+  gun_deviation__onShotDeviationChange:r=0
+  gun_deviation__shotTau:r=0.1
+  gun_spread__maxDeltaAngle:r=0.15
+  combatFiringRange:p2=25, 50
+  combatShootTime:p2=0.2, 0.3
+  combatCooldownTime:p2=0.1, 0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  gun__boxedAmmoHolderTemplate:t="box_12_gauge_magazine"
+  gun_boxed_ammo_reload__loadPrepareTime:r=0.7
+  gun_boxed_ammo_reload__loadLoopTime:r=0.5
+  gun_boxed_ammo_reload__loadPostTime:r=1.2
+  _use:t="gun_sound_with_animchar"
+  _use:t="rifle_gun_aim_sound"
+  _use:t="rifle_gun_shot_dry_sound"
+  meleeSoundType:t="rifle"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+
+  "animchar__actOnDemand:tag"{}
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/12_gauge.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_sound__forceOneshot:b=yes
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/rifle/spas_12"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/rifle/spas_12/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/rifle/spas_12/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/rifle/spas_12/reload3/change_ammo"
+    }
+
+    "boltAction:object"{
+      path:t="/weapon/rifle/spas_12/bolt_action"
+    }
+  }
+
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.06, -0.08, -0.08
+    crouch:p3=0.06, -0.08, -0.08
+    crawl:p3=0.06, -0.08, -0.08
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+aa_12_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="aa_12_magazine"
+  }
+}
+
+aa_12_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="gun_icon"
+  item__filterType:t="weapons"
+  _use:t="item_rarity_rare"
+  animchar__res:t="aa12_char"
+  collres__res:t="aa12_collision"
+  gun__blk:t="gamedata/weapons/spas_12.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  gun_shell_ejection__templateName:t="12_cal_ejected_shell"
+  item__proto:t="aa_12_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="aa_12_gun"
+  item__name:t="items/aa_12"
+  item__weapType:t="shotgun"
+  item__baseWeight:r=5.2
+  item__volume:r=26
+  item__marketPrice:i=7950
+  gun_shell_ejection__timeMult:r=0.35
+  gun__adsSpeedMult:r=0.8
+  gun__chokeSpread:r=1
+  gun__deviationInFireReady:r=2
+  gun__length:r=0.6
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.35
+  gun__recoilControlMult:r=0.5
+  gun__recoilDirAmount:r=0.7
+  gun__recoilOffsMult:r=1
+  gun_boxed_ammo_reload__batchReloadTime:r=3.5
+  gun__shotFreq:r=2.27
+  gun__sightsDistance:r=0.05
+  gun__statName:t="shotgun"
+  gun__useLocalPlayerTracer:b=no
+  gun__visualRecoilMult:r=0.1
+  gun__zeroingAngle:r=-1
+  gun__zeroingDistance:r=100
+  gun_deviation__extraDeviationTau:r=0.3
+  gun_deviation__maxDeviation:r=30
+  gun_deviation__movementDevInc:p2=0, 15
+  gun_deviation__movementRange:p2=2.1, 4
+  gun_deviation__omegaDevInc:p2=0.1, 0.6
+  gun_deviation__omegaRange:p2=30, 90
+  gun_deviation__onShotDeviationChange:r=0
+  gun_deviation__shotTau:r=0.1
+  gun_spread__maxDeltaAngle:r=0.15
+  combatFiringRange:p2=25, 50
+  combatShootTime:p2=0.2, 0.3
+  combatCooldownTime:p2=0.1, 0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  gun__boxedAmmoHolderTemplate:t="box_12_gauge_magazine"
+  gun_boxed_ammo_reload__loadPrepareTime:r=0.7
+  gun_boxed_ammo_reload__loadLoopTime:r=0.5
+  gun_boxed_ammo_reload__loadPostTime:r=1.2
+  _use:t="gun_sound_with_animchar"
+  _use:t="rifle_gun_aim_sound"
+  _use:t="rifle_gun_shot_dry_sound"
+  meleeSoundType:t="rifle"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+
+  "animchar__actOnDemand:tag"{}
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/12_gauge.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_sound__forceOneshot:b=yes
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/rifle/spas_12"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/rifle/spas_12/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/rifle/spas_12/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/rifle/spas_12/reload3/change_ammo"
+    }
+
+    "boltAction:object"{
+      path:t="/weapon/rifle/spas_12/bolt_action"
+    }
+  }
+
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.06, -0.08, -0.08
+    crouch:p3=0.06, -0.08, -0.08
+    crawl:p3=0.06, -0.08, -0.08
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+dp_12_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="gun_with_builtin_ammo_holder"
+  _use:t="gun_check_weapon_no_magazine"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_shotgun"
+  _use:t="gun_icon"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="gun_anim"
+  _use:t="weapon_slot_indexed"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_medium"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="dp_12_char"
+  collres__res:t="dp_12_collision"
+  gun__blk:t="gamedata/weapons/spas_12.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  gun_shell_ejection__templateName:t="12_cal_ejected_shell"
+  item__proto:t="dp_12_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="dp_12_gun"
+  item__name:t="items/dp_12"
+  item__weapType:t="shotgun"
+  item__baseWeight:r=4.2
+  item__volume:r=26
+  item__marketPrice:i=6750
+  gun_shell_ejection__timeMult:r=0.35
+  gun__adsSpeedMult:r=0.8
+  gun__chokeSpread:r=1
+  gun__deviationInFireReady:r=2
+  gun__length:r=0.6
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.35
+  gun__recoilControlMult:r=0.5
+  gun__recoilDirAmount:r=0.7
+  gun__recoilOffsMult:r=1
+  gun_boxed_ammo_reload__batchReloadTime:r=3.5
+  gun__shotFreq:r=2.27
+  gun__sightsDistance:r=0.05
+  gun__statName:t="shotgun"
+  gun__useLocalPlayerTracer:b=no
+  gun__visualRecoilMult:r=1
+  gun__zeroingAngle:r=-1
+  gun__zeroingDistance:r=100
+  gun_deviation__extraDeviationTau:r=0.3
+  gun_deviation__maxDeviation:r=30
+  gun_deviation__movementDevInc:p2=0, 15
+  gun_deviation__movementRange:p2=2.1, 4
+  gun_deviation__omegaDevInc:p2=0.1, 0.6
+  gun_deviation__omegaRange:p2=30, 90
+  gun_deviation__onShotDeviationChange:r=0
+  gun_deviation__shotTau:r=0.1
+  gun_spread__maxDeltaAngle:r=0.15
+  gun_check_weapon__firemodeNodeName:t="gunFx_main_1"
+  combatFiringRange:p2=25, 50
+  combatShootTime:p2=0.2, 0.3
+  combatCooldownTime:p2=0.1, 0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  gun__maxAmmo:i=14
+  gun__boxedAmmoHolderTemplate:t="box_12_gauge_magazine"
+  gun_boxed_ammo_reload__loadPrepareTime:r=0.7
+  gun_boxed_ammo_reload__loadLoopTime:r=0.5
+  gun_boxed_ammo_reload__loadPostTime:r=1.2
+  _use:t="gun_sound_with_animchar"
+  _use:t="rifle_gun_aim_sound"
+  _use:t="rifle_gun_shot_dry_sound"
+  meleeSoundType:t="rifle"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[0.8, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[4.76837e-07, 0, 1] [0, 1, 0] [-1, 0, 4.76837e-07] [0.00366518, -0.0288959, -0.065]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/12_gauge.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="bolt_action"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_sound__forceOneshot:b=yes
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/rifle/spas_12"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/rifle/spas_12/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/rifle/spas_12/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/rifle/spas_12/reload3/change_ammo"
+    }
+
+    "boltAction:object"{
+      path:t="/weapon/rifle/spas_12/bolt_action"
+    }
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.06, -0.08, -0.08
+    crouch:p3=0.06, -0.08, -0.08
+    crawl:p3=0.06, -0.08, -0.08
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.26, -0.02, -2.98023e-08]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.28, 0, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+ruger_10_22_specops_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="ruger_10_22_specops_magazine"
+  }
+}
+
+ruger_10_22_specops_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="gun_icon"
+  _use:t="item_rarity_uncommon"
+  item__filterType:t="weapons"
+  animchar__res:t="am_weapon_crate_char"
+  collres__res:t="am_weapon_crate_collision"
+  item__iconPitch:r=0
+  item__iconRoll:r=25
+  item__iconYaw:r=210
+  gun__blk:t="gamedata/weapons/barrett_m82a1.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="ruger_10_22_specops_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="ruger_10_22_specops_gun"
+  item__name:t="items/ruger_10_22_specops"
+  item__weapType:t="semiauto"
+  item__baseWeight:r=2.6
+  item__volume:r=26
+  item__marketPrice:i=7200
+  gun_shell_ejection__templateName:t="ptrd_41_ejected_shell"
+  gun__adsSpeedMult:r=0.4
+  gun__boltFreq:r=5.5
+  gun__ammoInspectionInOutDuration:p2=2, 2
+  gun__ammoInspectionIdleLoopDuration:r=10
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.85
+  gun__deviationInFireReady:r=2
+  gun__disableToggleAim:b=yes
+  gun__hitTagDurationMult:r=4
+  gun__hitTagPower:r=0.5
+  gun__length:r=1.25
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.22
+  gun__recoilDirAmount:r=0.8
+  gun_boxed_ammo_reload__batchReloadTime:r=2.5
+  gun__shotFreq:r=10.8333
+  gun__sightsDistance:r=0.25
+  gun__statName:t="rifle"
+  gun__useLocalPlayerTracer:b=no
+  gun__visualRecoilMult:r=0.1
+  gun__zeroingAngle:r=-1
+  gun__zeroingDistance:r=100
+  gun_deviation__extraDeviationTau:r=0.2
+  gun_deviation__maxDeviation:r=20
+  gun_deviation__movementDevInc:p2=0, 15
+  gun_deviation__movementRange:p2=2.1, 4
+  gun_deviation__omegaDevInc:p2=0.07, 0.5
+  gun_deviation__omegaRange:p2=30, 90
+  gun_deviation__onShotDeviationChange:r=0
+  gun_deviation__shotTau:r=0.1
+  gun__integratedScope:b=yes
+  gunmod__camNode:t="scope_view"
+  gunmod__lensNode:t="lens_close"
+  gunmod__crosshairNode:t="crosshair"
+  gunmod__lensActive:b=yes
+  gunmod__deviationMult:r=0.5
+  gunmod__zoomFactor:r=10
+  gunmod__camShiftMin:r=0.11
+  gunmod__camShiftMax:r=0.23
+  gunmod__camFovMin:r=28
+  gunmod__camFovMax:r=19
+  gunmod__focusPlaneShift:r=0.5
+  gunmod__dofNearAmountPercent:r=50
+  gunmod__dofFarAmountPercent:r=0.02
+  gunmod__distortionParams:p3=0.8, 0.1, 0.07
+  gun_spread__maxDeltaAngle:r=0.05
+  combatFiringRange:p2=50, 70
+  combatShootTime:p2=0.2, 0.3
+  combatCooldownTime:p2=0.1, 0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_22_LR_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="rifle_gun_aim_sound"
+  _use:t="rifle_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1.5, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[5.14692e-05, 3.70182e-07, 1] [-0.00714479, 0.999974, -2.32831e-09] [-0.999974, -0.00714479, 5.14705e-05] [-0.428045, -0.0552216, -0.0693359]]
+
+  "animchar__actOnDemand:tag"{}
+  "isCameraAlwaysOnScope:tag"{}
+  "gun_mods__slots:shared:object"{
+    magazine:t="ruger_10_22_specops_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/50_bmg.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/_common/firing_mode_rifle"
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/rifle/barrett_m82a1"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/rifle/barrett_m82a1/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/rifle/barrett_m82a1/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/rifle/barrett_m82a1/reload3/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="ammo_mesh"
+    n:t="bullet_01_mesh"
+    n:t="bullet_02_mesh"
+    n:t="bullet_03_mesh"
+    n:t="bullet_04_mesh"
+    n:t="bullet_05_mesh"
+    n:t="bullet_06_mesh"
+    n:t="bullet_07_mesh"
+    n:t="bullet_08_mesh"
+    n:t="bullet_09_mesh"
+    n:t="bullet_10_mesh"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=1.8
+    alt:r=1.5
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3.8
+    alt:r=3.3
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1.5
+    alt:r=0.9
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=3.2
+    alt:r=2.5
+  }
+
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=-0.06, -0.17, 0.01
+    crouch:p3=-0.06, -0.17, 0.01
+    crawl:p3=-0.06, -0.17, 0.01
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.443771, -0.000926495, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0, 0, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+m110a1_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="m110a1_magazine"
+  }
+}
+
+m110a1_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_at_rifle"
+  _use:t="big_gun_icon"
+  _use:t="ww2_stg_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="semi_auto_rifle_preset"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="assault_rifle_rapid_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_big"
+  _use:t="gun_check_weapon_magazine"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="m110a1_sdmr_char"
+  collres__res:t="m110a1_sdmr_collision"
+  gun__blk:t="gamedata/weapons/m110a1.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="m110a1_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="m110a1_gun"
+  item__name:t="items/m110a1"
+  item__weapType:t="semiauto"
+  item__baseWeight:r=4.15
+  item__volume:r=30
+  item__marketPrice:i=16800
+  item__iconRecalcAnimation:b=yes
+  gun_shell_ejection__templateName:t="762_51_nato_ejected_shell"
+  gun__shotFreq:r=10
+  gun__ammoInspectionInOutDuration:p2=2.3, 1.5
+  gun__ammoInspectionIdleLoopDuration:r=8.3
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
+  gun__length:r=0.41
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.112
+  gun__recoilDir:r=0.36
+  gun__recoilDirAmount:r=0.71
+  gun__visualRecoilMult:r=1.2
+  gun__recoilControlMult:r=0.5
+  gun_boxed_ammo_reload__batchReloadTime:r=2.67
+  gun__sightsDistance:r=0.3
+  gun__statName:t="assault_rifle"
+  gun__useLocalPlayerTracer:b=no
+  gun_spread__maxDeltaAngle:r=0.014
+  weapon__aimNodeOffset:r=0.3
+  combatFiringRange:p2=50, 70
+  combatShootTime:p2=0.2, 0.3
+  combatCooldownTime:p2=0.1, 0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_7_62x51_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="rifle_gun_aim_sound"
+  _use:t="rifle_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.16753, 0.00208619, -0.066586]]
+
+  "animchar__actOnDemand:tag"{}
+  "isCameraAlwaysOnScope:tag"{}
+  "gun_mods__slots:shared:object"{
+    scope:t="scope_picatinny_long_slot"
+    magazine:t="m110a1_magazine_slot"
+    silencer:t="m110a1_silencer_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/7.62x51.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/rifle/m110a1/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/rifle/m110a1/change_mode"
+
+    "gun_sound__shotPath:shared:object"{
+      "options:array"{
+        "silenced:object"{
+          gunSilenced:b=yes
+          path:t="/weapon/rifle/m110a1_silenced"
+        }
+
+        "default:object"{
+          path:t="/weapon/rifle/m110a1"
+        }
+      }
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/rifle/m110a1/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/rifle/m110a1/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/rifle/m110a1/reload3/change_ammo"
+    }
+
+    "reload4:object"{
+      hero:t="player/weapon/rifle/m110a1/reload4/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="mag_mesh"
+    n:t="bullet_01_mesh"
+    n:t="bullet_02_mesh"
+    n:t="bullet_03_mesh"
+    n:t="bullet_04_mesh"
+    n:t="bullet_05_mesh"
+    n:t="bullet_06_mesh"
+    n:t="bullet_07_mesh"
+    n:t="bullet_08_mesh"
+    n:t="bullet_09_mesh"
+    n:t="bullet_10_mesh"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=1.8
+    alt:r=1.5
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3.8
+    alt:r=3.3
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1.5
+    alt:r=0.9
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=3.2
+    alt:r=2.5
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.06, -0.1, 0.01
+    crouch:p3=0.06, -0.1, 0.01
+    crawl:p3=0.04, -0.12, 0.09
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.22, 0.05, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.365039, 0.0607738, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+fn_evolys_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="fn_evolys_magazine"
+  }
+}
+
+fn_evolys_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="big_gun_icon"
+  item__filterType:t="weapons"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="fn_evolys_char"
+  collres__res:t="fn_evolys_collision"
+  gun__blk:t="gamedata/weapons/akm_47.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="fn_evolys_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="fn_evolys_gun"
+  item__name:t="items/fn_evolys"
+  item__weapType:t="machine_gun"
+  item__baseWeight:r=6.2
+  item__volume:r=35
+  item__marketPrice:i=26000
+  gun__adsSpeedMult:r=0.7
+  gun__altReloadTime:r=1.8
+  gun__ammoInspectionInOutDuration:p2=1.8, 1.4
+  gun__ammoInspectionIdleLoopDuration:r=10
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
+  gun__deviationInFireReady:r=2
+  gun__hitTagPower:r=0.8
+  gun__length:r=0.42
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.041
+  gun__recoilDirAmount:r=0.8
+  gun_boxed_ammo_reload__batchReloadTime:r=2.3
+  gun__shotFreq:r=10
+  gun__sightsDistance:r=0.3
+  gun__statName:t="machine_gun"
+  gun__useLocalPlayerTracer:b=no
+  gun__visualRecoilMult:r=0.1
+  gun__zeroingAngle:r=-1
+  gun__zeroingDistance:r=100
+  gun_deviation__extraDeviationTau:r=0.2
+  gun_deviation__maxDeviation:r=20
+  gun_deviation__movementDevInc:p2=0, 15
+  gun_deviation__movementRange:p2=2.1, 4
+  gun_deviation__omegaDevInc:p2=0.07, 0.5
+  gun_deviation__omegaRange:p2=30, 90
+  gun_deviation__onShotDeviationChange:r=0
+  gun_deviation__shotTau:r=0.1
+  gun_spread__maxDeltaAngle:r=0.15
+  gun_shell_ejection__templateName:t="762_51_nato_ejected_shell"
+  combatFiringRange:p2=50, 70
+  combatShootTime:p2=0.2, 0.3
+  combatCooldownTime:p2=0.1, 0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  gun__boxedAmmoHolderTemplate:t="box_7_62x51_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="mgun_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[0.000815562, -0.032988, 0.999456] [-0.0111868, 0.999393, 0.0329952] [-0.999937, -0.0112075, 0.000446039] [-0.123653, 0.0580902, -0.0644531]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/5.56x45.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/_common/firing_mode_ar"
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/mgun/ak47"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/ak47/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/ak47/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/ak47/reload3/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="bullets_mesh"
+    n:t="mag_mesh"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=2.3
+    alt:r=2.3
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3
+    alt:r=2.5
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1
+    alt:r=1
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=3
+    alt:r=2.5
+  }
+
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.07, -0.08, -0.03
+    crouch:p3=0.07, -0.08, -0.03
+    crawl:p3=0.07, -0.08, -0.03
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.176025, 0.0596466, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.165039, 0.0829163, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+m249_para_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="m249_para_magazine"
+  }
+}
+
+m249_para_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="big_gun_icon"
+  item__filterType:t="weapons"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="m249_para_char"
+  collres__res:t="m249_para_collision"
+  animchar__icon:t="!ui/uiskin/weapon_stencils/weapon_stencil_mg.svg"
+  gun__blk:t="gamedata/weapons/akm_47.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="m249_para_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="m249_para_gun"
+  item__name:t="items/m249_para"
+  item__weapType:t="machine_gun"
+  item__baseWeight:r=7.5
+  item__volume:r=35
+  item__marketPrice:i=17500
+  gun__adsSpeedMult:r=0.7
+  gun__altReloadTime:r=1.8
+  gun__ammoInspectionInOutDuration:p2=1.8, 1.4
+  gun__ammoInspectionIdleLoopDuration:r=10
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
+  gun__deviationInFireReady:r=2
+  gun__hitTagPower:r=0.8
+  gun__length:r=0.42
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.041
+  gun__recoilDirAmount:r=0.8
+  gun_boxed_ammo_reload__batchReloadTime:r=2.3
+  gun__shotFreq:r=10
+  gun__sightsDistance:r=0.3
+  gun__statName:t="machine_gun"
+  gun__useLocalPlayerTracer:b=no
+  gun__visualRecoilMult:r=0.1
+  gun__zeroingAngle:r=-1
+  gun__zeroingDistance:r=100
+  gun_deviation__extraDeviationTau:r=0.2
+  gun_deviation__maxDeviation:r=20
+  gun_deviation__movementDevInc:p2=0, 15
+  gun_deviation__movementRange:p2=2.1, 4
+  gun_deviation__omegaDevInc:p2=0.07, 0.5
+  gun_deviation__omegaRange:p2=30, 90
+  gun_deviation__onShotDeviationChange:r=0
+  gun_deviation__shotTau:r=0.1
+  gun_spread__maxDeltaAngle:r=0.15
+  combatFiringRange:p2=50, 70
+  combatShootTime:p2=0.2, 0.3
+  combatCooldownTime:p2=0.1, 0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  gun__boxedAmmoHolderTemplate:t="box_5_56_magazine"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="mgun_gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[0.000815562, -0.032988, 0.999456] [-0.0111868, 0.999393, 0.0329952] [-0.999937, -0.0112075, 0.000446039] [-0.123653, 0.0580902, -0.0644531]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/7.62x39.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/_common/firing_mode_ar"
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/mgun/ak47"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/ak47/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/ak47/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/ak47/reload3/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="bullets_mesh"
+    n:t="mag_mesh"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=2.3
+    alt:r=2.3
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3
+    alt:r=2.5
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1
+    alt:r=1
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=3
+    alt:r=2.5
+  }
+
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.07, -0.08, -0.03
+    crouch:p3=0.07, -0.08, -0.03
+    crawl:p3=0.07, -0.08, -0.03
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.176025, 0.0596466, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.165039, 0.0829163, 0]]
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}

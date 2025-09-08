@@ -1,0 +1,510 @@
+player_base_zone{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  sphere_zone__radius:r=50
+
+  "player_base_zone:tag"{}
+}
+
+player_preset_item_unequip_in_progress{
+  player_preset__frameNumber:i=-1
+  player_preset__counted:b=no
+}
+
+floating_sleeve{
+  collres__res:t="am_soldier_corrupted_male_a_collision"
+  _use:t="animchar"
+  _use:t="navmesh_phys_forced_anim_state"
+  anim_state__forceAnimState:t="flask_float"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="am_flask_body_char"
+  animchar__rndVarOnAppearName:t="flask_floating_type"
+  animchar__rndVarOnAppearRng:p2=0, 2
+  animchar__appliedAnimSpeed:r=1
+  _use:t="static_sinusoidal_oscillation"
+  static_sinusoidal_oscillation__amplitude:r=0.1
+  static_sinusoidal_oscillation__frequency:r=0.25
+
+  "anim_state__animChannels:list<t>"{
+    channel:t="upper"
+    channel:t="lower"
+  }
+
+  "animchar__animState:object"{
+    upper:i=-1
+    lower:i=-1
+  }
+
+  "animchar__animStateDirty:b"{
+    value:b=yes
+    _hide:b=yes
+  }
+}
+
+alter_tube_light{
+  _use:t="omni_light"
+  _use:t="player_base_light"
+  _use:t="player_base_onboarding_object"
+  light__color:c=60, 200, 255, 255
+  light__brightness:r=1
+  player_base_light__onboardingBrightness:r=0
+  alter_tube__key:t=""
+
+  _group{
+    _tags:t="render"
+    omni_light__shadows:b=yes
+    omni_light__dynamic_obj_shadows:b=no
+  }
+}
+
+alter_tube_passive_light{
+  _use:t="omni_light"
+  _use:t="player_base_light"
+  _use:t="player_base_onboarding_object_3"
+  light__color:c=60, 200, 255, 255
+  light__brightness:r=0.1
+  player_base_light__onboardingBrightness:r=0
+
+  _group{
+    _tags:t="render"
+    omni_light__shadows:b=yes
+    omni_light__dynamic_obj_shadows:b=no
+  }
+}
+
+alter_tube_distortion_1{
+  _use:t="animchar"
+  animchar_render__enabled:b=yes
+  animchar__res:t="stasis_field_cylinder_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  am_core_protective_sphere__rotationSpd:p3=200, 0, 0
+  alter_tube__key:t=""
+
+  "requires_distortion_render:tag"{}
+}
+
+alter_tube_distortion_2{
+  _use:t="animchar"
+  animchar_render__enabled:b=yes
+  animchar__res:t="stasis_field_cylinder_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  am_core_protective_sphere__rotationSpd:p3=100, 0, 0
+  alter_tube__key:t=""
+
+  "requires_distortion_render:tag"{}
+}
+
+selected_tube_distortion{
+  "selected_tube_distortion:tag"{}
+}
+
+alter_tube_sound{
+  _use:t="sound_effect_with_transform"
+  _use:t="am_fx_managed_sound"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/base/tank"
+  }
+}
+
+alter_tube_place{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  alter_tube_place__alterTemplate:t="floating_sleeve"
+  alter_tube_place__alterOffset:p3=0, 0.9, 0
+  alter_tube_place__number:i=0
+
+  "alter_tube_place__decorators:array"{
+    "light:object"{
+      name:t="alter_tube_passive_light"
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 2.8, 0]]
+    }
+
+    "selection_light:object"{
+      name:t="alter_tube_light"
+      tm:m=[[0, 0, 1] [-0, 1, 0] [-1, -0, 0] [0, 2.8, 0]]
+    }
+
+    "light:object"{
+      name:t="alter_tube_passive_light"
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 1, 0]]
+    }
+
+    "effect:object"{
+      name:t="alter_tube_flat_distortion"
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.8, 0]]
+    }
+
+    "effect:object"{
+      name:t="alter_tube_distortion_1"
+      tm:m=[[0.9, 0, 0] [0, 1, 0] [0, 0, 0.9] [0, 2, 0]]
+    }
+
+    "effect:object"{
+      name:t="alter_tube_distortion_2"
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 2, 0]]
+    }
+
+    "sound:object"{
+      name:t="alter_tube_sound"
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 1, 0]]
+    }
+  }
+
+  "alter_tube_place__decoratorEids:list<eid>"{}
+  "alter_tube_place__alterEid:eid"{}
+}
+
+am_alter_tube_place_00_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=0
+}
+
+am_alter_tube_place_01_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=1
+}
+
+am_alter_tube_place_02_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=2
+}
+
+am_alter_tube_place_03_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=3
+}
+
+open_console_menu_on_use{
+  _use:t="usable_object_base"
+  _use:t="use_object_enabled"
+  _use:t="locked"
+  item__useActionHintType:i=1
+  item__setCustomUsePrompt:t=""
+  item_world_marker__offset:p3=0, 0, 0
+  open_console_menu_on_use__menuName:t=""
+  use_object__offset:p3=0, 0, 0
+  use_object__minDot:r=0.8
+  locked__isLocked:b=no
+  locked__reason:t=""
+  locked__statusTip:t=""
+
+  "usableObject:tag"{}
+}
+
+loadout_console_menu_on_use{
+  _use:t="open_console_menu_on_use"
+  item__setCustomUsePrompt:t="console/press_to_loadout"
+  open_console_menu_on_use__menuName:t="Inventory"
+}
+
+music_player_console_menu_on_use{
+  _use:t="open_console_menu_on_use"
+  item__setCustomUsePrompt:t="console/press_to_music"
+  open_console_menu_on_use__menuName:t="audioModule"
+  use_object__offset:p3=0, 1.1, 0
+  item_world_marker__offset:p3=0, 1.1, 0
+}
+
+alter_console_menu_on_use{
+  _use:t="open_console_menu_on_use"
+  item__setCustomUsePrompt:t="homebase/replication_locked"
+  open_console_menu_on_use__menuName:t="CloneBody"
+  item_world_marker__offset:p3=0, 0.5, 0
+}
+
+stub_interactable_marker_locked_door{
+  _use:t="open_console_menu_on_use"
+  item__setCustomUsePrompt:t="hud/open_door"
+  item_world_marker__offset:p3=0, 2.5, 0
+  use_object__offset:p3=0, 2.5, 0
+  open_console_menu_on_use__menuName:t="DoorOutside"
+}
+
+replicator_console_menu_on_use{
+  _use:t="open_console_menu_on_use"
+  item__setCustomUsePrompt:t="console/press_to_replicator"
+  open_console_menu_on_use__menuName:t="craftWindow"
+  use_object__offset:p3=0.6, 1.2, 0
+  item_world_marker__offset:p3=0.6, 1.2, 0
+  player_base_upgrades__upgradeName:t="replicator_device"
+  player_base_upgrades__currentUpgradesCount:i=0
+  _use:t="ui_panel"
+  panel_name:t="replicator"
+  canvasWidth:i=800
+  worldSize:p2=0.32, 0.21
+  worldAngles:p3=0, -90, 0
+  worldOffset:p3=0.56, 1.256, 0
+
+  "player_base_upgrades__upgradeTemplateNames:object"{
+    am_crafter_c_unit_a:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+    frog_trap_visual_distortion_fx:m=[[0.3, 0, 0] [0, 1, 0] [0, 0, 0.5] [0, 1, 0]]
+  }
+
+  "player_base_upgrades__upgradePlaces:list<m>"{
+    i:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, -0.72]]
+    i:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, -1.63]]
+    i:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, -2.53]]
+    i:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, -3.44]]
+  }
+
+  "player_base_upgrades__upgradesEids:list<eid>"{}
+  "player_base_device__replicator:tag"{}
+}
+
+recycler_upgrades{
+  player_base_upgrades__upgradeName:t="recycler_device"
+  player_base_upgrades__currentUpgradesCount:i=0
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "player_base_upgrades__upgradeTemplateNames:object"{
+    am_recycler_d_unit_a:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  }
+
+  "player_base_upgrades__upgradePlaces:list<m>"{
+    i:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.661, 0.684]]
+    i:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 1.54, 0.684]]
+    i:m=[[1, 0, 0] [0, -1, -8.74228e-08] [0, 8.74228e-08, -1] [0, 0.661, -0.679]]
+    i:m=[[1, 0, 0] [0, -1, -8.74228e-08] [0, 8.74228e-08, -1] [0, 1.54, -0.679]]
+  }
+
+  "player_base_device__recycler:tag"{}
+  "player_base_upgrades__upgradesEids:list<eid>"{}
+}
+
+am_screen_crafter_gameobj{
+  _use:t="animchar"
+  _use:t="dynamic_screen"
+  _use:t="dynamic_screen_ui_panel"
+  _use:t="ui_panel"
+  _use:t="open_console_menu_on_use"
+  item__setCustomUsePrompt:t="console/press_to_replicator"
+  open_console_menu_on_use__menuName:t="craftWindow"
+  use_object__offset:p3=0.05, 0, 0
+  item_world_marker__offset:p3=0.05, 0, 0
+  animchar__res:t="am_base_screen_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  panel_name:t="craft_panel"
+
+  _group{
+    _tags:t="render"
+    dynamic_screen__texture_size:ip2=400, 225
+    dynamic_screen__texture_mips:i=0
+  }
+
+  "worldAnchorEntity:eid"{}
+}
+
+am_screen_recycler_gameobj{
+  _use:t="animchar"
+  _use:t="dynamic_screen"
+  _use:t="dynamic_screen_ui_panel"
+  _use:t="ui_panel"
+  _use:t="open_console_menu_on_use"
+  item__setCustomUsePrompt:t="console/press_to_recycler"
+  open_console_menu_on_use__menuName:t="Am_clean"
+  use_object__offset:p3=0.05, 0, 0
+  item_world_marker__offset:p3=0.05, 0, 0
+  animchar__res:t="am_base_screen_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  panel_name:t="refine_panel"
+
+  _group{
+    _tags:t="render"
+    dynamic_screen__texture_size:ip2=400, 225
+    dynamic_screen__texture_mips:i=0
+  }
+
+  "worldAnchorEntity:eid"{}
+}
+
+am_screen_monolyth_gameobj{
+  _use:t="animchar"
+  _use:t="dynamic_screen"
+  _use:t="dynamic_screen_ui_panel"
+  _use:t="ui_panel"
+  _use:t="open_console_menu_on_use"
+  item__setCustomUsePrompt:t="console/press_to_monolith"
+  open_console_menu_on_use__menuName:t="monolithAccessWnd"
+  use_object__offset:p3=0, 0.5, 0
+  item_world_marker__offset:p3=0.05, 0.05, 0
+  animchar__res:t="am_base_screen_b_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  panel_name:t="leaderboard_panel"
+
+  _group{
+    _tags:t="render"
+    dynamic_screen__texture_size:ip2=640, 360
+    dynamic_screen__texture_mips:i=0
+  }
+
+  "worldAnchorEntity:eid"{}
+}
+
+am_screen_shop_gameobj{
+  _use:t="animchar"
+  _use:t="dynamic_screen"
+  _use:t="dynamic_screen_ui_panel"
+  _use:t="ui_panel"
+  _use:t="open_console_menu_on_use"
+  item__setCustomUsePrompt:t="console/press_to_market"
+  open_console_menu_on_use__menuName:t="Market"
+  use_object__offset:p3=0, 0, 0
+  item_world_marker__offset:p3=0.05, 0.05, 0
+  animchar__res:t="am_shop_screen_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  panel_name:t="market"
+
+  _group{
+    _tags:t="render"
+    dynamic_screen__texture_size:ip2=640, 360
+    dynamic_screen__texture_mips:i=0
+  }
+
+  "worldAnchorEntity:eid"{}
+}
+
+am_intercom_c_gameobj{
+  _use:t="animchar"
+  _use:t="dynamic_screen"
+  _use:t="dynamic_screen_ui_panel"
+  _use:t="ui_panel"
+  _use:t="open_console_menu_on_use"
+  item__setCustomUsePrompt:t="console/press_to_access_intercom"
+  open_console_menu_on_use__menuName:t="contactsListWnd_modalUid"
+  use_object__offset:p3=0, 1.2, 0
+  item_world_marker__offset:p3=0, 1.2, 0
+  animchar__res:t="am_intercom_c_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  panel_name:t="intercom"
+
+  _group{
+    _tags:t="render"
+    dynamic_screen__texture_size:ip2=240, 180
+    dynamic_screen__texture_mips:i=0
+  }
+
+  "worldAnchorEntity:eid"{}
+}
+
+am_screen_portal_gameobj{
+  _use:t="animchar"
+  _use:t="dynamic_screen"
+  _use:t="dynamic_screen_ui_panel"
+  _use:t="ui_panel"
+  _use:t="open_console_menu_on_use"
+  item__setCustomUsePrompt:t="console/press_to_raid"
+  open_console_menu_on_use__menuName:t="Raid"
+  use_object__offset:p3=0.05, 0, 0
+  item_world_marker__offset:p3=0.05, 0, 0
+  animchar__res:t="am_base_screen_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  panel_name:t="raid_panel"
+
+  _group{
+    _tags:t="render"
+    dynamic_screen__texture_size:ip2=400, 225
+    dynamic_screen__texture_mips:i=0
+  }
+
+  "worldAnchorEntity:eid"{}
+}
+
+replicator_tube{
+  _use:t="replicator_tube_sound"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="animchar_with_dynamic_emission"
+  animchar__res:t="am_crafter_module_tube_char"
+  replicator_tube__colorPulsationPeriod:r=3
+  replicator_tube__colorInProgress:c=150, 90, 40, 140
+  replicator_tube__colorInProgressMax:c=150, 90, 40, 10
+  replicator_tube__colorDone:c=20, 220, 253, 255
+  replicator_tube__colorDoneMax:c=20, 220, 253, 10
+  replicator_tube__colorEmpty:c=0, 0, 0, 0
+  animchar_with_dynamic_emission__color:c=0, 0, 0, 0
+  replicator_tube__status:i=0
+  _tracked:t="replicator_tube__status"
+}
+
+replicator_module{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="am_crafter_c_unit_a_base"
+}
+
+replicator_table{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="animchar"
+  animchar__res:t="am_crafter_module_table_char"
+}
+
+am_screen_alters_room_gameobj{
+  _use:t="animchar"
+  _use:t="dynamic_screen"
+  _use:t="dynamic_screen_ui_panel"
+  _use:t="ui_panel"
+  _use:t="open_console_menu_on_use"
+  item__setCustomUsePrompt:t="homebase/replication_locked"
+  open_console_menu_on_use__menuName:t="CloneBody"
+  use_object__offset:p3=0.05, 0, 0
+  item_world_marker__offset:p3=0.05, 0, 0
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="am_base_screen_char"
+  panel_name:t="default"
+
+  _group{
+    _tags:t="render"
+    dynamic_screen__texture_size:ip2=400, 225
+    dynamic_screen__texture_mips:i=0
+  }
+}
+
+replicator_device{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  replicator_device__slotIdx:i=0
+  replicator_device__replicationEndAt:r=0
+  replicator_device__replicationTime:r=0
+  replicator_device__resetingEndAt:r=0
+  replicator_device__resetingTime:r=1
+  replicator_device__isEmpty:b=yes
+  replicator_device__replicationReady:b=no
+  replicator_device__tableTemplate:t="replicator_table"
+  replicator_device__tableOffset:p3=0, 1.27, 0
+  replicator_device__moduleTemplate:t="replicator_module"
+  replicator_device__moduleOffset:p3=0, 0, 0
+  replicator_device__tubeTemplate:t="replicator_tube"
+  replicator_device__tubeOffset:p3=0, 1.52, 0
+  replicator_device__placed:b=no
+  replicator_device__placeOnObject:t=""
+  _tracked:t="transform"
+
+  "replicator_device__tableEid:eid"{}
+  "replicator_device__moduleEid:eid"{}
+  "replicator_device__tubeEid:eid"{}
+}
+
+replicator_tube_sound{
+  _use:t="sound_control"
+  _use:t="base_managed_sound"
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=20
+  }
+
+  _group{
+    _tags:t="sound"
+    managed_sound__type:t="replicator"
+    managed_sound__maxInstances:i=1
+    managed_sound__excluded:b=yes
+  }
+
+  _group{
+    _tags:t="sound"
+    replicator_tube_sound__prevStatus:i=-1
+    replicator_tube_sound__workingPath:t="env_effects/base/replicator_working"
+    replicator_tube_sound__beginPath:t="env_effects/base/replicator_work_start"
+    replicator_tube_sound__endPath:t="env_effects/base/replicator_work_finish"
+
+    "replicator_tube_sound__event:SoundEvent"{}
+  }
+}

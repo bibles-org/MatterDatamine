@@ -1,0 +1,399 @@
+suit_militant_attachable_animchar{
+  _use:t="suit_attachable_animchar"
+  _use:t="militant_node_collapser"
+  _use:t="am_militant_ribbons"
+  _use:t="animchar_dynmodel_nodes_hider"
+  _use:t="attachable_wear_broken_bones"
+  _use:t="attachable_wear_projective_wounds_data"
+  type_of_wounds:i=2
+  collres__res:t=""
+
+  collres{}
+  "suit_militant_attachable_animchar:tag"{}
+  "slot_attach__initialAttachmentEids:list<eid>"{}
+}
+
+suit_militant_item_base{
+  _use:t="suit_item_base"
+  _use:t="equipment_with_mods"
+  _use:t="animchar_dynmodel_nodes_hider"
+  _use:t="block_item_move_to_backpack"
+  _use:t="block_item_move_to_ground"
+  _use:t="block_item_move_to_item_container"
+  item__iconYaw:r=20
+  item__iconRoll:r=10
+  item__iconPitch:r=0
+  item__iconScale:r=5
+  item__iconOffset:p2=-0.08, -0.81
+  suit__raidIcon:t="!ui/uiskin/raid_info/operative.svg"
+  item__baseWeight:r=0
+  item__weight:r=0
+  item__volume:r=0
+  item__filterType:t="alters"
+  _replicated:t="item__weight"
+  _tracked:t="item__weight"
+  equipment__setDefaultStubMeleeTemplate:t="default_stub_pocket_knife_weapon"
+  full_body_presentation_params:t="suit_full_body_presentation_parameters_base"
+  preview_presentation_params:t="suit_preview_presentation_parameters_base"
+
+  "item__dontUnequipOnDeath:tag"{}
+  "item__permanentItem:tag"{}
+  "item__chronogene:tag"{}
+  "item__cantBeCorrupted:tag"{}
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    item:t="pouches_1"
+    item:t="pouches_2"
+    item:t="pouches_3"
+  }
+
+  "suit_attachable_item__holsterAttachedAnimchars:list<t>"{
+    EWS_PRIMARY:t="top"
+    EWS_SECONDARY:t="top"
+    EWS_TERTIARY:t="top"
+    EWS_MELEE:t="top"
+    EWS_GRENADE:t="top"
+  }
+}
+
+suit_militant_male_item_base{
+  _use:t="suit_militant_item_base"
+  suit__suitType:i=0
+}
+
+suit_rootWalker_head_1_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_head_1_char"
+  collres__res:t="am_root_walker_head_1_collision"
+}
+
+suit_rootWalker_head_2_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_head_2_char"
+  collres__res:t="am_root_walker_head_2_collision"
+}
+
+suit_rootWalker_head_3_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_head_3_char"
+  collres__res:t="am_root_walker_head_3_collision"
+}
+
+suit_rootWalker_hand_1_r_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_hand_1_r_char"
+  collres__res:t="am_root_walker_hand_1_r_collision"
+}
+
+suit_rootWalker_hand_1_l_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_hand_1_l_char"
+  collres__res:t="am_root_walker_hand_1_l_collision"
+}
+
+suit_rootWalker_hand_2_r_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_hand_2_r_char"
+  collres__res:t="am_root_walker_hand_2_r_collision"
+}
+
+suit_rootWalker_hand_2_l_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_hand_2_l_char"
+  collres__res:t="am_root_walker_hand_2_l_collision"
+}
+
+suit_rootWalker_hand_3_r_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_hand_3_r_char"
+  collres__res:t="am_root_walker_hand_3_r_collision"
+}
+
+suit_rootWalker_hand_3_l_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_hand_3_l_char"
+  collres__res:t="am_root_walker_hand_3_l_collision"
+}
+
+suit_rootWalker_torso_1_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_torso_1_char"
+  collres__res:t="am_root_walker_torso_1_collision"
+}
+
+suit_rootWalker_torso_2_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_torso_2_char"
+  collres__res:t="am_root_walker_torso_2_collision"
+}
+
+suit_rootWalker_torso_3_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_torso_3_char"
+  collres__res:t="am_root_walker_torso_3_collision"
+}
+
+suit_rootWalker_leg_1_l_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_leg_1_l_char"
+  collres__res:t="am_root_walker_leg_1_l_collision"
+}
+
+suit_rootWalker_leg_1_r_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_leg_1_r_char"
+  collres__res:t="am_root_walker_leg_1_r_collision"
+}
+
+suit_rootWalker_leg_2_l_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_leg_2_l_char"
+  collres__res:t="am_root_walker_leg_2_l_collision"
+}
+
+suit_rootWalker_leg_2_r_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_leg_2_r_char"
+  collres__res:t="am_root_walker_leg_2_r_collision"
+}
+
+suit_rootWalker_leg_3_l_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_leg_3_l_char"
+  collres__res:t="am_root_walker_leg_3_l_collision"
+}
+
+suit_rootWalker_leg_3_r_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_walker_leg_3_r_char"
+  collres__res:t="am_root_walker_leg_3_r_collision"
+}
+
+suit_root_zBack1_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zBack1_char"
+  collres__res:t="am_root_zBack1_collision"
+}
+
+suit_root_zBack2_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zBack2_char"
+  collres__res:t="am_root_zBack2_collision"
+}
+
+suit_root_zBack3_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zBack3_char"
+  collres__res:t="am_root_zBack3_collision"
+}
+
+suit_root_zBack4_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zBack4_char"
+  collres__res:t="am_root_zBack4_collision"
+}
+
+suit_root_zHead1_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zHead1_char"
+  collres__res:t="am_root_zHead1_collision"
+}
+
+suit_root_zHead2_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zHead2_char"
+  collres__res:t="am_root_zHead2_collision"
+}
+
+suit_root_zHead3_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zHead3_char"
+  collres__res:t="am_root_zHead3_collision"
+}
+
+suit_root_zHead4_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zHead4_char"
+  collres__res:t="am_root_zHead4_collision"
+}
+
+suit_root_zHead5_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zHead5_char"
+  collres__res:t="am_root_zHead5_collision"
+}
+
+suit_root_zShoulderLeft1_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zShoulderLeft1_char"
+  collres__res:t="am_root_zShoulderLeft1_collision"
+}
+
+suit_root_zShoulderLeft2_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zShoulderLeft2_char"
+  collres__res:t="am_root_zShoulderLeft2_collision"
+}
+
+suit_root_zShoulderLeft3_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zShoulderLeft3_char"
+  collres__res:t="am_root_zShoulderLeft3_collision"
+}
+
+suit_root_zShoulderRight1_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zShoulderRight1_char"
+  collres__res:t="am_root_zShoulderRight1_collision"
+}
+
+suit_root_zShoulderRight2_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zShoulderRight2_char"
+  collres__res:t="am_root_zShoulderRight2_collision"
+}
+
+suit_root_zShoulderRight3_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zShoulderRight3_char"
+  collres__res:t="am_root_zShoulderRight3_collision"
+}
+
+suit_root_zSideLeft1_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zSideLeft1_char"
+  collres__res:t="am_root_zSideLeft1_collision"
+}
+
+suit_root_zSideLeft2_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zSideLeft2_char"
+  collres__res:t="am_root_zSideLeft2_collision"
+}
+
+suit_root_zSideRight1_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zSideRight1_char"
+  collres__res:t="am_root_zSideRight1_collision"
+}
+
+suit_root_zSideRight2_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_root_zSideRight2_char"
+  collres__res:t="am_root_zSideRight2_collision"
+}
+
+suit_monster_rootWalker_item{
+  _use:t="suit_militant_male_item_base"
+  _use:t="item_rarity_rare"
+  item__proto:t="suit_militant_light_i_item"
+  item__name:t="items/suit_militant_light_i_item"
+  animchar__res:t="am_player_trooper_male_light_i_char"
+  collres__res:t="am_player_trooper_male_light_i_collision"
+  dm_part_armor__partName:t="*"
+  full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
+  preview_presentation_params:t="suit_militant_light_i_preview_presentation"
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_small_slot"
+    equipment_mod_body_1:t="armorplate_small_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    "torso:list<t>"{
+      i:t="suit_rootWalker_torso_1_animchar"
+      i:t="suit_rootWalker_torso_2_animchar"
+      i:t="suit_rootWalker_torso_3_animchar"
+    }
+
+    "head:list<t>"{
+      i:t="suit_rootWalker_head_1_animchar"
+      i:t="suit_rootWalker_head_2_animchar"
+      i:t="suit_rootWalker_head_3_animchar"
+    }
+
+    "hand_left:list<t>"{
+      i:t="suit_rootWalker_hand_1_l_animchar"
+      i:t="suit_rootWalker_hand_2_l_animchar"
+      i:t="suit_rootWalker_hand_3_l_animchar"
+    }
+
+    "hand_right:list<t>"{
+      i:t="suit_rootWalker_hand_1_r_animchar"
+      i:t="suit_rootWalker_hand_2_r_animchar"
+      i:t="suit_rootWalker_hand_3_r_animchar"
+    }
+
+    "leg_left:list<t>"{
+      i:t="suit_rootWalker_leg_1_l_animchar"
+      i:t="suit_rootWalker_leg_2_l_animchar"
+      i:t="suit_rootWalker_leg_3_l_animchar"
+    }
+
+    "leg_right:list<t>"{
+      i:t="suit_rootWalker_leg_1_r_animchar"
+      i:t="suit_rootWalker_leg_2_r_animchar"
+      i:t="suit_rootWalker_leg_3_r_animchar"
+    }
+
+    "zBack:list<t>"{
+      i:t="suit_root_zBack1_animchar"
+      i:t="suit_root_zBack2_animchar"
+      i:t="suit_root_zBack3_animchar"
+      i:t="suit_root_zBack4_animchar"
+    }
+
+    "zHead:list<t>"{
+      i:t="suit_root_zHead1_animchar"
+      i:t="suit_root_zHead2_animchar"
+      i:t="suit_root_zHead3_animchar"
+      i:t="suit_root_zHead4_animchar"
+      i:t="suit_root_zHead5_animchar"
+    }
+
+    "zShoulderLeft:list<t>"{
+      i:t="suit_root_zShoulderLeft1_animchar"
+      i:t="suit_root_zShoulderLeft2_animchar"
+      i:t="suit_root_zShoulderLeft3_animchar"
+    }
+
+    "zShoulderRight:list<t>"{
+      i:t="suit_root_zShoulderRight1_animchar"
+      i:t="suit_root_zShoulderRight2_animchar"
+      i:t="suit_root_zShoulderRight3_animchar"
+    }
+
+    "zSideLeft:list<t>"{
+      i:t="suit_root_zSideLeft1_animchar"
+      i:t="suit_root_zSideLeft2_animchar"
+    }
+
+    "zSideRight:list<t>"{
+      i:t="suit_root_zSideRight1_animchar"
+      i:t="suit_root_zSideRight2_animchar"
+    }
+  }
+
+  "suit_attachable_item__holsterAttachedAnimchars:list<t>"{
+    EWS_PRIMARY:t=""
+    EWS_SECONDARY:t=""
+    EWS_TERTIARY:t=""
+    EWS_MELEE:t=""
+    EWS_GRENADE:t=""
+  }
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0
+    DM_MELEE:r=0.05
+    DM_EXPLOSION:r=0
+    DM_ZONE:r=0
+    DM_COLLISION:r=0
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0
+  }
+
+  "entity_mod_effects:object"{
+    "fasterChangePoseMult+mult_diminishing":r=1.2
+  }
+}

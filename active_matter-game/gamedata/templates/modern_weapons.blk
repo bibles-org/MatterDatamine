@@ -1,0 +1,158 @@
+crossbow_bolt_char{
+  animchar__res:t="crossbow_ammo_char"
+  collres__res:t="crossbow_ammo_collision"
+}
+
+crossbow_he_bolt_char{
+  animchar__res:t="crossbow_he_bolt_char"
+  collres__res:t="crossbow_he_bolt_collision"
+}
+
+crossbow_bolt_shell{
+  _use:t="animchar_turn_dir"
+  _use:t="crossbow_bolt_char"
+  shell__active:b=yes
+  shell__launchTime:r=-1
+  shell__cleanupTime:r=30
+  shell__fuseTime:r=0
+  shell__gun_props_id:i=-1
+  shell__shell_id__shell_id:i=-1
+  shell__shell_id__damage_id:i=-1
+  shell__shell_id__ballistics_id:i=-1
+  shell__expl_node:t="weapon"
+  shell__explNodeIdx:i=-1
+
+  collres{}
+  "shell__owner:eid"{}
+  "shell__orientationByVelocity:tag"{}
+}
+
+crossbow_bolt_explosive{
+  _use:t="projectile_phys"
+  _use:t="crossbow_bolt_shell"
+  _use:t="crossbow_he_bolt_char"
+  phys_obj_net_phys__blk:t="gamedata/weapons/shell/crossbow_bolt_explosive.blk"
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_grenade_explosion"
+  game_effect__destroyAt:r=-1
+  game_effect__timeToDestroy:r=4
+
+  "crossbow_bolt_explosive:tag"{}
+  "shell__explodeOnContact:tag"{}
+}
+
+crossbow_bolt_projectile_sound{
+  "projectile_sound__paths:shared:object"{
+    _tags:t="sound"
+    hitBullet:t="impact/bolt"
+    hitShell:t="impact/bolt"
+  }
+
+  _group{
+    _tags:t="sound"
+    projectile_sound__wizSound:t="impact/wiz_bolt"
+  }
+}
+
+crossbow_bolt_projectile{
+  _use:t="bullet_projectile"
+  _use:t="block_rethrow_shell"
+  _use:t="crossbow_bolt_projectile_sound"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  crossbow_bolt__appendOnCreate:t="crossbow_bolt_shell"
+  crossbow_bolt__unstuckedLifetime:r=60
+  crossbow_bolt__stuckPickableChance:r=0.7
+  crossbow_bolt__stuckPickableTemplate:t="crossbow_bolt_item+crossbow_bolt_stuck_pickable+item_in_world"
+  crossbow_bolt__stuckUnpickableTemplate:t="crossbow_bolt_stuck_unpickable"
+  crossbow_bolt__stuckHumanTemplate:t="crossbow_bolt_stuck_in_human"
+  crossbow_bolt__unstuckTemplate:t="crossbow_bolt_unstuck"
+  projectile__minLifeTime:r=300
+  projectile__maxLifeTime:r=60
+  projectile__stopped:b=no
+  projectile__addBulletHole:b=no
+  _tracked:t="projectile__stopped"
+
+  "crossbow_bolt:tag"{}
+  "crossbow_bolt__stuckParams:object"{
+    bushes:r=0.45
+    cactus:r=0.45
+    concrete:r=0.8
+    default:r=0.45
+    fabric:r=0.3
+    metal:r=0.8
+    paper:r=0.3
+    sand:r=0.3
+    small_decor:r=0.45
+    softSteelDoor:r=0.8
+    softWoodDoor:r=0.45
+    steel:r=0.8
+    stone:r=0.8
+    window_wood:r=0.45
+    wood:r=0.45
+    changedFlesh:r=0.45
+    flowermanFlesh:r=0.45
+    invisibleManFlesh:r=0.45
+    activeMatterCore:r=2
+    barbwire:r=2
+    ceramic:r=2
+    clay:r=2
+    glass:r=2
+    grid:r=2
+  }
+}
+
+crossbow_bolt_stuck{
+  _use:t="crossbow_bolt_char"
+  _use:t="replicating"
+
+  "crossbow_bolt:tag"{}
+}
+
+crossbow_bolt_stuck_pickable{
+  _use:t="crossbow_bolt_stuck"
+  rendinst_attach__dropOnRiDestroy:b=yes
+
+  "item__removeTemplatesInInventory:list<t>"{
+    templ:t="crossbow_bolt_stuck_pickable"
+    templ:t="rendinst_attach_destroyable"
+    templ:t="rendinst_attach_rotatable"
+    templ:t="crossbow_bolt_shell"
+  }
+}
+
+crossbow_bolt_stuck_unpickable{
+  _use:t="crossbow_bolt_stuck"
+  _use:t="animchar_turn_dir"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+crossbow_bolt_stuck_in_human{
+  _use:t="crossbow_bolt_stuck"
+  _use:t="animchar_turn_dir"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  crossbow_bolt_in_human__nodeId:i=-1
+  crossbow_bolt_in_human__localTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_effect__timeToDestroy:r=15
+  game_effect__destroyAt:r=-1
+  _tracked:t="transform"
+
+  "crossbow_bolt_in_human__eid:eid"{}
+}
+
+crossbow_bolt_unstuck{
+  _use:t="animchar_turn_dir"
+  _use:t="crossbow_bolt_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ragdoll__use_ccd:b=yes
+  ragdoll__active:b=yes
+  ragdoll__isSingleBody:b=yes
+  ragdoll__massMatrix:p4=15, 5, 5, 5
+  ragdoll__start_vel:p3=0, 0, 0
+  ragdoll__applyParams:b=no
+
+  "animchar__physSymDependence:tag"{}
+  collres{}
+  "crossbow_bolt:tag"{}
+  ragdoll{
+    _tags:t="render"
+  }
+}

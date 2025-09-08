@@ -1,0 +1,2880 @@
+PhysMats{
+  __DefaultParams{
+    iak:r=1
+    damage_k:r=1
+  }
+
+  default{
+    bf_class:t="default"
+    color:c=255, 162, 0, 100
+    damage_k:r=0.3
+    deformable_width:r=0.05
+    resistanceK:r=0.0006
+
+    bulletHole{
+      type:t="bullet_hole"
+      scale:r=20
+    }
+
+    billboardDecal{
+      type:t="default_billboard_decal"
+      scale:r=6
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="default"
+
+      melee{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+    }
+
+    damageModel{
+      ricochetAngleMult:r=2
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+
+    deformProps{
+      mult:r=3
+      period:p2=0.625, 0.5
+    }
+  }
+
+  horLandMesh{
+    bf_class:t="horLandMesh"
+    color:c=255, 162, 0, 100
+    iak:r=0.2
+    damage_k:r=0.3
+    deformable_width:r=0.15
+    resistanceK:r=0.0006
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=6
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+    }
+
+    damageModel{
+      ricochetAngleMult:r=2
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+
+    deformProps{
+      mult:r=3
+      period:p2=0.625, 0.5
+    }
+  }
+
+  verLandMesh{
+    color:c=255, 162, 0, 100
+    damage_k:r=0.3
+
+    damageModel{
+      ricochetAngleMult:r=2
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+  }
+
+  waterPuddle{
+    color:c=0, 0, 255, 10
+
+    damageModel{
+      ricochetAngleMult:r=1
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+  }
+
+  water3d{
+    color:c=255, 162, 0, 100
+
+    shellHitFx{
+      bullet{
+        smoke:t="water_hit_bullet_cmps_fx"
+        jet:t="water_hit_bullet_cmps_fx"
+      }
+    }
+
+    damageModel{
+      ricochetAngleMult:r=0.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+  }
+
+  water{
+    color:c=0, 0, 255, 200
+
+    damageModel{
+      ricochetAngleMult:r=1
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+  }
+
+  concrete{
+    bf_class:t="concrete"
+    color:c=255, 255, 0, 200
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=1
+      collDesc:t="collConcrete"
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_sand_cmps_fx"
+        jet:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="concrete"
+
+      melee{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+    }
+
+    bulletHole{
+      type:t="bullet_hole"
+      scale:r=0.7
+    }
+
+    billboardDecal{
+      type:t="default_billboard_decal"
+      scale:r=4
+    }
+
+    damageModel{
+      ricochetAngleMult:r=0.3
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.2
+    }
+  }
+
+  stone{
+    bf_class:t="stone"
+    color:c=255, 255, 0, 200
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="default_billboard_decal"
+      scale:r=4
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_stone_cmps_fx"
+        jet:t="hit_6_8mm_ap_stone_cmps_fx"
+      }
+    }
+
+    damageModel{
+      ricochetAngleMult:r=0.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.2
+      armorThickness:r=20
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="concrete"
+
+      melee{
+        fx:t="hit_8_12mm_ap_stone_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_stone_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_stone_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_stone_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_stone_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_stone_cmps_fx"
+      }
+    }
+  }
+
+  buildings{
+    color:c=255, 255, 0, 200
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="default_billboard_decal"
+      scale:r=4
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_sand_cmps_fx"
+        jet:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="concrete"
+
+      melee{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+    }
+  }
+
+  wood{
+    bf_class:t="wood"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collWood"
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=4
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.6
+      armorThickness:r=0.1
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_wood_cmps_fx"
+        jet:t="hit_6_8mm_ap_wood_cmps_fx"
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="wood"
+
+      melee{
+        fx:t="hit_8_12mm_ap_wood_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_wood_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_wood_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_wood_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_wood_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_wood_cmps_fx"
+      }
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=0.3
+    }
+  }
+
+  wood_snow{
+    bf_class:t="wood"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collWood"
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=4
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.6
+      armorThickness:r=0.1
+    }
+  }
+
+  wood_fall{
+    bf_class:t="wood"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collWood"
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=4
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.6
+      armorThickness:r=0.1
+    }
+  }
+
+  wood_dead{
+    bf_class:t="wood"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collWood"
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=4
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.6
+      armorThickness:r=0.1
+    }
+  }
+
+  wood_palm{
+    bf_class:t="wood"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collWood"
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=4
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.6
+      armorThickness:r=0.1
+    }
+  }
+
+  wood_solid{
+    bf_class:t="wood"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collWood"
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=4
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.6
+      armorThickness:r=15
+    }
+  }
+
+  wood_snow_solid{
+    bf_class:t="wood"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collWood"
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=4
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.6
+      armorThickness:r=15
+    }
+  }
+
+  wood_fall_solid{
+    bf_class:t="wood"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collWood"
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=4
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.6
+      armorThickness:r=15
+    }
+  }
+
+  wood_dead_solid{
+    bf_class:t="wood"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collWood"
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=4
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.6
+      armorThickness:r=15
+    }
+  }
+
+  wood_palm_solid{
+    bf_class:t="wood"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collWood"
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=4
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.6
+      armorThickness:r=15
+    }
+  }
+
+  wood_railway{
+    bf_class:t="wood"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collWood"
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=4
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.6
+      armorThickness:r=0.1
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_sand_cmps_fx"
+        jet:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="wood"
+
+      melee{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=0.3
+    }
+  }
+
+  window_wood{
+    bf_class:t="window"
+    damage_k:r=0.3
+    completelyTransparent:b=yes
+    lightTransparent:b=yes
+
+    physDestructible{
+      climbingThrough:b=yes
+      impulseSpeed:r=2.5
+    }
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collWood"
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=4
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.6
+      armorThickness:r=0.1
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_sand_cmps_fx"
+        jet:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="wood"
+
+      melee{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=0.3
+    }
+  }
+
+  glass{
+    bf_class:t="glass"
+    damage_k:r=0.3
+    completelyTransparent:b=yes
+    lightTransparent:b=yes
+
+    vehicleSound{
+      concrete:r=0.5
+    }
+
+    damageModel{
+      ricochetAngleMult:r=0.1
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.2
+      armorThickness:r=0.01
+    }
+
+    bulletHole{
+      type:t="bullet_hole"
+      scale:r=1
+    }
+
+    billboardDecal{
+      type:t="glass_bullet_hole"
+      scale:r=15
+    }
+  }
+
+  steel{
+    bf_class:t="steel"
+    color:c=0, 0, 255, 200
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collMetal"
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_metal_cmps_fx"
+        jet:t="hit_6_8mm_ap_metal_cmps_fx"
+      }
+    }
+
+    damageModel{
+      ricochetAngleMult:r=0.3
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.1
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="metal"
+
+      melee{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_metal_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_metal_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_metal_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+    }
+
+    bulletHole{
+      type:t="bullet_hole"
+      scale:r=0.7
+    }
+
+    billboardDecal{
+      type:t="metal_bullet_hole"
+      scale:r=4
+    }
+  }
+
+  metal{
+    bf_class:t="steel"
+    color:c=0, 0, 255, 200
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collMetal"
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_metal_cmps_fx"
+        jet:t="hit_6_8mm_ap_metal_cmps_fx"
+      }
+    }
+
+    damageModel{
+      ricochetAngleMult:r=0.3
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.1
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="metal"
+
+      melee{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_metal_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_metal_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_metal_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+    }
+
+    bulletHole{
+      type:t="bullet_hole"
+      scale:r=0.7
+    }
+
+    billboardDecal{
+      type:t="metal_bullet_hole"
+      scale:r=4
+    }
+  }
+
+  metal_grid{
+    bf_class:t="metal_grid"
+    color:c=0, 0, 255, 200
+    completelyTransparent:b=yes
+    lightTransparent:b=yes
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collMetal"
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_metal_cmps_fx"
+        jet:t="hit_6_8mm_ap_metal_cmps_fx"
+      }
+    }
+
+    damageModel{
+      ricochetAngleMult:r=0.3
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.1
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="metal"
+
+      melee{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_metal_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_metal_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_metal_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+    }
+
+    bulletHole{
+      type:t="bullet_hole"
+      scale:r=0.7
+    }
+
+    billboardDecal{
+      type:t="metal_bullet_hole"
+      scale:r=4
+    }
+  }
+
+  train{
+    bf_class:t="steel"
+    color:c=0, 0, 255, 200
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collMetal"
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_metal_cmps_fx"
+        jet:t="hit_6_8mm_ap_metal_cmps_fx"
+      }
+    }
+
+    damageModel{
+      ricochetAngleMult:r=0.3
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.1
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="metal"
+
+      melee{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_metal_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_metal_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_metal_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+    }
+
+    bulletHole{
+      type:t="bullet_hole"
+      scale:r=0.7
+    }
+
+    billboardDecal{
+      type:t="metal_bullet_hole"
+      scale:r=4
+    }
+  }
+
+  flesh{
+    bf_class:t="flesh"
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_blood_entry_cmps_fx"
+        jet:t="hit_blood_entry_cmps_fx"
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t=""
+
+      melee{
+        fx:t="hit_blood_drops_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_blood_entry_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_blood_drops_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_blood_entry_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_blood_entry_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_blood_entry_cmps_fx"
+      }
+    }
+
+    billboardDecal{
+      type:t="blood_decal"
+      scale:r=1
+    }
+
+    vehicleSound{
+      minMaxScrape:p2=0, 0
+    }
+  }
+
+  changedFlesh{
+    bf_class:t="flesh"
+
+    shellHitFx{
+      bullet{
+        smoke:t="changed_hit_blood_splash_fx"
+        jet:t="changed_hit_blood_splash_fx"
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t=""
+
+      default{
+        fx:t="changed_hit_blood_splash_fx"
+      }
+    }
+
+    vehicleSound{
+      minMaxScrape:p2=0, 0
+    }
+  }
+
+  invisibleManFlesh{
+    bf_class:t="flesh"
+
+    shellHitFx{
+      bullet{
+        smoke:t="invisible_man_blood_splash_fx"
+        jet:t="invisible_man_blood_splash_fx"
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t=""
+
+      default{
+        fx:t="invisible_man_blood_splash_fx"
+      }
+    }
+
+    vehicleSound{
+      minMaxScrape:p2=0, 0
+    }
+  }
+
+  flowermanFlesh{
+    bf_class:t="flesh"
+
+    shellHitFx{
+      bullet{
+        smoke:t="invisible_man_blood_splash_fx"
+        jet:t="invisible_man_blood_splash_fx"
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t=""
+
+      default{
+        fx:t="invisible_man_blood_splash_fx"
+      }
+    }
+
+    vehicleSound{
+      minMaxScrape:p2=0, 0
+    }
+  }
+
+  cactus{
+    bf_class:t="wood"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collWood"
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=4
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.6
+      armorThickness:r=0.05
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_sand_cmps_fx"
+        jet:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="cactus"
+
+      melee{
+        fx:t="hit_blood_drops_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_blood_drops_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_blood_drops_cmps_fx"
+      }
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=0.3
+    }
+  }
+
+  soil{
+    bf_class:t="soil"
+    deformable_width:r=0.2
+    resistanceK:r=0.0008
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=1.2
+    }
+
+    damageModel{
+      ricochetAngleMult:r=2
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+  }
+
+  sandbag{
+    bf_class:t="soil"
+    deformable_width:r=0.2
+    resistanceK:r=0.0008
+
+    billboardDecal{
+      type:t="sandbag_bullet_hole"
+      scale:r=3
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=1.2
+    }
+
+    damageModel{
+      ricochetAngleMult:r=2
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+  }
+
+  mud{
+    bf_class:t="soil"
+    deformable_width:r=0.2
+    resistanceK:r=0.0008
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=1.2
+    }
+
+    damageModel{
+      ricochetAngleMult:r=2
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+  }
+
+  road{
+    bf_class:t="road"
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=0.1
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+
+    deformProps{
+      mult:r=0.5
+      period:p2=0.125, 0.05
+    }
+  }
+
+  dirt{
+    bf_class:t="dirt"
+    deformable_width:r=0.3
+    resistanceK:r=0.001
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=1.4
+    }
+  }
+
+  roadSoil{
+    bf_class:t="roadSoil"
+    deformable_width:r=0.05
+    resistanceK:r=0.00015
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=0.3
+    }
+
+    deformProps{
+      mult:r=1
+      period:p2=0.325, 0.25
+    }
+  }
+
+  roadMud{
+    bf_class:t="roadSoil"
+    deformable_width:r=0.05
+    resistanceK:r=0.00015
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=0.3
+    }
+
+    deformProps{
+      mult:r=1
+      period:p2=0.325, 0.25
+    }
+  }
+
+  roadGravel{
+    bf_class:t="roadSoil"
+    deformable_width:r=0.05
+    resistanceK:r=0.00015
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=0.3
+    }
+
+    deformProps{
+      mult:r=1
+      period:p2=0.325, 0.25
+    }
+  }
+
+  roadAsphalt{
+    bf_class:t="roadSoil"
+    deformable_width:r=0.05
+    resistanceK:r=0.00015
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=0.3
+    }
+
+    deformProps{
+      mult:r=1
+      period:p2=0.325, 0.25
+    }
+  }
+
+  roadConcrete{
+    bf_class:t="roadSoil"
+    deformable_width:r=0.05
+    resistanceK:r=0.00015
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=0.3
+    }
+
+    deformProps{
+      mult:r=1
+      period:p2=0.325, 0.25
+    }
+  }
+
+  sand{
+    bf_class:t="sand"
+    deformable_width:r=0.2
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_sand_bottom_cmps_fx"
+      front:t="misc_tank_tracks_sand_top_cmps_fx"
+    }
+  }
+
+  quarrySand{
+    bf_class:t="quarrySand"
+    deformable_width:r=0.05
+    resistanceK:r=0.00015
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_sand_bottom_cmps_fx"
+      front:t="misc_tank_tracks_sand_top_cmps_fx"
+      spawnRateMult:r=0.7
+    }
+  }
+
+  sand_slope{
+    bf_class:t="sand_slope"
+    deformable_width:r=0.05
+    resistanceK:r=0.00015
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_sand_bottom_cmps_fx"
+      front:t="misc_tank_tracks_sand_top_cmps_fx"
+      spawnRateMult:r=0.7
+    }
+  }
+
+  roadSand{
+    bf_class:t="roadSand"
+    deformable_width:r=0.1
+    resistanceK:r=0.00015
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_sand_bottom_cmps_fx"
+      front:t="misc_tank_tracks_sand_top_cmps_fx"
+      spawnRateMult:r=0.7
+    }
+
+    deformProps{
+      mult:r=1
+      period:p2=0.325, 0.25
+    }
+  }
+
+  quickSand{
+    bf_class:t="sand"
+    deformable_width:r=0.6
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_sand_bottom_cmps_fx"
+      front:t="misc_tank_tracks_sand_top_cmps_fx"
+      spawnRateMult:r=0.5
+    }
+  }
+
+  snow{
+    bf_class:t="snow"
+    deformable_width:r=0.3
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_snow_bottom_cmps_fx"
+      front:t="misc_tank_tracks_snow_top_cmps_fx"
+    }
+  }
+
+  ice{
+    bf_class:t="ice"
+
+    billboardDecal{
+      type:t="metal_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_snow_bottom_cmps_fx"
+      front:t="misc_tank_tracks_snow_top_cmps_fx"
+      spawnRateMult:r=0.2
+    }
+  }
+
+  snowLower{
+    bf_class:t="snow"
+    deformable_width:r=0.2
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_snow_bottom_cmps_fx"
+      front:t="misc_tank_tracks_snow_top_cmps_fx"
+      spawnRateMult:r=0.5
+    }
+  }
+
+  roadSnow{
+    bf_class:t="roadSnow"
+    deformable_width:r=0.05
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_snow_bottom_cmps_fx"
+      front:t="misc_tank_tracks_snow_top_cmps_fx"
+      spawnRateMult:r=0.2
+    }
+
+    deformProps{
+      mult:r=1
+      period:p2=0.325, 0.25
+    }
+  }
+
+  rocks{
+    bf_class:t="rocks"
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="default_billboard_decal"
+      scale:r=4
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_sand_cmps_fx"
+        jet:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+    }
+  }
+
+  rocksSlippery{
+    bf_class:t="rocksSlippery"
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="default_billboard_decal"
+      scale:r=4
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_sand_cmps_fx"
+        jet:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+    }
+  }
+
+  gravel{
+    bf_class:t="gravel"
+    resistanceK:r=2.5e-05
+    is_solid:b=yes
+    tankTracksTexId:i=3
+    vehicleHeightmapDeformation:p2=0.02, 0.04
+    humanHeightmapDeformation:r=0.007
+    trailDetailStrength:r=1
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="default_billboard_decal"
+      scale:r=4
+    }
+
+    bulletHole{
+      type:t="bullet_hole"
+      scale:r=0.7
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.2
+      bulletBrokenThreshold:r=150
+    }
+  }
+
+  pebbles{
+    bf_class:t="gravel"
+    resistanceK:r=2.5e-05
+    is_solid:b=yes
+    tankTracksTexId:i=3
+    vehicleHeightmapDeformation:p2=0.02, 0.04
+    humanHeightmapDeformation:r=0.007
+    trailDetailStrength:r=1
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="default_billboard_decal"
+      scale:r=4
+    }
+
+    bulletHole{
+      type:t="bullet_hole"
+      scale:r=0.7
+    }
+
+    damageModel{
+      ricochetAngleMult:r=1
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.2
+      bulletBrokenThreshold:r=150
+    }
+  }
+
+  grass{
+    bf_class:t="soil"
+    deformable_width:r=0.2
+    resistanceK:r=0.0008
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=1.2
+    }
+
+    damageModel{
+      ricochetAngleMult:r=2
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+  }
+
+  grassTall{
+    bf_class:t="soil"
+    deformable_width:r=0.2
+    resistanceK:r=0.0008
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=1.2
+    }
+
+    damageModel{
+      ricochetAngleMult:r=2
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+  }
+
+  forestFloor{
+    bf_class:t="soil"
+    deformable_width:r=0.2
+    resistanceK:r=0.0008
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=1.2
+    }
+
+    damageModel{
+      ricochetAngleMult:r=2
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+  }
+
+  forestMoss{
+    bf_class:t="soil"
+    deformable_width:r=0.2
+    resistanceK:r=0.0008
+
+    billboardDecal{
+      type:t="soil_bullet_hole"
+      scale:r=4
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=1.2
+    }
+
+    damageModel{
+      ricochetAngleMult:r=2
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+  }
+
+  rubber{
+    bf_class:t="rubber"
+
+    vehicleSound{
+      concrete:r=1
+    }
+  }
+
+  ceramic{
+    bf_class:t="ceramic"
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="default_billboard_decal"
+      scale:r=4
+    }
+  }
+
+  fabric{
+    bf_class:t="fabric"
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=5
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="default"
+
+      melee{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+    }
+
+    damageModel{
+      armorThickness:r=0.01
+    }
+  }
+
+  hay{
+    bf_class:t="wood"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+      collDesc:t="collWood"
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=1
+    }
+
+    damageModel{
+      ricochetAngleMult:r=2.8
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.6
+      armorThickness:r=0.7
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_sand_cmps_fx"
+        jet:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="wood"
+
+      melee{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+    }
+
+    trackDirtFx{
+      back:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+      front:t="misc_tank_tracks_dirt_top_cmps_fx"
+      spawnRateMult:r=0.3
+    }
+  }
+
+  paper{
+    bf_class:t="paper"
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=3
+    }
+  }
+
+  plastic{
+    bf_class:t="plastic"
+
+    vehicleSound{
+      concrete:r=1
+    }
+  }
+
+  bushes{
+    bf_class:t="bushes"
+
+    softCollision{
+      physViscosity:r=1.5
+    }
+  }
+
+  bushes_wall{
+    bf_class:t="bushes"
+
+    softCollision{
+      physViscosity:r=2.5
+    }
+
+    damageModel{
+      armorThickness:r=0.01
+    }
+  }
+
+  bushes_fall{
+    bf_class:t="bushes"
+
+    softCollision{
+      physViscosity:r=2.5
+    }
+
+    damageModel{
+      armorThickness:r=0.01
+    }
+  }
+
+  bushes_snow{
+    bf_class:t="bushes"
+
+    softCollision{
+      physViscosity:r=2.5
+    }
+
+    damageModel{
+      armorThickness:r=0.01
+    }
+  }
+
+  bushes_dead{
+    bf_class:t="bushes"
+
+    softCollision{
+      physViscosity:r=2.5
+    }
+
+    damageModel{
+      armorThickness:r=0.01
+    }
+  }
+
+  bushes_palm{
+    bf_class:t="bushes"
+
+    softCollision{
+      physViscosity:r=2.5
+    }
+
+    damageModel{
+      armorThickness:r=0.01
+    }
+  }
+
+  bushesTransparent{
+    bf_class:t="bushesTransparent"
+
+    softCollision{
+      physViscosity:r=2.5
+    }
+  }
+
+  barbwire{
+    bf_class:t="barbwire"
+
+    softCollision{
+      physViscosity:r=2.5
+    }
+  }
+
+  activeMatterCore{
+    bf_class:t="activeMatterCore"
+
+    vehicleSound{
+      concrete:r=1
+    }
+
+    billboardDecal{
+      type:t="default_billboard_decal"
+      scale:r=4
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_stone_cmps_fx"
+        jet:t="hit_6_8mm_ap_stone_cmps_fx"
+      }
+    }
+  }
+
+  walkRay{
+    bf_class:t="walkRay"
+  }
+
+  meleeRay{
+    bf_class:t="meleeRay"
+  }
+
+  climbAiRay{
+    bf_class:t="climbAiRay"
+  }
+
+  tankTrack{
+    bf_class:t="tankTrack"
+  }
+
+  wheel{
+    bf_class:t="wheel"
+  }
+
+  cameraRay{
+    bf_class:t="cameraRay"
+  }
+
+  photocameraRay{
+    bf_class:t="photocameraRay"
+  }
+
+  bulletRay{
+    bf_class:t="bulletRay"
+  }
+
+  aimRay{
+    bf_class:t="aimRay"
+  }
+
+  aiRay{
+    bf_class:t="aiRay"
+  }
+
+  slide{
+    bf_class:t="slide"
+
+    physContactProps{
+      forcedSliding:b=yes
+    }
+  }
+
+  spraySpawnerRay{
+    bf_class:t="spraySpawnerRay"
+  }
+
+  walker{
+    bf_class:t="walker"
+
+    softCollision{
+      collisionForce:r=0.8
+    }
+  }
+
+  walkerBot{
+    bf_class:t="walkerBot"
+
+    softCollision{
+      collisionForce:r=0.8
+    }
+  }
+
+  softWoodDoor{
+    bf_class:t="softWoodDoor"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+    }
+
+    softCollision{
+      collisionForce:r=0.3
+    }
+
+    damageModel{
+      armorThickness:r=0.1
+      ricochetAngleMult:r=1.5
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=1
+    }
+
+    billboardDecal{
+      type:t="wood_bullet_hole"
+      scale:r=4
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_sand_cmps_fx"
+        jet:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="wood"
+
+      melee{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+    }
+  }
+
+  softSteelDoor{
+    bf_class:t="softSteelDoor"
+    damage_k:r=0.3
+
+    vehicleSound{
+      concrete:r=0.5
+    }
+
+    softCollision{
+      collisionForce:r=0.3
+    }
+
+    damageModel{
+      ricochetAngleMult:r=0.3
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.2
+      armorThickness:r=40
+    }
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_6_8mm_ap_metal_cmps_fx"
+        jet:t="hit_6_8mm_ap_metal_cmps_fx"
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t="metal"
+
+      melee{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+
+      knife{
+        fx:t="hit_8_12mm_ap_metal_cmps_fx"
+      }
+
+      hands{
+        fx:t="hit_6_8mm_ap_sand_cmps_fx"
+      }
+
+      axe{
+        fx:t="hit_8_12mm_ap_metal_cmps_fx"
+      }
+
+      shovel{
+        fx:t="hit_6_8mm_ap_metal_cmps_fx"
+      }
+
+      default{
+        fx:t="hit_8_12mm_ap_sand_cmps_fx"
+      }
+    }
+
+    bulletHole{
+      type:t="bullet_hole"
+      scale:r=0.7
+    }
+
+    billboardDecal{
+      type:t="metal_bullet_hole"
+      scale:r=4
+    }
+  }
+
+  small_debris{
+    bf_class:t="small_debris"
+  }
+
+  small_decor{
+    bf_class:t="small_decor"
+  }
+
+  bullet_transparent{
+    bf_class:t="bullet_transparent"
+  }
+
+  gunRay{
+    bf_class:t="gunRay"
+  }
+
+  build_ray{
+    bf_class:t="build_ray"
+  }
+
+  bombCraterCast{
+    bf_class:t="bombCraterCast"
+  }
+
+  ragdoll{
+    bf_class:t="ragdoll"
+  }
+
+  grid{
+    bf_class:t="grid"
+  }
+}
+
+InteractPropsList{
+  walkRay{
+    bushes{
+      en:b=no
+    }
+
+    bushesTransparent{
+      en:b=no
+    }
+
+    barbwire{
+      en:b=no
+    }
+
+    small_debris{
+      en:b=no
+    }
+
+    small_decor{
+      en:b=no
+    }
+
+    walkerBot{
+      en:b=no
+    }
+
+    glass{
+      en:b=no
+    }
+
+    window{
+      en:b=no
+    }
+
+    walker{
+      en:b=no
+    }
+  }
+
+  meleeRay{
+    bushes{
+      en:b=no
+    }
+
+    bushesTransparent{
+      en:b=no
+    }
+
+    barbwire{
+      en:b=no
+    }
+
+    small_debris{
+      en:b=no
+    }
+
+    small_decor{
+      en:b=no
+    }
+
+    slide{
+      en:b=no
+    }
+  }
+
+  build_ray{
+    bushes{
+      en:b=no
+    }
+
+    bushesTransparent{
+      en:b=no
+    }
+
+    barbwire{
+      en:b=no
+    }
+
+    small_debris{
+      en:b=no
+    }
+
+    small_decor{
+      en:b=no
+    }
+
+    slide{
+      en:b=no
+    }
+  }
+
+  climbAiRay{
+    bushes{
+      en:b=no
+    }
+
+    bushesTransparent{
+      en:b=no
+    }
+
+    barbwire{
+      en:b=no
+    }
+
+    small_debris{
+      en:b=no
+    }
+
+    small_decor{
+      en:b=no
+    }
+
+    walker{
+      en:b=no
+    }
+
+    walkerBot{
+      en:b=no
+    }
+
+    slide{
+      en:b=no
+    }
+  }
+
+  gunRay{
+    bushes{
+      en:b=no
+    }
+
+    bushesTransparent{
+      en:b=no
+    }
+
+    barbwire{
+      en:b=no
+    }
+
+    small_debris{
+      en:b=no
+    }
+
+    small_decor{
+      en:b=no
+    }
+
+    walker{
+      en:b=no
+    }
+
+    walkerBot{
+      en:b=no
+    }
+
+    slide{
+      en:b=no
+    }
+  }
+
+  walker{
+    small_debris{
+      en:b=no
+    }
+
+    small_decor{
+      en:b=no
+    }
+  }
+
+  walkerBot{
+    small_debris{
+      en:b=no
+    }
+
+    small_decor{
+      en:b=no
+    }
+  }
+
+  bulletRay{
+    bushes{
+      en:b=no
+    }
+
+    bushesTransparent{
+      en:b=no
+    }
+
+    barbwire{
+      en:b=no
+    }
+
+    bullet_transparent{
+      en:b=no
+    }
+
+    grid{
+      en:b=no
+    }
+
+    slide{
+      en:b=no
+    }
+  }
+
+  aimRay{
+    bushes{
+      en:b=no
+    }
+
+    bushesTransparent{
+      en:b=no
+    }
+
+    barbwire{
+      en:b=no
+    }
+
+    bullet_transparent{
+      en:b=no
+    }
+
+    metal_grid{
+      en:b=no
+    }
+
+    glass{
+      en:b=no
+    }
+
+    window{
+      en:b=no
+    }
+
+    slide{
+      en:b=no
+    }
+  }
+
+  aiRay{
+    bushesTransparent{
+      en:b=no
+    }
+
+    barbwire{
+      en:b=no
+    }
+
+    bullet_transparent{
+      en:b=no
+    }
+
+    metal_grid{
+      en:b=no
+    }
+
+    glass{
+      en:b=no
+    }
+
+    window{
+      en:b=no
+    }
+
+    slide{
+      en:b=no
+    }
+  }
+
+  slide{
+    bushesTransparent{
+      en:b=no
+    }
+
+    barbwire{
+      en:b=no
+    }
+
+    bullet_transparent{
+      en:b=no
+    }
+
+    metal_grid{
+      en:b=no
+    }
+
+    glass{
+      en:b=no
+    }
+
+    window{
+      en:b=no
+    }
+  }
+
+  cameraRay{
+    bushes{
+      en:b=no
+    }
+
+    bushesTransparent{
+      en:b=no
+    }
+
+    barbwire{
+      en:b=no
+    }
+
+    slide{
+      en:b=no
+    }
+  }
+
+  photocameraRay{
+    glass{
+      en:b=no
+    }
+
+    window{
+      en:b=no
+    }
+
+    metal_grid{
+      en:b=no
+    }
+
+    barbwire{
+      en:b=no
+    }
+
+    bushesTransparent{
+      en:b=no
+    }
+
+    slide{
+      en:b=no
+    }
+  }
+
+  tankTrack{
+    default{
+      fk:r=1
+      rollingFrictionK:r=0.045
+    }
+
+    horLandMesh{
+      fk:r=1
+      rollingFrictionK:r=0.1
+    }
+
+    concrete{
+      fk:r=0.8
+      rollingFrictionK:r=0.05
+    }
+
+    stone{
+      fk:r=0.8
+      rollingFrictionK:r=0.05
+    }
+
+    steel{
+      fk:r=0.8
+      rollingFrictionK:r=0.05
+    }
+
+    soil{
+      fk:r=1
+      rollingFrictionK:r=0.12
+    }
+
+    dirt{
+      fk:r=0.8
+      rollingFrictionK:r=0.2
+    }
+
+    road{
+      fk:r=0.9
+      rollingFrictionK:r=0.05
+    }
+
+    roadSoil{
+      fk:r=1
+      rollingFrictionK:r=0.06
+    }
+
+    sand{
+      fk:r=0.8
+      rollingFrictionK:r=0.08
+    }
+
+    roadSand{
+      fk:r=0.9
+      rollingFrictionK:r=0.05
+    }
+
+    snow{
+      fk:r=0.8
+      rollingFrictionK:r=0.09
+    }
+
+    ice{
+      fk:r=0.3
+      rollingFrictionK:r=0.2
+    }
+
+    roadSnow{
+      fk:r=0.7
+      rollingFrictionK:r=0.1
+    }
+
+    rocks{
+      fk:r=0.75
+      rollingFrictionK:r=0.05
+    }
+
+    rocksSlippery{
+      fk:r=0.7
+      rollingFrictionK:r=0.07
+    }
+
+    fabric{
+      fk:r=0.8
+      rollingFrictionK:r=0.09
+    }
+
+    glass{
+      fk:r=0.6
+      rollingFrictionK:r=0.02
+    }
+
+    wood{
+      fk:r=0.8
+      rollingFrictionK:r=0.0166
+    }
+
+    bushes{
+      en:b=no
+    }
+
+    bushesTransparent{
+      en:b=no
+    }
+  }
+
+  wheel{
+    default{
+      fk:r=1
+      rollingFrictionK:r=0.025
+    }
+
+    horLandMesh{
+      fk:r=1
+      rollingFrictionK:r=0.025
+    }
+
+    concrete{
+      fk:r=1
+      rollingFrictionK:r=0.0085
+    }
+
+    stone{
+      fk:r=1
+      rollingFrictionK:r=0.0085
+    }
+
+    wood{
+      fk:r=1
+      rollingFrictionK:r=0.0085
+    }
+
+    steel{
+      fk:r=1
+      rollingFrictionK:r=0.0085
+    }
+
+    soil{
+      fk:r=1
+      rollingFrictionK:r=0.015
+    }
+
+    road{
+      fk:r=1
+      rollingFrictionK:r=0.01
+    }
+
+    dirt{
+      fk:r=1
+      rollingFrictionK:r=0.02
+    }
+
+    roadSoil{
+      fk:r=1
+      rollingFrictionK:r=0.012
+    }
+
+    sand{
+      fk:r=1
+      rollingFrictionK:r=0.25
+    }
+
+    roadSand{
+      fk:r=1
+      rollingFrictionK:r=0.05
+    }
+
+    snow{
+      fk:r=1
+      rollingFrictionK:r=0.01
+    }
+
+    ice{
+      fk:r=1
+      rollingFrictionK:r=0.01
+    }
+
+    roadSnow{
+      fk:r=1
+      rollingFrictionK:r=0.009
+    }
+
+    rocks{
+      fk:r=1
+      rollingFrictionK:r=0.0085
+    }
+
+    rocksSlippery{
+      fk:r=1
+      rollingFrictionK:r=0.0085
+    }
+
+    bushes{
+      en:b=no
+    }
+
+    bushesTransparent{
+      en:b=no
+    }
+  }
+
+  spraySpawnerRay{
+    bushes{
+      en:b=no
+    }
+
+    bushesTransparent{
+      en:b=no
+    }
+
+    barbwire{
+      en:b=no
+    }
+
+    small_debris{
+      en:b=no
+    }
+
+    small_decor{
+      en:b=no
+    }
+
+    walker{
+      en:b=no
+    }
+
+    walkerBot{
+      en:b=no
+    }
+  }
+
+  bombCraterCast{
+    bushes{
+      en:b=no
+    }
+
+    bushesTransparent{
+      en:b=no
+    }
+
+    barbwire{
+      en:b=no
+    }
+
+    small_debris{
+      en:b=no
+    }
+
+    small_decor{
+      en:b=no
+    }
+  }
+
+  ragdoll{
+    bushes{
+      en:b=no
+    }
+
+    bushesTransparent{
+      en:b=no
+    }
+
+    small_debris{
+      en:b=no
+    }
+
+    small_decor{
+      en:b=no
+    }
+  }
+}

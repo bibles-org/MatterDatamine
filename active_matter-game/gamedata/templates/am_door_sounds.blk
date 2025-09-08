@@ -1,0 +1,124 @@
+wooden_rotating_door_sound_setup{
+  _group{
+    _tags:t="sound"
+    rotating_door_sound__openedPath:t="env_effects/doors/wooden/opened"
+    rotating_door_sound__closedPath:t="env_effects/doors/wooden/closed"
+    rotating_door_sound__movingPath:t="env_effects/doors/wooden/moving"
+    rotating_door_sound__pushPath:t="env_effects/doors/wooden/push"
+  }
+}
+
+wooden_fence_rotating_door_sound_setup{
+  _group{
+    _tags:t="sound"
+    rotating_door_sound__openedPath:t="env_effects/doors/wooden/opened"
+    rotating_door_sound__closedPath:t="env_effects/doors/wooden/closed"
+    rotating_door_sound__movingPath:t="env_effects/doors/wooden/moving"
+    rotating_door_sound__pushPath:t="env_effects/doors/wooden/push"
+  }
+}
+
+metal_rotating_door_sound_setup{
+  _group{
+    _tags:t="sound"
+    rotating_door_sound__openedPath:t="env_effects/doors/metal/opened"
+    rotating_door_sound__closedPath:t="env_effects/doors/metal/closed"
+    rotating_door_sound__movingPath:t="env_effects/doors/metal/moving"
+    rotating_door_sound__pushPath:t="env_effects/doors/metal/push"
+  }
+}
+
+metal_gate_rotating_door_sound_setup{
+  _group{
+    _tags:t="sound"
+    rotating_door_sound__openedPath:t="env_effects/doors/metal_gate/opened"
+    rotating_door_sound__closedPath:t="env_effects/doors/metal_gate/closed"
+    rotating_door_sound__movingPath:t="env_effects/doors/metal_gate/moving"
+    rotating_door_sound__pushPath:t="env_effects/doors/metal_gate/push"
+  }
+}
+
+metal_fence_rotating_door_sound_setup{
+  _group{
+    _tags:t="sound"
+    rotating_door_sound__openedPath:t="env_effects/doors/metal_fence/opened"
+    rotating_door_sound__closedPath:t="env_effects/doors/metal_fence/closed"
+    rotating_door_sound__movingPath:t="env_effects/doors/metal_fence/moving"
+    rotating_door_sound__pushPath:t="env_effects/doors/metal_fence/push"
+  }
+}
+
+bunker_rotating_door_sound_setup{
+  _group{
+    _tags:t="sound"
+    rotating_door_sound__openedPath:t="env_effects/doors/metal_bunker/opened"
+    rotating_door_sound__closedPath:t="env_effects/doors/metal_bunker/closed"
+    rotating_door_sound__movingPath:t="env_effects/doors/metal_bunker/moving"
+    rotating_door_sound__pushPath:t="env_effects/doors/metal_bunker/push"
+  }
+}
+
+hatch_rotating_door_sound_setup{
+  _group{
+    _tags:t="sound"
+    rotating_door_sound__openedPath:t="env_effects/doors/metal_hatch/opened"
+    rotating_door_sound__closedPath:t="env_effects/doors/metal_hatch/closed"
+    rotating_door_sound__movingPath:t="env_effects/doors/metal_hatch/moving"
+    rotating_door_sound__pushPath:t="env_effects/doors/metal_hatch/push"
+  }
+}
+
+wooden_rotating_window_sound_setup{
+  _group{
+    _tags:t="sound"
+    rotating_door_sound__openedPath:t="env_effects/doors/wooden_window/opened"
+    rotating_door_sound__closedPath:t="env_effects/doors/wooden_window/closed"
+    rotating_door_sound__movingPath:t="env_effects/doors/wooden_window/moving"
+    rotating_door_sound__pushPath:t="env_effects/doors/wooden_window/push"
+  }
+}
+
+wooden_rotating_door_sound{
+  _use:t="rotating_door_sound"
+  _use:t="wooden_rotating_door_sound_setup"
+}
+
+wooden_fence_rotating_door_sound{
+  _use:t="rotating_door_sound"
+  _use:t="wooden_fence_rotating_door_sound_setup"
+}
+
+metal_rotating_door_sound{
+  _use:t="rotating_door_sound"
+  _use:t="metal_rotating_door_sound_setup"
+}
+
+metal_gate_rotating_door_sound{
+  _use:t="rotating_door_sound"
+  _use:t="metal_gate_rotating_door_sound_setup"
+}
+
+metal_fence_rotating_door_sound{
+  _use:t="rotating_door_sound"
+  _use:t="metal_fence_rotating_door_sound_setup"
+}
+
+bunker_rotating_door_sound{
+  _use:t="rotating_door_sound"
+  _use:t="bunker_rotating_door_sound_setup"
+}
+
+hatch_rotating_door_sound{
+  _use:t="rotating_door_sound"
+  _use:t="hatch_rotating_door_sound_setup"
+}
+
+locker_rotating_door_sound{
+  _use:t="rotating_door_sound"
+  _use:t="wooden_rotating_door_sound_setup"
+}
+
+wooden_rotating_window_sound{
+  _use:t="rotating_door_sound"
+  _use:t="wooden_rotating_window_sound_setup"
+}

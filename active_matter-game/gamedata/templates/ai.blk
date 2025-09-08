@@ -1,0 +1,443 @@
+human_stat_tracking{
+  human_stat_tracking__spawnTime:r=0
+  human_stat_tracking__ownerTime:r=0
+  human_stat_tracking__ownedBy:i=0
+  human_stat_tracking__targetTracesCount:i=0
+  human_stat_tracking__killsCount:i=0
+  human_stat_tracking__botsKillsCount:i=0
+  human_stat_tracking__inVehicleKillsCount:i=0
+  human_stat_tracking__killsDistance:r=0
+  human_stat_tracking__maxKillsDistance:r=0
+  human_stat_tracking__hitsCount:i=0
+  human_stat_tracking__botsHitsCount:i=0
+  human_stat_tracking__inVehicleHitsCount:i=0
+  human_stat_tracking__hitsDistance:r=0
+  human_stat_tracking__shotsCount:i=0
+  human_stat_tracking__inVehicleShotsCount:i=0
+  human_stat_tracking__prevShootAtTime:r=-1
+  human_stat_tracking__totalDangers:r=0
+}
+
+human_stat_tracking_ext{
+  human_stat_tracking__lastWeaponName:t=""
+  human_stat_tracking__lastWeaponTime:r=-1
+
+  "human_stat_tracking__battleTimePerWeapon:object"{}
+  "human_stat_tracking__shotsPerWeapon:object"{}
+  "human_stat_tracking__inVehicleShotsPerWeapon:object"{}
+  "human_stat_tracking__killsPerWeapon:object"{}
+  "human_stat_tracking__inVehicleKillsPerWeapon:object"{}
+  "human_stat_tracking__killsDistancePerWeapon:object"{}
+  "human_stat_tracking__botsKillsPerWeapon:object"{}
+  "human_stat_tracking__hitsPerWeapon:object"{}
+  "human_stat_tracking__inVehicleHitsPerWeapon:object"{}
+  "human_stat_tracking__botsHitsPerWeapon:object"{}
+}
+
+squad_member_server_debug_ai{
+  _replicated:t="beh_tree__debugState"
+
+  "beh_tree__debugState:t"{
+    _tags:t="dev"
+    value:t=""
+  }
+
+  "beh_tree__server_debug:tag"{}
+}
+
+squad_member_on_bullet_nearby_reaction{
+  agent_dangers__lastBulletReactionTime:r=0
+
+  "agent_dangers__lastBulletReactionOffenderEid:eid"{}
+}
+
+squad_member_on_hit_reaction{
+  agent_dangers__lastHitReactionTime:r=0
+
+  "agent_dangers__lastHitReactionOffenderEid:eid"{}
+}
+
+squad_member_ai{
+  _use:t="human_stat_tracking"
+  _use:t="human_stat_tracking_ext"
+  _use:t="walker_agent_danger_calc"
+  _use:t="beh_tree_regular_check"
+  _use:t="beh_tree_enemy_player_in_radius"
+  _use:t="beh_tree_bomb_site_in_radius"
+  _use:t="squad_member_on_hit_reaction"
+  _use:t="squad_member_on_bullet_nearby_reaction"
+  _use:t="beh_tree_agent_in_train_zone"
+  _use:t="beh_tree_agent_on_train"
+  beh_tree__node:t="squad_member"
+  beh_tree__debug:b=no
+  walker_agent__velViscosity:r=0.3
+  walker_agent__velFactor:r=1
+  walker_agent__aimViscosity:r=0.2
+  walker_agent__aimSpeed:r=1050
+  walker_agent__gunAimOffsetCompensation:r=0.9
+  walker_agent__breathOffsetCompensation:r=1
+  walker_agent__serverAiAction:i=0
+  walker_agent__nextAiActionUpdate:r=-1
+  walker_agent__currentAiAction:i=0
+  _tracked:t="walker_agent__currentAiAction"
+  _replicated:t="walker_agent__currentAiAction"
+  walker_agent__useObjectTimer:r=1
+  walker_agent__standShootLocalPos:p3=0.23, 1.4, -0.15
+  walker_agent__crouchShootLocalPos:p3=0.23, 0.95, -0.25
+  walker_agent__crawlShootLocalPos:p3=0.76, 0.26, -0.18
+  beh_tree__blackboard__preferedWeapon:i=0
+  beh_tree__blackboard__enemyRadius:r=90
+  beh_tree__blackboard__enemyNearRadius:r=10
+  agent_dangers__maxDangerDist:r=90
+  agent_dangers__frustumAngle:r=45
+  agent_dangers__projectileDist:r=4
+  agent_dangers__decrease:r=5
+  agent_dangers__timeFromDetection:r=3
+  agent_dangers__lastBulletReactionTime:r=-1
+  agent_dangers__nextBulletReactionTime:r=-1
+  agent_dangers__hmapTraceOffset:p3=0, -0.1, 0
+  agent_dangers__nextDangersCheckTime:r=0
+  agent_dangers__nextDangersTraceTime:r=0
+  agent_dangers__dangerIncrease:r=5
+  agent_dangers__dangerOutIncrease:r=0
+  agent_dangers__maxDangerDistMult:r=0.3
+  agent_dangers__standShootPos:p3=0, 0, 0
+  agent_dangers__standShootDir:p3=0, 0, 0
+
+  "beh_tree__debugState:t"{
+    _tags:t="dev"
+    value:t=""
+  }
+
+  walker_agent{
+    _tags:t="server"
+  }
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  agent_dangers{
+    _tags:t="server"
+  }
+}
+
+walker_agent_danger_calc{
+  alertness_calc__distCoef:p2=-0.03, 0.8
+  alertness_calc__inFrustumCoef:p2=1.8, 0.25
+  alertness_calc__frustumCoef:p3=5, 1, 0
+  alertness_calc__frustumOffset:p2=-0.1, 0.23
+  alertness_calc__crouchCoef:r=0.85
+  alertness_calc__crawlCoef:r=0.5
+  alertness_calc__downedCoef:r=0.75
+  alertness_calc__inVehicleCoef:r=0.75
+  danger_calc__aiCoef:p2=1.1, 1
+  danger_calc__avoidBulletsNearTime:r=10
+  danger_calc__lastShootCoef:p2=1, 1
+  danger_calc__noiseCoef:p2=0.2, 1
+  danger_calc__lastBulletNearbyCoef:p2=10, 10
+  danger_calc__rayMatId:i=-1
+  danger_calc__rayMat:t="aiRay"
+  danger_calc__useRayMatForce:b=yes
+  danger_calc__tooNearDistance:r=1.5
+  danger_calc__magnitudeTreshhold:r=0.8
+  danger_calc__observeAngleCosTreshhold:r=0.5
+}
+
+monster_danger_calc{
+  _use:t="walker_agent_danger_calc"
+  alertness_calc__inFrustumCoef:p2=0, 0
+}
+
+crawler_ai{
+  _use:t="squad_member_ai"
+  beh_tree__node:t="crawler"
+  beh_tree__enabled:b=yes
+}
+
+croucher_ai{
+  _use:t="squad_member_ai"
+  beh_tree__node:t="croucher"
+  beh_tree__enabled:b=yes
+}
+
+mean_enemy_pos{
+  mean_pos__pos:p3=0, 0, 0
+  mean_pos__team:i=-1
+}
+
+moveable_obstacle{
+  editableTemplate:b=no
+
+  _group{
+    _tags:t="server"
+
+    "moveable_obstacle:tag"{}
+  }
+}
+
+still_obstacle{
+  editableTemplate:b=no
+
+  _group{
+    _tags:t="server"
+    obstacle__lastCheckTime:r=-1
+    obstacle__checkDelta:r=0.5
+    obstacle__lastStillTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+    obstacle__lastStillTime:r=-1
+    obstacle__stillPosThreshold:r=0.3
+    obstacle__stillAngCosThreshold:r=0.9
+    obstacle__initialStillTimeout:r=5
+    obstacle__stillTimeout:r=5
+    obstacle__stillCount:i=0
+    obstacle__handle:i=0
+    obstacle__padding:r=0.7
+    obstacle__paddingSide:r=0.13
+
+    "obstacle__still:tag"{}
+  }
+}
+
+fake_still_obstacle{
+  _use:t="still_obstacle"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  collres{}
+}
+
+still_cube_obstacle{
+  _use:t="fake_still_obstacle"
+  collres__res:t="blocking_cube_collision"
+}
+
+still_obstacles{
+  _singleton:b=yes
+
+  _group{
+    _tags:t="server"
+    still_obstacles__obstacleTemplate:t="still_obstacle"
+    still_obstacles__lastCheckTime:r=-1
+    still_obstacles__checkDelta:r=0.5
+  }
+}
+
+obstacles_grid{
+  editableObj:b=no
+  _use:t="replicating"
+  _singleton:b=yes
+  grid_holder__type:t="obstacles"
+  grid_holder__typeHash:i=0
+  grid_holder__cellSize:i=32
+
+  grid_holder{}
+}
+
+obstacles_grid_obj{
+  grid_obj__gridType:t="obstacles"
+  grid_obj__hidden:i=0
+  grid_obj__fixedTmScale:r=-1
+  _replicated:t="grid_obj__hidden"
+  _tracked:t="grid_obj__hidden"
+
+  grid_obj{}
+}
+
+empty_box_obstacle{
+  _use:t="obstacles_grid_obj"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "createObstacle:tag"{}
+  "box_zone:tag"{}
+  "grid_obj__scaledBoxBounding:tag"{}
+}
+
+level_ri_obstacles{
+  _group{
+    _tags:t="server"
+    level_ri_obstacles__padding:r=0.7
+    level_ri_obstacles__paddingSide:r=0.13
+
+    "level_ri_obstacles__resNames:list<t>"{}
+  }
+}
+
+_componentFilters{
+  walker_agent__currentAiAction:t="filter_friendly_team"
+}
+
+look_around_target{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  look_around__speed:r=3
+  look_around__amplitude:p2=0.7, 0.1
+  look_around__rollingOwnerForward:p3=0, 0, 0
+  look_around__rollingOwnerForwardUpdateInterval:r=0.1
+  look_around__rollingOwnerForwardUpdateAt:r=0
+  look_around__randomTimeOffset:r=0
+
+  "look_around__owner:eid"{}
+}
+
+wander_looker{
+  wander_looker__targetBb:i=0
+  wander_looker__updateInterval:r=3
+  wander_looker__updateAt:r=0
+  wander_looker__teammatesUpdateInterval:r=2
+  wander_looker__teammateSearchRadius:r=50
+  wander_looker__teammateSearchCosThreshold:r=0.25
+  wander_looker__teammatesUpdateAt:r=0
+
+  "wander_looker__lookAroundTarget:eid"{}
+  "wander_looker__teammateToWatch:eid"{}
+}
+
+follow_waypoints{
+  follow_waypoints__origin:p3=0, 0, 0
+  follow_waypoints__patrolPathMode:i=1
+  follow_waypoints__patrolSpeedMinMax:p2=0.5, 2
+  follow_waypoints__patrolPathForward:b=no
+  follow_waypoints__patrolHeight:r=4
+  follow_waypoints__patrolSpeed:r=0
+  follow_waypoints__patrolAligmentRatio:r=0.2
+  follow_waypoints__patrolPathPointIndex:i=0
+  follow_waypoints__velocity:p3=0, 0, 0
+  follow_waypoints__maxDt:r=0.3
+
+  "follow_waypoints__waypoints:list<p3>"{}
+}
+
+flanking_ai{
+  flanking_ai__dir:p3=0, 0, 0
+  flanking_ai__radius:r=1.4
+  flanking_ai__priority:i=0
+  flanking_ai__enabled:b=yes
+  flanking_ai__attackFromSide:b=no
+  flanking_ai__maxCount:i=4
+  flanking_ai__minDistance:r=1
+
+  "flanking_ai__lastTarget:eid"{}
+}
+
+patroller_ai{
+  patroller__aroundPos:p3=0, 0, 0
+  patroller__radius:r=30
+  patroller__maxWaypoints:i=10
+  patroller__currentWaypointUpdateAt:r=0
+  patroller__currentWaypointUpdateInterval:r=5
+  patroller__currentWaypointIdx:i=0
+  patroller__currentWaypoint:p3=0, 0, 0
+
+  "patroller__waypoints:list<p3>"{}
+}
+
+patroller_walker_ai_debug{
+  "patroller__drawWaypoints:tag"{}
+}
+
+get_attract_position_ai{
+  _tracked:t="attract_point__eid"
+  attract_point__targetPos:p3=0, 0, 0
+  attract_point__checkPath:b=no
+  attract_point__distanceTime:r=0
+  attract_point__nextCheck:r=0
+  attract_point__checkInterval:r=0.2
+  attract_point__ratio:r=1
+  attract_point__searchRadius:r=50
+  entity_mods__attractPointSearchRadiusMult:r=1
+  _tracked:t="entity_mods__attractPointSearchRadiusMultMods"
+
+  "attract_point__eid:eid"{}
+  "entity_mods__attractPointSearchRadiusMultMods:object"{}
+}
+
+track_visual_attract_points{
+  visual_attract__maxDist:r=50
+  visual_attract__updateInterval:r=0.1
+  visual_attract__nextUpdate:r=0
+  entity_mods__visualAttractMaxDistMult:r=1
+  _tracked:t="entity_mods__visualAttractMaxDistMultMods"
+
+  "entity_mods__visualAttractMaxDistMultMods:object"{}
+  "visual_attract__points:array"{}
+}
+
+get_visible_attract_position_ai{
+  visual_attract__nearestNavPos:p3=0, 0, 0
+
+  "visual_attract__nearestEid:eid"{}
+}
+
+personal_enemies{
+  personal_enemies__damageToMakeEnemy:r=10
+  personal_enemies__damageToMakeEnemySameKind:r=30
+
+  "personal_enemies__enemies:list<eid>"{}
+  "personal_enemies__candidates__eid:list<eid>"{}
+  "personal_enemies__candidates__damageDealt:list<r>"{}
+}
+
+ai_target_visibility_controller{
+  ai_target_visibility_controller__nextUpdateAt:r=-1
+  ai_target_visibility_controller__updateInterval:r=0.5
+  ai_target_visibility_controller__currentLightByDayTime:r=1
+  ai_target_visibility_controller__currentLight:r=1
+
+  "ai_target_visibility_controller__approxLightPerDayTime:shared:array"{
+    "item:object"{
+      from:r=0
+      to:r=2
+      light:r=0.2
+    }
+
+    "item:object"{
+      from:r=2
+      to:r=4
+      light:r=0
+    }
+
+    "item:object"{
+      from:r=4.1
+      to:r=4.5
+      light:r=0.5
+    }
+
+    "item:object"{
+      from:r=4.5
+      to:r=6
+      light:r=0.85
+    }
+
+    "item:object"{
+      from:r=6
+      to:r=18
+      light:r=1
+    }
+
+    "item:object"{
+      from:r=18
+      to:r=19.5
+      light:r=0.85
+    }
+
+    "item:object"{
+      from:r=19.5
+      to:r=22
+      light:r=0.5
+    }
+
+    "item:object"{
+      from:r=22
+      to:r=25
+      light:r=0.2
+    }
+  }
+}
+
+disable_beh_tree_effect{
+  _use:t="game_effect_base"
+  beh_tree_effect__newEnabled:b=no
+  beh_tree_effect__prevEnabled:b=yes
+}
+
+beh_tree_interrupter{
+  "beh_tree_interrupter__target:eid"{}
+}

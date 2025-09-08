@@ -1,0 +1,117 @@
+orderedSelector{
+  name:t="nchanged_mini_tamed"
+
+  reaction{
+    event:t="onHit"
+
+    subTree{
+      treeName:t="sub.reaction.changed.on_hit"
+    }
+  }
+
+  reaction{
+    event:t="onBulletNearby"
+
+    subTree{
+      treeName:t="sub.reaction.changed.on_bullet_nearby"
+    }
+  }
+
+  reaction{
+    event:t="onBlindness"
+
+    subTree{
+      treeName:t="sub.reaction.changed.on_blindness"
+    }
+  }
+
+  failed{
+    modifyNode{
+      target:t="beh_tree__interruptDisabled"
+      operator:t="="
+      arg:i=0
+    }
+  }
+
+  subTree{
+    treeName:t="sub.blindness"
+  }
+
+  subTree{
+    treeName:t="sub.leave_obstacle"
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.return_to_navmesh"
+    }
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.changed.tamed.go_to_stand_pos_if_required"
+    }
+  }
+
+  sequencer{
+    name:t="attack"
+
+    reaction{
+      event:t="regularCheck"
+
+      subTree{
+        treeName:t="sub.reaction.changed.tamed.attack_regular_check"
+      }
+    }
+
+    findDanger{
+      paramName:t="enemy"
+      radiusParamName:t="enemyRadius"
+      minDanger:r=0.1
+    }
+
+    modifyNode{
+      target:t="walker_agent__targetEid"
+      operator:t="="
+      argIntParam:t="enemy"
+    }
+
+    checkAlive{
+      targetParam:t="walker_agent__targetEid"
+    }
+
+    subTree{
+      treeName:t="sub.changed.mini.run_to_target_and_attack"
+    }
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.changed.moveToAttraction"
+    }
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.door_opener"
+    }
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.changed.tamed.go_to_stand_pos_if_required"
+    }
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.changed.tamed.aimlessly_walk_around"
+    }
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.changed.tamed.stare_at_master"
+    }
+  }
+}

@@ -1,0 +1,272 @@
+chargable_portal{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  chargable_portal__activationPrompt:t="chargable_portal/start_channeling"
+  chargable_portal__continuePrompt:t="chargable_portal/continue_channeling"
+  item_world_marker__enabled:b=yes
+  item__useActionHintType:i=1
+  item__setCustomUsePrompt:t="nexus_portal/start_channeling"
+  item__useActionAvailable:b=yes
+  item_world_marker__offset:p3=0, 0, 0
+  nexus_portal__activationProgressDisplayed:r=0
+  _replicated:t="nexus_portal__activationProgressDisplayed"
+  _tracked:t="nexus_portal__activationProgressDisplayed"
+  _replicated:t="nexus_portal__playersChanneling"
+  _tracked:t="nexus_portal__playersChanneling"
+  nexus_portal__interactionDistance:r=4
+  nexus_portal__interactionRadius:r=4
+  nexus_portal__totalActivationTime:r=300
+  nexus_portal__state:i=0
+  _replicated:t="nexus_portal__state"
+  nexus_portal__timeToEvict:r=300
+  nexus_portal__minTimeToEvict:r=60
+  nexus_portal__evictAt:r=-1
+  _replicated:t="nexus_portal__evictAt"
+  nexus_portal__evictionTimeDecrease:r=60
+
+  "nexus_portal:tag"{}
+  _group{
+    _tags:t="gameClient"
+
+    "nexus_portal__visualEntityTemplates:object"{
+      nexus_beacon_capture_device_effect:p3=0, 0, 0
+      nexus_portal_light_effect:p3=0, 1, 0
+    }
+
+    "nexus_portal__visualEntities:list<eid>"{}
+  }
+
+  _group{
+    _tags:t="server"
+    nexus_portal__lastSyncedActivationProgressValue:r=0
+    nexus_portal__zoneDamageAfterEvict:r=10
+    nexus_portal__zoneContractionTimeAfterEvict:r=5
+    nexus_portal__activationCooldownSpeed:r=3
+    nexus_portal__activationProgress:r=0
+    nexus_portal__activationProgressUpdateAt:r=0
+    nexus_portal__activationProgressUpdateInterval:r=0.5
+  }
+
+  "nexus_portal__playersChanneling:list<eid>"{}
+}
+
+trans_portal{
+  _use:t="chargable_portal"
+  nexus_portal__totalActivationTime:r=10
+  nexus_portal__interactionRadius:r=0.4
+  nexus_portal__interactionDistance:r=2
+  extraction__extractionProgress:r=0
+  item__setCustomUsePrompt:t="portal/activate"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  trans_portal__affectTemplate:t="trans_teleport_sequence_affect"
+  _replicated:t="trans_portal__exitEid"
+
+  _group{
+    _tags:t="gameClient"
+
+    "nexus_portal__visualEntityTemplates:object"{
+      trans_portal_effect:p3=0, 0, 0
+      trans_portal_distortion_opening:p3=0, 0, 0
+    }
+
+    "nexus_portal__visualEntities:list<eid>"{}
+  }
+
+  "trans_portal:tag"{}
+  "trans_portal__exitEid:eid"{}
+  "trans_portal__groupEid:eid"{}
+}
+
+trans_portal_group{
+  trans_portal_group__spawnPairCount:i=0
+  trans_portal_group__template:t="trans_portal"
+
+  "trans_portal_group__positions:list<p3>"{}
+}
+
+trans_portal_effect{
+  nexus_beacon_capture_device_effect__minMaxActivationScale:p2=0.15, 0.8
+  extraction_visual__initialTime:r=0
+  extraction_visual__initialPos:p3=0, 0, 0
+  extraction_visual__preExpandScale:r=0.7
+  extraction_visual__expandTime:r=0.5
+  extraction_visual__maxScale:r=1.4
+
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_portal_a_composite_fx"
+  }
+
+  "extraction__activatingPortal:tag"{}
+  "trans_portal_visual__ownerEid:eid"{}
+}
+
+trans_portal_distortion_opening{
+  _use:t="portal_dynmodel_distortion_opening"
+  nexus_beacon_capture_device_effect__desiredScale:r=0
+  nexus_beacon_capture_device_effect__currentScale:r=0
+  nexus_beacon_capture_device_effect__minMaxActivationScale:p2=0.25, 1.2
+  nexus_beacon_capture_device_effect__minMaxEvictionScale:p2=0.5, 2
+  nexus_beacon_capture_device_effect__evictionOscillationPeriod:r=3
+
+  "trans_portal_visual__ownerEid:eid"{}
+}
+
+trans_portal_affect_start_sound{
+  _use:t="game_effect_sound"
+  game_effect_sound__hero:t="player/effects/invisible"
+  game_effect_sound__enemy:t="enemy/effects/invisible"
+}
+
+trans_portal_affect_end_sound{
+  _use:t="game_effect_sound"
+  game_effect_sound__hero:t="player/effects/invisible_out"
+  game_effect_sound__enemy:t="enemy/effects/invisible_out"
+}
+
+trans_teleport_sequence_affect{
+  _use:t="game_effect_sequence"
+  trans_portal_effect__teleportTo:p3=0, 0, 0
+
+  "spawn_sequence__fxEid:eid"{}
+  "trans_portal_effect__exit:eid"{}
+  "trans_portal_effect__entry:eid"{}
+  "game_effect__disableUse:tag"{}
+  "locked_view__lockZoom:tag"{}
+  "locked_use_object__lockGrenadeRethrowing:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockVehicleUse:tag"{}
+  "game_effect__disableActions:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "game_effect_sequence__stages:array"{
+    "stage:object"{
+      affectTemplate:t="extraction_sequence_init"
+      duration:r=0.25
+    }
+
+    "stage:object"{
+      affectTemplate:t="extraction_sequence_soldier_disappears+trans_portal_affect_start_sound"
+      duration:r=1.05
+    }
+
+    "stage:object"{
+      affectTemplate:t="trans_portal_teleport"
+      duration:r=0.1
+    }
+
+    "stage:object"{
+      affectTemplate:t="extraction_sequence_give_control+trans_portal_affect_end_sound"
+      duration:r=0.1
+    }
+
+    "stage:object"{
+      affectTemplate:t=""
+      duration:r=1
+    }
+  }
+}
+
+trans_portal_teleport{
+  "game_effect__parentEffectEid:eid"{}
+  "trans_portal_teleport:tag"{}
+}
+
+teleportation_portal_visual_effect{
+  effect__scale:r=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  "effects:object"{
+    teleportation_portal_plane_distortion_a_fx:r=1
+    teleportation_portal_vortex_distortion_a_fx:r=1
+  }
+}
+
+teleportation_portal_cubic_dynmodel{
+  _use:t="dynamic_portal"
+  animchar__res:t="am_portal_dynamic_rectangular_hole_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "teleportation_portal_dynmodel__owner:eid"{}
+}
+
+teleportation_portal_spherical_dynmodel{
+  _use:t="teleportation_portal_cubic_dynmodel"
+  animchar__res:t="am_portal_dynamic_spherical_hole_char"
+}
+
+teleportation_cooldown_effect{
+  _use:t="game_effect_with_duration"
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=0.6
+
+  "teleportation_cooldown_effect__attachedTeleport:eid"{}
+}
+
+teleportation_long_cooldown_effect{
+  _use:t="teleportation_cooldown_effect"
+  game_effect__timeToDestroy:r=1.5
+}
+
+teleportation_portal{
+  _use:t="replicating"
+  _use:t="am_triggerable_zone"
+  _use:t="editor_selected_box_preview"
+  teleportation_portal__groupId:i=-1
+  teleportation_portal__onTeleportEffect:t="teleportation_cooldown_effect"
+  teleportation_portal__safeLocalExitDir:p3=0, 0, 0
+  teleportation_portal__exitOffset:r=1.5
+  teleportation_portal__isBidirectional:b=yes
+  teleportation_portal__addTemplateOnLink:t="destroy_doors_in_tm"
+  _use:t="sound_effect"
+
+  "box_zone:tag"{}
+  "humanTriggerable:tag"{}
+  "throwingItemsTriggerable:tag"{}
+  "teleportation_portal__teleportedEntities:list<eid>"{}
+  "teleportation_portal__linkedPortal:eid"{}
+  _group{
+    _tags:t="gameClient"
+    teleportation_portal__effectName:t="teleportation_portal_visual_effect"
+    teleportation_portal__dynmodelName:t="teleportation_portal_cubic_dynmodel"
+
+    "teleportation_portal__effectEid:eid"{}
+    "teleportation_portal__dynmodelEid:eid"{}
+  }
+
+  _group{
+    _tags:t="server"
+    teleportation_portal__clientEntryClearance:r=5
+    teleportation_portal__clientExitClearance:r=5
+  }
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="am/objects/teleport/nexus_portal"
+  }
+}
+
+teleportation_spherical_portal{
+  _use:t="teleportation_portal"
+  teleportation_portal__isBidirectional:b=no
+  teleportation_portal__onTeleportEffect:t="teleportation_long_cooldown_effect"
+
+  _group{
+    _tags:t="gameClient"
+    teleportation_portal__dynmodelName:t="teleportation_portal_spherical_dynmodel"
+    teleportation_portal__effectScale:p3=0.5, 0.5, 0.5
+  }
+}
+
+teleportation_simple_portal{
+  _use:t="teleportation_portal"
+
+  _group{
+    _tags:t="gameClient"
+    teleportation_portal__dynmodelName:t=""
+  }
+}

@@ -1,0 +1,39 @@
+ground_hole_box_top_projection{
+  _use:t="ground_hole"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ground_hole_sphere_shape:b=no
+  box_zone__boxMin:p3=-1, -1, -1
+  box_zone__boxMax:p3=1, 1, 1
+}
+
+ground_hole_sphere_top_projection{
+  _use:t="ground_hole"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ground_hole_sphere_shape:b=yes
+  sphere_zone__radius:r=1
+}
+
+ground_hole_box_intersection{
+  _use:t="ground_hole"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ground_hole_sphere_shape:b=no
+  ground_hole_shape_intersection:b=yes
+  box_zone__boxMin:p3=-1, -1, -1
+  box_zone__boxMax:p3=1, 1, 1
+}
+
+ground_hole_sphere_intersection{
+  _use:t="ground_hole"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ground_hole_sphere_shape:b=yes
+  ground_hole_shape_intersection:b=yes
+  sphere_zone__radius:r=1
+}
+
+underground_zone_box{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "underground_zone:tag"{}
+  "box_zone:tag"{}
+}

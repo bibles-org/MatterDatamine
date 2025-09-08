@@ -1,0 +1,47 @@
+repeat{
+  name:t="use_portal"
+
+  sequencer{
+    wait{
+      range:p2=1, 1
+      resetable:b=yes
+    }
+
+    findNearestTransPortal{
+      targetParam:t="portalEid"
+    }
+
+    setPosFromEntity{
+      to:t="portalPos"
+      from:t="portalEid"
+    }
+
+    moveToPos{
+      posParam:t="portalPos"
+      minStance:i=1
+      targetParam:t="portalEid"
+      tryClimbing:b=yes
+      distThreshold:r=1
+    }
+
+    parallel{
+      lookAtEntity{
+        targetParam:t="portalEid"
+      }
+
+      wait{
+        range:p2=1, 1
+        resetable:b=yes
+      }
+    }
+
+    useEntity{
+      targetParam:t="portalEid"
+    }
+
+    wait{
+      range:p2=4, 4
+      resetable:b=yes
+    }
+  }
+}

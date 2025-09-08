@@ -1,0 +1,133 @@
+free_camera_input{
+  free_camera__move:p3=0, 0, 0
+  free_camera__rotate:p3=0, 0, 0
+  free_camera__turboMode:b=no
+  free_camera__moveSpeed:r=0
+  free_camera__rotationSpeed:p2=2, 0.2
+  free_camera__curVelocity:p3=0, 0, 0
+  free_camera__moveSpeedDefault:r=5
+  free_camera__upVector:p3=0, 1, 0
+  free_camera__dashDir:p3=0, 1, 0
+  free_camera__dashFramesLeft:i=0
+  free_camera__dstLeft:r=0
+  free_camera__fixedDirection:p3=0, 0, 0
+  free_camera__useFixedDirection:b=no
+  free_camera__zoomInertia:r=0.8
+  free_camera__zoomSpeed:r=45
+  free_camera__zoomLinVel:r=0
+  _tracked:t="free_camera__useFixedDirection"
+
+  _group{
+    _tags:t="input"
+
+    "free_camera_input__moveXZ:u16"{
+      value:i=-1
+    }
+
+    "free_camera_input__rotate:u16"{
+      value:i=-1
+    }
+
+    "free_camera_input__moveY:u16"{
+      value:i=-1
+    }
+
+    "free_camera_input__zoomIn:u16"{
+      value:i=-1
+    }
+
+    "free_camera_input__zoomOut:u16"{
+      value:i=-1
+    }
+
+    "free_camera_input__turbo:u16"{
+      value:i=-1
+    }
+
+    "free_camera_input__speedUp:u16"{
+      value:i=-1
+    }
+
+    "free_camera_input__speedDown:u16"{
+      value:i=-1
+    }
+
+    "free_camera_input__speedReset:u16"{
+      value:i=-1
+    }
+
+    "free_camera_input__bank:u16"{
+      value:i=-1
+    }
+
+    "free_camera_input__toggleDir:u16"{
+      value:i=-1
+    }
+
+    "free_camera_input__resetRoll:u16"{
+      value:i=-1
+    }
+
+    "free_camera_input__dash:u16"{
+      value:i=-1
+    }
+
+    input{}
+  }
+}
+
+base_free_cam{
+  _use:t="free_camera_input"
+  editableObj:b=no
+  camera__active:b=no
+  _tracked:t="camera__active"
+  camera__input_enabled:b=yes
+  fov:r=90
+  znear:r=0.01
+  zfar:r=10000
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  base_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "camera_view:tag"{}
+  _group{
+    free_camera__mouse:p2=0, 0
+    _tags:t="gameClient"
+  }
+
+  "disableScreenEffects:tag"{}
+}
+
+free_cam{
+  _use:t="base_free_cam"
+  _use:t="free_cam_gravity_awareness"
+}
+
+inertial_free_cam{
+  _use:t="base_free_cam"
+  free_camera__moveInertia:r=0.999
+  free_camera__stopInertia:r=0.999
+}
+
+fast_free_cam{
+  _use:t="base_free_cam"
+  free_camera__moveSpeedDefault:r=50
+}
+
+free_cam_gravity_awareness{
+  free_cam__checkGravity:b=no
+  free_cam__lastGravity:p3=0, 1, 0
+}
+
+static_cam{
+  camera__active:b=no
+  fov:r=90
+  znear:r=0.01
+  zfar:r=10000
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  base_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="replicating"
+
+  "camera_view:tag"{}
+  "net__inInitialScope:tag"{}
+  "static_cam:tag"{}
+}

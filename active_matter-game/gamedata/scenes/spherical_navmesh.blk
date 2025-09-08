@@ -1,0 +1,77 @@
+entity{
+  _template:t="raid_mode"
+}
+
+entity{
+  _template:t="static_cam"
+  camera__active:b=yes
+  transform:m=[[0, 0, -1] [0, 1, 0] [1, 0, 0] [0, 0, 0]]
+}
+
+entity{
+  _template:t="navmesh_battle_area"
+  transform:m=[[4000, 0, 0] [0, 4000, 0] [0, 0, 4000] [0, 0, 0]]
+}
+
+entity{
+  _template:t="shaderVars"
+
+  "shader_vars__vars:object"{
+    river1:c=142, 137, 71, 0
+    river0:c=76, 63, 5, 0
+    river_density:r=2
+    water_color_noise_size:r=71
+    ocean1:c=142, 137, 71, 0
+    ocean0:c=76, 63, 5, 0
+    ocean_density:r=1
+    paint_details_tex:t="sovmod_building_colors_tex_palette*"
+    river0:c=30, 81, 63, 0
+    river1:c=41, 104, 83, 0
+    ocean0:c=100, 110, 150, 0
+    ocean1:c=90, 100, 150, 0
+  }
+}
+
+entity{
+  _template:t="position_mapping_zones_generator"
+  position_mapping_zones_generator__riPrefix:t="gd_island_sphere"
+}
+
+entity{
+  _template:t="position_mapping_zones_generator"
+  position_mapping_zones_generator__riPrefix:t="gd_spherical_island_stripe"
+}
+
+entity{
+  _template:t="position_mapping_to_area_marker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1694.64, 192.654, -47.72]]
+  sphere_zone__radius:r=350
+}
+
+entity{
+  _template:t="position_mapping_from_area_marker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-1783.27, 144, 908.312]]
+  sphere_zone__radius:r=250
+}
+
+entity{
+  _template:t="position_mapping_to_area_marker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1503.77, 200, 429.66]]
+  sphere_zone__radius:r=180
+}
+
+entity{
+  _template:t="position_mapping_from_area_marker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1891.57, 52.6223, -925.697]]
+  sphere_zone__radius:r=190
+}
+
+entity{
+  _template:t="level"
+  level__blk:t="levels/gd_spherical_navmesh.blk"
+  level__timeRange:p2=6.5, 6.5
+
+  "level__weatherChoice:object"{
+    weather_dalniy_island_overcast:r=1
+  }
+}

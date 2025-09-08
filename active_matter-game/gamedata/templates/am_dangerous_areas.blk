@@ -1,0 +1,14 @@
+entity_bound_area{
+  entity_bound_area__radius:r=1
+  entity_bound_area__name:t="POLYAREA_DANGER"
+
+  "entity_bound_area__num:u8"{}
+  "entity_bound_area__nmeshPolyRefs:list<u64>"{}
+}
+
+movable_entity_bound_area{
+  _use:t="entity_bound_area"
+  entity_bound_area__updateInterval:r=5
+  entity_bound_area__nextUpdate:r=0
+  entity_bound_area__lastPos:p3=0, 0, 0
+}

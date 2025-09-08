@@ -1,0 +1,58 @@
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=3e-05, 3e-05
+  transform:m=[[-48.6498, 0, 109.93] [145.335, 0, 64.3183] [0, 50.5184, -0] [965.025, 65.0967, -329.091]]
+}
+
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house changeds"
+  monster_gen_gen__householdCount:i=2
+  monster_gen_gen__minHouseholdVolume:r=225
+  monster_gen_gen__useHouseholdsOnEuclid:b=no
+
+  "monster_gen_gen__genTemplates:object"{
+    household_changed_monster_generator:i=70
+    anomaly_encounter_changed_indoor_small:i=30
+  }
+}
+
+entity{
+  _template:t="distorted_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [913.358, 64.9783, -307.47]]
+  objective_static_target__tag:t="distorted_zone_1"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="distorted_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [954.039, 65.1357, -374.863]]
+  objective_static_target__tag:t="distorted_zone_2"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="distorted_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1032.12, 64.9967, -331.714]]
+  objective_static_target__tag:t="distorted_zone_3"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="invisible_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [990.62, 64.9967, -257.91]]
+  objective_static_target__tag:t="invisible_zone_1"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="invisible_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [973.379, 64.8878, -349.251]]
+  objective_static_target__tag:t="invisible_zone_2"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}

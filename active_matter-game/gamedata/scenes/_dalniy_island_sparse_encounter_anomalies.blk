@@ -1,0 +1,65 @@
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="firefly_region_monster_generator"
+      genType:t="firefly field"
+      count:i=9
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="forest_1260"
+    r:t="forest_1384"
+    r:t="forest_1233"
+    r:t="forest_1273"
+    r:t="forest_1228"
+    r:t="forest_1263"
+    r:t="forest_1249"
+    r:t="forest_1406"
+    r:t="forest_1428"
+  }
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="frog_trap_region_monster_generator"
+      genType:t="frog trap field"
+      count:i=1
+    }
+
+    "generator:object"{
+      template:t="teleport_trap_region_monster_generator"
+      genType:t="teleport trap field"
+      count:i=1
+    }
+
+    "generator:object"{
+      template:t="anomaly_traps_mix_region_monster_generator"
+      genType:t="anomaly traps mix field"
+      count:i=5
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="forest_1261"
+    r:t="forest_1254"
+    r:t="forest_1234"
+    r:t="forest_1233"
+    r:t="forest_1235"
+    r:t="forest_1262"
+    r:t="forest_1228"
+    r:t="forest_1376"
+    r:t="forest_1238"
+    r:t="forest_1384"
+    r:t="forest_1388"
+    r:t="forest_1263"
+    r:t="forest_1249"
+    r:t="forest_1406"
+    r:t="forest_1428"
+  }
+}

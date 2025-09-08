@@ -1,0 +1,112 @@
+selected_lootable_container{
+  outline__enabled:b=yes
+  outline__always_visible:b=yes
+  outline__color:c=12, 255, 73, 73
+}
+
+lootable_rendinst{
+  _use:t="replicating"
+  _use:t="openable_external_inventory_container_ri"
+  _use:t="iteractable_drop_on_ri_destroy"
+  _use:t="openable_ri_sound"
+  _use:t="trigger_encounter_guards_on_looted"
+  use_object__offset:p3=0, 0, 0
+  use_object__obbMin:p3=0, 0, 0
+  use_object__obbMax:p3=0, 0, 0
+  use_object__selectedTemplate:t="selected_lootable_container"
+  item__setCustomUsePrompt:t="hud/search"
+  ri_extra__name:t=""
+  ri_extra__bboxMin:p3=0, 0, 0
+  ri_extra__bboxMax:p3=0, 0, 0
+  loot_drop_system__lootPreset:t=""
+  loot_drop_system_delayed_loot_generation__generated:b=no
+  item__useActionHintType:i=1
+  item_world_marker__offset:p3=0, 0, 0
+  item_world_marker__riColliderPoint:p3=0.5, 0.6, 0.5
+  item_world_marker__riColliderPointOffset:p3=0, 0, 0
+  loud_noise__radius:r=8
+  loud_noise__noisePerDrop:r=45
+
+  "lootableRendinst:tag"{}
+  "usableObject:tag"{}
+  ri_extra{}
+  "ri_extra__handle:u64"{
+    value:i64=-1
+  }
+
+  "net_sound__descs:shared:object"{
+    "start_search:object"{
+      path:t="player/walker/am_trooper_male/items/healing/pick"
+    }
+
+    "success_search:object"{
+      path:t="env_effects/doors/standart/open"
+    }
+
+    "fail_search:object"{
+      path:t="env_effects/doors/standart/open"
+    }
+  }
+
+  _group{
+    _tags:t="ui"
+    itemContainer__uiItemsMergeEnabled:b=no
+    itemContainer__uiItemsSortingEnabled:b=yes
+    itemContainer__uiItemsOverrideSortingPriority:b=yes
+  }
+
+  "lootable_ri__objectiveEid:eid"{}
+}
+
+infinite_lootable_rendinst{
+  lootable_rendinst__infiniteLoot:b=yes
+}
+
+search_lootable_rendinst_invoice{
+  _use:t="base_interactable_invoice"
+  interactable_invoice__available:b=no
+  interactable_invoice__duration:r=1
+  interactable_invoice__completesAt:r=0
+  interactable_invoice__activateOnCompletion:b=yes
+  _tracked:t="interactable_invoice__completesAt"
+  _replicated:t="interactable_invoice__completesAt"
+  interactable_invoice__userEffect:t="play_use_animation_effect"
+
+  "interactable_invoice__userEffectEid:eid"{}
+  "lootable_rendinst__useTime:tag"{}
+  "search_lootable_rendinst_invoice:tag"{}
+}
+
+lootable_rendinst_manager{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  lootable_rendinsts__allowSpawnInForbiddenZone:b=no
+  lootable_rendinsts__restrictToBoundingBox:b=no
+
+  "lootable_rendinsts__list:array"{}
+}
+
+sample_box_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="sample_box_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_g"
+  human_inventory__maxVolume:r=10
+  loot_drop_system__lootPreset:t="civil_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_owner_pos_preset"
+
+  ri_extra{}
+}
+
+sample_box2_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="sample_box2_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_e"
+  human_inventory__maxVolume:r=5
+  loot_drop_system__lootPreset:t="soviet_equipment_t3_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_owner_pos_preset"
+
+  ri_extra{}
+}

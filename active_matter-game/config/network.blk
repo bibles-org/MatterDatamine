@@ -1,0 +1,213 @@
+defaultCircuit:t="am-production"
+
+am-test{
+  appPerm_1182:i=50175
+  environment:t="test"
+  chanceOfFatalOnLogerrOnExit:i=1
+  alwaysReloadDataOnUpdate:b=yes
+  marketplaceURL:t="http://market-test.gaijin.ops/marketPlaceExp/"
+  shopUrl:t="https://store.gaijin.net/storefront.php?category=CuisineRoyale"
+  shopUrlSteam:t="https://store.steampowered.com/app/997120"
+  shopGuidUrl:t="https://store.gaijin.net/yuplay/show_item.php?guid={guid}"
+  shopCategoryUrl:t="https://store.gaijin.net/catalog.php?category={category}"
+  shopGuidUrlSteam:t="http://store.gaijin.net/steam.php?guid={guid}&app_id={appId}&steam_id={steamId}"
+  steamBindUrl:t="https://login.gaijin.net/steam?token={token}&lang={langAbbreviation}"
+  psnFriendsUrl:t="https://auth-psn-dev.gaijinent.com/psn_friends.php"
+  pso_cache_download_url:t="https://beta.pso-cache.gaijin.net"
+
+  matching{
+    server:t="match-am-test-lw-nl-01.enlisted.net:7853"
+  }
+
+  char{
+    servers{
+      url:t="https://contacts-active-matter-pc.test.gap.gaijin.net/json"
+    }
+  }
+
+  leaderboard{
+    servers{
+      url:t="https://leaderboard-active-matter-pc.test.gap.gaijin.net/json-rpc"
+    }
+  }
+
+  profile_server{
+    servers{
+      url:t="https://profile-active-matter-pc.test.gap.gaijin.net/json-rpc"
+    }
+  }
+
+  onlineStorage{
+    servers{
+      url:t="https://cloud-active-matter-pc.test.gap.gaijin.net/char"
+    }
+  }
+
+  message_queue{
+    port:i=11300
+    host:t="127.0.0.1"
+  }
+}
+
+am-staging{
+  appPerm_1182:i=50175
+  environment:t="test"
+  chanceOfFatalOnLogerrOnExit:i=32
+  disableVromsAutoUpdate:b=no
+  alwaysReloadDataOnUpdate:b=yes
+  pso_cache_download_url:t="https://beta.pso-cache.gaijin.net"
+
+  contentUpdater{
+    shouldPatchVromsWithRemoteVersion:b=yes
+    disableFastVersionCheck:b=yes
+  }
+
+  matching{
+    server:t="mgate-am-staging-01.enlisted.net:7853"
+  }
+
+  eventLog{
+    host:t="client-logs.gaijin.net"
+    project:t="active_matter"
+  }
+
+  char{
+    servers{
+      url:t="https://contacts-active-matter-pc.staging.gap.gaijin.net/json"
+    }
+  }
+
+  leaderboard{
+    servers{
+      url:t="https://leaderboard-active-matter-pc.staging.gap.gaijin.net/json-rpc"
+    }
+  }
+
+  profile_server{
+    servers{
+      url:t="https://profile-active-matter-pc.staging.gap.gaijin.net/json-rpc"
+    }
+  }
+
+  onlineStorage{
+    servers{
+      url:t="https://cloud-active-matter-pc.staging.gap.gaijin.net/char"
+    }
+  }
+
+  message_queue{
+    port:i=11300
+    host:t="127.0.0.1"
+  }
+}
+
+am-dev{
+  appPerm_1182:i=50175
+  environment:t="test"
+  chanceOfFatalOnLogerrOnExit:i=0
+  trustClientStreamingMode:b=yes
+  marketplaceURL:t="https://trade.gaijin.net/"
+  shopUrl:t="https://store.gaijin.net/storefront.php?category=CuisineRoyale"
+  shopGuidUrl:t="https://store.gaijin.net/yuplay/show_item.php?guid={guid}"
+  shopCategoryUrl:t="https://store.gaijin.net/catalog.php?category={category}"
+  psnFriendsUrl:t="https://auth-psn-dev.gaijinent.com/psn_friends.php"
+  pso_cache_download_url:t="https://beta.pso-cache.gaijin.net"
+
+  matching{
+    server:t="mgate-am-dev-lw-nl-01.enlisted.net:7853"
+  }
+
+  eventLog{
+    host:t="client-logs.warthunder.com"
+  }
+
+  char{
+    servers{
+      url:t="https://contacts-active-matter-pc.dev.gap.gaijin.net/json"
+    }
+  }
+
+  leaderboard{
+    servers{
+      url:t="https://leaderboard-active-matter-pc.dev.gap.gaijin.net/json-rpc"
+    }
+  }
+
+  profile_server{
+    servers{
+      url:t="https://profile-active-matter-pc.dev.gap.gaijin.net/json-rpc"
+    }
+  }
+
+  onlineStorage{
+    servers{
+      url:t="https://cloud-active-matter-pc.dev.gap.gaijin.net/char"
+    }
+  }
+
+  message_queue{
+    port:i=11300
+    host:t="127.0.0.1"
+  }
+}
+
+am-production{
+  appPerm_1182:i=50308
+  environment:t="production"
+  chanceOfFatalOnLogerrOnExit:i=0
+  marketplaceURL:t="https://trade.gaijin.net/"
+  shopUrl:t="https://store.gaijin.net/storefront.php?category=CuisineRoyale"
+  shopUrlSteam:t="https://store.steampowered.com/app/{appId}"
+  shopGuidUrl:t="https://store.gaijin.net/yuplay/show_item.php?guid={guid}"
+  shopGuidUrlSteam:t="http://store.gaijin.net/steam.php?guid={guid}&app_id={appId}&steam_id={steamId}"
+  shopCategoryUrl:t="https://store.gaijin.net/catalog.php?category={category}"
+  shopCategoryUrlSteam:t="https://store.gaijin.net/catalog.php?category={category}&app_id={appId}&steam_id={steamId}"
+  steamBindUrl:t="https://login.gaijin.net/steam?token={token}&lang={langAbbreviation}"
+  steamRebindUrl:t="https://login.gaijin.net/{langAbbreviation}/account/link/withSteam?app_id={appId}"
+  psnFriendsUrl:t="https://auth.gaijinent.com/psn_friends.php"
+  pso_cache_download_url:t="https://pso-cache.gaijin.net"
+
+  contentUpdater{
+    tag:t="production"
+    shouldPatchVromsWithRemoteVersion:b=yes
+  }
+
+  matching{
+    server:t="mgate-am-production-01.enlisted.net:7853"
+    server:t="mgate-am-production-02.enlisted.net:7853"
+  }
+
+  eventLog{
+    host:t="client-logs.gaijin.net"
+    project:t="active_matter"
+  }
+
+  char{
+    servers{
+      url:t="https://contacts-active-matter-pc.production.gap.gaijin.net/json"
+    }
+  }
+
+  leaderboard{
+    servers{
+      url:t="https://leaderboard-active-matter-pc.production.gap.gaijin.net/json-rpc"
+    }
+  }
+
+  profile_server{
+    servers{
+      url:t="https://profile-active-matter-pc.production.gap.gaijin.net/json-rpc"
+    }
+  }
+
+  onlineStorage{
+    servers{
+      url:t="https://cloud-active-matter-pc.production.gap.gaijin.net/char"
+    }
+  }
+
+  message_queue{
+    port:i=11300
+    host:t="127.0.0.1"
+  }
+}

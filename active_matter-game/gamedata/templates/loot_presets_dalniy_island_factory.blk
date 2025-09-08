@@ -1,0 +1,481 @@
+factory_vehicle_civic_spawn_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="gaz_67+vehicle_state_randomizer"
+      number:ip2=1, 2
+    }
+  }
+}
+
+factory_vehicle_outdoor_spawn_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="gaz_67+vehicle_state_randomizer"
+      number:i=2
+    }
+  }
+}
+
+factory_fuel_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="canister_gasoline_item+item_in_world"
+      number:ip2=5, 10
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_big_item+item_in_world"
+      number:ip2=1, 2
+    }
+  }
+}
+
+factory_vehicle_parts_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="canister_gasoline_item+item_in_world"
+      number:ip2=3, 4
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_big_item+item_in_world"
+      number:ip2=0, 1
+    }
+
+    "item:object"{
+      template_name:t="soviet_repair_kit_item+item_in_world"
+      number:ip2=5, 10
+    }
+  }
+}
+
+factory_secret_stash_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="secret_stash_lootable_rendinst_1"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="secret_stash_lootable_rendinst_2"
+      number:i=1
+    }
+  }
+}
+
+factory_hangar_17_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_close_range_weapons_t2_lootable_rendinst"
+      number:i=8
+    }
+
+    "item:object"{
+      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
+      number:i=8
+    }
+
+    "item:object"{
+      template_name:t="military_equipment_t2_lootable_rendinst"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="military_medical_t2_lootable_rendinst"
+      number:i=3
+    }
+  }
+}
+
+factory_hangar_18_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_close_range_weapons_t2_lootable_rendinst"
+      number:i=8
+    }
+
+    "item:object"{
+      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
+      number:i=8
+    }
+
+    "item:object"{
+      template_name:t="military_equipment_t2_lootable_rendinst"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="military_medical_t2_lootable_rendinst"
+      number:i=5
+    }
+  }
+}
+
+factory_overall_zone_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="small_sovmod_backpack_lootable+item_in_world"
+      number:ip2=10, 20
+    }
+
+    "item:object"{
+      template_name:t="medium_sovmod_backpack_lootable+item_in_world"
+      number:ip2=0, 8
+    }
+
+    "item:object"{
+      template_name:t="large_sovmod_backpack_lootable+item_in_world"
+      number:ip2=0, 2
+    }
+
+    "item:object"{
+      template_name:t="encounter_fuse_item+item_in_world"
+      number:ip2=15, 20
+    }
+
+    "item:object"{
+      template_name:t="encounter_battery_item+item_in_world"
+      number:ip2=20, 25
+    }
+
+    "item:object"{
+      template_name:t="civil_lootable_rendinst_1"
+      number:ip2=50, 75
+    }
+
+    "item:object"{
+      template_name:t="civil_lootable_rendinst_2"
+      number:ip2=50, 75
+    }
+
+    "item:object"{
+      template_name:t="sovmod_flashlight_device+item_in_world"
+      number:ip2=13, 17
+    }
+
+    "item:object"{
+      template_name:t="sovmod_diver_flashlight+item_in_world"
+      number:ip2=2, 3
+    }
+
+    "item:object"{
+      template_name:t="soviet_repair_kit_item+item_in_world"
+      number:ip2=10, 20
+    }
+
+    "item:object"{
+      template_name:t="axe_weapon+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="wrench_weapon+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="screwdriver_a_weapon+item_in_world"
+      number:ip2=1, 3
+    }
+
+    "item:object"{
+      template_name:t="screwdriver_b_weapon+item_in_world"
+      number:ip2=1, 3
+    }
+
+    "item:object"{
+      template_name:t="chisel_a_weapon+item_in_world"
+      number:ip2=1, 3
+    }
+
+    "item:object"{
+      template_name:t="chisel_b_weapon+item_in_world"
+      number:ip2=1, 3
+    }
+
+    "item:object"{
+      template_name:t="cooking_knife_weapon+item_in_world"
+      number:ip2=20, 40
+    }
+
+    "item:object"{
+      template_name:t="cooking_cleaver_weapon+item_in_world"
+      number:ip2=1, 5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_01+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_02+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_03+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_04+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_05+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_06+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_07+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_08+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_09+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_10+item_in_world"
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_secret_note+item_in_world"
+      number:i=3
+    }
+  }
+}
+
+factory_loot_indoor_shelves_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="corrupted_iron_item+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="electronics+item_in_world"
+      number:ip2=10, 15
+    }
+  }
+}
+
+factory_loot_indoor_table_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="corrupted_iron_item+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="electronics+item_in_world"
+      number:ip2=10, 15
+    }
+  }
+}
+
+factory_loot_indoor_floor_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="corrupted_iron_item+item_in_world"
+      number:ip2=10, 15
+    }
+
+    "item:object"{
+      template_name:t="electronics+item_in_world"
+      number:ip2=10, 15
+    }
+  }
+}
+
+factory_tower_sensor_5_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="small_backpack_tower_sensor_5_lootable+item_in_world"
+      number:i=1
+    }
+  }
+}
+
+factory_institute_basement_post_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="dead_body_container_factory_basement_key"
+      number:i=1
+    }
+  }
+}
+
+factory_lab_am_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_5+item_in_world"
+      number:i=4
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_10+item_in_world"
+      number:i=1
+    }
+  }
+}
+
+factory_military_uaz_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_uaz_lootable_rendinst_1"
+      number:i=8
+    }
+  }
+}
+
+factory_gravizone_am_pile_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_2+item_in_world"
+      number:i=20
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_1+item_in_world"
+      number:i=25
+    }
+  }
+}
+
+factory_construction_site_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
+      number:i=3
+    }
+  }
+}
+
+factory_small_random_encounter_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="encounter_small_changed_guard_box"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_frog_trap_box"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_mindcontrolled_guard_box"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_box_pile"
+      number:i=1
+    }
+  }
+}
+
+factory_medium_random_encounter_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="encounter_medium_minefield_raf"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_bmp_guards"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_trap_container"
+      number:i=1
+    }
+  }
+}
+
+factory_patrol_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_guards_group_cluster"
+      number:i=3
+    }
+  }
+}
+
+factory_power_station_wandering_core_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="wandering_core"
+      number:ip2=2, 3
+    }
+  }
+}
+
+factory_monster_conversion_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="monster_hunter_artifact_item+item_in_world"
+      number:i=3
+    }
+  }
+}

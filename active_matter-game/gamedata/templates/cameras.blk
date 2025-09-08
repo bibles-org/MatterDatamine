@@ -1,0 +1,830 @@
+observed{
+  _use:t="deformation_bbox_enabler"
+  _use:t="gravity_zone_visual_effect_enabler"
+  _use:t="smartwatch_owner"
+  _use:t="help_sign_tracer"
+  _tracked:t="bindedCamera"
+  observed__lastPunchTime:r=0
+  hero__isDrawAboveGeometry:b=yes
+
+  "watchedByPlr:eid"{
+    _hide:b=yes
+  }
+
+  "bindedCamera:eid"{
+    _hide:b=yes
+  }
+
+  "activeCamIdx:i"{
+    _tags:t="gameClient"
+    value:i=0
+    _hide:b=yes
+  }
+
+  "cockpitEntity:tag"{}
+}
+
+observed_local{
+  _use:t="observed"
+  _use:t="non_human_phys_ik_origin"
+  _use:t="displacement_compensation_origin"
+  _use:t="nesting_swarm_fx_origin"
+}
+
+spectator_observed{
+  _use:t="observed"
+  _use:t="human_hero_check_weapon_controller"
+  _use:t="non_human_phys_ik_origin"
+  _use:t="displacement_compensation_origin"
+  _use:t="nesting_swarm_fx_origin"
+
+  "spectator__observed:tag"{}
+}
+
+observed_remote{}
+base_camera_shaker{
+  _group{
+    _tags:t="gameClient"
+    camera_shaker__waveMinPower:r=0.01
+    camera_shaker__waveMaxPower:r=1
+    camera_shaker__waveRadiusMod:r=1.3
+    camera_shaker__waveDamageMod:r=0.2
+    camera_shaker__projectilePowerMod:r=0.8
+    camera_shaker__projectileHitDamageMod:r=0.0025
+    camera_shaker__projectileMaxDistance:r=1.5
+    camera_shaker__projectileMinCaliber:r=0.03
+    camera_shaker__projectileShakeSmooth:r=5
+    camera_shaker__vehicleMaxDistance:r=10
+    camera_shaker__vehicleShakeSmooth:r=10
+    camera_shaker__vehicleMassMod:r=0.0007
+    camera_shaker__vehicleSpeedMod:r=0.00075
+  }
+}
+
+camera_shaker_random{
+  _use:t="base_camera_shaker"
+
+  camera_shaker{
+    _tags:t="gameClient"
+  }
+}
+
+camera_shaker_debug{
+  _group{
+    _tags:t="gameClient"
+    camera_shaker_debug__sustainTrauma:r=0
+
+    "camera_shaker_debug__enabled:tag"{}
+  }
+}
+
+camera_shaker_perlin{
+  _use:t="base_camera_shaker"
+
+  _group{
+    _tags:t="gameClient"
+    camera_shaker__trauma:r=0
+    camera_shaker__traumaFadeoutSpeed:r=1.5
+    camera_shaker__shakePower:r=8
+    camera_shaker__maxShake:p3=10, 10, 20
+    camera_shaker__shake:r=0
+    camera_shaker__totalTime:r=0
+    camera_shaker__projectilePowerMod:r=80
+    camera_shaker__vehicleMaxTrauma:r=0.2
+    camera_shaker__projectileFlyMaxTrauma:r=0.5
+    camera_shaker__punch:r=0
+    camera_shaker__punchAngles:p3=0, 0, 0
+    camera_shaker__punchSpeed:r=2
+    camera_shaker__punchByDirMaxAngles:p3=4, 4, 4
+    camera_shaker__punchMaxPower:r=0.5
+    camera_shaker__punchDirLength:r=10
+    camera_shaker__extraShakeAngles:p3=0, 0, 0
+    camera_shaker__onShotMass:r=1
+    camera_shaker__onShotViscosity:p3=0.5, 0.5, 0.5
+    camera_shaker__onShotStiffness:p3=1, 1, 1
+    camera_shaker__onShotCameraOffset:p3=0, 0, 0
+    camera_shaker__onShotCameraPrevOffset:p3=0, 0, 0
+    camera_shaker__onShotExternalImpulse:p3=0, 0, 0
+  }
+
+  _group{
+    _tags:t="gameClient"
+    camera_settings__shakePowerMult:r=1
+    camera_settings__shakePowerAdd:r=0
+  }
+}
+
+cam{
+  camera__active:b=no
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  team:i=0
+  sphere_cam__offs:p3=0, 0.5, -2.7
+
+  "camera_view:tag"{}
+  sphere_cam{
+    _tags:t="gameClient"
+  }
+}
+
+cam1{
+  team:i=0
+  camera__active:b=no
+  sphere_cam__offs:p3=0, 0, 0
+  sphere_cam__zNear:r=0.01
+
+  sphere_cam{
+    _tags:t="gameClient"
+  }
+}
+
+animated_camera{
+  _use:t="static_cam"
+  anim_track_on:b=no
+  _tracked:t="anim_track_on"
+
+  anim_key_track{}
+  anim_float_attr{}
+}
+
+linear_cam{
+  camera__active:b=no
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 100, 0]]
+  fov:r=90
+  from_pos:p3=0, 0, 0
+  from_dir:p3=1, 0, 0
+  from_fov:r=90
+  to_pos:p3=0, 0, 0
+  to_dir:p3=1, 0, 0
+  to_fov:r=90
+  begin_time_sec:r=0
+  end_time_sec:r=0
+
+  "camera_view:tag"{}
+}
+
+benchmark_camera{
+  zfar:r=8000
+  znear:r=0.02
+  camera__active:b=no
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 100, 0]]
+  fov:r=90
+
+  "camera_view:tag"{}
+  "benchmark__overrideExistCamera:tag"{}
+}
+
+camera_aim_data{
+  aim_data__lensNodeId:i=-1
+  aim_data__crosshairNodeId:i=-1
+  aim_data__isAiming:b=no
+  aim_data__isAimingThroughScope:b=no
+  aim_data__nightVision:b=no
+  aim_data__thermalVision:b=no
+  aim_data__nearDofEnabled:b=no
+  aim_data__farDofEnabled:b=no
+  aim_data__simplifiedAimDof:b=no
+  aim_data__lensRenderEnabled:b=no
+  aim_data__aimingTime:r=0
+  aim_data__scopeWeaponLensZoomFactor:r=1
+
+  "aim_data__entityWithScopeLensEid:eid"{}
+  "aim_data__gunEid:eid"{}
+  "aim_data__scopeLensCockpitEntities:list<eid>"{}
+}
+
+base_shooter_cam{
+  _use:t="camera_aim_data"
+  camera__active:b=no
+  camera__fovHorPlus:b=no
+  camera__fovHybrid:b=yes
+  camera__fovSettingsPath:t="camera_fov"
+  fov:r=90
+  camera__scopeWeaponLensZoomFactor:r=0.75
+  fovSettings:r=90
+  fovLimits:p2=50, 120
+  znear:r=0.01
+  zfar:r=10000
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  base_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  zoom:r=0
+  team:i=0
+  isHeroCockpitCam:b=yes
+  _tracked:t="camera__target"
+  _tracked:t="camera__active"
+  shooter_camera__stabTau:r=0
+  camera__offset:p3=0, 0, 0
+  camera__prevOffset:p3=0, 0, 0
+  camera__pivotPos:p3=0, 0, 0
+  camera__velTau:r=0
+  camera__velFactor:r=0
+  camera__tau:r=0
+  camera__vertOffset:r=0
+  camera__tauPos:r=0
+  camera__tmToAnimRatio:r=0
+  camera__animTau:r=0
+  camera__totalMagnification:r=1
+  shooter_cam__blk:t="gamedata/cameras/shootercam.blk"
+  shooter_cam__punch_x_range:p2=-0.0625, 0.0625
+  shooter_cam__punch_y_range:p2=-0.0625, 0.0625
+  shooter_cam__punch_fadeout_tau:r=0.07
+  shooter_cam__punch_strength:r=2
+  shooter_cam__offset:p3=0, 0, 0
+  shooter_cam__offset_multiplier:r=1
+  shooter_cam__alternative_settings:b=no
+  shooter_cam__look_dir:p3=1, 0, 0
+  shooter_cam__rayMat:t="cameraRay"
+  shooter_cam__tau_on_change:r=0.2
+  shooter_cam__lastPos:p3=0, 0, 0
+  shooter_cam__lastAnimTmOffset:p3=0, 0, 0
+  shooter_cam__lastStabVector:p3=0, 1, 0
+  shooter_cam__isScopeRiLodChangeEnabled:b=no
+  shooter_cam__isScopeLodChangeEnabled:b=no
+  shooter_cam__lastDt:r=0
+  shooter_cam__lastOffsDistMult:r=1
+  shooter_cam__rayMatId:i=-1
+  shooter_cam__wasAlternative:b=no
+  shooter_cam__punchTau:r=0
+  shooter_cam__punchFadeoutTau:r=0
+  shooter_cam__punchXRange:p2=0, 0
+  shooter_cam__punchYRange:p2=0, 0
+  shooter_cam__punchStrength:r=0
+  shooter_cam__velMain:p3=0, 0, 0
+  shooter_cam__velAnim:p3=0, 0, 0
+  shooter_cam__isLastPosValid:b=no
+  shooter_cam__tauOnChange:r=0
+  shooter_cam__lastDir:p3=1, 0, 0
+  shooter_cam__tauInc:r=0.15
+
+  camera__accuratePos{
+    _tags:t="gameClient"
+  }
+
+  "camera__prevTarget:eid"{}
+  "camera__target:eid"{}
+  "camera_view:tag"{}
+  shooter_cam{
+    _tags:t="gameClient"
+  }
+
+  "camera__posOnlyBaseOffset:dp3"{}
+}
+
+shooter_cam_perlin{
+  _use:t="camera_shaker_perlin"
+  _use:t="base_shooter_cam"
+  _use:t="vhs_camera_preset"
+  vhs_camera__isActive:b=no
+  camera__updateWhileInactive:b=no
+  camera_tilt__rotateInertion:r=0
+  camera_tilt__rotateInertionDumpViscosity:r=0.1
+  camera_tilt__rotateInertionForce:r=0.3
+  camera_tilt__moveInertionForce:r=0.02
+  camera_tilt__rotateInertionMoveInfluence:r=0.4
+}
+
+shooter_cam{
+  _use:t="camera_shaker_random"
+  _use:t="base_shooter_cam"
+  camera_tilt__rotateInertionDumpViscosity:r=0
+}
+
+shooter_tps_cam{
+  _use:t="shooter_cam"
+  shooter_cam__blk:t="gamedata/cameras/shootertpscam.blk"
+  shooter_cam__moveInSpd:r=6
+  shooter_cam__moveOutSpd:r=2
+  isTpsView:b=yes
+  shooter_cam__additionalOffset:p3=0, 0, 0
+  shooter_cam__wishAdditionalOffset:p3=0, 0, 0
+  shooter_cam__additionalOffsetTau:r=0.2
+  shooter_cam__magnificationMult:r=1
+  shooter_cam__wishMagnificationMult:r=1
+  shooter_cam__magnificationTau:r=0.5
+  shooter_cam__tauMult:r=1
+  shooter_cam__velTauMult:r=1
+  isHeroCockpitCam:b=no
+}
+
+dev_tps_cam{
+  _use:t="shooter_tps_cam"
+  shooter_cam__blk:t="gamedata/cameras/shootertpscam_dev.blk"
+}
+
+underwater_camera_dof{
+  _singleton:b=yes
+  _tags:t="render"
+  savedDof__on:b=no
+  savedDof__is_filmic:b=no
+  savedDof__nearDofStart:r=0.01
+  savedDof__nearDofEnd:r=0.35
+  savedDof__nearDofAmountPercent:r=0
+  savedDof__farDofStart:r=100
+  savedDof__farDofEnd:r=1e+06
+  savedDof__farDofAmountPercent:r=0
+  underwaterDof__nearDofStart:r=0
+  underwaterDof__nearDofEnd:r=0
+  underwaterDof__nearDofAmountPercent:r=0
+  underwaterDof__farDofStart:r=0
+  underwaterDof__farDofEnd:r=1e+06
+  underwaterDof__farDofAmountPercent:r=0.0035
+}
+
+spectator{
+  _use:t="spectator_input"
+  spectator__teamId:i=-1
+  spectator__dir:p3=1, 0, 0
+  spectator__ang:p2=0, 0
+  spectator__changeTargetAvaliableAt:r=0
+  spectator__changeTargetTime:r=0.5
+  shooter_cam__tau_on_change:r=0
+
+  "spectator:tag"{}
+  "spectator__target:eid"{}
+}
+
+replay_node_collapser{
+  "hero:tag"{}
+}
+
+replay_observed{
+  _use:t="replay_node_collapser"
+  _use:t="observed_local"
+  replay__deadCamTime:r=10
+  replay__deadCamTimer:r=0
+  lut_switcher__enabled:b=yes
+  _tracked:t="lut_switcher__enabled"
+
+  "hero:tag"{}
+  "isReplayObserved:tag"{}
+  "cockpitEntity:tag"{}
+  "replay__prevHumanCam:eid"{}
+}
+
+base_replay_camera{
+  _use:t="independent_chromatic_aberration"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  isTpsView:b=no
+  isHeroCockpitCam:b=yes
+  bindToVehicle:b=no
+  camera__active:b=no
+  fovSettings:r=90
+  _tracked:t="fovSettings"
+  _tracked:t="camera__target"
+  _tracked:t="camera__active"
+  shooter_camera__forceStabilized:b=no
+  camera_tilt__rotateInertion:r=0
+  camera_tilt__rotateInertionDumpViscosity:r=0.2
+  camera_tilt__rotateInertionForce:r=0.05
+  camera_tilt__moveInertionForce:r=0.02
+  camera_tilt__rotateInertionMoveInfluence:r=1.2
+
+  "replayCamera:tag"{}
+  "camera__prevTarget:eid"{}
+  "camera__target:eid"{}
+  "camera_view:tag"{}
+}
+
+replay_camera_operator{
+  _use:t="base_replay_camera"
+  _use:t="disable_screen_effects"
+  isTpsView:b=yes
+  isHeroCockpitCam:b=no
+  operator__horizontalOffset:p3=-2, 2, 0
+  operator__tripodLen:r=3
+  operator__tripodLenDefault:r=3
+  operator__tripodLenTarget:r=3
+  operator__moveSpeed:r=0.2
+  operator__verticalOffset:p3=0, 1, 0
+  operator__newPos:p3=0, 0, 0
+
+  "replay_camera__operator:tag"{}
+  camera__accuratePos{
+    _tags:t="gameClient"
+  }
+}
+
+replay_camera{
+  _use:t="camera_shaker_perlin"
+  _use:t="shooter_cam"
+  _use:t="base_replay_camera"
+  isHeroCockpitCam:b=yes
+  isTpsView:b=no
+}
+
+replay_camera_tps{
+  _use:t="base_replay_camera"
+  _use:t="shooter_tps_cam"
+  _use:t="spectator_input"
+  _use:t="disable_screen_effects"
+  spectator__dir:p3=1, 0, 0
+  spectator__ang:p2=0, 0
+  isTpsView:b=yes
+  isHeroCockpitCam:b=no
+  camera__input_enabled:b=no
+  camera__inputActionSet:t=""
+  _tracked:t="camera__input_enabled"
+}
+
+base_replay_free_cam{
+  _use:t="free_camera_input"
+  _use:t="base_replay_camera"
+  _use:t="disable_screen_effects"
+  fov:r=90
+  znear:r=0.01
+  zfar:r=50000
+  base_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  free_cam__angSpdScale:p2=0.001, 0.001
+  isTpsView:b=yes
+  isHeroCockpitCam:b=no
+  specator_cam__smoothDiv:r=1000
+  free_cam_input__moveUI:p2=0, 0
+  replay_camera__rollSpeed:r=45
+  replay_camera__currentRoll:r=0
+  replay_camera__tpsInputAngle:p2=0, 0
+  replay_camera__tpsCurAng:p2=0, 0
+  replay_camera__tpsLerpFactor:r=2
+  replay_camera__freeLinVel:p3=0, 0, 0
+  replay_camera__zoomLinVel:r=0
+  replay_camera__stopInertia:r=0.75
+  replay_camera__moveInertia:r=0.95
+  replay_camera__offset:p3=1.194, 2.092, 3.501
+  _tracked:t="replay_camera__tpsLerpFactor"
+  _tracked:t="replay_camera__stopInertia"
+
+  "camera_view:tag"{}
+  input{
+    _tags:t="input"
+  }
+
+  _group{
+    free_cam__mouse:p2=0, 0
+    _tags:t="gameClient"
+  }
+
+  "replay_camera__tpsFree:tag"{}
+  camera__accuratePos{
+    _tags:t="gameClient"
+  }
+}
+
+replay_camera_tps_free{
+  _use:t="base_replay_free_cam"
+  camera__inputActionSet:t="Camera"
+  camera__input_enabled:b=no
+  _tracked:t="camera__input_enabled"
+  replay_camera__trackWeaponNodeId:i=-1
+  replay_camera__trackWeaponRelativeTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  replay_camera__trackingEnabled:b=no
+  _tracked:t="replay_camera__trackingEnabled"
+
+  "replay_camera__tpsFreeNoTrack:tag"{}
+  "replay_camera__trackWeaponEid:eid"{}
+}
+
+replay_camera_track{
+  _use:t="base_replay_camera"
+  _use:t="base_replay_free_cam"
+
+  "replay_camera__track:tag"{}
+}
+
+disable_screen_effects{
+  "disableScreenEffects:tag"{}
+}
+
+replay_camera_tps_free_with_offset{
+  _use:t="shooter_tps_cam"
+  _use:t="base_replay_camera"
+  _use:t="disable_screen_effects"
+  replay__rotateCamera:b=yes
+  replay__moveCamera:b=yes
+
+  "ignoreMagnification:tag"{}
+}
+
+replay_camera_vertigo{
+  _use:t="shooter_tps_cam"
+  _use:t="base_replay_camera"
+  _use:t="disable_screen_effects"
+  replay__rotateCamera:b=yes
+  replay__moveCamera:b=yes
+
+  "replay_camera__vertigo:tag"{}
+  "ignoreMagnification:tag"{}
+}
+
+spectator_camera{
+  _use:t="shooter_cam_bodycam"
+  _use:t="spectator"
+  _use:t="vhs_camera_preset"
+  vhs_camera__isActive:b=yes
+  vhs_camera__resolutionDownscale:r=0.9
+  vhs_camera__saturationMultiplier:r=1.05
+  vhs_camera__noiseIntensity:r=0.01
+  vhs_camera__dynamicRangeMin:r=0
+  vhs_camera__dynamicRangeMax:r=0.9
+  vhs_camera__dynamicRangeGamma:r=1.1
+  vhs_camera__scanlineHeight:r=0.01
+}
+
+shooter_tps_cine_cam{
+  _use:t="shooter_cam"
+  shooter_cam__blk:t="gamedata/cameras/shootertpscamcine.blk"
+  shooter_cam__moveInSpd:r=6
+  shooter_cam__moveOutSpd:r=0.3
+  isTpsView:b=yes
+}
+
+tank_cam{
+  _use:t="shooter_cam"
+  shooter_cam__blk:t="gamedata/cameras/tankcam.blk"
+  shooter_cam__alt_blk:t="gamedata/cameras/tankcam_commander.blk"
+  shooter_cam__punch_x_range:p2=-0.0625, 0.0625
+  shooter_cam__punch_y_range:p2=-0.5, 0.5
+  shooter_cam__punch_strength:r=-2
+  shooter_cam__tau_on_change:r=0
+  isTpsView:b=yes
+  bindToVehicle:b=yes
+}
+
+dev_tps_tankcam{
+  _use:t="tank_cam"
+  shooter_cam__blk:t="gamedata/cameras/tankcam_dev.blk"
+  shooter_cam__alt_blk:t="gamedata/cameras/tankcam_dev.blk"
+}
+
+car_tps_cam{
+  _use:t="tank_cam"
+  shooter_camera__forceStabilized:b=yes
+}
+
+base_tank_fps_cam{
+  shooter_cam__blk:t="gamedata/cameras/tankfpscam.blk"
+  shooter_cam__alt_blk:t="gamedata/cameras/tankfpscam_commander.blk"
+  shooter_cam__punch_x_range:p2=-0.0625, 0.0625
+  shooter_cam__punch_y_range:p2=-0.5, 0.5
+  shooter_cam__punch_strength:r=-2
+  shooter_cam__tau_on_change:r=0
+  bindToVehicle:b=yes
+}
+
+tank_fps_cam{
+  _use:t="shooter_cam"
+  _use:t="base_tank_fps_cam"
+  camera__fovSettingsPath:t="vehicle_camera_fov"
+}
+
+tank_fps_cam_perlin{
+  _use:t="shooter_cam_bodycam"
+  _use:t="base_tank_fps_cam"
+}
+
+plane_tps_cam{
+  _use:t="shooter_cam"
+  shooter_cam__blk:t="gamedata/cameras/planecam.blk"
+  zfar:r=40000
+  isTpsView:b=yes
+  bindToVehicle:b=yes
+  shooter_camera__forceStabilized:b=no
+  shooter_cam__tau_on_change:r=0
+  isHeroCockpitCam:b=no
+  isPlaneCockpitCam:b=no
+}
+
+plane_fps_cam{
+  _use:t="shooter_cam"
+  camera__fovSettingsPath:t="vehicle_camera_fov"
+  shooter_cam__blk:t="gamedata/cameras/planefpscam.blk"
+  camera__animcharMaxDtThreshold:r=0.4
+  zfar:r=40000
+  bindToVehicle:b=yes
+  shooter_camera__forceStabilized:b=no
+  shooter_cam__tau_on_change:r=0
+  isHeroCockpitCam:b=yes
+  isPlaneCockpitCam:b=yes
+}
+
+melee_tps_cam{
+  _use:t="shooter_cam"
+  shooter_cam__blk:t="gamedata/cameras/meleetpscam.blk"
+}
+
+base_node_cam{
+  _tracked:t="entity"
+  znear:r=0.01
+  zfar:r=10000
+  fov:r=90
+  team:i=0
+  camera__active:b=no
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "entity:eid"{}
+}
+
+helmet_cam{
+  _use:t="base_node_cam"
+  team:i=0
+  node_cam__node:t="Bip01 Head"
+  node_cam__offset:p3=-0.3, 0.1, 0.1
+  node_cam__angTau:r=0.1
+
+  "camera_view:tag"{}
+  node_cam{
+    _tags:t="gameClient"
+  }
+}
+
+eye_cam{
+  _use:t="base_node_cam"
+  team:i=0
+  node_cam__node:t="reye"
+  node_cam__offset:p3=0, 0, 0
+  node_cam__angTau:r=0.05
+
+  "camera_view:tag"{}
+  node_cam{
+    _tags:t="gameClient"
+  }
+}
+
+base_gun_cam{
+  _tracked:t="entity"
+  fov:r=60
+  shooter_cam__blk:t="gamedata/cameras/guncam.blk"
+
+  "entity:eid"{}
+}
+
+gun_cam{
+  _use:t="base_gun_cam"
+  _use:t="shooter_cam"
+}
+
+gun_cam_perlin{
+  _use:t="base_gun_cam"
+  _use:t="shooter_cam_bodycam"
+  shooter_cam__recoilOffset:r=0
+  shooter_cam__recoilOffsetTau:r=0.1
+}
+
+observe_head_cam{
+  _use:t="base_node_cam"
+  fov:r=80
+  shooter_cam__alternative_settings:b=no
+  zoom:r=0
+  node_cam__node:t="Bip01 Spine1"
+  node_cam__offset:p3=-1, 0.3, 0
+  node_cam__velTau:r=0
+  node_cam__velFactor:r=0
+  node_cam__tau:r=0
+  node_cam__angTau:r=0.02
+  node_cam__angles:p3=205, 0, 0
+  node_cam__locked:b=yes
+
+  "camera_view:tag"{}
+  node_cam{
+    _tags:t="gameClient"
+  }
+
+  "camera__target:eid"{}
+}
+
+observe_pelvis_cam{
+  _use:t="base_node_cam"
+  fov:r=80
+  shooter_cam__alternative_settings:b=no
+  zoom:r=0
+  node_cam__node:t="Bip01 Pelvis"
+  node_cam__offset:p3=-1, -0.1, 0
+  node_cam__velTau:r=0
+  node_cam__velFactor:r=0
+  node_cam__tau:r=0
+  node_cam__angTau:r=0.02
+  node_cam__angles:p3=205, 0, 0
+  node_cam__locked:b=yes
+
+  "camera_view:tag"{}
+  node_cam{
+    _tags:t="gameClient"
+  }
+
+  "camera__target:eid"{}
+}
+
+observe_ass_cam{
+  _use:t="observe_pelvis_cam"
+  node_cam__angles:p3=25, 0, 0
+}
+
+observe_left_cam{
+  _use:t="observe_pelvis_cam"
+  node_cam__node:t="Bip01 Spine1"
+  node_cam__offset:p3=-2.5, -0.1, -0.5
+  node_cam__angles:p3=-90, -10, -30
+}
+
+camtrack{
+  znear:r=0.01
+  zfar:r=10000
+  camera__active:b=no
+  camtrack__filename:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  fov:r=90
+
+  "camera_view:tag"{}
+  camtrack{
+    _tags:t="gameClient"
+  }
+}
+
+camtrack_executor{
+  camtracks__start_after_level_loaded:b=yes
+  camtracks__playing:b=no
+  camtracks__file:t=""
+  camtracks__fade_in_time:r=0.2
+  camtracks__fade_out_time:r=0.25
+}
+
+respawn_cam{
+  _use:t="base_shooter_cam"
+  shooter_cam__tauMult:r=1
+  camera__animcharMaxDtThreshold:r=0.4
+  shooter_cam__tau_on_change:r=0.2
+
+  "respawnCameraTargerPoint:eid"{}
+  "respawnCamera:tag"{}
+}
+
+replay_shaker{
+  camera_shaker__prevTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  camera_shaker__velocity:p3=0, 0, 0
+  camera_shaker__omega:p3=0, 0, 0
+  camera_shaker__movementSpeeds:p2=0, 2.5
+  camera_shaker__movementShake:p2=0.03, 0.1
+  camera_shaker__rotationSpeeds:p2=0.1, 0.3
+  camera_shaker__rotationShake:p2=0, 0.2
+  camera_shaker__movementHiFreqMult:r=0.004
+  camera_shaker__movementSmoothHiFreqMult:r=1
+  camera_shaker__movementShakeFadeCoeff:r=0.2
+  camera_shaker__movementShakeHiFreqFadeCoeff:r=0.25
+}
+
+camera_shaker_realistic{
+  _use:t="base_camera_shaker"
+  _use:t="replay_shaker"
+
+  _group{
+    _tags:t="gameClient"
+    camera_settings__shakePowerAdd:r=0
+
+    camera_shaker{}
+  }
+}
+
+independent_chromatic_aberration{
+  chromatic_aberration__value:p4=0.0025, 0.001, 0, 0
+  _tracked:t="chromatic_aberration__value"
+}
+
+shooter_cam_bodycam{
+  _use:t="base_shooter_cam"
+  _use:t="camera_shaker_perlin"
+  _use:t="vhs_camera_preset"
+  _use:t="independent_chromatic_aberration"
+  vhs_camera__isActive:b=no
+  camera__updateWhileInactive:b=no
+  camera_tilt__rotateInertion:r=0
+  camera_tilt__rotateInertionDumpViscosity:r=0.2
+  camera_tilt__rotateInertionForce:r=0.03
+  camera_tilt__moveInertionForce:r=0.007
+  camera_tilt__rotateInertionMoveInfluence:r=1.2
+}
+
+showroom_cam{
+  camera__active:b=no
+  _tracked:t="camera__active"
+  fov:r=90
+  znear:r=0.01
+  zfar:r=10000
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 100, 0]]
+  base_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 100, 0]]
+  _use:t="replicating"
+  showroom_cam__targetPos:p3=0, 0, 0
+  showroom_cam__defaultZoom:r=1
+  showroom_cam__zoom:r=1
+  showroom_cam__zoomDefaultBordersRng:p2=0.7, 1.3
+  showroom_cam__zoomBordersRng:p2=0.7, 1.3
+  showroom_cam__zoomMult:r=0.01
+  showroom_cam__currentState:i=0
+  showroom_cam__currentStateTime:r=0
+  showroom_cam__fadeInOutTime:p2=0.5, 0.5
+  _tracked:t="showroom_cam__itemPlaceEid"
+  showroom_cam__screenPos:p2=0, 0
+  showroom_cam__screenSize:p2=0, 0
+
+  "camera_view:tag"{}
+  "showroom_cam:tag"{}
+  "net__inInitialScope:tag"{}
+  "showroom_cam__itemPlaceEid:eid"{}
+  "showroom_cam__wishItemPlaceEid:eid"{}
+}

@@ -1,0 +1,406 @@
+stamina:r=100
+sprintStaminaDrain:r=0
+restStaminaRestore:r=30
+jumpStaminaDrain:r=0
+climbStaminaDrain:r=0
+jumpVertSpeed:r=3.75
+sprintJumpHorzSpeed:r=0
+ladderQuickMoveUpSpeedMult:r=-1
+ladderQuickMoveDownSpeedMult:r=-1
+climbPositions:i=1
+climbOnPos:p3=0.4, 2.1, 0
+fastClimbingMult:r=1.2
+maxClimbSpeed:r=1.6
+climbVertAccel:r=18
+maxClimbHorzVel:r=2.55
+climbHorzAccel:r=13
+swimPosOffset:p3=0, 1.2, 0
+underwaterSwimPosOffset:p3=0, 0.6, 0
+collisionRadius:r=0.25
+ccdRadius:r=0.15
+allowWeaponSwitchOnSprint:b=yes
+forcedSlidingIfWalkTraceFailed:b=yes
+crawlSlideAngle:r=50
+sprintSpeed:r=6
+acceleration:r=10
+frictionGroundCoeff:r=8
+frictionThresSpdMult:r=0.33
+standAimPos:p3=0.1, 1.7, 0
+crouchAimPos:p3=0.1, 1.2, 0
+crawlAimPos:p3=0.5, 0.3, 0
+heightChangeDeltaClampMin:r=-0.1
+heightChangeDeltaClampMax:r=0.1
+airFrictionAccel:r=10
+blockForceUpCrawlingTimer:r=0.4
+climbOverMaxHeight:r=1.7
+climbOverHeightThreshold:r=0.12
+climbOverForwardOffset:r=0.85
+maxHeightForFastClimbing:r=0.75
+maxObstacleDownReach:r=0.45
+forceDownReachDists:p2=0.1, 0.5
+forceDownReachVel:r=1
+maxStepOverHeight:r=0.1
+gunNode:t="neck"
+maxSprintAngle:r=30
+maxVerticalDirChangeCosine:r=-0.1
+vertDirChangeTau:r=0.3
+aimingMoveSpeed:r=1
+aimSpeed:r=8
+zoomSpeed:r=4
+canCrawl:b=yes
+canCrouch:b=yes
+
+standState{
+  walkSpeed:r=2.2
+  runSpeed:r=2.2
+  sprintSpeed:r=4.75
+  rotateAngles:p2=-30, 30
+  rotateSpeed:r=180
+  ccdPos:p3=0.2, 0.8, 0
+  collisionCenterPos:p3=0.2, 0, 0
+  gravityPivot:p3=0, 0.8, 0
+
+  collisionLinks{
+    offset:p3=0.2, 0.8, 0
+    haveCollision:b=no
+
+    body{
+      offset:p3=0, 0.7, 0
+      capsuleRadiusScale:r=1.2
+      haveCollision:b=yes
+    }
+
+    weapon{
+      offset:p3=0, 0, 0
+      capsuleRadiusScale:r=1
+      haveCollision:b=no
+    }
+  }
+}
+
+crouchState{
+  walkSpeed:r=1.5
+  runSpeed:r=1.5
+  rotateAngles:p2=-20, 20
+  rotateSpeed:r=180
+  ccdPos:p3=0.2, 0.8, 0
+  collisionCenterPos:p3=0.2, 0, 0
+  gravityPivot:p3=0, 0.8, 0
+
+  collisionLinks{
+    offset:p3=0.2, 0.8, 0
+    haveCollision:b=no
+
+    body{
+      offset:p3=0, 0.3, 0
+      capsuleRadiusScale:r=1.2
+      haveCollision:b=yes
+    }
+
+    weapon{
+      offset:p3=0, 0, 0
+      capsuleRadiusScale:r=1
+      haveCollision:b=no
+    }
+  }
+}
+
+crawlState{
+  walkSpeed:r=1
+  runSpeed:r=1
+  rotateAngles:p2=-180, 180
+  alignSpeed:r=0
+  rotateSpeed:r=180
+  collisionCenterPos:p3=0.3, 0, 0
+  ccdPos:p3=0.2, 0.2, 0
+  gravityPivot:p3=0, 0.2, 0
+
+  collisionLinks{
+    offset:p3=-0.2, 0.3, 0
+    haveCollision:b=no
+
+    body{
+      offset:p3=1.1, 0, 0
+      capsuleRadiusScale:r=1.2
+      haveCollision:b=yes
+    }
+
+    weapon{
+      offset:p3=0, 0, 0
+      capsuleRadiusScale:r=1
+      haveCollision:b=no
+    }
+  }
+}
+
+swimState{
+  collisionCenterPos:p3=0, -0.7, 0
+  walkSpeed:r=1.5
+  runSpeed:r=2
+  sprintSpeed:r=4
+
+  collisionLinks{
+    offset:p3=-0.1, -0.5, 0
+    haveCollision:b=no
+
+    body{
+      offset:p3=0, 0.7, 0
+      oriParamMult:r=0.4
+      haveCollision:b=yes
+    }
+  }
+}
+
+swimUnderwaterState{
+  collisionCenterPos:p3=0, -0.7, 0
+  walkSpeed:r=2
+  runSpeed:r=3
+  sprintSpeed:r=5
+
+  collisionLinks{
+    offset:p3=-0.1, -0.5, 0
+    haveCollision:b=no
+
+    body{
+      offset:p3=0, 0.7, 0
+      oriParamMult:r=0.4
+      haveCollision:b=yes
+    }
+  }
+}
+
+downedState{
+  walkSpeed:r=1
+  runSpeed:r=1
+  rotateAngles:p2=-80, 80
+  rotateSpeed:r=180
+  ccdPos:p3=0.2, 0.5, 0
+  collisionCenterPos:p3=0.2, 0, 0
+  gravityPivot:p3=0.2, 0.5, 0
+
+  collisionLinks{
+    offset:p3=0.2, 0.5, 0
+    haveCollision:b=no
+
+    body{
+      offset:p3=0, 0.6, 0
+      capsuleRadiusScale:r=1.2
+      haveCollision:b=yes
+    }
+  }
+}
+
+climbState{
+  walkSpeed:r=3
+  runSpeed:r=3.5
+  sprintSpeed:r=5
+  rotateAngles:p2=-90, 90
+  rotateSpeed:r=180
+  gravityPivot:p3=0, 0.7, 0
+
+  collisionLinks{
+    offset:p3=0, 0.5, 0
+    haveCollision:b=no
+
+    body{
+      offset:p3=0, 0.7, 0
+      haveCollision:b=yes
+    }
+  }
+}
+
+climbThroughState{
+  walkSpeed:r=3
+  runSpeed:r=3.5
+  sprintSpeed:r=5
+  rotateAngles:p2=-90, 90
+  rotateSpeed:r=180
+  ccdPos:p3=0, 1.05, 0
+  collisionCenterPos:p3=0, 0.85, 0
+  gravityPivot:p3=0, 1.05, 0
+
+  collisionLinks{
+    offset:p3=0, 1.1, 0
+    haveCollision:b=no
+
+    body{
+      offset:p3=0, 0.05, 0
+      haveCollision:b=yes
+      capsuleRadiusScale:r=0.5
+    }
+  }
+}
+
+climbOverObstacleState{
+  walkSpeed:r=3
+  runSpeed:r=3.5
+  sprintSpeed:r=5
+  rotateAngles:p2=-90, 90
+  rotateSpeed:r=180
+  ccdPos:p3=0, 1.5, 0
+  gravityPivot:p3=0, 1.5, 0
+  collisionCenterPos:p3=0, 1.5, 0
+
+  collisionLinks{
+    offset:p3=0, 1.5, 0
+    haveCollision:b=no
+
+    body{
+      offset:p3=0, 0.1, 0
+      haveCollision:b=yes
+    }
+  }
+}
+
+climbLadderState{
+  walkSpeed:r=2.2
+  runSpeed:r=2.2
+  sprintSpeed:r=4.75
+  rotateAngles:p2=-30, 30
+  rotateSpeed:r=180
+  gravityPivot:p3=0, 0.7, 0
+
+  collisionLinks{
+    offset:p3=-0.11, 0.45, 0
+    haveCollision:b=no
+
+    body{
+      offset:p3=0, 1, 0
+      haveCollision:b=yes
+    }
+  }
+}
+
+weapons{
+  primary{
+    walkMoveMagnitude:r=0
+    predictTime:r=0.1
+    targetSpdVisc:r=0
+    gunSpdVisc:r=0.02
+    gunSpdDeltaMult:r=1
+    maxGunSpd:r=20.5
+    moveToSpd:r=20.5
+    vertOffsetRestoreVisc:r=0.4
+    vertOffsetMoveDownVisc:r=0.5
+    breathShakeMagnitude:r=0.1
+    crouchBreathShakeMagnitude:r=0.05
+    crawlBreathShakeMagnitude:r=0.025
+    gunLen:r=0.4
+
+    breathShake{
+      standing:r=0.1
+      crouch:r=0.075
+      crawl:r=0.05
+    }
+  }
+
+  secondary{
+    walkMoveMagnitude:r=0
+    predictTime:r=0.1
+    targetSpdVisc:r=0
+    gunSpdVisc:r=0.02
+    gunSpdDeltaMult:r=1
+    maxGunSpd:r=20.5
+    moveToSpd:r=20.5
+    vertOffsetRestoreVisc:r=0.4
+    vertOffsetMoveDownVisc:r=0.5
+    breathShakeMagnitude:r=0.1
+    crouchBreathShakeMagnitude:r=0.05
+    crawlBreathShakeMagnitude:r=0.025
+    gunLen:r=0.4
+
+    breathShake{
+      standing:r=0.1
+      crouch:r=0.075
+      crawl:r=0.05
+    }
+  }
+
+  tertiary{
+    walkMoveMagnitude:r=0
+    predictTime:r=0.1
+    targetSpdVisc:r=0
+    gunSpdVisc:r=0.02
+    gunSpdDeltaMult:r=1
+    maxGunSpd:r=20.5
+    moveToSpd:r=20.5
+    vertOffsetRestoreVisc:r=0.4
+    vertOffsetMoveDownVisc:r=0.5
+    breathShakeMagnitude:r=0.1
+    crouchBreathShakeMagnitude:r=0.05
+    crawlBreathShakeMagnitude:r=0.025
+    gunLen:r=0.4
+
+    breathShake{
+      standing:r=0.1
+      crouch:r=0.075
+      crawl:r=0.05
+    }
+  }
+
+  melee{
+    walkMoveMagnitude:r=0
+    predictTime:r=0.1
+    targetSpdVisc:r=0
+    gunSpdVisc:r=0.02
+    gunSpdDeltaMult:r=1
+    maxGunSpd:r=20.5
+    moveToSpd:r=20.5
+    vertOffsetRestoreVisc:r=0.4
+    vertOffsetMoveDownVisc:r=0.5
+    breathShakeMagnitude:r=0.1
+    crouchBreathShakeMagnitude:r=0.05
+    crawlBreathShakeMagnitude:r=0.025
+    gunLen:r=0.4
+
+    breathShake{
+      standing:r=0.1
+      crouch:r=0.075
+      crawl:r=0.05
+    }
+  }
+
+  grenade{
+    walkMoveMagnitude:r=0
+    predictTime:r=0.1
+    targetSpdVisc:r=0
+    gunSpdVisc:r=0.02
+    gunSpdDeltaMult:r=1
+    maxGunSpd:r=20.5
+    moveToSpd:r=20.5
+    vertOffsetRestoreVisc:r=0.4
+    vertOffsetMoveDownVisc:r=0.5
+    breathShakeMagnitude:r=0.1
+    crouchBreathShakeMagnitude:r=0.05
+    crawlBreathShakeMagnitude:r=0.025
+    gunLen:r=0.4
+
+    breathShake{
+      standing:r=0.1
+      crouch:r=0.075
+      crawl:r=0.05
+    }
+  }
+
+  unarmed{
+    walkMoveMagnitude:r=0
+    predictTime:r=0.1
+    targetSpdVisc:r=0
+    gunSpdVisc:r=0.02
+    gunSpdDeltaMult:r=1
+    maxGunSpd:r=20.5
+    moveToSpd:r=20.5
+    vertOffsetRestoreVisc:r=0.4
+    vertOffsetMoveDownVisc:r=0.5
+    breathShakeMagnitude:r=0.1
+    crouchBreathShakeMagnitude:r=0.05
+    crawlBreathShakeMagnitude:r=0.025
+    gunLen:r=0.4
+
+    breathShake{
+      standing:r=0.1
+      crouch:r=0.075
+      crawl:r=0.05
+    }
+  }
+}

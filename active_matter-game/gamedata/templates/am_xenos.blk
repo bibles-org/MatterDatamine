@@ -1,0 +1,24 @@
+indoor_patroller{
+  indoor_patroller__lastIndoorPos:p3=0, 0, 0
+  indoor_patroller__lastIndoorTime:r=0
+  indoor_patroller__indoorCheckAt:r=0
+  indoor_patroller__indoorCheckDelta:r=1
+  indoor_patroller__maxLeashDist:r=40
+}
+
+beh_tree_patroller{
+  beh_tree__refs__patroller_ref:t="sub.patroller"
+}
+
+beh_tree_indoor_patroller{
+  beh_tree__refs__patroller_ref:t="sub.indoorPatroller"
+}
+
+beh_tree_outdoor_patroller{
+  beh_tree__refs__patroller_ref:t="sub.outdoorPatroller"
+}
+
+beh_tree_clamped_patroller{
+  beh_tree__refs__patroller_ref:t="sub.clampedPatroller"
+  clamped_patroller__yRange:p2=0, 0
+}

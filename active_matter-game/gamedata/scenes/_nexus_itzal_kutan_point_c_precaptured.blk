@@ -1,0 +1,26 @@
+entity{
+  _template:t="nexus_round_mode_beacon+nexus_beacon_precaptured_second_team"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-0.0791642, 42.371, -11.5597]]
+  nexus_beacon__id:i=3
+  nexus_beacon__name:t="Temple"
+  nexus_beacon__symbol:t="C"
+  nexus_beacon__allCaptureDevicesCount:i=2
+}
+
+entity{
+  _template:t="nexus_round_mode_beacon_capture_device"
+  transform:m=[[1, 0, 0] [-0, -1, 8.74228e-08] [0, -8.74228e-08, -1] [-0.0791642, 46.5, -11.8429]]
+  nexus_beacon_capture_device__parentId:i=3
+  item__setCustomUsePrompt:t="nexus_portal/Temple_ceiling"
+}
+
+entity{
+  _template:t="nexus_round_mode_beacon_capture_device"
+  transform:m=[[-1, 8.74228e-08, 0] [8.74228e-08, 1, 8.74228e-08] [7.64274e-15, 8.74228e-08, -1] [-0.0791643, 39.1505, -10.7619]]
+  nexus_beacon_capture_device__parentId:i=3
+  item__setCustomUsePrompt:t="nexus_portal/Temple_floor"
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_itzal_kutan_point_c_decorations.blk"
+}

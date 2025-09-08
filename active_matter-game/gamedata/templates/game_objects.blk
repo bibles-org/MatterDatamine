@@ -1,0 +1,30 @@
+game_objects{
+  _singleton:b=yes
+  nonCreatableObj:b=yes
+
+  game_objects{}
+  "game_objects__createChance:object"{
+    stationary_mg42:r=0.4
+    chimney_smoke_fx:r=0.15
+  }
+
+  "game_objects__syncCreation:object"{
+    gravity_zone_sphere:b=yes
+    gravity_zone_box:b=yes
+    gravity_zone_cylinder:b=yes
+    gravity_zone_sphere_rad:b=yes
+    gravity_path_box:b=yes
+    gravity_zone_gd_flat:b=yes
+    gravity_zone_box_gd_island:b=yes
+  }
+}
+
+game_object{
+  "gameObject:tag"{}
+}
+
+custom_game_object{
+  custom_game_object__name:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  custom_game_object__occuped:b=no
+}

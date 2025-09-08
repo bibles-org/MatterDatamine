@@ -1,0 +1,63 @@
+tweening_sphere_zone_radius_smooth{
+  sphere_zone__radius:r=0
+  tweening_sphere_zone_radius_smooth__fromRadius:r=0
+  tweening_sphere_zone_radius_smooth__toRadius:r=0
+  tweening_sphere_zone_radius_smooth__timer:r=0
+  tweening_sphere_zone_radius_smooth__time:r=1
+}
+
+tweening_transform_scale_smooth{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  tweening_transform_scale_smooth__from:p3=1, 1, 1
+  tweening_transform_scale_smooth__to:p3=1, 1, 1
+  tweening_transform_scale_smooth__timer:r=0
+  tweening_transform_scale_smooth__time:r=1
+}
+
+tweening_transform_pos{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  tweening_transform_pos__from:p3=0, 0, 0
+  tweening_transform_pos__to:p3=0, 0, 0
+  tweening_transform_pos__lerpPow:r=1
+  tweening_transform_pos__timer:r=0
+  tweening_transform_pos__time:r=1
+}
+
+tweening_transform_rotation{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  tweening_transform_rotation__from:p4=0, 0, 0, 0
+  tweening_transform_rotation__to:p4=0, 0, 0, 0
+  tweening_transform_rotation__lerpPow:r=1
+  tweening_transform_rotation__timer:r=0
+  tweening_transform_rotation__time:r=1
+}
+
+scale_to_zero_and_destroy{
+  scale_to_zero_and_destroy__time:r=1
+}
+
+scale_to_zero_and_destroy_0_5s{
+  _use:t="scale_to_zero_and_destroy"
+  scale_to_zero_and_destroy__time:r=0.5
+}
+
+scale_to_zero_and_destroy_1s{
+  _use:t="scale_to_zero_and_destroy"
+}
+
+scale_to_zero_and_destroy_10s{
+  _use:t="scale_to_zero_and_destroy"
+  scale_to_zero_and_destroy__time:r=10
+}
+
+self_destroyer_scale_to_zero_0_5s{
+  self_destroyer__template:t="scale_to_zero_and_destroy_0_5s"
+}
+
+self_destroyer_scale_to_zero_1s{
+  self_destroyer__template:t="scale_to_zero_and_destroy_1s"
+}
+
+self_destroyer_scale_to_zero_10s{
+  self_destroyer__template:t="scale_to_zero_and_destroy_10s"
+}

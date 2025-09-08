@@ -1,0 +1,68 @@
+mass:r=0.6
+momentOfInertia:p3=0.04, 0.008, 0.04
+caliber:r=0.04
+speed:r=18.5
+speedPitch:r=5
+maxDistance:r=5
+physMat:t="walkRay"
+useFutureContacts:b=yes
+logCCD:b=no
+frictionGround:r=2
+noSleepAtTheSlopeCos:r=0.766
+entityTemplate:t="m24_grenade"
+entityPhysTemplate:t="m24_grenade_phys"
+explosiveType:t="tnt"
+explosiveMass:r=0.18
+
+collisionResource{
+  props{
+    volumeBox:t="box"
+  }
+}
+
+ccdSpheres{
+  ccd:p4=0, 0.05, 0, 0.015
+  ccd:p4=0, 0.2, 0, 0.015
+  ccd:p4=0, -0.05, 0, 0.015
+}
+
+solver{
+  energyConservation:r=0.85
+}
+
+detonation{
+  onHit:b=no
+  timer:r=5
+}
+
+splashDamage{
+  radius:p2=1, 10
+  penetration:p2=15, 2
+  damage:r=75
+  dmgOffset:p3=0, 0.25, 0
+}
+
+splash{
+  innerRadius:r=1
+  outerRadius:r=10
+  penetration:r=10
+  damage:r=75
+  dmgOffset:p3=0, 0.25, 0
+}
+
+explFx{
+  fxScale:p2=0.8, 0.9
+  effectTemplName:t="explosion_effect_small+disable_effect_sfx"
+}
+
+shellSound{
+  explosionPath:t="impact/grenade"
+  activatePath:t="/weapon/throwable/grenade/activate"
+}
+
+damage{
+  explosive{
+    strengthEquivalent:r=1
+    brisanceEquivalent:r=1
+  }
+}

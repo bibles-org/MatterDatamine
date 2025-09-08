@@ -1,0 +1,36 @@
+navmesh_battle_area{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  editableObj:b=no
+
+  "battle_area:tag"{}
+  "box_zone:tag"{}
+  "humanTriggerable:tag"{}
+  "ecs_no_debug:tag"{}
+}
+
+am_navmesh_creature_base{
+  _use:t="navmesh_creature_base"
+  _use:t="truce_zone_creature"
+  bodyCleanupTime:r=120
+  collision_physMatId:i=-1
+  collision_physMatName:t="walker"
+  ragdoll__use_ccd:b=yes
+  navmesh_phys__upDir:p3=0, 1, 0
+
+  "am_navmesh_creature__gravZones:list<eid>"{}
+  "ragdoll__enabled:b"{
+    _tags:t="render"
+    value:b=no
+  }
+
+  "ragdoll__enabledAt:r"{
+    _tags:t="render"
+    value:r=0
+  }
+
+  "am_navmesh_creature:tag"{}
+}
+
+dont_create_nphys_obstacle{
+  "dontCreateNphysObstacle:tag"{}
+}

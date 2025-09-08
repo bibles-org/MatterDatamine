@@ -1,0 +1,49 @@
+screen_mud_renderer{
+  _singleton:b=yes
+  _tags:t="render"
+  screen_mud__active:b=no
+  screen_mud__enable:b=yes
+  mudDrops_res:t="liquid_screen_splatter_tile_tex_n"
+  mudDrops_var:t="base_splash_tex"
+  screen_mud__aspect_ratio:r=1.78
+  screen_mud__splashes_current_count:i=0
+  screen_mud__oldest_splash_index:i=0
+  screen_mud_offset_seed_value:r=0
+  _tracked:t="screen_mud__active"
+
+  "screen_mud__spots:dafg::NodeHandle"{}
+  "screen_mud__blur_x:dafg::NodeHandle"{}
+  "screen_mud__blur_y:dafg::NodeHandle"{}
+  "mudDrops:SharedTexHolder"{}
+  "screen_mud_albedo:ShaderVar"{}
+  "screen_mud_albedo2:ShaderVar"{}
+  "screen_mud_translucency:ShaderVar"{}
+  "screen_mud_sun_refraction:ShaderVar"{}
+  "screen_mud__splashes_buf:UniqueBufHolder"{}
+  "screen_mud__splashes:MudSplashes"{}
+  "screen_mud__splashes_positions:list<p2>"{}
+  "screen_mud__splashes_scaled_eccentricity_vectors:list<p2>"{}
+  "screen_mud__splashes_base_intensities:list<r>"{}
+  "screen_mud__splashes_sizes:list<r>"{}
+  "screen_mud__splashes_aspect_ratios:list<r>"{}
+  "screen_mud__splashes_durations:list<r>"{}
+  "screen_mud__splashes_time_left:list<r>"{}
+  "screen_mud_max_splash_size:ShaderVar"{}
+  "screen_mud_max_intensity:ShaderVar"{}
+  "screen_mud_offset_seed:ShaderVar"{}
+}
+
+screen_mud_settings{
+  _singleton:b=yes
+  _tags:t="render"
+
+  _group{
+    _track:b=yes
+    screen_mud__baseDuration:r=5
+    screen_mud__baseIntensity:r=1
+    screen_mud_albedo_value:p4=0.011, 0.007, 0.003, 0
+    screen_mud_albedo2_value:p4=0.01, 0.005, 0.001, 0
+    screen_mud_translucency_value:p4=0.045, 0.025, 0.008, 0
+    screen_mud_sun_refraction_value:r=0.01
+  }
+}

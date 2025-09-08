@@ -1,0 +1,591 @@
+human_damage_model{
+  _use:t="replicating"
+  human_damage_model__protectionKoefForProtectionFx:r=0.3
+  _tracked:t="human_damage_model__armorMods"
+  human_damage_model__selectedPartIdx:i=-1
+  human_damage_model__wishPartIdx:i=-1
+  human_damage_model__dmgMult:r=10
+  human_damage_model__painDmgMult:r=0.003
+  _replicated:t="human_damage_model__parts"
+  _tracked:t="human_damage_model__parts"
+
+  "customDamageModel:tag"{}
+  "human_damage_model__parts:object"{
+    "head:object"{
+      maxHp:r=150
+      hp:r=150
+      isInjured:b=no
+      removeInjuryHp:r=10
+      explosionImpact:b=yes
+      collisionImpact:b=no
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="head"
+
+      "list:list<t>"{
+        node:t="Bip01 Head"
+        node:t="Bip01 Neck"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+
+    "body:object"{
+      maxHp:r=200
+      hp:r=200
+      isInjured:b=no
+      removeInjuryHp:r=10
+      explosionImpact:b=yes
+      collisionImpact:b=no
+      holdBreathImpact:b=no
+      barbwireImpact:b=no
+      name:t="body"
+
+      "list:list<t>"{
+        node:t="Bip01 Spine1"
+        node:t="Bip01 Spine"
+        node:t="Bip01 Pelvis"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{}
+    }
+
+    "right_hand:object"{
+      maxHp:r=100
+      hp:r=100
+      isInjured:b=no
+      removeInjuryHp:r=10
+      distributionDamageMult:r=0.75
+      explosionImpact:b=yes
+      collisionImpact:b=no
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="right_hand"
+
+      "list:list<t>"{
+        node:t="Bip01 R Clavicle"
+        node:t="Bip01 R UpperArm"
+        node:t="Bip01 R Forearm"
+        node:t="Bip01 R Hand"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+
+    "left_hand:object"{
+      maxHp:r=100
+      hp:r=100
+      isInjured:b=no
+      removeInjuryHp:r=10
+      distributionDamageMult:r=0.75
+      explosionImpact:b=yes
+      collisionImpact:b=no
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="left_hand"
+
+      "list:list<t>"{
+        node:t="Bip01 L Clavicle"
+        node:t="Bip01 L UpperArm"
+        node:t="Bip01 L Forearm"
+        node:t="Bip01 L Hand"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+
+    "right_leg:object"{
+      maxHp:r=100
+      hp:r=100
+      isInjured:b=no
+      removeInjuryHp:r=10
+      distributionDamageMult:r=1.25
+      explosionImpact:b=yes
+      collisionImpact:b=yes
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="right_leg"
+
+      "list:list<t>"{
+        node:t="Bip01 R Thigh"
+        node:t="Bip01 R Calf"
+        node:t="Bip01 R Foot"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+
+    "left_leg:object"{
+      maxHp:r=100
+      hp:r=100
+      isInjured:b=no
+      removeInjuryHp:r=10
+      distributionDamageMult:r=1.25
+      explosionImpact:b=yes
+      collisionImpact:b=yes
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="left_leg"
+
+      "list:list<t>"{
+        node:t="Bip01 L Thigh"
+        node:t="Bip01 L Calf"
+        node:t="Bip01 L Foot"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+  }
+
+  "human_damage_model__effects:shared:array"{
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_stamina_sprint_drain_mult_15_body"
+
+      "parts:object"{
+        "body:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_speed_mult_0_5"
+      sequential:b=yes
+
+      "parts:object"{
+        "left_leg:object"{
+          whenInjured:b=yes
+        }
+
+        "right_leg:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_injured_animation"
+      sequential:b=no
+
+      "parts:object"{
+        "left_leg:object"{
+          whenInjured:b=yes
+        }
+
+        "right_leg:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_activator_pain_on_landing_0_7"
+      sequential:b=yes
+
+      "parts:object"{
+        "left_leg:object"{
+          whenInjured:b=yes
+        }
+
+        "right_leg:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_activator_pain_on_landing_0_3"
+
+      "parts:object"{
+        "left_leg:object"{
+          whenInjured:b=yes
+        }
+
+        "right_leg:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_stamina_sprint_drain_mult_15"
+
+      "parts:object"{
+        "left_leg:object"{
+          whenInjured:b=yes
+        }
+
+        "right_leg:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_activator_pain_on_sprint_2"
+
+      "parts:object"{
+        "left_leg:object"{
+          whenInjured:b=yes
+        }
+
+        "right_leg:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_activator_pain_on_sprint_3"
+      sequential:b=yes
+
+      "parts:object"{
+        "left_leg:object"{
+          whenInjured:b=yes
+        }
+
+        "right_leg:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_breath_amplitude_mult_7"
+
+      "parts:object"{
+        "left_hand:object"{
+          whenInjured:b=yes
+        }
+
+        "right_hand:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_activator_pain_on_aim_0_7"
+      sequential:b=yes
+
+      "parts:object"{
+        "left_hand:object"{
+          whenInjured:b=yes
+        }
+
+        "right_hand:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_activator_pain_on_aim_0_3"
+
+      "parts:object"{
+        "left_hand:object"{
+          whenInjured:b=yes
+        }
+
+        "right_hand:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_recoil_mult_1_2"
+
+      "parts:object"{
+        "left_hand:object"{
+          whenInjured:b=yes
+        }
+
+        "right_hand:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_activator_pain_on_climb"
+
+      "parts:object"{
+        "left_hand:object"{
+          whenInjured:b=yes
+        }
+
+        "right_hand:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_activator_pain_on_ladder"
+
+      "parts:object"{
+        "left_hand:object"{
+          whenInjured:b=yes
+        }
+
+        "right_hand:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_activator_pain_on_shoot_0_1"
+
+      "parts:object"{
+        "left_hand:object"{
+          whenInjured:b=yes
+        }
+
+        "right_hand:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_activator_pain_on_melee_0_1"
+
+      "parts:object"{
+        "right_hand:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_activator_pain_on_two_handed_melee_0_1"
+
+      "parts:object"{
+        "left_hand:object"{
+          whenInjured:b=yes
+        }
+
+        "right_hand:object"{
+          whenInjured:b=yes
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_immediate_death"
+
+      "parts:object"{
+        "body:object"{
+          minHp:r=-15
+        }
+
+        "head:object"{
+          minHp:r=0
+        }
+      }
+    }
+
+    "effect:object"{
+      effectTemplate:t="damage_model_effect_down_state"
+
+      "parts:object"{
+        "left_leg:object"{
+          minHp:r=-15
+          chance:r=0.3
+        }
+
+        "right_leg:object"{
+          minHp:r=-15
+          chance:r=0.3
+        }
+
+        "body:object"{
+          minHp:r=-5
+          chance:r=0.3
+        }
+      }
+    }
+  }
+
+  "human_damage_model__armorMods:list<eid>"{}
+  "human_damage_model__appliedEffects:list<t>"{}
+  _group{
+    _replicate:b=yes
+    _track:b=yes
+    human_damage_model__sumHpAllBodyParts:r=0
+    human_damage_model__sumMaxHpAllBodyParts:r=0
+  }
+}
+
+healing_screen_effect{
+  _use:t="screen_effect_generic"
+  screen_effect__texture_res:t="veins_screen_splatter_tile_tex_n"
+  screen_effect__diffuse:p4=0, 1, 2, 1
+  screen_effect__roughness:r=0.8
+  screen_effect__opacity:r=0.1
+  screen_effect__uvScale:r=0.471
+  screen_effect__intensity:r=0
+  screen_effect__borderOffset:r=0.2
+  screen_effect__borderSaturation:r=1.5
+  healing_screen_effect__value:r=0
+  healing_screen_effect__wishValue:r=0
+  healing_screen_effect__dampViscosity:r=0.5
+  healing_screen_effect__speedViscosity:r=0.5
+  healing_screen_effect__effectRange:p2=0, 0.4
+}
+
+painkiller_screen_effect{
+  _use:t="screen_effect_generic"
+  screen_effect__texture_res:t="postfx_vortex_vectormap_tex_f"
+  screen_effect__diffuse:p4=20, 20, 20, 1
+  screen_effect__roughness:r=10
+  screen_effect__opacity:r=10
+  screen_effect__uvScale:r=0
+  screen_effect__intensity:r=0.4
+  screen_effect__borderOffset:r=0
+  screen_effect__borderSaturation:r=7
+  screen_effect__weight:r=0
+  painkiller_screen_effect__wishBorder:r=0
+  painkiller_screen_effect__startAt:r=-1
+  painkiller_screen_effect__endAt:r=-1
+  painkiller_screen_effect__startTime:r=0.5
+  painkiller_screen_effect__endTime:r=2
+}
+
+militant_dm_parts{
+  _skipInitialReplication:t="dm_parts__parts"
+
+  "dm_parts__parts:object"{
+    "Bip01 Head:object"{
+      dmgMult:r=1.8
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 Neck:object"{
+      dmgMult:r=2
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 L Thigh:object"{
+      dmgMult:r=0.6
+      armor:r=0
+      type:t="l_leg"
+    }
+
+    "Bip01 R Thigh:object"{
+      dmgMult:r=0.6
+      armor:r=0
+      type:t="r_leg"
+    }
+
+    "Bip01 L Calf:object"{
+      dmgMult:r=0.6
+      armor:r=0
+      type:t="l_leg"
+    }
+
+    "Bip01 R Calf:object"{
+      dmgMult:r=0.6
+      armor:r=0
+      type:t="r_leg"
+    }
+
+    "Bip01 L Foot:object"{
+      dmgMult:r=0.6
+      armor:r=0
+      type:t="l_leg"
+    }
+
+    "Bip01 R Foot:object"{
+      dmgMult:r=0.6
+      armor:r=0
+      type:t="r_leg"
+    }
+
+    "Bip01 Pelvis:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="torso"
+    }
+
+    "Bip01 Spine:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="torso"
+    }
+
+    "Bip01 Spine1:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="torso"
+    }
+
+    "Bip01 R Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="r_hand"
+    }
+
+    "Bip01 L Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="l_hand"
+    }
+
+    "Bip01 R UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="r_hand"
+    }
+
+    "Bip01 L UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="l_hand"
+    }
+
+    "Bip01 R Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="r_hand"
+    }
+
+    "Bip01 L Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="l_hand"
+    }
+
+    "Bip01 R Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="r_hand"
+    }
+
+    "Bip01 L Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="l_hand"
+    }
+  }
+}

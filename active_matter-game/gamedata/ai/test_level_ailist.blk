@@ -1,0 +1,256 @@
+repeat{
+  name:t="militant_gravity_navigation_test"
+
+  findClosestEntityWithComponent{
+    componentName:t="position_mapping__matrix"
+    outParamName:t="targetEid"
+  }
+
+  setPosFromEntity{
+    to:t="targetPos"
+    from:t="targetEid"
+    projectToNavmesh:b=no
+  }
+
+  gravityMoveToPos{
+    incObstacles:b=no
+    posParam:t="targetPos"
+    minStance:i=1
+    distThreshold:r=1
+    lookVisc:r=0.1
+    setShootDir:b=yes
+    tryClimbing:b=yes
+    deflectPath:b=yes
+    maxDeflectionAngle:r=1.147
+    minCurvedPathlenThreshold:r=20
+    restTimerRange:p2=1, 7
+  }
+
+  wait{
+    range:p2=2.5, 2.5
+    resetable:b=yes
+  }
+
+  choosePositionAroundEntityRespectingRotation{
+    to:t="targetPos"
+    from:t="targetEid"
+  }
+
+  gravityMoveToPos{
+    incObstacles:b=no
+    posParam:t="targetPos"
+    minStance:i=1
+    distThreshold:r=1
+    lookVisc:r=0.1
+    setShootDir:b=yes
+    tryClimbing:b=yes
+    deflectPath:b=yes
+    maxDeflectionAngle:r=1.147
+    minCurvedPathlenThreshold:r=20
+    restTimerRange:p2=1, 7
+  }
+
+  wait{
+    range:p2=0.5, 0.5
+    resetable:b=yes
+  }
+}
+
+repeat{
+  name:t="changed_gravity_navigation_test"
+  selectStrategy:t="ordered"
+
+  findClosestEntityWithComponent{
+    componentName:t="position_mapping__matrix"
+    outParamName:t="targetEid"
+  }
+
+  setPosFromEntity{
+    to:t="targetPos"
+    from:t="targetEid"
+    projectToNavmesh:b=no
+  }
+
+  setEcsPoint3FromBb{
+    from:t="targetPos"
+    to:t="walker_agent__targetPos"
+  }
+
+  nPhysCorridorMoveToPosWithNavmeshMapping{
+    posParam:t="walker_agent__targetPos"
+    forceToWalk:b=yes
+    navLookAhead:r=0.75
+  }
+
+  wait{
+    range:p2=0.5, 0.5
+    resetable:b=yes
+  }
+
+  choosePositionAroundEntityRespectingRotation{
+    to:t="targetPos"
+    from:t="targetEid"
+  }
+
+  setEcsPoint3FromBb{
+    from:t="targetPos"
+    to:t="walker_agent__targetPos"
+  }
+
+  nPhysCorridorMoveToPosWithNavmeshMapping{
+    posParam:t="walker_agent__targetPos"
+    forceToWalk:b=yes
+    navLookAhead:r=0.75
+  }
+
+  wait{
+    range:p2=0.5, 0.5
+    resetable:b=yes
+  }
+}
+
+repeat{
+  name:t="changed_gravity_navigation_test_open"
+
+  sequencer{
+    findClosestEntityWithComponent{
+      componentName:t="debug_waypoint"
+      outParamName:t="targetEid"
+    }
+
+    setPosFromEntity{
+      to:t="targetPos"
+      from:t="targetEid"
+      projectToNavmesh:b=no
+    }
+
+    setEcsPoint3FromBb{
+      from:t="targetPos"
+      to:t="walker_agent__targetPos"
+    }
+
+    nPhysCorridorMoveToPosWithNavmeshMapping{
+      posParam:t="walker_agent__targetPos"
+      forceToWalk:b=yes
+      lookInMoveDir:b=yes
+    }
+  }
+
+  wait{
+    range:p2=0.2, 0.2
+    resetable:b=yes
+  }
+}
+
+repeat{
+  name:t="militant_gravity_navigation_test_open"
+
+  findClosestEntityWithComponent{
+    componentName:t="debug_waypoint"
+    outParamName:t="targetEid"
+  }
+
+  setPosFromEntity{
+    to:t="targetPos"
+    from:t="targetEid"
+    projectToNavmesh:b=no
+  }
+
+  gravityMoveToPos{
+    incObstacles:b=no
+    posParam:t="targetPos"
+    minStance:i=1
+    distThreshold:r=1
+    lookVisc:r=0.1
+    setShootDir:b=yes
+    tryClimbing:b=yes
+    deflectPath:b=yes
+    maxDeflectionAngle:r=1.147
+    minCurvedPathlenThreshold:r=20
+    restTimerRange:p2=1, 7
+  }
+
+  wait{
+    range:p2=0.5, 0.5
+    resetable:b=yes
+  }
+}
+
+repeat{
+  name:t="changed_change_gravity_zone_test"
+
+  patroller{}
+  nPhysCorridorMoveToPos{
+    posParam:t="patroller__currentWaypoint"
+    stopDist:r=2
+    navLookAhead:r=0.75
+  }
+
+  wait{
+    range:p2=0.5, 0.5
+    resetable:b=yes
+  }
+}
+
+repeat{
+  name:t="running_olympian"
+
+  wait{
+    range:p2=0.3, 0.3
+    resetable:b=yes
+  }
+
+  findClosestEntityWithComponent{
+    componentName:t="running_olympics_finish"
+    outParamName:t="targetEid"
+  }
+
+  setPosFromEntity{
+    to:t="targetPos"
+    from:t="targetEid"
+    projectToNavmesh:b=no
+  }
+
+  gravityMoveToPos{
+    incObstacles:b=no
+    posParam:t="targetPos"
+    distThreshold:r=0.5
+    lookVisc:r=0.1
+    deflectPath:b=no
+    restTimerRange:p2=0.1, 0.1
+    sprintTimerRange:p2=90, 90
+    minDistToSprint:r=0.5
+  }
+}
+
+repeat{
+  name:t="test_tagging"
+
+  nPhysCorridorMoveToPosWithNavmeshMapping{
+    posParam:t="test_tagging__startPos"
+    forceToWalk:b=yes
+    navLookAhead:r=0.75
+  }
+
+  nPhysCorridorMoveToPosWithNavmeshMapping{
+    posParam:t="test_tagging__endPos"
+    forceToWalk:b=yes
+    navLookAhead:r=0.75
+  }
+}
+
+repeat{
+  name:t="test_tagging_run"
+
+  nPhysCorridorMoveToPosWithNavmeshMapping{
+    posParam:t="test_tagging__startPos"
+    forceToWalk:b=no
+    navLookAhead:r=0.75
+  }
+
+  nPhysCorridorMoveToPosWithNavmeshMapping{
+    posParam:t="test_tagging__endPos"
+    forceToWalk:b=no
+    navLookAhead:r=0.75
+  }
+}

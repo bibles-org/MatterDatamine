@@ -1,0 +1,47 @@
+repeat{
+  name:t="centipede"
+  selectStrategy:t="ordered"
+
+  utilitySelector{
+    utilVars{
+      updateTimeStep:r=0.05
+      ready:t="util_vars__ready"
+      var:t="util_vars__attractPointRatio"
+    }
+
+    sequencer{
+      utilFn:t="attractPointRatio > 0f ? 0f : 1f"
+      name:t="patrol"
+
+      outdoorPatroller{}
+      nPhysCorridorWriggleMoveToPos{
+        posParam:t="patroller__currentWaypoint"
+        forceToWalk:b=yes
+        sprintTimerRange:p2=0, 0
+      }
+
+      wait{
+        range:p2=5, 10
+        resetable:b=yes
+      }
+    }
+
+    sequencer{
+      utilFn:t="attractPointRatio"
+      name:t="runToAttrackPoint"
+
+      nPhysCorridorWriggleMoveToPos{
+        posParam:t="attract_point__targetPos"
+      }
+
+      wait{
+        range:p2=1, 2
+        resetable:b=yes
+      }
+
+      subTree{
+        treeName:t="sub.spider_swarm_patroll_around_attract_pos"
+      }
+    }
+  }
+}

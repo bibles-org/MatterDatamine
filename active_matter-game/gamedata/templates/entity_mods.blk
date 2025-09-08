@@ -1,0 +1,162 @@
+base_entity_mods{
+  _group{
+    _replicate:b=yes
+    entity_mods__reloadMult:r=1
+    entity_mods__shotDeviationMult:r=1
+    entity_mods__shotDeviationAdd:r=0
+    entity_mods__fireDamageMult:r=1
+    entity_mods__changePosModsMulti:r=1
+
+    "entity_mods__reloadMultMods:object"{}
+    "entity_mods__shotDeviationMods:object"{}
+  }
+
+  "entity_mods:object"{}
+  "entity_mod_values:object"{
+    "speedMult:object"{
+      value:r=1
+      reversePositivity:b=no
+    }
+
+    "recoilMult:object"{
+      value:r=1
+      reversePositivity:b=yes
+    }
+
+    "breathAmplitudeMult:object"{
+      value:r=1
+      reversePositivity:b=yes
+    }
+
+    "walkNoiseMult:object"{
+      value:r=1
+      reversePositivity:b=yes
+    }
+
+    "attractionMult:object"{
+      value:r=1
+      reversePositivity:b=yes
+    }
+
+    "fasterChangePoseMult:object"{
+      value:r=4
+      reversePositivity:b=no
+    }
+
+    "jumpSpeedMult:object"{
+      value:r=1
+      reversePositivity:b=no
+    }
+
+    "fallDamageSpeedMult:object"{
+      value:r=1
+      reversePositivity:b=no
+    }
+
+    "weightPenaltyReduction:object"{
+      value:r=1
+      reversePositivity:b=no
+    }
+
+    "activeMatterGatherSpeed:object"{
+      value:r=1
+      reversePositivity:b=no
+    }
+
+    "itemUsageSpeed:object"{
+      value:r=1
+      reversePositivity:b=no
+    }
+
+    "itemRecognitionSpeed:object"{
+      value:r=1
+      reversePositivity:b=no
+    }
+
+    "meleeDamageMult:object"{
+      value:r=1
+      reversePositivity:b=no
+    }
+
+    "bulletProtectionMult:object"{
+      value:r=1
+      reversePositivity:b=no
+    }
+
+    "meleeProtectionMult:object"{
+      value:r=1
+      reversePositivity:b=no
+    }
+
+    "shockReduction:object"{
+      value:r=0
+      reversePositivity:b=no
+    }
+
+    "healingMult:object"{
+      value:r=1
+      reversePositivity:b=no
+    }
+
+    "hrStaminaRegenMulti:object"{
+      value:r=1
+      reversePositivity:b=no
+    }
+
+    "hrFallSpeedMulti:object"{
+      value:r=1
+      reversePositivity:b=no
+    }
+
+    "hrFatigueThresholdAdd:object"{
+      value:r=0
+      reversePositivity:b=no
+    }
+
+    "hrActivityMulti:object"{
+      value:r=1
+      reversePositivity:b=yes
+    }
+
+    "hrRiseSpeedMulti:object"{
+      value:r=1
+      reversePositivity:b=yes
+    }
+
+    "hrStaminaDrainMulti:object"{
+      value:r=1
+      reversePositivity:b=yes
+    }
+
+    "hitpointsDmgMult:object"{
+      value:r=1
+      reversePositivity:b=no
+      hidden:b=yes
+    }
+
+    "hitpointsMeleeDmgMult:object"{
+      value:r=1
+      reversePositivity:b=no
+      hidden:b=yes
+    }
+
+    "humanNoiseMult:object"{
+      value:r=1
+      reversePositivity:b=yes
+      hidden:b=yes
+    }
+
+    "invisbleManSpawnFreqMult:object"{
+      value:r=1
+      reversePositivity:b=yes
+      hidden:b=yes
+    }
+
+    "corruptionZoneDamageMult:object"{
+      value:r=1
+      calcType:t="mult_diminishing"
+      reversePositivity:b=yes
+      hidden:b=yes
+    }
+  }
+}

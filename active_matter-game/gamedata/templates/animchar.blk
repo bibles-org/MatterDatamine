@@ -1,0 +1,116 @@
+animchar{
+  animchar__accumDt:r=0
+  animchar__dtThresholdDefaultValue:r=0.1
+  _use:t="animchar_bbox"
+
+  "animchar__updatable:b"{
+    value:b=yes
+    _hide:b=yes
+    _track:b=yes
+  }
+
+  "animchar__dtThreshold:r"{
+    value:r=0
+    _hide:b=yes
+  }
+
+  animchar{}
+  animchar_render{
+    _tags:t="render"
+  }
+
+  animchar_node_wtm{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    animchar_render__dist_sq:r=201
+    animchar_render__shadow_cast_dist:r=-1
+  }
+
+  animchar_visbits{
+    _tags:t="render"
+  }
+
+  "animchar__visible:b"{
+    _tags:t="render"
+    value:b=yes
+    _track:b=yes
+  }
+
+  "animchar__invisDtThreshold:r"{
+    _tags:t="render"
+    value:r=0.4
+  }
+
+  "animchar__minDtThreshold:r"{
+    _tags:t="render"
+    value:r=0
+  }
+
+  "animchar__renderPriority:b"{
+    _tags:t="render"
+    value:b=no
+  }
+}
+
+requires_trans_render{
+  "requires_trans_render:tag"{}
+}
+
+animchar_turn_dir{
+  _use:t="animchar"
+  animchar__turnDir:b=yes
+
+  animchar{}
+}
+
+animchar_act_on_demand{
+  animchar__updatable:b=no
+
+  "animchar__actOnDemand:tag"{}
+}
+
+_replicatedComponentClientModifyBlacklist{
+  animchar_render__enabled{}
+}
+
+animchar_phys_var_walk_dir{
+  animchar_phys_var__walkDir:t="walk_dir"
+  animchar_phys_var__walkDirId:i=-1
+}
+
+animchar_infrequent_updater{
+  animchar_infrequent_updater__updateAt:r=0
+  animchar_infrequent_updater__interval:r=10
+}
+
+animchar_with_dynamic_emission{
+  _use:t="animchar"
+  _use:t="dynmat_params_base"
+  animchar__res:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar_with_dynamic_emission__color:c=0, 0, 0, 0
+  _tracked:t="animchar_with_dynamic_emission__color"
+  animchar_with_dynamic_emission__brightness:r=1
+  _tracked:t="animchar_with_dynamic_emission__brightness"
+
+  "dynamic_material_channels_arr:array"{
+    _tags:t="render"
+
+    "dynamic_material_channel:object"{
+      dynamic_material_type:t="emissive"
+      dynmat_param__emissive_color:p4=1, 1, 1, 10
+      dynmat_param__emission_albedo_mult:r=0.1
+    }
+  }
+}
+
+slot_attach_show_after_appear{
+  slot_attach__visible:b=no
+  _tracked:t="slot_attach__visible"
+  _replicated:t="slot_attach__visible"
+  slot_attach_show_after_appear__time:r=0.5
+  slot_attach_show_after_appear__showAt:r=0
+}

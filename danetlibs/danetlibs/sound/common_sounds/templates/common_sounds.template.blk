@@ -1,0 +1,163 @@
+sound_effect{
+  _use:t="sound_control"
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=0
+  }
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t=""
+    sound_effect__localOffset:p3=0, 0, 0
+    sound_effect__abandonOnReset:b=no
+    sound_effect__autoRange:b=yes
+
+    "sound_effect__event:SoundEvent"{}
+  }
+}
+
+sound_effect_with_transform{
+  _use:t="sound_effect"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+replicated_sound_effect{
+  _use:t="sound_effect_with_transform"
+  _use:t="replicating"
+  replicated_sound_effect__path:t=""
+}
+
+disable_sound_effect{
+  _use:t="disable_sound_control"
+}
+
+moveable_sound_effect_tag{
+  "movableSoundEffect:tag"{
+    _tags:t="sound"
+  }
+}
+
+watchable_sound_effect_tag{
+  "watchableSoundEffect:tag"{
+    _tags:t="sound"
+  }
+}
+
+test_sound_effect{
+  _use:t="sound_effect"
+  _use:t="sfx_managed_sound"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/fire/fire_mid"
+  }
+}
+
+sound_effect_speed_var{
+  _group{
+    _tags:t="sound"
+    sound_effect_speed_var__pos:p3=0, 0, 0
+    sound_effect_speed_var__speedToVar:p4=0, 10, 0, 100
+  }
+}
+
+sound_effect_2d{
+  _use:t="sound_banks_state"
+  _use:t="replicating"
+
+  _group{
+    _tags:t="sound"
+    sound_effect_2d__path:t=""
+    sound_effect_2d__abandonOnReset:b=yes
+
+    "sound_effect_2d__event:SoundEvent"{}
+  }
+}
+
+phys_obj_collision_sound{
+  _group{
+    _tags:t="sound"
+    phys_obj_collision_sound__maxImpulse:r=0
+    phys_obj_collision_sound__time:r=-0.25
+    phys_obj_collision_sound__path:t=""
+    phys_obj_collision_sound__threshold:p2=5, 80
+    phys_obj_collision_sound__omegaMul:r=1
+    phys_obj_collision_sound__maxRange:r=40
+    phys_obj_collision_sound__lifetime:r=1
+
+    "phys_obj_collision_sound__event:SoundEvent"{}
+  }
+}
+
+fx_destruction_sound{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t=""
+  }
+}
+
+on_appear_sound{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="sound"
+    on_appear_sound__path:t=""
+  }
+}
+
+on_disappear_sound{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="sound"
+    on_disappear_sound__path:t=""
+  }
+}
+
+sound_physmat{
+  _use:t="replicating"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+
+    "sound_physmat__PMIDToSMID:list<r>"{}
+  }
+
+  _group{
+    _tags:t="sound"
+    sound_physmat__defPhysMatId:r=0
+    sound_physmat__defSoundMatId:r=-1
+
+    "sound_physmat__soundMaterials:list<t>"{}
+    "sound_physmat__physmatToSoundmat:object"{}
+  }
+}
+
+game_effect_sound{
+  game_effect_sound__hero:t=""
+  game_effect_sound__enemy:t=""
+
+  "game_effect_sound__event:SoundEvent"{
+    _tags:t="sound"
+  }
+}
+
+dng_sound_listener_tag{
+  _group{
+    _tags:t="sound"
+
+    "dngSoundListener:tag"{}
+  }
+}
+
+dng_sound_listener_enabled{
+  _group{
+    _tags:t="sound"
+    dng_sound_listener_enabled:b=yes
+  }
+}

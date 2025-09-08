@@ -1,0 +1,154 @@
+orderedSelector{
+  name:t="nchanged_tamed"
+
+  reaction{
+    event:t="onHit"
+
+    subTree{
+      treeName:t="sub.reaction.changed.on_hit"
+    }
+  }
+
+  reaction{
+    event:t="onBulletNearby"
+
+    subTree{
+      treeName:t="sub.reaction.changed.on_bullet_nearby"
+    }
+  }
+
+  reaction{
+    event:t="onBlindness"
+
+    subTree{
+      treeName:t="sub.reaction.changed.on_blindness"
+    }
+  }
+
+  failed{
+    modifyNode{
+      target:t="beh_tree__interruptDisabled"
+      operator:t="="
+      arg:i=0
+    }
+  }
+
+  subTree{
+    treeName:t="sub.blindness"
+  }
+
+  subTree{
+    treeName:t="sub.leave_obstacle"
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.return_to_navmesh"
+    }
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.changed.tamed.go_to_stand_pos_if_required"
+    }
+  }
+
+  sequencer{
+    name:t="attack"
+
+    reaction{
+      event:t="regularCheck"
+
+      subTree{
+        treeName:t="sub.reaction.changed.tamed.attack_regular_check"
+      }
+    }
+
+    subTree{
+      treeName:t="sub.changed.tamed.attack"
+    }
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.changed.moveToAttraction"
+    }
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.door_opener"
+    }
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.changed.tamed.go_to_stand_pos_if_required"
+    }
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.changed.tamed.aimlessly_walk_around"
+    }
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.changed.tamed.stare_at_master"
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.changed.tamed.attack"
+
+  setTime{
+    to:t="agent_dangers__time"
+  }
+
+  compareNode{
+    lhs:t="changed__disableAgroUntil"
+    operator:t="<"
+    rhs:t="agent_dangers__time"
+  }
+
+  sequencer{
+    orderedSelector{
+      not{
+        subTree{
+          treeName:t="sub.changed.tamed.check_should_run_to_master"
+        }
+      }
+
+      subTree{
+        treeName:t="sub.changed.tamed.run_to_master"
+      }
+
+      checkDistanceToTarget{
+        targetParam:t="minion_creature__masterEid"
+        radius:r=15
+      }
+    }
+
+    findDanger{
+      paramName:t="enemy"
+      radiusParamName:t="enemyRadius"
+      minDanger:r=0.1
+    }
+
+    modifyNode{
+      target:t="walker_agent__targetEid"
+      operator:t="="
+      argIntParam:t="enemy"
+    }
+
+    checkAlive{
+      targetParam:t="walker_agent__targetEid"
+    }
+
+    subTree{
+      treeName:t="sub.changed.runToAndAttack"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+orderedSelector{
+  name:t="am_jellyfish_swarm"
+
+  sequencer{
+    name:t="move_to_new_territory"
+
+    outdoorPatroller{}
+    flyingSwarmSetWaypointTarget{}
+    parallel{
+      repeat{
+        flyingSwarmDamageInArea{}
+      }
+
+      flyingSwarmMoveToTargetSimple{
+        setAttackState:b=no
+      }
+    }
+  }
+}

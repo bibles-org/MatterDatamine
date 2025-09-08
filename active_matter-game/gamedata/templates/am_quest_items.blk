@@ -1,0 +1,636 @@
+item_secret_keys{
+  _use:t="item"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="item_secret_keys"
+  item__name:t="items/secret_keys"
+  item__weight:r=0.02
+  item__volume:r=1
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_secret_note{
+  _use:t="base_consumable_key_item"
+  _use:t="item_rarity_rare"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="item_secret_note"
+  item__name:t="items/secret_note"
+  item__weight:r=0
+  item__volume:r=0
+  _replicated:t="key__tags"
+  _replicated:t="secret_note__linkedContainerEid"
+  _tracked:t="secret_note__linkedContainerEid"
+  item__useMessage:t="quest/secret_note_error"
+
+  "item__alwaysUseful:tag"{}
+  "item__cantBeCorrupted:tag"{}
+  "item__cantBeReplica:tag"{}
+  "key__tags:list<t>"{}
+  "secret_note__linkedContainerEid:eid"{}
+}
+
+item_raid_documents{
+  _use:t="item"
+  _use:t="item_enriched"
+  _use:t="item_rarity_rare"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_d_char"
+  collres__res:t="sovmod_folder_d_collision"
+  item__proto:t="item_raid_documents"
+  item__name:t="items/item_raid_documents"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+}
+
+item_raid_biomaterials{
+  _use:t="item"
+  _use:t="item_enriched"
+  _use:t="item_rarity_rare"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="biomaterial_container_box_a_char"
+  collres__res:t="biomaterial_container_box_a_collision"
+  item__proto:t="item_raid_biomaterials"
+  item__name:t="items/item_raid_biomaterials"
+  item__weight:r=1
+  item__volume:r=0.2
+}
+
+item_raid_samples{
+  _use:t="item"
+  _use:t="item_enriched"
+  _use:t="item_rarity_rare"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sample_grape_char"
+  collres__res:t="sample_grape_collision"
+  item__proto:t="item_raid_samples"
+  item__name:t="items/item_raid_samples"
+  item__weight:r=1
+  item__volume:r=0.2
+}
+
+item_raid_engines{
+  _use:t="item"
+  _use:t="item_enriched"
+  _use:t="item_rarity_rare"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="outpost_props_flat_antenna_item_char"
+  collres__res:t="outpost_props_flat_antenna_item_collision"
+  item__proto:t="item_raid_engines"
+  item__name:t="items/item_raid_engines"
+  item__weight:r=1
+  item__volume:r=0.2
+}
+
+item_euclid_science_documents{
+  _use:t="item"
+  _use:t="discovered_quest_item"
+  _use:t="item_rarity_rare"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_d_char"
+  collres__res:t="sovmod_folder_d_collision"
+  item__proto:t="item_euclid_science_documents"
+  item__name:t="items/item_euclid_science_documents"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+quest_ri_decoration{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_extra__name:t="sovindustrial_laboratory_room_b_table_a"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+quest_omni_light{
+  _use:t="attached_omni_light"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+item_euclid_car_part{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sample_nut_char"
+  collres__res:t="sample_nut_collision"
+  item__proto:t="item_euclid_car_part"
+  item__name:t="items/item_euclid_car_part"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_engines"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_euclid_fake_device{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="biomaterial_container_box_a_char"
+  collres__res:t="biomaterial_container_box_a_collision"
+  item__proto:t="item_euclid_fake_device"
+  item__name:t="items/item_euclid_fake_device"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_engines"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_euclid_scientist_diary{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_euclid_scientist_diary"
+  item__name:t="items/item_euclid_scientist_diary"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_ozernoe_firestation_reports{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_ozernoe_firestation_reports"
+  item__name:t="items/item_ozernoe_firestation_reports"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_ozernoe_firestation_tape{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="loot_audio_cassete_a_char"
+  collres__res:t="loot_audio_cassete_a_collision"
+  item__proto:t="item_ozernoe_firestation_tape"
+  item__name:t="items/item_ozernoe_firestation_tape"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_euclid_real_device{
+  _use:t="item"
+  _use:t="item_rarity_epic"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="biomaterial_container_box_a_char"
+  collres__res:t="biomaterial_container_box_a_collision"
+  item__proto:t="item_euclid_real_device"
+  item__name:t="items/item_euclid_real_device"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_engines"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_euclid_docs_stash{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_euclid_docs_stash"
+  item__name:t="items/item_euclid_docs_stash"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_forest_ship_lost_cargo{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="biomaterial_container_box_a_char"
+  collres__res:t="biomaterial_container_box_a_collision"
+  item__proto:t="item_forest_ship_lost_cargo"
+  item__name:t="items/item_forest_ship_lost_cargo"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_biomaterials"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_coast_evacuation_cargo{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="biomaterial_container_box_a_char"
+  collres__res:t="biomaterial_container_box_a_collision"
+  item__proto:t="item_coast_evacuation_cargo"
+  item__name:t="items/item_coast_evacuation_cargo"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_biomaterials"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_euclid_hospital_docs{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_d_char"
+  collres__res:t="sovmod_folder_d_collision"
+  item__proto:t="item_euclid_hospital_docs"
+  item__name:t="items/item_euclid_hospital_docs"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_homemade_am_storage_empty{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="biomaterial_container_can_medium_rugged_char"
+  collres__res:t="biomaterial_container_can_medium_rugged_collision"
+  item__proto:t="item_homemade_am_storage_empty"
+  item__name:t="items/item_homemade_am_storage_empty"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_biomaterials"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_smuggler_science_cargo{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="biomaterial_container_box_a_char"
+  collres__res:t="biomaterial_container_box_a_collision"
+  item__proto:t="item_smuggler_science_cargo"
+  item__name:t="items/item_smuggler_science_cargo"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_biomaterials"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_scientist_escort_documents{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_d_char"
+  collres__res:t="sovmod_folder_d_collision"
+  item__proto:t="item_scientist_escort_documents"
+  item__name:t="items/item_scientist_escort_documents"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_surveillance_house_docs{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_surveillance_house_docs"
+  item__name:t="items/item_surveillance_house_docs"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_surveillance_apartment_docs{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_surveillance_apartment_docs"
+  item__name:t="items/item_surveillance_apartment_docs"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_factory_basement_docs{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_factory_basement_docs"
+  item__name:t="items/item_factory_basement_docs"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_factory_admin_docs{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_factory_admin_docs"
+  item__name:t="items/item_factory_admin_docs"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_ozernoe_incident_report{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_ozernoe_incident_report"
+  item__name:t="items/item_ozernoe_incident_report"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_ozernoe_greenhouse_diary{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_ozernoe_greenhouse_diary"
+  item__name:t="items/item_ozernoe_greenhouse_diary"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_ozernoe_anomalous_seeds{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sample_grape_char"
+  collres__res:t="sample_grape_collision"
+  item__proto:t="item_ozernoe_anomalous_seeds"
+  item__name:t="items/item_ozernoe_anomalous_seeds"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_samples"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_ozernoe_flowerman_source{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sample_grape_char"
+  collres__res:t="sample_grape_collision"
+  item__proto:t="item_ozernoe_flowerman_source"
+  item__name:t="items/item_ozernoe_flowerman_source"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_samples"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_cargoport_admin_docs{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_cargoport_admin_docs"
+  item__name:t="items/item_cargoport_admin_docs"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_cargoport_investigation_report"
+  }
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_cargoport_cargo_movement_log{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_cargoport_cargo_movement_log"
+  item__name:t="items/item_cargoport_cargo_movement_log"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_cargoport_bribe_evidence{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_cargoport_bribe_evidence"
+  item__name:t="items/item_cargoport_bribe_evidence"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_cargoport_security_chief_docs{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_cargoport_security_chief_docs"
+  item__name:t="items/item_cargoport_security_chief_docs"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_cargoport_stolen_device{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="biomaterial_container_can_medium_rugged_char"
+  collres__res:t="biomaterial_container_can_medium_rugged_collision"
+  item__proto:t="item_cargoport_stolen_device"
+  item__name:t="items/item_cargoport_stolen_device"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_biomaterials"
+
+  "item__alwaysUseful:tag"{}
+}
+
+item_africa_headquarters_flashdrive_1{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="am_keycard_a_char"
+  collres__res:t="am_keycard_a_collision"
+  item__proto:t="item_africa_headquarters_flashdrive_1"
+  item__name:t="items/item_africa_headquarters_flashdrive_1"
+  item__desc:t="items/item_africa_headquarters_flashdrive/desc"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+  "item__cantBeCorrupted:tag"{}
+  "item__cantBeReplica:tag"{}
+}
+
+item_africa_headquarters_bunker_data{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="am_keycard_a_char"
+  collres__res:t="am_keycard_a_collision"
+  item__proto:t="item_africa_headquarters_bunker_data"
+  item__name:t="items/item_africa_headquarters_bunker_data"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__alwaysUseful:tag"{}
+  "item__cantBeCorrupted:tag"{}
+  "item__cantBeReplica:tag"{}
+}

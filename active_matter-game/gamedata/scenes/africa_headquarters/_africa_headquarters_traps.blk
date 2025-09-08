@@ -1,0 +1,49 @@
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="trap_region_generator"
+      genType:t="region_traps"
+      count:i=25
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="forest_01"
+    r:t="forest_02"
+    r:t="forest_03"
+    r:t="forest_04"
+    r:t="forest_05"
+    r:t="forest_06"
+    r:t="forest_07"
+    r:t="forest_08"
+    r:t="forest_09"
+    r:t="forest_10"
+    r:t="forest_11"
+    r:t="forest_12"
+    r:t="forest_13"
+    r:t="forest_14"
+    r:t="forest_15"
+    r:t="forest_16"
+    r:t="forest_17"
+    r:t="forest_18"
+    r:t="forest_19"
+    r:t="forest_20"
+    r:t="forest_21"
+    r:t="forest_22"
+    r:t="forest_23"
+    r:t="forest_24"
+    r:t="forest_25"
+  }
+}
+
+entity{
+  _template:t="monster_mothman_artifact_item+item_in_world"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [538.058, 46.2467, -1391.26]]
+}
+
+entity{
+  _template:t="monster_mothman_artifact_item+item_in_world"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [564.738, 35.2061, -795.402]]
+}

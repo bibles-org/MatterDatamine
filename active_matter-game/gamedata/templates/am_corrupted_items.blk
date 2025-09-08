@@ -1,0 +1,510 @@
+item_corrupted{
+  _use:t="item"
+  item__iconRoll:r=45
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item_corrupted__effectName:t="item_corrupted_effect"
+  item_corrupted__effectScaleRng:p2=0.3, 0.3
+
+  "item_corrupted__effectEids:list<eid>"{}
+  "item_corrupted__effectOffsets:list<p3>"{
+    default:p3=0, 0, 0
+  }
+}
+
+requires_distortion_render{
+  "requires_distortion_render:tag"{}
+}
+
+item_corrupted_effect{
+  _use:t="animchar"
+  animchar__res:t="am_emission_field_a_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  am_emission_field__scaleMult:r=0
+  am_emission_field__wishScaleMult:r=1
+  am_emmision_field__scaleRng:p2=1, 0
+
+  "requires_distortion_render:tag"{}
+  "am_emission_field__ownerEid:eid"{}
+}
+
+item_civilian_artifact{
+  _use:t="item_corrupted"
+  animchar__res:t="sample_nut_char"
+  collres__res:t="sample_nut_collision"
+  item__proto:t="item_civilian_artifact"
+  item__name:t="items/item_civilian_artifact"
+  item__weight:r=1
+  item__volume:r=1
+  dropTm:m=[[0.9991, 0.0387779, -0.0171766] [0.00221634, -0.45218, -0.891924] [-0.0423538, 0.891083, -0.451859] [0, 0.0178, 0]]
+
+  "item_civil:tag"{}
+}
+
+item_mutated_organ_sample{
+  _use:t="item_corrupted"
+  animchar__res:t="sample_vangogh_char"
+  collres__res:t="sample_vangogh_collision"
+  item__proto:t="item_mutated_organ_sample"
+  item__name:t="items/item_mutated_organ_sample"
+  item__weight:r=0.5
+  item__volume:r=2
+  dropTm:m=[[-0.996195, -0.0871429, 0.0014672] [-7.51774e-13, 0.0168344, 0.999858] [-0.0871553, 0.996054, -0.0167703] [0, 0.05, 0]]
+}
+
+item_corrupted_grape{
+  _use:t="item_corrupted"
+  _use:t="artifact_grape_model"
+  item__proto:t="item_corrupted_grape"
+  item__name:t="items/item_corrupted_grape"
+  item__weight:r=0.3
+  item__volume:r=1
+  dropTm:m=[[-0.0233419, 0.827993, -0.560253] [0.999603, 0.0281798, 9.99557e-10] [0.0157878, -0.56003, -0.828322] [0, 0.05, 0]]
+}
+
+item_corrupted_neuron{
+  _use:t="item_corrupted"
+  _use:t="artifact_neuron_model"
+  item__proto:t="item_corrupted_neuron"
+  item__name:t="items/item_corrupted_neuron"
+  item__weight:r=0.3
+  item__volume:r=1
+  dropTm:m=[[0.114969, -0.969501, -0.21645] [0.993042, 0.117761, 6.4367e-10] [0.0254893, -0.214944, 0.976294] [0, 0.05, 0]]
+}
+
+makarov_corrupted_item{
+  _use:t="item_corrupted"
+  animchar__res:t="makarov_char"
+  collres__res:t="makarov_collision"
+  item__proto:t="makarov_corrupted_item"
+  item__name:t="items/makarov_corrupted_item"
+  item__weight:r=0.73
+  item__volume:r=6
+}
+
+akm_47_corrupted_item{
+  item_corrupted__effectScaleRng:p2=0.2, 0.4
+  _use:t="item_corrupted"
+  animchar__res:t="akm_47_char"
+  collres__res:t="akm_47_collision"
+  item__proto:t="akm_47_corrupted_item"
+  item__name:t="items/akm_47_corrupted_item"
+  item__weight:r=3.1
+  item__volume:r=26
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=0, 0.049, -0.38
+    i:p3=0, 0, -0.17
+    i:p3=0, 0.047, 0.012
+  }
+}
+
+sks_carbine_corrupted_item{
+  _use:t="item_corrupted"
+  item_corrupted__effectScaleRng:p2=0.2, 0.4
+  animchar__res:t="sks_44_char"
+  collres__res:t="sks_44_collision"
+  item__proto:t="sks_carbine_corrupted_item"
+  item__name:t="items/sks_carbine_corrupted_item"
+  item__weight:r=3.75
+  item__volume:r=28
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=0, 0, 0
+    i:p3=0, 0.015, -0.45
+  }
+}
+
+item_junk_1{
+  _use:t="item_corrupted"
+  item_corrupted__effectScaleRng:p2=0.5, 0.5
+  animchar__res:t="junk_loot_a_char"
+  collres__res:t="junk_loot_a_collision"
+  item__proto:t="item_junk_1"
+  item__name:t="items/item_junk"
+  item__weight:r=1
+  item__volume:r=10
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=-0.041, 0.25, 0.076
+  }
+
+  "item_civil:tag"{}
+}
+
+item_junk_2{
+  _use:t="item_corrupted"
+  item_corrupted__effectScaleRng:p2=0.4, 0.4
+  animchar__res:t="junk_loot_b_char"
+  collres__res:t="junk_loot_b_collision"
+  item__proto:t="item_junk_2"
+  item__name:t="items/item_junk"
+  item__weight:r=0.5
+  item__volume:r=5
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=0, 0.05, 0
+  }
+
+  "item_civil:tag"{}
+}
+
+item_junk_3{
+  _use:t="item_corrupted"
+  item_corrupted__effectScaleRng:p2=0.4, 0.5
+  animchar__res:t="junk_loot_c_char"
+  collres__res:t="junk_loot_c_collision"
+  item__proto:t="item_junk_3"
+  item__name:t="items/item_junk"
+  item__weight:r=1
+  item__volume:r=25
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=0.05, 0.05, 0.05
+    i:p3=-0.07, 0.15, 0.28
+  }
+
+  "item_civil:tag"{}
+}
+
+cutlery_item{
+  _use:t="item_corrupted"
+  item_corrupted__effectScaleRng:p2=0.1, 0.3
+  animchar__res:t="junk_loot_cutlery_a_char"
+  collres__res:t="junk_loot_cutlery_a_collision"
+  item__proto:t="cutlery_item"
+  item__name:t="items/cutlery_item"
+  item__weight:r=0.2
+  item__volume:r=2
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0.05, 0, 0]]
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=-0.1, 0.02, 0
+    i:p3=0.05, 0.02, 0
+  }
+
+  "item_civil:tag"{}
+}
+
+jar_1_item{
+  _use:t="item_corrupted"
+  animchar__res:t="junk_loot_bank_a_type_50_a_char"
+  collres__res:t="junk_loot_bank_a_type_50_a_collision"
+  item__proto:t="jar_1_item"
+  item__name:t="items/item_junk_small"
+  item__weight:r=0.4
+  item__volume:r=3
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconPitch:r=0
+  item__iconRoll:r=0
+  item__iconYaw:r=30
+  item__iconScale:r=0.9
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=0, 0.05, 0
+  }
+
+  "item_civil:tag"{}
+}
+
+corrupted_jar_2_item{
+  _use:t="item_corrupted"
+  item_corrupted__effectScaleRng:p2=0.4, 0.4
+  animchar__res:t="junk_loot_bank_a_type_100_a_char"
+  collres__res:t="junk_loot_bank_a_type_100_a_collision"
+  item__proto:t="corrupted_jar_2_item"
+  item__name:t="items/item_junk_small"
+  item__weight:r=0.8
+  item__volume:r=6
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconPitch:r=0
+  item__iconRoll:r=0
+  item__iconYaw:r=30
+  item__iconScale:r=0.9
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=0, 0.05, 0
+  }
+
+  "item_civil:tag"{}
+}
+
+corrupted_jar_3_item{
+  _use:t="item_corrupted"
+  item_corrupted__effectScaleRng:p2=0.5, 0.5
+  animchar__res:t="junk_loot_bank_a_type_150_a_char"
+  collres__res:t="junk_loot_bank_a_type_150_a_collision"
+  item__proto:t="corrupted_jar_3_item"
+  item__name:t="items/item_junk_large"
+  item__weight:r=1.2
+  item__volume:r=10
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconPitch:r=0
+  item__iconRoll:r=0
+  item__iconYaw:r=30
+  item__iconScale:r=0.9
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=0, 0.1, 0
+  }
+
+  "item_civil:tag"{}
+}
+
+corrupted_meatgrinder_item{
+  _use:t="item_corrupted"
+  item_corrupted__effectScaleRng:p2=0.5, 0.5
+  animchar__res:t="junk_loot_meatgrinder_a_char"
+  collres__res:t="junk_loot_meatgrinder_a_collision"
+  item__proto:t="corrupted_meatgrinder_item"
+  item__name:t="items/meatgrinder"
+  item__weight:r=1.4
+  item__volume:r=12
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=0, 0.1, 0
+  }
+
+  "item_civil:tag"{}
+}
+
+corrupted_kettle_item{
+  _use:t="item_corrupted"
+  item_corrupted__effectScaleRng:p2=0.8, 0.8
+  animchar__res:t="junk_loot_teapot_a_char"
+  collres__res:t="junk_loot_teapot_a_collision"
+  item__proto:t="corrupted_kettle_item"
+  item__name:t="items/old_kettle"
+  item__weight:r=0.8
+  item__volume:r=20
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconPitch:r=0
+  item__iconRoll:r=20
+  item__iconYaw:r=65
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=0, 0.1, 0
+  }
+
+  "item_civil:tag"{}
+}
+
+corrupted_plates_item{
+  _use:t="item_corrupted"
+  item_corrupted__effectScaleRng:p2=0.6, 0.6
+  animchar__res:t="junk_loot_plates_a_char"
+  collres__res:t="junk_loot_plates_a_collision"
+  item__proto:t="corrupted_plates_item"
+  item__name:t="items/old_plates"
+  item__weight:r=3
+  item__volume:r=8
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=0, 0, 0
+  }
+
+  "item_civil:tag"{}
+}
+
+corrupted_sauceboat_item{
+  _use:t="item_corrupted"
+  item_corrupted__effectScaleRng:p2=0.3, 0.3
+  animchar__res:t="junk_loot_saucer_a_char"
+  collres__res:t="junk_loot_saucer_a_collision"
+  item__proto:t="corrupted_sauceboat_item"
+  item__name:t="items/old_sauceboat"
+  item__weight:r=0.4
+  item__volume:r=5
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconPitch:r=20
+  item__iconRoll:r=25
+  item__iconYaw:r=65
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=0, 0.05, 0
+  }
+
+  "item_civil:tag"{}
+}
+
+corrupted_wafflemaker_item{
+  _use:t="item_corrupted"
+  item_corrupted__effectScaleRng:p2=0.3, 0.4
+  animchar__res:t="junk_loot_wafflemaker_a_char"
+  collres__res:t="junk_loot_wafflemaker_a_collision"
+  item__proto:t="corrupted_wafflemaker_item"
+  item__name:t="items/wafflemaker"
+  item__weight:r=1.5
+  item__volume:r=12
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=0, 0.025, 0
+    i:p3=-0.2, 0.025, 0.05
+  }
+
+  "item_civil:tag"{}
+}
+
+corrupted_wrench_item{
+  _use:t="item_corrupted"
+  item_corrupted__effectScaleRng:p2=0.2, 0.3
+  animchar__res:t="wrench_13_b_char"
+  collres__res:t="wrench_13_b_collision"
+  item__proto:t="corrupted_wrench_item"
+  item__name:t="items/item_junk_small"
+  item__weight:r=2
+  item__volume:r=8
+  item__iconYaw:r=110
+  item__iconPitch:r=45
+  item__iconRoll:r=50
+  dropTm:m=[[1, 0, 0] [0, 0, -1] [0, 1, 0] [0, 0, 0]]
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    i:p3=0, 0.25, 0
+    i:p3=0, -0.15, 0
+  }
+
+  "item_civil:tag"{}
+}
+
+corrupted_iron_item{
+  _use:t="item_corrupted"
+  item_corrupted__effectScaleRng:p2=0.4, 0.4
+  animchar__res:t="junk_loot_iron_a_char"
+  collres__res:t="junk_loot_iron_a_collision"
+  item__proto:t="corrupted_iron_item"
+  item__name:t="items/iron"
+  item__weight:r=1.8
+  item__volume:r=10
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+}
+
+corrupted_fan_item{
+  _use:t="item_corrupted"
+  animchar__res:t="junk_loot_sovind_fan_cab_a_char"
+  collres__res:t="junk_loot_sovind_fan_cab_a_collision"
+  item__proto:t="corrupted_fan_item"
+  item__name:t="items/item_junk_small"
+  item__weight:r=1.2
+  item__volume:r=12
+  item__scaleMult:r=0.5
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "item_corrupted__effectOffsets:list<p3>"{
+    default:p3=0, 0.1, 0
+  }
+
+  "item_civil:tag"{}
+  "item_electronics:tag"{}
+}
+
+am_corrupted_inventory{
+  _use:t="item_grid_spawner"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  grid_spawner__gap:p2=0.5, 0.5
+
+  "spawnItemList:array"{
+    "item:object"{
+      templ:t="item_corrupted_grape+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_corrupted_neuron+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="akm_47_corrupted_item+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="sks_carbine_corrupted_item+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="makarov_corrupted_item+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_civilian_artifact+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_junk_1+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_junk_2+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_junk_3+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_mutated_organ_sample+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="cutlery_item+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="jar_1_item+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="corrupted_jar_2_item+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="corrupted_jar_3_item+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="corrupted_meatgrinder_item+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="corrupted_wafflemaker_item+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="corrupted_wrench_item+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="corrupted_iron_item+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="corrupted_fan_item+item_in_world"
+      count:i=3
+    }
+  }
+}

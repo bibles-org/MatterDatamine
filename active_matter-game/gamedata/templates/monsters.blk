@@ -1,0 +1,82 @@
+monster_aura{
+  monster_aura__enabled:b=no
+  _tracked:t="monster_aura__enabled"
+
+  "monster_aura__enabledAliveAttachments:list<t>"{}
+  "monster_aura__enabledDeadAttachments:list<t>"{}
+  "monster_aura__disabledAliveAttachments:list<t>"{}
+  "monster_aura__disabledDeadAttachments:list<t>"{}
+  "monster_aura__attachmentsEids:list<eid>"{}
+}
+
+monster_aura_update_at{
+  monster_aura__updateAt:r=0
+}
+
+miniboss_spawn_point{
+  miniboss_spawn_point__type:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+miniboss_spawn_point_changed{
+  _use:t="miniboss_spawn_point"
+  miniboss_spawn_point__type:t="changed"
+}
+
+miniboss_spawn_point_flower_human{
+  _use:t="miniboss_spawn_point"
+  miniboss_spawn_point__type:t="flower_human"
+}
+
+miniboss_manager{
+  "miniboss_manager__spawnData:object"{
+    "changed:object"{
+      count:ip2=18, 20
+
+      "templates:list<t>"{
+        t:t="outdoor_sleeper_changed_human_miniboss"
+        t:t="outdoor_sleeper_changed_human_minion_cirlce"
+        t:t="outdoor_sleeper_changed_human_miniboss_decor_gpu_cirlce_small"
+        t:t="outdoor_sleeper_changed_human_miniboss_decor_gpu_cirlce_big"
+      }
+    }
+
+    "flower_human:object"{
+      count:ip2=20, 22
+
+      "templates:list<t>"{
+        t:t="flower_human_miniboss"
+        t:t="flower_human_miniboss_treasure_cirlce"
+        t:t="flower_human_minion_cirlce"
+        t:t="flower_human_miniboss_decor_root_cirlce"
+        t:t="flower_human_miniboss_decor_gpu_cirlce"
+        t:t="flower_human_miniboss_trap_cirlce"
+      }
+    }
+  }
+}
+
+park_miniboss_manager{
+  "miniboss_manager__spawnData:object"{
+    "flower_human:object"{
+      count:ip2=4, 6
+
+      "templates:list<t>"{
+        t:t="flower_human_miniboss"
+        t:t="flower_human_miniboss_treasure_cirlce"
+        t:t="flower_human_minion_cirlce"
+        t:t="flower_human_miniboss_decor_root_cirlce"
+        t:t="flower_human_miniboss_decor_gpu_cirlce"
+        t:t="flower_human_miniboss_trap_cirlce"
+      }
+    }
+  }
+}
+
+invulnerable{
+  _group{
+    _tags:t="server"
+
+    "invulnerable:tag"{}
+  }
+}

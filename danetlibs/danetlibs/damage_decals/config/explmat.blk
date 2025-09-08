@@ -1,0 +1,68 @@
+explMats{
+  shader:t="explosion_patch_color"
+  needMaterialTex:b=no
+
+  steel{
+    default{
+      normalMap:t="decal_bullethole_metal_a_tex_n*"
+      colorMap:t="decal_bullethole_metal_a_tex_d*"
+      sizeScale:r=12
+    }
+
+    kinetic_penetration{
+      normalMap:t="decal_bullethole_metal_pr_gen_tex_n*"
+      colorMap:t="decal_bullethole_metal_pr_gen_tex_d*"
+      sizeScale:r=6.5
+    }
+
+    kinetic_non_penetration{
+      normalMap:t="decal_bullethole_metal_st_gen_tex_n*"
+      colorMap:t="decal_bullethole_metal_st_gen_tex_d*"
+      sizeScale:r=6.5
+      stretchMax:r=1.5
+    }
+
+    kinetic_ricochet{
+      normalMap:t="decal_bullethole_metal_st_gen_tex_n*"
+      colorMap:t="decal_bullethole_metal_st_gen_tex_d*"
+      sizeScale:r=6.5
+      stretchMax:r=2
+    }
+
+    explosive_penetration{
+      normalMap:t="decal_bullethole_metal_pr_splash_tex_n*"
+      colorMap:t="decal_bullethole_metal_pr_splash_tex_d*"
+      sizeScale:r=5
+    }
+
+    explosive_non_penetration{
+      normalMap:t="decal_bullethole_metal_st_splash_tex_n*"
+      colorMap:t="decal_bullethole_metal_st_splash_tex_d*"
+      sizeScale:r=6
+    }
+
+    kinetic_sabot_penetration{
+      normalMap:t="decal_bullethole_metal_pr_sub_tex_n*"
+      colorMap:t="decal_bullethole_metal_pr_sub_tex_d*"
+      sizeScale:r=5
+    }
+
+    kinetic_sabot_non_penetration{
+      normalMap:t="decal_bullethole_metal_st_sub_tex_n*"
+      colorMap:t="decal_bullethole_metal_st_sub_tex_d*"
+      sizeScale:r=5
+    }
+
+    heat_penetration{
+      normalMap:t="decal_bullethole_metal_pr_jet_tex_n*"
+      colorMap:t="decal_bullethole_metal_pr_jet_tex_d*"
+      sizeScale:r=6
+    }
+
+    heat_non_penetration{
+      normalMap:t="decal_bullethole_metal_st_jet_tex_n*"
+      colorMap:t="decal_bullethole_metal_st_jet_tex_d*"
+      sizeScale:r=5
+    }
+  }
+}

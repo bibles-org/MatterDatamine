@@ -1,0 +1,1057 @@
+import:t="effects_includes/effects_environment.blk"
+import:t="effects_includes/effects_vehicles.blk"
+import:t="effects_includes/effects_explosions.blk"
+import:t="effects_includes/effects_hits.blk"
+import:t="effects_includes/effects_trails.blk"
+import:t="effects_includes/effects_destruction.blk"
+import:t="effects_includes/effects_muzzle_presets.blk"
+
+global_fx_info{
+  _singleton:b=yes
+  _tags:t="render"
+  global_fx__target:i=0
+  global_fx__riColorSaturationMult:r=0.5
+  global_fx__riColorSaturationInc:r=0.5
+  global_fx__riColorValueMult:r=0.5
+  global_fx__riColorValueInc:r=0.5
+
+  _group{
+    _track:b=yes
+    global_fx__discard__lowres:r=16
+    global_fx__discard__highres:r=4
+    global_fx__discard__distortion:r=32
+    global_fx__discard__volfogInjection:r=32
+    global_fx__discard__atest:r=16
+    global_fx__discard__waterProj:r=32
+    global_fx__discard__thermal:r=4
+    global_fx__discard__underwater:r=16
+    global_fx__discard__fom:r=32
+    global_fx__discard__bvh:r=0
+  }
+
+  "global_fx__rendinstColors:list<p4>"{}
+}
+
+global_fx_material_groups{
+  _singleton:b=yes
+  _use:t="replicating"
+
+  "global_fx__materialGroups:object"{
+    "wood:list<t>"{
+      value:t="wood"
+      value:t="wood_solid"
+      value:t="wood_railway"
+      value:t="window_wood"
+      value:t="softWoodDoor"
+      value:t="wood_fall"
+      value:t="wood_palm"
+      value:t="wood_dead"
+      value:t="wood_snow"
+      value:t="wood_fall_solid"
+      value:t="wood_palm_solid"
+      value:t="wood_dead_solid"
+      value:t="wood_snow_solid"
+    }
+
+    "stone:list<t>"{
+      value:t="concrete"
+      value:t="stone"
+      value:t="rocks"
+      value:t="rocksSlippery"
+      value:t="gravel"
+      value:t="ceramic"
+    }
+
+    "water:list<t>"{
+      value:t="water"
+      value:t="water3d"
+      value:t="waterPuddle"
+    }
+
+    "dirt_and_mud:list<t>"{
+      value:t="mud"
+      value:t="roadmud"
+      value:t="soil"
+      value:t="roadSoil"
+      value:t="dirt"
+    }
+
+    "mud:list<t>"{
+      value:t="mud"
+      value:t="roadmud"
+    }
+
+    "dirt:list<t>"{
+      value:t="soil"
+      value:t="roadSoil"
+      value:t="dirt"
+    }
+
+    "sand:list<t>"{
+      value:t="sand"
+      value:t="sand_slope"
+      value:t="quickSand"
+      value:t="roadSand"
+      value:t="quarrySand"
+    }
+
+    "metal:list<t>"{
+      value:t="steel"
+      value:t="metal"
+      value:t="train"
+      value:t="barbwire"
+      value:t="softSteelDoor"
+    }
+
+    "snow:list<t>"{
+      value:t="snow"
+      value:t="ice"
+      value:t="snowLower"
+      value:t="roadSnow"
+    }
+  }
+}
+
+level_effect{
+  _use:t="sound_control"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="bonfire_composite_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=35
+  }
+}
+
+base_effect{
+  _use:t="replicating"
+  _use:t="sound_control"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="bonfire_composite_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=35
+  }
+}
+
+effect_light_restriction{
+  _use:t="replicating"
+  effect__box:m=[[0, 0, 0] [0, 0, 0] [0, 0, 0] [0, 0, 0]]
+  effect__use_box:b=yes
+  effect__automatic_box:b=yes
+  _tracked:t="effect__box"
+  _tracked:t="effect__use_box"
+  _tracked:t="effect__automatic_box"
+
+  effect{
+    _tags:t="render"
+  }
+}
+
+burst_fx_base{
+  _group{
+    _tags:t="render"
+    burst_fx__transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+    burst_fx__period:p2=1, 2
+    burst_fx__currentPeriod:r=0
+    burst_fx__nextUpdate:r=-1000
+  }
+}
+
+bonfire_effect_no_occluders{
+  _use:t="replicating"
+  _use:t="sound_control"
+  _use:t="effect_light_restriction"
+  dmgzone__teamToDamage:i=-1
+  dmgzone__damage:r=1
+  dmgzone__fireAffect:r=2
+  dmgzone__lastUpdate:r=-1
+  dm__damageType:t="fire"
+  dm__damageTypeId:i=-1
+  sphere_zone__radius:r=1.5
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="bonfire_composite_fx"
+  }
+
+  _group{
+    _tags:t="server"
+    obstacle__handle:i=0
+    obstacle__padding:r=0.58
+  }
+
+  "dmgzone__ignoreInvisibleTargets:tag"{}
+  "humanTriggerable:tag"{}
+  "changedTriggerable:tag"{}
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=35
+  }
+}
+
+bonfire_effect{
+  _use:t="bonfire_effect_no_occluders"
+  _use:t="smoke_occluders"
+
+  "smoke_occluders__isStatic:tag"{}
+  "smoke_occluders__updateInterval:r"{
+    _tags:t="server"
+    value:r=5
+  }
+
+  "smoke_occluders__info:shared:array"{
+    _tags:t="server"
+
+    "little:object"{
+      windScale:r=0.15
+      expanseStartTime:r=0
+      expanseFullTime:r=0
+      fadeStartTime:r=0
+      totalTime:r=0
+      upSpeed:p3=1, 1, 1
+      normalSpeed:p3=0, 0, 0
+      radius:p3=1, 1, 1
+    }
+
+    "medium:object"{
+      windScale:r=0.45
+      expanseStartTime:r=0
+      expanseFullTime:r=0
+      fadeStartTime:r=0
+      totalTime:r=0
+      upSpeed:p3=3, 3, 3
+      normalSpeed:p3=0, 0, 0
+      radius:p3=1.4, 1.4, 1.4
+    }
+
+    "big:object"{
+      windScale:r=0.75
+      expanseStartTime:r=0
+      expanseFullTime:r=0
+      fadeStartTime:r=0
+      totalTime:r=0
+      upSpeed:p3=6, 6, 6
+      normalSpeed:p3=0, 0, 0
+      radius:p3=1.8, 1.8, 1.8
+    }
+  }
+}
+
+effect_entity{
+  _use:t="ecs_no_debug"
+
+  effect{
+    _tags:t="render"
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+entity_binded_effect{
+  _use:t="effect_entity"
+  entity_binded_effect__collNodeId:i=-1
+  entity_binded_effect__localEmitter:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "entity_binded_effect__entity:eid"{}
+}
+
+effect_animation_activated{
+  _group{
+    _tags:t="render"
+    effect_animation__stageStartedTime:r=0
+    effect_animation__currentStageId:i=-1
+    effect_animation__transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  }
+
+  "effect_animation__activated:tag"{
+    _tags:t="render"
+  }
+}
+
+burning{
+  "burning:tag"{}
+}
+
+blood_puddle_emitter{
+  _use:t="ecs_no_debug"
+  blood_puddle_emitter__collNodeId:i=0
+  blood_puddle_emitter__lastPos:p3=0, 0, 0
+  blood_puddle_emitter__stableTime:r=0
+  blood_puddle_emitter__offset:p3=0, 0, 0
+
+  "blood_puddle_emitter__human:eid"{}
+}
+
+blood_splash_emitter{
+  _use:t="ecs_no_debug"
+  blood_splash_emitter__pos:p3=0, 0, 0
+  blood_splash_emitter__targetPos:p3=0, 0, 0
+  blood_splash_emitter__gravity:p3=0, 0, 0
+  blood_splash_emitter__velocity:p3=0, 0, 0
+  blood_splash_emitter__normal:p3=0, 0, 0
+  blood_splash_emitter__itm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  blood_splash_emitter__matrix_id:i=0
+  blood_splash_emitter__size:r=0
+}
+
+weather_choice_created{
+  "weather_choice_tag:tag"{}
+}
+
+dafx_rain{
+  _singleton:b=yes
+  _use:t="falling_weather_effect_template"
+
+  _group{
+    _track:b=yes
+    puddles__growthRate:r=2e-05
+    puddles__growthLimit:r=0.1
+    far_rain__density:r=10
+    far_rain__speed:r=1
+    far_rain__width:r=1
+    far_rain__length:r=1
+    far_rain__alpha:r=1
+    far_rain__maxDensity:r=10
+    rain_ripples__size:r=0.05
+    wetness__strength:r=0.5
+    drop_splashes__spriteYPos:r=0.2
+    drop_fx_template:t="rain_drop_splash_template"
+
+    "drop_splashes__splashesFxId:eid"{}
+  }
+
+  _group{
+    _tags:t="render"
+    effect__offset:p3=0, -8, 0
+  }
+
+  rain{
+    _tags:t="render"
+  }
+
+  "rain_tag:tag"{}
+}
+
+rain_ripples{
+  _singleton:b=yes
+  _tags:t="render"
+  rain_ripples_shader_name:t="rain_ripples"
+  rain_ripples_texture_res:t="droplets_tex"
+  rain_ripples_texture_var:t="droplets_tex"
+  rain_ripple_params_value:p4=4, 1.5, 0.7, 0.8
+
+  "rain_ripples_shader:PostFxRenderer"{}
+  "rain_ripples_texture:SharedTexHolder"{}
+  "rain_ripple_params:ShaderVar"{}
+  "zn_zfar:ShaderVar"{}
+}
+
+dafx_snow{
+  _singleton:b=yes
+  _use:t="falling_weather_effect_template"
+
+  _group{
+    _track:b=yes
+    snow__density:r=10
+    snow__speed:r=1
+    snow__width:r=1
+    snow__length:r=1
+    snow__alpha:r=1
+    snow__maxDensity:r=10
+  }
+
+  _group{
+    _tags:t="render"
+    effect__offset:p3=0, -2, 0
+  }
+
+  "snow_tag:tag"{}
+}
+
+dafx_storm{
+  _singleton:b=yes
+  _use:t="falling_weather_effect_template"
+
+  _group{
+    _track:b=yes
+    storm__length:r=1
+    storm__speed:r=1
+    storm__width:r=1
+    storm__density:r=10
+    storm__alpha:r=1
+    storm__maxDensity:r=10
+  }
+}
+
+effect_area{
+  _use:t="effect_area_base"
+
+  _group{
+    effect_area__effectName:t="hit_blood_entry_cmps_fx"
+    _track:b=yes
+  }
+}
+
+effect_area_box{
+  _use:t="effect_area"
+
+  effect_area{
+    _tags:t="render"
+  }
+
+  "box_zone:tag"{}
+}
+
+effect_area_sphere{
+  _use:t="effect_area"
+  sphere_zone__radius:r=1
+
+  effect_area{
+    _tags:t="render"
+  }
+}
+
+background_tracer{
+  _use:t="ecs_no_debug"
+  _tags:t="render"
+  background_tracer__pos:p3=0, 0, 0
+  background_tracer__vel:p3=0, 0, 0
+  background_tracer__id:i=-1
+  background_tracer__ttl:r=0
+}
+
+tracer_launcher{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="replicating"
+  tracer_launcher__bullet_size:r=5
+  tracer_launcher__bullet_ttl:r=2.5
+  tracer_launcher__bullet_speed:r=100
+  tracer_launcher__bullet_color:p3=1, 1, 1
+  tracer_launcher__short_cooldown:r=0.25
+  tracer_launcher__long_cooldown_min_max:p2=1.5, 3
+  tracer_launcher__long_cooldown_probability:r=0.05
+  tracer_launcher__shoot_direction:p2=45, 0
+  tracer_launcher__rotate_range:p2=10, 20
+  tracer_launcher__rotate_speed:r=1
+  tracer_launcher__time_to_fire:r=2
+}
+
+effect_scale_randomizer{
+  effect_scale_randomizer__range:p2=0.5, 4
+  effect_scale_randomizer__scale:r=1
+  _replicated:t="effect_scale_randomizer__scale"
+  _tracked:t="effect_scale_randomizer__scale"
+}
+
+effect_controller{
+  effect_controller__state:i=0
+  effect_controller__stateTimes:p2=0, 0
+  _replicated:t="effect_controller__state"
+  _tracked:t="effect_controller__state"
+  _replicated:t="effect_controller__stateTimes"
+
+  "effect_controller__states:array"{}
+}
+
+ri_gpu_object{
+  _use:t="replicating"
+
+  _group{
+    _track:b=yes
+    ri_gpu_object__name:t="ammunition_box_n"
+    ri_gpu_object__grid_tiling:i=4
+    ri_gpu_object__grid_size:i=16
+    ri_gpu_object__cell_size:r=8
+    ri_gpu_object__seed:i=0
+    ri_gpu_object__up_vector:p3=0, 1, 0
+    ri_gpu_object__scale_range:p2=1, 1
+    ri_gpu_object__biom_indexes:p4=-1, -1, -1, -1
+    ri_gpu_object__is_using_normal:b=no
+    ri_gpu_object__incline_delta:r=0
+    ri_gpu_object__rotate_range:p2=0, 0
+    ri_gpu_object__map:t=""
+    ri_gpu_object__map_size:p2=512, 512
+    ri_gpu_object__map_offset:p2=0, 0
+    ri_gpu_object__color_from:c=127, 127, 127, 127
+    ri_gpu_object__color_to:c=127, 127, 127, 127
+    ri_gpu_object__slope_factor:p2=1, 0
+    ri_gpu_object__hardness:r=1
+    ri_gpu_object__sparse_weight:r=0
+    ri_gpu_object__decal:b=no
+    ri_gpu_object__transparent:b=no
+    ri_gpu_object__distorsion:b=no
+    ri_gpu_object__place_on_water:b=no
+    ri_gpu_object__render_into_shadows:b=no
+    ri_gpu_object__coast_range:p2=-1, -1
+    ri_gpu_object__face_coast:b=no
+
+    "ri_gpu_object__biome_params:array"{}
+    "ri_gpu_object__multiple_objects:array"{}
+  }
+
+  "ri_preload:GpuObjectRiResourcePreload"{
+    _tags:t="render"
+  }
+}
+
+gpu_objects_distance_emitter{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    gpu_objects_distance_emitter__range:r=0
+    gpu_objects_distance_emitter__scale_factor:r=1
+    gpu_objects_distance_emitter__rotation_factor:r=1
+  }
+}
+
+gpu_object_placer{
+  ri_gpu_object__name:t="ammunition_box_n"
+  _tracked:t="ri_gpu_object__name"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+
+  "ri_preload:GpuObjectRiResourcePreload"{
+    _tags:t="render"
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__ri_asset_idx:i=-1
+    gpu_object_placer__object_density:r=10
+    gpu_object_placer__min_scale_radius:r=1
+    gpu_object_placer__object_up_vector_threshold:p4=0, 0, 0, 0.1
+    gpu_object_placer__current_distance_squared:r=0
+    gpu_object_placer__opaque:b=yes
+    gpu_object_placer__decal:b=no
+    gpu_object_placer__distorsion:b=no
+    gpu_object_placer__render_into_shadows:b=no
+    gpu_object_placer__filled:b=no
+    gpu_object_placer__buffer_offset:i=-1
+    gpu_object_placer__decal_buffer_size:i=0
+    gpu_object_placer__distance_emitter_buffer_size:i=0
+    gpu_object_placer__buffer_size:i=-1
+    gpu_object_placer__on_rendinst_geometry_count:i=0
+    gpu_object_placer__on_terrain_geometry_count:i=0
+    gpu_object_placer__show_geometry:b=no
+    gpu_object_placer__place_on_geometry:b=yes
+    gpu_object_placer__use_strict_decal_placement:b=no
+    gpu_object_placer__use_original_tm_for_strict_decal_placement:b=yes
+    gpu_object_placer__spoofed_decal_size:p2=1.5, 1.5
+    gpu_object_placer__min_gathered_triangle_size:r=0.1
+    gpu_object_placer__use_distance_emitter:b=no
+    gpu_object_placer__distance_affect_decals:b=no
+    gpu_object_placer__distance_emitter_is_dirty:b=yes
+    gpu_object_placer__distance_to_scale_to:p3=1, 1, 1
+    gpu_object_placer__distance_to_rotation_from:r=0
+    gpu_object_placer__distance_to_rotation_to:r=0
+    gpu_object_placer__distance_to_scale_pow:p3=1, 1, 1
+    gpu_object_placer__distance_to_rotation_pow:r=1
+    gpu_object_placer__distance_out_of_range:b=no
+    gpu_object_placer__triangle_edge_length_ratio_cutoff:r=-1
+    _tags:t="render"
+
+    "gpu_object_placer__distance_emitter_eid:eid"{}
+    gpu_object_placer__surface_riex_handles{}
+  }
+
+  _group{
+    _track:b=yes
+    gpu_object_placer__distance_to_scale_from:p3=1, 1, 1
+    gpu_object_placer__distance_based_scale:p2=1, 1
+    gpu_object_placer__object_scale_range:p2=0.9, 1.1
+    gpu_object_placer__object_max_count:i=50
+    gpu_object_placer__visible_distance_squared:r=2500
+  }
+}
+
+decor_grid{
+  editableObj:b=no
+  _use:t="replicating"
+  _singleton:b=yes
+  grid_holder__type:t="decor"
+  grid_holder__typeHash:i=0
+  grid_holder__cellSize:i=128
+
+  grid_holder{}
+}
+
+gpu_object_placer_box{
+  _use:t="gpu_object_placer"
+  _use:t="replicating"
+  grid_obj__gridType:t="decor"
+  net__scopeDistanceSq:r=108900
+
+  "box_zone:tag"{}
+  grid_obj{}
+  _group{
+    _track:b=yes
+    gpu_object_placer__boxBorderX:p2=0, 0
+    gpu_object_placer__boxBorderY:p2=0, 0
+    gpu_object_placer__boxBorderZ:p2=0, 0
+  }
+}
+
+envi_cover_template{
+  _tags:t="render"
+  _singleton:b=yes
+  envi_cover:b=yes
+  envi_cover_albedo:p4=0.8, 0.98, 1, 0
+  envi_cover_translucency:r=1
+  envi_cover_smoothness:r=0.35
+  envi_cover_reflectance:r=0.8
+  envi_cover_normal_infl:r=-0.5
+  envi_cover_normal:p4=0, 1, 0.1, 0
+  envi_cover_noise_high_frequency:r=5
+  envi_cover_noise_low_frequency:r=0.1
+  envi_cover_depth_smoothstep_max:r=0.1
+  envi_cover_depth_pow_exponent:r=0.125
+  envi_cover_noise_mask_factor:r=0.3
+  envi_cover_depth_mask_threshold:r=0.45
+  envi_cover_normal_mask_threshold:r=0.3
+  envi_cover_depth_mask_contrast:r=1
+  envi_cover_normal_mask_contrast:r=1.5
+  envi_cover_intensity_map:t="null_var"
+  envi_cover_lowest_intensity:r=0
+  envi_cover_intensity_map_left_top_right_bottom:p4=-2048, 2048, 2048, -2048
+}
+
+flamethrower_flame_stream_effect{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "node_attached__destroyWithParent:tag"{}
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="flamethrower_mod_flame_stream_20m_composite_fx"
+  }
+}
+
+flamethrower_flame_stream_short_effect{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "node_attached__destroyWithParent:tag"{}
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="flamethrower_mod_flame_stream_composite_fx"
+  }
+}
+
+volfog{
+  _use:t="replicating"
+  volfog:t=""
+}
+
+nbs_sphere{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    nbs_sphere__class_name:t="default"
+    nbs_sphere__center_density:r=1
+    nbs_sphere__radius:r=1
+    nbs_sphere__edge_density:r=0
+  }
+
+  "transform__NBSSphereRadius:tag"{}
+}
+
+nbs_spheres_manager{
+  _use:t="replicating"
+
+  _group{
+    nbs_spheres_manager__class_name:t="default"
+  }
+
+  "nbs_spheres_manager:NBSSpheresManager"{
+    _tags:t="render"
+  }
+}
+
+disable_effect_sfx{}
+explosion_effect{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "attachedEffect:tag"{}
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_dirt_cmps_fx"
+  }
+}
+
+explosion_effect_small{
+  _use:t="explosion_effect"
+  wind_emitter__radius:r=1
+  wind_emitter__duration:r=1
+  wind_emitter__strength:r=1
+
+  "wind_emitter__omni:tag"{}
+}
+
+explosion_effect_medium{
+  _use:t="explosion_effect"
+  wind_emitter__radius:r=1.5
+  wind_emitter__duration:r=1.5
+  wind_emitter__strength:r=1.5
+
+  "wind_emitter__omni:tag"{}
+}
+
+explosion_effect_large{
+  _use:t="explosion_effect"
+  wind_emitter__radius:r=2
+  wind_emitter__duration:r=2
+  wind_emitter__strength:r=2
+
+  "wind_emitter__omni:tag"{}
+}
+
+explosion_effect_extra_large{
+  _use:t="explosion_effect"
+  wind_emitter__radius:r=2.5
+  wind_emitter__duration:r=2.5
+  wind_emitter__strength:r=2.5
+
+  "wind_emitter__omni:tag"{}
+}
+
+flash_explosion_effect_small{
+  _use:t="explosion_effect_small"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_dirt_cmps_fx"
+  }
+}
+
+mine_explosion_effect_small{
+  _use:t="explosion_effect_small"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_dirt_cmps_fx"
+  }
+}
+
+spider_minion_explosion_effect{
+  _use:t="explosion_effect"
+  wind_emitter__radius:r=1.5
+  wind_emitter__duration:r=1.5
+  wind_emitter__strength:r=1.5
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_dirt_cmps_fx"
+  }
+}
+
+falling_weather_effect_template{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 20, 0]]
+  _tracked:t="transform"
+
+  _group{
+    _tags:t="render"
+    camera_prev_pos:p3=0, 0, 0
+    camera_prev_vel:p3=0, 0, 0
+    effect__offset:p3=0, 1, 0
+    effect__bias_coef:r=0.5
+    effect__smooth_coef:r=0.2
+    effect__use_deprecated_bound_camera_logic:b=no
+  }
+
+  effect{
+    _tags:t="render"
+  }
+
+  "request_depth_above_render_transparent:tag"{
+    _tags:t="render"
+  }
+}
+
+camera_snow_light_template{
+  _use:t="dafx_snow"
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="camera_snow_light_cmps_fx"
+  }
+}
+
+camera_snow_heavy_template{
+  _use:t="dafx_snow"
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="camera_snow_heavy_cmps_fx"
+  }
+}
+
+camera_rain_light_template{
+  _use:t="dafx_rain"
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="camera_rain_light_cmps_fx"
+  }
+
+  "shader_vars__vars:object"{
+    puddle_increase:r=0.05
+  }
+}
+
+camera_rain_heavy_template{
+  _use:t="dafx_rain"
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="camera_rain_heavy_cmps_fx"
+  }
+
+  "shader_vars__vars:object"{
+    puddle_increase:r=0.1
+  }
+}
+
+rain_drop_splash_template{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "alwaysInViewportEffect:tag"{}
+  _group{
+    _track:b=yes
+    drop_splash_fx__spawnRate:r=1
+  }
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="camera_rain_drops_cmps_fx"
+  }
+}
+
+camera_dust_template{
+  _use:t="dafx_dust"
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="camera_dust_cmps_fx"
+  }
+}
+
+camera_underwater_template{
+  _use:t="dafx_dust"
+  editableObj:b=no
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__offset:p3=0, 0.02, 0
+    effect__name:t="camera_underwater_cmps_fx"
+  }
+}
+
+camera_leaves_green_template{
+  _use:t="dafx_storm"
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="camera_leaves_green_cmps_fx"
+  }
+}
+
+ground_effect_base{
+  _use:t="ecs_no_debug"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  effect__spawnRate:r=0
+  _tracked:t="effect__spawnRate"
+
+  "staticEffect:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t=""
+
+    effect{}
+  }
+}
+
+ground_sparkles_10m{
+  _use:t="ground_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="fire_molotov_p_sparks_fx"
+  }
+}
+
+shell_explosion_fx_info{
+  _singleton:b=yes
+  _use:t="replicating"
+  shell_explosion_fx__default:t=""
+  shell_explosion_fx__traceLength:r=0.5
+  shell_explosion_fx__infoTemplate:t=""
+}
+
+gun_environment_fx{
+  _tags:t="render"
+  gun_environment__defaultFxTemplate:t="hit_ground_wave_small_misc_effect"
+
+  "gun_environment_fx__materials:object"{
+    group__dirt_and_mud:t="hit_ground_wave_small_dirt_effect"
+    group__sand:t="hit_ground_wave_small_sand_effect"
+    group__snow:t="hit_ground_wave_small_snow_effect"
+    group__stone:t="hit_ground_wave_small_stone_effect"
+  }
+
+  "gun_environment_fx__matTemplates:list<t>"{}
+}
+
+recreate_entity_effect_in{
+  recreate_entity_effect_in__time:r=0
+
+  "recreate_entity_effect_in__eid:eid"{}
+}
+
+teleport_effect_in{
+  _use:t="replicating"
+  _use:t="client_destroy_in_5_sec"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  effect__scale:r=0.3
+
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_anomaly_teleport_trap_cmps_fx"
+
+    effect{}
+  }
+}
+
+teleport_effect_out{
+  _use:t="teleport_trap_anomaly_out_fx"
+  _use:t="client_destroy_in_5_sec"
+}
+
+client_human_cam_magnification_curve_affect{
+  _use:t="client_game_effect_with_duration"
+  human_cam_magnification_affect__magnification:r=1
+  game_effect__timeToDestroy:r=0.75
+
+  "human_cam_magnification_affect__curve:array"{
+    "key:object"{
+      t:r=0
+      v:r=1
+    }
+
+    "key:object"{
+      t:r=0.3
+      v:r=2.1
+    }
+
+    "key:object"{
+      t:r=0.6
+      v:r=0.9
+    }
+
+    "key:object"{
+      t:r=0.8
+      v:r=1.025
+    }
+
+    "key:object"{
+      t:r=1
+      v:r=1
+    }
+  }
+}
+
+animate_float_component{
+  _use:t="game_effect_base"
+  animate_float_component__componentName:t=""
+  animate_float_component__createdAt:r=0
+
+  "animate_float_component__componentHash:u32"{
+    value:i=0
+  }
+
+  "animate_float_component__curve:array"{}
+}
+
+shooting_range_exit_haze{
+  effect__scale:r=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  "effects:object"{
+    teleportation_portal_plane_distortion_a_fx:r=1
+  }
+}

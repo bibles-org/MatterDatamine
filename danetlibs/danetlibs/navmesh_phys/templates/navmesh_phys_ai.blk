@@ -1,0 +1,11 @@
+nphys_bullet_hit_tagging{
+  navmesh_phys__walkSpeedMult:r=1
+  navmesh_phys__hitTagEnd:r=0
+  navmesh_phys__walkSpeedModHitTagMultName:t="hit_tag_mult"
+}
+
+nphys_hit_tagging{
+  _use:t="nphys_bullet_hit_tagging"
+  navmesh_phys__hitTagPower:r=0.8
+  navmesh_phys__hitTagDuration:r=1
+}

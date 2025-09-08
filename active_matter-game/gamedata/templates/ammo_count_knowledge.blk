@@ -1,0 +1,19 @@
+ammo_count_knowledge_inspecting{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=1.5
+  ammo_count_knowledge_inspecting__startTimestamp:r=0
+
+  "ammo_count_knowledge_inspecting__itemEid:eid"{}
+  "ammo_count_knowledge_inspecting__owner:eid"{}
+}
+
+ammo_count_knowledge_controller{
+  _tracked:t="ammo_count_knowledge_controller__inspectingAffectEid"
+
+  _group{
+    _tags:t="gameClient"
+    ammo_count_knowledge_controller__inspectingAffectTemplate:t="ammo_count_knowledge_inspecting"
+
+    "ammo_count_knowledge_controller__inspectingAffectEid:eid"{}
+  }
+}

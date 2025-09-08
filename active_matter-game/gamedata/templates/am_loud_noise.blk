@@ -1,0 +1,103 @@
+sleeping_monster{
+  _use:t="ignored_ai_target"
+  _use:t="ai_danger_update_disabled"
+  _use:t="sleeping_animchar_update_toggle_by_distance"
+  sleeping_monster__appearTime:r=0
+  sleeping_monster__animState:i=0
+  sleeping_monster__animStateName:t="sleep"
+  sleeping_monster__template:t="sleeping_monster"
+  sleeping_monster__templateAdd:t="changed_appear_effect"
+  entity_mods__receivedMeleeDamageMult:r=1.5
+  net__scopeDistanceSq:r=160000
+
+  "sleeping_monster:tag"{}
+  "nphys__disabled:tag"{}
+  "loc_snaphots__disabled:tag"{}
+}
+
+sleeping_monster_awake_forbidden{
+  "sleeping_monster_awake_forbidden:tag"{}
+}
+
+sleeping_trap{
+  _use:t="sleeping_monster"
+  sleeping_monster__template:t="sleeping_trap"
+
+  "sleeping_trap:tag"{}
+}
+
+sleep_disturber{
+  sleep_disturber__radius:r=20
+  sleep_disturber__updateAt:r=0
+  sleep_disturber__interval:r=3
+}
+
+loud_noise_receiver{
+  loud_noise__accumulatedNoise:r=0
+  loud_noise__prevAccumulatedNoise:r=0
+  loud_noise__noiseVelocity:r=0
+  loud_noise__noiseVelocityFade:r=15
+  loud_noise__maxFadeVelocity:r=35
+  _replicated:t="loud_noise__accumulatedNoise"
+  _tracked:t="loud_noise__accumulatedNoise"
+  loud_noise__appendOnNoise:t="loud_noise_reaction"
+}
+
+loud_noise_reaction{
+  loud_noise_reaction__updateAt:r=0
+  loud_noise_reaction__interval:r=0.5
+  loud_noise_reaction__wasDisturbed:b=yes
+  loud_noise_reaction__addedTemplate:t="loud_noise_reaction"
+
+  "loud_noise_reaction:tag"{}
+}
+
+human_loud_noise{
+  human_loud_noise__updateAt:r=0
+  human_loud_noise__interval:r=0.25
+  human_loud_noise__radius:r=10
+  human_loud_noise__crawling:r=40
+  human_loud_noise__crouching:r=30
+  human_loud_noise__walking:r=45
+  human_loud_noise__sprinting:r=60
+  human_loud_noise__climbing:r=45
+  human_loud_noise__reload:r=50
+  human_loud_noise__stanceChange:r=30
+  human_loud_noise__switchWeapon:r=30
+  human_loud_noise__airbornModifier:r=0.5
+  human_loud_noise__amount:r=0
+  human_loud_noise__lastAmount:r=0
+  human_loud_noise__lastIncrement:r=0
+  human_loud_noise__noisePerLootPickup:r=25
+  human_loud_noise__noisePerMpsLanding:r=5
+}
+
+loud_noise_debug{
+  loud_noise_debug__radius:r=0
+  loud_noise_debug__drawNoiseless:b=no
+
+  "loud_noise_debug:tag"{}
+}
+
+loud_debug_noise_block_awakening_marker{
+  "loud_debug_noise_block_awakening_marker:tag"{}
+}
+
+loud_noise_block_awakening{
+  "loud_noise_block_awakening:tag"{}
+}
+
+loud_noise_oneshot{
+  loud_noise__radius:r=0
+  loud_noise__noise:r=0
+  loud_noise__pos:p3=0, 0, 0
+  game_effect__destroyAt:r=1
+}
+
+loud_noise_meter{
+  loud_noise_meter__value:r=0
+  loud_noise_meter__muffledMultiplier:r=0.5
+  loud_noise_meter__expFadeRatio:r=-1.6
+  loud_noise_meter__linearFadePerSecond:r=1
+  _tracked:t="loud_noise_meter__value"
+}

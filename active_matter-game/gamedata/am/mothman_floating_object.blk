@@ -1,0 +1,35 @@
+mass:r=5
+logCCD:b=no
+addToWorld:b=no
+skipUpdateOnSleep:b=no
+sleepUpdateFrequency:i=0
+gravityMult:r=0.1
+explodeHitPower:r=10
+explodeArmorPower:r=0
+explodeRadius:p2=0.5, 2
+shutterDamage:b=yes
+shutterDamageRadius:r=3
+shutterAmount:i=100
+shutterArmorPower:r=10
+shutterHit:r=6
+
+collision{
+  body{
+    sphere{
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+      rad:r=0.1
+    }
+  }
+}
+
+ccdSpheres{
+  ccd:p4=0, 0, 0, 0.1
+}
+
+solver{
+  energyConservation:r=0
+}
+
+shellSound{
+  explosionPath:t="impact/grenade"
+}

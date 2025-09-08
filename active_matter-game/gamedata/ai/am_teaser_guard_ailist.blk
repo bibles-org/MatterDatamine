@@ -1,0 +1,106 @@
+repeat{
+  name:t="teaser_guard"
+
+  reaction{
+    event:t="onHit"
+
+    sequencer{
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+      }
+
+      recalculateTree{}
+    }
+  }
+
+  reaction{
+    event:t="onBulletNearby"
+
+    sequencer{
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+      }
+
+      recalculateTree{}
+    }
+  }
+
+  reaction{
+    event:t="onBlindness"
+
+    sequencer{
+      recalculateTree{}
+    }
+  }
+
+  sequencer{
+    name:t="sub.wanderAroundObjective"
+
+    reaction{
+      name:t="wander_reaction"
+      event:t="regularCheck"
+
+      orderedSelector{
+        failed{
+          chooseBestWeapon{}
+        }
+
+        findObstaclesAlongsidePath{}
+        sequencer{
+          successChance{
+            chance:r=0.1
+          }
+
+          hasMagazinesToLoad{}
+          selectNode{
+            name:t="load_ammo_magazines"
+          }
+        }
+
+        subTree{
+          treeName:t="sub.mindcontrolledReactions"
+        }
+      }
+    }
+
+    reaction{
+      event:t="onAttract"
+
+      recalculateTree{}
+    }
+
+    success{
+      findPotentialEnemyPos{
+        posParam:t="potentialEnemyPos"
+      }
+    }
+
+    setCurrentAiAction{
+      state:t="stand"
+    }
+
+    sequencer{
+      findRandomNavmeshPoint{
+        posParam:t="gotoPos"
+        aroundPos:t="wanderTarget"
+        dist:r=6
+      }
+
+      moveToPos{
+        posParam:t="gotoPos"
+        sprintTimerRange:p2=0, 0
+        forceToWalk:b=yes
+        tryClimbing:b=no
+        distThreshold:r=2
+      }
+    }
+
+    setCurrentAiAction{
+      state:t="stand"
+    }
+  }
+}

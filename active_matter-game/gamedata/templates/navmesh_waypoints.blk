@@ -1,0 +1,18 @@
+navmesh_waypoints{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="navmesh_waypoints__waypoints"
+  navmesh_waypoints__localSpace:b=yes
+  _tracked:t="navmesh_waypoints__localSpace"
+  navmesh_waypoints__looped:b=yes
+  navmesh_waypoints__center:p3=0, 0, 0
+  navmesh_waypoints__boundingRadius:r=0
+
+  "navmesh_waypoints__waypoints:list<p3>"{}
+}
+
+navmesh_waypoints_projected{
+  _use:t="navmesh_waypoints"
+  navmesh_waypoints__projectionExtents:p3=5, 5, 5
+
+  "navmesh_waypoints__projectedWaypoints:list<p3>"{}
+}

@@ -1,0 +1,71 @@
+am_heartrate{
+  heartrate__value:r=70
+  heartrate__stamina:r=100
+  heartrate__amortization:r=0
+  heartrate__range:p2=70, 180
+  heartrate__riseTau:r=0.96
+  heartrate__fallTau:r=0.96
+  heartrate__riseSpeedMulti:r=1
+  heartrate__riseSpeedMultiDefault:r=0.05
+  heartrate__fallSpeedMulti:r=1
+  heartrate__fallSpeedMultiDefault:r=0.03
+  heartrate__normalizationSpeed:p2=1, 1
+  heartrate__normalizationSpeedDefault:p2=1.2, 0.6
+  heartrate__sprintMult:p2=1, 0.6
+  heartrate__handStaminaMult:p2=1, 8
+  heartrate__climbSpeedMult:p2=1, 0.6
+  heartrate__holdBreathDrain:p2=0.33, 0.66
+  heartrate__restoreBreath:p2=0.2, 0.1
+  heartrate__changePos:p2=1, 0.5
+  heartrate__recoverBreath:p2=2, 0.5
+  heartrate__jumpSpeed:p2=1, 0.5
+  heartrate__sprintPow:r=1
+  heartrate__dodgeMulti:p2=1, 0.5
+  heartrate__walkHR:r=15
+  heartrate__sprintHR:r=60
+  heartrate__standUpHR:r=1500
+  heartrate__climbHR:r=120
+  heartrate__jumpHR:r=130
+  heartrate__dodgeHR:r=3000
+  heartrate__elevationGainHR:r=100
+  heartrate__damagedHR:r=100
+  heartrate__downhillMulti:r=0.4
+  heartrate__fatigueThreshold:r=0
+  heartrate__fatigueThresholdDefault:r=120
+  heartrate__lastHighActivityAt:r=0
+  heartrate__restCooldown:r=1
+  heartrate__maxStamina:r=100
+  heartrate__movementHRStaminaMult:p2=1, 1
+  heartrate__movementHRStaminaMultDefault:p2=1, 1.2
+  heartrate__fatigueHRRatio:r=0.7
+  heartrate__fatigueHRPow:r=0.5
+  heartrate__staminaRegen:p3=0, 0, 0
+  heartrate__staminaRegenDefault:p3=0.5, 0.75, 0
+  heartrate__staminaRegenPeakHR:r=90
+  heartrate__staminaDrain:p2=0, 0
+  heartrate__staminaDrainDefault:p2=0.1, 1
+  heartrate__amortizationFractionPerSecond:r=0.5
+  heartrate__overflowHRToAmortizationRatio:r=0.8
+  heartrate__damagedStaminaPow:r=0.4
+  heartrate__damagedStaminaMaxMulti:r=2.5
+  heartrate__lastVisualHeartbeat:r=0
+  heartrate__visualHeartbeat__staminaThreshold:r=60
+  heartrate__visualHeartbeatIntensity:p2=0.5, 1
+  heartrate__syncPeriod:i=60
+  heartrate__lastHp:r=0
+  heartrate__lastTrackedHp:r=0
+  heartrate__hpDelayTicks:i=20
+  heartrate__showStamina:b=no
+  heartrate__debugInfoTarget:p4=70, 70, 70, 70
+  heartrate__debugInfoAmort:p2=0, 0
+  heartrate__staminaRate:r=0
+  heartrate__sendDebugEvents:b=no
+  heartrate__riseSpeedMultiDebugValue:r=0
+
+  "heartrate__hpinfo__tick:list<i>"{}
+  "heartrate__hpinfo__hp:list<r>"{}
+}
+
+am_phys_state_syncer{
+  "phys_state_syncer:ECSCustomPhysStateSyncer"{}
+}

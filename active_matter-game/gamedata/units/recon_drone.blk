@@ -1,0 +1,46 @@
+liftForceAtPower0:r=-0.15
+liftForceAtPower1_zeroSpeed:r=3
+liftForceAtPower1_maxSpeed:r=4
+fakeBoostFactor:r=0
+pitchMultiplier:r=3
+rollMultiplier:r=3
+yawMultiplierCW:r=12
+yawMultiplierCCW:r=12
+pitchViscosity:r=0.04
+rollViscosity:r=0.04
+yawViscosity:r=0.01
+aimViscosity:r=1
+midAlt:r=350
+maxAlt:r=750
+gyroRotationInertia:r=3.5
+gyroVectorInertia:r=0.3
+powerInertia:r=0.35
+posFrictionViscosity:r=52
+rotationFrictionViscosity:r=0.4
+groundCollisionForce:r=625
+groundCollisionForceDamper:r=6.25
+maxPositiveSpeed:p3=30, 30, 25
+maxNegativeSpeed:p3=20, 20, 25
+frictionPointX:p3=-2.5, 0, 0
+frictionPointY:p3=0, 0, 0
+frictionPointZ:p3=-2.8, 0, 0
+mass:r=0.6
+mainPropHeightAboveMc:r=2
+mainPropRadius:r=7
+rudderForceApplyPoint:p3=-6, -0.3, 0
+massBox:p3=1.5, 1, 1
+defaultMainEngineRPM:r=5000
+defaultTailEngineRPM:r=10000
+autopilotKeepPosAngleFeedback:r=8
+autopilotKeepPosSpeedFeedback:r=0.1
+autopilotKeepPosControlClamp:r=0.4
+autopilotKeepHeightSpeedFeedback:r=4
+autopilotKeepYawWFeedback:r=22
+rightWheelRadius:r=0.3
+leftWheelRadius:r=0.3
+centerWheelRadius:r=0.17
+wheelSpeedViscosity:r=1.5
+
+collisionProps{
+  Copter_cls:t="convex_hull"
+}

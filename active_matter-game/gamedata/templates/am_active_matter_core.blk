@@ -1,0 +1,978 @@
+import:t="am_wandering_core.blk"
+
+am_cores_grid{
+  editableObj:b=no
+  _use:t="replicating"
+  _singleton:b=yes
+  grid_holder__type:t="am_cores"
+  grid_holder__typeHash:i=0
+  grid_holder__cellSize:i=128
+
+  grid_holder{}
+}
+
+am_core_hitpoints{
+  _use:t="base_dm_parts"
+  _use:t="base_hitpoints"
+  grid_obj__gridType:t="am_cores"
+  hitpoints__hp:r=10
+  hitpoints__maxHp:r=10
+  hitpoints__regenPerSec:r=50
+  hitpoints__shellDmgMult:r=1
+  hitpoints__shellSplashDmgMult:r=1
+  am_core__maxHpStep:r=15
+  am_core__maxHpRng:p2=5, 100
+  am_core__coolingDownDuration:r=20
+  am_core__coolingDownEndTime:r=0
+  needsBlood:b=no
+  isAlive:b=yes
+  _tracked:t="isAlive"
+  _replicated:t="isAlive"
+  _replicated:t="hitpoints__hp"
+
+  grid_obj{}
+  collres{}
+  capsule_approximation{}
+  "capsule_approximation__nodeNames:array"{}
+  "capsule_approximation__complexNodeNames:array"{}
+  "killer:eid"{}
+}
+
+am_core_companion{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="creatures_grid_obj"
+  animchar__res:t="stone_shield_part_b_char"
+  collres__res:t="stone_shield_part_b_collision"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  am_core_companion__yaw:r=0
+  am_core_companion__pitch:r=0
+  am_core_companion__yawSpeed:r=0
+  am_core_companion__pitchSpeed:r=0
+  am_core_companion__speed:r=0
+  am_core_companion__speedRng:p2=-0.001, 0.001
+  am_core_companion__scaleRng:p2=0.4, 0.6
+  am_core_companion__radius:r=0
+  am_core_companion__radiusRng:p2=2, 2.3
+
+  collres{}
+  _group{
+    _tags:t="gameClient"
+    am_core__blastWaveAdd:r=2
+  }
+
+  "am_core_companion__parent:eid"{}
+}
+
+am_core_light{
+  _use:t="attached_omni_light"
+  light__max_radius:r=10
+  light__offset:p3=0, 0, 0
+  light__color:c=0, 255, 0, 255
+  light__brightness:r=20
+  am_core_light__exhausted:c=255, 10, 10, 255
+  am_core_light__healthy:c=119, 255, 10, 0
+  light__dynamic_light:b=yes
+  light__automatic_box:b=no
+
+  _group{
+    _tags:t="render"
+    omni_light__dynamic_obj_shadows:b=yes
+    omni_light__shadows:b=yes
+  }
+}
+
+am_core_effect{
+  _use:t="base_effect"
+
+  "amCoreEffect:tag"{}
+  "game_effect__attachedTo:eid"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="am_crystal_distortion_a_fx"
+
+    effect{}
+  }
+}
+
+am_core_sound{
+  _use:t="sound_control"
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=200
+  }
+
+  _group{
+    _tags:t="sound"
+    am_core_sound__activeModePath:t="am/objects/core/core_loop_1"
+    am_core_sound__protectiveModePath:t="am/objects/core/core_loop_2"
+    am_core_sound__startActiveModePath:t="am/objects/core/core_start_1"
+    am_core_sound__fragmentDroppedPath:t="am/objects/core/core_breach"
+    am_core_sound__hitReactionPath:t="am/objects/core/hit"
+
+    "am_core_sound__event:SoundEvent"{}
+  }
+}
+
+am_wandering_core_sound{
+  _use:t="sound_control"
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=200
+  }
+
+  _group{
+    _tags:t="sound"
+    am_core_sound__activeModePath:t="am/objects/lightning_ball/loop"
+    am_core_sound__protectiveModePath:t="am/objects/core/core_loop_2"
+    am_core_sound__startActiveModePath:t="am/objects/core/core_start_1"
+    am_core_sound__fragmentDroppedPath:t="am/objects/core/core_breach"
+    am_core_sound__hitReactionPath:t="am/objects/lightning_ball/hit"
+
+    "am_core_sound__event:SoundEvent"{}
+  }
+}
+
+am_core_base{
+  _use:t="replicating"
+  _use:t="loc_snapshots"
+  _use:t="animchar"
+  _use:t="am_core_hitpoints"
+  _use:t="am_core_light"
+  _use:t="am_core_sound"
+  _use:t="loot_drop_system"
+  _use:t="am_core_fake_collision"
+  animchar__res:t="am_crystal_i_char"
+  collres__res:t="am_crystal_i_collision"
+  material:t="activeMatterCore"
+  am_core__aliveMaterial:t="activeMatterCore"
+  am_core__deadMaterial:t="steel"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  am_core__effectTemplate:t="am_core_effect"
+  am_core__decorCompanionTemplate:t="am_core_companion"
+  am_core__decorCompanionsCountRng:ip2=15, 20
+  loot_drop_system__dropPreset:t="freefall_drop_preset"
+  am_core__maxLootCountCapactity:i=20
+  am_core__createOnDestroyTemplate:t="kamikaze_activator"
+  ballistic_phys__omegaBase:p3=0.5, 0.5, 0.5
+
+  "am_core:tag"{}
+  _group{
+    _tags:t="gameClient"
+    am_core__protectiveShellTemplate:t="am_core_protective_shell"
+    am_core__protectiveShellScaleViscosityMult:r=2.1
+    am_core__scaleAdd:r=0.1
+    am_core__scale:r=1
+    am_core__minMaxScale:p2=1, 1.3
+    am_core__scaleViscosity:r=0.3
+    am_core__blastWaveAdd:r=1
+
+    "am_core__protectiveShellEid:eid"{}
+  }
+
+  _group{
+    _tags:t="server"
+    am_core__timeInProtectiveModeRng:p2=3, 10
+    am_core__timeInProtectiveModeStep:r=2
+    am_core__protectiveModeEndTime:r=0
+    am_core__fragmentsLimitDenominator:p2=1, 3
+    am_core__moveTo:p3=0, 0, 0
+
+    "am_core__lootPresets:list<t>"{
+      item:t="am_core_tiny_loot_preset"
+      item:t="am_core_small_loot_preset"
+      item:t="am_core_medium_loot_preset"
+      item:t="am_core_big_loot_preset"
+      item:t="am_core_huge_loot_preset"
+    }
+  }
+
+  "preloadSpawnActivatedShellProps:list<t>"{
+    template:t="kamikaze_activator"
+  }
+
+  _group{
+    _replicate:b=yes
+    am_core__timeInProtectiveMode:r=10
+    ballistic_phys__omega:p3=0.5, 0.5, 0.5
+
+    "am_core__fragmentsLimit:i"{
+      value:i=50
+      _track:b=yes
+    }
+  }
+}
+
+am_core_fake_collision{
+  am_core_fake_collision__colliderTemplate:t="am_core_fake_collider"
+}
+
+am_core_fake_collider{
+  _use:t="replicating"
+  _use:t="loc_snapshots"
+  loc_snapshots__sendPeriod:r=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  pair_collision__tag:t="collidableToPhysObj"
+  collres__res:t="am_core_d_collision"
+  net__physId:i=-1
+  phys_obj_net_phys__blk:t="gamedata/am/am_core.blk"
+  collision_physMatId:i=-1
+  loc_snapshots__compensationSpeed:p2=1, 2
+
+  pair_collision__gridHolders{}
+  "pair_collision__gridNames:list<t>"{
+    h:t="humans"
+    h:t="vehicles"
+  }
+
+  "collidableToPhysObj:tag"{}
+  "am_core_fake_collider:tag"{}
+  "ownerEid:eid"{}
+  collres{}
+  phys_obj_net_phys{}
+  base_net_phys_ptr{}
+  phys_vars{}
+}
+
+am_core_protective_sphere_controller{
+  am_core__protectiveSphereTemplate:t="am_core_bulletproof_sphere"
+  am_core__protectiveSphereVisualScale:r=1.08
+  am_core__protectiveSphereRadiusMinMax:p2=0.25, 4
+  am_core__protectiveSphereEnabled:b=yes
+  am_core__protectiveSphereAttached:b=yes
+  _tracked:t="am_core__protectiveSphereEnabled"
+  _replicated:t="am_core__protectiveSphereEnabled"
+  _tracked:t="am_core__protectiveSphereAttached"
+  _replicated:t="am_core__protectiveSphereAttached"
+
+  "am_core__protectiveSphereEid:eid"{}
+}
+
+protected_by_warriors{
+  protected_by_warriors__enabled:b=yes
+  _tracked:t="protected_by_warriors__enabled"
+  protected_by_warriors__count:ip2=5, 7
+  protected_by_warriors__template:t="am_core_warrior"
+  protected_by_warriors__spawnRadius:r=7
+  protected_by_warriors__agroRadius:r=12
+  protected_by_warriors__travelToBestOutOf:i=3
+  protected_by_warriors__origin:p3=0, 0, 0
+  protected_by_warriors__minProximity:r=3
+  protected_by_warriors__updateAt:r=0
+  protected_by_warriors__interval:r=2
+  protected_by_warriors__hasAgro:b=no
+  protected_by_warriors__warriorsPerTarget:i=3
+
+  "protected_by_warriors__targetsPos:list<p3>"{}
+  "protected_by_warriors__targetEids:list<eid>"{}
+}
+
+am_core_damage_sphere_touch_fx{
+  _use:t="replicating"
+  _use:t="server_destroy_in_5_sec"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="teleport_a_composite_fx"
+  }
+}
+
+am_core_damage_sphere{
+  _use:t="replicating"
+  _use:t="am_gravity_sphere"
+  am_gravity_sphere__gravityMult:r=0
+  _use:t="am_triggerable_zone"
+  sphere_zone__radius:r=10
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  am_core_damage_sphere__pushForce:r=9.2
+  am_core_damage_sphere__pushForceVehicle:r=3000
+  am_core_damage_sphere__pushForceEffectName:t="am_core_damage_sphere_touch_fx"
+  am_core_damage_sphere__humanInsideTemplate:t="human_in_zero_gravity_field"
+
+  "humanTriggerable:tag"{}
+  "am_core_damage_sphere:tag"{}
+  "am_core_damage_sphere__ownerEid:eid"{}
+  "net_sound__descs:shared:object"{
+    "hit:object"{
+      path:t="player/effects/doublejump"
+    }
+  }
+}
+
+am_core_explosion_sphere{
+  _use:t="replicating"
+  _use:t="am_gravity_sphere"
+  am_gravity_sphere__gravityMult:r=0
+  _use:t="am_triggerable_zone"
+  sphere_zone__radius:r=15
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  am_core_explosion_sphere_explosion__pushForce:r=15
+  am_core_explosion_sphere_explosion__pushForceVehicle:r=5000
+  am_core_explosion_sphere_explosion__pushUpForce:r=1
+  am_core_explosion_sphere_explosion__riDmgRadius:r=25
+  am_core_explosion_sphere_explosion__riDmgNearFar:p2=350, 35
+  am_core_explosion_sphere__explosionTemplate:t="am_core_explosion_sphere_explosion"
+
+  "humanTriggerable:tag"{}
+  "changedTriggerable:tag"{}
+  "flowerhumanTriggerable:tag"{}
+  "vehicleTriggerable:tag"{}
+  "am_core_damage_sphere:tag"{}
+  "am_core_damage_sphere__ownerEid:eid"{}
+  "net_sound__descs:shared:object"{
+    "hit:object"{
+      path:t="player/effects/doublejump"
+    }
+  }
+
+  "am_core_damage_sphere__heroCanExit:tag"{}
+}
+
+am_core_explosion_sphere_explosion{
+  am_core_explosion_sphere_explosion__pushForce:r=15
+  am_core_explosion_sphere_explosion__pushForceVehicle:r=5000
+  am_core_explosion_sphere_explosion__pushUpForce:r=1
+  game_effect__timeToDestroy:r=0.5
+  game_effect__destroyAt:r=-1
+
+  "game_effect__ownerEid:eid"{}
+}
+
+human_in_zero_gravity_field{
+  human_in_zero_gravity_field__shootPushForce:r=3
+}
+
+am_core_damage_sphere_controller{
+  am_core_damage_sphere_controller__damageSphereTemplate:t="am_core_damage_sphere"
+  am_core_damage_sphere_controller__damageSphereEnabled:b=no
+  _tracked:t="am_core_damage_sphere_controller__damageSphereEnabled"
+  _replicated:t="am_core_damage_sphere_controller__damageSphereEnabled"
+  am_core_damage_sphere_controller__attached:b=yes
+  _tracked:t="am_core_damage_sphere_controller__attached"
+  _replicated:t="am_core_damage_sphere_controller__attached"
+
+  "am_core_damage_sphere_controller__damageSphereEid:eid"{}
+}
+
+am_core_explosion_effect{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_effect__timeToDestroy:r=1
+  game_effect__clientDestroyAt:r=-1
+
+  "attachedEffect:tag"{}
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_jump_quest_am_core_small_cmps_fx"
+  }
+}
+
+am_core_explosion_shell{
+  _use:t="shell"
+  animchar__res:t="am_crystal_c_char"
+  animchar__updatable:b=no
+  animchar_render__enabled:b=no
+  shell__expl_node:t="am_crystal_c_dynmodel.lod00"
+}
+
+am_core_explosion_phys{
+  _use:t="am_core_explosion_shell"
+  _use:t="projectile"
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_wandering_core_explosion"
+}
+
+protected_am_core_explosion{
+  on_create__spawnActivatedShellBlk:t="gamedata/weapons/protected_am_core_explosion_shell.blk"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "ownerEid:eid"{}
+}
+
+protected_am_core_round1_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_1"
+      weight:r=1
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_2"
+      weight:r=1
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_3"
+      weight:r=1
+      number:i=1
+    }
+  }
+}
+
+protected_am_core_round2_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_1"
+      weight:r=1
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_2"
+      weight:r=1
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_3"
+      weight:r=1
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_5"
+      weight:r=1
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_10"
+      weight:r=1
+      number:i=1
+    }
+  }
+}
+
+protected_am_core_round3_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=5, 6
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_1"
+      weight:r=1
+      number:i=3
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_2"
+      weight:r=1
+      number:i=3
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_3"
+      weight:r=1
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_5"
+      weight:r=1
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_10"
+      weight:r=1
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_15"
+      weight:r=1
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_20"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile_shell+coin_item_count_50"
+      weight:r=1
+    }
+  }
+}
+
+protected_am_core_patrolling{
+  "protected_am_core__patrolling:tag"{}
+}
+
+protected_am_core{
+  _use:t="am_core_base"
+  _use:t="am_core_protective_sphere_controller"
+  _use:t="am_core_damage_sphere_controller"
+  _use:t="protected_by_warriors"
+  entity__recreateToOnDeath:t=""
+  animchar__res:t="am_core_a_char"
+  collres__res:t="am_core_a_collision"
+  am_core__createOnDestroyTemplate:t="protected_am_core_explosion"
+  protected_by_warriors__enabled:b=no
+  protected_by_warriors__count:ip2=8, 10
+  protected_by_warriors__spawnRadius:r=8
+  protected_by_warriors__agroRadius:r=10
+  am_core__protectiveSphereEnabled:b=no
+  am_core__protectiveSphereRadiusMinMax:p2=0.25, 10
+  am_core_damage_sphere_controller__damageSphereEnabled:b=no
+  am_core__decorCompanionsCountRng:ip2=0, 0
+  hitpoints__hp:r=0
+  hitpoints__maxHp:r=0
+  hitpoints__regenPerSec:r=15
+  am_core__maxHpStep:r=15
+  am_core__maxHpRng:p2=600, 800
+  am_core__maxLootCountCapactity:i=100000
+  protected_am_core__fightArenaPos:p3=0, 0, 0
+  protected_am_core__roundsCount:i=0
+  protected_am_core__roundsCountMax:i=1
+  protected_am_core__triggerFightRadius:r=8
+  protected_am_core__updateInterval:r=1
+  protected_am_core__updateAt:r=0
+  protected_am_core__lastEnemyAgroTime:r=0
+  protected_am_core__noAgroCalmTime:r=10
+  protected_am_core__fightForbiddenInterval:r=10
+  protected_am_core__fightForbiddenUntilTime:r=0
+  protected_am_core__fightHeight:r=7
+  protected_am_core__patrolHeight:r=4
+  protected_am_core__patrolSpeed:r=0
+  protected_am_core__patrolSpeedMinMax:p2=0.5, 2
+  protected_am_core__state:i=0
+  protected_am_core__originPos:p3=0, 0, 0
+  protected_am_core__patrolRadius:r=100
+  protected_am_core__patrolGeneratePathOnSetup:b=yes
+  protected_am_core__patrolPathMode:i=0
+  protected_am_core__patrolPathForward:b=yes
+  protected_am_core__patrolPathPointIndex:i=0
+  protected_am_core__patrolPathFindWaypointsDist:r=50
+  _tracked:t="protected_am_core__state"
+  protected_am_core__velocity:p3=0, 0, 0
+  protected_am_core__damping:p2=1, 2
+
+  "capsule_approximation__nodeNames:array"{
+    node:t="am_core_a_dynmodel.lod00"
+  }
+
+  "preloadSpawnActivatedShellProps:list<t>"{
+    template:t="protected_am_core_explosion"
+  }
+
+  _group{
+    _tags:t="server"
+    am_core__fragmentsLimitDenominator:p2=1, 1
+    am_core__timeInProtectiveModeRng:p2=3, 12
+    am_core__timeInProtectiveModeStep:r=3
+
+    "am_core__lootPresets:list<t>"{
+      item:t="protected_am_core_round1_loot_preset"
+      item:t="protected_am_core_round2_loot_preset"
+      item:t="protected_am_core_round3_loot_preset"
+    }
+  }
+
+  "protected_am_core__patrolPath:list<p3>"{}
+}
+
+protected_am_core_active{
+  _use:t="am_core_base"
+  _use:t="protected_by_warriors"
+  entity__recreateToOnDeath:t=""
+  animchar__res:t="am_core_a_char"
+  collres__res:t="am_core_a_collision"
+  loc_snapshots__compensationSpeed:p2=4, 14
+  am_core__createOnDestroyTemplate:t="protected_am_core_explosion"
+  protected_by_warriors__enabled:b=no
+  protected_by_warriors__count:ip2=8, 10
+  protected_by_warriors__spawnRadius:r=8
+  protected_by_warriors__agroRadius:r=10
+  am_core__protectiveSphereEnabled:b=no
+  am_core__protectiveSphereRadiusMinMax:p2=0.25, 10
+  am_core_damage_sphere_controller__damageSphereEnabled:b=no
+  am_core__decorCompanionsCountRng:ip2=0, 0
+  hitpoints__hp:r=0
+  hitpoints__maxHp:r=0
+  hitpoints__regenPerSec:r=15
+  am_core__maxHpStep:r=15
+  am_core__maxHpRng:p2=1000, 1300
+  am_core__maxLootCountCapactity:i=100000
+  protected_am_core__fightArenaPos:p3=0, 0, 0
+  protected_am_core__roundsCount:i=0
+  protected_am_core__roundsCountMax:i=1
+  protected_am_core__triggerFightRadius:r=8
+  protected_am_core__updateInterval:r=1
+  protected_am_core__updateAt:r=0
+  protected_am_core__lastEnemyAgroTime:r=0
+  protected_am_core__noAgroCalmTime:r=10
+  protected_am_core__fightForbiddenInterval:r=10
+  protected_am_core__fightForbiddenUntilTime:r=0
+  protected_am_core__fightHeight:r=7
+  protected_am_core__patrolHeight:r=4
+  protected_am_core__patrolSpeed:r=0
+  protected_am_core__patrolSpeedMinMax:p2=0.5, 2
+  protected_am_core__state:i=0
+  protected_am_core__originPos:p3=0, 0, 0
+  protected_am_core__patrolRadius:r=100
+  protected_am_core__patrolGeneratePathOnSetup:b=yes
+  protected_am_core__patrolPathMode:i=0
+  protected_am_core__patrolPathForward:b=yes
+  protected_am_core__patrolPathPointIndex:i=0
+  protected_am_core__patrolPathFindWaypointsDist:r=50
+  _tracked:t="protected_am_core__state"
+  protected_am_core__velocity:p3=0, 0, 0
+  protected_am_core__damping:p2=1, 2
+
+  "capsule_approximation__nodeNames:array"{
+    node:t="am_core_a_dynmodel.lod00"
+  }
+
+  "preloadSpawnActivatedShellProps:list<t>"{
+    template:t="protected_am_core_explosion"
+  }
+
+  _group{
+    _tags:t="server"
+    am_core__fragmentsLimitDenominator:p2=1, 1
+    am_core__timeInProtectiveModeRng:p2=3, 12
+    am_core__timeInProtectiveModeStep:r=3
+
+    "am_core__lootPresets:list<t>"{
+      item:t="protected_am_core_round1_loot_preset"
+      item:t="protected_am_core_round2_loot_preset"
+      item:t="protected_am_core_round3_loot_preset"
+    }
+  }
+
+  "protected_am_core__patrolPath:list<p3>"{}
+}
+
+am_core_warrior_sound{
+  _group{
+    _tags:t="sound"
+    am_core_sound__warriorCharge:t="player/effects/drop_incoming"
+    am_core_sound__warriorAttack:t="am/objects/core/hit"
+  }
+}
+
+am_core_warrior_explosion{
+  on_create__spawnActivatedShellBlk:t="gamedata/weapons/protected_am_core_warrior_explosion_shell.blk"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "ownerEid:eid"{}
+}
+
+am_core_warrior{
+  _use:t="replicating"
+  _use:t="am_core_warrior_sound"
+  _use:t="animchar"
+  _use:t="am_core_warrior_attack_visual_controller"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="am_crystal_i_char"
+  collres__res:t="am_crystal_i_collision"
+  animchar_render__enabled:b=yes
+  am_core_warrior__exhaustedTemplate:t="am_core_warrior_explosion"
+  am_core_warrior__state:i=0
+  am_core_warrior__agroRadius:r=5
+  am_core_warrior__damageRadius:r=5
+  am_core_warrior__damageThickness:r=0.1
+  am_core_warrior__chargeTime:r=0.7
+  am_core_warrior__restTime:p2=0.5, 1.5
+  am_core_warrior__actAt:r=0
+  am_core_warrior__updateAt:r=0
+  am_core_warrior__interval:r=2
+  am_core_warrior__damage:p2=22, 25
+  am_core_warrior__node:t="Bip01 Spine"
+  am_core_warrior__normal:p3=0, 0, 0
+  am_core_warrior__origin:p3=0, 0, 0
+  am_core_warrior__elevationRnd:p2=1.7, 2.7
+  am_core_warrior__triggeredTemplate:t="am_core_warrior_triggered"
+  am_core_warrior__moveAmplitudeRnd:r=0.2
+  am_core_warrior__moveAmplitude:r=0.5
+  am_core_warrior__moveFreq:r=0.4
+  am_core_warrior__moveFreqRnd:r=0.15
+  am_core_warrior__moveTimeOffset:r=0
+  am_core_warrior__travelAt:r=0
+  am_core_warrior__travelCooldown:p2=4, 10
+  am_core_warrior__travelSpeed:r=8
+  am_core_warrior__travelDestination:p3=0, 0, 0
+  _replicated:t="am_core_warrior__state"
+  _tracked:t="am_core_warrior__state"
+  _replicated:t="am_core_warrior__normal"
+  _replicated:t="am_core_warrior__moveTimeOffset"
+  _replicated:t="am_core_warrior__actAt"
+
+  "am_core_warrior__parentEid:eid"{}
+  "am_core_warrior__targetEid:eid"{}
+  "am_core_warrior__travelPath:list<p3>"{}
+  _group{
+    _tags:t="gameClient"
+    am_core_warrior__rotSpeed:r=5
+    am_core_warrior__rotDeaccelTime:r=1
+    am_core_warrior__lastHitAt:r=0
+  }
+}
+
+am_core_warrior_radial_plane{
+  _use:t="animchar"
+  animchar__res:t=""
+  am_core_warrior_radial_plane__rot:p4=0, 0, 0, 0
+  am_core_warrior_radial_plane__scale:r=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "ownerEid:eid"{}
+  "am_core_warrior_radial_plane:tag"{}
+}
+
+am_core_warrior_warning_disk{
+  _use:t="am_core_warrior_radial_plane"
+  animchar__res:t="am_turret_distortion_disk_a_char"
+  am_core_warrior_warning_disk__scale:r=1.75
+
+  "requires_distortion_render:tag"{}
+}
+
+am_core_warrior_attack_ring{
+  _use:t="am_core_warrior_radial_plane"
+  animchar__res:t="am_turret_damage_ring_a_char"
+  am_core_warrior_attack_ring__scale:r=1.75
+  am_core_warrior_attack_ring__activationTime:r=0.13
+}
+
+am_core_warrior_attack_visual_controller_updatable{
+  "am_core_warrior_attack_visual_controller__updatable:tag"{}
+}
+
+am_core_warrior_attack_visual_controller{
+  am_core_warrior_attack_visual_controller__diskTemplate:t="am_core_warrior_warning_disk"
+  am_core_warrior_attack_visual_controller__ringTemplate:t="am_core_warrior_attack_ring"
+
+  "am_core_warrior_attack_visual_controller__diskEid:eid"{}
+  "am_core_warrior_attack_visual_controller__ringEid:eid"{}
+}
+
+am_core_warrior_triggered{
+  "am_core_warrior__triggered:tag"{}
+}
+
+am_core_protective_shell{
+  _use:t="animchar"
+  animchar__res:t="am_core_d_char"
+  collres__res:t="am_core_d_collision"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="gameClient"
+    am_core__scale:r=1.3
+    am_core__scaleViscosity:r=0
+    am_core__minMaxScale:p2=0, 1.3
+  }
+
+  _group{
+    ballistic_phys__omega:p3=0.05, 0.05, 0.05
+  }
+}
+
+am_core_protective_sphere{
+  _use:t="replicating"
+  _use:t="traceable_sphere"
+
+  "am_core_protective_sphere:tag"{}
+  "am_core_protective_sphere__ownerEid:eid"{}
+}
+
+traceable_sphere_hit_effect{
+  traceable_sphere_hit_effect__name:t=""
+  traceable_sphere_hit_effect__type:i=-1
+  traceable_sphere_hit_effect__important:b=no
+  traceable_sphere_hit_effect__scale:r=1
+  traceable_sphere_hit_effect__fxTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+am_core_bulletproof_sphere_visual{
+  _use:t="animchar"
+  animchar__res:t="am_core_field_a_char"
+  collres__res:t="am_core_field_a_collision"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  am_core_protective_sphere__rotationSpd:p3=20, 20, 20
+
+  collres{}
+  "requires_distortion_render:tag"{}
+}
+
+am_core_bulletproof_sphere{
+  _use:t="am_core_protective_sphere"
+  _use:t="traceable_sphere_hit_effect"
+  _use:t="invulnerable"
+  sphere_zone__radius:r=1
+  material:t="steel"
+  am_core_bulletproof_sphere__visualTemplate:t="am_core_bulletproof_sphere_visual"
+  traceable_sphere_hit_effect__name:t="sparks_am_core_protective_sphere_hit_fx"
+  grid_obj__gridType:t="traceable_spheres"
+
+  "am_core_bulletproof_sphere__visualEid:eid"{}
+  grid_obj{}
+}
+
+am_core_spawn_manager{
+  _use:t="dynamic_spawn_manager"
+  dynamic_spawn_manager__entitiesInWorldNumLimits:ip2=10, 10
+  dynamic_spawn_manager__updateDt:r=240
+  dynamic_spawn_manager__spawnPosTag:t="spawn_pos__amCore"
+  loot_drop_system__lootPreset:t="am_core_entities_preset"
+  loot_drop_system__dropPreset:t="spawn_far_from_people"
+}
+
+am_core_entities_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="wandering_core_embryo"
+    }
+  }
+}
+
+am_core_spawn_pos{
+  _use:t="base_spawn_pos"
+  wandering_core_spawn__radius:r=17.922
+
+  "spawn_pos__amCore:tag"{}
+}
+
+am_core_spawn_patrol_15m{
+  wandering_core_spawn__radius:r=15
+}
+
+explosive_am_core_fx{
+  _use:t="base_effect"
+  _use:t="attached_pos"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="ball_lighting_composite_fx"
+
+    effect{}
+  }
+}
+
+explosive_am_core_fx_controller{
+  explosive_am_core_fx_controller__fxTemplate:t="explosive_am_core_fx"
+
+  "explosive_am_core_fx_controller__fxEid:eid"{}
+}
+
+explosive_am_core_light{
+  _use:t="light_blinker"
+  explosive_am_core_light__color:c=212, 231, 255, 255
+  light_blinker__brightnessRange:p2=7.5, 25
+  light_blinker__brightnessBlinkInterval:r=0.1
+}
+
+explosive_am_core{
+  _use:t="am_core_base"
+  _use:t="am_core_protective_sphere_controller"
+  _use:t="am_core_damage_sphere_controller"
+  _use:t="protected_by_warriors"
+  _use:t="explosive_am_core_fx_controller"
+  _use:t="explosive_am_core_light"
+  _use:t="downabled_hitpoints"
+  protected_by_warriors__count:ip2=0, 0
+  animchar_render__enabled:b=no
+  animchar__updatable:b=no
+  am_core__effectTemplate:t=""
+  entity__recreateToOnDeath:t=""
+  animchar__res:t="am_core_a_char"
+  collres__res:t="am_core_a_collision"
+  am_core__protectiveSphereRadiusMinMax:p2=0, 0
+  am_core__createOnDestroyTemplate:t="protected_am_core_explosion"
+  am_core_damage_sphere_controller__damageSphereEnabled:b=no
+  am_core__decorCompanionsCountRng:ip2=0, 0
+  am_core_damage_sphere_controller__damageSphereTemplate:t="am_core_explosion_sphere"
+  hitpoints__hp:r=0
+  hitpoints__maxHp:r=0
+  hitpoints__regenPerSec:r=15
+  am_core__maxHpStep:r=15
+  am_core__maxHpRng:p2=100, 100
+  am_core__maxLootCountCapactity:i=100000
+  protected_am_core__fightArenaPos:p3=0, 0, 0
+  protected_am_core__roundsCount:i=0
+  protected_am_core__roundsCountMax:i=1
+  protected_am_core__triggerFightRadius:r=8
+  protected_am_core__updateInterval:r=1
+  protected_am_core__updateAt:r=0
+  protected_am_core__lastEnemyAgroTime:r=0
+  protected_am_core__noAgroCalmTime:r=10
+  protected_am_core__fightForbiddenInterval:r=10
+  protected_am_core__fightForbiddenUntilTime:r=0
+  protected_am_core__fightHeight:r=1.5
+  protected_am_core__patrolHeight:r=1
+  protected_am_core__patrolSpeed:r=0
+  protected_am_core__patrolSpeedMinMax:p2=3, 6
+  protected_am_core__state:i=0
+  protected_am_core__originPos:p3=0, 0, 0
+  protected_am_core__patrolRadius:r=100
+  protected_am_core__patrolGeneratePathOnSetup:b=yes
+  protected_am_core__patrolPathMode:i=0
+  protected_am_core__patrolPathForward:b=yes
+  protected_am_core__patrolPathPointIndex:i=0
+  protected_am_core__patrolPathFindWaypointsDist:r=50
+  protected_am_core__patrolHeightPerlinFactor:r=10
+  _tracked:t="protected_am_core__state"
+  protected_am_core__velocity:p3=0, 0, 0
+  protected_am_core__damping:p2=1, 2
+  protected_am_core__activateFightOnProjectileHit:b=no
+
+  _group{
+    _tags:t="gameClient"
+    am_core__protectiveShellTemplate:t=""
+  }
+
+  "capsule_approximation__nodeNames:array"{
+    node:t="am_core_a_dynmodel.lod00"
+  }
+
+  "preloadSpawnActivatedShellProps:list<t>"{
+    template:t="protected_am_core_explosion"
+  }
+
+  _group{
+    _tags:t="gameClient"
+    am_core__scale:r=1
+    am_core__minMaxScale:p2=0.1, 0.3
+  }
+
+  _group{
+    _tags:t="server"
+    am_core__fragmentsLimitDenominator:p2=1, 1
+    am_core__timeInProtectiveModeRng:p2=3, 12
+    am_core__timeInProtectiveModeStep:r=3
+
+    "am_core__lootPresets:list<t>"{
+      item:t="protected_am_core_round1_loot_preset"
+      item:t="protected_am_core_round2_loot_preset"
+      item:t="protected_am_core_round3_loot_preset"
+    }
+  }
+
+  "protected_am_core__patrolPath:list<p3>"{}
+}

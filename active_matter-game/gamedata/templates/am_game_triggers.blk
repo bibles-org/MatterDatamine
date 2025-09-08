@@ -1,0 +1,265 @@
+game_interactable_object_base{
+  _use:t="replicating"
+  _use:t="usable_object_base"
+  _use:t="use_object_enabled"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_interactable_object__eventTrigger:t=""
+  game_interactable_object__disposable:b=yes
+  item__setCustomUsePrompt:t=""
+  item__useActionAvailable:b=yes
+  game_interactable_object__defaultCustomUsePrompt:t=""
+  game_interactable_object__requiredItemTag:t=""
+  game_interactable_object__requiredItemIsConsumable:b=yes
+  game_interactable_object__requiredItemMissingPrompt:t=""
+
+  "usableObject:tag"{}
+}
+
+selected_game_interactable_object{
+  "game_interactable_object__selected:tag"{}
+}
+
+game_trigger_on_external_inventory_close{
+  game_trigger_on_external_inventory_close__eventTrigger:t=""
+}
+
+game_interactable_object{
+  _use:t="game_interactable_object_base"
+  use_object__selectedTemplate:t="selected_game_interactable_object"
+  item__useActionHintType:i=1
+
+  "game_interactable_object:tag"{}
+}
+
+game_trigger_timer{
+  game_trigger_processor_timer__time:r=5
+  game_trigger_processor_timer__timestamp:r=0
+  game_trigger_processor_timer__eventTrigger:t=""
+}
+
+game_trigger_box{
+  _use:t="editor_box_preview"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_trigger_box__onEnterEventTrigger:t=""
+  game_trigger_box__onLeaveEventTrigger:t=""
+
+  "game_trigger__includeGrids:list<t>"{}
+  "game_trigger__includeGridsHashes:list<u32>"{}
+  "game_trigger__requireComponents:list<t>"{}
+  "game_trigger__requireComponentsHashes:list<u32>"{}
+  "game_trigger_box__currentVisitors:list<eid>"{}
+}
+
+game_trigger_sphere{
+  _use:t="editor_zone_preview"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_trigger_sphere__onEnterEventTrigger:t=""
+  game_trigger_sphere__onLeaveEventTrigger:t=""
+  sphere_zone__radius:r=1
+
+  "game_trigger__includeGrids:list<t>"{}
+  "game_trigger__includeGridsHashes:list<u32>"{}
+  "game_trigger__requireComponents:list<t>"{}
+  "game_trigger__requireComponentsHashes:list<u32>"{}
+  "game_trigger_sphere__currentVisitors:list<eid>"{}
+}
+
+game_trigger_appear{
+  game_trigger_appear__emitEvent:t=""
+}
+
+game_trigger_disappear{
+  game_trigger_disappear__emitEvent:t=""
+}
+
+game_trigger_on_locked_changed{
+  game_trigger_on_locked_changed__requiredState:b=no
+  game_trigger_on_locked_changed__eventTrigger:t=""
+}
+
+game_trigger_processor_base{
+  game_trigger_processor__onTrigger:t=""
+  game_trigger_processor__onTriggerHash:i=0
+}
+
+game_trigger_processor_simple{
+  _use:t="game_trigger_processor_base"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+game_trigger_processor_doors_locks{
+  _use:t="game_trigger_processor_simple"
+  _use:t="editor_zone_preview"
+  game_trigger_processor_doors_locks__unlock:b=yes
+}
+
+game_trigger_processor_open_note{
+  game_trigger_processor_open_note__note:t=""
+  game_trigger_processor__onTrigger:t=""
+  game_trigger_processor__onTriggerHash:i=0
+}
+
+game_trigger_processor_open_note_delayed{
+  game_trigger_processor_open_note__note:t=""
+  game_trigger_processor_open_note__atTime:r=-1
+
+  "game_trigger_processor_open_note__player:eid"{}
+}
+
+game_trigger_processor_open_note_after_onboarding{
+  game_trigger_processor_open_note__note:t=""
+  game_trigger_processor__onTrigger:t=""
+  game_trigger_processor__onTriggerHash:i=0
+
+  "disable_in_onboarding:tag"{}
+}
+
+game_trigger_processor_play_assistant_script{
+  _use:t="game_trigger_processor_base"
+  game_trigger_processor_play_assistant_script__name:t=""
+  game_trigger_processor_play_assistant_script__skipBeepSound:b=no
+}
+
+game_trigger_processor_kill{
+  game_trigger_processor__onTrigger:t=""
+  game_trigger_processor__onTriggerHash:i=0
+  dm__damageType:t=""
+  dm__damageTypeId:i=-1
+
+  "game_trigger_processor_kill:tag"{}
+}
+
+killbox{
+  _use:t="game_trigger_box"
+  game_trigger_box__onEnterEventTrigger:t="killbox"
+
+  "game_trigger__includeGrids:list<t>"{
+    item:t="humans"
+  }
+}
+
+killbox_processor{
+  _use:t="game_trigger_processor_kill"
+  game_trigger_processor__onTrigger:t="killbox"
+  dm__damageType:t="collision"
+}
+
+game_trigger_processor_show_hint{
+  game_trigger_processor_show_hint__showOnTrigger:t=""
+  game_trigger_processor_show_hint__showOnTriggerHash:i=0
+  game_trigger_processor_show_hint__hideOnTrigger:t=""
+  game_trigger_processor_show_hint__hideOnTriggerHash:i=0
+  game_trigger_processor_show_hint__inputId:t=""
+  game_trigger_processor_show_hint__text:t=""
+  game_trigger_processor_show_hint__show:b=no
+  game_trigger_processor_show_hint__requireTargetHero:b=no
+  _tracked:t="game_trigger_processor_show_hint__show"
+}
+
+game_trigger_processor_show_world_hint{
+  _use:t="game_trigger_processor_show_hint"
+  game_trigger_processor_show_world_hint__minDistance:r=0
+  game_trigger_processor_show_world_hint__maxDistance:r=0
+  game_trigger_processor_show_world_hint__clampToBorder:b=no
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+game_trigger_processor_show_screen_hint{
+  _use:t="game_trigger_processor_show_hint"
+
+  "game_trigger_processor_show_screen_hint:tag"{}
+}
+
+game_trigger_processor_doors_open{
+  _use:t="game_trigger_processor_simple"
+  _use:t="editor_zone_preview"
+  game_trigger_processor_doors_locks__targetState:i=2
+}
+
+game_trigger_processor_create_entity{
+  _use:t="game_trigger_processor_simple"
+  _use:t="editor_zone_preview"
+  game_trigger_processor_create_entity__template:t=""
+  game_trigger_processor_create_entity__initTransform:b=yes
+  game_trigger_processor_create_entity__destroyEntityOnDisappear:b=no
+
+  "game_trigger_processor_create_entity__entityEid:eid"{}
+}
+
+game_trigger_processor_self_destroy{
+  _use:t="game_trigger_processor_simple"
+
+  "game_trigger_processor_self_destroy:tag"{}
+}
+
+game_trigger_processor_targeted_self_destroy{
+  _use:t="game_trigger_processor_self_destroy"
+
+  "game_trigger_processor_targeted_self_destroy:tag"{}
+}
+
+game_trigger_processor_attach_game_effect{
+  game_trigger_processor_attach_game_effect__template:t=""
+  game_trigger_processor_attach_game_effect__attachOnTrigger:t=""
+  game_trigger_processor_attach_game_effect__attachOnTriggerHash:i=0
+  game_trigger_processor_attach_game_effect__removeOnTrigger:t=""
+  game_trigger_processor_attach_game_effect__removeOnTriggerHash:i=0
+
+  "game_trigger_processor_attach_game_effect__eid:eid"{}
+}
+
+game_trigger_processor_attach_game_effect_client{
+  game_trigger_processor_attach_game_effect_client__template:t=""
+  game_trigger_processor_attach_game_effect_client__attachOnTrigger:t=""
+  game_trigger_processor_attach_game_effect_client__attachOnTriggerHash:i=0
+  game_trigger_processor_attach_game_effect_client__removeOnTrigger:t=""
+  game_trigger_processor_attach_game_effect_client__removeOnTriggerHash:i=0
+  game_trigger_processor_attach_game_effect_client__requireTargetHero:b=no
+
+  "game_trigger_processor_attach_game_effect_client__eid:eid"{}
+}
+
+game_trigger_processor_transform_transition_update{
+  "game_trigger_processor_transform_transition_update:tag"{}
+}
+
+game_trigger_processor_transform_transition{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_trigger_processor_transform_transition__state:i=0
+  _tracked:t="game_trigger_processor_transform_transition__state"
+  game_trigger_processor_transform_transition__progress:r=0
+  game_trigger_processor_transform_transition__forwardSpeed:r=0.25
+  game_trigger_processor_transform_transition__backwardSpeed:r=0.25
+  game_trigger_processor_transform_transition__forwardTrigger:t=""
+  game_trigger_processor_transform_transition__forwardTriggerHash:i=0
+  game_trigger_processor_transform_transition__backwardTrigger:t=""
+  game_trigger_processor_transform_transition__backwardTriggerHash:i=0
+  game_trigger_processor_transform_transition__fromPos:p3=0, 0, 0
+  game_trigger_processor_transform_transition__fromRot:p4=0, 0, 0, 0
+  game_trigger_processor_transform_transition__toPos:p3=0, 0, 0
+  game_trigger_processor_transform_transition__toRot:p4=0, 0, 0, 0
+}
+
+game_trigger_processor_sound_oneshot{
+  _use:t="game_trigger_processor_simple"
+  game_trigger_processor_sound_oneshot__soundName:t=""
+}
+
+game_trigger_processor_start_effect{
+  _use:t="game_trigger_processor_simple"
+  game_trigger_processor_start_effect__name:t=""
+  game_trigger_processor_start_effect__type:i=-1
+  game_trigger_processor_start_effect__important:b=no
+  game_trigger_processor_start_effect__scale:r=1
+  game_trigger_processor_start_effect__fxTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+game_trigger_processor_visual_log{
+  _use:t="game_trigger_processor_simple"
+
+  "game_trigger_processor_visual_log:tag"{}
+}
+
+game_trigger_processor_disabled{
+  "game_trigger_processor_disabled:tag"{}
+}

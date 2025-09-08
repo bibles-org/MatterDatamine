@@ -1,0 +1,20 @@
+module game_end_reasons_common shared
+require ecs.enum_macro
+
+
+[export_enum]
+enum GameEndReasons
+  YOU_DIED
+  YOU_EXTRACTED
+  BASE_PROTECTED
+  TIME_OUT
+  LEFT_WITH_NOTHING
+  LEFT_WITH_LOOT
+  BASE_ROBBED
+  NEXUS_BATTLE_WON
+  NEXUS_BATTLE_LOST
+  NEXUS_BATTLE_DIED
+  NEXUS_ROUND_WON
+  NEXUS_ROUND_LOST
+  ONBOARDING_FAILED_CONTRACT
+

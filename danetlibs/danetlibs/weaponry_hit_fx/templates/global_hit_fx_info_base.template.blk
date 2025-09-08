@@ -1,0 +1,16 @@
+global_hit_fx_info_base{
+  _singleton:b=yes
+  _use:t="replicating"
+
+  _group{
+    _hide:b=yes
+
+    "global_hit_fx__bulletTypeGroups:object"{}
+    "global_hit_fx__bulletTypeIdToGroupIdMap:list<i>"{}
+    "global_hit_fx__bulletTypeGroupNameToIdMap:object"{}
+    "global_hit_fx__effectGroups:array"{}
+    "global_hit_fx__effectPresets:array"{}
+    "global_hit_fx__fleshEffects:object"{}
+    "global_hit_fx__canopyEffects:object"{}
+  }
+}

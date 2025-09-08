@@ -1,0 +1,56 @@
+battle_areas_visitor{
+  isOutsideBattleArea:b=no
+  isInDeactivatingBattleArea:b=no
+  _replicated:t="isOutsideBattleArea"
+  _tracked:t="isOutsideBattleArea"
+  _replicated:t="isInDeactivatingBattleArea"
+  _tracked:t="isInDeactivatingBattleArea"
+  battle_areas_visitor__updateInterval:r=0.5
+  battle_areas_visitor__nextUpdateAt:r=0
+
+  "battle_areas_visitor__zonesIn:list<eid>"{}
+}
+
+base_battle_area{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  deactivatable:b=yes
+  deactivationDelay:r=120
+  active:b=yes
+  _use:t="replicating"
+  zone__keepDead:b=yes
+  _tracked:t="active"
+  _replicated:t="active"
+  _replicated:t="transform"
+  _replicated:t="battle_area__deactivatedAtTime"
+  battle_area__deactivatedAtTime:r=-1
+  battle_area__isVisible:b=yes
+  battle_area__team:i=-1
+
+  _group{
+    battle_area__timeToDamage:r=15
+    battle_area__damage:r=1
+    battle_area__damageInterval:r=1
+    battle_area__noDamageBorderWidth:r=0
+    battle_area__timeToWarn:r=30
+    battle_area__lastDamageAtTime:r=-1
+    _tags:t="server"
+
+    "battle_area__timeToDamageByType:object"{
+      human:r=15
+      default:r=15
+    }
+
+    "kill_list__eid:list<eid>"{}
+    "kill_list__timer:list<r>"{}
+  }
+
+  "battle_area:tag"{}
+}
+
+box_battle_area{
+  _use:t="base_battle_area"
+
+  "humanTriggerable:tag"{}
+  "invisibleHumanTriggerable:tag"{}
+  "box_zone:tag"{}
+}

@@ -1,0 +1,86 @@
+onboarding_phase_base_first_time{
+  _use:t="state_machine_state"
+
+  "onboarding_phase_base_first_time:tag"{}
+  "state_machine_state__createEntitiesWhenCurrent:list<t>"{
+    item:t="onboarding_teleport_hero_to_base"
+    item:t="disable_player_profile"
+    item:t="onboarding_empty_hero_loadout"
+    item:t="onboarding_note_first_bunker_visit_processor"
+    item:t="onboarding_heal_hero"
+    item:t="onboarding_respawn_effect_creator"
+    item:t="onboarding_base_first_time_start_hero_effect_creator"
+    item:t="base_first_time_audio_hint_first_trigger"
+    item:t="base_first_time_audio_hint_processor"
+    item:t="base_first_time_waiting_timer_restarter"
+    item:t="base_first_time_override_raid_console"
+    item:t="onboarding_phase_base_first_time_ambient_sound"
+  }
+}
+
+base_first_time_override_raid_console{
+  "base_first_time_override_raid_console:tag"{}
+}
+
+base_first_time_advance_phase_on_use{
+  "base_first_time_advance_phase_on_use:tag"{}
+}
+
+base_first_time_audio_hint_first_trigger{
+  _use:t="game_trigger_timer"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor_timer__time:r=60
+  game_trigger_processor_timer__eventTrigger:t="base_first_time_waiting"
+  game_trigger_processor__onTrigger:t="base_first_time_waiting"
+}
+
+base_first_time_audio_hint_subsequent_trigger{
+  _use:t="base_first_time_audio_hint_first_trigger"
+  game_trigger_processor_timer__time:r=90
+}
+
+base_first_time_audio_hint_processor{
+  _use:t="game_trigger_processor_play_assistant_script"
+  game_trigger_processor_play_assistant_script__name:t="onboarding_raid_waiting"
+  game_trigger_processor_play_assistant_script__skipBeepSound:b=yes
+  game_trigger_processor__onTrigger:t="base_first_time_waiting"
+}
+
+base_first_time_waiting_timer_restarter{
+  _use:t="game_trigger_processor_create_entity"
+  game_trigger_processor_create_entity__template:t="base_first_time_audio_hint_subsequent_trigger"
+  game_trigger_processor__onTrigger:t="base_first_time_waiting"
+  game_trigger_processor_create_entity__initTransform:b=no
+  game_trigger_processor_create_entity__destroyEntityOnDisappear:b=yes
+}
+
+onboarding_base_first_time_start_hero_effect{
+  _use:t="client_game_effect_with_duration"
+  _use:t="base_postfx_fade_affect"
+  _use:t="hide_ui_game_effect"
+  _use:t="oneshot_set_pulse_effect"
+  game_effect__timeToDestroy:r=2.5
+  postfx_fade_affect__fadeColor:c=255, 255, 255, 255
+  postfx_fade_affect__fadeInTime:r=0.05
+  postfx_fade_affect__fadeOutTime:r=4.5
+  oneshot_set_pulse_effect__pulse:r=190
+  oneshot_set_pulse_effect__stamina:r=100
+}
+
+onboarding_base_first_time_start_hero_effect_creator{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_base_first_time_start_hero_effect"
+}
+
+onboarding_note_first_bunker_visit_box_trigger{
+  _use:t="onboarding_open_note_box_trigger"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_trigger_box__onEnterEventTrigger:t="onboarding_note_bunker_first_visit"
+}
+
+onboarding_note_first_bunker_visit_processor{
+  _use:t="game_trigger_processor_open_note"
+  game_trigger_processor_open_note__note:t="note_onboarding_bunker_first_visit"
+  game_trigger_processor_open_note__delay:r=4
+  game_trigger_processor__onTrigger:t="onboarding_note_bunker_first_visit"
+}

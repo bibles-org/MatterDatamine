@@ -1,0 +1,27 @@
+echolocation_hit{
+  echolocation_hit__pos:p3=0, 0, 0
+  echolocation_hit__norm:p3=0, 0, 0
+  echolocation_hit__timer:r=0
+  echolocation_hit__time:r=0
+  echolocation_hit__amplitudePhase:r=0.4
+}
+
+echolocation_source{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  echolocation__nextTickAt:r=0
+  echolocation__curTick:i=0
+  echolocation__timePerTick:r=1e-07
+  echolocation__distance:r=9
+  echolocation__hitTime:r=1.9
+  echolocation__gridRadius:i=26
+  echolocation__gridTicksPerStep:i=4
+  echolocation__gridCellSize:r=0.1
+
+  "echolocation__attachedTo:eid"{}
+}
+
+echolocation_unit{
+  echolocation__enabled:b=no
+  echolocation__generateAt:r=0
+  echolocation__time:r=2
+}

@@ -1,0 +1,54 @@
+tree_horde_goal{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  tree_horde_goal__transformUpdateInterval:p2=1.5, 3
+  tree_horde_goal__transformUpdateAt:r=-1
+
+  "tree_horde_goal:tag"{}
+  "tree_horde_goal__attachedTo:eid"{}
+}
+
+tree_horde_bot{
+  _use:t="am_militant_with_attachable_suit"
+  _use:t="am_militant_bot_ai"
+  _use:t="equipped_bot"
+  equipped_bot__equipmentGeneratorName:t="tree_horde_equipment_generator"
+  beh_tree__node:t="tree_horde_part"
+  beh_tree__blackboard__enemyRadius:r=10
+}
+
+tree_horde_event{
+  _use:t="truce_zone_creature"
+  team:i=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  tree_horde_event__spawnRadiusMinMax:p2=50, 90
+  tree_horde_event__numTrees:ip2=60, 100
+  tree_horde_event__spawnDuration:r=10
+  tree_horde_event__treeTemplate:t="tree_horde_bot"
+  tree_horde_event__enemiesMarkRadius:r=25
+  tree_horde_event__enemiesMarkUpdateInterval:p2=7, 12
+  tree_horde_event__leftToSpawn:i=0
+  tree_horde_event__nextUpdate:r=0
+  tree_horde_event__updateInterval:r=-1
+  tree_horde_event__enemiesMarkUpdateAt:r=-1
+  tree_horde_event__debug:b=no
+
+  "tree_horde_event__goal:eid"{}
+}
+
+tree_horde_scream_effect{
+  _use:t="attached_replicated_effect_with_duration"
+  game_effect__forceAnimState:t="ability_scream"
+  game_effect__forceAnimStateId:i=-1
+  game_effect__forcedParametricVarName:t="action_progress"
+  game_effect__forcedParametricVarId:i=-1
+  game_effect__timeToDestroy:r=2
+  game_effect__destroyAt:r=-1
+  game_effect__vertLookAngleLimit:p2=20, 80
+  game_effect_create_loud_noise_on_appear__nodeName:t="Bip01 Head"
+  game_effect_create_loud_noise_on_appear__radius:r=15
+  game_effect_create_loud_noise_on_appear__noise:r=100
+
+  "locked_human_state__lockCrawl:tag"{}
+  "locked_human_state__lockCrouch:tag"{}
+  "game_effect__uncontrollable:tag"{}
+}

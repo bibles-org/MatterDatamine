@@ -1,0 +1,234 @@
+repeat{
+  name:t="static_sniper"
+
+  reaction{
+    event:t="onHit"
+
+    sequencer{
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+      }
+
+      recalculateTree{}
+    }
+  }
+
+  reaction{
+    event:t="onBulletNearby"
+
+    sequencer{
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+      }
+
+      recalculateTree{}
+    }
+  }
+
+  reaction{
+    event:t="onBlindness"
+
+    sequencer{
+      recalculateTree{}
+    }
+  }
+
+  sequencer{
+    name:t="empty_gun"
+
+    not{
+      hasAmmoInGun{}
+    }
+
+    subTree{
+      treeName:t="sub.reload"
+    }
+  }
+
+  exitHandler{
+    sequencer{
+      name:t="enemy_attack"
+
+      reaction{
+        name:t="enemy_attack_reaction"
+        event:t="regularCheck"
+
+        orderedSelector{
+          failed{
+            findObstaclesAlongsidePath{}
+          }
+
+          sequencer{
+            not{
+              hasAmmoInGun{}
+            }
+
+            recalculateTree{}
+          }
+
+          sequencer{
+            hasMagazinesToLoad{}
+            loadMagazine{}
+          }
+
+          subTree{
+            treeName:t="sub.staticSniperReactions"
+          }
+        }
+      }
+
+      not{
+        isUnderwater{}
+      }
+
+      chooseBestWeapon{
+        targetParam:t="shootEnemy"
+      }
+
+      findDanger{
+        paramName:t="shootEnemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+      }
+
+      chooseBestWeapon{
+        targetParam:t="shootEnemy"
+      }
+
+      randomSelector{
+        orderedSelector{
+          sequencer{
+            hasMagazinesToLoad{}
+            loadMagazine{}
+          }
+
+          shootAtUnit{
+            targetUnitParam:t="shootEnemy"
+            minStance:i=1
+            shootTime:p2=0.2, 0.7
+            cooldownTime:p2=0.1, 0.9
+            minAimTime:p2=0.2, 0.4
+            maxAimSpeed:r=720
+            maxTrackSpeed:r=360
+            lostTargetCooldownRange:p2=3, 4
+          }
+        }
+      }
+    }
+  }
+
+  exitHandler{
+    sequencer{
+      name:t="investigate_enemy"
+
+      reaction{
+        name:t="investigate_reaction"
+        event:t="regularCheck"
+
+        subTree{
+          treeName:t="sub.staticSniperReactions"
+        }
+      }
+    }
+
+    setIntVar{
+      to:t="lastKnownEnemy"
+      value:i=0
+    }
+  }
+}
+
+orderedSelector{
+  name:t="sub.staticSniperReactions"
+
+  sequencer{
+    name:t="burning_rc"
+
+    isBurning{}
+    recalculateTree{}
+  }
+
+  sequencer{
+    name:t="danger_rc"
+
+    orderedSelector{
+      sequencer{
+        findDanger{
+          paramName:t="newEnemy"
+          radiusParamName:t="enemyRadius"
+          minDanger:r=0.7
+        }
+
+        copyIntVar{
+          to:t="prevEnemy"
+          from:t="shootEnemy"
+        }
+
+        chooseDanger{
+          lhsParam:t="shootEnemy"
+          rhsParam:t="newEnemy"
+          outParam:t="potentialEnemy"
+          diff:r=0.2
+          minDanger:r=0.1
+        }
+
+        ifThenElse{
+          chooseBestWeapon{
+            targetParam:t="potentialEnemy"
+          }
+
+          sequencer{
+            speak{
+              effect:t="seeDanger"
+              timeMinMax:p2=6, 10
+            }
+
+            orderedSelector{
+              isVarsIntEqual{
+                lhs:t="prevEnemy"
+                rhs:t="potentialEnemy"
+              }
+
+              recalculateTree{}
+            }
+          }
+
+          sequencer{
+            setPosFromEntity{
+              to:t="enemyPosition"
+              from:t="potentialEnemy"
+            }
+
+            checkDistance{
+              posParam:t="enemyPosition"
+              radius:r=20
+            }
+
+            recalculateTree{}
+          }
+        }
+      }
+
+      sequencer{
+        checkTarget{
+          targetUnitParam:t="shootEnemy"
+        }
+
+        setIntVar{
+          to:t="shootEnemy"
+          value:i=0
+        }
+
+        chooseBestWeapon{
+          targetParam:t="shootEnemy"
+        }
+
+        recalculateTree{}
+      }
+    }
+  }
+}

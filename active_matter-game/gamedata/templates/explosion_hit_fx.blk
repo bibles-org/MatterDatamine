@@ -1,0 +1,97 @@
+hit_effect_group_grenade_explosion{
+  _use:t="shell_explosion_fx_info"
+  shell_explosion_fx__default:t="explosion_grenades_air_effect"
+  shell_explosion_fx__traceLength:r=1.5
+
+  "shell_explosion_fx__info:object"{
+    "soil:object"{
+      fx:t="explosion_grenades_dirt_effect"
+    }
+
+    "dirt:object"{
+      fx:t="explosion_grenades_dirt_effect"
+    }
+
+    "mud:object"{
+      fx:t="explosion_grenades_dirt_effect"
+    }
+
+    "roadmud:object"{
+      fx:t="explosion_grenades_dirt_effect"
+    }
+
+    "roadSoil:object"{
+      fx:t="explosion_grenades_dirt_effect"
+    }
+
+    "concrete:object"{
+      fx:t="explosion_grenades_stone_effect"
+    }
+
+    "sand:object"{
+      fx:t="explosion_grenades_sand_effect"
+    }
+
+    "snow:object"{
+      fx:t="explosion_grenades_snow_effect"
+    }
+
+    "ice:object"{
+      fx:t="explosion_grenades_snow_effect"
+    }
+
+    "water3d:object"{
+      fx:t="explosion_grenades_water_effect"
+    }
+
+    "stone:object"{
+      fx:t="explosion_grenades_stone_effect"
+    }
+
+    "ceramic:object"{
+      fx:t="explosion_grenades_stone_effect"
+    }
+
+    "glass:object"{
+      fx:t="explosion_grenades_air_effect"
+    }
+
+    "flesh:object"{
+      fx:t="explosion_grenades_air_effect"
+    }
+
+    "fabric:object"{
+      fx:t="explosion_grenades_air_effect"
+    }
+  }
+}
+
+hit_effect_group_smoke_grenade_explosion{
+  _use:t="shell_explosion_fx_info"
+  shell_explosion_fx__default:t="explosion_grenades_smoke_effect"
+  shell_explosion_fx__traceLength:r=1.5
+}
+
+hit_effect_group_wandering_core_explosion{
+  _use:t="shell_explosion_fx_info"
+  shell_explosion_fx__default:t="am_core_explosion_effect"
+  shell_explosion_fx__traceLength:r=1.5
+}
+
+hit_effect_group_firefly_explosion{
+  _use:t="shell_explosion_fx_info"
+  shell_explosion_fx__default:t="firefly_explosion_effect"
+  shell_explosion_fx__traceLength:r=1.5
+}
+
+hit_effect_group_molotov_explosion{
+  _use:t="shell_explosion_fx_info"
+  shell_explosion_fx__default:t="explosion_molotov_effect"
+  shell_explosion_fx__traceLength:r=1.5
+}
+
+hit_effect_group_stone_explosion{
+  _use:t="shell_explosion_fx_info"
+  shell_explosion_fx__default:t="explosion_mothman_stone_effect"
+  shell_explosion_fx__traceLength:r=1.5
+}

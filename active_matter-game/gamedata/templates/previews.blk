@@ -1,0 +1,42 @@
+semi_transparent_render{
+  _tracked:t="semi_transparent__visible"
+
+  _group{
+    _tags:t="render"
+    semi_transparent__placingColor:p3=0, 0, 0
+    semi_transparent__visible:b=yes
+    semi_transparent__lod:i=-1
+  }
+}
+
+base_builder_preview{
+  buildingCost:r=1
+  _use:t="semi_transparent_render"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  buildingDistance:r=3
+  additionalHeight:r=0
+  yawRotationSpeed:r=90
+  additionalYawRotation:r=0
+  _tracked:t="additionalYawRotation"
+  previewCollobjPos:p3=0, 0, 0
+
+  "builder_preview:tag"{}
+  "previewCollobj:CollisionObject"{}
+}
+
+base_animchar_builder_preview{
+  _use:t="base_builder_preview"
+  _use:t="animchar"
+  animchar_render__enabled:b=yes
+  animchar__res:t=""
+
+  "previewCollres:CollisionResource"{}
+}
+
+base_rendinst_builder_preview{
+  _use:t="base_builder_preview"
+  semi_transparent__resIdx:i=-1
+  ri_preview__name:t="sandbags_wall_medium_rounded_a"
+
+  riPreviewResPreload{}
+}

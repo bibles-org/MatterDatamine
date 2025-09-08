@@ -1,0 +1,180 @@
+entity{
+  _template:t="render_settings"
+  render_settings__volumeFogQuality:t="medium"
+}
+
+entity{
+  _template:t="violence_settings"
+  isBloodEnabled:b=yes
+}
+
+entity{
+  _template:t="blood_decals_render_manager"
+}
+
+entity{
+  _template:t="portal_renderer_manager"
+}
+
+entity{
+  _template:t="grenade_trajectory_node"
+}
+
+entity{
+  _template:t="blood_settings"
+}
+
+entity{
+  _template:t="ssss"
+}
+
+entity{
+  _template:t="caustics"
+  needs_water_heightmap:b=yes
+}
+
+entity{
+  _template:t="caustics_settings"
+  water_caustics_world_scale:r=1
+}
+
+entity{
+  _template:t="bvh"
+}
+
+entity{
+  _template:t="flash_blind_renderer"
+}
+
+entity{
+  _template:t="screen_droplets"
+}
+
+entity{
+  _template:t="vehicle_trails_manager"
+}
+
+entity{
+  _template:t="semi_trans_render"
+}
+
+entity{
+  _template:t="hero_cockpit_renderer"
+}
+
+entity{
+  _template:t="latency_input_event_listener"
+}
+
+entity{
+  _template:t="adaptation_manager"
+}
+
+entity{
+  _template:t="adaptation"
+}
+
+entity{
+  _template:t="puddles_manager"
+}
+
+entity{
+  _template:t="blurred_ui"
+}
+
+entity{
+  _template:t="heat_haze_renderer"
+}
+
+entity{
+  _template:t="scope_full_deferred_renderer"
+}
+
+entity{
+  _template:t="scope_additional_data"
+}
+
+entity{
+  _template:t="close_geometry_occlusion_data"
+}
+
+entity{
+  _template:t="weaponry_render"
+}
+
+entity{
+  _template:t="dynamic_hair_renderer"
+}
+
+entity{
+  _template:t="local_tone_mapping"
+  local_tone_mapping__hq_enabled:b=yes
+  local_tone_mapping__hq_shadows_multiplier:r=1
+  local_tone_mapping__hq_highlights_multiplier:r=1
+  local_tone_mapping__hq_sigma:r=0.2
+}
+
+entity{
+  _template:t="dagdp_manager"
+}
+
+entity{
+  _template:t="hmap_displacement_invalidation_toggle"
+}
+
+entity{
+  _template:t="object_motion_blur"
+}
+
+entity{
+  _template:t="glass_decals_renderer"
+}
+
+entity{
+  _template:t="blood_on_screen_settings"
+  blood_on_screen_hit_size_value:r=1
+  blood_on_screen_directional_damage_width_value:r=4
+  blood_on_screen_hit_base_threshold_value:r=0.01
+  blood_on_screen_hit_threshold_range_value:r=0.2
+  blood_on_screen_screen_range_value:r=0.2
+}
+
+entity{
+  _template:t="screen_snowflakes_settings"
+}
+
+entity{
+  _template:t="screen_mud_settings"
+}
+
+entity{
+  _template:t="bloom"
+}
+
+entity{
+  _template:t="vhs_camera_renderer"
+}
+
+entity{
+  _template:t="postfx"
+}
+
+entity{
+  _template:t="postfx_controller"
+}
+
+entity{
+  _template:t="cache_thrashing_detector"
+}
+
+entity{
+  _template:t="underwater_camera_dof"
+}
+
+entity{
+  _template:t="biome_fx_color_replacement"
+}
+
+entity{
+  _template:t="glass_gbuffer_renderer"
+}

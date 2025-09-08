@@ -1,0 +1,973 @@
+configVer:i=1
+longPressDur:i=400
+dblClickDur:i=220
+
+actionSets{
+  Globals{
+    Global.ScreenshotNoGUI{
+      type:t="digital_button"
+      maskImmediate:b=yes
+      group_tag:t="UI,platform=pc"
+    }
+
+    Global.Screenshot{
+      type:t="digital_button"
+      group_tag:t="UI,platform=pc"
+    }
+
+    VoiceChat.Record{
+      type:t="digital_button"
+      group_tag:t="VoiceChat"
+    }
+  }
+
+  Camera{
+    internal:b=no
+    group_tag:t="Camera"
+
+    Camera.Move{
+      type:t="joystick_move"
+      quantize:t="8bit"
+    }
+
+    Camera.Rotate{
+      type:t="absolute_mouse"
+      gpadAxisScale:r=3000
+    }
+
+    Camera.ShiftY{
+      type:t="steerwheel"
+      quantize:t="8bit"
+    }
+
+    Camera.Turbo{
+      type:t="trigger"
+    }
+
+    Camera.LookAround{
+      type:t="trigger"
+    }
+
+    Camera.ZoomIn{
+      type:t="digital_button"
+    }
+
+    Camera.ZoomOut{
+      type:t="digital_button"
+    }
+
+    Camera.SpeedUp{
+      type:t="digital_button"
+    }
+
+    Camera.SpeedDown{
+      type:t="digital_button"
+    }
+
+    Camera.Dash{
+      type:t="digital_button"
+    }
+
+    Camera.SpeedReset{
+      type:t="digital_button"
+    }
+
+    Camera.Bank{
+      type:t="steerwheel"
+      quantize:t="8bit"
+    }
+
+    Camera.ResetRoll{
+      type:t="digital_button"
+    }
+
+    Camera.ToggleDir{
+      type:t="digital_button"
+    }
+
+    Camera.LockOri{
+      type:t="digital_button"
+    }
+
+    Camera.LockOfs{
+      type:t="digital_button"
+    }
+
+    Camera.OriWorld{
+      type:t="digital_button"
+    }
+  }
+
+  HUDBase{
+    HUD.GameMenu{
+      type:t="digital_button"
+      group_tag:t="UI"
+    }
+
+    HUD.BigMap{
+      type:t="digital_button"
+      group_tag:t="UI"
+    }
+
+    HUD.Journal{
+      type:t="digital_button"
+      group_tag:t="UI"
+    }
+
+    HUD.NexusLoadout{
+      type:t="digital_button"
+      group_tag:t="UI"
+    }
+
+    HUD.Inventory{
+      type:t="digital_button"
+      group_tag:t="UI"
+    }
+
+    HUD.ChatInput{
+      type:t="digital_button"
+      group_tag:t="UI,platform=pc"
+    }
+
+    HUD.AssistantVoiceToggle{
+      type:t="digital_button"
+      group_tag:t="UI"
+    }
+
+    HUD.LeaveMatchingQueue{
+      type:t="digital_button"
+      group_tag:t="UI"
+    }
+  }
+
+  BigMap{
+    HUD.Interactive{
+      type:t="digital_button"
+    }
+
+    HUD.ZoomIn{
+      type:t="trigger"
+      quantize:t="8bit"
+    }
+
+    HUD.ZoomOut{
+      type:t="trigger"
+      quantize:t="8bit"
+    }
+  }
+
+  HUD{
+    internal:b=yes
+
+    HUD.GameMenu{
+      reuse_defined_earlier:b=yes
+    }
+
+    HUD.CloseMenu{
+      type:t="digital_button"
+    }
+  }
+
+  Human{
+    Human.Move{
+      type:t="joystick_move"
+      quantize:t="8bit"
+      group_tag:t="Movement"
+    }
+
+    Human.Look{
+      type:t="absolute_mouse"
+      maskImmediate:b=yes
+      mouseMoveScale:r=0.0003
+      gpadAxisScaleX:r=1
+      gpadAxisScaleY:r=0.5
+      group_tag:t="View"
+    }
+
+    Human.Aim{
+      type:t="absolute_mouse"
+      mouseMoveScale:r=0.0003
+      gpadAxisScaleX:r=1.5
+      gpadAxisScaleY:r=1
+      group_tag:t="View"
+      smoothValue:r=0.25
+    }
+
+    Human.AimDelta{
+      type:t="joystick_delta"
+      gpadAxisScaleX:r=0.5
+      gpadAxisScaleY:r=0.5
+      group_tag:t="_noDigitalButtons_,View,platform=ps4/ps5"
+      smoothValue:r=0.15
+    }
+
+    Human.Jump{
+      type:t="digital_button"
+      group_tag:t="Movement"
+    }
+
+    Human.Sprint{
+      type:t="digital_button"
+      exclusive_tag:t="hold_sprint"
+      group_tag:t="Movement"
+    }
+
+    Human.Crawl{
+      type:t="digital_button"
+      group_tag:t="Movement"
+    }
+
+    Human.Sneak{
+      type:t="digital_button"
+      group_tag:t="Movement"
+    }
+
+    Human.Deploy{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.Crouch{
+      type:t="digital_button"
+      group_tag:t="Movement"
+    }
+
+    Human.HoldCrouch{
+      type:t="digital_button"
+      group_tag:t="Movement,not_important"
+    }
+
+    Human.Shoot{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.Aim1{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.Aim2{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.Zoom{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.HoldBreath{
+      type:t="digital_button"
+      exclusive_tag:t="hold_sprint"
+      group_tag:t="Weapon"
+    }
+
+    Human.Reload{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.CheckAmmo{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.Recover{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.Weapon1{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.Weapon2{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.Weapon3{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.Weapon4{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.SpecialItemSlot{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.WeaponNextMain{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.WeaponNext{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.WeaponPrev{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.Melee{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.Throw{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.Throw2{
+      type:t="digital_button"
+      group_tag:t="Weapon,not_important"
+    }
+
+    Human.Throw3{
+      type:t="digital_button"
+      group_tag:t="Weapon,not_important"
+    }
+
+    Human.Throw4{
+      type:t="digital_button"
+      group_tag:t="Weapon,not_important"
+    }
+
+    Human.SightNext{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.SightPrev{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.FiringModeNext{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.Seat01{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+
+    Human.Seat02{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+
+    Human.Seat03{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+
+    Human.Seat04{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+
+    Human.Seat05{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+
+    Human.Seat06{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+
+    Human.Seat07{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+
+    Human.Seat08{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+
+    Human.Seat09{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+
+    Human.Seat10{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+
+    Human.SeatNext{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+
+    Human.DriverSeat{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+
+    Human.VehicleMaintenance{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+
+    Human.Use{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.UseAlt{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.PushObject{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.PutOutFire{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.FastHeal{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.LeanLeft{
+      type:t="digital_button"
+      group_tag:t="Movement,not_important"
+    }
+
+    Human.LeanRight{
+      type:t="digital_button"
+      group_tag:t="Movement,not_important"
+    }
+
+    HUD.QuickChat{
+      type:t="digital_button"
+      group_tag:t="UI"
+    }
+
+    Human.Flashlight{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.NightVisionDevice{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.UseEmote{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.UseAbility1{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.UseAbility2{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.UseAbility3{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Deploy.Create{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Deploy.Cancel{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Deploy.Return{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Deploy.RotateUp{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Deploy.RotateDown{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.QuickUse1{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.QuickUse2{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.QuickUse3{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.QuickUse4{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.QuickUse5{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.QuickUseObjectiveItem{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.StoneThrow{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+
+    Human.HoldUpWeapon{
+      type:t="digital_button"
+      group_tag:t="Other"
+    }
+  }
+
+  MonsterChanged{
+    group_tag:t="Proxy"
+
+    MonsterChanged.Dash{
+      type:t="digital_button"
+    }
+
+    MonsterChanged.SpawnMinion{
+      type:t="digital_button"
+    }
+
+    MonsterChanged.Echolocation{
+      type:t="digital_button"
+    }
+
+    MonsterChanged.CommandAttack{
+      type:t="digital_button"
+    }
+  }
+
+  MonsterMothman{
+    group_tag:t="Proxy"
+
+    MonsterMothman.GatherItems{
+      type:t="digital_button"
+    }
+
+    MonsterMothman.GrabEnemy{
+      type:t="digital_button"
+    }
+  }
+
+  MonsterInvisibleman{
+    group_tag:t="Proxy"
+
+    MonsterInvisibleman.Invis{
+      type:t="digital_button"
+    }
+
+    MonsterInvisibleman.Pushing{
+      type:t="digital_button"
+    }
+
+    MonsterInvisibleman.Trap{
+      type:t="digital_button"
+    }
+  }
+
+  Vehicle{
+    group_tag:t="Vehicle"
+
+    Vehicle.Steer{
+      type:t="steerwheel"
+      quantize:t="8bit"
+    }
+
+    Vehicle.Throttle{
+      type:t="steerwheel"
+      quantize:t="8bit"
+    }
+
+    Vehicle.Accel{
+      type:t="steerwheel"
+      quantize:t="8bit"
+    }
+
+    Vehicle.Brake{
+      type:t="steerwheel"
+      quantize:t="8bit"
+    }
+
+    Vehicle.HandBrake{
+      type:t="digital_button"
+    }
+
+    Vehicle.Aim{
+      type:t="absolute_mouse"
+      mouseMoveScale:r=0.0003
+      gpadAxisScaleX:r=1.5
+      gpadAxisScaleY:r=1
+      smoothValue:r=0.25
+    }
+
+    Vehicle.Look{
+      type:t="absolute_mouse"
+      gpadAxisScaleX:r=3200
+      gpadAxisScaleY:r=1100
+    }
+
+    Human.Look{
+      reuse_defined_earlier:b=yes
+    }
+
+    Human.Aim{
+      reuse_defined_earlier:b=yes
+    }
+
+    Vehicle.NextBulletType{
+      type:t="digital_button"
+    }
+
+    Vehicle.SecondaryNextBulletType{
+      type:t="digital_button"
+    }
+
+    Vehicle.Horn{
+      type:t="digital_button"
+    }
+
+    Vehicle.NextGear{
+      type:t="digital_button"
+    }
+
+    Vehicle.PrevGear{
+      type:t="digital_button"
+    }
+
+    Vehicle.NeutralGear{
+      type:t="digital_button"
+    }
+
+    Vehicle.AutomaticTransmission{
+      type:t="digital_button"
+    }
+
+    Vehicle.NextCockpitView{
+      type:t="digital_button"
+    }
+
+    Vehicle.PrevCockpitView{
+      type:t="digital_button"
+    }
+  }
+
+  Onboarding{
+    internal:b=yes
+
+    Human.Jump{
+      reuse_defined_earlier:b=yes
+    }
+
+    Human.Aim{
+      reuse_defined_earlier:b=yes
+    }
+
+    Human.Use{
+      reuse_defined_earlier:b=yes
+    }
+  }
+
+  Edit{
+    internal:b=yes
+
+    EditMode.ToggleRender{
+      type:t="digital_button"
+    }
+
+    EditMode.NearestHuman{
+      type:t="digital_button"
+    }
+
+    EditMode.TogglePause{
+      type:t="digital_button"
+    }
+
+    EditMode.TogglePauseCurrent{
+      type:t="digital_button"
+    }
+  }
+
+  Spectator{
+    Spectator.Prev{
+      type:t="digital_button"
+      group_tag:t="Spectator"
+    }
+
+    Spectator.Next{
+      type:t="digital_button"
+      group_tag:t="Spectator"
+    }
+
+    Spectator.LoadoutHub{
+      type:t="digital_button"
+      group_tag:t="UI"
+    }
+  }
+
+  Replay{
+    internal:b=no
+    group_tag:t="Replay"
+
+    Replay.ToggleCamera{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.DisableHUD{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.DisableGameHUD{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.AdvancedSettings{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.Next{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.Prev{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.Pause{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.SpeedUp{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.SpeedDown{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.Camera1{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.Camera2{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.Camera3{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.NextCamera{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.PrevCamera{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.RecordVideo{
+      type:t="digital_button"
+      group_tag:t="Replay,platform=pc"
+    }
+
+    ReplayTrack.SaveKeyFrame{
+      type:t="digital_button"
+      group_tag:t="Replay,not_important"
+    }
+
+    ReplayTrack.DeleteCurrentKeyFrame{
+      type:t="digital_button"
+      group_tag:t="Replay,not_important"
+    }
+
+    ReplayTrack.ClearAllKeyFrames{
+      type:t="digital_button"
+      group_tag:t="Replay,not_important"
+    }
+
+    ReplayTrack.LoadKeyFrames{
+      type:t="digital_button"
+      group_tag:t="Replay,not_important"
+    }
+
+    ReplayTrack.ToggleInterpolation{
+      type:t="digital_button"
+      group_tag:t="Replay,not_important"
+    }
+
+    ReplayTrack.TogglePlayRotation{
+      type:t="digital_button"
+      group_tag:t="Replay,not_important"
+    }
+
+    ReplayTrack.TogglePlayPosition{
+      type:t="digital_button"
+      group_tag:t="Replay,not_important"
+    }
+
+    ReplayTrack.TogglePlayRoll{
+      type:t="digital_button"
+      group_tag:t="Replay,not_important"
+    }
+
+    ReplayTrack.TogglePlayFov{
+      type:t="digital_button"
+      group_tag:t="Replay,not_important"
+    }
+  }
+
+  Drone{
+    group_tag:t="Vehicle"
+
+    Drone.DropGrenade{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+
+    Drone.Leave{
+      type:t="digital_button"
+      group_tag:t="Vehicle"
+    }
+  }
+
+  Helicopter{
+    group_tag:t="Vehicle"
+
+    Helicopter.Nose{
+      type:t="steerwheel"
+      quantize:t="8bit"
+    }
+
+    Helicopter.Roll{
+      type:t="steerwheel"
+      quantize:t="8bit"
+    }
+
+    Helicopter.Fly{
+      type:t="steerwheel"
+      quantize:t="8bit"
+    }
+
+    Helicopter.Yaw{
+      type:t="steerwheel"
+      quantize:t="8bit"
+    }
+  }
+
+  HelicopterTouch{
+    group_tag:t="Vehicle,platform=android,not_important"
+
+    HelicopterTouch.TouchAim{
+      type:t="absolute_mouse"
+      mouseMoveScale:r=0.0003
+      gpadAxisScaleX:r=1.5
+      gpadAxisScaleY:r=1
+    }
+  }
+
+  HelicopterMouse{
+    group_tag:t="Vehicle,not_important"
+
+    HelicopterMouse.MouseAim{
+      type:t="absolute_mouse"
+      mouseMoveScale:r=0.0003
+      gpadAxisScaleX:r=1.5
+      gpadAxisScaleY:r=1
+    }
+  }
+
+  StopInput{}
+  BackgroundHUD{}
+}
+
+actionSetsOrder{
+  Camera{}
+  Edit{}
+  BigMap{}
+  HUD{}
+  Globals{}
+  StopInput{}
+  HUDBase{}
+  Spectator{}
+  Replay{}
+  Drone{}
+  Helicopter{}
+  HelicopterTouch{}
+  HelicopterMouse{}
+  Vehicle{}
+  MonsterChanged{}
+  MonsterMothman{}
+  MonsterInvisibleman{}
+  Human{}
+  Onboarding{}
+  BackgroundHUD{}
+}
+
+customUserProps{
+  humanAiming:r=0.65
+  humanTpsCam:r=1
+  humanFpsCam:r=1
+  vehicleCam:r=1
+}
+
+activateActionSetsOnInit{
+  BackgroundHUD{}
+  Globals{}
+  HUDBase{}
+  Human{}
+}

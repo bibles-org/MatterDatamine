@@ -1,0 +1,304 @@
+repeat{
+  name:t="tree_horde_part"
+
+  reaction{
+    event:t="onHit"
+
+    sequencer{
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+      }
+
+      recalculateTree{}
+    }
+  }
+
+  reaction{
+    event:t="onBulletNearby"
+
+    sequencer{
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+      }
+
+      recalculateTree{}
+    }
+  }
+
+  reaction{
+    event:t="onBlindness"
+
+    sequencer{
+      recalculateTree{}
+    }
+  }
+
+  reaction{
+    name:t="investigate_reaction"
+    event:t="regularCheck"
+
+    subTree{
+      treeName:t="sub.treeHordeReactions"
+    }
+  }
+
+  sequencer{
+    name:t="blindness"
+
+    isInBlindness{}
+    subTree{
+      treeName:t="sub.findMappedNavmeshFallbackPosition"
+    }
+
+    parallel{
+      inBlindness{}
+      gravityMoveToPos{
+        posParam:t="fallbackPosition"
+        sprintTimerRange:p2=10, 20
+        minDistToSprint:r=0.5
+        tryClimbing:b=yes
+        distThreshold:r=1
+        deflectPath:b=yes
+        maxDeflectionAngle:r=1.047
+        minCurvedPathlenThreshold:r=20
+      }
+    }
+  }
+
+  sequencer{
+    name:t="melee_attack"
+
+    findDanger{
+      paramName:t="enemy"
+      radiusParamName:t="enemyRadius"
+      minDanger:r=0.1
+      tag:t="human"
+      canBeInVehicle:b=yes
+    }
+
+    success{
+      chooseBestWeapon{
+        targetParam:t="enemy"
+      }
+    }
+
+    sequencer{
+      reaction{
+        name:t="melee_reaction"
+        event:t="regularCheck"
+
+        orderedSelector{
+          failed{
+            sequencer{
+              findObstaclesAlongsidePathMapped{}
+              findDoorObstacleWithNavmeshMapping{}
+              success{
+                tryOpenDoor{}
+              }
+            }
+          }
+
+          subTree{
+            treeName:t="sub.treeHordeReactions"
+          }
+        }
+      }
+
+      setPosFromEntity{
+        to:t="enemyPosition"
+        from:t="enemy"
+        projectToNavmesh:b=no
+      }
+
+      checkDistance{
+        posParam:t="enemyPosition"
+        radius:r=15
+      }
+
+      not{
+        isInstallingWeaponMod{}
+      }
+
+      changeWeapon{
+        param:t="meleeWeaponSlot"
+      }
+
+      gravityMoveToTarget{
+        targetUnitParam:t="enemy"
+        stopDistRange:p2=3, 3
+        aimToTarget:b=yes
+      }
+
+      meleeAttack{
+        targetUnitParam:t="enemy"
+        timeToAttack:r=1
+        attackDist:r=1.5
+      }
+    }
+  }
+
+  exitHandler{
+    name:t="investigate_enemy"
+
+    sequencer{
+      not{
+        isVarsIntEqual{
+          lhs:t="lastKnownEnemy"
+          rhs_value:i=0
+        }
+      }
+
+      not{
+        isVarsIntEqual{
+          lhs:t="lastKnownEnemy"
+          rhs_value:i=-1
+        }
+      }
+
+      gravityMoveToPos{
+        posParam:t="laskKnownEnemyPosition"
+        minStance:i=1
+        distThreshold:r=2.5
+        lookVisc:r=0.1
+        targetParam:t="lastShootEnemy"
+        timeToLookAtTarget:r=4
+        dangerPosParam:t="enemyPos"
+        dangerValidParam:t="enemyPosValid"
+        dangerLookRange:p2=1.5, 2.5
+      }
+    }
+
+    setIntVar{
+      to:t="lastKnownEnemy"
+      value:i=0
+    }
+  }
+
+  sequencer{
+    name:t="go_to_horde_goal"
+
+    findClosestEntityWithComponent{
+      componentName:t="tree_horde_goal"
+      outParamName:t="targetEid"
+    }
+
+    choosePositionAroundEntityRespectingRotation{
+      to:t="targetPos"
+      from:t="targetEid"
+      radiusMinMax:p2=1, 5
+    }
+
+    parallel{
+      gravityMoveToPos{
+        posParam:t="targetPos"
+        distThreshold:r=0.5
+        lookVisc:r=0.1
+        deflectPath:b=yes
+        restTimerRange:p2=0.1, 0.1
+        sprintTimerRange:p2=90, 90
+        minDistToSprint:r=0.5
+      }
+
+      failed{
+        wait{
+          range:p2=5, 10
+          resetable:b=yes
+        }
+      }
+    }
+
+    parallel{
+      wait{
+        range:p2=3, 6
+        resetable:b=yes
+      }
+
+      applyGameAffect{
+        templateName:t="tree_horde_scream_effect"
+      }
+    }
+  }
+
+  sequencer{
+    name:t="go_to_attract"
+
+    reaction{
+      name:t="go_to_attract_reaction"
+      event:t="regularCheck"
+
+      orderedSelector{
+        sequencer{
+          findObstaclesAlongsidePathMapped{}
+          findDoorObstacleWithNavmeshMapping{}
+          success{
+            tryOpenDoor{}
+          }
+        }
+
+        subTree{
+          treeName:t="sub.treeHordeReactions"
+        }
+      }
+    }
+
+    getAttractionPosition{}
+    modifyNode{
+      targetIntParam:t="attractPointEntity"
+      operator:t="="
+      arg:t="attract_point__eid"
+    }
+
+    setPosFromEntity{
+      to:t="attractPosition"
+      from:t="attractPointEntity"
+      projectToNavmesh:b=no
+    }
+
+    gravityMoveToPos{
+      posParam:t="attractPosition"
+      minStance:i=1
+      distThreshold:r=2.5
+      lookVisc:r=0.1
+      targetParam:t="lastShootEnemy"
+      timeToLookAtTarget:r=4
+      tryClimbing:b=yes
+      dangerPosParam:t="enemyPos"
+      dangerValidParam:t="enemyPosValid"
+      dangerLookRange:p2=1.5, 2.5
+    }
+
+    wait{
+      range:p2=0.5, 1
+      resetable:b=yes
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.treeHordeReactions"
+
+  findDanger{
+    paramName:t="newEnemy"
+    radiusParamName:t="enemyRadius"
+    minDanger:r=0.3
+  }
+
+  copyIntVar{
+    to:t="prevEnemy"
+    from:t="enemy"
+  }
+
+  chooseDanger{
+    lhsParam:t="enemy"
+    rhsParam:t="newEnemy"
+    outParam:t="enemy"
+    diff:r=0.2
+    minDanger:r=0.1
+  }
+
+  recalculateTree{}
+}

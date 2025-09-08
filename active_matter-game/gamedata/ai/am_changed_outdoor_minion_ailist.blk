@@ -1,0 +1,507 @@
+orderedSelector{
+  name:t="nchanged_outdoor_minion"
+
+  reaction{
+    event:t="onHit"
+
+    sequencer{
+      orderedSelector{
+        compareNode{
+          lhs:t="beh_tree__interruptDisabled"
+          operator:t="=="
+          rhs:r=1
+        }
+
+        sequencer{
+          findFlankableTarget{
+            useLargeRadius:b=yes
+            backupTarget:t="agent_dangers__lastHitReactionOffenderEid"
+            minDanger:r=0.1
+          }
+
+          selectNode{
+            name:t="attack"
+          }
+        }
+
+        sequencer{
+          setBlind{
+            duration:p2=2, 5
+          }
+
+          recalculateTree{}
+        }
+      }
+    }
+  }
+
+  reaction{
+    event:t="onBulletNearby"
+
+    sequencer{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=0
+      }
+
+      findFlankableTarget{
+        useLargeRadius:b=yes
+        minDanger:r=0.1
+      }
+
+      selectNode{
+        name:t="attack"
+      }
+    }
+  }
+
+  reaction{
+    event:t="onBlindness"
+
+    sequencer{
+      modifyNode{
+        target:t="beh_tree__interruptDisabled"
+        operator:t="="
+        arg:i=0
+      }
+
+      recalculateTree{}
+    }
+  }
+
+  subTree{
+    treeName:t="sub.blindness"
+  }
+
+  subTree{
+    treeName:t="sub.leave_obstacle"
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.return_to_navmesh"
+    }
+  }
+
+  sequencer{
+    name:t="attack"
+
+    reaction{
+      event:t="regularCheck"
+
+      orderedSelector{
+        compareNode{
+          lhs:t="beh_tree__interruptDisabled"
+          operator:t="=="
+          rhs:r=1
+        }
+
+        sequencer{
+          subTree{
+            treeName:t="sub.reaction.nchanged_outdoor_minion_check_out_of_boss"
+          }
+
+          subTree{
+            treeName:t="sub.reaction.nchanged_outdoor_minion_check_out_of_origin"
+          }
+
+          subTree{
+            treeName:t="sub.attackReaction"
+          }
+
+          subTree{
+            treeName:t="sub.nchanged_outdoor_minion_run_to_boss_if_he_is_not_sleeping"
+          }
+        }
+      }
+    }
+
+    setTime{
+      to:t="agent_dangers__time"
+    }
+
+    compareNode{
+      lhs:t="changed__disableAgroUntil"
+      operator:t="<"
+      rhs:t="agent_dangers__time"
+    }
+
+    sequencer{
+      orderedSelector{
+        not{
+          subTree{
+            treeName:t="sub.nchanged_outdoor_minion_check_should_run_to_boss"
+          }
+        }
+
+        subTree{
+          treeName:t="sub.nchanged_outdoor_minion_run_to_boss"
+        }
+
+        checkDistanceToTarget{
+          targetParam:t="miniboss_minion__bossEid"
+          radius:r=15
+        }
+      }
+
+      subTree{
+        treeName:t="sub.changed.runToAndAttack"
+      }
+    }
+  }
+
+  subTree{
+    treeName:t="sub.changed.moveToAttraction"
+  }
+
+  subTree{
+    treeName:t="sub.aimlessly_walk_around_after_awaken"
+  }
+
+  sequencer{
+    name:t="goToOrigin"
+
+    reaction{
+      event:t="regularCheck"
+
+      orderedSelector{
+        compareNode{
+          lhs:t="beh_tree__interruptDisabled"
+          operator:t="=="
+          rhs:r=1
+        }
+
+        subTree{
+          treeName:t="sub.clearPath"
+        }
+
+        sequencer{
+          hasTimePassed{
+            from:t="changed__targetLostAt"
+            duration:t="changed__targetIndifferenceTime"
+          }
+
+          orderedSelector{
+            sequencer{
+              checkDistanceToPos{
+                posParam:t="changed__origin"
+                radius:r=20
+              }
+
+              findDanger{
+                paramName:t="enemy"
+                radiusParamName:t="enemyRadius"
+                minDanger:r=0.1
+              }
+            }
+
+            findDanger{
+              paramName:t="enemy"
+              radiusParamName:t="enemyRadiusMicro"
+              minDanger:r=0.6
+              tag:t="human"
+            }
+          }
+
+          modifyNode{
+            target:t="walker_agent__targetEid"
+            operator:t="="
+            argIntParam:t="enemy"
+          }
+
+          setTime{
+            to:t="changed__loseInterestAt"
+          }
+
+          modifyNode{
+            target:t="changed__loseInterestAt"
+            operator:t="+"
+            arg:t="changed__agroOnAwakened"
+          }
+
+          selectNode{
+            name:t="attack"
+          }
+        }
+
+        subTree{
+          treeName:t="sub.nchanged_outdoor_minion_run_to_boss_if_he_is_not_sleeping"
+        }
+
+        sequencer{
+          nFindAttractPosition{
+            posParam:t="walker_agent__targetPos"
+          }
+
+          selectNode{
+            name:t="moveToAttraction"
+          }
+        }
+
+        subTree{
+          treeName:t="sub.recalculateTreeOnStuck"
+        }
+      }
+    }
+
+    orderedSelector{
+      orderedSelector{
+        not{
+          checkDistanceToPos{
+            posParam:t="changed__origin"
+            radius:r=20
+          }
+        }
+
+        not{
+          findDanger{
+            paramName:t="enemy"
+            radiusParamName:t="enemyRadius"
+            minDanger:r=0.1
+          }
+        }
+      }
+
+      setTime{
+        to:t="changed__awakenAt"
+      }
+    }
+
+    subTree{
+      treeName:t="sub.return_to_navmesh"
+    }
+
+    setTime{
+      to:t="changed__targetLostAt"
+    }
+
+    moveToPosWithBlinks{
+      posParam:t="changed__origin"
+      forceToWalk:b=yes
+      navLookAhead:r=0.75
+      blinkPeriod:p2=0.1, 0.7
+    }
+
+    orderedSelector{
+      subTree{
+        treeName:t="sub.nchanged_outdoor_minion_run_to_boss_if_he_is_not_sleeping"
+      }
+
+      sequencer{
+        nPhysForceAnimState{
+          animState:t="lie_down"
+          duration:r=1.1
+        }
+
+        addTemplate{
+          name:t="sleeping_monster"
+        }
+      }
+    }
+  }
+
+  subTree{
+    treeName:t="sub.door_opener"
+  }
+}
+
+sequencer{
+  name:t="sub.nchanged_outdoor_minion_run_to_boss"
+
+  checkAlive{
+    targetParam:t="miniboss_minion__bossEid"
+  }
+
+  orderedSelector{
+    sequencer{
+      modifyNode{
+        target:t="beh_tree__interruptDisabled"
+        operator:t="="
+        arg:i=1
+      }
+
+      nPhysCorridorMoveToTargetWithNavmeshMapping{
+        targetParam:t="miniboss_minion__bossEid"
+        stopDist:r=5
+        loseInvisibleTarget:b=no
+      }
+
+      modifyNode{
+        target:t="beh_tree__interruptDisabled"
+        operator:t="="
+        arg:i=0
+      }
+    }
+
+    subTree{
+      treeName:t="sub.changed.goToOrigin"
+    }
+  }
+
+  orderedSelector{
+    sequencer{
+      success{
+        modifyNode{
+          targetIntParam:t="boss"
+          operator:t="="
+          arg:t="miniboss_minion__bossEid"
+        }
+      }
+
+      not{
+        targetIsSleeping{
+          targetParam:t="boss"
+        }
+      }
+    }
+
+    subTree{
+      treeName:t="sub.changed.goToOrigin"
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.nchanged_outdoor_minion_run_to_boss_if_he_is_not_sleeping"
+
+  orderedSelector{
+    not{
+      checkAlive{
+        targetParam:t="miniboss_minion__bossEid"
+      }
+    }
+
+    sequencer{
+      modifyNode{
+        targetIntParam:t="boss"
+        operator:t="="
+        arg:t="miniboss_minion__bossEid"
+      }
+
+      not{
+        targetIsSleeping{
+          targetParam:t="boss"
+        }
+      }
+
+      subTree{
+        treeName:t="sub.nchanged_outdoor_minion_run_to_boss"
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.reaction.nchanged_outdoor_minion_check_out_of_origin"
+
+  setTime{
+    to:t="agent_dangers__time"
+  }
+
+  orderedSelector{
+    checkAlive{
+      targetParam:t="miniboss_minion__bossEid"
+    }
+
+    compareNode{
+      lhs:t="changed__disableAgroUntil"
+      operator:t=">"
+      rhs:t="agent_dangers__time"
+    }
+
+    checkDistanceToPos{
+      posParam:t="changed__origin"
+      radiusParam:t="changed__originRadius"
+    }
+
+    sequencer{
+      compareNode{
+        lhs:t="changed__loseInterestAt"
+        operator:t=">"
+        rhs:r=0
+      }
+
+      compareNode{
+        lhs:t="changed__loseInterestAt"
+        operator:t="<"
+        rhs:t="agent_dangers__time"
+      }
+
+      modifyNode{
+        target:t="changed__loseInterestAt"
+        operator:t="="
+        arg:i=0
+      }
+
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        arg:i=0
+      }
+
+      modifyNode{
+        target:t="changed__disableAgroUntil"
+        operator:t="="
+        arg:t="agent_dangers__time"
+      }
+
+      modifyNode{
+        target:t="changed__disableAgroUntil"
+        operator:t="+"
+        arg:t="changed__disableAgroTime"
+      }
+
+      recalculateTree{}
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.reaction.nchanged_outdoor_minion_check_out_of_boss"
+
+  orderedSelector{
+    compareNode{
+      lhs:t="beh_tree__interruptDisabled"
+      operator:t="=="
+      rhs:r=1
+    }
+
+    not{
+      subTree{
+        treeName:t="sub.nchanged_outdoor_minion_check_should_run_to_boss"
+      }
+    }
+
+    recalculateTree{}
+  }
+}
+
+sequencer{
+  name:t="sub.nchanged_outdoor_minion_check_should_run_to_boss"
+
+  checkAlive{
+    targetParam:t="miniboss_minion__bossEid"
+  }
+
+  not{
+    checkDistanceToTarget{
+      targetParam:t="miniboss_minion__bossEid"
+      radius:r=15
+    }
+  }
+
+  orderedSelector{
+    compareNode{
+      lhs:t="walker_agent__targetEid"
+      operator:t="=="
+      rhs:i=0
+    }
+
+    compareNode{
+      lhs:t="changed__loseInterestAt"
+      operator:t="<"
+      rhs:t="agent_dangers__time"
+    }
+  }
+}

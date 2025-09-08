@@ -1,0 +1,120 @@
+cortical_vault_in_inventory{
+  _use:t="base_invis_item"
+  cortical_vault_in_inventory__trackPos:p3=0, 0, 0
+  _tracked:t="cortical_vault_in_inventory__trackPos"
+  cortical_vault_in_inventory__updateAt:r=0
+  cortical_vault_in_inventory__updateInterval:r=5
+}
+
+base_cortical_vault{
+  _use:t="equipable_item"
+  _use:t="block_item_move_to_safepack"
+  item__recreateInInventory:t="cortical_vault_in_inventory"
+  item__name:t="items/teammate_heart"
+  animchar__res:t="am_cortical_vault_watch_a_item_char"
+  collres__res:t="am_cortical_vault_watch_a_item_collision"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.02, 0]]
+  item__weight:r=0.02
+  item__volume:r=0
+  item__useTime:r=5
+  cortical_vault__usingAmReserved:i=0
+  _replicated:t="cortical_vault__usingAmReserved"
+  _replicated:t="playerItemOwner"
+  cortical_vault__reviveAllowed:b=yes
+  item__extractionTemplateOverride:t="cortical_vault_inactive"
+  item__unarmedUsage:b=yes
+  cortical_vault__effectTemplateName:t="teammate_revive_effect"
+
+  "item__equipmentSlots:list<t>"{
+    slot:t="cortical_vault"
+  }
+
+  _group{
+    _tags:t="gameClient"
+    item__setCustomLongUseHint:t="hud/mindvault_long_use_hint"
+  }
+
+  "item__interruptInDriverSeat:tag"{}
+  "net__alwaysInScope:tag"{}
+  "cortical_vault:tag"{}
+  "item__customSortingPriority:tag"{}
+  "item__closeInventoryOnUsage:tag"{}
+  "playerItemOwner:eid"{}
+  "playerItemHideForEnemies:tag"{}
+  "cortical_vault__effectEid:eid"{}
+  "item_enriched:tag"{}
+}
+
+cortical_vault{
+  _use:t="suit_attachable_item_base"
+  _use:t="base_cortical_vault"
+  item__proto:t="cortical_vault"
+  item__recreateInEquipment:t="item_in_equipment_hided_on_doll"
+  slot_attach__slotName:t="cortical_vault"
+  item__iconPitch:r=0
+  item__iconRoll:r=60
+  item__iconYaw:r=135
+
+  "equipment_item:tag"{}
+}
+
+cortical_vault_test{
+  _use:t="cortical_vault"
+  team:i=666666
+  am_storage__value:i=50
+
+  "cortical_vault_test:tag"{}
+}
+
+cortical_vault_inactive{
+  _use:t="item"
+  item__proto:t="cortical_vault_inactive"
+  item__name:t="items/cortical_vault_inactive"
+  item__fakeName:t="items/cortical_vault_nameless"
+  animchar__res:t="am_cortical_vault_watch_a_item_char"
+  collres__res:t="am_cortical_vault_watch_a_item_collision"
+  dropTm:m=[[1, 0, 0] [0, 0, 1] [0, -1, 0] [0, 0.05, 0]]
+  item__weight:r=0.02
+  item__volume:r=1
+  cortical_vault_inactive__ownerNickname:t=""
+  item__filterType:t="cortical_vaults"
+  item__iconPitch:r=0
+  item__iconRoll:r=60
+  item__iconYaw:r=135
+  profile_server_data__enrichmentAMCount:ip2=5, 5
+
+  "net__alwaysInScope:tag"{}
+}
+
+equip_cortical_vault{
+  equip_cortical_vault__itemTemplate:t="cortical_vault"
+  equip_cortical_vault__equipped:b=no
+}
+
+dogtag_item{
+  _use:t="item"
+  item__proto:t="dogtag_item"
+  item__name:t="items/dogtag"
+  item__desc:t="items/dogtag/desc"
+  item__fakeName:t="items/dogtag_nameless"
+  item__filterType:t="dog_tags"
+  animchar__res:t="am_cortical_vault_watch_memorycard_char"
+  collres__res:t="am_cortical_vault_watch_memorycard_collision"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.02, 0]]
+  item__weight:r=0
+  item__volume:r=0
+  item__iconPitch:r=0
+  item__iconRoll:r=60
+  item__iconYaw:r=135
+  cortical_vault_inactive__ownerNickname:t=""
+  cortical_vault_inactive__killerNickname:t=""
+  cortical_vault_inactive__killedByWeapon:t=""
+  cortical_vault_inactive__deathReason:t=""
+  _replicated:t="playerItemOwner"
+
+  "cortical_vault_inactive__killerPlayerEid:eid"{}
+  "dogtag_item:tag"{}
+  "playerItemOwner:eid"{}
+  "item__cantBeCorrupted:tag"{}
+  "item__cantBeReplica:tag"{}
+}

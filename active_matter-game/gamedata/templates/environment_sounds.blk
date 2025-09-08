@@ -1,0 +1,27 @@
+sandstorm_sound{
+  _use:t="sound_effect_2d"
+
+  _group{
+    _tags:t="sound"
+    sound_effect_2d__path:t="ambient/sandstorm"
+  }
+}
+
+geyser_sound{
+  _use:t="sound_effect"
+  geyser_sound__spawnRateThreshold:r=0.5
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/geyser"
+  }
+}
+
+lava_sound{
+  _use:t="sound_effect"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/fire/lava"
+  }
+}

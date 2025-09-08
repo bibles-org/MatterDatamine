@@ -1,0 +1,116 @@
+invis_lock_actions{
+  game_effect__disableFlag:t="human_inventory__canUseItems"
+  game_effect__enableFlag:t="human_use_object__lockVehicleUse"
+
+  "state__disableWeaponSwitch:tag"{}
+  "locked_weapon__reload:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "locked_view__lockZoom:tag"{}
+  "locked_use_object__lockGrenadeRethrowing:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockVehicleUse:tag"{}
+  "locked_use_object__lockSprayDraw:tag"{}
+  "locked_use_object__lockSprayFill:tag"{}
+  "game_effect__disableActions:tag"{}
+  "game_effect__disableShooting:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_use_object__lockJetpackUse:tag"{}
+  "game_effect__lockZonesEnter:tag"{}
+  "allowed_breathe_underwater:tag"{}
+}
+
+invis_dof_and_color_grading{
+  game_effect_dof__farDofAmountPercent:r=0.0065
+  game_effect_dof__farDofStart:r=8
+  game_effect_dof__farDofEnd:r=1e+06
+  game_effect_dof__nearDofEnd:r=0.1
+  game_effect_dof__on:b=yes
+  _tags:t="render"
+
+  "game_effect__colorGrading:object"{
+    colorContrast:p4=1, 1, 1, 1.2
+    colorGain:p4=1, 1, 1, 1
+    colorGamma:p4=1.15, 1.1, 1.5, 0.8
+    colorSaturation:p4=1, 1, 1, 0.1
+    _tags:t="render"
+  }
+}
+
+base_invis_affect{
+  _use:t="replicated_effect_with_duration"
+  _use:t="color_graded_affect"
+  _use:t="locked_loot_pickup_affect"
+  _use:t="invis_lock_actions"
+  _use:t="invis_dof_and_color_grading"
+  game_effect__perkName:t="gamedata/items/ability_shadow_walk.blk"
+  game_effect__enableFlag:t="another_dimension_visitor__inside"
+
+  "game_effect__invisibility:tag"{}
+  "game_effect__invisibleBody:tag"{}
+  "game_effect__animcharActWhenInvisble:tag"{}
+  "game_effect__disableMapHighlight:tag"{}
+  "game_effect__disableHumanMapHighlight:tag"{}
+}
+
+invisibility_affect{
+  _use:t="base_invis_affect"
+  game_effect__perkName:t="gamedata/items/ability_shadow_walk.blk"
+  _use:t="game_effect_sound"
+  game_effect_sound__hero:t="player/effects/invisible"
+  game_effect__disableFlagOnce:t="burning__isBurning"
+
+  "game_effect__disableCollision:tag"{}
+}
+
+invisibility_affect_in{
+  _use:t="attached_replicated_effect_with_duration"
+  _use:t="invis_lock_actions"
+  game_effect__perkName:t="gamedata/items/ability_shadow_walk_transition.blk"
+  _use:t="game_effect_sound"
+  game_effect_sound__hero:t="player/effects/invisible_in"
+  game_effect_sound__enemy:t="enemy/effects/invisible_in"
+  game_effect__disableFlagOnce:t="burning__isBurning"
+  ingame_rumble__onEffectAttach:t="ability"
+
+  "game_effect__disableActions:tag"{}
+  "game_effect__disableShooting:tag"{}
+}
+
+invisibility_continuous_affect_in{
+  _use:t="attached_replicated_effect_with_duration"
+}
+
+invisibility_burst_affect_in{
+  _use:t="attached_replicated_effect_with_duration"
+}
+
+invisibility_affect_out{
+  _use:t="attached_replicated_effect_with_duration"
+  _use:t="invis_lock_actions"
+  _use:t="replicated_effect_with_duration"
+  game_effect__perkName:t="gamedata/items/ability_shadow_walk_transition.blk"
+  _use:t="game_effect_sound"
+  game_effect_sound__enemy:t="enemy/effects/invisible_out"
+  ingame_rumble__onEffectAttach:t="ability"
+
+  "game_effect__invisibility:tag"{}
+  "game_effect__animcharActWhenInvisble:tag"{}
+  "game_effect__disableCollision:tag"{}
+}
+
+invisibility_continuous_affect_out{
+  _use:t="attached_replicated_effect_with_duration"
+  game_effect__enableFlag:t="another_dimension_visitor__inside"
+}
+
+invisibility_burst_affect_out{
+  _use:t="attached_replicated_effect_with_duration"
+}
+
+active_matter_invis_ability{
+  game_effect__invisible:b=no
+  _tracked:t="game_effect__invisible"
+  human_use_object__lockVehicleUse:b=no
+  animchar__actWhenInvisible:b=yes
+}

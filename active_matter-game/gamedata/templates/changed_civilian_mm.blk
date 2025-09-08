@@ -1,0 +1,32 @@
+changed_civilian_mm_w_database{
+  _use:t="motion_matching_animation_database"
+  _singleton:b=yes
+  _tags:t="render"
+  weightsPath:t="gamedata/motion_matching/changed_civilian_mm_attack_weights.blk"
+  rootMotionPath:t="gamedata/motion_matching/main_data_base_root_motion.blk"
+
+  "data_bases_paths:list<t>"{
+    path:t="gamedata/motion_matching/changed_civilian_mm_idle_anim_list.blk"
+    path:t="gamedata/motion_matching/changed_civilian_mm_walk_anim_list.blk"
+    path:t="gamedata/motion_matching/changed_civilian_mm_attack_anim_list.blk"
+  }
+
+  "main_database__pbcWeightOverrides:object"{}
+  "main_database__availableTags:list<t>"{
+    tag:t="bad"
+    tag:t="idle"
+    tag:t="prepare_attack"
+    tag:t="attack"
+  }
+}
+
+changed_civilian_mm{
+  _use:t="motion_matching_animchar_component"
+  _use:t="changed_human"
+  animchar__res:t="changed_civillian_mm_char"
+
+  _group{
+    _tags:t="render"
+    motion_matching__dataBaseTemplateName:t="changed_civilian_mm_w_database"
+  }
+}

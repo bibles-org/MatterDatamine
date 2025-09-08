@@ -1,0 +1,946 @@
+monstrified_changed_human_concussion_attack_affect{
+  _use:t="replicated_game_effect"
+  ingame_rumble__onEffectAttach:t="concussion"
+  concussion__handsShakeMagnitude:r=1.1
+  concussion__handsShakeSpeedMult:r=6
+  concussion__handsShakeFadeTime:r=5
+  concussion__duration:r=8
+  concussion__startedAtTime:r=0
+  concussion__replaced:b=no
+
+  "concussionAffect:tag"{}
+  "concussionHandsShake:tag"{}
+  "concussionScreenEffect:tag"{}
+}
+
+common_monster_ability{
+  _use:t="common_char_ability"
+  _replicated:t="monster_ability"
+
+  "monster_ability:tag"{}
+}
+
+monstrified_changed_human_idle_sound{
+  _group{
+    _tags:t="sound"
+    monstrified_changed_human_idle_sound__lastTime:r=0
+    monstrified_changed_human_idle_sound__interval:r=0
+    monstrified_changed_human_idle_sound__idleInterval:r=3
+    monstrified_changed_human_idle_sound__runInterval:r=2
+    monstrified_changed_human_idle_sound__sprintInterval:r=1
+    monstrified_changed_human_idle_sound__intervalChangeSpeed:r=0.5
+
+    "monstrified_changed_human_idle_sound__event:SoundEvent"{}
+    "monstrified_changed_human_idle_sound__path:shared:object"{
+      path:t="/walker/changed/voice_fx/click"
+    }
+  }
+}
+
+monstrified_changed_human_sound{
+  _use:t="monstrified_changed_human_idle_sound"
+
+  _group{
+    _tags:t="sound"
+    heartrate_sound__startFrom:r=240
+  }
+}
+
+monstrify_sequence_spawn_effect{
+  _use:t="replicated_effect_with_duration"
+  monstrify_effect__template:t="monstrified_changed_human+monstrify_spawn_sequence_controller"
+}
+
+monstrify_sequence{
+  _use:t="game_effect_sequence"
+
+  "spawn_sequence__fxEid:eid"{}
+  "locked_weapon__reload:tag"{}
+  "state__interruptReload:tag"{}
+  "entity_mod_effects:object"{
+    "hitpointsDmgMult+mult_diminishing":r=0
+  }
+
+  "game_effect_sequence__stages:array"{
+    "stage:object"{
+      affectTemplate:t="monstrify_extraction_sequence_init"
+      duration:r=0.1
+    }
+
+    "stage:object"{
+      affectTemplate:t="monstrify_sequence_portal_opens"
+      duration:r=0.1
+      setupTransform:b=yes
+    }
+
+    "stage:object"{
+      affectTemplate:t="monstrify_extraction_sequence_soldier_disappears+trans_portal_affect_start_sound"
+      duration:r=0.7
+    }
+
+    "stage:object"{
+      affectTemplate:t="monstrify_sequence_spawn_effect"
+      duration:r=0.5
+    }
+  }
+}
+
+monstrified_changed_human{
+  _use:t="monstrified_human_base"
+  _use:t="am_militant_with_attachable_suit"
+  _use:t="militant_node_collapser"
+  _use:t="changed_aura"
+  _use:t="damage_model_regeneration"
+  _use:t="stalker_statue_not_target"
+  _use:t="am_mindcontrolled_changed_abilities"
+  _use:t="monstrified_changed_human_sound"
+  _use:t="monstrified_human_locked_melee_only"
+  _use:t="actions_resume_graph"
+  backstab__enabled:b=yes
+  backstab__offenderDmgMult:r=1.2
+  damage_model_regeneration__healByTickAmount:r=3
+  default_stub_melee_controller__meleeTemplate:t="default_changed_claw"
+  item__name:t="items/suit_militant_changed_item"
+  suit__raidIcon:t="!ui/uiskin/raid_info/distorted.svg"
+  item__desc:t="items/suit_militant_changed_item/desc"
+  human_inventory__canHeal:b=no
+  human_inventory__canLoadCharges:b=no
+  melee_attack_to_hands_aim_punch__strength:r=1.5
+  melee_attack_to_head_concussion__template:t="monstrified_changed_human_concussion_attack_affect"
+  melee_attack_to_head_confusion__duration:r=1
+  melee_attack_to_head_confusion__intensity:r=1
+  melee_attack_to_head_confusion__speed:r=0.2
+  melee_attack_to_head__extraDamage:r=0.2
+  agent_dangers__tag:t="changed_human"
+  am_storage__value:i=0
+  am_storage__maxValue:i=300
+  animchar__res:t="distorted_player_char"
+  collres__res:t="distorted_player_collision"
+  heartrate__range:p2=30, 265
+  heartrate__hpDelayTicks:i=40
+  heartrate__fatigueThresholdDefault:r=245
+  heartrate__walkHR:r=12
+  heartrate__sprintHR:r=24
+  heartrate__standUpHR:r=1200
+  heartrate__climbHR:r=90
+  heartrate__jumpHR:r=110
+  heartrate__elevationGainHR:r=100
+  heartrate__overflowHRToAmortizationRatio:r=0.5
+  heartrate__staminaRegenDefault:p3=1.5, 1.75, 1
+  heartrate__staminaDrainDefault:p2=0.01, 0.02
+  hunter_vision__updateAt:r=0
+  hunter_vision__interval:r=1.4
+  hunter_vision__loudNoiseRange:p2=12, 30
+  hunter_vision__effectTemplate:t="monster_vision_fx"
+  changed_human_vision__colorTaken:c=20, 255, 40, 255
+  changed_human_vision__updateAt:r=0
+  changed_human_vision__interval:r=0.3
+  changed_human_vision__radius:r=25
+  changed_human_vision__abilityRadius:r=10
+  item__filterType:t="alters"
+  item__iconYaw:r=20
+  item__iconRoll:r=10
+  item__iconPitch:r=0
+  item__iconScale:r=5
+  item__iconOffset:p2=-0.08, -0.71
+  _skipInitialReplication:t="dm_parts__parts"
+
+  "actions__resumeGraphNodeNodeNames:list<t>"{
+    list:t="knife_stand_attack"
+  }
+
+  "actions__resumeGraphNodeActionNames:list<t>"{
+    list:t="stand_melee"
+  }
+
+  "ignoreDownState:tag"{}
+  "update_default_stub_melee_on_appear:tag"{}
+  "human_equipment__slots:object"{
+    "cortical_vault:eid"{}
+    "chronogene_primary_1:eid"{}
+    "pouch:eid"{}
+    "backpack:eid"{}
+  }
+
+  "game_effect__initialAttachmentsServer:list<t>"{
+    item:t="changed_monster_effect"
+  }
+
+  _group{
+    _tags:t="render"
+    night_light__lightMult:r=0.06
+    night_light__lightDistanceMult:r=0.02
+  }
+
+  "monster_hunter:tag"{}
+  "allow_friendly_damage:tag"{}
+  "changed_human_vision__outlinedEids:list<eid>"{}
+  "dm_parts__parts:object"{
+    "Bip01 Head:object"{
+      dmgMult:r=1.3
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 Neck:object"{
+      dmgMult:r=1.3
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 L Thigh:object"{
+      dmgMult:r=0.5
+      armor:r=0
+      type:t="l_leg"
+    }
+
+    "Bip01 R Thigh:object"{
+      dmgMult:r=0.5
+      armor:r=0
+      type:t="r_leg"
+    }
+
+    "Bip01 L Calf:object"{
+      dmgMult:r=0.5
+      armor:r=0
+      type:t="l_leg"
+    }
+
+    "Bip01 R Calf:object"{
+      dmgMult:r=0.5
+      armor:r=0
+      type:t="r_leg"
+    }
+
+    "Bip01 L Foot:object"{
+      dmgMult:r=0.5
+      armor:r=0
+      type:t="l_leg"
+    }
+
+    "Bip01 R Foot:object"{
+      dmgMult:r=0.5
+      armor:r=0
+      type:t="r_leg"
+    }
+
+    "Bip01 Pelvis:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="torso"
+    }
+
+    "Bip01 Spine:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="torso"
+    }
+
+    "Bip01 Spine1:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="torso"
+    }
+
+    "Bip01 R Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="r_hand"
+    }
+
+    "Bip01 L Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="l_hand"
+    }
+
+    "Bip01 R UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="r_hand"
+    }
+
+    "Bip01 L UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="l_hand"
+    }
+
+    "Bip01 R Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="r_hand"
+    }
+
+    "Bip01 L Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="l_hand"
+    }
+
+    "Bip01 R Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="r_hand"
+    }
+
+    "Bip01 L Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="l_hand"
+    }
+  }
+}
+
+changed_camera_magnification_blink_effect{
+  _use:t="client_human_cam_magnification_curve_affect"
+  game_effect__timeToDestroy:r=0.5
+
+  "human_cam_magnification_affect__curve:array"{
+    "key:object"{
+      t:r=0
+      v:r=0.65
+      tan:p2=-1, -1
+    }
+
+    "key:object"{
+      t:r=0.05
+      v:r=1.25
+    }
+
+    "key:object"{
+      t:r=0.15
+      v:r=1.35
+    }
+
+    "key:object"{
+      t:r=1
+      v:r=0.65
+      tan:p2=-0.5, -0.5
+    }
+  }
+}
+
+changed_monster_effect{
+  _use:t="base_monster_game_effect"
+  _use:t="color_graded_affect"
+  _use:t="local_tone_mapping_affect"
+  _use:t="chromatic_aberration_affect"
+  human_cam_magnification_affect__magnification:r=0.65
+  postfx_vignette_affect__factor:r=0.05
+  local_tone_mapping_affect__hq_shadows_multiplier:r=2
+  local_tone_mapping_affect__hq_highlights_multiplier:r=3
+  game_effect__chromaticAberrationParams:p4=0.002, 0.008, 0, 0
+  _use:t="game_effect_sound"
+  game_effect_sound__enemy:t="enemy/walker/changed/voice_fx/transmigration"
+  game_effect_sound__hero:t="player/walker/changed/voice_fx/transmigration"
+
+  "effect_enable_action_sets__actionSetList:list<t>"{
+    item:t="MonsterChanged"
+  }
+
+  "game_effect__colorGrading:object"{
+    colorGain:p4=1, 1, 1, 1
+    colorGamma:p4=1, 1, 1, 1.1
+    colorContrast:p4=1, 0.95, 1, 1.3
+    colorSaturation:p4=1, 0.2, 0.4, 0.8
+    priority:i=90000
+    _tags:t="render"
+  }
+
+  "entity_mod_effects:object"{
+    "hitpointsDmgMult+mult_diminishing":r=0.55
+    "hitpointsMeleeDmgMult+mult_diminishing":r=0.75
+    "speedMult+mult_diminishing":r=1.333
+    "jumpSpeedMult+mult_diminishing":r=1.3
+    "fallDamageSpeedMult+mult_diminishing":r=1.1
+  }
+
+  "sound_mod_tags:list<t>"{
+    _tags:t="sound"
+    tag:t="changedAffect"
+  }
+}
+
+default_changed_claw{
+  _use:t="base_melee"
+  _use:t="base_nonreplicated_item"
+  _use:t="replicating"
+  item__proto:t="default_changed_claw"
+  item__isOnGround:b=no
+  _replicated:t="item__isOnGround"
+  item__id:i=0
+  _replicated:t="item__id"
+  _use:t="melee_weap_slots"
+  _use:t="weapon_slot_indexed"
+  melee_weapon__propsId:i=-1
+  melee_weapon__blk:t="gamedata/weapons/changed_claws_weapon.blk"
+  gun__blk:t="gamedata/weapons/changed_claws_weapon.blk"
+  gun__propsId:i=-1
+  gun__melee:b=yes
+  gun__reloadable:b=no
+  gun__statName:t="melee"
+  melee_weapon__attackTime:r=1
+  melee_weapon__attackAt:r=-1
+  meleeSoundType:t="hands"
+
+  "item_weapon:tag"{}
+  "default_stub_item:tag"{}
+  "notExtractable:tag"{}
+  "item__humanOwnerEid:eid"{}
+  "changed_claw:tag"{}
+}
+
+monster_vision_fx{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="aura_vision_trail_a_fx"
+
+    effect{}
+  }
+}
+
+monster_vision_fx_destroy{
+  game_effect__timeToDestroy:r=3
+  game_effect__clientDestroyAt:r=-1
+  game_effect__scaleMePerSecond:r=1
+}
+
+monster_changed_minion_spawn_from_portal_distortion_effect{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="changed_minion_spawn_from_portal_distortion_fx"
+  }
+}
+
+monster_changed_minion_spawn_from_portal_smoke_effect{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="changed_minion_spawn_from_portal_smoke_fx"
+  }
+}
+
+monster_changed_minion_spawn_from_portal_geomtree_affect{
+  _use:t="replicated_game_effect_with_duration"
+  _use:t="game_effect_geomtree_effects"
+  game_effect__showHideDistanceSq:p2=8100, 14400
+
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="monster_changed_minion_spawn_from_portal_distortion_effect"
+    item:t="monster_changed_minion_spawn_from_portal_smoke_effect"
+  }
+}
+
+monster_changed_minion_spawn_from_portal_subtemplate{
+  "nphys__disabled:tag"{}
+}
+
+monster_changed_minion_spawn_from_portal_affect{
+  _use:t="disable_beh_tree_effect"
+  _use:t="monster_changed_minion_spawn_from_portal_geomtree_affect"
+  game_effect__attachedTemplate:t="monster_changed_minion_spawn_from_portal_subtemplate"
+  game_effect__timeToDestroy:r=1.25
+  game_effect__forceAnimState:t="spawn_from_portal"
+  game_effect__forceAnimStateId:i=-1
+  game_effect__disableOutlineOnAppearForTime:r=1.25
+}
+
+monster_changed_minion_spawn_from_portal{
+  "game_effect__initialAttachmentsServer:list<t>"{
+    item:t="monster_changed_minion_spawn_from_portal_affect"
+  }
+
+  "game_effect__attachmentsAfterTeleportServer:list<t>"{
+    item:t="monster_changed_minion_spawn_from_portal_affect"
+  }
+}
+
+monster_changed_minion_common{
+  _use:t="minion_creature"
+  _use:t="minion_creature_alternate_targets"
+  _use:t="minion_creature_teleport_to_master"
+  outline__disabledUntil:r=0
+  personal_enemies__damageToMakeEnemy:r=-1
+  personal_enemies__damageToMakeEnemySameKind:r=-1
+
+  "human_inventory__deathDrop:array"{}
+}
+
+monster_changed_minion{
+  _use:t="outdoor_sleeper_changed_human"
+  _use:t="monster_changed_minion_common"
+  beh_tree__node:t="monster_changed_minion"
+  hitpoints__hp:r=70
+  hitpoints__maxHp:r=70
+  navmesh_phys__rndWalkSpeed:p2=6, 6.25
+
+  "human_animchar_parts__partsGenerator:shared:object"{
+    "head:object"{
+      distorted_head_a_char:r=1
+      distorted_head_b_char:r=1
+      distorted_head_c_char:r=1
+    }
+
+    "bottom:object"{
+      distorted_bottom_cargo_pants_torn_char:r=1
+      distorted_bottom_sweatpants_char:r=1
+      distorted_bottom_sweatpants_torn_char:r=1
+    }
+
+    "top:object"{
+      distorted_top_raincoat_char:r=1
+    }
+  }
+}
+
+monster_changed_minion_mini{
+  _use:t="outdoor_sleeper_changed_human_mini"
+  _use:t="monster_changed_minion_common"
+  beh_tree__node:t="monster_changed_minion_mini"
+  hitpoints__hp:r=60
+  hitpoints__maxHp:r=60
+  navmesh_phys__rndWalkSpeed:p2=5.75, 6
+}
+
+active_matter_dash_ability{
+  _use:t="common_monster_ability"
+  _use:t="changed_snapshot_blink_geomtree_effect_controller"
+  _use:t="changed_camera_magnification_blink_effect_controller"
+  game_effect__dashDistance:r=10
+  game_effect__dashCooldown:r=0.5
+  game_effect__dashTrailInTemplate:t="dash_trail_affect_in"
+  game_effect__dashTrailInTtl:r=0.5
+  game_effect__dashTrailTemplate:t="dash_trail_effect"
+  game_effect__dashTrailTtl:r=1
+  game_effect__dashBufferDistance:r=0.5
+  game_effect__dashTraceBackwardOffset:r=0.1
+  game_effect__dashVelImmunityAmount:r=2
+  game_effect__mainDashMatId:i=-1
+  game_effect__mainDashMatName:t="aimRay"
+  game_effect__dashMaxCharges:i=3
+  dash__maxStamina:r=100
+  dash__stamina:r=100
+  _tracked:t="dash__stamina"
+  _replicated:t="dash__stamina"
+  dash__staminaConsumption:r=30
+  dash__staminaRegen:r=8
+
+  _group{
+    _track:b=yes
+    _tags:t="gameClient"
+    hero_dash_ability__spawnTime:r=0
+    hero_dash_ability__lastFailedUseTime:r=0
+  }
+
+  _group{
+    _tags:t="sound"
+    dash_ability_sound__hero:t="player/effects/dash_affect"
+    dash_ability_sound__enemy:t="enemy/effects/dash_affect"
+
+    "ability_dash_sound__event:SoundEvent"{}
+  }
+
+  "hero_ability__abilities:array"{
+    "dash:object"{
+      name:t="dash"
+      actionHandleName:t="MonsterChanged.Dash"
+      show_in_ui:b=yes
+      activeMatterPrice:i=5
+      icon:t="uiskin/ability/blink.svg"
+      cooldown:r=0
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=no
+
+      "stages:array"{
+        "in_stage:object"{
+          affectTemplate:t="dash_affect_in"
+          setupTransform:b=yes
+          duration:r=0.3
+          interruptible:b=yes
+        }
+
+        "main_stage:object"{
+          affectTemplate:t="dash_affect"
+          duration:r=18
+          activePhase:b=yes
+          interruptible:b=yes
+        }
+      }
+    }
+  }
+}
+
+dash_affect_activator{
+  _use:t="replicated_effect_with_duration"
+
+  "dash_affect_activator:tag"{}
+}
+
+dash_trail_affect_in{
+  _use:t="attached_replicated_effect_with_duration"
+  _use:t="game_effect_sound"
+  game_effect__destroyAt:r=0
+}
+
+dash_trail_effect{
+  _use:t="attached_replicated_effect_with_duration"
+  _use:t="game_effect_sound"
+  game_effect__destroyAt:r=0
+}
+
+active_matter_scream_ability{
+  _use:t="common_monster_ability"
+  game_effect__screamDisorientationRadius:p2=1.5, 10
+  game_effect__screamDisorientationPower:p2=2.5, 1.51
+  game_effect__screamDisorientationDistExp:r=0.25
+  game_effect__screamMinionSpawnSectorDegrees:r=100
+  game_effect__screamMinionSpawnOffset:p2=1.5, 5.5
+  game_effect__screamMinionCount:i=0
+  _tracked:t="game_effect__screamMinionCount"
+  game_effect__screamMinionCountMax:i=3
+
+  _group{
+    _track:b=yes
+    _tags:t="gameClient"
+    hero_scream_ability__spawnTime:r=0
+    hero_scream_ability__lastFailedUseTime:r=0
+  }
+
+  "game_effect__screamMinionTemplates:array"{
+    "i:object"{
+      template:t="monster_changed_minion"
+      weight:r=3
+    }
+
+    "i:object"{
+      template:t="monster_changed_minion_mini"
+      weight:r=1
+    }
+  }
+
+  "hero_ability__abilities:array"{
+    "scream:object"{
+      name:t="scream"
+      actionHandleName:t="MonsterChanged.SpawnMinion"
+      show_in_ui:b=yes
+      activeMatterPrice:i=0
+      icon:t="uiskin/ability/scream.svg"
+      cooldown:r=60
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=no
+
+      "stages:array"{
+        "in_stage:object"{
+          affectTemplate:t="scream_affect_in"
+          setupTransform:b=yes
+          duration:r=2
+          interruptible:b=yes
+        }
+
+        "main_stage:object"{
+          affectTemplate:t="scream_affect"
+          duration:r=0.5
+          activePhase:b=yes
+          interruptible:b=yes
+        }
+      }
+    }
+  }
+}
+
+scream_effect_client{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_effect__timeToDestroy:r=1
+  game_effect__clientDestroyAt:r=-1
+
+  "attachedEffect:tag"{}
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="scream_ability_cmps_fx"
+  }
+}
+
+scream_affect_in{
+  _use:t="attached_replicated_effect_with_duration"
+  ingame_rumble__onEffectAttach:t="ability"
+  game_effect__forceAnimState:t="ability_scream"
+  game_effect__forceAnimStateId:i=-1
+  game_effect__forcedParametricVarName:t="action_progress"
+  game_effect__forcedParametricVarId:i=-1
+  game_effect__timeToDestroy:r=2
+  game_effect__destroyAt:r=-1
+  game_effect__vertLookAngleLimit:p2=20, 80
+  game_effect_create_client_entity_on_appear__nodeName:t="Bip01 Head"
+  game_effect_create_client_entity_on_appear__template:t="scream_effect_client"
+  game_effect_create_loud_noise_on_appear__nodeName:t="Bip01 Head"
+  game_effect_create_loud_noise_on_appear__radius:r=15
+  game_effect_create_loud_noise_on_appear__noise:r=100
+  _use:t="game_effect_sound"
+  game_effect_sound__hero:t="player/walker/changed/voice_fx/ability"
+
+  "scream_affect_in:tag"{}
+  _group{
+    _tags:t="server"
+    scream_affect_for_enemy_net_sound__desc:t="screamAffect"
+  }
+
+  "game_effect__disableActions:tag"{}
+  "locked_human_state__lockCrawl:tag"{}
+  "locked_human_state__lockCrouch:tag"{}
+  "game_effect__uncontrollable:tag"{}
+}
+
+scream_affect{
+  _use:t="replicated_effect_with_duration"
+
+  "scream_affect:tag"{}
+}
+
+echolocation_affect_in{
+  _use:t="attached_replicated_effect_with_duration"
+  _use:t="game_effect_sound"
+  game_effect_sound__hero:t="player/walker/changed/voice_fx/ability"
+  game_effect_sound__enemy:t="enemy/walker/changed/voice_fx/ability"
+  ingame_rumble__onEffectAttach:t="ability"
+  game_effect__forceAnimState:t="ability_scream"
+  game_effect__forceAnimStateId:i=-1
+  game_effect__forcedParametricVarName:t="action_progress"
+  game_effect__forcedParametricVarId:i=-1
+  game_effect__timeToDestroy:r=2
+  game_effect__destroyAt:r=-1
+  game_effect__vertLookAngleLimit:p2=20, 80
+  game_effect_create_client_entity_on_appear__nodeName:t="Bip01 Head"
+  game_effect_create_client_entity_on_appear__template:t="scream_effect_client"
+  game_effect_create_loud_noise_on_appear__nodeName:t="Bip01 Head"
+  game_effect_create_loud_noise_on_appear__radius:r=15
+  game_effect_create_loud_noise_on_appear__noise:r=100
+  ability_echolocation__duration:r=2
+  ability_echolocation__mapRadiusRange:p2=10, 80
+
+  "game_effect__disableActions:tag"{}
+  "locked_human_state__lockCrawl:tag"{}
+  "locked_human_state__lockCrouch:tag"{}
+  "game_effect__uncontrollable:tag"{}
+}
+
+echolocation_affect{
+  _use:t="replicated_effect_with_duration"
+  ability_echolocation__duration:r=5
+
+  "echolocation_affect:tag"{}
+}
+
+active_matter_echolocation_ability{
+  _use:t="common_monster_ability"
+
+  "hero_ability__abilities:array"{
+    "echolocation:object"{
+      name:t="echolocation"
+      actionHandleName:t="MonsterChanged.Echolocation"
+      activeMatterPrice:i=0
+      icon:t="uiskin/ability/invisibility.svg"
+      cooldown:r=2
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=no
+      show_in_ui:b=no
+
+      "stages:array"{
+        "in_stage:object"{
+          affectTemplate:t="echolocation_affect_in"
+          setupTransform:b=yes
+          duration:r=2
+          interruptible:b=yes
+        }
+
+        "main_stage:object"{
+          affectTemplate:t="echolocation_affect"
+          duration:r=0.5
+          activePhase:b=yes
+          interruptible:b=yes
+        }
+      }
+    }
+  }
+
+  "active_matter_echolocation_ability:tag"{}
+}
+
+command_attack_ability{
+  _use:t="common_monster_ability"
+  command_attack_ability__traceDist:r=25
+  command_attack_ability__traceEnemyMinDot:r=0.85
+  command_attack_ability__traceRayMat:t="walkRay"
+  command_attack_ability__traceRayMatId:i=-1
+}
+
+monster_changed_command_attack_affect_in{
+  _use:t="attached_replicated_effect_with_duration"
+  _use:t="game_effect_sound"
+  game_effect_sound__hero:t="player/walker/changed/voice_fx/command_attack"
+  game_effect_sound__enemy:t="enemy/walker/changed/voice_fx/command_attack"
+  ingame_rumble__onEffectAttach:t="ability"
+  game_effect__forceAnimState:t="command_attack"
+  game_effect__forceAnimStateId:i=-1
+  game_effect__forcedParametricVarName:t="action_progress"
+  game_effect__forcedParametricVarId:i=-1
+  game_effect__timeToDestroy:r=1
+  game_effect__destroyAt:r=-1
+  game_effect_create_loud_noise_on_appear__nodeName:t="Bip01 Head"
+  game_effect_create_loud_noise_on_appear__radius:r=15
+  game_effect_create_loud_noise_on_appear__noise:r=30
+
+  "game_effect__disableActions:tag"{}
+  "locked_human_state__lockCrawl:tag"{}
+  "locked_human_state__lockCrouch:tag"{}
+}
+
+monster_changed_command_attack_affect{
+  _use:t="replicated_effect_with_duration"
+
+  "monster_changed_command_attack_affect:tag"{}
+}
+
+minion_attack_mark{
+  minion_attack_mark__piority:i=1
+  minion_attack_mark__updateAt:r=0
+  minion_attack_mark__updateInterval:r=2
+  minion_attack_mark__removeAt:r=0
+  minion_attack_mark__removeTimeout:r=25
+  minion_attack_mark__distToDestroySq:r=900
+
+  "minion_attack_mark:tag"{}
+  "minion_attack_mark__target:eid"{}
+  "minion_attack_mark__owner:eid"{}
+}
+
+minion_walk_mark{
+  _use:t="server_destroy_in_15_sec"
+  minion_walk_mark__updateAt:r=0
+  minion_walk_mark__updateInterval:r=2
+  minion_walk_mark__distToDestroySq:r=900
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "minion_walk_mark:tag"{}
+  "minion_walk_mark__owner:eid"{}
+}
+
+am_mindcontrolled_changed_abilities{
+  _use:t="active_matter_scream_ability"
+  _use:t="active_matter_dash_ability"
+  _use:t="active_matter_echolocation_ability"
+  _use:t="command_attack_ability"
+
+  "hero_ability__abilities:array"{
+    "dash:object"{
+      name:t="dash"
+      actionHandleName:t="MonsterChanged.Dash"
+      icon:t="uiskin/ability/blink.svg"
+      cooldown:r=0
+      lockWhileSwimming:b=no
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=no
+      hide_ui_after_first_use:b=yes
+
+      "stages:array"{
+        "dash_affect_activator:object"{
+          affectTemplate:t="dash_affect_activator"
+          duration:r=0.2
+        }
+      }
+    }
+
+    "scream:object"{
+      name:t="scream"
+      actionHandleName:t="MonsterChanged.SpawnMinion"
+      icon:t="uiskin/ability/scream.svg"
+      cooldown:r=60
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=no
+
+      "stages:array"{
+        "in_stage:object"{
+          affectTemplate:t="scream_affect_in"
+          setupTransform:b=yes
+          duration:r=2
+          interruptible:b=yes
+        }
+
+        "main_stage:object"{
+          affectTemplate:t="scream_affect"
+          duration:r=0.5
+          activePhase:b=yes
+          interruptible:b=yes
+        }
+      }
+    }
+
+    "echolocation:object"{
+      name:t="echolocation"
+      actionHandleName:t="MonsterChanged.Echolocation"
+      activeMatterPrice:i=0
+      icon:t="uiskin/ability/invisibility.svg"
+      cooldown:r=2
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=no
+      hide_ui_after_first_use:b=yes
+
+      "stages:array"{
+        "in_stage:object"{
+          affectTemplate:t="echolocation_affect_in"
+          setupTransform:b=yes
+          duration:r=2
+          interruptible:b=yes
+        }
+
+        "main_stage:object"{
+          affectTemplate:t="echolocation_affect"
+          duration:r=0.5
+          activePhase:b=yes
+          interruptible:b=yes
+        }
+      }
+    }
+
+    "command_attack:object"{
+      name:t="command_attack"
+      actionHandleName:t="MonsterChanged.CommandAttack"
+      activeMatterPrice:i=0
+      icon:t="uiskin/ability/attack_target.svg"
+      cooldown:r=1
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=no
+
+      "stages:array"{
+        "in_stage:object"{
+          affectTemplate:t="monster_changed_command_attack_affect_in"
+          setupTransform:b=yes
+          duration:r=0.5
+          interruptible:b=yes
+        }
+
+        "main_stage:object"{
+          affectTemplate:t="monster_changed_command_attack_affect"
+          duration:r=0.2
+          activePhase:b=yes
+          interruptible:b=yes
+        }
+      }
+    }
+  }
+}

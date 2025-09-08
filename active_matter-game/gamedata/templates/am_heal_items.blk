@@ -1,0 +1,549 @@
+painkiller_effect{
+  _use:t="replicated_game_effect"
+  game_effect__timeToDestroy:r=120
+  game_effect__destroyAt:r=-1
+  healing_effect__effectVisualStrength:r=5
+
+  "painkillerEffect:tag"{}
+}
+
+old_painkiller_effect{
+  _use:t="replicated_game_effect"
+  game_effect__timeToDestroy:r=15
+  game_effect__destroyAt:r=-1
+
+  "painkillerEffect:tag"{}
+}
+
+healing_effect_client{
+  "healing_effect_client:tag"{}
+}
+
+item_painkiller{
+  _use:t="item"
+  _use:t="base_equipment_mod"
+  animchar__res:t="am_meds_injector_c_full_char"
+  item__proto:t="item_painkiller"
+  item__name:t="items/painkiller"
+  collres__res:t="am_meds_injector_c_full_collision"
+  dropTm:m=[[0.197347, 0.980334, 0.00999996] [0.00197347, 0.00980329, -1] [-0.980334, 0.197347, -8.73028e-09] [0, 0.01, 0]]
+  item__volume:r=1
+  item__weight:r=0.05
+  item__marketPrice:i=475
+  item__lootSoundType:t="healing"
+  item__interruptOnLandingSpeed:r=10
+  item__useTime:r=4.56
+  item_heal__animationEnd:r=0.66
+  item__boostTemplateName:t="painkiller_effect"
+  item__filterType:t="medicines"
+  four_step_healing__effectTemplateName:t="injector_2_healing_effect"
+  item__unarmedUsage:b=yes
+  item__iconYaw:r=55
+  item__iconPitch:r=0
+  item__iconRoll:r=70
+  _use:t="using_item_irq_sound"
+
+  "item__isDirectlyUsable:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "item__notConsumedWhenUsed:tag"{}
+  "item__interruptOnDodge:tag"{}
+  "item__interruptOnReloading:tag"{}
+  "item__dontInterruptOnDowned:tag"{}
+  "item__skipHealCheck:tag"{}
+  "item__usageSpeedModAffected:tag"{}
+  "item__interruptInDriverSeat:tag"{}
+  "item_heal:tag"{}
+  "item_heal_revive:tag"{}
+  "four_step_healing__effectEid:eid"{}
+  "interruptUseOnWeaponSwitch:tag"{}
+  _group{
+    _tags:t="sound"
+
+    "using_item_irq_sound__paths:shared:object"{
+      "sndMedPrepare:object"{
+        hero:t="player/walker/_common_foley/injectors/painkiller_prepare"
+        enemy:t="enemy/walker/_common_foley/injectors/painkiller_prepare"
+      }
+
+      "sndMedInject:object"{
+        hero:t="player/walker/_common_foley/injectors/painkiller_inject"
+        enemy:t="enemy/walker/_common_foley/injectors/painkiller_inject"
+      }
+
+      "sndMedRemove:object"{
+        hero:t="player/walker/_common_foley/injectors/injector_discard"
+        enemy:t="enemy/walker/_common_foley/injectors/injector_discard"
+      }
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+  "item__customQuickUseAction:tag"{}
+}
+
+am_heal_inventory{
+  _use:t="item_grid_spawner"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  grid_spawner__gap:p2=0.5, 0.5
+
+  "spawnItemList:array"{
+    "item:object"{
+      templ:t="item_healkit+item_in_world"
+      count:i=4
+    }
+
+    "item:object"{
+      templ:t="item_big_healkit+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_painkiller+item_in_world"
+      count:i=7
+    }
+
+    "item:object"{
+      templ:t="item_injector_hot+item_in_world"
+      count:i=7
+    }
+
+    "item:object"{
+      templ:t="item_injector_streaming+item_in_world"
+      count:i=7
+    }
+  }
+}
+
+delayed_heal{
+  delayed_heal__at:r=-1
+  delayed_heal__bodyPartIdx:i=-1
+
+  "delayed_heal__owner:eid"{}
+}
+
+item_healkit_magazine{
+  _use:t="item_holder"
+  _use:t="base_equipment_mod"
+  _use:t="boxed_item_in_advance"
+  item__lootType:t="magazine"
+  item__lootSoundType:t="healing"
+  item_pickup_priority__lookAtWeight:r=3.85
+  animchar__res:t="am_meds_medpack_a_char"
+  collres__res:t="am_meds_medpack_a_collision"
+  item__proto:t="item_healkit_magazine"
+  item__name:t="items/healkit"
+  item__weight:r=0.8
+  item__volume:r=2
+  item__iconRoll:r=45
+  item__iconYaw:r=-45
+  item__iconPitch:r=0
+  item__iconScale:r=0.8
+  item__interruptOnLandingSpeed:r=10
+  item__useTime:r=4.69
+  item_heal__animationEnd:r=0.4
+  item__healTemplateName:t="instant_healing_effect"
+  four_step_healing__effectTemplateName:t="ampoule_healing_effect"
+  item__unarmedUsage:b=yes
+  item__filterType:t="medicines"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item_holder__maxItemCount:i=10
+  item_holder__boxedItemTemplate:t="item_healing_ampoule"
+  item_holder__loadTimePerItem:r=0.4
+  item_holder__unloadTimePerItem:r=0.3
+  item_holder__loadInOutTime:p2=0, 0
+  item_holder__unloadInOutTime:p2=0, 0
+  item_holder__noAmmoToLoadTip:t="status_tip_no_ampoule_to_load"
+  _use:t="using_item_irq_sound"
+  dropTm:m=[[0, -1, 0] [1, 0, 0] [0, 0, 1] [0, 0.03, 0]]
+
+  "item__isDirectlyUsable:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "openHealingDollOnUse:tag"{}
+  "item__customQuickUseAction:tag"{}
+  "item__notConsumedWhenUsed:tag"{}
+  "item__interruptOnDodge:tag"{}
+  "item__interruptOnReloading:tag"{}
+  "item__usageSpeedModAffected:tag"{}
+  "item__interruptInDriverSeat:tag"{}
+  "item_heal:tag"{}
+  "four_step_healing__effectEid:eid"{}
+  "item_healkit_magazine:tag"{}
+  "interruptUseOnWeaponSwitch:tag"{}
+  "item_holder__customUiProps:shared:object"{
+    loadAmmoIcon:t="load_med.svg"
+    loadAmmoTooltip:t="Inventory/load_med_ammo"
+    unloadAmmoIcon:t="unload_med.svg"
+    unloadAmmoTooltip:t="Inventory/unload_med_ammo"
+  }
+
+  _group{
+    _tags:t="sound"
+
+    "using_item_irq_sound__paths:shared:object"{
+      "sndMedPrepare:object"{
+        path:t="/walker/_common_foley/injectors/med_open"
+      }
+
+      "sndMedInject:object"{
+        path:t="/walker/_common_foley/injectors/med_inject"
+      }
+
+      "sndMedRemove:object"{
+        path:t="/walker/_common_foley/injectors/med_discard"
+      }
+    }
+  }
+}
+
+healkit_magazine_partial{
+  item_holder__rndItemCount:ip2=1, 1
+}
+
+loot_item_healkit_magazine_small{
+  _use:t="item_healkit_magazine"
+  animchar__res:t="sovmod_medkit_ai2_char"
+  collres__res:t="sovmod_medkit_ai2_collision"
+  item__name:t="items/ai2"
+  item__proto:t="loot_item_healkit_magazine_small"
+  item__volume:r=3
+  item__weight:r=0.135
+  item__marketPrice:i=100
+  item__iconRoll:r=45
+  item_holder__rndItemCount:ip2=1, 3
+  item_holder__maxItemCount:i=4
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+
+  "item__chronotracesProgressionInfo:object"{
+    "repeatedly:object"{
+      extract:i=100
+      uses:i=10
+    }
+  }
+}
+
+loot_item_healkit_magazine_avg{
+  _use:t="item_healkit_magazine"
+  animchar__res:t="sovmod_medkit_vehiclebox_char"
+  collres__res:t="sovmod_medkit_vehiclebox_collision"
+  item__name:t="items/soviet_car_healkit"
+  item__proto:t="loot_item_healkit_magazine_avg"
+  item__volume:r=7
+  item__weight:r=0.4
+  item__marketPrice:i=200
+  item__iconRoll:r=30
+  item_holder__rndItemCount:ip2=4, 8
+  item_holder__maxItemCount:i=12
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "item__chronotracesProgressionInfo:object"{
+    "repeatedly:object"{
+      extract:i=100
+      uses:i=10
+    }
+  }
+}
+
+loot_item_healkit_magazine_big{
+  _use:t="item_healkit_magazine"
+  animchar__res:t="ussr_medkit_char"
+  collres__res:t="ussr_medkit_collision"
+  item__name:t="items/soviet_med_bag"
+  item__proto:t="loot_item_healkit_magazine_big"
+  item__volume:r=14
+  item__weight:r=1.2
+  item__marketPrice:i=500
+  item__iconPitch:r=45
+  item__iconRoll:r=320
+  item__iconYaw:r=270
+  item__iconScale:r=0.9
+  item__iconOffset:p2=0, 0.1
+  item_holder__rndItemCount:ip2=6, 14
+  item_holder__maxItemCount:i=30
+  dropTm:m=[[0, 0, 1] [0, 1, 0] [-1, 0, 0] [0, 0, 0]]
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "item__chronotracesProgressionInfo:object"{
+    "repeatedly:object"{
+      extract:i=100
+      uses:i=10
+    }
+  }
+}
+
+item_healing_ampoule{
+  _use:t="boxed_item"
+  _use:t="base_equipment_mod"
+  animchar__res:t="sovmod_medkit_ai2_syrette_char"
+  item__proto:t="item_healing_ampoule"
+  boxed_item__template:t="item_healing_ampoule"
+  boxed_item__itemName:t="items/healing_ampoule"
+  _use:t="boxed_item_in_advance"
+  _use:t="boxed_item_in_advance_exclude_last"
+  item__countPerStack:i=1
+  item__name:t="items/healing_ampoule"
+  collres__res:t="sovmod_medkit_ai2_syrette_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__volumePerStack:r=0.8
+  item__weightPerStack:r=0.01
+  item__marketPrice:i=200
+  item__lootType:t="magazine"
+  item__lootSoundType:t="healing"
+  item_pickup_priority__lookAtWeight:r=3.85
+  item__interruptOnLandingSpeed:r=10
+  item__useTime:r=4.69
+  item_heal__animationEnd:r=0.4
+  item__healTemplateName:t="instant_healing_effect"
+  four_step_healing__effectTemplateName:t="ampoule_healing_effect"
+  item__unarmedUsage:b=yes
+  item__filterType:t="medicines"
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  item__iconScale:r=0.8
+  _use:t="using_item_irq_sound"
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.4, 2.4
+
+  "item__isDirectlyUsable:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "openHealingDollOnUse:tag"{}
+  "item__customQuickUseAction:tag"{}
+  "item__notConsumedWhenUsed:tag"{}
+  "item__interruptOnDodge:tag"{}
+  "item__interruptOnReloading:tag"{}
+  "item__usageSpeedModAffected:tag"{}
+  "item__interruptInDriverSeat:tag"{}
+  "item_heal:tag"{}
+  "item_heal_ampoule:tag"{}
+  "four_step_healing__effectEid:eid"{}
+  "interruptUseOnWeaponSwitch:tag"{}
+  _group{
+    _tags:t="sound"
+
+    "using_item_irq_sound__paths:shared:object"{
+      "sndMedPrepare:object"{
+        path:t="/walker/_common_foley/injectors/med_open"
+      }
+
+      "sndMedInject:object"{
+        path:t="/walker/_common_foley/injectors/med_inject"
+      }
+
+      "sndMedRemove:object"{
+        path:t="/walker/_common_foley/injectors/med_discard"
+      }
+    }
+  }
+}
+
+item_healkit{
+  _use:t="item_healkit_magazine"
+  animchar__res:t="am_meds_medpack_a_char"
+  collres__res:t="am_meds_medpack_a_collision"
+  item__proto:t="item_healkit"
+  item__name:t="items/healkit"
+  item__weight:r=0.35
+  item__volume:r=4
+  item__marketPrice:i=2400
+  item__iconRoll:r=45
+  item_holder__rndItemCount:ip2=10, 10
+  item_holder__maxItemCount:i=10
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  showroom_item__customZoom:r=1.7
+  showroom_item__customZoomBordersRng:p2=1.3, 2
+
+  "item__chronotracesProgressionInfo:object"{
+    "repeatedly:object"{
+      extract:i=100
+      uses:i=10
+    }
+  }
+}
+
+first_aid_item{
+  _use:t="item_healkit"
+  animchar__res:t="item_first_aid_char"
+  collres__res:t="item_first_aid_collision"
+  item__proto:t="first_aid_item"
+  item__name:t="items/first_aid"
+  item__weight:r=0.3
+  item__volume:r=4
+  item__marketPrice:i=2200
+  item__iconRoll:r=45
+  item_holder__rndItemCount:ip2=1, 3
+  item_holder__maxItemCount:i=8
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  showroom_item__customZoom:r=1.7
+  showroom_item__customZoomBordersRng:p2=1.3, 2
+}
+
+item_big_healkit{
+  _use:t="item_healkit_magazine"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="am_meds_medpack_b_char"
+  collres__res:t="am_meds_medpack_b_collision"
+  item__proto:t="item_big_healkit"
+  item__name:t="items/big_healkit"
+  item__weight:r=0.9
+  item__volume:r=8
+  item__marketPrice:i=5200
+  item__iconRoll:r=45
+  item_holder__rndItemCount:ip2=24, 24
+  item_holder__maxItemCount:i=24
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  showroom_item__customZoom:r=1.7
+  showroom_item__customZoomBordersRng:p2=1.3, 2
+
+  "item__cantBeCorrupted:tag"{}
+  "item__chronotracesProgressionInfo:object"{
+    "repeatedly:object"{
+      extract:i=100
+      uses:i=10
+    }
+  }
+}
+
+item_injector_hot{
+  _use:t="item"
+  _use:t="base_equipment_mod"
+  animchar__res:t="am_meds_injector_a_full_char"
+  collres__res:t="am_meds_injector_a_full_collision"
+  item__proto:t="item_injector_hot"
+  item__name:t="items/injector_hot"
+  dropTm:m=[[0.197347, 0.980334, 0.00999996] [0.00197347, 0.00980329, -1] [-0.980334, 0.197347, -8.73028e-09] [0, 0.01, 0]]
+  item__volume:r=1
+  item__weight:r=0.05
+  item__marketPrice:i=750
+  item__lootType:t="magazine"
+  item__lootSoundType:t="healing"
+  item_pickup_priority__lookAtWeight:r=3.85
+  item__interruptOnLandingSpeed:r=10
+  item__useTime:r=2.65
+  item_heal__animationEnd:r=0.35
+  item__healTemplateName:t="healing_of_time_effect"
+  item__filterType:t="medicines"
+  four_step_healing__effectTemplateName:t="injector_healing_effect"
+  item__unarmedUsage:b=yes
+  item__iconPitch:r=30
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconScale:r=0.8
+  _use:t="using_item_irq_sound"
+
+  "item__isDirectlyUsable:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "item__customQuickUseAction:tag"{}
+  "item__notConsumedWhenUsed:tag"{}
+  "item__interruptOnDodge:tag"{}
+  "item__interruptOnReloading:tag"{}
+  "item__usageSpeedModAffected:tag"{}
+  "item__interruptInDriverSeat:tag"{}
+  "item_heal:tag"{}
+  "item_heal_hot:tag"{}
+  "four_step_healing__effectEid:eid"{}
+  "interruptUseOnWeaponSwitch:tag"{}
+  _group{
+    _tags:t="sound"
+
+    "using_item_irq_sound__paths:shared:object"{
+      "sndMedPrepare:object"{
+        path:t="/walker/_common_foley/injectors/regen_prepare"
+      }
+
+      "sndMedInject:object"{
+        path:t="/walker/_common_foley/injectors/regen_inject"
+      }
+
+      "sndMedRemove:object"{
+        path:t="/walker/_common_foley/injectors/injector_discard"
+      }
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+  "item__chronotracesProgressionInfo:object"{
+    "repeatedly:object"{
+      extract:i=100
+      uses:i=10
+    }
+  }
+}
+
+item_injector_streaming{
+  _use:t="item"
+  _use:t="base_equipment_mod"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="am_meds_injector_b_char"
+  collres__res:t="am_meds_injector_b_collision"
+  item__proto:t="item_injector_streaming"
+  item__name:t="items/injector_streaming"
+  dropTm:m=[[0.197347, 0.980334, 0.00999996] [0.00197347, 0.00980329, -1] [-0.980334, 0.197347, -8.73028e-09] [0, 0.01, 0]]
+  item__volume:r=1
+  item__weight:r=0.05
+  item__marketPrice:i=1600
+  item__lootSoundType:t="healing"
+  item_pickup_priority__lookAtWeight:r=3.85
+  item__interruptOnLandingSpeed:r=10
+  item__useTime:r=1.93
+  item_heal__animationEnd:r=0.66
+  item_heal__healTick:r=0.1
+  item_heal__healPerTick:r=2
+  item__maxAmount:i=200
+  item__healTemplateName:t="healing_stream_effect"
+  item__filterType:t="medicines"
+  four_step_healing__effectTemplateName:t="injector_healing_effect"
+  item__unarmedUsage:b=yes
+  item__iconPitch:r=20
+  item__iconRoll:r=70
+  item__iconYaw:r=-45
+  item__iconScale:r=0.9
+  _use:t="using_item_irq_sound"
+
+  "item__isDirectlyUsable:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "item__customQuickUseAction:tag"{}
+  "item__notConsumedWhenUsed:tag"{}
+  "item__interruptOnDodge:tag"{}
+  "item__interruptOnReloading:tag"{}
+  "item__usageSpeedModAffected:tag"{}
+  "item__interruptInDriverSeat:tag"{}
+  "item_heal:tag"{}
+  "item_heal_stream:tag"{}
+  "item_heal__healEffect:eid"{}
+  "four_step_healing__effectEid:eid"{}
+  "interruptUseOnWeaponSwitch:tag"{}
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    item__amount:i=200
+  }
+
+  _group{
+    _tags:t="sound"
+
+    "using_item_irq_sound__paths:shared:object"{
+      "sndMedPrepare:object"{
+        path:t="/walker/_common_foley/injectors/regen_prepare"
+      }
+
+      "sndMedInject:object"{
+        path:t="/walker/_common_foley/injectors/regen_inject"
+      }
+
+      "sndMedRemove:object"{
+        path:t="/walker/_common_foley/injectors/injector_discard"
+      }
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+  "item__chronotracesProgressionInfo:object"{
+    "repeatedly:object"{
+      extract:i=100
+      uses:i=10
+    }
+  }
+}

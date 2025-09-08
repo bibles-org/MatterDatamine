@@ -1,0 +1,204 @@
+am_projectile_hit_vehicle_fx_sound{
+  _use:t="projectile_hit_entity_fx_sound"
+
+  "projectile_hit_entity_fx_sound__paths:shared:object"{
+    _tags:t="sound"
+
+    "stopped:object"{
+      "bullet:object"{
+        hero:t="player/vehicle/tank/impacts/hit_small_fail"
+        enemy:t="enemy/vehicle/tank/impacts/hit_small_fail"
+      }
+
+      "shell:object"{
+        hero:t="player/vehicle/tank/impacts/hit_mid_fail"
+        enemy:t="enemy/vehicle/tank/impacts/hit_mid_fail"
+      }
+    }
+
+    "unstopped:object"{
+      "bullet:object"{
+        hero:t="player/vehicle/tank/impacts/hit_small_fail"
+        enemy:t="enemy/vehicle/tank/impacts/hit_small_fail"
+      }
+
+      "shell:object"{
+        hero:t="player/vehicle/tank/impacts/hit_mid"
+        enemy:t="enemy/vehicle/tank/impacts/hit_mid"
+      }
+    }
+  }
+}
+
+am_car_vehicle_sound{
+  _use:t="car_vehicle_sound"
+  _use:t="am_projectile_hit_vehicle_fx_sound"
+}
+
+am_jeep_vehicle_sound{
+  _use:t="jeep_vehicle_sound"
+  _use:t="am_projectile_hit_vehicle_fx_sound"
+}
+
+am_truck_vehicle_sound{
+  _use:t="truck_vehicle_sound"
+  _use:t="am_projectile_hit_vehicle_fx_sound"
+}
+
+opel_olympia_vehicle_sound{
+  _use:t="am_car_vehicle_sound"
+  _use:t="car_vehicle_inside_sound"
+  _use:t="vehicle_horn_note_D5"
+}
+
+gaz_67_vehicle_sound{
+  _use:t="am_jeep_vehicle_sound"
+  _use:t="nodoor_vehicle_seat_sound_setup"
+
+  _group{
+    _tags:t="sound"
+
+    "vehicle_engine_sound__path:shared:object"{
+      hero:t="player/vehicle/car/gaz_67/engine"
+      enemy:t="enemy/vehicle/car/gaz_67/engine"
+    }
+
+    "vehicle_engine_sound__startPath:shared:object"{
+      hero:t="player/vehicle/car/gaz_67/engine_start"
+      enemy:t="enemy/vehicle/car/gaz_67/engine_start"
+    }
+
+    "vehicle_engine_sound__stopPath:shared:object"{
+      hero:t="player/vehicle/car/gaz_67/engine_stop"
+      enemy:t="enemy/vehicle/car/gaz_67/engine_stop"
+    }
+  }
+
+  "vehicle_tracks_sound__path:shared:object"{
+    _tags:t="sound"
+    hero:t="player/vehicle/car/gaz_67/tracks"
+    enemy:t="enemy/vehicle/car/gaz_67/tracks"
+  }
+}
+
+vw_beetle_vehicle_sound{
+  _use:t="am_car_vehicle_sound"
+  _use:t="car_vehicle_inside_sound"
+  _use:t="vehicle_horn_note_E5"
+}
+
+dune_buggy_vehicle_sound{
+  _use:t="am_jeep_vehicle_sound"
+  _use:t="nodoor_vehicle_seat_sound_setup"
+
+  _group{
+    _tags:t="sound"
+
+    "vehicle_engine_sound__path:shared:object"{
+      hero:t="player/vehicle/car/gaz_67/engine"
+      enemy:t="enemy/vehicle/car/gaz_67/engine"
+    }
+
+    "vehicle_engine_sound__startPath:shared:object"{
+      hero:t="player/vehicle/car/gaz_67/engine_start"
+      enemy:t="enemy/vehicle/car/gaz_67/engine_start"
+    }
+
+    "vehicle_engine_sound__stopPath:shared:object"{
+      hero:t="player/vehicle/car/gaz_67/engine_stop"
+      enemy:t="enemy/vehicle/car/gaz_67/engine_stop"
+    }
+  }
+}
+
+ural_vehicle_sound{
+  _use:t="am_truck_vehicle_sound"
+  _use:t="truck_vehicle_inside_sound"
+  _use:t="vehicle_horn_note_F4"
+
+  _group{
+    _tags:t="sound"
+
+    "vehicle_engine_sound__path:shared:object"{
+      hero:t="player/vehicle/car/ural_4320/engine"
+      enemy:t="enemy/vehicle/car/ural_4320/engine"
+    }
+
+    "vehicle_engine_sound__startPath:shared:object"{
+      hero:t="player/vehicle/car/ural_4320/engine_start"
+      enemy:t="enemy/vehicle/car/ural_4320/engine_start"
+    }
+
+    "vehicle_engine_sound__stopPath:shared:object"{
+      hero:t="player/vehicle/car/ural_4320/engine_stop"
+      enemy:t="enemy/vehicle/car/ural_4320/engine_stop"
+    }
+  }
+
+  "vehicle_tracks_sound__path:shared:object"{
+    _tags:t="sound"
+    hero:t="player/vehicle/car/ural_4320/tracks"
+    enemy:t="enemy/vehicle/car/ural_4320/tracks"
+  }
+}
+
+ford_f250_vehicle_sound{
+  _use:t="am_jeep_vehicle_sound"
+  _use:t="nodoor_vehicle_seat_sound_setup"
+
+  _group{
+    _tags:t="sound"
+
+    "vehicle_engine_sound__path:shared:object"{
+      hero:t="player/vehicle/car/gaz_67/engine"
+      enemy:t="enemy/vehicle/car/gaz_67/engine"
+    }
+
+    "vehicle_engine_sound__startPath:shared:object"{
+      hero:t="player/vehicle/car/gaz_67/engine_start"
+      enemy:t="enemy/vehicle/car/gaz_67/engine_start"
+    }
+
+    "vehicle_engine_sound__stopPath:shared:object"{
+      hero:t="player/vehicle/car/gaz_67/engine_stop"
+      enemy:t="enemy/vehicle/car/gaz_67/engine_stop"
+    }
+  }
+
+  "vehicle_tracks_sound__path:shared:object"{
+    _tags:t="sound"
+    hero:t="player/vehicle/car/gaz_67/tracks"
+    enemy:t="enemy/vehicle/car/gaz_67/tracks"
+  }
+}
+
+maxxpro_armored_car_vehicle_sound{
+  _use:t="am_truck_vehicle_sound"
+  _use:t="truck_vehicle_inside_sound"
+  _use:t="vehicle_horn_note_F4"
+
+  _group{
+    _tags:t="sound"
+
+    "vehicle_engine_sound__path:shared:object"{
+      hero:t="player/vehicle/car/ural_4320/engine"
+      enemy:t="enemy/vehicle/car/ural_4320/engine"
+    }
+
+    "vehicle_engine_sound__startPath:shared:object"{
+      hero:t="player/vehicle/car/ural_4320/engine_start"
+      enemy:t="enemy/vehicle/car/ural_4320/engine_start"
+    }
+
+    "vehicle_engine_sound__stopPath:shared:object"{
+      hero:t="player/vehicle/car/ural_4320/engine_stop"
+      enemy:t="enemy/vehicle/car/ural_4320/engine_stop"
+    }
+  }
+
+  "vehicle_tracks_sound__path:shared:object"{
+    _tags:t="sound"
+    hero:t="player/vehicle/car/ural_4320/tracks"
+    enemy:t="enemy/vehicle/car/ural_4320/tracks"
+  }
+}

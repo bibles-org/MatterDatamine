@@ -1,0 +1,21 @@
+root_node:t="Bip01"
+root_motion_a2d_node:t="root"
+
+direction_nodes{
+  node{
+    name:t="Bip01"
+    weight:r=1
+  }
+
+  node{
+    name:t="Bip01 Spine2"
+    weight:r=1
+  }
+}
+
+center_of_mass{
+  node{
+    name:t="Bip01 Spine1"
+    params:p4=0, 0, 0, 1
+  }
+}

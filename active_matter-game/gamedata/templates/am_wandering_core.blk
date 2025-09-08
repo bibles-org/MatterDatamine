@@ -1,0 +1,335 @@
+wandering_core{
+  _use:t="am_navmesh_creature_base"
+  _use:t="ai_target"
+  _use:t="am_wandering_core_sound"
+  _use:t="am_wandering_core_ai"
+  _use:t="wandering_core_base"
+  _use:t="wandering_core_hitpoints"
+  _use:t="wandering_core_death_drop"
+  _use:t="non_burnable"
+  _use:t="core_curious_behavior"
+  wandering_core__waypointSearchRadius:r=20
+  wandering_core__waypointIdx:i=-1
+  wandering_core__waypointIncrement:i=1
+  wandering_core__patrolRadius:r=0
+  wandering_core__charge:r=0
+  wandering_core__triggerCharge:r=100
+  wandering_core__chargeFade:p2=1, 2
+  _replicated:t="wandering_core__charge"
+  wandering_core__chargeUpdtAt:r=0
+  wandering_core__chargeUpdtInterval:r=0.5
+  wandering_core__chargePerHpLost:r=0.8
+  wandering_core__chargePerStoneHit:r=40
+  wandering_core__lastStoneHitAt:r=0
+  wandering_core__stoneHitCd:r=1
+  wandering_core__playerAmChargeMulti:r=1
+  wandering_core__amChargeMulti:r=0.3
+  wandering_core__amChargeRadius:r=9
+  wandering_core__lastUpdatePos:p3=0, 0, 0
+  wandering_core__triggeredTemplate:t="triggered_curious_core"
+  wandering_core__exploadDelay:r=1.5
+  hitpoints__hp:r=999999
+  hitpoints__maxHp:r=999999
+  wandering_core__searchTargetRadius:r=3
+  navmesh_phys__hitTagPower:r=0.2
+  navmesh_phys__hitTagDuration:r=0.8
+  nphys_levitating__prefferedElevation:r=1.5
+  nphys_levitating__elevation:r=1.5
+  nphys_levitating__elevationChangeSpeed:r=0.75
+  obstacle_avoider__avoidsDamageZones:b=no
+  obstacle_avoider__escapeOffset:r=0.3
+  stuck_detector_debug__enabled:b=yes
+  navmesh_phys__maxWalkSpeed:r=3
+  navmesh_phys__acceleration:r=8
+  path_corridor_ai__slowDownCoef:r=100
+  nphys__mass:r=80
+  beh_tree__node:t="curious_core"
+  loc_snapshots__addPeriod:i=6
+  entity__recreateToOnDeath:t=""
+  wandering_core__agroThreshold:r=5
+  wandering_core__agroOnHit:r=15
+  wandering_core__agroOnTargetFound:r=1
+  wandering_core__agroedSearchTargetRadius:p2=10, 50
+  wandering_core__damageAgroBlockedUntil:r=0
+  wandering_core__damageAgroCooldown:r=3
+  wandering_core__targetPos:p3=0, 0, 0
+
+  "wandering_core__waypointsEid:eid"{}
+  "wandering_core__trackedObjectPos:list<p3>"{}
+  "wandering_core__trackedObjectEid:list<eid>"{}
+  _group{
+    _tags:t="gameClient"
+    wandering_core__prevCharge:r=0
+    wandering_core__chargeFx:t="core_charge_effect"
+    wandering_core__chargeOscilationRange:r=0.5
+    wandering_core__oscilateUntil:r=0
+    wandering_core__oscilateDuration:r=0.7
+    wandering_core__oscilateStart:r=0
+  }
+
+  anim_phys{}
+  "wandering_core__targetEid:eid"{}
+}
+
+roaming_wandering_core{
+  _use:t="wandering_core"
+  wandering_core__patrolRadius:r=100
+}
+
+core_charge_effect{
+  game_effect__timeToDestroy:r=0.9
+  game_effect__clientDestroyAt:r=0
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="human_extraction_lightnings_effect_fps_fx"
+  }
+}
+
+core_curious_behavior{
+  curious_core__gridSizeX:i=0
+  curious_core__gridMin:p3=0, 0, 0
+  curious_core__gridMax:p3=0, 0, 0
+  curious_core__gridCellSize:r=35
+  curious_core__extraCells:i=2
+  curious_core__updateAt:r=0
+  curious_core__interval:r=2
+  curious_core__amWeight:r=1
+  curious_core__distanceWeight:r=1
+  curious_core__presenceFadeMult:r=0.03
+  curious_core__curiosityCell:i=-1
+  curious_core__exploreCuriosityAt:r=0
+  curious_core__curiosityInterval:p2=90, 240
+  curious_core__defaultWeight:r=1
+
+  "curious_core__grid:list<r>"{}
+}
+
+waypointless_core{
+  "waypointless_core:tag"{}
+}
+
+triggered_curious_core{
+  wandering_core__exploadAt:r=0
+
+  "behTreeDisabler:tag"{}
+  "nphys__disabled:tag"{}
+  "wandering_core__fxTimings:list<r>"{
+    i:r=0
+    i:r=0.25
+    i:r=0.35
+    i:r=0.6
+    i:r=0.7
+    i:r=0.95
+    i:r=1.05
+    i:r=1.3
+    i:r=1.4
+  }
+
+  "wandering_core__fxScales:list<r>"{
+    i:r=2.5
+    i:r=0.5
+    i:r=1.9
+    i:r=0.35
+    i:r=1.5
+    i:r=0.2
+    i:r=1.2
+    i:r=0.1
+    i:r=1
+  }
+}
+
+wandering_core_base{
+  _use:t="animchar"
+  _use:t="loc_snapshots"
+  _use:t="wandering_core_light"
+  needsBlood:b=no
+  material:t="steel"
+  animchar_render__enabled:b=no
+  animchar__updatable:b=no
+  animchar__res:t="am_core_a_char"
+  grid_obj__fixedTmScale:r=-1
+  team:i=1
+  wandering_core__searchTargetRadius:r=8
+  wandering_core__damageSphereTemplate:t="am_core_explosion_sphere"
+  wandering_core__explosionTemplate:t="protected_am_core_explosion"
+  wandering_core__updateAt:r=0
+  wandering_core__interval:r=1
+  wandering_core__agro:r=0
+  wandering_core__agroMax:r=50
+  death_note__name:t="note_thunderball"
+  non_burnable__fireDmgMult:r=20
+  collres__res:t="am_core_a_collision"
+  collision_physMatId:i=-1
+  collision_physMatName:t="walker"
+  ai_target_node__node:t="am_core_a_dynmodel.lod00"
+  kill_tracking_tag:t="wandering_core"
+
+  "wandering_core:tag"{}
+  "grid_obj__updateAlways:tag"{}
+  "nphys__noLookDir:tag"{}
+  "preloadSpawnActivatedShellProps:list<t>"{
+    template:t="protected_am_core_explosion"
+  }
+
+  "wandering_core__damageSphere:eid"{}
+  _group{
+    _tags:t="gameClient"
+    wandering_core__fxTemplate:t="wandering_core_fx"
+    wandering_core__fxRadius:p2=1.1, 0.4
+    wandering_core__fxTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+    wandering_core__fxSpeed:r=2
+    wandering_core__fxCount:ip2=1, 1
+    wandering_core__fxTime:r=0
+
+    "wandering_core__fxList:list<eid>"{}
+  }
+
+  "capsule_approximation__nodeNames:array"{
+    node:t="am_core_a_dynmodel.lod00"
+  }
+
+  "capsule_approximation__complexNodeNames:array"{}
+  "kill_tracking__taggedPlayers:object"{}
+}
+
+wandering_core_death_drop{
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_3"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_3"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_3"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_3"
+      dropChance:r=0.5
+      dropHeight:r=1
+    }
+  }
+}
+
+am_wandering_core_ai{
+  _use:t="agent_dangers_hit_reaction"
+  _use:t="get_reaction_offender_ai"
+  _use:t="beh_tree_regular_check"
+  _use:t="corridor_walker"
+  _use:t="obstacle_avoider"
+  _use:t="door_obstacle_handler"
+  _use:t="destructable_obstacle_handler"
+  _use:t="stuck_detector"
+  _use:t="nphys_hit_tagging"
+  _use:t="navmesh_phys_jumplinks"
+  _use:t="navmesh_phys_jumplinks_jump"
+  _use:t="nphys_levitating"
+  beh_tree__debug:b=no
+  beh_tree__node:t="wadering_core"
+  navmesh_phys__climbSpeed:r=5
+  navmesh_phys__climbJumpMaxDistSq:r=25
+  navmesh_phys__climbJumpStartSpeed:r=8
+
+  _group{
+    _track:b=yes
+    beh_tree__enabled:b=yes
+  }
+
+  _group{
+    _tags:t="server"
+
+    "beh_tree:BehaviourTree"{}
+  }
+}
+
+wandering_core_hitpoints{
+  _use:t="base_dm_parts"
+  _use:t="base_hitpoints"
+  grid_obj__gridType:t="am_cores"
+  hitpoints__hp:r=250
+  hitpoints__maxHp:r=250
+  hitpoints__regenPerSec:r=50
+  hitpoints__shellDmgMult:r=1
+  hitpoints__shellSplashDmgMult:r=2
+  needsBlood:b=no
+  isAlive:b=yes
+  _tracked:t="isAlive"
+  _replicated:t="isAlive"
+  _replicated:t="hitpoints__hp"
+
+  grid_obj{}
+  collres{}
+  capsule_approximation{}
+  "capsule_approximation__nodeNames:array"{}
+  "capsule_approximation__complexNodeNames:array"{}
+  "killer:eid"{}
+}
+
+follow_waypoints_mode{
+  _use:t="follow_waypoints"
+  follow_waypoints_mode__template:t="follow_waypoints_mode"
+  follow_waypoints__patrolHeight:r=1
+  follow_waypoints__patrolSpeedMinMax:p2=0.5, 2
+
+  "nphys__disabled:tag"{}
+}
+
+wandering_core_light{
+  _use:t="attached_omni_light"
+  light__max_radius:r=10
+  light__offset:p3=0, 0, 0
+  light__color:c=212, 231, 255, 255
+  light__brightness:r=20
+  light__dynamic_light:b=yes
+  light__automatic_box:b=no
+  light__approximate_static:b=yes
+
+  _group{
+    _tags:t="render"
+    omni_light__dynamic_obj_shadows:b=yes
+    omni_light__shadows:b=yes
+  }
+}
+
+wandering_core_fx{
+  _use:t="base_effect"
+  wandering_core_fx__timeHit:r=0
+  wandering_core_fx__scaleTime:r=0.5
+  wandering_core_fx__scaleMinMax:p2=1, 2
+  wandering_core_fx__radiusMult:r=1
+
+  _group{
+    _tags:t="render"
+    effect__name:t="ball_lighting_composite_fx"
+
+    effect{}
+  }
+}
+
+wandering_core_embryo{
+  _use:t="dynamic_spawn_item"
+  transform:m=[[0, 0, -1] [0, 1, 0] [1, 0, 0] [1, 1, 1]]
+  embryo__spawnTemplate:t="wandering_core"
+  embryo__myTemplate:t="wandering_core_embryo"
+  embryo__updateAt:r=0
+  embryo__interval:r=1
+  embryo__humanSearchRadius:r=15
+  wandering_core__waypointSearchRadius:r=0
+
+  "wandering_core__waypointsEid:eid"{}
+}

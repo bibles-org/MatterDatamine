@@ -1,0 +1,239 @@
+import:t="civil_vehicles.blk"
+
+vehicles_grid{
+  editableObj:b=no
+  _use:t="replicating"
+  _singleton:b=yes
+  grid_holder__type:t="vehicles"
+  grid_holder__typeHash:i=0
+  grid_holder__cellSize:i=32
+
+  grid_holder{}
+}
+
+vehicle{
+  _use:t="vehicle_no_ai"
+  _use:t="technic_heat_sources"
+  agent_dangers__tag:t="vehicle"
+  ai_target__invisibleTimeTo:r=0
+  ai_target__noiseLevel:r=0
+
+  "heat_source__enginePartsPatterns:array"{
+    engine:t="engine((_\w+)?)"
+  }
+
+  "heat_source__wheelsPartsPatterns:array"{}
+  "heat_source__radiatorPartsPatterns:array"{}
+  ai_target{
+    _tags:t="server"
+  }
+
+  "chargesgeyserAnomaly:tag"{}
+}
+
+vehicle_seats_order{
+  _singleton:b=yes
+
+  "vehicleSeatsOrder:array"{
+    "seat:object"{
+      name:t="commander"
+    }
+
+    "seat:object"{
+      name:t="main_gunner"
+    }
+
+    "seat:object"{
+      name:t="driver"
+    }
+
+    "seat:object"{
+      name:t="loader"
+    }
+
+    "seat:object"{
+      name:t="additional_gunner"
+      multiple:b=yes
+    }
+
+    "seat:object"{
+      name:t="external_gunner"
+      multiple:b=yes
+    }
+  }
+}
+
+repairable_vehicle{
+  _replicated:t="repairable__repairTime"
+  _replicated:t="repairable__repairTotalTime"
+  _replicated:t="repairable__repairRequired"
+  _replicated:t="repairable__inProgress"
+  _tracked:t="repairable__inProgress"
+  repairable__baseRepairTotalTime:r=5
+  repairable__repairTotalTime:r=-1
+  repairable__repairTime:r=-1
+  repairable__inProgress:b=no
+  repairable__repairRequired:b=no
+  repairable__baseRecoveryRatio:r=1
+  repairable__recoveryRatio:r=1
+
+  "maintainable__operator:eid"{}
+  meta_parts_state{}
+}
+
+broken_vehicle{
+  item__customUsePrompt:t="car_mechanic/broken_car"
+
+  "brokenVehicle:tag"{}
+  "vehicle__manualEnteringControl:tag"{}
+}
+
+vehicle_fuel_use{
+  vehicle__fuel:r=20
+  vehicle__fuelUse:r=0.1
+  vehicle__fuelAutoUse:b=no
+  vehicle__maxFuel:r=200
+  vehicle__refuelingInProgress:b=no
+  vehicle__fuelAlert:b=no
+  vehicle__fuelLastAlertAt:r=0
+  vehicle__fuelAlertCooldown:r=20
+  _replicated:t="vehicle__currentDriver"
+  _replicated:t="vehicle__fuel"
+  _tracked:t="vehicle__fuel"
+  _tracked:t="vehicle__fuelAlert"
+
+  "vehicle__currentDriver:eid"{}
+}
+
+vehicle_fuel_container_owner{
+  vehicle__inventoryFuelCount:i=0
+  vehicle__inventoryFuelAmount:r=0
+}
+
+vehicle_state_randomizer{
+  vehicle_state_randomizer__fuelRng:p2=0.1, 0.4
+  vehicle_state_randomizer__bodyHpRng:p2=0.8, 1
+  vehicle_state_randomizer__otherPartsHpDeltaRng:p2=0, 0.3
+}
+
+civil_vehicle_templ{
+  _use:t="vehicle"
+  _use:t="vehicle_effects_4x4"
+  zones_visitor__triggerTag:t="vehicleTriggerable"
+  _replicated:t="killer"
+  lastStatPos:p3=0, 0, 0
+  collision_damage__threshold:r=5
+  collision_damage__velDeltaMult:r=10
+  collision_damage__velDeltaPower:r=2
+  collision_damage__body__threshold:r=2.5
+  collision_damage__body__velDeltaMult:r=1.25
+  collision_damage__body__velDeltaPower:r=1.25
+  collision_damage__transmission__threshold:r=4
+  collision_damage__transmission__velDeltaMult:r=0.45
+  collision_damage__transmission__velDeltaPower:r=1
+  collision_damage__engine__threshold:r=8
+  collision_damage__engine__velDeltaMult:r=0.85
+  collision_damage__engine__velDeltaPower:r=1
+  collision_damage__ram__speedThreshold:r=4
+  collision_damage__ram__bodyDamageMult:r=0.9
+  collision_damage__ram__transmissionDamageMult:r=0.1
+  collision_damage__ram__engineDamageMult:r=0.075
+  _replicated:t="dm_state"
+  isExploded:b=no
+  triggerDamageEffects:b=yes
+  vehicle_seat_damage__minVelocity:r=5
+  vehicle_seat_damage__velocityMult:r=0.5
+  vehicle_seat_damage__maxDmgPercent:r=0.3
+  _replicated:t="fire_damage_state"
+  _replicated:t="fire_damage__isBurn"
+  _replicated:t="isExploded"
+  _tracked:t="isExploded"
+  fire_damage__isBurn:b=no
+  fire_damage__totalTime:r=0
+  fire_damage__update_burn_interval:r=1
+  fire_damage__innerRadiusMult:r=2
+  item__setCustomUsePrompt:t="tips/enterVehicle"
+  collision_damage__forwardDamageToHumanMult:r=3
+  loud_noise__radius:r=20
+  loud_noise__noisePerRpm:r=0.02
+  loud_noise__updateAt:r=0
+  loud_noise__interval:r=0.25
+  loud_noise__accumulatedNoise:r=0
+  loud_noise__lastAmount:r=0
+  loud_noise__noisePerHorn:r=100
+  loud_noise__hornRadius:r=35
+
+  "vehicleDisplayMarkerOverHead:tag"{
+    tags:t="ui"
+  }
+
+  "killer:eid"{}
+  "dm_state:list<u16>"{}
+  "notConsiderPassengersDM:tag"{}
+  fire_damage{}
+  fire_damage_state{}
+  fire_protection{}
+  _group{
+    _tags:t="render"
+    animchar_camera_target__node_name:t="bone_camera_driver"
+
+    "engine_fire_fx__eids:list<eid>"{}
+    "vehicle_fxs__effectsEids:list<eid>"{}
+  }
+
+  "fire_attach_excludes__nodeIds:list<i>"{}
+  "fire_attach_excludes__nodeNames:list<t>"{
+    name:t="wheel_r_01"
+    name:t="wheel_r_02"
+    name:t="wheel_l_01"
+    name:t="wheel_l_02"
+    name:t="wheel_l_drive"
+    name:t="wheel_r_drive"
+  }
+
+  "dm_phys_parts__bodyPartIds:list<i>"{}
+  "dm_phys_parts__enginePartIds:list<i>"{}
+  "dm_phys_parts__transmissionPartIds:list<i>"{}
+  "dm_phys_parts__tracksPartIds:list<i>"{}
+  "dm_phys_parts__body:array"{
+    body:t="body"
+  }
+
+  "dm_phys_parts__engine:array"{
+    engine:t="engine"
+  }
+
+  "dm_phys_parts__transmission:array"{
+    transmission:t="transmission"
+  }
+
+  "engine_fire_fx__fx:array"{
+    "fx:object"{
+      "dmParts:array"{
+        dmParts:t="engine"
+      }
+
+      "fx:array"{
+        "fx:object"{
+          name:t="pv_broken_exhaust_base_template"
+          emitter:t="emtr_fire_engine"
+        }
+      }
+    }
+  }
+}
+
+base_civil_fire_ready_vehicle{
+  _use:t="civil_vehicle_templ"
+  _use:t="human_trigger_trap_activator"
+
+  "vehicle_seats__seatTemplates:shared:object"{
+    default:t="vehicle_seat_fire_ready"
+    driver:t="vehicle_seat_driver"
+  }
+}
+
+vehicle_trunk_controller{
+  _use:t="composit_holder"
+  vehicle_trunk_controller__trunkTemplate:t=""
+}

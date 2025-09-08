@@ -1,0 +1,64 @@
+human_pain{
+  pain__intensity:r=0
+  pain__intensityMult:r=1
+  pain__progress:r=0
+  pain__progressMult:r=0.25
+  pain__lockDecreaseProgressUntil:r=-1
+  pain__lockDecreaseProgressDuration:r=1
+
+  "pain__active:b"{
+    value:b=no
+    _track:b=yes
+  }
+
+  _group{
+    _tags:t="server"
+    pain__entityModsMultTemplateName:t="pain_entity_mods_mult"
+  }
+
+  _group{
+    _tags:t="render"
+    pain__renderEffectsTemplateName:t="pain_render_effect"
+  }
+}
+
+pain_entity_mods_mult{
+  _use:t="replicated_game_effect"
+
+  "painEntityModsMult:tag"{}
+  "entity_mod_effects:object"{
+    "recoilMult+mult_diminishing":r=2
+    "breathAmplitudeMult+mult":r=2
+  }
+}
+
+pain_render_effect{
+  _use:t="pain_screen_effect"
+  _use:t="pain_force_concussion_screen_effect"
+
+  "painRenderEffect:tag"{}
+}
+
+pain_screen_effect{
+  _use:t="screen_effect_generic"
+  screen_effect__texture_res:t="veins_screen_splatter_tile_tex_n"
+  screen_effect__diffuse:p4=0.1, 0.01, 0.001, 1
+  screen_effect__roughness:r=0.8
+  screen_effect__opacity:r=0.1
+  screen_effect__uvScale:r=0.471
+  screen_effect__intensity:r=0
+  screen_effect__borderOffset:r=0.2
+  screen_effect__borderSaturation:r=1.5
+  pain_screen_effect__intensityMult:r=2
+  pain_screen_effect__intensityMinMax:p2=0, 0.6
+
+  "painScreenEffect:tag"{}
+}
+
+pain_force_concussion_screen_effect{
+  _use:t="game_effect_base"
+  force_concussion_screen_effect__intensity:r=0
+  force_concussion_screen_effect__intensityMult:r=0.01
+  force_concussion_screen_effect__startedAtTime:r=-1
+  force_concussion_screen_effect__duration:r=99999
+}

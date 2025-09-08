@@ -1,0 +1,2198 @@
+military_lootable_rendinst_manager{
+  _use:t="lootable_rendinst_manager"
+
+  "lootable_rendinsts__list:array"{
+    "i:object"{
+      ri_name:t="ammunition_box_a"
+      ri_after_loot_name:t="ammunition_box_a_open"
+      container_capacity:r=20
+      loot_preset:t="medical_items_t1_loot_preset"
+      drop_preset:t="drop_in_places_ammo_box"
+      container_name:t="container/ammoCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_b"
+      ri_after_loot_name:t="ammunition_box_b_open"
+      container_capacity:r=20
+      loot_preset:t="medical_items_t2_loot_preset"
+      drop_preset:t="drop_in_places_medical_box"
+      container_name:t="container/medicalCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_c"
+      ri_after_loot_name:t="ammunition_box_c_open"
+      container_capacity:r=20
+      loot_preset:t="grenade_box_loot_preset"
+      drop_preset:t="drop_in_places_grenade_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_d"
+      ri_after_loot_name:t="ammunition_box_d_open"
+      container_capacity:r=20
+      loot_preset:t="soviet_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_e"
+      ri_after_loot_name:t="ammunition_box_e_open"
+      container_capacity:r=20
+      loot_preset:t="soviet_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_f"
+      ri_after_loot_name:t="ammunition_box_f_open"
+      container_capacity:r=20
+      loot_preset:t="military_ammo_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_g"
+      ri_after_loot_name:t="ammunition_box_g_open"
+      container_capacity:r=20
+      loot_preset:t="military_ammo_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/ammoCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_h"
+      ri_after_loot_name:t="ammunition_box_h_open"
+      container_capacity:r=50
+      loot_preset:t="close_range_soviet_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/weaponCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_i"
+      ri_after_loot_name:t="ammunition_box_i_open"
+      container_capacity:r=20
+      loot_preset:t="military_ammo_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/ammoCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_j"
+      ri_after_loot_name:t="ammunition_box_j_open"
+      container_capacity:r=20
+      loot_preset:t="close_range_soviet_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/weaponCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_k"
+      ri_after_loot_name:t="ammunition_box_k_open"
+      container_capacity:r=45
+      loot_preset:t="soviet_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_l"
+      ri_after_loot_name:t="ammunition_box_l_open"
+      container_capacity:r=50
+      loot_preset:t="long_range_soviet_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/rifleCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_m"
+      ri_after_loot_name:t="ammunition_box_m_open"
+      container_capacity:r=50
+      loot_preset:t="long_range_soviet_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/rifleCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_n"
+      ri_after_loot_name:t="ammunition_box_n_open"
+      container_capacity:r=40
+      loot_preset:t="long_range_soviet_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_places_big_weapon_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_o"
+      ri_after_loot_name:t="ammunition_box_o_open"
+      container_capacity:r=60
+      loot_preset:t="soviet_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_places_big_items_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="sovindustrial_box_zip_a_500"
+      ri_after_loot_name:t="sovindustrial_box_zip_a_500_open_loot"
+      container_capacity:r=20
+      loot_preset:t="soviet_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="sovindustrial_box_zip_a_650"
+      ri_after_loot_name:t=""
+      container_capacity:r=45
+      loot_preset:t="soviet_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+  }
+}
+
+military_lootable_rendinst_manager_t1{
+  _use:t="lootable_rendinst_manager"
+
+  "lootable_rendinsts__list:array"{
+    "i:object"{
+      ri_name:t="ammunition_box_a"
+      ri_after_loot_name:t="ammunition_box_a_open"
+      container_capacity:r=20
+      loot_preset:t="medical_items_t1_loot_preset"
+      drop_preset:t="drop_in_places_ammo_box"
+      container_name:t="container/ammoCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_b"
+      ri_after_loot_name:t="ammunition_box_b_open"
+      container_capacity:r=20
+      loot_preset:t="medical_items_t1_loot_preset"
+      drop_preset:t="drop_in_places_medical_box"
+      container_name:t="container/medicalCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_c"
+      ri_after_loot_name:t="ammunition_box_c_open"
+      container_capacity:r=20
+      loot_preset:t="grenade_box_loot_preset"
+      drop_preset:t="drop_in_places_grenade_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_d"
+      ri_after_loot_name:t="ammunition_box_d_open"
+      container_capacity:r=20
+      loot_preset:t="soviet_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_e"
+      ri_after_loot_name:t="ammunition_box_e_open"
+      container_capacity:r=20
+      loot_preset:t="soviet_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_f"
+      ri_after_loot_name:t="ammunition_box_f_open"
+      container_capacity:r=20
+      loot_preset:t="military_ammo_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_g"
+      ri_after_loot_name:t="ammunition_box_g_open"
+      container_capacity:r=20
+      loot_preset:t="military_ammo_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/ammoCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_h"
+      ri_after_loot_name:t="ammunition_box_h_open"
+      container_capacity:r=50
+      loot_preset:t="close_range_soviet_weapons_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/weaponCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_i"
+      ri_after_loot_name:t="ammunition_box_i_open"
+      container_capacity:r=20
+      loot_preset:t="military_ammo_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/ammoCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_j"
+      ri_after_loot_name:t="ammunition_box_j_open"
+      container_capacity:r=20
+      loot_preset:t="close_range_soviet_weapons_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/weaponCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_k"
+      ri_after_loot_name:t="ammunition_box_k_open"
+      container_capacity:r=45
+      loot_preset:t="soviet_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_l"
+      ri_after_loot_name:t="ammunition_box_l_open"
+      container_capacity:r=50
+      loot_preset:t="long_range_soviet_weapons_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/rifleCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_m"
+      ri_after_loot_name:t="ammunition_box_m_open"
+      container_capacity:r=50
+      loot_preset:t="long_range_soviet_weapons_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/rifleCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_n"
+      ri_after_loot_name:t="ammunition_box_n_open"
+      container_capacity:r=40
+      loot_preset:t="long_range_soviet_weapons_t1_loot_preset"
+      drop_preset:t="drop_in_places_big_weapon_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_o"
+      ri_after_loot_name:t="ammunition_box_o_open"
+      container_capacity:r=60
+      loot_preset:t="soviet_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_places_big_items_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="sovindustrial_box_zip_a_500"
+      ri_after_loot_name:t="sovindustrial_box_zip_a_500_open_loot"
+      container_capacity:r=20
+      loot_preset:t="soviet_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="sovindustrial_box_zip_a_650"
+      ri_after_loot_name:t=""
+      container_capacity:r=45
+      loot_preset:t="soviet_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+  }
+}
+
+military_africa_lootable_rendinst_manager{
+  _use:t="lootable_rendinst_manager"
+
+  "lootable_rendinsts__list:array"{
+    "i:object"{
+      ri_name:t="african_cinema_b_helicopter_part_a"
+      ri_after_loot_name:t="african_cinema_b_helicopter_part_a"
+      container_capacity:r=100
+      loot_preset:t="long_range_modern_weapons_t3_loot_preset"
+      container_name:t="container/helicopter"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="helicopter"
+    }
+
+    "i:object"{
+      ri_name:t="african_cinema_b_helicopter_part_b"
+      ri_after_loot_name:t="african_cinema_b_helicopter_part_b"
+      container_capacity:r=100
+      loot_preset:t="modern_equipment_t3_loot_preset"
+      container_name:t="container/helicopter"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="helicopter"
+    }
+
+    "i:object"{
+      ri_name:t="african_cinema_b_helicopter_part_c"
+      ri_after_loot_name:t="african_cinema_b_helicopter_part_c"
+      container_capacity:r=100
+      loot_preset:t="long_range_modern_weapons_t3_loot_preset"
+      container_name:t="container/helicopter"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="helicopter"
+    }
+
+    "i:object"{
+      ri_name:t="ammo_case_40mm_400x150_a"
+      ri_after_loot_name:t="ammo_case_40mm_400x150_a"
+      container_capacity:r=20
+      loot_preset:t="modern_military_ammo_t2_loot_preset"
+      container_name:t="container/ammoCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammo_box_middle_500x250_a"
+      ri_after_loot_name:t="ammo_box_middle_500x250_a"
+      container_capacity:r=40
+      loot_preset:t="modern_military_ammo_t2_loot_preset"
+      container_name:t="container/ammoCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammo_box_large_650x250_a"
+      ri_after_loot_name:t="ammo_box_large_650x250_a"
+      container_capacity:r=60
+      loot_preset:t="modern_military_ammo_t2_loot_preset"
+      container_name:t="container/ammoCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="mbs_modern_loadout_bag_a"
+      ri_after_loot_name:t="mbs_modern_loadout_bag_a"
+      container_capacity:r=20
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/equipmentCrate"
+      openable_ri_sound:t="sack"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="modern_military_case_1000x800_a"
+      ri_after_loot_name:t="modern_military_case_1000x800_a"
+      container_capacity:r=30
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="modern_military_case_1500x1000_a"
+      ri_after_loot_name:t="modern_military_case_1500x1000_a"
+      container_capacity:r=40
+      loot_preset:t="modern_equipment_t3_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="modern_military_case_2000x600_a"
+      ri_after_loot_name:t="modern_military_case_2000x600_a"
+      container_capacity:r=60
+      loot_preset:t="long_range_modern_weapons_t3_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="modern_military_case_600x500_a"
+      ri_after_loot_name:t="modern_military_case_600x500_a"
+      container_capacity:r=20
+      loot_preset:t="close_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="modern_military_case_700x400_a"
+      ri_after_loot_name:t="modern_military_case_700x400_a"
+      container_capacity:r=20
+      loot_preset:t="modern_military_ammo_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="modern_rackmount_case_1000x750x350_a"
+      ri_after_loot_name:t="modern_rackmount_case_1000x750x350_a"
+      container_capacity:r=20
+      loot_preset:t="medical_items_t2_loot_preset"
+      container_name:t="container/medicalCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="modern_rackmount_case_1000x750x500_a"
+      ri_after_loot_name:t="modern_rackmount_case_1000x750x500_a"
+      container_capacity:r=20
+      loot_preset:t="medical_items_t3_loot_preset"
+      container_name:t="container/medicalCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="modern_rackmount_case_1000x750x650_a"
+      ri_after_loot_name:t="modern_rackmount_case_1000x750x650_a"
+      container_capacity:r=30
+      loot_preset:t="medical_items_t3_loot_preset"
+      container_name:t="container/medicalCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1200x2200_a_a_part_a"
+      ri_after_loot_name:t="military_case_set_plastic_1200x2200_a_a_part_a"
+      container_capacity:r=80
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1200x2200_a_a_part_b"
+      ri_after_loot_name:t="military_case_set_plastic_1200x2200_a_a_part_b"
+      container_capacity:r=80
+      loot_preset:t="close_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1200x2200_a_b_part_a"
+      ri_after_loot_name:t="military_case_set_plastic_1200x2200_a_b_part_a"
+      container_capacity:r=80
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1200x2200_a_b_part_b"
+      ri_after_loot_name:t="military_case_set_plastic_1200x2200_a_b_part_b"
+      container_capacity:r=80
+      loot_preset:t="close_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1200x2200_a_c_part_a"
+      ri_after_loot_name:t="military_case_set_plastic_1200x2200_a_c_part_a"
+      container_capacity:r=80
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1200x2200_a_c_part_b"
+      ri_after_loot_name:t="military_case_set_plastic_1200x2200_a_c_part_b"
+      container_capacity:r=80
+      loot_preset:t="close_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1200x2200_b_a_part_a"
+      ri_after_loot_name:t="military_case_set_plastic_1200x2200_b_a_part_a"
+      container_capacity:r=80
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1200x2200_b_a_part_b"
+      ri_after_loot_name:t="military_case_set_plastic_1200x2200_b_a_part_b"
+      container_capacity:r=80
+      loot_preset:t="close_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1200x2200_b_b_part_b"
+      ri_after_loot_name:t="military_case_set_plastic_1200x2200_b_b_part_b"
+      container_capacity:r=80
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1200x2200_b_c_part_a"
+      ri_after_loot_name:t="military_case_set_plastic_1200x2200_b_c_part_a"
+      container_capacity:r=80
+      loot_preset:t="close_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1200x2200_b_c_part_b"
+      ri_after_loot_name:t="military_case_set_plastic_1200x2200_b_c_part_b"
+      container_capacity:r=80
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_a_a_part_a"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_a_a_part_a"
+      container_capacity:r=80
+      loot_preset:t="close_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_a_a_part_b"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_a_a_part_b"
+      container_capacity:r=80
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_a_b_part_a"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_a_b_part_a"
+      container_capacity:r=80
+      loot_preset:t="close_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_a_b_part_b"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_a_b_part_b"
+      container_capacity:r=80
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_a_b_part_c"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_a_b_part_c"
+      container_capacity:r=80
+      loot_preset:t="close_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_a_c_part_a"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_a_c_part_a"
+      container_capacity:r=80
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_a_c_part_b"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_a_c_part_b"
+      container_capacity:r=80
+      loot_preset:t="close_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_a_c_part_c"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_a_c_part_c"
+      container_capacity:r=80
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_b_a_part_a"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_b_a_part_a"
+      container_capacity:r=80
+      loot_preset:t="close_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_b_a_part_b"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_b_a_part_b"
+      container_capacity:r=80
+      loot_preset:t="grenade_box_modern_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_b_b_part_a"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_b_b_part_a"
+      container_capacity:r=80
+      loot_preset:t="grenade_box_modern_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_b_b_part_b"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_b_b_part_b"
+      container_capacity:r=80
+      loot_preset:t="grenade_box_modern_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_b_b_part_c"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_b_b_part_c"
+      container_capacity:r=80
+      loot_preset:t="grenade_box_modern_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_b_c_part_a"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_b_c_part_a"
+      container_capacity:r=80
+      loot_preset:t="grenade_box_modern_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_plastic_1800x2200_b_c_part_b"
+      ri_after_loot_name:t="military_case_set_plastic_1800x2200_b_c_part_b"
+      container_capacity:r=80
+      loot_preset:t="grenade_box_modern_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_a_a_part_a"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_a_a_part_a"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_a_a_part_b"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_a_a_part_b"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_a_a_part_c"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_a_a_part_c"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_a_a_part_d"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_a_a_part_d"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_a_b_part_a"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_a_b_part_a"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_a_b_part_b"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_a_b_part_b"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_a_b_part_c"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_a_b_part_c"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t3_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_a_b_part_d"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_a_b_part_d"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_a_c_part_a"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_a_c_part_a"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t3_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_a_c_part_b"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_a_c_part_b"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_a_c_part_c"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_a_c_part_c"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t3_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_a_c_part_d"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_a_c_part_d"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_b_a_part_a"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_b_a_part_a"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t3_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_b_a_part_b"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_b_a_part_b"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_b_b_part_a"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_b_b_part_a"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t3_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_b_b_part_b"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_b_b_part_b"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_b_c_part_a"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_b_c_part_a"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t3_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="military_case_set_steel_1200x2200_b_c_part_b"
+      ri_after_loot_name:t="military_case_set_steel_1200x2200_b_c_part_b"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/supplyCrate"
+      openable_ri_sound:t="chest_metal"
+      container_type:t="chest "
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_a"
+      ri_after_loot_name:t="ammunition_box_a_open"
+      container_capacity:r=20
+      loot_preset:t="medical_items_t1_loot_preset"
+      drop_preset:t="drop_in_places_ammo_box"
+      container_name:t="container/ammoCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_b"
+      ri_after_loot_name:t="ammunition_box_b_open"
+      container_capacity:r=20
+      loot_preset:t="medical_items_t2_loot_preset"
+      drop_preset:t="drop_in_places_medical_box"
+      container_name:t="container/medicalCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_c"
+      ri_after_loot_name:t="ammunition_box_c_open"
+      container_capacity:r=20
+      loot_preset:t="grenade_box_modern_loot_preset"
+      drop_preset:t="drop_in_places_grenade_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_d"
+      ri_after_loot_name:t="ammunition_box_d_open"
+      container_capacity:r=20
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_e"
+      ri_after_loot_name:t="ammunition_box_e_open"
+      container_capacity:r=20
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_f"
+      ri_after_loot_name:t="ammunition_box_f_open"
+      container_capacity:r=20
+      loot_preset:t="modern_military_ammo_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_g"
+      ri_after_loot_name:t="ammunition_box_g_open"
+      container_capacity:r=20
+      loot_preset:t="modern_military_ammo_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/ammoCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_h"
+      ri_after_loot_name:t="ammunition_box_h_open"
+      container_capacity:r=50
+      loot_preset:t="close_range_modern_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/weaponCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_i"
+      ri_after_loot_name:t="ammunition_box_i_open"
+      container_capacity:r=20
+      loot_preset:t="modern_military_ammo_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/ammoCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_j"
+      ri_after_loot_name:t="ammunition_box_j_open"
+      container_capacity:r=20
+      loot_preset:t="close_range_modern_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/weaponCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_k"
+      ri_after_loot_name:t="ammunition_box_k_open"
+      container_capacity:r=45
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_l"
+      ri_after_loot_name:t="ammunition_box_l_open"
+      container_capacity:r=50
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/rifleCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_m"
+      ri_after_loot_name:t="ammunition_box_m_open"
+      container_capacity:r=50
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/rifleCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_n"
+      ri_after_loot_name:t="ammunition_box_n_open"
+      container_capacity:r=40
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      drop_preset:t="drop_in_places_big_weapon_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_o"
+      ri_after_loot_name:t="ammunition_box_o_open"
+      container_capacity:r=60
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_places_big_items_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="sovindustrial_box_zip_a_500"
+      ri_after_loot_name:t="sovindustrial_box_zip_a_500_open_loot"
+      container_capacity:r=20
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="sovindustrial_box_zip_a_650"
+      ri_after_loot_name:t=""
+      container_capacity:r=45
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_114x67x31"
+      ri_after_loot_name:t="ammunition_box_east_114x67x31_half_open"
+      container_capacity:r=45
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_114x70x46"
+      ri_after_loot_name:t="ammunition_box_east_114x70x46_half_open"
+      container_capacity:r=45
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_120x55x30"
+      ri_after_loot_name:t="ammunition_box_east_120x55x30_half_open"
+      container_capacity:r=35
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_126x33x22"
+      ri_after_loot_name:t="ammunition_box_east_126x33x22_half_open"
+      container_capacity:r=20
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_144x71x24"
+      ri_after_loot_name:t="ammunition_box_east_144x71x24_half_open"
+      container_capacity:r=40
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_160x28x27"
+      ri_after_loot_name:t="ammunition_box_east_160x28x27_half_open"
+      container_capacity:r=20
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_160x35x40"
+      ri_after_loot_name:t="ammunition_box_east_160x35x40_half_open"
+      container_capacity:r=30
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_160x64x40"
+      ri_after_loot_name:t="ammunition_box_east_160x64x40_half_open"
+      container_capacity:r=40
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_162x28x27"
+      ri_after_loot_name:t="ammunition_box_east_162x28x27_half_open"
+      container_capacity:r=20
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_47x15x23"
+      ri_after_loot_name:t="ammunition_box_east_47x15x23_half_open"
+      container_capacity:r=5
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_57x41x16"
+      ri_after_loot_name:t="ammunition_box_east_57x41x16_half_open"
+      container_capacity:r=5
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_90x47x57"
+      ri_after_loot_name:t="ammunition_box_east_90x47x57_half_open"
+      container_capacity:r=35
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_99x50x27"
+      ri_after_loot_name:t="ammunition_box_east_99x50x27_half_open"
+      container_capacity:r=20
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_a"
+      ri_after_loot_name:t="ammunition_box_east_a_half_open"
+      container_capacity:r=5
+      loot_preset:t="medical_items_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_metal"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_medical_box"
+      ri_after_loot_name:t="ammunition_box_east_medical_box_half_open"
+      container_capacity:r=25
+      loot_preset:t="medical_items_t1_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_rifle_a"
+      ri_after_loot_name:t="ammunition_box_east_rifle_a_half_open"
+      container_capacity:r=25
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_rifle_a"
+      ri_after_loot_name:t="ammunition_box_east_rifle_a_half_open"
+      container_capacity:r=25
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_grenade_box_east_a"
+      ri_after_loot_name:t="ammunition_grenade_box_east_a_half_open"
+      container_capacity:r=10
+      loot_preset:t="grenade_box_modern_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_grenade_box_east_b"
+      ri_after_loot_name:t="ammunition_grenade_box_east_b_half_open"
+      container_capacity:r=10
+      loot_preset:t="grenade_box_modern_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_piles_big_a"
+      ri_after_loot_name:t="ammunition_box_east_piles_big_a_open"
+      container_capacity:r=120
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_piles_big_b"
+      ri_after_loot_name:t="ammunition_box_east_piles_big_b_open"
+      container_capacity:r=130
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_piles_big_c"
+      ri_after_loot_name:t="ammunition_box_east_piles_big_c_open"
+      container_capacity:r=100
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_piles_medium_a"
+      ri_after_loot_name:t="ammunition_box_east_piles_medium_a_open"
+      container_capacity:r=90
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_piles_medium_b"
+      ri_after_loot_name:t="ammunition_box_east_piles_medium_b_open"
+      container_capacity:r=80
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_piles_medium_c"
+      ri_after_loot_name:t="ammunition_box_east_piles_medium_c_open"
+      container_capacity:r=90
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_piles_medium_d"
+      ri_after_loot_name:t="ammunition_box_east_piles_medium_d_open"
+      container_capacity:r=80
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_piles_small_a"
+      ri_after_loot_name:t="ammunition_box_east_piles_small_a_open"
+      container_capacity:r=60
+      loot_preset:t="close_range_modern_weapons_t1_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_piles_small_b"
+      ri_after_loot_name:t="ammunition_box_east_piles_small_b_open"
+      container_capacity:r=60
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_east_piles_small_c"
+      ri_after_loot_name:t="ammunition_box_east_piles_small_c_open"
+      container_capacity:r=60
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_piles_big_a"
+      ri_after_loot_name:t="ammunition_box_west_piles_big_a_open"
+      container_capacity:r=120
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_piles_big_b"
+      ri_after_loot_name:t="ammunition_box_west_piles_big_b_open"
+      container_capacity:r=100
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_piles_big_c"
+      ri_after_loot_name:t="ammunition_box_west_piles_big_c_open"
+      container_capacity:r=140
+      loot_preset:t="long_range_modern_weapons_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_piles_medium_a"
+      ri_after_loot_name:t="ammunition_box_west_piles_medium_a"
+      container_capacity:r=60
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_piles_medium_b"
+      ri_after_loot_name:t="ammunition_box_west_piles_medium_b"
+      container_capacity:r=60
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_piles_medium_c"
+      ri_after_loot_name:t="ammunition_box_west_piles_medium_c_open"
+      container_capacity:r=80
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_piles_small_a"
+      ri_after_loot_name:t="ammunition_box_west_piles_small_a_open"
+      container_capacity:r=60
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_piles_small_c"
+      ri_after_loot_name:t="ammunition_box_west_piles_small_c_open"
+      container_capacity:r=60
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+      container_type:t="chest"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_95x28x15"
+      ri_after_loot_name:t="ammunition_box_west_95x28x15_half_open"
+      container_capacity:r=30
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_big"
+      ri_after_loot_name:t="ammunition_box_west_big_half_open"
+      container_capacity:r=60
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_places_big_items_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_drone_a"
+      ri_after_loot_name:t="ammunition_box_west_drone_a_half_open"
+      container_capacity:r=30
+      loot_preset:t="modern_equipment_t2_loot_preset"
+      drop_preset:t="drop_in_places_big_items_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_drone_b"
+      ri_after_loot_name:t="ammunition_box_west_drone_b_half_open"
+      container_capacity:r=60
+      loot_preset:t="modern_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_places_big_items_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_javelin"
+      ri_after_loot_name:t="ammunition_box_west_javelin_open"
+      container_capacity:r=30
+      loot_preset:t="modern_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_places_big_items_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_nlaw"
+      ri_after_loot_name:t="ammunition_box_west_nlaw_open"
+      container_capacity:r=30
+      loot_preset:t="modern_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_places_big_items_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_rifle"
+      ri_after_loot_name:t="ammunition_box_west_rifle_half_open"
+      container_capacity:r=40
+      loot_preset:t="modern_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_places_big_items_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_box_west_small"
+      ri_after_loot_name:t="ammunition_box_west_small_half_open"
+      container_capacity:r=20
+      loot_preset:t="modern_equipment_t1_loot_preset"
+      drop_preset:t="drop_in_places_big_items_box"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="locker"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_grenade_box_west_a"
+      ri_after_loot_name:t="ammunition_grenade_box_west_a_half_open"
+      container_capacity:r=10
+      loot_preset:t="grenade_box_modern_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+
+    "i:object"{
+      ri_name:t="ammunition_grenade_box_west_b"
+      ri_after_loot_name:t="ammunition_grenade_box_west_b_half_open"
+      container_capacity:r=10
+      loot_preset:t="grenade_box_modern_loot_preset"
+      drop_preset:t="drop_in_owner_pos_preset"
+      container_name:t="container/armyCrate"
+      openable_ri_sound:t="chest_wood"
+    }
+  }
+}
+
+military_equipment_t1_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_equipment_t1_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_d"
+  openable_ri__closed:t="ammunition_box_d"
+  ri_preload__name:t="ammunition_box_d_open"
+  human_inventory__maxVolume:r=50
+  loot_drop_system__lootPreset:t="soviet_equipment_t1_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_owner_pos_preset"
+  itemContainer__name:t="container/armyCrate"
+  itemContainer__type:t="armyCrate"
+
+  ri_extra{}
+}
+
+military_equipment_t2_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_equipment_t2_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_e"
+  openable_ri__closed:t="ammunition_box_e"
+  ri_preload__name:t="ammunition_box_e_open"
+  human_inventory__maxVolume:r=50
+  loot_drop_system__lootPreset:t="soviet_equipment_t2_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_owner_pos_preset"
+  itemContainer__name:t="container/armyCrate"
+  itemContainer__type:t="armyCrate"
+
+  ri_extra{}
+}
+
+military_equipment_t3_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_equipment_t3_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_k"
+  openable_ri__closed:t="ammunition_box_k"
+  ri_preload__name:t="ammunition_box_k_open"
+  human_inventory__maxVolume:r=45
+  loot_drop_system__lootPreset:t="soviet_equipment_t3_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_owner_pos_preset"
+  itemContainer__name:t="container/armyCrate"
+  itemContainer__type:t="armyCrate"
+
+  ri_extra{}
+}
+
+military_ammo_t1_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_ammo_t1_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_a"
+  openable_ri__closed:t="ammunition_box_a"
+  ri_preload__name:t="ammunition_box_a_open"
+  human_inventory__maxVolume:r=50
+  loot_drop_system__lootPreset:t="military_ammo_t1_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_ammo_box"
+  itemContainer__name:t="container/ammoCrate"
+  itemContainer__type:t="ammoCrate"
+
+  ri_extra{}
+}
+
+military_ammo_t2_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_ammo_t2_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_g"
+  openable_ri__closed:t="ammunition_box_g"
+  ri_preload__name:t="ammunition_box_g_open"
+  human_inventory__maxVolume:r=50
+  loot_drop_system__lootPreset:t="military_ammo_t2_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_owner_pos_preset"
+  itemContainer__name:t="container/ammoCrate"
+  itemContainer__type:t="ammoCrate"
+
+  ri_extra{}
+}
+
+military_medical_t1_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_medical_t1_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_b"
+  openable_ri__closed:t="ammunition_box_b"
+  ri_preload__name:t="ammunition_box_b_open"
+  human_inventory__maxVolume:r=50
+  loot_drop_system__lootPreset:t="medical_items_t1_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_medical_box"
+  itemContainer__name:t="container/medicalCrate"
+  itemContainer__type:t="medicalCrate"
+
+  ri_extra{}
+}
+
+military_medical_t2_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_medical_t2_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_b"
+  openable_ri__closed:t="ammunition_box_b"
+  ri_preload__name:t="ammunition_box_b_open"
+  human_inventory__maxVolume:r=50
+  loot_drop_system__lootPreset:t="medical_items_t2_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_medical_box"
+  itemContainer__name:t="container/medicalCrate"
+  itemContainer__type:t="medicalCrate"
+
+  ri_extra{}
+}
+
+military_medical_t3_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_medical_t3_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_b"
+  openable_ri__closed:t="ammunition_box_b"
+  ri_preload__name:t="ammunition_box_b_open"
+  human_inventory__maxVolume:r=50
+  loot_drop_system__lootPreset:t="medical_items_t3_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_medical_box"
+  itemContainer__name:t="container/medicalCrate"
+  itemContainer__type:t="medicalCrate"
+
+  ri_extra{}
+}
+
+military_grenades_t1_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_grenades_t1_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="sovindustrial_box_weapons_c"
+  openable_ri__closed:t="sovindustrial_box_weapons_c"
+  ri_preload__name:t="sovindustrial_box_weapons_c_open_b"
+  human_inventory__maxVolume:r=50
+  loot_drop_system__lootPreset:t="grenade_box_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_grenade_box_normal"
+  itemContainer__name:t="container/grenadeCrate"
+  itemContainer__type:t="grenadeCrate"
+
+  ri_extra{}
+}
+
+military_close_range_weapons_t1_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_close_range_weapons_t1_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_h"
+  openable_ri__closed:t="ammunition_box_h"
+  ri_preload__name:t="ammunition_box_h_open"
+  human_inventory__maxVolume:r=60
+  loot_drop_system__lootPreset:t="close_range_soviet_weapons_t1_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_owner_pos_preset"
+  itemContainer__name:t="container/weaponCrate"
+  itemContainer__type:t="weaponCrate"
+
+  ri_extra{}
+}
+
+military_close_range_weapons_t2_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_close_range_weapons_t2_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_l"
+  openable_ri__closed:t="ammunition_box_l"
+  ri_preload__name:t="ammunition_box_l_open"
+  human_inventory__maxVolume:r=60
+  loot_drop_system__lootPreset:t="close_range_soviet_weapons_t2_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_owner_pos_preset"
+  itemContainer__name:t="container/weaponCrate"
+  itemContainer__type:t="weaponCrate"
+
+  ri_extra{}
+}
+
+military_long_range_weapons_t1_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_long_range_weapons_t1_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_h"
+  openable_ri__closed:t="ammunition_box_h"
+  ri_preload__name:t="ammunition_box_h_open"
+  human_inventory__maxVolume:r=60
+  loot_drop_system__lootPreset:t="long_range_soviet_weapons_t1_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_owner_pos_preset"
+  itemContainer__name:t="container/weaponCrate"
+  itemContainer__type:t="weaponCrate"
+
+  ri_extra{}
+}
+
+military_long_range_weapons_t2_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_long_range_weapons_t2_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_l"
+  openable_ri__closed:t="ammunition_box_l"
+  ri_preload__name:t="ammunition_box_l_open"
+  human_inventory__maxVolume:r=60
+  loot_drop_system__lootPreset:t="long_range_soviet_weapons_t2_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_owner_pos_preset"
+  itemContainer__name:t="container/rifleCrate"
+  itemContainer__type:t="rifleCrate"
+
+  ri_extra{}
+}
+
+military_long_range_weapons_t3_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_long_range_weapons_t3_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_m"
+  openable_ri__closed:t="ammunition_box_m"
+  ri_preload__name:t="ammunition_box_m_open"
+  human_inventory__maxVolume:r=60
+  loot_drop_system__lootPreset:t="long_range_soviet_weapons_t3_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_owner_pos_preset"
+  itemContainer__name:t="container/rifleCrate"
+  itemContainer__type:t="rifleCrate"
+
+  ri_extra{}
+}
+
+modern_military_equipment_t1_lootable_rendinst{
+  _use:t="military_equipment_t1_lootable_rendinst"
+  loot_drop_system__lootPreset:t="modern_equipment_t1_loot_preset"
+}
+
+modern_military_equipment_t2_lootable_rendinst{
+  _use:t="military_equipment_t2_lootable_rendinst"
+  loot_drop_system__lootPreset:t="modern_equipment_t2_loot_preset"
+}
+
+modern_military_equipment_t3_lootable_rendinst{
+  _use:t="military_equipment_t3_lootable_rendinst"
+  loot_drop_system__lootPreset:t="modern_equipment_t3_loot_preset"
+}
+
+modern_military_ammo_t1_lootable_rendinst{
+  _use:t="military_ammo_t1_lootable_rendinst"
+  loot_drop_system__lootPreset:t="modern_military_ammo_t1_loot_preset"
+}
+
+modern_military_ammo_t2_lootable_rendinst{
+  _use:t="military_ammo_t2_lootable_rendinst"
+  loot_drop_system__lootPreset:t="modern_military_ammo_t2_loot_preset"
+}
+
+modern_military_medical_t1_lootable_rendinst{
+  _use:t="military_medical_t1_lootable_rendinst"
+  loot_drop_system__lootPreset:t="modern_medical_items_t1_loot_preset"
+}
+
+modern_military_medical_t2_lootable_rendinst{
+  _use:t="military_medical_t2_lootable_rendinst"
+  loot_drop_system__lootPreset:t="modern_medical_items_t2_loot_preset"
+}
+
+modern_military_medical_t3_lootable_rendinst{
+  _use:t="military_medical_t3_lootable_rendinst"
+  loot_drop_system__lootPreset:t="modern_medical_items_t3_loot_preset"
+}
+
+modern_military_grenades_t1_lootable_rendinst{
+  _use:t="military_grenades_t1_lootable_rendinst"
+  loot_drop_system__lootPreset:t="grenade_box_modern_loot_preset"
+}
+
+modern_military_close_range_weapons_t1_lootable_rendinst{
+  _use:t="military_close_range_weapons_t1_lootable_rendinst"
+  loot_drop_system__lootPreset:t="close_range_modern_weapons_t1_loot_preset"
+}
+
+modern_military_close_range_weapons_t2_lootable_rendinst{
+  _use:t="military_close_range_weapons_t2_lootable_rendinst"
+  loot_drop_system__lootPreset:t="close_range_modern_weapons_t2_loot_preset"
+}
+
+modern_military_close_range_weapons_t3_lootable_rendinst{
+  _use:t="military_close_range_weapons_t2_lootable_rendinst"
+  loot_drop_system__lootPreset:t="close_range_modern_weapons_t3_loot_preset"
+}
+
+modern_military_long_range_weapons_t1_lootable_rendinst{
+  _use:t="military_long_range_weapons_t1_lootable_rendinst"
+  loot_drop_system__lootPreset:t="long_range_modern_weapons_t1_loot_preset"
+}
+
+modern_military_long_range_weapons_t2_lootable_rendinst{
+  _use:t="military_long_range_weapons_t2_lootable_rendinst"
+  loot_drop_system__lootPreset:t="long_range_modern_weapons_t2_loot_preset"
+}
+
+modern_military_long_range_weapons_t3_lootable_rendinst{
+  _use:t="military_long_range_weapons_t3_lootable_rendinst"
+  loot_drop_system__lootPreset:t="long_range_modern_weapons_t3_loot_preset"
+}
+
+military_vss_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="military_vss_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_m"
+  openable_ri__closed:t="ammunition_box_m"
+  ri_preload__name:t="ammunition_box_m_open"
+  human_inventory__maxVolume:r=60
+  loot_drop_system__lootPreset:t="vss_vintorez_gun_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_owner_pos_preset"
+  itemContainer__name:t="container/weaponCrate"
+  itemContainer__type:t="weaponCrate"
+
+  ri_extra{}
+}
+
+award_weapon_box_lootable_rendinst_1{
+  _use:t="lootable_rendinst"
+  _use:t="award_weapon_box_lootable_rendinst_1_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="sovmod_pistol_case"
+  openable_ri__closed:t="sovmod_pistol_case"
+  ri_preload__name:t="sovmod_pistol_case_open_a"
+  human_inventory__maxVolume:r=30
+  loot_drop_system__lootPreset:t="award_weapons_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_award_box"
+  itemContainer__name:t="container/weaponCrate"
+  itemContainer__type:t="weaponCrate"
+
+  ri_extra{}
+}
+
+award_weapon_box_lootable_rendinst_2{
+  _use:t="award_weapon_box_lootable_rendinst_1"
+  ri_preload__name:t="sovmod_pistol_case_open_b"
+}
+
+award_weapon_box_lootable_rendinst_3{
+  _use:t="award_weapon_box_lootable_rendinst_1"
+  ri_preload__name:t="sovmod_pistol_case_open_c"
+}
+
+secret_lootable_rendinst_1{
+  _use:t="lootable_rendinst"
+  _use:t="locked"
+  _use:t="secret_lootable_rendinst_1_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="ammunition_box_n"
+  openable_ri__closed:t="ammunition_box_n"
+  ri_preload__name:t="ammunition_box_n_open"
+  human_inventory__maxVolume:r=40
+  loot_drop_system__lootPreset:t="valuable_military_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_big_weapon_box"
+  itemContainer__name:t="container/armyCrate"
+  itemContainer__type:t="armyCrate"
+  _replicated:t="locked__keyTags"
+  secret_lootable_rendinst__questMsg:t=""
+  use_object__enabled:b=no
+
+  ri_extra{}
+  "locked__keyTags:list<t>"{}
+  "secret_lootable_rendinst:tag"{}
+  "secret_lootable_rendinst__questMsgOptions:list<t>"{
+    i:t="quest/secret_note_message_millitary1"
+  }
+}
+
+secret_military_lootable_rendinst_1{
+  _use:t="lootable_rendinst"
+  _use:t="locked"
+  _use:t="secret_military_lootable_rendinst_1_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="sovindustrial_box_zip_b_type_a"
+  openable_ri__closed:t="sovindustrial_box_zip_b_type_a"
+  ri_preload__name:t="sovindustrial_box_zip_b_type_d"
+  human_inventory__maxVolume:r=60
+  loot_drop_system__lootPreset:t="close_range_soviet_weapons_t1_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_big_weapon_box"
+  itemContainer__name:t="container/armyCrate"
+  itemContainer__type:t="armyCrate"
+  _replicated:t="locked__keyTags"
+  secret_lootable_rendinst__questMsg:t=""
+
+  ri_extra{}
+  "locked__keyTags:list<t>"{}
+  "secret_lootable_rendinst:tag"{}
+  "secret_lootable_rendinst__questMsgOptions:list<t>"{
+    i:t="quest/secret_note_message_millitary1"
+  }
+}
+
+secret_military_lootable_rendinst_2{
+  _use:t="lootable_rendinst"
+  _use:t="locked"
+  _use:t="secret_military_lootable_rendinst_2_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="sovindustrial_box_zip_b_type_a"
+  openable_ri__closed:t="sovindustrial_box_zip_b_type_a"
+  ri_preload__name:t="sovindustrial_box_zip_b_type_d"
+  human_inventory__maxVolume:r=60
+  loot_drop_system__lootPreset:t="close_range_soviet_weapons_t1_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_big_weapon_box"
+  itemContainer__name:t="container/armyCrate"
+  itemContainer__type:t="armyCrate"
+  _replicated:t="locked__keyTags"
+  secret_lootable_rendinst__questMsg:t=""
+
+  ri_extra{}
+  "locked__keyTags:list<t>"{}
+  "secret_lootable_rendinst:tag"{}
+  "secret_lootable_rendinst__questMsgOptions:list<t>"{
+    i:t="quest/secret_note_message_millitary1"
+  }
+}
+
+secret_military_lootable_rendinst_3{
+  _use:t="lootable_rendinst"
+  _use:t="locked"
+  _use:t="secret_military_lootable_rendinst_3_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="sovindustrial_box_zip_b_type_a"
+  openable_ri__closed:t="sovindustrial_box_zip_b_type_a"
+  ri_preload__name:t="sovindustrial_box_zip_b_type_d"
+  human_inventory__maxVolume:r=60
+  loot_drop_system__lootPreset:t="long_range_soviet_weapons_t1_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_big_weapon_box"
+  itemContainer__name:t="container/armyCrate"
+  itemContainer__type:t="armyCrate"
+  _replicated:t="locked__keyTags"
+  secret_lootable_rendinst__questMsg:t=""
+
+  ri_extra{}
+  "locked__keyTags:list<t>"{}
+  "secret_lootable_rendinst:tag"{}
+  "secret_lootable_rendinst__questMsgOptions:list<t>"{
+    i:t="quest/secret_note_message_millitary1"
+  }
+}
+
+secret_military_lootable_rendinst_4{
+  _use:t="lootable_rendinst"
+  _use:t="locked"
+  _use:t="secret_military_lootable_rendinst_4_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="sovindustrial_box_zip_b_type_a"
+  openable_ri__closed:t="sovindustrial_box_zip_b_type_a"
+  ri_preload__name:t="sovindustrial_box_zip_b_type_d"
+  human_inventory__maxVolume:r=60
+  loot_drop_system__lootPreset:t="grenade_box_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_big_weapon_box"
+  itemContainer__name:t="container/armyCrate"
+  itemContainer__type:t="armyCrate"
+  _replicated:t="locked__keyTags"
+  secret_lootable_rendinst__questMsg:t=""
+
+  ri_extra{}
+  "locked__keyTags:list<t>"{}
+  "secret_lootable_rendinst:tag"{}
+  "secret_lootable_rendinst__questMsgOptions:list<t>"{
+    i:t="quest/secret_note_message_millitary1"
+  }
+}
+
+secret_stash_lootable_rendinst_1{
+  _use:t="lootable_rendinst"
+  _use:t="locked"
+  _use:t="secret_stash_lootable_rendinst_1_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="sovindustrial_box_zip_b_type_a"
+  openable_ri__closed:t="sovindustrial_box_zip_b_type_a"
+  ri_preload__name:t="sovindustrial_box_zip_b_type_d"
+  human_inventory__maxVolume:r=60
+  loot_drop_system__lootPreset:t="close_range_soviet_weapons_t1_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_big_weapon_box"
+  itemContainer__name:t="container/weaponCrate"
+  itemContainer__type:t="weaponCrate"
+  _replicated:t="locked__keyTags"
+  secret_lootable_rendinst__questMsg:t=""
+
+  ri_extra{}
+  "locked__keyTags:list<t>"{}
+  "secret_lootable_rendinst:tag"{}
+  "secret_lootable_rendinst__questMsgOptions:list<t>"{
+    i:t="quest/secret_note_message_millitary1"
+  }
+}
+
+secret_stash_lootable_rendinst_2{
+  _use:t="lootable_rendinst"
+  _use:t="locked"
+  _use:t="secret_stash_lootable_rendinst_2_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="sovindustrial_box_zip_b_type_a"
+  openable_ri__closed:t="sovindustrial_box_zip_b_type_a"
+  ri_preload__name:t="sovindustrial_box_zip_b_type_d"
+  human_inventory__maxVolume:r=60
+  loot_drop_system__lootPreset:t="long_range_soviet_weapons_t1_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_big_weapon_box"
+  itemContainer__name:t="container/weaponCrate"
+  itemContainer__type:t="weaponCrate"
+  _replicated:t="locked__keyTags"
+  secret_lootable_rendinst__questMsg:t=""
+
+  ri_extra{}
+  "locked__keyTags:list<t>"{}
+  "secret_lootable_rendinst:tag"{}
+  "secret_lootable_rendinst__questMsgOptions:list<t>"{
+    i:t="quest/secret_note_message_millitary1"
+  }
+}
+
+hidden_colt_nickel_lootable_rendinst_1{
+  _use:t="lootable_rendinst"
+  _use:t="hidden_colt_nickel_lootable_rendinst_1_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="sovmod_pistol_case"
+  openable_ri__closed:t="sovmod_pistol_case"
+  ri_preload__name:t="sovmod_pistol_case_open_c"
+  human_inventory__maxVolume:r=10
+  loot_drop_system__lootPreset:t="hidden_colt_nickel_gun_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_award_box"
+  itemContainer__name:t="container/weaponCrate"
+  itemContainer__type:t="weaponCrate"
+
+  ri_extra{}
+}
+
+military_uaz_lootable_rendinst_1{
+  _use:t="lootable_rendinst"
+  _use:t="military_uaz_lootable_rendinst_1_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="uaz_452_abandoned_c"
+  openable_ri__closed:t="uaz_452_abandoned_c"
+  ri_preload__name:t="uaz_452_abandoned_c_open"
+  human_inventory__maxVolume:r=80
+  loot_drop_system__lootPreset:t="military_uaz_weapons_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_award_box"
+  itemContainer__name:t="container/uaz452"
+  itemContainer__type:t="uaz452"
+
+  ri_extra{}
+}
+
+military_barge_small_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="locked"
+  _use:t="military_barge_small_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="sovindustrial_box_zip_a_500"
+  openable_ri__closed:t="sovindustrial_box_zip_a_500"
+  ri_preload__name:t="sovindustrial_box_zip_a_500_open_loot"
+  human_inventory__maxVolume:r=60
+  loot_drop_system__lootPreset:t="anomaly_barge_small_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_medical_safe"
+  itemContainer__name:t="container/crate"
+  itemContainer__type:t="crate"
+
+  ri_extra{}
+  "ri_preload__preloadOnLevelLoaded:tag"{}
+  "locked__keyTags:list<t>"{
+    i:t="anomaly_barge_container_small_lock"
+  }
+}
+
+military_barge_big_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  _use:t="locked"
+  _use:t="military_barge_big_lootable_rendinst_sounds"
+  _replicated:t="transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t="sovindustrial_box_zip_a_1000_type_c"
+  openable_ri__closed:t="sovindustrial_box_zip_a_1000_type_c"
+  ri_preload__name:t="sovindustrial_box_zip_a_1000_type_c_open"
+  human_inventory__maxVolume:r=90
+  loot_drop_system__lootPreset:t="anomaly_barge_big_loot_preset"
+  loot_drop_system__dropPreset:t="drop_in_places_medical_safe"
+  itemContainer__name:t="container/crate"
+  itemContainer__type:t="crate"
+
+  ri_extra{}
+  "ri_preload__preloadOnLevelLoaded:tag"{}
+  "locked__keyTags:list<t>"{
+    i:t="anomaly_barge_container_big_lock"
+  }
+}

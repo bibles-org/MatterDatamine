@@ -1,0 +1,277 @@
+onboarding_miniraid_memory_item{
+  "onboarding_miniraid_memory_item:tag"{}
+}
+
+clear_miniraid_memory_items{
+  "clear_miniraid_memory_items:tag"{}
+}
+
+onboarding_key_insertion_failed{
+  _use:t="state_machine_transition_trigger"
+  game_trigger_processor__onTrigger:t="onboarding_memory_key_insertion_failed"
+  game_trigger_processor__onTriggerHash:i=0
+
+  "trigger_transition_on_game_trigger:tag"{}
+}
+
+onboarding_memory_respawn_and_trigger_on_key_insertion{
+  _use:t="onboarding_respawn_on_disappear"
+  _use:t="client_destroy_in_5_sec"
+  _use:t="game_trigger_disappear"
+  game_trigger_disappear__emitEvent:t="onboarding_memory_key_insertion_failed"
+}
+
+onboarding_memory_death_processor{
+  onboarding_death_processor__template:t="onboarding_memory_respawn_and_trigger_on_key_insertion"
+}
+
+onboarding_memory_respawn_attached_template{
+  _use:t="game_effect_base"
+  game_effect__attachedTemplate:t="onboarding_memory_death_processor"
+}
+
+onboarding_memory_respawn_effect_creator{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_memory_respawn_attached_template"
+}
+
+onboarding_memory_fade_hero_effect{
+  _use:t="client_game_effect_with_duration"
+  _use:t="base_postfx_fade_affect"
+  _use:t="hide_ui_game_effect"
+  game_effect__timeToDestroy:r=2.5
+  postfx_fade_affect__fadeColor:c=5, 7, 5, 255
+  postfx_fade_affect__fadeInTime:r=1
+  postfx_fade_affect__fadeOutTime:r=1
+}
+
+onboarding_memory_fade{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_memory_fade_hero_effect"
+}
+
+onboarding_memory_fade_long_hero_effect{
+  _use:t="onboarding_memory_fade_hero_effect"
+  game_effect__timeToDestroy:r=9
+  postfx_fade_affect__fadeInTime:r=6
+  postfx_fade_affect__fadeOutTime:r=3
+}
+
+onboarding_memory_fade_long{
+  _use:t="onboarding_hero_game_effect"
+  _use:t="onboarding_phase_temporary_entity"
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_memory_fade_long_hero_effect"
+}
+
+onboarding_memory_delayed_enable_profile{
+  _use:t="create_entity_on_appear_with_delay"
+  create_entity_on_appear_with_delay__delay:r=6
+  create_entity_on_appear_with_delay__template:t="enable_player_profile"
+}
+
+onboarding_memory_delayed_end_onboarding{
+  _use:t="create_entity_on_appear_with_delay"
+  create_entity_on_appear_with_delay__delay:r=6.1
+  create_entity_on_appear_with_delay__template:t="end_onboarding"
+}
+
+delayed_start_trigger_source{
+  _use:t="game_trigger_timer"
+  game_trigger_processor_timer__time:r=1
+  game_trigger_processor_timer__eventTrigger:t="memory_delayed_start"
+}
+
+onboarding_memory_delayed_heal{
+  _use:t="create_entity_on_appear_with_delay"
+  create_entity_on_appear_with_delay__delay:r=6
+  create_entity_on_appear_with_delay__template:t="onboarding_heal_hero"
+}
+
+onboarding_memory_delayed_stamina_restore{
+  _use:t="create_entity_on_appear_with_delay"
+  create_entity_on_appear_with_delay__delay:r=6
+  create_entity_on_appear_with_delay__template:t="onboarding_restore_pulse_and_stamina"
+}
+
+onboarding_memory_delayd_start_trigger{
+  _use:t="state_machine_transition_trigger"
+  game_trigger_processor__onTrigger:t="memory_delayed_start"
+  game_trigger_processor__onTriggerHash:i=0
+
+  "trigger_transition_on_game_trigger:tag"{}
+}
+
+onboarding_memory_fadeout_state{
+  _use:t="state_machine_state"
+
+  "onboarding_memory_fadeout_state:tag"{}
+  "state_machine_state__createEntitiesWhenCurrent:list<t>"{
+    item:t="onboarding_memory_fade"
+    item:t="delayed_start_trigger_source"
+  }
+}
+
+onboarding_phase_finished_memory_no_profile{
+  _use:t="onboarding_phase_finished"
+
+  "state_machine_state__createEntitiesWhenCurrent:list<t>"{
+    item:t="phase_temporary_entities"
+    item:t="onboarding_memory_fade_long"
+    item:t="onboarding_memory_delayed_end_onboarding"
+    item:t="onboarding_memory_delayed_enable_profile"
+    item:t="onboarding_memory_delayed_heal"
+    item:t="onboarding_memory_delayed_stamina_restore"
+  }
+}
+
+onboarding_phase_base_key_insertion_no_profile{
+  _use:t="onboarding_phase_base_key_insertion"
+
+  "onboarding_phase_base_key_insertion:tag"{}
+  "state_machine_state__createEntitiesWhenCurrent:list<t>"{
+    item:t="onboarding_teleport_hero_to_base"
+    item:t="onboarding_heal_hero"
+    item:t="onboarding_note_contracts_processor"
+    item:t="onboarding_note_monolith_processor"
+    item:t="onboarding_monolith_enable_interaction_processor"
+    item:t="onboarding_memory_respawn_effect_creator"
+    item:t="onboarding_note_bunker_end_processor"
+    item:t="onboarding_contract_trigger"
+    item:t="onboarding_monolith_access_trigger"
+    item:t="onboarding_restore_pulse_and_stamina"
+  }
+}
+
+onboarding_load_from_memory{
+  _use:t="state_machine_transition"
+
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{}
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_memory_fadeout_state"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="state_machine_transition_trigger_immediate"
+  }
+}
+
+onboarding_memory_fadeout_to_monolith{
+  _use:t="state_machine_transition"
+
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{
+    item:t="onboarding_memory_fadeout_state"
+  }
+
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_phase_monolith"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="onboarding_memory_delayd_start_trigger"
+  }
+}
+
+transition_monolith_to_base_first_time_memory{
+  _use:t="state_machine_transition"
+
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{
+    item:t="onboarding_phase_monolith"
+  }
+
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_phase_base_first_time"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="onboarding_portal_activated"
+  }
+}
+
+transition_base_first_time_to_miniraid_memory{
+  _use:t="state_machine_transition"
+
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{
+    item:t="onboarding_phase_base_first_time"
+  }
+
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_phase_miniraid"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="onboarding_miniraid_activated"
+  }
+}
+
+transition_miniraid_to_base_key_insertion_memory{
+  _use:t="state_machine_transition"
+
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{
+    item:t="onboarding_phase_miniraid"
+  }
+
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_phase_base_key_insertion"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="onboarding_miniraid_extraction"
+  }
+}
+
+transition_base_key_insertion_to_finished_memory{
+  _use:t="state_machine_transition"
+
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{
+    item:t="onboarding_phase_base_key_insertion"
+  }
+
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_phase_finished"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="onboarding_base_activated"
+  }
+}
+
+transition_failed_key_insertion_to_base_first_time{
+  _use:t="state_machine_transition"
+
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{
+    item:t="onboarding_phase_base_key_insertion"
+  }
+
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_phase_base_first_time"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="onboarding_key_insertion_failed"
+  }
+}
+
+onboarding_state_machine_memory{
+  _use:t="onboarding_state_machine"
+
+  "onboarding_state_machine_memory:tag"{}
+  "state_machine__stateTemplates:list<t>"{
+    item:t="onboarding_memory_fadeout_state"
+    item:t="onboarding_phase_monolith"
+    item:t="onboarding_phase_base_first_time"
+    item:t="onboarding_phase_miniraid"
+    item:t="onboarding_phase_base_key_insertion_no_profile"
+    item:t="onboarding_phase_finished_memory_no_profile"
+  }
+
+  "state_machine__transitionTemplates:list<t>"{
+    item:t="onboarding_load_from_memory"
+    item:t="onboarding_memory_fadeout_to_monolith"
+    item:t="transition_monolith_to_base_first_time_memory"
+    item:t="transition_base_first_time_to_miniraid_memory"
+    item:t="transition_failed_miniraid_to_base_first_time"
+    item:t="transition_failed_key_insertion_to_base_first_time"
+    item:t="transition_miniraid_to_base_key_insertion_memory"
+    item:t="transition_base_key_insertion_to_finished_memory"
+  }
+}

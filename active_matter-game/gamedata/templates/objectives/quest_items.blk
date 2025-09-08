@@ -1,0 +1,755 @@
+base_quest_item{
+  item__weight:r=0
+  item__volume:r=0
+  quest_item__disablePickupMessage:t="quest_item_for_other_player"
+
+  "questItem:tag"{}
+  "questItemTooltip:tag"{}
+  _group{
+    _replicate:b=yes
+    quest_item__canBeTakenByAll:b=no
+
+    "quest_item__playerEid:eid"{}
+    "quest_item__objectiveEids:list<eid>"{}
+  }
+}
+
+base_not_dropable_quest_item{
+  _use:t="base_quest_item"
+  _use:t="block_item_move_to_backpack"
+  _use:t="block_item_move_to_ground"
+
+  "item__nonDroppable:tag"{}
+}
+
+base_not_extractable_quest_item{
+  _use:t="base_not_dropable_quest_item"
+
+  "notExtractable:tag"{}
+}
+
+included_quest_item{
+  _use:t="base_not_dropable_quest_item"
+
+  "includedQuestItem:tag"{}
+  "item__cantBeCorrupted:tag"{}
+  "item__cantBeReplica:tag"{}
+}
+
+included_not_extractable_quest_item{
+  _use:t="base_not_extractable_quest_item"
+
+  "includedQuestItem:tag"{}
+  "item__cantBeCorrupted:tag"{}
+  "item__cantBeReplica:tag"{}
+}
+
+discovered_quest_item{
+  _use:t="base_quest_item"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t=""
+
+  "discoveredQuestItem:tag"{}
+}
+
+secret_discovered_quest_item{
+  _use:t="discovered_quest_item"
+
+  "item__overrideTemplateAfterFirstExtractionItem:tag"{}
+  "secretDiscoveredQuestItem:tag"{}
+}
+
+game_effect_recreate_discovered_quest_item{
+  _use:t="game_effect_with_duration"
+  game_effect__timeToDestroy:r=60
+  game_effect__recreateDiscoveredQuestItem:b=yes
+
+  "game_effect_recreate_discovered_quest_item:tag"{}
+}
+
+discovered_not_extractable_quest_item{
+  _use:t="base_not_extractable_quest_item"
+
+  "discoveredQuestItem:tag"{}
+  "item__cantBeCorrupted:tag"{}
+  "item__cantBeReplica:tag"{}
+}
+
+quest_camera_watching_affect{
+  _use:t="replicated_game_effect"
+  quest_camera_watching_affect__state:i=0
+  _tracked:t="quest_camera_watching_affect__state"
+  _replicated:t="quest_camera_watching_affect__state"
+  quest_camera_watching_affect__interruptUseAt:r=-1
+  quest_camera_watching_affect__interruptAfterShotDelay:r=1.5
+  human_cam_magnification_affect__magnification:r=1.5
+  postfx_vignette_affect__factor:r=0.9
+
+  "game_effect__colorGrading:object"{
+    colorContrast:p4=1, 1.05, 1, 1.1
+    colorGain:p4=1, 0.95, 1, 1
+    colorGamma:p4=1.1, 1, 1.1, 0.8
+    colorSaturation:p4=1, 1, 0.8, 0.6
+    _tags:t="render"
+  }
+
+  "quest_camera_watching_affect:tag"{}
+  _group{
+    _tags:t="gameClient"
+    _track:b=yes
+    quest_camera_watching_affect__inPlace:b=no
+    quest_camera_watching_affect__targetInView:b=no
+    quest_camera_watching_affect__traceRatio:r=0
+
+    "quest_camera_watching_affect__closestZoneEid:eid"{}
+    "quest_camera_watching_affect__targetEid:eid"{}
+    "quest_camera_watching_affect__detectedTargetEid:eid"{}
+  }
+}
+
+quest_camera_item{
+  _use:t="base_binoculars_item"
+  _use:t="included_not_extractable_quest_item"
+  item__name:t="items/camera"
+  item__proto:t="quest_camera_item"
+  animchar__res:t="digital_binoculars_char"
+  item__iconYaw:r=-25
+  item__iconPitch:r=0
+  item__iconRoll:r=15
+  binoculars_item__binocularsAffectTemplate:t="quest_camera_watching_affect"
+
+  "item__hideInInventory:tag"{}
+  "item__notConsumedWhenUsed:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "questCameraItem:tag"{}
+  "singletonQuestItem:tag"{}
+  "binoculars_item__ignoreShootInputInterrupt:tag"{}
+}
+
+quest_sensor_device_item{
+  _use:t="item"
+  _use:t="included_not_extractable_quest_item"
+  item__name:t="items/quest_sensor_device_item"
+  item__proto:t="quest_sensor_device_item"
+  animchar__res:t="am_tripod_research_device_c_item_char"
+  collres__res:t="am_tripod_research_device_c_item_dynmodel_collision"
+  device_item__startCooldownOnEquip:b=yes
+  item__useTime:r=1
+  item__unarmedUsage:b=yes
+
+  "item__hideInInventory:tag"{}
+  "item__notConsumedWhenUsed:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "item__interruptAbilityOnUse:tag"{}
+  "item_common_use:tag"{}
+  "item__unarmedUsageNoReturnToPreviousSlot:tag"{}
+  "deviceItem:tag"{}
+  "item__blockUseOnPlayerBase:tag"{}
+  "device_item__ability:object"{
+    name:t="diy"
+    type:t="ultimate"
+    activeMatterPrice:i=0
+    cooldown:r=0
+    lockWhileSwimming:b=yes
+    lockInVehicle:b=yes
+    isNoWeaponMode:b=yes
+    manualSoulsWithdrawl:b=yes
+
+    "stages:array"{
+      "placement_stage:object"{
+        affectTemplate:t="quest_sensor_device_planting_preview_phase"
+        duration:r=999999
+        activePhase:b=yes
+        interruptible:b=yes
+        skippable:b=yes
+      }
+
+      "out_stage:object"{
+        affectTemplate:t="quest_device_planting_finishing_phase"
+        label:t="out_stage"
+        duration:r=0.25
+        exit:b=yes
+      }
+    }
+  }
+}
+
+quest_tower_sensor_device_item{
+  _use:t="quest_sensor_device_item"
+  item__name:t="items/quest_tower_sensor_device_item"
+  item__proto:t="quest_tower_sensor_device_item"
+}
+
+quest_ozernoe_main_sensor_item{
+  _use:t="quest_sensor_device_item"
+  item__name:t="items/quest_ozernoe_main_sensor_item"
+  item__proto:t="quest_ozernoe_main_sensor_item"
+}
+
+daily_research_sensor_item{
+  _use:t="item"
+  _use:t="included_not_extractable_quest_item"
+  item__name:t="items/quest_sensor_device_item"
+  item__proto:t="daily_research_sensor_item"
+  animchar__res:t="am_tripod_research_device_c_item_char"
+  collres__res:t="am_tripod_research_device_c_item_dynmodel_collision"
+  device_item__startCooldownOnEquip:b=yes
+  item__useTime:r=1
+
+  "item__hideInInventory:tag"{}
+  "item__notConsumedWhenUsed:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "item_common_use:tag"{}
+  "deviceItem:tag"{}
+  "item__blockUseOnPlayerBase:tag"{}
+  "device_item__ability:object"{
+    name:t="diy"
+    type:t="ultimate"
+    activeMatterPrice:i=0
+    cooldown:r=0
+    lockWhileSwimming:b=yes
+    lockInVehicle:b=yes
+    isNoWeaponMode:b=yes
+    manualSoulsWithdrawl:b=yes
+
+    "stages:array"{
+      "placement_stage:object"{
+        affectTemplate:t="quest_sensor_device_planting_preview_phase"
+        duration:r=999999
+        activePhase:b=yes
+        interruptible:b=yes
+        skippable:b=yes
+      }
+
+      "out_stage:object"{
+        affectTemplate:t="quest_device_planting_finishing_phase"
+        label:t="out_stage"
+        duration:r=0.25
+        exit:b=yes
+      }
+    }
+  }
+}
+
+quest_chrongene_device_item{
+  _use:t="quest_sensor_device_item"
+  item__name:t="items/quest_chrongene_device_item"
+  item__proto:t="quest_chrongene_device_item"
+  animchar__res:t="am_tripod_research_device_b_item_char"
+  collres__res:t="am_tripod_research_device_b_item_dynmodel_collision"
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+
+  "device_item__ability:object"{
+    name:t="diy"
+    type:t="ultimate"
+    activeMatterPrice:i=0
+    cooldown:r=0
+    lockWhileSwimming:b=yes
+    lockInVehicle:b=yes
+    isNoWeaponMode:b=yes
+    manualSoulsWithdrawl:b=yes
+
+    "stages:array"{
+      "placement_stage:object"{
+        affectTemplate:t="quest_scanner_device_planting_preview_phase"
+        duration:r=999999
+        activePhase:b=yes
+        interruptible:b=yes
+        skippable:b=yes
+      }
+
+      "out_stage:object"{
+        affectTemplate:t="quest_device_planting_finishing_phase"
+        label:t="out_stage"
+        duration:r=0.25
+        exit:b=yes
+      }
+    }
+  }
+}
+
+quest_flask_with_ground_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  item__name:t="items/flask_with_ground"
+  item__proto:t="quest_flask_with_ground_item"
+  item__weight:r=1
+  item__volume:r=0.2
+  animchar__res:t="sample_crystal_char"
+  collres__res:t="sample_crystal_collision"
+  item__extractionTemplateOverride:t="item_raid_samples"
+}
+
+quest_ozernoe_flask_with_ground_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  item__name:t="items/flask_with_ground_ozernoe"
+  item__proto:t="quest_ozernoe_flask_with_ground_item"
+  item__weight:r=1
+  item__volume:r=0.2
+  animchar__res:t="sample_crystal_char"
+  collres__res:t="sample_crystal_collision"
+  item__extractionTemplateOverride:t="item_raid_samples"
+}
+
+quest_flask_with_water_item{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="discovered_quest_item"
+  item__name:t="items/flask_with_water"
+  item__proto:t="quest_flask_with_water_item"
+  item__weight:r=1
+  item__volume:r=0.2
+  animchar__res:t="biomaterial_container_can_small_char"
+  collres__res:t="biomaterial_container_can_small_collision"
+  item__iconYaw:r=45
+  item__iconPitch:r=35
+  item__iconRoll:r=45
+  item__extractionTemplateOverride:t="item_raid_samples"
+}
+
+test_quest_item{
+  _use:t="item"
+  _use:t="discovered_quest_item"
+  item__name:t="items/test_quest_item"
+  item__proto:t="test_quest_item"
+  item__weight:r=1
+  item__volume:r=0.2
+  animchar__res:t="biomaterial_container_can_medium_char"
+  collres__res:t="biomaterial_container_can_medium_collision"
+  item__extractionTemplateOverride:t="item_raid_biomaterials"
+}
+
+quest_info_collector_device_item{
+  _use:t="item"
+  _use:t="included_not_extractable_quest_item"
+  item__name:t="items/quest_info_collector_device_item"
+  item__proto:t="quest_info_collector_device_item"
+  animchar__res:t="biomaterial_container_box_a_char"
+  collres__res:t="biomaterial_container_box_a_collision"
+  device_item__startCooldownOnEquip:b=yes
+  item__useTime:r=1
+
+  "item__notConsumedWhenUsed:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "item_common_use:tag"{}
+  "deviceItem:tag"{}
+  "item__blockUseOnPlayerBase:tag"{}
+  "device_item__ability:object"{
+    name:t="diy"
+    type:t="ultimate"
+    activeMatterPrice:i=0
+    cooldown:r=0
+    lockWhileSwimming:b=yes
+    lockInVehicle:b=yes
+    isNoWeaponMode:b=yes
+    manualSoulsWithdrawl:b=yes
+
+    "stages:array"{
+      "placement_stage:object"{
+        affectTemplate:t="quest_info_collector_device_planting_preview_phase"
+        duration:r=999999
+        activePhase:b=yes
+        interruptible:b=yes
+        skippable:b=yes
+      }
+
+      "out_stage:object"{
+        affectTemplate:t="quest_device_planting_finishing_phase"
+        label:t="out_stage"
+        duration:r=0.25
+        exit:b=yes
+      }
+    }
+  }
+}
+
+euclid_car_locator_item{
+  _use:t="item"
+  _use:t="included_not_extractable_quest_item"
+  item__name:t="items/euclid_car_locator_item"
+  item__proto:t="euclid_car_locator_item"
+  animchar__res:t="am_tripod_research_device_a_item_char"
+  collres__res:t="am_tripod_research_device_a_item_dynmodel_collision"
+  device_item__startCooldownOnEquip:b=yes
+  item__useTime:r=1
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+
+  "item__notConsumedWhenUsed:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "item__interruptAbilityOnUse:tag"{}
+  "item_common_use:tag"{}
+  "deviceItem:tag"{}
+  "item__blockUseOnPlayerBase:tag"{}
+  "device_item__ability:object"{
+    name:t="diy"
+    type:t="ultimate"
+    activeMatterPrice:i=0
+    cooldown:r=0
+    lockWhileSwimming:b=yes
+    lockInVehicle:b=yes
+    isNoWeaponMode:b=yes
+    manualSoulsWithdrawl:b=yes
+
+    "stages:array"{
+      "placement_stage:object"{
+        affectTemplate:t="euclid_car_locator_planting_preview_phase"
+        duration:r=999999
+        activePhase:b=yes
+        interruptible:b=yes
+        skippable:b=yes
+      }
+
+      "out_stage:object"{
+        affectTemplate:t="quest_device_planting_finishing_phase"
+        label:t="out_stage"
+        duration:r=0.25
+        exit:b=yes
+      }
+    }
+  }
+}
+
+ozernoe_locator_item{
+  _use:t="euclid_car_locator_item"
+  item__name:t="items/ozernoe_locator_item"
+  item__proto:t="ozernoe_locator_item"
+
+  "item__hideInInventory:tag"{}
+}
+
+euclid_primary_locator_item{
+  _use:t="euclid_car_locator_item"
+  item__name:t="items/euclid_primary_locator_item"
+  item__proto:t="euclid_primary_locator_item"
+
+  "item__hideInInventory:tag"{}
+}
+
+cargoport_primary_locator_item{
+  _use:t="euclid_car_locator_item"
+  item__name:t="items/cargoport_primary_locator_item"
+  item__proto:t="cargoport_primary_locator_item"
+
+  "item__hideInInventory:tag"{}
+}
+
+africa_locator_item{
+  _use:t="euclid_car_locator_item"
+  item__name:t="items/africa_locator_item"
+  item__proto:t="africa_locator_item"
+
+  "item__hideInInventory:tag"{}
+}
+
+quest_bomb_device_item{
+  _use:t="item"
+  _use:t="included_not_extractable_quest_item"
+  item__name:t="items/quest_bomb_device_item"
+  item__proto:t="quest_bomb_device_item"
+  animchar__res:t="tnt_explosive_char"
+  collres__res:t="tnt_explosive_collision"
+  device_item__startCooldownOnEquip:b=yes
+  item__useTime:r=1
+
+  "item__notConsumedWhenUsed:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "item_common_use:tag"{}
+  "deviceItem:tag"{}
+  "item__blockUseOnPlayerBase:tag"{}
+  "device_item__ability:object"{
+    name:t="diy"
+    type:t="ultimate"
+    activeMatterPrice:i=0
+    cooldown:r=0
+    lockWhileSwimming:b=yes
+    lockInVehicle:b=yes
+    isNoWeaponMode:b=yes
+    manualSoulsWithdrawl:b=yes
+
+    "stages:array"{
+      "placement_stage:object"{
+        affectTemplate:t="quest_bomb_device_planting_preview_phase"
+        duration:r=999999
+        activePhase:b=yes
+        interruptible:b=yes
+        skippable:b=yes
+      }
+
+      "out_stage:object"{
+        affectTemplate:t="quest_device_planting_finishing_phase"
+        label:t="out_stage"
+        duration:r=0.25
+        exit:b=yes
+      }
+    }
+  }
+}
+
+quest_monster_trap_device_item{
+  _use:t="item"
+  _use:t="included_not_extractable_quest_item"
+  item__name:t="items/quest_monster_trap_device_item"
+  item__proto:t="quest_monster_trap_device_item"
+  animchar__res:t="biomaterial_container_box_a_char"
+  collres__res:t="biomaterial_container_box_a_collision"
+  device_item__startCooldownOnEquip:b=yes
+  item__useTime:r=1
+
+  "item__notConsumedWhenUsed:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "item_common_use:tag"{}
+  "deviceItem:tag"{}
+  "item__blockUseOnPlayerBase:tag"{}
+  "device_item__ability:object"{
+    name:t="diy"
+    type:t="ultimate"
+    activeMatterPrice:i=0
+    cooldown:r=0
+    lockWhileSwimming:b=yes
+    lockInVehicle:b=yes
+    isNoWeaponMode:b=yes
+    manualSoulsWithdrawl:b=yes
+
+    "stages:array"{
+      "placement_stage:object"{
+        affectTemplate:t="quest_monster_trap_device_planting_preview_phase"
+        duration:r=999999
+        activePhase:b=yes
+        interruptible:b=yes
+        skippable:b=yes
+      }
+
+      "out_stage:object"{
+        affectTemplate:t="quest_device_planting_finishing_phase"
+        label:t="out_stage"
+        duration:r=0.25
+        exit:b=yes
+      }
+    }
+  }
+}
+
+item_secret_working_tower_sensor{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="secret_discovered_quest_item"
+  animchar__res:t="outpost_props_flat_antenna_item_char"
+  collres__res:t="outpost_props_flat_antenna_item_collision"
+  item__proto:t="item_secret_working_tower_sensor"
+  item__name:t="items/item_secret_working_tower_sensor"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_engines"
+}
+
+item_secret_docs_stash_journal{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="secret_discovered_quest_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_secret_docs_stash_journal"
+  item__name:t="items/item_secret_docs_stash_journal"
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_documents"
+}
+
+item_secret_ship_journal_2{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="secret_discovered_quest_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_secret_ship_journal_2"
+  item__name:t="items/item_info_notes_secret_ship_journal_2"
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_documents"
+}
+
+item_secret_coast_evacuation_plans{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="secret_discovered_quest_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_secret_coast_evacuation_plans"
+  item__name:t="items/item_secret_coast_evacuation_plans"
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_documents"
+}
+
+item_secret_medical_personnel_evacuation_order{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="secret_discovered_quest_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_secret_medical_personnel_evacuation_order"
+  item__name:t="items/item_secret_medical_personnel_evacuation_order"
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_documents"
+}
+
+item_secret_crashed_scientist_car_documents{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="secret_discovered_quest_item"
+  animchar__res:t="sovmod_folder_b_char"
+  collres__res:t="sovmod_folder_b_collision"
+  item__proto:t="item_secret_crashed_scientist_car_documents"
+  item__name:t="items/item_secret_crashed_scientist_car_documents"
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_documents"
+}
+
+item_secret_homemade_am_container_journal{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="secret_discovered_quest_item"
+  animchar__res:t="sovmod_folder_b_char"
+  collres__res:t="sovmod_folder_b_collision"
+  item__proto:t="item_secret_homemade_am_container_journal"
+  item__name:t="items/item_secret_homemade_am_container_journal"
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_documents"
+}
+
+item_secret_smuggler_map{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="secret_discovered_quest_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_secret_smuggler_map"
+  item__name:t="items/item_secret_smuggler_map"
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_documents"
+}
+
+item_secret_scientist_escort_order{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="secret_discovered_quest_item"
+  animchar__res:t="sovmod_folder_b_char"
+  collres__res:t="sovmod_folder_b_collision"
+  item__proto:t="item_secret_scientist_escort_order"
+  item__name:t="items/item_secret_scientist_escort_order"
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  item__weight:r=1
+  item__volume:r=0.2
+  item__extractionTemplateOverride:t="item_raid_documents"
+}
+
+item_africa_headquarters_flashdrive_2{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="secret_discovered_quest_item"
+  animchar__res:t="am_keycard_a_char"
+  collres__res:t="am_keycard_a_collision"
+  item__proto:t="item_africa_headquarters_flashdrive_2"
+  item__name:t="items/item_africa_headquarters_flashdrive_2"
+  item__desc:t="items/item_africa_headquarters_flashdrive/desc"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+item_africa_headquarters_flashdrive_3{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="secret_discovered_quest_item"
+  animchar__res:t="am_keycard_a_char"
+  collres__res:t="am_keycard_a_collision"
+  item__proto:t="item_africa_headquarters_flashdrive_3"
+  item__name:t="items/item_africa_headquarters_flashdrive_3"
+  item__desc:t="items/item_africa_headquarters_flashdrive/desc"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+item_africa_headquarters_flashdrive_4{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="secret_discovered_quest_item"
+  animchar__res:t="am_keycard_a_char"
+  collres__res:t="am_keycard_a_collision"
+  item__proto:t="item_africa_headquarters_flashdrive_4"
+  item__name:t="items/item_africa_headquarters_flashdrive_4"
+  item__desc:t="items/item_africa_headquarters_flashdrive/desc"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+item_africa_headquarters_flashdrive_5{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  _use:t="secret_discovered_quest_item"
+  animchar__res:t="am_keycard_a_char"
+  collres__res:t="am_keycard_a_collision"
+  item__proto:t="item_africa_headquarters_flashdrive_5"
+  item__name:t="items/item_africa_headquarters_flashdrive_5"
+  item__desc:t="items/item_africa_headquarters_flashdrive/desc"
+  item__weight:r=1
+  item__volume:r=0.2
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  item__extractionTemplateOverride:t="item_raid_documents"
+
+  "item__cantBeCorrupted:tag"{}
+}

@@ -1,0 +1,803 @@
+anomaly_mothman_transmutation_composite_fx{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="anomaly_transmutation_b_composite_fx"
+
+    effect{}
+  }
+}
+
+monstrify_invisible_man_trap_visual_fx_controller{
+  _use:t="anomaly_trap_visual_fx_controller"
+
+  _group{
+    _tags:t="gameClient"
+
+    "anomaly_trap_visual_fx_controller__fxTemplates:list<t>"{
+      item:t="anomaly_mothman_transmutation_composite_fx"
+    }
+  }
+}
+
+monstrified_invisible_man_sequence_spawn_effect{
+  _use:t="replicated_effect_with_duration"
+  monstrify_effect__template:t="monstrified_invisible_man"
+}
+
+monstrify_invisible_man_sequence{
+  _use:t="game_effect_sequence"
+
+  "entity_mod_effects:object"{
+    "hitpointsDmgMult+mult_diminishing":r=0
+  }
+
+  "game_effect_sequence__stages:array"{
+    "stage:object"{
+      affectTemplate:t="monstrify_sequence_fade_in"
+      duration:r=0.55
+    }
+
+    "stage:object"{
+      duration:r=0.2
+    }
+
+    "stage:object"{
+      affectTemplate:t="monstrified_invisible_man_sequence_spawn_effect"
+      duration:r=0.5
+    }
+  }
+}
+
+monstrify_invisible_man_trap{
+  _use:t="monstrify_trap"
+  monstrify_trap__sequenceTemplate:t="monstrify_invisible_man_sequence"
+  optimised_effect_source__template:t="monstrify_invisible_man_trap_visual_fx_controller"
+}
+
+monster_invisibility_affect_in{
+  _use:t="invisibility_affect_in"
+
+  "monster_invisibility_affect_in:tag"{}
+  "state__disableUseAbilities:tag"{}
+}
+
+monster_invisibility_affect{
+  _use:t="invisibility_affect"
+
+  "monster_invisibility_affect:tag"{}
+  "state__disableUseAbilities:tag"{}
+}
+
+monster_invisibility_affect_out{
+  _use:t="invisibility_affect_out"
+
+  "monster_invisibility_affect_out:tag"{}
+  "state__disableUseAbilities:tag"{}
+}
+
+monster_invis_ability{
+  _use:t="common_char_ability"
+  _use:t="active_matter_invis_ability"
+  game_effect__invisible:b=no
+  human_use_object__lockVehicleUse:b=no
+
+  "hero_ability__abilities:array"{
+    "invisibility:object"{
+      name:t="invisibility"
+      actionHandleName:t="MonsterInvisibleman.Invis"
+      cooldown:r=15
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=yes
+
+      "stages:array"{
+        "in_stage:object"{
+          affectTemplate:t="monster_invisibility_affect_in"
+          setupTransform:b=yes
+          duration:r=0.3
+          activePhase:b=yes
+          interruptible:b=yes
+
+          "substages:array"{
+            "smoke:object"{
+              affectTemplate:t="invisibility_continuous_affect_in"
+              setupTransform:b=yes
+              duration:r=0.2
+            }
+
+            "burst_smoke:object"{
+              affectTemplate:t="invisibility_burst_affect_in"
+              setupTransform:b=yes
+              delay:r=0.2
+              duration:r=1
+            }
+          }
+        }
+
+        "main_stage:object"{
+          affectTemplate:t="monster_invisibility_affect"
+          duration:r=10
+          skippable:b=yes
+          unskippableDuration:r=2
+          activePhase:b=yes
+          interruptible:b=yes
+        }
+
+        "out_stage:object"{
+          affectTemplate:t="monster_invisibility_affect_out"
+          setupTransform:b=yes
+          duration:r=1.5
+          exit:b=yes
+
+          "substages:array"{
+            "smoke:object"{
+              affectTemplate:t="invisibility_continuous_affect_out"
+              setupTransform:b=yes
+              duration:r=1
+            }
+
+            "burst_smoke:object"{
+              affectTemplate:t="invisibility_burst_affect_out"
+              setupTransform:b=yes
+              delay:r=1
+              duration:r=1
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+monster_preparation_to_explode{
+  "monster_preparation_to_explode:tag"{}
+  "state__disableUseAbilities:tag"{}
+}
+
+monster_explode{
+  _use:t="replicated_game_effect"
+  _use:t="locked_loot_pickup_affect"
+  game_effect__perkName:t="gamedata/items/ability_pushing_explode.blk"
+  game_effect__disableFlag:t="human_inventory__canUseItems"
+  game_effect__enableFlag:t="human_use_object__lockVehicleUse"
+  sphere_zone__radius:r=15
+  monster_explosion__traceNode:t="Bip01 Head"
+  monster_explosion__pushForce:r=10
+  monster_explosion__pushForceVehicle:r=200
+  monster_explosion__pushUpForce:r=1
+  monster_explosion__riDmgRadius:r=10
+  monster_explosion__riDmgNearFar:p2=125, 35
+  monster_explosion__fxTemplate:t="am_core_explosion_effect"
+
+  "state__disableWeaponSwitch:tag"{}
+  "locked_weapon__reload:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "locked_view__lockZoom:tag"{}
+  "locked_use_object__lockGrenadeRethrowing:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockVehicleUse:tag"{}
+  "locked_use_object__lockSprayDraw:tag"{}
+  "locked_use_object__lockSprayFill:tag"{}
+  "game_effect__disableActions:tag"{}
+  "game_effect__disableShooting:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_use_object__lockJetpackUse:tag"{}
+  "game_effect__lockZonesEnter:tag"{}
+  "state__disableUseAbilities:tag"{}
+  "monster_explode:tag"{}
+}
+
+monster_explode_affect_out{
+  "monster_explode_affect_out:tag"{}
+  "state__disableUseAbilities:tag"{}
+}
+
+monster_pushing_ability{
+  _use:t="common_char_ability"
+  human_use_object__lockVehicleUse:b=no
+
+  "hero_ability__abilities:array"{
+    "pushing_explosion:object"{
+      name:t="pushing_explosion"
+      actionHandleName:t="MonsterInvisibleman.Pushing"
+      cooldown:r=15
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=yes
+
+      "stages:array"{
+        "in_stage:object"{
+          affectTemplate:t="monster_preparation_to_explode"
+          setupTransform:b=yes
+          duration:r=0.9
+          activePhase:b=yes
+          interruptible:b=yes
+
+          "substages:array"{
+            "smoke:object"{
+              affectTemplate:t="invisibility_continuous_affect_in"
+              setupTransform:b=yes
+              duration:r=0.6
+            }
+
+            "burst_smoke:object"{
+              affectTemplate:t="invisibility_burst_affect_in"
+              setupTransform:b=yes
+              delay:r=0.3
+            }
+          }
+        }
+
+        "main_stage:object"{
+          affectTemplate:t="monster_explode"
+          duration:r=0.5
+          skippable:b=no
+          unskippableDuration:r=0.5
+          activePhase:b=yes
+          interruptible:b=no
+        }
+
+        "out_stage:object"{
+          affectTemplate:t="monster_explode_affect_out"
+          setupTransform:b=yes
+          duration:r=0.4
+          exit:b=yes
+
+          "substages:array"{
+            "smoke:object"{
+              affectTemplate:t="invisibility_continuous_affect_out"
+              setupTransform:b=yes
+              duration:r=0.3
+            }
+
+            "burst_smoke:object"{
+              affectTemplate:t="invisibility_burst_affect_out"
+              setupTransform:b=yes
+              duration:r=0.1
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+monster_trapping_ability{
+  _use:t="common_char_ability"
+  human_use_object__lockVehicleUse:b=no
+
+  "hero_ability__abilities:array"{
+    "trapping:object"{
+      name:t="trapping"
+      actionHandleName:t="MonsterInvisibleman.Trap"
+      show_in_ui:b=yes
+      cooldown:r=0
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=yes
+      activeMatterPrice:i=0
+      icon:t="uiskin/ability/blink.svg"
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=no
+
+      "stages:array"{
+        "trapping:object"{
+          name:t="trapping"
+          cooldown:r=10
+          lockWhileSwimming:b=yes
+          lockInVehicle:b=yes
+          skipOnDeath:b=yes
+
+          "stages:array"{
+            "monster_trap_planting:object"{
+              affectTemplate:t="monster_trap_planting"
+              duration:r=9999
+              activePhase:b=yes
+              interruptible:b=yes
+              skippable:b=yes
+            }
+
+            "monster_trap_planting_finish:object"{
+              affectTemplate:t="monster_trap_finishing"
+              duration:r=0.5
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+invisible_monster_trap_teleportation{
+  _use:t="teleport_trap"
+  _use:t="animchar"
+  animchar_render__enabled:b=yes
+  animchar__res:t="floor_trap_a_char"
+  collres__res:t="floor_trap_a_collision"
+  team:i=-1
+  teleport_trap__affectTemplate:t="mothman_teleport_affect"
+
+  "net__alwaysInScope:tag"{}
+  "playerOwnerEid:eid"{}
+  "set_teammate:tag"{}
+}
+
+invisible_monster_trap_teleportation_preview{
+  _use:t="animchar_diy_preview"
+  animchar__res:t="floor_trap_a_char"
+  collres__res:t="floor_trap_a_collision"
+  preview__radius:r=1.85
+
+  _group{
+    _tags:t="render"
+    semi_transparent__lod:i=1
+  }
+
+  "diyNormalizeGround:tag"{}
+  "diyNormalizeWall:tag"{}
+}
+
+monster_invisible_traping_configure{
+  _use:t="base_quest_device_planting_human"
+  diy__resultTempl:t="invisible_monster_trap_teleportation"
+  diy__previewTempl:t="invisible_monster_trap_teleportation_preview"
+}
+
+monster_trap_planting{
+  _use:t="replicated_game_effect"
+  _use:t="base_quest_device_planting_preview_phase"
+  game_effect__attachedTemplate:t="monster_invisible_traping_configure"
+
+  "monster_trap_planting:tag"{}
+  "state__disableUseAbilities:tag"{}
+}
+
+monster_trap_finishing{
+  "monster_trap_finishing:tag"{}
+  "state__disableUseAbilities:tag"{}
+}
+
+am_mindcontrolled_invisible_man_abilities{
+  _use:t="monster_invis_ability"
+  _use:t="monster_pushing_ability"
+  _use:t="monster_trapping_ability"
+
+  "hero_ability__abilities:array"{
+    "invisibility:object"{
+      name:t="invisibility"
+      actionHandleName:t="MonsterInvisibleman.Invis"
+      show_in_ui:b=yes
+      cooldown:r=0
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=yes
+      activeMatterPrice:i=0
+      icon:t="uiskin/ability/blink.svg"
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=no
+
+      "stages:array"{
+        "in_stage:object"{
+          affectTemplate:t="monster_invisibility_affect_in"
+          setupTransform:b=yes
+          duration:r=1
+          activePhase:b=yes
+          interruptible:b=yes
+
+          "substages:array"{
+            "smoke:object"{
+              affectTemplate:t="invisibility_continuous_affect_in"
+              setupTransform:b=yes
+              duration:r=1
+            }
+
+            "burst_smoke:object"{
+              affectTemplate:t="invisibility_burst_affect_in"
+              setupTransform:b=yes
+              delay:r=0.2
+              duration:r=1
+            }
+          }
+        }
+
+        "main_stage:object"{
+          affectTemplate:t="monster_invisibility_affect"
+          duration:r=100000
+          skippable:b=yes
+          unskippableDuration:r=2
+          activePhase:b=yes
+          interruptible:b=yes
+        }
+
+        "out_stage:object"{
+          affectTemplate:t="monster_invisibility_affect_out"
+          setupTransform:b=yes
+          duration:r=1.5
+          exit:b=yes
+
+          "substages:array"{
+            "smoke:object"{
+              affectTemplate:t="invisibility_continuous_affect_out"
+              setupTransform:b=yes
+              duration:r=1
+            }
+
+            "burst_smoke:object"{
+              affectTemplate:t="invisibility_burst_affect_out"
+              setupTransform:b=yes
+              delay:r=1
+              duration:r=1
+            }
+          }
+        }
+      }
+    }
+
+    "pushing_explosion:object"{
+      name:t="pushing_explosion"
+      actionHandleName:t="MonsterInvisibleman.Pushing"
+      cooldown:r=1
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=yes
+      icon:t="uiskin/ability/blink.svg"
+
+      "stages:array"{
+        "in_stage:object"{
+          affectTemplate:t="monster_preparation_to_explode"
+          setupTransform:b=yes
+          duration:r=0.9
+          activePhase:b=yes
+          interruptible:b=yes
+
+          "substages:array"{
+            "smoke:object"{
+              affectTemplate:t="invisibility_continuous_affect_in"
+              setupTransform:b=yes
+              duration:r=0.6
+            }
+
+            "burst_smoke:object"{
+              affectTemplate:t="invisibility_burst_affect_in"
+              setupTransform:b=yes
+              delay:r=0.3
+            }
+          }
+        }
+
+        "main_stage:object"{
+          affectTemplate:t="monster_explode"
+          duration:r=0.5
+          skippable:b=no
+          unskippableDuration:r=0.5
+          activePhase:b=yes
+          interruptible:b=no
+        }
+
+        "out_stage:object"{
+          affectTemplate:t="monster_explode_affect_out"
+          setupTransform:b=yes
+          duration:r=0.4
+          exit:b=yes
+
+          "substages:array"{
+            "smoke:object"{
+              affectTemplate:t="invisibility_continuous_affect_out"
+              setupTransform:b=yes
+              duration:r=0.3
+            }
+
+            "burst_smoke:object"{
+              affectTemplate:t="invisibility_burst_affect_out"
+              setupTransform:b=yes
+              duration:r=0.1
+            }
+          }
+        }
+      }
+    }
+
+    "trapping:object"{
+      name:t="trapping"
+      actionHandleName:t="MonsterInvisibleman.Trap"
+      show_in_ui:b=yes
+      cooldown:r=1
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=yes
+      activeMatterPrice:i=0
+      icon:t="uiskin/ability/blink.svg"
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      isNoWeaponMode:b=no
+
+      "stages:array"{
+        "monster_trap_planting:object"{
+          affectTemplate:t="monster_trap_planting"
+          duration:r=9999
+          activePhase:b=yes
+          interruptible:b=yes
+          skippable:b=yes
+        }
+
+        "monster_trap_planting_finish:object"{
+          affectTemplate:t="monster_trap_finishing"
+          duration:r=0.5
+          exit:b=yes
+        }
+      }
+    }
+  }
+}
+
+invisible_monster_effect{
+  _use:t="base_monster_game_effect"
+  _use:t="color_graded_affect"
+  _use:t="local_tone_mapping_affect"
+  _use:t="chromatic_aberration_affect"
+  human_cam_magnification_affect__magnification:r=0.65
+  postfx_vignette_affect__factor:r=0.05
+  local_tone_mapping_affect__hq_shadows_multiplier:r=2
+  local_tone_mapping_affect__hq_highlights_multiplier:r=3
+  game_effect__chromaticAberrationParams:p4=0.002, 0.008, 0, 0
+  _use:t="game_effect_sound"
+  game_effect_sound__enemy:t="enemy/walker/changed/voice_fx/transmigration"
+  game_effect_sound__hero:t="player/walker/changed/voice_fx/transmigration"
+
+  "effect_enable_action_sets__actionSetList:list<t>"{
+    item:t="MonsterInvisibleman"
+  }
+
+  "game_effect__destroyAllItems:tag"{}
+  "invisible_monster_effect:tag"{}
+  "game_effect__colorGrading:object"{
+    colorGain:p4=1, 1, 1, 1
+    colorGamma:p4=1, 1, 1, 1.1
+    colorContrast:p4=1, 0.95, 1, 1.3
+    colorSaturation:p4=1, 0.2, 0.4, 0.8
+    priority:i=90000
+    _tags:t="render"
+  }
+
+  "entity_mod_effects:object"{
+    "hitpointsDmgMult+mult_diminishing":r=0.55
+    "hitpointsMeleeDmgMult+mult_diminishing":r=0.75
+    "speedMult+mult_diminishing":r=1.333
+    "jumpSpeedMult+mult_diminishing":r=1.3
+    "fallDamageSpeedMult+mult_diminishing":r=1.1
+  }
+
+  "sound_mod_tags:list<t>"{
+    _tags:t="sound"
+    tag:t="changedAffect"
+  }
+}
+
+monstrified_invisible_man{
+  _use:t="monstrified_human_base"
+  _use:t="am_militant_with_attachable_suit"
+  _use:t="militant_node_collapser"
+  _use:t="changed_aura"
+  _use:t="damage_model_regeneration"
+  _use:t="stalker_statue_not_target"
+  _use:t="am_mindcontrolled_invisible_man_abilities"
+  _use:t="monstrified_human_locked_melee_only"
+  _use:t="invisible_man_another_dimension_visitor"
+  damage_model_regeneration__healByTickAmount:r=3
+  default_stub_melee_controller__meleeTemplate:t="default_changed_claw"
+  item__name:t="items/suit_militant_changed_item"
+  suit__raidIcon:t="!ui/uiskin/raid_info/distorted.svg"
+  item__desc:t="items/suit_militant_changed_item/desc"
+  human_inventory__canHeal:b=no
+  human_inventory__canLoadCharges:b=no
+  melee_attack_to_hands_aim_punch__strength:r=1.5
+  melee_attack_to_head_concussion__template:t="monstrified_changed_human_concussion_attack_affect"
+  melee_attack_to_head_confusion__duration:r=1
+  melee_attack_to_head_confusion__intensity:r=1
+  melee_attack_to_head_confusion__speed:r=0.2
+  melee_attack_to_head__extraDamage:r=0.2
+  agent_dangers__tag:t="changed_human"
+  am_storage__value:i=0
+  am_storage__maxValue:i=300
+  collres__res:t="distorted_player_collision"
+  animchar__res:t="distorted_player_char"
+  animchar__actWhenInvisible:b=yes
+  human_death_anim__defaultDeathState:t=""
+  heartrate__range:p2=30, 265
+  heartrate__hpDelayTicks:i=40
+  heartrate__fatigueThresholdDefault:r=245
+  heartrate__walkHR:r=12
+  heartrate__sprintHR:r=24
+  heartrate__standUpHR:r=1200
+  heartrate__climbHR:r=90
+  heartrate__jumpHR:r=110
+  heartrate__elevationGainHR:r=100
+  heartrate__overflowHRToAmortizationRatio:r=0.5
+  heartrate__staminaRegenDefault:p3=1.5, 1.75, 1
+  heartrate__staminaDrainDefault:p2=0.01, 0.02
+  hunter_vision__updateAt:r=0
+  hunter_vision__interval:r=1.4
+  hunter_vision__loudNoiseRange:p2=12, 30
+  hunter_vision__effectTemplate:t="monster_vision_fx"
+  changed_human_vision__colorTaken:c=20, 255, 40, 255
+  changed_human_vision__updateAt:r=0
+  changed_human_vision__interval:r=0.3
+  changed_human_vision__radius:r=25
+  changed_human_vision__abilityRadius:r=10
+  item__filterType:t="alters"
+  item__iconYaw:r=20
+  item__iconRoll:r=10
+  item__iconPitch:r=0
+  item__iconScale:r=5
+  item__iconOffset:p2=-0.08, -0.71
+  _skipInitialReplication:t="dm_parts__parts"
+
+  "ignoreDownState:tag"{}
+  "update_default_stub_melee_on_appear:tag"{}
+  "ignore_initial_items:tag"{}
+  "human_equipment__slots:object"{
+    "cortical_vault:eid"{}
+    "chronogene_primary_1:eid"{}
+  }
+
+  "effect_enable_action_sets__actionSetList:list<t>"{
+    item:t="MonsterInvisibleman"
+  }
+
+  "game_effect__initialAttachmentsServer:list<t>"{
+    item:t="invisible_monster_effect"
+  }
+
+  _group{
+    _tags:t="render"
+    night_light__lightMult:r=0.06
+    night_light__lightDistanceMult:r=0.02
+  }
+
+  "monster_hunter:tag"{}
+  "allow_friendly_damage:tag"{}
+  "animchar_effectors__effectorsState:object"{}
+  "human_death_anim__anims:shared:array"{}
+  "changed_human_vision__outlinedEids:list<eid>"{}
+  "dm_parts__parts:object"{
+    "Bip01 Head:object"{
+      dmgMult:r=1.3
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 Neck:object"{
+      dmgMult:r=1.3
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 L Thigh:object"{
+      dmgMult:r=0.5
+      armor:r=0
+      type:t="l_leg"
+    }
+
+    "Bip01 R Thigh:object"{
+      dmgMult:r=0.5
+      armor:r=0
+      type:t="r_leg"
+    }
+
+    "Bip01 L Calf:object"{
+      dmgMult:r=0.5
+      armor:r=0
+      type:t="l_leg"
+    }
+
+    "Bip01 R Calf:object"{
+      dmgMult:r=0.5
+      armor:r=0
+      type:t="r_leg"
+    }
+
+    "Bip01 L Foot:object"{
+      dmgMult:r=0.5
+      armor:r=0
+      type:t="l_leg"
+    }
+
+    "Bip01 R Foot:object"{
+      dmgMult:r=0.5
+      armor:r=0
+      type:t="r_leg"
+    }
+
+    "Bip01 Pelvis:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="torso"
+    }
+
+    "Bip01 Spine:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="torso"
+    }
+
+    "Bip01 Spine1:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="torso"
+    }
+
+    "Bip01 R Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="r_hand"
+    }
+
+    "Bip01 L Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="l_hand"
+    }
+
+    "Bip01 R UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="r_hand"
+    }
+
+    "Bip01 L UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="l_hand"
+    }
+
+    "Bip01 R Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="r_hand"
+    }
+
+    "Bip01 L Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="l_hand"
+    }
+
+    "Bip01 R Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="r_hand"
+    }
+
+    "Bip01 L Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+      type:t="l_hand"
+    }
+  }
+}
+
+monster_invisibleman_artifact_item{
+  _use:t="monstrify_artifact"
+  _use:t="spawn_client_decorations_around"
+  animchar__res:t="remains_invisible_char"
+  collres__res:t="remains_invisible_collision"
+  item__name:t="items/monster_invisibleman_artifact_item"
+  item__proto:t="monster_invisibleman_artifact_item"
+  item__useTime:r=1
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:r=1
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  monstrify_artifact__sequenceTemplate:t="monstrify_invisible_man_sequence"
+  monstrify_trap__group:t="default"
+  monstrify_trap__icon:t="!ui/uiskin/raid_info/mothman.svg"
+  monstrify_trap__monsterName:t="items/suit_militant_mothman_item"
+}

@@ -1,0 +1,34 @@
+weapon_idle_anim{
+  weapon_idle_anim__idleActionVarId:i=-1
+  weapon_idle_anim__nextIdleAt:r=-1
+  weapon_idle_anim__timeBetweenIdlesRng:p2=8, 12
+  weapon_idle_anim__idleTimeRng:p2=2, 3
+  weapon_idle_anim__curIdleTime:r=0
+  weapon_idle_anim__targetIdleTime:r=-1
+  weapon_idle_anim__idleTypeVarId:i=-1
+  weapon_idle_anim__idleTypesCount:i=6
+}
+
+gun_with_fillable_ammo_magazines{
+  "gun__magazineReload:tag"{}
+  "gun__secondaryAmmoHolderIds:list<i>"{}
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=2
+    alt:r=2
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=2
+    alt:r=2
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1
+    alt:r=1
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=1
+    alt:r=1
+  }
+}

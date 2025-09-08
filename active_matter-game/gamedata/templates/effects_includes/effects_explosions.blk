@@ -1,0 +1,653 @@
+explosion_sound_effect_base{
+  _use:t="sound_effect"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__abandonOnReset:b=yes
+  }
+}
+
+explosion_grenades_air_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=2
+  wind_emitter__duration:r=3
+  wind_emitter__strength:r=2
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=5
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_air_cmps_fx"
+    effect__environmentDestructionRadius:r=3
+  }
+}
+
+explosion_grenades_dirt_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=2
+  wind_emitter__duration:r=3
+  wind_emitter__strength:r=2
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=5
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_dirt_cmps_fx"
+    effect__environmentDestructionRadius:r=3
+  }
+}
+
+explosion_grenades_sand_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=2
+  wind_emitter__duration:r=3
+  wind_emitter__strength:r=2
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=5
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_sand_cmps_fx"
+    effect__environmentDestructionRadius:r=3
+  }
+}
+
+explosion_grenades_snow_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=2
+  wind_emitter__duration:r=3
+  wind_emitter__strength:r=2
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=5
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_snow_cmps_fx"
+    effect__environmentDestructionRadius:r=3
+  }
+}
+
+explosion_grenades_stone_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=2
+  wind_emitter__duration:r=3
+  wind_emitter__strength:r=2
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=5
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_stone_cmps_fx"
+    effect__environmentDestructionRadius:r=3
+  }
+}
+
+explosion_grenades_water_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_water_ripple_effect"
+  wind_emitter__radius:r=1
+  wind_emitter__duration:r=2
+  wind_emitter__strength:r=1
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=3
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_water_cmps_fx"
+  }
+}
+
+explosion_grenades_smoke_effect{
+  _use:t="explosion_effect"
+  _use:t="sound_effect"
+  wind_emitter__radius:r=1
+  wind_emitter__duration:r=15
+  wind_emitter__strength:r=1
+  effect__smokeOccludersTemplate:t="explosion_grenades_smoke_smoke_occluders"
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_smoke_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/fire/grenade_smoke"
+  }
+}
+
+base_explosion_grenades_smoke_occluders{
+  _use:t="smoke_occluders"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  smoke_occluders__destroyAtTime:r=-1
+
+  "smoke_occluders__updateInterval:r"{
+    _tags:t="server"
+    value:r=2
+  }
+}
+
+explosion_grenades_smoke_smoke_occluders{
+  _use:t="base_explosion_grenades_smoke_occluders"
+  smoke_occluders__destroyDelay:r=3
+
+  "smoke_occluders__info:shared:array"{
+    _tags:t="server"
+
+    "big:object"{
+      windScale:r=0
+      expanseStartTime:r=1
+      expanseFullTime:r=2
+      fadeStartTime:r=23
+      totalTime:r=24
+      upSpeed:p3=1, 1, 1
+      normalSpeed:p3=0, 0, 0
+      radius:p3=1, 2.25, 1
+    }
+  }
+
+  "smoke_occluders__isStatic:tag"{}
+}
+
+explosion_grenades_smoke_shell_smoke_occluders{
+  _use:t="base_explosion_grenades_smoke_occluders"
+  smoke_occluders__destroyDelay:r=6
+
+  "smoke_occluders__info:shared:array"{
+    _tags:t="server"
+
+    "big:object"{
+      windScale:r=0
+      expanseStartTime:r=1
+      expanseFullTime:r=2
+      fadeStartTime:r=27
+      totalTime:r=28
+      upSpeed:p3=1, 1, 1
+      normalSpeed:p3=0, 0, 0
+      radius:p3=2, 6, 3
+    }
+  }
+
+  "smoke_occluders__isStatic:tag"{}
+}
+
+explosion_grenades_smoke_mortar_smoke_occluders{
+  _use:t="base_explosion_grenades_smoke_occluders"
+  smoke_occluders__destroyDelay:r=3
+
+  "smoke_occluders__info:shared:array"{
+    _tags:t="server"
+
+    "big:object"{
+      windScale:r=0
+      expanseStartTime:r=2
+      expanseFullTime:r=2
+      fadeStartTime:r=15
+      totalTime:r=16
+      upSpeed:p3=1, 1, 1
+      normalSpeed:p3=0, 0, 0
+      radius:p3=1, 2, 1
+    }
+  }
+
+  "smoke_occluders__isStatic:tag"{}
+}
+
+explosion_grenades_smoke_shell_effect{
+  _use:t="explosion_effect"
+  wind_emitter__radius:r=1
+  wind_emitter__duration:r=25
+  wind_emitter__strength:r=1
+  effect__smokeOccludersTemplate:t="explosion_grenades_smoke_shell_smoke_occluders"
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_smoke_shell_cmps_fx"
+  }
+}
+
+explosion_grenades_smoke_mortar_effect{
+  _use:t="explosion_effect"
+  _use:t="sound_effect"
+  wind_emitter__radius:r=1
+  wind_emitter__duration:r=25
+  wind_emitter__strength:r=1
+  effect__smokeOccludersTemplate:t="explosion_grenades_smoke_mortar_smoke_occluders"
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_smoke_mortar_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/fire/grenade_smoke"
+  }
+}
+
+explosion_gas_small_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=2
+  wind_emitter__duration:r=3
+  wind_emitter__strength:r=2
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=5
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_gas_small_cmps_fx"
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_gas_medium_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=2
+  wind_emitter__duration:r=3
+  wind_emitter__strength:r=3
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=5
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_gas_medium_cmps_fx"
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_gas_big_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=3
+  wind_emitter__duration:r=3
+  wind_emitter__strength:r=3
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=5
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_gas_big_cmps_fx"
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_acid_small_effect{
+  _use:t="hit_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_acid_small_cmps_fx"
+  }
+}
+
+explosion_acid_medium_effect{
+  _use:t="hit_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_acid_medium_cmps_fx"
+  }
+}
+
+explosion_acid_big_effect{
+  _use:t="hit_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_acid_big_cmps_fx"
+  }
+}
+
+explosion_molotov_effect{
+  _use:t="explosion_effect"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_molotov_cmps_fx"
+    effect__environmentDestructionRadius:r=10
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_mothman_stone_effect{
+  _use:t="explosion_effect"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="hit_ricochet_medium_cmps_fx"
+    effect__environmentDestructionRadius:r=1
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_50_100kg_dirt_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=5
+  wind_emitter__duration:r=4
+  wind_emitter__strength:r=7
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=6
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_50_100kg_dirt_cmps_fx"
+    effect__environmentDestructionRadius:r=10
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_50_100kg_sand_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=5
+  wind_emitter__duration:r=4
+  wind_emitter__strength:r=7
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=6
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_50_100kg_sand_cmps_fx"
+    effect__environmentDestructionRadius:r=10
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_50_100kg_snow_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=5
+  wind_emitter__duration:r=4
+  wind_emitter__strength:r=7
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=6
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_50_100kg_snow_cmps_fx"
+    effect__environmentDestructionRadius:r=10
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_50_100kg_stone_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=5
+  wind_emitter__duration:r=4
+  wind_emitter__strength:r=7
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=6
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_50_100kg_stone_cmps_fx"
+    effect__environmentDestructionRadius:r=10
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_50_100kg_water_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_water_ripple_effect"
+  wind_emitter__radius:r=4
+  wind_emitter__duration:r=3.5
+  wind_emitter__strength:r=2
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=4
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="water_explosion_50_100kg_cmps_fx"
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_100_250kg_dirt_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=6
+  wind_emitter__duration:r=4.5
+  wind_emitter__strength:r=10
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=8
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_100_250kg_dirt_cmps_fx"
+    effect__environmentDestructionRadius:r=15
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_100_250kg_sand_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=6
+  wind_emitter__duration:r=4.5
+  wind_emitter__strength:r=10
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=8
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_100_250kg_sand_cmps_fx"
+    effect__environmentDestructionRadius:r=15
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_100_250kg_snow_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=6
+  wind_emitter__duration:r=4.5
+  wind_emitter__strength:r=10
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=8
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_100_250kg_snow_cmps_fx"
+    effect__environmentDestructionRadius:r=15
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_100_250kg_stone_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=6
+  wind_emitter__duration:r=4.5
+  wind_emitter__strength:r=10
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=8
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_100_250kg_stone_cmps_fx"
+    effect__environmentDestructionRadius:r=15
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_100_250kg_water_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_water_ripple_effect"
+  wind_emitter__radius:r=6
+  wind_emitter__duration:r=4.5
+  wind_emitter__strength:r=5
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=6
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="water_explosion_100_250kg_cmps_fx"
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_250_500kg_dirt_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=8
+  wind_emitter__duration:r=5.5
+  wind_emitter__strength:r=15
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=10
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_250_500kg_dirt_cmps_fx"
+    effect__environmentDestructionRadius:r=20
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_250_500kg_sand_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=8
+  wind_emitter__duration:r=5.5
+  wind_emitter__strength:r=15
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=10
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_250_500kg_sand_cmps_fx"
+    effect__environmentDestructionRadius:r=20
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_250_500kg_snow_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=8
+  wind_emitter__duration:r=5.5
+  wind_emitter__strength:r=15
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=10
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_250_500kg_snow_cmps_fx"
+    effect__environmentDestructionRadius:r=20
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_250_500kg_stone_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=8
+  wind_emitter__duration:r=5.5
+  wind_emitter__strength:r=15
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=10
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_250_500kg_stone_cmps_fx"
+    effect__environmentDestructionRadius:r=20
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+explosion_250_500kg_water_effect{
+  _use:t="explosion_effect"
+  _use:t="hit_water_ripple_effect"
+  water_ripple__mass:r=4.5
+  water_ripple__radius:r=0.8
+  wind_emitter__radius:r=6
+  wind_emitter__duration:r=4.5
+  wind_emitter__strength:r=10
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=8
+  wind_emitter__phaseAttack:b=yes
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="water_explosion_250_500kg_cmps_fx"
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}

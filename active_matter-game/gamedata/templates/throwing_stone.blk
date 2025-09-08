@@ -1,0 +1,98 @@
+throwing_stone{
+  _use:t="animchar"
+  _use:t="phys_water_splasher"
+  _use:t="zones_visitor"
+  animchar__res:t=""
+  collres__res:t=""
+  throwing_stone__attachedSubtemplate:t="throwing_stone_slot_attach"
+  throwing_stone__physSubtemplate:t="throwing_stone_phys"
+  throwing_stone__freezeSubtemplate:t="throwing_stone_freeze"
+  loud_noise__radius:r=10
+  loud_noise__noisePerHit:r=10
+  throwing_stone__awakeCheckRadius:r=1.5
+  zones_visitor__triggerTag:t="throwingItemsTriggerable"
+
+  collres{}
+  "throwing_stone_owner:eid"{}
+  "throwing_stone:tag"{}
+  _group{
+    _tags:t="gameClient"
+    phys_water_splasher__fxTemplate:t="hit_water_tiny_effect+client_destroy_in_5_sec"
+  }
+
+  "teleportation__once:tag"{}
+  _group{
+    _tags:t="render"
+    teleportation__fxNameIn:t="teleport_effect_in"
+    teleportation__fxNameOut:t="teleport_effect_out"
+  }
+}
+
+throwing_stone_slot_attach{
+  _use:t="slot_attachable"
+  slot_attach__slotName:t="throw_stone"
+  slot_attach__visible:b=yes
+  animchar_render__enabled:b=yes
+}
+
+throwing_stone_phys{
+  _use:t="shell_trap_activator"
+  _use:t="projectile_phys_grid_obj"
+  _use:t="phys_obj_init_impulse"
+  _use:t="throwing_stone_phys_sound"
+  phys_obj_init_impulse__omegaRng:p2=-10, 10
+  throwing_stone_phys__timeToFreeze:r=5
+  phys_obj_net_phys__blk:t="gamedata/am/throwing_stone_phys.blk"
+  collision_physMatId:i=-1
+  net__physId:i=-1
+  start_vel:p3=0, 0, 0
+  phys_obj__fallingToSideAxisIdx:i=1
+  phys_obj__fallingToSideLerpKoef:r=16
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+
+  phys_obj_net_phys{}
+  base_net_phys_ptr{}
+  "grav_zones_affected:tag"{}
+}
+
+throwing_stone_freeze{
+  _use:t="disable_update"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+frog_trap_detected_effect{
+  _use:t="client_destroy_in_5_sec"
+  _use:t="base_effect"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="am_crystal_flare_fx"
+
+    effect{}
+  }
+}
+
+teleport_trap_detected_effect{
+  _use:t="client_destroy_in_5_sec"
+  _use:t="base_effect"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="am_crystal_distortion_vortex_fx"
+
+    effect{}
+  }
+}
+
+metal_heat_detected_effect{
+  _use:t="client_destroy_in_5_sec"
+  _use:t="base_effect"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="fire_flamethrower_p_origin_sparks_fx"
+
+    effect{}
+  }
+}

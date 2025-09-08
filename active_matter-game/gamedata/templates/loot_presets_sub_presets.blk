@@ -1,0 +1,143 @@
+toz_b_gun_template_sub_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="box_12_gauge_magazine+item_in_world"
+      number:ip2=1, 6
+    }
+  }
+}
+
+makarov_gun_template_sub_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="makarov_magazine+mod_item_in_world"
+      number:ip2=1, 2
+    }
+  }
+}
+
+makarov_rust_gun_template_sub_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="makarov_magazine+mod_item_in_world"
+      number:ip2=2, 3
+    }
+  }
+}
+
+mosin_m44_gun_template_sub_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="box_7_62x54_magazine+item_in_world"
+      number:ip2=0, 1
+    }
+  }
+}
+
+sks_carbine_rust_gun_template_sub_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="box_7_62x39_magazine+item_in_world"
+      number:ip2=1, 3
+    }
+  }
+}
+
+sks_carbine_gun_template_sub_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="box_7_62x39_magazine+item_in_world"
+      number:ip2=0, 2
+    }
+  }
+}
+
+sks_carbine_hunt_gun_template_sub_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="box_7_62x39_magazine+item_in_world"
+      number:ip2=0, 1
+    }
+  }
+}
+
+pm_63_rak_gun_template_sub_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="pm_63_rak_magazine+mod_item_in_world"
+      number:ip2=0, 2
+    }
+  }
+}
+
+pp_91_kedr_gun_template_sub_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="pp_91_kedr_20_magazine+mod_item_in_world"
+      number:ip2=0, 2
+    }
+  }
+}
+
+akm_47_civil_gun_template_sub_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="vepr_10rd_magazine+mod_item_in_world"
+      number:ip2=1, 3
+    }
+  }
+}
+
+mosin_m91_gun_template_sub_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="box_7_62x54_magazine+item_in_world"
+      number:ip2=0, 1
+    }
+  }
+}
+
+akm_47_gun_template_sub_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="akm_47_magazine+item_in_world"
+      number:ip2=1, 2
+    }
+  }
+}

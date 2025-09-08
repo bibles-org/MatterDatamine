@@ -1,0 +1,29 @@
+base_team{
+  _use:t="replicating"
+  team__id:i=-1
+  team__spawnPlaceId:i=-1
+  team__capacity:i=-1
+  _replicated:t="team__memberEids"
+  _tracked:t="team__memberEids"
+
+  "team__memberEids:list<eid>"{}
+  "team__spawnBaseEid:eid"{}
+}
+
+raid_player_team{
+  _use:t="base_team"
+  team__capacity:i=1
+  team__markSpawnBase:b=yes
+  team__spawnGroupId:i=-1
+  _replicated:t="team__spawnGroupId"
+  team__firstKillConfirmed:b=no
+
+  "net__notInInitialScope:tag"{}
+  "team__unitTemplates:object"{
+    am_militant_with_attachable_suit:r=1
+  }
+
+  "player_team:tag"{}
+  "team__spawnBaseEid:eid"{}
+  "team__confirmedDailyContract:object"{}
+}

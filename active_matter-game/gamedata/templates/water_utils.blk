@@ -1,0 +1,10 @@
+phys_water_splasher{
+  _group{
+    _tags:t="gameClient"
+    phys_water_splasher__lastTracePos:p3=0, 0, 0
+    phys_water_splasher__traceAt:r=0
+    phys_water_splasher__traceInterval:r=0.05
+    phys_water_splasher__traceDistMin:r=0.2
+    phys_water_splasher__fxTemplate:t="hit_water_small_effect+client_destroy_in_5_sec"
+  }
+}

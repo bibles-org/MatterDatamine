@@ -1,0 +1,72 @@
+used_game_objects_registry{
+  used_game_objects__type:t="loot_box"
+  used_game_objects__inited:b=no
+
+  "used_game_objects__map:list<b>"{}
+}
+
+loot_generator_forbidden_zone{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "loot_generator_forbidden_zone:tag"{}
+}
+
+loot_generator_by_loot_preset{
+  loot_generator__gameObjType:t="loot_box"
+  loot_generator__projAttempts:i=20
+  loot_generator__multiplier:r=1
+  loot_generator__countSkipAttempts:i=20
+  loot_generator__gridStep:r=10
+  loot_generator__referenceGridCellsNum:i=650
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t=""
+  loot_generator__finished:b=no
+}
+
+custom_game_objects_loot_generator_by_loot_preset{
+  loot_generator__customGameObjName:t=""
+  loot_generator__projAttempts:i=10
+  loot_generator__multiplier:r=1
+  loot_generator__countSkipAttempts:i=20
+  loot_generator__gridStep:r=100
+  loot_generator__referenceGridCellsNum:i=-1
+  loot_generator__allowVolumesOverflow:b=yes
+  loot_generator__createItemsInPlace:b=yes
+  loot_generator__fixedTm:b=no
+  loot_generator__compensateDropTm:b=no
+  loot_generator__lootPreset:t=""
+  loot_generator__finished:b=no
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+box_loot_generator_by_loot_preset{
+  _use:t="loot_generator_by_loot_preset"
+  _use:t="editor_selected_box_preview"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "box_zone:tag"{}
+}
+
+region_loot_generator_by_loot_preset{
+  _use:t="box_loot_generator_by_loot_preset"
+  regional_generator__region:t=""
+}
+
+ri_extra_generator{
+  _use:t="replicating"
+  ri_extra_gen__blk:t=""
+
+  ri_extra_gen{
+    _tags:t="server"
+  }
+}
+
+am_objects_generator{
+  _use:t="ri_extra_generator"
+  ri_extra_gen__blk:t="gamedata/geisel_library_objects.blk"
+  ri_extra_gen__createEntityWhenDone:t="am_objects_generation_done"
+}
+
+am_objects_generation_done{
+  "objectsGenerationIsDone:tag"{}
+}

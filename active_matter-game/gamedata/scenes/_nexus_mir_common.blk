@@ -1,0 +1,329 @@
+import{
+  scene:t="gamedata/scenes/_nexus_mir_sounds.blk"
+}
+
+entity{
+  _template:t="tiled_map"
+  tiled_map__leftTop:p2=-52.412, -70.002
+  tiled_map__rightBottom:p2=62.517, 44.927
+  tiled_map__leftTopBorder:p2=-52.412, -70.002
+  tiled_map__rightBottomBorder:p2=62.517, 44.927
+  tiled_map__visibleRange:p2=20, 60
+  tiled_map__tileWidth:i=2048
+  tiled_map__zlevels:i=0
+  tiled_map__northAngle:r=0
+  tiled_map__tilesPath:t="maps/nexus_factory_mir"
+}
+
+entity{
+  _template:t="navmesh_battle_area"
+  transform:m=[[200, 0, 0] [0, 200, 0] [0, 0, 200] [0, 0, 0]]
+}
+
+entity{
+  _template:t="shaderVars"
+
+  "shader_vars__vars:object"{
+    ocean1:c=90, 100, 150, 0
+    ocean0:c=100, 110, 150, 0
+    ocean_density:r=1
+    river1:c=41, 104, 83, 0
+    river0:c=30, 81, 63, 0
+    paint_details_tex:t="assets_color_global_tex_palette*"
+    water_color_noise_size:r=71
+    river_density:r=2
+  }
+}
+
+entity{
+  _template:t="wind"
+  wind__noiseScale:r=100
+  wind__noiseSpeed:r=4
+  wind__strength:r=1
+}
+
+entity{
+  _template:t="clouds_hole_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+entity{
+  _template:t="door_mult_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_doors.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_round_mode_base_config.blk"
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-8.87689, -7.76047e-07, 0] [2.89021e-07, -3.30602, 0] [0, 0, 4.99046] [14.8127, 18.8351, -31.4848]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-4.06759, -3.55601e-07, 0] [2.24041e-07, -2.56273, 0] [0, 0, 9.70872] [20.6854, 17.7284, -29.7363]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-11.2614, -9.84494e-07, 0] [2.45986e-07, -2.81375, 0] [0, 0, 6.26004] [16.9994, 17.1643, -24.1092]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-2.95684, -2.58497e-07, 0] [2.89021e-07, -3.30602, 0] [0, 0, 2.87384] [19.5505, 18.336, -31.5773]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-15.5424, -1.35876e-06, 0] [2.99519e-07, -3.42611, 0] [0, 0, 18.6764] [21.5905, 16.7407, -13.5741]]
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderX:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-5.98537, -5.23256e-07, 0] [2.41547e-07, -2.76298, 0] [0, 0, 8.49251] [11.0284, 16.8227, -8.49059]]
+}
+
+entity{
+  _template:t="vvc_smooth_red_light+game_object"
+  transform:m=[[-1, -1.50996e-07, 0] [1.50996e-07, -1, 0] [0, 0, 1] [37.8095, 5.00549, -39.7439]]
+}
+
+entity{
+  _template:t="vvc_smooth_red_light+game_object"
+  transform:m=[[-1, -1.50996e-07, 0] [1.50996e-07, -1, 0] [0, 0, 1] [33.1102, 5.02973, -49.0566]]
+}
+
+entity{
+  _template:t="vvc_smooth_red_light+game_object"
+  transform:m=[[-1, -1.50996e-07, 0] [1.50996e-07, -1, 0] [0, 0, 1] [27.7493, 4.99288, -52.6649]]
+}
+
+entity{
+  _template:t="vvc_smooth_red_light+game_object"
+  transform:m=[[-1, -1.50996e-07, 0] [1.50996e-07, -1, 0] [0, 0, 1] [31.3952, 4.99784, -51.7752]]
+}
+
+entity{
+  _template:t="vvc_smooth_red_light+game_object"
+  transform:m=[[-1, -1.50996e-07, 0] [1.50996e-07, -1, 0] [0, 0, 1] [37.1286, 4.99498, -42.7045]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-4.15296, -3.63061e-07, 0] [4.25857e-07, -4.87123, 0] [0, 0, 4.55192] [24.7102, 17.4592, -24.8283]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-2.93525, -2.56609e-07, 0] [2.97531e-07, -3.40336, 0] [0, 0, 2.35187] [18.2825, 16.9955, -29.2214]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[1.28413e-14, 6.72078, 2.93774e-07] [1.00776e-07, 1.00776e-07, -2.30549] [-3.11214, 1.18926e-14, -1.36036e-07] [-34.9766, 14.9949, 32.5118]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-0.7513, 2.42378, 0.152529] [4.31079, 1.32493, 0.17936] [0.232342, 0.791263, -11.4292] [-13.8684, 13.3726, -17.4691]]
+  grav_zone__boxBorderX:p2=0, 0
+  grav_zone__boxBorderZ:p2=1, 1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-1.61759, 3.58521, 0.372266] [1.736, 1.04888, -2.55821] [-8.63564, -3.15353, -7.15307] [-17.9388, 12.6566, -25.4572]]
+  grav_zone__boxBorderX:p2=0, 0
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=1.5, 6
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-4.23942e-06, 2.38204, -4.44767e-06] [1.8955, 6.9127e-06, 1.8955] [3.14474, -2.74922e-07, -3.14474] [-14.0739, 13.2648, -11.409]]
+  grav_zone__boxBorderZ:p2=0.5, 0.5
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-6.22653e-08, 5.31618, 1.42447] [1.60492e-07, 0.983807, -3.67162] [-11.6991, 5.09155e-13, -5.11386e-07] [-28.2573, 18.4268, 36.9093]]
+  grav_zone__boxBorderX:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-6.22653e-08, 5.31618, 1.42447] [1.60492e-07, 0.983807, -3.67162] [-11.6991, 5.09155e-13, -5.11386e-07] [-28.6045, 13.2316, 36.9678]]
+  grav_zone__boxBorderX:p2=0, 0
+  grav_zone__boxBorderZ:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-3.48695e-08, 2.97714, 0.797725] [1.60492e-07, 0.983807, -3.67162] [-5.73716, 2.49686e-13, -2.5078e-07] [-34.1101, 15.444, 35.0663]]
+  grav_zone__boxBorderX:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-3.48695e-08, 2.97714, 0.797725] [1.22916e-07, 0.753471, -2.81199] [-2.81892, 1.22682e-13, -1.23219e-07] [-35.4501, 12.5852, 35.1209]]
+  grav_zone__boxBorderX:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-3.48695e-08, 2.97714, 0.797725] [1.22916e-07, 0.753471, -2.81199] [-2.81892, 1.22682e-13, -1.23219e-07] [-35.4501, 9.70499, 35.3579]]
+  grav_zone__boxBorderX:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-4.82801e-08, 3.01761, 3.01761] [1.70189e-07, 2.85022, -2.85021] [-2.53103, 5.53175e-08, -9.58123e-08] [-35.4501, 6.81777, 34.8501]]
+  grav_zone__boxBorderX:p2=1, 0
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[1.22552e-14, 6.41405, 2.80366e-07] [9.07454e-08, 9.07454e-08, -2.07602] [-4.68362, 1.78979e-14, -2.04727e-07] [-29.1618, 16.5886, 34.4233]]
+  grav_zone__boxBorderX:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-0.00472917, 1.51117, 0.00472518] [1.51049, 3.98894e-06, 1.51049] [2.79616, 0.0174937, -2.79616] [-13.601, 14.8101, -10.7661]]
+  grav_zone__boxBorderX:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-2.82188e-06, 1.51115, 0.00668518] [2.13615, 3.98898e-06, 1.70748e-13] [-1.77123e-08, 0.00948524, -2.14409] [-12.8242, 14.8101, -13.4352]]
+  grav_zone__boxBorderX:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-5.37323, -4.69743e-07, 0] [2.99519e-07, -3.42611, 0] [0, 0, 18.6764] [32, 16.7407, -13.5741]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-6.55532, -5.73085e-07, 0] [3.44295e-07, -3.93826, 0] [0, 0, 19.8169] [37.9074, 17.0105, -14.2292]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[11.3088, 0, 0] [0, -7.80463e-08, -1.78549] [-0, 9.93409, -4.34233e-07] [-28.18, 17.6113, 32.874]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-0.0161364, 3.64755, -6.81106e-06] [-6.36623e-08, 3.98855e-06, 2.13615] [13.5941, 0.0601388, 2.92846e-07] [-21.165, 13.5882, -9.52444]]
+  grav_zone__boxBorderX:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-0.00715963, 1.6184, -1.61843] [-0.00672314, 1.51973, 1.51974] [13.4148, 0.0593457, 1.51367e-07] [-21.4328, 11.03, -9.74565]]
+  grav_zone__boxBorderX:p2=1.25, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-2.57048, -2.24717e-07, 0] [2.3027e-07, -2.63398, 0] [0, 0, 4.55192] [27.9535, 17.4956, -24.8283]]
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-4.37114e-08, -1, -4.37114e-08] [0, -4.37114e-08, 1] [-1, 4.37114e-08, 1.91069e-15] [37.1381, 13.6129, -12.6697]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-4.37114e-08, -1, -4.37114e-08] [0, -4.37114e-08, 1] [-1, 4.37114e-08, 1.91069e-15] [38.7839, 18.2827, -21.5961]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-4.37114e-08, -1, -4.37114e-08] [0, -4.37114e-08, 1] [-1, 4.37114e-08, 1.91069e-15] [48.9507, 7.80744, -46.9273]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-4.37114e-08, -1, -4.37114e-08] [0, -4.37114e-08, 1] [-1, 4.37114e-08, 1.91069e-15] [5.38919, 17.2789, -34.2657]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[4.37114e-08, -1, -4.37114e-08] [-1, -4.37114e-08, -4.37114e-08] [4.37114e-08, 4.37114e-08, -1] [13.3435, 20.1908, -31.5671]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[4.37114e-08, -1, -4.37114e-08] [-1, -4.37114e-08, -4.37114e-08] [4.37114e-08, 4.37114e-08, -1] [6.78289, 13.4338, -17.377]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[4.37114e-08, -1, 4.37114e-08] [8.74228e-08, -4.37114e-08, -1] [1, 4.37114e-08, 8.74228e-08] [-21.0588, 17.8529, 4.73798]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[4.37114e-08, -1, 4.37114e-08] [8.74228e-08, -4.37114e-08, -1] [1, 4.37114e-08, 8.74228e-08] [-35.4394, 11.6042, 3.9497]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-4.37114e-08, -1, 4.37114e-08] [1, -4.37114e-08, 1.31134e-07] [-1.31134e-07, 4.37114e-08, 1] [-40.2778, 16.2512, 16.1]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-4.37114e-08, -1, -4.37114e-08] [-1.74846e-07, -4.37114e-08, 1] [-1, 4.37114e-08, -1.74846e-07] [-30.4735, 13.0912, 33.7066]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-4.37114e-08, -1.42109e-14, 1] [-1.74846e-07, 1, 6.56811e-15] [-1, -1.74846e-07, -4.37114e-08] [-27.7473, 13.2849, 33.9477]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-4.37114e-08, -1, -4.37114e-08] [-1.74846e-07, -4.37114e-08, 1] [-1, 4.37114e-08, -1.74846e-07] [-2.87926, 17.6135, -39.7162]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="level+level_synced_environment"
+  level__blk:t="levels/mir_level.blk"
+  level_synced_environment__timeOfDaySeed:i=1
+  level_synced_environment__weatherSeed:i=2
+
+  "level__weatherChoice:object"{
+    "weather_overcast_c:object"{
+      weight:r=1
+    }
+  }
+
+  "level__timeVec:array"{
+    level__timeVec:r=11
+  }
+}

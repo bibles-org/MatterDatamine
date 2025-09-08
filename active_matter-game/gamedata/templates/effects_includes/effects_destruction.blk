@@ -1,0 +1,951 @@
+destruction_effect_base{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  paint_color:p4=1, 1, 1, 0.5
+
+  _group{
+    _tags:t="render"
+
+    effect{}
+  }
+
+  "staticEffect:tag"{}
+  "autodeleteEffectEntity:tag"{}
+}
+
+envir_destr_buildings_big_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_buildings_big_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/building_fall_big"
+  }
+}
+
+envir_destr_buildings_med_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_buildings_med_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/building_fall_mid"
+  }
+}
+
+envir_destr_buildings_small_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_buildings_small_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/building_fall_small"
+  }
+}
+
+envir_destr_basic_big_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_basic_big_cmps_fx"
+  }
+}
+
+envir_destr_basic_med_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_basic_med_cmps_fx"
+  }
+}
+
+envir_destr_basic_small_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_basic_small_cmps_fx"
+  }
+}
+
+envir_destr_bush_fall_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    usePaintColor:b=yes
+    paintFromLevelRiColors:b=yes
+    effect__riPoolUsedForColoring:i=-1
+    effect__name:t="envir_destr_bush_fall_cmps_fx"
+  }
+}
+
+envir_destr_bush_green_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    usePaintColor:b=yes
+    paintFromLevelRiColors:b=yes
+    effect__riPoolUsedForColoring:i=-1
+    effect__name:t="envir_destr_bush_green_cmps_fx"
+  }
+}
+
+envir_destr_bush_palm_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    usePaintColor:b=yes
+    paintFromLevelRiColors:b=yes
+    effect__riPoolUsedForColoring:i=-1
+    effect__name:t="envir_destr_bush_palm_cmps_fx"
+  }
+}
+
+envir_destr_bush_snow_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    effect__name:t="envir_destr_bush_snow_cmps_fx"
+  }
+}
+
+envir_destr_bush_dead_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    effect__name:t="envir_destr_bush_dead_cmps_fx"
+  }
+}
+
+envir_destr_tree_fall_big_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    usePaintColor:b=yes
+    paintFromLevelRiColors:b=yes
+    effect__riPoolUsedForColoring:i=-1
+    effect__name:t="envir_destr_tree_fall_big_cmps_fx"
+  }
+}
+
+envir_destr_tree_fall_med_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    usePaintColor:b=yes
+    paintFromLevelRiColors:b=yes
+    effect__riPoolUsedForColoring:i=-1
+    effect__name:t="envir_destr_tree_fall_med_cmps_fx"
+  }
+}
+
+envir_destr_tree_green_big_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    usePaintColor:b=yes
+    paintFromLevelRiColors:b=yes
+    effect__riPoolUsedForColoring:i=-1
+    effect__name:t="envir_destr_tree_green_big_cmps_fx"
+  }
+}
+
+envir_destr_tree_green_med_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    usePaintColor:b=yes
+    paintFromLevelRiColors:b=yes
+    effect__riPoolUsedForColoring:i=-1
+    effect__name:t="envir_destr_tree_green_med_cmps_fx"
+  }
+}
+
+envir_destr_tree_palm_big_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    usePaintColor:b=yes
+    paintFromLevelRiColors:b=yes
+    effect__riPoolUsedForColoring:i=-1
+    effect__name:t="envir_destr_tree_palm_big_cmps_fx"
+  }
+}
+
+envir_destr_tree_palm_med_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    usePaintColor:b=yes
+    paintFromLevelRiColors:b=yes
+    effect__riPoolUsedForColoring:i=-1
+    effect__name:t="envir_destr_tree_palm_med_cmps_fx"
+  }
+}
+
+envir_destr_tree_snow_big_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    effect__name:t="envir_destr_tree_snow_big_cmps_fx"
+  }
+}
+
+envir_destr_tree_snow_med_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    effect__name:t="envir_destr_tree_snow_med_cmps_fx"
+  }
+}
+
+envir_destr_tree_dead_big_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    effect__name:t="envir_destr_tree_dead_big_cmps_fx"
+  }
+}
+
+envir_destr_tree_dead_med_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    effect__name:t="envir_destr_tree_dead_med_cmps_fx"
+  }
+}
+
+envir_destr_cactus_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    effect__name:t="envir_destr_cactus_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/cactus"
+  }
+}
+
+envir_collision_bush_dead_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    effect__name:t="envir_destr_colloision_bush_dead_cmps_fx"
+  }
+}
+
+envir_collision_bush_fall_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    usePaintColor:b=yes
+    paintFromLevelRiColors:b=yes
+    effect__riPoolUsedForColoring:i=-1
+    effect__name:t="envir_destr_colloision_bush_fall_cmps_fx"
+  }
+}
+
+envir_collision_bush_green_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    usePaintColor:b=yes
+    paintFromLevelRiColors:b=yes
+    effect__riPoolUsedForColoring:i=-1
+    effect__name:t="envir_destr_colloision_bush_green_cmps_fx"
+  }
+}
+
+envir_collision_bush_palm_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    usePaintColor:b=yes
+    paintFromLevelRiColors:b=yes
+    effect__riPoolUsedForColoring:i=-1
+    effect__name:t="envir_destr_colloision_bush_palm_cmps_fx"
+  }
+}
+
+envir_collision_bush_snow_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__lowestFxQuality:i=1
+    effect__name:t="envir_destr_colloision_bush_snow_cmps_fx"
+  }
+}
+
+envir_destr_ceramic_big_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_ceramic_big_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/ceramic"
+  }
+}
+
+envir_destr_ceramic_med_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_ceramic_med_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/ceramic"
+  }
+}
+
+envir_destr_ceramic_small_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_ceramic_small_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/ceramic"
+  }
+}
+
+envir_destr_ceramic_tiny_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_ceramic_tiny_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/ceramic"
+  }
+}
+
+envir_destr_clay_big_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_clay_big_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/ceramic"
+  }
+}
+
+envir_destr_clay_med_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_clay_med_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/ceramic"
+  }
+}
+
+envir_destr_clay_small_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_clay_small_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/ceramic"
+  }
+}
+
+envir_destr_concrete_big_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_concrete_big_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/concrete_big"
+  }
+}
+
+envir_destr_concrete_med_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_concrete_med_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/concrete_mid"
+  }
+}
+
+envir_destr_concrete_small_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_concrete_small_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/concrete_mid"
+  }
+}
+
+envir_destr_glass_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_glass_cmps_fx"
+    sfx:t="env_effects/object_crash/glass"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/glass"
+  }
+}
+
+envir_destr_bottle_green_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_p_derbis_bottle_green_glass_fx"
+    sfx:t="env_effects/object_crash/glass"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/glass"
+  }
+}
+
+envir_destr_bottle_clear_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_p_derbis_bottle_clear_glass_fx"
+    sfx:t="env_effects/object_crash/glass"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/glass"
+  }
+}
+
+envir_destr_wasp_hive_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_wasp_hive_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/hive"
+  }
+}
+
+envir_destr_tiny_wooden_prop_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_p_derbis_wood_tiny_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/wooden_tiny"
+  }
+}
+
+envir_destr_small_wooden_prop_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_wood_small_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/wooden_small"
+  }
+}
+
+envir_destr_tv_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_tv_cmps_fx"
+    sfx:t="env_effects/object_crash/glass"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/tv_crt"
+  }
+}
+
+envir_destr_bayan_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_wood_small_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/accordion"
+  }
+}
+
+envir_destr_guitar_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_wood_small_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/guitar"
+  }
+}
+
+envir_destr_phone_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_p_sparks_rad_tiny_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/phone"
+  }
+}
+
+envir_destr_clocks_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_metal_small_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/clock"
+  }
+}
+
+envir_destr_gong_clocks_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_wood_small_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/clock_antique"
+  }
+}
+
+envir_destr_hay_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_hay_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/haystack_medium"
+  }
+}
+
+envir_destr_paper_med_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_paper_med_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/paper_med"
+  }
+}
+
+envir_destr_paper_small_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_p_derbis_papers_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/paper_small"
+  }
+}
+
+envir_destr_paper_tiny_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_paper_tiny_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/paper_small"
+  }
+}
+
+envir_destr_hive_med_effect{
+  _use:t="destruction_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_hive_med_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/hive"
+  }
+}
+
+envir_destr_sandbags_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_sandbags_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/sandbag"
+  }
+}
+
+envir_destr_metal_big_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_metal_big_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/metal_mid"
+  }
+}
+
+envir_destr_metal_med_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_metal_med_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/metal_mid"
+  }
+}
+
+envir_destr_metal_small_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_metal_small_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/metal_small"
+  }
+}
+
+envir_destr_metal_tiny_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_p_sparks_rad_tiny_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/metal_dishes_small"
+  }
+}
+
+envir_destr_metal_micro_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_p_sparks_rad_microscopic_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/props/metal_dishes_tiny"
+  }
+}
+
+envir_destr_wood_big_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_wood_big_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/wood_mid"
+  }
+}
+
+envir_destr_wood_med_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_wood_med_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/wood_mid"
+  }
+}
+
+envir_destr_wood_small_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_wood_small_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/wood_small"
+  }
+}
+
+envir_destr_wood_tiny_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_p_derbis_wood_tiny_fx"
+  }
+}
+
+envir_destr_wood_door_big_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_wood_door_big_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/wooden_door"
+  }
+}
+
+envir_destr_wood_door_med_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_wood_door_med_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/wooden_door"
+  }
+}
+
+envir_destr_wood_window_med_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_wood_window_med_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/window"
+  }
+}
+
+envir_destr_wood_window_small_effect{
+  _use:t="destruction_effect_base"
+  _use:t="fx_destruction_sound"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_destr_wood_window_small_cmps_fx"
+  }
+
+  _group{
+    _tags:t="sound"
+    fx_destruction_sound__path:t="env_effects/object_crash/window"
+  }
+}
+
+envir_destr_wood_no_glass_window_small_effect{
+  _use:t="envir_destr_wood_small_effect"
+}

@@ -1,0 +1,171 @@
+check_ammo_net_phys{
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    human_net_phys__canClimb:b=yes
+    human_net_phys__canJump:b=yes
+    human_net_phys__canSprint:b=yes
+  }
+}
+
+check_ammo_controller{
+  _use:t="check_ammo_net_phys"
+  check_ammo_controller__input:b=no
+  check_ammo_controller__state:i=0
+  _tracked:t="check_ammo_controller__state"
+  _replicated:t="check_ammo_controller__state"
+  check_ammo_controller__ammoInspectionProgress:r=0
+  check_ammo_controller__ammoInspectionIdleProgress:r=0
+  check_ammo_controller__ammoInspectionInOutSpeed:p2=1, 1
+  check_ammo_controller__ammoInspectionIdleSpeed:r=1
+  check_ammo_controller__commonAffectTemplate:t="check_ammo_game_effect"
+  check_ammo_controller__removedAmmoAffectTemplate:t="check_ammo_removed_ammo_game_effect"
+  check_ammo_controller__ammoInspectionProgressIdleStart:r=1
+  check_ammo_controller__ammoInspectionProgressIdleEnd:r=2
+  check_ammo_controller__ammoInspectionProgressEnd:r=3
+  check_ammo_controller__ammoInspectionProgressInMarkStart:r=-1
+  check_ammo_controller__ammoInspectionProgressRemovedAmmoMarkers:p2=-1, -1
+
+  "check_ammo_controller__gunEid:eid"{}
+  "check_ammo_controller__commonAffectEid:eid"{}
+  "check_ammo_controller__removedAmmoAffectEid:eid"{}
+}
+
+check_ammo_game_effect{
+  _use:t="replicated_game_effect"
+  game_effect__enableFlag:t="human_use_object__lockVehicleUse"
+
+  "locked_weapon__reload:tag"{}
+  "locked_weapon__aim:tag"{}
+  "locked_view__lockZoom:tag"{}
+  "game_effect__disableActions:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockSprayDraw:tag"{}
+  "locked_use_object__lockSprayFill:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "locked_use_object__lockGrenadeRethrowing:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_use_object__limitJetpackUse:tag"{}
+  "game_effect__disableFlags:list<t>"{
+    item:t="human_inventory__canUseItems"
+    item:t="human_net_phys__canClimb"
+    item:t="human_net_phys__canSprint"
+  }
+}
+
+check_ammo_removed_ammo_game_effect{
+  _use:t="replicated_game_effect"
+
+  "game_effect__disableShooting:tag"{}
+  "game_effect__disableMelee:tag"{}
+}
+
+check_weapon_mark{
+  check_weapon_mark__offset:p3=0, 0, 0
+  check_weapon_mark__loc:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "check_weapon_mark__locData:object"{}
+}
+
+gun_check_weapon_no_magazine{
+  gun_check_weapon__ammoNodeId:i=-1
+  gun_check_weapon__ammoNodeName:t="gunFx_add_bolt"
+  gun_check_weapon__ammoNodeOffset:p3=0, 0, 0
+  gun_check_weapon__bulletInsideNodeId:i=-1
+  gun_check_weapon__bulletInsideNodeName:t="gunFx_add_bolt"
+  gun_check_weapon__bulletInsideNodeOffset:p3=0, 0, 0
+  gun_check_weapon__firemodeNodeId:i=-1
+  gun_check_weapon__firemodeNodeName:t="gunFx_main"
+  gun_check_weapon__firemodeNodeOffset:p3=-0.1, 0, -0.1
+  gun_check_weapon__firerangeNodeId:i=-1
+  gun_check_weapon__firerangeNodeName:t="sight1"
+  gun_check_weapon__firerangeNodeOffset:p3=0, 0, 0
+}
+
+gun_check_weapon_magazine{
+  gun_check_weapon__ammoNodeId:i=-1
+  gun_check_weapon__ammoNodeName:t="ammo"
+  gun_check_weapon__ammoNodeOffset:p3=0, 0, 0
+  gun_check_weapon__bulletInsideNodeId:i=-1
+  gun_check_weapon__bulletInsideNodeName:t="gunFx_add_bolt"
+  gun_check_weapon__bulletInsideNodeOffset:p3=0, 0, 0
+  gun_check_weapon__firemodeNodeId:i=-1
+  gun_check_weapon__firemodeNodeName:t="gunFx_main"
+  gun_check_weapon__firemodeNodeOffset:p3=0, 0, 0
+  gun_check_weapon__firerangeNodeId:i=-1
+  gun_check_weapon__firerangeNodeName:t="sight1"
+  gun_check_weapon__firerangeNodeOffset:p3=0, 0, 0
+}
+
+human_hero_check_weapon_controller{
+  human_hero_check_weapon_controller__markTemplate:t="check_weapon_mark"
+
+  "human_hero_check_weapon_controller__markEids:list<eid>"{}
+}
+
+base_gun_ammo_inspection_sound{
+  "anim_irq__eventNames:object"{}
+  anim_irq_to_event_converter{}
+  _group{
+    _tags:t="sound"
+
+    "gun_ammo_inspection_sound__inIrqs:object"{
+      "ammo_inspection_in_reload1:object"{
+        frw:t="reload1"
+        inv:t="reload2"
+      }
+
+      "ammo_inspection_in_reload1_frw:object"{
+        frw:t="reload1"
+      }
+
+      "ammo_inspection_in_reload2_inv:object"{
+        inv:t="reload2"
+      }
+
+      "ammo_inspection_in_reload4_inv:object"{
+        inv:t="reload4"
+      }
+
+      "ammo_inspection_in_reload14:object"{
+        frw:t="reload1"
+        inv:t="reload4"
+      }
+
+      "ammo_inspection_in_reload3:object"{
+        frw:t="reload3"
+        inv:t="reload4"
+      }
+
+      "ammo_inspection_in_reload3_fwd:object"{
+        frw:t="reload3"
+      }
+
+      "ammo_inspection_in_reload4_inv:object"{
+        inv:t="reload4"
+      }
+
+      "ammo_inspection_in_mag_out_frw:object"{
+        frw:t="mag_out"
+      }
+
+      "ammo_inspection_in_mag_in_inv:object"{
+        inv:t="mag_in"
+      }
+
+      "ammo_inspection_in_shutter_in_frw:object"{
+        frw:t="shutter_in"
+      }
+
+      "ammo_inspection_in_shutter_out_inv:object"{
+        inv:t="shutter_out"
+      }
+    }
+  }
+}
+
+base_gun_ammo_inspection{
+  _use:t="base_gun_ammo_inspection_sound"
+}

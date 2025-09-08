@@ -1,0 +1,103 @@
+entity{
+  _template:t="hive_clusters_manager"
+  hivesToSpawnRng:ip2=11, 11
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[-1, 0, -8.74228e-08] [0, 1, 0] [8.74228e-08, 0, -1] [1735.11, 48.8307, -1459.6]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[1, 0, 1.74846e-07] [0, 1, -0] [-1.74846e-07, 0, 1] [1649.05, 46.7002, -1447.18]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[0.994211, 0, 0.107446] [0, 1, -0] [-0.107446, 0, 0.994211] [1785.25, 44.2189, -1393.85]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[0.110579, 0, 0.993867] [0, 1, -0] [-0.993867, 0, 0.110579] [1671.32, 52.5773, -1330.26]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[-0.110578, 0, -0.993867] [0, 1, 0] [0.993867, 0, -0.110578] [1634.42, 52.7497, -1280.29]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[0.939795, 0, -0.341738] [0, 1, 0] [0.341738, -0, 0.939795] [1554.93, 50.2863, -1285.31]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[0.839159, 0, -0.543887] [0, 1, 0] [0.543887, -0, 0.839159] [1499.27, 50.0781, -1252.6]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[0.543886, 0, 0.839159] [0, 1, -0] [-0.839159, 0, 0.543886] [1453.55, 50.8233, -1188.33]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[-0.931382, 0, 0.364043] [0, 1, 0] [-0.364043, 0, -0.931382] [1594.14, 51.2325, -1302.69]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[0.918358, 0, -0.395751] [0, 1, 0] [0.395751, -0, 0.918358] [1558.71, 54.4092, -1275.84]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_big_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[-0.471851, 0, -0.114879] [0, 0.485635, 0] [0.114879, 0, -0.471851] [1805.33, 63.9746, -1409.43]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_factory_chimney_preset"
+  }
+}

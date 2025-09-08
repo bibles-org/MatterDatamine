@@ -1,0 +1,192 @@
+floating_object{
+  _use:t="euler_sinusoidal_oscillation"
+  _use:t="placeable_rendinst"
+  ri_extra__hasCollision:b=no
+  floating_object__ellipseHeight:r=0
+  floating_object__ellipseWidth:r=0
+  floating_object__currentEllipseParam:r=0
+  floating_object__orbitAngle:r=0
+  floating_object__speed:r=0
+
+  "floating_object__owner:eid"{}
+  "net__alwaysInScope:tag"{}
+}
+
+bighead_floating_object{
+  _use:t="floating_object"
+}
+
+bighead_floating_object_physics{
+  collres__res:t="is_kettle_a2_collision"
+  phys_obj_net_phys__blk:t="gamedata/am/mothman_floating_object.blk"
+  net__physId:i=-1
+  collision_physMatId:i=-1
+  first_contact_listener__hadContact:b=no
+  shell__shell_id__shell_id:i=-1
+  shell__shell_id__damage_id:i=-1
+  shell__shell_id__ballistics_id:i=-1
+
+  collres{}
+  phys_obj_net_phys{}
+  base_net_phys_ptr{}
+}
+
+bighead_floating_object_attack{
+  bighead_floating_object_attack__prepareMoveSpeed:r=2
+  bighead_floating_object_attack__preparePosition:p3=0, 0, 0
+
+  "floating_object__disableEllipseFloating:tag"{}
+  "bighead_floating_object_attack__target:eid"{}
+}
+
+bighead_floating_object_attack_launched{
+  _use:t="bighead_floating_object_physics"
+  bighead_floating_object_attack_launched__position:p3=0, 0, 0
+  bighead_floating_object_attack_launched__speed:r=35
+  floating_object_launched__downChance:r=0.5
+  floating_object_launched__downDuration:r=1
+
+  "floating_object__launched:tag"{}
+}
+
+bighead_floating_object_destruction{
+  bighead_floating_object_destruction__destroyAt:r=0
+  bighead_floating_object_destruction__stoppingViscosity:r=1
+}
+
+floating_objects{
+  floating_objects__anchorPosition:p3=0, 0, 0
+  floating_objects__anchorOffset:p3=0, 0, 0
+  floating_objects__anchorApproachViscocity:r=0.15
+  _skipInitialReplication:t="floating_objects__eids"
+  floating_objects__numObjects:i=35
+  floating_objects__minMaxEllipseHeight:p2=3, 7
+  floating_objects__ellipseWidthHeightRatio:r=0.75
+  floating_objects__minMaxSpeed:p2=2, 3
+  floating_objects__minMaxOscillationFrequency:p2=1, 2
+  floating_objects__minMaxOscillationAmplitude:p2=0.5, 1.5
+  floating_objects__minMaxOrbitAnglesDeg:p2=-20, 20
+  floating_objects__objectTemplate:t="floating_object"
+
+  "floating_objects__eids:list<eid>"{}
+  "floating_objects__creationRiList:list<t>"{
+    item:t="br_sink_a"
+    item:t="br_toilet_a"
+    item:t="commode_b_dmg_b"
+    item:t="hp_stool_b"
+    item:t="hp_trolley_a"
+    item:t="is_chandelier_h"
+    item:t="is_gramophone_a"
+    item:t="is_kettle_a2"
+    item:t="is_lamp_table_a"
+    item:t="is_mirror_a_dmg"
+    item:t="is_phone_b"
+    item:t="is_smoothing_iron_a"
+  }
+}
+
+bighead_ai{
+  _use:t="beh_tree_regular_check"
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  beh_tree__node:t="bighead_develop"
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  "beh_tree__debugState:t"{
+    _tags:t="dev"
+    value:t=""
+  }
+}
+
+bighead_victims{
+  bighead_victims__searchRadius:r=100
+  bighead_victims__looseInterestAfter:r=10
+  bighead_victims__pursueRadius:r=150
+
+  "bighead_victims__eid:list<eid>"{}
+  "bighead_victims__lastSeen:list<r>"{}
+}
+
+bighead_attack{
+  bighead_attack__state:i=0
+  bighead_attack__progress:r=0
+  bighead_attack__finishAttackAt:r=0
+  bighead_attack__finishPrepareAt:r=0
+  bighead_attack__prepareTime:r=0
+  bighead_attack__startedAt:r=0
+  bighead_attack__throwAmount:i=0
+  bighead_attack__launchedProjectiles:b=no
+  bighead_attack__attackTime:r=1
+  bighead_attack__prepareObjectsHeight:r=2.5
+  bighead_attack__launchAt:r=0.25
+
+  "bighead_attack__chosenObjects:list<eid>"{}
+}
+
+bighead_animgraph_ids{
+  bighead_animgraph_ids__attackPrepare:i=-1
+  bighead_animgraph_ids__attackThrow:i=-1
+  bighead_animgraph_ids__fly:i=-1
+  bighead_animgraph_ids__paramActionProgress:i=-1
+  bighead_animgraph_ids__paramMoveAngleHorizontal:i=-1
+  bighead_animgraph_ids__paramMoveAngleVertical:i=-1
+  bighead_animgraph_ids__paramMoveSpeed:i=-1
+}
+
+bighead_territory{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  sphere_zone__radius:r=80
+  bighead_territory__monsterTemplate:t="bighead"
+
+  "bighead_territory__bighead:eid"{}
+  "bighead_territory__wanderingPositions:list<p3>"{}
+}
+
+bighead_movement{
+  bighead_movement__position:p3=0, 0, 0
+  bighead_movement__waypointApproachDistance:r=2
+  bighead_movement__approachSpeed:r=0
+  bighead_movement__approachSpeedViscocity:r=2
+  bighead_movement__approachMaxSpeed:r=8
+  bighead_movement__wayPointListIndex:i=0
+  bighead_movement__testCubeSize:r=15
+  bighead_movement__maxTestCubesNumber:i=100
+
+  "bighead_movement__wayPointList:list<p3>"{}
+}
+
+bighead_wandering{
+  bighead_wandering__position:p3=0, 0, 0
+}
+
+bighead{
+  _use:t="replicating"
+  _use:t="creatures_grid_obj"
+  _use:t="animchar_turn_dir"
+  _use:t="bighead_ai"
+  _use:t="floating_objects"
+  _use:t="bighead_victims"
+  _use:t="bighead_animgraph_ids"
+  _use:t="bighead_wandering"
+  animchar__res:t="bighead_char"
+  collres__res:t="bighead_collision"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  bighead__previousPosition:p3=0, 0, 0
+  bighead__previousSpeed:r=0
+  bighead__speedAnimgraphMultiplier:r=50
+  bighead__verticalSpeedAnimgraphMultiplier:r=900
+  kill_tracking_tag:t="bighead"
+
+  "bighead:tag"{}
+  "bighead__territory:eid"{}
+  "kill_tracking__taggedPlayers:object"{}
+}
+
+indoor_bighead{
+  _use:t="bighead"
+  floating_objects__minMaxEllipseHeight:p2=1, 3
+  floating_objects__numObjects:i=15
+}

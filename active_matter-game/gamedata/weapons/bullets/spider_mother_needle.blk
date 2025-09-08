@@ -1,0 +1,45 @@
+mass:r=3.602
+caliber:r=0.1
+speed:r=40
+maxDistance:r=2000
+bulletType:t="ball"
+hitPowerMult:r=7
+relativeVelArmorShift:p2=200, 1000
+effectiveDistance:r=400
+relativeVelHitShift:p2=300, 1000
+
+stoppingPower{
+  stoppingPower:r=15
+}
+
+armorpower{
+  ArmorPower0m:p2=5, 5
+  ArmorPower100m:p2=4, 100
+  ArmorPower500m:p2=2, 500
+  ArmorPower1000m:p2=1, 1000
+  ArmorPower1500m:p2=0.1, 1500
+}
+
+hitpower{
+  HitPower10m:p2=1.45, 10
+  HitPower100m:p2=1.43, 100
+  HitPower200m:p2=1.37, 300
+  HitPower400m:p2=0.7, 400
+  HitPower600m:p2=0.3, 600
+  HitPower1000m:p2=0.1, 1000
+  HitPower1500m:p2=0.01, 1500
+}
+
+tracer{
+  luminosity:r=300
+  headColor:c=255, 255, 255, 255
+  smokeRadius:r=0.023
+  smokeTime:r=0.1
+}
+
+hitFx{
+  fxScale:p2=0.8, 1
+  defaultFx:t="hit_6_8mm_ap_sand_cmps_fx"
+  jetFx:t="hit_6_8mm_ap_sand_cmps_fx"
+  preset:t="bullet"
+}

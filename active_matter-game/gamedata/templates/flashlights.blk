@@ -1,0 +1,173 @@
+attached_flashlight_controller{
+  _tracked:t="attached_flashlight_controller__entityEid"
+  attached_flashlight_controller__templateName:t="attached_flashlight"
+  attached_flashlight_controller__nodeName:t="d_eye_l"
+  attached_flashlight_controller__nodeId:i=0
+
+  "attached_flashlight_controller__entityEid:eid"{}
+}
+
+flashlight_device_dynamic_material{
+  _use:t="dynmat_params_base"
+
+  "dynamic_material_channels_arr:array"{
+    _tags:t="render"
+
+    "dynamic_material_channel:object"{
+      dynamic_material_type:t="emissive"
+      dynmat_param__emissive_color:p4=1, 1, 1, 1
+      dynmat_param__emission_albedo_mult:r=0.1
+    }
+
+    "dynamic_material_channel:object"{
+      dynamic_material_type:t="emissive"
+      dynmat_param__emissive_color:p4=1, 1, 1, 0
+      dynmat_param__emission_albedo_mult:r=0.1
+    }
+  }
+}
+
+flashlight_device{
+  _use:t="replicating"
+  _use:t="equipable_item"
+  _use:t="slot_attachable"
+  _use:t="attached_flashlight_controller"
+  _use:t="flashlight_device_dynamic_material"
+  item__weight:r=0.1
+  item__volume:r=2
+  item__marketPrice:i=325
+  attached_flashlight_controller__offset:p3=0, 0, 0.1
+  item__recreateInInventory:t="base_invis_item"
+  item__filterType:t="equipment"
+  item__proto:t="flashlight_device"
+  item__name:t="items/flashlight_device1"
+  animchar__res:t="flashlight_sidevinder_a_char"
+  collres__res:t="flashlight_sidevinder_a_collision"
+  item__animcharInInventoryName:t="flashlight_sidevinder_b_char"
+  slot_attach__slotName:t="flashlight"
+  animchar_render__enabled:b=yes
+  animchar__actWhenInvisible:b=yes
+  flashlight_device__type:i=0
+  flashlight_device__emissiveOnValue:r=10
+  flashlight_device__emissiveColor:p3=1, 1, 1
+  flashlight_device__slotNameWithHelmet:t="flashlight"
+  flashlight_device__slotNameWithHelmetId:i=-1
+  flashlight_device__slotNameWithoutHelmet:t="flashlight_no_helmet"
+  flashlight_device__slotNameWithoutHelmetId:i=-1
+  dropTm:m=[[0, -1, 0] [1, 0, 0] [0, 0, 1] [0, 0.012, 0]]
+  showroom_item__customZoom:r=1.4
+  showroom_item__customZoomBordersRng:p2=1, 1.8
+
+  "item__equipmentSlots:list<t>"{
+    slot:t="flashlight"
+  }
+
+  "item__containerOwnerEid:eid"{}
+  "slot_attach__destroyWithParent:tag"{}
+  "slot_attach_fps_hidable_equipment:tag"{}
+  "equipment_item:tag"{}
+  "item__cantBeCorrupted:tag"{}
+}
+
+battle_box{
+  _use:t="replicating"
+  _use:t="equipable_item"
+  _use:t="slot_attachable"
+  item__weight:r=100
+  item__volume:r=300
+  item__recreateInInventory:t="base_invis_item"
+  item__filterType:t="equipment"
+  item__proto:t="battle_box"
+  item__name:t="items/battle_box"
+  animchar__res:t="battlepass_box_char"
+  collres__res:t="battlepass_box_collision"
+  slot_attach__slotName:t="jetpack"
+  animchar_render__enabled:b=yes
+  animchar__actWhenInvisible:b=yes
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.005, 0]]
+
+  "item__equipmentSlots:list<t>"{
+    slot:t="backpack"
+  }
+
+  "item__containerOwnerEid:eid"{}
+  "slot_attach__destroyWithParent:tag"{}
+  "equipment_item:tag"{}
+}
+
+bot_attached_flashlight{
+  _use:t="attached_flashlight"
+
+  _group{
+    _tags:t="render"
+    spot_light__shadowsDstSq:r=81
+    spot_light__dynShadowsDstSq:r=49
+  }
+}
+
+attached_flashlight_sound{
+  _group{
+    _tags:t="sound"
+    attached_flashlight_sound__onPath:t="player/walker/am_trooper_male/items/flashlight/on"
+    attached_flashlight_sound__offPath:t="player/walker/am_trooper_male/items/flashlight/off"
+  }
+}
+
+attached_flashlight{
+  _use:t="replicating"
+  _use:t="gunlight_spot"
+  _use:t="flashlight_attracts_owner"
+  _use:t="attached_flashlight_sound"
+  light__brightness:r=0
+  attached_flashlight__isOn:b=no
+  _tracked:t="attached_flashlight__isOn"
+  _replicated:t="attached_flashlight__isOn"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+  _replicated:t="attached_flashlight__actorEid"
+  attached_flashlight__type:i=0
+  attached_flashlight__lightRayMaterial:t="aiRay"
+  attached_flashlight__lightRayMaterialId:i=0
+  attached_flashlight__loudNoiseMinCos:r=0.92
+  attached_flashlight__loudNoiseUpdateInterval:r=0.5
+  attached_flashlight__loudNoiseUpdateAt:r=0
+  attached_flashlight__lightScale:r=0.65
+  attached_flashlight__normalBrightness:r=1.5
+  light__radius_scale:r=6
+  attached_flashlight__extraRotation:p3=0, 0, 0
+  attached_flashlight__extraRotationQuat:p4=0, 0, 0, 0
+
+  "slot_attach__attachedTo:eid"{}
+  "attached_flashlight__actorEid:eid"{}
+  "attached_flashlight__controllerEid:eid"{}
+  "net__alwaysInScope:tag"{}
+}
+
+gun_flashlight{
+  _use:t="gunlight"
+  _use:t="flashlight_attracts_owner"
+  gun_flashlight__normalBrightness:r=8
+  gun_flashlight__isOn:b=no
+  _tracked:t="gun_flashlight__isOn"
+  _replicated:t="gun_flashlight__isOn"
+}
+
+flashlight_visual_attract_point{
+  _use:t="visual_attract_point"
+  visual_attract_point__radius:r=0
+  flashlight_attract__visualAttractOffset:p3=0, 0, 0
+  flashlight_attract__visualAttractRadius:r=0
+  flashlight_attract__outdoorRadiusScale:r=0
+  flashlight_attract__nextUpdate:r=0
+  flashlight_attract__updateInterval:r=0.2
+
+  "flashlight_attract__visualAttractOwnerEid:eid"{}
+}
+
+flashlight_attracts_owner{
+  flashlight_attracts__visualAttractPointTemplate:t="flashlight_visual_attract_point"
+
+  "flashlight_attracts__visualAttractPoints:list<p4>"{
+    value:p4=-4, 0, 0, 2
+  }
+}

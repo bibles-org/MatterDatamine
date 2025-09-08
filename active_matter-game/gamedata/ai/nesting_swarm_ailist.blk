@@ -1,0 +1,175 @@
+repeat{
+  name:t="nesting_swarm_warrior"
+  selectStrategy:t="ordered"
+
+  sequencer{
+    name:t="chase_enemy"
+
+    checkAlive{
+      targetParam:t="walker_agent__targetEid"
+    }
+
+    sequencer{
+      reaction{
+        name:t="too_far_reaction"
+        event:t="regularCheck"
+
+        orderedSelector{
+          sequencer{
+            setTime{
+              to:t="swarm_warrior__lastActionAt"
+            }
+
+            not{
+              isSwarmWithinNestRange{}
+            }
+
+            modifyNode{
+              target:t="walker_agent__targetEid"
+              operator:t="="
+              arg:i=0
+            }
+
+            copyEntityPos{
+              pos:t="swarm_warrior__targetPos"
+              eid:t="swarm_warrior__primaryNest"
+            }
+
+            recalculateTree{}
+          }
+        }
+      }
+
+      dementorStrideTo{
+        target:t="walker_agent__targetEid"
+        distance:t="stride__approachTargetDistance"
+      }
+
+      wait{
+        range:p2=1, 2
+        resetable:b=yes
+      }
+
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        arg:i=0
+      }
+
+      subTree{
+        treeName:t="sub.findTargetOrComeBackHome"
+      }
+    }
+  }
+
+  sequencer{
+    name:t="investigate_pos"
+
+    dementorStrideTo{
+      pos:t="swarm_warrior__targetPos"
+      distance:t="stride__approachTargetDistance"
+    }
+
+    wait{
+      range:p2=1, 2
+      resetable:b=yes
+    }
+
+    subTree{
+      treeName:t="sub.findTargetOrComeBackHome"
+    }
+  }
+
+  sequencer{
+    name:t="attempt to teleport"
+
+    compareNode{
+      lhs:t="swarm_warrior__teleportDesire"
+      operator:t=">"
+      rhs:i=1
+    }
+
+    teleportNestingSwarmNest{}
+  }
+}
+
+orderedSelector{
+  name:t="sub.findTargetOrComeBackHome"
+  selectOnSuccess:b=yes
+
+  sequencer{
+    modifyNode{
+      target:t="walker_agent__targetEid"
+      operator:t="="
+      arg:i=0
+    }
+
+    findDanger{
+      paramName:t="enemy"
+      radiusParamName:t="enemyRadius"
+      minDanger:r=0
+      tag:t="human"
+    }
+
+    modifyNode{
+      target:t="walker_agent__targetEid"
+      operator:t="="
+      argIntParam:t="enemy"
+    }
+
+    modifyNode{
+      targetIntParam:t="enemy"
+      operator:t="="
+      arg:i=0
+    }
+
+    setTime{
+      to:t="swarm_warrior__lastActionAt"
+    }
+  }
+
+  sequencer{
+    compareNode{
+      lhs:t="swarm_warrior__investigationsLeft"
+      operator:t="=="
+      rhs:i=1
+    }
+
+    modifyNode{
+      target:t="swarm_warrior__investigationsLeft"
+      operator:t="="
+      arg:i=0
+    }
+  }
+
+  sequencer{
+    compareNode{
+      lhs:t="swarm_warrior__teleportDesire"
+      operator:t=">"
+      rhs:i=1
+    }
+
+    teleportNestingSwarmNest{}
+  }
+
+  copyEntityPos{
+    pos:t="swarm_warrior__targetPos"
+    eid:t="swarm_warrior__primaryNest"
+  }
+}
+
+repeat{
+  name:t="nesting_swarm_supply"
+  selectStrategy:t="ordered"
+
+  sequencer{
+    name:t="chase_warrior"
+
+    dementorStrideTo{
+      target:t="swarm_supply__targetEid"
+      distance:t="stride__approachTargetDistance"
+    }
+
+    resupplySwarmWarrior{}
+  }
+}

@@ -1,0 +1,52 @@
+sleepyhead{
+  sleep_mode__isSleeping:b=yes
+  sleep_mode__firstWakeUp:b=yes
+  sleep_mode__nextUpdateAt:r=0
+  sleep_mode__updateInterval:p2=5, 7
+  sleep_mode__triggerPoint:p3=0, 0, 0
+  sleep_mode__triggered:b=no
+  sleep_mode__triggerCheckDistSq:r=0.25
+  _replicated:t="sleep_mode__isSleeping"
+  _tracked:t="sleep_mode__isSleeping"
+}
+
+sleep_mode_wakeup_forbidden{
+  "sleep_mode_wakeup_forbidden:tag"{}
+}
+
+hit_wakeup_all_around{
+  hit_wakeup__radius:r=7
+  hit_wakeup__nextUpdateSleepModeAdd:r=7
+  hit_wakeup__awakeUnitsAround:i=10
+}
+
+pickup_wakeup_all_around{
+  pickup_wakeup__radius:r=10
+  pickup_wakeup__nextUpdateSleepModeAdd:r=5
+  pickup_wakeup__awakeUnitsAround:i=4
+}
+
+wakeup_all_around{
+  transform:m=[[0.5, 0, 0] [0, 0.5, 0] [0, 0, 0.5] [0, 0, 0]]
+  wakeup__radius:r=5
+  wakeup__nextUpdateSleepModeAdd:r=5
+  wakeup__awakeUnitsAround:i=4
+  game_effect__timeToDestroy:r=1
+  game_effect__destroyAt:r=-1
+}
+
+artifact_wakeup_all_around{
+  artifact__wakeupRadius:p2=1, 3.5
+  artifact__awakeUnitsAround:i=4
+  artifact__wakeupNextUpdateSleepModeAdd:r=5
+}
+
+flowerman_trap_wakeup_all_around{
+  _use:t="wakeup_all_around"
+  wakeup__radius:r=30
+  game_effect__destroyAt:r=-1
+  game_effect__timeToDestroy:r=2.5
+  _replicated:t="game_effect__destroyAt"
+
+  "trigger_activator:eid"{}
+}

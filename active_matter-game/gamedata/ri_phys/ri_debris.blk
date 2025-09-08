@@ -1,0 +1,17 @@
+inferFromCollision:b=yes
+density:r=200
+useFutureContacts:b=yes
+logCCD:b=no
+addToWorld:b=no
+skipUpdateOnSleep:b=yes
+sleepUpdateFrequency:i=10
+omegaMovementDamping:r=0.9
+omegaMovementDampingThreshold:r=0
+movementDampingThreshold:r=0
+
+solver{
+  erp:r=0
+  linear_slop:r=0.01
+  baumgarteBias:r=0.4
+  warmstartingFactor:r=0.85
+}

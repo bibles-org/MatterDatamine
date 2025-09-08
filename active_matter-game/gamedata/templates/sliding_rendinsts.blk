@@ -1,0 +1,23 @@
+sliding_rendinst_moving{
+  sliding_rendinst_moving__progressSpeed:r=0
+
+  "sliding_rendinst_moving:tag"{}
+}
+
+sliding_rendinst{
+  _use:t="replicating"
+  sliding_rendinst__axis:p3=0, 1, 0
+  sliding_rendinst__offset:r=3
+  sliding_rendinst__progress:r=0
+  sliding_rendinst__smoothProgress:b=yes
+  sliding_rendinst__metersPerSecond:r=2
+  sliding_rendinst__pauseOnCollision:b=no
+  sliding_rendinst__slidedState:b=no
+  _tracked:t="sliding_rendinst__slidedState"
+  _replicated:t="sliding_rendinst__slidedState"
+  sliding_rendinst__movingTemplate:t="sliding_rendinst_moving"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  initialTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "sliding_rendinst:tag"{}
+}

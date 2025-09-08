@@ -1,0 +1,241 @@
+maxChannels:i=1024
+maxSoftwareChannels:i=128
+maxVorbisCodecs:i=128
+maxFADPCMCodecs:i=128
+streamBufferSizeKb:i=96
+randomizeSeed:b=yes
+maxEventInstances:i=64
+maxOneshotEventInstances:i=32
+rejectFarOneshots:b=yes
+memoryTrackingMode:b=no
+memoryPc:i=200
+memoryPCLowMode:i=200
+memoryPCHighMode:i=200
+memoryPS4:i=200
+fmodLoglevel:t="warnings"
+loglevel:t="errors"
+occlusionInit:b=yes
+
+dsp{
+  pan3DDecay:r=0.05
+}
+
+vca{
+  MASTER{}
+  effects{}
+  interface{}
+  music{}
+  voices{}
+}
+
+banks{
+  folder:t="content/active_matter/sound"
+  extension:t=".bank"
+
+  plugins{
+    resonance_audio{
+      win32:t="resonanceaudio.dll"
+      win64:t="resonanceaudio.dll"
+      linux:t="linux64/libresonanceaudio.so"
+    }
+  }
+
+  presets{
+    master{
+      master_bank{
+        async:b=yes
+        preload:b=yes
+        loadToMemory:b=yes
+      }
+
+      master_bank.strings{
+        async:b=yes
+        preload:b=yes
+        loadToMemory:b=yes
+      }
+
+      master_bank.assets{
+        async:b=yes
+        preload:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_ambient{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_ambient.assets{
+        async:b=yes
+      }
+
+      am_music{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_music.assets{
+        async:b=yes
+      }
+
+      am_effects{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_effects.assets{
+        async:b=yes
+      }
+
+      am_ui{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_ui.assets{
+        async:b=yes
+      }
+
+      am_walker_flower_human{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_walker_flower_human.assets{
+        async:b=yes
+      }
+
+      am_walker_human{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_walker_human.assets{
+        async:b=yes
+      }
+
+      am_walker_spider{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_walker_spider.assets{
+        async:b=yes
+      }
+
+      am_walker_swarm_cluster{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_walker_swarm_cluster.assets{
+        async:b=yes
+      }
+
+      am_walker_swarm_xenos{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_walker_swarm_xenos.assets{
+        async:b=yes
+      }
+
+      am_walker_xenos{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_walker_xenos.assets{
+        async:b=yes
+      }
+
+      am_weapon{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_weapon.assets{
+        async:b=yes
+      }
+
+      am_weapon_foley{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_weapon_foley.assets{
+        async:b=yes
+      }
+
+      am_vehicles{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_vehicles.assets{
+        async:b=yes
+      }
+
+      am_voice_assistant{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_voice_assistant.assets{
+        async:b=yes
+      }
+
+      am_walker_statue{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_walker_statue.assets{
+        async:b=yes
+      }
+
+      am_walker_changed{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_walker_changed.assets{
+        async:b=yes
+      }
+
+      am_walker_mothman{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_walker_mothman.assets{
+        async:b=yes
+      }
+
+      am_walker_wormhuman{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_walker_wormhuman.assets{
+        async:b=yes
+      }
+
+      am_cutscenes{
+        async:b=yes
+        loadToMemory:b=yes
+      }
+
+      am_cutscenes.assets{
+        async:b=yes
+      }
+    }
+  }
+
+  languageToLocale{
+    German:t="de"
+    Russian:t="ru"
+    English:t="en"
+  }
+}

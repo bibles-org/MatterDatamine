@@ -1,0 +1,63 @@
+bots_ai_spawner{
+  numBotsSpawned:i=0
+  targetPopulation:i=5
+  minBotsToSpawn:i=0
+  templateToSpawn:t=""
+  spawnPeriod:r=5
+  assignTeam:b=yes
+  createPlayer:b=yes
+  metaChance:r=0
+  searchTeam:b=yes
+  createSquad:b=yes
+  countTeams:b=no
+  shouldBalanceTeams:b=yes
+  bots_ai_spawner__botAutoSquad:b=no
+
+  "applyMeta:array"{}
+}
+
+attract_points_grid{
+  editableObj:b=no
+  _use:t="replicating"
+  _singleton:b=yes
+  grid_holder__type:t="attract_point"
+  grid_holder__typeHash:i=0
+  grid_holder__smallCellSize:i=32
+
+  grid_holder{}
+}
+
+attract_point_base{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  attract_point__magnitude:r=1
+  grid_obj__gridType:t="attract_point"
+  grid_obj__fixedTmScale:r=-1
+
+  "attract_point__ownerEid:eid"{}
+  grid_obj{}
+}
+
+attract_point{
+  _use:t="attract_point_base"
+  game_effect__timeToDestroy:r=3
+  game_effect__destroyAt:r=0
+}
+
+shrinkable_attract_point{
+  _use:t="attract_point"
+  attract_point__minMagnitude:r=0.05
+  attract_point__shrinkSpeed:r=1
+}
+
+visual_attract_point{
+  visual_attract_point__radius:r=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+visual_attract_point_debug{
+  "visual_attract_point__debugDraw:tag"{}
+}
+
+debug_obstacles{
+  beh_tree__drawObstacles:b=no
+}

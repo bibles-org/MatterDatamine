@@ -1,0 +1,229 @@
+diy_ability{
+  "hero_ability__abilities:array"{
+    "diy:object"{
+      name:t="diy"
+      cooldown:r=0.5
+      lockWhileSwimming:b=yes
+      lockInVehicle:b=yes
+      skipOnDeath:b=yes
+      manualSoulsWithdrawl:b=yes
+
+      "stages:array"{
+        "placement_stage:object"{
+          affectTemplate:t="diy_template_selected"
+          duration:r=9999
+          activePhase:b=yes
+          interruptible:b=yes
+          skippable:b=yes
+        }
+
+        "out_stage:object"{
+          affectTemplate:t="diy_finishing_phase"
+          label:t="out_stage"
+          duration:r=0.5
+          exit:b=yes
+        }
+      }
+    }
+  }
+}
+
+diy_template_selected{
+  _use:t="replicated_game_effect"
+  _use:t="diy_disable_actions"
+  hero_ability__name:t=""
+  diy__previewControllerTempl:t="diy_preview_controller"
+  diy__previewControllerServerTempl:t="diy_preview_controller_server"
+  game_effect__cameraOffset:p3=0, 1, -3
+  game_effect__cameraMagnification:r=1
+  locked_view__lockPersonView:i=3
+
+  "diy__previewControllerEid:eid"{}
+  "diy__serverPreviewControllerEid:eid"{}
+  "locked_view__lockZoom:tag"{}
+}
+
+diy_finishing_phase{
+  _use:t="replicated_game_effect"
+  _use:t="diy_disable_actions"
+  locked_view__lockPersonView:i=1
+}
+
+diy_appear_effect{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_effect__timeToDestroy:r=5
+  game_effect__clientDestroyAt:r=0
+
+  effect{
+    _tags:t="render"
+  }
+
+  "effects:object"{
+    crash_impact_smoke:r=0.6
+  }
+}
+
+diy_ability_config{
+  "diy__config:array"{
+    "item:object"{
+      blueprint:t="sowmod_blueprint"
+      uiName:t="diy_creations/wall"
+      icon:t="ability/diy_creations/wall"
+    }
+
+    "item:object"{
+      blueprint:t="sowmod_complex_blueprint"
+      uiName:t="diy_creations/walls_complex"
+      icon:t="ability/diy_creations/wall"
+    }
+
+    "item:object"{
+      blueprint:t="sowmod_sample_blueprint"
+      uiName:t="diy_creations/sowmod_sample_blueprint"
+      icon:t="ability/diy_creations/wall"
+    }
+
+    "item:object"{
+      blueprint:t="service_center_blueprint"
+      uiName:t="diy_creations/SERVICE"
+      icon:t="ability/bastion"
+    }
+  }
+}
+
+diy_input{
+  diy__input__create:i=-1
+  diy__input__cancel:i=-1
+  diy__input__return:i=-1
+  diy__input__rotateUp:i=-1
+  diy__input__rotateDown:i=-1
+  diy__input__useDevice:i=-1
+}
+
+diy_preview_controller{
+  preview__validColor:p3=0, 1, 0
+  preview__invalidColor:p3=1, 0, 0
+  preview__spectatingColor:p3=0.5, 0.5, 0.8
+  preview__radius:r=2
+  preview__diyNormalizeGround:b=no
+  preview__diyNormalizeWall:b=no
+  preview__allowedMinAngle:r=0
+  preview__baseYawRotation:r=0
+  additionalYawRotation:r=0
+  yawRotationSpeed:r=90
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  diy__buildingInstanceId:i=-1
+  name:t="noname"
+
+  "diy__previewEids:list<eid>"{}
+  "preview__ownerEid:eid"{}
+}
+
+diy_preview_controller_server{
+  _use:t="diy_preview_controller"
+  diy__additionalPreviewTemplate:t="diy_preview_server"
+  diy__previewsCreatedCount:i=0
+
+  "diyPreviewControllerServer:tag"{}
+}
+
+diy_preview_server{
+  "diyPreviewServer:tag"{}
+  "diy_preview_server__ownerEid:eid"{}
+}
+
+base_diy_building_preview{
+  diy__offsetTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  preview__result:t=""
+
+  "preview__controllerEid:eid"{}
+}
+
+animchar_diy_building_preview{
+  _use:t="base_diy_building_preview"
+  _use:t="base_animchar_builder_preview"
+  preview_phys__blk:t=""
+}
+
+animchar_diy_building_preview_turn_dir{
+  _use:t="animchar_diy_building_preview"
+  _use:t="animchar_turn_dir"
+}
+
+base_diy_preview{
+  preview__validColor:p3=0, 1, 0
+  preview__invalidColor:p3=1, 0, 0
+  preview__spectatingColor:p3=0.5, 0.5, 0.8
+  preview__radius:r=2
+  preview__allowedMinAngle:r=0
+  preview__baseAdditionalYawRotation:r=0
+  preview__collHeightAdd:r=0.3
+}
+
+animchar_diy_preview{
+  _use:t="base_diy_preview"
+  _use:t="base_animchar_builder_preview"
+  preview_phys__blk:t=""
+}
+
+animchar_diy_preview_turn_dir{
+  _use:t="animchar_diy_preview"
+  _use:t="animchar_turn_dir"
+}
+
+diy_disable_actions{
+  _use:t="activate_unarmed_affect"
+  game_effect__enableFlag:t="human_use_object__lockVehicleUse"
+
+  "locked_weapon__reload:tag"{}
+  "locked_weapon__aim:tag"{}
+  "locked_view__lockZoom:tag"{}
+  "game_effect__disableActions:tag"{}
+  "game_effect__disableShooting:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockSprayDraw:tag"{}
+  "locked_use_object__lockSprayFill:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "locked_use_object__lockGrenadeRethrowing:tag"{}
+  "locked_use_object__lockVehicleUse:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_use_object__limitJetpackUse:tag"{}
+  "state__disableWeaponSwitch:tag"{}
+  "game_effect__disableFlags:list<t>"{
+    item:t="human_inventory__canUseItems"
+  }
+}
+
+diy_usable_device{
+  "diy__usableDevice:tag"{}
+}
+
+rendinst_diy_preview{
+  _use:t="base_diy_preview"
+  _use:t="base_diy_building_preview"
+  _use:t="base_rendinst_builder_preview"
+  preview_phys__blk:t=""
+}
+
+ri_preview_base{
+  _use:t="base_diy_building_preview"
+  _use:t="base_rendinst_builder_preview"
+  ri_preview__name:t=""
+  preview_phys__blk:t=""
+  preview__collHeightAdd:r=0.3
+}
+
+diy_grid{
+  editableObj:b=no
+  _use:t="replicating"
+  _singleton:b=yes
+  grid_holder__type:t="diy"
+  grid_holder__typeHash:i=0
+
+  grid_holder{}
+}
+
+diy_owned_by_watched{
+  "ownedByWatched:tag"{}
+}

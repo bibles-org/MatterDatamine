@@ -1,0 +1,200 @@
+clips{
+  default_animation_mask:t="full_body"
+  default_tags:t="default"
+
+  xenos_morph_idle_mirror_mm{
+    tags:t="idle"
+
+    use_foot_ik_locker{
+      always_locked:b=yes
+    }
+  }
+
+  xenos_morph_idle_mm{
+    tags:t="idle"
+
+    use_foot_ik_locker{
+      always_locked:b=yes
+    }
+  }
+
+  xenos_morph_idle_to_run_180_left_mm{
+    use_border_frames:b=yes
+    play_speed_multiplier_range:p2=0.5, 2
+
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_to_run_180_right_mm{
+    use_border_frames:b=yes
+    play_speed_multiplier_range:p2=0.5, 2
+
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_to_run_45_left_mm{
+    use_border_frames:b=yes
+    play_speed_multiplier_range:p2=0.5, 2
+
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_to_run_45_right_mm{
+    use_border_frames:b=yes
+    play_speed_multiplier_range:p2=0.5, 2
+
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_to_run_90_left_mm{
+    use_border_frames:b=yes
+    play_speed_multiplier_range:p2=0.5, 2
+
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_to_run_90_right_mm{
+    use_border_frames:b=yes
+    play_speed_multiplier_range:p2=0.5, 2
+
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_to_run_mirror_mm{
+    use_border_frames:b=yes
+    play_speed_multiplier_range:p2=0.5, 2
+
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_to_run_mm{
+    use_border_frames:b=yes
+    play_speed_multiplier_range:p2=0.5, 2
+
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_turn_on_spot_180_left_mirror_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_turn_on_spot_180_left_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_turn_on_spot_180_rigt_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_turn_on_spot_45_left_mirror_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_turn_on_spot_45_left_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_turn_on_spot_45_right_mirror_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_turn_on_spot_45_right_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_turn_on_spot_90_left_mirror_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_turn_on_spot_90_left_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_turn_on_spot_90_right_mirror_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_idle_turn_on_spot_90_right_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_mirror_mm{
+    fake_trajectory_multiplier:r=1.7
+    play_speed_multiplier_range:p2=0.5, 2
+
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_mm{
+    fake_trajectory_multiplier:r=1.7
+    play_speed_multiplier_range:p2=0.5, 2
+
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_run_turn_90_left_mm{
+    play_speed_multiplier_range:p2=0.5, 2
+
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_run_turn_90_right_mm{
+    play_speed_multiplier_range:p2=0.5, 2
+
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_to_idle_mirror_mm{
+    use_border_frames:b=yes
+    play_speed_multiplier_range:p2=0.5, 2
+
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_to_idle_mm{
+    use_border_frames:b=yes
+    play_speed_multiplier_range:p2=0.5, 2
+
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_turn_180_big_circkle_left{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_turn_180_big_circle_right_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_turn_180_left_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_turn_180_medium_circle_left_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_turn_180_medium_circle_right_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_turn_180_right_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_turn_180_very_big_circkle_left{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_turn_180_very_big_circle_right_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_turn_on_spot_180_left_mm{
+    use_foot_ik_locker{}
+  }
+
+  xenos_morph_run_turn_on_spot_180_right_mm{
+    use_foot_ik_locker{}
+  }
+}

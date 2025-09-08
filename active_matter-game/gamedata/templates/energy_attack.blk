@@ -1,0 +1,34 @@
+energy_attack_controller{
+  energy_attack_controller__visualAffectTemplate:t=""
+  energy_attack_controller__visualAffectAvailable:b=no
+  _tracked:t="energy_attack_controller__visualAffectAvailable"
+  energy_attack_controller__readyAt:r=0
+  energy_attack_controller__time:r=0
+  energy_attack_controller__cooldown:p2=2, 5
+
+  "energy_attack_controller__visualAffectEid:eid"{}
+  "energy_attack_controller__geomtreeNodeIds:list<i>"{}
+  "energy_attack_controller__geomtreeNodes:list<t>"{}
+}
+
+energy_attack_projectile{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  energy_attack_projectile__startPos:p3=0, 0, 0
+  energy_attack_projectile__startTimestamp:r=0
+  energy_attack_projectile__dirForward:p3=0, 0, 0
+  energy_attack_projectile__dirRight:p3=0, 0, 0
+  energy_attack_projectile__velocity:r=10
+  energy_attack_projectile__maxDistance:r=100
+  energy_attack_projectile__offsetFrequency:r=10
+  energy_attack_projectile__offsetAmplitude:r=2
+  energy_attack_projectile__salt:r=0
+  energy_attack_projectile__damageRng:p2=5, 10
+  energy_attack_projectile__pushRng:p2=5, 10
+  energy_attack_projectile__damageTraceDistSq:r=0.09
+  energy_attack_projectile__damageTracePos:p3=0, 0, 0
+  team:i=-1
+
+  "energy_attack_projectile__owner:eid"{}
+  "energy_attack_projectile__damagedEntities:list<eid>"{}
+}

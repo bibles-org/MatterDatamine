@@ -1,0 +1,104 @@
+item_broken{
+  _use:t="item"
+  item__iconRoll:r=45
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+item_broken_grenade{
+  _use:t="item_broken"
+  animchar__res:t="grenade_mk2_char"
+  collres__res:t="grenade_mk2_collision"
+  item__proto:t="item_broken_grenade"
+  item__name:t="items/item_broken_grenade"
+  item__weight:r=0.5
+  item__volume:r=2
+  item__iconPitch:r=-20
+  item__iconRoll:r=-10
+  item__iconYaw:r=0
+  dropTm:m=[[0, 0, 1] [0, 1, 0] [-1, 0, 0] [0, 0.005, 0]]
+}
+
+item_old_broken_painkiller{
+  _use:t="item_broken"
+  animchar__res:t="medication_b_char"
+  collres__res:t="medication_b_collision"
+  item__proto:t="item_old_broken_painkiller"
+  item__name:t="items/item_old_broken_painkiller"
+  item__weight:r=0.1
+  item__volume:r=1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.005, 0]]
+
+  "item_civil:tag"{}
+}
+
+akm_47_broken_item{
+  _use:t="item_broken"
+  animchar__res:t="akm_47_char"
+  collres__res:t="akm_47_collision"
+  item__proto:t="akm_47_broken_item"
+  item__name:t="items/akm_47_broken_item"
+  item__weight:r=3.1
+  item__volume:r=26
+  dropTm:m=[[0, 1, 0] [-1, 0, 0] [0, 0, 1] [0, 0.05, 0]]
+}
+
+sks_carbine_broken_item{
+  _use:t="item_broken"
+  animchar__res:t="sks_44_char"
+  collres__res:t="sks_44_collision"
+  item__proto:t="sks_carbine_broken_item"
+  item__name:t="items/sks_carbine_broken_item"
+  item__weight:r=3.75
+  item__volume:r=28
+  dropTm:m=[[0, 1, 0] [-1, 0, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+armor_plates_broken_item{
+  _use:t="item_broken"
+  animchar__res:t="thermal_imager_a_char"
+  collres__res:t="thermal_imager_a_collision"
+  item__proto:t="armor_plates_broken_item"
+  item__name:t="items/armor_plates_broken_item"
+  item__weight:r=2
+  item__volume:r=6
+  item__scaleMult:r=3
+  dropTm:m=[[0, 1, 0] [-1, 0, 0] [0, 0, 1] [0, 0.05, 0]]
+}
+
+am_broken_items_inventory{
+  _use:t="item_grid_spawner"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.05, 0]]
+  grid_spawner__gap:p2=0.5, 0.5
+
+  "spawnItemList:array"{
+    "item:object"{
+      templ:t="item_broken_ammo+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_broken_grenade+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="item_old_broken_painkiller+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="akm_47_broken_item+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="sks_carbine_broken_item+item_in_world"
+      count:i=3
+    }
+
+    "item:object"{
+      templ:t="armor_plates_broken_item+item_in_world"
+      count:i=3
+    }
+  }
+}

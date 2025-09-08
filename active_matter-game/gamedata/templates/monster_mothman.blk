@@ -1,0 +1,1194 @@
+anomaly_mothman_transmutation_composite_fx{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="anomaly_transmutation_b_composite_fx"
+
+    effect{}
+  }
+}
+
+monstrify_mothman_trap_visual_fx_controller{
+  _use:t="anomaly_trap_visual_fx_controller"
+
+  _group{
+    _tags:t="gameClient"
+
+    "anomaly_trap_visual_fx_controller__fxTemplates:list<t>"{
+      item:t="anomaly_mothman_transmutation_composite_fx"
+    }
+  }
+}
+
+monstrify_mothman_sequence_spawn_effect{
+  _use:t="replicated_effect_with_duration"
+  monstrify_effect__template:t="monstrified_mothman_human+monstrify_spawn_sequence_controller"
+}
+
+monstrify_mothman_sequence{
+  _use:t="game_effect_sequence"
+
+  "spawn_sequence__fxEid:eid"{}
+  "locked_weapon__reload:tag"{}
+  "state__interruptReload:tag"{}
+  "entity_mod_effects:object"{
+    "hitpointsDmgMult+mult_diminishing":r=0
+  }
+
+  "game_effect_sequence__stages:array"{
+    "stage:object"{
+      affectTemplate:t="monstrify_extraction_sequence_init"
+      duration:r=0.25
+    }
+
+    "stage:object"{
+      affectTemplate:t="monstrify_sequence_portal_opens"
+      duration:r=0.1
+      setupTransform:b=yes
+    }
+
+    "stage:object"{
+      affectTemplate:t="monstrify_extraction_sequence_soldier_disappears+trans_portal_affect_start_sound"
+      duration:r=0.7
+    }
+
+    "stage:object"{
+      affectTemplate:t="monstrify_mothman_sequence_spawn_effect"
+      duration:r=0.5
+    }
+  }
+}
+
+monstrify_mothman_trap{
+  _use:t="monstrify_trap"
+  monstrify_trap__sequenceTemplate:t="monstrify_mothman_sequence"
+  optimised_effect_source__template:t="monstrify_mothman_trap_visual_fx_controller"
+}
+
+monster_flight_mode{
+  monster_flight_mode__accel:r=3
+  monster_flight_mode__fric:r=1
+  monster_flight_mode__fricThresSpd:r=10
+  monster_flight_mode__speedDefault:r=9
+  monster_flight_mode__speedSprint:r=20
+  monster_flight_mode__enabled:b=yes
+  _replicated:t="monster_flight_mode__enabled"
+  monster_flight_mode__isSprinting:b=no
+  monster_flight_mode__isImmobilized:b=no
+  _tracked:t="monster_flight_mode__isSprinting"
+  monster_flight_mode__sprintBrakeTime:r=1
+  monster_flight_mode__sprintBrakeUntil:r=-1
+  monster_flight_mode__maxStamina:r=100
+  monster_flight_mode__stamina:r=100
+  _tracked:t="monster_flight_mode__stamina"
+  _replicated:t="monster_flight_mode__stamina"
+  monster_flight_mode__staminaFlightConsumption:r=40
+  monster_flight_mode__staminaRegen:r=3
+  monster_flight_mode__forceVelocity:p3=0, 0, 0
+  monster_flight_mode__forceVelocityEnabled:b=no
+  _tracked:t="monster_flight_mode__forceVelocityEnabled"
+}
+
+mothman_monster_sprint_geomtree_effect_aura_smoke{
+  _use:t="attached_effect_local_space_no_scale"
+  effect__spawnRate:r=0
+  _tracked:t="effect__spawnRate"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="mothman_sprint_aura_smoke_fx"
+  }
+}
+
+mothman_monster_sprint_geomtree_effect_trail_smoke{
+  _use:t="attached_effect_world_space_no_scale"
+  effect__spawnRate:r=0
+  _tracked:t="effect__spawnRate"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="mothman_sprint_trail_smoke_fx"
+  }
+}
+
+mothman_monster_sprint_geomtree_effect{
+  _use:t="replicated_game_effect"
+  _use:t="game_effect_geomtree_effects"
+  game_effect__showHideDistanceSq:p2=8100, 14400
+
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="mothman_monster_sprint_geomtree_effect_aura_smoke"
+    item:t="mothman_monster_sprint_geomtree_effect_trail_smoke"
+  }
+
+  "game_effect__geomtreeEffectIgnoreNodeNames:list<t>"{
+    node:t="Bip001 Head"
+  }
+
+  "game_effect__geomtreeEffectIgnoreNodeIndices:list<i>"{}
+}
+
+mothman_monster_effect{
+  _use:t="changed_monster_effect"
+  _use:t="game_effect_sound"
+  game_effect_sound__enemy:t="enemy/walker/mothman/voice_fx/transmigration"
+  game_effect_sound__hero:t="player/walker/mothman/voice_fx/transmigration"
+  game_effect__enableFlag:t="human_use_object__lockVehicleUse"
+  postfx_vignette_affect__factor:r=0.05
+  human_cam_magnification_affect__magnification:r=0.75
+  game_effect__chromaticAberrationParams:p4=0, 0, 0, 0
+  monster_flight_mode_effect__sprintGeomtreeEffectTemplate:t="mothman_monster_sprint_geomtree_effect"
+
+  "effect_enable_action_sets__actionSetList:list<t>"{
+    item:t="MonsterMothman"
+  }
+
+  "mothman_monster_effect:tag"{}
+  "locked_use_object__lockVehicleUse:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "game_effect__colorGrading:object"{
+    colorGain:p4=1, 1, 1, 1.5
+    colorGamma:p4=1, 1, 1, 0.9
+    colorContrast:p4=1, 1, 1, 1.3
+    colorSaturation:p4=1, 1, 1, 0.25
+    priority:i=90000
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="gameClient"
+    monster_flight_mode_effect__magnificationFromTo:p2=1, 0.5
+    monster_flight_mode_effect__vignetteFactorFromTo:p2=0.05, 0.8
+    monster_flight_mode_effect__gammaFromTo:p2=0.9, 1.2
+    monster_flight_mode_effect__contrastFromTo:p2=1.3, 2.5
+    monster_flight_mode_effect__saturationFromTo:p2=0.25, 0
+  }
+
+  "monster_flight_mode_effect__sprintGeomtreeEffectEid:eid"{}
+  "sound_mod_tags:list<t>"{
+    _tags:t="sound"
+    tag:t="mothmanAffect"
+  }
+
+  "entity_mod_effects:object"{
+    "hitpointsDmgMult+mult_diminishing":r=0.55
+    "hitpointsMeleeDmgMult+mult_diminishing":r=0.75
+  }
+}
+
+mothman_render_smoke_effect{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="mothman_aura_smoke_a_fx"
+  }
+}
+
+mothman_render_distortion_effect{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="mothman_aura_distortion_a_fx"
+  }
+}
+
+mothman_render_shards_effect{
+  _use:t="attached_effect_world_space_no_scale"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="mothman_aura_shards_vortex_a_fx"
+  }
+}
+
+mothman_render_effect{
+  _use:t="replicated_game_effect"
+  _use:t="game_effect_geomtree_effects"
+
+  "game_effect__ownerEid:eid"{}
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="mothman_render_smoke_effect"
+    item:t="mothman_render_distortion_effect"
+    item:t="mothman_render_shards_effect"
+  }
+}
+
+watched_mothman_render_effect{
+  _use:t="mothman_render_effect"
+
+  "game_effect__geomtreeEffectIgnoreNodeNames:list<t>"{
+    node:t="Bip001 Head"
+    node:t="Bip001 Spine"
+    node:t="Bip001 Spine2"
+    node:t="Bip001 Spine203"
+    node:t="Bip001 Spine3"
+    node:t="Bip001 Thigh_L"
+    node:t="Bip001 Thigh_L02"
+    node:t="Bip001 Thigh_L03"
+    node:t="Bip001 Thigh_R"
+    node:t="Bip001 Thigh_R02"
+    node:t="Bip001 Thigh_R03"
+    node:t="Bip001 L UpperArm"
+    node:t="Bip001 L Forearm"
+    node:t="Bip001 R UpperArm"
+    node:t="Bip001 R Forearm"
+  }
+
+  "game_effect__geomtreeEffectIgnoreNodeIndices:list<i>"{}
+}
+
+mothman_aura{
+  _use:t="monster_aura"
+
+  "monster_aura__watchedAttachments:list<t>"{
+    i:t="watched_mothman_render_effect"
+  }
+
+  "monster_aura__enabledAliveAttachments:list<t>"{
+    i:t="mothman_render_effect"
+  }
+
+  "monster_aura__enabledDeadAttachments:list<t>"{
+    i:t="mothman_render_effect"
+  }
+}
+
+mothman_object_visual_effect{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="mothman_aura_smoke_a_fx"
+  }
+}
+
+mothman_object_gathering_affect{
+  _use:t="replicated_game_effect"
+  _use:t="game_effect_sound"
+  game_effect_sound__enemy:t="enemy/walker/mothman/voice_fx/gather_ammo"
+  game_effect_sound__hero:t="player/walker/mothman/voice_fx/gather_ammo"
+
+  "game_effect__enableFlags:list<t>"{
+    i:t="monster_flight_mode__isImmobilized"
+    i:t="monstrified_mothman_gathering__isChanneling"
+  }
+}
+
+mothman_echolocation_affect_in{
+  _use:t="echolocation_affect_in"
+  game_effect_sound__enemy:t="enemy/walker/mothman/voice_fx/ability"
+  game_effect_sound__hero:t="player/walker/mothman/voice_fx/ability"
+  game_effect_create_client_entity_on_appear__nodeName:t="Bip001 Head"
+  game_effect_create_loud_noise_on_appear__nodeName:t="Bip001 Head"
+
+  "reset_mothman_idle_sound:tag"{}
+}
+
+mothman_echolocation_affect{
+  _use:t="echolocation_affect"
+  ability_echolocation__duration:r=3
+}
+
+monstrified_mothman_abilities{
+  _use:t="monster_flight_mode"
+
+  "hero_ability__abilities:array"{
+    "mothman_sprint:object"{
+      name:t="mothman_sprint"
+      type:t="passive"
+      icon:t="uiskin/ability/mothman_rush.svg"
+    }
+
+    "mothman_gather_stones:object"{
+      name:t="mothman_gather_stones"
+      actionHandleName:t="MonsterMothman.GatherItems"
+      hide_ui_after_first_use:b=yes
+      type:t="active"
+      icon:t="uiskin/ability/mothman_field.svg"
+
+      "stages:array"{
+        "gathering_stage:object"{
+          affectTemplate:t="mothman_object_gathering_affect"
+          duration:r=9999
+          activePhase:b=yes
+          interruptible:b=yes
+          skippable:b=yes
+        }
+
+        "gathering_exit:object"{
+          exit:b=yes
+        }
+      }
+    }
+  }
+}
+
+mothman_locate_players_ability_activated{
+  _use:t="game_effect_base"
+
+  "mothman_locate_players_ability_activated:tag"{}
+}
+
+monstrified_mothman_human_anim{
+  _group{
+    _tags:t="gameClient"
+    mothman_anim__moveAngleHorizontalVarId:i=-1
+    mothman_anim__moveAngleVerticalVarId:i=-1
+    mothman_anim__moveSpeedVarId:i=-1
+    mothman_anim__prevVelocity:p3=0, 0, 0
+    mothman_anim__floatNodeId:i=-1
+    mothman_anim__floatTimer:r=0
+  }
+}
+
+monstrified_mothman_gathering{
+  monstrified_mothman_gathering__isChanneling:b=no
+  _replicated:t="monstrified_mothman_gathering__isChanneling"
+  monstrified_mothman_gathering__nextGatherAt:r=-1
+  _replicated:t="monstrified_mothman_gathering__nextGatherAt"
+  monstrified_mothman_gathering__oneItemGatherTime:r=1
+  monstrified_mothman_gathering__maxGatheredItems:i=8
+  monstrified_mothman_gathering__paramName:t="stone_progress"
+  monstrified_mothman_gathering__paramId:i=-1
+  monstrified_mothman_gathering__maxHeight:r=4
+  monstrified_mothman_gathering__objectAppearRandomRadius:p2=0.1, 6
+
+  _group{
+    _tags:t="gameClient"
+    monstrified_mothman_gathering__objectAppearFx:t="hit_footstep_big_dirt_effect"
+    monstrified_mothman_gathering__objectAppearSound:t="enemy/effects/mothman_gathering"
+  }
+}
+
+monstrified_mothman_attack{
+  monstrified_mothman_attack__isChanneling:b=no
+  _tracked:t="monstrified_mothman_attack__isChanneling"
+  monstrified_mothman_attack__chargedAt:r=-1
+  monstrified_mothman_attack__shotAt:r=-1
+  monstrified_mothman_attack__shootAnimTime:r=0.8
+  monstrified_mothman_attack__shootAnimTimeEnd:r=-1
+  monstrified_mothman_attack__loadTime:r=2.25
+  monstrified_mothman_attack__floatingObjectAttractionProgress:r=0
+  monstrified_mothman_attack__objectPrepareCameraOffset:p3=0, 0.5, 1
+  monstrified_mothman_attack__paramName:t="attack_progress"
+  monstrified_mothman_attack__paramId:i=-1
+  monstrified_mothman_attack__holdObjectAtParamValue:r=0.5
+
+  "monstrified_mothman_attack__chosenObject:eid"{}
+  _group{
+    _tags:t="server"
+    monstrified_mothman_attack__clientAttackPositionLeewayDistance:r=40
+    monstrified_mothman_attack__clientAttackMaxLeewayTime:r=0.5
+  }
+}
+
+riextra_with_impulse_on_destruction{
+  ri_extra__impulseOnDestruction:p3=0, 0, 0
+  ri_extra__impulsePosOnDestruction:p3=0, 0, 0
+}
+
+mothman_damage_model{
+  _use:t="human_damage_model"
+
+  "human_damage_model__parts:object"{
+    "head:object"{
+      maxHp:r=100
+      hp:r=100
+      isInjured:b=no
+      removeInjuryHp:r=10
+      explosionImpact:b=yes
+      collisionImpact:b=no
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="head"
+
+      "list:list<t>"{
+        node:t="Bip001 Head"
+        node:t="Bip001 Neck"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+
+    "body:object"{
+      maxHp:r=250
+      hp:r=250
+      isInjured:b=no
+      removeInjuryHp:r=10
+      explosionImpact:b=yes
+      collisionImpact:b=no
+      holdBreathImpact:b=no
+      barbwireImpact:b=no
+      name:t="body"
+
+      "list:list<t>"{
+        node:t="Bip001 Spine"
+        node:t="Bip001 Spine2"
+        node:t="Bip001 Spine3"
+        node:t="Bip001 Spine203"
+        node:t="Bip001 Pelvis2"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{}
+    }
+
+    "right_hand:object"{
+      maxHp:r=150
+      hp:r=150
+      isInjured:b=no
+      removeInjuryHp:r=10
+      distributionDamageMult:r=0.75
+      explosionImpact:b=yes
+      collisionImpact:b=no
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="right_hand"
+
+      "list:list<t>"{
+        node:t="Bip001 R Clavicle"
+        node:t="Bip001 R UpperArm"
+        node:t="Bip001 R ForeTwist1"
+        node:t="Bip001 R Hand"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+
+    "left_hand:object"{
+      maxHp:r=150
+      hp:r=150
+      isInjured:b=no
+      removeInjuryHp:r=10
+      distributionDamageMult:r=0.75
+      explosionImpact:b=yes
+      collisionImpact:b=no
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="left_hand"
+
+      "list:list<t>"{
+        node:t="Bip001 L Clavicle"
+        node:t="Bip001 L UpperArm"
+        node:t="Bip001 L ForeTwist1"
+        node:t="Bip001 L Hand"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+
+    "right_leg:object"{
+      maxHp:r=150
+      hp:r=150
+      isInjured:b=no
+      removeInjuryHp:r=10
+      distributionDamageMult:r=1.25
+      explosionImpact:b=yes
+      collisionImpact:b=yes
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="right_leg"
+
+      "list:list<t>"{
+        node:t="Bip001 Thigh_R"
+        node:t="Bip001 Thigh_R02"
+        node:t="Bip001 Thigh_R03"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+
+    "left_leg:object"{
+      maxHp:r=150
+      hp:r=150
+      isInjured:b=no
+      removeInjuryHp:r=10
+      distributionDamageMult:r=1.25
+      explosionImpact:b=yes
+      collisionImpact:b=yes
+      holdBreathImpact:b=no
+      barbwireImpact:b=yes
+      name:t="left_leg"
+
+      "list:list<t>"{
+        node:t="Bip001 Thigh_L"
+        node:t="Bip001 Thigh_L02"
+        node:t="Bip001 Thigh_L03"
+      }
+
+      "nodeIds:list<i>"{}
+      "adjacentParts:list<t>"{
+        part:t="body"
+      }
+    }
+  }
+}
+
+mothman_ragdoll{
+  _use:t="militant_ragdoll_phys_obj"
+
+  "ragdoll_phys_obj__links:array"{
+    "spine:object"{
+      nodeIdx:i=-1
+      nodeName:t="Bip001 Spine"
+      root:b=yes
+    }
+  }
+}
+
+floating_object_approach_from_pos{
+  floating_object_approach_from_pos__pos:p3=0, 0, 0
+  floating_object_approach_from_pos__approachTime:r=1
+  floating_object_approach_from_pos__approachStart:r=-1
+}
+
+mothman_idle_sound{
+  _group{
+    _tags:t="sound"
+    mothman_idle_sound__hero:t="player/walker/mothman/voice_fx/click"
+    mothman_idle_sound__enemy:t="enemy/walker/mothman/voice_fx/click"
+  }
+
+  _group{
+    _tags:t="server"
+    mothman_idle_sound__periodMinMax:p2=5, 8
+    mothman_idle_sound__nextAt:r=-1
+  }
+}
+
+mothman_flight_sound{
+  _tags:t="sound"
+  mothman_flight_sound__pathHero:t="player/walker/mothman/foley_mov/flight"
+  mothman_flight_sound__pathEnemy:t="enemy/walker/mothman/foley_mov/flight"
+  monster_flight_sound__sprintSoundDampingViscosity:r=0.25
+  mothman_flight_sound__sprintSoundValue:r=0
+
+  "mothman_flight_sound__event:SoundEvent"{}
+}
+
+mothman_attack_sound{
+  mothman_attack_sound__hero:t="player/walker/mothman/voice_fx/attack"
+  mothman_attack_sound__enemy:t="enemy/walker/mothman/voice_fx/attack"
+}
+
+monstrified_mothman_human_sound{
+  _use:t="am_human_sound"
+  _use:t="mothman_idle_sound"
+  _use:t="mothman_attack_sound"
+  _use:t="mothman_flight_sound"
+
+  _group{
+    _tags:t="sound"
+    attach_reverb_sound_to_watchable__nodeName:t="Bip001 Neck1"
+  }
+
+  _group{
+    _tags:t="sound"
+    heartrate_sound__startFrom:r=240
+  }
+}
+
+monstrified_mothman_floating_objects{
+  _use:t="floating_objects"
+  floating_objects__anchorOffset:p3=0, 1, 0
+  floating_objects__launchSpeed:r=120
+  floating_objects__objectTemplate:t="floating_object+mothman_object_visual_effect+riextra_with_impulse_on_destruction+floating_object_approach_from_pos"
+  floating_objects__numObjects:i=8
+  _replicated:t="floating_objects__numObjects"
+  floating_objects__anchorApproachViscocity:r=0.05
+  floating_objects__minMaxEllipseHeight:p2=1.5, 3.5
+  floating_objects__ellipseWidthHeightRatio:r=0.75
+  floating_objects__minMaxSpeed:p2=2, 3
+  floating_objects__minMaxOscillationFrequency:p2=1, 2
+  floating_objects__minMaxOscillationAmplitude:p2=0.5, 1.5
+  floating_objects__minMaxOrbitAnglesDeg:p2=-30, 30
+
+  "floating_objects__creationRiList:list<t>"{
+    item:t="mothman_projectile_stone_part_a"
+    item:t="mothman_projectile_stone_part_b"
+    item:t="mothman_projectile_stone_part_c"
+    item:t="mothman_projectile_stone_part_d"
+    item:t="mothman_projectile_stone_part_e"
+    item:t="mothman_projectile_stone_part_f"
+    item:t="mothman_projectile_stone_part_g"
+    item:t="mothman_projectile_stone_part_h"
+  }
+}
+
+monstrified_mothman_human_base{
+  _use:t="monstrified_human_base"
+  _use:t="shooter_human"
+  _use:t="base_entity_mods"
+  _use:t="teammate_raiser"
+  _use:t="am_hit_tagging"
+  _use:t="vehicle_fuel_container_owner"
+  _use:t="equipment_char_flags"
+  _use:t="sleep_disturber"
+  _use:t="firefly_disturber"
+  _use:t="human_loud_noise"
+  _use:t="human_dodge"
+  _use:t="human_trigger_trap_activator"
+  _use:t="trap_logger"
+  _use:t="human_pain"
+  _use:t="default_stub_melee_controller"
+  _use:t="another_dimension_visitor_default"
+  _use:t="am_portal_user"
+  _use:t="human_breath"
+  _use:t="human_item_use"
+  _use:t="human_inventory_postponed_usage"
+  _use:t="human_anim_threephase_action"
+  _use:t="zones_visitor"
+  _use:t="militant_coll_damage"
+  _use:t="militant_inventory"
+  _use:t="militant_dm_parts"
+  _use:t="militant_actions"
+  _use:t="militant_weap"
+  _use:t="locked_weapon_soldier"
+  _use:t="locked_view_soldier"
+  _use:t="locked_looting_soldier"
+  _use:t="locked_use_objects_soldier_base"
+  _use:t="locked_human_state_soldier"
+  _use:t="barbwire_damage"
+  _use:t="uncontrollable_soldier"
+  _use:t="am_storm_effect"
+  _use:t="human_corruption"
+  _use:t="antigrav_character"
+  _use:t="am_militant_ai_target"
+  _use:t="external_inventory_interactor"
+  _use:t="awake_sleepers_on_am_pickup"
+  _use:t="loc_snapshots_hero_awareness"
+  _use:t="am_militant_base_ability"
+  _use:t="find_player_target"
+  _use:t="am_emotes"
+  _use:t="human_climbing_hint"
+  _use:t="player_name_marker"
+  _use:t="check_ammo_controller"
+  _use:t="binoculars_controller"
+  _use:t="quick_use_slots"
+  _use:t="militant_items_around"
+  _use:t="militant_use_interactables"
+  _use:t="base_throw_trajectory"
+  _use:t="human_cocussed_vision"
+  _use:t="human_limited_visibility"
+  _use:t="human_pickup_frustum"
+  _use:t="human_cam"
+  _use:t="hud_actions"
+  _use:t="stamina_view"
+  _use:t="am_camera_shake"
+  _use:t="sleeping_animchar_update_toggle_by_distance_origin"
+  _use:t="loud_noise_meter"
+  _use:t="am_heartrate"
+  _use:t="militant_swarm_target"
+  _use:t="awake_changed_around"
+  _use:t="ammo_count_knowledge_controller"
+  _use:t="hero_extraction"
+  _use:t="stalker_statue_target"
+  _use:t="fog_of_war_clearer"
+  _use:t="mothman_damage_model"
+  _use:t="am_storage"
+  _use:t="flowermen_random_awaker"
+  _use:t="militant_node_collapser"
+  _use:t="damage_model_regeneration"
+  _use:t="stalker_statue_not_target"
+  _use:t="monstrified_mothman_human_anim"
+  _use:t="mothman_aura"
+  _use:t="am_militant_suit_base"
+  _use:t="monstrified_mothman_human_sound"
+  _use:t="monstrified_human_locked_melee_only"
+  monstrified_mothman__maxTraceLenCeiling:r=2.5
+  monstrified_mothman__minDistToCeiling:r=2.1
+  monstrified_mothman__distToCeiling:r=0
+  monstrified_mothman__maxTraceHeight:r=15
+  monstrified_mothman__currentHeightNearGround:r=0
+  _replicated:t="monstrified_mothman__currentHeightNearGround"
+  monstrified_mothman__isNearGround:b=no
+  _replicated:t="monstrified_mothman__isNearGround"
+  net_ragdoll__animcharNodeForCreationPositionName:t="Bip001 Spine"
+  killcam__neckNodeName:t="Bip001 Neck1"
+  lightning_emitter__templateName:t="euclid_central_sphere_lightning_effect"
+  human_inventory__canHeal:b=no
+  human_inventory__canLoadCharges:b=no
+  human_inventory__pickupRadius:r=1.5
+  human_inventory__pickupHeight:r=1.5
+  human_inventory__pickupRemoveRadius:r=1.7
+  human_inventory__pickupRemoveHeight:r=1.7
+  team:i=1
+  camera__relative_angle:p2=0, 0
+  camera__isRotateInGlobal:b=yes
+  human_net_phys__blk:t="gamedata/units/monster_mothman.blk"
+  human_net_phys__canClimb:b=no
+  human_net_phys__canCrawl:b=no
+  human_net_phys__canJump:b=no
+  meleeHitThroughRi:b=yes
+  human_unarmed__hiddenWeapon:b=no
+  human_unarmed__active:b=no
+  ai_target_node__node:t="Bip001 Spine"
+  aim_assist_target__nodeName:t="Bip001 Spine"
+  human_cam__camNodeName:t="Bip001 Head"
+  trajectory__startNodeName:t="Bip001 Head"
+  human_use_object__lookNodeName:t="Bip001 Head"
+  visual_entity_offset__nodeName:t="Bip001 Head"
+  visual_entity_offset__posNodeName:t="Root"
+  backstab__nodeName:t="Bip001 Spine"
+  collres__centerNode:t="Bip001 Pelvis"
+  human_death_anim__defaultDeathState:t=""
+  hit_reaction__animNodeDefault:t="block"
+  offender_marks__updateOffenderPos:b=no
+  kill_tracking_tag:t="mothman"
+  agent_dangers__tag:t="mothman"
+  loud_noise__noisePerMeleeHit:r=50
+  loud_noise__noisePerMeleeAction:r=30
+  loud_noise__radius:r=15
+  nphys_obstacle__radius:r=0.25
+  nphys_obstacle__numSegments:i=6
+  damage_model_regeneration__healByTickAmount:r=1.5
+  default_stub_melee_controller__meleeTemplate:t="default_changed_claw"
+  item__name:t="items/suit_militant_mothman_item"
+  suit__raidIcon:t="!ui/uiskin/raid_info/mothman.svg"
+  item__desc:t="items/suit_militant_mothman_item/desc"
+  am_storage__value:i=10
+  am_storage__maxValue:i=300
+  animchar__res:t="mothman_leader_char"
+  collres__res:t="mothman_leader_collision"
+  animchar_fast_phys__res:t="mothman_leader_fastphys"
+  heartrate__range:p2=30, 265
+  heartrate__hpDelayTicks:i=40
+  heartrate__fatigueThresholdDefault:r=245
+  heartrate__walkHR:r=12
+  heartrate__sprintHR:r=24
+  heartrate__standUpHR:r=1200
+  heartrate__climbHR:r=90
+  heartrate__jumpHR:r=110
+  heartrate__elevationGainHR:r=100
+  heartrate__overflowHRToAmortizationRatio:r=0.5
+  heartrate__staminaRegenDefault:p3=1.5, 1.75, 1
+  heartrate__staminaDrainDefault:p2=0.01, 0.02
+  human_coll_damage__lastMinDmgSpd:r=100
+  human_coll_damage__minDmgSpd:r=100
+  _tracked:t="human_equipment__slotsFlags"
+
+  "dontBodyCleanupOnDeath:tag"{}
+  _group{
+    _tags:t="server"
+    net_ragdoll__physObjTemplate:t="mothman_ragdoll"
+  }
+
+  "flying_creature:tag"{}
+  "human_unarmed__disableSwitchWeaponEffect:eid"{}
+  "ragdoll__keepAnimcharUpdateOnRagdoll:tag"{}
+  "box_anomaly__target:tag"{}
+  "footstep__nodes:array"{}
+  "animchar_effectors__effectorsList:array"{}
+  "human_death_anim__anims:shared:array"{}
+  _group{
+    ui__geom_node_name:t="Bip001 Head"
+    _tags:t="ui"
+  }
+
+  _group{
+    _tags:t="render"
+    night_light__lightMult:r=0.06
+    night_light__lightDistanceMult:r=0.02
+
+    "animchar_node_collapser__nodes:object"{
+      "Bip001 Head":t="Bip001 Neck1"
+      "Bip001 Neck1":t=""
+    }
+  }
+
+  "dm_parts__parts:object"{
+    "Bip001 Head:object"{
+      dmgMult:r=6
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip001 Neck1:object"{
+      dmgMult:r=2
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip001 Thigh_L03:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip001 Thigh_L02:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip001 Thigh_L:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip001 Thigh_R03:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip001 Thigh_R02:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip001 Thigh_R:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip001 Pelvis2:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip001 Spine203:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip001 Spine3:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip001 Spine2:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip001 Spine:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip001 Neck:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip001 R Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip001 L Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip001 R UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip001 L UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip001 R Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip001 L Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip001 R Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip001 L Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+  }
+
+  "capsule_approximation__nodeNames:array"{
+    node:t="Bip001 L Forearm"
+    node:t="Bip001 L UpperArm"
+    node:t="Bip001 R Forearm"
+    node:t="Bip001 R UpperArm"
+    node:t="Bip001 Thigh_L"
+    node:t="Bip001 Thigh_R"
+  }
+
+  "capsule_approximation__complexNodeNames:array"{
+    "node:array"{
+      node:t="Bip001 Thigh_R02"
+      node:t="Bip001 Thigh_R03"
+    }
+
+    "node:array"{
+      node:t="Bip001 Thigh_L02"
+      node:t="Bip001 Thigh_L03"
+    }
+
+    "node:array"{
+      node:t="Bip001 Head"
+      node:t="Bip001 Neck1"
+      node:t="Bip001 Neck"
+    }
+
+    "node:array"{
+      node:t="Bip001 Spine"
+      node:t="Bip001 Spine2"
+      node:t="Bip001 Spine3"
+      node:t="Bip001 Spine203"
+      node:t="Bip001 Pelvis2"
+    }
+  }
+
+  "actions__actions:array"{
+    "action:object"{
+      name:t="stand_melee"
+      state:t="upper_melee"
+      class:t="melee"
+      actionTime:r=1
+      applyAt:r=0.3
+      props:t="gamedata/actions/melee.blk"
+      irq:t="melee"
+      varName:t="action_progress"
+    }
+
+    "action:object"{
+      name:t="crawl_melee"
+      state:t="crawl_melee"
+      class:t="melee"
+      actionTime:r=1
+      applyAt:r=0.3
+      props:t="gamedata/actions/melee.blk"
+      irq:t="melee"
+      varName:t="action_progress"
+    }
+
+    "action:object"{
+      name:t="pickup"
+      state:t="pickup_item"
+      actionTime:r=0.6
+      applyAt:r=0.3
+      props:t="gamedata/actions/pickup.blk"
+      irq:t="pickup_act"
+      varName:t="action_progress"
+    }
+
+    "action:object"{
+      name:t="operate_door"
+      state:t="operate_door"
+      actionTime:r=0.6
+      applyAt:r=0.3
+      props:t="gamedata/actions/open_door.blk"
+      irq:t="door_act"
+      varName:t="action_progress"
+    }
+  }
+
+  "actions__actions_enabled:array"{
+    enabled:b=yes
+    enabled:b=yes
+    enabled:b=yes
+    enabled:b=yes
+  }
+
+  "heroForPlayer:tag"{}
+  "createObstacle:tag"{}
+  "kill_tracking__taggedPlayers:object"{}
+  "nestedSwarmTarget:tag"{}
+  "update_default_stub_melee_on_appear:tag"{}
+  "human_equipment__slots:object"{
+    "cortical_vault:eid"{}
+    "chronogene_primary_1:eid"{}
+  }
+
+  "monster_hunter:tag"{}
+  "allow_friendly_damage:tag"{}
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+
+  "game_effect__initialAttachmentsServer:list<t>"{
+    item:t="mothman_monster_effect"
+  }
+
+  "slots_holder__slotTemplates:shared:object"{
+    chronogene_primary_1:t="chronogene_primary_slot"
+    chronogene_secondary_1:t="chronogene_secondary_slot"
+    chronogene_secondary_2:t="chronogene_secondary_slot"
+    chronogene_secondary_3:t="chronogene_secondary_slot"
+    chronogene_secondary_4:t="chronogene_secondary_slot"
+    cortical_vault:t="cortical_vault_slot"
+    primary:t="primary_secondary_slot"
+    secondary:t="primary_secondary_slot"
+    tertiary:t="tertiary_slot"
+    melee:t="melee_slot"
+  }
+
+  "human_equipment__slotsFlags:object"{}
+}
+
+monstrified_mothman_human{
+  _use:t="monstrified_mothman_human_base"
+  _use:t="monstrified_mothman_floating_objects"
+  _use:t="monstrified_mothman_attack"
+  _use:t="monstrified_mothman_gathering"
+  _use:t="monstrified_mothman_abilities"
+}
+
+mothman_floating_object_physics{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  collres__res:t="is_kettle_a2_collision"
+  phys_obj_net_phys__blk:t="gamedata/am/mothman_floating_object.blk"
+  net__physId:i=-1
+  collision_physMatId:i=-1
+  first_contact_listener__hadContact:b=no
+
+  collres{}
+  phys_obj_net_phys{}
+  base_net_phys_ptr{}
+}
+
+mothman_floating_object_shell{
+  shell__shell_id__shell_id:i=-1
+  shell__shell_id__damage_id:i=-1
+  shell__shell_id__ballistics_id:i=-1
+}
+
+trail_floating_object_launched_effect{
+  _use:t="trails_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="misc_tank_tracks_dirt_bottom_cmps_fx"
+    gun_flash_fx__timeToDestroy:r=100
+  }
+}
+
+trail_teleport_object_launched_effect{
+  _use:t="trails_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="changed_miniboss_energy_projectile_distortion_fx"
+    gun_flash_fx__timeToDestroy:r=100
+  }
+}
+
+thrown_object_trail_fx{
+  _use:t="projectile_trail_fx"
+  projectile_trail_fx__previousPos:p3=0, 0, 0
+
+  _group{
+    _tags:t="render"
+    projectile_trail_fx__flightFxTemplate:t="trail_floating_object_launched_effect"
+  }
+}
+
+teleport_object_trail_fx{
+  _use:t="thrown_object_trail_fx"
+
+  _group{
+    _tags:t="render"
+    projectile_trail_fx__flightFxTemplate:t="trail_teleport_object_launched_effect"
+  }
+}
+
+mothman_server_launched_object{
+  _use:t="mothman_floating_object_physics"
+  _use:t="mothman_floating_object_shell"
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_stone_explosion"
+  floating_object_launched__downChance:r=0.1
+  floating_object_launched__downDuration:r=1
+  start_vel:p3=0, 0, 0
+
+  "floating_object__launched:tag"{}
+  "ignoreObjs__eids:list<eid>"{}
+  "floating_object__owner:eid"{}
+  "mothman_server_launched_object__attachedClientEntity:eid"{}
+  _group{
+    _tags:t="server"
+    mothman_server_launched_object__catchupFromTime:r=-1
+  }
+}
+
+mothman_teleport_affect{
+  _use:t="teleport_trap_affect"
+  teleport_trap_affect__limitToZone:b=yes
+  teleport_trap_affect__radiusRng:p2=10, 100
+  teleport_trap_affect__heightRng:p2=1.35, 2.35
+}
+
+mothman_server_launched_teleport{
+  _use:t="mothman_floating_object_physics"
+  _use:t="mothman_floating_object_shell"
+  phys_obj_net_phys__blk:t="gamedata/am/mothman_teleport.blk"
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_firefly_explosion"
+  start_vel:p3=0, 0, 0
+
+  "floating_object__launched:tag"{}
+  "ignoreObjs__eids:list<eid>"{}
+  "floating_object__owner:eid"{}
+  "mothman_server_launched_object__attachedClientEntity:eid"{}
+  "mothman_server_launched_teleport:tag"{}
+  _group{
+    _tags:t="server"
+    mothman_server_launched_object__catchupFromTime:r=-1
+  }
+}
+
+mothman_hero_client_prediction_launched_object{
+  _use:t="mothman_floating_object_physics"
+  start_vel:p3=0, 0, 0
+
+  "mothman_hero_client_prediction_launched_object:tag"{}
+  "floating_object__launched:tag"{}
+  "ignoreObjs__eids:list<eid>"{}
+  "floating_object__owner:eid"{}
+  "clientSide:tag"{}
+  "mothman_server_launched_object__attachedClientEntity:eid"{}
+}
+
+mothman_clientside_prepared_object{
+  _use:t="teleport_object_trail_fx"
+}
+
+mothman_clientside_launched_object{
+  _use:t="thrown_object_trail_fx"
+  mothman_clientside_launched_object__catchupTime:r=0.75
+  mothman_clientside_launched_object__launchedAt:r=-1
+
+  "floating_object__launched:tag"{}
+  "mothman_clientside_launched_object__attachedServerEntity:eid"{}
+  "floating_object__disableEllipseFloating:tag"{}
+}
+
+mothman_floating_object_destruction{
+  _use:t="thrown_object_trail_fx"
+  mothman_floating_object_destruction__destroyAt:r=0
+  mothman_floating_object_destruction__stoppingViscosity:r=10
+}

@@ -1,0 +1,50 @@
+another_dimension_visitor_default_our_to_another_affect{
+  _use:t="game_effect_base"
+  _use:t="game_effect_geomtree_effects"
+
+  "game_effect__invisibleBody:tag"{}
+  "game_effect__geomtreeEffectTemplates:list<t>"{}
+}
+
+another_dimension_visitor_default_another_to_our_affect{
+  _use:t="game_effect_base"
+  _use:t="game_effect_geomtree_effects"
+
+  "game_effect__invisibleBody:tag"{}
+  "game_effect__geomtreeEffectTemplates:list<t>"{}
+}
+
+another_dimension_visitor_default_another_to_another_affect{
+  _use:t="game_effect_base"
+  _use:t="game_effect_geomtree_effects"
+
+  "game_effect__geomtreeEffectTemplates:list<t>"{}
+}
+
+another_dimension_visitor{
+  another_dimension_visitor__inside:b=no
+  _tracked:t="another_dimension_visitor__inside"
+  _replicated:t="another_dimension_visitor__inside"
+  another_dimension_visitor__renderMode:i=-1
+  _tracked:t="another_dimension_visitor__renderMode"
+  another_dimension_visitor__renderModeInDistanceSq:r=160000
+  another_dimension_visitor__renderModeOutDistanceSq:r=202500
+  another_dimension_visitor__renderModeUpdateInterval:r=5
+  another_dimension_visitor__renderModeNextUpdateAt:r=0
+  animchar__actWhenInvisible:b=yes
+
+  "another_dimension_visitor__renderModeAffectEids:list<eid>"{}
+  "another_dimension_visitor__renderModeFromOurToOurAffectTemplates:list<t>"{}
+  "another_dimension_visitor__renderModeFromOurToAnotherAffectTemplates:list<t>"{}
+  "another_dimension_visitor__renderModeFromAnotherToOurAffectTemplates:list<t>"{}
+  "another_dimension_visitor__renderModeFromAnotherToAnotherAffectTemplates:list<t>"{}
+  "phys_vars__skipVisibilityCheck:tag"{}
+}
+
+another_dimension_visitor_default{
+  _use:t="another_dimension_visitor"
+
+  "another_dimension_visitor__renderModeFromOurToAnotherAffectTemplates:list<t>"{}
+  "another_dimension_visitor__renderModeFromAnotherToOurAffectTemplates:list<t>"{}
+  "another_dimension_visitor__renderModeFromAnotherToAnotherAffectTemplates:list<t>"{}
+}

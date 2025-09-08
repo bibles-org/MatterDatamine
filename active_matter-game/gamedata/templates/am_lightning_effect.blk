@@ -1,0 +1,40 @@
+lightning_emitter{
+  lightning_emitter__emitterStartRadius:r=50
+  lightning_emitter__emitTime:r=0.5
+  lightning_emitter__emitRadius:r=150
+  lightning_emitter__nextLightingAt:r=0
+  lightning_emitter__lightingSpd:r=200
+  lightning_emitter__templateName:t="lightning_effect"
+}
+
+lightning_effect{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  lightning_effect__translationDir:p3=0, 0, 0
+  lightning_effect__translationSpd:r=0
+  lightning_effect__startedAt:r=-1
+  lightning_effect__shiftAt:r=-1
+  lightning_effect__shiftTimeStep:r=0.02
+  lightning_effect__maxShiftLength:r=1
+  game_effect__timeToDestroy:r=-1
+  game_effect__clientDestroyAt:r=-1
+  lightning_effect__canBranch:b=yes
+  lightning_effect__maxBranchesCount:i=5
+  lightning_effect__curBranchesCount:i=0
+  lightning_effect__brancheCreationChanceStartFrom:r=0.45
+  lightning_effect__brancheCreationChanceStopAt:r=0.85
+  lightning_effect__branchTemplateName:t="lightning_effect_branch"
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_portal_lightnings_a_fx"
+  }
+}
+
+lightning_effect_branch{
+  _use:t="lightning_effect"
+  lightning_effect__canBranch:b=no
+}

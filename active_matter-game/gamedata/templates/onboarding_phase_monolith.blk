@@ -1,0 +1,525 @@
+onboarding_phase_monolith{
+  _use:t="state_machine_state"
+
+  "onboarding_phase_monolith:tag"{}
+  "state_machine_state__createEntitiesWhenCurrent:list<t>"{
+    item:t="onboarding_erase_all_bullet_holes"
+    item:t="monolith_clear_bullet_holes_on_monolith_sphere_enter"
+    item:t="onboarding_monolith_start_hero_effect_creator"
+    item:t="fake_in_battle_ui_state"
+    item:t="onboarding_monolith_override_respbase"
+    item:t="phase_temporary_entities"
+    item:t="monolith_weather"
+    item:t="onboarding_monolith_hero_loadout"
+    item:t="disable_player_profile"
+    item:t="onboarding_respawn_effect_creator"
+    item:t="onboarding_remove_base_components_from_hero"
+    item:t="create_monolith_marker_entities"
+    item:t="onboarding_hide_player_base"
+    item:t="solid_monolith"
+    itam:t="raid_mode"
+    item:t="onboarding_wish_processor"
+    item:t="monolith_grav_zone"
+    item:t="monolith_transformation_trigger_zone"
+    item:t="monolith_override_zone_border_max_radius"
+    item:t="monolith_audio_hint_processor"
+    item:t="monolith_waiting_timer_restarter"
+    item:t="monolith_waiting_first_hint_timer_starter"
+    item:t="zone_force_field"
+    item:t="onboarding_monolith_storm_zone"
+    item:t="monolith_extraction_effect_creator_a"
+    item:t="monolith_extraction_effect_creator_b"
+    item:t="monolith_light"
+    item:t="onboarding_cleanup_items_in_world"
+    item:t="onboarding_island__onboarding_industrial__compound_ambient_sound"
+    item:t="onboarding_island__onboarding_rocks__compound_ambient_sound"
+    item:t="onboarding_island__onboarding_caves__compound_ambient_sound"
+    item:t="onboarding_island_compound_ambient_sound_controller"
+    item:t="onboarding_phase_monolith_ambient_sound"
+    item:t="onboarding_island_net_sounds"
+    item:t="onboarding_island_arrival_sound"
+  }
+}
+
+onboarding_phase_monolith_selection{
+  _use:t="state_machine_state"
+
+  "onboarding_phase_monolith_selection:tag"{}
+  "state_machine_state__createEntitiesWhenCurrent:list<t>"{
+    item:t="onboarding_erase_all_bullet_holes"
+    item:t="monolith_clear_bullet_holes_on_monolith_sphere_enter"
+    item:t="onboarding_monolith_start_hero_effect_creator"
+    item:t="fake_in_battle_ui_state"
+    item:t="onboarding_monolith_override_respbase"
+    item:t="phase_temporary_entities"
+    item:t="monolith_weather"
+    item:t="disable_player_profile"
+    item:t="onboarding_monolith_selection_respawn_effect_creator"
+    item:t="onboarding_remove_base_components_from_hero"
+    item:t="create_monolith_marker_entities"
+    item:t="onboarding_hide_player_base"
+    item:t="solid_monolith"
+    itam:t="raid_mode"
+    item:t="onboarding_wish_processor"
+    item:t="monolith_grav_zone"
+    item:t="monolith_transformation_trigger_zone"
+    item:t="monolith_override_zone_border_max_radius"
+    item:t="monolith_audio_hint_processor"
+    item:t="monolith_waiting_timer_restarter"
+    item:t="monolith_waiting_first_hint_timer_starter"
+    item:t="zone_force_field"
+    item:t="onboarding_monolith_storm_zone"
+    item:t="monolith_extraction_effect_creator_a"
+    item:t="monolith_extraction_effect_creator_b"
+    item:t="onboarding_monolith_path_selection_rich"
+    item:t="onboarding_monolith_path_selection_fame_creator"
+    item:t="onboarding_monolith_path_selection_fame"
+    item:t="monolith_light"
+    item:t="onboarding_cleanup_items_in_world"
+    item:t="onboarding_island__onboarding_industrial__compound_ambient_sound"
+    item:t="onboarding_island__onboarding_rocks__compound_ambient_sound"
+    item:t="onboarding_island__onboarding_caves__compound_ambient_sound"
+    item:t="onboarding_island_compound_ambient_sound_controller"
+    item:t="onboarding_phase_monolith_ambient_sound"
+    item:t="onboarding_island_net_sounds"
+    item:t="onboarding_island_arrival_sound"
+  }
+}
+
+monolith_extraction_effect{
+  _use:t="onboarding_hero_game_effect"
+  _use:t="game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_monolith_extraction_sequence_affect"
+}
+
+monolith_extraction_effect_creator_a{
+  _use:t="game_trigger_processor_create_entity"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor__onTrigger:t="onboarding_monolith_to_base_a"
+  game_trigger_processor_create_entity__template:t="monolith_extraction_effect"
+}
+
+monolith_extraction_effect_creator_b{
+  _use:t="game_trigger_processor_create_entity"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor__onTrigger:t="onboarding_monolith_to_base_b"
+  game_trigger_processor_create_entity__template:t="monolith_extraction_effect"
+}
+
+monolith_waiting_first_hint_timer_starter{
+  _use:t="game_trigger_processor_create_entity"
+  game_trigger_processor_create_entity__template:t="monolith_audio_hint_first_trigger"
+  game_trigger_processor__onTrigger:t="onboarding_wish"
+  game_trigger_processor_create_entity__initTransform:b=no
+  game_trigger_processor_create_entity__destroyEntityOnDisappear:b=yes
+}
+
+monolith_audio_hint_first_trigger{
+  _use:t="game_trigger_timer"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor_timer__time:r=65
+  game_trigger_processor_timer__eventTrigger:t="monolith_waiting"
+  game_trigger_processor__onTrigger:t="monolith_waiting"
+}
+
+monolith_audio_hint_subsequent_trigger{
+  _use:t="monolith_audio_hint_first_trigger"
+  game_trigger_processor_timer__time:r=90
+}
+
+monolith_audio_hint_processor{
+  _use:t="game_trigger_processor_play_assistant_script"
+  game_trigger_processor_play_assistant_script__name:t="onboarding_monolith_waiting"
+  game_trigger_processor_play_assistant_script__skipBeepSound:b=yes
+  game_trigger_processor__onTrigger:t="monolith_waiting"
+}
+
+monolith_waiting_timer_restarter{
+  _use:t="game_trigger_processor_create_entity"
+  game_trigger_processor_create_entity__template:t="monolith_audio_hint_subsequent_trigger"
+  game_trigger_processor__onTrigger:t="monolith_waiting"
+  game_trigger_processor_create_entity__initTransform:b=no
+  game_trigger_processor_create_entity__destroyEntityOnDisappear:b=yes
+}
+
+monolith_override_zone_border_max_radius{
+  monolith_override_zone_border_max_radius__new:r=5
+  monolith_override_zone_border_max_radius__previous:r=-1
+}
+
+monolith_bullet_catcher{
+  _use:t="editor_zone_preview"
+  _use:t="traceable_sphere"
+  sphere_zone__radius:r=1.8
+  grid_obj__gridType:t="traceable_spheres"
+
+  "monolith_bullet_catcher:tag"{}
+  grid_obj{}
+}
+
+monolith_bullet_catcher_huge{
+  _use:t="editor_zone_preview"
+  _use:t="traceable_sphere"
+  sphere_zone__radius:r=50
+  grid_obj__gridType:t="traceable_spheres"
+
+  "monolith_bullet_catcher:tag"{}
+  grid_obj{}
+}
+
+onboarding_monolith_to_base_trigger_a{
+  _use:t="game_trigger_box"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor__onTrigger:t="onboarding_monolith_to_base_a"
+  game_trigger_box__onEnterEventTrigger:t="onboarding_monolith_to_base_a"
+
+  "game_trigger__includeGrids:list<t>"{
+    item:t="humans"
+  }
+
+  "game_trigger__requireComponents:list<t>"{
+    item:t="hero"
+  }
+}
+
+onboarding_monolith_to_base_trigger_b{
+  _use:t="game_trigger_box"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor__onTrigger:t="onboarding_monolith_to_base_b"
+  game_trigger_box__onEnterEventTrigger:t="onboarding_monolith_to_base_b"
+
+  "game_trigger__includeGrids:list<t>"{
+    item:t="humans"
+  }
+
+  "game_trigger__requireComponents:list<t>"{
+    item:t="hero"
+  }
+}
+
+onboarding_monolith_path_selection_rich{
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor__onTrigger:t="onboarding_monolith_to_base_a"
+  onboarding_monolith_path_selection__pathId:i=0
+}
+
+onboarding_monolith_path_selection_fame_creator{
+  _use:t="game_trigger_processor_create_entity"
+  game_trigger_processor_create_entity__template:t="onboarding_fame_door_trigger"
+  game_trigger_processor__onTrigger:t="onboarding_monolith_to_base_b"
+}
+
+onboarding_monolith_path_selection_fame{
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor__onTrigger:t="onboarding_monolith_to_base_b"
+  onboarding_monolith_path_selection__pathId:i=1
+}
+
+onboarding_monolith_fade_start_hero_effect{
+  _use:t="client_game_effect_with_duration"
+  _use:t="base_postfx_fade_affect"
+  _use:t="hide_ui_game_effect"
+  game_effect__timeToDestroy:r=1
+  postfx_fade_affect__fadeInTime:r=1
+  onboarding_change_fov_effect__from:r=1
+  onboarding_change_fov_effect__to:r=0.1
+  postfx_fade_affect__fadeColor:c=255, 255, 255, 255
+}
+
+onboarding_monolith_extraction_fov_effect{
+  _use:t="militant_spawn_sequence_fov_affect"
+  onboarding_change_fov_effect__from:r=1
+  onboarding_change_fov_effect__to:r=0.1
+}
+
+onboarding_monolith_extraction_sequence_affect{
+  _use:t="onboarding_extraction_sequence_affect"
+
+  "game_effect_sequence__stages:array"{
+    "stage:object"{
+      affectTemplate:t="extraction_sequence_init"
+      duration:r=0.25
+    }
+
+    "stage:object"{
+      affectTemplate:t="onboarding_monolith_fade_start_hero_effect+trans_portal_affect_start_sound"
+      waitForDestruction:b=yes
+    }
+  }
+}
+
+monolith_touch_distortion_a_fx{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  game_effect__timeToDestroy:r=1
+  game_effect__clientDestroyAt:r=0
+
+  _group{
+    _tags:t="render"
+    effect__name:t="monolyth_touch_light_a_fx"
+
+    effect{}
+  }
+}
+
+monolith_light{
+  _use:t="omni_light_huge"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-170, 20, 120]]
+  light__brightness:r=100
+  light__max_radius:r=40
+  light__color:c=255, 30, 1, 10
+
+  _group{
+    _tags:t="render"
+    omni_light__shadows:b=yes
+  }
+}
+
+monolith_touch_distortion_creator{
+  _use:t="game_trigger_processor_create_entity"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor_create_entity__template:t="monolith_touch_distortion_a_fx"
+  game_trigger_processor__onTrigger:t="monolith_sphere_enter"
+}
+
+monolith_clear_door_bullet_holes{
+  _use:t="onboarding_phase_temporary_entity"
+  sphere_zone__radius:r=2
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-125.1, 10.3781, 104.649]]
+
+  "onboarding_erase_bullet_holes_in_sphere:tag"{}
+}
+
+monolith_clear_bullet_holes_on_monolith_sphere_enter{
+  _use:t="game_trigger_processor_create_entity"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor_create_entity__template:t="monolith_clear_door_bullet_holes"
+  game_trigger_processor__onTrigger:t="monolith_sphere_enter"
+  game_trigger_processor_create_entity__initTransform:b=no
+}
+
+onboarding_monolith_hero_loadout{
+  _use:t="onboarding_set_hero_loadout"
+  onboarding_set_hero_loadout__loadoutName:t="Monolith"
+}
+
+solid_monolith{
+  _use:t="rendinst"
+  _use:t="game_trigger_processor_base"
+  _use:t="rendinst_resource_preload"
+  _use:t="immortal_rendinst"
+  net__scopeDistanceSq:r=108900
+  game_trigger_processor__onTrigger:t="monolith_sphere_enter"
+  transform:m=[[-1, 0, 0] [0, 1, 0] [0, 0, -1] [-170, 13.1, 120]]
+  ri_extra__name:t="am_monolyth_huge_tall_a_solid"
+  ri_preload__name:t="am_monolyth_huge_tall_a_door"
+  onboarding_change_ri_on_trigger__done:b=no
+  ri_extra__isBeingReplaced:b=no
+}
+
+monolith_door_red{
+  _use:t="placeable_rendinst"
+  _use:t="closed_r_door"
+  _use:t="wooden_rotating_door_sound"
+  _use:t="onboarding_phase_temporary_entity"
+  _use:t="monolith_door_sound"
+  ri_extra__name:t="am_monolyth_door_1300x2400_a_l"
+
+  "door_operations__localizations:object"{
+    open_pull:t="monolith/door_pull/fame"
+  }
+
+  "monolith_door:tag"{}
+}
+
+monolith_door_red_outer{
+  _use:t="placeable_rendinst"
+  _use:t="onboarding_phase_temporary_entity"
+  ri_extra__name:t="am_monolyth_door_jamb_1300x2400_a"
+}
+
+monolith_door_red_creator{
+  _use:t="game_trigger_processor_create_entity"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor_create_entity__template:t="monolith_door_red"
+  game_trigger_processor__onTrigger:t="monolith_sphere_enter"
+}
+
+monolith_door_red_outer_creator{
+  _use:t="game_trigger_processor_create_entity"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor_create_entity__template:t="monolith_door_red_outer"
+  game_trigger_processor__onTrigger:t="monolith_sphere_enter"
+}
+
+monolith_door_blue{
+  _use:t="placeable_rendinst"
+  _use:t="closed_l_door"
+  _use:t="wooden_rotating_door_sound"
+  _use:t="onboarding_phase_temporary_entity"
+  _use:t="monolith_door_sound"
+  ri_extra__name:t="am_monolyth_door_blue_1300x2400_a_r"
+
+  "door_operations__localizations:object"{
+    open_pull:t="monolith/door_pull/rich"
+  }
+
+  "monolith_door:tag"{}
+}
+
+monolith_door_blue_outer{
+  _use:t="placeable_rendinst"
+  _use:t="onboarding_phase_temporary_entity"
+  ri_extra__name:t="am_monolyth_door_jamb_blue_1300x2400_a"
+}
+
+monolith_door_blue_creator{
+  _use:t="game_trigger_processor_create_entity"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor_create_entity__template:t="monolith_door_blue"
+  game_trigger_processor__onTrigger:t="monolith_sphere_enter"
+}
+
+monolith_door_blue_outer_creator{
+  _use:t="game_trigger_processor_create_entity"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor_create_entity__template:t="monolith_door_blue_outer"
+  game_trigger_processor__onTrigger:t="monolith_sphere_enter"
+}
+
+monolith_grav_zone{
+  _use:t="gravity_zone_sphere"
+  grav_zone__innerRadius:r=14.5
+  grav_zone__outerRadius:r=15
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "grav_zone__lateCreationAllowed:tag"{}
+}
+
+monolith_transformation_trigger_zone{
+  _use:t="game_trigger_sphere"
+  sphere_zone__radius:r=15
+  game_trigger_sphere__onEnterEventTrigger:t="monolith_sphere_enter"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "game_trigger__includeGrids:list<t>"{
+    item:t="humans"
+  }
+
+  "game_trigger__requireComponents:list<t>"{
+    item:t="hero"
+  }
+}
+
+monolith_smartwatch_loading{
+  onboarding_hero_irq_reactor__irqName:t="smartwatch_start_loading"
+
+  "smartwatch_loading:tag"{}
+}
+
+monolith_weather{
+  _use:t="override_weather_preset"
+  override_weather_preset__newPreset:t="weather_monolyth_island_poor"
+  override_weather_preset__newSkiesTime:r=11
+  override_weather_preset__newCloudHoleTargetDensity:r=0.7
+}
+
+onboarding_monolith_wish_note_box{
+  _use:t="game_trigger_box"
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor__onTrigger:t="onboarding_wish"
+  game_trigger_box__onLeaveEventTrigger:t="onboarding_wish"
+
+  "game_trigger__includeGrids:list<t>"{
+    item:t="humans"
+  }
+
+  "game_trigger__requireComponents:list<t>"{
+    item:t="hero"
+  }
+}
+
+onboarding_wish_processor{
+  _use:t="game_trigger_processor_play_assistant_script"
+  game_trigger_processor_play_assistant_script__name:t="note_onboarding_wish"
+  game_trigger_processor_play_assistant_script__skipBeepSound:b=yes
+  game_trigger_processor__onTrigger:t="onboarding_wish"
+}
+
+onboarding_monolith_multimarker{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "onboarding_monolith_marker__createTemplates:list<t>"{}
+  "onboarding_monolith_marker__entities:list<eid>"{}
+}
+
+onboarding_monolith_override_respbase{
+  _use:t="override_respawn_base"
+  override_respawn_base__createAtEntityWithTag:t="onboarding_monolith_spawn_location"
+  override_respawn_base__newBaseTemplate:t="onboarding_respbase"
+}
+
+onboarding_monolith_storm_zone{
+  _use:t="storm_zone_with_forcefield"
+  sphere_zone__radius:r=200
+  shrinkZoneRadius:r=200
+  moving_zone__minZone:p2=-504, -445
+  moving_zone__maxZone:p2=396, 455
+  moving_zone__manual_activation:b=yes
+  moving_zone__sourcePos:p3=-205, 3, 193
+  moving_zone__targetPos:p3=-205, 3, 193
+  corruption_zone__doublingTime:r=1.2
+}
+
+create_monolith_marker_entities{
+  "create_monolith_marker_entities:tag"{}
+}
+
+onboarding_monolith_marker{
+  onboarding_monolith_marker__createTemplate:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "onboarding_monolith_marker__entity:eid"{}
+}
+
+onboarding_monolith_start_hero_effect{
+  _use:t="client_game_effect_with_duration"
+  _use:t="base_postfx_fade_affect"
+  game_effect__timeToDestroy:r=2.5
+  postfx_fade_affect__fadeColor:c=5, 7, 5, 255
+  postfx_fade_affect__fadeInTime:r=0.05
+  postfx_fade_affect__fadeOutTime:r=4.5
+  game_effect__teleportToEntityWithTag:t="onboarding_monolith_spawn_location"
+}
+
+onboarding_monolith_start_hero_effect_creator{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_monolith_start_hero_effect"
+}
+
+onboarding_monolith_spawn_location{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "onboarding_monolith_spawn_location:tag"{}
+}
+
+onboarding_monolith_selection_respawn_and_interupt{
+  _use:t="onboarding_respawn_on_disappear"
+  _use:t="client_destroy_in_5_sec"
+  _use:t="game_trigger_disappear"
+  game_trigger_disappear__emitEvent:t="onboarding_monolith_selection_death"
+}
+
+onboarding_monolith_selection_death_processor{
+  onboarding_death_processor__template:t="onboarding_monolith_selection_respawn_and_interupt+enable_player_profile"
+}
+
+onboarding_monolith_selection_respawn_attached_template{
+  _use:t="game_effect_base"
+  game_effect__attachedTemplate:t="onboarding_monolith_selection_death_processor"
+}
+
+onboarding_monolith_selection_respawn_effect_creator{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_monolith_selection_respawn_attached_template"
+}

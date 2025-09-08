@@ -1,0 +1,99 @@
+ammo_holder{
+  ammo_holder__id:i=0
+  ammo_holder__templateName:t=""
+  item__currentBoxedItemCount:i=-1
+  _tracked:t="item__currentBoxedItemCount"
+  _replicated:t="item__currentBoxedItemCount"
+}
+
+item_magazine{
+  _use:t="base_gun_mod"
+  _use:t="ammo_holder"
+  item__iconYaw:r=-45
+  item__iconRoll:r=45
+  item__iconPitch:r=45
+  item__iconScale:r=0.8
+  item__lootType:t="magazine"
+  item__lootSoundType:t="ammo"
+  dropTm:m=[[0, -1, 0] [1, 0, 0] [0, 0, 1] [0, 0.03, 0]]
+  item_pickup_priority__lookAtWeight:r=3.85
+  item_holder__maxItemCount:i=0
+  gunAttachable__slotName:t="magazine"
+  item__weight:r=0
+  item__filterType:t="ammunition"
+  _replicated:t="item__weight"
+  _tracked:t="item__weight"
+  weapon_mod__delayedEquipTime:r=1
+  weapon_mod__delayedUnequipTime:r=1
+  _tracked:t="ammo_holder__ammoCountKnown"
+  _replicated:t="ammo_holder__ammoCountKnown"
+
+  "gunAttachable:tag"{}
+  "ammo_holder__ammoCountKnown:list<eid>"{}
+}
+
+boxed_ammo{
+  _use:t="boxed_item"
+  _use:t="ammo_holder"
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  item__iconScale:r=0.8
+  item__lootType:t="magazine"
+  item__lootSoundType:t="ammo"
+  dropTm:m=[[0, -1, 0] [1, 0, 0] [0, 0, 1] [0, 0.03, 0]]
+  item_pickup_priority__lookAtWeight:r=3.85
+  item__recreateOnReload:t="boxed_ammo_reload"
+
+  "item__alwaysShowCount:tag"{}
+}
+
+base_magazine{
+  _use:t="item_holder"
+  _use:t="base_gun_mod"
+  _use:t="animchar"
+  _use:t="magazine_anim"
+  _use:t="ammo_holder"
+  item__baseWeight:r=0
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__lootType:t="magazine"
+  item__lootSoundType:t="magazine"
+  item__weight:r=0
+  item__filterType:t="ammunition"
+  _replicated:t="item__weight"
+  _tracked:t="item__weight"
+  dropTm:m=[[0, -1, 0] [1, 0, 0] [0, 0, 1] [0, 0.03, 0]]
+  item_pickup_priority__lookAtWeight:r=3.85
+  gunAttachable__slotName:t="magazine"
+  weapon_mod__delayedEquipTime:r=1
+  weapon_mod__delayedUnequipTime:r=1
+  item__unarmedUsage:b=yes
+  _tracked:t="ammo_holder__ammoCountKnown"
+  _replicated:t="ammo_holder__ammoCountKnown"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=1, 1
+
+  "gunAttachable:tag"{}
+  "item__interruptOnDodge:tag"{}
+  "item__interruptOnSprint:tag"{}
+  "item__interruptOnReloading:tag"{}
+  "item__interruptInDriverSeat:tag"{}
+  "interruptUseOnWeaponSwitch:tag"{}
+  _group{
+    _tags:t="gameClient"
+    item_holder__loadLongUseHint:t="hud/long_use_hint/top_up_holder"
+    item_holder__unloadLongUseHint:t="hud/long_use_hint/unload_holder"
+    item__setCustomLongUseHint:t=""
+  }
+
+  "ammo_holder__ammoCountKnown:list<eid>"{}
+}
+
+magazine_anim{
+  _tags:t="render"
+  magazine_anim__curNumAmmoParamId:i=-1
+}
+
+need_update_wish_ammo{
+  "item__needUpdateWishAmmo:tag"{}
+}

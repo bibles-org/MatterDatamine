@@ -1,0 +1,343 @@
+hive_remains_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="altered_wax_item"
+      weight:r=100
+    }
+
+    "item:object"{
+      template_name:t="altered_wax_pristine_item"
+      weight:r=5
+    }
+  }
+}
+
+hive_items_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="civil_loot_preset_big"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="civil_car_loot_preset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="small_sovmod_backpack_lootable_grenades_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_healkit"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="item_painkiller"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="item_injector_hot"
+      weight:r=0.5
+    }
+  }
+}
+
+hive_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="hive_remains_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="hive_items_loot_subpreset"
+      weight:r=1
+    }
+  }
+}
+
+hive_body_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="soviet_armor_t1_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="soviet_bags_t1_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="close_range_soviet_weapons_t1_loot_preset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="close_range_soviet_weapons_t2_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="long_range_soviet_weapons_t1_loot_preset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_healkit_preset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="small_sovmod_backpack_lootable_grenades_preset"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="altered_wax_item"
+      weight:r=5
+    }
+  }
+}
+
+hive_drop_preset{
+  _use:t="base_drop_preset"
+  drop_preset__circlePhysFallHeightRng:p2=-0.5, 0.5
+  drop_preset__circlePhysFallRangeRng:p2=0, 0.8
+  drop_preset__circlePhysFallAnglesRng:p2=-180, 180
+  drop_preset__circlePhysFallImpulseVelocityRng:p2=1, 2.25
+  drop_preset__circlePhysFallImpulseOmegaRng:p2=1, 2
+}
+
+hive_body_ragdoll_phys_obj{
+  _use:t="lootable_ragdoll_phys_obj_with_loot_preset"
+  loot_drop_system__lootPreset:t="hive_body_loot_preset"
+  phys_obj_net_phys__blk:t="gamedata/templates/hive_ragdoll_phys.blk"
+}
+
+hive_body_ragdoll_phys_obj_empty{
+  _use:t="ragdoll_phys_obj"
+  phys_obj_net_phys__blk:t="gamedata/templates/hive_ragdoll_phys.blk"
+}
+
+hive_dead_body_container{
+  _use:t="dead_body_container"
+
+  _group{
+    _tags:t="server"
+    net_ragdoll__physObjTemplate:t="hive_body_ragdoll_phys_obj"
+  }
+}
+
+hive_dead_body_container_corrupted_male_a{
+  _use:t="hive_dead_body_container"
+  animchar__res:t="am_trooper_corrupted_male_a_char"
+  collres__res:t="am_trooper_corrupted_male_a_collision"
+}
+
+hive_dead_body_container_corrupted_male_b{
+  _use:t="hive_dead_body_container"
+  animchar__res:t="am_trooper_corrupted_male_b_char"
+  collres__res:t="am_trooper_corrupted_male_b_collision"
+}
+
+hive_dead_body_empty{
+  _use:t="hive_dead_body_container"
+
+  _group{
+    _tags:t="server"
+    net_ragdoll__physObjTemplate:t="hive_body_ragdoll_phys_obj_empty"
+  }
+}
+
+hive_dead_body_empty_a{
+  _use:t="hive_dead_body_empty"
+  animchar__res:t="dead_body_a_char"
+  collres__res:t="dead_body_a_collision"
+}
+
+hive_dead_body_empty_b{
+  _use:t="hive_dead_body_empty"
+  animchar__res:t="dead_body_b_char"
+  collres__res:t="dead_body_b_collision"
+}
+
+hive_dead_body_empty_c{
+  _use:t="hive_dead_body_empty"
+  animchar__res:t="dead_body_c_char"
+  collres__res:t="dead_body_c_collision"
+}
+
+hive_dead_body_empty_d{
+  _use:t="hive_dead_body_empty"
+  animchar__res:t="dead_body_d_char"
+  collres__res:t="dead_body_d_collision"
+}
+
+beehive{
+  _use:t="damageable_rendinst"
+  ri_extra__name:t="hive_wasp_wall_a"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__riAfterDestruction:t="hive_wasp_wall_a_dmg"
+  hive_body__destructionTriggered:b=no
+  hive_body__spawnChance:r=0.4
+  hive_body__spawnOffset:p3=-3.5, -4, 0
+  hive_honeycomb__spawnChance:r=0.66
+  hive_honeycomb__spawnOffset:p3=-3.5, -4, 0
+  drop_preset_owner__dropOffset:p3=-4.5, -4, 0
+  loot_drop_system__lootPreset:t="hive_loot_preset"
+  loot_drop_system__dropPreset:t="hive_drop_preset"
+
+  "beehive:tag"{}
+  "isRendinstDestr:tag"{
+    _tags:t="render"
+  }
+
+  "hive_body__templates:array"{
+    "item:object"{
+      template:t="hive_dead_body_container_corrupted_male_a"
+      weight:r=5
+    }
+
+    "item:object"{
+      template:t="hive_dead_body_container_corrupted_male_b"
+      weight:r=5
+    }
+
+    "item:object"{
+      template:t="hive_dead_body_empty_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template:t="hive_dead_body_empty_d"
+      weight:r=1
+    }
+  }
+
+  "hive_honeycomb__templates:array"{
+    "item:object"{
+      template:t="hive_enhanced_honeycomb_piece"
+      number:ip2=1, 1
+    }
+  }
+
+  "loot_drop_system__dropRequestOnRiDestruction:tag"{}
+  _group{
+    _tags:t="gameClient"
+    hive_client_destruction__effectTemplate:t="hive_wasp_slime_leaks_effect"
+    hive_client_destruction__effectOffset:p3=-3.25, -2, 0
+    hive_client_destruction__fallingEffectMarkTemplate:t="hive_wasp_slime_falling_mark"
+    hive_client_destruction__fallingSoundTemplate:t="hive_falling_sound"
+  }
+}
+
+beehives_encounters_gen{
+  _use:t="base_encounter_gen"
+  encounter_gen__numToSpawn:i=0
+  encounter_gen__templateToSpawn:t=""
+  vertical_surface_encounter__numToPregenerate:i=1000
+  vertical_surface_encounter__bounds:p4=0, 0, 0, 0
+  encounter_gen__minDst:r=0
+  encounter_gen__genTemplate:t=""
+  encounter_gen__fileName:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "encounter_gen__norm:list<p3>"{}
+}
+
+hive_wasp_slime_leaks_effect{
+  _use:t="base_effect"
+  _use:t="client_destroy_in_5_sec"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="hive_wasp_slime_leaks_a_fx"
+  }
+}
+
+hive_wasp_slime_splash_effect{
+  _use:t="base_effect"
+  _use:t="client_destroy_in_5_sec"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="hive_wasp_slime_splash_a_fx"
+  }
+}
+
+hive_wasp_slime_falling_mark{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  hive_wasp_slime_falling_mark__speed:r=12
+  hive_wasp_slime_falling_mark__updateTime:r=0
+  hive_wasp_slime_falling_mark__updateInterval:r=0.15
+  hive_wasp_slime_falling_mark__travelledDistance:r=0
+  hive_wasp_slime_falling_mark__maxDistance:r=5.5
+  hive_wasp_slime_falling_mark__collisionEffectTemplate:t="hive_wasp_slime_splash_effect"
+
+  "hive_wasp_slime_falling_mark:tag"{}
+}
+
+hive_enhanced_honeycomb_piece_phys{
+  pair_collision__tag:t="collidableToPhysObj"
+  net__physId:i=-1
+  phys_obj_net_phys__blk:t="gamedata/am/hive_enhanced_honeycomb_piece.blk"
+  collision_physMatId:i=-1
+
+  pair_collision__gridHolders{}
+  "pair_collision__gridNames:list<t>"{
+    h:t="humans"
+    h:t="vehicles"
+  }
+
+  "collidableToPhysObj:tag"{}
+  collres{}
+  phys_obj_net_phys{}
+  base_net_phys_ptr{}
+  phys_vars{}
+}
+
+hive_enhanced_honeycomb_piece{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="attach_am_to_obj_on_appear"
+  _use:t="hive_enhanced_honeycomb_piece_phys"
+  _use:t="server_destroy_in_10_min"
+  attach_am_to_obj_on_appear__count:ip2=4, 14
+  animchar__res:t="hive_chunk_a_char"
+  collres__res:t="hive_chunk_a_collision"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+hive_falling_sound{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="sound"
+    hive_falling_sound__hitPt:p3=0, 0, 0
+    hive_falling_sound__playAtTime:r=0
+    hive_falling_sound__path:t="env_effects/object_crash/props/hive_pieces"
+    hive_falling_sound__maxTraceLen:r=50
+    hive_falling_sound__delayMul:r=0.98
+  }
+}

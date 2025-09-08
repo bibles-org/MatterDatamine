@@ -1,0 +1,707 @@
+alien_insect_flying_swarm{
+  _use:t="flying_swarm_base"
+  _use:t="swarm_metatex"
+  _use:t="swarm_emission"
+  swarmRenderTemplate:t="alien_insect_char_swarm_render"
+  _tracked:t="swarm__emissionColor"
+
+  "swarm__metatex_material_params:array"{
+    "swarm__metatex_parameters_channel:object"{
+      swarm__color_black_from:p4=0.24, 0.27, 0.21, 0.1
+      swarm__color_black_to:p4=0.05, 0.02, 0.07, 0.8
+      swarm__color_red_from:p4=0.2, 0.18, 0.17, 0.2
+      swarm__color_red_to:p4=0.1, 0.03, 0.02, 0.6
+      swarm__color_green_from:p4=0.1, 0.1, 0.13, 0.5
+      swarm__color_green_to:p4=0.4, 0.3, 0.2, 0.9
+      swarm__color_blue_from:p4=0.4, 0.2, 0.1, 0.6
+      swarm__color_blue_to:p4=0.65, 0.6, 0.5, 0.8
+      swarm__color_alpha_from:p4=0.2, 0.15, 0.1, 0.4
+      swarm__color_alpha_to:p4=0.6, 0.55, 0.5, 0.6
+      swarm__emissive_black_from:r=0
+      swarm__emissive_black_to:r=0
+      swarm__emissive_red_from:r=0
+      swarm__emissive_red_to:r=0
+      swarm__emissive_green_from:r=0
+      swarm__emissive_green_to:r=0.01
+      swarm__emissive_blue_from:r=0.1
+      swarm__emissive_blue_to:r=1
+      swarm__emissive_alpha_from:r=0.5
+      swarm__emissive_alpha_to:r=0.5
+      swarm__emissive_color:p4=0.2, 0.9, 1, 0.1
+      swarm__albedo_blend_for_emission:r=1
+    }
+
+    "swarm__metatex_parameters_channel:object"{
+      swarm__color_black_from:p4=1, 1, 1, 0.5
+      swarm__color_black_to:p4=1, 1, 1, 0.9
+      swarm__color_red_from:p4=1, 0.8, 0.8, 0.5
+      swarm__color_red_to:p4=1, 1, 1, 0.9
+      swarm__color_green_from:p4=1, 1, 1, 0.5
+      swarm__color_green_to:p4=1, 1, 1, 0.9
+      swarm__color_blue_from:p4=1, 1, 1, 0.8
+      swarm__color_blue_to:p4=1, 1, 1, 0.9
+      swarm__color_alpha_from:p4=0, 0, 0, 0.6
+      swarm__color_alpha_to:p4=0.5, 0.5, 0.5, 0.9
+      swarm__opacity_black_from:r=0.1
+      swarm__opacity_black_to:r=0.1
+      swarm__opacity_red_from:r=0
+      swarm__opacity_red_to:r=0
+      swarm__opacity_green_from:r=1
+      swarm__opacity_green_to:r=1
+      swarm__opacity_blue_from:r=1
+      swarm__opacity_blue_to:r=1
+      swarm__opacity_alpha_from:r=1
+      swarm__opacity_alpha_to:r=0
+      swarm__opacity_color:p4=1, 1, 0.5, 1
+    }
+  }
+
+  _group{
+    swarm__shoot_fx_id:i=-1
+    swarm__shoot_fx_name:t="hit_blood_entry_cmps_fx"
+    swarm__emissionColor:p3=0.05, 0.05, 0.05
+    swarm__emissionChangeDuration:r=5
+    _tags:t="render"
+  }
+
+  "swarm__autoDestroyRender:tag"{}
+}
+
+am_swarm_heightgrid{
+  swarm__heightCellSize:r=5
+  swarm__canMoveUnderwater:b=no
+}
+
+alien_insect_char_swarm_render{
+  _use:t="animated_swarm_render"
+  animchar__res:t="wasp_basic_a_char"
+
+  "baked_animstates:array"{
+    a:t="flying"
+    a:t="flying"
+    a:t="death"
+    a:t="attack_air"
+    _tags:t="render"
+  }
+}
+
+jellyfish_swarm_render{
+  _use:t="swarm_render_base"
+  animchar__res:t="jellyfish_a_char"
+}
+
+am_habitat_swarm{
+  am_habitat_swarm__centerAndRadius:p3=29, 2, 250
+  am_habitat_swarm__minHeight:r=85
+  am_habitat_swarm__maxFlightDistance:r=85
+}
+
+am_jellyfish_swarm{
+  _use:t="swarm_cluster"
+  _use:t="flying_swarm_base"
+  _use:t="am_swarm_heightgrid"
+  swarmRenderTemplate:t="jellyfish_swarm_render"
+  radius:r=10
+  count:i=60
+  swarm__moveSpeed:r=2
+  swarm__rotSpeed:r=1
+  swarm__cellSize:r=10
+  swarm__alignmentWeight:r=1
+  swarm__separationWeight:r=2
+  swarm__targetWeight:r=1
+  swarm__trajectoryLength:r=2.5
+  trajectoryHistory:i=5
+  swarm__horizontalOrientation:r=0
+  swarm__animationSpeed:r=1
+  swarm__heightBits:i=3
+  _use:t="am_habitat_swarm"
+  am_habitat_swarm__minHeight:r=3
+  swarm_cluster__maxCount:i=30
+  swarm_cluster__damage:r=5
+  swarm_cluster__maxDamage:r=5
+  swarm_cluster__timeToDamage:r=1
+  swarm_cluster__maxSpeed:r=1
+  _use:t="patroller_ai"
+  beh_tree__enabled:b=yes
+  beh_tree__node:t="am_jellyfish_swarm"
+  _use:t="am_boids_can_be_killed"
+  jellyfish__escapeRad:r=20
+  swarm__damageZoneType:i=1
+
+  "swarm_cluster__target:eid"{}
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+}
+
+swarm_boid_fx_controller{
+  swarm_boid_fx_controller__effectTemplateName:t=""
+
+  "swarm_boid_fx_controller__effectEid:eid"{}
+}
+
+am_bee_fire_fx{
+  _use:t="base_effect"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="swarm_flame_fx"
+
+    effect{}
+  }
+}
+
+am_bee_fire_fx_controller{
+  _use:t="swarm_boid_fx_controller"
+  swarm_boid_fx_controller__effectTemplateName:t="am_bee_fire_fx"
+}
+
+swarm_distance_optimization{
+  swarm__visible:b=yes
+  swarm__disableBoidUpdateTemplate:t="boid_update_disabled"
+  swarm__visibleDistSq:r=25500
+  swarm__invisibleDistSq:r=40000
+  swarm__updatableBoidRatio:r=0.2
+
+  "swarm__distanceOptimization:tag"{}
+}
+
+am_undead_bees_swarm{
+  _use:t="swarm_cluster"
+  _use:t="alien_insect_flying_swarm"
+  _use:t="am_bees_swarm_cluster_sound"
+  _use:t="am_swarm_heightgrid"
+  _use:t="swarm_distance_optimization"
+  swarm__updateInterval:r=0.1
+  swarm__nextUpdate:r=0
+  swarm__horizontalOrientation:r=0.9
+  swarm__minStayTime:r=-1
+  swarm__projectOnGround:b=no
+  swarm__deadBoidFiredTemplateName:t="am_bee_fire_fx_controller"
+  boid__avoidProjectile:b=no
+  _replicated:t="swarm_cluster__target"
+  swarm_attack__boomStage:b=no
+  swarm_attack__boomOffset:p3=0, 2, 0
+  swarm_attack__zoomOffset:p3=0, 0, 0
+  swarm_attack__zoomHeightOffset:r=20
+  swarm_attack__zoomXYOffsetLen:r=10
+  swarm_attack__zoomPos:p3=0, 0, 0
+
+  "swarm_cluster__target:eid"{}
+  "swarm__hitTargets:array"{}
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+}
+
+am_bees_swarm{
+  _use:t="am_undead_bees_swarm"
+  death_note__name:t="note_swarm"
+
+  "swarm_cluster__destroyOnAllBoidDies:tag"{}
+}
+
+am_bees_hive_comps{
+  "swarm_cluster__hiveClusterEid:eid"{}
+}
+
+am_boids_can_be_killed{
+  swarm_cluster__minHealthyCount:i=50
+  swarm_cluster__spawnCountRng:ip2=6, 8
+  swarm_cluster__spawnTimeRng:p2=40, 55
+  swarm_cluster__spawnMult:r=1
+  swarm_cluster__nextBoidsSpawnTime:r=0
+
+  "projectileTargetSwarm:tag"{}
+  "explosionTargetSwarm:tag"{}
+  "fireTargetSwarm:tag"{}
+}
+
+bees_boid_element{
+  _use:t="boidElement"
+  boid__avoidProjectile:b=no
+
+  "boidAggregatedKilling:tag"{}
+}
+
+swarm_cluster_catch_up_to_server{
+  _group{
+    _tags:t="gameClient"
+    swarm_cluster__nextServerCatchUp:r=0
+    swarm_cluster__serverCatchUpPeriod:p2=1.5, 2
+    swarm_cluster__maxServerCatchUpPerFrame:i=4
+  }
+}
+
+corpse_swarm_gathering_effect{
+  "corpse_swarm_gathering_effect__corpseEid:eid"{}
+  "corpse_swarm_gathering_effect__swarmEid:eid"{}
+  "corpse_swarm_gathering_effect__effectEid:eid"{}
+}
+
+not_interesting_to_corpse_swarm{
+  "not_interesting_to_corpse_swarm:tag"{}
+}
+
+repellable_swarm{
+  _tags:t="server"
+  corpse_attached_swarm__detractPos:p3=0, 0, 0
+  corpse_attached_swarm__detractUntil:r=-1
+  corpse_attached_swarm__serverCountPrevious:i=-1
+  corpse_attached_swarm__repelWhenShotContinuouslyFor:r=4
+  corpse_attached_swarm__resetContinousShotAfterSilence:r=3
+  corpse_attached_swarm__nextContinousShotResetAt:r=-1
+  corpse_attached_swarm__nextContinousShotRepelAt:r=-1
+  corpse_attached_swarm__repelWhenRatioDied:r=0.5
+  corpse_attached_swarm__repelFromSmokeUpdateAt:r=-1
+  corpse_attached_swarm__repelFromSmokeUpdateInterval:p2=0.8, 1.2
+  corpse_attached_swarm__repelFromFireUpdateAt:r=-1
+  corpse_attached_swarm__repelFromFireUpdateInterval:p2=0.8, 1.2
+}
+
+corpse_attached_swarm{
+  _use:t="am_bees_swarm"
+  _use:t="am_boids_can_be_killed"
+  _use:t="am_storage"
+  _use:t="patroller_ai"
+  _use:t="swarm_cluster_catch_up_to_server"
+  _use:t="repellable_swarm"
+  am_storage__maxValue:i=500
+  am_habitat_swarm__minHeight:r=50
+  swarm__boidTemplateName:t="bees_boid_element"
+  swarm__minStayTime:r=-1
+  swarm__rotSpeed:r=4
+  _replicated:t="swarm__rotSpeed"
+  _replicated:t="swarm__minStayTime"
+  radius:r=0.1
+  swarm_cluster__radius:r=0.1
+  swarm__heightBits:i=3
+  swarm__strictGroundCheck:b=yes
+  swarm__heightGridCulling:b=yes
+  swarm__heightCellSize:r=3
+  swarm_cluster__minHealthyCount:i=30
+  swarm_cluster__timeToDamage:r=1
+  swarm_cluster__spawnCountRng:ip2=1, 2
+  swarm_cluster__spawnTimeRng:p2=15, 30
+  swarm_cluster__visibilityRange:r=20
+  swarm_cluster__agroRange:r=22
+  swarm_cluster__attackRadius:r=5
+  swarm_cluster__maxBoidsRatioKilledByExplosion:r=0.5
+  swarm_cluster__poisonDuration:r=4
+  swarm_cluster__maxSpeed:r=6
+  swarm__moveSpeed:r=10
+  swarm__moveSpeedAttack:r=8
+  swarm__moveSpeedNormal:r=10
+  swarm__targetWeight:r=1
+  swarm__alignmentWeight:r=1
+  swarm__separationWeight:r=10
+  corpse_attached_swarm__isGatheringAm:b=no
+  _replicated:t="corpse_attached_swarm__isGatheringAm"
+  _replicated:t="corpse_attached_swarm__corpseEid"
+  swarm_cluster__initialCount:i=30
+  count:i=30
+  swarm_cluster__maxCount:i=60
+  swarm_cluster__maxDamage:r=1
+  swarm_cluster__damage:r=1
+  beh_tree__enabled:b=yes
+  beh_tree__debug:b=no
+  beh_tree__node:t="corpse_attached_bee_swarm"
+  beh_tree__regularCheckRange:p2=5.5, 7
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=50
+  }
+
+  "sound_paths:shared:object"{
+    _tags:t="sound"
+
+    "movement:object"{
+      enemy:t="enemy/walker/swarm_over_body/movement"
+    }
+
+    "attack:object"{
+      enemy:t="enemy/walker/swarm_over_body/attack"
+    }
+  }
+
+  _group{
+    _tags:t="server"
+    corpse_attached_swarm__corpsePosition:p3=0, 0, 0
+    corpse_attached_swarm__addMaxBoidsPerAm:i=2
+    corpse_attached_swarm__addMaxDamagePerAm:r=0.2
+    corpse_attached_swarm__nextAmTickAt:r=0
+    corpse_attached_swarm__amExtractionPeriod:r=15
+    corpse_attached_swarm__returnRadius:r=30
+    corpse_attached_swarm__prevAmValue:i=0
+    corpse_attached_swarm__gainAmPerCorpseEaten:i=10
+    corpse_attached_swarm__newCorpseSearchRadius:r=50
+    corpse_attached_swarm__nextCorpseSearchAt:r=0
+    corpse_attached_swarm__corpseSearchPeriod:r=2
+    corpse_attached_swarm__searchCooldownUntil:r=-1
+    corpse_attached_swarm__searchCooldownAfterEaten:r=120
+    corpse_attached_swarm__searchCooldownAfterRepelled:r=120
+    corpse_attached_swarm__maxDroppedAmPerBoid:i=3
+
+    "corpse_attached_swarm__ignoreCorpsesWithKillTags:list<t>"{
+      i:t="changed_human"
+      i:t="invisible_man"
+      i:t="flower_human"
+      i:t="statue"
+    }
+
+    "patroller__customAroundPos:tag"{}
+  }
+
+  "corpse_attached_swarm__corpseEid:eid"{}
+}
+
+corpse_eaten_by_swarm{
+  corpse_eaten_by_swarm__eatTimeLeft:r=-1
+  corpse_eaten_by_swarm__destroyDelayMinMax:p2=120, 300
+
+  "corpse_eaten_by_swarm:tag"{}
+  "corpse_eaten_by_swarm__swarm:eid"{}
+}
+
+corpse_swarm_manager{
+  corpse_swarm_manager__swarmTemplate:t="corpse_attached_swarm"
+  corpse_swarm_manager__numSwarmsMinMax:ip2=5, 6
+  corpse_swarm_manager__finished:b=no
+}
+
+hive_clusters_manager{
+  hivesToSpawnRng:ip2=0, 0
+}
+
+bees_swarm_preset{
+  hive_point__transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  bees_swarm_preset__templateName:t="am_bees_guards_teaser"
+  bees_swarm_preset__swarmCount:i=5
+  am_habitat_swarm__maxFlightDistance:r=10
+  swarm_cluster__hivePlace:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-10, 0, 0]]
+
+  "hive_point__hiveClusterEid:eid"{}
+}
+
+hive_point{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "hive_point__avaliableHivePresets:list<t>"{}
+  "hive_point__avaliableBeesPresets:list<t>"{
+    i:t="bees_swarm_preset"
+  }
+}
+
+hive_cluster_preset{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "hiveCluster:tag"{}
+  "hive_cluster_preset__rendinsts:array"{}
+  "hive_cluster_preset__rendinstsEids:list<eid>"{}
+}
+
+hive_cluster_water_tower_preset{
+  _use:t="hive_cluster_preset"
+
+  "hiveClusterWaterTower:tag"{}
+  "hive_cluster_preset__rendinsts:array"{
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[0.0709063, -0.00291639, -0.431546] [-0.0164862, 0.436995, -0.00566202] [0.431241, 0.0171857, 0.07074] [-0.0360107, 2.065, 0.880005]]
+    }
+
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[-0.0305055, -0.00291617, -0.436267] [-0.0173475, 0.436994, -0.00170803] [0.435932, 0.0171857, -0.030597] [0.289001, -0.4604, 1.15002]]
+    }
+
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[0.300965, -0.00291588, -0.317301] [-0.0104641, 0.436995, -0.0139412] [0.317142, 0.0171859, 0.300656] [-0.778992, 1.0757, 0.880005]]
+    }
+  }
+}
+
+hive_cluster_wall_preset{
+  _use:t="hive_cluster_preset"
+
+  "hiveClusterWall:tag"{}
+  "hive_cluster_preset__rendinsts:array"{
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[0.34, 0, 0] [0, 0.34, 0] [0, 0, 0.34] [0, -0.366455, -0.7164]]
+    }
+
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[0.34, 0, 0] [0, 0.34, 0] [0, 0, 0.34] [0, 0.694405, 0.860268]]
+    }
+  }
+}
+
+hive_cluster_big_wall_preset{
+  _use:t="hive_cluster_preset"
+
+  "hiveClusterBigWall:tag"{}
+  "hive_cluster_preset__rendinsts:array"{
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[0.34, 0, 0] [0, 0.34, 0] [0, 0, 0.34] [0, 0.834419, 2.00385]]
+    }
+
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[0.34, 0, 0] [0, 0.34, 0] [0, 0, 0.34] [0, -0.767334, 0.996399]]
+    }
+
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[0.34, 0, 0] [0, 0.34, 0] [0, 0, 0.34] [0, 1.20239, 0.356079]]
+    }
+
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[0.34, 0, 0] [0, 0.34, 0] [0, 0, 0.34] [0, 2.09777, -1.12286]]
+    }
+  }
+}
+
+hive_cluster_church_dome_preset{
+  _use:t="hive_cluster_preset"
+
+  "hiveClusterChurchDome:tag"{}
+  "hive_cluster_preset__rendinsts:array"{
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[0.385937, -0.126803, 0.252586] [-0.0484091, 0.392324, 0.270921] [-0.277601, -0.242937, 0.302198] [-0.558228, -0.256004, -0.867188]]
+    }
+
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[0.0756654, -0.25134, 0.399911] [0.0322698, 0.407553, 0.250038] [-0.46977, -0.0125107, 0.0810204] [0.531769, 0, -1.48016]]
+    }
+
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[0.161086, -0.373497, 0.251749] [0.146232, 0.296763, 0.34671] [-0.424786, -0.0395999, 0.213057] [0.118774, 0.473, -0.951172]]
+    }
+  }
+}
+
+hive_cluster_factory_chimney_preset{
+  _use:t="hive_cluster_preset"
+
+  "hiveClusterFactoryChimney:tag"{}
+  "hive_cluster_preset__rendinsts:array"{
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[0.100034, -0.00291588, 0.425738] [0.017397, 0.436995, -0.00109471] [-0.425393, 0.0171859, 0.10007] [0.914673, -1.46376, 0.0399933]]
+    }
+
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[0.321807, -0.00291639, 0.296141] [0.013782, 0.436995, -0.0106729] [-0.295835, 0.0171857, 0.321644] [0.506866, -0.474457, 0.661041]]
+    }
+
+    "rendinst:object"{
+      template:t="beehive"
+      tm:m=[[0.381417, -0.00291617, 0.213963] [0.0109496, 0.436994, -0.0135632] [-0.213703, 0.0171857, 0.381188] [0.102753, -2.99986, 0.784515]]
+    }
+  }
+}
+
+am_bees_guards_util_vars{
+  util_vars__ready:b=no
+  util_vars__hasTargetToAttack:b=no
+  util_vars__hasTargetToMove:b=no
+  util_vars__battleReady:b=yes
+  util_vars__aggressionLevel:r=0
+}
+
+am_bees_leader{
+  am_bees_leader__isFollowed:b=no
+  am_bees_leader__searchRadius:r=30
+  am_bees_leader__positionHistory:p3=0, 0, 0
+  am_bees_leader__nextUpdateAt:r=0
+  am_bees_leader__nextUpdateInterval:p2=0.1, 1
+
+  "am_bees_leader__leaderSwarmEid:eid"{}
+}
+
+am_bees_guards{
+  _use:t="am_bees_swarm"
+  _use:t="am_bees_hive_comps"
+  _use:t="repellable_swarm"
+  _use:t="am_bees_leader"
+  radius:r=0.1
+  swarm_cluster__radius:r=0.1
+  count:i=400
+  swarm_cluster__maxCount:i=400
+  swarm__rotSpeedPerCount:p2=4, 9
+  swarm_cluster__maxSpeed:r=6
+  swarm__moveSpeed:r=10
+  swarm__moveSpeedAttack:r=8
+  swarm__moveSpeedNormal:r=10
+  swarm_cluster__acceleration:r=10
+  swarm__targetWeight:r=1
+  swarm__alignmentWeight:r=1
+  swarm__separationWeight:r=10
+  swarm__heightBits:i=3
+  swarm__strictGroundCheck:b=yes
+  swarm__heightGridCulling:b=yes
+  swarm__heightCellSize:r=3
+  swarm__extraAttractors:b=no
+  swarm__horizontalOrientation:r=0.9
+  swarm_cluster__minHealthyCount:i=175
+  swarm_cluster__lastHitReactionTime:r=-1
+  _use:t="am_bees_guards_util_vars"
+  swarm_cluster__damage:r=0.35
+  swarm_cluster__maxDamage:r=0.35
+  swarm_cluster__damageAt:r=0
+  swarm_cluster__hearingRange:r=50
+  swarm_cluster__visibilityRange:r=50
+  swarm_cluster__agroRange:r=25
+  _use:t="get_attract_position_ai"
+  attract_point__checkPath:b=no
+  attract_point__searchRadius:r=50
+  beh_tree__enabled:b=yes
+  beh_tree__debug:b=no
+  beh_tree__node:t="am_bees_guard_swarm"
+  _use:t="am_boids_can_be_killed"
+  swarm__orbitAngle:r=0
+  swarm__orbitRadRng:p2=5, 15
+  swarm__orbitCurRad:r=10
+  swarm__orbitRotSpdRng:p2=0.1, 0.4
+  swarm__orbitCurRotSpd:r=0.4
+  swarm__orbitOffset:p3=0, 5, 0
+  swarm_cluster__poisonAttack:b=no
+  swarm_cluster__poisonDuration:r=4
+  swarm_cluster__attackProbability:r=0.2
+  swarm_cluster__damagePeriod:p2=0.3, 1
+  swarm_cluster__attackAddTrauma:r=0.4
+  swarm_cluster__attakMaxTrauma:r=2.5
+  swarm_cluster__attackRadius:r=8
+
+  _group{
+    _tags:t="server"
+    corpse_attached_swarm__repelFromSmokeUpdateInterval:p2=0.2, 0.5
+    corpse_attached_swarm__repelFromFireUpdateInterval:p2=0.2, 0.5
+  }
+
+  "am_bees_guard_swarm:tag"{}
+}
+
+am_bees_solo_util_vars{
+  util_vars__ready:b=no
+  util_vars__retired:b=no
+  util_vars__hasTargetToAttack:b=no
+  util_vars__hasPointsToInvestigate:b=no
+  util_vars__battleReady:b=yes
+  util_vars__distanceFromHive:r=0
+  util_vars__aggressionLevel:r=0
+}
+
+am_bees_aggressive_swarm{
+  aggressive_swarm__aggressionLevel:r=0
+  aggressive_swarm__aggressionReduceSpd:r=0.05
+  aggressive_swarm__aggressionSensitivityMult:r=3
+  aggressive_swarm__baseHearingRange:r=0
+  aggressive_swarm__baseVisibilityRange:r=0
+  aggressive_swarm__nearSwarmsAggressionCheckAt:r=0
+  aggressive_swarm__nearSwarmsAggressionCheckTime:r=0.5
+  _tracked:t="aggressive_swarm__aggressionLevel"
+  _replicated:t="aggressive_swarm__aggressionLevel"
+}
+
+am_bees_solo{
+  _use:t="am_bees_swarm"
+  swarm_cluster__acceleration:r=5
+  swarm_cluster__radius:r=8
+  radius:r=8
+  count:i=500
+  swarm_cluster__maxCount:i=500
+  swarm_cluster__maxSpeed:r=7
+  swarm__moveSpeed:r=12
+  swarm__rotSpeed:r=3.5
+  swarm__heightCellSize:r=2
+  swarm__heightBits:i=3
+  swarm__retired:b=no
+  swarm_cluster__hearingRange:r=30
+  swarm_cluster__visibilityRange:r=40
+  swarm_cluster__agroRange:r=20
+  swarm_cluster__lastHitReactionTime:r=-1
+  _use:t="am_bees_solo_util_vars"
+  beh_tree__enabled:b=yes
+  beh_tree__node:t="am_bees_solo_swarm"
+  _use:t="get_attract_position_ai"
+  attract_point__checkPath:b=no
+  attract_point__searchRadius:r=160
+  _use:t="am_boids_can_be_killed"
+  swarm_cluster__minHealthyCount:i=200
+  swarm_cluster__spawnCountRng:ip2=6, 8
+  swarm_cluster__spawnTimeRng:p2=40, 55
+  swarm_cluster__spawnMult:r=1
+  swarm_cluster__maxDistanceFromHive:r=250
+  swarm_cluster__damage:r=5
+  swarm_cluster__maxDamage:r=5
+  swarm_cluster__timeToDamage:r=1
+  swarm_cluster__isWandering:b=no
+  _use:t="am_bees_aggressive_swarm"
+  _use:t="aggressive_swarm_change_color"
+
+  "am_bees_solo_swarm:tag"{}
+  _group{
+    swarm__emissionChangeDuration:r=2
+    _tags:t="render"
+  }
+}
+
+am_draw_flying_swarm_move_path{
+  "am_draw_flying_swarm_move_path:tag"{}
+}
+
+aggressive_swarm_change_color{
+  _tags:t="render"
+
+  "aggressive_swarm__changeColorParams:array"{
+    "colorParam:object"{
+      metatexMaterialIdx:i=0
+
+      "metatexMaterialFloatRngs:object"{
+        swarm__emissive_blue_from:p2=0.1, 1
+        swarm__emissive_blue_to:p2=1, 80
+      }
+
+      "metatexMaterialFloat4Rngs:object"{
+        "swarm__emissive_color:object"{
+          passive:p4=0.2, 0.9, 1, 0.1
+          aggressive:p4=1, 0, 0, 1
+        }
+      }
+    }
+  }
+}
+
+am_bees_guards_teaser{
+  _use:t="am_bees_guards"
+  _use:t="swarm_cluster_catch_up_to_server"
+  swarm__boidTemplateName:t="bees_boid_element"
+  loc_snapshots__addPeriod:i=8
+  loc_snapshots__hideDelay:r=999999
+  loc_snapshots__maxDelayDstSq:r=90000
+  radius:r=0.1
+  swarm_cluster__radius:r=0.1
+}
+
+bees_dirty_screen_effect{
+  _use:t="screen_effect_generic"
+  screen_effect__texture_res:t="liquid_screen_splatter_tile_tex_n"
+  screen_effect__diffuse:p4=0.4, 0.5, 0.1, 1
+  screen_effect__roughness:r=0.01
+  screen_effect__opacity:r=0.1
+  screen_effect__uvScale:r=0.5
+  bees_dirty_screen_effect__recoverSpd:r=0.1
+
+  "bees_dirty_screen_effect:tag"{}
+}

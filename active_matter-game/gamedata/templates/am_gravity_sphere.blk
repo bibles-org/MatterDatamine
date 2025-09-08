@@ -1,0 +1,43 @@
+am_gravity_sphere{
+  am_gravity_sphere__gravityMult:r=0.25
+  sphere_zone__radius:r=10
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  am_gravity_sphere__active:b=yes
+  am_gravity_sphere__updateAt:r=0
+  am_gravity_sphere__updateInterval:r=0.5
+  am_gravity_sphere__affectInTemplate:t="am_gravity_sphere_affect_in"
+
+  "am_gravity_sphere:tag"{}
+  "am_gravity_sphere__gridNames:list<t>"{
+    h:t="humans"
+    h:t="vehicles"
+    h:t="interactable"
+    h:t="projectile_phys"
+  }
+
+  "am_gravity_sphere__gridEids:list<i>"{}
+}
+
+am_gravity_sphere_affect_base{
+  _use:t="replicated_game_effect"
+  am_gravity_sphere_affect__gravityChangeSpeed:r=0.45
+  am_gravity_sphere_affect__gravityMult:r=1
+  am_gravity_sphere_affect__selfDestroy:b=no
+}
+
+am_gravity_sphere_affect_in{
+  _use:t="am_gravity_sphere_affect_base"
+  am_gravity_sphere_affect__resultAffect:t="am_gravity_sphere_affect_out"
+  game_effect__destroyAt:r=0
+
+  "am_gravity_sphere_affect_in:tag"{}
+}
+
+am_gravity_sphere_affect_out{
+  _use:t="am_gravity_sphere_affect_base"
+  am_gravity_sphere_affect__gravityChangeSpeed:r=0.25
+  am_gravity_sphere_affect__gravityMult:r=1
+  am_gravity_sphere_affect__selfDestroy:b=yes
+
+  "am_gravity_sphere_affect_out:tag"{}
+}

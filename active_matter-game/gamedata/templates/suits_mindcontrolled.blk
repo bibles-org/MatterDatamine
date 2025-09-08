@@ -1,0 +1,540 @@
+suit_mindcontrolled_attachable_animchar{
+  _use:t="suit_militant_attachable_animchar"
+}
+
+suit_mindcontrolled_item_base{
+  _use:t="suit_militant_item_base"
+  suit__raidIcon:t="!ui/uiskin/raid_info/turned.svg"
+}
+
+suit_mindcontrolled_militant_a_animchar{
+  _use:t="suit_mindcontrolled_attachable_animchar"
+  animchar__res:t="am_trooper_corrupted_male_a_char"
+  collres__res:t="am_soldier_corrupted_male_a_collision"
+}
+
+suit_mindcontrolled_militant_a_item{
+  _use:t="suit_mindcontrolled_item_base"
+  item__proto:t="suit_mindcontrolled_militant_a_item"
+  item__name:t="items/mindcontrolled_militant"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_trooper_corrupted_male_a_char"
+  collres__res:t="am_trooper_corrupted_male_a_collision"
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_mindcontrolled_militant_a_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "equipment_effect__blockEquipmentSlots:list<t>"{
+    item:t="helmet"
+  }
+}
+
+suit_mindcontrolled_militant_b_animchar{
+  _use:t="suit_mindcontrolled_attachable_animchar"
+  animchar__res:t="am_trooper_corrupted_male_b_char"
+  collres__res:t="am_soldier_corrupted_male_b_collision"
+}
+
+suit_mindcontrolled_militant_b_item{
+  _use:t="suit_mindcontrolled_item_base"
+  item__proto:t="suit_mindcontrolled_militant_b_item"
+  item__name:t="items/mindcontrolled_militant"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_trooper_corrupted_male_b_char"
+  collres__res:t="am_trooper_corrupted_male_b_collision"
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_mindcontrolled_militant_b_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "equipment_effect__blockEquipmentSlots:list<t>"{
+    item:t="helmet"
+  }
+}
+
+suit_mindcontrolled_dasher_item{
+  _use:t="suit_mindcontrolled_militant_b_item"
+  item__proto:t="suit_mindcontrolled_dasher_item"
+  equipment_effect__addSubTemplate:t="active_matter_dash_ability"
+  equipment_effect__addAbilitiesFromTemplate:t="active_matter_dash_ability"
+  am_storage__value:i=5
+
+  "equipment_effect__transferAmOnEquip:tag"{}
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+}
+
+suit_mindcontrolled_militant_c_animchar{
+  _use:t="suit_mindcontrolled_attachable_animchar"
+  animchar__res:t="am_trooper_corrupted_male_c_char"
+  collres__res:t="am_soldier_corrupted_male_c_collision"
+}
+
+suit_mindcontrolled_militant_c_item{
+  _use:t="suit_mindcontrolled_item_base"
+  item__proto:t="suit_mindcontrolled_militant_c_item"
+  item__name:t="items/mindcontrolled_militant"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_trooper_corrupted_male_c_char"
+  collres__res:t="am_trooper_corrupted_male_c_collision"
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_left_hand_0:t="armorplate_small_slot"
+    equipment_mod_right_hand_0:t="armorplate_small_slot"
+    equipment_mod_left_leg_0:t="armorplate_small_slot"
+    equipment_mod_right_leg_0:t="armorplate_small_slot"
+    equipment_mod_body_0:t="armorplate_big_slot"
+  }
+
+  "equipment_mods__slotIcons:shared:object"{
+    equipment_mod_left_hand_0:t="uiskin/small_armor_plate_slot.svg"
+    equipment_mod_right_hand_0:t="uiskin/small_armor_plate_slot.svg"
+    equipment_mod_left_leg_0:t="uiskin/small_armor_plate_slot.svg"
+    equipment_mod_right_leg_0:t="uiskin/small_armor_plate_slot.svg"
+    equipment_mod_body_0:t="uiskin/large_armor_plate_slot.svg"
+  }
+
+  "equipment_mods__slotTooltips:shared:object"{
+    equipment_mod_left_hand_0:t="slots/small_armor_plate"
+    equipment_mod_right_hand_0:t="slots/small_armor_plate"
+    equipment_mod_left_leg_0:t="slots/small_armor_plate"
+    equipment_mod_right_leg_0:t="slots/small_armor_plate"
+    equipment_mod_body_0:t="slots/large_armor_plate"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_mindcontrolled_militant_c_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "equipment_effect__blockEquipmentSlots:list<t>"{
+    item:t="helmet"
+  }
+}
+
+suit_mindcontrolled_soldier_base{
+  _use:t="suit_mindcontrolled_item_base"
+  equipment__setDefaultStubMeleeTemplate:t="default_ak_bayonet_weapon_rust"
+}
+
+suit_mindcontrolled_soldier_heavy_a_animchar{
+  _use:t="suit_mindcontrolled_attachable_animchar"
+  animchar__res:t="am_soldier_corrupted_male_heavy_a_char"
+  collres__res:t="am_soldier_corrupted_male_heavy_a_collision"
+}
+
+suit_mindcontrolled_soldier_heavy_a_item{
+  _use:t="suit_mindcontrolled_soldier_base"
+  item__proto:t="suit_mindcontrolled_soldier_heavy_a_item"
+  item__name:t="items/mindcontrolled_soldier_boss"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_soldier_corrupted_male_heavy_a_char"
+  collres__res:t="am_soldier_corrupted_male_heavy_a_collision"
+  suit__raidIcon:t="!ui/uiskin/raid_info/boss.svg"
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_mindcontrolled_soldier_heavy_a_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "equipment_effect__blockEquipmentSlots:list<t>"{
+    item:t="helmet"
+    item:t="flashlight"
+    item:t="safepack"
+  }
+}
+
+suit_mindcontrolled_soldier_a_animchar{
+  _use:t="suit_mindcontrolled_attachable_animchar"
+  animchar__res:t="am_soldier_corrupted_male_a_char"
+  collres__res:t="am_soldier_corrupted_male_a_collision"
+}
+
+suit_mindcontrolled_soldier_a_item{
+  _use:t="suit_mindcontrolled_soldier_base"
+  item__proto:t="suit_mindcontrolled_soldier_a_item"
+  item__name:t="items/mindcontrolled_soldier"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_soldier_corrupted_male_a_char"
+  collres__res:t="am_soldier_corrupted_male_a_collision"
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_mindcontrolled_soldier_a_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "equipment_effect__blockEquipmentSlots:list<t>"{
+    item:t="helmet"
+    item:t="backpack"
+    item:t="flashlight"
+    item:t="safepack"
+  }
+}
+
+suit_mindcontrolled_soldier_a2_animchar{
+  _use:t="suit_mindcontrolled_attachable_animchar"
+  animchar__res:t="am_soldier_corrupted_male_a2_char"
+  collres__res:t="am_soldier_corrupted_male_a2_collision"
+}
+
+suit_mindcontrolled_soldier_a2_item{
+  _use:t="suit_mindcontrolled_soldier_base"
+  item__proto:t="suit_mindcontrolled_soldier_a2_item"
+  item__name:t="items/mindcontrolled_soldier"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_soldier_corrupted_male_a2_char"
+  collres__res:t="am_soldier_corrupted_male_a2_collision"
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_mindcontrolled_soldier_a2_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "equipment_effect__blockEquipmentSlots:list<t>"{
+    item:t="flashlight"
+    item:t="safepack"
+  }
+}
+
+suit_mindcontrolled_soldier_b_animchar{
+  _use:t="suit_mindcontrolled_attachable_animchar"
+  animchar__res:t="am_soldier_corrupted_male_b_char"
+  collres__res:t="am_soldier_corrupted_male_b_collision"
+}
+
+suit_mindcontrolled_soldier_b_item{
+  _use:t="suit_mindcontrolled_soldier_base"
+  item__proto:t="suit_mindcontrolled_soldier_b_item"
+  item__name:t="items/mindcontrolled_soldier"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_soldier_corrupted_male_b_char"
+  collres__res:t="am_soldier_corrupted_male_b_collision"
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_mindcontrolled_soldier_b_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "equipment_effect__blockEquipmentSlots:list<t>"{
+    item:t="helmet"
+    item:t="flashlight"
+    item:t="safepack"
+  }
+}
+
+suit_mindcontrolled_soldier_b2_animchar{
+  _use:t="suit_mindcontrolled_attachable_animchar"
+  animchar__res:t="am_soldier_corrupted_male_b2_char"
+  collres__res:t="am_soldier_corrupted_male_b2_collision"
+}
+
+suit_mindcontrolled_soldier_b2_item{
+  _use:t="suit_mindcontrolled_soldier_base"
+  item__proto:t="suit_mindcontrolled_soldier_b2_item"
+  item__name:t="items/mindcontrolled_soldier"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_soldier_corrupted_male_b2_char"
+  collres__res:t="am_soldier_corrupted_male_b2_collision"
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_mindcontrolled_soldier_b2_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "equipment_effect__blockEquipmentSlots:list<t>"{
+    item:t="flashlight"
+    item:t="safepack"
+  }
+}
+
+suit_mindcontrolled_soldier_c_animchar{
+  _use:t="suit_mindcontrolled_attachable_animchar"
+  animchar__res:t="am_soldier_corrupted_male_c_char"
+  collres__res:t="am_soldier_corrupted_male_c_collision"
+}
+
+suit_mindcontrolled_soldier_c_item{
+  _use:t="suit_mindcontrolled_soldier_base"
+  item__proto:t="suit_mindcontrolled_soldier_c_item"
+  item__name:t="items/mindcontrolled_soldier"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_soldier_corrupted_male_c_char"
+  collres__res:t="am_soldier_corrupted_male_c_collision"
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_mindcontrolled_soldier_c_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "equipment_effect__blockEquipmentSlots:list<t>"{
+    item:t="flashlight"
+    item:t="safepack"
+  }
+}
+
+suit_mindcontrolled_soldier_d_animchar{
+  _use:t="suit_mindcontrolled_attachable_animchar"
+  animchar__res:t="am_soldier_corrupted_male_d_char"
+  collres__res:t="am_soldier_corrupted_male_d_collision"
+}
+
+suit_mindcontrolled_soldier_d_item{
+  _use:t="suit_mindcontrolled_soldier_base"
+  item__proto:t="suit_mindcontrolled_soldier_d_item"
+  item__name:t="items/mindcontrolled_soldier"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_soldier_corrupted_male_d_char"
+  collres__res:t="am_soldier_corrupted_male_d_collision"
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_mindcontrolled_soldier_d_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "equipment_effect__blockEquipmentSlots:list<t>"{
+    item:t="helmet"
+    item:t="backpack"
+    item:t="flashlight"
+    item:t="safepack"
+  }
+}
+
+suit_mindcontrolled_soldier_e_animchar{
+  _use:t="suit_mindcontrolled_attachable_animchar"
+  animchar__res:t="am_soldier_corrupted_male_e_char"
+  collres__res:t="am_soldier_corrupted_male_e_collision"
+}
+
+suit_mindcontrolled_soldier_e_item{
+  _use:t="suit_mindcontrolled_soldier_base"
+  item__proto:t="suit_mindcontrolled_soldier_e_item"
+  item__name:t="items/mindcontrolled_soldier"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_soldier_corrupted_male_e_char"
+  collres__res:t="am_soldier_corrupted_male_e_collision"
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_mindcontrolled_soldier_e_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "equipment_effect__blockEquipmentSlots:list<t>"{
+    item:t="flashlight"
+    item:t="safepack"
+  }
+}
+
+suit_mindcontrolled_soldier_g_animchar{
+  _use:t="suit_mindcontrolled_attachable_animchar"
+  animchar__res:t="am_soldier_corrupted_male_g_char"
+  collres__res:t="am_soldier_corrupted_male_g_collision"
+}
+
+suit_mindcontrolled_soldier_g_item{
+  _use:t="suit_mindcontrolled_soldier_base"
+  item__proto:t="suit_mindcontrolled_soldier_g_item"
+  item__name:t="items/mindcontrolled_soldier"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_soldier_corrupted_male_g_char"
+  collres__res:t="am_soldier_corrupted_male_g_collision"
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_mindcontrolled_soldier_g_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "equipment_effect__blockEquipmentSlots:list<t>"{
+    item:t="helmet"
+    item:t="flashlight"
+    item:t="safepack"
+  }
+}
+
+suit_mindcontrolled_snork_a_animchar{
+  _use:t="suit_mindcontrolled_attachable_animchar"
+  animchar__res:t="am_snork_a_char"
+  collres__res:t="am_snork_a_collision"
+}
+
+suit_mindcontrolled_snork_a_item{
+  _use:t="suit_mindcontrolled_soldier_base"
+  item__proto:t="suit_mindcontrolled_snork_a_item"
+  item__name:t="items/mindcontrolled_snork"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_snork_a_char"
+  collres__res:t="am_snork_a_collision"
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_mindcontrolled_snork_a_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "equipment_effect__blockEquipmentSlots:list<t>"{
+    item:t="helmet"
+    item:t="flashlight"
+    item:t="safepack"
+  }
+}
+
+suit_mindcontrolled_snork_a2_animchar{
+  _use:t="suit_mindcontrolled_attachable_animchar"
+  animchar__res:t="am_snork_a2_char"
+  collres__res:t="am_snork_a2_collision"
+}
+
+suit_mindcontrolled_snork_a2_item{
+  _use:t="suit_mindcontrolled_soldier_base"
+  item__proto:t="suit_mindcontrolled_snork_a2_item"
+  item__name:t="items/mindcontrolled_snork"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  animchar__res:t="am_snork_a2_char"
+  collres__res:t="am_snork_a2_collision"
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_mindcontrolled_snork_a2_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "equipment_effect__blockEquipmentSlots:list<t>"{
+    item:t="helmet"
+    item:t="flashlight"
+    item:t="safepack"
+  }
+}
+
+suit_mindcontrolled_screamer_item{
+  _use:t="suit_mindcontrolled_militant_c_item"
+  item__proto:t="suit_mindcontrolled_screamer_item"
+  equipment_effect__addSubTemplate:t="active_matter_scream_ability"
+  equipment_effect__addAbilitiesFromTemplate:t="active_matter_scream_ability"
+
+  "equipment__setDefaultStubEquipmentTemplates:object"{
+    pouch:t="small_pouch+default_stub_equipment"
+  }
+}

@@ -1,0 +1,786 @@
+entity{
+  _template:t="dagdp_level_settings"
+  dagdp__max_objects:i=40000
+  dagdp__max_meshes:i=2048
+}
+
+entity{
+  _template:t="dagdp_density_mask"
+  dagdp__density_mask_res:t="dalniy_island_sparse_det_dagdp_density_tex_m"
+  dagdp__density_mask_left_top_right_bottom:p4=-2048, 2048, 2048, -2048
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_forest_groundplants_a"
+
+  "dagdp__params:object"{
+    scale:p2=0.65, 0.15
+    rot_y:p2=0, 360
+    orientation:t="normal"
+    rot_x:p2=0, 10
+    rot_z:p2=0, 10
+  }
+
+  "dagdp__assets:object"{
+    "ground_plant_fern_a:object"{
+      weight:r=1
+    }
+
+    "ground_plant_fern_b:object"{
+      weight:r=6
+    }
+
+    "ground_plant_fern_c:object"{
+      weight:r=6
+    }
+
+    "ground_plant_fern_d:object"{
+      weight:r=6
+    }
+
+    "ground_plant_fern_e:object"{
+      weight:r=1
+    }
+
+    "ground_plant_fern_f:object"{
+      weight:r=1
+    }
+
+    "tree_fagus_scrub_a:object"{
+      weight:r=8
+    }
+
+    "tree_fagus_scrub_b:object"{
+      weight:r=8
+    }
+
+    "tree_fagus_scrub_c:object"{
+      weight:r=8
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_forest_groundplants_a"
+  dagdp__density:r=0.5
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_forest_groundplants_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=39
+    item:i=20
+    item:i=21
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_forest_groundplants_b"
+
+  "dagdp__params:object"{
+    scale:p2=0.7, 0.3
+    rot_y:p2=0, 360
+    orientation:t="normal"
+    rot_x:p2=0, 10
+    rot_z:p2=0, 10
+  }
+
+  "dagdp__assets:object"{
+    "ground_plant_fern_a:object"{
+      weight:r=4
+    }
+
+    "ground_plant_fern_b:object"{
+      weight:r=4
+    }
+
+    "ground_plant_fern_c:object"{
+      weight:r=1
+    }
+
+    "ground_plant_fern_d:object"{
+      weight:r=1
+    }
+
+    "ground_plant_fern_e:object"{
+      weight:r=1
+    }
+
+    "ground_plant_fern_f:object"{
+      weight:r=1
+    }
+
+    "tree_fagus_scrub_a:object"{
+      weight:r=1
+    }
+
+    "tree_fagus_scrub_b:object"{
+      weight:r=1
+    }
+
+    "tree_fagus_scrub_c:object"{
+      weight:r=1
+    }
+
+    "tree_pinus_koraienesis_shrub_a:object"{
+      weight:r=6
+    }
+
+    "tree_pinus_koraienesis_shrub_b:object"{
+      weight:r=6
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_forest_groundplants_b"
+  dagdp__density:r=0.7
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_forest_groundplants_b"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=22
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_forest_groundplants_c"
+
+  "dagdp__params:object"{
+    scale:p2=0.7, 0.3
+    rot_y:p2=0, 360
+    orientation:t="normal"
+    rot_x:p2=0, 10
+    rot_z:p2=0, 10
+  }
+
+  "dagdp__assets:object"{
+    "ground_plant_fern_a:object"{
+      weight:r=1
+    }
+
+    "ground_plant_fern_b:object"{
+      weight:r=1
+    }
+
+    "ground_plant_fern_c:object"{
+      weight:r=5
+    }
+
+    "ground_plant_fern_d:object"{
+      weight:r=5
+    }
+
+    "ground_plant_fern_e:object"{
+      weight:r=1
+    }
+
+    "ground_plant_fern_f:object"{
+      weight:r=1
+    }
+
+    "tree_fagus_scrub_a:object"{
+      weight:r=1
+    }
+
+    "tree_betula_ermanii_shrub_a:object"{
+      weight:r=6
+    }
+
+    "tree_betula_ermanii_shrub_b:object"{
+      weight:r=6
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_forest_groundplants_c"
+  dagdp__density:r=0.7
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_forest_groundplants_c"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=23
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_overgrowth_groundplants_a"
+
+  "dagdp__params:object"{
+    scale:p2=1, 0.2
+    rot_y:p2=0, 360
+    orientation:t="normal"
+    rot_x:p2=0, 10
+    rot_z:p2=0, 10
+  }
+
+  "dagdp__assets:object"{
+    "bush_tree_heracleum_medium_a:object"{
+      weight:r=1
+    }
+
+    "bush_tree_heracleum_medium_b:object"{
+      weight:r=1
+    }
+
+    "bush_tree_heracleum_small_a:object"{
+      weight:r=3
+    }
+
+    "bush_tree_heracleum_small_b:object"{
+      weight:r=3
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_overgrowth_groundplants_a"
+  dagdp__density:r=1
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_overgrowth_groundplants_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=30
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_stone_shards_a"
+
+  "dagdp__params:object"{
+    scale:p2=0.9, 0.3
+    rot_y:p2=0, 360
+    orientation:t="normal"
+    rot_x:p2=0, 10
+    rot_z:p2=0, 10
+    slope_factor:r=0.5
+    heightmap_imitators:t="reject"
+  }
+
+  "dagdp__assets:object"{
+    "stone_small_shard_bright_a:object"{
+      weight:r=1
+    }
+
+    "stone_small_shard_bright_b:object"{
+      weight:r=1
+    }
+
+    "stone_small_shard_bright_c:object"{
+      weight:r=1
+    }
+
+    "stone_small_shard_bright_d:object"{
+      weight:r=1
+    }
+
+    "stone_small_shard_bright_e:object"{
+      weight:r=1
+    }
+
+    "stone_small_shard_bright_f:object"{
+      weight:r=1
+    }
+
+    "stone_small_shard_bright_g:object"{
+      weight:r=1
+    }
+
+    "stone_small_shard_bright_h:object"{
+      weight:r=1
+    }
+
+    "stone_small_shard_bright_i:object"{
+      weight:r=1
+    }
+
+    "stone_small_shard_bright_j:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_stone_shards_a"
+  dagdp__density:r=12
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_stone_shards_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=5
+    item:i=10
+    item:i=12
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_stone_shards_b"
+  dagdp__density:r=6
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_stone_shards_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=16
+    item:i=17
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_shoreline_stones_a"
+
+  "dagdp__params:object"{
+    scale:p2=0.7, 0.3
+    rot_y:p2=0, 360
+    orientation:t="normal"
+    rot_x:p2=0, 10
+    rot_z:p2=0, 10
+    slope_factor:r=2
+  }
+
+  "dagdp__assets:object"{
+    "stone_small_shoreline_rounded_a:object"{
+      weight:r=1
+    }
+
+    "stone_small_shoreline_rounded_b:object"{
+      weight:r=1
+    }
+
+    "stone_small_shoreline_rounded_c:object"{
+      weight:r=1
+    }
+
+    "stone_small_shoreline_rounded_d:object"{
+      weight:r=1
+    }
+
+    "stone_small_shoreline_rounded_e:object"{
+      weight:r=1
+    }
+
+    "stone_small_shoreline_rounded_f:object"{
+      weight:r=1
+    }
+
+    "stone_small_shoreline_rounded_g:object"{
+      weight:r=1
+    }
+
+    "stone_small_shoreline_rounded_h:object"{
+      weight:r=1
+    }
+
+    "stone_small_shoreline_rounded_i:object"{
+      weight:r=1
+    }
+
+    "stone_small_shoreline_rounded_j:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_shoreline_driftwood_a"
+
+  "dagdp__params:object"{
+    scale:p2=0.8, 0.4
+    rot_y:p2=90, 60
+    orientation:t="normal_xz"
+    rot_x:p2=0, 360
+    rot_z:p2=0, 2
+  }
+
+  "dagdp__assets:object"{
+    "tree_driftwood_branch_small_a:object"{
+      weight:r=1
+    }
+
+    "tree_driftwood_branch_small_b:object"{
+      weight:r=1
+    }
+
+    "tree_driftwood_branch_small_c:object"{
+      weight:r=1
+    }
+
+    "tree_driftwood_branch_small_d:object"{
+      weight:r=3
+    }
+
+    "tree_driftwood_branch_small_e:object"{
+      weight:r=3
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_shoreline_stones_a"
+  dagdp__density:r=12
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_shoreline_stones_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=13
+    item:i=15
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_shoreline_stones_b"
+  dagdp__density:r=1.5
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_shoreline_stones_a"
+    item:t="group_shoreline_driftwood_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=14
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_dead_branches_a"
+
+  "dagdp__params:object"{
+    scale:p2=0.8, 0.2
+    rot_y:p2=0, 360
+    orientation:t="normal"
+    rot_x:p2=0, 10
+    rot_z:p2=0, 10
+  }
+
+  "dagdp__assets:object"{
+    "debris_branch_generic_dead_a:object"{
+      weight:r=2
+    }
+
+    "debris_branch_generic_dead_b:object"{
+      weight:r=2
+    }
+
+    "debris_branch_generic_dead_c:object"{
+      weight:r=2
+    }
+
+    "ground_plant_trash_branches_core_a:object"{
+      weight:r=1
+    }
+
+    "ground_plant_trash_branches_core_b:object"{
+      weight:r=1
+    }
+
+    "ground_plant_trash_branches_core_c:object"{
+      weight:r=1
+    }
+
+    "ground_plant_trash_branches_core_d:object"{
+      weight:r=1
+    }
+
+    "ground_plant_trash_branches_core_e:object"{
+      weight:r=1
+    }
+
+    "ground_plant_trash_branches_core_f:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_dead_branches_a"
+  dagdp__density:r=4
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_dead_branches_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=39
+    item:i=21
+    item:i=22
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_marble_stone_shards_a"
+
+  "dagdp__params:object"{
+    scale:p2=0.7, 0.3
+    rot_y:p2=0, 360
+    orientation:t="normal"
+    rot_x:p2=0, 15
+    rot_z:p2=0, 15
+  }
+
+  "dagdp__assets:object"{
+    "marble_quarry_scree_shard_a:object"{
+      weight:r=1
+    }
+
+    "marble_quarry_scree_shard_b:object"{
+      weight:r=1
+    }
+
+    "marble_quarry_scree_shard_c:object"{
+      weight:r=1
+    }
+
+    "marble_quarry_scree_shard_d:object"{
+      weight:r=1
+    }
+
+    "marble_quarry_scree_shard_e:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_marble_stone_shards_a"
+  dagdp__density:r=1
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_marble_stone_shards_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=36
+    item:i=35
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_manmade_trash_a"
+
+  "dagdp__params:object"{
+    scale:p2=0.7, 0.3
+    orientation:t="normal"
+    rot_x:p2=0, 1
+    rot_y:p2=0, 360
+    rot_z:p2=0, 1
+    occlusion_range:r=3
+    occlusion_start:r=0.3
+    occlusion_end:r=0.1
+    heightmap_imitators:t="reject"
+  }
+
+  "dagdp__assets:object"{
+    "sovmod_garbage_pile_round_a:object"{
+      weight:r=1
+    }
+
+    "sovmod_garbage_pile_round_b:object"{
+      weight:r=8
+    }
+
+    "sovmod_garbage_pile_round_c:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_road_trash_a"
+  dagdp__density:r=2
+  dagdp__density_mask_channel_weights:p4=0.5, 0, 0, 0
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_manmade_trash_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=45
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_building_trash_a"
+  dagdp__density:r=2
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_manmade_trash_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=40
+    item:i=41
+    item:i=42
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="placer_city_trash_a"
+  dagdp__density:r=2
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_manmade_trash_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=32
+    item:i=33
+    item:i=42
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_moss_cover_a"
+
+  "dagdp__params:object"{
+    scale:p2=1.5, 0.2
+    rot_y:p2=0, 360
+    orientation:t="normal"
+    rot_x:p2=0, 30
+    rot_z:p2=0, 30
+    slope_start:r=20
+    slope_end:r=60
+  }
+
+  "dagdp__assets:object"{
+    "moss_cover_generic_a:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_on_ri"
+  dagdp__name:t="placer_moss_on_boulders_a"
+  dagdp__density:r=120
+  dagdp__target_mesh_lod:i=1
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_moss_cover_a"
+  }
+
+  "dagdp__resource_names:list<t>"{
+    item:t="dalniy_rock_boulder_forest_a"
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_decal_dust_dirt_a"
+
+  "dagdp__params:object"{
+    scale:p2=1.2, 0.2
+    rot_y:p2=0, 360
+    orientation:t="world"
+    rot_x:p2=0, 10
+    rot_z:p2=0, 10
+    slope_start:r=10
+    slope_end:r=40
+  }
+
+  "dagdp__assets:object"{
+    "decal_projective_dust_dirt_a:object"{
+      weight:r=1
+    }
+
+    "decal_projective_dust_dirt_b:object"{
+      weight:r=1
+    }
+
+    "decal_projective_dust_dirt_c:object"{
+      weight:r=1
+    }
+
+    "decal_projective_dust_dirt_d:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_on_ri"
+  dagdp__name:t="placer_dust_on_cars_a"
+  dagdp__density:r=1
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_decal_dust_dirt_a"
+  }
+
+  "dagdp__resource_names:list<t>"{
+    item:t="gaz_24_abandoned_a"
+    item:t="gaz_24_abandoned_b"
+    item:t="ikarus_280"
+    item:t="ikarus_280_a"
+    item:t="ikarus_280_b"
+    item:t="ikarus_280_c"
+    item:t="pc_5_tanker_a"
+    item:t="raf_22031"
+    item:t="raf_22032"
+    item:t="raf_2203_abandoned_a"
+    item:t="t170_a"
+    item:t="tractor_ussr_t170_a"
+    item:t="tractor_ussr_t170_a_damaged_a"
+    item:t="tractor_ussr_t170_a_damaged_b"
+    item:t="uaz_31514_abandoned_a"
+    item:t="uaz_31514_abandoned_b"
+    item:t="uaz_452_abandoned_a"
+    item:t="uaz_452_abandoned_b"
+    item:t="uaz_452_abandoned_c"
+    item:t="uaz_452_abandoned_c_open"
+    item:t="vaz_2101_a"
+    item:t="vaz_2101_b"
+    item:t="vaz_2101_b_a"
+    item:t="zaz_968"
+    item:t="zil_130"
+    item:t="zil_pm130"
+    item:t="firetruck_zil_vma30_a"
+    item:t="moskvich_408"
+    item:t="uaz_452_abandoned_b"
+    item:t="uaz_31514_abandoned_b"
+    item:t="uaz_452"
+    item:t="kamaz_dmg_a_cmp"
+    item:t="liaz_677"
+    item:t="zil_pm130"
+    item:t="gzsa_3704"
+    item:t="zil_130"
+    item:t="uaz_31514"
+    item:t="kamaz_dmg_a_cmp"
+    item:t="firetruck_zil_vma30_b"
+  }
+}

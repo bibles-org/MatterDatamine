@@ -1,0 +1,80 @@
+entity{
+  _template:t="mir_sound_occlusion"
+}
+
+entity{
+  _template:t="mir_ambient_sound"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="electrical_room_a"
+  compound_ambient_sound_type__path:t="ambient/volumes/electrical_room_a"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="evacuation_request_voice_eng"
+  compound_ambient_sound_type__path:t="ambient/volumes/evacuation_request_voice_eng"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="garbage_pit"
+  compound_ambient_sound_type__path:t="ambient/volumes/garbage_pit"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="garden_wind_a"
+  compound_ambient_sound_type__path:t="ambient/volumes/garden_wind_a"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="industrial_noise_a"
+  compound_ambient_sound_type__path:t="ambient/volumes/industrial_noise_a"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="industrial_noise_b"
+  compound_ambient_sound_type__path:t="ambient/volumes/industrial_noise_b"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="vvc_music"
+  compound_ambient_sound_type__path:t="ambient/volumes/vvc_music"
+}
+
+entity{
+  _template:t="compound_ambient_sound_controller"
+
+  "compound_ambient_sound_controller__soundTypes:list<t>"{
+    name:t="electrical_room_a"
+    name:t="evacuation_request_voice_eng"
+    name:t="garbage_pit"
+    name:t="garden_wind_a"
+    name:t="industrial_noise_a"
+    name:t="industrial_noise_b"
+    name:t="vvc_music"
+  }
+}
+
+entity{
+  _template:t="game_object_sound_effect_generator"
+
+  "game_object_sound_effect_generator__gameObjectToEventPath:object"{
+    sfx_point_drain_bright_a:t="env_effects/drain_bright_a"
+    sfx_point_drain_deep_a:t="env_effects/drain_deep_a"
+    sfx_point_electrical_panel_a:t="env_effects/electrical_panel_a"
+    sfx_point_electrical_panel_b:t="env_effects/electrical_panel_b"
+    sfx_point_electrical_panel_c:t="env_effects/electrical_panel_c"
+    sfx_point_evacuation_alarm:t="env_effects/evacuation_alarm"
+    sfx_point_metal_gates_a:t="env_effects/metal_gates_a"
+    sfx_point_transformator_a:t="env_effects/transformator_a"
+    sfx_point_transformator_b:t="env_effects/transformator_b"
+    sfx_point_transformator_c:t="env_effects/transformator_c"
+  }
+}

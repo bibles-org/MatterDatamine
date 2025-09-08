@@ -1,0 +1,19 @@
+mass:r=1
+momentOfInertia:p3=0.1, 0.1, 0.1
+centerOfMass:p3=0, 0.1, 0
+physMat:t="bulletRay"
+useFutureContacts:b=yes
+logCCD:b=no
+addToWorld:b=yes
+skipUpdateOnSleep:b=yes
+sleepUpdateFrequency:i=0
+physLayer:i=8
+physMask:i=2
+
+collisionResource{
+  props{
+    customSphereCollisions{
+      sphere:p4=0, 0.2, 0, 0.2
+    }
+  }
+}

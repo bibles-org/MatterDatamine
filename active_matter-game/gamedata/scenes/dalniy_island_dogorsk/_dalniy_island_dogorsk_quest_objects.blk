@@ -1,0 +1,68 @@
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-108.861, 34.9962, -1029.29]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_dogorsk_zone_1"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-234.831, 51.7804, -1115.83]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_dogorsk_zone_2"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-520.885, 46.6845, -1102.17]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_dogorsk_zone_3"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-243.777, 30.0196, -902.575]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_dogorsk_zone_4"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-569.291, 34.6944, -843.556]]
+  map_object_zone__radius:r=16
+  quest_target_geometry_sphere__radius:r=16
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_dogorsk_zone_5"
+}
+
+entity{
+  _template:t="static_dead_body_container"
+  transform:m=[[0.884945, 0, -0.465696] [-0.0181496, 0.99924, -0.034489] [0.465342, 0.038973, 0.884273] [-344.223, 181.257, -1293.29]]
+  animchar__res:t="am_soldier_corrupted_male_b_char"
+  collres__res:t="am_soldier_corrupted_male_b_collision"
+  loot_drop_system__lootPreset:t="dogorsk_shotgun_soldier_loot_preset"
+
+  "animchar__forceVarValues:object"{
+    dead_body_pos_num:r=10
+  }
+}
+
+entity{
+  _template:t="static_dead_body_container"
+  transform:m=[[-0.937256, 0, -0.348642] [0, 1, 0] [0.348643, 0, -0.937256] [-163.652, 38, -1008.27]]
+  animchar__res:t="am_soldier_corrupted_male_a_char"
+  collres__res:t="am_soldier_corrupted_male_a_collision"
+  loot_drop_system__lootPreset:t="dogorsk_sniper_soldier_loot_preset"
+
+  "animchar__forceVarValues:object"{
+    dead_body_pos_num:r=9
+  }
+}

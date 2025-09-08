@@ -1,0 +1,85 @@
+navigation_position_mapping{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  position_mapping__matrix:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  position_mapping__radius:r=10
+
+  _group{
+    _tags:t="dev"
+    position_mapping__drawUnmappedNavmesh:b=no
+  }
+}
+
+negative_navigation_position_mapping{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  negative_position_mapping__radius:r=10
+}
+
+position_mapping{
+  _tracked:t="position_mapping__lastZone"
+  path_corridor__forceUpdateThisFrame:b=no
+  position_mapping__isInTransitZone:b=no
+  position_mapping__intermediateWaypoint:p3=0, 0, 0
+  position_mapping__intermediateWaypointUpdateAt:r=0
+  position_mapping__intermediateWaypointUpdateInterval:r=2
+  position_mapping__isOnSphere:b=no
+  position_mapping__isGoalOnSphere:b=no
+
+  "position_mapping:tag"{}
+  "position_mapping__lastZone:eid"{}
+}
+
+nphys_position_mapping{
+  _use:t="position_mapping"
+  nphys_position_mapping__oldUpDir:p3=0, 0, 0
+  nphys_position_mapping__nmeshApproachSpeed:r=0.5
+  nphys_position_mapping__didMapThisFrame:b=no
+
+  "nphys__customObstacles:tag"{}
+}
+
+position_mapping_from_area_marker{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  sphere_zone__radius:r=100
+
+  "position_mapping_from_area_marker:tag"{}
+}
+
+position_mapping_to_area_marker{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  sphere_zone__radius:r=100
+
+  "position_mapping_to_area_marker:tag"{}
+}
+
+position_mapping_zones_generator{
+  position_mapping_zones_generator__riPrefix:t=""
+  position_mapping_zones_generator__riSuffix:t=""
+}
+
+debug_waypoint{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "debug_waypoint:tag"{}
+}
+
+debug_navmeshmapping_marker{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "debug_navmeshmapping_marker:tag"{}
+}
+
+position_mapping_transit_zone{
+  _use:t="editor_selected_box_preview"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  position_mapping_transit_zone__groundPosition:p3=0, 0, 0
+
+  "position_mapping_transit_zone:tag"{}
+  "position_mapping_transit_zone__visitors:list<eid>"{}
+}
+
+mapped_navmesh_rescue{
+  _use:t="editor_selected_box_preview"
+  mapped_navmesh_rescue__at:r=0
+  mapped_navmesh_rescue__interval:r=2
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}

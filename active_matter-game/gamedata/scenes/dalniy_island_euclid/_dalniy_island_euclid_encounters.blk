@@ -1,0 +1,47 @@
+import{
+  scene:t="gamedata/scenes/_dalniy_island_sparse_encounter_caponeer.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_euclid/_dalniy_island_euclid_random_encounter_points.blk"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="small_random_encounter"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_small_random_encounter_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="medium_random_encounter"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_medium_random_encounter_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="big_random_encounter"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_big_random_encounter_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="shore_random_encounter"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_shore_random_encounter_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="euclid_random_encounter"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[-6.38976, 0, -360.76] [-231.221, 0, 4.09537] [0, 409.412, 0] [1981.92, 105.019, -880.632]]
+  loot_generator__lootPreset:t="euclid_random_encounter_euclid_loot_preset"
+}

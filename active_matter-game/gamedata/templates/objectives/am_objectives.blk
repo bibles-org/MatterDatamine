@@ -1,0 +1,481 @@
+am_base_objective{
+  _use:t="replicating"
+  objective__requireValue:i=0
+  objective__id:t=""
+  objective__blockExtractionWhenIncomplete:b=no
+  objective__requireExtraction:b=no
+  objective__isStoryContract:b=no
+  objective__requireFullCompleteInSession:b=no
+  objective__isReported:b=no
+  objective__templateName:t=""
+  objective__contractType:i=3
+  objective__completeForEntireTeamInRadius:r=-1
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    objective__reserveValue:i=0
+    objective__currentValue:i=0
+    objective__isCompleted:b=no
+    objective__isFailed:b=no
+    objective__name:t=""
+    objective__unlimitedProgress:b=no
+
+    "objective__params:array"{}
+  }
+
+  "objective__playerEid:eid"{}
+  "objective__show:b"{
+    value:b=yes
+    _track:b=yes
+    _tags:t="gameClient"
+  }
+}
+
+objective_active{
+  "objective_active:tag"{}
+}
+
+disable_objective_update{
+  "disableObjectiveUpdate:tag"{}
+}
+
+secret_objective{
+  "secretObjective:tag"{}
+  "dontSaveObjective:tag"{}
+  "objective__show:b"{
+    value:b=no
+    _tags:t="gameClient"
+  }
+}
+
+objective_datacard_with_content{
+  _use:t="am_base_objective"
+  objective__contentKey:t=""
+
+  "dontSaveObjectiveValue:tag"{}
+}
+
+objective_unique_item{
+  "objective_unique_item:tag"{}
+}
+
+unique_item_location_marker{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  unique_item_location_marker__location:t=""
+  unique_item_location_marker__used:b=no
+  unique_item_location_marker__bboxMax:p3=0, 0, 0
+  unique_item_location_marker__bboxMin:p3=0, 0, 0
+}
+
+objective_collect_item_with_name{
+  _use:t="am_base_objective"
+  objective__itemTemplateNameInParams:t="itemTemplate"
+  _replicated:t="objective__collectedItemsList"
+
+  "objective__collectedItemsList:list<eid>"{}
+}
+
+objective_collect_item_with_tag{
+  _use:t="am_base_objective"
+  objective__itemTagNameInParams:t="itemTag"
+  _replicated:t="objective__collectedItemsList"
+
+  "objective__collectedItemsList:list<eid>"{}
+}
+
+objective_collect_secret_item_with_name{
+  _use:t="objective_collect_item_with_name"
+  _use:t="secret_objective"
+}
+
+objective_onboarding_collect_item_with_name{
+  _use:t="objective_collect_item_with_name"
+}
+
+objective_activate_corrupted_workbench{
+  _use:t="am_base_objective"
+
+  "objective_activate_corrupted_workbench:tag"{}
+}
+
+objective_win_rounds{
+  _use:t="am_base_objective"
+
+  "objective_win_rounds:tag"{}
+}
+
+draw_path{
+  draw_path__updatePathAt:r=0
+  draw_path__updatePeriod:r=1
+
+  "draw_path__path:list<p3>"{}
+}
+
+objective_kill_with_tag{
+  _use:t="base_objective_with_quest_items"
+  _replicated:t="objective__victimTags"
+  objective__victimTagNameInParams:t="victimTag"
+  objective__regionNameInParams:t="regionName"
+  objective__requiredWeaponTypeNameInParams:t="weaponType"
+
+  "objectiveKillWithTag:tag"{}
+  "objective__victimTags:list<t>"{}
+}
+
+objective_kill_with_tag_and_zone{
+  _use:t="objective_kill_with_tag"
+  _use:t="base_objective_with_selection_target_by_tag"
+}
+
+objective_kill_with_tag_pvp{
+  _use:t="objective_kill_with_tag"
+  objective__teammateKillDistance:r=0
+  objective__teammateTaggingTime:r=0
+}
+
+objective_kill_with_tag_am_for_kill{
+  objective__amForKill:i=10
+  objective__amForKillReason:t="kill"
+  objective__amForKillNameInParams:t="amForKill"
+  objective__unlimitedProgress:b=yes
+  objective__totalAmReward:i=0
+}
+
+objective_kill_with_tag_monster{
+  _use:t="objective_kill_with_tag"
+  _use:t="objective_kill_with_tag_am_for_kill"
+  _use:t="activate_objective_by_player_tag"
+  objective_activate__playerTagNameInParams:t="monsterTag"
+  objective__amForKillReason:t="monster kill"
+
+  "objective__show:b"{
+    value:b=no
+    _tags:t="gameClient"
+  }
+}
+
+objective_hack_corticals{
+  _use:t="am_base_objective"
+
+  "objective_hack_corticals:tag"{}
+}
+
+objective_stay_alive{
+  _use:t="am_base_objective"
+  objective__updateInterval:r=1
+  objective__nextUpdateAt:r=0
+
+  "objectiveStayAlive:tag"{}
+}
+
+objective_stay_in_zone{
+  _use:t="base_objective_with_selection_target_by_tag"
+  objective__updateInterval:r=1
+  objective__nextUpdateAt:r=0
+
+  "objectiveStayInZone:tag"{}
+}
+
+objective_interact_encounters{
+  _use:t="am_base_objective"
+
+  "objectiveInteractEncounter:tag"{}
+  "objective__visitedEncountersEids:list<eid>"{}
+}
+
+objective_interact_containers{
+  _use:t="am_base_objective"
+
+  "objectiveInteractContainers:tag"{}
+  "objective_interact_containers__usedContainers:list<eid>"{}
+}
+
+objective_car_delivery{
+  _use:t="base_objective_with_selection_target_by_tag"
+
+  "objectiveCarDelivery:tag"{}
+}
+
+base_objective_with_quest_items{
+  _use:t="am_base_objective"
+  objective__questItemTemplateNameInParams:t="questItemTemplate"
+
+  "objectiveWithQuestItems:tag"{}
+}
+
+base_objective_with_selection_target_by_tag{
+  _use:t="am_base_objective"
+  objective__targetTagNameInParams:t="staticTargetTag"
+  objective__numTagsNameInParams:t="requireTargets"
+
+  "forbidExtractItemForObjective:tag"{}
+  _group{
+    _replicate:b=yes
+
+    "objective__staticTargetsList:list<eid>"{}
+  }
+}
+
+objective_photograph{
+  _use:t="base_objective_with_quest_items"
+  _use:t="base_objective_with_selection_target_by_tag"
+
+  "objective_photograph__completedTargets:list<eid>"{}
+  "objectivePhotograph:tag"{}
+}
+
+objective_put_device{
+  _use:t="base_objective_with_quest_items"
+  _use:t="base_objective_with_selection_target_by_tag"
+  objective_put_device__deviceCount:i=1
+  _tracked:t="objective_put_device__deviceCount"
+  _replicated:t="objective_put_device__deviceCount"
+
+  "objectivePutDevice:tag"{}
+}
+
+objective_checkpoints{
+  _use:t="base_objective_with_selection_target_by_tag"
+
+  "objectiveCheckpoints:tag"{}
+}
+
+objective_gather_samples{
+  _use:t="objective_collect_item_with_name"
+  _use:t="base_objective_with_selection_target_by_tag"
+
+  "objectiveGatherSamples:tag"{}
+}
+
+objective_loot_container{
+  _use:t="objective_collect_item_with_name"
+  _use:t="base_objective_with_selection_target_by_tag"
+}
+
+objective_gather_am{
+  _use:t="am_base_objective"
+
+  "objectiveGatherAm:tag"{}
+}
+
+objective_activate_extraction_portal{
+  _use:t="am_base_objective"
+
+  "objectiveEnterToRaid:tag"{}
+  "objective_activate_extraction_portal:tag"{}
+}
+
+objective_activate_extraction_portal_monster{
+  _use:t="objective_activate_extraction_portal"
+  _use:t="activate_objective_by_player_tag"
+  objective_activate__playerTagNameInParams:t="monsterTag"
+
+  "objective__show:b"{
+    value:b=no
+    _tags:t="gameClient"
+  }
+}
+
+objective_enter_to_raid{
+  _use:t="am_base_objective"
+
+  "objectiveEnterToRaid:tag"{}
+}
+
+objective_final_extraction{
+  _use:t="am_base_objective"
+
+  "objective_show_only_completed:tag"{}
+  "disable_auto_objective_activation:tag"{}
+}
+
+phased_objective{
+  _use:t="am_base_objective"
+  _tracked:t="phased_objective__currentPhase"
+
+  _group{
+    _tags:t="server"
+    phased_objective__currentPhase:i=0
+
+    "phased_objective__phaseNames:list<t>"{
+      item:t=""
+    }
+  }
+}
+
+activate_objective_by_player_tag{
+  objective_activate__playerTagNameInParams:t="playerTag"
+  objective_activate__playerTag:t=""
+
+  "disable_auto_objective_activation:tag"{}
+  "activate_objective_by_player_tag:tag"{}
+}
+
+contract_survive_then_extract{
+  _use:t="phased_objective"
+
+  _group{
+    _tags:t="server"
+
+    "phased_objective__phaseNames:list<t>"{
+      item:t="contract_survive_before_extraction"
+      item:t="contract_extract"
+    }
+  }
+
+  "objectiveSurviveThenExtract:tag"{}
+  "objective_activate_extraction_portal:tag"{}
+}
+
+test_objective_fx{
+  _use:t="base_effect"
+  _use:t="replicating"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="test_zone_a_fx"
+
+    effect{}
+  }
+}
+
+test_objective_help_sign{
+  _use:t="help_sign"
+  help__title:t="Objective"
+  help__text:t=""
+  help__fullDistance:r=1e-06
+}
+
+test_objective_zone{
+  _use:t="replicating"
+  _use:t="am_triggerable_zone"
+  _use:t="on_disappear_sound"
+  sphere_zone__radius:r=1
+  test_objective_zone__fxTemplate:t="test_objective_fx"
+  test_objective_zone__fxOffset:p3=0, 0.075, 0
+  test_objective_zone__helpSignTemplate:t="test_objective_help_sign"
+  test_objective_zone__helpSignOffset:p3=0, 1.75, 0
+  test_objective_zone__helpSignTitle:t="Objective"
+  effect__effectOnDestroyed:t="explosion_anomaly_frog_trap_cmps_fx"
+  test_objective_zone__objectiveTemplate:t=""
+
+  "humanTriggerable:tag"{}
+  "test_objective_zone__fxEid:eid"{}
+  "test_objective_zone__helpSignEid:eid"{}
+  _group{
+    _tags:t="sound"
+    on_disappear_sound__path:t="enemy/effects/spawn/portal_opens"
+  }
+
+  "test_objective_zone__objectiveParams:object"{}
+  "test_objective_zone__questItems:list<t>"{}
+  "test_objective_zone__staticTargetTags:list<t>"{}
+}
+
+item_for_objective{
+  objective_dynamic_target__tag:t=""
+
+  "item_for_objective__objectiveEid:eid"{}
+}
+
+item_for_plant_item_objective{
+  _use:t="item_for_objective"
+  _use:t="map_component_approximate_zone_no_transform"
+
+  "item_for_plant_item_objective:tag"{}
+}
+
+item_for_extract_item_objective{
+  _use:t="item_for_objective"
+  _use:t="map_component_approximate_zone_no_transform"
+
+  "item_for_extract_item_objective:tag"{}
+}
+
+sub_objective_spawn_item_on_spawn{
+  objective__itemTemplateNameInParams:t="itemTemplate"
+  objective__additionalItemTemplate:t="item_for_plant_item_objective+item_in_world"
+  objective_spawn_item_on_spawn__radius:p2=2, 4
+  objective_spawn_item_on_spawn__attempts:i=20
+}
+
+sub_objective_plant_item{
+  objective__containerMinVolume:r=30
+  objective__additionalContainerTemplate:t="designated_objective_container"
+  objective__backupContainerTemplate:t="backup_objective_container"
+  objective__outlineContainerColor:c=255, 123, 33, 73
+  objective__defaultContainerColor:c=0, 0, 0, 0
+
+  "objective__containerTypes:list<t>"{
+    i:t="sideboard"
+    i:t="chest"
+    i:t="cupboard"
+    i:t="pierGlass"
+    i:t="table"
+    i:t="locker"
+    i:t="bench"
+    i:t="car"
+  }
+
+  "objective__containerEid:eid"{}
+  "objectivePlantItem:tag"{}
+}
+
+objective_plant_item{
+  _use:t="am_base_objective"
+  _use:t="sub_objective_spawn_item_on_spawn"
+  _use:t="sub_objective_plant_item"
+}
+
+designated_objective_container{
+  _use:t="map_component_marker"
+  map_object_marker__iconName:t="!ui/skin#bagpack_icon.svg"
+  map_object_marker__tag:t=""
+  map_object_marker__tooltip:t=""
+  itemContainer__questName:t="contract/designated_container"
+
+  "showMapObjectOnQuestTargetAssignition:tag"{}
+  "net__alwaysInScope:tag"{}
+}
+
+objective_extract_item{
+  _use:t="am_base_objective"
+  objective__additionalContainerTemplate:t="designated_objective_container"
+  objective__itemTemplateNameInParams:t="itemTemplate"
+  objective__additionalItemTemplate:t="item_for_extract_item_objective"
+  objective__backupContainerTemplate:t="backup_objective_container"
+  objective__outlineContainerColor:c=255, 123, 33, 73
+  objective__defaultContainerColor:c=0, 0, 0, 0
+
+  "objective__containerTypes:list<t>"{
+    i:t="sideboard"
+    i:t="chest"
+    i:t="cupboard"
+    i:t="pierGlass"
+    i:t="table"
+    i:t="locker"
+    i:t="bench"
+  }
+
+  "objective__containerEid:eid"{}
+  "objectiveExtractItem:tag"{}
+}
+
+monolith_apply_params{
+  hunter_vision_target__radius:r=60
+  hunter_vision_target__fxDurationMult:r=2
+
+  "entity_mod_effects:object"{
+    "humanNoiseMult+mult_diminishing":r=1.5
+    "invisbleManSpawnFreqMult+mult_diminishing":r=1.2
+    "corruptionZoneDamageMult+mult_diminishing":r=1.3
+  }
+}
+
+backup_objective_container{
+  _use:t="military_equipment_t2_lootable_rendinst"
+  _use:t="designated_objective_container"
+  map_object_marker__tooltip:t="container/armyCrate"
+  loot_drop_system__lootPreset:t="empty_loot_preset"
+}

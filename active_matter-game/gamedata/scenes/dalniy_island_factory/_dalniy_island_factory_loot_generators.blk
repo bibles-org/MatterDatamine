@@ -1,0 +1,142 @@
+entity{
+  _template:t="used_game_objects_registry"
+  used_game_objects__type:t="loot_box"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="vehicle_civic_spawn_box"
+  loot_generator__projAttempts:i=10
+  loot_generator__gridStep:r=100
+  loot_generator__referenceGridCellsNum:i=-1
+  loot_generator__lootPreset:t="factory_vehicle_civic_spawn_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="vehicle_outdoor_spawn"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[800, 0, 0] [0, 800, 0] [0, 0, 800] [1580, 40, -1380]]
+  loot_generator__lootPreset:t="factory_vehicle_outdoor_spawn_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box_fuel"
+  loot_generator__lootPreset:t="factory_fuel_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box_vehicle_parts"
+  loot_generator__lootPreset:t="factory_vehicle_parts_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="secret_stash"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[800, 0, 0] [0, 800, 0] [0, 0, 800] [1580, 40, -1380]]
+  loot_generator__lootPreset:t="factory_secret_stash_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="military_container_loot_box"
+  transform:m=[[-11.6978, 0, -0.0432262] [0, 8.02605, 0] [0.132425, 0, -35.8365] [1844.58, 42.2189, -1464.1]]
+  loot_generator__referenceGridCellsNum:i=-1
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="factory_hangar_17_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="military_container_loot_box"
+  transform:m=[[-11.6978, 0, -0.0432262] [0, 8.02605, 0] [0.132425, 0, -35.8365] [1810.12, 42.2189, -1464.1]]
+  loot_generator__referenceGridCellsNum:i=-1
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="factory_hangar_18_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box"
+  loot_generator__lootPreset:t="factory_overall_zone_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_indoor_shelves"
+  loot_generator__lootPreset:t="factory_loot_indoor_shelves_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_indoor_table"
+  loot_generator__lootPreset:t="factory_loot_indoor_table_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_indoor_floor"
+  loot_generator__lootPreset:t="factory_loot_indoor_floor_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="tower_sensor_5"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2000, 0, 0] [0, 2000, 0] [0, 0, 2000] [1580, 40, -1380]]
+  loot_generator__lootPreset:t="factory_tower_sensor_5_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="basement_dead_soldier"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2000, 0, 0] [0, 2000, 0] [0, 0, 2000] [1580, 40, -1380]]
+  loot_generator__lootPreset:t="factory_institute_basement_post_loot_preset"
+}
+
+entity{
+  _template:t="military_long_range_weapons_t1_lootable_rendinst"
+  transform:m=[[0.844888, 0, -0.534944] [0, 1, 0] [0.534944, -0, 0.844888] [1469.89, 49.634, -1163.24]]
+}
+
+entity{
+  _template:t="military_long_range_weapons_t1_lootable_rendinst"
+  transform:m=[[0.644139, 0, -0.764908] [0, 1, 0] [0.764909, -0, 0.64414] [1470.75, 49.6209, -1163.81]]
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="factory_lab_am"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2000, 0, 0] [0, 2000, 0] [0, 0, 2000] [1580, 40, -1380]]
+  loot_generator__lootPreset:t="factory_lab_am_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="military_uaz"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2000, 0, 0] [0, 2000, 0] [0, 0, 2000] [1580, 40, -1380]]
+  loot_generator__lootPreset:t="factory_military_uaz_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="gravizone_am_pile"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2000, 0, 0] [0, 2000, 0] [0, 0, 2000] [1580, 40, -1380]]
+  loot_generator__lootPreset:t="factory_gravizone_am_pile_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="construction_site"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  transform:m=[[2000, 0, 0] [0, 2000, 0] [0, 0, 2000] [1580, 40, -1380]]
+  loot_generator__lootPreset:t="factory_construction_site_loot_preset"
+}

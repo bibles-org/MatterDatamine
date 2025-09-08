@@ -1,0 +1,130 @@
+zones_grid{
+  editableObj:b=no
+  _use:t="replicating"
+  _singleton:b=yes
+  grid_holder__type:t="zones"
+  grid_holder__typeHash:i=0
+  grid_holder__smallCellSize:i=32
+
+  grid_holder{}
+}
+
+am_triggerable_zone{
+  zone__active:b=yes
+  zone__lastTriggerTime:r=-1
+  zone__nextCheckTime:r=-1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  grid_obj__gridType:t="zones"
+  grid_obj__fixedTmScale:r=-1
+
+  grid_obj{}
+}
+
+base_encounter_gen{
+  encounter_gen__numToSpawn:i=0
+  encounter_gen__templateToSpawn:t=""
+
+  "encounter_gen__pos:list<p3>"{}
+}
+
+active_encounter_gen{
+  encounter_gen__iterations:i=0
+  encounter_gen__minPoiDistance:r=30
+
+  "activeEncounterGen:tag"{}
+}
+
+finished_encounter_gen{
+  "finishedEncounterGen:tag"{}
+}
+
+spider_swarm_encounters_gen{
+  _use:t="base_encounter_gen"
+  indoor_encounter_gen__numToPregenerate:i=500
+  encounter_gen__numToSpawn:i=300
+  encounter_gen__templateToSpawn:t="spider_swarm"
+}
+
+additional_artifact_spawner_place{
+  _use:t="ecs_no_debug"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  additional_artifact__spawnPlaceActive:b=yes
+}
+
+minimap_dalnyi_island{
+  _use:t="minimap"
+  mapTex:t="dalniy_island_det_minimap*"
+  left_top:p2=-2048, 2048
+  right_bottom:p2=2048, -2048
+}
+
+loot_generator_monster_gen{
+  "loot_generator_monster_gen:tag"{}
+}
+
+vertical_surface_scanner{
+  vs_scanner__overallBounds:p4=0, 0, 0, 0
+  vs_scanner__macroCellIdx:i=0
+
+  "vs_scanner__resultPos:list<p3>"{}
+  "vs_scanner__resultNorm:list<p3>"{}
+  "vs_scanner__reportTo:eid"{}
+  "vs_scanner__invalidMats:list<t>"{}
+  "vs_scanner__invalidMatIds:list<i>"{}
+}
+
+complete_vertical_surface_scanner{
+  "completeVerticalSurfaceScanner:tag"{}
+}
+
+vertical_surface_scanner_for_beehives{
+  _use:t="vertical_surface_scanner"
+
+  "vs_scanner__invalidMats:list<t>"{
+    item:t="glass"
+  }
+}
+
+indoor_liana_anomaly_spawner{
+  indoor_spawner__count:i=10
+
+  "indoor_spawner__templateObjectList:array"{
+    "item:object"{
+      template:t="indoor_liana_anomaly"
+      alignToWalls:b=yes
+    }
+  }
+}
+
+possible_spawn_point{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "possible_spawn_point:tag"{}
+}
+
+no_spawn_controller{
+  _use:t="replicating"
+
+  "spawn_rules__customLevelLoadedRespawn:tag"{}
+}
+
+player_spawn_controller_default{
+  _use:t="replicating"
+  _tracked:t="player_spawn_controller_default__state"
+
+  "spawn_rules__customLevelLoadedRespawn:tag"{}
+  "player_spawn_controller_default:tag"{}
+  _group{
+    _tags:t="gameClient"
+    player_spawn_controller_default__state:i=0
+    player_spawn_controller_default__spawnAt:r=0
+    player_spawn_controller_default__spawnDelay:r=0.4
+    player_spawn_controller_default__spawnFramesLeft:i=40
+    player_spawn_controller_default__fadeInColor:c=5, 7, 5, 255
+    player_spawn_controller_default__fadeInColorDefault:c=5, 7, 5, 255
+  }
+}
+
+block_spawn_on_level_load{
+  "spawn_rules__spawnBlockedOnLevelLoaded:tag"{}
+}

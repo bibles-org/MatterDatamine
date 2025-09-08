@@ -1,0 +1,185 @@
+repeat{
+  name:t="nchanged_wanderer"
+  selectStrategy:t="ordered"
+
+  reaction{
+    event:t="onHit"
+
+    sequencer{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=0
+      }
+
+      triggerChangedsAroundOnHit{}
+      orderedSelector{
+        sequencer{
+          findDanger{
+            paramName:t="enemy"
+            radiusParamName:t="enemyRadiusLarge"
+            minDanger:r=0.6
+            tag:t="human"
+          }
+
+          selectNode{
+            name:t="attack"
+          }
+        }
+
+        sequencer{
+          setBlind{
+            duration:p2=2, 5
+          }
+
+          recalculateTree{}
+        }
+      }
+    }
+  }
+
+  reaction{
+    event:t="onBulletNearby"
+
+    sequencer{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=0
+      }
+
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadiusLarge"
+        minDanger:r=0.6
+        tag:t="human"
+      }
+
+      selectNode{
+        name:t="attack"
+      }
+    }
+  }
+
+  reaction{
+    event:t="onBlindness"
+
+    sequencer{
+      modifyNode{
+        target:t="beh_tree__interruptDisabled"
+        operator:t="="
+        arg:i=0
+      }
+
+      recalculateTree{}
+    }
+  }
+
+  subTree{
+    treeName:t="sub.blindness"
+  }
+
+  subTree{
+    treeName:t="sub.leave_obstacle"
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.return_to_navmesh"
+    }
+  }
+
+  sequencer{
+    name:t="attack"
+
+    reaction{
+      event:t="regularCheck"
+
+      orderedSelector{
+        compareNode{
+          lhs:t="beh_tree__interruptDisabled"
+          operator:t="=="
+          rhs:r=1
+        }
+
+        subTree{
+          treeName:t="sub.attackReaction"
+        }
+      }
+    }
+
+    subTree{
+      treeName:t="sub.changed.runToAndAttack"
+    }
+  }
+
+  subTree{
+    treeName:t="sub.changed.moveToAttraction"
+  }
+
+  sequencer{
+    name:t="WanderInRegion"
+
+    reaction{
+      event:t="regularCheck"
+
+      orderedSelector{
+        compareNode{
+          lhs:t="beh_tree__interruptDisabled"
+          operator:t="=="
+          rhs:r=1
+        }
+
+        subTree{
+          treeName:t="sub.clearPath"
+        }
+
+        subTree{
+          treeName:t="sub.changed.findDanger"
+        }
+
+        sequencer{
+          nFindAttractPosition{
+            posParam:t="walker_agent__targetPos"
+          }
+
+          selectNode{
+            name:t="moveToAttraction"
+          }
+        }
+
+        subTree{
+          treeName:t="sub.recalculateTreeOnStuck"
+        }
+      }
+    }
+
+    nMeshFindPointInRegion{
+      regionParam:t="region"
+      posParam:t="walker_agent__targetPos"
+    }
+
+    nPhysCorridorMoveToPosWithNavmeshMapping{
+      posParam:t="walker_agent__targetPos"
+      forceToWalk:b=yes
+      navLookAhead:r=0.75
+    }
+
+    selector{
+      sequencer{
+        subTree{
+          treeName:t="sub.changed.findDanger"
+        }
+      }
+
+      wait{
+        range:p2=5, 10
+        resetable:b=yes
+      }
+    }
+  }
+
+  subTree{
+    treeName:t="sub.door_opener"
+  }
+}

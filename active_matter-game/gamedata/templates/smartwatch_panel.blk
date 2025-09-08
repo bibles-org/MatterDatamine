@@ -1,0 +1,40 @@
+smartwatch_panel{
+  _use:t="ui_panel"
+  canvasWidth:i=180
+  useHdpxMult:b=no
+  panel_name:t="smartwatch_onboarding_initialization"
+  worldAnchorEntityNode:t="watch_attach"
+  worldSize:p2=0.045, 0.045
+  worldAngles:p3=0, 180, -90
+  worldOffset:p3=0, 0.001, 0
+  smartwatchInterference:r=0
+  smartwatchScreenOpacity:r=1
+  _tracked:t="smartwatchInterference"
+  _tracked:t="smartwatchScreenOpacity"
+
+  "worldAnchorEntity:eid"{}
+  "smartwatch_panel:tag"{}
+}
+
+dynamic_screen_smartwatch_panel{
+  _use:t="dynamic_screen"
+  _use:t="dynamic_screen_ui_panel"
+  _use:t="smartwatch_panel"
+
+  _group{
+    _tags:t="render"
+    dynamic_screen__texture_size:ip2=180, 180
+  }
+}
+
+smartwatch_owner{
+  _tags:t="gameClient"
+
+  "smartwatch_owner:tag"{}
+}
+
+smartwatch_owner_suit{
+  _tags:t="gameClient"
+
+  "smartwatch_owner_suit:tag"{}
+}

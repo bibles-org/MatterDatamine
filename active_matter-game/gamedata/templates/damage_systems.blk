@@ -1,0 +1,43 @@
+simple_hitpoints{
+  hitpoints__hp:r=-1
+  hitpoints__maxHp:r=100
+  _tracked:t="hitpoints__hp"
+
+  _group{
+    _tags:t="server"
+
+    "hitpoints:tag"{}
+  }
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    isAlive:b=yes
+  }
+}
+
+cellular_hitpoints{
+  cellular_hitpoints__maxCellHp:r=1
+  cellular_hitpoints__maxCells:i=10
+  cellular_hitpoints__damagedCells:i=0
+  cellular_hitpoints__currentCellHp:r=-1
+
+  _group{
+    _tags:t="server"
+
+    "hitpoints:tag"{}
+  }
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    isAlive:b=yes
+  }
+}
+
+hitpoints_recovery{
+  hitpoints__hpPartThreshold:r=0.5
+  hitpoints__hpRecoverySpd:r=1
+  hitpoints__recoveryTimeThreshold:r=3
+  hitpoints__lastDamageTime:r=-1
+}

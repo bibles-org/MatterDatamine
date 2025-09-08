@@ -1,0 +1,57 @@
+blood_on_screen{
+  _singleton:b=yes
+  _tags:t="render"
+  blood_on_screen__active:b=no
+  blood_on_screen__enable:b=yes
+  bloodDrops_res:t="liquid_screen_splatter_tile_tex_n"
+  bloodDrops_var:t="blood_on_screen_tex"
+  _tracked:t="blood_on_screen__active"
+
+  "blood_on_screen_manager:BloodOnScreen"{}
+  "bloodDrops:SharedTexHolder"{}
+  "blood_on_screen__hitDirections:list<p3>"{}
+  "blood_on_screen__hitTimesLeft:list<r>"{}
+  "blood_on_screen__hitDurations:list<r>"{}
+  "blood_on_screen__hitBaseIntensities:list<r>"{}
+  "blood_on_screen__hitHold:list<b>"{}
+  "blood_on_screen_albedo:ShaderVar"{}
+  "blood_on_screen_albedo2:ShaderVar"{}
+  "blood_on_screen_sun_refraction:ShaderVar"{}
+  "blood_on_screen_specular:ShaderVar"{}
+  "blood_on_screen_translucency:ShaderVar"{}
+  "blood_on_screen_hit_size:ShaderVar"{}
+  "blood_on_screen_directional_damage_width:ShaderVar"{}
+  "blood_on_screen_hit_base_threshold:ShaderVar"{}
+  "blood_on_screen_hit_threshold_range:ShaderVar"{}
+  "blood_on_screen_screen_range:ShaderVar"{}
+  "blood_on_screen:ShaderVar"{}
+  "blood_on_screen_hit_data:ShaderVar"{}
+  "blood_on_screen__spots:dafg::NodeHandle"{}
+  "blood_on_screen__blur_x:dafg::NodeHandle"{}
+  "blood_on_screen__blur_y:dafg::NodeHandle"{}
+}
+
+blood_on_screen_settings{
+  _singleton:b=yes
+  _tags:t="render"
+
+  _group{
+    _track:b=yes
+    blood_on_screen__baseDuration:r=4.7
+    blood_on_screen__baseIntensity:r=1.5
+    blood_on_screen__minRelativeDuration:r=0.7
+    blood_on_screen__ambient_base_intensity:r=1
+    blood_on_screen__ambient_max_intensity_cone_angle_cos:r=0.7
+    blood_on_screen__ambient_max_effect_distance:r=4
+    blood_on_screen_albedo_value:p4=0.053, 0.015, 0.013, 0
+    blood_on_screen_albedo2_value:p4=0.014, 0, 0, 0
+    blood_on_screen_sun_refraction_value:r=0.3
+    blood_on_screen_specular_value:p4=0.067, 0.004, 0, 0.016
+    blood_on_screen_translucency_value:p4=0.122, 0.008, 0, 0
+    blood_on_screen_hit_size_value:r=0.4
+    blood_on_screen_directional_damage_width_value:r=1
+    blood_on_screen_hit_base_threshold_value:r=0.55
+    blood_on_screen_hit_threshold_range_value:r=0.05
+    blood_on_screen_screen_range_value:r=0.35
+  }
+}

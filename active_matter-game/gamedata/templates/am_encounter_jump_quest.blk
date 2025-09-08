@@ -1,0 +1,819 @@
+encounter_jump_quest_core_projectile_fx{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  effect__scale:r=0.5
+  _tracked:t="effect__scale"
+  effect__colorMult:c=0, 0, 0, 0
+  _tracked:t="effect__colorMult"
+  encounter_jump_quest_core_projectile_fx__colorMult:c=0, 0, 0, 0
+  encounter_jump_quest_core_projectile_fx__effectScale:r=0.5
+
+  "encounter_jump_quest_core_projectile_fx__owner:eid"{}
+}
+
+encounter_jump_quest_core_projectile_fx_controller{
+  encounter_jump_quest_core_projectile_fx_controller__effectTemplate:t="encounter_jump_quest_core_projectile_fx"
+  encounter_jump_quest_core_projectile_fx_controller__trackingScale:r=0.25
+  encounter_jump_quest_core_projectile_fx_controller__trackingColor:c=95, 210, 255, 255
+  encounter_jump_quest_core_projectile_fx_controller__ramScaleRng:p2=0.3, 0.75
+  encounter_jump_quest_core_projectile_fx_controller__ramColorBegin:c=255, 155, 120, 255
+  encounter_jump_quest_core_projectile_fx_controller__ramColorEnd:c=255, 0, 0, 255
+
+  "encounter_jump_quest_core_projectile_fx_controller__effectEid:eid"{}
+}
+
+encounter_jump_quest_core_projectile{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="loc_snapshots"
+  _use:t="encounter_jump_quest_core_projectile_fx_controller"
+  _use:t="base_dm_parts"
+  _use:t="base_hitpoints"
+  _use:t="creatures_grid_obj"
+  animchar__res:t="stone_shield_part_b_char"
+  material:t="steel"
+  hitpoints__hp:r=1e+06
+  hitpoints__maxHp:r=1e+06
+  hitpoints__regenPerSec:r=50000
+  hitpoints__shellDmgMult:r=1
+  hitpoints__shellSplashDmgMult:r=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+  encounter_jump_quest_core_projectile__dir:p3=0, 0, 1
+  encounter_jump_quest_core_projectile__state:i=0
+  _tracked:t="encounter_jump_quest_core_projectile__state"
+  _replicated:t="encounter_jump_quest_core_projectile__state"
+  encounter_jump_quest_core_projectile__idleOrbitRadiusRng:p2=4.5, 5
+  encounter_jump_quest_core_projectile__idleTheta:r=0
+  encounter_jump_quest_core_projectile__idlePhi:r=0
+  encounter_jump_quest_core_projectile__idleSpeedRng:p2=0.05, 0.3
+  encounter_jump_quest_core_projectile__currentIdleSpeed:p2=0, 0
+  encounter_jump_quest_core_projectile__targetIdleSpeed:p2=0, 0
+  encounter_jump_quest_core_projectile__selectTrackingEnemyPositionAt:r=0
+  encounter_jump_quest_core_projectile__selectTrackingEnemyPositionInterval:r=3
+  encounter_jump_quest_core_projectile__trackingEnemyPosition:p3=0, 0, 0
+  encounter_jump_quest_core_projectile__trackingEnemySpeed:r=1
+  encounter_jump_quest_core_projectile__trackingEnemyAttackAt:r=0
+  encounter_jump_quest_core_projectile__trackingEnemyAttackTimeRng:p2=4, 6
+  encounter_jump_quest_core_projectile__trackingEnemyAttackDistanceMinMax:p2=3, 12
+  encounter_jump_quest_core_projectile__chargingToRamTime:r=2
+  encounter_jump_quest_core_projectile__chargingToRamAimTimePercent:r=0.75
+  encounter_jump_quest_core_projectile__ramSrcPosition:p3=0, 0, 0
+  encounter_jump_quest_core_projectile__ramDestPosition:p3=0, 0, 0
+  encounter_jump_quest_core_projectile__ramSpeed:p2=15, 35
+  encounter_jump_quest_core_projectile__damageRng:p2=3.5, 5.5
+  encounter_jump_quest_core_projectile__pushPowerRng:p2=1.75, 2.5
+  encounter_jump_quest_core_projectile__stateProgressTimer:r=0
+  _replicated:t="encounter_jump_quest_core_projectile__stateProgressTimer"
+
+  collres{}
+  "collres__desc:array"{
+    "node:object"{
+      name:t="stone_shield_part_b"
+      physMatId:t="steel"
+      bbox_min:p3=-0.25, -0.5, -0.125
+      bbox_max:p3=0.25, 0.5, 0.125
+    }
+  }
+
+  "encounter_jump_quest_core_projectile__owner:eid"{}
+  "encounter_jump_quest_core_projectile__enemyEid:eid"{}
+}
+
+encounter_jump_quest_core_ai{
+  encounter_jump_quest_core_ai__projectileTemplate:t="encounter_jump_quest_core_projectile"
+  encounter_jump_quest_core_ai__projectileCountRng:ip2=10, 10
+  encounter_jump_quest_core_ai__nextUpdateAt:r=0
+  encounter_jump_quest_core_ai__updateInterval:r=2
+  encounter_jump_quest_core_ai__blindZoneRadiusSq:r=16
+  encounter_jump_quest_core_ai__alarmRadius:r=22
+  encounter_jump_quest_core_ai__protectiveRadiusSq:r=784
+  encounter_jump_quest_core_ai__alarmTimePerProjectile:r=10
+  encounter_jump_quest_core_ai__maxProjectilesCountPerEnemy:i=3
+
+  "encounter_jump_quest_core_ai__projectileEids:list<eid>"{}
+  "encounter_jump_quest_core_ai__enemies__eid:list<eid>"{}
+  "encounter_jump_quest_core_ai__enemies__alarmTime:list<r>"{}
+}
+
+encounter_jump_quest_core{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="am_core_hitpoints"
+  _use:t="am_core_light"
+  _use:t="am_core_sound"
+  _use:t="am_core_protective_sphere_controller"
+  _use:t="encounter_jump_quest_core_ai"
+  _use:t="loot_drop_system"
+  _use:t="am_core_fake_collision"
+  animchar__res:t="am_core_c_char"
+  collres__res:t="am_core_c_collision"
+  am_core__maxHpRng:p2=100, 100
+  hitpoints__hp:r=100
+  hitpoints__maxHp:r=100
+  hitpoints__regenPerSec:r=1
+  hitpoints__shellDmgMult:r=1
+  hitpoints__shellSplashDmgMult:r=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  material:t="activeMatterCore"
+  am_core__aliveMaterial:t="activeMatterCore"
+  am_core__deadMaterial:t="steel"
+  am_core__decorCompanionsCountRng:ip2=0, 0
+  am_core__protectiveSphereRadiusMinMax:p2=0.25, 4
+  encounter_jump_quest_core__explosionFx:t="explosion_jump_quest_am_core_cmps_fx"
+  encounter_jump_quest_core__earthshakeTemplate:t="encounter_jump_quest_earthshake"
+  encounter_jump_quest_core__concussionAffect:t="encounter_jump_quest_core_concussion_affect"
+  encounter_jump_quest_core__epicenterRadius:r=10
+  loot_drop_system__lootPreset:t="encounter_jump_quest_core_loot_preset"
+  loot_drop_system__dropPreset:t="freefall_drop_preset"
+  ballistic_phys__omegaBase:p3=0.5, 0.5, 0.5
+
+  "capsule_approximation__nodeNames:array"{
+    node:t="am_core_c_dynmodel.lod00"
+  }
+
+  "am_core:tag"{}
+  "encounter_jump_quest_core:tag"{}
+  _group{
+    _tags:t="sound"
+    encounter_jump_quest_core__explosionSound:t="env_effects/encounter_jump_quest/core_explosion"
+  }
+
+  _group{
+    _tags:t="gameClient"
+    am_core__protectiveShellTemplate:t="am_core_protective_shell"
+    am_core__protectiveShellScaleViscosityMult:r=2.1
+    am_core__scaleAdd:r=0.1
+    am_core__scale:r=1
+    am_core__minMaxScale:p2=1, 1.3
+    am_core__scaleViscosity:r=0.3
+
+    "am_core__protectiveShellEid:eid"{}
+  }
+
+  _group{
+    _tags:t="server"
+    am_core__timeInProtectiveModeRng:p2=100000, 100000
+    am_core__timeInProtectiveModeStep:r=2
+    am_core__protectiveModeEndTime:r=0
+  }
+
+  _group{
+    _replicate:b=yes
+    am_core__timeInProtectiveMode:r=100000
+    ballistic_phys__omega:p3=0.5, 0.5, 0.5
+
+    "am_core__fragmentsLimit:i"{
+      value:i=50
+      _track:b=yes
+    }
+  }
+}
+
+encounter_jump_quest_core_concussion_affect{
+  _use:t="replicated_game_effect"
+  ingame_rumble__onEffectAttach:t="concussion"
+  concussion__handsShakeMagnitude:r=0.2
+  concussion__handsShakeSpeedMult:r=6
+  concussion__handsShakeFadeTime:r=5
+  concussion__duration:r=10
+  concussion__startedAtTime:r=0
+  concussion__replaced:b=no
+
+  "concussionAffect:tag"{}
+  "concussionHandsShake:tag"{}
+  "concussionScreenEffect:tag"{}
+}
+
+encounter_jump_quest{
+  _use:t="encounter_zone"
+  _use:t="encounter_jump_quest_gravity_controller"
+  _use:t="replicating"
+  encounter_zone__name:t="jump_quest"
+  sphere_zone__radius:r=50
+  encounter_jump_quest__radiusSq:r=0
+  encounter_jump_quest__amCoreTemplate:t="encounter_jump_quest_core"
+  encounter_jump_quest__horizontalOffsetRnd:p2=1.5, 2.25
+  encounter_jump_quest__verticalOffsetRnd:p2=-0.1, 0.4
+  encounter_jump_quest__rendinstRollDegrees:r=20
+  encounter_jump_quest__heightRnd:p2=15, 20
+  encounter_jump_quest__branchesCountRnd:ip2=6, 9
+  encounter_jump_quest__branchNodesCountRnd:ip2=5, 15
+  encounter_jump_quest__trunkNodesLimit:i=1000
+  encounter_jump_quest__trunkCreateNodeAttempts:i=32
+  encounter_jump_quest__branchCreateNodeAttempts:i=4
+  encounter_jump_quest__activeMatterOnStepsRnd:ip2=25, 30
+  encounter_jump_quest__decorNodesCountRnd:ip2=60, 120
+  encounter_jump_quest__decorOffsetRnd:p2=4, 7
+  encounter_jump_quest__recoverAt:r=0
+  encounter_jump_quest__recoveringDelay:p2=360, 600
+  encounter_jump_quest__playerMinMaxDistanceToRecover:p2=100, 150
+  encounter_jump_quest__physBlkFolder:t="gamedata/sovmod_phys_rendinst/jumpquest"
+  encounter_jump_quest__decorRendinstRotorChance:r=0.4
+  encounter_jump_quest__decorRendinstLevitationChance:r=0.66
+  encounter_jump_quest__pathRendinstLevitationChance:r=0.275
+
+  "encounter_jump_quest:tag"{}
+  "encounter_jump_quest__nodes__type:list<i>"{}
+  "encounter_jump_quest__nodes__collisionTm:list<m>"{}
+  "encounter_jump_quest__nodes__rendinstIdx:list<i>"{}
+  "encounter_jump_quest__nodes__rendinstEid:list<eid>"{}
+  "encounter_jump_quest__nodes__rendinstMinMaxBoundingRadius:list<p2>"{}
+  "encounter_jump_quest__nodes__flags:list<i>"{}
+  "encounter_jump_quest__nodes__treeDepth:list<i>"{}
+  "encounter_jump_quest__nodeLinks:list<ip2>"{}
+  "encounter_jump_quest__entities:list<eid>"{}
+  "encounter_jump_quest__coreEid:eid"{}
+  "encounter_jump_quest__pathRendinsts:array"{
+    "item:object"{
+      rendinst:t="concrete_slab_b_a"
+    }
+
+    "item:object"{
+      rendinst:t="concrete_slab_b_a_broken"
+    }
+
+    "item:object"{
+      rendinst:t="concrete_slab_b_b"
+    }
+
+    "item:object"{
+      rendinst:t="concrete_slab_b_b_broken"
+    }
+
+    "item:object"{
+      rendinst:t="concrete_slab_c_a"
+    }
+
+    "item:object"{
+      rendinst:t="concrete_slab_c_b"
+    }
+
+    "item:object"{
+      rendinst:t="concrete_slab_d_a"
+    }
+
+    "item:object"{
+      rendinst:t="concrete_slab_e_a"
+    }
+
+    "item:object"{
+      rendinst:t="concrete_slab_e_b"
+    }
+
+    "item:object"{
+      rendinst:t="concrete_slab_e_c"
+    }
+
+    "item:object"{
+      rendinst:t="concrete_slab_f_a"
+    }
+
+    "item:object"{
+      rendinst:t="concrete_slab_f_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_flowerpot_a_type_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovind_factory_tower_brick_60_a_balcony"
+    }
+
+    "item:object"{
+      rendinst:t="sovind_port_container_a_a_base"
+    }
+
+    "item:object"{
+      rendinst:t="sovind_factory_modular_tile_floor_6000_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovind_factory_modular_tile_floor_6000_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovind_factory_modular_tile_floor_6000_c"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cinema_wooden_floor_chunk_e"
+    }
+
+    "item:object"{
+      rendinst:t="gaz_24_abandoned_a"
+    }
+
+    "item:object"{
+      rendinst:t="gaz_24_abandoned_b"
+    }
+
+    "item:object"{
+      rendinst:t="raf_2203_abandoned_a"
+    }
+
+    "item:object"{
+      rendinst:t="uaz_31514_abandoned_a"
+    }
+
+    "item:object"{
+      rendinst:t="uaz_452_abandoned_a"
+    }
+
+    "item:object"{
+      rendinst:t="uaz_452_abandoned_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_wooden_box_a_1000_type_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_wooden_box_a_1000_type_c"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_wooden_box_a_2000_type_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_wood_planks_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_wood_planks_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cinema_chunk_concrete_frame_e"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cinema_chunk_concrete_frame_f"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cinema_chunk_concrete_plate_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cinema_chunk_concrete_plate_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cinema_chunk_concrete_plate_c"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cinema_chunk_concrete_plate_d"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cinema_chunk_concrete_plate_e"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cinema_chunk_concrete_thick_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cinema_chunk_concrete_thick_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cinema_chunk_concrete_thick_c"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_catering_dishwasher_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_catering_kitchen_cooker_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_catering_kitchen_cooker_c"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_catering_kitchen_cooker_d"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_catering_kitchen_cooker_f"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_catering_metal_locker_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_catering_range_hood_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_bed_single_b"
+    }
+  }
+
+  "encounter_jump_quest__topPlatformRendinsts:array"{
+    "item:object"{
+      rendinst:t="sovmod_cinema_chunk_concrete_plate_d"
+    }
+  }
+
+  "encounter_jump_quest__decorRendinsts:array"{
+    "item:object"{
+      rendinst:t="sovmod_air_condition_a_type_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cafe_a_table_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovindustrial_welding_machine_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_catering_chair_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_washingmachine_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_fridge_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_fridge_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_piano_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_catering_cutting_table_a_type_c"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_catering_cutting_table_a_type_g"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cafe_a_chair_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cafe_a_table_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cinema_door_wood_1500_2200_r"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_firestation_door_wood_a"
+    }
+
+    "item:object"{
+      rendinst:t="soviet_fireman_uniform_mask"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_payphone_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_road_post_lamp_a_type_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_computer_module_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_computer_module_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_computer_module_c"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_computer_monitor_and_bloc"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_computer_swich_box"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_is_computer_a_keyboard"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_is_computer_a_monitor"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_electric_locker_a_door_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovindustrial_machine_a_type_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovindustrial_machine_a_type_c"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_electric_antenna_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_electric_antenna_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cinema_catwalk_horizontal_e"
+    }
+
+    "item:object"{
+      rendinst:t="sovindustrial_radiotelescope_stairs_a_end"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_sofa_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_sofa_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_cot_a_type_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_bookshelves_a_type_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_armchair_a_type_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_armchair_c_type_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_chair_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_stool_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_tires_a_type_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_tires_a_type_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_tires_a_type_c"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_kitchen_b_type_cupboard_1000_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_kitchen_b_type_cupboard_500_m"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_kitchen_b_type_shelf_1000_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_shelves_set_a_type_c_open"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_sideboard_b_1600_type_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_small_table_b_type_b"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_writing_table_a_type_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_hanger_b_type_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_stove_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_tv_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_playgornd_a_basketball_hoop_type_a"
+    }
+
+    "item:object"{
+      rendinst:t="concrete_cylinder_a"
+    }
+
+    "item:object"{
+      rendinst:t="concrete_ring_a"
+    }
+
+    "item:object"{
+      rendinst:t="concrete_ring_b_broken"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_traffic_light_a_type_a"
+    }
+
+    "item:object"{
+      rendinst:t="sovmod_trash_can_a_type_small_a"
+    }
+  }
+}
+
+encounter_jump_quest_gravity_sphere{
+  _use:t="am_gravity_sphere"
+  am_gravity_sphere__gravityMult:r=0.33
+  sphere_zone__radius:r=10
+  encounter_jump_quest_gravity_sphere__nodeIndex:i=-1
+
+  "encounter_jump_quest_gravity_sphere__jumpQuestEid:eid"{}
+}
+
+encounter_jump_quest_gravity_controller{
+  encounter_jump_quest_gravity_controller__gravitySphereTemplate:t="encounter_jump_quest_gravity_sphere"
+
+  "encounter_jump_quest_gravity_controller__gravitySphereEids:list<eid>"{}
+}
+
+jump_quest_rendinsts_grid{
+  editableObj:b=no
+  _use:t="replicating"
+  _singleton:b=yes
+  grid_holder__type:t="jump_quest_rendinsts"
+  grid_holder__typeHash:i=0
+  grid_holder__cellSize:i=32
+
+  grid_holder{}
+}
+
+encounter_jump_quest_node_rendinst{
+  _use:t="placeable_rendinst"
+  _use:t="immortal_rendinst"
+  ri_extra__hasCollision:b=yes
+  encounter_jump_quest_node_rendinst__state:i=0
+  _tracked:t="encounter_jump_quest_node_rendinst__state"
+  _replicated:t="encounter_jump_quest_node_rendinst__state"
+  encounter_jump_quest_node_rendinst__nodeIndex:i=-1
+  encounter_jump_quest_node_rendinst__treeDepth:i=-1
+  encounter_jump_quest_node_rendinst__positionTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  encounter_jump_quest_node_rendinst__volume:r=0
+  encounter_jump_quest_node_rendinst__punchNodeIndex:i=5
+  encounter_jump_quest_node_rendinst__demolitionEffectTemplate:t="explosion_jump_quest_node_poof_fx"
+  grid_obj__gridType:t="jump_quest_rendinsts"
+  grid_obj__fixedTmScale:r=-1
+  collres__res:t=""
+  phys_obj_net_phys__blk:t=""
+
+  "encounter_jump_quest_node_rendinst:tag"{}
+  "encounter_jump_quest_node_rendinst__jumpQuestEid:eid"{}
+  "nphys_obstacle__merge:tag"{}
+  "nphys_obstacle__useHull:tag"{}
+  grid_obj{}
+}
+
+encounter_jump_quest_node_rendinst_preparing_to_demolition{
+  encounter_jump_quest_node_rendinst_preparing_to_demolition__demolitionAt:r=0
+}
+
+encounter_jump_quest_node_rendinst_phys{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  collres__res:t=""
+  net__physId:i=-1
+  phys_obj_net_phys__blk:t=""
+  collision_physMatId:i=-1
+  encounter_jump_quest_node_rendinst_phys__collisionDamageSpeedThreshold:r=0.2
+  encounter_jump_quest_node_rendinst_phys__collisionDamageDotThreshold:r=0.5
+  encounter_jump_quest_node_rendinst_phys__collisionDamageMult:r=0.004
+  pair_collision__tag:t="collidableToPhysObj"
+
+  collres{}
+  phys_obj_net_phys{}
+  base_net_phys_ptr{}
+  phys_vars{}
+  "encounter_jump_quest_node_rendinst_phys:tag"{}
+  pair_collision__gridHolders{}
+  "pair_collision__gridNames:list<t>"{
+    h:t="jump_quest_rendinsts"
+    h:t="humans"
+    h:t="vehicles"
+  }
+
+  "collidableToPhysObj:tag"{}
+}
+
+encounter_jump_quest_node_rendinst_demolition{
+  _use:t="encounter_jump_quest_node_rendinst_phys"
+  encounter_jump_quest_node_rendinst_demolition__stopAt:r=0
+  encounter_jump_quest_node_rendinst_demolition__initialImpulse:p3=0, 0, 0
+  encounter_jump_quest_node_rendinst_demolition__initialOmega:p3=0, 0, 0
+}
+
+encounter_jump_quest_node_rendinst_recovering{
+  encounter_jump_quest_node_rendinst_recovering__recoveringAt:r=0
+  encounter_jump_quest_node_rendinst_recovering__progress:r=0
+  encounter_jump_quest_node_rendinst_recovering__speed:r=1
+  encounter_jump_quest_node_rendinst_recovering__speedRng:p2=0.1, 0.35
+  encounter_jump_quest_node_rendinst_recovering__fromPos:p3=0, 0, 0
+  encounter_jump_quest_node_rendinst_recovering__fromRot:p4=0, 0, 0, 0
+}
+
+encounter_jump_quest_spawn_point{
+  encounter_jump_quest_spawn_point__jumpQuestTemplate:t="encounter_jump_quest"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+encounter_jump_quest_controller{
+  encounter_jump_quest_controller__encountersCount:ip2=10, 12
+  encounter_jump_quest_controller__minDistanceBetweenEncountersSq:r=62500
+
+  "encounter_jump_quest_controller:tag"{}
+}
+
+encounter_jump_quest_rendinst_rotor{
+  encounter_jump_quest_rendinst_rotor__active:b=yes
+  encounter_jump_quest_rendinst_rotor__rotSpeedRng:p2=0.001, 0.1
+  encounter_jump_quest_rendinst_rotor__rotSpeed:p3=0, 0, 0
+  encounter_jump_quest_rendinst_rotor__startAngle:p3=0, 0, 0
+
+  "encounter_jump_quest_rendinst_rotor:tag"{}
+}
+
+encounter_jump_quest_rendinst_levitation{
+  encounter_jump_quest_rendinst_levitation__active:b=yes
+  encounter_jump_quest_rendinst_levitation__speedRng:p2=0.1, 0.25
+  encounter_jump_quest_rendinst_levitation__speed:r=0
+  encounter_jump_quest_rendinst_levitation__amplitudeRng:p2=0.05, 0.25
+  encounter_jump_quest_rendinst_levitation__amplitude:r=0
+  encounter_jump_quest_rendinst_levitation__load:i=0
+  encounter_jump_quest_rendinst_levitation__loadTimestamp:r=0
+  encounter_jump_quest_rendinst_levitation__saggin:r=0.45
+  encounter_jump_quest_rendinst_levitation__sagginExtraTime:r=0.35
+  encounter_jump_quest_rendinst_levitation__sagginMaxLoad:i=2
+  encounter_jump_quest_rendinst_levitation__sagginVolumesRange:p2=1, 6
+  encounter_jump_quest_rendinst_levitation__sagginVolumeMult:r=0.5
+  encounter_jump_quest_rendinst_levitation__lerpFactor:r=3
+}
+
+encounter_jump_quest_path_rendinst_levitation{
+  _use:t="encounter_jump_quest_rendinst_levitation"
+  encounter_jump_quest_rendinst_levitation__speedRng:p2=0.2, 1
+  encounter_jump_quest_rendinst_levitation__amplitudeRng:p2=0.045, 0.1
+}
+
+encounter_jump_quest_earthshake_sound{
+  _use:t="sound_effect"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/encounter_jump_quest/earthshake"
+  }
+}
+
+encounter_jump_quest_earthshake{
+  _use:t="encounter_jump_quest_earthshake_sound"
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  sphere_zone__radius:r=50
+  encounter_jump_quest_earthshake__initialPunch:r=15
+  encounter_jump_quest_earthshake__cameraTrauma:r=0.575
+  encounter_jump_quest_earthshake__startAt:r=0
+  encounter_jump_quest_earthshake__time:r=30
+}

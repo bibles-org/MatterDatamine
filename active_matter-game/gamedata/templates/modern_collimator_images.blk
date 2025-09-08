@@ -1,0 +1,419 @@
+scope_exps3_collimator_image{
+  _use:t="collimator_moa_image"
+  _tags:t="render"
+
+  "collimator_moa_image__shapes:array"{
+    "shape:object"{
+      type:t="ring"
+      center:p2=0, 0
+      radius:r=34
+      width:r=2
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=0, 0
+      radius:r=2
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=-35, 0
+      end:p2=-46, 0
+      width:r=2
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=35, 0
+      end:p2=46, 0
+      width:r=2
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=0, -35
+      end:p2=0, -46
+      width:r=2
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=0, 35
+      end:p2=0, 46
+      width:r=2
+    }
+  }
+}
+
+scope_okp7_image{
+  _use:t="collimator_moa_image"
+  _tags:t="render"
+
+  "collimator_moa_image__shapes:array"{
+    "shape:object"{
+      type:t="ring"
+      center:p2=0, 0
+      radius:r=25
+      width:r=2
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=0, 0
+      radius:r=2
+    }
+  }
+}
+
+scope_amg_uh1_collimator_image{
+  _use:t="collimator_moa_image"
+  _tags:t="render"
+
+  "collimator_moa_image__shapes:array"{
+    "shape:object"{
+      type:t="arc"
+      center:p2=0, 0
+      radius:r=34
+      width:r=2
+      begin:r=-30
+      end:r=30
+    }
+
+    "shape:object"{
+      type:t="arc"
+      center:p2=0, 0
+      radius:r=34
+      width:r=2
+      begin:r=60
+      end:r=160
+    }
+
+    "shape:object"{
+      type:t="arc"
+      center:p2=0, 0
+      radius:r=34
+      width:r=2
+      begin:r=-60
+      end:r=-160
+    }
+
+    "shape:object"{
+      type:t="triangle"
+      point_a:p2=0, -22
+      point_b:p2=-7, -40
+      point_c:p2=7, -40
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=0, 0
+      radius:r=2
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=-35, 0
+      end:p2=-46, 0
+      width:r=2
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=35, 0
+      end:p2=46, 0
+      width:r=2
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=0, 35
+      end:p2=0, 46
+      width:r=2
+    }
+  }
+}
+
+scope_2moa_dot_collimator_image{
+  _use:t="collimator_moa_image"
+  _tags:t="render"
+
+  "collimator_moa_image__shapes:array"{
+    "shape:object"{
+      type:t="circle"
+      center:p2=0, 0
+      radius:r=4
+    }
+  }
+}
+
+scope_4moa_dot_collimator_image{
+  _use:t="collimator_moa_image"
+  _tags:t="render"
+
+  "collimator_moa_image__shapes:array"{
+    "shape:object"{
+      type:t="circle"
+      center:p2=0, 0
+      radius:r=8
+    }
+  }
+}
+
+scope_rk_06_collimator_image{
+  _use:t="collimator_moa_image"
+  _tags:t="render"
+
+  "collimator_moa_image__shapes:array"{
+    "shape:object"{
+      type:t="circle"
+      center:p2=0, 0
+      radius:r=4
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=20, 0
+      end:p2=34, 0
+      width:r=4
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=-20, 0
+      end:p2=-34, 0
+      width:r=4
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=0, -20
+      end:p2=0, -34
+      width:r=4
+    }
+  }
+}
+
+scope_1p63_collimator_image{
+  _use:t="collimator_moa_image"
+  _tags:t="render"
+
+  "collimator_moa_image__shapes:array"{
+    "shape:object"{
+      type:t="triangle"
+      point_a:p2=0, 0
+      point_b:p2=-7, -14
+      point_c:p2=7, -14
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=55, 0
+      end:p2=95, 0
+      width:r=4
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=-55, 0
+      end:p2=-95, 0
+      width:r=4
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=0, -62
+      end:p2=0, -102
+      width:r=4
+    }
+  }
+}
+
+scope_1p87_collimator_image{
+  _use:t="collimator_moa_image"
+  _tags:t="render"
+
+  "collimator_moa_image__shapes:array"{
+    "shape:object"{
+      type:t="circle"
+      center:p2=0, 0
+      radius:r=2
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=30, 0
+      radius:r=1.5
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=-30, 0
+      radius:r=1.5
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=0, 30
+      radius:r=1.5
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=0, -30
+      radius:r=1.5
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=26, 15
+      radius:r=1.5
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=15, 26
+      radius:r=1.5
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=-26, -15
+      radius:r=1.5
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=-15, -26
+      radius:r=1.5
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=-26, 15
+      radius:r=1.5
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=-15, 26
+      radius:r=1.5
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=26, -15
+      radius:r=1.5
+    }
+
+    "shape:object"{
+      type:t="circle"
+      center:p2=15, -26
+      radius:r=1.5
+    }
+  }
+}
+
+scope_ekp_8_18_cobra_collimator_image{
+  _use:t="collimator_moa_image"
+  _tags:t="render"
+
+  "collimator_moa_image__shapes:array"{
+    "shape:object"{
+      type:t="circle"
+      center:p2=0, 0
+      radius:r=4
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=0, -30
+      end:p2=-21, -51
+      width:r=4
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=0, -30
+      end:p2=21, -51
+      width:r=4
+    }
+  }
+}
+
+scope_vzor_collimator_image{
+  _use:t="collimator_moa_image"
+  _tags:t="render"
+
+  "collimator_moa_image__shapes:array"{
+    "shape:object"{
+      type:t="circle"
+      center:p2=0, 0
+      radius:r=2
+    }
+
+    "shape:object"{
+      type:t="arc"
+      center:p2=0, 0
+      radius:r=34
+      width:r=2
+      begin:r=15
+      end:r=75
+    }
+
+    "shape:object"{
+      type:t="arc"
+      center:p2=0, 0
+      radius:r=34
+      width:r=2
+      begin:r=105
+      end:r=165
+    }
+
+    "shape:object"{
+      type:t="arc"
+      center:p2=0, 0
+      radius:r=34
+      width:r=2
+      begin:r=-15
+      end:r=-75
+    }
+
+    "shape:object"{
+      type:t="arc"
+      center:p2=0, 0
+      radius:r=34
+      width:r=2
+      begin:r=-105
+      end:r=-165
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=-34, 0
+      end:p2=-46, 0
+      width:r=2
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=34, 0
+      end:p2=46, 0
+      width:r=2
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=0, -34
+      end:p2=0, -46
+      width:r=2
+    }
+
+    "shape:object"{
+      type:t="line"
+      begin:p2=0, 34
+      end:p2=0, 46
+      width:r=2
+    }
+  }
+}

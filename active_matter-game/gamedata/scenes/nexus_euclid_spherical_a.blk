@@ -1,0 +1,119 @@
+entity{
+  _template:t="spawnBase+nexus_first_team"
+  transform:m=[[-0.306772, 0.642521, 0.702181] [-0.63154, 0.414534, -0.655224] [-0.712073, -0.64446, 0.27861] [-1713.83, 163.442, 789.397]]
+  spawnBase__spawnRadius:r=2
+}
+
+entity{
+  _template:t="nexus_battle_container+nexus_first_team"
+  transform:m=[[0.380224, 0.890536, 0.249752] [-0.644871, 0.448828, -0.618624] [-0.663002, 0.0741582, 0.744935] [-1714.83, 163.034, 790.7]]
+  nexus_battle_container__team:i=2
+}
+
+entity{
+  _template:t="spawnBase+nexus_second_team"
+  transform:m=[[0.568031, -0.46155, 0.681405] [0.694267, 0.713344, -0.095569] [-0.441966, 0.527363, 0.725641] [-1896, 121.361, 713.215]]
+  spawnBase__spawnRadius:r=2
+}
+
+entity{
+  _template:t="nexus_battle_container+nexus_second_team"
+  transform:m=[[0.623194, -0.593998, 0.50872] [0.703648, 0.709772, -0.0332328] [-0.341335, 0.37867, 0.86029] [-1899.48, 124.375, 711.646]]
+  nexus_battle_container__team:i=3
+}
+
+entity{
+  _template:t="static_cam"
+  camera__active:b=yes
+  transform:m=[[0.99952, -0.0260879, 0.0166854] [0.00971563, 0.775776, 0.630933] [-0.0294039, -0.630469, 0.775657] [-1806.46, 93.5112, 705.116]]
+}
+
+entity{
+  _template:t="dalniy_ambient_sound"
+}
+
+entity{
+  _template:t="nexus_mode_storm_zone"
+  sphere_zone__radius:r=205
+  moving_zone__sourcePos:p3=-1800, 220, 700
+  moving_zone__movingVelocity:r=2.5
+  moving_zone__manual_activation:b=yes
+}
+
+entity{
+  _template:t="shaderVars"
+
+  "shader_vars__vars:object"{
+    river1:c=142, 137, 71, 0
+    river0:c=76, 63, 5, 0
+    river_density:r=2
+    water_color_noise_size:r=71
+    ocean1:c=142, 137, 71, 0
+    ocean0:c=76, 63, 5, 0
+    ocean_density:r=1
+    paint_details_tex:t="sovmod_building_colors_tex_palette*"
+    river0:c=30, 81, 63, 0
+    river1:c=41, 104, 83, 0
+    ocean0:c=100, 110, 150, 0
+    ocean1:c=90, 100, 150, 0
+    rendinst_landscape_area_left_top_right_bottom:p4=-2048, 2048, 2048, -2048
+  }
+}
+
+entity{
+  _template:t="wind"
+  wind__noiseScale:r=100
+  wind__noiseSpeed:r=4
+  wind__strength:r=1
+}
+
+entity{
+  _template:t="clouds_hole_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+entity{
+  _template:t="door_mult_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_doors.blk"
+}
+
+entity{
+  _template:t="nexus_beacon"
+  transform:m=[[-0.998171, 0.0534306, 0.0282905] [0.0509309, 0.995271, -0.0827195] [-0.0325764, -0.0811273, -0.996171] [-1806.73, 88.576, 710.923]]
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_wave_mode_base_config.blk"
+}
+
+entity{
+  _template:t="gravity_zone_sphere_rad+allow_inner_gravity_zones_visual_effects"
+  grav_zone__innerRadius:r=160
+  grav_zone__outerRadius:r=180
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-1800, 220, 700]]
+}
+
+entity{
+  _template:t="tiled_map"
+  tiled_map__leftTop:p2=-2000, 500
+  tiled_map__rightBottom:p2=-1600, 900
+  tiled_map__leftTopBorder:p2=-2000, 500
+  tiled_map__rightBottomBorder:p2=-1600, 900
+  tiled_map__visibleRange:p2=25, 500
+  tiled_map__tileWidth:i=512
+  tiled_map__zlevels:i=4
+  tiled_map__northAngle:r=0
+  tiled_map__tilesPath:t="maps/gd_nexus_spherical_a"
+}
+
+entity{
+  _template:t="level+level_synced_environment"
+  level__blk:t="levels/gd_nexus_spherical_a.blk"
+  level__timeRange:p2=6.5, 6.5
+  level_synced_environment__timeOfDaySeed:i=1
+  level_synced_environment__weatherSeed:i=2
+
+  "level__weatherChoice:object"{
+    weather_dalniy_island_overcast:r=1
+  }
+}

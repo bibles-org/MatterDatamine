@@ -1,0 +1,22 @@
+include %danetlibs/dascript_base/base_project.das_project
+
+let
+  mountPointPrefixes <- {
+    "game" => "%scripts/game",
+    "active_matter" => "%scripts",
+    "danetlibs" => "%danetlibs",
+    "sound_utils" => "%danetlibs/sound/sound_utils",
+    "sound_utils_net" => "%danetlibs/sound/sound_utils_net",
+    "common_sounds" => "%danetlibs/sound/common_sounds",
+    "environment_sounds" => "%danetlibs/sound/environment_sounds",
+    "door_sounds" => "%danetlibs/sound/door_sounds",
+    "human_sounds" => "%danetlibs/sound/human_sounds",
+    "human_sounds_net" => "%danetlibs/sound/human_sounds_net",
+    "human_speech" => "%danetlibs/sound/human_speech",
+    "human_net_speech" => "%danetlibs/sound/human_net_speech",
+    "vehicle_sounds" => "%danetlibs/sound/vehicle_sounds",
+    "vehicle_sounds_net" => "%danetlibs/sound/vehicle_sounds_net",
+    "ship_sounds" => "%danetlibs/sound/ship_sounds",
+    "plane_sounds" => "%danetlibs/sound/plane_sounds",
+    "weapon_sounds" => "%danetlibs/sound/weapon_sounds"
+  }

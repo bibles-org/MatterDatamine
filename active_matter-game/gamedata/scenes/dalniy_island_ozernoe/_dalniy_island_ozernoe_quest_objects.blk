@@ -1,0 +1,525 @@
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [110.222, 80.036, -610.572]]
+  objective_static_target__tag:t="sensor_ozernoe_primary_1"
+  map_object_zone__radius:r=33
+  quest_target_geometry_sphere__radius:r=33
+  map_object__show:b=no
+  _template:t="place_for_device_target"
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [32.1789, 80.2609, -671.047]]
+  objective_static_target__tag:t="sensor_ozernoe_primary_2"
+  map_object_zone__radius:r=40
+  quest_target_geometry_sphere__radius:r=40
+  map_object__show:b=no
+  _template:t="place_for_device_target"
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-47.8426, 80.2609, -714.479]]
+  objective_static_target__tag:t="sensor_ozernoe_primary_3"
+  map_object_zone__radius:r=40
+  quest_target_geometry_sphere__radius:r=40
+  map_object__show:b=no
+  _template:t="place_for_device_target"
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [111.92, 80.2609, -764.403]]
+  objective_static_target__tag:t="sensor_ozernoe_primary_4"
+  map_object_zone__radius:r=40
+  quest_target_geometry_sphere__radius:r=40
+  map_object__show:b=no
+  _template:t="place_for_device_target"
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [195.453, 80.2609, -628.307]]
+  objective_static_target__tag:t="sensor_ozernoe_primary_5"
+  map_object_zone__radius:r=40
+  quest_target_geometry_sphere__radius:r=40
+  map_object__show:b=no
+  _template:t="place_for_device_target"
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [186.226, 80.2609, -507.395]]
+  objective_static_target__tag:t="sensor_ozernoe_primary_6"
+  map_object_zone__radius:r=35
+  quest_target_geometry_sphere__radius:r=35
+  map_object__show:b=no
+  _template:t="place_for_device_target"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [61.8293, 79.525, -662.907]]
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_ozernoe_zone_1"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [65.2964, 79.525, -573.09]]
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_ozernoe_zone_2"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [138.356, 73.1242, -776.825]]
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_ozernoe_zone_3"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-116.215, 80.0125, -680.567]]
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_ozernoe_zone_4"
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [151.394, 78.8434, -567.765]]
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_water_ozernoe_zone_1"
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [217.909, 78.8434, -575.248]]
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_water_ozernoe_zone_2"
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+}
+
+entity{
+  _template:t="spherical_quest_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [4.11547, 80.5636, -686.179]]
+  quest_target_geometry_sphere__radius:r=50
+  objective_static_target__tag:t="monolith_plant_item_zone_1"
+}
+
+entity{
+  _template:t="spherical_quest_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [105.872, 80.5636, -610.688]]
+  quest_target_geometry_sphere__radius:r=40
+  objective_static_target__tag:t="monolith_plant_item_zone_2"
+}
+
+entity{
+  _template:t="spherical_quest_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [115.381, 80.5636, -702.877]]
+  quest_target_geometry_sphere__radius:r=50
+  objective_static_target__tag:t="monolith_plant_item_zone_3"
+}
+
+entity{
+  _template:t="quest_container+drawer_openable_ri_sound"
+  transform:m=[[-0.763523, 0, 0.645781] [0, 1, 0] [-0.645781, 0, -0.763523] [-90.433, 84.1964, -745.404]]
+  ri_extra__name:t="sovmod_kitchen_a_type_cupboard_500_a"
+  openable_ri__closed:t="sovmod_kitchen_a_type_cupboard_500_a"
+  ri_preload__name:t="sovmod_kitchen_a_type_cupboard_500_b"
+  objective_static_target__tag:t="ozernoe_firestation_documents"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_ozernoe_firestation_reports"
+  }
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[8.1538, 0, 9.70144] [0, 1, -0] [-19.0732, 0, 16.0305] [-87.6702, 91.2397, -756.629]]
+  objective_static_target__tag:t="place_ozernoe_locator"
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=0
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="quest_container_secret+wardrobe_openable_ri_sound"
+  transform:m=[[0.990737, 0, 0.135793] [0, 1, -0] [-0.135793, 0, 0.990737] [-83.3215, 89.0607, -760.74]]
+  ri_extra__name:t="sovmod_clothes_c"
+  openable_ri__closed:t="sovmod_clothes_c"
+  ri_preload__name:t="sovmod_clothes_c"
+  objective_static_target__tag:t="ozernoe_firestation_safe_keys"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="key_ozernoe_firestation_safe_item"
+  }
+}
+
+entity{
+  _template:t="quest_container_locked+safe_openable_ri_sound"
+  transform:m=[[0.76246, 0, -0.647035] [0, 1, 0] [0.647035, -0, 0.76246] [-108.879, 84.1976, -746.793]]
+  ri_extra__name:t="sovmod_safe_type_c_loot"
+  openable_ri__closed:t="sovmod_safe_type_c_loot"
+  ri_preload__name:t="sovmod_safe_type_c_loot_open"
+  objective_static_target__tag:t="ozernoe_firestation_safe_locked"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_ozernoe_firestation_tape"
+  }
+
+  "locked__keyTags:list<t>"{
+    item:t="ozernoe_firestation_safe_lock"
+  }
+}
+
+entity{
+  _template:t="area_decor_overgrowth"
+  transform:m=[[11.9365, 0, 0.367152] [0, 11.9421, -0] [-0.44079, 0, 14.3305] [169.137, 85.7654, -675.057]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="flowerman_trap_a"
+  transform:m=[[1.75947, 0, 0] [0, 1.75947, 0] [0, 0, 1.75947] [155.739, 79.9717, -675.914]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="flowerman_trap_a"
+  transform:m=[[0.861157, 0, 2.43914] [0, 2.58669, -0] [-2.43914, 0, 0.861157] [158.345, 79.9717, -677.082]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="flowerman_trap_a"
+  transform:m=[[2.57505, 0, -0.245122] [0, 2.58669, 0] [0.245122, -0, 2.57505] [156.864, 79.9717, -680.533]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="flowerman_trap_a"
+  transform:m=[[1.20527, 0, 1.28182] [0, 1.75947, -0] [-1.28182, 0, 1.20527] [158.495, 79.9717, -681.03]]
+}
+
+entity{
+  _template:t="area_decor_flowerman"
+  transform:m=[[-5.18884, 0, -0.37852] [0, 5.87553, 0] [0.72521, 0, -9.94136] [157.167, 80.7642, -678.219]]
+  gpu_object_placer__object_max_count:i=100
+  gpu_object_placer__object_scale_range:p2=0.5, 1.7
+  gpu_object_placer__visible_distance_squared:r=900
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="am_rosin_door_a"
+  transform:m=[[-0.962037, 0.0955089, 0.601929] [-0.0689783, -1.1346, 0.0697842] [0.605542, 0.0224922, 0.964244] [156.3, 81.5635, -681.273]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="am_rosin_door_a"
+  transform:m=[[-0.176429, 0.0769419, -1.32603] [-0.535632, -1.22821, 7.45058e-09] [-1.21547, 0.530077, 0.192476] [155.36, 81.7301, -677.386]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="am_rosin_door_a"
+  transform:m=[[0.170096, 0.0900812, -1.32603] [-0.627102, 1.18412, -4.99162e-09] [1.17184, 0.620598, 0.192476] [158.907, 81.3954, -679.005]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="am_rosin_door_a"
+  transform:m=[[-0.343933, 1.07669, -0.139273] [-0.542281, -0.0438076, 1.00048] [0.94053, 0.368466, 0.525919] [158.71, 80.284, -675.243]]
+}
+
+entity{
+  _template:t="area_decor_rosin"
+  transform:m=[[4.05177, 0, 0.241688] [0, 4.92176, -0] [-0.0594554, 0, 0.996739] [166.161, 82.3388, -667.66]]
+}
+
+entity{
+  _template:t="area_decor_rosin"
+  transform:m=[[4.05177, 0, 0.241688] [0, 4.92176, -0] [-0.0594554, 0, 0.996739] [170.962, 82.3388, -667.66]]
+}
+
+entity{
+  _template:t="area_decor_rosin"
+  transform:m=[[0.310305, 0, -7.06584] [-0, 2.9041, 0] [0.999106, 0, 0.043877] [177.016, 81.3799, -674.99]]
+}
+
+entity{
+  _template:t="area_decor_rosin"
+  transform:m=[[-0.323893, 0, 4.61108] [0, 4.92176, 0] [-0.996786, 0, -0.0700165] [164.176, 82.3388, -670.856]]
+}
+
+entity{
+  _template:t="area_decor_rosin"
+  transform:m=[[-0.223891, 0, 3.18742] [0, 4.92176, 0] [-0.995501, 0, -0.0699262] [164.176, 82.3388, -674.408]]
+}
+
+entity{
+  _template:t="area_decor_rosin"
+  transform:m=[[2.94589, 0, 0.104808] [0, 2.9041, -0] [-0.0355479, 0, 0.999159] [174.873, 81.9071, -671.479]]
+}
+
+entity{
+  _template:t="decor_bmp_2m"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [171.581, 79.9969, -658.458]]
+}
+
+entity{
+  _template:t="decor_bmp_2m"
+  transform:m=[[0.110192, 0, -0.99391] [0, 1, 0] [0.99391, -0, 0.110192] [142.402, 79.9963, -661.041]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="am_rosin_door_a"
+  transform:m=[[0.683286, 0.147602, -0.715076] [0.697729, 0.1566, 0.699035] [0.21516, -0.97657, 0.00401674] [159.887, 79.9969, -660.21]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="am_rosin_door_a"
+  transform:m=[[0.187806, 0.147602, 0.971052] [-0.973859, 0.1566, 0.164545] [-0.12778, -0.976571, 0.173154] [163.72, 79.9969, -661.344]]
+}
+
+entity{
+  _template:t="decor_matter_barrel"
+  transform:m=[[-0.897849, 0.188617, -0.397857] [0.405129, -3.72529e-08, -0.91426] [-0.172445, -0.982051, -0.0764143] [159.456, 80.2711, -657.514]]
+}
+
+entity{
+  _template:t="decor_matter_barrel"
+  transform:m=[[-0.981969, -0.00271302, -0.189022] [-0.00677003, 0.99976, 0.0208208] [0.18892, 0.0217251, -0.981752] [164.665, 80.148, -660.061]]
+}
+
+entity{
+  _template:t="decor_matter_barrel"
+  transform:m=[[0.701881, -0.384898, 0.599347] [-0.649375, -4.47035e-08, 0.760468] [-0.292703, -0.922959, -0.249943] [165.733, 80.4153, -660.376]]
+}
+
+entity{
+  _template:t="static_dead_body_quest_container"
+  transform:m=[[0.0896134, 0, -0.995977] [0, 1, 0] [0.995977, -0, 0.0896134] [161.618, 80.148, -659.856]]
+  animchar__res:t="am_soldier_corrupted_male_a_char"
+  collres__res:t="am_soldier_corrupted_male_a_collision"
+  objective_static_target__tag:t="ozernoe_incident_report"
+  loot_drop_system__lootPreset:t="close_range_soviet_weapons_t2_loot_preset"
+
+  "animchar__forceVarValues:object"{
+    dead_body_pos_num:r=10
+  }
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_ozernoe_incident_report"
+  }
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target+ozernoe_samples"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [147.532, 73.8751, -727.879]]
+  map_object_zone__radius:r=9
+  quest_target_geometry_sphere__radius:r=9
+  gather_samples_target__accesspointsCountRng:ip2=30, 30
+  objective_static_target__tag:t="ozernoe_gather_ground_sample_zone_1"
+}
+
+entity{
+  _template:t="quest_container+drawer_openable_ri_sound"
+  transform:m=[[0.997392, 0, 0.0721687] [0, 1, -0] [-0.0721687, 0, 0.997392] [165.477, 81.5, -671.906]]
+  ri_extra__name:t="sovmod_small_table_b_type_a"
+  openable_ri__closed:t="sovmod_small_table_b_type_a"
+  ri_preload__name:t="sovmod_small_table_b_type_a_loot"
+  objective_static_target__tag:t="ozernoe_greenhouse_diary"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_ozernoe_greenhouse_diary"
+  }
+}
+
+entity{
+  _template:t="quest_container+sack_openable_ri_sound"
+  transform:m=[[0.700043, 7.45058e-09, -0.714101] [-0.184558, 0.966025, -0.180924] [0.689839, 0.258448, 0.676259] [91.4526, 79.9969, -683.605]]
+  ri_extra__name:t="bag_grain_stand_a"
+  openable_ri__closed:t="bag_grain_stand_a"
+  ri_preload__name:t="bag_grain_stand_a"
+  objective_static_target__tag:t="ozernoe_garbage_seeds"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_ozernoe_anomalous_seeds"
+  }
+}
+
+entity{
+  _template:t="area_decor_flowerman"
+  transform:m=[[2.83767, 0, 0] [0, 1, 0] [0, 0, 2.83767] [91.3872, 80.0579, -683.473]]
+}
+
+entity{
+  _template:t="quest_container+sack_openable_ri_sound"
+  transform:m=[[-0.267188, 0.315109, -0.996323] [-0.972358, 0.301669, 0.35617] [0.382717, 0.98643, 0.209345] [157.094, 79.9969, -675.236]]
+  ri_extra__name:t="bag_grain_stand_a"
+  openable_ri__closed:t="bag_grain_stand_a"
+  ri_preload__name:t="bag_grain_stand_a"
+  objective_static_target__tag:t="ozernoe_garden_flower_source"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_ozernoe_flowerman_source"
+  }
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="flowerman_trap_a"
+  transform:m=[[0.265206, 0, -0.830214] [0, 0.871544, 0] [0.830214, -0, 0.265206] [156.655, 79.9969, -675.061]]
+}
+
+entity{
+  _template:t="flowerman_wakeup_enemies_trap_no_drop_on_ground"
+  transform:m=[[-0.267188, 0.315109, -0.996323] [-0.972358, 0.301669, 0.35617] [0.382717, 0.98643, 0.209345] [157.094, 79.9969, -675.236]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[0.698278, 0, 0.715826] [0, 1, -0] [-0.715826, 0, 0.698278] [166.576, 89.857, -619.244]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[-0.725764, 0, 0.687944] [0, 1, 0] [-0.687944, 0, -0.725764] [164.326, 89.9474, -619.235]]
+}
+
+entity{
+  _template:t="quest_container_secret+locker_openable_ri_sound"
+  transform:m=[[0.999288, 0, -0.0377417] [0, 1, 0] [0.0377417, -0, 0.999288] [205.671, 83.9318, -502.836]]
+  ri_extra__name:t="sovindustrial_locker_metal_a_type_a"
+  openable_ri__closed:t="sovindustrial_locker_metal_a_type_a"
+  ri_preload__name:t="sovindustrial_locker_metal_a_type_a_open"
+  objective_static_target__tag:t="euclid_docs_stash_safe_keys"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="key_euclid_docs_stash_safe_item"
+  }
+}
+
+entity{
+  _template:t="quest_container_locked+safe_openable_ri_sound"
+  transform:m=[[-0.999827, 0, 0.018587] [0, 1, 0] [-0.018587, 0, -0.999827] [211.014, 83.9318, -504.158]]
+  ri_extra__name:t="sovmod_safe_type_c_loot"
+  openable_ri__closed:t="sovmod_safe_type_c_loot"
+  ri_preload__name:t="sovmod_safe_type_c_loot_open"
+  objective_static_target__tag:t="euclid_docs_stash_safe_locked"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_euclid_docs_stash"
+  }
+
+  "locked__keyTags:list<t>"{
+    item:t="euclid_docs_stash_safe_lock"
+  }
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-83.8385, 89.0559, -760.098]]
+  help__text:t="ozernoe/accounting/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-88.1118, 89.1488, -756.971]]
+  help__text:t="ozernoe/communication_room/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-95.7382, 89.7338, -750.556]]
+  help__text:t="ozernoe/restroom/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-100.923, 86.5183, -744.139]]
+  help__text:t="ozernoe/chief_of_staff/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-95.7148, 86.5183, -750.575]]
+  help__text:t="ozernoe/restroom/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-89.6663, 85.8909, -755.622]]
+  help__text:t="ozernoe/briefing_room/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-80.8088, 86.1372, -763.077]]
+  help__text:t="ozernoe/chief_of_fire_protection_service/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-80.8088, 85.8101, -763.077]]
+  help__text:t="ozernoe/deputy_chief_of_civil_defense/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-93.9901, 86.5634, -747.918]]
+  help__text:t="ozernoe/duty_officer/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-82.3396, 83.2779, -761.791]]
+  help__text:t="ozernoe/communication_room/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-88.7049, 83.2779, -756.436]]
+  help__text:t="ozernoe/cloakroom/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-95.1847, 83.2779, -758.776]]
+  help__text:t="ozernoe/emergency_exit/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-95.7751, 83.2779, -750.503]]
+  help__text:t="ozernoe/restroom/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-96.5452, 83.3307, -747.76]]
+  help__text:t="ozernoe/canteen/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-90.7473, 81.9944, -745.691]]
+  help__text:t="ozernoe/boiler_room/sign"
+}
+
+entity{
+  _template:t="door_sign"
+  transform:m=[[0.785721, 0, -0.618581] [0, 1, 0] [0.618581, -0, 0.785721] [-90.4418, 83.5451, -742.942]]
+  help__text:t="ozernoe/garage/sign"
+}

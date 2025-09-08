@@ -1,0 +1,16 @@
+entity{
+  _template:t="player_base"
+}
+
+entity{
+  _template:t="base_ambient_sound"
+}
+
+entity{
+  _template:t="navmesh_battle_area"
+  transform:m=[[4000, 0, 0] [0, 4000, 0] [0, 0, 4000] [0, 0, 0]]
+}
+
+entity{
+  _template:t="player_profile"
+}

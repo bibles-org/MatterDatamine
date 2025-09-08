@@ -1,0 +1,446 @@
+explosiveTypes{
+  comp_a{
+    strengthEquivalent:r=1.44
+    brisanceEquivalent:r=1.26
+  }
+
+  rdx_tnt{
+    strengthEquivalent:r=1.28
+    brisanceEquivalent:r=1.28
+  }
+
+  tetryl_bpp{
+    strengthEquivalent:r=1.45
+    brisanceEquivalent:r=1.15
+  }
+
+  h5_fp02{
+    strengthEquivalent:r=1.7
+    brisanceEquivalent:r=1.41
+  }
+
+  tnt_a_ix_2{
+    strengthEquivalent:r=1.7
+    brisanceEquivalent:r=1.41
+  }
+
+  ph_salz_h10{
+    strengthEquivalent:r=1.43
+    brisanceEquivalent:r=1.22
+  }
+
+  fp10_np10{
+    strengthEquivalent:r=1.7
+    brisanceEquivalent:r=1.27
+  }
+
+  fp02_np10{
+    strengthEquivalent:r=1
+    brisanceEquivalent:r=1.27
+  }
+
+  lyddit{
+    strengthEquivalent:r=1
+    brisanceEquivalent:r=1
+  }
+
+  shimose{
+    strengthEquivalent:r=1
+    brisanceEquivalent:r=1
+  }
+
+  torpex{
+    strengthEquivalent:r=1.6
+    brisanceEquivalent:r=1.2
+  }
+
+  hta{
+    strengthEquivalent:r=1.2
+    brisanceEquivalent:r=1.28
+  }
+
+  pentolite{
+    strengthEquivalent:r=1.21
+    brisanceEquivalent:r=1.26
+  }
+
+  comp_b{
+    strengthEquivalent:r=1.31
+    brisanceEquivalent:r=1.27
+  }
+
+  amatol_tnt{
+    strengthEquivalent:r=1
+    brisanceEquivalent:r=0.94
+  }
+
+  amatol{
+    strengthEquivalent:r=1
+    brisanceEquivalent:r=0.94
+  }
+
+  exp_d_tetryl{
+    strengthEquivalent:r=0.98
+    brisanceEquivalent:r=0.99
+  }
+
+  exp_d{
+    strengthEquivalent:r=0.98
+    brisanceEquivalent:r=0.99
+  }
+
+  fp60_40{
+    strengthEquivalent:r=1
+    brisanceEquivalent:r=1
+  }
+
+  fp02{
+    strengthEquivalent:r=1
+    brisanceEquivalent:r=1
+  }
+
+  fp02_tetraxhlornaphtalin{
+    strengthEquivalent:r=1
+    brisanceEquivalent:r=1
+  }
+
+  tetryl{
+    strengthEquivalent:r=1.45
+    brisanceEquivalent:r=1.2
+  }
+
+  ph_salz{
+    strengthEquivalent:r=1.43
+    brisanceEquivalent:r=1.22
+  }
+
+  a_ix_2{
+    strengthEquivalent:r=1.7
+    brisanceEquivalent:r=1.4
+  }
+
+  a_ix_1{
+    strengthEquivalent:r=1.7
+    brisanceEquivalent:r=1.4
+  }
+
+  h10{
+    strengthEquivalent:r=1.7
+    brisanceEquivalent:r=1.4
+  }
+
+  h5{
+    strengthEquivalent:r=1.7
+    brisanceEquivalent:r=1.4
+  }
+
+  np_10{
+    strengthEquivalent:r=1.7
+    brisanceEquivalent:r=1.3
+  }
+
+  np_15{
+    strengthEquivalent:r=1.7
+    brisanceEquivalent:r=1.3
+  }
+
+  petn{
+    strengthEquivalent:r=1.7
+    brisanceEquivalent:r=1.3
+  }
+
+  tnt{
+    strengthEquivalent:r=1
+    brisanceEquivalent:r=1
+  }
+}
+
+explosiveTypeToSplashParams{
+  explosiveMassToInnerRadius{
+    p0:p2=0.01, 0.015
+    p1:p2=0.2, 0.04
+    p2:p2=0.6, 0.05
+    p3:p2=2.5, 0.9
+    p4:p2=5, 1.3
+    p5:p2=6, 1.6
+    p6:p2=8, 2.2
+    p7:p2=25, 3
+    p8:p2=65, 5.5
+    p9:p2=120, 8
+    p10:p2=300, 10
+    p11:p2=500, 15
+    p12:p2=700, 30
+    p13:p2=1500, 60
+    p14:p2=3500, 120
+  }
+
+  explosiveMassToOuterRadius{
+    p0:p2=0.01, 0.15
+    p1:p2=0.1, 3
+    p3:p2=25, 4
+    p4:p2=65, 7
+    p5:p2=120, 12
+    p6:p2=300, 14
+    p7:p2=500, 19
+    p8:p2=700, 35
+    p9:p2=1500, 65
+    p10:p2=3500, 125
+  }
+
+  explosiveMassToPenetration{
+    p0:p2=0.005, 0.1
+    p1:p2=0.1, 1
+    p2:p2=0.2, 1.2
+    p3:p2=2, 35
+    p4:p2=3, 45
+    p5:p2=5, 50
+    p6:p2=6, 60
+    p7:p2=8, 70
+    p8:p2=25, 80
+    p9:p2=40, 90
+    p10:p2=120, 100
+    p11:p2=300, 120
+    p12:p2=500, 150
+    p13:p2=700, 200
+    p14:p2=1500, 300
+    p15:p2=3500, 350
+  }
+
+  explosiveMassToDamage{
+    p0:p2=0.01, 45
+    p1:p2=0.03, 70
+    p1:p2=0.1, 110
+    p2:p2=0.2, 130
+    p3:p2=0.6, 250
+    p4:p2=2.5, 400
+    p5:p2=8, 450
+    p6:p2=25, 500
+    p7:p2=40, 850
+    p8:p2=120, 1800
+    p9:p2=250, 4000
+    p10:p2=500, 10000
+    p11:p2=700, 12500
+    p12:p2=1500, 21000
+    p13:p2=3500, 30000
+  }
+}
+
+explosiveTypeToShattersParams{
+  aphe_sc{
+    fillingRatio:r=0.0005
+
+    explosiveMassToRadius{
+      p0:p2=0.01, 1.5
+      p1:p2=0.2, 5
+      p2:p2=0.6, 7
+      p3:p2=3, 12
+      p4:p2=7, 15
+    }
+
+    explosiveMassToPenetration{
+      p0:p2=0.01, 4
+      p1:p2=0.05, 5
+      p2:p2=0.2, 6
+      p3:p2=0.6, 8
+      p4:p2=3, 9
+      p5:p2=7, 12
+    }
+
+    explosiveMassToDamage{
+      p0:p2=0.01, 5
+      p1:p2=0.2, 17
+      p2:p2=0.6, 22
+      p3:p2=3, 25
+      p4:p2=7, 27
+    }
+
+    bodyMassToShattersCount{
+      p0:p2=0.05, 5
+      p1:p2=0.5, 30
+      p2:p2=5, 120
+      p3:p2=10, 250
+      p4:p2=25, 450
+      p5:p2=50, 650
+    }
+  }
+
+  aphe_hc{
+    fillingRatio:r=0.02
+
+    explosiveMassToRadius{
+      p0:p2=0.01, 1.5
+      p1:p2=0.2, 4
+      p2:p2=0.6, 7
+      p3:p2=3, 12
+      p4:p2=7, 15
+    }
+
+    explosiveMassToPenetration{
+      p0:p2=0.01, 3
+      p1:p2=0.05, 5
+      p2:p2=0.2, 6
+      p3:p2=0.6, 8
+      p4:p2=3, 9
+      p5:p2=7, 12
+    }
+
+    explosiveMassToDamage{
+      p0:p2=0.01, 5
+      p1:p2=0.2, 18
+      p2:p2=0.6, 23
+      p3:p2=3, 25
+      p4:p2=7, 27
+    }
+
+    bodyMassToShattersCount{
+      p0:p2=0.05, 6
+      p1:p2=0.5, 35
+      p2:p2=5, 160
+      p3:p2=10, 270
+      p4:p2=25, 470
+      p5:p2=50, 700
+    }
+  }
+
+  he_frag{
+    fillingRatio:r=0.06
+
+    explosiveMassToRadius{
+      p0:p2=0.01, 1.5
+      p1:p2=0.2, 7
+      p2:p2=0.6, 15
+      p3:p2=3, 30
+      p4:p2=7, 45
+    }
+
+    explosiveMassToPenetration{
+      p0:p2=0.01, 4
+      p1:p2=0.03, 5
+      p1:p2=0.2, 5.5
+      p2:p2=0.6, 6
+      p3:p2=3, 9
+      p4:p2=7, 12
+    }
+
+    explosiveMassToDamage{
+      p0:p2=0.01, 4
+      p1:p2=0.03, 4.7
+      p1:p2=0.2, 5.5
+      p2:p2=0.6, 6
+      p3:p2=2.5, 20
+      p4:p2=7, 50
+    }
+
+    bodyMassToShattersCount{
+      p0:p2=0.05, 15
+      p1:p2=0.5, 50
+      p1:p2=0.7, 70
+      p2:p2=5, 300
+      p3:p2=10, 350
+      p4:p2=25, 900
+      p5:p2=50, 1300
+    }
+  }
+
+  he_heat{
+    fillingRatio:r=0.3
+
+    explosiveMassToRadius{
+      p0:p2=0.01, 1.5
+      p1:p2=0.2, 7
+      p2:p2=0.6, 15
+      p3:p2=3, 25
+      p4:p2=7, 45
+      p5:p2=25, 70
+      p6:p2=40, 100
+    }
+
+    explosiveMassToPenetration{
+      p0:p2=0.01, 3
+      p1:p2=0.2, 5
+      p2:p2=0.6, 6
+      p3:p2=3, 7
+      p4:p2=7, 8
+      p5:p2=25, 10
+      p6:p2=40, 13
+    }
+
+    explosiveMassToDamage{
+      p0:p2=0.01, 4
+      p1:p2=0.2, 4
+      p2:p2=0.6, 5
+      p3:p2=2.5, 25
+      p4:p2=7, 30
+      p5:p2=25, 35
+      p6:p2=40, 40
+    }
+
+    bodyMassToShattersCount{
+      p0:p2=0.05, 20
+      p1:p2=0.5, 100
+      p2:p2=5, 350
+      p3:p2=10, 600
+      p4:p2=25, 1100
+      p5:p2=50, 2200
+      p6:p2=100, 3000
+    }
+  }
+
+  bombs_he_frag{
+    fillingRatio:r=0.8
+
+    explosiveMassToRadius{
+      p0:p2=0.01, 1.5
+      p1:p2=0.2, 7
+      p2:p2=0.6, 15
+      p3:p2=3, 25
+      p4:p2=7, 45
+      p5:p2=25, 70
+      p6:p2=40, 100
+      p7:p2=120, 120
+      p8:p2=300, 150
+      p9:p2=500, 200
+      p10:p2=2000, 300
+    }
+
+    explosiveMassToPenetration{
+      p0:p2=0.01, 3
+      p1:p2=0.2, 5
+      p2:p2=0.6, 6
+      p3:p2=3, 7
+      p4:p2=7, 8
+      p5:p2=25, 10
+      p6:p2=40, 13
+      p7:p2=120, 13
+      p8:p2=300, 15
+      p9:p2=2000, 17
+    }
+
+    explosiveMassToDamage{
+      p0:p2=0.01, 4
+      p1:p2=0.2, 4
+      p2:p2=0.6, 5
+      p3:p2=3, 6
+      p4:p2=7, 7
+      p5:p2=25, 10
+      p6:p2=40, 12
+      p7:p2=120, 15
+      p8:p2=300, 16
+      p9:p2=2000, 20
+    }
+
+    bodyMassToShattersCount{
+      p0:p2=0.05, 20
+      p1:p2=0.5, 100
+      p2:p2=5, 350
+      p3:p2=10, 700
+      p4:p2=25, 1500
+      p5:p2=50, 5000
+      p6:p2=100, 10000
+      p7:p2=250, 20000
+      p8:p2=500, 40000
+      p9:p2=1000, 80000
+      p10:p2=2000, 100000
+    }
+  }
+}

@@ -1,0 +1,53 @@
+dynamic_storm_zone{
+  _use:t="storm_zone_with_forcefield"
+  moving_zone__manual_activation:b=yes
+  moving_zone__movingVelocity:r=0
+
+  "dynamic_storm_zone:tag"{}
+  _group{
+    _tags:t="server"
+    moving_zone__chooseFinalExtraction:b=no
+  }
+}
+
+dynamic_zone_weather{
+  _use:t="zone_weather"
+  dynamic_zone_weather__recoveryTimePerShrink:r=15
+  dynamic_zone_weather__initialStormPower:r=0.5
+  zone_weather__manualActivation:b=yes
+
+  "dynamic_zone_weather:tag"{}
+}
+
+dynamic_zone_militant_extraction{
+  _use:t="extraction_point_with_guards"
+
+  "extraction_for_everyone:tag"{}
+  "dynamic_zone_militant_extraction:tag"{}
+}
+
+dynamic_zone_controller{
+  _use:t="replicating"
+  dynamic_zone_controller__shrinksToFinalExtractionRng:ip2=5, 6
+  dynamic_zone_controller__finalZoneRadius:r=50
+  dynamic_zone_controller__finalZoneShrinkingTime:r=45
+  dynamic_zone_controller__finalZoneWaitingTime:r=240
+  dynamic_zone_controller__waitingForZoneShrinkingTime:r=110
+  dynamic_zone_controller__zoneShrinkingTime:r=90
+  dynamic_zone_controller__waitingForZoneShrinkingTimePow:r=0.8
+  dynamic_zone_controller__zoneShrinkingTimePow:r=0.95
+  dynamic_zone_controller__shrinksToFinalExtraction:i=0
+
+  "dynamic_zone_controller:tag"{}
+  "dynamic_zone_controller__finalExtractionPointEid:eid"{}
+  "dynamic_zone_controller__stormZoneEid:eid"{}
+  "dynamic_zone_controller__zoneWeatherEid:eid"{}
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    dynamic_zone_controller__currentShrinkIndex:i=0
+    dynamic_zone_controller__state:i=0
+  }
+
+  "dynamic_zone_controller__shrinksPosAndRadius:list<p4>"{}
+}

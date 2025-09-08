@@ -1,0 +1,98 @@
+blood_puddles__debugger{
+  _singleton:b=yes
+  _tags:t="render,dev"
+  blood_puddle_dbg__mode:i=0
+
+  "blood_puddle_dbg__render_node:dafg::NodeHandle"{}
+}
+
+blood_puddles_settings{
+  singleton:b=yes
+  _tags:t="render"
+  _tracked:t="blood_puddles_settings__groupAttributes"
+  _tracked:t="blood_puddles_settings__visualAttributes"
+
+  "blood_puddles_settings__atlas:object"{
+    baseTex:t="decal_growth_liquid_atlas_separate_tex_n"
+    flowmapTex:t="decal_growth_liquid_atlas_separate_tex_m"
+    atlasSize:p2=4, 8
+  }
+
+  "blood_puddles_settings__groupAttributes:object"{
+    "puddle:object"{
+      appearTime:r=25
+      minDistance:r=0.25
+      sizeRange:p2=0.5, 2
+      variantsCount:i=4
+      stayFreshTime:r=60
+      bloodNormalDominanceTerm:r=0.85
+      edgeWidthScale:r=0.9
+    }
+
+    "splash:object"{
+      appearTime:r=1
+      minDistance:r=0.01
+      sizeRange:p2=1, 1.5
+      variantsCount:i=4
+      effectTemplateName:t="hit_blood_ground_effect"
+      maxEffectsPerFrame:i=2
+      bloodNormalDominanceTerm:r=0.9
+      edgeWidthScale:r=0.5
+    }
+
+    "spray:object"{
+      appearTime:r=1
+      minDistance:r=0.01
+      sizeRange:p2=0.25, 0.5
+      variantsCount:i=4
+      bloodNormalDominanceTerm:r=0.8
+      edgeWidthScale:r=0.5
+    }
+
+    "leak:object"{
+      appearTime:r=10
+      minDistance:r=0.1
+      sizeRange:p2=0.8, 1.5
+      variantsCount:i=4
+      bloodNormalDominanceTerm:r=0.95
+      edgeWidthScale:r=0.1
+    }
+
+    "footprint:object"{
+      appearTime:r=0.1
+      minDistance:r=0.01
+      sizeRange:p2=0.3, 0.3
+      strengthDecayPerStep:r=0.8
+      minStrength:r=0.2
+      bloodNormalDominanceTerm:r=0.1
+      edgeWidthScale:r=0.93
+
+      "variantsCounts:list<i>"{
+        bareLeg:i=4
+        footWearOne:i=4
+      }
+    }
+
+    "explosion:object"{
+      appearTime:r=10
+      minDistance:r=0.1
+      sizeRange:p2=0.8, 1.5
+      variantsCount:i=4
+      maxVerticalThreshold:r=0.7
+      bloodNormalDominanceTerm:r=0.95
+      edgeWidthScale:r=0.1
+    }
+  }
+
+  "blood_puddles_settings__visualAttributes:object"{
+    startSize:r=0.05
+    colorAtHighIntensity:p3=0.14, 0, 0
+    colorAtLowIntensity:p3=0.05, 0, 0
+    reflectance:r=0.15
+    smoothness:r=1
+    smoothnessOnEdge:r=1
+    landscapeReflectance:r=0.21
+    landscapeSmoothnessEdge:r=0.4
+    centerAlbedoDarkening:r=0.5
+  }
+}

@@ -1,0 +1,124 @@
+repair_kit_item{
+  _use:t="item"
+  animchar__res:t="repair_tools_char"
+  collres__res:t="repair_tools_collision"
+  item__proto:t="repair_kit_item"
+  item__name:t="items/repair_kit"
+  item__type:t="repair_kit"
+  item__lootSoundType:t="healing"
+  item__weight:r=2.5
+  item__volume:r=3.5
+  repair_kit__useCounter:i=0
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.03, 0]]
+
+  "item__alwaysUseful:tag"{}
+  "item__isRepairTool:tag"{}
+}
+
+m30_luftwaffe_drilling_magazine{
+  _use:t="item_magazine"
+  animchar__res:t="browning_auto_5_ammo_char"
+  item__proto:t="m30_luftwaffe_drilling_magazine"
+  ammo_holder__templateName:t="m30_luftwaffe_drilling_magazine"
+  item_holder__maxItemCount:i=2
+  item__weight:r=0.2
+  item__volume:r=0.1
+  item__name:t="items/m30_luftwaffe_drilling_magazine"
+  collres__res:t="browning_auto_5_ammo_collision"
+}
+
+rocket_shell{
+  havePairCollision:b=no
+  start_omega:p3=0, 0, 0
+  _use:t="block_rethrow_shell"
+  phys_obj_thrust__thrust:r=48
+  phys_obj_thrust__direction:p3=1, 0, 0
+  phys_obj_thrust__offset:p3=-0.1, 0, 0
+  phys_obj_thrust__duration:r=10
+  phys_obj_thrust__endTime:r=0
+  shell__expl_node:t="weapon"
+  shell__active:b=yes
+  shell__launchTime:r=-1
+  shell__launchAtTime:r=0
+  shell__cleanupTime:r=30
+  shell__fuseTime:r=0
+  shell__explNodeIdx:i=-1
+
+  "shell__explodeOnContact:tag"{}
+}
+
+m6a1_bazooka_shell{
+  animchar__res:t="m6a1_bazooka_ammo_char"
+  collres__res:t="m6a1_bazooka_ammo_collision"
+}
+
+m6a1_bazooka_phys{
+  _use:t="projectile_phys"
+  _use:t="m6a1_bazooka_shell"
+  _use:t="rocket_shell"
+  _use:t="projectile_trail_fx"
+  phys_obj_net_phys__blk:t="gamedata/weapons/shell/m6a1_bazooka.blk"
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_grenade_explosion"
+}
+
+m6a1_bazooka_item{
+  _use:t="item_grenade"
+  _use:t="m6a1_bazooka_shell"
+  _use:t="boxed_ammo"
+  item__proto:t="m6a1_bazooka_item"
+  item__shell:t="gamedata/weapons/shell/m6a1_bazooka.blk"
+  item__weight:r=1.5
+  item__volume:r=0.5
+  item__name:t="items/m6a1_bazooka"
+  item__grenadeType:t="shell"
+  ammo_holder__id:i=-1
+  ammo_holder__templateName:t="m6a1_bazooka_item"
+  boxed_item__template:t="m6a1_bazooka_item"
+  item__countPerStack:i=1
+  item__weightPerStack:r=1.5
+  item__volumePerStack:r=0.5
+}
+
+m1911_colt_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="m1911_colt_ammo_char"
+  item__proto:t="m1911_colt_magazine"
+  ammo_holder__templateName:t="m1911_colt_magazine"
+  item_holder__maxItemCount:i=7
+  item_holder__boxedItemTemplate:t="box_45_acp_magazine"
+  item__baseWeight:r=0.245
+  item__volume:r=2
+  item__name:t="items/m1911_colt_magazine"
+  collres__res:t="m1911_colt_ammo_collision"
+  item__marketPrice:i=165
+  showroom_item__customZoom:r=0.8
+  showroom_item__customZoomBordersRng:p2=0.6, 1.2
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_m1911_colt"
+  }
+}
+
+mosin_magazine{
+  _use:t="item_magazine"
+  animchar__res:t="m1903_springfield_ammo_char"
+  item__proto:t="mosin_magazine"
+  ammo_holder__templateName:t="mosin_magazine"
+  item_holder__maxItemCount:i=5
+  item__weight:r=0.2
+  item__volume:r=0.1
+  item__name:t="items/mosin_magazine"
+  collres__res:t="m1903_springfield_ammo_collision"
+}
+
+winchester_model_1912_magazine{
+  _use:t="item_magazine"
+  animchar__res:t="browning_auto_5_ammo_char"
+  item__proto:t="winchester_model_1912_magazine"
+  ammo_holder__templateName:t="winchester_model_1912_magazine"
+  item_holder__maxItemCount:i=6
+  item__weight:r=0.3
+  item__volume:r=0.15
+  item__name:t="items/winchester_model_1912_magazine"
+  collres__res:t="browning_auto_5_ammo_collision"
+}

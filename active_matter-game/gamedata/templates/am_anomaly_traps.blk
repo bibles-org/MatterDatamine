@@ -1,0 +1,545 @@
+trigger_trap_activator{
+  trigger_trap_activator__updateAt:r=0
+  trigger_trap_activator__interval:r=0.15
+
+  "trigger_trap_activator:tag"{}
+  "trigger_trap_activator__mask:u32"{
+    value:i=0
+  }
+}
+
+monster_trigger_trap_activator{
+  _use:t="trigger_trap_activator"
+
+  "trigger_trap_activator__maskItems:shared:list<t>"{
+    i:t="MONSTER"
+  }
+}
+
+human_trigger_trap_activator{
+  _use:t="trigger_trap_activator"
+
+  "trigger_trap_activator__maskItems:shared:list<t>"{
+    i:t="HUMAN"
+  }
+}
+
+human_phys_trigger_trap_activator{
+  _use:t="human_trigger_trap_activator"
+
+  "trigger_trap_activator__traceNodeNames:shared:list<t>"{
+    i:t="Bip01 Spine"
+    i:t="Bip01 L Calf"
+    i:t="Bip01 Neck"
+    i:t="Bip01 R Thigh"
+  }
+
+  "trigger_trap_activator__traceNodes:list<i>"{}
+}
+
+mindcontrolled_trigger_trap_activator{
+  _use:t="trigger_trap_activator"
+
+  "trigger_trap_activator__maskItems:shared:list<t>"{
+    i:t="HUMAN"
+    i:t="MINDCONTROLLED"
+  }
+}
+
+trigger_trap_reset_in_5_sec{
+  trigger_trap_reset__resetAt:r=-1
+  trigger_trap_reset__timeToReset:r=5
+}
+
+sphere_trigger_trap{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  trigger_trap__affectRadius:r=5
+  trigger_trap__triggered:b=no
+
+  "trigger_trap__humanAffectTemplates:list<t>"{}
+  "trigger_trap__mask:u32"{
+    value:i=-1
+  }
+}
+
+trigger_trap_mark_entities_around_on_trigger{
+  trigger_trap_mark_entities_around_on_trigger__radius:r=3
+  trigger_trap_mark_entities_around_on_trigger__gridName:t=""
+  trigger_trap_mark_entities_around_on_trigger__requiredTag:t=""
+  trigger_trap_mark_entities_around_on_trigger__markTemplate:t=""
+}
+
+mark_entities_around_on_disappear{
+  mark_entities_around_on_disappear__radius:r=3
+  mark_entities_around_on_disappear__gridName:t=""
+  mark_entities_around_on_disappear__requiredTag:t=""
+  mark_entities_around_on_disappear__markTemplate:t=""
+}
+
+anomaly_trap_visual_fx_controller{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="gameClient"
+
+    "anomaly_trap_visual_fx_controller__fxTemplates:list<t>"{}
+    "anomaly_trap_visual_fx_controller__fxEids:list<eid>"{}
+  }
+}
+
+frog_trap_visual_shards_fx{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="anomaly_trampoline_shards_a_fx"
+
+    effect{}
+  }
+}
+
+frog_trap_visual_distortion_fx{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="anomaly_trampoline_ground_distortion_a_fx"
+
+    effect{}
+  }
+}
+
+frog_trap_visual_fx_controller{
+  _use:t="anomaly_trap_visual_fx_controller"
+
+  _group{
+    _tags:t="gameClient"
+
+    "anomaly_trap_visual_fx_controller__fxTemplates:list<t>"{
+      item:t="frog_trap_visual_shards_fx"
+      item:t="frog_trap_visual_distortion_fx"
+    }
+  }
+}
+
+frog_trap_drop{
+  _use:t="spawn_random_entity_on_disappear"
+  spawn_random_entity_on_disappear__chance:r=0.1
+
+  "spawn_random_entity_on_disappear__templates:array"{
+    "item:object"{
+      weight:r=5
+      template:t="active_matter_pile+coin_item_count_1+item_in_world"
+    }
+
+    "item:object"{
+      weight:r=1
+      template:t="active_matter_pile+coin_item_count_2+item_in_world"
+    }
+  }
+}
+
+empty_frog_trap_drop{
+  _use:t="frog_trap_drop"
+  spawn_random_entity_on_disappear__chance:r=0
+
+  "spawn_random_entity_on_disappear__templates:array"{}
+}
+
+onboarding_frog_trap_drop{
+  _use:t="frog_trap_drop"
+
+  "spawn_random_entity_on_disappear__templates:array"{
+    "item:object"{
+      weight:r=5
+      template:t="active_matter_pile+coin_item_count_1+item_in_world+onboarding_phase_temporary_entity"
+    }
+
+    "item:object"{
+      weight:r=1
+      template:t="active_matter_pile+coin_item_count_2+item_in_world+onboarding_phase_temporary_entity"
+    }
+  }
+}
+
+anomaly_trap{
+  _use:t="replicating"
+
+  "anomaly_trap:tag"{}
+}
+
+frog_trap{
+  _use:t="anomaly_trap"
+  _use:t="sphere_trigger_trap"
+  _use:t="entity_bound_area"
+  _use:t="frog_trap_drop"
+  _use:t="traceable_sphere"
+  _use:t="optimised_visual_effect_source"
+  _use:t="triggerable_anomaly_trap_sound"
+  _use:t="invulnerable"
+  optimised_effect_source__template:t="frog_trap_visual_fx_controller"
+  entity_bound_area__name:t="POLYAREA_DANGER"
+  entity_bound_area__radius:r=2
+  material:t="steel"
+  needsBlood:b=no
+  grid_obj__gridType:t="traceable_spheres"
+  net__scopeDistanceSq:r=108900
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  sphere_zone__radius:r=0.9
+  sphere_trigger_trap__triggerRadius:r=1
+  trigger_trap__affectRadius:r=12
+  frog_trap__pushAffectTemplate:t="frog_trap_anim_affect"
+  frog_trap__pushAffectMinDistancePercent:r=0.7
+  frog_trap__pushPitch:r=0
+  frog_trap__forceCenterYOffset:r=-1.5
+  frog_trap__pushSpeed:r=18
+  frog_trap__pushDistancePower:r=1.75
+  frog_trap__pushDistancePowerScaleLimits:p2=0, 1
+  frog_trap__pushEnemyEffectTemplateTtl:r=2.5
+  frog_trap__pushImmunityAmount:r=0
+  frog_trap__pushHitTagPowerMult:r=0.5
+  frog_trap__pushAiDistancePowerMult:r=1
+  frog_trap__vehiclePointOffset:p3=0, -1.65, 0
+  frog_trap__vehicleEnergyScale:r=7000
+  kill_tracking_tag:t="trap_frog"
+  loud_noise__radius:r=50
+  loud_noise__noiseValue:r=180
+
+  "trap_triggerable_by_projectile:tag"{}
+  grid_obj{}
+  "trigger_trap__humanAffectTemplates:list<t>"{
+    i:t="concussion_affect"
+    i:t="confusion_affect"
+  }
+
+  "frog_trap:tag"{}
+  _group{
+    _tags:t="gameClient"
+    anomaly_trap__triggerFx:t="explosion_anomaly_frog_trap_cmps_fx"
+    anomaly_trap__triggerFxScale:r=0.2
+    anomaly_trap__triggerFxOffset:p3=0, 0.1, 0
+
+    "frog_trap__debrisFxPerPhysMat:shared:object"{
+      default:t="explosion_debris_1_fx"
+      stone:t="explosion_debris_2_fx"
+    }
+
+    "frog_trap__debrisFxTypePerPhysMatId:object"{}
+  }
+
+  _group{
+    _tags:t="sound"
+    trap_trigger_sound__path:t="impact/trap_gravity"
+  }
+}
+
+frog_trap_onboarding{
+  _use:t="frog_trap"
+  _use:t="onboarding_frog_trap_drop"
+  spawn_random_entity_on_disappear__chance:r=1
+  frog_trap__pushSpeed:r=10
+  miniraid_trigger_on_trap_triggered__triggerName:t="miniraid_trap_triggered"
+}
+
+teleport_trap_anomaly_out_fx{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="anomaly_teleport_out_cmps_fx"
+
+    effect{}
+  }
+}
+
+teleport_trap_visual_bubbles_fx{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="anomaly_teleport_bubbles_a_fx"
+
+    effect{}
+  }
+}
+
+teleport_trap_visual_distortion_fx{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="anomaly_teleport_ground_distortion_a_fx"
+
+    effect{}
+  }
+}
+
+teleport_trap_visual_lights_fx{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="anomaly_teleport_lights_a_fx"
+
+    effect{}
+  }
+}
+
+teleport_trap_visual_fx_controller{
+  _use:t="anomaly_trap_visual_fx_controller"
+
+  _group{
+    _tags:t="gameClient"
+
+    "anomaly_trap_visual_fx_controller__fxTemplates:list<t>"{
+      item:t="teleport_trap_visual_bubbles_fx"
+      item:t="teleport_trap_visual_distortion_fx"
+      item:t="teleport_trap_visual_lights_fx"
+    }
+  }
+}
+
+teleport_trap_drop{
+  _use:t="spawn_random_entity_on_disappear"
+  spawn_random_entity_on_disappear__chance:r=0.1
+
+  "spawn_random_entity_on_disappear__templates:array"{
+    "item:object"{
+      weight:r=5
+      template:t="active_matter_pile+coin_item_count_1+item_in_world"
+    }
+
+    "item:object"{
+      weight:r=1
+      template:t="active_matter_pile+coin_item_count_2+item_in_world"
+    }
+  }
+}
+
+teleport_trap{
+  _use:t="anomaly_trap"
+  _use:t="sphere_trigger_trap"
+  _use:t="entity_bound_area"
+  _use:t="teleport_trap_drop"
+  _use:t="traceable_sphere"
+  _use:t="optimised_visual_effect_source"
+  _use:t="triggerable_anomaly_trap_sound"
+  _use:t="invulnerable"
+  optimised_effect_source__template:t="teleport_trap_visual_fx_controller"
+  entity_bound_area__name:t="POLYAREA_DANGER"
+  entity_bound_area__radius:r=2
+  material:t="steel"
+  needsBlood:b=no
+  grid_obj__gridType:t="traceable_spheres"
+  net__scopeDistanceSq:r=108900
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  sphere_zone__radius:r=0.9
+  sphere_trigger_trap__triggerRadius:r=1
+  trigger_trap__affectRadius:r=2.5
+  teleport_trap__affectTemplate:t="teleport_trap_affect"
+  teleport_trap__physObjAffectTemplate:t="teleport_trap_phys_obj_affect"
+  teleport_trap__centerOffset:p3=0, 0.15, 0
+  kill_tracking_tag:t="trap_teleport"
+  loud_noise__radius:r=10
+  loud_noise__noiseValue:r=30
+
+  "trap_triggerable_by_projectile:tag"{}
+  grid_obj{}
+  "trigger_trap__humanAffectTemplates:list<t>"{
+    i:t="concussion_affect"
+    i:t="confusion_affect"
+  }
+
+  "teleport_trap:tag"{}
+  _group{
+    _tags:t="gameClient"
+    anomaly_trap__triggerFx:t="explosion_anomaly_teleport_trap_cmps_fx"
+    anomaly_trap__triggerFxScale:r=1.5
+    anomaly_trap__triggerFxOffset:p3=0, 1, 0
+  }
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/traps/trap_teleport"
+  }
+
+  _group{
+    _tags:t="sound"
+    trap_trigger_sound__path:t="impact/trap_teleport"
+  }
+}
+
+shadow_realm_effect_common{
+  _use:t="replicated_game_effect"
+
+  "game_effect__disableCollision:tag"{}
+  "game_effect__invisibility:tag"{}
+}
+
+shadow_realm_effect_human{
+  _use:t="shadow_realm_effect_common"
+
+  "game_effect__invisibleBody:tag"{}
+}
+
+shadow_realm_effect_monster{
+  _use:t="shadow_realm_effect_common"
+
+  "game_effect__disableFlags:list<t>"{
+    item:t="beh_tree__enabled"
+    item:t="animchar_render__enabled"
+  }
+
+  "game_effect__hiddenAnimcharAttaches:list<eid>"{}
+}
+
+teleport_trap_affect{
+  _use:t="replicated_effect_with_duration"
+  _use:t="postfx_fade_affect"
+  _use:t="am_storm_zone_ignore_affect"
+  game_effect__perkName:t="gamedata/items/teleport_trap_pulling.blk"
+  postfx_fade_affect__layerName:t="teleport_trap"
+  postfx_fade_affect__fadeColor:c=5, 7, 5, 255
+  postfx_fade_affect__fadeInTime:r=0.25
+  postfx_fade_affect__fadeOutTime:r=0.5
+  game_effect__timeToDestroy:r=0.85
+  game_effect__destroyAt:r=0
+  teleport_trap_affect__center:p3=0, 0, 0
+  teleport_trap_affect__radiusRng:p2=10, 20
+  teleport_trap_affect__heightRng:p2=5.35, 8.35
+  teleport_trap_affect__state:i=0
+  _tracked:t="teleport_trap_affect__state"
+  teleport_trap_affect__appearedAt:r=0
+  teleport_trap_affect__pullPower:r=650
+  teleport_trap_affect__shadowRealmTime:r=0.2
+  teleport_trap_affect__teleportTime:r=0.65
+  teleport_trap_affect__teleportTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  teleport_trap_affect__shodowRealmEffectHuman:t="shadow_realm_effect_human"
+  teleport_trap_affect__shodowRealmEffectMonster:t="shadow_realm_effect_monster"
+
+  "game_effect__uncontrollable:tag"{}
+  "teleport_trap_affect__shadowRealmSubEffect:eid"{}
+  _group{
+    _tags:t="gameClient"
+    teleport_trap_affect__teleportFx:t="explosion_anomaly_teleport_trap_out_cmps_fx"
+    teleport_trap_affect__teleportFxScale:r=1.25
+    teleport_trap_affect__teleportFxOffset:p3=0, 1, 0
+  }
+
+  _group{
+    _tags:t="sound"
+    teleport_trap_affect_sound__path:t="am/objects/teleport/teleport_start_2"
+  }
+}
+
+teleport_trap_phys_obj_affect{
+  _use:t="teleport_trap_affect"
+  teleport_trap_affect__shadowRealmTime:r=0
+  teleport_trap_affect__teleportTime:r=0.01
+}
+
+frog_trap_cluster{
+  _use:t="base_star_cluster"
+  star_cluster__radius:r=20
+  star_cluster__startingSeed:i=0
+  star_cluster__initAttemptsPerSpawn:i=10
+  star_cluster__interval:r=5
+  star_cluster__initInterval:r=0.2
+  star_cluster__rayCount:i=6
+  star_cluster__minProximity:r=5
+  star_cluster__rndSpawnRadius:r=5
+  star_cluster__playerCheckRadius:r=100
+  star_cluster__spawnCount:i=8
+  star_cluster__grid:t="traceable_spheres"
+
+  "star_cluster__spawnTemplates:list<t>"{
+    i:t="frog_trap+recreate_on_disappear_after_5m+if_there_no_heroes_nearby+star_cluster_child"
+  }
+}
+
+teleport_trap_cluster{
+  _use:t="base_star_cluster"
+  star_cluster__radius:r=20
+  star_cluster__startingSeed:i=0
+  star_cluster__initAttemptsPerSpawn:i=10
+  star_cluster__interval:r=5
+  star_cluster__initInterval:r=0.2
+  star_cluster__rayCount:i=6
+  star_cluster__minProximity:r=5
+  star_cluster__rndSpawnRadius:r=5
+  star_cluster__playerCheckRadius:r=100
+  star_cluster__spawnCount:i=8
+  star_cluster__grid:t="traceable_spheres"
+
+  "star_cluster__spawnTemplates:list<t>"{
+    i:t="teleport_trap+recreate_on_disappear_after_5m+if_there_no_heroes_nearby+star_cluster_child"
+  }
+}
+
+magnet_sphere_debug_draw{
+  "magnet_sphere_debug_draw:tag"{}
+}
+
+magnet_sphere_effect{
+  _use:t="replicated_game_effect"
+
+  "magnet_sphere_effect__magnetSphereEid:eid"{}
+}
+
+repulsive_magnet_sphere{
+  _use:t="am_triggerable_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  sphere_zone__radius:r=3
+  magnet_sphere__innerSphereRadiusFactor:r=0.4
+  magnet_sphere__powFactor:r=2
+  magnet_sphere__innerPushForce:r=55
+  magnet_sphere__outerPushForce:r=30
+  magnet_sphere__magnetEffect:t="magnet_sphere_effect"
+
+  "humanTriggerable:tag"{}
+}
+
+attracting_magnet_sphere{
+  _use:t="repulsive_magnet_sphere"
+  magnet_sphere__innerSphereRadiusFactor:r=0.05
+  magnet_sphere__powFactor:r=1.5
+  magnet_sphere__innerPushForce:r=0
+  magnet_sphere__outerPushForce:r=-45
+}
+
+invisible_wakeup_enemies_flowerman_trap{
+  _use:t="anomaly_trap"
+  _use:t="sphere_trigger_trap"
+  _use:t="entity_bound_area"
+  _use:t="traceable_sphere"
+  _use:t="invulnerable"
+  sphere_zone__radius:r=0.4
+  trigger_trap__radius:r=0.7
+  trigger_trap__addSubTemplateOnTrigger:t="trigger_trap_reset_in_5_sec"
+  entity_bound_area__radius:r=0.5
+  entity_bound_area__name:t="POLYAREA_DANGER"
+  material:t="wood"
+  needsBlood:b=no
+  grid_obj__gridType:t="traceable_spheres"
+  net__scopeDistanceSq:r=108900
+  nphys_obstacle__radius:r=0.3
+  nphys_obstacle__numSegments:i=6
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "trigger_trap__affectTemplates:list<t>"{
+    it:t="flowerman_trap_wakeup_all_around"
+    it:t="flowerman_trap_wakeup_enemies_fx"
+  }
+
+  "trigger_trap__humanAffectTemplates:list<t>"{
+    i:t="wakeup_trigger_affect"
+  }
+
+  "trigger_trap__maskItems:shared:list<t>"{
+    i:t="HUMAN"
+  }
+
+  "trap_triggerable_by_projectile:tag"{}
+  "flower_trap:tag"{}
+  grid_obj{}
+}

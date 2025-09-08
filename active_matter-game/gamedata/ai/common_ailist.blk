@@ -1,0 +1,1590 @@
+patroller{
+  name:t="sub.patroller"
+}
+
+indoorPatroller{
+  name:t="sub.indoorPatroller"
+}
+
+outdoorPatroller{
+  name:t="sub.outdoorPatroller"
+}
+
+clampedPatroller{
+  name:t="sub.clampedPatroller"
+}
+
+sequencer{
+  name:t="sub.trySelfHeal"
+
+  shouldHeal{}
+  ensureWeaponSlot{
+    slotName:t="unarmedWeaponSlot"
+  }
+
+  success{
+    useMedkit{}
+  }
+
+  wait{
+    range:p2=0.2, 0.2
+    resetable:b=yes
+  }
+
+  chooseBestWeapon{
+    selectWeapon:b=yes
+  }
+}
+
+sequencer{
+  name:t="sub.isAimingAtFriend"
+
+  success{
+    findAimTargetInGrid{
+      blackboardParamName:t="aimTarget"
+    }
+  }
+
+  isEntityFriendly{
+    blackboardParamName:t="aimTarget"
+  }
+}
+
+sequencer{
+  name:t="sub.randomWait"
+
+  isAgentInsideZone{
+    checkZoneTargetState:b=no
+  }
+
+  successChance{
+    chance:r=0.2
+  }
+
+  wait{
+    range:p2=0.3, 2
+    resetable:b=yes
+  }
+}
+
+sequencer{
+  name:t="sub.lookAtWanderTarget"
+
+  copyEcsValue{
+    ecsName:t="wander_looker__targetBb"
+    blackboardName:t="wanderLookEntity"
+  }
+
+  parallel{
+    lookAtEntity{
+      targetParam:t="wanderLookEntity"
+    }
+
+    wait{
+      range:p2=2, 5
+      resetable:b=yes
+    }
+  }
+
+  wait{
+    range:p2=1, 1
+    resetable:b=yes
+  }
+}
+
+sequencer{
+  name:t="sub.lagOnStart"
+
+  parallel{
+    repeat{
+      subTree{
+        treeName:t="sub.lookAtWanderTarget"
+      }
+    }
+
+    wait{
+      range:p2=0.5, 8
+      resetable:b=no
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.escapeInsideZone"
+
+  not{
+    isAgentInsideZone{
+      checkZoneTargetState:b=no
+    }
+  }
+
+  findNearestPointInsideZone{
+    posParam:t="insideZonePosition"
+  }
+
+  moveToPos{
+    incObstacles:b=no
+    posParam:t="insideZonePosition"
+    minStance:i=1
+    distThreshold:r=1
+    lookVisc:r=0.1
+    setShootDir:b=yes
+    tryClimbing:b=yes
+    sprintTimerRange:p2=10, 20
+    minDistToSprint:r=0.5
+  }
+}
+
+sequencer{
+  name:t="sub.selfExtinguish"
+
+  reaction{
+    event:t="regularCheck"
+  }
+
+  isBurning{}
+  parallel{
+    success{
+      sequencer{
+        findDanger{
+          paramName:t="enemy"
+          radiusParamName:t="enemyRadius"
+          minDanger:r=0.1
+        }
+
+        findFallbackNavmeshPoint{
+          posParam:t="hidePosition"
+          dist:r=10
+          targetParam:t="enemy"
+        }
+
+        moveToPos{
+          incObstacles:b=no
+          posParam:t="hidePosition"
+          sprintTimerRange:p2=10, 20
+          minDistToSprint:r=10
+          lookVisc:r=0.1
+        }
+      }
+    }
+
+    extinguish{}
+  }
+
+  extinguish{}
+  wait{
+    range:p2=0.05, 0.1
+    resetable:b=yes
+  }
+}
+
+sequencer{
+  name:t="sub.selfHeal"
+
+  reaction{
+    event:t="onAttract"
+
+    recalculateTree{}
+  }
+
+  orderedSelector{
+    successChance{
+      chance:r=0.8
+    }
+
+    findDanger{
+      paramName:t="enemy"
+      radiusParamName:t="enemyRadius"
+      minDanger:r=0.1
+      canBeInVehicle:b=no
+    }
+
+    subTree{
+      treeName:t="sub.trySelfHeal"
+    }
+  }
+}
+
+randomSelector{
+  name:t="sub.killTarget"
+
+  sequencer{
+    findRandomNavmeshPoint{
+      posParam:t="wanderingPosition"
+      dist:r=3
+    }
+
+    traceNavmesh{
+      posParam:t="wanderingPosition"
+      posDestParam:t="wishShootFromPos"
+      traceRange:p2=2, 4
+      angDispersion:r=180
+    }
+
+    not{
+      subTree{
+        treeName:t="sub.isAimingAtFriend"
+      }
+    }
+
+    moveShoot{
+      posParam:t="wishShootFromPos"
+      targetUnitParam:t="shootEnemy"
+      angleThreshold:r=180
+      minStance:i=2
+      shootTime:p2=0.2, 1
+      chooseStance:b=no
+      cooldownTime:p2=0.1, 0.3
+      minAimTime:p2=0.2, 0.4
+      distThreshold:r=0.5
+      maxAimSpeed:r=1050
+      lostTargetCooldownRange:p2=3, 4
+    }
+  }
+
+  orderedSelector{
+    sequencer{
+      name:t="fallback_shoot"
+
+      setPosFromEntity{
+        to:t="enemyPosition"
+        from:t="shootEnemy"
+      }
+
+      checkDistance{
+        posParam:t="enemyPosition"
+        radius:r=5
+      }
+
+      findFallbackNavmeshPoint{
+        posParam:t="fallbackPosition"
+        dist:r=10
+        targetParam:t="shootEnemy"
+      }
+
+      not{
+        subTree{
+          treeName:t="sub.isAimingAtFriend"
+        }
+      }
+
+      moveShoot{
+        posParam:t="fallbackPosition"
+        targetUnitParam:t="shootEnemy"
+        angleThreshold:r=180
+        minStance:i=2
+        shootTime:p2=0.2, 1
+        cooldownTime:p2=0.1, 0.3
+        chooseStance:b=no
+        minAimTime:p2=0.2, 0.4
+        distThreshold:r=0.5
+        maxAimSpeed:r=1050
+        lostTargetCooldownRange:p2=3, 4
+      }
+    }
+
+    sequencer{
+      not{
+        subTree{
+          treeName:t="sub.isAimingAtFriend"
+        }
+      }
+
+      shootAtUnit{
+        targetUnitParam:t="shootEnemy"
+        minStance:i=1
+        shootTime:p2=0.2, 0.7
+        cooldownTime:p2=0.1, 0.9
+        minAimTime:p2=0.2, 0.4
+        maxAimSpeed:r=720
+        maxTrackSpeed:r=360
+        lostTargetCooldownRange:p2=3, 4
+      }
+    }
+  }
+}
+
+exitHandler{
+  name:t="sub.attackEnemy"
+
+  sequencer{
+    reaction{
+      name:t="attackEnemyReactions"
+      event:t="regularCheck"
+
+      orderedSelector{
+        failed{
+          sequencer{
+            findObstaclesAlongsidePathMapped{}
+            findDoorObstacleWithNavmeshMapping{}
+            success{
+              tryOpenDoor{}
+            }
+          }
+        }
+
+        sequencer{
+          not{
+            checkTargetVisibility{
+              targetUnitParam:t="shootEnemy"
+              rayMat:t="aiRay"
+            }
+          }
+
+          copyIntVar{
+            to:t="lastKnownEnemy"
+            from:t="shootEnemy"
+          }
+
+          setPosFromEntity{
+            to:t="laskKnownEnemyPosition"
+            from:t="lastKnownEnemy"
+          }
+
+          setIntVar{
+            to:t="shootEnemy"
+            value:i=0
+          }
+
+          recalculateTree{}
+        }
+
+        sequencer{
+          not{
+            hasAmmoInGun{}
+          }
+
+          recalculateTree{}
+        }
+
+        subTree{
+          treeName:t="sub.fireReaction"
+        }
+
+        subTree{
+          treeName:t="sub.outOfZoneReaction"
+        }
+      }
+    }
+
+    not{
+      isUnderwater{}
+    }
+
+    copyIntVar{
+      to:t="prevShootEnemy"
+      from:t="shootEnemy"
+    }
+
+    findDanger{
+      paramName:t="shootEnemy"
+      radiusParamName:t="enemyRadius"
+      minDanger:r=0.1
+    }
+
+    copyIntVar{
+      to:t="lastShootEnemy"
+      from:t="shootEnemy"
+    }
+
+    success{
+      tellAlliesAboutDanger{
+        dangerParam:t="shootEnemy"
+      }
+    }
+
+    ifThen{
+      not{
+        isVarsIntEqual{
+          lhs:t="prevShootEnemy"
+          rhs:t="shootEnemy"
+        }
+      }
+
+      sequencer{
+        setPosFromEntity{
+          to:t="enemyPosition"
+          from:t="shootEnemy"
+        }
+
+        wanderLook{
+          posParam:t="enemyPosition"
+          range:p2=0.6, 0.1
+          timerMult:p2=0.1, 0.1
+          clampRange:b=yes
+          vertAim:b=yes
+          ownTimer:b=yes
+          lookTime:r=0.5
+        }
+      }
+    }
+
+    success{
+      equipWeaponsFromInventory{}
+    }
+
+    chooseBestWeapon{
+      targetParam:t="shootEnemy"
+    }
+
+    subTree{
+      treeName:t="sub.killTarget"
+    }
+  }
+
+  sequencer{
+    ifThenElse{
+      checkTarget{
+        targetUnitParam:t="shootEnemy"
+      }
+
+      sequencer{
+        copyIntVar{
+          to:t="lastKnownEnemy"
+          from:t="shootEnemy"
+        }
+
+        setPosFromEntity{
+          to:t="laskKnownEnemyPosition"
+          from:t="shootEnemy"
+        }
+      }
+
+      continue{}
+    }
+
+    setIntVar{
+      to:t="shootEnemy"
+      value:i=0
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.meleeAttack"
+
+  reaction{
+    name:t="melee_reaction"
+    event:t="regularCheck"
+
+    orderedSelector{
+      failed{
+        sequencer{
+          findObstaclesAlongsidePathMapped{}
+          findDoorObstacleWithNavmeshMapping{}
+          success{
+            tryOpenDoor{}
+          }
+        }
+      }
+
+      subTree{
+        treeName:t="sub.commonRegularReactions"
+      }
+    }
+  }
+
+  setPosFromEntity{
+    to:t="enemyPosition"
+    from:t="hideFromEnemy"
+  }
+
+  checkDistance{
+    posParam:t="enemyPosition"
+    radius:r=10
+  }
+
+  not{
+    isInstallingWeaponMod{}
+  }
+
+  changeWeapon{
+    param:t="meleeWeaponSlot"
+  }
+
+  moveToTarget{
+    targetUnitParam:t="hideFromEnemy"
+    stopDistRange:p2=3, 3
+    aimToTarget:b=yes
+  }
+
+  meleeAttack{
+    targetUnitParam:t="hideFromEnemy"
+    timeToAttack:r=1
+    attackDist:r=1.5
+  }
+}
+
+sequencer{
+  name:t="sub.hide"
+
+  reaction{
+    name:t="hide_reaction"
+    event:t="regularCheck"
+
+    orderedSelector{
+      failed{
+        sequencer{
+          findObstaclesAlongsidePathMapped{}
+          findDoorObstacleWithNavmeshMapping{}
+          success{
+            tryOpenDoor{}
+          }
+        }
+      }
+
+      subTree{
+        treeName:t="sub.commonRegularReactions"
+      }
+    }
+  }
+
+  reaction{
+    event:t="onAttract"
+
+    recalculateTree{}
+  }
+
+  isAgentInsideZone{}
+  findFallbackNavmeshPoint{
+    posParam:t="hidePosition"
+    dist:r=30
+    targetParam:t="hideFromEnemy"
+  }
+
+  orderedSelector{
+    sequencer{
+      successChance{
+        chance:r=0.2
+      }
+
+      moveToPos{
+        incObstacles:b=no
+        posParam:t="hidePosition"
+        minStance:i=1
+        lookVisc:r=0.1
+        deflectPath:b=yes
+        maxDeflectionAngle:r=1.047
+        minCurvedPathlenThreshold:r=20
+      }
+    }
+
+    zigZagEscape{
+      wishPosParam:t="hidePosition"
+      stepDistRange:p2=5, 8
+      scatterMultiplierRange:p2=0.5, 0.75
+      sprintTimerRange:p2=10, 20
+      minDistToSprint:r=0.5
+      lookVisc:r=0.1
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.noAmmoActions"
+
+  findDanger{
+    paramName:t="hideFromEnemy"
+    radiusParamName:t="enemyRadius"
+    minDanger:r=0.1
+    tag:t="human"
+    canBeInVehicle:b=no
+  }
+
+  not{
+    chooseBestWeapon{
+      targetParam:t="hideFromEnemy"
+    }
+  }
+
+  orderedSelector{
+    subTree{
+      treeName:t="sub.meleeAttack"
+    }
+
+    ignoreChance{
+      chance:r=0.75
+    }
+
+    subTree{
+      treeName:t="sub.hide"
+    }
+  }
+}
+
+exitHandler{
+  name:t="sub.investigateEnemy"
+
+  sequencer{
+    name:t="investigate_enemy"
+
+    not{
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+      }
+    }
+
+    not{
+      isVarsIntEqual{
+        lhs:t="lastKnownEnemy"
+        rhs_value:i=0
+      }
+    }
+
+    not{
+      isVarsIntEqual{
+        lhs:t="lastKnownEnemy"
+        rhs_value:i=-1
+      }
+    }
+
+    checkTarget{
+      targetUnitParam:t="lastKnownEnemy"
+    }
+
+    parallel{
+      moveToPos{
+        incObstacles:b=no
+        posParam:t="laskKnownEnemyPosition"
+        minStance:i=1
+        distThreshold:r=9.5
+        lookVisc:r=0.1
+        targetParam:t="lastShootEnemy"
+        timeToLookAtTarget:r=4
+        dangerPosParam:t="enemyPos"
+        dangerValidParam:t="enemyPosValid"
+        dangerLookRange:p2=1.5, 2.5
+        dangerBetweenLookRange:p2=0.3, 0.5
+      }
+
+      wait{
+        range:p2=1.5, 10
+        resetable:b=yes
+      }
+    }
+  }
+
+  setIntVar{
+    to:t="lastKnownEnemy"
+    value:i=0
+  }
+}
+
+sequencer{
+  name:t="sub.goToAttract"
+
+  reaction{
+    name:t="go_to_attract_reaction"
+    event:t="regularCheck"
+
+    orderedSelector{
+      failed{
+        sequencer{
+          findObstaclesAlongsidePathMapped{}
+          findDoorObstacleWithNavmeshMapping{}
+          success{
+            tryOpenDoor{}
+          }
+        }
+      }
+
+      subTree{
+        treeName:t="sub.commonRegularReactions"
+      }
+    }
+  }
+
+  getAttractionPosition{}
+  modifyNode{
+    targetIntParam:t="attractPointEntity"
+    operator:t="="
+    arg:t="attract_point__eid"
+  }
+
+  setPosFromEntity{
+    to:t="attractPosition"
+    from:t="attractPointEntity"
+  }
+
+  success{
+    repeatUntilFail{
+      sequencer{
+        parallel{
+          moveToPos{
+            incObstacles:b=no
+            posParam:t="attractPosition"
+            minStance:i=1
+            distThreshold:r=2.5
+            lookVisc:r=0.1
+            targetParam:t="lastShootEnemy"
+            timeToLookAtTarget:r=4
+            tryClimbing:b=yes
+            dangerPosParam:t="enemyPos"
+            dangerValidParam:t="enemyPosValid"
+            dangerLookRange:p2=1.5, 2.5
+          }
+
+          wait{
+            range:p2=3, 10
+            resetable:b=yes
+          }
+        }
+
+        parallel{
+          lookAtEntity{
+            targetParam:t="attractPointEntity"
+          }
+
+          success{
+            subTree{
+              treeName:t="sub.randomWait"
+            }
+          }
+        }
+
+        not{
+          checkDistance{
+            posParam:t="attractPosition"
+            radius:r=2.5
+          }
+        }
+      }
+    }
+  }
+
+  wait{
+    range:p2=0.5, 1
+    resetable:b=yes
+  }
+}
+
+sequencer{
+  name:t="sub.fireReaction"
+
+  isBurning{}
+  recalculateTree{}
+}
+
+sequencer{
+  name:t="sub.dangerReaction"
+
+  orderedSelector{
+    sequencer{
+      findDanger{
+        paramName:t="newEnemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.7
+      }
+
+      copyIntVar{
+        to:t="prevEnemy"
+        from:t="shootEnemy"
+      }
+
+      chooseDanger{
+        lhsParam:t="shootEnemy"
+        rhsParam:t="newEnemy"
+        outParam:t="potentialEnemy"
+        diff:r=0.2
+        minDanger:r=0.1
+      }
+
+      copyIntVar{
+        to:t="shootEnemy"
+        from:t="potentialEnemy"
+      }
+
+      ifThenElse{
+        chooseBestWeapon{
+          targetParam:t="shootEnemy"
+        }
+
+        orderedSelector{
+          isVarsIntEqual{
+            lhs:t="prevEnemy"
+            rhs:t="shootEnemy"
+          }
+
+          recalculateTree{}
+        }
+
+        sequencer{
+          setPosFromEntity{
+            to:t="enemyPosition"
+            from:t="shootEnemy"
+          }
+
+          checkDistance{
+            posParam:t="enemyPosition"
+            radius:r=20
+          }
+
+          recalculateTree{}
+        }
+      }
+    }
+
+    sequencer{
+      checkTarget{
+        targetUnitParam:t="shootEnemy"
+      }
+
+      setIntVar{
+        to:t="shootEnemy"
+        value:i=0
+      }
+
+      chooseBestWeapon{
+        targetParam:t="shootEnemy"
+      }
+
+      recalculateTree{}
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.outOfZoneReaction"
+
+  not{
+    isAgentInsideZone{
+      checkZoneTargetState:b=no
+    }
+  }
+
+  recalculateTree{}
+}
+
+orderedSelector{
+  name:t="sub.commonRegularReactions"
+
+  subTree{
+    treeName:t="sub.fireReaction"
+  }
+
+  subTree{
+    treeName:t="sub.dangerReaction"
+  }
+
+  subTree{
+    treeName:t="sub.outOfZoneReaction"
+  }
+}
+
+sequencer{
+  name:t="sub.tryLootAnyWeaponsFromGround"
+
+  findLoot{
+    traceDist:r=12
+    lootTargetParam:t="lootEntity"
+    maxPickupVolume:r=5
+    allowWeaponsWithoutAmmo:b=yes
+  }
+
+  setPosFromEntity{
+    to:t="lootPosition"
+    from:t="lootEntity"
+    projectToNavmesh:b=no
+  }
+
+  gravityMoveToPos{
+    posParam:t="lootPosition"
+    minStance:i=1
+    distThreshold:r=1.5
+    lookVisc:r=0.1
+    targetParam:t="lastShootEnemy"
+    timeToLookAtTarget:r=4
+    tryClimbing:b=yes
+    dangerPosParam:t="enemyPos"
+    dangerValidParam:t="enemyPosValid"
+    dangerLookRange:p2=1.5, 2.5
+  }
+
+  isAgentInsideZone{
+    checkZoneTargetState:b=no
+  }
+
+  parallel{
+    lookAtEntity{
+      targetParam:t="lootEntity"
+    }
+
+    wait{
+      range:p2=0.5, 1
+      resetable:b=yes
+    }
+  }
+
+  orderedSelector{
+    sequencer{
+      isItemAm{
+        targetParam:t="lootEntity"
+      }
+
+      parallel{
+        gatherResource{
+          targetParam:t="lootEntity"
+        }
+
+        lookAtEntity{
+          targetParam:t="lootEntity"
+        }
+
+        wait{
+          range:p2=5, 7
+          resetable:b=yes
+        }
+      }
+
+      modifyNode{
+        target:t="am_bot__lootCount"
+        operator:t="+"
+        arg:r=1
+      }
+
+      compareNode{
+        lhs:t="am_bot__lootCount"
+        operator:t=">="
+        rhs:t="am_bot__extractAtLootCount"
+      }
+
+      selectNode{
+        name:t="go_to_extraction"
+      }
+    }
+
+    sequencer{
+      pickupItemEntity{
+        targetParam:t="lootEntity"
+      }
+
+      wait{
+        range:p2=0.5, 1
+        resetable:b=yes
+      }
+
+      success{
+        chooseBestWeapon{
+          targetParam:t="lastShootEnemy"
+        }
+      }
+
+      modifyNode{
+        target:t="am_bot__lootCount"
+        operator:t="+"
+        arg:r=1
+      }
+
+      compareNode{
+        lhs:t="am_bot__lootCount"
+        operator:t=">="
+        rhs:t="am_bot__extractAtLootCount"
+      }
+
+      selectNode{
+        name:t="go_to_extraction"
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.tryLootFromGround"
+
+  findLoot{
+    traceDist:r=7
+    lootTargetParam:t="lootEntity"
+    maxPickupVolume:r=5
+  }
+
+  setPosFromEntity{
+    to:t="lootPosition"
+    from:t="lootEntity"
+    projectToNavmesh:b=no
+  }
+
+  gravityMoveToPos{
+    posParam:t="lootPosition"
+    minStance:i=1
+    distThreshold:r=1.5
+    lookVisc:r=0.1
+    targetParam:t="lastShootEnemy"
+    timeToLookAtTarget:r=4
+    tryClimbing:b=yes
+    dangerPosParam:t="enemyPos"
+    dangerValidParam:t="enemyPosValid"
+    dangerLookRange:p2=1.5, 2.5
+  }
+
+  isAgentInsideZone{
+    checkZoneTargetState:b=no
+  }
+
+  parallel{
+    lookAtEntity{
+      targetParam:t="lootEntity"
+    }
+
+    wait{
+      range:p2=0.5, 1
+      resetable:b=yes
+    }
+  }
+
+  orderedSelector{
+    sequencer{
+      isItemAm{
+        targetParam:t="lootEntity"
+      }
+
+      parallel{
+        gatherResource{
+          targetParam:t="lootEntity"
+        }
+
+        lookAtEntity{
+          targetParam:t="lootEntity"
+        }
+
+        wait{
+          range:p2=5, 7
+          resetable:b=yes
+        }
+      }
+
+      modifyNode{
+        target:t="am_bot__lootCount"
+        operator:t="+"
+        arg:r=1
+      }
+
+      compareNode{
+        lhs:t="am_bot__lootCount"
+        operator:t=">="
+        rhs:t="am_bot__extractAtLootCount"
+      }
+
+      selectNode{
+        name:t="go_to_extraction"
+      }
+    }
+
+    sequencer{
+      pickupItemEntity{
+        targetParam:t="lootEntity"
+      }
+
+      wait{
+        range:p2=0.5, 1
+        resetable:b=yes
+      }
+
+      success{
+        chooseBestWeapon{
+          targetParam:t="lastShootEnemy"
+        }
+      }
+
+      modifyNode{
+        target:t="am_bot__lootCount"
+        operator:t="+"
+        arg:r=1
+      }
+
+      compareNode{
+        lhs:t="am_bot__lootCount"
+        operator:t=">="
+        rhs:t="am_bot__extractAtLootCount"
+      }
+
+      selectNode{
+        name:t="go_to_extraction"
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.tryLootFromContainer"
+
+  findInteractableWithLoot{
+    radius:r=7
+    lootTargetParam:t="interactableEntity"
+  }
+
+  compareNode{
+    lhs:t="am_bot__lootCount"
+    operator:t="<"
+    rhs:t="am_bot__extractAtLootCount"
+  }
+
+  not{
+    compareNode{
+      lhsIntParam:t="interactableEntity"
+      operator:t="=="
+      rhs:i=0
+    }
+  }
+
+  setPosFromEntity{
+    to:t="interactablePosition"
+    from:t="interactableEntity"
+  }
+
+  gravityMoveToPos{
+    posParam:t="interactablePosition"
+    minStance:i=1
+    distThreshold:r=1
+    lookVisc:r=0.1
+    targetParam:t="lastShootEnemy"
+    timeToLookAtTarget:r=4
+    tryClimbing:b=yes
+    dangerPosParam:t="enemyPos"
+    dangerValidParam:t="enemyPosValid"
+    dangerLookRange:p2=1.5, 2.5
+  }
+
+  parallel{
+    lookAtEntity{
+      targetParam:t="interactableEntity"
+    }
+
+    wait{
+      range:p2=0.5, 1
+      resetable:b=yes
+    }
+  }
+
+  openInteractableWithLoot{
+    targetParam:t="interactableEntity"
+  }
+
+  success{
+    repeatUntilFail{
+      lootFromInteractable{
+        targetParam:t="interactableEntity"
+      }
+
+      wait{
+        range:p2=0.5, 1
+        resetable:b=yes
+      }
+
+      success{
+        chooseBestWeapon{
+          targetParam:t="lastShootEnemy"
+        }
+      }
+
+      modifyNode{
+        target:t="am_bot__lootCount"
+        operator:t="+"
+        arg:r=1
+      }
+
+      compareNode{
+        lhs:t="am_bot__lootCount"
+        operator:t="<"
+        rhs:t="am_bot__extractAtLootCount"
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.tryLootAround"
+
+  orderedSelector{
+    subTree{
+      treeName:t="sub.tryLootFromContainer"
+    }
+
+    subTree{
+      treeName:t="sub.tryLootFromGround"
+    }
+  }
+}
+
+orderedSelector{
+  name:t="sub.findRiCoverIfPrevExpired"
+
+  sequencer{
+    isTimerInProgress{
+      target:t="bot_with_ri_covers__coverExpireAt"
+    }
+
+    riCoversIsNearSavedPos{
+      maxDist:r=3
+    }
+
+    checkTarget{
+      targetUnitParam:t="shootFromCoverEnemy"
+      ignoreHidden:b=no
+    }
+
+    setPosFromEntity{
+      to:t="shootFromCoverEnemyPosition"
+      from:t="shootFromCoverEnemy"
+    }
+
+    not{
+      checkDistance{
+        posParam:t="shootFromCoverEnemyPosition"
+        radius:r=6
+      }
+    }
+  }
+
+  sequencer{
+    orderedSelector{
+      sequencer{
+        checkTarget{
+          targetUnitParam:t="shootFromCoverEnemy"
+          ignoreHidden:b=no
+        }
+
+        setPosFromEntity{
+          to:t="shootFromCoverEnemyPosition"
+          from:t="shootFromCoverEnemy"
+        }
+
+        copyIntVar{
+          to:t="prevShootEnemy"
+          from:t="shootFromCoverEnemy"
+        }
+
+        checkDistance{
+          posParam:t="shootFromCoverEnemyPosition"
+          radius:r=20
+        }
+
+        findDanger{
+          paramName:t="newEnemy"
+          radiusParamName:t="enemyRadius"
+          minDanger:r=0.7
+        }
+
+        copyIntVar{
+          to:t="prevEnemy"
+          from:t="shootFromCoverEnemy"
+        }
+
+        chooseDanger{
+          lhsParam:t="shootFromCoverEnemy"
+          rhsParam:t="newEnemy"
+          outParam:t="shootFromCoverEnemy"
+          diff:r=0.2
+          minDanger:r=0.1
+        }
+      }
+
+      findDanger{
+        paramName:t="shootFromCoverEnemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+      }
+    }
+
+    copyIntVar{
+      to:t="lastShootEnemy"
+      from:t="shootFromCoverEnemy"
+    }
+
+    chooseBestWeapon{
+      targetParam:t="shootFromCoverEnemy"
+    }
+
+    setPosFromEntity{
+      to:t="shootFromCoverEnemyPosition"
+      from:t="shootFromCoverEnemy"
+    }
+
+    checkDistance{
+      posParam:t="shootFromCoverEnemyPosition"
+      radius:r=25
+    }
+
+    copyIntVar{
+      to:t="prevShootEnemy"
+      from:t="shootFromCoverEnemy"
+    }
+
+    riCoversFindBestCover{
+      posParam:t="behindCoverPosition"
+      targetUnitParam:t="shootFromCoverEnemy"
+      searchRadius:r=8
+      coverToOwnerDistWeight:r=1
+      coverToTargetDistWeight:r=1.5
+    }
+  }
+}
+
+exitHandler{
+  name:t="sub.shootFromRiCover"
+
+  repeatUntilFail{
+    count:i=10
+
+    reaction{
+      name:t="shoot_from_ri_cover_reaction"
+      event:t="regularCheck"
+
+      orderedSelector{
+        failed{
+          sequencer{
+            findObstaclesAlongsidePathMapped{}
+            findDoorObstacleWithNavmeshMapping{}
+            success{
+              tryOpenDoor{}
+            }
+          }
+        }
+
+        sequencer{
+          not{
+            hasAmmoInGun{}
+          }
+
+          recalculateTree{}
+        }
+
+        subTree{
+          treeName:t="sub.commonRegularReactions"
+        }
+      }
+    }
+
+    not{
+      isUnderwater{}
+    }
+
+    subTree{
+      treeName:t="sub.findRiCoverIfPrevExpired"
+    }
+
+    setTimer{
+      target:t="bot_with_ri_covers__coverExpireAt"
+      deltaTime:r=20
+    }
+
+    orderedSelector{
+      compareNode{
+        lhs:t="bot_with_ri_covers__isBehindCover"
+        operator:t="=="
+        rhs:b=yes
+      }
+
+      sequencer{
+        name:t="go_behind_cover"
+
+        success{
+          moveShoot{
+            posParam:t="behindCoverPosition"
+            targetUnitParam:t="shootFromCoverEnemy"
+            angleThreshold:r=180
+            chooseStance:b=no
+            shootTime:p2=0.2, 1
+            cooldownTime:p2=0.2, 0.8
+            minAimTime:p2=0.2, 0.4
+            distThreshold:r=0.05
+            maxAimSpeed:r=1050
+            time:p2=10, 15
+            lostTargetCooldownRange:p2=3, 4
+          }
+        }
+
+        riCoversFindSafePos{
+          posParam:t="behindCoverPosition"
+          targetUnitParam:t="shootFromCoverEnemy"
+        }
+
+        orderedSelector{
+          riCoversIsNearSafePos{
+            posParam:t="behindCoverPosition"
+            maxDist:r=0.4
+          }
+
+          moveToPos{
+            incObstacles:b=no
+            posParam:t="behindCoverPosition"
+            minStance:i=1
+            lookVisc:r=0.1
+            targetParam:t="shootFromCoverEnemy"
+            timeToLookAtTarget:r=10
+            tryClimbing:b=yes
+            dangerPosParam:t="shootFromCoverEnemy"
+            dangerValidParam:t="enemyPosValid"
+            dangerLookRange:p2=1.5, 2.5
+            distThreshold:r=0.05
+            sprintTimerRange:p2=10, 20
+          }
+        }
+
+        not{
+          sequencer{
+            orderedSelector{
+              checkDistance{
+                posParam:t="shootFromCoverEnemyPosition"
+                radius:r=8
+              }
+
+              not{
+                isAgentInsideZone{
+                  checkZoneTargetState:b=no
+                }
+              }
+            }
+
+            resetTimer{
+              target:t="bot_with_ri_covers__coverExpireAt"
+            }
+          }
+        }
+
+        wait{
+          range:p2=0.6, 1.2
+          resetable:b=yes
+        }
+
+        riCoversSetPeekFromCoverPos{
+          posParam:t="peekPosition"
+        }
+
+        modifyNode{
+          target:t="bot_with_ri_covers__isBehindCover"
+          operator:t="="
+          arg:b=yes
+        }
+      }
+    }
+
+    sequencer{
+      name:t="peek_from_cover"
+
+      moveToPos{
+        incObstacles:b=no
+        posParam:t="peekPosition"
+        minStance:i=1
+        lookVisc:r=0.1
+        targetParam:t="shootFromCoverEnemy"
+        timeToLookAtTarget:r=10
+        tryClimbing:b=yes
+        dangerPosParam:t="shootFromCoverEnemyPosition"
+        dangerValidParam:t="enemyPosValid"
+        dangerLookRange:p2=1.5, 2.5
+        distThreshold:r=0.05
+        sprintTimerRange:p2=10, 20
+      }
+
+      modifyNode{
+        target:t="bot_with_ri_covers__isBehindCover"
+        operator:t="="
+        arg:b=no
+      }
+
+      success{
+        shootAtUnit{
+          targetUnitParam:t="shootFromCoverEnemy"
+          minStance:i=1
+          shootTime:p2=0.1, 0.4
+          chooseStance:b=no
+          cooldownTime:p2=0.1, 0.3
+          minAimTime:p2=0.1, 0.2
+          maxAimSpeed:r=720
+          maxTrackSpeed:r=360
+          time:p2=0.1, 1
+          lostTargetCooldownRange:p2=3, 4
+        }
+      }
+    }
+
+    resetTimer{
+      target:t="bot_with_ri_covers__coverExpireAt"
+    }
+  }
+
+  sequencer{
+    riCoversSaveCurPos{}
+  }
+}
+
+sequencer{
+  name:t="sub.reload"
+
+  findAmmoForGun{}
+  reloadGun{}
+}
+
+sequencer{
+  name:t="sub.restoreHeartrate"
+
+  reaction{
+    name:t="resurrect_reaction"
+    event:t="regularCheck"
+
+    subTree{
+      treeName:t="sub.lootRaiderReactions"
+    }
+  }
+
+  repeatUntilFail{
+    not{
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+      }
+    }
+
+    compareNode{
+      lhs:t="heartrate__fatigueThreshold"
+      operator:t="<"
+      rhs:t="heartrate__value"
+    }
+
+    changeStance{
+      stanceName:t="crouch"
+    }
+
+    wait{
+      range:p2=0.05, 0.05
+      resetable:b=yes
+    }
+
+    orderedSelector{
+      subTree{
+        treeName:t="sub.trySelfHeal"
+      }
+
+      loadMagazine{}
+      subTree{
+        treeName:t="sub.reload"
+      }
+
+      sequencer{
+        name:t="rest_look_around"
+
+        findRandomNavmeshPoint{
+          posParam:t="wanderLookPos"
+          dist:r=15
+        }
+
+        parallel{
+          wanderLook{
+            posParam:t="wanderLookPos"
+            range:p2=0.6, 0.1
+            clampRange:b=yes
+            vertAim:b=yes
+          }
+
+          wait{
+            range:p2=0.8, 4
+            resetable:b=yes
+          }
+        }
+      }
+    }
+  }
+}

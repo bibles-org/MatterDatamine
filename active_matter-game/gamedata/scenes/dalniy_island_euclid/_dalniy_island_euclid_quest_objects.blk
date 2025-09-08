@@ -1,0 +1,1289 @@
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [966.311, 64.9967, -323.372]]
+  objective_static_target__tag:t="sensor_euclid_primary_1"
+  map_object_zone__radius:r=70
+  quest_target_geometry_sphere__radius:r=70
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1317.09, 9.69143, -759.229]]
+  objective_static_target__tag:t="sensor_euclid_primary_2"
+  map_object_zone__radius:r=70
+  quest_target_geometry_sphere__radius:r=70
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [996.294, 39.2189, -692.962]]
+  objective_static_target__tag:t="sensor_euclid_primary_3"
+  map_object_zone__radius:r=70
+  quest_target_geometry_sphere__radius:r=70
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [669.56, 75.0984, -50.8078]]
+  objective_static_target__tag:t="sensor_euclid_primary_4"
+  map_object_zone__radius:r=60
+  quest_target_geometry_sphere__radius:r=60
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [561.021, 52.545, -626.938]]
+  objective_static_target__tag:t="sensor_euclid_primary_5"
+  map_object_zone__radius:r=60
+  quest_target_geometry_sphere__radius:r=60
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [674.965, 10.0427, -967.786]]
+  objective_static_target__tag:t="sensor_euclid_primary_6"
+  map_object_zone__radius:r=60
+  quest_target_geometry_sphere__radius:r=60
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1580.75, 41.4105, -1271.32]]
+  objective_static_target__tag:t="sensor_euclid_primary_7"
+  map_object_zone__radius:r=60
+  quest_target_geometry_sphere__radius:r=60
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1745.72, 14.1268, -730.46]]
+  objective_static_target__tag:t="sensor_euclid_primary_8"
+  map_object_zone__radius:r=60
+  quest_target_geometry_sphere__radius:r=60
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [167.003, 79.9969, -658.311]]
+  objective_static_target__tag:t="sensor_euclid_primary_9"
+  map_object_zone__radius:r=60
+  quest_target_geometry_sphere__radius:r=60
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="stay_in_box_target"
+  transform:m=[[1.19623, 0, 1.60282] [0, 15.75, 0] [-2.00352, 0, 1.49529] [1466.31, 48.4216, -1157.92]]
+  objective_static_target__tag:t="explore_gravzones_quest_1"
+  map_object_zone__radius:r=10
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="stay_in_box_target"
+  transform:m=[[1.27729, 0, 0.786466] [0, 7, 0] [-0.786466, 0, 1.27729] [619.694, 13.1998, -1126.61]]
+  objective_static_target__tag:t="explore_gravzones_quest_2"
+  map_object_zone__radius:r=10
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="stay_in_box_target"
+  transform:m=[[1.47022, 0, 1.3559] [0, 9.5, 0] [-1.18641, 0, 1.28644] [973.047, 69.8731, -297.98]]
+  objective_static_target__tag:t="explore_gravzones_quest_3"
+  map_object_zone__radius:r=10
+  map_object__show:b=no
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1803.13, 26.7321, -875.741]]
+  objective_static_target__tag:t="explore_euclid_quest"
+  map_object_zone__radius:r=60
+  quest_target_geometry_sphere__radius:r=60
+  map_object__show:b=no
+  _template:t="stay_around_target"
+}
+
+entity{
+  _template:t="photographing_target"
+  transform:m=[[92.4006, 0, 0] [0, 108.795, 0] [0, 0, 138.74] [1779.72, 123.5, -884.595]]
+  objective_static_target__tag:t="photo_quest"
+  photographing_target__name:t="photo/photo_quest_target_name"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="photographing_stand_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1414.38, 73.179, -672.199]]
+  objective_static_target__tag:t="photo_area_1"
+  map_object_zone__radius:r=10
+  map_object__show:b=no
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1437.72, 150.587, -410.687]]
+  objective_static_target__tag:t="photo_area_2"
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  map_object__show:b=no
+  _template:t="photographing_stand_target"
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1445.85, 61.2832, -1145.71]]
+  objective_static_target__tag:t="photo_area_3"
+  map_object_zone__radius:r=10
+  map_object__show:b=no
+  _template:t="photographing_stand_target"
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1001.53, 18.2391, -998.357]]
+  objective_static_target__tag:t="place_device_quest_1"
+  map_object_zone__radius:r=40
+  quest_target_geometry_sphere__radius:r=40
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [514.013, 35.1821, -711.084]]
+  objective_static_target__tag:t="place_device_quest_2"
+  map_object_zone__radius:r=40
+  quest_target_geometry_sphere__radius:r=40
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1010.4, 63.0802, -116.905]]
+  objective_static_target__tag:t="place_device_quest_3"
+  map_object_zone__radius:r=40
+  quest_target_geometry_sphere__radius:r=40
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1160.43, 66.7337, -461.79]]
+  objective_static_target__tag:t="place_chronogene_device_quest_1"
+  map_object_zone__radius:r=10
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [439.177, 19.7887, -844.829]]
+  objective_static_target__tag:t="place_chronogene_device_quest_2"
+  map_object_zone__radius:r=10
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="dead_body_container_trooper_male_light_a"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1160.43, 66.9337, -461.79]]
+}
+
+entity{
+  _template:t="dead_body_container_trooper_male_light_b"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [439.177, 19.7887, -844.829]]
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [626.581, 10.1148, -1008.07]]
+  objective_static_target__tag:t="daily_research_sensor_1"
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  map_object__show:b=no
+  _template:t="place_for_device_target"
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [576.098, 60.0044, -513.018]]
+  objective_static_target__tag:t="daily_research_sensor_2"
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  map_object__show:b=no
+  _template:t="place_for_device_target"
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [604.986, 75.0984, -44.9427]]
+  objective_static_target__tag:t="daily_research_sensor_3"
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  map_object__show:b=no
+  _template:t="place_for_device_target"
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [992.765, 64.9967, -254.844]]
+  objective_static_target__tag:t="daily_research_sensor_4"
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  map_object__show:b=no
+  _template:t="place_for_device_target"
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [146.584, 80.0451, -651.933]]
+  objective_static_target__tag:t="daily_research_sensor_5"
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  map_object__show:b=no
+  _template:t="place_for_device_target"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [824.933, 10.2906, -1180.84]]
+  map_object_zone__radius:r=30
+  quest_target_geometry_sphere__radius:r=30
+  gather_samples_target__accesspointsCountRng:ip2=40, 40
+  objective_static_target__tag:t="gather_ground_sample_zone_1"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1023.63, 65.1206, -2.16235]]
+  map_object_zone__radius:r=30
+  quest_target_geometry_sphere__radius:r=30
+  gather_samples_target__accesspointsCountRng:ip2=40, 40
+  objective_static_target__tag:t="gather_ground_sample_zone_2"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1029.95, 54.4264, -547.243]]
+  map_object_zone__radius:r=30
+  quest_target_geometry_sphere__radius:r=30
+  gather_samples_target__accesspointsCountRng:ip2=40, 40
+  objective_static_target__tag:t="gather_ground_sample_zone_3"
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [467.016, 11.2039, -1126.46]]
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_water_sample_zone_1"
+  map_object_zone__radius:r=35
+  quest_target_geometry_sphere__radius:r=35
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [208.492, 78.8149, -566.168]]
+  objective_static_target__tag:t="gather_water_sample_zone_2"
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [855.679, 74.3813, 89.6005]]
+  objective_static_target__tag:t="gather_water_sample_zone_3"
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  map_object_zone__radius:r=30
+  quest_target_geometry_sphere__radius:r=30
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1248.05, 11.7179, -786.156]]
+  objective_static_target__tag:t="explore_daily_euclid_quarry"
+  map_object_zone__radius:r=95
+  quest_target_geometry_sphere__radius:r=95
+  map_object__show:b=no
+  _template:t="stay_around_target"
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [668.89, 74.9734, -53.5153]]
+  objective_static_target__tag:t="explore_daily_euclid_military_base"
+  map_object_zone__radius:r=60
+  quest_target_geometry_sphere__radius:r=60
+  map_object__show:b=no
+  _template:t="stay_around_target"
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [772.671, 0.0279503, -1370.27]]
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_water_daily_euclid_zone_1"
+  map_object_zone__radius:r=35
+  quest_target_geometry_sphere__radius:r=35
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [2042.47, 1.03868, -552.091]]
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_water_daily_euclid_zone_2"
+  map_object_zone__radius:r=35
+  quest_target_geometry_sphere__radius:r=35
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1478.32, 1.03876, 387.247]]
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_water_daily_euclid_zone_3"
+  map_object_zone__radius:r=35
+  quest_target_geometry_sphere__radius:r=35
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [596.592, 72.9043, -294.332]]
+  map_object_zone__radius:r=30
+  quest_target_geometry_sphere__radius:r=30
+  gather_samples_target__accesspointsCountRng:ip2=40, 40
+  objective_static_target__tag:t="gather_soil_daily_euclid_zone_1"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [436.702, 50.5403, -749.161]]
+  map_object_zone__radius:r=30
+  quest_target_geometry_sphere__radius:r=30
+  gather_samples_target__accesspointsCountRng:ip2=40, 40
+  objective_static_target__tag:t="gather_soil_daily_euclid_zone_2"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1104.81, 23.0714, -1082.36]]
+  map_object_zone__radius:r=30
+  quest_target_geometry_sphere__radius:r=30
+  gather_samples_target__accesspointsCountRng:ip2=40, 40
+  objective_static_target__tag:t="gather_soil_daily_euclid_zone_3"
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [559.222, 60.2586, -584.784]]
+  objective_static_target__tag:t="photo_daily_hospital_area"
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  map_object__show:b=no
+  _template:t="photographing_stand_target"
+}
+
+entity{
+  transform:m=[[57.1887, 0, 2.30131] [0, 35.0357, -0] [-1.42992, 0, 35.5344] [558.871, 64.5654, -571.377]]
+  objective_static_target__tag:t="photo_daily_hospital_target"
+  photographing_target__name:t="photo/photo_daily_hospital_target_name"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  map_object__show:b=no
+  _template:t="photographing_target"
+}
+
+entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [768.838, 50.9418, -394.95]]
+  objective_static_target__tag:t="photo_daily_supermarket_area"
+  map_object_zone__radius:r=15
+  quest_target_geometry_sphere__radius:r=15
+  map_object__show:b=no
+  _template:t="photographing_stand_target"
+}
+
+entity{
+  transform:m=[[12.162, 0, 65.0295] [0, 42.2117, -0] [-34.8059, 0, 6.50948] [739.358, 57.1363, -380.724]]
+  objective_static_target__tag:t="photo_daily_supermarket_target"
+  photographing_target__name:t="photo/photo_daily_supermarket_target_name"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  map_object__show:b=no
+  _template:t="photographing_target"
+}
+
+entity{
+  _template:t="quest_container+drawer_openable_ri_sound"
+  transform:m=[[-0.543174, 3.62839e-15, 0.86488] [1.88991e-08, 1.0266, 1.18693e-08] [-0.864829, 2.22006e-08, -0.543142] [707.677, 14.422, -968.193]]
+  ri_extra__name:t="sovmod_nightstand_f"
+  openable_ri__closed:t="sovmod_nightstand_f"
+  ri_preload__name:t="sovmod_nightstand_f_loot"
+  objective_static_target__tag:t="euclid_science_documents_container"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_euclid_science_documents"
+  }
+}
+
+entity{
+  transform:m=[[0.394533, 0, 0.138993] [0, 0.718618, -0] [-1.32517, 0, 3.7615] [491.907, 80.389, -323.499]]
+  objective_static_target__tag:t="euclid_documents_photo_quest"
+  photographing_target__name:t="photo/euclid_documents_photo_quest_target_name"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  map_object__show:b=no
+  _template:t="photographing_target"
+}
+
+entity{
+  transform:m=[[4.81096, 0, 1.69642] [0, 3.80114, -0] [-3.1457, 0, 8.9211] [493.965, 80.2192, -322.68]]
+  objective_static_target__tag:t="euclid_documents_photo_area_1"
+  map_object_zone__radius:r=10
+  quest_target_geometry_sphere__radius:r=0
+  map_object__show:b=no
+  _template:t="photographing_stand_target"
+}
+
+entity{
+  _template:t="quest_container+locker_openable_ri_sound"
+  transform:m=[[0.933456, 0, 0.358691] [0, 1, -0] [-0.358691, 0, 0.933456] [498.111, 75.0233, -324.563]]
+  ri_extra__name:t="sovindustrial_locker_metal_a_type_c"
+  openable_ri__closed:t="sovindustrial_locker_metal_a_type_c"
+  ri_preload__name:t="sovindustrial_locker_metal_a_type_c_open"
+  objective_static_target__tag:t="euclid_car_part_container"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_euclid_car_part"
+  }
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [886.471, 24.4437, -697.237]]
+  objective_static_target__tag:t="place_euclid_car_locator_1"
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="quest_container+car_openable_ri_sound"
+  transform:m=[[-0.378136, -0.103483, -0.919948] [-0.0139823, 0.994258, -0.106095] [0.925645, -0.0272554, -0.377412] [1312.62, 55.4511, -612.691]]
+  ri_extra__name:t="uaz_31514_abandoned_a"
+  openable_ri__closed:t=""
+  ri_preload__name:t="uaz_31514_abandoned_a"
+  objective_static_target__tag:t="euclid_fake_device_container"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_euclid_fake_device"
+  }
+}
+
+entity{
+  _template:t="quest_container_secret+drawer_openable_ri_sound"
+  transform:m=[[-0.156122, 0, -0.987738] [0, 1, 0] [0.987738, 0, -0.156122] [1656.81, 44.8729, -1458.93]]
+  ri_extra__name:t="sovmod_nightstand_e_type_b"
+  openable_ri__closed:t="sovmod_nightstand_e_type_b"
+  ri_preload__name:t="sovmod_nightstand_e_type_b_loot_b"
+  objective_static_target__tag:t="euclid_diary_safe_keys"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="key_euclid_diary_safe_item"
+  }
+}
+
+entity{
+  _template:t="quest_container_locked+safe_openable_ri_sound"
+  transform:m=[[1, 0, 0.000694837] [0, 1, -0] [-0.000694838, 0, 1] [1649.48, 44.8726, -1460.5]]
+  ri_extra__name:t="sovmod_safe_type_c_loot"
+  openable_ri__closed:t="sovmod_safe_type_c_loot"
+  ri_preload__name:t="sovmod_safe_type_c_loot_open"
+  objective_static_target__tag:t="euclid_diary_safe_locked"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_euclid_scientist_diary"
+  }
+
+  "locked__keyTags:list<t>"{
+    item:t="euclid_diary_safe_lock"
+  }
+}
+
+entity{
+  _template:t="quest_omni_light+light_blinker"
+  transform:m=[[0.679209, -0.493437, 0.543318] [-0.720584, -0.58893, 0.365949] [0.139403, -0.640063, -0.755571] [1868.82, 183.412, -891.555]]
+  light__color:c=255, 0, 0, 255
+  light__max_radius:r=0.3
+  light__brightness:r=999
+  light_blinker__brightnessRange:p2=300, 999
+  light_blinker__brightnessBlinkInterval:r=1
+}
+
+entity{
+  _template:t="quest_container+locker_openable_ri_sound"
+  transform:m=[[0.5264, -0.493437, 0.692403] [-0.788021, -0.58893, 0.179396] [0.319257, -0.640063, -0.698853] [1870.31, 184.572, -891.89]]
+  ri_extra__name:t="outpost_props_scanner_a"
+  openable_ri__closed:t="outpost_props_scanner_a"
+  ri_preload__name:t="outpost_props_scanner_a"
+  objective_static_target__tag:t="euclid_real_device_container"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_euclid_real_device"
+  }
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="uaz_31514_abandoned_b"
+  transform:m=[[0.564348, 0.811286, -0.152732] [-0.262123, 0.000661246, -0.965034] [-0.782818, 0.584649, 0.21303] [722.353, 59.2942, -393.033]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="metal_barrel_a"
+  transform:m=[[0.573615, 0.0709514, 0.816046] [-0.0240038, 0.997269, -0.0698351] [-0.818773, 0.0204703, 0.573752] [618.292, 10.1283, -1127.17]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="metal_barrel_b"
+  transform:m=[[0.471385, 0.704428, 0.530639] [-0.494015, 0.70933, -0.502792] [-0.730579, -0.0251352, 0.682366] [619.138, 14.0497, -1126.43]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_tires_a_type_c"
+  transform:m=[[0.38047, 0.822519, 0.422735] [0.722107, 0.0213503, -0.691452] [-0.577758, 0.568337, -0.585824] [973.47, 70.0463, -296.461]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_tires_a_type_c"
+  transform:m=[[-0.325202, 0.227152, 0.917958] [0.201939, 0.965011, -0.167256] [-0.923831, 0.130979, -0.359694] [971.68, 65.1791, -299.85]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_wooden_box_a_2000_type_c"
+  transform:m=[[0.542332, -0.00475046, 0.840151] [-0.00612631, 0.999935, 0.00960857] [-0.840142, -0.0103581, 0.542268] [970.384, 65.2821, -299.574]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_wooden_box_a_2000_type_c"
+  transform:m=[[0.678997, 0.312728, 0.664203] [0.698399, 0.00370407, -0.715699] [-0.226279, 0.949836, -0.215894] [971.578, 72.3916, -298.236]]
+}
+
+entity{
+  _template:t="area_decor_spikes"
+  transform:m=[[-0.0725679, -0.0138469, 1.64323] [-0.0182069, 0.510985, 0.00350182] [-0.999612, -0.0353125, -0.0444421] [728.902, 79.4926, -561.055]]
+}
+
+entity{
+  _template:t="decor_mi_24a"
+  transform:m=[[0.842342, -0.506979, -0.182845] [0.538943, 0.792383, 0.285778] [0, -0.339266, 0.94069] [396.538, -0.489438, -1105.61]]
+}
+
+entity{
+  _template:t="underwater_heli_container_lootable_rendinst"
+  transform:m=[[0.0966997, 6.62649e-09, -0.995314] [-3.30464e-08, 1, 3.44707e-09] [0.995314, 3.25582e-08, 0.0966997] [393.662, 0.971249, -1105.28]]
+}
+
+entity{
+  _template:t="quest_container_secret+drawer_openable_ri_sound"
+  transform:m=[[-0.999908, 0, -0.0135548] [0, 1, 0] [0.0135548, 0, -0.999908] [553.433, 65, -564.594]]
+  ri_extra__name:t="sovmod_writing_table_a_type_c"
+  openable_ri__closed:t="sovmod_writing_table_a_type_c"
+  ri_preload__name:t="sovmod_writing_table_a_type_c_loot_a"
+  objective_static_target__tag:t="euclid_hospital_docs_safe_keys"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="key_euclid_hospital_docs_safe_item"
+  }
+}
+
+entity{
+  _template:t="quest_container_locked+safe_openable_ri_sound"
+  transform:m=[[-0.999908, 0, -0.0135548] [0, 1, 0] [0.0135548, 0, -0.999908] [553.267, 65, -561.329]]
+  ri_extra__name:t="sovmod_safe_600_a_type_b"
+  openable_ri__closed:t="sovmod_safe_600_a_type_b"
+  ri_preload__name:t="sovmod_safe_600_a_type_a"
+  objective_static_target__tag:t="euclid_hospital_docs_safe_locked"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_euclid_hospital_docs"
+  }
+
+  "locked__keyTags:list<t>"{
+    item:t="euclid_hospital_docs_safe_lock"
+  }
+}
+
+entity{
+  _template:t="tower_sensor_broken_lootable_rendinst"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [762.628, 88.838, -1115.71]]
+}
+
+entity{
+  _template:t="tower_sensor_broken_lootable_rendinst"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [710.689, 153.938, 120.76]]
+}
+
+entity{
+  _template:t="tower_sensor_working_lootable_rendinst"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [325.399, 204.338, 58.3633]]
+}
+
+entity{
+  _template:t="static_dead_body_container"
+  transform:m=[[0.284281, 0, 0.958742] [0, 1, -0] [-0.958741, 0, 0.284281] [327.239, 158.818, 57.5986]]
+  animchar__res:t="am_soldier_corrupted_male_a_char"
+  collres__res:t="am_soldier_corrupted_male_a_collision"
+  loot_drop_system__lootPreset:t="close_range_soviet_weapons_t2_loot_preset"
+
+  "animchar__forceVarValues:object"{
+    dead_body_pos_num:r=10
+  }
+}
+
+entity{
+  _template:t="tower_sensor_broken_lootable_rendinst"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1589.48, 119.676, 107.176]]
+}
+
+entity{
+  _template:t="tower_sensor_broken_lootable_rendinst"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1567.86, 114.747, -1525.52]]
+}
+
+entity{
+  _template:t="place_for_device_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1270.77, 49.4218, -779.8]]
+  objective_static_target__tag:t="place_tower_sensor_device_quest_1"
+  map_object_zone__radius:r=10
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[0.698278, 0, 0.715826] [0, 1, -0] [-0.715826, 0, 0.698278] [166.576, 89.857, -619.244]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[-0.725764, 0, 0.687944] [0, 1, 0] [-0.687944, 0, -0.725764] [164.326, 89.9474, -619.235]]
+}
+
+entity{
+  _template:t="quest_container_secret+locker_openable_ri_sound"
+  transform:m=[[0.999288, 0, -0.0377417] [0, 1, 0] [0.0377417, -0, 0.999288] [205.671, 83.9318, -502.836]]
+  ri_extra__name:t="sovindustrial_locker_metal_a_type_a"
+  openable_ri__closed:t="sovindustrial_locker_metal_a_type_a"
+  ri_preload__name:t="sovindustrial_locker_metal_a_type_a_open"
+  objective_static_target__tag:t="euclid_docs_stash_safe_keys"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="key_euclid_docs_stash_safe_item"
+  }
+}
+
+entity{
+  _template:t="quest_container_locked+safe_openable_ri_sound"
+  transform:m=[[-0.999827, 0, 0.018587] [0, 1, 0] [-0.018587, 0, -0.999827] [211.014, 83.9318, -504.158]]
+  ri_extra__name:t="sovmod_safe_type_c_loot"
+  openable_ri__closed:t="sovmod_safe_type_c_loot"
+  ri_preload__name:t="sovmod_safe_type_c_loot_open"
+  objective_static_target__tag:t="euclid_docs_stash_safe_locked"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_euclid_docs_stash"
+  }
+
+  "locked__keyTags:list<t>"{
+    item:t="euclid_docs_stash_safe_lock"
+  }
+}
+
+entity{
+  _template:t="decor_barge_rust_stern"
+  transform:m=[[0.212345, 0.178968, -0.960667] [-3.72529e-09, 0.983086, 0.183144] [0.977195, -0.0388897, 0.208753] [1506.33, 71.4581, 2.10253]]
+}
+
+entity{
+  _template:t="decor_barge_rust_cabine"
+  transform:m=[[0.212345, 0.178968, -0.960667] [-3.72529e-09, 0.983086, 0.183144] [0.977195, -0.0388897, 0.208753] [1506.33, 71.4581, 2.10253]]
+}
+
+entity{
+  _template:t="secret_ship_safe_lootable_rendinst"
+  transform:m=[[-0.9829, 0.0498084, -0.177277] [0.0170202, 0.983175, 0.181869] [0.183353, 0.175742, -0.967211] [1521.2, 76.902, 6.00713]]
+}
+
+entity{
+  _template:t="decor_port_container"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [663.707, -3.17158, -1455.25]]
+}
+
+entity{
+  _template:t="decor_port_container_door_l"
+  transform:m=[[0.832335, 0, -0.554273] [0, 1, 0] [0.554273, -0, 0.832335] [666.655, -3.12075, -1456.51]]
+}
+
+entity{
+  _template:t="decor_port_container_door_r"
+  transform:m=[[0.83501, 0, 0.550235] [-0.548387, 0.0818795, 0.832206] [-0.0450529, -0.996642, 0.0683702] [666.999, -3.16841, -1454.34]]
+}
+
+entity{
+  _template:t="quest_container+wooden_chest_openable_ri_sound"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [664.595, -2.9867, -1454.62]]
+  ri_extra__name:t="ammunition_box_l"
+  openable_ri__closed:t="ammunition_box_l"
+  ri_preload__name:t="ammunition_box_l_open"
+  objective_static_target__tag:t="forest_ship_underwater_container"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_forest_ship_lost_cargo"
+  }
+}
+
+entity{
+  _template:t="decor_barge_rust_bow"
+  transform:m=[[0.543657, -0.231193, 0.756696] [0.194546, 0.928978, 0.144057] [-0.766936, 0.0717649, 0.57294] [1505.6, 52.0974, -1257.31]]
+}
+
+entity{
+  _template:t="secret_ship_box_lootable_rendinst"
+  transform:m=[[-0.397494, 0.230244, -0.888249] [0.195657, 0.967013, 0.163104] [0.896502, -0.108959, -0.429431] [1510.65, 52.6757, -1259.66]]
+}
+
+entity{
+  _template:t="area_decor_distortion"
+  transform:m=[[4.53131, 0, 2.67704] [0, 3.45339, -0] [-6.00577, 0, 10.1657] [557.274, 20.0194, -912.284]]
+}
+
+entity{
+  _template:t="spike_room_safe_lootable_rendinst"
+  transform:m=[[0.683869, 0.328679, 0.651378] [0.102713, 0.84052, -0.531955] [-0.722338, 0.430693, 0.541046] [556.314, 19.4935, -913.749]]
+}
+
+entity{
+  _template:t="spike_room_nightstand_lootable_rendinst"
+  transform:m=[[-0.932577, 0.287393, 0.218418] [0, 0.605081, -0.796164] [-0.360972, -0.742484, -0.564285] [557.508, 19.3589, -908.122]]
+}
+
+entity{
+  _template:t="dead_body_container_spike_room_scientist"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [695.223, 30.4155, -747.305]]
+}
+
+entity{
+  _template:t="area_decor_spikes"
+  transform:m=[[4.83067, 0.58256, 1.23394] [-0.274746, 2.27823, -1.36836e-08] [-0.557545, -0.0672377, 2.21445] [1014.26, 69.2407, -348.507]]
+}
+
+entity{
+  _template:t="secret_crashed_scientist_car_lootable_rendinst"
+  transform:m=[[-0.504656, -0.160591, -0.848253] [-0.0792509, 0.987016, -0.139712] [0.859676, -0.00328191, -0.51083] [278.905, 49.5652, -806.832]]
+}
+
+entity{
+  _template:t="photographing_stand_target"
+  transform:m=[[7.91399, 0, 3.15926] [0, 4.1089, -0] [-3.51219, 0, 8.79805] [814.637, 81.736, 184.517]]
+  objective_static_target__tag:t="euclid_vehicle_development_photo_area_1"
+  quest_target_geometry_sphere__radius:r=0
+  map_object_zone__radius:r=10
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="photographing_target"
+  transform:m=[[0.381664, 0, -0.923525] [0, 0.463048, 0] [1.12322, -0, 0.464193] [815.536, 80.7462, 183.577]]
+  objective_static_target__tag:t="euclid_vehicle_development_photo_quest"
+  photographing_target__name:t="photo/euclid_vehicle_development_photo_quest_name"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  map_object__show:b=no
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="raf_2203_abandoned_a"
+  transform:m=[[0.273471, 0.0914387, 0.957524] [0.0675049, 0.991192, -0.113933] [-0.959509, 0.0957951, 0.26489] [1333.33, 44.7216, -1046.88]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="moskvich_408"
+  transform:m=[[0.953804, 0.0663719, 0.293008] [-0.0122394, 0.983066, -0.182842] [-0.300182, 0.170809, 0.938465] [1325.74, 46.0893, -1041.09]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="gaz_24_abandoned_b"
+  transform:m=[[0.682675, 0.0857762, 0.72567] [0.0398361, 0.987241, -0.15417] [-0.729635, 0.134156, 0.670548] [1324.83, 45.5947, -1044.31]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="uaz_31514_abandoned_a"
+  transform:m=[[0.155951, -0.21202, -0.964742] [3.72529e-09, 0.976692, -0.214646] [0.987765, 0.0334742, 0.152316] [1325.57, 44.8269, -1048.02]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="uaz_452_abandoned_a"
+  transform:m=[[-0.739719, -0.0992198, -0.66556] [0.0951108, 0.963724, -0.249378] [0.66616, -0.247772, -0.703449] [1329.21, 45.9962, -1041.43]]
+}
+
+entity{
+  _template:t="police_car_last_stand_lootable_rendinst"
+  transform:m=[[0.730793, -0.0544809, 0.680422] [0.172428, 0.979217, -0.106787] [-0.660462, 0.195363, 0.724998] [1332.6, 45.486, -1042.45]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="zil_pm130"
+  transform:m=[[1, 0, 0] [0, 0.98995, -0.141414] [-0, 0.141414, 0.989951] [1330.07, 44.3455, -1050.3]]
+}
+
+entity{
+  _template:t="decor_dead_body_changed"
+  transform:m=[[-0.956458, 0, 0.291869] [0, 1, 0] [-0.291869, 0, -0.956458] [1334.2, 46.0526, -1043.94]]
+}
+
+entity{
+  _template:t="decor_dead_body_changed"
+  transform:m=[[0.0577372, 0, -0.998332] [-0, 1, 0] [0.998332, 0, 0.0577372] [1327.39, 46.0526, -1038.74]]
+}
+
+entity{
+  _template:t="decor_dead_body_changed"
+  transform:m=[[-0.935367, 0, 0.353678] [0, 1, 0] [-0.353678, 0, -0.935367] [1330.33, 46.0526, -1047.64]]
+}
+
+entity{
+  _template:t="decor_barge_dmg_bow"
+  transform:m=[[-0.265912, -0.42642, -0.864556] [-7.45058e-09, 0.896845, -0.442346] [0.963997, -0.117625, -0.238482] [1960.39, -3.11873, -439.419]]
+}
+
+entity{
+  _template:t="decor_barge_dmg_mid"
+  transform:m=[[-0.265912, -0.42642, -0.864556] [-7.45058e-09, 0.896845, -0.442346] [0.963997, -0.117625, -0.238482] [1960.39, -3.11847, -439.419]]
+}
+
+entity{
+  _template:t="quest_container+wooden_chest_openable_ri_sound"
+  transform:m=[[-0.350077, -0.291073, -0.89035] [0, 0.950496, -0.310736] [0.936721, -0.108782, -0.332747] [1955.16, -2.31061, -439.282]]
+  ri_extra__name:t="ammunition_box_l"
+  openable_ri__closed:t="ammunition_box_l"
+  ri_preload__name:t="ammunition_box_l_open"
+  objective_static_target__tag:t="coast_evacuation_ship_container"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_coast_evacuation_cargo"
+  }
+}
+
+entity{
+  _template:t="military_close_range_weapons_t1_lootable_rendinst"
+  transform:m=[[1, 0, 0] [0, 0.842513, -0.538676] [-0, 0.538676, 0.842513] [1954.29, -1.59351, -437.714]]
+}
+
+entity{
+  _template:t="dead_body_container_close_range_weapons"
+  transform:m=[[1, 0, 0] [0, 0.842513, -0.538676] [-0, 0.538676, 0.842513] [1953.53, -1.89456, -438.859]]
+}
+
+entity{
+  _template:t="dead_body_container_close_range_weapons"
+  transform:m=[[1, 0, 0] [0, 0.842513, -0.538676] [-0, 0.538676, 0.842513] [1955.73, -1.52961, -437.898]]
+}
+
+entity{
+  _template:t="smugglers_coast_box_lootable_rendinst"
+  transform:m=[[0.42945, 0, 0.903091] [0, 1, -0] [-0.903091, 0, 0.42945] [1300.98, -0.366524, -1469.01]]
+}
+
+entity{
+  _template:t="quest_container+wooden_chest_openable_ri_sound"
+  transform:m=[[0.659494, 0, 0.751709] [0, 1, -0] [-0.751709, 0, 0.659494] [1301.96, -0.334857, -1469.68]]
+  ri_extra__name:t="sovmod_wooden_box_a_1000_type_a"
+  openable_ri__closed:t="sovmod_wooden_box_a_1000_type_a"
+  ri_preload__name:t="sovmod_wooden_box_a_1000_type_b"
+  objective_static_target__tag:t="smuggler_coast_container"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_smuggler_science_cargo"
+  }
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="wooden_boat_a"
+  transform:m=[[-0.471997, -0.354146, 0.807341] [-0.198023, 0.934956, 0.294355] [-0.859073, -0.0209371, -0.511425] [1300.8, -0.504809, -1471.72]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="dalniy_cliff_water_medium_a"
+  transform:m=[[-0.14853, -0.25349, 0.541896] [-0.370797, 0.47169, 0.119017] [-0.348708, -0.223611, -0.20018] [1306.41, 0.780807, -1468.49]]
+}
+
+entity{
+  _template:t="decor_dead_body_changed"
+  transform:m=[[0.336737, 0, 0.941599] [0, 1, -0] [-0.941599, 0, 0.336737] [806.764, 75.7395, 241.488]]
+}
+
+entity{
+  _template:t="decor_dead_body_changed"
+  transform:m=[[0.92592, 0, 0.37772] [0, 1, -0] [-0.37772, 0, 0.925921] [804.853, 75.7395, 243.928]]
+}
+
+entity{
+  _template:t="decor_dead_body_changed"
+  transform:m=[[0.892856, 0, -0.450342] [0, 1, 0] [0.450343, -0, 0.892856] [805.736, 76.36, 247.611]]
+}
+
+entity{
+  _template:t="scientist_escort_sideboard_a_1200_lootable_rendinst"
+  transform:m=[[-0.948071, 0, 0.318061] [0, 1, 0] [-0.318061, 0, -0.948071] [456.479, 12.7142, -928.627]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_sideboard_a_600_d"
+  transform:m=[[0.646967, -0.0249343, -0.76211] [0.679488, 0.472396, 0.561372] [0.346021, -0.881034, 0.322567] [456.842, 12.9969, -929.349]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_sideboard_a_1200_f"
+  transform:m=[[0.925149, 0, -0.379604] [0, 1, 0] [0.379604, -0, 0.925149] [456.367, 12.7142, -929.155]]
+}
+
+entity{
+  _template:t="quest_container+cardboard_openable_ri_sound"
+  transform:m=[[0.839676, 0, -0.543087] [0, 1, 0] [0.543087, -0, 0.839676] [456.945, 13.095, -927.164]]
+  ri_extra__name:t="cardboard_box_a_400_closed"
+  openable_ri__closed:t="cardboard_box_a_400_closed"
+  ri_preload__name:t="cardboard_box_a_400"
+  objective_static_target__tag:t="scientist_escort_home_container"
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="item_scientist_escort_documents"
+  }
+}
+
+entity{
+  _template:t="decor_dead_body_changed"
+  transform:m=[[-0.978804, 0, 0.204801] [0, 1, 0] [-0.204801, 0, -0.978804] [457.827, 12.7142, -927.684]]
+}
+
+entity{
+  _template:t="decor_bmp_2m"
+  transform:m=[[0.153142, 0, -0.988204] [0, 1, 0] [0.988204, -0, 0.153142] [1300.84, 12.9395, -684.388]]
+}
+
+entity{
+  _template:t="decor_bmp_2m"
+  transform:m=[[-0.119664, 0, -0.992815] [0, 1, 0] [0.992815, 0, -0.119664] [1310.26, 10.0037, -695.58]]
+}
+
+entity{
+  _template:t="decor_bmp_2m"
+  transform:m=[[0.999354, 0, 0.0359268] [0, 1, -0] [-0.0359268, 0, 0.999354] [1300.59, 7.9333, -642.698]]
+}
+
+entity{
+  _template:t="decor_bmp_2m"
+  transform:m=[[0.72309, 0, 0.690753] [0, 1, -0] [-0.690753, 0, 0.72309] [1254.72, 7.91182, -635.795]]
+}
+
+entity{
+  _template:t="decor_bmp_2m"
+  transform:m=[[0.911142, 0, 0.412094] [0, 1, -0] [-0.412094, 0, 0.911141] [1252.92, 7.91182, -629.16]]
+}
+
+entity{
+  _template:t="decor_uaz_31514"
+  transform:m=[[0.748688, 0, 0.662923] [0, 1, -0] [-0.662923, 0, 0.748688] [1263.55, 7.91157, -637.459]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[0.609922, 0, -0.792461] [0, 1, 0] [0.792461, -0, 0.609922] [1302.98, 12.9395, -688.632]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med"
+  transform:m=[[-0.00782176, 0, -0.999969] [0, 1, 0] [0.999969, 0, -0.00782176] [1297.73, 12.8277, -689.081]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[0.986328, 0, -0.164796] [0, 1, 0] [0.164796, -0, 0.986328] [1260.88, 7.93353, -627.693]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[0.51539, 0, 0.856956] [0, 1, -0] [-0.856956, 0, 0.51539] [1259.91, 7.93353, -625.477]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[0.942406, 0, 0.33447] [0, 1, -0] [-0.33447, 0, 0.942406] [1261.72, 7.93353, -632.514]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med"
+  transform:m=[[0.0139568, 0, -0.999903] [0, 1, 0] [0.999903, -0, 0.0139568] [1242.26, 7.93034, -623.952]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med"
+  transform:m=[[0.0139568, 0, -0.999903] [0, 1, 0] [0.999903, -0, 0.0139568] [1250.33, 7.93034, -623.857]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[0.343316, 0, 0.93922] [0, 1, -0] [-0.93922, 0, 0.343316] [1256.78, 7.93353, -623.02]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovindustrial_posters_b_type_m"
+  transform:m=[[-0.593097, 0, -0.805131] [0, 1, 0] [0.805131, 0, -0.593097] [1462.66, 54.2672, -1172.96]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovindustrial_posters_b_type_m"
+  transform:m=[[-0.812857, 0, 0.582464] [0, 1, 0] [-0.582464, 0, -0.812857] [1462.15, 51.6473, -1169.05]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_police_lattice_jamb_a"
+  transform:m=[[0.343375, 0, -0.619102] [0, 0.70795, 0] [0.619102, -0, 0.343375] [228.989, 130.9, -89.2527]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_police_lattice_jamb_a"
+  transform:m=[[0.619102, 0, 0.343375] [0, 0.70795, -0] [-0.343375, 0, 0.619102] [232.695, 130.015, -90.272]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_police_lattice_jamb_a"
+  transform:m=[[0.619102, 0, 0.343375] [0, 0.70795, -0] [-0.343375, 0, 0.619102] [230.261, 130.015, -85.8837]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_police_lattice_jamb_a"
+  transform:m=[[0.343375, 0, -0.619102] [0, 0.70795, 0] [0.619102, -0, 0.343375] [233.559, 130.015, -86.9668]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_police_lattice_jamb_a"
+  transform:m=[[0.578601, 0, 0.407938] [0, 0.70795, -0] [-0.407938, 0, 0.578601] [68.244, 140.858, 111.797]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_police_lattice_jamb_a"
+  transform:m=[[-0.407938, 0, 0.578601] [0, 0.70795, 0] [-0.578601, 0, -0.407938] [68.6789, 139.973, 115.347]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_police_lattice_jamb_a"
+  transform:m=[[0.578601, 0, 0.407938] [0, 0.70795, -0] [-0.407938, 0, 0.578601] [65.5349, 139.973, 116.016]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_police_lattice_jamb_a"
+  transform:m=[[-0.407938, 0, 0.578601] [0, 0.70795, 0] [-0.578601, 0, -0.407938] [64.5792, 139.973, 112.457]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovind_factory_modular_inside_walls_a_3000"
+  transform:m=[[-0.00386647, 0, 0.999993] [0, 1, 0] [-0.999993, 0, -0.00386647] [1694.2, 37.8958, -1453.31]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovind_factory_modular_inside_walls_a_3000"
+  transform:m=[[-0.00386647, 0, 0.999993] [0, 1, 0] [-0.999993, 0, -0.00386647] [1694.2, 37.8958, -1450.23]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovind_factory_modular_inside_walls_a_3000"
+  transform:m=[[-0.00386647, 0, 0.999993] [0, 1, 0] [-0.999993, 0, -0.00386647] [1689.73, 37.8958, -1450.23]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovind_factory_modular_inside_walls_a_3000"
+  transform:m=[[-0.00386647, 0, 0.999993] [0, 1, 0] [-0.999993, 0, -0.00386647] [1676.23, 37.8958, -1453.66]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovind_factory_modular_inside_walls_a_3000"
+  transform:m=[[0.99996, 0, -0.00895] [0, 1, 0] [0.00895, -0, 0.99996] [1679.76, 37.8958, -1462.67]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovind_factory_modular_inside_walls_a_3000"
+  transform:m=[[0.99996, 0, -0.00895] [0, 1, 0] [0.00895, -0, 0.99996] [1684.19, 37.8958, -1462.6]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovind_factory_modular_inside_walls_a_3000"
+  transform:m=[[0.99996, 0, -0.00895] [0, 1, 0] [0.00895, -0, 0.99996] [1689.18, 37.8958, -1462.54]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovind_factory_modular_inside_walls_a_3000"
+  transform:m=[[0.99996, 0, -0.00895] [0, 1, 0] [0.00895, -0, 0.99996] [1693.65, 37.8958, -1462.49]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovind_factory_modular_inside_walls_a_3000"
+  transform:m=[[0.999899, 0, 0.0141836] [-0, 1, 0] [-0.0141836, -0, 0.999899] [1694.38, 38.4425, -1455.46]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovind_factory_modular_inside_walls_a_3000"
+  transform:m=[[-0.999879, 0, -0.0155657] [0, 1, 0] [0.0155657, 0, -0.999879] [1690.06, 38.4728, -1455.68]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovindustrial_machine_a_type_a"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1680.35, 38.4728, -1460.89]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovindustrial_machine_a_type_a"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1680.35, 38.4728, -1456.84]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovindustrial_machine_a_type_a"
+  transform:m=[[-0.0125089, 0, 0.999922] [0, 1, 0] [-0.999922, 0, -0.0125089] [1687.94, 38.4728, -1456.7]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovindustrial_operator_table_a"
+  transform:m=[[0.00193341, 0, 0.999998] [0, 1, -0] [-0.999998, 0, 0.00193341] [1683.62, 38.4728, -1462.58]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_armchair_c_type_a"
+  transform:m=[[0.515637, 0, -0.856807] [0, 1, 0] [0.856808, -0, 0.515637] [1683.49, 38.5038, -1460.75]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovindustrial_laboratory_room_a_table_c"
+  transform:m=[[-0.0239301, 0, -0.999714] [0, 1, 0] [0.999714, 0, -0.0239301] [1684.13, 38.4728, -1453.55]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovindustrial_laboratory_room_a_table_c"
+  transform:m=[[-0.0239301, 0, -0.999714] [0, 1, 0] [0.999714, 0, -0.0239301] [1682.45, 38.4728, -1453.55]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_armchair_c_type_a"
+  transform:m=[[0.597503, 0, 0.801867] [0, 1, -0] [-0.801867, 0, 0.597503] [1683.74, 38.4728, -1454.83]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_armchair_c_type_a"
+  transform:m=[[-0.386911, 0, 0.922117] [0, 1, 0] [-0.922117, 0, -0.386911] [1682.19, 38.5136, -1454.86]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_is_computer_a_unit"
+  transform:m=[[-0.0182492, 0, -0.999833] [0, 1, 0] [0.999834, 0, -0.0182493] [1684.57, 39.2553, -1453.92]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_is_computer_a_monitor"
+  transform:m=[[-0.652626, 0, -0.75768] [0, 1, 0] [0.757681, 0, -0.652626] [1684.52, 39.3606, -1453.9]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_is_computer_a_keyboard"
+  transform:m=[[-0.121817, 0, -0.992553] [0, 1, 0] [0.992553, 0, -0.121817] [1683.93, 39.2702, -1454.17]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_is_computer_a_unit"
+  transform:m=[[-0.0182492, 0, -0.999833] [0, 1, 0] [0.999834, 0, -0.0182493] [1682.87, 39.2553, -1453.92]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_is_computer_a_monitor"
+  transform:m=[[-0.34103, 0, -0.940052] [0, 1, 0] [0.940053, 0, -0.34103] [1682.82, 39.3606, -1453.9]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_is_computer_a_keyboard"
+  transform:m=[[-0.998979, 0, -0.0451786] [0, 1, 0] [0.0451786, 0, -0.998979] [1682.42, 39.2702, -1454.03]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_army_canteen_a_table_a"
+  transform:m=[[0.00312121, 0, 0.999995] [0, 1, -0] [-0.999995, 0, 0.00312121] [1683.21, 38.4728, -1458.04]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_army_canteen_a_table_a"
+  transform:m=[[0.00312121, 0, 0.999995] [0, 1, -0] [-0.999995, 0, 0.00312121] [1684.21, 38.4728, -1458.04]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovind_items_a_laboratory_room_a_table_b"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1683.72, 38.4728, -1457.58]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovindustrial_items_laboratory_room_a_table_b_type_b"
+  transform:m=[[0.997937, 0, 0.0642044] [-0, 1, 0] [-0.0642044, -0, 0.997937] [1682.86, 38.4728, -1458.65]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_cinema_rack_a"
+  transform:m=[[0.00312121, 0, 0.999995] [0, 1, -0] [-0.999995, 0, 0.00312121] [1678.3, 38.4728, -1453.81]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="sovmod_cinema_rack_a"
+  transform:m=[[0.00312121, 0, 0.999995] [0, 1, -0] [-0.999995, 0, 0.00312121] [1678.3, 38.4728, -1455.68]]
+}

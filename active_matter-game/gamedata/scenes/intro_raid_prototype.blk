@@ -1,0 +1,581 @@
+entity{
+  _template:t="raid_mode"
+}
+
+entity{
+  _template:t="static_cam"
+  camera__active:b=yes
+  transform:m=[[0, 0, -1] [0, 1, 0] [1, 0, 0] [0, 0, 0]]
+}
+
+entity{
+  _template:t="dalniy_ambient_sound"
+}
+
+entity{
+  _template:t="navmesh_battle_area"
+  transform:m=[[4000, 0, 0] [0, 4000, 0] [0, 0, 4000] [0, 0, 0]]
+}
+
+entity{
+  _template:t="shaderVars"
+
+  "shader_vars__vars:object"{
+    river1:c=142, 137, 71, 0
+    river0:c=76, 63, 5, 0
+    river_density:r=2
+    water_color_noise_size:r=71
+    ocean1:c=142, 137, 71, 0
+    ocean0:c=76, 63, 5, 0
+    ocean_density:r=1
+    paint_details_tex:t="sovmod_building_colors_tex_palette*"
+    river0:c=30, 81, 63, 0
+    river1:c=41, 104, 83, 0
+    ocean0:c=100, 110, 150, 0
+    ocean1:c=90, 100, 150, 0
+  }
+}
+
+entity{
+  _template:t="wind"
+  wind__noiseScale:r=100
+  wind__noiseSpeed:r=4
+  wind__strength:r=1
+}
+
+entity{
+  _template:t="clouds_hole_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+entity{
+  _template:t="am_teams"
+  am_teams__players:t="am_player_team_for_test_all"
+}
+
+entity{
+  _template:t="am_respawn_raid"
+  transform:m=[[0.999951, 0, -0.00993299] [0, 1, 0] [0.00993299, -0, 0.999951] [111.157, -1.90735e-05, 357.663]]
+  spawnBase__spawnGroupId:i=0
+}
+
+entity{
+  _template:t="postfx_color_grading_tonemap_death_alive"
+}
+
+entity{
+  _template:t="misc_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_misc.blk"
+}
+
+entity{
+  _template:t="player_spawn_controller_default"
+}
+
+entity{
+  _template:t="zone_weather"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[3.88724, -0.00445273, 0.0118321] [0.00311554, -0.013042, -1.02846] [0.00250333, 2.11418, -0.0268025] [103.854, 1.66626, 365.315]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[4.19876, -0.00480957, 0.0127804] [0.00311555, -0.013042, -1.02847] [0.00250333, 2.11418, -0.0268025] [102.904, 1.66626, 349.84]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.0578475, -0.00519071, -4.53114] [-1.02851, -0.0130436, 0.0131456] [-0.0268387, 2.11418, -0.00207929] [104.224, 1.66626, 368.098]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[2.83245, -0.0032445, 0.00862154] [0.00311553, -0.0130419, -1.02846] [0.00250333, 2.11418, -0.0268025] [122.084, 1.66626, 349.84]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[2.83245, -0.0032445, 0.00862154] [0.00311553, -0.0130419, -1.02846] [0.00250333, 2.11418, -0.0268025] [121.645, 1.66626, 365.315]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -0.0032445, -2.83031] [-1.02769, -0.0130419, -0.0400428] [-0.0266952, 2.11418, -0.00346411] [135.265, 1.66626, 371.599]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -0.0032445, -2.83031] [-1.02769, -0.0130419, -0.0400428] [-0.0266952, 2.11418, -0.00346411] [135.975, 1.66626, 353.375]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -0.0032445, -2.83031] [-1.02769, -0.0130419, -0.0400428] [-0.0266952, 2.11418, -0.00346411] [135.706, -0.908879, 360.101]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.00431538, 0.0306357, -2.83229] [-0.00306415, 1.02848, 0.0111293] [0.916863, 0.0027464, -0.00136726] [124.53, 0.994533, 359.817]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.00431538, 0.0306357, -2.83229] [-0.00306415, 1.02848, 0.0111293] [0.916863, 0.0027464, -0.00136726] [124.53, 0.678284, 359.817]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.0693287, 0.0306364, -2.83151] [-0.00335278, 1.02857, 0.0110469] [4.22786, 0.0126681, 0.103655] [139.876, 0.994537, 362.461]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.0693287, 0.0306364, -2.83151] [-0.00335278, 1.02857, 0.0110469] [4.22786, 0.0126681, 0.103655] [148.193, 0.994537, 362.461]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.0693287, 0.0306364, -2.83151] [-0.00335278, 1.02857, 0.0110469] [4.22786, 0.0126681, 0.103655] [139.743, 0.994543, 375.325]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.0693287, 0.0306364, -2.83151] [-0.00335278, 1.02857, 0.0110469] [4.22786, 0.0126681, 0.103655] [148.056, 0.994543, 375.113]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[2.83245, -0.0032445, 0.00862154] [0.00311553, -0.0130419, -1.02846] [0.00250333, 2.11418, -0.0268025] [136.138, 1.66626, 349.84]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -0.0032445, -2.83031] [-1.02769, -0.0130419, -0.0400428] [-0.0266952, 2.11418, -0.00346411] [149.467, 1.66627, 363.167]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -0.0032445, -2.83031] [-1.02769, -0.0130419, -0.0400428] [-0.0266952, 2.11418, -0.00346411] [148.988, 1.66627, 374.892]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -0.0032445, -2.83031] [-1.02769, -0.0130419, -0.0400428] [-0.0266952, 2.11418, -0.00346411] [135.222, 1.66626, 382.037]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="decor_sensor"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [143.194, 1.12598, 362.37]]
+}
+
+entity{
+  _template:t="military_long_range_weapons_t1_lootable_rendinst"
+  transform:m=[[0.936422, 0, -0.350873] [0, 1, 0] [0.350874, -0, 0.936424] [142.618, 1.12113, 361.085]]
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.0945558, 1.38883, 2.46686] [0.00345107, 0.896395, -0.504532] [-4.22677, -0.0568889, -0.129986] [139.743, 0.662583, 373.807]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.0945558, 2.83094, -0.00272522] [0.00345107, -0.000874944, -1.02863] [-4.22677, -0.141191, -0.0140608] [139.358, 6.49502, 385.104]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.0945558, 2.83094, -0.00272522] [0.00345107, -0.000874944, -1.02863] [-4.22677, -0.141191, -0.0140608] [147.499, 6.49502, 385.104]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.0945558, 2.83094, -0.00272522] [0.00345107, -0.000874944, -1.02863] [-4.22677, -0.141191, -0.0140608] [155.86, 6.49502, 385.104]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -0.0032445, -2.83031] [-1.02769, -0.0130419, -0.0400428] [-0.0266952, 2.11418, -0.00346411] [135.05, 5.91357, 385.618]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, 2.83006, -0.038159] [-1.02769, 0.0398792, -0.0135349] [-0.026695, 0.0295444, 2.11398] [135.05, 7.76003, 383.014]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -0.0032445, -2.83031] [-1.02769, -0.0130419, -0.0400428] [-0.0266952, 2.11418, -0.00346411] [143.464, 5.91357, 385.618]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -0.0032445, -2.83031] [-1.02769, -0.0130419, -0.0400428] [-0.0266952, 2.11418, -0.00346411] [143.464, 1.73425, 385.618]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[2.83246, -0.0032445, -0.004284] [-0.00157047, -0.0130419, -1.02847] [0.00238118, 2.11418, -0.0268133] [143.627, 2.04307, 371.933]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[2.83177, -0.0494262, -0.038159] [0.0177659, 1.02831, -0.0135349] [0.0289634, 0.0273243, 2.11398] [143.437, 7.04284, 383.014]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[2.83125, 0.0736488, -0.0381591] [-0.0269265, 1.02811, -0.0135349] [0.0277489, 0.0285568, 2.11398] [135.234, 19.2334, 383.392]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[2.83125, 0.0736488, -0.0381591] [-0.0269265, 1.02811, -0.0135349] [0.0277489, 0.0285568, 2.11398] [148.421, 19.5764, 383.392]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.0945558, 2.83094, -0.00272522] [0.00345107, -0.000874944, -1.02863] [-4.22677, -0.141191, -0.0140608] [164.15, 6.49502, 385.104]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[2.82851, 0.144613, -0.038159] [-0.0526957, 1.02711, -0.0135349] [0.0270242, 0.0292436, 2.11398] [156.136, 6.82298, 383.014]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[2.16017, -1.83168, -0.0381591] [0.665003, 0.784544, -0.0135349] [0.0397195, 0.00280267, 2.11398] [159.369, 19.9979, 383.392]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.0945558, 2.83094, -0.00272522] [0.00345107, -0.000874944, -1.02863] [-4.22677, -0.141191, -0.0140608] [172.404, 6.49502, 385.104]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.0945558, 1.38883, 2.46686] [0.00345107, 0.896395, -0.504532] [-4.22677, -0.0568889, -0.129986] [172.774, 1.20413, 373.807]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.0693287, -0.656065, -2.75463] [-0.00335278, 1.00062, -0.238401] [4.22786, 0.0373961, 0.0975006] [172.704, 1.85588, 375.709]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -1.35968, -2.48233] [-1.02769, -0.030642, -0.0288897] [-0.026695, 1.85375, -1.01656] [176.275, 10.0402, 385.618]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[2.83166, -0.055628, -0.038159] [0.020018, 1.02827, -0.0135349] [0.0290232, 0.0272608, 2.11398] [169.524, 11.0661, 383.014]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -2.8301, -0.0350218] [-1.02769, -0.0402158, 0.0124993] [-0.026695, 0.0251201, -2.11403] [149.396, 12.5454, 383.188]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.0464521, -1.19164, -0.0147463] [-1.02704, -0.0401905, 0.0124914] [-0.0266935, 0.0251186, -2.11391] [149.102, 20.6261, 383.188]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[8.83289, 0, 0] [0, 0.00119726, -4.21348] [-0, 14.9304, 0.0042425] [139.294, 12.607, 383.355]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[8.83289, 0, 0] [0, 0.000920326, -3.23886] [-0, 13.4508, 0.00382207] [147.936, 13.629, 384.337]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[8.83289, 0, 0] [0, 0.000920326, -3.23886] [-0, 13.4508, 0.00382207] [156.476, 13.629, 384.337]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[8.83289, 0, 0] [0, 0.000920326, -3.23886] [-0, 13.4508, 0.00382207] [165.08, 13.629, 384.337]]
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -1.35968, -2.48233] [-1.02769, -0.030642, -0.0288897] [-0.026695, 1.85375, -1.01656] [168.34, 7.77065, 382.069]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -1.35968, -2.48233] [-1.02769, -0.030642, -0.0288897] [-0.026695, 1.85375, -1.01656] [176.807, 3.5699, 373.974]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-1.8711, -0.0032445, -2.12645] [-0.772108, -0.0130419, 0.679411] [-0.021727, 2.11418, 0.0158922] [169.362, 1.66627, 370.475]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.0062558, -0.0032445, -2.83245] [-1.02847, -0.0130419, 0.00228643] [-0.026815, 2.11418, -0.00236251] [160.252, 1.66626, 360.607]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.0111465, -0.00578099, -5.04682] [-1.02847, -0.013042, 0.00228644] [-0.026815, 2.11418, -0.00236252] [176.844, 1.66626, 370.457]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.0062558, -0.0032445, -2.83245] [-1.02847, -0.0130419, 0.00228643] [-0.026815, 2.11418, -0.00236251] [160.225, 1.66627, 347.349]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.0062558, -0.0032445, -2.83245] [-1.02847, -0.0130419, 0.00228643] [-0.026815, 2.11418, -0.00236251] [176.77, 1.66627, 347.349]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[3.62491, -0.00415224, 0.0110337] [0.00311554, -0.0130419, -1.02846] [0.00250333, 2.11418, -0.0268025] [159.638, 1.66627, 333.969]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.0693287, 0.0306364, -2.83151] [-0.00335278, 1.02857, 0.0110469] [4.22786, 0.0126681, 0.103655] [168.304, 0.624259, 347.45]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.00493151, -0.474496, 2.79249] [0.003062, 1.0141, 0.172308] [-4.22912, 0.0111779, 0.0093679] [168.304, 0.740809, 345.98]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[1.38684, -0.00158859, -0.00209756] [-0.00157046, -0.0130419, -1.02847] [0.00238118, 2.11418, -0.0268133] [132.055, 2.04307, 371.933]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[1.38684, -0.00158859, -0.00209756] [-0.00157046, -0.0130419, -1.02847] [0.00238118, 2.11418, -0.0268133] [140.193, 2.04307, 371.933]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.00431632, 2.83159, 0.091714] [-0.00364715, -0.0396373, 1.22359] [0.430874, 0.000614558, 0.00130421] [172.573, -8.3916, 368.14]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.00431632, 2.83159, 0.091714] [-0.00364715, -0.0396373, 1.22359] [0.430874, 0.000614558, 0.00130421] [168.349, -8.39159, 361.07]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.00431632, 2.83159, 0.091714] [-0.00364715, -0.0396373, 1.22359] [0.430874, 0.000614558, 0.00130421] [172.363, -8.3916, 357.222]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.00431632, 2.83159, 0.091714] [-0.00364715, -0.0396373, 1.22359] [0.430874, 0.000614558, 0.00130421] [164.792, -8.3916, 346.442]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.00431632, 2.83159, 0.091714] [-0.00364715, -0.0396373, 1.22359] [0.430874, 0.000614558, 0.00130421] [172.187, -8.3916, 346.458]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -0.0032445, -2.83031] [-1.02769, -0.0130419, -0.0400428] [-0.0266952, 2.11418, -0.00346411] [135.571, 5.56451, 361.746]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[3.56885, -0.00408801, -0.00539776] [-0.00157047, -0.0130419, -1.02847] [0.00238118, 2.11418, -0.0268133] [131.991, 5.64891, 371.933]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[1.38684, -0.00158859, -0.00209756] [-0.00157046, -0.0130419, -1.02847] [0.00238118, 2.11418, -0.0268133] [131.646, 8.88375, 384.908]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.849905, -0.000973544, -0.00128546] [-0.00157046, -0.0130419, -1.02847] [0.00238118, 2.11418, -0.0268133] [139.449, 8.88375, 384.908]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[-0.0945558, 2.83094, -0.00272522] [0.00345107, -0.000874944, -1.02863] [-4.22677, -0.141191, -0.0140608] [139.358, 8.93953, 384.896]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.110322, -2.8301, -0.0350218] [-1.02769, -0.0402158, 0.0124993] [-0.026695, 0.0251201, -2.11403] [149.067, 19.9802, 381.475]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="decor_port_container_door_l"
+  transform:m=[[0.591737, 0, 0.806131] [0, 1, -0] [-0.806131, 0, 0.591737] [138.868, 0.96912, 371.876]]
+}
+
+entity{
+  _template:t="decor_port_container_door_l"
+  transform:m=[[0.9999, 0, -0.0141085] [0, 1, 0] [0.0141085, -0, 0.9999] [138.37, 6.86015, 384.885]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[0.133541, 0, 0.991043] [0, 1, -0] [-0.991043, 0, 0.133541] [168.908, -1.62125e-05, 362.015]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[-0.205246, 0, 0.97871] [0, 1, 0] [-0.97871, 0, -0.205246] [170.809, -1.52588e-05, 357.448]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[0.101728, 0, 0.994812] [0, 1, -0] [-0.994812, 0, 0.101728] [166.182, 0.718287, 346.879]]
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.0693287, 0.0306364, -2.83151] [-0.00335278, 1.02857, 0.0110469] [4.22786, 0.0126681, 0.103655] [139.876, 3.7516, 362.461]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.0693287, 0.0306364, -2.83151] [-0.00335278, 1.02857, 0.0110469] [4.22786, 0.0126681, 0.103655] [147.209, 3.7516, 362.461]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.0693287, 0.0306364, -2.83151] [-0.00335278, 1.02857, 0.0110469] [4.22786, 0.0126681, 0.103655] [147.209, 3.7516, 373.184]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[0.0693287, 0.0306364, -2.83151] [-0.00335278, 1.02857, 0.0110469] [4.22786, 0.0126681, 0.103655] [139.294, 3.7516, 373.184]]
+  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+}
+
+entity{
+  _template:t="metal_heat_light"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [143.181, 3.02013, 362.37]]
+  metal_heat_light__movePosSpeed:p3=0, 0, 0
+  light__brightness:r=15
+  game_effect__lightBrightnessSmooth:p2=0.1, 10
+  omni_light__dynamic_obj_shadows:b=yes
+  omni_light__shadows:b=yes
+}
+
+entity{
+  _template:t="extraction_point+debug_portal"
+  extraction__currentState:i=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [168.764, 0.83189, 336.769]]
+
+  "extraction__connectedSpawnGroups:list<i>"{
+    groupId:i=0
+  }
+}
+
+entity{
+  _template:t="active_matter_pile+coin_item_count_5+item_in_world"
+  transform:m=[[-0.970264, -5.78322e-08, -0.24205] [-5.96047e-08, 1, 0] [0.24205, 1.44273e-08, -0.970264] [170.051, 0.782961, 342.307]]
+}
+
+entity{
+  _template:t="active_matter_pile+coin_item_count_5+item_in_world"
+  transform:m=[[-0.970264, -5.78322e-08, -0.24205] [-5.96047e-08, 1, 0] [0.24205, 1.44273e-08, -0.970264] [167.284, 0.782961, 341.489]]
+}
+
+entity{
+  _template:t="active_matter_pile+coin_item_count_5+item_in_world"
+  transform:m=[[-0.970264, -5.78322e-08, -0.24205] [-5.96047e-08, 1, 0] [0.24205, 1.44273e-08, -0.970264] [168.068, 0.782961, 344.272]]
+}
+
+entity{
+  _template:t="level+level_synced_environment"
+  level__blk:t="levels/gameplay_test_level.blk"
+  level__timeRange:p2=6.5, 6.5
+  level_synced_environment__timeOfDaySeed:i=1
+  level_synced_environment__weatherSeed:i=2
+
+  "level__weatherChoice:object"{
+    weather_dalniy_island_overcast:r=1
+  }
+}

@@ -1,0 +1,14 @@
+stat_name:t="semiauto"
+selWeaponVar:t="m110a1_sdmr"
+
+gunFlash{
+  gunFx_main{
+    fx:t="muzzle_flash_a_composit_fx"
+    scale:r=0.16
+  }
+
+  gunFx_add_bolt{
+    fx:t="fire_muzzle_smoke_extractor_cmps_fx"
+    scale:r=0.2
+  }
+}

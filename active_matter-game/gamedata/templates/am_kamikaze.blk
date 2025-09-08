@@ -1,0 +1,209 @@
+kamikaze_activator{
+  on_create__spawnActivatedShellBlk:t="gamedata/weapons/antitank_mine.blk"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "ownerEid:eid"{}
+}
+
+spawn_attract_point_ai{
+  spawn_attract_point__power:p2=0.2, 1
+  spawn_attract_point__ttl:p2=3, 6
+  spawn_attract_point__growDuration:p2=1, 1.5
+  spawn_attract_point__currentGrowDuration:r=0
+  spawn_attract_point__currentTimeLeft:r=0
+
+  "spawn_attract_point__currentPointEid:eid"{}
+}
+
+nphys_kamikaze_ai{
+  _use:t="patroller_ai"
+  _use:t="spawn_attract_point_ai"
+  _use:t="get_attract_position_ai"
+  _use:t="beh_tree_regular_check"
+  _use:t="agent_dangers_bullet_reaction"
+  _use:t="agent_dangers_hit_reaction"
+  _use:t="get_reaction_offender_ai"
+  _use:t="track_visual_attract_points"
+  _use:t="get_visible_attract_position_ai"
+  _use:t="base_navmesh_agent_comp"
+  _use:t="corridor_walker"
+  attract_point__searchRadius:r=30
+  visual_attract__maxDist:r=30
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  beh_tree__blackboard__enemyRadius:r=30
+  agent_dangers__hasTraceableDangers:b=no
+  _use:t="monster_danger_calc"
+  agent_dangers__tag:t="kamikaze"
+  agent_dangers__maxDangerDist:r=90
+  agent_dangers__frustumAngle:r=90
+  agent_dangers__projectileDist:r=4
+  agent_dangers__decrease:r=5
+  agent_dangers__timeFromDetection:r=3
+  agent_dangers__lastBulletReactionTime:r=-1
+  agent_dangers__nextBulletReactionTime:r=-1
+  agent_dangers__hmapTraceOffset:p3=0, -0.1, 0
+  agent_dangers__nextDangersCheckTime:r=0
+  agent_dangers__nextDangersTraceTime:r=0
+  agent_dangers__dangerIncrease:r=5
+  agent_dangers__dangerOutIncrease:r=0
+  agent_dangers__maxDangerDistMult:r=0.3
+  agent_dangers__standShootPos:p3=0, 0, 0
+  agent_dangers__standShootDir:p3=0, 0, 0
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  agent_dangers{
+    _tags:t="server"
+  }
+}
+
+nphys_kamikaze{
+  _use:t="nphys_kamikaze_ai"
+  _use:t="base_dm_parts"
+  _use:t="am_navmesh_creature_base"
+  _use:t="ai_target"
+  _use:t="navmesh_phys_move_anim"
+  _use:t="outline"
+  kamikaze__activatorTemplate:t="kamikaze_activator"
+  kill_tracking_tag:t="kamikaze"
+  animchar__res:t="beastlocust_char"
+  collres__res:t="beastlocust_collision"
+  trace__topNodeName:t="Bip01 Neck"
+  hitpoints__hp:r=40
+  hitpoints__maxHp:r=40
+  ai_target_node__node:t="Bip01 Spine"
+  beh_tree__node:t="kamikaze"
+  beh_tree__refs__attack:t="sub.kamikaze_attack"
+  beh_tree__refs__retaliatory_attack:t="sub.kamikaze_retaliatory_attack"
+  team:i=1
+  _skipInitialReplication:t="dm_parts__parts"
+
+  "kamikaze:tag"{}
+  anim_phys{}
+  "dm_parts__parts:object"{
+    "Bip01 Head:object"{
+      dmgMult:r=1.8
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 Neck:object"{
+      dmgMult:r=2
+      armor:r=0
+      type:t="head"
+    }
+
+    "Bip01 L Thigh:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 R Thigh:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 L Calf:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 R Calf:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 L Foot:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 R Foot:object"{
+      dmgMult:r=0.6
+      armor:r=0
+    }
+
+    "Bip01 Pelvis:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 Spine:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 Spine1:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L Clavicle:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L UpperArm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L Forearm:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 R Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+
+    "Bip01 L Hand:object"{
+      dmgMult:r=1
+      armor:r=0
+    }
+  }
+
+  "dmgzoneVulnerable:tag"{}
+  "capsule_approximation__nodeNames:array"{
+    node:t="Bip01 L Calf"
+    node:t="Bip01 L Thigh"
+    node:t="Bip01 L UpperArm"
+    node:t="Bip01 L Forearm"
+    node:t="Bip01 R Calf"
+    node:t="Bip01 R Thigh"
+    node:t="Bip01 R UpperArm"
+    node:t="Bip01 R Forearm"
+  }
+
+  "capsule_approximation__complexNodeNames:array"{
+    "node:array"{
+      node:t="Bip01 Neck1"
+      node:t="Bip01 Neck2"
+      node:t="Bip01 Head"
+    }
+
+    "node:array"{
+      node:t="Bip01 Spine"
+      node:t="Bip01 Spine1"
+    }
+  }
+}

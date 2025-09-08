@@ -1,0 +1,736 @@
+helmet_with_ribbons{
+  _use:t="am_militant_ribbons"
+  animchar__res:t=""
+
+  "attachable_helmet_animchar:tag"{}
+}
+
+helmet_base{
+  _use:t="equipable_item"
+  _use:t="slot_attachable"
+  _use:t="dm_part_armor"
+  _use:t="item_hitpoints"
+  _use:t="equipment_with_mods"
+  _use:t="node_collapser"
+  slot_attach__slotName:t="helmet"
+  collres__res:t="medkit_collision"
+  dm_part_armor__partName:t="head"
+  item__minDamageGap:r=0.25
+  item__baseWeight:r=0
+  item__weight:r=0
+  item__filterType:t="equipment"
+  _replicated:t="item__weight"
+  _tracked:t="item__weight"
+  showroom_item__customZoom:r=1.5
+  showroom_item__customZoomBordersRng:p2=1.2, 1.7
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "item__equipmentSlots:list<t>"{
+    slot:t="helmet"
+  }
+
+  _group{
+    _tags:t="render"
+
+    "animchar_node_collapser__nodes:object"{
+      root:t=""
+    }
+  }
+
+  "equipment_item:tag"{}
+  _group{
+    _tags:t="sound"
+    item_destroyed_sound__path:t="env_effects/object_crash/metal_grid_fall"
+  }
+
+  "item__chronotracesProgressionInfo:object"{
+    "once:object"{
+      damaged:i=25
+    }
+
+    "repeatedly:object"{
+      extract:i=100
+    }
+  }
+}
+
+attachable_helmet_animchar{
+  _use:t="suit_attachable_animchar"
+  _use:t="node_collapser"
+
+  "attachable_helmet_animchar:tag"{}
+  _group{
+    _tags:t="render"
+
+    "animchar_node_collapser__nodes:object"{
+      "Bip01 Head":t="Bip01 Neck1"
+      "Bip01 Neck1":t=""
+    }
+  }
+}
+
+suit_attachable_helmet_base{
+  _use:t="helmet_base"
+  _use:t="suit_attachable_item_base"
+}
+
+helmet_ussr_ssh40{
+  _use:t="helmet_base"
+  item__proto:t="helmet_ussr_ssh40"
+  animchar__res:t="helmet_ussr_ssh40_char"
+  collres__res:t="helmet_ussr_ssh40_collision"
+  item__name:t="items/helmet_ussr_ssh40"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=1.4
+  item__volume:r=14
+  item__marketPrice:i=500
+  item__hp:r=120
+  item__maxHp:r=120
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.3
+    DM_MELEE:r=0.4
+    DM_EXPLOSION:r=0.4
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.2
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+}
+
+helmet_ussr_ssh40_rust{
+  _use:t="helmet_ussr_ssh40"
+  item__name:t="items/helmet_ussr_ssh40_rust"
+  item__marketPrice:i=350
+  item__hp:r=100
+  item__maxHp:r=100
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentResearchAlias:t="helmet_ussr_ssh40"
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.25
+    DM_MELEE:r=0.35
+    DM_EXPLOSION:r=0.35
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.15
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+
+  "animchar__objTexReplace:object"{
+    "ussr_ssh40_tex_d*":t="ussr_ssh40_rust_a_tex_d*"
+    "ussr_ssh40_tex_n*":t="ussr_ssh40_rust_a_tex_n*"
+  }
+}
+
+helmet_e{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  item__proto:t="helmet_e"
+  animchar__res:t="helmet_e_char"
+  collres__res:t="helmet_e_collision"
+  item__name:t="items/helmet_e"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=1.6
+  item__volume:r=14
+  item__marketPrice:i=650
+  item__hp:r=160
+  item__maxHp:r=160
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.4
+    DM_MELEE:r=0.5
+    DM_EXPLOSION:r=0.5
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.3
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+}
+
+helmet_d{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="helmet_d"
+  animchar__res:t="helmet_d_char"
+  collres__res:t="helmet_d_collision"
+  item__name:t="items/helmet_d"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=2.1
+  item__volume:r=16
+  item__marketPrice:i=1050
+  item__hp:r=160
+  item__maxHp:r=160
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.45
+    DM_MELEE:r=0.5
+    DM_EXPLOSION:r=0.6
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.3
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+}
+
+helmet_k6_3{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  _use:t="item_rarity_rare"
+  item__proto:t="helmet_k6_3"
+  animchar__res:t="k6_3_helmet_char"
+  collres__res:t="k6_3_helmet_collision"
+  item__name:t="items/helmet_k6_3"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=3.8
+  item__volume:r=18
+  item__marketPrice:i=4500
+  item__hp:r=260
+  item__maxHp:r=260
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.8
+    DM_MELEE:r=0.85
+    DM_EXPLOSION:r=0.8
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.4
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+}
+
+helmet_c{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  item__proto:t="helmet_c"
+  animchar__res:t="helmet_c_char"
+  collres__res:t="helmet_c_collision"
+  item__name:t="items/helmet_c"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=1.9
+  item__volume:r=14
+  item__marketPrice:i=750
+  item__hp:r=140
+  item__maxHp:r=140
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.4
+    DM_MELEE:r=0.4
+    DM_EXPLOSION:r=0.55
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.3
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+helmet_b{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  item__proto:t="helmet_b"
+  animchar__res:t="helmet_b_char"
+  collres__res:t="helmet_b_collision"
+  item__name:t="items/helmet_b"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=1.6
+  item__volume:r=14
+  item__marketPrice:i=1100
+  item__hp:r=160
+  item__maxHp:r=160
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.45
+    DM_MELEE:r=0.5
+    DM_EXPLOSION:r=0.6
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.3
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_night_vision_device:t="night_vision_device_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+helmet_f{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="helmet_f"
+  animchar__res:t="helmet_f_char"
+  collres__res:t="helmet_f_collision"
+  item__name:t="items/helmet_f"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=1.2
+  item__volume:r=14
+  item__marketPrice:i=1750
+  item__hp:r=200
+  item__maxHp:r=200
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.55
+    DM_MELEE:r=0.55
+    DM_EXPLOSION:r=0.7
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.35
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_night_vision_device:t="night_vision_device_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+helmet_a{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="helmet_a"
+  animchar__res:t="helmet_a_char"
+  collres__res:t="helmet_a_collision"
+  item__name:t="items/helmet_a"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=1.4
+  item__volume:r=16
+  item__marketPrice:i=2400
+  item__hp:r=220
+  item__maxHp:r=220
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.65
+    DM_MELEE:r=0.65
+    DM_EXPLOSION:r=0.75
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.35
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_night_vision_device:t="night_vision_device_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+helmet_h{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="helmet_h"
+  animchar__res:t="helmet_h_char"
+  collres__res:t="helmet_h_collision"
+  item__name:t="items/helmet_h"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=2.7
+  item__volume:r=16
+  item__marketPrice:i=3600
+  item__hp:r=250
+  item__maxHp:r=250
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.75
+    DM_MELEE:r=0.8
+    DM_EXPLOSION:r=0.75
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.35
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_night_vision_device:t="night_vision_device_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+helmet_g{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  _use:t="item_rarity_rare"
+  item__proto:t="helmet_g"
+  animchar__res:t="helmet_g_char"
+  collres__res:t="helmet_g_collision"
+  item__name:t="items/helmet_g"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=1.6
+  item__volume:r=18
+  item__marketPrice:i=4800
+  item__hp:r=280
+  item__maxHp:r=280
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.8
+    DM_MELEE:r=0.85
+    DM_EXPLOSION:r=0.8
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.4
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_night_vision_device:t="night_vision_device_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+helmet_pasgt{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  item__proto:t="helmet_pasgt"
+  animchar__res:t="pasgt_helmet_char"
+  collres__res:t="pasgt_helmet_collision"
+  item__name:t="items/helmet_pasgt"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=1.5
+  item__volume:r=14
+  item__marketPrice:i=750
+  item__hp:r=140
+  item__maxHp:r=140
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.4
+    DM_MELEE:r=0.4
+    DM_EXPLOSION:r=0.55
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.3
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+helmet_pasgt_tactical{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  item__proto:t="helmet_pasgt_tactical"
+  animchar__res:t="pasgt_helmet_picatinny_fastener_char"
+  collres__res:t="pasgt_helmet_picatinny_fastener_collision"
+  item__name:t="items/helmet_pasgt_tactical"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=1.7
+  item__volume:r=14
+  item__marketPrice:i=790
+  item__hp:r=140
+  item__maxHp:r=140
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.4
+    DM_MELEE:r=0.4
+    DM_EXPLOSION:r=0.55
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.3
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_night_vision_device:t="night_vision_device_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+helmet_kiver{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  item__proto:t="helmet_kiver"
+  animchar__res:t="kiver_helmet_char"
+  collres__res:t="kiver_helmet_collision"
+  item__name:t="items/helmet_kiver"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=1.2
+  item__volume:r=14
+  item__marketPrice:i=1100
+  item__hp:r=160
+  item__maxHp:r=160
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.45
+    DM_MELEE:r=0.5
+    DM_EXPLOSION:r=0.6
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.3
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_night_vision_device:t="night_vision_device_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+helmet_galvion_viper_a3{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  item__proto:t="helmet_galvion_viper_a3"
+  animchar__res:t="galvion_viper_a3_helmet_char"
+  collres__res:t="galvion_viper_a3_helmet_collision"
+  item__name:t="items/helmet_galvion_viper_a3"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=1.27
+  item__volume:r=14
+  item__marketPrice:i=1750
+  item__hp:r=200
+  item__maxHp:r=200
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.55
+    DM_MELEE:r=0.55
+    DM_EXPLOSION:r=0.7
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.35
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_night_vision_device:t="night_vision_device_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+helmet_fast_sf{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="helmet_fast_sf"
+  animchar__res:t="fast_sf_helmet_char"
+  collres__res:t="fast_sf_helmet_collision"
+  item__name:t="items/helmet_fast_sf"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=0.9
+  item__volume:r=12
+  item__marketPrice:i=2400
+  item__hp:r=220
+  item__maxHp:r=220
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.65
+    DM_MELEE:r=0.65
+    DM_EXPLOSION:r=0.75
+    DM_ZONE:r=0
+    DM_COLLISION:r=0.35
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0.3
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_night_vision_device:t="night_vision_device_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hat_panama_black_item{
+  _use:t="helmet_base"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="hat_panama_black"
+  animchar__res:t="panama_char"
+  collres__res:t="panama_collision"
+  item__name:t="items/hat_panama_black"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=0.15
+  item__volume:r=12
+  item__marketPrice:i=2400
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hat_hood_khaki_attachable_animchar_male{
+  _use:t="attachable_helmet_animchar"
+  animchar__res:t="hood_char"
+}
+
+hat_hood_khaki_item{
+  _use:t="suit_attachable_helmet_base"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="hat_hood_khaki"
+  animchar__res:t="hood_char"
+  collres__res:t="hood_collision"
+  item__name:t="items/hat_hood_khaki"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=0.15
+  item__volume:r=12
+  item__marketPrice:i=2400
+
+  "suit_attachable_item__suitTypeBasedAnimcharTemplates:list<t>"{
+    male:t="hat_hood_khaki_attachable_animchar_male"
+    female:t="hat_hood_khaki_attachable_animchar_male"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hat_hood_mesh_attachable_male{
+  _use:t="attachable_helmet_animchar"
+  animchar__res:t="mesh_hood_char"
+}
+
+hat_hood_mesh_item{
+  _use:t="suit_attachable_helmet_base"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="hat_hood_mesh"
+  animchar__res:t="mesh_hood_char"
+  collres__res:t="mesh_hood_collision"
+  item__name:t="items/hat_hood_mesh"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=0.15
+  item__volume:r=12
+  item__marketPrice:i=2400
+
+  "suit_attachable_item__suitTypeBasedAnimcharTemplates:list<t>"{
+    male:t="hat_hood_mesh_attachable_male"
+    female:t="hat_hood_mesh_attachable_male"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hat_red_berete_item{
+  _use:t="helmet_base"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="hat_red_berete"
+  animchar__res:t="red_beret_char"
+  collres__res:t="red_beret_collision"
+  item__name:t="items/hat_red_berete"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=0.15
+  item__volume:r=12
+  item__marketPrice:i=2400
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hat_tactical_cap_item{
+  _use:t="helmet_base"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="tactical_cap"
+  animchar__res:t="tactical_cap_char"
+  collres__res:t="tactical_cap_collision"
+  item__name:t="items/tactical_cap"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=0.15
+  item__volume:r=12
+  item__marketPrice:i=2400
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hat_tactical_cap_rotate_item{
+  _use:t="helmet_base"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="tactical_cap_rotate"
+  animchar__res:t="tactical_cap_rotate_char"
+  collres__res:t="tactical_cap_rotate_collision"
+  item__name:t="items/tactical_cap_rotate"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=0.15
+  item__volume:r=12
+  item__marketPrice:i=2400
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hat_tactical_hat_item{
+  _use:t="helmet_base"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="tactical_hat"
+  animchar__res:t="tactical_hat_char"
+  collres__res:t="tactical_hat_collision"
+  item__name:t="items/tactical_hat"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=0.15
+  item__volume:r=12
+  item__marketPrice:i=2400
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hat_tactical_panama_a_item{
+  _use:t="helmet_base"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="tactical_panama_a"
+  animchar__res:t="tactical_panama_a_char"
+  collres__res:t="tactical_panama_a_collision"
+  item__name:t="items/tactical_panama_a"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=0.15
+  item__volume:r=12
+  item__marketPrice:i=2400
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hat_panama_carbonmask_item{
+  _use:t="helmet_base"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="panama_carbonmask"
+  animchar__res:t="panama_mask_char"
+  collres__res:t="panama_mask_collision"
+  item__name:t="items/panama_carbonmask"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=0.15
+  item__volume:r=12
+  item__marketPrice:i=2400
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hat_winter_hat_item{
+  _use:t="helmet_base"
+  _use:t="helmet_with_ribbons"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="winter_hat"
+  animchar__res:t="winter_hat_char"
+  collres__res:t="winter_hat_collision"
+  item__name:t="items/winter_hat"
+  drop_item__horizontalAngleLimits:p2=0, 360
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hat_sniper_scarf_male{
+  _use:t="attachable_helmet_animchar"
+  animchar__res:t="scarf_sniper_char"
+}
+
+hat_sniper_scarf_male_item{
+  _use:t="suit_attachable_helmet_base"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="hat_scarf_sniper"
+  animchar__res:t="scarf_sniper_char"
+  collres__res:t="scarf_sniper_collision"
+  item__name:t="items/hat_scarf_sniper"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__baseWeight:r=0.15
+  item__volume:r=12
+  item__marketPrice:i=2400
+
+  "suit_attachable_item__suitTypeBasedAnimcharTemplates:list<t>"{
+    male:t="hat_sniper_scarf_male"
+    female:t="hat_sniper_scarf_male"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}

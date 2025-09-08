@@ -1,0 +1,988 @@
+doors_grid{
+  editableObj:b=no
+  _use:t="replicating"
+  _singleton:b=yes
+  grid_holder__type:t="doors"
+  grid_holder__typeHash:i=0
+  grid_holder__cellSize:i=16
+
+  grid_holder{}
+}
+
+rotating_rendinst{
+  "rendinst_axis_rotation__enabled:tag"{}
+}
+
+rotating_rendinst_simple_phys_disabled{
+  "rotating_rendinst_simple_phys_disabled:tag"{}
+}
+
+rotating_rendinst_simple_phys_processing{
+  rotating_rendinst_simple_phys__timeAcc:r=0
+  rotating_rendinst_simple_phys__physAngle:r=0
+  rotating_rendinst_simple_phys__physAnglePrevUpdate:r=0
+  rotating_rendinst_simple_phys__angularVelocity:r=0
+  rotating_rendinst_simple_phys__torque:r=0
+  rotating_rendinst_simple_phys__kinematicCollisionsEnabled:b=yes
+  rotating_rendinst_simple_phys__idleUpdate:b=no
+  loud_noise__rotating_rendinst_simple_phys__updateAt:r=0
+  loud_noise__rotating_rendinst_simple_phys__interval:r=0.33
+  loud_noise__rotating_rendinst_simple_phys__accNoise:r=0
+
+  "rotating_rendinst_simple_phys_processing:tag"{}
+}
+
+rotating_rendinst_simple_phys{
+  rotating_rendinst_simple_phys__processingTemplate:t="rotating_rendinst_simple_phys_processing"
+  rotating_rendinst_simple_phys__startEnabled:b=yes
+  _tracked:t="rotating_rendinst_simple_phys__startEnabled"
+  _replicated:t="rotating_rendinst_simple_phys__startEnabled"
+  rotating_rendinst_simple_phys__angularDamping:r=1
+  rotating_rendinst_simple_phys__invMomentOfInertia:r=1
+  rotating_rendinst_simple_phys__momentOfInertiaFromMassDiv:r=40
+
+  "rotating_rendinst_simple_phys__rendinstImpulseActors:list<ip2>"{}
+}
+
+rotating_door_simple_phys_processing{
+  _use:t="rotating_rendinst_simple_phys_processing"
+}
+
+rotating_door_simple_phys{
+  _use:t="rotating_rendinst_simple_phys"
+  rotating_rendinst_simple_phys__angularDamping:r=1.5
+  rotating_door_simple_phys__closeOnClosedAngleReached:b=yes
+  rotating_rendinst_simple_phys__startEnabled:b=no
+  rotating_rendinst_simple_phys__clampAngles:p2=0, 0
+
+  _group{
+    _tags:t="gameClient"
+    rotating_door_simple_phys__collisionDesyncCheckInterval:r=0.5
+    rotating_door_simple_phys__collisionDesyncCheckAt:r=0
+  }
+}
+
+rotating_rendinst_decal_matrixes{
+  decals__useDecalMatrices:b=no
+  decals__bulletHoleMatrixId:i=0
+  decals__sprayMatrixId:i=0
+  decals__bloodPuddlesMatrixId:i=0
+}
+
+door_client_prediction_tracker{
+  door_client_prediction__atTime:r=-1
+  door_client_prediction__timeout:r=1
+
+  "door_client_prediction__doorEid:eid"{}
+}
+
+rendinst_axis_rotation_damped_oscillations{
+  rendinst_axis_rotation__damped_oscillations__amplitude:r=0.05
+  rendinst_axis_rotation__damped_oscillations__decayRate:r=0.25
+  rendinst_axis_rotation__damped_oscillations__frequency:r=30
+  rendinst_axis_rotation__damped_oscillations__t:r=0
+}
+
+rendinst_axis_rotation_damped_oscillations_enabled{
+  "rendinst_axis_rotation__damped_oscillations__enabled:tag"{}
+}
+
+rendinst_axis_rotation_damped_oscillations_on_rotation_finished{
+  "rendinst_axis_rotation_damped_oscillations_on_rotation_finished:tag"{}
+}
+
+rendinst_axis_rotation_braking_way{
+  rendinst_axis_rotation__braking_way__decayRate:r=0.5
+  rendinst_axis_rotation__braking_way__t:r=0
+  rendinst_axis_rotation__braking_way__dir:r=0
+  rendinst_axis_rotation__braking_way__allowedDir:r=0
+}
+
+rendinst_axis_rotation_braking_way_enabled{
+  "rendinst_axis_rotation__braking_way__enabled:tag"{}
+}
+
+rendinst_axis_rotation_braking_way_on_rotation_finished{
+  "rendinst_axis_rotation_braking_way_on_rotation_finished:tag"{}
+}
+
+door_base_comps{
+  door_operations__reqState:i=0
+  _replicated:t="door_operations__reqState"
+  door_operations__state:i=0
+  _tracked:t="door_operations__state"
+  _replicated:t="door_operations__state"
+  rendinst_axis_rotation__rotSpeedKoef:r=1
+  item__setCustomUsePrompt:t="hud/open_door"
+  item__setCustomUseAltPrompt:t="hud/open_door"
+  door_operations__ajarAngleKoef:r=0.35
+  door_operations__ajarSpeedKoef:r=0.35
+  rendinst__mass:r=0
+}
+
+dynamic_rotating_door{
+  _use:t="door_base_comps"
+  _tracked:t="transform"
+  _tracked:t="door_operations__serverTargetAngle"
+  _tracked:t="rendinst_axis_rotation__targetAngle"
+  _replicated:t="door_operations__serverTargetAngle"
+  rendinst_axis_rotation__targetAngle:r=-95
+  rendinst_axis_rotation__axis:p3=0, 1, 0
+  rendinst_axis_rotation__rotSpeed:r=100
+  rendinst_axis_rotation__collisionStartedAt:r=0
+  rendinst_axis_rotation__stopOnCollision:b=yes
+  rendinst_axis_rotation__stopOnCollisionDelay:r=1
+  initialTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  door_operations__serverTargetAngle:r=0
+  door_operations__lastUseTime:r=0
+  door_operations__useCooldown:r=1.5
+  rendinst_axis_rotation__subTemplate:t="rotating_rendinst"
+  grid_obj__gridType:t="doors"
+  grid_obj__fixedTmScale:r=-1
+  item__useActionHintType:i=1
+  item_world_marker__offset:p3=0, 0, 0
+  item_world_marker__riColliderPoint:p3=0.5, 0.6, 0.5
+  item_world_marker__riColliderPointOffset:p3=0, 0, 0
+  ri_extra__destroyed:b=no
+  loud_noise__radius:r=15
+  loud_noise__noisePerOperation:r=50
+
+  "rendinst_axis_rotation__enabled:tag"{}
+  "pair_door__eid:eid"{}
+  ri_extra{}
+  grid_obj{}
+  _group{
+    _tags:t="server"
+    obstacle__lastCheckTime:r=-1
+    obstacle__checkDelta:r=1
+    obstacle__handle:i=0
+    obstacle__padding:r=0.7
+    obstacle__bufferSize:p2=0.35, 0
+  }
+
+  "obstacle__isDestructible:tag"{}
+}
+
+static_rotating_door_no_grid{
+  _use:t="door_base_comps"
+  _use:t="rotating_door_simple_phys"
+  _use:t="rotating_rendinst_decal_matrixes"
+  _use:t="use_object_enabled"
+  _tracked:t="transform"
+  _tracked:t="door_operations__serverTargetAngle"
+  _tracked:t="rendinst_axis_rotation__targetAngle"
+  _replicated:t="door_operations__serverTargetAngle"
+  _replicated:t="ri_extra__handle"
+  item__useActionAvailable:b=yes
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  initialTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _skipInitialReplication:t="transform,initialTransform"
+  doorEscapePos:p3=1.3, 0, 0
+  pair_door__searchDist:r=3
+  pair_door__checkMargin:r=0.05
+  pair_door__searchTag:t=""
+  isDoor:b=yes
+  _use:t="replicating"
+  rendinst_axis_rotation__axis:p3=0, 1, 0
+  rendinst_axis_rotation__rotSpeed:r=150
+  rendinst_axis_rotation__curAngle:r=0
+  rendinst_axis_rotation__startAngle:r=0
+  rendinst_axis_rotation__appliedAngle:r=0
+  rendinst_axis_rotation__targetAngle:r=-95
+  rendinst_axis_rotation__collisionStartedAt:r=0
+  rendinst_axis_rotation__stopOnCollision:b=yes
+  rendinst_axis_rotation__stopOnCollisionDelay:r=1
+  rendinst_axis_rotation__subTemplate:t="rotating_rendinst"
+  door_operations__omniRotate:b=no
+  door_operations__lastUseTime:r=-1
+  door_operations__useCooldown:r=0.7
+  door_operations__serverTargetAngle:r=-95
+  door_operations__openOnUnlock:b=no
+  door_operations__closeOnLock:b=no
+  door_operations__openedDir:p3=0, 0, 0
+  net__scopeDistanceSq:r=90000
+  item__useActionHintType:i=1
+  item_world_marker__offset:p3=0, 0, 0
+  item_world_marker__riColliderPoint:p3=0.5, 0.6, 0.5
+  item_world_marker__riColliderPointOffset:p3=0, 0, 0
+  ri_extra__destroyed:b=no
+  loud_noise__radius:r=15
+  loud_noise__noisePerOperation:r=100
+
+  "pair_door__eid:eid"{}
+  ri_extra{}
+  _group{
+    _tags:t="server"
+    obstacle__lastCheckTime:r=-1
+    obstacle__checkDelta:r=1
+    obstacle__handle:i=0
+    obstacle__padding:r=0.7
+    obstacle__bufferSize:p2=0.35, 0
+  }
+
+  "obstacle__isDestructible:tag"{}
+  "ri_extra__handle:u64"{
+    value:i64=-1
+  }
+}
+
+static_rotating_door{
+  _use:t="static_rotating_door_no_grid"
+  grid_obj__gridType:t="doors"
+  grid_obj__fixedTmScale:r=-1
+
+  grid_obj{}
+}
+
+ri_start_state_preset{
+  "ri_start_state_preset__chances:array"{}
+}
+
+door_start_state_preset{
+  _use:t="ri_start_state_preset"
+
+  "ri_start_state_preset__chances:array"{
+    "item:object"{
+      angle_mult_range:p2=0, 0
+      weight:r=3
+    }
+
+    "item:object"{
+      angle_mult_range:p2=0.1, 0.3
+      weight:r=1
+    }
+
+    "item:object"{
+      angle_mult_range:p2=1, 1
+      weight:r=0.33
+    }
+  }
+}
+
+window_start_state_preset{
+  _use:t="ri_start_state_preset"
+
+  "ri_start_state_preset__chances:array"{
+    "item:object"{
+      angle_mult_range:p2=0, 0
+      weight:r=7
+    }
+
+    "item:object"{
+      angle_mult_range:p2=0.05, 0.2
+      weight:r=1
+    }
+
+    "item:object"{
+      angle_mult_range:p2=1, 1
+      weight:r=0.1
+    }
+  }
+}
+
+gate_door_start_state_preset{
+  _use:t="ri_start_state_preset"
+
+  "ri_start_state_preset__chances:array"{
+    "item:object"{
+      angle_mult_range:p2=0, 0
+      weight:r=7
+    }
+
+    "item:object"{
+      angle_mult_range:p2=0.1, 0.3
+      weight:r=1
+    }
+
+    "item:object"{
+      angle_mult_range:p2=1, 1
+      weight:r=0.2
+    }
+  }
+}
+
+standart_right_door{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=-95
+  rendinst_axis_rotation__curAngle:r=-95
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=-95
+  door_operations__state:i=0
+}
+
+standart_right_door_90{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=-90
+  rendinst_axis_rotation__curAngle:r=-90
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=-90
+  door_operations__state:i=0
+}
+
+standart_left_door{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=95
+  rendinst_axis_rotation__curAngle:r=95
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=95
+  door_operations__state:i=0
+}
+
+standart_left_door_90{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=90
+  rendinst_axis_rotation__curAngle:r=90
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=90
+  door_operations__state:i=0
+}
+
+standart_r_door{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=95
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=95
+  rendinst_axis_rotation__curAngle:r=95
+  door_operations__state:i=0
+}
+
+standart_l_door{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=-95
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=-95
+  rendinst_axis_rotation__curAngle:r=-95
+  door_operations__state:i=0
+}
+
+closed_r_door_params{
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  door_operations__openedAngle:r=95
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+}
+
+closed_r_door{
+  _use:t="static_rotating_door"
+  _use:t="closed_r_door_params"
+}
+
+random_state_r_door{
+  _use:t="static_rotating_door"
+  _use:t="closed_r_door_params"
+  door_operations__riStartStatePreset:t="door_start_state_preset"
+}
+
+closed_l_door_90_params{
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  door_operations__openedAngle:r=-90
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+}
+
+closed_l_door_90{
+  _use:t="static_rotating_door"
+  _use:t="closed_l_door_90_params"
+}
+
+random_state_l_door_90{
+  _use:t="static_rotating_door"
+  _use:t="closed_l_door_90_params"
+  door_operations__riStartStatePreset:t="door_start_state_preset"
+}
+
+one_sided_closed_l_door_90_params{
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  rendinst_axis_rotation__rotSpeed:r=85
+  door_operations__openedAngle:r=-90
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+}
+
+one_sided_closed_l_door_90{
+  _use:t="static_rotating_door"
+  _use:t="one_sided_closed_l_door_90_params"
+}
+
+one_sided_random_state_l_door_90{
+  _use:t="static_rotating_door"
+  _use:t="one_sided_closed_l_door_90_params"
+  door_operations__riStartStatePreset:t="door_start_state_preset"
+}
+
+closed_r_door_90_params{
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  door_operations__openedAngle:r=90
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+}
+
+closed_r_door_90{
+  _use:t="static_rotating_door"
+  _use:t="closed_r_door_90_params"
+}
+
+random_state_r_door_90{
+  _use:t="static_rotating_door"
+  _use:t="closed_r_door_90_params"
+  door_operations__riStartStatePreset:t="door_start_state_preset"
+}
+
+one_sided_closed_r_door_90_params{
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  rendinst_axis_rotation__rotSpeed:r=85
+  door_operations__openedAngle:r=90
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+}
+
+one_sided_closed_r_door_90{
+  _use:t="static_rotating_door"
+  _use:t="one_sided_closed_r_door_90_params"
+}
+
+one_sided_random_state_r_door_90{
+  _use:t="static_rotating_door"
+  _use:t="one_sided_closed_r_door_90_params"
+  door_operations__riStartStatePreset:t="door_start_state_preset"
+}
+
+closed_l_door_params{
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  door_operations__openedAngle:r=-95
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+}
+
+closed_l_door{
+  _use:t="static_rotating_door"
+  _use:t="closed_l_door_params"
+}
+
+random_state_l_door{
+  _use:t="static_rotating_door"
+  _use:t="closed_l_door_params"
+  door_operations__riStartStatePreset:t="door_start_state_preset"
+}
+
+wc_door{
+  _use:t="standart_l_door"
+  rendinst_axis_rotation__targetAngle:r=-90
+  rendinst_axis_rotation__curAngle:r=-90
+  door_operations__closedAngle:r=-90
+  door_operations__omniRotate:b=no
+}
+
+window_no_obstacle{
+  "dontCreateNphysObstacle:tag"{}
+}
+
+standart_right_window_params{
+  isDoor:b=no
+  door_operations__state:i=0
+  door_operations__openedAngle:r=-95
+  door_operations__closedAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  rendinst_axis_rotation__targetAngle:r=0
+  door_operations__omniRotate:b=no
+}
+
+standart_right_window{
+  _use:t="static_rotating_door"
+  _use:t="standart_right_window_params"
+  _use:t="window_no_obstacle"
+}
+
+random_state_right_window{
+  _use:t="static_rotating_door"
+  _use:t="standart_right_window_params"
+  _use:t="window_no_obstacle"
+  door_operations__riStartStatePreset:t="window_start_state_preset"
+}
+
+standart_left_window_params{
+  isDoor:b=no
+  door_operations__state:i=0
+  door_operations__openedAngle:r=95
+  door_operations__closedAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  rendinst_axis_rotation__targetAngle:r=0
+  door_operations__omniRotate:b=no
+}
+
+standart_left_window{
+  _use:t="static_rotating_door"
+  _use:t="standart_left_window_params"
+}
+
+random_state_left_window{
+  _use:t="static_rotating_door"
+  _use:t="standart_left_window_params"
+  _use:t="window_no_obstacle"
+  door_operations__riStartStatePreset:t="window_start_state_preset"
+}
+
+standart_right_shutters{
+  _use:t="standart_right_window"
+  door_operations__openedAngle:r=-95
+}
+
+standart_left_shutters{
+  _use:t="standart_left_window"
+  door_operations__openedAngle:r=95
+}
+
+gate_door_left{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=0
+  doorEscapePos:p3=1.5, 0, 0
+  rendinst_axis_rotation__rotSpeed:r=45
+  door_operations__openedAngle:r=90
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+}
+
+gate_door_left_90{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=90
+  doorEscapePos:p3=1.5, 0, 0
+  rendinst_axis_rotation__rotSpeed:r=75
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=90
+  door_operations__state:i=0
+}
+
+gate_door_l{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=-95
+  doorEscapePos:p3=3.1, 0, 0
+  rendinst_axis_rotation__curAngle:r=-95
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=-95
+  door_operations__state:i=0
+}
+
+gate_door_r{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=95
+  doorEscapePos:p3=3.1, 0, 0
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=95
+  rendinst_axis_rotation__curAngle:r=95
+  door_operations__state:i=0
+}
+
+closed_gate_door_l_params{
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  doorEscapePos:p3=3.1, 0, 0
+  door_operations__openedAngle:r=-95
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+}
+
+closed_gate_door_l{
+  _use:t="static_rotating_door"
+  _use:t="closed_gate_door_l_params"
+}
+
+random_state_gate_door_l{
+  _use:t="static_rotating_door"
+  _use:t="closed_gate_door_l_params"
+  door_operations__riStartStatePreset:t="gate_door_start_state_preset"
+}
+
+random_state_gate_door_l_slow{
+  _use:t="random_state_gate_door_l"
+  rendinst_axis_rotation__rotSpeed:r=60
+}
+
+dynamic_closed_gate_door_l{
+  _use:t="dynamic_rotating_door"
+  _use:t="closed_gate_door_l_params"
+}
+
+closed_gate_door_l_slow{
+  _use:t="closed_gate_door_l"
+  rendinst_axis_rotation__rotSpeed:r=60
+}
+
+closed_gate_door_l_90{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  doorEscapePos:p3=3.1, 0, 0
+  door_operations__openedAngle:r=-90
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+}
+
+closed_gate_door_r_params{
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  doorEscapePos:p3=3.1, 0, 0
+  door_operations__openedAngle:r=95
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+}
+
+closed_gate_door_r{
+  _use:t="static_rotating_door"
+  _use:t="closed_gate_door_r_params"
+}
+
+random_state_gate_door_r{
+  _use:t="static_rotating_door"
+  _use:t="closed_gate_door_r_params"
+  door_operations__riStartStatePreset:t="gate_door_start_state_preset"
+}
+
+random_state_gate_door_r_slow{
+  _use:t="random_state_gate_door_r"
+  rendinst_axis_rotation__rotSpeed:r=60
+}
+
+dynamic_closed_gate_door_r{
+  _use:t="dynamic_rotating_door"
+  _use:t="closed_gate_door_r_params"
+}
+
+closed_gate_door_r_slow{
+  _use:t="closed_gate_door_r"
+  rendinst_axis_rotation__rotSpeed:r=60
+}
+
+closed_gate_door_r_90{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  doorEscapePos:p3=3.1, 0, 0
+  door_operations__openedAngle:r=90
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+}
+
+fence_door_lr{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=0
+  door_operations__openedAngle:r=-95
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+}
+
+bunker_door_left{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=-90
+  rendinst_axis_rotation__rotSpeed:r=45
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=-90
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+  door_operations__closeOnLock:b=yes
+}
+
+bunker_door_right{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=90
+  rendinst_axis_rotation__rotSpeed:r=45
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=90
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+  door_operations__closeOnLock:b=yes
+}
+
+bunker_closed_door_left{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  rendinst_axis_rotation__rotSpeed:r=45
+  door_operations__openedAngle:r=-95
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+  door_operations__closeOnLock:b=yes
+}
+
+bunker_closed_door_right{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  rendinst_axis_rotation__rotSpeed:r=45
+  door_operations__openedAngle:r=95
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+  door_operations__closeOnLock:b=yes
+}
+
+afr_bunker_closed_door_left{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  rendinst_axis_rotation__rotSpeed:r=45
+  door_operations__openedAngle:r=95
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+  door_operations__closeOnLock:b=yes
+}
+
+afr_bunker_closed_door_right{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  rendinst_axis_rotation__rotSpeed:r=45
+  door_operations__openedAngle:r=-95
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+  door_operations__closeOnLock:b=yes
+}
+
+portal_bunker_door_left{
+  _use:t="static_rotating_door"
+  _use:t="locked"
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  rendinst_axis_rotation__rotSpeed:r=45
+  door_operations__openedAngle:r=-110
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+  door_operations__closeOnLock:b=yes
+  locked__isLocked:b=no
+  locked__reason:t=""
+  locked__statusTip:t=""
+}
+
+portal_bunker_door_right{
+  _use:t="static_rotating_door"
+  _use:t="locked"
+  rendinst_axis_rotation__targetAngle:r=0
+  rendinst_axis_rotation__curAngle:r=0
+  rendinst_axis_rotation__rotSpeed:r=45
+  door_operations__openedAngle:r=110
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+  door_operations__closeOnLock:b=yes
+  locked__isLocked:b=no
+  locked__reason:t=""
+  locked__statusTip:t=""
+}
+
+gate_door_right{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=45
+  doorEscapePos:p3=1.5, 0, 0
+  rendinst_axis_rotation__rotSpeed:r=45
+  door_operations__openedAngle:r=-45
+  door_operations__closedAngle:r=45
+  door_operations__state:i=0
+}
+
+gate_door_right_90{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=-90
+  doorEscapePos:p3=1.5, 0, 0
+  rendinst_axis_rotation__rotSpeed:r=75
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=-90
+  door_operations__state:i=0
+}
+
+gate_huge_door_right_90{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=-90
+  doorEscapePos:p3=1.5, 0, 0
+  rendinst_axis_rotation__rotSpeed:r=45
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=-90
+  door_operations__state:i=0
+}
+
+gate_huge_door_left_90{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=90
+  doorEscapePos:p3=1.5, 0, 0
+  rendinst_axis_rotation__rotSpeed:r=45
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=90
+  door_operations__state:i=0
+}
+
+base_hatch{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__axis:p3=0, 1, 0
+  rendinst_axis_rotation__rotSpeed:r=150
+  rendinst_axis_rotation__curAngle:r=0
+  rendinst_axis_rotation__targetAngle:r=0
+  door_operations__openedAngle:r=105
+  door_operations__closedAngle:r=0
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+  item_world_marker__riColliderPoint:p3=0.5, 0.5, 0.5
+}
+
+one_sided_door_left_params{
+  rendinst_axis_rotation__targetAngle:r=-90
+  rendinst_axis_rotation__rotSpeed:r=85
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=-90
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+}
+
+one_sided_door_left{
+  _use:t="static_rotating_door"
+  _use:t="one_sided_door_left_params"
+}
+
+random_state_one_sided_door_left{
+  _use:t="static_rotating_door"
+  _use:t="one_sided_door_left_params"
+  door_operations__riStartStatePreset:t="door_start_state_preset"
+}
+
+one_sided_door_right_params{
+  rendinst_axis_rotation__targetAngle:r=90
+  rendinst_axis_rotation__rotSpeed:r=85
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=90
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+}
+
+one_sided_door_right{
+  _use:t="static_rotating_door"
+  _use:t="one_sided_door_right_params"
+}
+
+random_state_one_sided_door_right{
+  _use:t="static_rotating_door"
+  _use:t="one_sided_door_right_params"
+  door_operations__riStartStatePreset:t="door_start_state_preset"
+}
+
+locker_door_left_90{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=1
+  doorEscapePos:p3=0.02, 0, 0
+  rendinst_axis_rotation__rotSpeed:r=95
+  door_operations__openedAngle:r=90
+  door_operations__closedAngle:r=90
+}
+
+locker_door_right_90{
+  _use:t="static_rotating_door"
+  rendinst_axis_rotation__targetAngle:r=1
+  doorEscapePos:p3=0.02, 0, 0
+  rendinst_axis_rotation__rotSpeed:r=95
+  door_operations__openedAngle:r=-90
+  door_operations__closedAngle:r=-90
+}
+
+caponier_gate_braking_way{
+  _use:t="rendinst_axis_rotation_braking_way"
+  _use:t="rendinst_axis_rotation_braking_way_on_rotation_finished"
+  rendinst_axis_rotation__braking_way__decayRate:r=1.2
+}
+
+caponier_gate_left{
+  _use:t="static_rotating_door_no_grid"
+  _use:t="rotating_rendinst_simple_phys_disabled"
+  _use:t="caponier_gate_braking_way"
+  rendinst_axis_rotation__targetAngle:r=-90
+  rendinst_axis_rotation__rotSpeed:r=1
+  rendinst_axis_rotation__pauseOnCollision:b=no
+  rendinst_axis_rotation__stopOnCollision:b=no
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=-90
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+  pair_door__searchDist:r=40
+  pair_door__checkMargin:r=0.1
+  pair_door__searchTag:t="caponier_gate"
+  rendinst_axis_rotation__braking_way__allowedDir:r=1
+}
+
+caponier_gate_right{
+  _use:t="static_rotating_door_no_grid"
+  _use:t="rotating_rendinst_simple_phys_disabled"
+  _use:t="caponier_gate_braking_way"
+  rendinst_axis_rotation__targetAngle:r=90
+  rendinst_axis_rotation__rotSpeed:r=1
+  rendinst_axis_rotation__pauseOnCollision:b=no
+  rendinst_axis_rotation__stopOnCollision:b=no
+  door_operations__openedAngle:r=0
+  door_operations__closedAngle:r=90
+  door_operations__state:i=0
+  door_operations__omniRotate:b=no
+  pair_door__searchDist:r=40
+  pair_door__checkMargin:r=0.1
+  pair_door__searchTag:t="caponier_gate"
+  rendinst_axis_rotation__braking_way__allowedDir:r=-1
+}
+
+door_ent_generator{
+  ri_extra_gen__riName:t="normandy_decor_door_arch_c2"
+  ri_extra_gen__template:t="standart_right_door+wooden_rotating_door_sound"
+
+  ri_extra_gen{
+    _tags:t="server"
+  }
+}
+
+door_mult_ent_generator{
+  _use:t="replicating"
+  ri_extra_gen__blk:t=""
+  ri_extra_gen__createEntityWhenDone:t="doors_generation_done"
+
+  ri_extra_gen{
+    _tags:t="server"
+  }
+}
+
+doors_generation_done{
+  "doorsGenerationDone:tag"{}
+}
+
+door_controller{
+  door_controller__name:t=""
+  door_controller__detectDoorRadius:r=0.5
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "door_controller__doorEid:eid"{}
+}
+
+door_controller_opened_state{
+  _use:t="door_controller"
+  door_controller__initState:i=1
+}
+
+door_controller_closed_state{
+  _use:t="door_controller"
+  door_controller__initState:i=0
+}
+
+door_interactor{
+  door_interactor__updateAt:r=0
+
+  "door_interactor:tag"{}
+}
+
+destroy_doors_in_tm{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "destroyDoorsInTm:tag"{}
+}

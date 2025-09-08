@@ -1,0 +1,131 @@
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house_monsters"
+  monster_gen_gen__householdCount:i=370
+  monster_gen_gen__minHouseholdVolume:r=200
+  monster_gen_gen__useHouseholdsOnEuclid:b=no
+
+  "monster_gen_gen__genTemplates:object"{
+    household_africa_changed_monster_generator:i=50
+    anomaly_encounter_am_indoor:i=25
+    anomaly_encounter_flowerman_indoor:i=15
+    household_traps_generator:i=5
+    anomaly_encounter_statues_cairns_indoor_small:i=5
+  }
+
+  "monster_gen_gen__excludeBoxes:list<m>"{
+    t:m=[[30.7229, 0, -8.54356] [0, 31.8887, 0] [11.0506, -0, 39.7384] [381.343, 32.4736, -879.253]]
+    t:m=[[40.8483, 0, -16.4335] [0, 18.694, 0] [9.70899, -0, 24.1334] [580.831, 41.1968, -718.026]]
+  }
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=0.00043, 0.00043
+  transform:m=[[30.7229, 0, -8.54356] [0, 31.8887, 0] [11.0506, -0, 39.7384] [381.343, 32.4736, -879.253]]
+}
+
+entity{
+  _template:t="outdoor_sleeper_changed_tm_generator"
+  monster_gen__density:p2=0.00055, 0.00055
+  transform:m=[[40.8483, 0, -16.4335] [0, 18.694, 0] [9.70899, -0, 24.1334] [580.831, 41.1968, -718.026]]
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset+loot_generator_monster_gen"
+  loot_generator__customGameObjName:t="turned_patrol"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[1500, 0, 0] [0, 1500, 0] [0, 0, 1500] [470, 0, -1060]]
+  loot_generator__lootPreset:t="africa_turned_patrol_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset+loot_generator_monster_gen"
+  loot_generator__customGameObjName:t="worm_nest"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__projAttempts:i=0
+  transform:m=[[1500, 0, 0] [0, 1500, 0] [0, 0, 1500] [470, 0, -1060]]
+  loot_generator__lootPreset:t="africa_worm_nest_loot_preset"
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="changed_group_region_generator"
+      genType:t="forest_changed_groups"
+      count:i=10
+    }
+
+    "generator:object"{
+      template:t="anomaly_zone_flowerman_forest_generator"
+      genType:t="forest_flowerman"
+      count:i=8
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="forest_01"
+    r:t="forest_02"
+    r:t="forest_03"
+    r:t="forest_04"
+    r:t="forest_05"
+    r:t="forest_06"
+    r:t="forest_07"
+    r:t="forest_08"
+    r:t="forest_09"
+    r:t="forest_10"
+    r:t="forest_11"
+    r:t="forest_12"
+    r:t="forest_13"
+    r:t="forest_14"
+    r:t="forest_15"
+    r:t="forest_16"
+    r:t="forest_17"
+    r:t="forest_18"
+    r:t="forest_19"
+    r:t="forest_20"
+    r:t="forest_21"
+    r:t="forest_22"
+    r:t="forest_23"
+    r:t="forest_24"
+    r:t="forest_25"
+  }
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="changed_group_region_generator"
+      genType:t="field changed"
+      count:i=2
+    }
+
+    "generator:object"{
+      template:t="anomaly_zone_flowerman_generator"
+      genType:t="field flowermen"
+      count:i=2
+    }
+
+    "generator:object"{
+      template:t="field_trap_region_generator"
+      genType:t="field traps"
+      count:i=2
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="field_01"
+    r:t="field_02"
+    r:t="field_03"
+    r:t="field_04"
+    r:t="field_05"
+    r:t="field_06"
+    r:t="field_07"
+    r:t="field_08"
+  }
+}

@@ -1,0 +1,94 @@
+bullet_projectile_debug{
+  _tags:t="dev"
+  cProjectilePos:i=0
+  projectileNextTime:r=0
+
+  "projectilePos:list<p3>"{
+    projectilePos:p3=0, 0, 0
+    projectilePos:p3=0, 0, 0
+    projectilePos:p3=0, 0, 0
+    projectilePos:p3=0, 0, 0
+    projectilePos:p3=0, 0, 0
+    projectilePos:p3=0, 0, 0
+    projectilePos:p3=0, 0, 0
+    projectilePos:p3=0, 0, 0
+  }
+}
+
+base_projectile{
+  _use:t="ecs_no_debug"
+  detonation__timer:r=-1
+  projectile__lifeTime:r=0
+  projectile__visualPos:p3=0, 0, 0
+  projectile__tracerIgnitionTime:r=0
+  projectile__minLifeTime:r=0
+  projectile__maxLifeTime:r=0
+  projectile__stopped:b=no
+  projectile__exploded:b=no
+  projectile__prevPos:p3=0, 0, 0
+  projectile__intersectionCount:i=0
+  projectile__maxAllowedSceneIntersectionsForFx:i=3
+  projectile__traceRayMatId:i=-1
+  projectile__isUnderwater:b=no
+  projectile__hitEffectDescriptor:i=0
+  projectile__explEffectDescriptor:i=0
+  projectile__fleshEffectCaliberGroup:r=-1
+  projectile__pierceShiftOnStartPenetration:r=0
+  projectile_trace_info__sceneIntersected:b=no
+  projectile_trace_info__pmid:i=-1
+  projectile_trace_info__dir:p3=0, 0, 0
+  projectile_trace_info__len:r=0
+  projectile_trace_info__norm:p3=0, 0, 0
+  projectile_trace_info__prevProjectileDistance:r=0
+  projectile_trace_info__waterLen:r=0
+  projectile_trace_info__riDescCellIdx:i=-1
+  projectile_trace_info__riDescIdx:i=-1
+  projectile_trace_info__riDescPool:i=-1
+  projectile_trace_info__riDescLayer:i=-1
+  scene_hit_place__pos:p3=0, 0, 0
+  scene_hit_place__norm:p3=0, 1, 0
+  scene_hit_place__matId:i=-1
+  projectile_hit_fx__fleshPresetIndex:i=-1
+
+  "projectile_trace_info__riDescOffs:u32"{
+    value:i=-1
+  }
+
+  "dm_projectile_state:dm::ProjectileState"{}
+  "projectile_ballistics:ballistics::ProjectileBallistics"{}
+  "projectile_ballistics_props:ballistics::ProjectileProps"{}
+  "launch_desc:daweap::LaunchDesc"{}
+  "ownerEid:eid"{}
+  "gunEid:eid"{}
+  "projectile__penetratedEids:list<eid>"{}
+  "projectile__lastDamagedRiexHandle:u64"{
+    value:i64=-1
+  }
+}
+
+projectile_inactive{
+  _tags:t="server"
+  projectile__timeToDestroy:r=1
+
+  "projectile__inactive:tag"{}
+}
+
+disable_ricochet{
+  projectile__sceneHitRicochetStability:r=1
+}
+
+bullet_projectile{
+  _use:t="base_projectile"
+  _use:t="bullet_projectile_sound"
+  loud_noise__radius:r=7
+  loud_noise__noisePerHit:r=80
+
+  "projectileSmokeTracerId:i"{
+    _tags:t="render"
+    value:i=-1
+  }
+
+  projectile_tracer_props{
+    _tags:t="render"
+  }
+}

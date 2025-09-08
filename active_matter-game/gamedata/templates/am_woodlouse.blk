@@ -1,0 +1,104 @@
+woodlouse_base{
+  _use:t="base_dm_parts"
+  _use:t="am_navmesh_creature_base"
+  _use:t="navmesh_aligned_phys_base"
+  _use:t="spider_sound"
+  _use:t="outline"
+  animchar__res:t="woodlouse_basic_a_char"
+  collres__res:t="woodlouse_basic_a_collision"
+  hitpoints__hp:r=2
+  hitpoints__maxHp:r=2
+  deform_bbox__bmin:p3=-0.1, -0.1, -0.1
+  deform_bbox__bmax:p3=0.1, 0.1, 0.1
+  spawn_immunity__initialPos:p3=0, 0, 0
+  spawn_immunity__immuneDistance:r=0.1
+  spawn_immunity__timer:r=0.1
+  kill_tracking_tag:t="spider"
+  _skipInitialReplication:t="dm_parts__parts"
+
+  "kill_tracking__taggedPlayers:object"{}
+  "dm_parts__parts:object"{}
+  "dmgzoneVulnerable:tag"{}
+  anim_phys{}
+  "capsule_approximation__nodeNames:array"{}
+  "capsule_approximation__complexNodeNames:array"{}
+}
+
+woodlouse_util_vars{
+  util_vars__ready:b=no
+  util_vars__visibleTargets:r=0
+  util_vars__offenderHitCoef:r=0
+  util_vars__aggressionLevel:r=0
+  util_vars__lastBulletReactionCoef:r=0
+  util_vars__visibleAttractPoints:r=0
+  util_vars__attractPointRatio:r=0
+
+  "spiderUtilVars:tag"{}
+}
+
+woodlouse_ai{
+  _use:t="patroller_ai"
+  _use:t="get_attract_position_ai"
+  _use:t="beh_tree_regular_check"
+  _use:t="agent_dangers_bullet_reaction"
+  _use:t="agent_dangers_hit_reaction"
+  _use:t="get_reaction_offender_ai"
+  _use:t="track_visual_attract_points"
+  _use:t="get_visible_attract_position_ai"
+  _use:t="corridor_walker"
+  _use:t="woodlouse_util_vars"
+  _use:t="base_navmesh_agent_comp"
+  attract_point__searchRadius:r=30
+  visual_attract__maxDist:r=30
+  patroller__radius:r=10
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  beh_tree__blackboard__enemyRadius:r=30
+  agent_dangers__hasTraceableDangers:b=no
+  _use:t="monster_danger_calc"
+  agent_dangers__tag:t="spider"
+  agent_dangers__maxDangerDist:r=90
+  agent_dangers__frustumAngle:r=90
+  agent_dangers__projectileDist:r=4
+  agent_dangers__decrease:r=5
+  agent_dangers__timeFromDetection:r=3
+  agent_dangers__lastBulletReactionTime:r=-1
+  agent_dangers__nextBulletReactionTime:r=-1
+  agent_dangers__hmapTraceOffset:p3=0, -0.1, 0
+  agent_dangers__nextDangersCheckTime:r=0
+  agent_dangers__nextDangersTraceTime:r=0
+  agent_dangers__dangerIncrease:r=5
+  agent_dangers__dangerOutIncrease:r=0
+  agent_dangers__maxDangerDistMult:r=0.3
+  agent_dangers__standShootPos:p3=0, 0, 0
+  agent_dangers__standShootDir:p3=0, 0, 0
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  agent_dangers{
+    _tags:t="server"
+  }
+}
+
+woodlouse{
+  _use:t="woodlouse_base"
+  _use:t="woodlouse_ai"
+  team:i=1
+}
+
+woodlouse_swarm{
+  _use:t="woodlouse"
+  nPhys__animcharScale:r=0.3
+  beh_tree__node:t="woodlouse_swarm"
+
+  "loc_snapshots__scaledTransform:tag"{}
+}
+
+woodlouse_lair_gen{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  lair_gen__templateToSpawn:t="woodlouse_swarm"
+  lair_gen__dist:r=10
+  lair_gen__numToSpawn:i=380
+}

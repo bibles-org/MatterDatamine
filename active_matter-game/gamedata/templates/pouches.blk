@@ -1,0 +1,109 @@
+pouch_base{
+  _use:t="equipable_item"
+  _use:t="equipment_with_mods"
+  item__recreateOnGround:t="item_in_world"
+  item__recreateInWorldPhys:t="item_in_world_phys"
+  item__recreateInInventory:t="base_invis_item"
+  item__recreateInEquipment:t="base_attached_invis_item"
+  item__filterType:t="equipment"
+  collres__res:t="medkit_collision"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+
+  "item__equipmentSlots:list<t>"{
+    slot:t="pouch"
+  }
+
+  "equipment_item:tag"{}
+  "item__chronotracesProgressionInfo:object"{
+    "repeatedly:object"{
+      extract:i=100
+    }
+  }
+}
+
+small_pouch{
+  _use:t="pouch_base"
+  _use:t="slot_attach_attached_show_dynmodel_nodes"
+  item__proto:t="small_pouch"
+  animchar__res:t="pouches_upg1_char"
+  collres__res:t="pouches_upg1_collision"
+  item__name:t="items/small_pouch"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__inventoryExtension:r=15
+  item__weight:r=0.3
+  item__volume:r=5
+  item__marketPrice:i=500
+  item__iconScale:r=0.7
+  showroom_item__customZoom:r=1.2
+  showroom_item__customZoomBordersRng:p2=0.8, 1.6
+
+  "slot_attach__attached_show_dynmodel_nodes__forceShownNodes:list<t>"{
+    item:t="pouches_1"
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_pocket_0:t="pocket_slot"
+  }
+}
+
+medium_pouch{
+  _use:t="pouch_base"
+  _use:t="slot_attach_attached_show_dynmodel_nodes"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="medium_pouch"
+  animchar__res:t="pouches_upg2_char"
+  collres__res:t="pouches_upg2_collision"
+  item__name:t="items/medium_pouch"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__inventoryExtension:r=20
+  item__weight:r=0.3
+  item__volume:r=5
+  item__marketPrice:i=2050
+  item__iconScale:r=1
+  showroom_item__customZoom:r=1.8
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+
+  "slot_attach__attached_show_dynmodel_nodes__forceShownNodes:list<t>"{
+    item:t="pouches_1"
+    item:t="pouches_2"
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+large_pouch{
+  _use:t="pouch_base"
+  _use:t="slot_attach_attached_show_dynmodel_nodes"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="large_pouch"
+  animchar__res:t="pouches_upg3_char"
+  collres__res:t="pouches_upg3_collision"
+  item__name:t="items/large_pouch"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__inventoryExtension:r=25
+  item__weight:r=0.6
+  item__volume:r=8
+  item__marketPrice:i=3200
+  item__iconScale:r=1.2
+  showroom_item__customZoom:r=1.8
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+
+  "slot_attach__attached_show_dynmodel_nodes__forceShownNodes:list<t>"{
+    item:t="pouches_1"
+    item:t="pouches_2"
+    item:t="pouches_3"
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+    equipment_mod_pocket_2:t="pocket_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}

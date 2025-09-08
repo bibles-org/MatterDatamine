@@ -1,0 +1,45 @@
+import:t="xvp_guns.blk"
+import:t="hud_entities.blk"
+import:t="xvp_drone.blk"
+
+animchar_geomtree_nodes_hider{
+  _tracked:t="animchar_geomtree_nodes_hider__hiddenNodes"
+
+  _group{
+    _tags:t="gameClient"
+
+    "animchar_geomtree_nodes_hider__hiddenNodes:list<t>"{}
+    "animchar_geomtree_nodes_hider__hiddenNodesIds:list<u16>"{}
+  }
+}
+
+slot_attach_attached_hide_geomtree_nodes{
+  "slot_attach__attached_hide_geomtree_nodes__hiddenNodes:list<t>"{}
+  "slot_attach__attached_hide_geomtree_nodes__attachedTo:eid"{}
+}
+
+animchar_dynmodel_nodes_hider{
+  _use:t="replicating"
+  _tracked:t="animchar_dynmodel_nodes_hider__hiddenNodes"
+  _replicated:t="animchar_dynmodel_nodes_hider__hiddenNodes"
+  _tracked:t="animchar_dynmodel_nodes_hider__forceShownNodes"
+  _replicated:t="animchar_dynmodel_nodes_hider__forceShownNodes"
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{}
+  "animchar_dynmodel_nodes_hider__forceShownNodes:list<t>"{}
+  _group{
+    _tags:t="gameClient"
+
+    "animchar_dynmodel_nodes_hider__hiddenNodesIds:list<i>"{}
+  }
+}
+
+slot_attach_attached_hide_dynmodel_nodes{
+  "slot_attach__attached_hide_dynmodel_nodes__hiddenNodes:list<t>"{}
+  "slot_attach__attached_hide_dynmodel_nodes__attachedTo:eid"{}
+}
+
+slot_attach_attached_show_dynmodel_nodes{
+  "slot_attach__attached_show_dynmodel_nodes__forceShownNodes:list<t>"{}
+  "slot_attach__attached_show_dynmodel_nodes__attachedTo:eid"{}
+}

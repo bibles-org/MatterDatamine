@@ -1,0 +1,857 @@
+import:t="am_firefly.blk"
+import:t="am_keys_and_locks.blk"
+
+encounter_zone{
+  _use:t="editor_zone_preview"
+  _use:t="editor_preview_colors"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  encounter_zone__name:t=""
+
+  "encounter_zone:tag"{}
+  _group{
+    _tags:t="dev"
+    editor__previewColorDefault:c=255, 195, 66, 96
+    editor__previewColorSelected:c=255, 255, 0, 255
+  }
+}
+
+encounter_door{
+  _use:t="locked"
+  locked__isLocked:b=no
+  locked__reason:t=""
+  locked__statusTip:t="status_tip_door_no_power"
+
+  "encounter_door:tag"{}
+}
+
+encounter_additional_game_object_point{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  encounter_additional_game_object_point__type:t="loot_box"
+  encounter_additional_game_object_point__typeHash:i=0
+}
+
+region_monster_generator_generator{
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      type:t="outdoor_sleeper_changed_monster_generator"
+      count:i=0
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="green_oaks"
+    r:t="redding"
+    r:t="lake_village"
+    r:t="tarkov_village"
+    r:t="militarybase_navarro"
+    r:t="military_town"
+    r:t="market"
+    r:t="littletown"
+    r:t="hospital"
+  }
+}
+
+base_monster_generator{
+  monster_gen__useGravity:b=yes
+  monster_gen__destroyGeneratedEntitiesOnDestroy:b=no
+  monster_gen__maxCount:i=0
+  monster_gen__curCount:i=0
+  monster_gen__minProximity:r=0
+  monster_gen__checkPlayersRadius:r=100
+  monster_gen__spawnInterval:r=0.1
+  monster_gen__spawnIntervalKoef:r=1
+  monster_gen__spawnComplete:b=no
+  monster_gen__updateAt:r=1e+08
+
+  "monster_gen__templates:list<t>"{}
+}
+
+monster_generator_forbidden_zone{
+  monster_generator_forbidden_zone__radius:r=35
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+region_monster_generator{
+  _use:t="base_monster_generator"
+  regional_generator__region:t=""
+  monster_gen__type:t=""
+  monster_gen__density:p2=0, 1
+  monster_gen__respawnInterval:r=5
+  monster_gen__maxConsecutiveFails:i=100
+  monster_gen__consecutiveFails:i=0
+  monster_gen__underwaterGenAllowed:b=no
+
+  "monster_gen__templates:list<t>"{}
+  "monster_gen__genGenEid:eid"{}
+}
+
+generated_monster{
+  "generated_monster__genEid:eid"{}
+}
+
+changed_region_monster_generator{
+  _use:t="region_monster_generator"
+  monster_gen__density:p2=0.001, 0.001
+
+  "monster_gen__templates:list<t>"{
+    i:t="regional_changed_human+changed_appear_effect+am_inside_body_3"
+  }
+}
+
+changed_trap_monster_generator{
+  _use:t="region_monster_generator"
+  monster_gen__density:p2=0.001, 0.001
+
+  "monster_gen__templates:list<t>"{
+    i:t="changed_human_trap+sleeping_trap"
+  }
+}
+
+migrating_monster{
+  "migration__leaderEid:eid"{}
+}
+
+migrating_changed_region_monster_generator{
+  _use:t="changed_region_monster_generator"
+  migration__migrateAt:r=0
+  migration__interval:p2=240, 360
+  migration__updateAt:r=0
+  migration__updateInterval:r=2
+  migration__destinationPos:p3=0, 0, 0
+  migration__speed:p2=7, 1
+  migration__radius:r=30
+  migration__stragglersRadius:r=250
+  migration__checkHeroRadius:r=150
+  migration__maxWaitingTime:r=60
+  migration__waitingTimeLeft:r=0
+  migration__waitingThreshold:r=0.6
+  migration__maxFails:i=10
+  migration__failsLeft:i=10
+  migration__debug:b=no
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  monster_gen__density:p2=0.008, 0.008
+  monster_gen__spawnInterval:r=0.02
+
+  "migration__path:list<p3>"{}
+  "monster_gen__templates:list<t>"{
+    i:t="regional_changed_human"
+  }
+}
+
+alarm_controller{
+  alarm__activeCount:i=0
+  alarm__activeTemplate:t=""
+  alarm__clearTemplate:t=""
+  alarm__monsterWanderDuration:r=300
+  _tracked:t="alarm__activeCount"
+}
+
+regional_alarm_door_generator{
+  _use:t="alarm_controller"
+  monster_gen__region:t=""
+  alarm_gen__probability:r=0.1
+  alarm_gen__doorTraces:p2=3, 100
+  alarm_gen__maxLMeshHeight:r=3
+  alarm_gen__template:t="changed_door_alarm"
+}
+
+alarm_generation_finished{
+  "alarm_gen__finished:tag"{}
+}
+
+changed_door_alarm{
+  door_alarm__isActivated:b=no
+  door_alarm__duration:r=60
+  door_alarm__alarmTemplate:t="changed_alarm"
+
+  "door_alarm__controllerEid:eid"{}
+}
+
+changed_alarm{
+  _use:t="replicating"
+  _use:t="active_alarm"
+  _use:t="changed_alarm_sound"
+  _use:t="attract_point_base"
+  alarm__endsAt:r=0
+  attract_point__magnitude:r=3
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "alarm__controllerEid:eid"{}
+}
+
+active_alarm{
+  "alarm__active:tag"{}
+}
+
+regional_changed_human_alarmed{
+  _use:t="regional_changed_human"
+  beh_tree__blackboard__enemyRadius:r=90
+  beh_tree__refs__wander:t="sub.investigateAlarm"
+  hitpoints__hp:r=50
+  hitpoints__maxHp:r=50
+  beh_tree__node:t="nchanged_attacker"
+  beh_tree__refs__attack:t="sub.attackPlayer"
+
+  "alarm__eid:eid"{}
+}
+
+alarm_monster_generator{
+  _use:t="region_monster_generator"
+  _use:t="active_alarm"
+  monster_gen__density:p2=0.002, 0.002
+  monster_gen__spawnInterval:r=0.5
+  monster_gen__respawnInterval:r=0.5
+  monster_gen__checkPlayersRadius:r=0
+
+  "monster_gen__templates:list<t>"{
+    i:t="regional_changed_human_alarmed+changed_appear_effect"
+  }
+}
+
+clear_generated_mosters_after_alarm{
+  clear_mosnters__updateAt:r=0
+  clear_mosnters__interval:r=1
+}
+
+changed_alarm_sound{
+  _use:t="sound_effect"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/doors/changed_door/door_alarm"
+    sound_effect__abandonOnReset:b=yes
+  }
+}
+
+changed_human_trap{
+  _use:t="changed_human"
+  beh_tree__enabled:b=no
+  navmesh_phys__rndWalkSpeed:p2=7.5, 8.5
+  navmesh_phys__walkSpeedModifier:r=0.5
+  agent_dangers__loseTargetTimeout:r=999999
+  beh_tree__refs__wander:t="sub.nWanderEverywhere"
+  hitpoints__hp:r=70
+  hitpoints__maxHp:r=70
+  beh_tree__blackboard__enemyRadius:r=90
+  beh_tree__blackboard__enemyRadiusTriggered:r=40
+  agent_dangers__hitTriggerRadius:r=8
+  agent_dangers__killTriggerRadius:r=12
+  agent_dangers__hitTriggerMaxCount:i=3
+  agent_dangers__killTriggerMaxCount:i=4
+  sleeping_trap__disturbProbabilityMult:r=1
+  sleeping_trap__radiusLimit:r=7
+  sleeping_trap__awakeRadius:r=5
+  sleeping_trap__propagateCount:i=1
+
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="changed_ear_item"
+      dropChance:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile"
+      dropChance:r=0.8
+      dropHeight:r=1
+    }
+  }
+}
+
+regional_sleeping_changed_generator{
+  _use:t="changed_region_monster_generator"
+  monster_gen__density:p2=0.008, 0.008
+  monster_gen__spawnInterval:r=0.02
+
+  "monster_gen__templates:list<t>"{
+    i:t="changed_human_trap+sleeping_trap"
+  }
+}
+
+household_monster_generator_generator{
+  monster_gen_gen__type:t=""
+  monster_gen_gen__householdCount:i=0
+  monster_gen_gen__minHouseholdVolume:r=500
+  monster_gen_gen__useHouseholdsOnEuclid:b=no
+
+  "monster_gen_gen__genTemplates:object"{}
+  "monster_gen_gen__excludeBoxes:list<m>"{}
+}
+
+tm_monster_generator{
+  _use:t="base_monster_generator"
+  _use:t="editor_selected_box_preview"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  monster_gen__bboxMin:p3=0, 0, 0
+  monster_gen__bboxMax:p3=0, 0, 0
+  monster_gen__type:t=""
+  monster_gen__density:p2=0, 1
+  monster_gen__respawnInterval:r=5
+  monster_gen__maxConsecutiveFails:i=100
+  monster_gen__consecutiveFails:i=0
+  monster_gen__underwaterGenAllowed:b=no
+
+  "monster_gen__templates:list<t>"{}
+  "monster_gen__genGenEid:eid"{}
+}
+
+household_dendroid_monster_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="dendroid"
+  monster_gen__density:p2=0.00135, 0.00135
+
+  "monster_gen__templates:list<t>"{
+    i:t="am_dendroid_encounter_guard"
+  }
+}
+
+household_changed_monster_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="changed"
+  monster_gen__density:p2=0.00135, 0.00135
+
+  "monster_gen__templates:list<t>"{
+    i:t="household_changed_human+sleeping_monster+am_inside_body_3"
+  }
+}
+
+household_milbase_changed_monster_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="changed"
+  monster_gen__density:p2=0.0008, 0.0008
+
+  "monster_gen__templates:list<t>"{
+    i:t="household_changed_human+sleeping_monster+am_inside_body_3"
+  }
+}
+
+household_euclid_changed_monster_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="changed"
+  monster_gen__density:p2=0.001, 0.001
+
+  "monster_gen__templates:list<t>"{
+    i:t="household_changed_human+sleeping_monster+am_inside_body_3"
+  }
+}
+
+household_changed_monster_t1_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="changed"
+  monster_gen__density:p2=0.001, 0.001
+
+  "monster_gen__templates:list<t>"{
+    i:t="household_changed_human+sleeping_monster+am_inside_body_3"
+  }
+}
+
+household_africa_changed_monster_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="changed"
+  monster_gen__density:p2=0.0042, 0.0042
+
+  "monster_gen__templates:list<t>"{
+    i:t="household_changed_human+sleeping_monster+am_inside_body_3"
+  }
+}
+
+household_distortion_changed_monster_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="changed"
+  monster_gen__density:p2=0.0021, 0.0021
+
+  "monster_gen__templates:list<t>"{
+    i:t="household_changed_human+sleeping_monster+am_inside_body_3"
+  }
+}
+
+household_mimic_monster_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="mimic"
+  monster_gen__density:p2=0.0035, 0.0035
+
+  "monster_gen__templates:list<t>"{
+    i:t="am_mimic+sleeping_mimic"
+  }
+}
+
+household_traps_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="traps"
+  monster_gen__density:p2=0.005, 0.005
+
+  "monster_gen__templates:list<t>"{
+    i:t="frog_trap+recreate_on_disappear_after_5m+if_there_no_heroes_nearby"
+  }
+}
+
+firefly_region_monster_generator{
+  _use:t="region_monster_generator"
+  monster_gen__density:p2=0.0002, 0.0002
+  monster_gen__spawnInterval:r=10
+
+  "monster_gen__templates:list<t>"{
+    i:t="firefly_field_small"
+  }
+}
+
+frog_trap_region_monster_generator{
+  _use:t="region_monster_generator"
+  regional_generator__condenseToCenter:b=yes
+  monster_gen__density:p2=0.006, 0.006
+  monster_gen__spawnInterval:r=0.0015
+
+  "monster_gen__templates:list<t>"{
+    i:t="frog_trap+recreate_on_disappear_after_5m+if_there_no_heroes_nearby"
+  }
+}
+
+frog_trap_region_monster_generator_dense{
+  _use:t="frog_trap_region_monster_generator"
+  monster_gen__density:p2=0.013, 0.013
+}
+
+teleport_trap_region_monster_generator{
+  _use:t="region_monster_generator"
+  regional_generator__condenseToCenter:b=yes
+  monster_gen__density:p2=0.006, 0.006
+  monster_gen__spawnInterval:r=0.0015
+
+  "monster_gen__templates:list<t>"{
+    i:t="teleport_trap+recreate_on_disappear_after_5m+if_there_no_heroes_nearby"
+  }
+}
+
+anomaly_traps_mix_region_monster_generator{
+  _use:t="region_monster_generator"
+  regional_generator__condenseToCenter:b=yes
+  monster_gen__density:p2=0.006, 0.006
+  monster_gen__spawnInterval:r=0.0015
+
+  "monster_gen__templates:list<t>"{
+    i:t="frog_trap+recreate_on_disappear_after_5m+if_there_no_heroes_nearby"
+    i:t="teleport_trap+recreate_on_disappear_after_5m+if_there_no_heroes_nearby"
+  }
+}
+
+outdoor_sleeper_changed_monster_generator{
+  _use:t="region_monster_generator"
+  monster_gen__type:t="sleeper_changed"
+  monster_gen__density:p2=0.003, 0.003
+  monster_gen__spawnInterval:r=0.5
+
+  "monster_gen__templates:list<t>"{
+    i:t="outdoor_sleeper_changed_human+sleeping_monster+am_inside_body_3"
+    i:t="outdoor_sleeper_changed_human_mini+sleeping_monster+am_inside_body_2"
+  }
+}
+
+changed_human_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="changed"
+  monster_gen__density:p2=0.0025, 0.0025
+
+  "monster_gen__templates:list<t>"{
+    i:t="regional_changed_human+am_inside_body_3"
+  }
+}
+
+outdoor_sleeper_changed_tm_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="changed"
+  monster_gen__density:p2=0.0025, 0.0025
+
+  "monster_gen__templates:list<t>"{
+    i:t="outdoor_sleeper_changed_human+sleeping_monster+am_inside_body_3"
+    i:t="outdoor_sleeper_changed_human_mini+sleeping_monster+am_inside_body_2"
+  }
+}
+
+forest_changed_generator{
+  _use:t="region_monster_generator"
+  monster_gen__type:t="sleeper_changed"
+  monster_gen__density:p2=0.00055, 0.00055
+  monster_gen__spawnInterval:r=0.5
+
+  "monster_gen__templates:list<t>"{
+    i:t="outdoor_sleeper_changed_human+sleeping_monster+am_inside_body_3"
+    i:t="outdoor_sleeper_changed_human_mini+sleeping_monster+am_inside_body_2"
+  }
+}
+
+outdoor_statues_tm_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="statues"
+  monster_gen__density:p2=0.0005, 0.0005
+
+  "monster_gen__templates:list<t>"{
+    i:t="stalker_statue_male_a"
+    i:t="stalker_statue_male_b"
+    i:t="stalker_statue_male_c"
+    i:t="stalker_statue_female_a"
+  }
+}
+
+firefly_field_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__density:p2=0.0002, 0.0002
+  monster_gen__spawnInterval:r=10
+
+  "monster_gen__templates:list<t>"{
+    i:t="firefly_field_small"
+  }
+}
+
+firefly_field_region_generator{
+  _use:t="region_monster_generator"
+  monster_gen__type:t="sleeper_changed"
+  monster_gen__density:p2=1.7e-05, 0.00017
+  monster_gen__spawnInterval:r=0.0015
+
+  "monster_gen__templates:list<t>"{
+    i:t="firefly_field_small"
+  }
+}
+
+frog_trap_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__density:p2=0.006, 0.006
+  monster_gen__spawnInterval:r=0.0015
+
+  "monster_gen__templates:list<t>"{
+    i:t="frog_trap+recreate_on_disappear_after_5m+if_there_no_heroes_nearby"
+  }
+}
+
+frog_trap_region_generator{
+  _use:t="region_monster_generator"
+  monster_gen__type:t="sleeper_changed"
+  monster_gen__density:p2=0.0007, 0.0007
+  monster_gen__spawnInterval:r=0.0015
+
+  "monster_gen__templates:list<t>"{
+    i:t="frog_trap+recreate_on_disappear_after_5m+if_there_no_heroes_nearby"
+  }
+}
+
+trap_region_generator{
+  _use:t="region_monster_generator"
+  monster_gen__type:t="sleeper_changed"
+  monster_gen__density:p2=0.0003, 0.0003
+  monster_gen__spawnInterval:r=0.0015
+
+  "monster_gen__templates:list<t>"{
+    i:t="frog_trap_cluster"
+    i:t="firefly_field_small"
+  }
+}
+
+trap_dense_region_generator{
+  _use:t="region_monster_generator"
+  monster_gen__type:t="traps_dense"
+  monster_gen__density:p2=0.001, 0.001
+  monster_gen__spawnInterval:r=0.0015
+
+  "monster_gen__templates:list<t>"{
+    i:t="frog_trap_cluster"
+    i:t="firefly_field_small"
+  }
+}
+
+frog_trap_cluster_region_generator{
+  _use:t="region_monster_generator"
+  monster_gen__type:t="frog_trap_cluster"
+  monster_gen__density:p2=0.0003, 0.0003
+  monster_gen__spawnInterval:r=0.0015
+
+  "monster_gen__templates:list<t>"{
+    i:t="frog_trap_cluster"
+  }
+}
+
+field_trap_region_generator{
+  _use:t="region_monster_generator"
+  monster_gen__type:t="field traps"
+  monster_gen__density:p2=0.0003, 0.0003
+  monster_gen__spawnInterval:r=0.0015
+
+  "monster_gen__templates:list<t>"{
+    i:t="frog_trap_cluster"
+    i:t="firefly_field_small"
+  }
+}
+
+outdoor_invisible_monster_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="invisible monsters"
+  monster_gen__density:p2=0.0015, 0.0015
+
+  "monster_gen__templates:list<t>"{
+    i:t="invisible_man_guard"
+  }
+}
+
+heat_trap_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="heat traps"
+  monster_gen__density:p2=0.0006, 0.0006
+
+  "monster_gen__templates:list<t>"{
+    i:t="anomaly_encounter_metal_heat"
+  }
+}
+
+field_core_waypoints{
+  _use:t="navmesh_waypoints_projected"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  navmesh_waypoints__localSpace:b=yes
+  navmesh_waypoints__looped:b=yes
+
+  "navmesh_waypoints__waypoints:list<p3>"{
+    item:p3=0.0976257, -1.90735e-06, 4.7179
+    item:p3=-7.59772, 0, 2.85315
+    item:p3=-8.73605, -1.90735e-06, -3.27869
+    item:p3=2.20084, -1.90735e-06, -5.52258
+    item:p3=9.40536, 0, -2.36987
+    item:p3=7.49759, -1.90735e-06, 4.90442
+  }
+}
+
+field_core_generator{
+  _use:t="region_monster_generator"
+  monster_gen__type:t="field cores"
+  monster_gen__density:p2=0.0002, 0.0002
+  monster_gen__spawnInterval:r=0.5
+
+  "monster_gen__templates:list<t>"{
+    i:t="field_core_waypoints"
+    i:t="wandering_core"
+  }
+}
+
+anomaly_zone_flowerman_generator{
+  _use:t="region_monster_generator"
+  monster_gen__type:t="field flowermen"
+  monster_gen__density:p2=0.0002, 0.0002
+  monster_gen__spawnInterval:r=0.5
+
+  "monster_gen__templates:list<t>"{
+    i:t="anomaly_encounter_flowerman_field"
+  }
+}
+
+anomaly_zone_flowerman_forest_generator{
+  _use:t="region_monster_generator"
+  monster_gen__type:t="forest flowermen"
+  monster_gen__density:p2=2e-05, 2e-05
+  monster_gen__spawnInterval:r=0.5
+
+  "monster_gen__templates:list<t>"{
+    i:t="anomaly_encounter_flowerman_forest"
+  }
+}
+
+anomaly_zone_flowerman_park_generator{
+  _use:t="region_monster_generator"
+  monster_gen__type:t="forest flowermen"
+  monster_gen__density:p2=1e-05, 1e-05
+  monster_gen__spawnInterval:r=0.5
+
+  "monster_gen__templates:list<t>"{
+    i:t="anomaly_encounter_flowerman_field"
+  }
+}
+
+star_cluster_child{
+  "spawnling__clusterEid:eid"{}
+}
+
+changed_group_cluster{
+  _use:t="base_star_cluster"
+  star_cluster__radius:r=16
+  star_cluster__startingSeed:i=0
+  star_cluster__initAttemptsPerSpawn:i=10
+  star_cluster__updateAt:r=0
+  star_cluster__interval:r=5
+  star_cluster__initInterval:r=0.2
+  star_cluster__rayCount:i=4
+  star_cluster__minProximity:r=5
+  star_cluster__rndSpawnRadius:r=4
+  star_cluster__playerCheckRadius:r=100
+  star_cluster__spawnCount:i=4
+  star_cluster__grid:t="humans"
+
+  "star_cluster__spawnTemplates:list<t>"{
+    i:t="outdoor_sleeper_changed_human+sleeping_monster+am_inside_body_3+star_cluster_child"
+    i:t="outdoor_sleeper_changed_human_mini+sleeping_monster+am_inside_body_2+star_cluster_child"
+  }
+}
+
+changed_group_region_generator{
+  _use:t="region_monster_generator"
+  monster_gen__type:t="sleeper_changed_group"
+  monster_gen__density:p2=0.0002, 0.0002
+  monster_gen__spawnInterval:r=0.0015
+
+  "monster_gen__templates:list<t>"{
+    i:t="changed_group_cluster"
+  }
+}
+
+changed_spiked_region_generator{
+  _use:t="region_monster_generator"
+  monster_gen__type:t="spiked_changed_group"
+  monster_gen__density:p2=2e-05, 2e-05
+  monster_gen__spawnInterval:r=0.0015
+
+  "monster_gen__templates:list<t>"{
+    i:t="anomaly_encounter_changed_spiked_small"
+  }
+}
+
+invisible_monsters_quest_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="invisible_monsters"
+
+  "monster_gen__templates:list<t>"{
+    i:t="invisible_man_guard"
+  }
+}
+
+am_pile_cluster{
+  _use:t="base_star_cluster"
+  star_cluster__radius:r=15
+  star_cluster__startingSeed:i=0
+  star_cluster__initAttemptsPerSpawn:i=10
+  star_cluster__interval:r=5
+  star_cluster__initInterval:r=0.2
+  star_cluster__rayCount:i=5
+  star_cluster__minProximity:r=3
+  star_cluster__rndSpawnRadius:r=3
+  star_cluster__playerCheckRadius:r=100
+  star_cluster__spawnCount:i=8
+  star_cluster__grid:t="traceable_spheres"
+
+  "star_cluster__spawnTemplates:list<t>"{
+    i:t="active_matter_pile+coin_item_count_10+item_in_world+star_cluster_child"
+  }
+}
+
+am_pile_small_cluster{
+  _use:t="base_star_cluster"
+  star_cluster__radius:r=6
+  star_cluster__startingSeed:i=0
+  star_cluster__initAttemptsPerSpawn:i=10
+  star_cluster__interval:r=2
+  star_cluster__initInterval:r=0.2
+  star_cluster__rayCount:i=3
+  star_cluster__minProximity:r=1
+  star_cluster__rndSpawnRadius:r=1
+  star_cluster__playerCheckRadius:r=100
+  star_cluster__spawnCount:i=4
+  star_cluster__grid:t="traceable_spheres"
+
+  "star_cluster__spawnTemplates:list<t>"{
+    i:t="active_matter_pile+coin_item_count_2+item_in_world+star_cluster_child"
+  }
+}
+
+am_pile_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__density:p2=0.0002, 0.0002
+  monster_gen__spawnInterval:r=0.0015
+
+  "monster_gen__templates:list<t>"{
+    i:t="active_matter_pile+coin_item_count_2+item_in_world"
+  }
+}
+
+spawn_circle{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  spawn_circle__template:t=""
+  spawn_circle__radius:r=3
+  spawn_circle__count:ip2=12, 12
+  spawn_circle__offsetRnd:p2=0, 0
+  spawn_circle__rotateType:i=0
+
+  "spawn_circle__spawnedEntities:list<eid>"{}
+}
+
+military_guards_group_cluster{
+  _use:t="base_star_cluster"
+  star_cluster__radius:r=16
+  star_cluster__startingSeed:i=0
+  star_cluster__initAttemptsPerSpawn:i=10
+  star_cluster__updateAt:r=0
+  star_cluster__interval:r=5
+  star_cluster__initInterval:r=0.2
+  star_cluster__rayCount:i=4
+  star_cluster__minProximity:r=5
+  star_cluster__rndSpawnRadius:r=4
+  star_cluster__playerCheckRadius:r=100
+  star_cluster__spawnCount:i=3
+  star_cluster__grid:t="humans"
+
+  "star_cluster__spawnTemplates:list<t>"{
+    i:t="am_area_guard+star_cluster_child"
+  }
+}
+
+military_guards_africa_group_cluster{
+  _use:t="base_star_cluster"
+  star_cluster__radius:r=16
+  star_cluster__startingSeed:i=0
+  star_cluster__initAttemptsPerSpawn:i=10
+  star_cluster__updateAt:r=0
+  star_cluster__interval:r=5
+  star_cluster__initInterval:r=0.2
+  star_cluster__rayCount:i=3
+  star_cluster__minProximity:r=5
+  star_cluster__rndSpawnRadius:r=4
+  star_cluster__playerCheckRadius:r=100
+  star_cluster__spawnCount:i=2
+  star_cluster__grid:t="humans"
+
+  "star_cluster__spawnTemplates:list<t>"{
+    i:t="am_modern_pmc_guard+star_cluster_child"
+  }
+}
+
+xenohounds_group_cluster{
+  _use:t="base_star_cluster"
+  star_cluster__radius:r=16
+  star_cluster__startingSeed:i=0
+  star_cluster__initAttemptsPerSpawn:i=10
+  star_cluster__updateAt:r=0
+  star_cluster__interval:r=5
+  star_cluster__initInterval:r=0.2
+  star_cluster__rayCount:i=4
+  star_cluster__minProximity:r=3
+  star_cluster__rndSpawnRadius:r=3
+  star_cluster__playerCheckRadius:r=100
+  star_cluster__spawnCount:i=5
+  star_cluster__grid:t="humans"
+
+  "star_cluster__spawnTemplates:list<t>"{
+    i:t="xenohound_creature+am_xenohound_mm+am_inside_body_1+star_cluster_child"
+  }
+}
+
+dendroids_group_cluster{
+  _use:t="base_star_cluster"
+  star_cluster__radius:r=12
+  star_cluster__startingSeed:i=0
+  star_cluster__initAttemptsPerSpawn:i=10
+  star_cluster__updateAt:r=0
+  star_cluster__interval:r=5
+  star_cluster__initInterval:r=0.2
+  star_cluster__rayCount:i=4
+  star_cluster__minProximity:r=2
+  star_cluster__rndSpawnRadius:r=4
+  star_cluster__playerCheckRadius:r=100
+  star_cluster__spawnCount:i=3
+  star_cluster__grid:t="humans"
+
+  "star_cluster__spawnTemplates:list<t>"{
+    i:t="am_dendroid_area_guard+star_cluster_child"
+  }
+}

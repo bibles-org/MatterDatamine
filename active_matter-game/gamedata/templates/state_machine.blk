@@ -1,0 +1,36 @@
+state_machine{
+  "state_machine__currentState:eid"{}
+  "state_machine__states:list<eid>"{}
+  "state_machine__stateTemplates:list<t>"{}
+  "state_machine__transitions:list<eid>"{}
+  "state_machine__transitionTemplates:list<t>"{}
+}
+
+state_machine_state{
+  "state_machine_state__createEntitiesWhenCurrent:list<t>"{}
+  "state_machine_state__createdEntities:list<eid>"{}
+}
+
+state_machine_transition{
+  "state_machine_transition__parentStateMachine:eid"{}
+  "state_machine_transition__requiredCurrentStateComps:list<t>"{}
+  "state_machine_transition__requiredCurrentStateCompsHashes:list<u32>"{}
+  "state_machine_transition__requiredNextStateComps:list<t>"{}
+  "state_machine_transition__requiredNextStateCompsHashes:list<u32>"{}
+  "state_machine_transition__triggerTemplates:list<t>"{}
+  "state_machine_transition__triggers:list<eid>"{}
+}
+
+state_machine_transition_condition{
+  "state_machine_transition_condition:tag"{}
+}
+
+state_machine_transition_trigger{
+  "state_machine_transition_trigger__parentTransition:eid"{}
+}
+
+state_machine_transition_trigger_immediate{
+  _use:t="state_machine_transition_trigger"
+
+  "state_machine_transition_trigger_immediate:tag"{}
+}

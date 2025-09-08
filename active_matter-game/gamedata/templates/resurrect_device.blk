@@ -1,0 +1,150 @@
+resurrect_device{
+  _use:t="replicating"
+  _use:t="base_quest_device_animchar"
+  _use:t="resurect_device_hitpoints"
+  animchar__res:t="am_respawn_beacon_char"
+  collres__res:t="am_respawn_beacon_collision"
+  animchar_render__enabled:b=yes
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/planted_bomb.blk"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  resurrect_device__noiseRadius:r=8
+  resurrect_device__noise:r=5
+  resurrect_device__builderTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  map_object_marker__iconName:t="!ui/skin#microchip.svg"
+  map_object_marker__tooltip:t="items/resurrect_device"
+  map_object__show:b=no
+  resurrect_device__destroyEffectTemplate:t="teleport_effect_in"
+  effect__scale:r=0.5
+
+  "self_resurrection_device:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="item_aura_composite_fx"
+
+    effect{}
+  }
+}
+
+resurect_device_hitpoints{
+  _use:t="base_hitpoints"
+  _use:t="base_dm_parts"
+  team:i=0
+  _replicated:t="team"
+  isAlive:b=yes
+  _tracked:t="isAlive"
+  _replicated:t="isAlive"
+  hitpoints__hp:r=10
+  _replicated:t="hitpoints__hp"
+  hitpoints__maxHp:r=10
+  hitpoints__regenPerSec:r=0
+  hitpoints__shellDmgMult:r=1
+  hitpoints__shellSplashDmgMult:r=1
+  needsBlood:b=no
+  grid_obj__gridType:t="interactable"
+
+  "killer:eid"{}
+  "allow_friendly_damage:tag"{}
+  grid_obj{}
+  collres{}
+}
+
+resurrect_device_preview{
+  _use:t="animchar_diy_preview"
+  preview__radius:r=1.85
+  preview__angleLimit:r=0.55
+  animchar__res:t="am_respawn_beacon_char"
+  collres__res:t="am_respawn_beacon_collision"
+
+  _group{
+    _tags:t="render"
+    semi_transparent__lod:i=1
+  }
+
+  "diyNormalizeGround:tag"{}
+}
+
+resurrect_device_planting_human{
+  _use:t="base_quest_device_planting_human"
+  diy__resultTempl:t="resurrect_device"
+  diy__previewTempl:t="resurrect_device_preview"
+}
+
+resurrect_device_planting_preview_phase{
+  _use:t="base_quest_device_planting_preview_phase"
+  game_effect__attachedTemplate:t="resurrect_device_planting_human"
+}
+
+resurrect_device_item{
+  _use:t="item_with_animchar_updatable"
+  _use:t="base_equipment_mod"
+  _use:t="slot_attachable"
+  _use:t="item_rarity_rare"
+  animchar__res:t="am_respawn_beacon_item_char"
+  collres__res:t="am_respawn_beacon_item_collision"
+  item__name:t="items/resurrect_device"
+  item__desc:t="items/resurrect_device/desc"
+  item__proto:t="resurrect_device_item"
+  item__filterType:t="medicines"
+  item__weight:r=1
+  item__volume:r=4
+  item__marketPrice:i=8900
+  item__iconPitch:r=-40
+  item__iconRoll:r=0
+  item__iconYaw:r=-45
+  device_item__startCooldownOnEquip:b=yes
+  item__useTime:r=1
+  showroom_item__customZoom:r=0.8
+  showroom_item__customZoomBordersRng:p2=0.6, 1.2
+
+  "item__isDirectlyUsable:tag"{}
+  "item__notConsumedWhenUsed:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "item_common_use:tag"{}
+  "deviceItem:tag"{}
+  "item__blockUseOnPlayerBase:tag"{}
+  "device_item__ability:object"{
+    name:t="diy"
+    type:t="ultimate"
+    activeMatterPrice:i=0
+    cooldown:r=0
+    lockWhileSwimming:b=yes
+    lockInVehicle:b=yes
+    isNoWeaponMode:b=yes
+    manualSoulsWithdrawl:b=yes
+
+    "stages:array"{
+      "placement_stage:object"{
+        affectTemplate:t="resurrect_device_planting_preview_phase"
+        duration:r=999999
+        activePhase:b=yes
+        interruptible:b=yes
+        skippable:b=yes
+      }
+
+      "out_stage:object"{
+        affectTemplate:t="quest_device_planting_finishing_phase"
+        label:t="out_stage"
+        duration:r=0.25
+        exit:b=yes
+      }
+    }
+  }
+
+  "mintBannedItem:tag"{}
+}
+
+resurrect_device_self_destruction_effect{
+  _use:t="replicated_game_effect"
+  team:i=-1
+  resurrect_device__destroyAt:r=-1
+  _replicated:t="resurrect_device__destroyAt"
+
+  _group{
+    _tags:t="server"
+    resurrect_device__onDeathWaitSeconds:r=25
+  }
+}
+
+_componentFilters{
+  resurrect_device__destroyAt:t="filter_friendly_team"
+}

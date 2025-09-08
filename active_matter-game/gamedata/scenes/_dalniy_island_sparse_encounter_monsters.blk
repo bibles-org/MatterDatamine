@@ -1,0 +1,92 @@
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="outdoor_sleeper_changed_monster_generator"
+      genType:t="outdoor_sleeper_changed"
+      count:i=1
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="militarybase_navarro"
+  }
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="outdoor_sleeper_changed_monster_generator"
+      genType:t="outdoor_sleeper_changed"
+      count:i=2
+    }
+
+    "generator:object"{
+      template:t="anomaly_zone_flowerman_indoor_generator"
+      genType:t="anomaly_flowerman_indoor"
+      count:i=2
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="redding"
+    r:t="lake_village"
+    r:t="hospital"
+    r:t="market"
+  }
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="outdoor_sleeper_changed_monster_generator"
+      genType:t="outdoor_sleeper_changed"
+      count:i=3
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="forest_1241"
+    r:t="forest_1234"
+    r:t="forest_1266"
+    r:t="forest_1262"
+    r:t="forest_1238"
+  }
+}
+
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house changeds"
+  monster_gen_gen__householdCount:i=49
+
+  "monster_gen_gen__genTemplates:object"{
+    household_changed_monster_generator:i=100
+  }
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset+loot_generator_monster_gen"
+  loot_generator__gameObjType:t="wormhuman_spawn_pos"
+  loot_generator__projAttempts:i=20
+  loot_generator__multiplier:r=1
+  loot_generator__gridStep:r=10
+  loot_generator__referenceGridCellsNum:i=650
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="sparse_wormhuman_spawn_pos_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset+loot_generator_monster_gen"
+  loot_generator__gameObjType:t="invisible_man_spawn_pos"
+  loot_generator__projAttempts:i=20
+  loot_generator__multiplier:r=1
+  loot_generator__gridStep:r=10
+  loot_generator__referenceGridCellsNum:i=650
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="sparse_invisible_man_spawn_pos_loot_preset"
+}

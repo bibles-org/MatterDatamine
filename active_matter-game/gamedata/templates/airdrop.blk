@@ -1,0 +1,161 @@
+airdrop_manager{
+  _use:t="replicating"
+
+  _group{
+    _tags:t="server"
+    airdrop_manager__startDropAt:r=-1
+    airdrop_manager__initialTimer:p2=300, 600
+    airdrop_manager__repeatedTimer:p2=420, 720
+    airdrop_manager__quantityRangeAirdrop:ip2=0, 3
+    airdrop_manager__countAirdrop:i=0
+    airdrop_manager__orderedAirdrop:i=0
+    airdrop_manager__multZoneRadius:r=0.5
+    airdrop_manager__airdropCreationHeight:r=5000
+    airdrop_manager__creationAirdropeAngle:p2=10, 20
+    airdrop_manager__airdropTemplate:t="airdrop_container_b"
+    airdrop_manager__airdropPhysTemplate:t="airdrop_phys"
+  }
+
+  _group{
+    _tags:t="gameClient"
+    airdrop_manager__radiusOnMapUi:r=75
+  }
+}
+
+airdrop_phys{
+  _use:t="phys_sleepable"
+  net__physId:i=-1
+  collision_physMatId:i=-1
+  start_vel:p3=0, 0, 0
+  pair_collision__tag:t="collidableToPhysObj"
+  phys_obj_net_phys__blk:t="gamedata/units/airdrop.blk"
+  first_contact_listener__hadContact:b=no
+  _replicated:t="first_contact_listener__hadContact"
+
+  phys_obj_net_phys{}
+  base_net_phys_ptr{}
+  pair_collision__gridHolders{}
+  "collidableToPhysObj:tag"{}
+  "pair_collision__gridNames:list<t>"{
+    h:t="humans"
+    h:t="vehicles"
+    h:t="interactable"
+  }
+}
+
+airdrop_hitpoints{
+  _use:t="base_dm_parts"
+  isAlive:b=yes
+  hitpoints__hp:r=1e+07
+  hitpoints__maxHp:r=1e+07
+  hitpoints__regenPerSec:r=0
+  hitpoints__shellDmgMult:r=1
+  hitpoints__shellSplashDmgMult:r=1
+  needsBlood:b=no
+}
+
+airdrop_container{
+  _use:t="usable_object_base"
+  _use:t="external_inventory_accesspoint"
+  _use:t="external_inventory_container"
+  _use:t="interactable_grid_obj"
+  item__useActionHintType:i=1
+  item__setCustomUsePrompt:t="lootingAirdrop/search"
+  item_world_marker__enabled:b=yes
+  item_world_marker__attachToNode:t="Drop_container_body"
+  item_world_marker__attachToNodeIdx:i=-1
+  item_world_marker__pos:p3=0, 0, 0
+  _tracked:t="item_world_marker__pos"
+  human_inventory__maxVolume:r=-1
+  loot_drop_system__lootPreset:t="civil_loot_preset"
+  loot_drop_system_delayed_loot_generation__generated:b=no
+  use_object__selectedTemplate:t="selected_lootable_container"
+
+  "usableObject:tag"{}
+  phys_vars{}
+  anim_phys{}
+  "grid_obj__updateAlways:tag"{}
+}
+
+airdrop_fire_fx{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="airdrop_trail_cmps_fx"
+
+    effect{}
+  }
+}
+
+airdrop_signal_effect{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="airdrop_signal_cmps_fx"
+
+    effect{}
+  }
+}
+
+airdrop_sound{
+  _use:t="sound_control"
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=8000
+  }
+
+  _group{
+    _tags:t="sound"
+    airdrop_sound__flyPath:t="impact/fly_airdrop"
+    airdrop_sound__landPath:t="impact/airdrop"
+
+    "airdrop_sound__flyEvent:SoundEvent"{}
+  }
+}
+
+airdrop_base{
+  _use:t="replicating"
+  _use:t="airdrop_container"
+  _use:t="airdrop_hitpoints"
+  _use:t="airdrop_sound"
+  _use:t="animchar"
+  animchar__updatable:b=yes
+  killLogName:t="Airdrop"
+  underground_teleporter__timeToCheck:r=0.5
+  underground_teleporter__timeBetweenChecks:r=0.5
+  netLodZones:p4=2500, 22500, 1.225e+07, 2.5e+07
+  animchar__res:t="Airdrop_container_B_char"
+  collres__res:t="Airdrop_container_B_collision"
+  collres__centerNode:t="Drop_container_body"
+  material:t="metal"
+  airdrop__fireFxTemplate:t="airdrop_fire_fx"
+  airdrop__groundingFxTemplate:t="explosion_100_250kg_sand_effect"
+  airdrop__smokeOnGroundTemplate:t="airdrop_signal_effect"
+  airdrop__smokeOnGroundTimer:r=120
+  airdrop__smokeOnGroundDestoyAt:r=-1
+  _replicated:t="airdrop__smokeOnGroundDestoyAt"
+  airdrop__startTime:r=0
+  airdrop__movingTime:r=50
+  airdrop__initialPosition:p3=0, 0, 0
+  airdrop__moveTo:p3=0, 0, 0
+  airdrop__icon:t="airdrop_icon.svg"
+  airdrop__assistantScript:t="hint_airdrop_coming"
+
+  "net__alwaysInScope:tag"{}
+  collres{}
+  phys_vars{}
+  anim_phys{}
+  "airdrop:tag"{}
+  "airdrop__fireFxEid:eid"{}
+  "airdrop__smokeFxEid:eid"{}
+}
+
+airdrop_container_b{
+  _use:t="airdrop_base"
+  loot_drop_system__lootPreset:t="airdrop_weapons_preset"
+  animchar__res:t="Airdrop_container_B_char"
+  collres__res:t="Airdrop_container_B_collision"
+}

@@ -1,0 +1,752 @@
+repeat{
+  name:t="spider_mother"
+  selectStrategy:t="ordered"
+
+  utilitySelector{
+    utilVars{
+      updateTimeStep:r=0.05
+      ready:t="util_vars__ready"
+      var:t="util_vars__aggressionLevel"
+      var:t="util_vars__visibleTargets"
+      var:t="util_vars__offenderHitCoef"
+      var:t="util_vars__lastBulletReactionCoef"
+      var:t="util_vars__visibleAttractPoints"
+      var:t="util_vars__attractPointRatio"
+    }
+
+    sequencer{
+      utilFn:t="0.25f / (1f + visibleTargets)"
+      name:t="patrol"
+
+      subTree{
+        refId:t="patroller_ref"
+        name:t="patroller"
+      }
+
+      nPhysCorridorMoveToPos{
+        posParam:t="patroller__currentWaypoint"
+        forceToWalk:b=yes
+        sprintTimerRange:p2=0, 0
+        stopDist:r=0.5
+      }
+
+      wait{
+        range:p2=50, 100
+        resetable:b=yes
+      }
+    }
+
+    exitHandler{
+      name:t="attack"
+      utilFn:t="visibleTargets * (1f + saturate(aggressionLevel - 0.4999))"
+
+      orderedSelector{
+        sequencer{
+          findDanger{
+            paramName:t="enemy"
+            radiusParamName:t="enemyRadius"
+            minDanger:r=0.1
+            tag:t="human"
+          }
+
+          modifyNode{
+            target:t="walker_agent__targetEid"
+            operator:t="="
+            argIntParam:t="enemy"
+          }
+
+          subTree{
+            treeName:t="sub.spider_mother_strafe_if_danger"
+          }
+
+          success{
+            sequencer{
+              name:t="run_to_target"
+
+              speak{
+                effect:t="seeDanger"
+                timeMinMax:p2=3, 5
+              }
+
+              checkDistanceToTarget{
+                targetParam:t="walker_agent__targetEid"
+                radius:r=10
+              }
+
+              parallel{
+                nPhysCorridorMoveToTarget{
+                  targetParam:t="walker_agent__targetEid"
+                  stopDist:r=1
+                }
+
+                wait{
+                  range:p2=3, 8
+                  resetable:b=yes
+                }
+              }
+            }
+          }
+
+          repeatUntilFail{
+            count:i=5
+
+            parallel{
+              nPhysCorridorMoveToTarget{
+                targetParam:t="walker_agent__targetEid"
+                stopDist:r=1
+              }
+
+              wait{
+                range:p2=3, 6
+                resetable:b=yes
+              }
+            }
+
+            success{
+              sequencer{
+                name:t="run_to_target_and_attack"
+
+                ignoreChance{
+                  chance:r=0.33
+                }
+
+                parallel{
+                  nPhysCorridorMoveToTarget{
+                    targetParam:t="walker_agent__targetEid"
+                    forceToWalk:b=no
+                    stopDist:r=2
+                  }
+
+                  wait{
+                    range:p2=3, 8
+                    resetable:b=yes
+                  }
+                }
+
+                runAction{
+                  action:t="stand_melee"
+                }
+
+                parallel{
+                  nPhysStareAtEntity{
+                    targetParam:t="walker_agent__targetEid"
+                  }
+
+                  wait{
+                    range:p2=0.5, 1
+                    resetable:b=yes
+                  }
+                }
+              }
+            }
+
+            subTree{
+              treeName:t="sub.spider_mother_strafe_run_around_target_if_danger"
+            }
+
+            parallel{
+              nPhysStareAtEntity{
+                targetParam:t="walker_agent__targetEid"
+              }
+
+              wait{
+                range:p2=0.2, 0.3
+                resetable:b=yes
+              }
+            }
+
+            checkTarget{
+              targetUnitParam:t="enemy"
+            }
+
+            subTree{
+              treeName:t="sub.spider_mother_strafe_run_around_target"
+            }
+
+            parallel{
+              nPhysStareAtEntity{
+                targetParam:t="walker_agent__targetEid"
+              }
+
+              wait{
+                range:p2=0.2, 0.3
+                resetable:b=yes
+              }
+            }
+
+            subTree{
+              treeName:t="sub.spider_mother_strafe_run_around_target_and_attack"
+            }
+          }
+        }
+
+        sequencer{
+          name:t="shoo"
+
+          findDanger{
+            paramName:t="enemy"
+            radiusParamName:t="enemyRadius"
+            minDanger:r=0.1
+            tag:t="human"
+          }
+
+          modifyNode{
+            target:t="walker_agent__targetEid"
+            operator:t="="
+            argIntParam:t="enemy"
+          }
+
+          speak{
+            effect:t="seeDanger"
+            timeMinMax:p2=3, 5
+          }
+
+          success{
+            orderedSelector{
+              checkDistanceToTarget{
+                targetParam:t="walker_agent__targetEid"
+                radius:r=2
+              }
+
+              sequencer{
+                nMeshFindPointNearTarget{
+                  posParam:t="walker_agent__targetPos"
+                  tries:i=2
+                  dist:p2=1.5, 2
+                  targetParam:t="walker_agent__targetEid"
+                  tracerayNavmesh:b=yes
+                }
+
+                nPhysCorridorMoveToPos{
+                  posParam:t="walker_agent__targetPos"
+                  forceToWalk:b=yes
+                }
+              }
+            }
+          }
+
+          parallel{
+            nPhysStareAtEntity{
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            wait{
+              range:p2=0.2, 0.5
+              resetable:b=yes
+            }
+          }
+
+          subTree{
+            treeName:t="sub.spider_mother_strafe_and_stare"
+          }
+        }
+      }
+
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        arg:i=0
+      }
+    }
+
+    exitHandler{
+      name:t="aggressive_attack"
+      utilFn:t="visibleTargets * (offenderHitCoef + lastBulletReactionCoef + saturate(aggressionLevel - 1f))"
+
+      orderedSelector{
+        sequencer{
+          findDanger{
+            paramName:t="enemy"
+            radiusParamName:t="enemyRadius"
+            minDanger:r=0.1
+            tag:t="human"
+          }
+
+          modifyNode{
+            target:t="walker_agent__targetEid"
+            operator:t="="
+            argIntParam:t="enemy"
+          }
+
+          subTree{
+            treeName:t="sub.spider_mother_strafe_run_around_target_if_danger"
+          }
+
+          success{
+            sequencer{
+              name:t="run_to_target"
+
+              speak{
+                effect:t="seeDanger"
+                timeMinMax:p2=3, 5
+              }
+
+              checkDistanceToTarget{
+                targetParam:t="walker_agent__targetEid"
+                radius:r=10
+              }
+
+              parallel{
+                nPhysCorridorMoveToTarget{
+                  targetParam:t="walker_agent__targetEid"
+                  stopDist:r=3
+                }
+
+                wait{
+                  range:p2=0.5, 1.25
+                  resetable:b=yes
+                }
+              }
+            }
+          }
+
+          repeatUntilFail{
+            count:i=2
+
+            subTree{
+              treeName:t="sub.spider_mother_strafe_run_around_target_and_attack"
+            }
+
+            parallel{
+              nPhysCorridorMoveToTarget{
+                targetParam:t="walker_agent__targetEid"
+                forceToWalk:b=no
+                stopDist:r=3
+              }
+
+              wait{
+                range:p2=0.5, 1.25
+                resetable:b=yes
+              }
+            }
+
+            success{
+              sequencer{
+                checkDistanceToTarget{
+                  targetParam:t="walker_agent__targetEid"
+                  radius:r=2.5
+                }
+
+                runAction{
+                  action:t="stand_melee"
+                }
+              }
+            }
+
+            parallel{
+              nPhysStareAtEntity{
+                targetParam:t="walker_agent__targetEid"
+              }
+
+              wait{
+                range:p2=0.15, 0.25
+                resetable:b=yes
+              }
+            }
+
+            subTree{
+              treeName:t="sub.spider_mother_strafe_run_around_target_and_attack"
+            }
+
+            parallel{
+              nPhysStareAtEntity{
+                targetParam:t="walker_agent__targetEid"
+              }
+
+              wait{
+                range:p2=0.15, 0.2
+                resetable:b=yes
+              }
+            }
+
+            subTree{
+              treeName:t="sub.spider_mother_strafe_run_around_target_if_danger"
+            }
+
+            parallel{
+              nPhysStareAtEntity{
+                targetParam:t="walker_agent__targetEid"
+              }
+
+              wait{
+                range:p2=0.1, 0.15
+                resetable:b=yes
+              }
+            }
+
+            subTree{
+              treeName:t="sub.spider_mother_strafe_run_around_target_and_attack"
+            }
+
+            checkTarget{
+              targetUnitParam:t="enemy"
+            }
+          }
+        }
+
+        sequencer{
+          name:t="run_away_if_danger"
+
+          compareNode{
+            lhs:t="util_vars__lastBulletReactionCoef"
+            operator:t=">"
+            rhs:r=0.5
+          }
+
+          nMeshFindRandomPointAroundTarget{
+            posParam:t="walker_agent__targetPos"
+            dist:p2=12, 25
+            targetParam:t="eid"
+          }
+
+          nPhysCorridorMoveToPos{
+            posParam:t="walker_agent__targetPos"
+            forceToWalk:b=no
+            stopDist:r=3
+          }
+        }
+      }
+
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        arg:i=0
+      }
+    }
+
+    sequencer{
+      name:t="runToVisibleAttrackPoint"
+      utilFn:t="visibleAttractPoints > 0f ? 0.5 : 0f"
+
+      not{
+        findDanger{
+          paramName:t="enemy"
+          radiusParamName:t="enemyRadius"
+          minDanger:r=0.1
+          tag:t="human"
+        }
+      }
+
+      getVisibleAttractionPosition{}
+      nPhysCorridorMoveToPos{
+        posParam:t="visual_attract__nearestNavPos"
+        forceToWalk:b=no
+        sprintTimerRange:p2=0, 0
+      }
+
+      wait{
+        range:p2=1, 2
+        resetable:b=yes
+      }
+
+      subTree{
+        treeName:t="sub.spider_mother_patroll_around_attract_pos"
+      }
+    }
+
+    sequencer{
+      name:t="runToAttrackPoint"
+      utilFn:t="attractPointRatio"
+
+      not{
+        findDanger{
+          paramName:t="enemy"
+          radiusParamName:t="enemyRadius"
+          minDanger:r=0.1
+          tag:t="human"
+        }
+      }
+
+      orderedSelector{
+        sequencer{
+          compareNode{
+            lhs:t="attract_point__distanceTime"
+            operator:t=">="
+            rhs:r=0.5
+          }
+
+          parallel{
+            nPhysStareAtEntity{
+              targetParam:t="attract_point__eid"
+            }
+
+            wait{
+              range:p2=3, 6
+              resetable:b=yes
+            }
+          }
+        }
+
+        sequencer{
+          nPhysCorridorMoveToPos{
+            posParam:t="attract_point__targetPos"
+          }
+
+          wait{
+            range:p2=1, 2
+            resetable:b=yes
+          }
+
+          subTree{
+            treeName:t="sub.spider_mother_patroll_around_attract_pos"
+          }
+        }
+      }
+    }
+  }
+}
+
+repeat{
+  name:t="sub.spider_mother_patroll_around_attract_pos"
+  count:i=4
+
+  sequencer{
+    ignoreChance{
+      chance:r=0.5
+    }
+
+    nMeshFindRandomPointAroundPos{
+      posParam:t="patroller__currentWaypoint"
+      dist:p2=5, 7
+      aroundPos:t="attract_point__targetPos"
+    }
+
+    randomSelector{
+      nPhysCorridorMoveToPos{
+        posParam:t="patroller__currentWaypoint"
+      }
+
+      nPhysCorridorMoveToPos{
+        posParam:t="patroller__currentWaypoint"
+        forceToWalk:b=yes
+        sprintTimerRange:p2=0, 0
+      }
+    }
+
+    wait{
+      range:p2=1, 2
+      resetable:b=yes
+    }
+  }
+}
+
+success{
+  name:t="sub.spider_mother_strafe_run_around_target"
+
+  sequencer{
+    name:t="strafe_run_around_target"
+
+    ignoreChance{
+      chance:r=0.2
+    }
+
+    repeatUntilFail{
+      count:i=3
+
+      nMeshFindPointNearTarget{
+        posParam:t="walker_agent__targetPos"
+        tries:i=3
+        dist:p2=2, 4.5
+        angleRangeSpread:p2=-150, 150
+        targetParam:t="walker_agent__targetEid"
+        tracerayNavmesh:b=yes
+      }
+
+      parallel{
+        nPhysCorridorMoveToPos{
+          posParam:t="walker_agent__targetPos"
+          forceToWalk:b=no
+          lookInMoveDir:b=no
+        }
+
+        nPhysStareAtEntity{
+          targetParam:t="walker_agent__targetEid"
+        }
+      }
+    }
+  }
+}
+
+success{
+  name:t="sub.spider_mother_strafe_run_around_target_and_attack"
+
+  sequencer{
+    name:t="strafe_run_around_target_and_attack"
+
+    ignoreChance{
+      chance:r=0.2
+    }
+
+    repeatUntilFail{
+      count:i=3
+
+      nMeshFindPointNearTarget{
+        posParam:t="walker_agent__targetPos"
+        tries:i=3
+        dist:p2=1, 3
+        angleRangeSpread:p2=-150, 150
+        targetParam:t="walker_agent__targetEid"
+        tracerayNavmesh:b=yes
+      }
+
+      parallel{
+        nPhysCorridorMoveToPos{
+          posParam:t="walker_agent__targetPos"
+          forceToWalk:b=no
+          lookInMoveDir:b=no
+        }
+
+        nPhysStareAtEntity{
+          targetParam:t="walker_agent__targetEid"
+        }
+      }
+
+      parallel{
+        nPhysCorridorMoveToTarget{
+          targetParam:t="walker_agent__targetEid"
+          forceToWalk:b=no
+          stopDist:r=1
+        }
+
+        wait{
+          range:p2=0.5, 1.25
+          resetable:b=yes
+        }
+      }
+
+      success{
+        sequencer{
+          checkDistanceToTarget{
+            targetParam:t="walker_agent__targetEid"
+            radius:r=2.5
+          }
+
+          runAction{
+            action:t="stand_melee"
+          }
+
+          wait{
+            range:p2=0.25, 0.5
+            resetable:b=yes
+          }
+        }
+      }
+    }
+  }
+}
+
+success{
+  name:t="sub.spider_mother_strafe_run_around_target_if_danger"
+
+  sequencer{
+    name:t="strafe_run_around_target_if_danger"
+
+    ignoreChance{
+      chance:r=0.15
+    }
+
+    compareNode{
+      lhs:t="util_vars__lastBulletReactionCoef"
+      operator:t=">"
+      rhs:r=0.5
+    }
+
+    nMeshFindPointNearTarget{
+      posParam:t="walker_agent__targetPos"
+      tries:i=3
+      dist:p2=4, 8
+      angleRangeSpread:p2=-150, 150
+      targetParam:t="walker_agent__targetEid"
+      tracerayNavmesh:b=yes
+    }
+
+    parallel{
+      nPhysCorridorMoveToPos{
+        posParam:t="walker_agent__targetPos"
+        forceToWalk:b=no
+        lookInMoveDir:b=no
+      }
+
+      nPhysStareAtEntity{
+        targetParam:t="walker_agent__targetEid"
+      }
+    }
+  }
+}
+
+success{
+  name:t="sub.spider_mother_strafe_if_danger"
+
+  sequencer{
+    name:t="strafe_if_danger"
+
+    ignoreChance{
+      chance:r=0.15
+    }
+
+    compareNode{
+      lhs:t="util_vars__lastBulletReactionCoef"
+      operator:t=">"
+      rhs:r=0.5
+    }
+
+    nMeshFindRandomPointAroundTarget{
+      posParam:t="walker_agent__targetPos"
+      dist:p2=4, 6
+      targetParam:t="eid"
+    }
+
+    nMeshTraceray{
+      posParam:t="walker_agent__targetPos"
+      outPosParam:t="walker_agent__targetPos"
+    }
+
+    parallel{
+      nPhysCorridorMoveToPos{
+        posParam:t="walker_agent__targetPos"
+        forceToWalk:b=no
+        lookInMoveDir:b=no
+      }
+
+      nPhysStareAtEntity{
+        targetParam:t="walker_agent__targetEid"
+      }
+    }
+  }
+}
+
+success{
+  name:t="sub.spider_mother_strafe_and_stare"
+
+  sequencer{
+    name:t="strafe_and_stare"
+
+    ignoreChance{
+      chance:r=0.15
+    }
+
+    nMeshFindRandomPointAroundTarget{
+      posParam:t="walker_agent__targetPos"
+      dist:p2=4, 7
+      targetParam:t="eid"
+    }
+
+    nMeshTraceray{
+      posParam:t="walker_agent__targetPos"
+      outPosParam:t="walker_agent__targetPos"
+    }
+
+    parallel{
+      nPhysCorridorMoveToPos{
+        posParam:t="walker_agent__targetPos"
+        forceToWalk:b=yes
+        lookInMoveDir:b=no
+        stopDist:r=0.5
+      }
+
+      nPhysStareAtEntity{
+        targetParam:t="walker_agent__targetEid"
+      }
+    }
+  }
+}

@@ -1,0 +1,1042 @@
+repeat{
+  name:t="flower_human"
+  selectStrategy:t="ordered"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      failed{
+        findDoorObstacle{
+          traceDist:r=1.5
+        }
+      }
+
+      subTree{
+        treeName:t="sub.recalculateTreeOnStuck"
+      }
+
+      sequencer{
+        not{
+          checkDistanceToPos{
+            posParam:t="zone_patroller__spawnPos"
+            radius:r=30
+          }
+        }
+
+        modifyNode{
+          target:t="flower_human__forceGoHome"
+          operator:t="="
+          arg:b=yes
+        }
+
+        selectNode{
+          name:t="forceGoHome"
+        }
+      }
+
+      sequencer{
+        findDanger{
+          paramName:t="enemy"
+          radiusParamName:t="enemyRadius"
+          minDanger:r=0.1
+          tag:t="human"
+        }
+
+        selectNode{
+          name:t="fightEnemies"
+        }
+      }
+
+      sequencer{
+        compareNode{
+          lhs:t="sleep_mode__triggered"
+          operator:t="=="
+          rhs:b=yes
+        }
+
+        selectNode{
+          name:t="goToTrigger"
+        }
+      }
+    }
+  }
+
+  reaction{
+    event:t="onAttract"
+
+    sequencer{
+      doesEntityExist{
+        targetEcsComponent:t="attract_point__eid"
+      }
+
+      selectNode{
+        name:t="goToAttract"
+      }
+    }
+  }
+
+  reaction{
+    event:t="onTraceableDanger"
+
+    selectNode{
+      name:t="fightEnemies"
+    }
+  }
+
+  reaction{
+    event:t="onHit"
+
+    selectNode{
+      name:t="fightEnemies"
+    }
+  }
+
+  sequencer{
+    name:t="fightEnemies"
+
+    reaction{
+      event:t="onHit"
+
+      setTimer{
+        target:t="flower_human__abandonAttackTimer"
+        deltaTime:r=25
+      }
+    }
+
+    reaction{
+      event:t="onAttract"
+
+      success{}
+    }
+
+    reaction{
+      event:t="onTraceableDanger"
+
+      success{}
+    }
+
+    reaction{
+      event:t="regularCheck"
+
+      orderedSelector{
+        subTree{
+          treeName:t="sub.abandonAttacking"
+        }
+
+        failed{
+          findDoorObstacle{
+            traceDist:r=1.5
+          }
+        }
+
+        subTree{
+          treeName:t="sub.recalculateTreeOnStuck"
+        }
+      }
+    }
+
+    setTimer{
+      target:t="flower_human__abandonAttackTimer"
+      deltaTime:r=25
+    }
+
+    subTree{
+      treeName:t="sub.retaliatory_attack"
+    }
+  }
+
+  sequencer{
+    name:t="goToTrigger"
+
+    reaction{
+      event:t="regularCheck"
+
+      sequencer{
+        failed{
+          findDoorObstacle{
+            traceDist:r=1.5
+          }
+        }
+
+        subTree{
+          treeName:t="sub.recalculateTreeOnStuck"
+        }
+      }
+    }
+
+    compareNode{
+      lhs:t="sleep_mode__triggered"
+      operator:t="=="
+      rhs:b=yes
+    }
+
+    parallel{
+      nPhysCorridorMoveToPosWithNavmeshMapping{
+        posParam:t="sleep_mode__triggerPoint"
+        forceToWalk:b=no
+        stopDist:r=0.4
+      }
+
+      wait{
+        range:p2=20, 20
+        resetable:b=yes
+      }
+    }
+
+    wait{
+      range:p2=1, 2
+      resetable:b=yes
+    }
+  }
+
+  sequencer{
+    name:t="goToAttract"
+
+    doesEntityExist{
+      targetEcsComponent:t="attract_point__eid"
+    }
+
+    parallel{
+      nPhysCorridorMoveToPosWithNavmeshMapping{
+        posParam:t="attract_point__targetPos"
+      }
+
+      wait{
+        range:p2=20, 20
+        resetable:b=yes
+      }
+    }
+
+    wait{
+      range:p2=1, 2
+      resetable:b=yes
+    }
+  }
+
+  sequencer{
+    name:t="goHome"
+
+    subTree{
+      treeName:t="sub.goToHome"
+    }
+
+    wait{
+      range:p2=1, 2
+      resetable:b=yes
+    }
+
+    sleepModeGoSleep{}
+  }
+
+  sequencer{
+    name:t="forceGoHome"
+
+    compareNode{
+      lhs:t="flower_human__forceGoHome"
+      operator:t="=="
+      rhs:b=yes
+    }
+
+    reaction{
+      event:t="regularCheck"
+
+      orderedSelector{
+        failed{
+          findDoorObstacle{
+            traceDist:r=1.5
+          }
+        }
+
+        sequencer{
+          isNphysEnabled{}
+          compareNode{
+            lhs:t="stuck_detector_debug__enabled"
+            operator:t=">"
+            rhs:r=0
+          }
+
+          compareNode{
+            lhs:t="stuck_detector__value"
+            operator:t=">"
+            rhs:r=0.55
+          }
+
+          modifyNode{
+            target:t="stuck_detector__value"
+            operator:t="="
+            arg:r=0
+          }
+
+          findSafePos{
+            posParam:t="zone_patroller__spawnPos"
+            enemyParam:t="walker_agent__potentialTargetEid"
+            defaultPosParam:t="zone_patroller__spawnPos"
+            overwrite:b=yes
+          }
+
+          recalculateTree{}
+        }
+      }
+    }
+
+    reaction{
+      event:t="onAttract"
+    }
+
+    reaction{
+      event:t="onTraceableDanger"
+    }
+
+    reaction{
+      event:t="onHit"
+    }
+
+    subTree{
+      treeName:t="sub.goToHome"
+    }
+
+    modifyNode{
+      target:t="walker_agent__targetEid"
+      operator:t="="
+      arg:i=0
+    }
+
+    modifyNode{
+      target:t="attract_point__eid"
+      operator:t="="
+      arg:i=0
+    }
+
+    modifyNode{
+      target:t="sleep_mode__triggered"
+      operator:t="="
+      arg:b=no
+    }
+
+    modifyNode{
+      target:t="flower_human__abandonAttackTimer"
+      operator:t="="
+      arg:r=0
+    }
+
+    wait{
+      range:p2=1, 2
+      resetable:b=yes
+    }
+
+    sleepModeGoSleep{}
+  }
+}
+
+sequencer{
+  name:t="sub.abandonAttacking"
+
+  subTree{
+    treeName:t="sub.shouldAbandonAttacking"
+  }
+
+  modifyNode{
+    target:t="walker_agent__targetEid"
+    operator:t="="
+    arg:i=0
+  }
+
+  recalculateTree{}
+}
+
+sequencer{
+  name:t="sub.shouldAbandonAttacking"
+
+  orderedSelector{
+    sequencer{
+      not{
+        isTimerInProgress{
+          target:t="flower_human__abandonAttackTimer"
+        }
+      }
+
+      not{
+        checkDistanceToPos{
+          posParam:t="zone_patroller__spawnPos"
+          radius:r=20
+        }
+      }
+
+      not{
+        checkDistanceToTarget{
+          targetParam:t="walker_agent__targetEid"
+          radius:r=10
+        }
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.goToHome"
+
+  subTree{
+    treeName:t="sub.return_to_navmesh"
+  }
+
+  parallel{
+    failed{
+      wait{
+        range:p2=30, 30
+        resetable:b=yes
+      }
+    }
+
+    success{
+      sequencer{
+        not{
+          sequencer{
+            checkDistanceToPos{
+              posParam:t="zone_patroller__spawnPos"
+              radius:r=2
+            }
+
+            failed{
+              modifyNode{
+                target:t="flower_human__forceGoHome"
+                operator:t="="
+                arg:b=no
+              }
+            }
+          }
+        }
+
+        nPhysCorridorMoveToPosWithNavmeshMapping{
+          posParam:t="zone_patroller__spawnPos"
+          forceToWalk:b=no
+          stopDist:r=0.25
+        }
+
+        modifyNode{
+          target:t="flower_human__forceGoHome"
+          operator:t="="
+          arg:b=no
+        }
+      }
+    }
+  }
+}
+
+exitHandler{
+  name:t="sub.retaliatory_attack"
+
+  sequencer{
+    orderedSelector{
+      sequencer{
+        getReactionOffender{}
+        modifyNode{
+          targetIntParam:t="enemy"
+          operator:t="="
+          arg:t="agent_dangers__lastReactionOffender"
+        }
+      }
+
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+        tag:t="human"
+      }
+    }
+
+    modifyNode{
+      target:t="walker_agent__potentialTargetEid"
+      operator:t="="
+      argIntParam:t="enemy"
+    }
+
+    orderedSelector{
+      sequencer{
+        name:t="approach_for_melee_attack"
+
+        nMeshFindPointNearTargetWithNavmeshMapping{
+          posParam:t="walker_agent__targetPos"
+          dist:p2=2, 2
+          targetParam:t="walker_agent__potentialTargetEid"
+          reusePrevPos:b=yes
+        }
+
+        modifyNode{
+          target:t="walker_agent__targetEid"
+          operator:t="="
+          argIntParam:t="enemy"
+        }
+
+        speak{
+          effect:t="seeDanger"
+          timeMinMax:p2=6, 10
+        }
+
+        subTree{
+          treeName:t="sub.flower_human_attack"
+          name:t="attack_queue"
+        }
+      }
+
+      sequencer{
+        modifyNode{
+          target:t="walker_agent__targetEid"
+          operator:t="="
+          argIntParam:t="enemy"
+        }
+
+        checkAlive{
+          targetParam:t="walker_agent__targetEid"
+        }
+
+        nPhysPrepareOffmeshJumping{
+          name:t="nPhysPrepareJumpingBetweenNMeshIslands"
+        }
+
+        nPhysCorridorMoveToPosWithNavmeshMapping{
+          posParam:t="walker_agent__climbingFrom"
+          forceToWalk:b=no
+          stopDist:r=0.6
+        }
+
+        nPhysLookAtEntityWithPositionMapping{
+          targetParam:t="walker_agent__targetEid"
+        }
+
+        performOffmeshJumping{
+          name:t="performJumping"
+        }
+
+        checkAlive{
+          targetParam:t="walker_agent__targetEid"
+        }
+
+        subTree{
+          treeName:t="sub.flower_human_near_attack"
+        }
+
+        subTree{
+          treeName:t="sub.return_to_navmesh"
+        }
+      }
+
+      failed{
+        modifyNode{
+          target:t="walker_agent__targetEid"
+          operator:t="="
+          arg:i=0
+        }
+      }
+
+      sequencer{
+        name:t="hide_away"
+
+        subTree{
+          treeName:t="sub.return_to_navmesh"
+        }
+
+        reaction{
+          event:t="regularCheck"
+
+          orderedSelector{
+            failed{
+              findDoorObstacle{
+                traceDist:r=1.5
+              }
+            }
+
+            sequencer{
+              isNphysEnabled{}
+              compareNode{
+                lhs:t="stuck_detector_debug__enabled"
+                operator:t=">"
+                rhs:r=0
+              }
+
+              compareNode{
+                lhs:t="stuck_detector__value"
+                operator:t=">"
+                rhs:r=0.55
+              }
+
+              modifyNode{
+                target:t="stuck_detector__value"
+                operator:t="="
+                arg:r=0
+              }
+
+              findSafePos{
+                posParam:t="zone_patroller__spawnPos"
+                enemyParam:t="walker_agent__potentialTargetEid"
+                defaultPosParam:t="zone_patroller__spawnPos"
+                overwrite:b=yes
+              }
+
+              recalculateTree{}
+            }
+          }
+        }
+
+        success{
+          repeatUntilFail{
+            count:i=2
+
+            not{
+              findSafePos{
+                posParam:t="zone_patroller__spawnPos"
+                enemyParam:t="walker_agent__potentialTargetEid"
+                defaultPosParam:t="zone_patroller__spawnPos"
+              }
+            }
+
+            success{
+              sequencer{
+                checkDistanceToPos{
+                  posParam:t="zone_patroller__spawnPos"
+                  radius:r=0.1
+                }
+
+                wait{
+                  range:p2=1, 2
+                  resetable:b=yes
+                }
+              }
+            }
+
+            nPhysCorridorMoveToPosWithNavmeshMapping{
+              posParam:t="zone_patroller__spawnPos"
+              forceToWalk:b=no
+              stopDist:r=0.25
+            }
+          }
+        }
+
+        nPhysCorridorMoveToPosWithNavmeshMapping{
+          posParam:t="zone_patroller__spawnPos"
+          forceToWalk:b=no
+          stopDist:r=0.25
+        }
+
+        wait{
+          range:p2=1, 2
+          resetable:b=yes
+        }
+
+        sleepModeGoSleep{}
+      }
+    }
+  }
+
+  modifyNode{
+    target:t="walker_agent__targetEid"
+    operator:t="="
+    arg:i=0
+  }
+}
+
+sequencer{
+  name:t="sub.flower_human_attack"
+
+  success{
+    sequencer{
+      checkDistanceToTarget{
+        targetParam:t="walker_agent__targetEid"
+        radius:r=3
+      }
+
+      subTree{
+        treeName:t="sub.flower_human_near_attack"
+      }
+    }
+  }
+
+  orderedSelector{
+    sequencer{
+      nMeshFindPointNearTargetWithNavmeshMapping{
+        posParam:t="walker_agent__targetPos"
+        dist:p2=4, 7
+        targetParam:t="walker_agent__targetEid"
+        reusePrevPos:b=yes
+      }
+
+      nPhysCorridorMoveToPosWithNavmeshMapping{
+        posParam:t="walker_agent__targetPos"
+        forceToWalk:b=no
+      }
+
+      nPhysCorridorMoveToTargetWithNavmeshMapping{
+        targetParam:t="walker_agent__targetEid"
+        stopDist:r=3
+        loseInvisibleTarget:b=no
+      }
+
+      applyGameAffect{
+        templateName:t="flower_human_run_attack_anim"
+      }
+
+      randomSelector{
+        applyGameAffect{
+          templateName:t="flower_human_confusion_run_attack"
+        }
+
+        applyGameAffect{
+          templateName:t="flower_human_concussion_run_attack"
+        }
+      }
+
+      repeatUntilFail{
+        count:i=6
+
+        randomSelector{
+          sequencer{
+            nMeshFindPointNearTargetWithNavmeshMapping{
+              posParam:t="walker_agent__targetPos"
+              oppositePoint:b=yes
+              angleRangeSpread:p2=-20, -10
+              dist:p2=5, 7
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            nPhysCorridorMoveToPosWithNavmeshMapping{
+              posParam:t="walker_agent__targetPos"
+              forceToWalk:b=no
+            }
+
+            nMeshFindPointNearTargetWithNavmeshMapping{
+              posParam:t="walker_agent__targetPos"
+              oppositePoint:b=no
+              angleRangeSpread:p2=20, 30
+              dist:p2=5, 7
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            nPhysCorridorMoveToPosWithNavmeshMapping{
+              posParam:t="walker_agent__targetPos"
+              forceToWalk:b=no
+            }
+          }
+
+          sequencer{
+            nMeshFindPointNearTargetWithNavmeshMapping{
+              posParam:t="walker_agent__targetPos"
+              oppositePoint:b=yes
+              angleRangeSpread:p2=20, 10
+              dist:p2=5, 7
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            nPhysCorridorMoveToPosWithNavmeshMapping{
+              posParam:t="walker_agent__targetPos"
+              forceToWalk:b=no
+            }
+
+            nMeshFindPointNearTargetWithNavmeshMapping{
+              posParam:t="walker_agent__targetPos"
+              oppositePoint:b=no
+              angleRangeSpread:p2=-20, -30
+              dist:p2=5, 7
+              targetParam:t="walker_agent__targetEid"
+            }
+
+            nPhysCorridorMoveToPosWithNavmeshMapping{
+              posParam:t="walker_agent__targetPos"
+              forceToWalk:b=no
+            }
+          }
+        }
+
+        checkTarget{
+          targetUnitParam:t="enemy"
+        }
+
+        nPhysCorridorMoveToTargetWithNavmeshMapping{
+          targetParam:t="walker_agent__targetEid"
+          stopDist:r=4
+          loseInvisibleTarget:b=no
+        }
+
+        applyGameAffect{
+          templateName:t="flower_human_run_attack_anim"
+        }
+
+        randomSelector{
+          applyGameAffect{
+            templateName:t="flower_human_confusion_run_attack"
+          }
+
+          applyGameAffect{
+            templateName:t="flower_human_concussion_run_attack"
+          }
+        }
+      }
+    }
+
+    subTree{
+      treeName:t="sub.flower_human_near_attack"
+    }
+  }
+
+  subTree{
+    treeName:t="sub.return_to_navmesh"
+  }
+
+  nMeshFindPointNearTargetWithNavmeshMapping{
+    posParam:t="walker_agent__targetPos"
+    oppositePoint:b=yes
+    angleRangeSpread:p2=-10, 0
+    dist:p2=4, 6
+    targetParam:t="walker_agent__targetEid"
+  }
+
+  nPhysCorridorMoveToPosWithNavmeshMapping{
+    posParam:t="walker_agent__targetPos"
+    forceToWalk:b=no
+  }
+}
+
+sequencer{
+  name:t="sub.flower_human_near_attack"
+
+  orderedSelector{
+    checkDistanceToTarget{
+      targetParam:t="walker_agent__targetEid"
+      radius:r=2.1
+    }
+
+    orderedSelector{
+      subTree{
+        treeName:t="sub.return_to_navmesh"
+      }
+
+      nPhysCorridorMoveToTargetWithNavmeshMapping{
+        targetParam:t="walker_agent__targetEid"
+        stopDist:r=1.9
+        loseInvisibleTarget:b=no
+      }
+    }
+
+    sequencer{
+      nPhysPrepareOffmeshJumping{
+        name:t="nPhysPrepareJumpingBetweenNMeshIslands"
+      }
+
+      nPhysCorridorMoveToPosWithNavmeshMapping{
+        posParam:t="walker_agent__climbingFrom"
+        forceToWalk:b=no
+        stopDist:r=0.6
+      }
+
+      nPhysLookAtEntityWithPositionMapping{
+        targetParam:t="walker_agent__targetEid"
+      }
+
+      performOffmeshJumping{
+        name:t="performJumping"
+      }
+    }
+  }
+
+  parallel{
+    join{
+      applyGameAffect{
+        templateName:t="flower_human_stationary_attack_anim"
+        duration:p2=2.5, 3
+        affectParam:t="flower_human__stationaryAttackAnimEid"
+      }
+
+      applyGameAffect{
+        templateName:t="flower_human_stationary_confusion_attack"
+        delay:p2=0.1, 0.3
+        affectParam:t="flower_human__stationaryConfusionAttackEid"
+      }
+    }
+
+    repeatUntilFail{
+      orderedSelector{
+        checkDistanceToTarget{
+          targetParam:t="walker_agent__targetEid"
+          radius:r=2.1
+        }
+
+        failed{
+          sequencer{
+            destroyGameAffect{
+              affectParam:t="flower_human__stationaryAttackAnimEid"
+            }
+
+            destroyGameAffect{
+              affectParam:t="flower_human__stationaryConfusionAttackEid"
+            }
+          }
+        }
+      }
+    }
+
+    nPhysStareAtEntity{
+      targetParam:t="walker_agent__targetEid"
+    }
+  }
+
+  orderedSelector{
+    checkDistanceToTarget{
+      targetParam:t="walker_agent__targetEid"
+      radius:r=2
+    }
+
+    orderedSelector{
+      subTree{
+        treeName:t="sub.return_to_navmesh"
+      }
+
+      nPhysCorridorMoveToTargetWithNavmeshMapping{
+        targetParam:t="walker_agent__targetEid"
+        stopDist:r=1.9
+        loseInvisibleTarget:b=no
+      }
+    }
+  }
+
+  parallel{
+    join{
+      applyGameAffect{
+        templateName:t="flower_human_stationary_attack_anim"
+        duration:p2=2.5, 3
+        affectParam:t="flower_human__stationaryAttackAnimEid"
+      }
+
+      applyGameAffect{
+        templateName:t="flower_human_stationary_concussion_attack"
+        delay:p2=0.1, 0.3
+        affectParam:t="flower_human__stationaryConcussionAttackEid"
+      }
+    }
+
+    repeatUntilFail{
+      orderedSelector{
+        checkDistanceToTarget{
+          targetParam:t="walker_agent__targetEid"
+          radius:r=2.1
+        }
+
+        failed{
+          sequencer{
+            destroyGameAffect{
+              affectParam:t="flower_human__stationaryAttackAnimEid"
+            }
+
+            destroyGameAffect{
+              affectParam:t="flower_human__stationaryConcussionAttackEid"
+            }
+          }
+        }
+      }
+    }
+
+    nPhysStareAtEntity{
+      targetParam:t="walker_agent__targetEid"
+    }
+  }
+
+  orderedSelector{
+    checkDistanceToTarget{
+      targetParam:t="walker_agent__targetEid"
+      radius:r=2
+    }
+
+    orderedSelector{
+      subTree{
+        treeName:t="sub.return_to_navmesh"
+      }
+
+      nPhysCorridorMoveToTargetWithNavmeshMapping{
+        targetParam:t="walker_agent__targetEid"
+        stopDist:r=1.9
+        loseInvisibleTarget:b=no
+      }
+    }
+  }
+
+  parallel{
+    join{
+      applyGameAffect{
+        templateName:t="flower_human_stationary_attack_anim"
+        duration:p2=2.5, 3
+        affectParam:t="flower_human__stationaryAttackAnimEid"
+      }
+
+      applyGameAffect{
+        templateName:t="flower_human_stationary_damage_attack"
+        delay:p2=0.1, 0.3
+        affectParam:t="flower_human__stationaryDamageAttackEid"
+      }
+    }
+
+    repeatUntilFail{
+      orderedSelector{
+        checkDistanceToTarget{
+          targetParam:t="walker_agent__targetEid"
+          radius:r=2.1
+        }
+
+        failed{
+          sequencer{
+            destroyGameAffect{
+              affectParam:t="flower_human__stationaryAttackAnimEid"
+            }
+
+            destroyGameAffect{
+              affectParam:t="flower_human__stationaryDamageAttackEid"
+            }
+          }
+        }
+      }
+    }
+
+    nPhysStareAtEntity{
+      targetParam:t="walker_agent__targetEid"
+    }
+  }
+
+  nPhysLookAtEntity{
+    targetParam:t="walker_agent__targetEid"
+  }
+
+  wait{
+    range:p2=0.2, 0.6
+    resetable:b=yes
+  }
+}
+
+sequencer{
+  name:t="sub.flower_human_ranged_attack"
+
+  nPhysCorridorMoveToPosWithNavmeshMapping{
+    posParam:t="walker_agent__targetPos"
+    forceToWalk:b=no
+  }
+
+  parallel{
+    repeat{
+      applyGameAffect{
+        templateName:t="flower_human_ranged_attack_anim"
+        duration:p2=1.5, 2
+      }
+    }
+
+    nPhysStareAtEntity{
+      targetParam:t="walker_agent__targetEid"
+    }
+
+    polenStormAttack{}
+  }
+
+  nPhysLookAtEntity{
+    targetParam:t="walker_agent__targetEid"
+  }
+
+  wait{
+    range:p2=0.2, 0.6
+    resetable:b=yes
+  }
+}

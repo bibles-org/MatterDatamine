@@ -1,0 +1,21 @@
+falling_piece_debug{
+  _singleton:b=yes
+
+  "falling_piece_debug:tag"{}
+}
+
+falling_piece{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "falling_piece:tag"{}
+  _group{
+    tags:t="render"
+    falling_piece__velocity:p3=0, 0, 0
+    falling_piece__max_velocity:r=1
+    falling_piece__start_orient:p4=0, 0, 0, 0
+    falling_piece__omega:p3=0, 0, 0
+    falling_piece__ttl:r=4.5
+    falling_piece__elapsed_time:r=0
+    falling_piece__debug_radius:r=0.1
+  }
+}

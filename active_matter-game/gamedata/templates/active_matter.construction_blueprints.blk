@@ -1,0 +1,399 @@
+construction_controller_creating_parts{
+  construction_controller_creating_parts__partsToCreateLeft:i=0
+}
+
+construction_controller{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+  construction_controller__blueprint:t=""
+  construction_controller__instanceId:t=""
+  construction_controller__bboxMax:p3=0, 0, 0
+  construction_controller__bboxMin:p3=0, 0, 0
+  _tracked:t="construction_controller__bboxMax"
+  _tracked:t="construction_controller__bboxMin"
+  construction_controller__gridId:i=-1
+
+  "construction_controller__parts:list<eid>"{}
+  "construction_controller:tag"{}
+}
+
+baked_construction_controller{
+  "baked_construction_controller:tag"{}
+}
+
+powered_controller{
+  _use:t="replicating"
+  powered_controller__attachedTo:t="-1"
+  _tracked:t="powered_controller__attachedTo"
+}
+
+power_station{
+  power_station__maxSlots:i=1
+  power_station__range:r=10
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+
+  "power_station:tag"{}
+  "power_station__connectedBuildingIds:list<t>"{}
+}
+
+small_power_station{
+  _use:t="power_station"
+  power_station__maxSlots:i=3
+}
+
+starting_power_station{
+  _use:t="power_station"
+  power_station__maxSlots:i=2
+  power_station__range:r=40
+}
+
+construction_part{
+  _use:t="replicating"
+  construction_part__localTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "construction_part__controller:eid"{}
+}
+
+construction_part_hidden{
+  "construction_part_hidden:tag"{}
+}
+
+construction_part_accesspoint{
+  "construction_part_accesspoint:tag"{}
+}
+
+targetable_ri_construction{
+  ai_target__noiseLevel:r=0
+  ai_target__riExtraOffset:p3=0, 0, 0
+
+  ai_target{
+    _tags:t="server"
+  }
+}
+
+construction_part_main{
+  "construction_part_main:tag"{}
+}
+
+powered_part{
+  powered_part__isPowered:b=no
+  _tracked:t="powered_part__isPowered"
+
+  "powered_part:tag"{}
+}
+
+shooting_point{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "shooting_point:tag"{}
+}
+
+blueprint_base{
+  blueprint_base__gridSize:ip2=1, 1
+
+  "blueprint_base__parts:array"{}
+}
+
+fortress_container_gate_frame{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="fortress_container_gate_blockout"
+}
+
+fortress_wall_front_defence_point{
+  wall_defence_point__offset:p3=-5, 0, 0
+}
+
+fortress_container_wall_ladder{
+  _use:t="ladder"
+  ladder__tm:m=[[0.1, 0, 0] [0, 2.01875, 0] [0, 0, 0.5] [1.2, 1.56, 1.78]]
+  ladder__steps:i=6
+}
+
+fortress_container_wall_a{
+  _use:t="fortress_container_wall_ladder"
+  _use:t="placeable_rendinst"
+  _use:t="fortress_wall_front_defence_point"
+  ri_extra__name:t="fortress_container_wall_a_blockout"
+}
+
+fortress_container_wall_b{
+  _use:t="placeable_rendinst"
+  _use:t="fortress_wall_front_defence_point"
+  ri_extra__name:t="fortress_container_wall_b_blockout"
+}
+
+fortress_container_wall_c{
+  _use:t="fortress_container_wall_ladder"
+  _use:t="placeable_rendinst"
+  _use:t="fortress_wall_front_defence_point"
+  ri_extra__name:t="fortress_container_wall_c_blockout"
+}
+
+fortress_container_wall_d{
+  _use:t="fortress_container_wall_ladder"
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="fortress_container_wall_d_blockout"
+  ladder__tm:m=[[0.1, 0, 0] [0, 2.01875, 0] [0, 0, 0.5] [2.45, 1.56, 0.62]]
+}
+
+fortress_container_wall_e{
+  _use:t="fortress_container_wall_ladder"
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="fortress_container_wall_e_blockout"
+  ladder__tm:m=[[0.1, 0, 0] [0, 2.01875, 0] [0, 0, 0.5] [2.45, 1.56, -0.62]]
+}
+
+fortress_container_wall_f{
+  _use:t="fortress_container_wall_ladder"
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="fortress_container_wall_f_blockout"
+  ladder__tm:m=[[0.1, 0, 0] [0, 2.01875, 0] [0, 0, 0.5] [2.45, 1.56, 0.62]]
+}
+
+fortress_gate_door_l{
+  _use:t="still_obstacle"
+  _use:t="placeable_rendinst"
+  _use:t="base_interactable"
+  _use:t="base_hitpoints"
+  _use:t="immortal_rendinst"
+  hitpoints__maxHp:r=40
+  hitpoints__shellDmgTraceTolerance:r=10
+  ri_extra__name:t="fortress_container_gate_door_a_l_blockout"
+  use_object__offset:p3=0, 1, -2
+
+  "construction_part__destroyOnDeath:tag"{}
+  collres{}
+  "usableObject:tag"{}
+}
+
+fortress_gate_door_r{
+  _use:t="still_obstacle"
+  _use:t="placeable_rendinst"
+  _use:t="base_interactable"
+  _use:t="immortal_rendinst"
+  _use:t="base_hitpoints"
+  hitpoints__maxHp:r=40
+  hitpoints__shellDmgTraceTolerance:r=10
+  ri_extra__name:t="fortress_container_gate_door_a_r_blockout"
+  use_object__offset:p3=0, 1, 2
+
+  "construction_part__destroyOnDeath:tag"{}
+  collres{}
+  "usableObject:tag"{}
+}
+
+not_obstacle{
+  "not_obstacle:tag"{}
+}
+
+fortress_door_blueprint{
+  _use:t="blueprint_base"
+  blueprint_base__gridSize:ip2=1, 4
+
+  "blueprint_base__parts:array"{
+    "item:object"{
+      template_name:t="fortress_container_gate_frame+not_obstacle"
+    }
+
+    "item:object"{
+      template_name:t="still_cube_obstacle"
+      move:p3=0, 1.5, -3.5
+      scale:p3=0.7, 1.3, 0.7
+    }
+
+    "item:object"{
+      template_name:t="still_cube_obstacle"
+      move:p3=0, 1.5, 3.5
+      scale:p3=0.7, 1.3, 0.7
+    }
+
+    "item:object"{
+      template_name:t="fortress_gate_door_l+dynamic_closed_gate_door_l+only_team_interactable+unpushable_door+metal_gate_rotating_door_sound"
+      move:p3=1, 0.15, 2.37
+    }
+
+    "item:object"{
+      template_name:t="fortress_gate_door_r+dynamic_closed_gate_door_r+only_team_interactable+unpushable_door+metal_gate_rotating_door_sound"
+      move:p3=1, 0.15, -2.37
+    }
+  }
+}
+
+fortress_wall_a_blueprint{
+  _use:t="blueprint_base"
+  blueprint_base__gridSize:ip2=1, 2
+
+  "blueprint_base__parts:array"{
+    "item:object"{
+      template_name:t="fortress_container_wall_a"
+    }
+  }
+}
+
+fortress_wall_b_blueprint{
+  _use:t="blueprint_base"
+
+  "blueprint_base__parts:array"{
+    "item:object"{
+      template_name:t="fortress_container_wall_b"
+    }
+  }
+}
+
+fortress_wall_c_blueprint{
+  _use:t="blueprint_base"
+  blueprint_base__gridSize:ip2=1, 2
+
+  "blueprint_base__parts:array"{
+    "item:object"{
+      template_name:t="fortress_container_wall_c"
+    }
+  }
+}
+
+fortress_wall_d_blueprint{
+  _use:t="blueprint_base"
+  blueprint_base__gridSize:ip2=2, 1
+
+  "blueprint_base__parts:array"{
+    "item:object"{
+      template_name:t="fortress_container_wall_d"
+    }
+  }
+}
+
+fortress_wall_e_blueprint{
+  _use:t="blueprint_base"
+  blueprint_base__gridSize:ip2=2, 1
+
+  "blueprint_base__parts:array"{
+    "item:object"{
+      template_name:t="fortress_container_wall_e"
+    }
+  }
+}
+
+fortress_wall_f_blueprint{
+  _use:t="blueprint_base"
+  blueprint_base__gridSize:ip2=2, 1
+
+  "blueprint_base__parts:array"{
+    "item:object"{
+      template_name:t="fortress_container_wall_f"
+    }
+  }
+}
+
+starting_base_blueprint{
+  _use:t="blueprint_base"
+
+  "blueprint_base__parts:array"{
+    "item:object"{
+      template_name:t="control_center_ap_c_blockout"
+      move:p3=-2.18629, -0.568079, 0.940178
+      rotate:p3=264.849, 1.001, 0.677
+    }
+
+    "item:object"{
+      template_name:t="starting_power_station"
+      move:p3=1.1, 5, -5.3
+    }
+  }
+}
+
+storage_blueprint{
+  _use:t="blueprint_base"
+  storage_blueprint__riOpened:t=""
+  storage_blueprint__riClosed:t=""
+  storage_blueprint__riDamaged:t=""
+
+  "storage_blueprint:tag"{}
+}
+
+small_storage_blueprint{
+  _use:t="storage_blueprint"
+  blueprint_base__gridSize:ip2=2, 1
+  storage_blueprint__riOpened:t="storage_a_blockout"
+  storage_blueprint__riClosed:t="storage_a_locked_blockout"
+  storage_blueprint__riDamaged:t="storage_a_damaged_blockout"
+
+  "blueprint_base__parts:array"{
+    "item:object"{
+      template_name:t="storage_a_blockout+construction_part_main"
+      move:p3=-1.25, 0, 0
+    }
+
+    "item:object"{
+      template_name:t="shooting_point"
+      move:p3=2.5, 0, 0
+    }
+
+    "item:object"{
+      template_name:t="console_accesspoint+construction_part_accesspoint+market_console_item+powered_part"
+      move:p3=0.124, -0.236, -0.788
+      rotate:p3=-29.159, 0.992, -0.129
+    }
+  }
+}
+
+service_center_blueprint{
+  _use:t="blueprint_base"
+
+  "blueprint_base__parts:array"{
+    "item:object"{
+      template_name:t="mbs_field_table_a"
+    }
+  }
+}
+
+am_cleaner_blueprint{
+  _use:t="blueprint_base"
+  blueprint_base__gridSize:ip2=2, 2
+
+  "blueprint_base__parts:array"{
+    "item:object"{
+      template_name:t="matter_vault_blockout"
+      move:p3=0, 0, 1.25
+    }
+
+    "item:object"{
+      template_name:t="console_accesspoint+am_cleaner_console_item+powered_part"
+      move:p3=-1.94806, 0.1647, 1.14823
+      rotate:p3=90, 0, 0
+    }
+  }
+}
+
+maintenance_grid_blueprint{
+  _use:t="blueprint_base"
+
+  "blueprint_base__parts:array"{
+    "item:object"{
+      template_name:t="maintenance_grid_blockout"
+      move:p3=0, 0.01, 0
+    }
+
+    "item:object"{
+      template_name:t="small_power_station"
+    }
+  }
+}
+
+workshop_blueprint{
+  _use:t="blueprint_base"
+  blueprint_base__gridSize:ip2=2, 2
+
+  "blueprint_base__parts:array"{
+    "item:object"{
+      template_name:t="workshop_blockout"
+      move:p3=2, 0, -1.25
+    }
+
+    "item:object"{
+      template_name:t="console_accesspoint+workshop_console_item+powered_part"
+      move:p3=-1.195, 0, -1.012
+    }
+  }
+}

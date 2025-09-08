@@ -1,0 +1,85 @@
+damage_zone_obstacle_base{
+  _group{
+    _tags:t="server"
+    obstacle__handle:i=0
+    obstacle__padding:r=1.2
+  }
+}
+
+damage_fire_base{
+  _use:t="damage_zone_obstacle_base"
+  sphere_zone__radius:r=1
+  dmgzone__teamToDamage:i=-1
+  dmgzone__damageInVehicle:b=no
+  dmgzone__damage:r=0
+  dmgzone__fireAffect:r=30
+  dmgzone__lastUpdate:r=-1
+  dm__damageType:t="fire"
+  dm__damageTypeId:i=-1
+}
+
+fire_source_no_fx{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  sphere_zone__radius:r=1.5
+  dmgzone__teamToDamage:i=-1
+  dmgzone__damageInVehicle:b=no
+  dmgzone__damage:r=0
+  dmgzone__fireAffect:r=30
+  dmgzone__lastUpdate:r=-1
+  dm__damageType:t="fire"
+  dm__damageTypeId:i=-1
+  visibilityRestrictionRadius:r=0.65
+  visibilityRestrictionHeight:r=1
+  visibilityRestrictionBottomOffset:r=-0.35
+  destroy_underwater__nextCheckTime:r=0
+  destroy_underwater__checkPeriod:r=1
+  _replicated:t="fire_source__startTime"
+  fire_source__startTime:r=0
+  dmgzone__maxRadius:r=1.67
+  fire_source__effectScale:r=0.6
+  fire_source__effectMinScale:r=0.2
+  fire_source__gunPropsId:i=-1
+  fire_source__shellId:i=-1
+
+  _group{
+    _tags:t="server"
+    obstacle__handle:i=0
+    obstacle__padding:r=0.58
+  }
+
+  "dmgzone__burningOffender:eid"{}
+  "humanTriggerable:tag"{}
+  "changedTriggerable:tag"{}
+  "fire_source:tag"{}
+  "fire_affected_optics:list<i>"{}
+  "destroyUnderwater:tag"{}
+}
+
+fire_timings{
+  _replicated:t="fire_source__fullForceTime"
+  fire_source__spreadTime:r=0.5
+  fire_source__fullForceTime:r=20
+  fire_source__maxFullForceTime:r=30
+  fire_source__fadeTime:r=10
+}
+
+fire_source{
+  _use:t="bonfire_effect_no_occluders"
+  _use:t="fire_source_no_fx"
+  _use:t="fire_source_managed_sound_effect"
+  _use:t="fire_timings"
+  effect__scale:r=1
+  _tracked:t="effect__scale"
+  fire_source__spreadTime:r=0.5
+  fire_source__fullForceTime:r=20
+  fire_source__maxFullForceTime:r=30
+  fire_source__fadeTime:r=10
+
+  _group{
+    _tags:t="render"
+    effect__name:t="fire_molotov_cmps_fx"
+  }
+
+  "attachedEffect:tag"{}
+}

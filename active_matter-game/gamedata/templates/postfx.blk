@@ -1,0 +1,170 @@
+postfx{
+  _tracked:t="post_fx"
+  _singleton:b=yes
+  _use:t="replicating"
+
+  "post_fx:object"{}
+  "generic_post_fx:object"{
+    damage_indicator__color:p4=1, 0.3, 0.3, 0
+    damage_indicator__size:r=0.5
+    smoke_blackout_effect__increaseDuration:r=3
+    smoke_blackout_effect__decreaseDuration:r=2
+    smoke_blackout_effect__maxIntensity:r=1.3
+    smoke_blackout_effect__minIntensity:r=0.9
+  }
+}
+
+postfx_roundctrl{
+  _use:t="postfx"
+  postfx_round_ctrl__scaleOnWin:r=1.15
+  postfx_round_ctrl__scaleOnLose:r=0.9
+  postfx_round_ctrl__expScale:r=1.1
+  postfx_round_ctrl__maxExposure:r=10
+  _singleton:b=yes
+}
+
+postfx_roundctrl_update{
+  "postfx_round_ctrl_update:tag"{
+    _tags:t="render"
+  }
+}
+
+override_post_fx{
+  _tracked:t="override_post_fx__enabled"
+  _tracked:t="override_post_fx__priority"
+  _tracked:t="override_post_fx__params"
+
+  _group{
+    _tags:t="render"
+    override_post_fx__enabled:b=no
+    override_post_fx__priority:i=-1
+
+    "override_post_fx__params:object"{}
+  }
+}
+
+depth_of_field{
+  _singleton:b=yes
+
+  "dof:DepthOfFieldPS"{
+    _tags:t="render"
+  }
+
+  "downsampled_dof_frame_fallback:UniqueTex"{
+    _tags:t="render"
+  }
+
+  "is_dof:tag"{}
+  _group{
+    _track:b=yes
+    dof__on:b=no
+    dof__is_filmic:b=no
+    dof__focusDistance:r=-1
+    dof__fStop:r=1
+    dof__sensorHeight_mm:r=24
+    dof__focalLength_mm:r=-1
+    dof__nearDofStart:r=0.01
+    dof__nearDofEnd:r=0.35
+    dof__nearDofAmountPercent:r=2
+    dof__farDofStart:r=100
+    dof__farDofEnd:r=1e+06
+    dof__farDofAmountPercent:r=0
+    dof__bokehShape_bladesCount:r=6
+    dof__bokehShape_kernelSize:r=8
+    dof__minCheckDistance:r=0.3
+  }
+}
+
+postfx_fade_controller{
+  _use:t="replicating"
+  _tracked:t="postfx_fade_controller__layers"
+
+  _group{
+    _tags:t="gameClient"
+
+    "postfx_fade_controller__layers:object"{}
+    "postfx_fade_controller:tag"{}
+  }
+}
+
+postfx_fade_layer_tweening{
+  postfx_fade_layer_tweening__layerNameHash:i=-1
+  postfx_fade_layer_tweening__startAt:r=-1
+  postfx_fade_layer_tweening__finishAt:r=-1
+  postfx_fade_layer_tweening__colorFrom:p4=0, 0, 0, 0
+  postfx_fade_layer_tweening__colorTo:p4=0, 0, 0, 0
+  postfx_fade_layer_tweening__destroyed:b=no
+}
+
+postfx_noize_controller{
+  _use:t="replicating"
+  _tracked:t="postfx_noize_controller__factor"
+
+  _group{
+    _tags:t="gameClient"
+    postfx_noize_controller__factor:r=0
+
+    "postfx_noize_controller:tag"{}
+  }
+}
+
+postfx_vignette_controller{
+  _use:t="replicating"
+  _tracked:t="postfx_vignette_controller__vignetteFactor"
+  _tracked:t="postfx_vignette_controller__secondVignetteFactor"
+  _tracked:t="postfx_vignette_controller__secondVignetteColor"
+
+  _group{
+    _tags:t="gameClient"
+    postfx_vignette_controller__vignetteFactor:r=0
+    postfx_vignette_controller__secondVignetteFactor:r=0
+    postfx_vignette_controller__secondVignetteColor:p4=0, 0, 0, 1
+
+    "postfx_vignette_controller:tag"{}
+  }
+}
+
+postfx_controller{
+  _use:t="postfx_fade_controller"
+  _use:t="postfx_noize_controller"
+  _use:t="postfx_vignette_controller"
+}
+
+bloom{
+  _use:t="bloom_base"
+  _tags:t="render"
+  bloom__threshold:r=2
+  bloom__radius:r=2
+  bloom__upSample:r=0.85
+  bloom__mul:r=0.1
+}
+
+adaptation{
+  _singleton:b=yes
+  _tags:t="render"
+  _tracked:t="adaptation_override_settings"
+
+  "adaptation_default_settings:object"{
+    adaptation__on:b=yes
+    adaptation__autoExposureScale:r=1
+    adaptation__highPart:r=0
+    adaptation__maxExposure:r=32
+    adaptation__minExposure:r=0.25
+    adaptation__lowPart:r=0
+    adaptation__adaptDownSpeed:r=3
+    adaptation__adaptUpSpeed:r=1
+    adaptation__brightnessPerceptionLinear:r=0.95
+    adaptation__brightnessPerceptionPower:r=0.93
+    adaptation__fixedExposure:r=-1
+  }
+
+  "adaptation_override_settings:object"{}
+}
+
+adaptation_level_settings{
+  _singleton:b=yes
+  _tags:t="render"
+  _tracked:t="adaptation_level_settings"
+
+  "adaptation_level_settings:object"{}
+}

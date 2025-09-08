@@ -1,0 +1,346 @@
+openable_ri_sound{
+  _group{
+    _tags:t="sound"
+    openable_ri_sound__folder:t="container"
+    openable_ri_sound__openName:t="open"
+    openable_ri_sound__closeName:t="close"
+    openable_ri_sound__path:t=""
+  }
+}
+
+wooden_chest_openable_ri_sound{
+  _use:t="openable_ri_sound"
+
+  _group{
+    _tags:t="sound"
+    openable_ri_sound__path:t="chest_wood"
+  }
+}
+
+metal_chest_openable_ri_sound{
+  _use:t="openable_ri_sound"
+
+  _group{
+    _tags:t="sound"
+    openable_ri_sound__path:t="chest_metal"
+  }
+}
+
+locker_openable_ri_sound{
+  _use:t="openable_ri_sound"
+
+  _group{
+    _tags:t="sound"
+    openable_ri_sound__path:t="locker"
+  }
+}
+
+fridge_openable_ri_sound{
+  _use:t="openable_ri_sound"
+
+  _group{
+    _tags:t="sound"
+    openable_ri_sound__path:t="fridge"
+  }
+}
+
+cardboard_openable_ri_sound{
+  _use:t="openable_ri_sound"
+
+  _group{
+    _tags:t="sound"
+    openable_ri_sound__path:t="cardboard"
+  }
+}
+
+safe_openable_ri_sound{
+  _use:t="openable_ri_sound"
+
+  _group{
+    _tags:t="sound"
+    openable_ri_sound__path:t="safe"
+  }
+}
+
+drawer_openable_ri_sound{
+  _use:t="openable_ri_sound"
+
+  _group{
+    _tags:t="sound"
+    openable_ri_sound__path:t="drawer"
+  }
+}
+
+wardrobe_openable_ri_sound{
+  _use:t="openable_ri_sound"
+
+  _group{
+    _tags:t="sound"
+    openable_ri_sound__path:t="wardrobe"
+  }
+}
+
+car_openable_ri_sound{
+  _use:t="openable_ri_sound"
+
+  _group{
+    _tags:t="sound"
+    openable_ri_sound__path:t="car"
+  }
+}
+
+truck_openable_ri_sound{
+  _use:t="openable_ri_sound"
+
+  _group{
+    _tags:t="sound"
+    openable_ri_sound__path:t="truck"
+  }
+}
+
+growth_openable_ri_sound{
+  _use:t="openable_ri_sound"
+
+  _group{
+    _tags:t="sound"
+    openable_ri_sound__path:t="growth"
+  }
+}
+
+spot_openable_ri_sound{
+  _use:t="openable_ri_sound"
+
+  _group{
+    _tags:t="sound"
+    openable_ri_sound__path:t="spot"
+  }
+}
+
+sack_openable_ri_sound{
+  _use:t="openable_ri_sound"
+
+  _group{
+    _tags:t="sound"
+    openable_ri_sound__path:t="sack"
+  }
+}
+
+medical_safe_lootable_rendinst_sounds{
+  _use:t="safe_openable_ri_sound"
+}
+
+secret_keys_container_lootable_rendinst_sounds{
+  _use:t="cardboard_openable_ri_sound"
+}
+
+old_ak_box_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+old_sks_box_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+tool_box_lootable_rendinst_sounds{
+  _use:t="metal_chest_openable_ri_sound"
+}
+
+secret_ship_safe_lootable_rendinst_sounds{
+  _use:t="safe_openable_ri_sound"
+}
+
+secret_ship_box_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+secret_crashed_scientist_car_lootable_rendinst_sounds{
+  _use:t="car_openable_ri_sound"
+}
+
+tower_sensor_broken_lootable_rendinst_sounds{
+  _use:t="metal_chest_openable_ri_sound"
+}
+
+tower_sensor_working_lootable_rendinst_sounds{
+  _use:t="metal_chest_openable_ri_sound"
+}
+
+police_car_last_stand_lootable_rendinst_sounds{
+  _use:t="car_openable_ri_sound"
+}
+
+underwater_heli_container_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+spike_room_safe_lootable_rendinst_sounds{
+  _use:t="safe_openable_ri_sound"
+}
+
+spike_room_nightstand_lootable_rendinst_sounds{
+  _use:t="drawer_openable_ri_sound"
+}
+
+smugglers_weapons_box_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+smugglers_coast_box_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+scientist_escort_sideboard_a_1200_lootable_rendinst_sounds{
+  _use:t="wardrobe_openable_ri_sound"
+}
+
+scientist_escort_sideboard_a_600_lootable_rendinst_sounds{
+  _use:t="wardrobe_openable_ri_sound"
+}
+
+attic_chest_1_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+attic_chest_2_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+attic_chest_3_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+attic_chest_4_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+sample_box_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+sample_box2_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_equipment_t1_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_equipment_t2_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_equipment_t3_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_ammo_t1_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_ammo_t2_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_medical_t1_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_medical_t2_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_medical_t3_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_grenades_t1_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_close_range_weapons_t1_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_close_range_weapons_t2_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_long_range_weapons_t1_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_long_range_weapons_t2_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_long_range_weapons_t3_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_vss_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+award_weapon_box_lootable_rendinst_1_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+secret_lootable_rendinst_1_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+secret_military_lootable_rendinst_1_sounds{
+  _use:t="metal_chest_openable_ri_sound"
+}
+
+secret_military_lootable_rendinst_2_sounds{
+  _use:t="metal_chest_openable_ri_sound"
+}
+
+secret_military_lootable_rendinst_3_sounds{
+  _use:t="metal_chest_openable_ri_sound"
+}
+
+secret_military_lootable_rendinst_4_sounds{
+  _use:t="metal_chest_openable_ri_sound"
+}
+
+secret_stash_lootable_rendinst_1_sounds{
+  _use:t="metal_chest_openable_ri_sound"
+}
+
+secret_stash_lootable_rendinst_2_sounds{
+  _use:t="metal_chest_openable_ri_sound"
+}
+
+hidden_colt_nickel_lootable_rendinst_1_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_uaz_lootable_rendinst_1_sounds{
+  _use:t="car_openable_ri_sound"
+}
+
+military_barge_small_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+military_barge_big_lootable_rendinst_sounds{
+  _use:t="wooden_chest_openable_ri_sound"
+}
+
+external_inventory_interactor_sound{
+  _group{
+    _tags:t="sound"
+    external_inventory_interactor_sound__path:t=""
+  }
+}
+
+lootable_ragdoll_interact_sound{
+  _use:t="external_inventory_interactor_sound"
+
+  _group{
+    _tags:t="sound"
+    external_inventory_interactor_sound__path:t="container/body/open"
+  }
+}

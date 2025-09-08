@@ -1,0 +1,17 @@
+mass:r=500
+bouncing:r=0.6
+bouncingGround:r=0.6
+useFutureContacts:b=yes
+logCCD:b=no
+addToWorld:b=yes
+skipUpdateOnSleep:b=no
+sleepUpdateFrequency:i=0
+gravityMult:r=0
+
+collisionResource{
+  props{
+    customSphereCollisions{
+      sphere:p4=0, 0, 0, 1.1
+    }
+  }
+}

@@ -1,0 +1,25 @@
+mass:r=0.102
+cartridgeMass:r=0.102
+momentOfInertia:p3=0.04, 0.008, 0.04
+caliber:r=0.03
+speed:r=82
+gravityMult:r=0.1
+logCCD:b=no
+physMat:t="bulletRay"
+useFutureContacts:b=yes
+entityTemplate:t="gravity_hook_bullet_phys"
+entityPhysTemplate:t="gravity_hook_bullet_phys"
+bullets:i=1
+normalizationPreset:t="heat"
+ricochetPreset:t="he"
+explodeOnRendinst:b=yes
+
+collisionResource{
+  props{
+    volumeBox_01:t="box"
+  }
+}
+
+ccdSpheres{
+  ccd:p4=0, 0, 0, 0.044
+}

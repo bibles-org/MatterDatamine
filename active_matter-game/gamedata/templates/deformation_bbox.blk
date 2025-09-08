@@ -1,0 +1,24 @@
+default_deformation_bbox{
+  deform_bbox__bmin:p3=-0.1, -0.1, -0.1
+  deform_bbox__bmax:p3=0.1, 0.1, 0.1
+}
+
+deformation_bbox_receiver{
+  _tags:t="gameClient"
+  deformation_bbox_receiver__bboxEnabled:b=no
+  deformation_bbox_receiver__bboxSubTemplateName:t="default_deformation_bbox"
+}
+
+human_deformation_bbox_receiver{
+  _use:t="deformation_bbox_receiver"
+  deformation_bbox_receiver__enabled:b=yes
+  deformation_bbox_receiver__disableOnDeath:b=yes
+}
+
+deformation_bbox_enabler{
+  _tags:t="gameClient"
+  deformation_bbox_enabler__checkAt:r=0
+  deformation_bbox_enabler__checkPeriod:r=1
+  deformation_bbox_enabler__addDistance:r=100
+  deformation_bbox_enabler__removeDistance:r=120
+}

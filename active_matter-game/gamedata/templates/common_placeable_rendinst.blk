@@ -1,0 +1,611 @@
+placeable_rendinst{
+  _use:t="decor_rendinst"
+
+  "construction__save:tag"{}
+  "isRendinstDestr:tag"{
+    _tags:t="render"
+  }
+}
+
+damageable_rendinst{
+  _use:t="placeable_rendinst"
+  ri_preload__name:t=""
+  ri_extra__isBeingReplaced:b=yes
+  ri_extra__riAfterDestructionTriggered:b=no
+  ri_extra__riAfterDestruction:t=""
+
+  "ri_preload__preloadOnLevelLoaded:tag"{}
+}
+
+immortal_rendinst{
+  "ri_extra__immortal:tag"{}
+}
+
+garage_wooden_shelf_d{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="garage_wooden_shelf_d"
+}
+
+sovmod_army_canteen_a_table_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovmod_army_canteen_a_table_a"
+}
+
+sovmod_road_stuff_sign_danger_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovmod_road_stuff_sign_danger_a"
+}
+
+searchlight{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="150cm_flak_sw_37"
+}
+
+searchlight_base{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="150cm_flak_sw_37_basement"
+}
+
+searchlight_no_base{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="150cm_flak_sw_37_searchlight"
+}
+
+generator{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="24kw_flak_generator"
+}
+
+hp_gurney_b{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="hp_gurney_b"
+}
+
+hp_gurney_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="hp_gurney_a"
+}
+
+hp_fabric_pile_b{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="hp_fabric_pile_b"
+}
+
+hp_bed_a_matress{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="hp_bed_a_matress"
+}
+
+hp_rack_b{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="hp_rack_b"
+}
+
+hp_stillage_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="hp_stillage_a"
+}
+
+hp_operating_table_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="hp_operating_table_a"
+}
+
+hp_trolley_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="hp_trolley_a"
+}
+
+mbs_desktop_stuff_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_desktop_stuff_a"
+}
+
+88mm_cannon_b{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="88mm_flak_36_canon_b"
+}
+
+88mm_cannon_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="88mm_flak_36_canon_a"
+}
+
+rangefinder_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="rangefinder_a"
+}
+
+mbs_ger_radio_feld_fu{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_ger_radio_feld_fu"
+}
+
+mbs_ger_radio_kw_e_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_ger_radio_kw_e_a"
+}
+
+mbs_stool_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_stool_a"
+}
+
+mbs_ger_headphones_dfh_b{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_ger_headphones_dfh_b"
+}
+
+mbs_desktop_stuff_a_tablet{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_desktop_stuff_a_tablet"
+}
+
+mbs_desktop_stuff_a_map{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_desktop_stuff_a_map"
+}
+
+mbs_desktop_stuff_a_folder{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_desktop_stuff_a_folder"
+}
+
+mbs_desktop_stuff_a_deflection_board{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_desktop_stuff_a_deflection_board"
+}
+
+mbs_desktop_stuff_a_binoculars{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_desktop_stuff_a_binoculars"
+}
+
+mbs_chair_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_chair_a"
+}
+
+mbs_camp_cot_a_madeup_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_camp_cot_a_madeup_a"
+}
+
+mbs_camp_cot_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_camp_cot_a"
+}
+
+is_gramophone_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="is_gramophone_a"
+}
+
+storage_tank_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="storage_tank_a"
+}
+
+storage_tank_b{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="storage_tank_b"
+}
+
+wooden_pallet_c{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="wooden_pallet_c"
+}
+
+ammunition_box_o{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="ammunition_box_o"
+}
+
+ammunition_box_n{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="ammunition_box_n"
+}
+
+ammunition_box_k{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="ammunition_box_k"
+}
+
+outpost_props_laptop_satellite{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="outpost_props_laptop_satellite"
+}
+
+outpost_props_laptop{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="outpost_props_laptop"
+}
+
+ammunition_box_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="ammunition_box_a"
+}
+
+is_computer_monitor_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="is_computer_monitor_a"
+}
+
+mbs_field_table_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_field_table_a"
+}
+
+sovindustrial_thermoelectric_generator_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovindustrial_thermoelectric_generator_a"
+}
+
+mbs_field_table_b{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_field_table_b"
+}
+
+mbs_field_table_c{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="mbs_field_table_c"
+}
+
+hp_table_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="hp_table_a"
+}
+
+add_score_to_destroyable_ri{
+  destroyable_ri__addScoreTeam:i=-1
+  destroyable_ri__group:i=-1
+  _replicated:t="destroyable_ri__addScoreTeam"
+  _tracked:t="destroyable_ri__addScoreTeam"
+
+  "hasCrosshairHint:tag"{}
+}
+
+barrage_balloon{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="barrage_balloon"
+}
+
+barrage_balloon_rope{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="barrage_balloon_rope_c"
+}
+
+abstroffwagen_b_rendinst{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="abstroffwagen_b_rendinst"
+}
+
+abstroffwagen_c_rendinst{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="abstroffwagen_c_rendinst"
+}
+
+abstroffwagen_rendinst{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="abstroffwagen_rendinst"
+}
+
+artillerie_flak_wagen_rendinst{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="artillerie_flak_wagen_rendinst"
+}
+
+geschutz_wagen_rendinst{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="geschutz_wagen_rendinst"
+}
+
+kommando_infanterie_wagen_rendinst{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="kommando_infanterie_wagen_rendinst"
+}
+
+panzerjagerwagen_rendinst{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="panzerjagerwagen_rendinst"
+}
+
+panzertragerwagen_rendinst{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="panzertragerwagen_rendinst"
+}
+
+panzerzug_bp_44_lokomotiv_rendinst{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="panzerzug_bp_44_lokomotiv_rendinst"
+}
+
+sovmod_wall_rendinst{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovmod_wall_a_end_b_r"
+}
+
+sovmod_corner_rendinst{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovmod_wall_a_corner_60_a"
+}
+
+sovmod_tower_rendinst{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="russia_forest_watch_tower_a"
+}
+
+sandbags_camp_rendinst{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sandbags_wall_high_rounded_hole_a"
+}
+
+bunker_lamp_wall_a_rendinst{
+  _use:t="placeable_rendinst"
+  _use:t="attached_omni_light"
+  ri_extra__name:t="bunker_lamp_wall_a"
+  light__max_radius:r=1
+  light__offset:p3=0.3, 0, 0
+  light__color:c=255, 100, 50, 255
+  light__brightness:r=0.35
+}
+
+bunker_lamp_wall_a_off_rendinst{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="bunker_lamp_wall_a_off"
+}
+
+sovind_port_container_a_a_base{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovind_port_container_a_a_base"
+}
+
+military_tent_b_b{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="military_tent_b_b"
+}
+
+tree_spruce_christmas_b{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="tree_spruce_christmas_b"
+}
+
+tree_debris_spruce_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="tree_debris_spruce_a"
+}
+
+sovindustrial_box_zip_a_650{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovindustrial_box_zip_a_650"
+}
+
+sovindustrial_factory_machine_milling_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovindustrial_factory_machine_milling_a"
+}
+
+sovindustrial_laboratory_room_a_laboratory_bench_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovindustrial_laboratory_room_a_laboratory_bench_a"
+}
+
+sovindustrial_locker_metal_a_type_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovindustrial_locker_metal_a_type_a"
+}
+
+sovind_port_container_a_a_door_l{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovind_port_container_a_a_door_l"
+}
+
+sovind_port_container_a_a_door_r{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovind_port_container_a_a_door_r"
+}
+
+outpost_props_crate_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="outpost_props_crate_a"
+}
+
+outpost_props_crate_b{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="outpost_props_crate_b"
+}
+
+control_center_blockout{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="control_center_blockout"
+}
+
+control_center_ap_a_blockout{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="control_center_ap_a_blockout"
+}
+
+control_center_ap_b_blockout{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="control_center_ap_b_blockout"
+}
+
+control_center_ap_c_blockout{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="control_center_ap_c_blockout"
+}
+
+storage_a_blockout_accesspoint{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="storage_a_blockout_accesspoint"
+}
+
+storage_a_blockout{
+  _use:t="placeable_rendinst"
+  _use:t="riextra_hp_to_hitpoints"
+  ri_extra__name:t="storage_a_blockout"
+  hitpoints__hp:r=150
+  hitpoints__maxHp:r=150
+}
+
+storage_b_blockout{
+  _use:t="placeable_rendinst"
+  _use:t="riextra_hp_to_hitpoints"
+  ri_extra__name:t="storage_b_blockout"
+  hitpoints__hp:r=200
+  hitpoints__maxHp:r=200
+}
+
+console_accesspoint{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="screen_ready"
+}
+
+matter_vault_blockout_accesspoint{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="matter_vault_blockout_accesspoint"
+}
+
+matter_vault_blockout{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="matter_vault_blockout"
+}
+
+workshop_blockout{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="workshop_blockout"
+}
+
+workshop_blockout_accesspoint{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="workshop_blockout_accesspoint"
+}
+
+maintenance_grid_blockout{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="maintenance_grid_blockout"
+}
+
+container_platform_large_blockout{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="container_platform_large_blockout"
+}
+
+sovmod_dam_duct_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovmod_dam_duct_a"
+}
+
+am_crafter_c_unit_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="am_crafter_c_unit_a"
+}
+
+am_recycler_d_unit_a{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="am_recycler_d_unit_a"
+}
+
+debris_trash_wood_plank_a{
+  _use:t="replicating"
+  _use:t="placeable_rendinst"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__frequency:p3=0.02, 0.15, 0.02
+  ri_extra__name:t="debris_trash_wood_plank_a"
+}
+
+debris_trash_wood_plank_b{
+  _use:t="replicating"
+  _use:t="placeable_rendinst"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__frequency:p3=0.02, 0.02, 0.15
+  ri_extra__name:t="debris_trash_wood_plank_b"
+}
+
+debris_brick_c{
+  _use:t="replicating"
+  _use:t="placeable_rendinst"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__frequency:p3=0.015, 0.02, 0.2
+  ri_extra__name:t="debris_bricks_c"
+}
+
+debris_brick_d{
+  _use:t="replicating"
+  _use:t="placeable_rendinst"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__frequency:p3=0.01, 0.015, 0.2
+  ri_extra__name:t="debris_bricks_d"
+}
+
+debris_brick_e{
+  _use:t="replicating"
+  _use:t="placeable_rendinst"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__frequency:p3=0.2, 0.015, 0.2
+  ri_extra__name:t="debris_bricks_e"
+}
+
+debris_brick_f{
+  _use:t="replicating"
+  _use:t="placeable_rendinst"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__frequency:p3=0.01, 0.015, 0.01
+  ri_extra__name:t="debris_bricks_f"
+}
+
+debris_brick_g{
+  _use:t="replicating"
+  _use:t="placeable_rendinst"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__frequency:p3=0.01, 0.015, 0.01
+  ri_extra__name:t="debris_bricks_g"
+}
+
+debris_brick_h{
+  _use:t="replicating"
+  _use:t="placeable_rendinst"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__frequency:p3=0.01, 0.015, 0.01
+  ri_extra__name:t="debris_bricks_h"
+}
+
+debris_brick_i{
+  _use:t="replicating"
+  _use:t="placeable_rendinst"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__frequency:p3=0.01, 0.015, 0.01
+  ri_extra__name:t="debris_bricks_i"
+}
+
+debris_brick_j{
+  _use:t="replicating"
+  _use:t="placeable_rendinst"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__frequency:p3=0.01, 0.015, 0.01
+  ri_extra__name:t="debris_bricks_j"
+}
+
+debris_brick_k{
+  _use:t="replicating"
+  _use:t="placeable_rendinst"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__frequency:p3=0.01, 0.015, 0.01
+  ri_extra__name:t="debris_bricks_k"
+}
+
+debris_brick_l{
+  _use:t="replicating"
+  _use:t="placeable_rendinst"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__frequency:p3=0.01, 0.015, 0.01
+  ri_extra__name:t="debris_bricks_l"
+}
+
+debris_brick_m{
+  _use:t="replicating"
+  _use:t="placeable_rendinst"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__frequency:p3=0.01, 0.015, 0.01
+  ri_extra__name:t="debris_bricks_m"
+}

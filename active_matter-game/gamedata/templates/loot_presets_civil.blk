@@ -1,0 +1,4881 @@
+kitchen_junk_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_junk_kitchen_cutlery"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_plates"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_tin_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_tin_2"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_tin_3"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_tin_4"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_tin_5"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_tin_6"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_tin_7"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_tin_8"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_tin_9"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_tin_10"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_grinder"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_saucer_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_wafflemaker"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_cup_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_cup_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_jug_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_plate_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_plate_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_plate_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_teapot_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_teapot_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_tureen_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_tureen_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_kitchen_coffee_can"
+      weight:r=1
+    }
+  }
+}
+
+kitchen_valuable_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="desired_filler_loot_subpreset"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="civil_melee_stash_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_healkit_preset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="keys_loot_preset"
+      weight:r=0.5
+    }
+  }
+}
+
+kitchen_valuable_africa_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="desired_filler_africa_loot_subpreset"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="civil_melee_stash_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_healkit_preset"
+      weight:r=0.5
+    }
+  }
+}
+
+kitchen_shelf_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="kitchen_valuable_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="kitchen_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="kitchen_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="kitchen_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="kitchen_junk_subpreset"
+      weight:r=1
+    }
+  }
+}
+
+kitchen_shelf_africa_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="kitchen_valuable_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="kitchen_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="kitchen_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="kitchen_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="kitchen_junk_subpreset"
+      weight:r=1
+    }
+  }
+}
+
+home_small_junk_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_hunt_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_hunt_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_hunt_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_hunt_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_old_canteen"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_old_shells_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_old_shells_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_handkerchief_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_handkerchief_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_handkerchief_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_handkerchief_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_rag_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_rag_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_rag_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_ruler_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_ruler_2"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_ruler_3"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_ruler_4"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_spool_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_spool_2"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_spool_3"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_spool_4"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_spool_5"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_spool_6"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_spool_7"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_2"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_3"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_4"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_5"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_6"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_7"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_8"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_e"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_f"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_paperclip_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_paperclip_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_pins_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_pins_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_shaver"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_scales_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_scales_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_scales_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_scales_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_padlock"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_pruner"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_sovmod_radio_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_sovmod_radio_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_sovmod_radio_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_sovmod_radio_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_sovmod_radio_e"
+      weight:r=1
+    }
+  }
+}
+
+home_average_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="info_notes_loot_preset"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="encounter_battery_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_fuse_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="helmet_ussr_ssh40_rust"
+      weight:r=0.3
+    }
+
+    "item:object"{
+      sub_preset:t="tapes_filler_loot_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="b7_binoculars_item"
+      weight:r=0.3
+    }
+  }
+}
+
+home_valuable_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="desired_filler_loot_subpreset"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="electronics"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_melee_stash_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_soviet_ammobox_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_makarov_stash_preset"
+      weight:r=0.75
+    }
+
+    "item:object"{
+      sub_preset:t="civil_hunting_guns_stash_preset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_healkit_preset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="f1_grenade_item"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      template_name:t="helmet_ussr_ssh40"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      sub_preset:t="keys_loot_preset"
+      weight:r=0.5
+    }
+  }
+}
+
+home_small_africa_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_hunt_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_hunt_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_hunt_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_matchbox_hunt_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_old_canteen"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_old_shells_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_old_shells_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_handkerchief_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_handkerchief_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_handkerchief_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_handkerchief_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_rag_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_rag_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_rag_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_ruler_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_ruler_2"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_ruler_3"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_ruler_4"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_spool_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_spool_2"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_spool_3"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_spool_4"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_spool_5"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_spool_6"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_spool_7"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_2"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_3"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_4"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_5"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_6"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_7"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_child_drawing_8"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_e"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_f"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_g"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_h"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_i"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_j"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_k"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_paperclip_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_paperclip_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_pins_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_pins_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_shaver"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_scales_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_scales_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_scales_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_scales_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_padlock"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_pruner"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_booklet"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_air_freshener"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_balloon_jar"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_banner"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_finish_flag"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_flag"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_ticket"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_diary_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_diary_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_diary_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_diary_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_diary_e"
+      weight:r=1
+    }
+  }
+}
+
+home_average_africa_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="encounter_battery_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_fuse_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="cd_filler_loot_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="modern_binoculars_item"
+      weight:r=0.3
+    }
+  }
+}
+
+home_valuable_africa_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="desired_filler_africa_loot_subpreset"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="electronics"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_melee_stash_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_soviet_ammobox_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_makarov_stash_preset"
+      weight:r=0.75
+    }
+
+    "item:object"{
+      sub_preset:t="civil_hunting_guns_stash_preset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_healkit_preset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="f1_grenade_item"
+      weight:r=0.1
+    }
+  }
+}
+
+industrial_small_junk_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_junk_industrial_small_square_battery"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_metal_nut"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_nails"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_ruler"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_glasscutter"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_calipers"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_angle"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_brush"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_hammer"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_nippers"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_planer"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_pliers"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_duct_tape"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_micrometer"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_rag_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_rag_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_rag_c"
+      weight:r=1
+    }
+  }
+}
+
+industrial_small_africa_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_junk_industrial_small_square_battery"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_metal_nut"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_nails"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_ruler"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_glasscutter"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_calipers"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_angle"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_brush"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_hammer"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_nippers"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_planer"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_pliers"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_duct_tape"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_small_micrometer"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_rag_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_rag_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_rag_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_modern_car_battery"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_gas_canister"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_chain_coil"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_gears"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_modern_metal_nuts_box"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_wires"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_tool_case"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_big_tool_case"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_modern_car_spare_parts"
+      weight:r=1
+    }
+  }
+}
+
+industrial_valuable_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="calculator_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="camera_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="tape_player_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="airplane_clocks_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="electronics"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_melee_stash_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_soviet_ammobox_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_makarov_stash_preset"
+      weight:r=0.75
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_healkit_preset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="f1_grenade_item"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      template_name:t="helmet_ussr_ssh40"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      sub_preset:t="keys_loot_preset"
+      weight:r=0.5
+    }
+  }
+}
+
+industrial_valuable_africa_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="calculator_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="camera_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="tape_player_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="electronics"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_melee_stash_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_soviet_ammobox_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_makarov_stash_preset"
+      weight:r=0.75
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_healkit_preset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="f1_grenade_item"
+      weight:r=0.1
+    }
+  }
+}
+
+chemicals_junk_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_junk_chemicals_soap"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_chemicals_jar_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_chemicals_jar_2"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_chemicals_jar_3"
+      weight:r=1
+    }
+  }
+}
+
+electronics_junk_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_junk_electronics_capacitor_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_capacitor_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_diode_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_diode_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_diode_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_resistor_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_resistor_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_resistor_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_resistor_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_resistor_e"
+      weight:r=1
+    }
+  }
+}
+
+electronics_africa_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_junk_electronics_capacitor_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_capacitor_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_diode_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_diode_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_diode_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_resistor_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_resistor_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_resistor_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_resistor_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_resistor_e"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_modern_radio"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_electronics_walkie_talkie"
+      weight:r=1
+    }
+  }
+}
+
+medicine_junk_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_junk_home_small_bandage"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_chemicals_iodine"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_chemicals_drugs_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_chemicals_drugs_2"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_chemicals_drugs_3"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_chemicals_drugs_4"
+      weight:r=1
+    }
+  }
+}
+
+civil_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="home_valuable_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_average_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="medicine_junk_subpreset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="chemicals_junk_subpreset"
+      weight:r=0.5
+    }
+  }
+}
+
+civil_loot_preset_big{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=4, 5
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="home_valuable_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_valuable_subpreset"
+      weight:r=0.25
+    }
+
+    "item:object"{
+      sub_preset:t="home_average_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_average_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="medicine_junk_subpreset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="chemicals_junk_subpreset"
+      weight:r=0.5
+    }
+  }
+}
+
+civil_africa_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="home_valuable_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_average_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_africa_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_africa_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_africa_subpreset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="medicine_junk_subpreset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="chemicals_junk_subpreset"
+      weight:r=0.5
+    }
+  }
+}
+
+civil_africa_loot_preset_big{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=4, 5
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="home_valuable_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_valuable_africa_subpreset"
+      weight:r=0.25
+    }
+
+    "item:object"{
+      sub_preset:t="home_average_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_average_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_africa_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_africa_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_africa_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="medicine_junk_subpreset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="chemicals_junk_subpreset"
+      weight:r=0.5
+    }
+  }
+}
+
+industrial_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="industrial_valuable_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="medicine_junk_subpreset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="chemicals_junk_subpreset"
+      weight:r=0.5
+    }
+  }
+}
+
+industrial_africa_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="industrial_valuable_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="medicine_junk_subpreset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="chemicals_junk_subpreset"
+      weight:r=0.5
+    }
+  }
+}
+
+industrial_loot_preset_big{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=4, 5
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="industrial_valuable_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_valuable_subpreset"
+      weight:r=0.25
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="medicine_junk_subpreset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="chemicals_junk_subpreset"
+      weight:r=0.5
+    }
+  }
+}
+
+industrial_africa_loot_preset_big{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=4, 5
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="industrial_valuable_africa_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_valuable_africa_subpreset"
+      weight:r=0.25
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="medicine_junk_subpreset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="chemicals_junk_subpreset"
+      weight:r=0.5
+    }
+  }
+}
+
+civil_loot_soviet_ammobox_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="box_12_gauge_magazine"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="box_9mm_magazine"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="box_7_62x39_magazine"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="box_7_62x54_magazine"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="box_5_45x39_magazine"
+      weight:r=1
+    }
+  }
+}
+
+civil_loot_artifacts_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_corrupted_neuron"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_corrupted_grape"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_civilian_artifact"
+      weight:r=1
+    }
+  }
+}
+
+civil_loot_healkit_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_healing_ampoule"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="medicine_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_small"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_avg"
+      weight:r=0.1
+    }
+  }
+}
+
+civil_melee_stash_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="axe_weapon"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="wrench_weapon"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="cooking_knife_weapon"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="cooking_cleaver_weapon"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="screwdriver_a_weapon"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="screwdriver_b_weapon"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="chisel_a_weapon"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="chisel_b_weapon"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="rugbeater_a_weapon"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="rugbeater_b_weapon"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="rugbeater_c_weapon"
+      weight:r=1
+    }
+  }
+}
+
+civil_makarov_stash_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="makarov_gun_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="makarov_rust_gun_loot_preset"
+      weight:r=0.5
+    }
+  }
+}
+
+civil_hunting_guns_stash_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="toz_b_gun_loot_preset"
+      weight:r=10
+    }
+
+    "item:object"{
+      sub_preset:t="mc_21_12_gun_loot_preset"
+      weight:r=6
+    }
+
+    "item:object"{
+      sub_preset:t="sks_carbine_hunt_gun_loot_preset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="akm_47_civil_gun_loot_preset"
+      weight:r=1
+    }
+  }
+}
+
+keys_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="key_hangar_84_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="key_hangar_17_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="key_hangar_18_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="key_cargoport_anomaly_crane_item"
+      weight:r=3
+    }
+
+    "item:object"{
+      template_name:t="key_cargoport_anomaly_barge_small_item"
+      number:i=2
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="key_cargoport_anomaly_barge_big_item"
+      weight:r=3
+    }
+
+    "item:object"{
+      template_name:t="key_shegolskoe_4_attic_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="key_shegolskoe_8_attic_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="key_shegolskoe_11_attic_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="key_shegolskoe_15_attic_item"
+      weight:r=1
+    }
+  }
+}
+
+keys_armory_loot_subpreset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="key_euclid_armory_1_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="key_euclid_armory_2_item"
+      weight:r=1
+    }
+  }
+}
+
+keys_port_anomaly_loot_subpreset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="key_cargoport_anomaly_barge_small_item"
+      number:i=2
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="key_cargoport_anomaly_barge_big_item"
+      weight:r=1
+    }
+  }
+}
+
+info_notes_fuel_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_info_notes_fuel_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_fuel_2"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_fuel_3"
+      weight:r=1
+    }
+  }
+}
+
+info_notes_garage_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_info_notes_garage_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_garage_2"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_garage_3"
+      weight:r=1
+    }
+  }
+}
+
+info_notes_medkits_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_info_notes_medkits_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_medkits_2"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_medkits_3"
+      weight:r=1
+    }
+  }
+}
+
+info_notes_weapons_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_info_notes_weapons_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_weapons_2"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_info_notes_weapons_3"
+      weight:r=1
+    }
+  }
+}
+
+info_newspapers_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_01"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_02"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_03"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_04"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_05"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_06"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_07"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_08"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_09"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newspaper_komsomol_10"
+      weight:r=1
+    }
+  }
+}
+
+info_notes_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="info_newspapers_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="info_notes_fuel_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="info_notes_garage_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="info_notes_medkits_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="info_notes_weapons_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_civilian_surveillance_logs"
+      weight:r=1
+    }
+  }
+}
+
+civil_small_junk_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_civilian_artifact"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="metal_junk_item"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="square_battery_item"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="encounter_battery_item"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="encounter_fuse_item"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="item_civilian_surveillance_logs"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="jar_1_item"
+      weight:r=5
+    }
+  }
+}
+
+civil_big_junk_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="sovmod_flask_item"
+      weight:r=12
+    }
+
+    "item:object"{
+      template_name:t="corrupted_iron_item"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="corrupted_fan_item"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="item_junk_1"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="item_junk_2"
+      weight:r=15
+    }
+
+    "item:object"{
+      template_name:t="item_junk_3"
+      weight:r=3
+    }
+
+    "item:object"{
+      template_name:t="corrupted_jar_2_item"
+      weight:r=15
+    }
+
+    "item:object"{
+      template_name:t="corrupted_jar_3_item"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="item_sewing_machine"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="helmet_ussr_ssh40_rust"
+      weight:r=0.1
+    }
+  }
+}
+
+civil_small_furniture_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="civil_small_junk_preset"
+      weight:r=10
+    }
+
+    "item:object"{
+      sub_preset:t="tapes_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="info_notes_loot_preset"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="b7_binoculars_item"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_soviet_ammobox_preset"
+      weight:r=0.01
+    }
+  }
+}
+
+civil_big_furniture_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="civil_big_junk_preset"
+      weight:r=10
+    }
+
+    "item:object"{
+      sub_preset:t="civil_melee_stash_preset"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="desired_filler_loot_subpreset"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="electronics"
+      weight:r=1
+    }
+  }
+}
+
+civil_loot_coat_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="home_average_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="vhs_filler_loot_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_healkit_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="keys_loot_preset"
+      weight:r=1
+    }
+  }
+}
+
+secret_keys_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_secret_keys"
+    }
+  }
+}
+
+tool_box_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="screwdriver_a_weapon"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="screwdriver_b_weapon"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="chisel_a_weapon"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="chisel_b_weapon"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_fuse_item"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="encounter_battery_item"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_soviet_ammobox_preset"
+      weight:r=0.01
+    }
+  }
+}
+
+medical_items_t1_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_healing_ampoule"
+      number:i=2
+      weight:r=3
+    }
+
+    "item:object"{
+      template_name:t="item_painkiller"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_small"
+      weight:r=2
+    }
+  }
+}
+
+medical_items_t2_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_healing_ampoule"
+      number:i=3
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="item_painkiller"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_small"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_avg"
+      weight:r=0.5
+    }
+  }
+}
+
+medical_items_t3_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_healing_ampoule"
+      number:i=3
+      weight:r=3
+    }
+
+    "item:object"{
+      template_name:t="item_painkiller"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_avg"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_big"
+      weight:r=2
+    }
+  }
+}
+
+modern_medical_items_t1_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_healing_ampoule"
+      number:i=2
+      weight:r=3
+    }
+
+    "item:object"{
+      template_name:t="item_painkiller"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_small"
+      weight:r=2
+    }
+  }
+}
+
+modern_medical_items_t2_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_healing_ampoule"
+      number:i=3
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="item_painkiller"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_injector_hot"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="first_aid_item"
+      weight:r=1
+    }
+  }
+}
+
+modern_medical_items_t3_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_healing_ampoule"
+      number:i=3
+      weight:r=3
+    }
+
+    "item:object"{
+      template_name:t="item_painkiller"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_injector_hot"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_injector_streaming"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_healkit"
+      weight:r=2
+    }
+  }
+}
+
+car_medical_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="item_healing_ampoule"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_small"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_avg"
+      weight:r=0.1
+    }
+  }
+}
+
+ambulance_medical_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_small+healkit_magazine_partial"
+      weight:r=5
+    }
+
+    "item:object"{
+      template_name:t="item_painkiller"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_small"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_avg"
+      weight:r=0.5
+    }
+  }
+}
+
+ambulance_medical_africa_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="first_aid_item+healkit_magazine_partial"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="chemicals_junk_subpreset"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="first_aid_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_painkiller"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_avg"
+      weight:r=0.5
+    }
+  }
+}
+
+car_civil_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+      weight:r=10
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_junk_subpreset"
+      weight:r=10
+    }
+
+    "item:object"{
+      sub_preset:t="chemicals_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="desired_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="tapes_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="books_filler_loot_subpreset"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="keys_loot_preset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="civil_melee_stash_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="info_notes_fuel_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_item"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_big_item"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      template_name:t="soviet_repair_kit_item"
+      weight:r=1
+    }
+  }
+}
+
+car_civil_africa_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="home_small_africa_subpreset"
+      weight:r=10
+    }
+
+    "item:object"{
+      sub_preset:t="industrial_small_africa_subpreset"
+      weight:r=10
+    }
+
+    "item:object"{
+      sub_preset:t="chemicals_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="desired_filler_africa_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="cd_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="modern_books_filler_loot_subpreset"
+      weight:r=5
+    }
+
+    "item:object"{
+      sub_preset:t="civil_melee_stash_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_industrial_modern_car_battery"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_modern_item"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_big_modern_item"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      template_name:t="soviet_repair_kit_item"
+      weight:r=1
+    }
+  }
+}
+
+ambulance_car_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="ambulance_medical_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="ambulance_medical_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="ambulance_medical_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_item"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_big_item"
+      weight:r=0.05
+    }
+
+    "item:object"{
+      template_name:t="sovmod_fire_extinguisher"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      template_name:t="soviet_repair_kit_item"
+      weight:r=0.1
+    }
+  }
+}
+
+civil_car_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="car_medical_loot_subpreset"
+      weight:r=0.3
+    }
+
+    "item:object"{
+      sub_preset:t="car_civil_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="car_civil_loot_subpreset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="car_civil_loot_subpreset"
+      weight:r=0.5
+    }
+  }
+}
+
+civil_car_africa_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="car_medical_loot_subpreset"
+      weight:r=0.3
+    }
+
+    "item:object"{
+      sub_preset:t="car_civil_africa_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_modern_item"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="car_civil_africa_loot_subpreset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="car_civil_africa_loot_subpreset"
+      weight:r=0.5
+    }
+  }
+}
+
+police_car_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="car_medical_loot_subpreset"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      sub_preset:t="makarov_all_guns_loot_preset"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="aks_74u_gun_loot_preset"
+      weight:r=0.05
+    }
+
+    "item:object"{
+      sub_preset:t="aks_74u_rust_gun_loot_preset"
+      weight:r=0.05
+    }
+
+    "item:object"{
+      template_name:t="b7_binoculars_item"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="info_notes_weapons_loot_preset"
+      weight:r=0.25
+    }
+
+    "item:object"{
+      template_name:t="sovmod_flashlight_device"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="keys_loot_preset"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_item"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="canister_gasoline_big_item"
+      weight:r=0.05
+    }
+
+    "item:object"{
+      template_name:t="sovmod_fire_extinguisher"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="soviet_repair_kit_item"
+      weight:r=0.5
+    }
+  }
+}
+
+secret_ship_safe_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="as_val_gun_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="grenade_box_loot_preset"
+      weight:r=1
+    }
+  }
+}
+
+secret_ship_box_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_info_notes_secret_ship_journal_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="key_secret_ship_safe_item"
+      weight:r=1
+    }
+  }
+}
+
+secret_crashed_scientist_car_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_info_notes_crashed_scientist_car_letter"
+      weight:r=1
+    }
+  }
+}
+
+tower_sensor_broken_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_broken_sensor"
+      weight:r=1
+    }
+  }
+}
+
+tower_sensor_working_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{}
+}
+
+books_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_junk_home_small_book_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_e"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_small_book_f"
+      weight:r=1
+    }
+  }
+}
+
+modern_books_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_e"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_f"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_g"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_h"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_i"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_j"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_junk_home_modern_book_k"
+      weight:r=1
+    }
+  }
+}
+
+encyclopedia_saturated_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_encyclopedia_a_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_b_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_c_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_d_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_e_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_f_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_g_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_h_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_i_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_j_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_k_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_l_saturated"
+      weight:r=1
+    }
+  }
+}
+
+encyclopedia_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_encyclopedia_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_e"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_f"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_g"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_h"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_i"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_j"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_k"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_encyclopedia_l"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="encyclopedia_saturated_filler_loot_subpreset"
+      weight:r=0.01
+    }
+  }
+}
+
+tape_player_saturated_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_player_blue_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_player_red_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_speaker_blue_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_speaker_red_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_legend404_tape_recorder_a_saturated"
+      weight:r=1
+    }
+  }
+}
+
+tape_player_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_player_blue"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_player_red"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_speaker_blue"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_speaker_red"
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="item_legend404_tape_recorder_a"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="tape_player_saturated_filler_loot_subpreset"
+      weight:r=0.01
+    }
+  }
+}
+
+camera_saturated_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_aurora_cam_a_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_zenit_cam_a_saturated"
+      weight:r=1
+    }
+  }
+}
+
+camera_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_aurora_cam_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_zenit_cam_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="camera_saturated_filler_loot_subpreset"
+      weight:r=0.01
+    }
+  }
+}
+
+modern_desired_saturated_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_fishing_rod_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_reward_cup_saturated"
+      weight:r=1
+    }
+  }
+}
+
+modern_desired_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_fishing_rod"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_reward_cup"
+      weight:r=2
+    }
+
+    "item:object"{
+      sub_preset:t="modern_desired_saturated_filler_loot_subpreset"
+      weight:r=0.01
+    }
+  }
+}
+
+tapes_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_2"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_3"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_4"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_5"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_6"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_7"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_8"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_audio_cassete_9"
+      weight:r=1
+    }
+  }
+}
+
+vhs_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_vhs_cassete_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_e"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_g"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_h"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_i"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_k"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_l"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vhs_cassete_m"
+      weight:r=1
+    }
+  }
+}
+
+vinyl_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_vinyl_disk_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vinyl_disk_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vinyl_disk_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vinyl_disk_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vinyl_disk_e"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vinyl_disk_f"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vinyl_disk_g"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vinyl_disk_h"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vinyl_disk_i"
+      weight:r=1
+    }
+  }
+}
+
+cd_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_cd_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_cd_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_cd_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_cd_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_cd_e"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_cd_f"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_cd_g"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_cd_h"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_cd_i"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_cd_j"
+      weight:r=1
+    }
+  }
+}
+
+radio_cars_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_rc_car_a_white"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_rc_car_b_red"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_rc_car_c_yellow"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_rc_car_d_blue"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_rc_controller"
+      weight:r=0.5
+    }
+  }
+}
+
+collectible_albums_saturated_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_stamps_album_a_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_stamps_album_b_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_stamps_album_c_saturated"
+      weight:r=1
+    }
+  }
+}
+
+collectible_albums_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_pins_album_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_pins_album_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_pins_album_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_stamps_album_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_stamps_album_b"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="item_stamps_album_c"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="collectible_albums_saturated_filler_loot_subpreset"
+      weight:r=0.01
+    }
+  }
+}
+
+airplane_clocks_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_airplane_clock"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_boxed_airplane_clock"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_airplane_clock_on_stand_1"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_airplane_clock_on_stand_2"
+      weight:r=1
+    }
+  }
+}
+
+radio_apc_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_rc_apc_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_rc_apc_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_rc_apc_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_rc_controller"
+      weight:r=0.5
+    }
+  }
+}
+
+toy_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="radio_cars_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="radio_apc_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      template_name:t="item_toy_railroad"
+      weight:r=3
+    }
+  }
+}
+
+newyear_toys_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_newyear_toy_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newyear_toy_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newyear_toy_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newyear_toy_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newyear_toy_e"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newyear_toy_f"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_newyear_toy_g"
+      weight:r=1
+    }
+  }
+}
+
+vase_saturated_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_vase_a_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vase_b_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vase_c_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vase_d_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vase_e_saturated"
+      weight:r=1
+    }
+  }
+}
+
+vase_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_vase_a"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vase_b"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vase_c"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vase_d"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_vase_e"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="vase_saturated_loot_subpreset"
+      weight:r=0.01
+    }
+  }
+}
+
+calculator_saturated_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_mk52_calculator_saturated"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_mk59_calculator_saturated"
+      weight:r=1
+    }
+  }
+}
+
+calculator_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_mk52_calculator"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_mk59_calculator"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="calculator_saturated_filler_loot_subpreset"
+      weight:r=0.01
+    }
+  }
+}
+
+desired_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="tape_player_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="camera_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="calculator_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="toy_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="vhs_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="vinyl_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="newyear_toys_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="collectible_albums_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="airplane_clocks_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="encyclopedia_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="vase_loot_subpreset"
+      weight:r=3
+    }
+  }
+}
+
+desired_filler_africa_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="tape_player_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="camera_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="calculator_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="toy_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="vhs_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="cd_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="collectible_albums_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="airplane_clocks_filler_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="vase_loot_subpreset"
+      weight:r=3
+    }
+
+    "item:object"{
+      sub_preset:t="modern_desired_filler_loot_subpreset"
+      weight:r=3
+    }
+  }
+}
+
+chronogene_scan_body_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="civil_loot_soviet_ammobox_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="civil_loot_healkit_preset"
+      weight:r=1
+    }
+  }
+}
+
+spike_room_safe_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_homemade_am_storage"
+    }
+  }
+}
+
+spike_room_scientist_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="key_spike_room_safe_item"
+    }
+
+    "item:object"{
+      sub_preset:t="close_range_soviet_weapons_t1_loot_preset"
+    }
+  }
+}
+
+cinema_storage_key_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="key_dogorsk_cinema_storage_item"
+      weight:r=1
+    }
+  }
+}
+
+dogorsk_shotgun_soldier_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=3, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_info_notes_shotgun_diary"
+    }
+
+    "item:object"{
+      template_name:t="box_23x75_magazine"
+    }
+
+    "item:object"{
+      sub_preset:t="cinema_storage_key_loot_subpreset"
+    }
+  }
+}
+
+dogorsk_sniper_soldier_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="svd_magazine"
+    }
+
+    "item:object"{
+      sub_preset:t="box_7_62x54_magazine_loot_preset"
+    }
+  }
+}
+
+attic_bags_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="medium_sovmod_backpack"
+      weight:r=1
+    }
+  }
+}
+
+attic_chest_collector_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=7, 7
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="collectible_albums_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="collectible_albums_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="collectible_albums_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="collectible_albums_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="collectible_albums_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="attic_bags_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="keys_armory_loot_subpreset"
+      weight:r=1
+    }
+  }
+}
+
+attic_chest_book_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=7, 7
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="books_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="books_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="books_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="encyclopedia_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="encyclopedia_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="attic_bags_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="keys_port_anomaly_loot_subpreset"
+      weight:r=1
+    }
+  }
+}
+
+attic_chest_electronics_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=7, 7
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="tape_player_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="tape_player_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="camera_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="camera_filler_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="item_mk52_calculator"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="attic_bags_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="keys_port_anomaly_loot_subpreset"
+      weight:r=1
+    }
+  }
+}
+
+television_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=5, 6
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="electronics_junk_subpreset"
+      weight:r=1
+    }
+  }
+}
+
+medical_car_africa_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="ambulance_medical_africa_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="ambulance_medical_africa_loot_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="ambulance_medical_africa_loot_subpreset"
+      weight:r=1
+    }
+  }
+}

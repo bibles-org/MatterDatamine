@@ -1,0 +1,40 @@
+am_militant_bot_delayed_suicide{
+  _use:t="game_effect_with_duration"
+  game_effect__timeToDestroy:r=10
+  post_effect__templateName:t="am_militant_bot_auto_suicide_effect"
+  post_effect__duration:r=5
+}
+
+am_militant_bot_auto_suicide_effect{
+  _use:t="game_effect_with_duration"
+  game_effect__timeToDestroy:r=2
+
+  "game_effect__suicide:tag"{}
+}
+
+am_militant_bot_paused_no_cleanup_body{
+  _use:t="am_militant_bot"
+  beh_tree__enabled:b=no
+  bodyCleanupTime:r=500
+
+  "customBotSpawner:tag"{}
+}
+
+lost_group_spawn_config{
+  lost_group_spawn__botTemplate:t="am_militant_bot_paused_no_cleanup_body"
+  lost_group_spawn__botPlayerTemplate:t="active_matter_bot_player"
+  lost_group_spawn__botSpawnEffect:t="am_militant_bot_delayed_suicide"
+  lost_group_spawn__groupsNum:ip2=3, 4
+  lost_group_spawn__distToPossibleSpawn:p2=15, 20
+  lost_group_spawn__botsPerGroupNum:ip2=1, 4
+  lost_group_spawn__botToGroupCenterDist:p2=1, 2.5
+
+  "lost_group_spawn__items:object"{
+    "dune_buggy+vehicle_state_randomizer:object"{
+      chance:r=0.3
+      toGroupCenterDist:p2=4, 5
+      collresCenter:p3=0, 0, 0
+      collresRadius:r=3
+    }
+  }
+}

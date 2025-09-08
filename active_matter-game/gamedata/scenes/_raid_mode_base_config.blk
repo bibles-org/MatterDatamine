@@ -1,0 +1,61 @@
+entity{
+  _template:t="raid_mode"
+}
+
+entity{
+  _template:t="player_raid_session_finisher"
+}
+
+entity{
+  _template:t="ribbon_colors"
+}
+
+entity{
+  _template:t="endgame_controller"
+}
+
+entity{
+  _template:t="loc_snapshots_debug_registry"
+}
+
+entity{
+  _template:t="am_teams"
+  am_teams__players:t="am_player_raid_team"
+}
+
+entity{
+  _template:t="zone_force_field"
+}
+
+entity{
+  _template:t="dynamic_ri_covers"
+}
+
+entity{
+  _template:t="am_bot_spawner_names"
+}
+
+entity{
+  _template:t="stats_game_mode"
+  stats_game_mode__name:t="raid"
+}
+
+entity{
+  _template:t="ri_preload_controller"
+}
+
+entity{
+  _template:t="heatmap_data"
+}
+
+entity{
+  _template:t="impostor_controller"
+}
+
+entity{
+  _template:t="player_spawn_controller_default"
+}
+
+entity{
+  _template:t="monstrify_artifact_manager"
+}

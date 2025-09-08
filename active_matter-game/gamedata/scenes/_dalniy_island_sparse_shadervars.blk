@@ -1,0 +1,19 @@
+entity{
+  _template:t="shaderVars"
+
+  "shader_vars__vars:object"{
+    clouds_shadow_influence:r=1.1
+    river0:c=15, 64, 49, 0
+    river1:c=9, 71, 26, 0
+    ocean0:c=100, 110, 150, 0
+    ocean1:c=90, 100, 150, 0
+    river_density:r=1
+    ocean_density:r=1
+    water_color_noise_size:r=71
+    leaves_ss_profile:p4=0.95, 1, 0.42, 0
+    paint_details_tex:t="sovmod_building_colors_tex_palette*"
+    cliff_color_overlay_map_tex:t="dalniy_island_sparse_det_cliff_color_tex_d*"
+    cliff_color_overlay_map_left_top_right_bottom:p4=-2048, 2048, 2048, -2048
+    rendinst_landscape_area_left_top_right_bottom:p4=2048, -512, 3072, -1536
+  }
+}

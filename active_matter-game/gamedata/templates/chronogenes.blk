@@ -1,0 +1,966 @@
+base_chronogene{
+  _use:t="equipment_mod_icon"
+  _use:t="base_item"
+  item__id:i=0
+  _replicated:t="item__id"
+  item__ui_priority:i=0
+  item__recreateOnGround:t="item_in_world"
+  item__recreateInWorldPhys:t="item_in_world_phys"
+  item__recreateInInventory:t="base_invis_item"
+  item__recreateInEquipment:t="item_in_equipment_hided_on_doll"
+  uniqueId:t="-1"
+  item__filterType:t="chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/default.svg"
+  chronogene__effect_type:t=""
+  item__weight:r=0
+  item__volume:r=0
+  animchar__res:t="biomaterial_container_can_small_char"
+  collres__res:t="biomaterial_container_can_small_collision"
+  item__iconYaw:r=200
+  item__iconRoll:r=60
+  item__iconPitch:r=30
+  equipable_item__curSlot:t=""
+  _tracked:t="equipable_item__curSlot"
+  _replicated:t="equipable_item__curSlot"
+
+  "item__dontUnequipOnDeath:tag"{}
+  "item__permanentItem:tag"{}
+  "item__chronogene:tag"{}
+  "item__cantBeCorrupted:tag"{}
+  "item__cantBeReplica:tag"{}
+  "slot_attach__attachedTo:eid"{}
+  "item__equipmentSlots:list<t>"{
+    slot:t="chronogene_secondary_1"
+    slot:t="chronogene_secondary_2"
+    slot:t="chronogene_secondary_3"
+    slot:t="chronogene_secondary_4"
+  }
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=0
+  }
+}
+
+speed_mult_chronogene_t1{
+  _use:t="base_chronogene"
+  item__proto:t="speed_mult_chronogene_t1"
+  item__name:t="items/speed_mult_chronogene_t1"
+  item__userstats__pickupName:t="pickup_speed_mult_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/run_speed_1.svg"
+  chronogene__effect_type:t="agility"
+
+  "entity_mod_effects:object"{
+    "speedMult+mult_diminishing":r=1.03
+  }
+}
+
+speed_mult_chronogene_t2{
+  _use:t="speed_mult_chronogene_t1"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="speed_mult_chronogene_t2"
+  item__name:t="items/speed_mult_chronogene_t2"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/run_speed_2.svg"
+
+  "entity_mod_effects:object"{
+    "speedMult+mult_diminishing":r=1.05
+  }
+}
+
+speed_mult_chronogene_t3{
+  _use:t="speed_mult_chronogene_t1"
+  _use:t="item_rarity_rare"
+  item__proto:t="speed_mult_chronogene_t3"
+  item__name:t="items/speed_mult_chronogene_t3"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/run_speed_3.svg"
+
+  "entity_mod_effects:object"{
+    "speedMult+mult_diminishing":r=1.07
+  }
+}
+
+jump_mult_chronogene_t1{
+  _use:t="base_chronogene"
+  item__proto:t="jump_mult_chronogene_t1"
+  item__name:t="items/jump_mult_chronogene_t1"
+  item__userstats__pickupName:t="pickup_jump_mult_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/jump_speed_1.svg"
+  chronogene__effect_type:t="agility"
+
+  "entity_mod_effects:object"{
+    "jumpSpeedMult+mult_diminishing":r=1.1
+    "fallDamageSpeedMult+mult_diminishing":r=1.03
+  }
+}
+
+jump_mult_chronogene_t2{
+  _use:t="jump_mult_chronogene_t1"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="jump_mult_chronogene_t2"
+  item__name:t="items/jump_mult_chronogene_t2"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/jump_speed_2.svg"
+
+  "entity_mod_effects:object"{
+    "jumpSpeedMult+mult_diminishing":r=1.2
+    "fallDamageSpeedMult+mult_diminishing":r=1.05
+  }
+}
+
+jump_mult_chronogene_t3{
+  _use:t="jump_mult_chronogene_t1"
+  _use:t="item_rarity_rare"
+  item__proto:t="jump_mult_chronogene_t3"
+  item__name:t="items/jump_mult_chronogene_t3"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/jump_speed_3.svg"
+
+  "entity_mod_effects:object"{
+    "jumpSpeedMult+mult_diminishing":r=1.3
+    "fallDamageSpeedMult+mult_diminishing":r=1.07
+  }
+}
+
+weight_penalty_reduction_chronogene_t1{
+  _use:t="base_chronogene"
+  item__proto:t="weight_penalty_reduction_chronogene_t1"
+  item__name:t="items/weight_penalty_reduction_chronogene_t1"
+  item__userstats__pickupName:t="pickup_weight_penalty_reduction_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/loot_weight_1.svg"
+  chronogene__effect_type:t="strength"
+
+  "entity_mod_effects:object"{
+    "weightPenaltyReduction+mult_diminishing":r=1.05
+  }
+}
+
+weight_penalty_reduction_chronogene_t2{
+  _use:t="weight_penalty_reduction_chronogene_t1"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="weight_penalty_reduction_chronogene_t2"
+  item__name:t="items/weight_penalty_reduction_chronogene_t2"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/loot_weight_2.svg"
+
+  "entity_mod_effects:object"{
+    "weightPenaltyReduction+mult_diminishing":r=1.1
+  }
+}
+
+weight_penalty_reduction_chronogene_t3{
+  _use:t="weight_penalty_reduction_chronogene_t1"
+  _use:t="item_rarity_rare"
+  item__proto:t="weight_penalty_reduction_chronogene_t3"
+  item__name:t="items/weight_penalty_reduction_chronogene_t3"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/loot_weight_3.svg"
+
+  "entity_mod_effects:object"{
+    "weightPenaltyReduction+mult_diminishing":r=1.15
+  }
+}
+
+active_matter_gathering_mult_chronogene_t1{
+  _use:t="base_chronogene"
+  item__proto:t="active_matter_gathering_mult_chronogene_t1"
+  item__name:t="items/active_matter_gathering_mult_chronogene_t1"
+  item__userstats__pickupName:t="pickup_active_matter_gathering_mult_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/am_gain_1.svg"
+  chronogene__effect_type:t="active_matter"
+
+  "entity_mod_effects:object"{
+    "activeMatterGatherSpeed+mult_diminishing":r=1.1
+  }
+}
+
+active_matter_gathering_mult_chronogene_t2{
+  _use:t="active_matter_gathering_mult_chronogene_t1"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="active_matter_gathering_mult_chronogene_t2"
+  item__name:t="items/active_matter_gathering_mult_chronogene_t2"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/am_gain_2.svg"
+
+  "entity_mod_effects:object"{
+    "activeMatterGatherSpeed+mult_diminishing":r=1.2
+  }
+}
+
+active_matter_gathering_mult_chronogene_t3{
+  _use:t="active_matter_gathering_mult_chronogene_t1"
+  _use:t="item_rarity_rare"
+  item__proto:t="active_matter_gathering_mult_chronogene_t3"
+  item__name:t="items/active_matter_gathering_mult_chronogene_t3"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/am_gain_3.svg"
+
+  "entity_mod_effects:object"{
+    "activeMatterGatherSpeed+mult_diminishing":r=1.3
+  }
+}
+
+item_usage_speed_chronogene_t1{
+  _use:t="base_chronogene"
+  item__proto:t="item_usage_speed_chronogene_t1"
+  item__name:t="items/item_usage_speed_chronogene_t1"
+  item__userstats__pickupName:t="pickup_item_usage_speed_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/item_usage_1.svg"
+  chronogene__effect_type:t="agility"
+
+  "entity_mod_effects:object"{
+    "itemUsageSpeed+mult_diminishing":r=1.1
+  }
+}
+
+item_usage_speed_chronogene_t2{
+  _use:t="item_usage_speed_chronogene_t1"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="item_usage_speed_chronogene_t2"
+  item__name:t="items/item_usage_speed_chronogene_t2"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/item_usage_2.svg"
+
+  "entity_mod_effects:object"{
+    "itemUsageSpeed+mult_diminishing":r=1.2
+  }
+}
+
+item_usage_speed_chronogene_t3{
+  _use:t="item_usage_speed_chronogene_t1"
+  _use:t="item_rarity_rare"
+  item__proto:t="item_usage_speed_chronogene_t3"
+  item__name:t="items/item_usage_speed_chronogene_t3"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/item_usage_3.svg"
+
+  "entity_mod_effects:object"{
+    "itemUsageSpeed+mult_diminishing":r=1.3
+  }
+}
+
+item_recognition_speed_chronogene_t1{
+  _use:t="base_chronogene"
+  item__proto:t="item_recognition_speed_chronogene_t1"
+  item__name:t="items/item_recognition_speed_chronogene_t1"
+  item__userstats__pickupName:t="pickup_item_recognition_speed_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/item_recognition_1.svg"
+  chronogene__effect_type:t="perception"
+
+  "entity_mod_effects:object"{
+    "itemRecognitionSpeed+mult_diminishing":r=1.1
+  }
+}
+
+item_recognition_speed_chronogene_t2{
+  _use:t="item_recognition_speed_chronogene_t1"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="item_recognition_speed_chronogene_t2"
+  item__name:t="items/item_recognition_speed_chronogene_t2"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/item_recognition_2.svg"
+
+  "entity_mod_effects:object"{
+    "itemRecognitionSpeed+mult_diminishing":r=1.2
+  }
+}
+
+item_recognition_speed_chronogene_t3{
+  _use:t="item_recognition_speed_chronogene_t1"
+  _use:t="item_rarity_rare"
+  item__proto:t="item_recognition_speed_chronogene_t3"
+  item__name:t="items/item_recognition_speed_chronogene_t3"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/item_recognition_3.svg"
+
+  "entity_mod_effects:object"{
+    "itemRecognitionSpeed+mult_diminishing":r=1.3
+  }
+}
+
+melee_strength_chronogene_t1{
+  _use:t="base_chronogene"
+  item__proto:t="melee_strength_chronogene_t1"
+  item__name:t="items/melee_strength_chronogene_t1"
+  item__userstats__pickupName:t="pickup_melee_strength_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/melee_dmg_1.svg"
+  chronogene__effect_type:t="strength"
+
+  "entity_mod_effects:object"{
+    "meleeDamageMult+mult_diminishing":r=1.05
+  }
+}
+
+melee_strength_chronogene_t2{
+  _use:t="melee_strength_chronogene_t1"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="melee_strength_chronogene_t2"
+  item__name:t="items/melee_strength_chronogene_t2"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/melee_dmg_2.svg"
+
+  "entity_mod_effects:object"{
+    "meleeDamageMult+mult_diminishing":r=1.1
+  }
+}
+
+melee_strength_chronogene_t3{
+  _use:t="melee_strength_chronogene_t1"
+  _use:t="item_rarity_rare"
+  item__proto:t="melee_strength_chronogene_t3"
+  item__name:t="items/melee_strength_chronogene_t3"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/melee_dmg_3.svg"
+
+  "entity_mod_effects:object"{
+    "meleeDamageMult+mult_diminishing":r=1.15
+  }
+}
+
+bullet_proof_chronogene_t1{
+  _use:t="base_chronogene"
+  item__proto:t="bullet_proof_chronogene_t1"
+  item__name:t="items/bullet_proof_chronogene_t1"
+  item__userstats__pickupName:t="pickup_bullet_proof_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/bullet_proof_1.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "bulletProtectionMult+mult_diminishing":r=1.02
+  }
+}
+
+bullet_proof_chronogene_t2{
+  _use:t="bullet_proof_chronogene_t1"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="bullet_proof_chronogene_t2"
+  item__name:t="items/bullet_proof_chronogene_t2"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/bullet_proof_2.svg"
+
+  "entity_mod_effects:object"{
+    "bulletProtectionMult+mult_diminishing":r=1.04
+  }
+}
+
+bullet_proof_chronogene_t3{
+  _use:t="bullet_proof_chronogene_t1"
+  _use:t="item_rarity_rare"
+  item__proto:t="bullet_proof_chronogene_t3"
+  item__name:t="items/bullet_proof_chronogene_t3"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/bullet_proof_3.svg"
+
+  "entity_mod_effects:object"{
+    "bulletProtectionMult+mult_diminishing":r=1.06
+  }
+}
+
+melee_proof_chronogene_t1{
+  _use:t="base_chronogene"
+  item__proto:t="melee_proof_chronogene_t1"
+  item__name:t="items/melee_proof_chronogene_t1"
+  item__userstats__pickupName:t="pickup_melee_proof_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/melee_proof_1.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "meleeProtectionMult+mult_diminishing":r=1.03
+  }
+}
+
+melee_proof_chronogene_t2{
+  _use:t="melee_proof_chronogene_t1"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="melee_proof_chronogene_t2"
+  item__name:t="items/melee_proof_chronogene_t2"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/melee_proof_2.svg"
+
+  "entity_mod_effects:object"{
+    "meleeProtectionMult+mult_diminishing":r=1.06
+  }
+}
+
+melee_proof_chronogene_t3{
+  _use:t="melee_proof_chronogene_t1"
+  _use:t="item_rarity_rare"
+  item__proto:t="melee_proof_chronogene_t3"
+  item__name:t="items/melee_proof_chronogene_t3"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/melee_proof_3.svg"
+
+  "entity_mod_effects:object"{
+    "meleeProtectionMult+mult_diminishing":r=1.09
+  }
+}
+
+shock_reduction_chronogene_t1{
+  _use:t="base_chronogene"
+  item__proto:t="shock_reduction_chronogene_t1"
+  item__name:t="items/shock_reduction_chronogene_t1"
+  item__userstats__pickupName:t="pickup_shock_reduction_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/downed_time_1.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "shockReduction+add_diminishing":r=1.5
+  }
+}
+
+shock_reduction_chronogene_t2{
+  _use:t="shock_reduction_chronogene_t1"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="shock_reduction_chronogene_t2"
+  item__name:t="items/shock_reduction_chronogene_t2"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/downed_time_2.svg"
+
+  "entity_mod_effects:object"{
+    "shockReduction+add_diminishing":r=2.5
+  }
+}
+
+shock_reduction_chronogene_t3{
+  _use:t="shock_reduction_chronogene_t1"
+  _use:t="item_rarity_rare"
+  item__proto:t="shock_reduction_chronogene_t3"
+  item__name:t="items/shock_reduction_chronogene_t3"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/downed_time_3.svg"
+
+  "entity_mod_effects:object"{
+    "shockReduction+add_diminishing":r=3.5
+  }
+}
+
+heal_improvement_chronogene_t1{
+  _use:t="base_chronogene"
+  item__proto:t="heal_improvement_chronogene_t1"
+  item__name:t="items/heal_improvement_chronogene_t1"
+  item__userstats__pickupName:t="pickup_heal_improvement_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/heal_up_1.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "healingMult+mult_diminishing":r=1.05
+  }
+}
+
+heal_improvement_chronogene_t2{
+  _use:t="heal_improvement_chronogene_t1"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="heal_improvement_chronogene_t2"
+  item__name:t="items/heal_improvement_chronogene_t2"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/heal_up_2.svg"
+
+  "entity_mod_effects:object"{
+    "healingMult+mult_diminishing":r=1.1
+  }
+}
+
+heal_improvement_chronogene_t3{
+  _use:t="heal_improvement_chronogene_t1"
+  _use:t="item_rarity_rare"
+  item__proto:t="heal_improvement_chronogene_t3"
+  item__name:t="items/heal_improvement_chronogene_t3"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/heal_up_3.svg"
+
+  "entity_mod_effects:object"{
+    "healingMult+mult_diminishing":r=1.15
+  }
+}
+
+stamina_chronogene_t1{
+  _use:t="base_chronogene"
+  item__proto:t="stamina_chronogene_t1"
+  item__name:t="items/stamina_chronogene_t1"
+  item__userstats__pickupName:t="pickup_stamina_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/stamina_pulse_1.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "hrRiseSpeedMulti+mult_diminishing":r=0.98
+    "hrStaminaDrainMulti+mult_diminishing":r=0.98
+    "hrFatigueThresholdAdd+add":r=3
+  }
+}
+
+stamina_chronogene_t2{
+  _use:t="stamina_chronogene_t1"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="stamina_chronogene_t2"
+  item__name:t="items/stamina_chronogene_t2"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/stamina_pulse_2.svg"
+
+  "entity_mod_effects:object"{
+    "hrRiseSpeedMulti+mult_diminishing":r=0.97
+    "hrStaminaDrainMulti+mult_diminishing":r=0.97
+    "hrFatigueThresholdAdd+add":r=4
+  }
+}
+
+stamina_chronogene_t3{
+  _use:t="stamina_chronogene_t1"
+  _use:t="item_rarity_rare"
+  item__proto:t="stamina_chronogene_t3"
+  item__name:t="items/stamina_chronogene_t3"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/stamina_pulse_3.svg"
+
+  "entity_mod_effects:object"{
+    "hrRiseSpeedMulti+mult_diminishing":r=0.96
+    "hrStaminaDrainMulti+mult_diminishing":r=0.96
+    "hrFatigueThresholdAdd+add":r=5
+  }
+}
+
+stamina_regeneration_chronogene_t1{
+  _use:t="base_chronogene"
+  item__proto:t="stamina_regeneration_chronogene_t1"
+  item__name:t="items/stamina_regeneration_chronogene_t1"
+  item__userstats__pickupName:t="pickup_stamina_regeneration_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/stamina_regen_1.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "hrStaminaRegenMulti+mult_diminishing":r=1.02
+    "hrFallSpeedMulti+mult_diminishing":r=1.02
+    "hrActivityMulti+mult_diminishing":r=0.98
+  }
+}
+
+stamina_regeneration_chronogene_t2{
+  _use:t="stamina_regeneration_chronogene_t1"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="stamina_regeneration_chronogene_t2"
+  item__name:t="items/stamina_regeneration_chronogene_t2"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/stamina_regen_2.svg"
+
+  "entity_mod_effects:object"{
+    "hrStaminaRegenMulti+mult_diminishing":r=1.03
+    "hrFallSpeedMulti+mult_diminishing":r=1.03
+    "hrActivityMulti+mult_diminishing":r=0.97
+  }
+}
+
+stamina_regeneration_chronogene_t3{
+  _use:t="stamina_regeneration_chronogene_t1"
+  _use:t="item_rarity_rare"
+  item__proto:t="stamina_regeneration_chronogene_t3"
+  item__name:t="items/stamina_regeneration_chronogene_t3"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/stamina_regen_3.svg"
+
+  "entity_mod_effects:object"{
+    "hrStaminaRegenMulti+mult_diminishing":r=1.04
+    "hrFallSpeedMulti+mult_diminishing":r=1.04
+    "hrActivityMulti+mult_diminishing":r=0.96
+  }
+}
+
+gameplay_chronogene{
+  _use:t="base_chronogene"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=1
+  }
+}
+
+observation_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="observation_chronogene_t1"
+  item__name:t="items/observation_chronogene_t1"
+  item__userstats__pickupName:t="pickup_observation_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/observation.svg"
+  chronogene__effect_type:t="perception"
+}
+
+calming_effect_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="calming_effect_chronogene_t1"
+  item__name:t="items/calming_effect_chronogene_t1"
+  item__userstats__pickupName:t="pickup_calming_effect_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/calming_effect.svg"
+  chronogene__effect_type:t="vitality"
+}
+
+parkour_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="parkour_chronogene_t1"
+  item__name:t="items/parkour_chronogene_t1"
+  item__userstats__pickupName:t="pickup_parkour_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/parkour.svg"
+  chronogene__effect_type:t="agility"
+}
+
+soft_steps_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="soft_steps_chronogene_t1"
+  item__name:t="items/soft_steps_chronogene_t1"
+  item__userstats__pickupName:t="pickup_soft_steps_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/soft_steps.svg"
+  chronogene__effect_type:t="agility"
+}
+
+limb_regeneration_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="limb_regeneration_chronogene_t1"
+  item__name:t="items/limb_regeneration_chronogene_t1"
+  item__userstats__pickupName:t="pickup_limb_regeneration_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/limb_regeneration.svg"
+  chronogene__effect_type:t="vitality"
+}
+
+berserk_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="berserk_chronogene_t1"
+  item__name:t="items/berserk_chronogene_t1"
+  item__userstats__pickupName:t="pickup_berserk_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/berserk.svg"
+  chronogene__effect_type:t="strength"
+}
+
+tenacious_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="tenacious_chronogene_t1"
+  item__name:t="items/tenacious_chronogene_t1"
+  item__userstats__pickupName:t="pickup_tenacious_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/tenacious.svg"
+  chronogene__effect_type:t="vitality"
+}
+
+conduit_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="conduit_chronogene_t1"
+  item__name:t="items/conduit_chronogene_t1"
+  item__userstats__pickupName:t="pickup_conduit_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/conduit.svg"
+  chronogene__effect_type:t="active_matter"
+}
+
+weapon_expert_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="weapon_expert_chronogene_t1"
+  item__name:t="items/weapon_expert_chronogene_t1"
+  item__userstats__pickupName:t="pickup_weapon_expert_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/weapon_expert.svg"
+  chronogene__effect_type:t="agility"
+}
+
+gunslinger_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="gunslinger_chronogene_t1"
+  item__name:t="items/gunslinger_chronogene_t1"
+  item__userstats__pickupName:t="pickup_gunslinger_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/gunslinger.svg"
+  chronogene__effect_type:t="agility"
+}
+
+night_owl_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="night_owl_chronogene_t1"
+  item__name:t="items/night_owl_chronogene_t1"
+  item__userstats__pickupName:t="pickup_night_owl_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/night_owl.svg"
+  chronogene__effect_type:t="perception"
+}
+
+trap_sensing_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="trap_sensing_chronogene_t1"
+  item__name:t="items/trap_sensing_chronogene_t1"
+  item__userstats__pickupName:t="pickup_trap_sensing_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/trap_sensing.svg"
+  chronogene__effect_type:t="perception"
+}
+
+knife_master_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="knife_master_chronogene_t1"
+  item__name:t="items/knife_master_chronogene_t1"
+  item__userstats__pickupName:t="pickup_knife_master_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/knife_master.svg"
+  chronogene__effect_type:t="strength"
+}
+
+am_locator_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="am_locator_chronogene_t1"
+  item__name:t="items/am_locator_chronogene_t1"
+  item__userstats__pickupName:t="pickup_am_locator_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/am_locator.svg"
+  chronogene__effect_type:t="active_matter"
+}
+
+monster_detector_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="monster_detector_chronogene_t1"
+  item__name:t="items/monster_detector_chronogene_t1"
+  item__userstats__pickupName:t="pickup_monster_detector_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/monster_detector.svg"
+  chronogene__effect_type:t="perception"
+}
+
+motion_detector_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="motion_detector_chronogene_t1"
+  item__name:t="items/motion_detector_chronogene_t1"
+  item__userstats__pickupName:t="pickup_motion_detector_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/motion_detector.svg"
+  chronogene__effect_type:t="perception"
+}
+
+sharp_memory_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="sharp_memory_chronogene_t1"
+  item__name:t="items/sharp_memory_chronogene_t1"
+  item__userstats__pickupName:t="pickup_sharp_memory_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/sharp_memory.svg"
+  chronogene__effect_type:t="perception"
+}
+
+reanimator_chronogene_t1{
+  _use:t="gameplay_chronogene"
+  _use:t="item_rarity_rare"
+  item__proto:t="reanimator_chronogene_t1"
+  item__name:t="items/reanimator_chronogene_t1"
+  item__userstats__pickupName:t="pickup_reanimator_chronogene_t1"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/reanimator.svg"
+  chronogene__effect_type:t="perception"
+}
+
+speed_mult_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="speed_mult_chronogene_passive"
+  item__name:t="items/speed_mult_chronogene_passive"
+  item__userstats__pickupName:t="pickup_speed_mult_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/run_speed_1.svg"
+  chronogene__effect_type:t="agility"
+
+  "entity_mod_effects:object"{
+    "speedMult+add":r=0.01
+  }
+}
+
+jump_mult_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="jump_mult_chronogene_passive"
+  item__name:t="items/jump_mult_chronogene_passive"
+  item__userstats__pickupName:t="pickup_jump_mult_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/jump_speed_no_rank.svg"
+  chronogene__effect_type:t="agility"
+
+  "entity_mod_effects:object"{
+    "jumpSpeedMult+add":r=0.01
+  }
+}
+
+safe_fall_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="safe_fall_chronogene_passive"
+  item__name:t="items/safe_fall_chronogene_passive"
+  item__userstats__pickupName:t="pickup_safe_fall_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/safe_fall_no_rank.svg"
+  chronogene__effect_type:t="agility"
+
+  "entity_mod_effects:object"{
+    "fallDamageSpeedMult+add":r=0.01
+  }
+}
+
+weight_penalty_reduction_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="weight_penalty_reduction_chronogene_passive"
+  item__name:t="items/weight_penalty_reduction_chronogene_passive"
+  item__userstats__pickupName:t="pickup_weight_penalty_reduction_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/loot_weight_no_rank.svg"
+  chronogene__effect_type:t="strength"
+
+  "entity_mod_effects:object"{
+    "weightPenaltyReduction+add":r=0.01
+  }
+}
+
+active_matter_gathering_mult_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="active_matter_gathering_mult_chronogene_passive"
+  item__name:t="items/active_matter_gathering_mult_chronogene_passive"
+  item__userstats__pickupName:t="pickup_active_matter_gathering_mult_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/am_gain_no_rank.svg"
+  chronogene__effect_type:t="active_matter"
+
+  "entity_mod_effects:object"{
+    "activeMatterGatherSpeed+add":r=0.01
+  }
+}
+
+item_usage_speed_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="item_usage_speed_chronogene_passive"
+  item__name:t="items/item_usage_speed_chronogene_passive"
+  item__userstats__pickupName:t="pickup_item_usage_speed_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/item_usage_no_rank.svg"
+  chronogene__effect_type:t="agility"
+
+  "entity_mod_effects:object"{
+    "itemUsageSpeed+add":r=0.01
+  }
+}
+
+item_recognition_speed_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="item_recognition_speed_chronogene_passive"
+  item__name:t="items/item_recognition_speed_chronogene_passive"
+  item__userstats__pickupName:t="pickup_item_recognition_speed_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/item_recognition_no_rank.svg"
+  chronogene__effect_type:t="perception"
+
+  "entity_mod_effects:object"{
+    "itemRecognitionSpeed+add":r=0.01
+  }
+}
+
+melee_strength_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="melee_strength_chronogene_passive"
+  item__name:t="items/melee_strength_chronogene_passive"
+  item__userstats__pickupName:t="pickup_melee_strength_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/melee_dmg_no_rank.svg"
+  chronogene__effect_type:t="strength"
+
+  "entity_mod_effects:object"{
+    "meleeDamageMult+add":r=0.01
+  }
+}
+
+bullet_proof_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="bullet_proof_chronogene_passive"
+  item__name:t="items/bullet_proof_chronogene_passive"
+  item__userstats__pickupName:t="pickup_bullet_proof_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/bullet_proof_no_rank.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "bulletProtectionMult+add":r=0.01
+  }
+}
+
+melee_proof_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="melee_proof_chronogene_passive"
+  item__name:t="items/melee_proof_chronogene_passive"
+  item__userstats__pickupName:t="pickup_melee_proof_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/melee_proof_no_rank.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "meleeProtectionMult+add":r=0.01
+  }
+}
+
+shock_reduction_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="shock_reduction_chronogene_passive"
+  item__name:t="items/shock_reduction_chronogene_passive"
+  item__userstats__pickupName:t="pickup_shock_reduction_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/downed_time_no_rank.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "shockReduction+add":r=1
+  }
+}
+
+heal_improvement_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="heal_improvement_chronogene_passive"
+  item__name:t="items/heal_improvement_chronogene_passive"
+  item__userstats__pickupName:t="pickup_heal_improvement_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/heal_up_no_rank.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "healingMult+add":r=0.01
+  }
+}
+
+stamina_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="stamina_chronogene_passive"
+  item__name:t="items/stamina_chronogene_passive"
+  item__userstats__pickupName:t="pickup_stamina_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/stamina_pulse_no_rank.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "hrRiseSpeedMulti+add":r=-0.01
+    "hrStaminaDrainMulti+add":r=-0.01
+    "hrFatigueThresholdAdd+add":r=1
+  }
+}
+
+stamina_regeneration_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="stamina_regeneration_chronogene_passive"
+  item__name:t="items/stamina_regeneration_chronogene_passive"
+  item__userstats__pickupName:t="pickup_stamina_regeneration_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/stamina_regen_no_rank.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "hrStaminaRegenMulti+add":r=0.01
+    "hrFallSpeedMulti+add":r=0.01
+    "hrActivityMulti+add":r=-0.01
+  }
+}
+
+low_recoil_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="low_recoil_chronogene_passive"
+  item__name:t="items/low_recoil_chronogene_passive"
+  item__userstats__pickupName:t="pickup_low_recoil_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/range_recoil_no_rank.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "recoilMult+add":r=-0.01
+  }
+}
+
+calm_breath_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="calm_breath_chronogene_passive"
+  item__name:t="items/calm_breath_chronogene_passive"
+  item__userstats__pickupName:t="pickup_calm_breath_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/calm_breath_no_rank.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "breathAmplitudeMult+add":r=-0.01
+  }
+}
+
+silent_step_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="silent_step_chronogene_passive"
+  item__name:t="items/silent_step_chronogene_passive"
+  item__userstats__pickupName:t="pickup_silent_step_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/silent_steps_no_rank.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "walkNoiseMult+add":r=-0.01
+  }
+}
+
+fast_pose_change_chronogene_passive{
+  _use:t="base_chronogene"
+  item__proto:t="fast_pose_change_chronogene_passive"
+  item__name:t="items/fast_pose_change_chronogene_passive"
+  item__userstats__pickupName:t="pickup_fast_pose_change_chronogene"
+  chronogene__effect_icon:t="!ui/uiskin/chronogenes/stance_change_no_rank.svg"
+  chronogene__effect_type:t="vitality"
+
+  "entity_mod_effects:object"{
+    "fasterChangePoseMult+add":r=0.01
+  }
+}

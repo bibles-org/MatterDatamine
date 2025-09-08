@@ -1,0 +1,139 @@
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house_monsters"
+  monster_gen_gen__householdCount:i=24
+  monster_gen_gen__minHouseholdVolume:r=225
+  monster_gen_gen__useHouseholdsOnEuclid:b=no
+
+  "monster_gen_gen__genTemplates:object"{
+    anomaly_encounter_flowerman_indoor:i=100
+  }
+
+  "monster_gen_gen__excludeBoxes:list<m>"{
+    t:m=[[-55.9497, 0, 48.3321] [39.0793, 0, 45.2385] [0, 50.5184, -0] [-75.1959, 80.234, -746.73]]
+  }
+}
+
+entity{
+  _template:t="dendroids_group_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-45.7547, 80.0125, -725.113]]
+}
+
+entity{
+  _template:t="dendroids_group_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [106.238, 75.7224, -722.249]]
+}
+
+entity{
+  _template:t="dendroids_group_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [87.1271, 79.6066, -558.519]]
+}
+
+entity{
+  _template:t="dendroids_group_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-61.6348, 79.076, -643.088]]
+}
+
+entity{
+  _template:t="anomaly_encounter_flowerman_indoor"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-61.7785, 80.6519, -776.42]]
+}
+
+entity{
+  _template:t="anomaly_encounter_flowerman_indoor"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-84.2936, 80.197, -737.787]]
+}
+
+entity{
+  _template:t="anomaly_encounter_flowerman_indoor"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-90.8386, 87.3976, -752.915]]
+}
+
+entity{
+  _template:t="military_guards_group_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [166.609, 79.9969, -658.093]]
+}
+
+entity{
+  _template:t="anomaly_encounter_flowerman_indoor"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [165.406, 80.4977, -628.628]]
+}
+
+entity{
+  _template:t="flower_human+flower_human_root_spawner+am_inside_body_3"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [91.5462, 79.9969, -681.845]]
+}
+
+entity{
+  _template:t="flower_human+flower_human_root_spawner+am_inside_body_3"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [146.839, 79.9969, -679.322]]
+}
+
+entity{
+  _template:t="flower_human+flower_human_root_spawner+am_inside_body_3"
+  transform:m=[[0.246081, 0, -0.969249] [0, 1, 0] [0.969249, -0, 0.246081] [156.605, 79.9348, -688.564]]
+}
+
+entity{
+  _template:t="flowermen_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-55.7058, 80.0125, -689.839]]
+  objective_static_target__tag:t="flowermen_zone_1"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="flowermen_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [12.6457, 80.0902, -602.517]]
+  objective_static_target__tag:t="flowermen_zone_2"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="flowermen_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [149.315, 79.9969, -606.425]]
+  objective_static_target__tag:t="flowermen_zone_3"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="invisible_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [207.481, 79.0391, -701.643]]
+  objective_static_target__tag:t="invisible_zone_1"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="invisible_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-57.6683, 84.2858, -589.14]]
+  objective_static_target__tag:t="invisible_zone_2"
+  quest_target_geometry_sphere__radius:r=20
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="turned_soldier_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [27.4634, 72.1175, -778.338]]
+  objective_static_target__tag:t="turned_soldier_zone_1"
+  quest_target_geometry_sphere__radius:r=15
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="turned_soldier_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-117.871, 79.9969, -707.006]]
+  objective_static_target__tag:t="turned_soldier_zone_2"
+  quest_target_geometry_sphere__radius:r=15
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="turned_soldier_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [224.239, 78.2869, -619.712]]
+  objective_static_target__tag:t="turned_soldier_zone_3"
+  quest_target_geometry_sphere__radius:r=15
+  map_object_zone__radius:r=15
+}

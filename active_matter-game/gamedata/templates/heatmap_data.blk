@@ -1,0 +1,13 @@
+heatmap_data{
+  _use:t="local_statistics"
+
+  "heatmap_data__time:list<r>"{}
+  "heatmap_data__position:list<p3>"{}
+  "heatmap_data__action:list<t>"{}
+  "heatmap:tag"{}
+}
+
+local_statistics{
+  statistics__updateAt:r=0
+  statistics__interval:r=120
+}

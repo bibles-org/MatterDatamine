@@ -1,0 +1,132 @@
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box"
+  loot_generator__lootPreset:t="sparse_overall_zone_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="military_container_loot_box"
+  loot_generator__lootPreset:t="sparse_military_container_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="am_core_spawn_box"
+  loot_generator__lootPreset:t="sparse_am_core_spawn_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="vehicle_civic_spawn_box"
+  loot_generator__lootPreset:t="sparse_vehicle_civic_spawn_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="vehicle_military_spawn_box"
+  loot_generator__lootPreset:t="sparse_vehicle_military_spawn_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="corrupted_workbench"
+  loot_generator__lootPreset:t="sparse_corrupted_workbench_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box_fuel"
+  loot_generator__lootPreset:t="sparse_fuel_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box_vehicle_parts"
+  loot_generator__lootPreset:t="sparse_vehicle_parts_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="hospital"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="sparse_hospital_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="hospital"
+  loot_generator__gameObjType:t="middle_furniture"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="sparse_middle_furniture_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="lake_village"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="sparse_lake_village_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="green_oaks"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="sparse_green_oaks_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="military_town"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="sparse_military_town_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="market"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="sparse_market_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="littletown"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="sparse_littletown_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="redding"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="sparse_redding_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  transform:m=[[29.0479, 0, -7.49795] [0, 10, 0] [12.4966, -0, 48.4132] [548.521, 80.09, -91.8276]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="sparse_militarybase_navarro_barraks_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  transform:m=[[29.0479, 0, -7.49795] [0, 10, 0] [12.4966, -0, 48.4132] [565.098, 80.09, -30.9316]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="sparse_militarybase_navarro_barraks_2_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  transform:m=[[58.0111, 0, -15.3203] [0, 10, 0] [12.7669, -0, 48.3426] [606.613, 80.09, 16.5161]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="sparse_militarybase_navarro_headquarter_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  transform:m=[[184.851, 0, 76.3546] [0, 10, -0] [-57.266, 0, 138.638] [721.493, 80.09, 195.344]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="sparse_militarybase_navarro_polygon_loot_preset"
+}

@@ -1,0 +1,1393 @@
+box_9mm_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="sovmod_ammo_9mm_char"
+  item__proto:t="box_9mm_magazine"
+  ammo_holder__templateName:t="box_9mm_magazine"
+  boxed_item__template:t="box_9mm_magazine"
+  boxed_item__itemName:t="items/ammo_9mm"
+  item__countPerStack:i=32
+  item__name:t="items/box_9mm_magazine"
+  collres__res:t="sovmod_ammo_9mm_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=0.35
+  item__volumePerStack:r=3.2
+  item__marketPrice:i=225
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+}
+
+box_9mm_magazine_partial{
+  item_holder__rndItemCount:ip2=5, 10
+}
+
+box_9x19_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="sovmod_ammo_9x19_char"
+  item__proto:t="box_9x19_magazine"
+  ammo_holder__templateName:t="box_9x19_magazine"
+  boxed_item__template:t="box_9x19_magazine"
+  boxed_item__itemName:t="items/ammo_9x19"
+  item__countPerStack:i=32
+  item__name:t="items/box_9x19_magazine"
+  collres__res:t="sovmod_ammo_9mm_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=0.4
+  item__volumePerStack:r=3.2
+  item__marketPrice:i=250
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+}
+
+box_45_acp_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="sovmod_ammo_45acp_char"
+  item__proto:t="box_45_acp_magazine"
+  ammo_holder__templateName:t="box_45_acp_magazine"
+  boxed_item__template:t="box_45_acp_magazine"
+  boxed_item__itemName:t="items/ammo_45_acp"
+  item__countPerStack:i=30
+  item__name:t="items/box_45_acp_magazine"
+  collres__res:t="sovmod_ammo_45acp_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=0.5
+  item__volumePerStack:r=3
+  item__marketPrice:i=275
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+}
+
+box_45_acp_magazine_partial{
+  item_holder__rndItemCount:ip2=5, 10
+}
+
+box_9x39_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="sovmod_ammo_9x39_char"
+  item__proto:t="box_9x39_magazine"
+  ammo_holder__templateName:t="box_9x39_magazine"
+  boxed_item__template:t="box_9x39_magazine"
+  boxed_item__itemName:t="items/ammo_9x39"
+  item__countPerStack:i=30
+  item__name:t="items/box_9x39_magazine"
+  collres__res:t="sovmod_ammo_762x39_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=0.75
+  item__volumePerStack:r=3
+  item__marketPrice:i=500
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+}
+
+box_9x39_magazine_partial{
+  item_holder__rndItemCount:ip2=5, 10
+}
+
+box_7_62x39_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="sovmod_ammo_762x39_char"
+  item__proto:t="box_7_62x39_magazine"
+  ammo_holder__templateName:t="box_7_62x39_magazine"
+  boxed_item__template:t="box_7_62x39_magazine"
+  boxed_item__itemName:t="items/ammo_7_62x39"
+  item__countPerStack:i=30
+  item__name:t="items/box_7_62x39_magazine"
+  collres__res:t="sovmod_ammo_762x39_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=0.6
+  item__volumePerStack:r=3
+  item__marketPrice:i=400
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+}
+
+box_7_62x39_magazine_partial{
+  item_holder__rndItemCount:ip2=5, 10
+}
+
+box_5_45x39_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="sovmod_ammo_545x39_char"
+  item__proto:t="box_5_45x39_magazine"
+  ammo_holder__templateName:t="box_5_45x39_magazine"
+  boxed_item__template:t="box_5_45x39_magazine"
+  boxed_item__itemName:t="items/ammo_5_45x39"
+  item__countPerStack:i=30
+  item__name:t="items/box_5_45x39_magazine"
+  collres__res:t="sovmod_ammo_556_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=0.4
+  item__volumePerStack:r=3
+  item__marketPrice:i=400
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+}
+
+box_5_45x39_magazine_partial{
+  item_holder__rndItemCount:ip2=5, 10
+}
+
+box_5_56_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="sovmod_ammo_556_char"
+  item__proto:t="box_5_56_magazine"
+  ammo_holder__templateName:t="box_5_56_magazine"
+  boxed_item__template:t="box_5_56_magazine"
+  boxed_item__itemName:t="items/ammo_5_56"
+  item__countPerStack:i=30
+  item__name:t="items/box_5_56_magazine"
+  collres__res:t="sovmod_ammo_556_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=0.4
+  item__volumePerStack:r=3
+  item__marketPrice:i=425
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+}
+
+box_12_gauge_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="sovmod_ammo_12ga_char"
+  item__proto:t="box_12_gauge_magazine"
+  ammo_holder__templateName:t="box_12_gauge_magazine"
+  boxed_item__template:t="box_12_gauge_magazine"
+  boxed_item__itemName:t="items/ammo_12_gauge"
+  item__countPerStack:i=12
+  item__name:t="items/box_12_gauge_magazine"
+  collres__res:t="sovmod_ammo_12ga_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=0.4
+  item__volumePerStack:r=4.8
+  item__marketPrice:i=300
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+}
+
+box_12_gauge_magazine_partial{
+  item_holder__rndItemCount:ip2=3, 6
+}
+
+box_23x75_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="sovmod_ammo_23x75_char"
+  item__proto:t="box_23x75_magazine"
+  ammo_holder__templateName:t="box_23x75_magazine"
+  boxed_item__template:t="box_23x75_magazine"
+  boxed_item__itemName:t="items/ammo_23x75"
+  item__countPerStack:i=12
+  item__name:t="items/box_23x75_magazine"
+  collres__res:t="sovmod_ammo_12ga_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=1.1
+  item__volumePerStack:r=4.8
+  item__marketPrice:i=390
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+}
+
+box_23x75_magazine_partial{
+  item_holder__rndItemCount:ip2=3, 6
+}
+
+box_7_62x54_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="sovmod_ammo_762x54_char"
+  item__proto:t="box_7_62x54_magazine"
+  ammo_holder__templateName:t="box_7_62x54_magazine"
+  boxed_item__template:t="box_7_62x54_magazine"
+  boxed_item__itemName:t="items/ammo_7_62x54"
+  item__countPerStack:i=30
+  item__name:t="items/box_7_62x54_magazine"
+  collres__res:t="sovmod_ammo_762x54_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=0.75
+  item__volumePerStack:r=6
+  item__marketPrice:i=600
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+}
+
+box_7_62x54_magazine_partial{
+  item_holder__rndItemCount:ip2=5, 10
+}
+
+box_7_62x51_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="sovmod_ammo_762x51_char"
+  item__proto:t="box_7_62x51_magazine"
+  ammo_holder__templateName:t="box_7_62x51_magazine"
+  boxed_item__template:t="box_7_62x51_magazine"
+  boxed_item__itemName:t="items/ammo_7_62x51"
+  item__countPerStack:i=30
+  item__name:t="items/box_7_62x51_magazine"
+  collres__res:t="sovmod_ammo_762x51_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=0.75
+  item__volumePerStack:r=6
+  item__marketPrice:i=575
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+}
+
+box_7_62x51_magazine_partial{
+  item_holder__rndItemCount:ip2=5, 10
+}
+
+box_12_7x55_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="sovmod_ammo_127x55_char"
+  item__proto:t="box_12_7x55_magazine"
+  ammo_holder__templateName:t="box_12_7x55_magazine"
+  boxed_item__template:t="box_12_7x55_magazine"
+  boxed_item__itemName:t="items/ammo_12_7x55"
+  item__countPerStack:i=20
+  item__name:t="items/box_12_7x55_magazine"
+  collres__res:t="sovmod_ammo_127x55_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=0.55
+  item__volumePerStack:r=6
+  item__marketPrice:i=700
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+}
+
+box_416_barret_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="sovmod_ammo_50cal_char"
+  item__proto:t="box_416_barret_magazine"
+  item__iconScale:r=1
+  ammo_holder__templateName:t="box_416_barret_magazine"
+  boxed_item__template:t="box_416_barret_magazine"
+  boxed_item__itemName:t="items/ammo_416_barret"
+  item__countPerStack:i=15
+  item__name:t="items/box_416_barret_magazine"
+  collres__res:t="sovmod_ammo_50cal_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=0.55
+  item__volumePerStack:r=6
+  item__marketPrice:i=800
+}
+
+box_7_92x57_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="cr_ammo_7_92x57_char"
+  item__proto:t="box_7_92x57_magazine"
+  ammo_holder__templateName:t="box_7_92x57_magazine"
+  boxed_item__template:t="box_7_92x57_magazine"
+  boxed_item__itemName:t="items/ammo_7_92x57"
+  item__countPerStack:i=30
+  item__name:t="items/box_7_92x57_magazine"
+  collres__res:t="cr_ammo_7_92x57_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__iconYaw:r=30
+  item__iconPitch:r=30
+  item__baseWeight:r=0.8
+  item__volumePerStack:r=3
+}
+
+box_7_62x25_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="cr_ammo_7_62x25_char"
+  item__proto:t="box_7_62x25_magazine"
+  ammo_holder__templateName:t="box_7_62x25_magazine"
+  boxed_item__template:t="box_7_62x25_magazine"
+  boxed_item__itemName:t="items/ammo_7_62x25"
+  item__countPerStack:i=30
+  item__name:t="items/box_7_62x25_magazine"
+  collres__res:t="cr_ammo_7_62x25_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=0.35
+  item__volumePerStack:r=3
+}
+
+box_30_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="cr_ammo_30cal_char"
+  item__proto:t="box_30_magazine"
+  ammo_holder__templateName:t="box_30_magazine"
+  boxed_item__template:t="box_30_magazine"
+  boxed_item__itemName:t="items/ammo_30"
+  item__countPerStack:i=20
+  item__name:t="items/box_30_magazine"
+  collres__res:t="cr_ammo_30cal_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__baseWeight:r=0.3
+  item__volumePerStack:r=2
+}
+
+box_22_LR_magazine{
+  _use:t="boxed_ammo"
+  animchar__res:t="sovmod_ammo_22lr_char"
+  item__proto:t="box_22_LR_magazine"
+  ammo_holder__templateName:t="box_22_LR_magazine"
+  boxed_item__template:t="box_22_LR_magazine"
+  boxed_item__itemName:t="items/ammo_22_LR"
+  item__countPerStack:i=30
+  item__name:t="items/box_22_LR_magazine"
+  collres__res:t="sovmod_ammo_762x39_collision"
+  dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
+  item__weightPerStack:r=0.15
+  item__volumePerStack:r=3
+}
+
+barrett_m82a1_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="barrett_m82a1_ammo_char"
+  item__proto:t="barrett_m82a1_magazine"
+  ammo_holder__templateName:t="barrett_m82a1_magazine"
+  item_holder__maxItemCount:i=10
+  item_holder__boxedItemTemplate:t="box_416_barret_magazine"
+  item__baseWeight:r=0.28
+  item__volume:r=4
+  item__name:t="items/barrett_m82a1_magazine"
+  collres__res:t="barrett_m82a1_ammo_collision"
+  item__marketPrice:i=730
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_barrett_m82a1"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hk_mp5n_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="hk_mp5n_ammo_char"
+  item__proto:t="hk_mp5n_magazine"
+  ammo_holder__templateName:t="hk_mp5n_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_9x19_magazine"
+  item__baseWeight:r=0.17
+  item__volume:r=2
+  item__name:t="items/hk_mp5n_magazine"
+  collres__res:t="hk_mp5n_ammo_collision"
+  item__marketPrice:i=435
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_hk_mp5n"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hk_ump_45_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="hk_ump_45_ammo_char"
+  item__proto:t="hk_ump_45_magazine"
+  ammo_holder__templateName:t="hk_ump_45_magazine"
+  item_holder__maxItemCount:i=25
+  item_holder__boxedItemTemplate:t="box_45_acp_magazine"
+  item__baseWeight:r=0.17
+  item__volume:r=2
+  item__name:t="items/hk_ump_45_magazine"
+  collres__res:t="hk_ump_45_ammo_collision"
+  item__marketPrice:i=430
+  showroom_item__customZoom:r=2.4
+  showroom_item__customZoomBordersRng:p2=2, 2.8
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_hk_mp5n"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+steyr_aug_a1_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="steyr_aug_a1_ammo_char"
+  item__proto:t="steyr_aug_a1_magazine"
+  ammo_holder__templateName:t="steyr_aug_a1_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_5_56_magazine"
+  item__baseWeight:r=0.15
+  item__volume:r=3
+  item__name:t="items/steyr_aug_a1_magazine"
+  collres__res:t="steyr_aug_a1_ammo_collision"
+  item__marketPrice:i=625
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_steyr_aug_a1"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+m4_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="m4_ammo_char"
+  item__proto:t="m4_magazine"
+  ammo_holder__templateName:t="m4_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_5_56_magazine"
+  item__baseWeight:r=0.25
+  item__volume:r=3
+  item__name:t="items/m4_magazine"
+  collres__res:t="m4_ammo_collision"
+  item__marketPrice:i=625
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_m4"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+m4_rust_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="m4_ammo_char"
+  item__proto:t="m4_rust_magazine"
+  ammo_holder__templateName:t="m4_rust_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_5_56_magazine"
+  item__baseWeight:r=0.25
+  item__volume:r=3
+  item__name:t="items/m4_rust_magazine"
+  collres__res:t="m4_ammo_collision"
+  item__marketPrice:i=625
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_m4"
+  }
+
+  "animchar__objTexReplace:object"{
+    "m4_ammo_d*":t="m4_ammo_rust_tex_d*"
+    "m4_ammo_n*":t="m4_ammo_rust_tex_n*"
+  }
+}
+
+m4a1_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="m4a1_ammo_char"
+  item__proto:t="m4a1_magazine"
+  ammo_holder__templateName:t="m4a1_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_5_56_magazine"
+  item__baseWeight:r=0.25
+  item__volume:r=3
+  item__name:t="items/m4a1_magazine"
+  collres__res:t="m4a1_ammo_collision"
+  item__marketPrice:i=625
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_m4a1"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+ak_103_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="ak_103_762_ammo_char"
+  item__proto:t="ak_103_magazine"
+  ammo_holder__templateName:t="ak_103_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_7_62x39_magazine"
+  item__baseWeight:r=0.25
+  item__volume:r=3
+  item__name:t="items/ak_103_magazine"
+  collres__res:t="akm_ammo_collision"
+  item__marketPrice:i=650
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_ak_103"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+fn_scar_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="fn_scar_ammo_char"
+  item__proto:t="fn_scar_magazine"
+  ammo_holder__templateName:t="fn_scar_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_5_56_magazine"
+  item__baseWeight:r=0.12
+  item__volume:r=3
+  item__name:t="items/fn_scar_magazine"
+  collres__res:t="fn_scar_ammo_collision"
+  item__marketPrice:i=625
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_fn_scar"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+akm_47_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="akm_ammo_char"
+  item__proto:t="akm_47_magazine"
+  ammo_holder__templateName:t="akm_47_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_7_62x39_magazine"
+  item__baseWeight:r=0.25
+  item__volume:r=3
+  item__name:t="items/akm_47_magazine"
+  collres__res:t="akm_ammo_collision"
+  item__marketPrice:i=650
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+vepr_10rd_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="vepr_10rd_ammo_char"
+  item__proto:t="vepr_10rd_magazine"
+  ammo_holder__templateName:t="vepr_10rd_magazine"
+  item_holder__maxItemCount:i=10
+  item_holder__boxedItemTemplate:t="box_7_62x39_magazine"
+  item__baseWeight:r=0.12
+  item__volume:r=2
+  item__name:t="items/vepr_10rd_magazine"
+  collres__res:t="vepr_10rd_ammo_collision"
+  item__marketPrice:i=350
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+akm_47_rust_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="akm_ammo_char"
+  item__proto:t="akm_47_rust_magazine"
+  ammo_holder__templateName:t="akm_47_rust_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_7_62x39_magazine"
+  item__baseWeight:r=0.25
+  item__volume:r=3
+  item__name:t="items/akm_47_rust_magazine"
+  collres__res:t="akm_ammo_collision"
+  item__marketPrice:i=650
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+
+  "animchar__objTexReplace:object"{
+    "akm_steel_mag_tex_d*":t="akm_steel_mag_rust_tex_d*"
+    "akm_steel_mag_tex_n*":t="akm_steel_mag_rust_tex_n*"
+  }
+}
+
+akm_47_bakelite_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="tkb022p_ammo_char"
+  item__proto:t="akm_47_bakelite_magazine"
+  ammo_holder__templateName:t="akm_47_bakelite_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_7_62x39_magazine"
+  item__baseWeight:r=0.235
+  item__volume:r=3
+  item__name:t="items/akm_47_bakelite_magazine"
+  collres__res:t="tkb022p_ammo_collision"
+  item__marketPrice:i=650
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+akm_47_enhanced_magazine_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__damageMult:r=1.17
+}
+
+akm_47_enhanced_magazine{
+  _use:t="akm_47_magazine"
+  _use:t="gun_mod_with_effect"
+  animchar__res:t="akm_enhanced_ammo_char"
+  collres__res:t="akm_enhanced_ammo_collision"
+  item__proto:t="akm_47_enhanced_magazine"
+  ammo_holder__templateName:t="akm_47_enhanced_magazine"
+  item__name:t="items/akm_47_enhanced_magazine"
+  gun_mod__effectTemplate:t="akm_47_enhanced_magazine_effect"
+  profile_server_data__enrichmentAMCount:ip2=40, 50
+
+  "requires_distortion_render:tag"{}
+}
+
+makarov_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="makarov_ammo_char"
+  item__proto:t="makarov_magazine"
+  ammo_holder__templateName:t="makarov_magazine"
+  item_holder__maxItemCount:i=8
+  item_holder__boxedItemTemplate:t="box_9mm_magazine"
+  item__baseWeight:r=0.08
+  item__volume:r=2
+  item__name:t="items/makarov_magazine"
+  collres__res:t="makarov_ammo_collision"
+  item__marketPrice:i=160
+  showroom_item__customZoom:r=2.2
+  showroom_item__customZoomBordersRng:p2=2, 2.4
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_makarov"
+  }
+}
+
+pp_19_vityaz_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="pp_19_vityaz_ammo_char"
+  item__proto:t="pp_19_vityaz_magazine"
+  ammo_holder__templateName:t="pp_19_vityaz_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_9x19_magazine"
+  item__baseWeight:r=0.17
+  item__volume:r=2
+  item__name:t="items/pp_19_vityaz_magazine"
+  collres__res:t="pp_19_vityaz_ammo_collision"
+  item__marketPrice:i=435
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_pp_19_vityaz"
+  }
+}
+
+ak_12_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="ak_12_545_ammo_char"
+  item__proto:t="ak_12_magazine"
+  ammo_holder__templateName:t="ak_12_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_5_45x39_magazine"
+  item__baseWeight:r=0.22
+  item__volume:r=3
+  item__name:t="items/ak_12_magazine"
+  collres__res:t="akm_ammo_collision"
+  item__marketPrice:i=600
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_ak12"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hawk_type_97_1_magazine{
+  _use:t="item_magazine"
+  animchar__res:t="browning_auto_5_ammo_char"
+  item__proto:t="hawk_type_97_1_magazine"
+  ammo_holder__templateName:t="hawk_type_97_1_magazine"
+  item__baseWeight:r=0.25
+  item__volume:r=3
+  item__name:t="items/hawk_type_97_1_magazine"
+  collres__res:t="browning_auto_5_ammo_collision"
+}
+
+scorpion_evo_3_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="scorpion_evo_iii_ammo_char"
+  item__proto:t="scorpion_evo_3_magazine"
+  ammo_holder__templateName:t="scorpion_evo_3_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_9x19_magazine"
+  item__baseWeight:r=0.13
+  item__volume:r=2
+  item__name:t="items/scorpion_evo_3_magazine"
+  collres__res:t="hk_mp5n_ammo_collision"
+  item__marketPrice:i=435
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_scorpion_evo_iii"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+crossbow_bolt_item{
+  _use:t="boxed_ammo"
+  _use:t="crossbow_bolt_char"
+  animchar__turnDir:b=yes
+  dropTm:m=[[0, 0, -1] [1, 0, 0] [0, -1, 0] [0, 0.03, 0]]
+  item__proto:t="crossbow_bolt_item"
+  item__shell:t="gamedata/weapons/ammoholders/crossbow_bolt.blk"
+  ammo_holder__templateName:t="crossbow_bolt_item"
+  boxed_item__template:t="crossbow_bolt_item"
+  item__weight:r=0.035
+  item__volume:r=0.1
+  item__name:t="items/crossbow_bolt"
+  item__countPerStack:i=1
+  item__weightPerStack:r=0.2
+  item__volumePerStack:r=0.1
+  item__marketPrice:i=35
+  showroom_item__customZoom:r=1.8
+  showroom_item__customZoomBordersRng:p2=1.6, 2.2
+}
+
+crossbow_bolt_explosive_item{
+  _use:t="item_grenade"
+  _use:t="boxed_ammo"
+  _use:t="crossbow_he_bolt_char"
+  item__proto:t="crossbow_bolt_explosive_item"
+  item__shell:t="gamedata/weapons/shell/crossbow_bolt_explosive.blk"
+  item__weight:r=0.06
+  item__volume:r=0.1
+  item__name:t="items/crossbow_bolt_explosive"
+  item__grenadeType:t="shell"
+  ammo_holder__id:i=-1
+  ammo_holder__templateName:t="crossbow_bolt_explosive_item"
+  boxed_item__template:t="crossbow_bolt_explosive_item"
+  item__countPerStack:i=1
+  item__weightPerStack:r=0.3
+  item__volumePerStack:r=0.2
+  item__marketPrice:i=200
+}
+
+as_val_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="as_val_ammo_char"
+  item__proto:t="as_val_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="as_val_magazine"
+  item_holder__maxItemCount:i=20
+  item_holder__boxedItemTemplate:t="box_9x39_magazine"
+  item__baseWeight:r=0.18
+  item__volume:r=3
+  item__name:t="items/as_val_magazine"
+  collres__res:t="as_val_ammo_collision"
+  item__marketPrice:i=535
+  gunAttachable__slotTag:t="as_val_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_as_val"
+  }
+}
+
+flamethrower_magazine{
+  _use:t="item_magazine"
+  animchar__res:t="xvp_flame_ammo_char"
+  collres__res:t="xvp_flame_ammo_collision"
+  item__proto:t="flamethrower_magazine"
+  ammo_holder__templateName:t="flamethrower_magazine"
+  item_holder__maxItemCount:i=400
+  item__name:t="items/flamethrower_magazine"
+  item__marketPrice:i=500
+  item__baseWeight:r=1.4
+  item__volume:r=6
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+mp_443_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="mp_443_ammo_char"
+  item__proto:t="mp_443_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="mp_443_magazine"
+  item_holder__maxItemCount:i=17
+  item_holder__boxedItemTemplate:t="box_9x19_magazine"
+  item__baseWeight:r=0.1
+  item__volume:r=2
+  item__name:t="items/mp_443_magazine"
+  collres__res:t="m1911_colt_ammo_collision"
+  item__marketPrice:i=235
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_mp_443"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+stechkin_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="makarov_ammo_char"
+  item__proto:t="stechkin_magazine"
+  ammo_holder__templateName:t="stechkin_magazine"
+  item_holder__maxItemCount:i=20
+  item_holder__boxedItemTemplate:t="box_9mm_magazine"
+  item__baseWeight:r=0.045
+  item__volume:r=2
+  item__name:t="items/stechkin_magazine"
+  collres__res:t="makarov_ammo_collision"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+tt_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="makarov_ammo_char"
+  item__proto:t="tt_magazine"
+  ammo_holder__templateName:t="tt_magazine"
+  item_holder__maxItemCount:i=8
+  item_holder__boxedItemTemplate:t="box_7_62x25_magazine"
+  item__baseWeight:r=0.08
+  item__volume:r=2
+  item__name:t="items/tt_magazine"
+  collres__res:t="makarov_ammo_collision"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+luger_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="makarov_ammo_char"
+  item__proto:t="luger_magazine"
+  ammo_holder__templateName:t="luger_magazine"
+  item_holder__maxItemCount:i=8
+  item_holder__boxedItemTemplate:t="box_9x19_magazine"
+  item__baseWeight:r=0.1
+  item__volume:r=2
+  item__name:t="items/luger_magazine"
+  collres__res:t="makarov_ammo_collision"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+beretta_m9_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="beretta_m9_ammo_char"
+  item__proto:t="beretta_m9_magazine"
+  ammo_holder__templateName:t="beretta_m9_magazine"
+  item_holder__maxItemCount:i=15
+  item_holder__boxedItemTemplate:t="box_9x19_magazine"
+  item__baseWeight:r=0.08
+  item__volume:r=2
+  item__name:t="items/beretta_m9_magazine"
+  collres__res:t="beretta_m9_ammo_collision"
+  item__marketPrice:i=220
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_beretta_m9"
+  }
+}
+
+glock_17_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="makarov_ammo_char"
+  item__proto:t="glock_17_magazine"
+  ammo_holder__templateName:t="glock_17_magazine"
+  item_holder__maxItemCount:i=13
+  item_holder__boxedItemTemplate:t="box_45_acp_magazine"
+  item__baseWeight:r=0.1
+  item__volume:r=2
+  item__name:t="items/glock_17_magazine"
+  collres__res:t="makarov_ammo_collision"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+rsh_12_magazine{
+  _use:t="item_magazine"
+  animchar__res:t="makarov_ammo_char"
+  item__proto:t="rsh_12_magazine"
+  ammo_holder__templateName:t="rsh_12_magazine"
+  item__baseWeight:r=0.23
+  item__volume:r=2
+  item__name:t="items/rsh_12_magazine"
+  collres__res:t="makarov_ammo_collision"
+}
+
+mc3_record_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="makarov_ammo_char"
+  item__proto:t="glock_17_magazine"
+  ammo_holder__templateName:t="mc3_record_magazine"
+  item_holder__maxItemCount:i=13
+  item_holder__boxedItemTemplate:t="box_22_LR_magazine"
+  item__baseWeight:r=0.1
+  item__volume:r=2
+  item__name:t="items/mc3_record_magazine"
+  collres__res:t="makarov_ammo_collision"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+ppsh_41_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="pp_19_vityaz_ammo_char"
+  item__proto:t="ppsh_41_magazine"
+  ammo_holder__templateName:t="ppsh_41_magazine"
+  item_holder__maxItemCount:i=35
+  item_holder__boxedItemTemplate:t="box_7_62x25_magazine"
+  item__baseWeight:r=0.17
+  item__volume:r=2
+  item__name:t="items/ppsh_41_magazine"
+  collres__res:t="pp_19_vityaz_ammo_collision"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+pp_91_kedr_20_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="pp91_ammo_20rd_char"
+  item__proto:t="pp_91_kedr_20_magazine"
+  ammo_holder__templateName:t="pp_91_kedr_20_magazine"
+  item_holder__maxItemCount:i=20
+  item_holder__boxedItemTemplate:t="box_9mm_magazine"
+  item__baseWeight:r=0.17
+  item__volume:r=2
+  item__name:t="items/pp_91_kedr_20_magazine"
+  collres__res:t="pp91_ammo_20rd_collision"
+  item__marketPrice:i=340
+  showroom_item__customZoom:r=2.4
+  showroom_item__customZoomBordersRng:p2=2, 2.8
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_pp91_kedr"
+  }
+}
+
+pp_91_kedr_30_magazine{
+  _use:t="base_magazine"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="pp91_ammo_30rd_char"
+  item__proto:t="pp_91_kedr_30_magazine"
+  ammo_holder__templateName:t="pp_91_kedr_30_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_9mm_magazine"
+  item__baseWeight:r=0.2
+  item__volume:r=2
+  item__name:t="items/pp_91_kedr_30_magazine"
+  collres__res:t="pp91_ammo_30rd_collision"
+  item__marketPrice:i=410
+  showroom_item__customZoom:r=2.4
+  showroom_item__customZoomBordersRng:p2=2, 2.8
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_pp91_kedr"
+  }
+}
+
+pm_63_rak_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="pm63_ammo_char"
+  item__proto:t="pm_63_rak_magazine"
+  ammo_holder__templateName:t="pm_63_rak_magazine"
+  item_holder__maxItemCount:i=25
+  item_holder__boxedItemTemplate:t="box_9mm_magazine"
+  item__baseWeight:r=0.17
+  item__volume:r=2
+  item__name:t="items/pm_63_rak_magazine"
+  collres__res:t="pm63_ammo_collision"
+  item__marketPrice:i=375
+  showroom_item__customZoom:r=2.4
+  showroom_item__customZoomBordersRng:p2=2, 2.8
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_pm63"
+  }
+}
+
+uzi_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="pp_19_vityaz_ammo_char"
+  item__proto:t="uzi_magazine"
+  ammo_holder__templateName:t="uzi_magazine"
+  item_holder__maxItemCount:i=25
+  item_holder__boxedItemTemplate:t="box_9x19_magazine"
+  item__baseWeight:r=0.17
+  item__volume:r=2
+  item__name:t="items/uzi_magazine"
+  collres__res:t="pp_19_vityaz_ammo_collision"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+pp_2000_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="pp_19_vityaz_ammo_char"
+  item__proto:t="pp_2000_magazine"
+  ammo_holder__templateName:t="pp_2000_magazine"
+  item_holder__maxItemCount:i=32
+  item_holder__boxedItemTemplate:t="box_9x19_magazine"
+  item__baseWeight:r=0.17
+  item__volume:r=2
+  item__name:t="items/pp_2000_magazine"
+  collres__res:t="pp_19_vityaz_ammo_collision"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+kriss_vector_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="kriss_vector_ammo_char"
+  item__proto:t="kriss_vector_magazine"
+  ammo_holder__templateName:t="kriss_vector_magazine"
+  item_holder__maxItemCount:i=13
+  item_holder__boxedItemTemplate:t="box_45_acp_magazine"
+  item__baseWeight:r=0.08
+  item__volume:r=2
+  item__name:t="items/kriss_vector_magazine"
+  collres__res:t="kriss_vector_ammo_collision"
+  item__marketPrice:i=220
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+kriss_vector_30_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="kriss_vector_ammo_b_char"
+  item__proto:t="kriss_vector_30_magazine"
+  ammo_holder__templateName:t="kriss_vector_30_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_45_acp_magazine"
+  item__baseWeight:r=0.2
+  item__volume:r=2
+  item__name:t="items/kriss_vector_30_magazine"
+  collres__res:t="kriss_vector_ammo_b_collision"
+  item__marketPrice:i=475
+  item__iconPitch:r=25
+  item__iconRoll:r=0
+  item__iconYaw:r=60
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+origin_12_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="ak_12_545_ammo_char"
+  item__proto:t="origin_12_magazine"
+  ammo_holder__templateName:t="origin_12_magazine"
+  item_holder__maxItemCount:i=10
+  item_holder__boxedItemTemplate:t="box_12_gauge_magazine"
+  item__baseWeight:r=0.22
+  item__volume:r=2
+  item__name:t="items/origin_12_magazine"
+  collres__res:t="akm_ammo_collision"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+aa_12_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="ak_12_545_ammo_char"
+  item__proto:t="aa_12_magazine"
+  ammo_holder__templateName:t="aa_12_magazine"
+  item_holder__maxItemCount:i=8
+  item_holder__boxedItemTemplate:t="box_12_gauge_magazine"
+  item__baseWeight:r=0.7
+  item__volume:r=3
+  item__name:t="items/aa_12_magazine"
+  collres__res:t="akm_ammo_collision"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+mc_18_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="as_val_ammo_char"
+  item__proto:t="mc_18_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="mc_18_magazine"
+  item_holder__maxItemCount:i=10
+  item_holder__boxedItemTemplate:t="box_22_LR_magazine"
+  item__baseWeight:r=0.1
+  item__volume:r=2
+  item__name:t="items/mc_18_magazine"
+  collres__res:t="as_val_ammo_collision"
+  gunAttachable__slotTag:t="mc_18_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+svd_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="svd_ammo_char"
+  item__proto:t="svd_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="svd_magazine"
+  item_holder__maxItemCount:i=10
+  item_holder__boxedItemTemplate:t="box_7_62x54_magazine"
+  item__baseWeight:r=0.12
+  item__volume:r=2
+  item__name:t="items/svd_magazine"
+  collres__res:t="svd_ammo_collision"
+  item__marketPrice:i=400
+  gunAttachable__slotTag:t="svd_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_svd"
+  }
+}
+
+ruger_10_22_specops_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="hk_mp5n_ammo_char"
+  item__proto:t="ruger_10_22_specops_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="ruger_10_22_specops_magazine"
+  item_holder__maxItemCount:i=25
+  item_holder__boxedItemTemplate:t="box_22_LR_magazine"
+  item__baseWeight:r=0.25
+  item__volume:r=2
+  item__name:t="items/ruger_10_22_specops_magazine"
+  collres__res:t="ruger_10_22_specops_ammo_collision"
+  gunAttachable__slotTag:t="svd_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+sv98_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="sv_98_ammo_char"
+  item__proto:t="sv98_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="sv98_magazine"
+  item_holder__maxItemCount:i=10
+  item_holder__boxedItemTemplate:t="box_7_62x51_magazine"
+  item__baseWeight:r=0.12
+  item__volume:r=2
+  item__name:t="items/sv98_magazine"
+  collres__res:t="sv_98_ammo_collision"
+  item__marketPrice:i=390
+  gunAttachable__slotTag:t="sv98_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_sv_98"
+  }
+}
+
+vssk_vyhlop_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="barrett_m82a1_ammo_char"
+  item__proto:t="vssk_vyhlop_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="vssk_vyhlop_magazine"
+  item_holder__maxItemCount:i=10
+  item_holder__boxedItemTemplate:t="box_12_7x55_magazine"
+  item__baseWeight:r=0.41
+  item__volume:r=3
+  item__name:t="items/vssk_vyhlop_magazine"
+  collres__res:t="as_val_ammo_collision"
+  gunAttachable__slotTag:t="vssk_vyhlop_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+m110a1_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="m110a1_sdmr_ammo_char"
+  item__proto:t="m110a1_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="m110a1_magazine"
+  item_holder__maxItemCount:i=20
+  item_holder__boxedItemTemplate:t="box_7_62x51_magazine"
+  item__baseWeight:r=0.3
+  item__volume:r=2
+  item__name:t="items/m110a1_magazine"
+  collres__res:t="m110a1_sdmr_ammo_collision"
+  item__marketPrice:i=580
+  gunAttachable__slotTag:t="m110a1_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_m110a1_sdmr"
+  }
+}
+
+hk_g3a4_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="g3a4_ammo_char"
+  item__proto:t="hk_g3a4_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="hk_g3a4_magazine"
+  item_holder__maxItemCount:i=20
+  item_holder__boxedItemTemplate:t="box_7_62x51_magazine"
+  item__baseWeight:r=0.26
+  item__volume:r=2
+  item__name:t="items/hk_g3a4_magazine"
+  collres__res:t="g3a4_ammo_collision"
+  item__marketPrice:i=580
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_g3a4"
+  }
+}
+
+ak_74_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="ak_74m_ammo_char"
+  item__proto:t="ak_74_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="ak_74_magazine"
+  item_holder__maxItemCount:i=30
+  item_holder__boxedItemTemplate:t="box_5_45x39_magazine"
+  item__baseWeight:r=0.235
+  item__volume:r=3
+  item__name:t="items/ak_74_magazine"
+  collres__res:t="as_val_ammo_collision"
+  item__marketPrice:i=600
+  gunAttachable__slotTag:t="ak_74_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_rpk_74m"
+  }
+}
+
+ash_12_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="ash12_ammo_20_char"
+  item__proto:t="ash_12_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="ash_12_magazine"
+  item_holder__maxItemCount:i=20
+  item_holder__boxedItemTemplate:t="box_12_7x55_magazine"
+  item__baseWeight:r=0.5
+  item__volume:r=3
+  item__name:t="items/ash_12_magazine"
+  collres__res:t="ash12_ammo_20_collision"
+  item__marketPrice:i=900
+  gunAttachable__slotTag:t="ash_12_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_ash12"
+  }
+}
+
+rpd_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="akm_ammo_char"
+  item__proto:t="rpd_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="rpd_magazine"
+  item_holder__maxItemCount:i=100
+  item_holder__boxedItemTemplate:t="box_7_62x39_magazine"
+  item__baseWeight:r=0.235
+  item__volume:r=8
+  item__name:t="items/rpd_magazine"
+  collres__res:t="as_val_ammo_collision"
+  gunAttachable__slotTag:t="rpd_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+rpk_74_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="rpk_74m_ammo_char"
+  item__proto:t="rpk_74_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="rpk_74_magazine"
+  item_holder__maxItemCount:i=45
+  item_holder__boxedItemTemplate:t="box_5_45x39_magazine"
+  item__baseWeight:r=0.28
+  item__volume:r=4
+  item__name:t="items/rpk_74_magazine"
+  collres__res:t="rpk_74m_ammo_collision"
+  item__marketPrice:i=1200
+  gunAttachable__slotTag:t="rpk_74_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_rpk_74m"
+  }
+}
+
+pk_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="pkm_ammo_char"
+  collres__res:t="pkm_ammo_collision"
+  item__proto:t="pk_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="pk_magazine"
+  item_holder__maxItemCount:i=200
+  item_holder__boxedItemTemplate:t="box_7_62x54_magazine"
+  item__baseWeight:r=1.7
+  item__volume:r=12
+  item__name:t="items/pk_magazine"
+  item__marketPrice:i=4200
+  gunAttachable__slotTag:t="pk_magazine"
+  dropTm:m=[[-0.999983, -0.00575471, -0.000307455] [-0.00573677, 0.999105, -0.0419089] [0.000548353, -0.0419065, -0.999122] [0, 0.075, 0]]
+  item__iconPitch:r=-40
+  item__iconRoll:r=10
+  item__iconYaw:r=45
+  item__iconOffset:p2=0, 0.1
+
+  "item_holder__canLoadOnlyOnBase:tag"{}
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+fn_evolys_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="akm_ammo_char"
+  item__proto:t="fn_evolys_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="fn_evolys_magazine"
+  item_holder__maxItemCount:i=100
+  item_holder__boxedItemTemplate:t="box_7_62x51_magazine"
+  item__baseWeight:r=0.235
+  item__volume:r=4
+  item__name:t="items/fn_evolys_magazine"
+  collres__res:t="as_val_ammo_collision"
+  gunAttachable__slotTag:t="fn_evolys_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+m249_para_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="akm_ammo_char"
+  item__proto:t="m249_para_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="m249_para_magazine"
+  item_holder__maxItemCount:i=200
+  item_holder__boxedItemTemplate:t="box_5_56_magazine"
+  item__baseWeight:r=0.235
+  item__volume:r=8
+  item__name:t="items/m249_para_magazine"
+  collres__res:t="as_val_ammo_collision"
+  gunAttachable__slotTag:t="m249_para_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}
+
+aek_999_magazine{
+  _use:t="base_magazine"
+  animchar__res:t="akm_ammo_char"
+  item__proto:t="aek_999_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="aek_999_magazine"
+  item_holder__maxItemCount:i=100
+  item_holder__boxedItemTemplate:t="box_7_62x54_magazine"
+  item__baseWeight:r=0.235
+  item__volume:r=4
+  item__name:t="items/aek_999_magazine"
+  collres__res:t="as_val_ammo_collision"
+  gunAttachable__slotTag:t="aek_999_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_akm"
+  }
+}

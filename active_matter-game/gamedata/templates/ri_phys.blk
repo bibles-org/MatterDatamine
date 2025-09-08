@@ -1,0 +1,49 @@
+big_syncable_ri_phys{
+  _use:t="syncable_ri_phys"
+  phys_obj_net_phys__blk:t="gamedata/ri_phys/ri_phys.blk"
+}
+
+medium_syncable_ri_phys{
+  _use:t="syncable_ri_phys"
+  phys_obj_net_phys__blk:t="gamedata/ri_phys/ri_medium.blk"
+}
+
+client_based_ri_phys{
+  _use:t="movable_rendinst"
+  phys_body__inferFromCollRes:b=yes
+  phys_body__density:r=500
+
+  collres{}
+  "grav_zones_affected:tag"{}
+  "rendinst_phys_move__heroList:list<eid>"{}
+  phys_body{}
+}
+
+moved_rendinst_omni_light{
+  _use:t="attached_omni_light"
+  phys_moved_rendinst_hero__checkRad:r=100
+  light__use_box:b=no
+  light__contact_shadows:b=no
+  light__color:c=255, 200, 100, 255
+  light__max_radius:r=4
+  light__brightness:r=0.5
+  light__radius_scale:r=1.4
+  light__affect_volumes:b=no
+
+  _group{
+    _tags:t="render"
+    omni_light__shadows:b=no
+    omni_light__dynamic_obj_shadows:b=no
+  }
+}
+
+moved_rendinst_lighted{
+  _use:t="moved_rendinst"
+  _use:t="moved_rendinst_omni_light"
+}
+
+big_syncable_ri_phys_omni_light{
+  _use:t="moved_rendinst_omni_light"
+  _use:t="big_syncable_ri_phys"
+  rendinst_phys__afterMovetemplate:t="moved_rendinst_lighted"
+}

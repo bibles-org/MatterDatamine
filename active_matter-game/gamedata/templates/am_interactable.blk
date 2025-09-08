@@ -1,0 +1,166 @@
+use_object_base{
+  _use:t="interactable_grid_obj"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+use_object_enabled{
+  use_object__enabled:b=yes
+  _replicated:t="use_object__enabled"
+  _tracked:t="use_object__enabled"
+}
+
+usable_object_base{
+  _use:t="use_object_base"
+
+  "clientUsable:tag"{}
+}
+
+base_interactable{
+  _use:t="replicating"
+  _use:t="usable_object_base"
+  interactable__blockThisInteraction:b=no
+
+  "interactable__invoiceTemplateList:list<t>"{}
+  "interactable__invoiceList:list<eid>"{}
+  "interactable__heroEid:eid"{}
+}
+
+player_exclusive_interactable{
+  "interactable__whitelistedPlayers:list<eid>"{}
+}
+
+unpushable_door{
+  "unpushable_door:tag"{}
+}
+
+only_team_interactable{
+  team:i=-1
+
+  "only_team_interactable:tag"{}
+}
+
+omnipresent_interactable{
+  _use:t="replicating"
+  interactable__blockThisInteraction:b=no
+
+  "interactable__invoiceTemplateList:list<t>"{}
+  "interactable__invoiceList:list<eid>"{}
+  "interactable__heroEid:eid"{}
+  "interactable__uninterruptible:tag"{}
+}
+
+interactable_immediate_single_action_use{
+  "interactable__immediate_single_action_use:tag"{}
+}
+
+interactable_grid_obj{
+  grid_obj__gridType:t="interactable"
+  grid_obj__fixedTmScale:r=-1
+
+  grid_obj{}
+}
+
+active_interactable{
+  "activeInteractable:tag"{}
+}
+
+watched_invoice{
+  "watched_invoice:tag"{}
+}
+
+base_interactable_invoice{
+  _use:t="replicating"
+  interactable_invoice__name:t="anonymous_interactable"
+  interactable_invoice__icon:t="objective_acquire_data.svg"
+  interactable_invoice__available:b=yes
+  interactable_invoice__show:b=yes
+  interactable_invoice__idx:i=-1
+  _tracked:t="interactable_invoice__available"
+  _replicated:t="interactable_invoice__available"
+  _tracked:t="interactable_invoice__show"
+  _replicated:t="interactable_invoice__show"
+
+  "interactable_invoice__parentInteractableEid:eid"{}
+  "interactable_invoice__hero:eid"{}
+}
+
+base_interactable_invoice_with_piemenu{
+  _use:t="base_interactable_invoice"
+
+  "interactable_invoice__pieMenu:tag"{}
+}
+
+interactable_grid{
+  editableObj:b=no
+  _use:t="replicating"
+  _singleton:b=yes
+  grid_holder__type:t="interactable"
+  grid_holder__typeHash:i=0
+  grid_holder__smallCellSize:i=32
+
+  grid_holder{}
+}
+
+base_interactable_invoice_with_duration{
+  _use:t="base_interactable_invoice"
+  interactable_invoice__available:b=no
+  interactable_invoice__duration:r=1
+  interactable_invoice__completesAt:r=0
+  interactable_invoice__activateOnCompletion:b=yes
+  _tracked:t="interactable_invoice__completesAt"
+  _replicated:t="interactable_invoice__completesAt"
+
+  "interactable_invoice__progressBar:tag"{}
+}
+
+point_of_interest{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  poi__bindedToRi:b=yes
+  nav_binding__navMeshPos:p3=0, 0, 0
+  nav_binding__inaccessible:b=no
+
+  "pointOfInterest:tag"{}
+}
+
+indoor_point_of_interest{
+  _use:t="point_of_interest"
+
+  "indoorPointOfInterest:tag"{}
+}
+
+play_open_interactable_animation_effect{
+  _use:t="replicated_game_effect"
+  game_effect__forceAnimUpperNonCrawlState:t="upper_satchel"
+  game_effect__forceAnimUpperNonCrawlStateId:i=-1
+  game_effect__forceAnimUpperCrawlState:t="satchel_plant_crawl"
+  game_effect__forceAnimUpperCrawlStateId:i=-1
+  game_effect__enableFlag:t="human_use_object__lockVehicleUse"
+
+  "game_effect__activateUnarmed:tag"{}
+  "game_effect__hiddenWeapon:tag"{}
+  "locked_weapon__reload:tag"{}
+  "locked_weapon__aim:tag"{}
+  "locked_view__lockZoom:tag"{}
+  "game_effect__disableActions:tag"{}
+  "game_effect__disableShooting:tag"{}
+  "game_effect__disableMelee:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockSprayDraw:tag"{}
+  "locked_use_object__lockSprayFill:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "locked_use_object__lockGrenadeRethrowing:tag"{}
+  "locked_use_object__lockVehicleUse:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_use_object__limitJetpackUse:tag"{}
+  "state__disableWeaponSwitch:tag"{}
+  "game_effect__disableFlags:list<t>"{
+    item:t="human_net_phys__canJump"
+    item:t="human_net_phys__canClimb"
+    item:t="human_net_phys__canSprint"
+  }
+}
+
+iteractable_drop_on_ri_destroy{
+  "iteractable__dropOnRiDestroy:tag"{}
+}

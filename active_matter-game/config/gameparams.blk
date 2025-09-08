@@ -1,0 +1,196 @@
+rendinstExtraMaxCnt:i=524288
+rendinstPreloadDistance:r=2500
+rendinstMaxLod0Dist:r=1200
+rendinstExtraSortTransparentInstances:b=yes
+maxRiGenPerCell:i=524288
+maxRiExPerCell:i=524288
+nodeBasedShadersFolder:t="active_matter"
+disableShadowImpostorForAllLod:b=yes
+hazeDivisor:i=1
+icon_render_panorama:t="icon_render_panorama_tex_d"
+physmatBlk:t="config/physmat.blk"
+attachmentSlotsInitBlk:t="gamedata/attachment_slots.blk"
+
+character_micro_details{
+  micro_detail:t="microdetail_00_generic_noise_a_tex_n*"
+  micro_detail:t="microdetail_02_fabric_tex_n*"
+  micro_detail:t="microdetail_03_fabric_2_tex_n*"
+  micro_detail:t="microdetail_04_wool_tex_n*"
+  micro_detail:t="microdetail_05_wool_2_tex_n*"
+  micro_detail:t="microdetail_06_leather_tex_n*"
+  micro_detail:t="microdetail_07_metal_tex_n*"
+  micro_detail:t="microdetail_08_wood_tex_n*"
+  micro_detail:t="microdetail_09_cordura_tex_n*"
+  micro_detail:t="microdetail_10_nylon_tex_n*"
+  micro_detail:t="microdetail_11_ripstop_tex_n*"
+  micro_detail:t="microdetail_skin_b_tex_n*"
+  micro_detail:t="microdetail_leather_a_tex_n*"
+  micro_detail:t="microdetail_leather_b_tex_n*"
+  micro_detail:t="microdetail_leather_c_tex_n*"
+  micro_detail:t="microdetail_cloth_molly_a_tex_n*"
+  micro_detail:t="microdetail_plastic_cord_a_tex_n*"
+  micro_detail:t="microdetail_plastic_fiber_a_tex_n*"
+  micro_detail:t="microdetail_wood_bark_a_tex_n*"
+  micro_detail:t="microdetail_wood_bark_generic_b_tex_n*"
+  micro_detail:t="microdetail_wood_beams_a_tex_n*"
+  micro_detail:t="microdetail_wood_sawdust_a_tex_n*"
+  micro_detail:t="microdetail_metal_hammered_a_tex_n*"
+  micro_detail:t="microdetail_metal_scratched_a_tex_n*"
+  micro_detail:t="microdetail_paint_car_dots_a_tex_n*"
+  micro_detail:t="microdetail_paint_knobby_a_tex_n*"
+  micro_detail:t="microdetail_stucco_a_tex_n*"
+  micro_detail:t="microdetail_stucco_clay_a_tex_n*"
+  micro_detail:t="microdetail_clay_b_tex_n*"
+  micro_detail:t="microdetail_concrete_b_tex_n*"
+  micro_detail:t="microdetail_concrete_c_tex_n*"
+  micro_detail:t="microdetail_stone_porous_a_tex_n*"
+  micro_detail:t="microdetail_rock_adobe_a_tex_n*"
+  micro_detail:t="microdetail_rock_adobe_b_tex_n*"
+  micro_detail:t="microdetail_asphalt_paint_line_a_tex_n*"
+  micro_detail:t="microdetail_paper_base_a_tex_n*"
+  micro_detail:t="microdetail_snow_b_tex_n*"
+  micro_detail:t="microdetail_fungus_a_tex_n*"
+  micro_detail:t="microdetail_carbon_a_tex_n*"
+}
+
+commonScenes{
+  scene:t="gamedata/scenes/_common_misc.blk"
+  scene:t="gamedata/scenes/_common_postfx.blk"
+  scene:t="gamedata/scenes/_common_sounds.blk"
+  scene:t="gamedata/scenes/_debug_scene.blk"
+  scene:t="gamedata/scenes/_global_fx.blk"
+  scene:t="gamedata/scenes/_level_is_loading.blk"
+  scene:t="gamedata/scenes/_liana_attach_node_scene.blk"
+  scene:t="gamedata/scenes/_loose_grid_scene.blk"
+  scene:t="gamedata/scenes/_minimap.blk"
+  scene:t="gamedata/scenes/_multiplayer_ui.blk"
+  scene:t="gamedata/scenes/_ribbon_colors.blk"
+  scene:t="gamedata/scenes/_server_no_players_timer.blk"
+  scene:t="gamedata/scenes/_shell_explosions.blk"
+  scene:t="gamedata/scenes/_spline_gen_scene.blk"
+  scene:t="gamedata/scenes/_usable_objects_scene.blk"
+}
+
+commonClientScenes{
+  scene:t="gamedata/scenes/_common_blood_puddles.blk"
+  scene:t="gamedata/scenes/_common_render_scene.blk"
+  scene:t="gamedata/scenes/_animchar_infrequent_updater.blk"
+  scene:t="gamedata/scenes/_hero_cockpit.blk"
+  scene:t="gamedata/scenes/_menu_controllers.blk"
+  scene:t="gamedata/scenes/_screen_night_vision.blk"
+  scene:t="gamedata/scenes/_swarm_renderer.blk"
+  scene:t="gamedata/scenes/_temperature_anomalies_manager.blk"
+  scene:t="gamedata/scenes/_visual_effects_optimiser.blk"
+  scene:t="gamedata/scenes/_global_fx_client.blk"
+  scene:t="gamedata/scenes/_dafx_gravity_zone.blk"
+  scene:t="gamedata/scenes/_common_collimators_moa.blk"
+  scene:t="gamedata/scenes/_common_thermal_vision.blk"
+  scene:t="gamedata/scenes/_common_wounds.blk"
+  scene:t="gamedata/scenes/_common_dev.blk"
+}
+
+bulletHoles{
+  diff0:t="decal_bullethole_metal_a_tex_d*"
+  norm0:t="decal_bullethole_metal_a_tex_n*"
+  diff1:t="decal_bullethole_soil_a_tex_d*"
+  norm1:t="decal_bullethole_soil_a_tex_n*"
+  diff2:t="decal_bullethole_stone_a_tex_d*"
+  norm2:t="decal_bullethole_stone_a_tex_n*"
+  diff3:t="decal_bullethole_wood_a_tex_d*"
+  norm3:t="decal_bullethole_wood_a_tex_n*"
+}
+
+explosionPatch{
+  expl_mat_path:t="gamedata/explMat.blk"
+}
+
+localProbe{
+  updateDist:r=5
+}
+
+riExtraGrid{
+  cellSize:i=64
+  maxMainExtension:r=40
+  maxSubExtension:r=3
+  maxSubRadius:r=4
+  objectsToCreateSubGrid:i=200
+  maxLeafObjects:i=40
+  reserveObjectsOnGrow:i=4
+}
+
+riDestr{
+  hitPointsToDestrImpulseMult:r=100
+  destrImpulseHitPointsMult:r=0.01
+
+  treeDestr{
+    heightThreshold:r=3
+    impulseThresholdMult:r=67
+    radiusThreshold:r=0.5
+    canopyRestitution:r=0.5
+    canopyStiffnessMult:r=1
+    canopyAngularLimit:r=0.3
+    canopyMaxRaduis:r=5
+    canopyRollingFriction:r=5
+    canopyInertia:p3=1, 10, 1
+    constraintLimitY:p2=0, 1
+
+    radiusToImpulse{
+      row:p2=0, 1
+      row:p2=0.5, 5
+      row:p2=1, 10
+    }
+  }
+}
+
+riPhys{
+  impulseCallbacksEnabled:b=yes
+}
+
+riExtraTiledScenes{
+  scnCount:i=3
+  scn1.tileSize:r=64
+  scn1.maxDist:r=251
+  scn2.tileSize:r=128
+  scn2.maxDist:r=1001
+  scn3.tileSize:r=1024
+  scn3.maxDist:r=1e+06
+}
+
+unitedVdata.rendInst.def{
+  IB:i=80000
+  VB1:i=65536
+  VB2:i=65536
+  VB3:i=65536
+  VB4:i=65536
+}
+
+unitedVdata.dynModel.def{
+  IB:i=40000
+  VB1:i=65536
+  VB2:i=40000
+}
+
+unitedVdata.dynModel{
+  IB:i=40000
+  VB1:i=65536
+  VB2:i=40000
+}
+
+navQueryFilterWeights{
+  maxPathWeight:r=9999
+  jumpWeight:r=2
+  jumpDownWeight:r=1
+  jumpOverWeight:r=5
+  jumpDownThreshold:r=0.1
+}
+
+treeCrownTransmittance{
+  brightness:r=0.6
+  falloffStart:r=0.1
+  falloffStop:r=1.2
+  enabled:b=yes
+}
+
+timers{
+  enableSpectatorAfterTimeSec:r=6.8
+}

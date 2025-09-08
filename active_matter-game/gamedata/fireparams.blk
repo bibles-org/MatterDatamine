@@ -1,0 +1,207 @@
+presets{
+  default_code{
+    damage:r=0.25
+    damageType:t="fire"
+    isDamageRelative:b=yes
+    maxFireTime:p2=20, 30
+    nonExtinguishFireTime:r=3
+    fireRadius:r=-1
+    engineExtinguishFireSpeed:p2=100, 400
+    engineExtinguishFireSpeedChance:p2=0.05, 0.3
+    maxTankFireTime:p2=30, 35
+    fireDamagePower:r=0.25
+    fireDamagePowerRel:r=-1
+  }
+
+  tank{
+    damage:r=0.01
+    damageType:t="fire"
+    isDamageRelative:b=yes
+    maxFireTime:p2=20, 55
+    radiusScales:p2=1, 4.5
+    nonExtinguishFireTime:r=3
+    fireRadius:r=-1
+    engineExtinguishFireSpeed:p2=100, 400
+    engineExtinguishFireSpeedChance:p2=0.05, 0.3
+    maxTankFireTime:p2=30, 35
+    fireDamagePower:r=0.25
+    fireDamagePowerRel:r=-1
+  }
+
+  default{
+    damage:r=0.01
+    damageType:t="fire"
+    radiusScale:r=1.5
+    maxFireTime:p2=20, 30
+    engineExtinguishFireSpeed:p2=0, 55
+    engineExtinguishFireSpeedChance:p2=0.9, 1
+    nonExtinguishFireTime:r=1
+    maxTankFireTime:p2=30, 35
+    fireDamagePowerRel:r=0.01
+    underwaterExtinguishTime:r=1
+    underwaterExtinguishAdditionalWater:r=5000
+  }
+
+  ship_cover{
+    damage:r=0.005
+    damageType:t="fire"
+    radiusScale:r=0.2
+    radiusScales:p2=0.1, 0.3
+    allowMultipleFires:b=yes
+    maxFireTime:p2=15, 20
+    nonExtinguishFireTime:r=5
+    underwaterExtinguishTime:r=1
+    underwaterExtinguishAdditionalWater:r=1000
+  }
+
+  ship_engine{
+    damage:r=0.01
+    damageType:t="fire"
+    radiusScales:p2=0.4, 1.3
+    maxFireTime:p2=15, 40
+    nonExtinguishFireTime:r=5
+    underwaterExtinguishTime:r=1
+    underwaterExtinguishAdditionalWater:r=2000
+  }
+
+  ship_turrets{
+    damage:r=0.01
+    damageType:t="fire"
+    radiusScales:p2=0.4, 1
+    maxFireTime:p2=15, 40
+    nonExtinguishFireTime:r=5
+    underwaterExtinguishTime:r=1
+    underwaterExtinguishAdditionalWater:r=5000
+  }
+
+  ship_fuel_tank{
+    damage:r=0.05
+    damageType:t="fire"
+    radiusScales:p2=0.5, 1.7
+    maxFireTime:p2=20, 30
+    nonExtinguishFireTime:r=10
+    underwaterExtinguishTime:r=1
+    underwaterExtinguishAdditionalWater:r=5000
+  }
+
+  default_metapart{
+    damage:r=1
+    damageType:t="fire"
+    isDamageRelative:b=no
+    radiusScale:r=0.1
+    maxFireTime:p2=30, 35
+    firePart:t="transmission_dm"
+    fireDamagePower:r=1
+    maxTankFireTime:p2=30, 35
+  }
+
+  turret_bustle{
+    damage:r=1
+    damageType:t="fire"
+    isDamageRelative:b=no
+    radiusScale:r=0.1
+    maxFireTime:p2=30, 35
+    extinguisherEffective:b=no
+    fireDamagePower:r=1
+    maxTankFireTime:p2=30, 35
+  }
+
+  100kph{
+    damage:r=0.05
+    damageType:t="fire"
+    engineExtinguishFireSpeed:p2=0, 64
+    engineExtinguishFireSpeedChance:p2=0.01, 0.1
+    nonExtinguishFireTime:r=5
+    fireDamagePowerRel:r=0.05
+  }
+
+  200kph{
+    damage:r=0.05
+    damageType:t="fire"
+    engineExtinguishFireSpeed:p2=0, 92
+    engineExtinguishFireSpeedChance:p2=0.01, 0.1
+    nonExtinguishFireTime:r=5
+    fireDamagePowerRel:r=0.05
+  }
+
+  300kph{
+    damage:r=0.05
+    damageType:t="fire"
+    engineExtinguishFireSpeed:p2=28, 110
+    engineExtinguishFireSpeedChance:p2=0.01, 0.1
+    nonExtinguishFireTime:r=5
+    fireDamagePowerRel:r=0.05
+  }
+
+  400kph{
+    damage:r=0.05
+    damageType:t="fire"
+    engineExtinguishFireSpeed:p2=55, 138
+    engineExtinguishFireSpeedChance:p2=0.01, 0.1
+    nonExtinguishFireTime:r=5
+    fireDamagePowerRel:r=0.05
+  }
+
+  500kph{
+    damage:r=0.05
+    damageType:t="fire"
+    engineExtinguishFireSpeed:p2=82, 166
+    engineExtinguishFireSpeedChance:p2=0.01, 0.1
+    nonExtinguishFireTime:r=5
+    fireDamagePowerRel:r=0.05
+  }
+
+  600kph{
+    damage:r=0.05
+    damageType:t="fire"
+    engineExtinguishFireSpeed:p2=82, 194
+    engineExtinguishFireSpeedChance:p2=0.01, 0.1
+    nonExtinguishFireTime:r=5
+    fireDamagePowerRel:r=0.05
+  }
+
+  700kph{
+    damage:r=0.05
+    damageType:t="fire"
+    engineExtinguishFireSpeed:p2=138, 223
+    engineExtinguishFireSpeedChance:p2=0.01, 0.1
+    nonExtinguishFireTime:r=5
+    fireDamagePowerRel:r=0.05
+  }
+
+  800kph{
+    damage:r=0.05
+    damageType:t="fire"
+    engineExtinguishFireSpeed:p2=166, 250
+    engineExtinguishFireSpeedChance:p2=0.01, 0.1
+    nonExtinguishFireTime:r=5
+    fireDamagePowerRel:r=0.05
+  }
+
+  900kph{
+    damage:r=0.05
+    damageType:t="fire"
+    engineExtinguishFireSpeed:p2=193, 277
+    engineExtinguishFireSpeedChance:p2=0.01, 0.1
+    nonExtinguishFireTime:r=5
+    fireDamagePowerRel:r=0.05
+  }
+
+  1000kph{
+    damage:r=0.05
+    damageType:t="fire"
+    engineExtinguishFireSpeed:p2=221, 306
+    engineExtinguishFireSpeedChance:p2=0.01, 0.1
+    nonExtinguishFireTime:r=5
+    fireDamagePowerRel:r=0.05
+  }
+
+  1100kph{
+    damage:r=0.05
+    damageType:t="fire"
+    engineExtinguishFireSpeed:p2=249, 334
+    engineExtinguishFireSpeedChance:p2=0.01, 0.1
+    nonExtinguishFireTime:r=5
+    fireDamagePowerRel:r=0.05
+  }
+}

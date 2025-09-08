@@ -1,0 +1,107 @@
+hacking_cortical_vault_process{
+  _use:t="replicating"
+  hacking_cortical_vault_process__startedAt:r=0
+  hacking_cortical_vault_process__hackTime:r=6
+
+  "hacking_cortical_vault_process:tag"{}
+  "hacking_cortical_vault_process__hackerActorEid:eid"{}
+  "hacking_cortical_vault_process__ragdollPhysObjEid:eid"{}
+}
+
+hacking_cortical_vault_client{
+  hacking_cortical_vault_client__removed:b=no
+  hacking_cortical_vault_client__timeoutAt:r=0
+  hacking_cortical_vault_client__channelingNodeName:t="Bip01 L Hand"
+  hacking_cortical_vault_client__channelingNodeId:i=-1
+
+  "hacking_cortical_vault_client:tag"{}
+  "hacking_cortical_vault_client__ragdollPhysObjEid:eid"{}
+  "hacking_cortical_vault_client__animEffect:eid"{}
+  "hacking_cortical_vault_client__visualEffect:eid"{}
+}
+
+cortical_vault_human_controller{
+  _tracked:t="cortical_vault_human_controller__hackingProcessEid"
+  _replicated:t="cortical_vault_human_controller__hackingProcessEid"
+  cortical_vault_human_controller__dogtagItemTemplate:t="dogtag_item"
+  cortical_vault_human_controller__dogtagDeathReason:t=""
+  cortical_vault_human_controller__dogtagKilledByPlayer:t=""
+  cortical_vault_human_controller__dogtagKilledByWeapon:t=""
+
+  "cortical_vault_human_controller:tag"{}
+  "cortical_vault_human_controller__hackingProcessEid:eid"{}
+  "cortical_vault_human_controller__dogtagKilledByPlayerEid:eid"{}
+  _group{
+    _tags:t="gameClient"
+    cortical_vault_human_controller__clientTemplate:t="hacking_cortical_vault_client"
+  }
+}
+
+hacking_cortical_vault_militant_effect{
+  _use:t="game_effect_base"
+  _use:t="gathering_am_sound"
+  game_effect__forceAnimUpperState:t="pickup_am"
+  game_effect__forceAnimUpperStateId:i=-1
+
+  "game_effect__activateUnarmed:tag"{}
+}
+
+human_revive_cortical_vault_effect_linear{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="sound_effect"
+  _use:t="moveable_sound_effect_tag"
+
+  effect{
+    _tags:t="render"
+  }
+
+  "effects:object"{
+    am_absorbtion_flow_flare_linear_small_fx:r=1
+    am_absorbtion_flow_pinch_linear_small_fx:r=1
+  }
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="enemy/walker/_common_foley/watch/watch_gather_am"
+    sound_effect__abandonOnReset:b=yes
+  }
+}
+
+human_revive_cortical_vault_effect{
+  "human_revive_cortical_vault_effect__eid:eid"{}
+  "human_revive_cortical_vault_effect__owner:eid"{}
+  "human_revive_cortical_vault_effect__target:eid"{}
+}
+
+human_hacking_cortical_vault_effect_point{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  "effects:object"{
+    am_absorbtion_flow_flare_fx:r=1
+    am_absorbtion_flow_pinch_fx:r=1
+  }
+}
+
+human_hacking_cortical_vault_effect{
+  human_hacking_cortical_vault_effect__flySpeed:r=12
+  human_hacking_cortical_vault_effect__requiredDistanceToTarget:r=0.5
+
+  "human_hacking_cortical_vault_effect__owner:eid"{}
+  "human_hacking_cortical_vault_effect__target:eid"{}
+  "human_hacking_cortical_vault_effect__pointEid:eid"{}
+}
+
+hacked_cortical_vault_map_mark{
+  _use:t="replicating"
+  _use:t="map_component_zone"
+  _use:t="server_destroy_in_3_min"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  hacked_cortical_vault_map_mark__offsetMult:p2=0.33, 0.9
+  map_object_zone__radius:r=10
+
+  "hacked_cortical_vault_map_mark:tag"{}
+}

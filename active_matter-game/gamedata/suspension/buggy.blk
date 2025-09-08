@@ -1,0 +1,233 @@
+group{
+  find:t="wheel_hub_back_(\w)$"
+
+  points{
+    suspension_upper_arm_chassis{
+      name:t="susp_upper_arm_back_$1"
+    }
+
+    suspension_lower_arm_chassis{
+      name:t="susp_lower_arm_back_$1"
+    }
+
+    suspension_upper_arm_wheel{
+      name:t="bone_susp_upper_arm_back_$1"
+      limitMin:p3=-10, 0, 0
+      limitMax:p3=10, 0, 0
+    }
+
+    suspension_lower_arm_wheel{
+      name:t="bone_susp_lower_arm_back_$1"
+      limitMin:p3=-10, 0, 0
+      limitMax:p3=10, 0, 0
+    }
+
+    damper_upper{
+      name:t="damper_upper_back_$1"
+    }
+
+    damper_lower{
+      name:t="damper_lower_back_$1"
+    }
+
+    drive_chasis{
+      name:t="susp_drive_back_$1"
+    }
+
+    drive_wheel{
+      name:t="bone_susp_drive_back_$1"
+    }
+
+    spring{
+      name:t="damper_spring_back_$1"
+    }
+
+    spring_target{
+      name:t="bone_spring_lower_back_$1"
+    }
+
+    wheel_hub{
+      name:t="wheel_hub_back_$1"
+      limitMin:p3=-10, 0, 0
+      limitMax:p3=10, 0, 0
+    }
+  }
+
+  constraints{
+    rigid{
+      pivot:t="wheel_hub"
+      attached:t="suspension_upper_arm_wheel"
+    }
+
+    rigid{
+      pivot:t="wheel_hub"
+      attached:t="suspension_lower_arm_wheel"
+    }
+
+    rigid{
+      pivot:t="wheel_hub"
+      attached:t="damper_lower"
+    }
+
+    edge{
+      from:t="damper_upper"
+      to:t="damper_lower"
+      rotateSecond:b=yes
+      moveNodes:b=no
+    }
+
+    rigid{
+      pivot:t="damper_lower"
+      attached:t="spring_target"
+    }
+
+    rigid{
+      pivot:t="damper_upper"
+      attached:t="spring"
+    }
+
+    edge{
+      from:t="spring"
+      to:t="spring_target"
+      moveNodes:b=no
+      isSpring:b=yes
+    }
+
+    edge{
+      from:t="suspension_upper_arm_chassis"
+      to:t="suspension_upper_arm_wheel"
+    }
+
+    edge{
+      from:t="suspension_lower_arm_chassis"
+      to:t="suspension_lower_arm_wheel"
+    }
+
+    rigid{
+      pivot:t="wheel_hub"
+      attached:t="drive_wheel"
+    }
+
+    edge{
+      from:t="drive_chasis"
+      to:t="drive_wheel"
+    }
+  }
+}
+
+group{
+  find:t="wheel_hub_front_(\w)$"
+
+  points{
+    suspension_upper_arm_chassis{
+      name:t="susp_upper_arm_front_$1"
+    }
+
+    suspension_lower_arm_chassis{
+      name:t="susp_lower_arm_front_$1"
+    }
+
+    suspension_upper_arm_wheel{
+      name:t="bone_susp_upper_arm_front_$1"
+      limitMin:p3=0, 0, -10
+      limitMax:p3=0, 0, 10
+    }
+
+    suspension_lower_arm_wheel{
+      name:t="bone_susp_lower_arm_front_$1"
+      limitMin:p3=0, 0, -10
+      limitMax:p3=0, 0, 10
+    }
+
+    damper_upper{
+      name:t="damper_upper_front_$1"
+    }
+
+    damper_lower{
+      name:t="damper_lower_front_$1"
+    }
+
+    drive_chasis{
+      name:t="susp_drive_front_$1"
+    }
+
+    drive_wheel{
+      name:t="bone_susp_drive_front_$1"
+    }
+
+    spring{
+      name:t="damper_spring_front_$1"
+    }
+
+    spring_target{
+      name:t="bone_spring_lower_front_$1"
+    }
+
+    wheel_hub{
+      name:t="wheel_hub_front_$1"
+      limitMin:p3=0, 0, -10
+      limitMax:p3=0, 0, 10
+    }
+  }
+
+  constraints{
+    rigid{
+      pivot:t="wheel_hub"
+      attached:t="suspension_upper_arm_wheel"
+    }
+
+    rigid{
+      pivot:t="wheel_hub"
+      attached:t="suspension_lower_arm_wheel"
+    }
+
+    rigid{
+      pivot:t="wheel_hub"
+      attached:t="damper_lower"
+    }
+
+    rigid{
+      pivot:t="wheel_hub"
+      attached:t="drive_wheel"
+    }
+
+    edge{
+      from:t="damper_upper"
+      to:t="damper_lower"
+      rotateSecond:b=yes
+      moveNodes:b=no
+    }
+
+    rigid{
+      pivot:t="damper_lower"
+      attached:t="spring_target"
+    }
+
+    rigid{
+      pivot:t="damper_upper"
+      attached:t="spring"
+    }
+
+    edge{
+      from:t="spring"
+      to:t="spring_target"
+      moveNodes:b=no
+      isSpring:b=yes
+    }
+
+    edge{
+      from:t="suspension_upper_arm_chassis"
+      to:t="suspension_upper_arm_wheel"
+    }
+
+    edge{
+      from:t="suspension_lower_arm_chassis"
+      to:t="suspension_lower_arm_wheel"
+    }
+
+    edge{
+      from:t="drive_chasis"
+      to:t="drive_wheel"
+    }
+  }
+}

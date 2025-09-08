@@ -1,0 +1,70 @@
+cinematic_mode_manager{
+  _use:t="settings_override_manager"
+  _use:t="motion_blur_manager"
+
+  "cinematic_mode_tag:tag"{}
+  _group{
+    _tags:t="render"
+
+    "cinematic_mode__manager:CinematicMode"{}
+  }
+}
+
+cinematic_mode{
+  _use:t="cinematic_mode_settings"
+  _use:t="cinematic_mode_manager"
+  _singleton:b=yes
+}
+
+cinematic_mode_settings{
+  _use:t="settings_override_settings"
+  _use:t="motion_blur_settings"
+  motion_blur__scale:r=0
+  cinematic_mode__saved_bloom_threshold:r=0.8
+  cinematic_mode__default_bloom_threshold:r=1
+  cinematic_mode__lenseCoveringTex:t="lense_dust"
+  cinematic_mode__lenseRadialTex:t=""
+
+  "settings_override__graphicsSettings:object"{
+    "video/antiAliasingMode":i=3
+    "video/temporalUpsamplingRatio":r=100
+    "video/dynamicResolution/targetFPS":i=0
+    "video/fsr":t="off"
+    "video/ssaa":b=no
+    "video/staticResolutionScale":r=100
+  }
+
+  _group{
+    _track:b=yes
+    cinematic_mode__fps:i=60
+    cinematic_mode__fname:t=""
+    cinematic_mode__audioDataFName:t=""
+    cinematic_mode__bitrate:i=30000000
+    cinematic_mode__subPixels:i=2
+    cinematic_mode__superPixels:i=2
+    cinematic_mode__vignetteStrength:r=0
+    cinematic_mode__chromaticAberration:p3=0.01, 0.007, 1
+    cinematic_mode__filmGrain:p3=0, 1, 1
+    cinematic_mode__lenseFlareIntensity:r=0
+    cinematic_mode__lenseDust:b=no
+    cinematic_mode__recording:b=no
+    cinematic_mode__audio_recording:b=no
+    cinematic_mode__loadAudio:b=no
+    cinematic_mode__saveAudio:b=no
+    cinematic_mode__hasRain:b=no
+    cinematic_mode__hasSnow:b=no
+    cinematic_mode__hasLightning:b=no
+    cinematic_mode__weatherPreset:t=""
+    cinematic_mode__rain:b=no
+    cinematic_mode__snow:b=no
+    cinematic_mode__lightning:b=no
+    cinematic_mode__dayTime:r=12
+    cinematic_mode__colorGradingSelected:t=""
+    cinematic_mode__enablePostBloom:b=yes
+  }
+
+  "cinematic_mode__weatherPresetList:list<t>"{}
+  "cinematic_mode__colorGradingOptions:shared:list<t>"{
+    item:t="postfx_color_grading_tonemap_death_alive"
+  }
+}

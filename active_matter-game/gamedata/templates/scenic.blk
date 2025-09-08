@@ -1,0 +1,263 @@
+world_renderer{
+  "world_renderer_tag:tag"{
+    _tags:t="render"
+  }
+}
+
+grass_settings{
+  _use:t="replicating"
+  _singleton:b=yes
+  hor_size_mul:r=1
+  grass_grid_size:r=0.5
+  grass_distance:r=100
+  grassMaskResolution:i=512
+  grassifyMaskResolution:i=1024
+  grassify:b=no
+
+  "grass_types:array"{}
+  "decals:array"{}
+}
+
+microdetail_settings{
+  _use:t="replicating"
+  _singleton:b=yes
+  land_micro_details_uv_scale:r=2.01
+
+  "micro_details:array"{}
+}
+
+level{
+  _use:t="replicating"
+  _singleton:b=yes
+  nonCreatableObj:b=yes
+  _tracked:t="level__loaded"
+  _tracked:t="level__loadedAtTime"
+  level__blk:t=""
+  level__loadedAtTime:r=-1
+  level__timeRange:p2=9, 9
+  level__latitude:r=-200
+  level__longtitude:r=-200
+  level__day:i=21
+  level__month:i=6
+  level__year:i=1986
+  level__timeSeed:i=-1
+  level__timeOfDay:r=9
+  level__weatherSeed:i=-1
+  level__cloudsHoleEnabled:b=yes
+  level__weather:t="weather_clear"
+  level__fpsLimit:i=-1
+  level__fixedBattleAreas:b=no
+  level__loadNavMesh:b=yes
+  level__useGroundHolesCollision:b=no
+  level__renderFeaturesOverrideFromLevelBlk:b=no
+  level__raidName:t=""
+
+  "level__loaded:b"{
+    value:b=no
+    _hide:b=yes
+  }
+
+  "net__alwaysInScope:tag"{}
+  level{}
+  level__node_based_fog_shader_preload{
+    _tags:t="render"
+  }
+
+  level__node_based_envi_cover_shader_preload{
+    _tags:t="render"
+  }
+
+  "level__timeVec:array"{}
+  "level__weatherChoice:object"{
+    weather_clear:r=0.5
+  }
+
+  "level__navAreas:list<eid>"{}
+}
+
+water{
+  _singleton:b=yes
+  _use:t="replicating"
+  _use:t="underwater_sound"
+  waterTrail__cascadeArea:r=128
+  waterTrail__cascadeAreaMul:r=2.5
+  waterTrail__quadHeight:r=20
+  waterTrail__fadeInTime:r=0.1
+  waterTrail__fadeOutTime:r=60
+  waterTrail__widthThreshold:r=2
+  waterTrail__forwardExpand:r=20
+  waterTrail__activeVertexCount:i=16384
+  waterTrail__finalizedVertexCount:i=32768
+  waterTrail__maxPointsPerSegment:i=100
+  waterTrail__useObstacle:b=no
+  waterTrail__texName:t="water_foam_trail_mask"
+  is_underwater:b=no
+  water_level:r=0
+
+  _group{
+    _track:b=yes
+    water__strength:r=4
+    water__wind_dir:r=40
+    water__level:r=0
+    water__fft_resolution:i=7
+    water__max_tessellation:i=4
+    water__flowmap:b=yes
+    water__has_slopes:b=yes
+    water__flowmap_tex:t=""
+    water__flowmap_area:p4=-512, -512, 512, 512
+    water__wind_strength:r=0.2
+    water__flowmap_range:r=100
+    water__flowmap_fading:r=3
+    water__flowmap_damping:r=0.5
+    water__flowmap_prebaked_speed:r=1
+    water__flowmap_prebaked_foam_scale:r=5
+    water__flowmap_prebaked_foam_power:r=0.5
+    water__flowmap_prebaked_foamfx:r=0
+    water__flowmap_min_distance:r=0.5
+    water__flowmap_max_distance:r=1
+    water__flowmap_simulated_speed:r=1
+    water__flowmap_simulated_foam_scale:r=0.3
+    water__flowmap_foam_power:r=5
+    water__flowmap_foam_scale:r=10
+    water__flowmap_foam_threshold:r=0.5
+    water__flowmap_foam_color_0:p4=1, 1, 1, 1
+    water__flowmap_foam_color_1:p4=1, 1, 1, 1
+    water__flowmap_foam_bumpmapping_scale:r=10
+    water__flowmap_foam_smoothness:r=0
+    water__flowmap_foam_softness:r=1
+    water__flowmap_foam_tiling:r=1
+    water__flowmap_speed_depth_scale:r=1
+    water__flowmap_foam_speed_scale:r=0.1
+    water__flowmap_speed_depth_max:r=0.3
+    water__flowmap_foam_depth_max:r=1
+    water__flowmap_slope:r=1
+    water__flowmap_detail:b=no
+    foamfx__tile_uv_scale:r=0.05
+    foamfx__distortion_scale:r=0.75
+    foamfx__normal_scale:r=0.1
+    foamfx__pattern_gamma:r=2.2
+    foamfx__mask_gamma:r=2.2
+    foamfx__gradient_gamma:r=2.2
+    foamfx__underfoam_threshold:r=0.1
+    foamfx__overfoam_threshold:r=0.25
+    foamfx__underfoam_weight:r=0.2
+    foamfx__overfoam_weight:r=1
+    foamfx__underfoam_color:p3=1, 1, 1
+    foamfx__overfoam_color:p3=1, 1, 1
+    foamfx__reflectivity:r=0.1
+    foamfx__tile_tex:t="foam_generator_1_tile_tex_n"
+    foamfx__gradient_tex:t="foam_generator_gradient_tex_n"
+    shore__enabled:b=yes
+    shore__texture_size:i=1024
+    shore__hmap_size:r=1024
+    shore__rivers_width:r=200
+    shore__significant_wave_threshold:r=0.62
+    shore__wave_height_to_amplitude:r=0.25
+    shore__amplitude_to_length:r=30
+    shore__parallelism_to_wind:r=0.1
+    shore__width_k:r=3
+    shore__waves_dist:p4=600, 1000, 0, 50
+    shore__waves_depth_min:r=0.25
+    shore__waves_depth_fade_interval:r=2
+    shore__wave_gspeed:r=1
+    shore__rivers_wave_multiplier:r=0.3
+  }
+
+  water{}
+  "needsWaterDroplets:tag"{
+    _tags:t="render"
+  }
+}
+
+wind{
+  dyn_wind__cumulus_alt_multiplier:r=2
+  dyn_wind__strata_alt_multiplier:r=2
+  _use:t="replicating"
+  _singleton:b=yes
+
+  "ambient_wind:AmbientWind"{
+    _tags:t="render"
+  }
+
+  _group{
+    _track:b=yes
+    wind__flowMap:t=""
+    wind__left_top_right_bottom:p4=-2048, -2048, 2048, 2048
+    wind__dir:r=40
+    wind__strength:r=2
+    wind__noiseStrength:r=2
+    wind__noiseSpeed:r=1
+    wind__noiseScale:r=70
+    wind__noisePerpendicular:r=0.5
+  }
+}
+
+level_synced_environment_delayed{
+  level_synced_environment__delayedSetupAt:r=-1
+}
+
+level_synced_environment{
+  level_synced_environment__unixTime:i=0
+  level_synced_environment__timeOfDayChangeInterval:i=300
+  level_synced_environment__timeOfDayChainSegments:i=3
+  level_synced_environment__timeOfDaySeed:i=1
+  level_synced_environment__delayedSetup:r=3
+  level_synced_environment__weatherChangeInterval:i=445
+  level_synced_environment__weatherChainSegments:i=3
+  level_synced_environment__weatherSeed:i=2
+  level__timeSeed:i=0
+  level__weatherSeed:i=0
+
+  "level_synced_environment:tag"{}
+}
+
+settings_override_manager{
+  _group{
+    "settings_override__manager:SettingsOverride"{}
+  }
+}
+
+settings_override_settings{
+  _group{
+    _track:b=yes
+    settings_override__useCustomSettings:b=no
+
+    "settings_override__graphicsSettings:object"{}
+    "settings_override__graphicsSettings_pc:object"{}
+    "settings_override__graphicsSettings_xboxone:object"{}
+    "settings_override__graphicsSettings_scarlett:object"{}
+    "settings_override__graphicsSettings_ps4:object"{}
+    "settings_override__graphicsSettings_ps5:object"{}
+    "settings_override__graphicsSettings_nswitch:object"{}
+    "settings_override__graphicsSettings_android:object"{}
+    "settings_override__graphicsSettings_ios:object"{}
+  }
+}
+
+motion_blur_manager{
+  _group{
+    _tags:t="render"
+
+    "motion_blur:MotionBlur"{}
+  }
+}
+
+motion_blur_settings{
+  motion_blur__mode:i=2
+
+  _group{
+    _track:b=yes
+    motion_blur__scale:r=1
+    motion_blur__velocityMultiplier:r=0.005
+    motion_blur__maxVelocity:r=0.1
+    motion_blur__alphaMulOnApply:r=0.125
+    motion_blur__overscanMul:r=0.01
+    motion_blur__forwardBlur:r=0
+  }
+}
+
+motion_blur{
+  _use:t="motion_blur_settings"
+  _use:t="motion_blur_manager"
+  _singleton:b=yes
+}

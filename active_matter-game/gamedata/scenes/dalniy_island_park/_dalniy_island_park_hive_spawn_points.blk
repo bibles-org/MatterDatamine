@@ -1,0 +1,40 @@
+entity{
+  _template:t="hive_clusters_manager"
+  hivesToSpawnRng:ip2=2, 2
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[-0.634864, 0, -0.772625] [0, 1, 0] [0.772625, 0, -0.634864] [145.336, 30.0615, -1412.23]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[0.999844, 0, -0.0176923] [-0, 1, 0] [0.0176923, 0, 0.999844] [373.671, 16.4807, -1227.7]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[-0.592026, 0.0151625, 0.805777] [-0.141655, 0.9823, -0.122562] [-0.793373, -0.186702, -0.579399] [96.1051, 16.1725, -1280.08]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}
+
+entity{
+  _template:t="hive_point"
+  transform:m=[[0.653533, 0.0151626, 0.756746] [-0.381314, 0.870251, 0.311869] [-0.653831, -0.492375, 0.57452] [310.863, 8.94764, -1445.21]]
+
+  "hive_point__avaliableHivePresets:list<t>"{
+    item:t="hive_cluster_wall_preset"
+  }
+}

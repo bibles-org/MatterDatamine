@@ -1,0 +1,1162 @@
+teaser_director{
+  _use:t="replicating"
+  teaser_director__hiddenBotTm:m=[[0.635224, -7.45082e-09, 0.772328] [4.73293e-09, 1, 5.75448e-09] [-0.772328, -0, 0.635224] [-1728.8, 0.753709, 2030.43]]
+}
+
+teaser_hero{
+  human_inventory__showSuitSlot:b=yes
+  nphys_obstacle__radius:r=0.05
+}
+
+teaser_team{
+  _use:t="am_player_raid_team"
+
+  "team__unitTemplates:object"{
+    "am_militant_with_attachable_suit+spawn_sequence_controller+teaser_hero+autorespawn+allow_friendly_damage":r=1
+  }
+}
+
+teaser_bot_player{
+  _use:t="bot_player"
+
+  _group{
+    _tags:t="server"
+    player_ribbons__rndColors:b=no
+  }
+}
+
+create_teaser_bot_player_colors_0{
+  create_teaser_bot_player__playerRibbonColors:ip2=-1, -1
+}
+
+create_teaser_bot_player_colors_1{
+  create_teaser_bot_player__playerRibbonColors:ip2=1, 1
+}
+
+create_teaser_bot_player_colors_2{
+  create_teaser_bot_player__playerRibbonColors:ip2=2, 2
+}
+
+create_teaser_bot_player_colors_3{
+  create_teaser_bot_player__playerRibbonColors:ip2=3, 3
+}
+
+create_teaser_bot_player_colors_4{
+  create_teaser_bot_player__playerRibbonColors:ip2=4, 4
+}
+
+create_teaser_bot_player_colors_5{
+  create_teaser_bot_player__playerRibbonColors:ip2=5, 5
+}
+
+create_teaser_bot_player_colors_7{
+  create_teaser_bot_player__playerRibbonColors:ip2=7, 7
+}
+
+create_teaser_bot_player{
+  _use:t="create_teaser_bot_player_colors_1"
+  create_teaser_bot_player__playerTemplate:t="teaser_bot_player"
+
+  "customBotSpawner:tag"{}
+}
+
+teaser_bot_team_1{
+  team:i=42
+}
+
+teaser_bot_team_2{
+  team:i=43
+}
+
+teaser_bot_team_3{
+  team:i=44
+}
+
+teaser_bot_team_4{
+  team:i=45
+}
+
+teaser_suit{
+  _use:t="ignore_block_item_move"
+}
+
+teaser_bot{
+  _use:t="am_militant_bot"
+  _use:t="equipped_bot"
+  _use:t="create_teaser_bot_player"
+  _use:t="teaser_bot_team_1"
+  teaser_bot__group:i=0
+  teaser_bot__originTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  teaser_bot__originTemplate:t=""
+  teaser_bot__originPose:i=0
+  bodyCleanupTime:r=999999
+  beh_tree__enabled:b=no
+  _tracked:t="beh_tree__enabled"
+  _replicated:t="beh_tree__enabled"
+
+  "teaser_bot:tag"{}
+  "human_inventory__dropOnGroundGunSlots:list<i>"{}
+  "human_inventory__dropOnGroundEquipmentSlots:list<t>"{}
+}
+
+teaser_bot_static_sniper{
+  _use:t="teaser_bot"
+  beh_tree__node:t="static_sniper"
+  agent_dangers__blindDistanceSq:r=24000
+  agent_dangers__maxDangerDist:r=150
+  beh_tree__blackboard__enemyRadius:r=150
+
+  "nphys__disabled:tag"{}
+  "walker_agent__distanceToShootError:shared:array"{
+    "error:object"{
+      distance:r=0
+      min:p2=0, 0
+      max:p2=0.4, 0.8
+      maxEnd:p2=0, 0
+    }
+
+    "error:object"{
+      distance:r=5
+      min:p2=0.25, 0.6
+      max:p2=0.5, 1
+      maxEnd:p2=0.25, 0.5
+    }
+
+    "error:object"{
+      distance:r=10
+      min:p2=0.5, 1.2
+      max:p2=2, 2
+      maxEnd:p2=1.2, 1
+    }
+
+    "error:object"{
+      distance:r=20
+      min:p2=0.5, 1.2
+      max:p2=2, 2
+      maxEnd:p2=2, 2
+    }
+  }
+
+  "walker_agent__aiDistanceToShootError:shared:array"{
+    "error:object"{
+      distance:r=0
+      min:p2=0, 0
+      max:p2=0.25, 0.5
+      maxEnd:p2=0, 0
+    }
+
+    "error:object"{
+      distance:r=25
+      min:p2=0, 0
+      max:p2=0.25, 0.5
+      maxEnd:p2=0, 0
+    }
+
+    "error:object"{
+      distance:r=75
+      min:p2=0, 0
+      max:p2=0.8, 0.8
+      maxEnd:p2=0.25, 0.5
+    }
+
+    "error:object"{
+      distance:r=750
+      min:p2=0, 0
+      max:p2=0.8, 0.8
+      maxEnd:p2=0.8, 0.8
+    }
+  }
+}
+
+teaser_bot_static_sniper_clumsy{
+  _use:t="teaser_bot_static_sniper"
+
+  "walker_agent__distanceToShootError:shared:array"{
+    "error:object"{
+      distance:r=0
+      min:p2=0.25, 0.6
+      max:p2=0.5, 0.8
+      maxEnd:p2=0, 0
+    }
+
+    "error:object"{
+      distance:r=25
+      min:p2=0.25, 0.6
+      max:p2=0.5, 0.8
+      maxEnd:p2=0, 0
+    }
+
+    "error:object"{
+      distance:r=75
+      min:p2=0.5, 1.2
+      max:p2=1.5, 1.5
+      maxEnd:p2=2, 2
+    }
+
+    "error:object"{
+      distance:r=750
+      min:p2=0.5, 1.2
+      max:p2=1.5, 1.5
+      maxEnd:p2=2, 2
+    }
+  }
+
+  "walker_agent__aiDistanceToShootError:shared:array"{
+    "error:object"{
+      distance:r=0
+      min:p2=0.25, 0.6
+      max:p2=0.5, 0.8
+      maxEnd:p2=0, 0
+    }
+
+    "error:object"{
+      distance:r=25
+      min:p2=0.25, 0.6
+      max:p2=0.5, 0.8
+      maxEnd:p2=0, 0
+    }
+
+    "error:object"{
+      distance:r=75
+      min:p2=0.5, 1.2
+      max:p2=1.5, 1.5
+      maxEnd:p2=2, 2
+    }
+
+    "error:object"{
+      distance:r=750
+      min:p2=0.5, 1.2
+      max:p2=1.5, 1.5
+      maxEnd:p2=2, 2
+    }
+  }
+}
+
+teaser_wander_target{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "teaser_wander_target:tag"{}
+}
+
+teaser_bot_guard{
+  _use:t="teaser_bot"
+  beh_tree__node:t="encounter_guard"
+  beh_tree__refs__wander:t="sub.wanderAroundObjective"
+  beh_tree__blackboard__wanderTarget:p3=0, 0, 0
+  beh_tree__blackboard__maxMeleeRadius:r=100
+  agent_dangers__blindDistanceSq:r=10000
+  attract_point__searchRadius:r=300
+  refill_magazines__refillVolumeRng:p2=0.5, 0.8
+  countAsAlive:b=no
+
+  "am_militant_bot:tag"{}
+  "walker_agent__distanceToShootError:shared:array"{
+    "error:object"{
+      distance:r=0
+      min:p2=0, 0
+      max:p2=0.4, 0.8
+      maxEnd:p2=0, 0
+    }
+
+    "error:object"{
+      distance:r=5
+      min:p2=0.25, 0.6
+      max:p2=0.5, 1
+      maxEnd:p2=0.25, 0.5
+    }
+
+    "error:object"{
+      distance:r=10
+      min:p2=0.5, 1.2
+      max:p2=2, 2
+      maxEnd:p2=1.2, 1
+    }
+
+    "error:object"{
+      distance:r=25
+      min:p2=0.5, 1.2
+      max:p2=2, 2
+      maxEnd:p2=2, 2
+    }
+  }
+
+  "walker_agent__aiDistanceToShootError:shared:array"{
+    "error:object"{
+      distance:r=0
+      min:p2=0, 0
+      max:p2=0.25, 0.5
+      maxEnd:p2=0, 0
+    }
+
+    "error:object"{
+      distance:r=25
+      min:p2=0, 0
+      max:p2=0.25, 0.5
+      maxEnd:p2=0, 0
+    }
+
+    "error:object"{
+      distance:r=75
+      min:p2=0, 0
+      max:p2=0.8, 0.8
+      maxEnd:p2=0.25, 0.5
+    }
+
+    "error:object"{
+      distance:r=750
+      min:p2=0, 0
+      max:p2=0.8, 0.8
+      maxEnd:p2=0.8, 0.8
+    }
+  }
+}
+
+teaser_bot_guard_blind{
+  _use:t="teaser_bot_guard"
+  agent_dangers__blindDistanceSq:r=2000
+}
+
+teaser_bot_guard_very_blind{
+  _use:t="teaser_bot_guard"
+  agent_dangers__blindDistanceSq:r=1000
+}
+
+teaser_episode{
+  _use:t="replicating"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  teaser_episode__name:t="unknown"
+  teaser_episode__index:i=-1
+  teaser_episode__levelTime:r=-1
+  teaser_episode__triggersCount:i=0
+  teaser_episode__hasReset:b=yes
+
+  "teaser_episode:tag"{}
+}
+
+teaser_episode_entity{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  teaser_episode_entity__episodeIndex:i=-1
+  teaser_episode_entity__initTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  teaser_episode_entity__initTemplate:t=""
+
+  "dontBodyCleanupOnDeath:tag"{}
+}
+
+teaser_episode_bot{
+  _use:t="teaser_episode_entity"
+  teaser_episode_bot__triggerIndex:i=0
+
+  "teaser_episode_bot:tag"{}
+}
+
+teaser_episode_bot_1{
+  _use:t="teaser_episode_bot"
+  teaser_episode_bot__triggerIndex:i=1
+}
+
+teaser_bot_crouch{
+  teaser_bot__originPose:i=1
+}
+
+teaser_bot_crawl{
+  teaser_bot__originPose:i=2
+}
+
+teaser_episode_created_entity{
+  teaser_episode_created_entity__episodeIndex:i=-1
+}
+
+teaser_episode_create_entity_point{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  teaser_episode_create_entity_point__episodeIndex:i=-1
+  teaser_episode_create_entity_point__triggerIndex:i=0
+  teaser_episode_create_entity_point__template:t=""
+  teaser_episode_create_entity_point__triggered:b=no
+  teaser_episode_create_entity_point__spawnTimer:r=0
+  teaser_episode_create_entity_point__delay:p2=0, 0
+}
+
+teaser_episode_trigger_zone{
+  _use:t="am_triggerable_zone"
+  teaser_episode_trigger_zone__episodeIndex:i=-1
+  teaser_episode_trigger_zone__triggerIndex:i=0
+  teaser_episode_trigger_zone__triggered:b=no
+  teaser_episode_trigger_zone__triggerAllZones:b=no
+  sphere_zone__radius:r=2
+
+  "teaser_episode_trigger_zone:tag"{}
+  "humanTriggerable:tag"{}
+}
+
+teaser_outdoor_sleeper_changed_human{
+  _use:t="outdoor_sleeper_changed_human"
+  _use:t="teaser_episode_entity"
+
+  "sleeping_monster_awake_forbidden:tag"{}
+}
+
+teaser_outdoor_sleeper_changed_human_cirlce{
+  _use:t="spawn_circle"
+  _use:t="teaser_episode_entity"
+  spawn_circle__template:t="teaser_outdoor_sleeper_changed_human+am_inside_body_3+sleeping_monster"
+  spawn_circle__radius:r=3
+  spawn_circle__count:ip2=12, 12
+  spawn_circle__offsetRnd:p2=0.1, 0.7
+  spawn_circle__rotateType:i=1
+}
+
+teaser_outdoor_sleeper_changed_human_cirlce_2{
+  _use:t="teaser_outdoor_sleeper_changed_human_cirlce"
+  spawn_circle__radius:r=1.5
+  spawn_circle__count:ip2=8, 8
+  spawn_circle__offsetRnd:p2=0.05, 0.35
+}
+
+teaser_outdoor_sleeper_changed_human_generator{
+  _use:t="tm_monster_generator"
+  _use:t="teaser_episode_entity"
+  monster_gen__type:t="changed"
+  monster_gen__density:p2=0.05, 0.05
+  monster_gen__useGravity:b=no
+  monster_gen__destroyGeneratedEntitiesOnDestroy:b=yes
+  monster_gen__spawnInterval:r=0.0001
+  monster_gen__respawnInterval:r=0.0001
+  monster_gen__spawnIntervalKoef:r=100
+  transform:m=[[35, 0, 0] [0, 6, 0] [0, 0, 35] [653.631, 77.4756, -140.537]]
+
+  "monster_gen__templates:list<t>"{
+    i:t="teaser_outdoor_sleeper_changed_human+sleeping_monster"
+  }
+}
+
+teaser_mindcontrolled_encounter_guard{
+  _use:t="am_mindcontrolled_encounter_guard"
+  beh_tree__enabled:b=no
+  beh_tree__node:t="teaser_guard"
+  beh_tree__refs__wander:t="sub.wanderAroundObjective"
+}
+
+teaser_anomaly_sphere_light{
+  _use:t="local_omni_light"
+  light__max_radius:r=10
+  light__offset:p3=0, 0, 0
+  light__color:c=8, 39, 37, 50
+  light__brightness:r=0.6
+  light__radius_scale:r=20
+  light__dynamic_light:b=yes
+  light__automatic_box:b=no
+
+  _group{
+    _tags:t="render"
+    omni_light__dynamic_obj_shadows:b=yes
+    omni_light__shadows:b=yes
+  }
+}
+
+teaser_anomaly_distortion_spike{
+  _use:t="euclid_distortion_spike"
+  euclid_anomaly_visual__scaleRng:p2=0.01, 0.014
+  euclid_anomaly_visual__totalScale:r=0.009
+}
+
+teaser_anomaly_sphere{
+  _use:t="indoor_euclid_central_sphere"
+  _use:t="teaser_anomaly_sphere_light"
+  transform__randomInitialScale:p2=0.25, 0.25
+
+  "euclid_anomaly_visual__subObjects:array"{
+    "i:object"{
+      templateName:t="teaser_anomaly_distortion_spike"
+      creationTemplate:t="sphere"
+      count:i=9
+    }
+  }
+}
+
+teaser_flower_human{
+  _use:t="flower_human"
+  _use:t="sleep_mode_wakeup_forbidden"
+}
+
+teaser_anomaly_zone_flowerman_field_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=100, 100
+
+  "anomaly_zone__spawnPresets:object"{
+    "creature_preset:array"{
+      "it:object"{
+        template:t="teaser_flower_human+flower_human_root_spawner+am_inside_body_3"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnOnLeafs:b=yes
+      }
+
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+      }
+    }
+
+    "decor_preset:array"{
+      "it:object"{
+        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
+        scaleToBox:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+    }
+
+    "decor_low_density_preset:array"{
+      "it:object"{
+        template:t="area_decor_flowerman+gpu_objects_trait_low_density"
+        scaleToBox:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+    }
+
+    "wakeup_trigger_preset:array"{
+      "it:object"{
+        template:t="flowerman_wakeup_enemies_trap"
+        targetScale:p3=0.6, 1, 0.6
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+
+      "it:object"{
+        template:t="flowerman_trap_root"
+        spawnOnLeafs:b=yes
+        projectToNavmesh:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=1, 1
+      preset:t="active_mattery_rich_pile_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=2, 3
+      preset:t="active_mattery_pile_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 3
+      zoneMinSize:ip3=3, 1, 3
+      preset:t="creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 3
+      zoneMinSize:ip3=2, 1, 2
+      preset:t="creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=3, 3
+      preset:t="creature_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=5, 10
+      zoneMinSize:ip3=2, 1, 1
+      preset:t="wakeup_trigger_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=5, 10
+      zoneMinSize:ip3=1, 1, 2
+      preset:t="wakeup_trigger_preset"
+    }
+
+    "group:object"{
+      spawnCount:ip2=10, 15
+      zoneMinSize:ip3=2, 1, 1
+      preset:t="decor_low_density_preset"
+      cellChancePow:r=-1
+    }
+
+    "group:object"{
+      spawnCount:ip2=10, 15
+      zoneMinSize:ip3=1, 1, 2
+      preset:t="decor_low_density_preset"
+      cellChancePow:r=-1
+    }
+
+    "group:object"{
+      spawnCount:ip2=10, 10
+      zoneMinSize:ip3=2, 1, 2
+      preset:t="decor_preset"
+      cellChancePow:r=1
+    }
+  }
+}
+
+teaser_anomaly_zone_flowerman_forest{
+  _use:t="anomaly_zone"
+  _use:t="teaser_episode_entity"
+  nmesh_voxel__gridSize:ip3=20, 6, 20
+  nmesh_voxel__gridStep:r=0.5
+
+  "anomaly_zone__branchTemplates:list<t>"{
+    it:t="teaser_anomaly_zone_flowerman_field_branch"
+  }
+}
+
+teaser_magazine_loading_ammo_affect{
+  _use:t="magazine_loading_ammo_affect"
+
+  "game_effect__hiddenWeapon:tag"{}
+}
+
+teaser_loading_ammo_actor{
+  teaser_loading_ammo_actor__loadingAmmoType:t="loading_ammo_akm"
+  teaser_loading_ammo_actor__progress:r=0
+  teaser_loading_ammo_actor__speed:r=1.35
+
+  "game_effect__initialAttachmentsServer:list<t>"{
+    i:t="teaser_magazine_loading_ammo_affect"
+  }
+}
+
+teaser_fn_scar_gun{
+  _use:t="fn_scar_gun"
+  gun__recoilAmount:r=0.01
+  item__name:t="fn_scar_low_recoil_special_video_edition"
+  item__proto:t="teaser_fn_scar_gun"
+  item__weapTemplate:t="teaser_fn_scar_gun"
+}
+
+teaser_hk_mp5n_gun{
+  _use:t="hk_mp5n_gun"
+  gun__recoilAmount:r=0.01
+  item__name:t="mp5n_low_recoil_special_video_edition"
+  item__proto:t="teaser_hk_mp5n_gun"
+  item__weapTemplate:t="teaser_hk_mp5n_gun"
+}
+
+teaser_ak_103_gun{
+  _use:t="ak_103_gun"
+  gun__recoilAmount:r=0.01
+  item__name:t="ak_103_low_recoil_special_video_edition"
+  item__proto:t="teaser_ak_103_gun"
+  item__weapTemplate:t="teaser_ak_103_gun"
+}
+
+teaser_fn_scar_gun_2{
+  _use:t="fn_scar_gun"
+  gun__recoilAmount:r=0.0425
+  gun__recoilRotationMean:p3=60, 60, 60
+  gun__visualRecoilMult:r=0.2
+  gun__spreadMult:r=0
+  gun_spread__maxDeltaAngle:r=0.01
+  gun__deviationInFireReady:r=0.1
+  item__name:t="fn_scar_mid_recoil_special_video_edition"
+  item__proto:t="teaser_fn_scar_gun"
+  item__weapTemplate:t="teaser_fn_scar_gun"
+}
+
+teaser_hk_mp5n_gun_2{
+  _use:t="hk_mp5n_gun"
+  gun__recoilAmount:r=0.03
+  gun__recoilRotationMean:p3=60, 60, 60
+  gun__visualRecoilMult:r=0.4
+  gun__spreadMult:r=0
+  gun_spread__maxDeltaAngle:r=0.01
+  gun__deviationInFireReady:r=0.1
+  item__name:t="mp5n_mid_recoil_special_video_edition"
+  item__proto:t="teaser_hk_mp5n_gun"
+  item__weapTemplate:t="teaser_hk_mp5n_gun"
+}
+
+teaser_ak_103_gun_2{
+  _use:t="ak_103_gun"
+  gun__recoilAmount:r=0.016
+  gun__recoilRotationMean:p3=60, 60, 60
+  gun__visualRecoilMult:r=0.2
+  gun__spreadMult:r=0
+  gun_spread__maxDeltaAngle:r=0.01
+  gun__deviationInFireReady:r=0.1
+  item__name:t="ak_103_mid_recoil_special_video_edition"
+  item__proto:t="teaser_ak_103_gun"
+  item__weapTemplate:t="teaser_ak_103_gun"
+}
+
+teaser_fake_target{
+  _use:t="ai_target"
+  _use:t="animchar"
+  ai_target_node__node:t="volumeBox"
+  ai_target__standNoiseLevel:r=1000
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  team:i=999
+  animchar_render__enabled:b=yes
+  animchar__res:t="grenade_rdg_char"
+  collres__res:t="grenade_rdg_collision"
+}
+
+teaser_frog_trap{
+  _use:t="frog_trap"
+  spawn_random_entity_on_disappear__chance:r=0
+}
+
+teaser_frog_trap_region_monster_generator_dense{
+  _use:t="frog_trap_region_monster_generator_dense"
+  monster_gen__destroyGeneratedEntitiesOnDestroy:b=yes
+  monster_gen__spawnInterval:r=0.0001
+  monster_gen__respawnInterval:r=0.0001
+  monster_gen__spawnIntervalKoef:r=100
+
+  "monster_gen__templates:list<t>"{
+    i:t="teaser_frog_trap"
+  }
+}
+
+teaser_changed_render_effect{
+  _use:t="changed_render_effect"
+  game_effect__showHideDistanceSq:p2=20000, 40000
+}
+
+teaser_changed_aura{
+  _use:t="changed_aura"
+
+  "monster_aura__enabledAliveAttachments:list<t>"{
+    i:t="teaser_changed_render_effect"
+  }
+
+  "monster_aura__enabledDeadAttachments:list<t>"{
+    i:t="teaser_changed_render_effect"
+  }
+}
+
+teaser_euclid_changed_human{
+  _use:t="regional_changed_human"
+  _use:t="teaser_changed_aura"
+  beh_tree__blackboard__enemyRadius:r=150
+  beh_tree__blackboard__enemyRadiusTriggered:r=200
+  beh_tree__blackboard__enemyRadiusLarge:r=200
+  agent_dangers__blindDistanceSq:r=40000
+  agent_dangers__maxDangerDist:r=200
+}
+
+teaser_am_bees_guards_teaser{
+  _use:t="am_bees_guards_teaser"
+  swarm_cluster__agroRange:r=300
+}
+
+teaser_bees_swarm_preset{
+  _use:t="bees_swarm_preset"
+  am_habitat_swarm__maxFlightDistance:r=50
+  bees_swarm_preset__templateName:t="teaser_am_bees_guards_teaser"
+  bees_swarm_preset__swarmCount:i=5
+}
+
+teaser_nesting_swarm_snake_segment{
+  _use:t="nesting_swarm_snake_segment"
+  nesting_swarm_snake_segment__attackRng:p2=20.2, 20.4
+}
+
+teaser_nesting_swarm_snake{
+  _use:t="nesting_swarm_snake"
+  beh_tree__blackboard__enemyRadius:r=16
+  nesting_swarm_snake__segmentTemplate:t="teaser_nesting_swarm_snake_segment"
+}
+
+teaser_nesting_swarm_snake_nest{
+  _use:t="nesting_swarm_snake_nest"
+  nesting_swarm_nest__warriorTemplate:t="teaser_nesting_swarm_snake"
+}
+
+teaser_invisible_man_visibility_render_affect{
+  _use:t="invisible_man_visibility_render_affect"
+
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="invisible_man_decay_smoke_attached_effect_template"
+    item:t="invisible_man_decay_smoke_effect_template"
+    item:t="invisible_man_decay_sparks_effect_template"
+  }
+}
+
+teaser_invisible_man_another_dimension_visitor{
+  _use:t="invisible_man_another_dimension_visitor"
+
+  "another_dimension_visitor__renderModeFromOurToOurAffectTemplates:list<t>"{
+    item:t="teaser_invisible_man_visibility_render_affect"
+  }
+}
+
+teaser_invisible_man_guard{
+  _use:t="invisible_man_guard"
+  _use:t="teaser_invisible_man_another_dimension_visitor"
+  hitpoints__hp:r=700000
+  hitpoints__maxHp:r=700000
+  invisible_man__anotherDimensionAvailable:b=no
+
+  "human_inventory__deathDrop:array"{}
+  "dontBodyCleanupOnDeath:tag"{}
+}
+
+teaser_extraction_point{
+  _use:t="extraction_point"
+  _use:t="debug_portal"
+  _use:t="attract_point_base"
+  extraction__currentState:i=1
+  extraction__extractionTime:r=120
+  attract_point__magnitude:r=0.5
+  attract_point__magnitudeLimits:p2=0.5, 0.5
+
+  "extraction_for_everyone:tag"{}
+}
+
+teaser_awake_on_trigger{
+  _use:t="teaser_episode_entity"
+  teaser_awake_on_trigger__triggerIndex:i=0
+}
+
+teaser_tape_recorder_animation{
+  teaser_tape_recorder_animation__rotorVarId:i=-1
+  teaser_tape_recorder_animation__rotorSpeed:r=200
+
+  phys_vars{}
+  anim_phys{}
+}
+
+teaser_tape_recorder{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="teaser_tape_recorder_animation"
+  animchar__res:t="loot_amfiton_tape_recorder_a_speaker_red_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+teaser_audio_cassette{
+  _use:t="replicating"
+  _use:t="animchar"
+  _use:t="teaser_tape_recorder_animation"
+  animchar__res:t="loot_audio_cassete_a_char"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+teaser_spot_light{
+  _use:t="spot_light_huge"
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    _replicate:b=yes
+    spot_light__contact_shadows:b=yes
+    spot_light__dynamic_obj_shadows:b=yes
+  }
+}
+
+teaser_sovmod_kindergarten_doll_d{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovmod_kindergarten_doll_d"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+sovmod_fence_brick_b_door_b_rot_l{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovmod_fence_brick_b_door_b_rot_l"
+}
+
+sovmod_fence_brick_b_door_b_rot_r{
+  _use:t="placeable_rendinst"
+  ri_extra__name:t="sovmod_fence_brick_b_door_b_rot_r"
+}
+
+teaser_car{
+  teaser_car__episodeIndex:i=-1
+  teaser_car__initTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+teaser_spider{
+  _use:t="spider_mother_shooter"
+  beh_tree__enabled:b=no
+  bodyCleanupTime:r=999999
+  hitpoints__hp:r=700000
+  hitpoints__maxHp:r=700000
+  teaser_spider__episodeIndex:i=-1
+  nPhys__animcharScale:r=0.06
+  _tracked:t="nPhys__animcharScale"
+  _replicated:t="nPhys__animcharScale"
+  nPhys__animcharScaleRange:p2=0.06, 0.06
+  anim_state__forceAnimStateId:i=-1
+  _tracked:t="anim_state__forceAnimStateId"
+  _replicated:t="anim_state__forceAnimStateId"
+  needsBlood:b=no
+  material:t=""
+
+  "ragdoll__isAllowed:b"{
+    _tags:t="render"
+    value:b=no
+  }
+
+  "loc_snaphots__disabled:tag"{}
+  "nphys__disabled:tag"{}
+  "npys_homoErectus:tag"{}
+  "teaser_spider:tag"{}
+  "loc_snapshots__scaledTransform:tag"{}
+  "human_inventory__deathDrop:array"{}
+}
+
+teaser_recorder_spider{
+  _use:t="teaser_spider"
+  nPhys__animcharScale:r=0.035
+  nPhys__animcharScaleRange:p2=0.035, 0.035
+  hitpoints__hp:r=1
+  hitpoints__maxHp:r=1
+}
+
+teaser_spider_walker_effect{
+  _use:t="replicated_game_effect"
+  game_effect__forceAnimState:t="lower_walk_root"
+  game_effect__forceAnimStateId:i=-1
+
+  "teaser_spider_walker_effect:tag"{}
+}
+
+teaser_spider_walker{
+  _use:t="teaser_bot_guard"
+  _use:t="teaser_episode_entity"
+  _use:t="create_teaser_bot_player_colors_0"
+  teaser_spider_walker__triggerIndex:i=2
+  equipped_bot__equipmentGeneratorName:t="teaser_spider_walker_equipment_generator"
+  teaser_spider_walker__effectTemplate:t="teaser_spider_walker_effect"
+
+  "teaser_spider_walker:tag"{}
+  "teaser_spider_walker__effectEid:eid"{}
+}
+
+final_euclid_changed_human{
+  _use:t="regional_changed_human"
+  _use:t="teaser_episode_entity"
+  _use:t="teaser_changed_aura"
+  teaser_episode_bot__triggerIndex:i=1
+  beh_tree__enabled:b=no
+  _tracked:t="beh_tree__enabled"
+  _replicated:t="beh_tree__enabled"
+  beh_tree__node:t="nchanged_teaser_walker"
+  navmesh_phys__defaultClimbHeight:r=0.2
+  navmesh_phys__climbJumpMaxDistSq:r=0
+  navmesh_phys__climbJumpMaxUpHeight:r=0.2
+  agent_dangers__maxDangerDist:r=100
+  agent_dangers__blindDistanceSq:r=10000
+  beh_tree__blackboard__enemyRadius:r=100
+  beh_tree__blackboard__enemyRadiusLarge:r=100
+  beh_tree__blackboard__enemyRadiusTriggered:r=120
+  navmesh_phys__rndWalkSpeed:p2=4.4, 4.7
+  changed__blinkDistance:p2=1.8, 2.2
+  changed__blinkPeriod:p2=5, 10
+
+  "final_euclid_changed_human:tag"{}
+  "actions__actions:array"{}
+  "actions__actions_enabled:array"{}
+}
+
+final_euclid_changed_human_walker{
+  _use:t="final_euclid_changed_human"
+  navmesh_phys__maxWalkSpeed:r=2.5
+  navmesh_phys__rndWalkSpeed:p2=2.4, 2.6
+  navmesh_phys__walkSpeedModifier:r=1
+  navmesh_phys__walkSpeedMult:r=1
+  changed__blinkDistance:p2=1, 1
+  changed__blinkPeriod:p2=100, 100
+  changed__firstBlinkTimerOffset:r=2
+}
+
+final_euclid_changed_human_walker_slow{
+  _use:t="final_euclid_changed_human_walker"
+  navmesh_phys__maxWalkSpeed:r=1.5
+  navmesh_phys__rndWalkSpeed:p2=1.4, 1.6
+}
+
+final_euclid_changed_human_looker{
+  _use:t="final_euclid_changed_human"
+  randomAnimStart:b=yes
+  final_euclid_changed_human_looker__episodeIndex:i=18
+  final_euclid_changed_human_looker__trigger:i=2
+  final_euclid_changed_human_looker__awakeDelay:p2=0, 0
+  nPhys__animcharScale:r=0.9
+  nphys_coll__capsuleRadius:r=0.1
+  beh_tree__enabled:b=yes
+  navmesh_phys__walkSpeedMult:r=0
+  navmesh_phys__wishLookApproachViscosity:r=0.1
+  navmesh_phys__wishLookApproachSpd:r=2
+  navmesh_phys__quatVisc:r=0.1
+  navmesh_phys__steeringAgentSineFactor:r=0.1
+  non_human_phys_ik__varName:t=""
+  changed__firstBlinkTimerOffset:r=500000
+  changed__blinkPeriod:p2=500000, 500000
+
+  "final_euclid_changed_human_looker:tag"{}
+  "pair_collision__gridNames:list<t>"{}
+  "nphys__no_obstacle_navigation:tag"{}
+}
+
+final_euclid_teaser_params{
+  final_euclid_teaser_params__jumpAimDist:r=3
+}
+
+final_euclid_changed_human_looker_1{
+  _use:t="final_euclid_changed_human_looker"
+  final_euclid_changed_human_looker__awakeDelay:p2=0.05, 0.05
+  navmesh_phys__maxWalkSpeed:r=2.5
+  navmesh_phys__rndWalkSpeed:p2=2.5, 2.5
+}
+
+final_euclid_changed_human_looker_2{
+  _use:t="final_euclid_changed_human_looker"
+  final_euclid_changed_human_looker__awakeDelay:p2=0.2, 0.2
+  final_euclid_changed_human_looker_jump_effect__triggered:b=no
+  final_euclid_changed_human_looker_jump_effect__dist:r=3
+}
+
+final_euclid_changed_human_looker_3{
+  _use:t="final_euclid_changed_human_looker"
+  final_euclid_changed_human_looker__awakeDelay:p2=0.26, 0.26
+}
+
+final_euclid_changed_human_looker_4{
+  _use:t="final_euclid_changed_human_looker"
+  final_euclid_changed_human_looker__awakeDelay:p2=0.55, 0.55
+  navmesh_phys__maxWalkSpeed:r=2.5
+  navmesh_phys__rndWalkSpeed:p2=2.5, 2.5
+}
+
+final_euclid_changed_human_looker_5{
+  _use:t="final_euclid_changed_human_looker"
+  final_euclid_changed_human_looker__awakeDelay:p2=0.65, 0.65
+  navmesh_phys__maxWalkSpeed:r=2.5
+  navmesh_phys__rndWalkSpeed:p2=2.5, 2.5
+}
+
+final_euclid_changed_human_looker_6{
+  _use:t="final_euclid_changed_human_looker"
+  final_euclid_changed_human_looker__awakeDelay:p2=0.9, 0.9
+  navmesh_phys__maxWalkSpeed:r=2.5
+  navmesh_phys__rndWalkSpeed:p2=2.5, 2.5
+}
+
+final_euclid_changed_human_looker_awake{
+  final_euclid_changed_human_looker_awake__at:r=0
+}
+
+final_euclid_changed_human_looker_jump_effect{
+  _use:t="replicated_game_effect"
+  game_effect__forceAnimState:t="jump_attack_continuous"
+  game_effect__forceAnimStateId:i=-1
+}
+
+teaser_invisible_man_looker{
+  _use:t="teaser_invisible_man_guard"
+  beh_tree__node:t="invisible_man_teaser"
+  randomAnimStart:b=yes
+  nPhys__animcharScale:r=1
+  nPhys__animcharScaleRange:p2=1, 1
+  anim_state__forceAnimState:t="idle1"
+  nPhys__animcharScaleMirror:b=no
+  navmesh_phys__walkSpeedMult:r=0
+  teaser_invisible_man_looker__initTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+teaser_invisible_man_looker_1{
+  _use:t="teaser_invisible_man_looker"
+  anim_state__forceAnimState:t="idle5"
+}
+
+teaser_invisible_man_looker_2{
+  _use:t="teaser_invisible_man_looker"
+  anim_state__forceAnimState:t="idle6"
+  nPhys__animcharScaleMirror:b=yes
+}
+
+teaser_invisible_man_looker_3{
+  _use:t="teaser_invisible_man_looker"
+  anim_state__forceAnimState:t="idle7"
+  nPhys__animcharScaleMirror:b=yes
+}
+
+teaser_invisible_man_looker_4{
+  _use:t="teaser_invisible_man_looker"
+  anim_state__forceAnimState:t="idle8"
+}
+
+teaser_invisible_man_looker_5{
+  _use:t="teaser_invisible_man_looker"
+  anim_state__forceAnimState:t="idle12"
+  nPhys__animcharScaleMirror:b=yes
+}
+
+teaser_invisible_man_looker_6{
+  _use:t="teaser_invisible_man_looker"
+  anim_state__forceAnimState:t="idle10"
+}
+
+teaser_invisible_man_looker_7{
+  _use:t="teaser_invisible_man_looker"
+  anim_state__forceAnimState:t="idle11"
+}
+
+teaser_invisible_man_looker_8{
+  _use:t="teaser_invisible_man_looker"
+  anim_state__forceAnimState:t="idle9"
+  nPhys__animcharScaleMirror:b=yes
+}
+
+teaser_invisible_man_looker_9{
+  _use:t="teaser_invisible_man_looker"
+  anim_state__forceAnimState:t="idle4"
+  nPhys__animcharScaleRange:p2=2, 2
+}
+
+teaser_explosion{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="hit_env_affect_fx"
+  wind_emitter__radius:r=5
+  wind_emitter__duration:r=4
+  wind_emitter__strength:r=7
+  wind_emitter__phaseSin:b=yes
+  wind_emitter__numWaves:i=6
+  wind_emitter__phaseAttack:b=yes
+  create_entity_on_disappear_with_delay__delay:r=3
+  create_entity_on_disappear_with_delay__template:t="teaser_explosion"
+
+  "wind_emitter__omni:tag"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_tank_base_cmps_fx"
+
+    effect{}
+    "vehicle_effect__vehicleEid:eid"{}
+  }
+
+  "vehicleEffect:tag"{}
+  "staticEffect:tag"{}
+  "autodeleteEffectEntity:tag"{}
+}

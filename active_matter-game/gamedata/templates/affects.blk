@@ -1,0 +1,804 @@
+game_effect_base{
+  _tracked:t="game_effect__attachedTo"
+
+  "game_effect__attachedTo:eid"{}
+  "game_effect__lastAttachedTo:eid"{}
+}
+
+game_effect_with_duration{
+  _use:t="game_effect_base"
+  game_effect__timeToDestroy:r=-1
+  game_effect__destroyAt:r=-1
+}
+
+client_game_effect_with_duration{
+  _use:t="game_effect_base"
+  game_effect__timeToDestroy:r=-1
+  game_effect__clientDestroyAt:r=-1
+}
+
+oneshot_set_pulse_effect{
+  _use:t="game_effect_base"
+
+  "oneshot_set_pulse_effect:tag"{}
+}
+
+replicated_game_effect{
+  _use:t="game_effect_base"
+  _use:t="replicating"
+}
+
+replicated_game_effect_with_duration{
+  _use:t="game_effect_with_duration"
+  _use:t="replicating"
+}
+
+vehicle_game_effect{
+  _use:t="replicated_game_effect"
+
+  "game_effect__vehicle:eid"{}
+}
+
+disabled_weapon_switch_game_effect{
+  "state__disableWeaponSwitch:tag"{}
+}
+
+disable_use_item{
+  "state__disableUseItems:tag"{}
+}
+
+locked_looting_soldier_base{
+  locked__pickupItemsLockedByAffect:b=no
+  _tracked:t="locked__pickupItemsLockedByAffect"
+}
+
+locked_use_objects_soldier_base{
+  human_use_object__lockGrenadeRethrowing:b=no
+  human_use_object__lockVehicleUse:b=no
+  human_use_object__lockStationaryGunUse:b=no
+  locked__stationaryGunUseLockedByAffect:b=no
+  human_use_object__lockDoorUse:b=no
+  _tracked:t="human_use_object__lockStationaryGunUse"
+  _tracked:t="locked__stationaryGunUseLockedByAffect"
+  human_vehicle__can_take_seat:b=yes
+  _tracked:t="human_vehicle__can_take_seat"
+  _replicated:t="human_use_object__lockVehicleUse"
+}
+
+burning_affect{
+  _use:t="replicated_game_effect"
+  ingame_rumble__whenEffectAttached:t="combustion"
+
+  "burning_affect:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockVehicleUse:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_use_object__lockDoorUse:tag"{}
+}
+
+concussion_affect{
+  _use:t="replicated_game_effect"
+  ingame_rumble__onEffectAttach:t="concussion"
+  concussion__handsShakeMagnitude:r=0.2
+  concussion__handsShakeSpeedMult:r=6
+  concussion__handsShakeFadeTime:r=5
+  concussion__duration:r=10
+  concussion__startedAtTime:r=0
+  concussion__replaced:b=no
+
+  "concussionAffect:tag"{}
+  "concussionHandsShake:tag"{}
+  "concussionSoundSuppression:tag"{}
+  "concussionScreenEffect:tag"{}
+}
+
+confusion_affect{
+  _use:t="replicated_game_effect"
+  confusion__duration:r=5
+  confusion__startedAtTime:r=0
+  confusion__intensity:r=0.005
+  confusion__speed:r=1
+
+  "confusionAffect:tag"{}
+  "confusionScreenEffect:tag"{}
+}
+
+base_postfx_fade_affect{
+  _use:t="replicated_game_effect"
+  postfx_fade_affect__layerName:t="default"
+  postfx_fade_affect__layerNameHash:i=-1
+}
+
+postfx_fade_affect{
+  _use:t="base_postfx_fade_affect"
+  postfx_fade_affect__fadeInTime:r=0.3
+  postfx_fade_affect__fadeOutTime:r=0.5
+}
+
+postfx_fadein_affect{
+  _use:t="base_postfx_fade_affect"
+  postfx_fadein_affect__time:r=0.3
+  postfx_fadein_affect__color:c=5, 7, 5, 255
+}
+
+postfx_fadeout_affect{
+  _use:t="base_postfx_fade_affect"
+  postfx_fadeout_affect__time:r=0.3
+}
+
+flash_blind_affect{
+  _use:t="replicated_game_effect"
+  flash_blind__intensity:r=1
+
+  "flashBlindScreenEffect:tag"{}
+}
+
+directional_push_affect{
+  push_effect__spawnRateThreshold:r=0.5
+  push_effect__scale:r=1
+  push_effect__active:b=no
+  push_effect__distance:r=1
+  push_effect__direction:p3=0, 1, 0
+  push_effect__distancePower:r=1
+  push_effect__powerLimits:p2=0.01, 0.8
+  push_effect__speed:r=40
+  push_effect__immunityAmount:r=2
+  push_effect__vehicleDistance:r=4
+  push_effect__vehicleEnergyScale:r=160
+  push_effect__shipEnergyScale:r=100
+}
+
+human_freefall_animation{
+  _use:t="replicated_game_effect"
+  game_effect__forceAnimState:t="parachute_free_fly_anim"
+  game_effect__forceAnimStateId:i=-1
+
+  "game_effect__activateUnarmed:tag"{}
+  "game_effect__hiddenWeapon:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+}
+
+human_parachute_opening_animation{
+  _use:t="replicated_game_effect"
+  game_effect__forceAnimState:t="parachute_open_anim"
+  game_effect__forceAnimStateId:i=-1
+
+  "game_effect__activateUnarmed:tag"{}
+  "game_effect__hiddenWeapon:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "human_parachute_opening_animation:tag"{}
+}
+
+human_parachute_opened_animation{
+  _use:t="replicated_game_effect"
+  game_effect__forceAnimState:t="parachute_cycle_anim"
+  game_effect__forceAnimStateId:i=-1
+
+  "game_effect__activateUnarmed:tag"{}
+  "game_effect__hiddenWeapon:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "human_parachute_opened_animation:tag"{}
+}
+
+human_parachute_close_animation{
+  _use:t="replicated_game_effect"
+  game_effect__forceAnimState:t="parachute_landing_anim"
+  game_effect__forceAnimStateId:i=-1
+
+  "game_effect__activateUnarmed:tag"{}
+  "game_effect__hiddenWeapon:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "human_parachute_close_animation:tag"{}
+}
+
+human_parachute_affect_hide_weapon{
+  _use:t="replicated_game_effect"
+
+  "game_effect__activateUnarmed:tag"{}
+  "game_effect__hiddenWeapon:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+}
+
+frog_trap_anim_affect{
+  _use:t="replicated_game_effect"
+  frog_trap_effect__startAnimStateId:i=-1
+  frog_trap_effect__flyUpAnimStateId:i=-1
+  frog_trap_effect__flyDownAnimStateId:i=-1
+  frog_trap_effect__landAnimStateId:i=-1
+  frog_trap_effect__state:i=-1
+  frog_trap_effect__changeStateAtTime:r=-1
+  frog_trap_effect__startAnimTime:r=0.5
+  frog_trap_effect__landAnimTime:r=2.5
+
+  "game_effect__activateUnarmed:tag"{}
+  "state__lockMove:tag"{}
+  "state__interruptShoot:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+}
+
+repair_kit_animation{
+  _use:t="attached_replicated_effect_with_duration"
+  _use:t="animchar"
+  game_effect__forceAnimUpperNonCrawlState:t="repair_vehicle"
+  game_effect__forceAnimUpperNonCrawlStateId:i=-1
+  game_effect__forceAnimUpperCrawlState:t="repair_vehicle_crawl"
+  game_effect__forceAnimUpperCrawlStateId:i=-1
+  animchar__res:t="sovmod_car_wrench_a_char"
+  slot_attach__slotName:t="weapon"
+
+  "game_effect__hiddenWeapon:tag"{}
+  "game_effect__uncontrollable:tag"{}
+  "state__disableStoneThrow:tag"{}
+}
+
+lifetime_affects_server{
+  "lifetime_affects_server__affectTemplates:list<t>"{}
+  "lifetime_affects_server__affectEids:list<eid>"{}
+}
+
+lifetime_affects_client{
+  "lifetime_affects_client__affectTemplates:list<t>"{}
+  "lifetime_affects_client__affectEids:list<eid>"{}
+}
+
+human_dodge_effect{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=1
+
+  "human_dodge_effect:tag"{}
+}
+
+human_fallen_animation{
+  _use:t="client_game_effect_with_duration"
+  _use:t="game_effect_with_duration"
+  game_effect__forceAnimState:t="sm_injured"
+  game_effect__forceAnimStateId:i=-1
+
+  "game_effect__confusionAffect:tag"{}
+  "game_effect__concussionAffect:tag"{}
+  "human_fallen_animation:tag"{}
+  "state__deactivateInput:tag"{}
+  "state__interruptInteractable:tag"{}
+  "state__interruptGather:tag"{}
+  "state__interruptItemUsage:tag"{}
+  "state__interruptShoot:tag"{}
+  "state__disableStoneThrow:tag"{}
+}
+
+human_in_bushes_effect{
+  _use:t="replicated_game_effect"
+
+  "human_in_bushes_effect:tag"{}
+  "state__disableJump:tag"{}
+  "state__cameraPunchOnJump:tag"{}
+}
+
+override_input{
+  "override_input:tag"{}
+}
+
+sneaking_game_effect{
+  _use:t="replicated_game_effect"
+
+  "entity_mod_effects:object"{
+    "walkNoiseMult+mult":r=0.5
+  }
+}
+
+infinity_stamina{
+  _use:t="replicated_game_effect"
+
+  "infinity_stamina:tag"{}
+  "entity_mod_effects:object"{
+    "hrStaminaDrainMulti+mult_diminishing":r=0.01
+  }
+}
+
+human_on_ladder_animation{
+  _use:t="game_effect_base"
+  game_effect__forceAnimState:t="climb_ladder"
+  game_effect__forceAnimStateId:i=-1
+  game_effect__disableFlag:t="hero__isDrawAboveGeometry"
+
+  "human_on_ladder_animation:tag"{}
+}
+
+human_unarmed_on_ladder{
+  _use:t="game_effect_base"
+  game_effect__switchToWeaponSlot:i=6
+  game_effect__startFromMiddle:b=no
+  game_effect__disableSwitchOnSlot:i=6
+
+  "state__interruptItemUsage:tag"{}
+  "state__disableStoneThrow:tag"{}
+  "human_unarmed_on_ladder:tag"{}
+}
+
+gravity_hook_effect{
+  _use:t="replicated_game_effect"
+  gravity_hook_effect__pushTime:r=0.5
+  gravity_hook_effect__pushLength:r=5
+  gravity_hook_effect__time:r=0
+  gravity_hook_effect__tickStart:i=0
+  gravity_hook_effect__tickEnd:i=-1
+  _replicated:t="gravity_hook_effect__tickEnd"
+
+  "gravity_hook_effect__zoneEid:eid"{}
+  "state__collisionDmgImmunity:tag"{}
+  "state__disableMovementInAir:tag"{}
+  "state__disableJump:tag"{}
+}
+
+game_effect_sequence{
+  _use:t="game_effect_base"
+
+  "game_effect_sequence__stages:array"{}
+  "game_effect_sequence__states__stageIdx:list<i>"{}
+  "game_effect_sequence__states__startEndTime:list<p2>"{}
+  "game_effect_sequence__states__delay:list<r>"{}
+  "game_effect_sequence__states__duration:list<r>"{}
+  "game_effect_sequence__states__affectTemplate:list<t>"{}
+  "game_effect_sequence__states__affectEid:list<eid>"{}
+  "game_effect_sequence__states__flags:list<i>"{}
+}
+
+report_destruction_to_sequence{
+  "report_destruction_to_sequence__sequenceEid:eid"{}
+}
+
+replicated_game_effect_sequence{
+  _use:t="game_effect_sequence"
+  _use:t="replicating"
+}
+
+ampoule_healing_effect{
+  _use:t="replicated_game_effect"
+  _use:t="activate_unarmed_affect"
+  game_effect__forceAnimUpperStateId:i=-1
+  game_effect__forceAnimUpperState:t="healing_by_sovmod_meds"
+  four_step_healing__progressVarId:i=-1
+  four_step_healing__didAnimLoopEnd:b=no
+  four_step_healing__healAt:r=-1
+  four_step_healing__selectedBodypartIdx:i=0
+
+  "game_effect__destroyWithOwner:tag"{}
+  "state__interruptInteractable:tag"{}
+  "state__interruptGather:tag"{}
+  "state__disableStoneThrow:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_use_object__lockDoorUse:tag"{}
+  "game_effect__disableFlags:list<t>"{
+    item:t="human_net_phys__canSprint"
+  }
+
+  "four_step_healing__animationInOutDurations:shared:list<p3>"{
+    0:p3=1.26, 2.73, 0.66
+    1:p3=1.26, 1.9, 0.66
+    2:p3=1.26, 4.13, 0.83
+    3:p3=1.26, 2.63, 0.66
+    4:p3=1.26, 2.06, 0.66
+    5:p3=1.26, 2.16, 0.9
+  }
+
+  "four_step_healing__animcharAlternativeSlots:shared:list<t>"{
+    i:t="syringe_cap_L"
+    i:t="syringe_L"
+  }
+
+  "four_step_healing__useAlternativeSlots:shared:list<b>"{
+    0:b=no
+    1:b=no
+    2:b=yes
+    3:b=no
+    4:b=no
+    5:b=yes
+  }
+
+  "four_step_healing__item:eid"{}
+  "four_step_healing__animcharTemplateNames:shared:list<t>"{
+    i:t="ampoule_cap_animchar_affect"
+    i:t="ampoule_boby_animchar_affect"
+  }
+
+  "four_step_healing__animcharEids:list<eid>"{}
+}
+
+ampoule_cap_animchar_affect{
+  _use:t="replicated_game_effect"
+  _use:t="slot_attachable"
+  _use:t="animchar"
+  animchar__res:t="sovmod_medkit_ai2_cap_char"
+  slot_attach__slotName:t="syringe_cap"
+
+  "slot_attach__followEffectAttach:tag"{}
+}
+
+ampoule_boby_animchar_affect{
+  _use:t="replicated_game_effect"
+  _use:t="slot_attachable"
+  _use:t="animchar"
+  animchar__res:t="sovmod_medkit_ai2_syrette_char"
+  slot_attach__slotName:t="syringe"
+
+  "slot_attach__followEffectAttach:tag"{}
+}
+
+injector_healing_effect{
+  _use:t="replicated_game_effect"
+  _use:t="activate_unarmed_affect"
+  game_effect__forceAnimUpperStateId:i=-1
+  game_effect__forceAnimUpperState:t="healing_by_injector_meds"
+  four_step_healing__progressVarId:i=-1
+  four_step_healing__didAnimLoopEnd:b=no
+  four_step_healing__healAt:r=-1
+  four_step_healing__selectedBodypartIdx:i=0
+
+  "game_effect__destroyWithOwner:tag"{}
+  "state__interruptInteractable:tag"{}
+  "state__disableStoneThrow:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_use_object__lockDoorUse:tag"{}
+  "game_effect__disableFlags:list<t>"{
+    item:t="human_net_phys__canSprint"
+  }
+
+  "four_step_healing__animationInOutDurations:shared:list<p3>"{
+    0:p3=0, 1.99, 0.66
+  }
+
+  "four_step_healing__animcharAlternativeSlots:shared:list<t>"{}
+  "four_step_healing__useAlternativeSlots:shared:list<b>"{
+    0:b=no
+  }
+
+  "four_step_healing__item:eid"{}
+  "four_step_healing__animcharTemplateNames:shared:list<t>"{
+    i:t="injector_cap_animchar_affect"
+    i:t="injector_cap2_animchar_affect"
+    i:t="injector_boby_animchar_affect"
+  }
+
+  "four_step_healing__animcharEids:list<eid>"{}
+}
+
+injector_cap_animchar_affect{
+  _use:t="replicated_game_effect"
+  _use:t="slot_attachable"
+  _use:t="animchar"
+  animchar__res:t="am_meds_injector_a_cap_char"
+  slot_attach__slotName:t="syringe_cap"
+
+  "slot_attach__followEffectAttach:tag"{}
+}
+
+injector_cap2_animchar_affect{
+  _use:t="replicated_game_effect"
+  _use:t="slot_attachable"
+  _use:t="animchar"
+  animchar__res:t="am_meds_injector_a_cap2_char"
+  slot_attach__slotName:t="syringe_cap2"
+
+  "slot_attach__followEffectAttach:tag"{}
+}
+
+injector_boby_animchar_affect{
+  _use:t="replicated_game_effect"
+  _use:t="slot_attachable"
+  _use:t="animchar"
+  animchar__res:t="am_meds_injector_a_char"
+  slot_attach__slotName:t="syringe"
+
+  "slot_attach__followEffectAttach:tag"{}
+}
+
+injector_2_healing_effect{
+  _use:t="replicated_game_effect"
+  _use:t="activate_unarmed_affect"
+  game_effect__forceAnimStateId:i=-1
+  game_effect__forceAnimState:t="healing_by_injector_meds_2"
+  four_step_healing__progressVarId:i=-1
+  four_step_healing__didAnimLoopEnd:b=no
+  four_step_healing__healAt:r=-1
+  four_step_healing__selectedBodypartIdx:i=0
+
+  "game_effect__destroyWithOwner:tag"{}
+  "state__interruptInteractable:tag"{}
+  "state__interruptGather:tag"{}
+  "state__disableStoneThrow:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_use_object__lockDoorUse:tag"{}
+  "game_effect__disableFlags:list<t>"{
+    item:t="human_net_phys__canSprint"
+  }
+
+  "four_step_healing__animationInOutDurations:shared:list<p3>"{
+    0:p3=0, 1.93, 0.66
+  }
+
+  "four_step_healing__animcharAlternativeSlots:shared:list<t>"{}
+  "four_step_healing__useAlternativeSlots:shared:list<b>"{
+    0:b=no
+  }
+
+  "four_step_healing__item:eid"{}
+  "four_step_healing__animcharTemplateNames:shared:list<t>"{
+    i:t="injector_cap_2_animchar_affect"
+    i:t="injector_cap2_2_animchar_affect"
+    i:t="injector_boby_2_animchar_affect"
+  }
+
+  "four_step_healing__animcharEids:list<eid>"{}
+}
+
+injector_cap_2_animchar_affect{
+  _use:t="replicated_game_effect"
+  _use:t="slot_attachable"
+  _use:t="animchar"
+  animchar__res:t="am_meds_injector_c_cap_char"
+  slot_attach__slotName:t="syringe_cap"
+
+  "slot_attach__followEffectAttach:tag"{}
+}
+
+injector_cap2_2_animchar_affect{
+  _use:t="replicated_game_effect"
+  _use:t="slot_attachable"
+  _use:t="animchar"
+  animchar__res:t="am_meds_injector_c_cap2_char"
+  slot_attach__slotName:t="syringe_cap2"
+
+  "slot_attach__followEffectAttach:tag"{}
+}
+
+injector_boby_2_animchar_affect{
+  _use:t="replicated_game_effect"
+  _use:t="slot_attachable"
+  _use:t="animchar"
+  animchar__res:t="am_meds_injector_c_char"
+  slot_attach__slotName:t="syringe"
+
+  "slot_attach__followEffectAttach:tag"{}
+}
+
+instant_healing_effect{
+  _use:t="replicated_game_effect_with_duration"
+  game_effect__timeToDestroy:r=1
+  healing_effect__healAmount:r=50
+  healing_effect__bodypartIdx:i=-1
+  healing_effect__effectVisualStrength:r=5
+}
+
+healing_of_time_effect{
+  _use:t="replicated_game_effect"
+  healing_effect__healByTickAmount:r=1
+  healing_effect__healTick:r=1
+  healing_effect__healTicksCount:i=180
+  healing_effect__nextHealAt:r=-1
+  healing_effect__effectVisualStrength:r=5
+
+  "healing_of_time_effect:tag"{}
+}
+
+healing_stream_effect{
+  _use:t="replicated_game_effect"
+  healing_effect__healByTickAmount:r=1
+  healing_effect__healedByCurrentTickAmount:r=1
+  healing_effect__healTick:r=1
+  healing_effect__nextHealAt:r=-1
+  healing_effect__effectVisualStrength:r=5
+
+  "healing_effect__healItem:eid"{}
+  "healing_stream_effect:tag"{}
+}
+
+stone_throwing_effect{
+  _use:t="game_effect_base"
+  game_effect__destroyAt:r=-1
+  game_effect__clientDestroyAt:r=-1
+  game_effect__forceAnimUpperState:t="throwing_stone_state"
+  game_effect__forceAnimUpperStateId:i=-1
+  stone_throwing_effect__stoneTemplate:t="throwing_stone+throwing_stone_slot_attach"
+  stone_throwing_effect__startAt:r=-1
+
+  "stone_throwing_effect:tag"{}
+  "stone_throwing_effect__stoneAnimchars:list<t>"{
+    i:t="projectile_nut_a"
+    i:t="projectile_nut_b"
+    i:t="projectile_nut_c"
+    i:t="projectile_nut_d"
+    i:t="projectile_nut_e"
+    i:t="projectile_nut_f"
+  }
+
+  "locked_weapon__aim:tag"{}
+  "locked_view__lockZoom:tag"{}
+}
+
+teammate_revive_effect{
+  _use:t="replicated_game_effect"
+  _use:t="activate_unarmed_affect"
+  game_effect__forceAnimUpperStateId:i=-1
+  game_effect__forceAnimUpperState:t="resurrection_state"
+  teammate_revive__progressVarId:i=-1
+  teammate_revive_effect__animcharTemplate:t="cortical_vault_revive_animchar_affect"
+
+  "game_effect__destroyWithOwner:tag"{}
+  "state__interruptInteractable:tag"{}
+  "state__interruptGather:tag"{}
+  "state__disableStoneThrow:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_use_object__lockDoorUse:tag"{}
+  "game_effect__disableFlags:list<t>"{
+    item:t="human_net_phys__canSprint"
+  }
+
+  "teammate_revive_effect__animcharEid:eid"{}
+  "teammate_revive_effect__playerItemOwner:eid"{}
+}
+
+cortical_vault_revive_animchar_affect{
+  _use:t="game_effect_base"
+  _use:t="animchar"
+  animchar__res:t="am_cortical_vault_watch_resurrection_char"
+  collres__res:t="am_cortical_vault_watch_resurrection_collision"
+  teammate_revive_effect__sequenceTemplate:t="cortical_vault_revive_sequence_affect"
+
+  "cortical_vault_revive__spawnPlayerEid:eid"{}
+  "cortical_vault_revive__posHistory:list<p3>"{}
+}
+
+cortical_vault_revive_sequence_affect{
+  _use:t="game_effect_sequence"
+
+  "spawn_sequence__fxEid:eid"{}
+  "cortical_vault_revive_sequence_affect:tag"{}
+  "game_effect_sequence__stages:array"{
+    "stage:object"{
+      affectTemplate:t="cortical_vault_revive_attach"
+      duration:r=1
+    }
+
+    "stage:object"{
+      affectTemplate:t="cortical_vault_revive_am_transfer"
+      duration:r=1.8
+    }
+
+    "stage:object"{
+      affectTemplate:t="cortical_vault_revive_nothing"
+      duration:r=1.6
+    }
+
+    "stage:object"{
+      affectTemplate:t="cortical_vault_revive_phys"
+      duration:r=0.4
+    }
+
+    "stage:object"{
+      affectTemplate:t="cortical_vault_revive_portal_opens"
+      duration:r=1
+    }
+
+    "stage:object"{
+      affectTemplate:t="cortical_vault_revive_teammate"
+      duration:r=0.1
+    }
+  }
+}
+
+cortical_vault_revive_attach{
+  _use:t="game_effect_base"
+  game_effect__addTemplate:t="cortical_vault_revive_attach_subtemplate"
+  game_effect__clientAddTemplate:t="cortical_vault_revive_attach_subtemplate"
+}
+
+cortical_vault_revive_am_transfer{
+  _use:t="game_effect_base"
+
+  "cortical_vault_revive_am_transfer__effectEid:eid"{}
+}
+
+cortical_vault_revive_nothing{
+  _use:t="game_effect_base"
+}
+
+cortical_vault_revive_phys{
+  _use:t="game_effect_base"
+  _use:t="shell_trap_activator"
+  cortical_vault_revive__attachSubtemplate:t="cortical_vault_revive_attach_subtemplate"
+  cortical_vault_revive__physSubtemplate:t="cortical_vault_revive_phys_subtemplate"
+  cortical_vault_revive__throwForce:r=20
+}
+
+cortical_vault_revive_portal_opens{
+  _use:t="game_effect_base"
+  spawn_sequence__fxTempl:t="cortical_vault_portal"
+  spawn_sequence__fxOffset:p3=0, 0, 0
+
+  "spawn_sequence__noMoveToNavMesh:tag"{}
+  "spawn_sequence__createFxClient:tag"{}
+}
+
+cortical_vault_revive_teammate{
+  _use:t="game_effect_base"
+  cortical_vault_revive__traceParams:p3=0.35, 0, 1.6
+}
+
+cortical_vault_revive_attach_subtemplate{
+  _use:t="slot_attachable"
+  slot_attach__slotName:t="resurrection_cortical_vault"
+
+  "slot_attach__followEffectAttach:tag"{}
+}
+
+cortical_vault_revive_phys_subtemplate{
+  _use:t="phys_water_splasher"
+  phys_obj_net_phys__blk:t="gamedata/am/throwing_stone_phys.blk"
+  collision_physMatId:i=-1
+  net__physId:i=-1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  start_vel:p3=0, 0, 0
+
+  "animchar__physSymDependence:tag"{}
+  collres{}
+  phys_vars{}
+  phys_obj_net_phys{}
+  base_net_phys_ptr{}
+  "grav_zones_affected:tag"{}
+  _group{
+    _tags:t="gameClient"
+    phys_water_splasher__fxTemplate:t="hit_water_tiny_effect+client_destroy_in_5_sec"
+  }
+}
+
+cortical_vault_portal{
+  _use:t="extraction_sequence_portal_effect"
+  portal__wishScale:r=0
+  portal__curScale:r=0
+  portal__scalingSpd:r=0
+  portal__scales:p2=0.001, 0.5
+  portal__openCloseTime:p2=0.2, 0.8
+  portal__radiusOffset:r=0.2
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+  hero_spawn_portal__scaleAnimationTemplate:t="cortical_vault_scale_animation"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="relocation_portal_a_composite_fx"
+
+    effect{}
+  }
+
+  "extraction_visual__ownerEid:eid"{}
+  "hero_spawn_portal__openEffects:object"{}
+  "hero_spawn_portal__effects:list<eid>"{}
+  "hero_spawn_portal:tag"{}
+  "portal__destroyClient:tag"{}
+}
+
+cortical_vault_scale_animation{
+  _use:t="militant_sequence_scale_animation"
+  militant_extraction_sequence_scale_animation__portalOffset:r=0
+  militant_extraction_sequence_scale_animation__time:r=1
+  militant_extraction_sequence_scale_animation__initialDelay:r=0
+  militant_extraction_sequence_scale_animation__endScale:r=0.1
+  militant_extraction_sequence_scale_animation__progress:r=0
+  militant_extraction_sequence_scale_animation__finalDelay:r=0.3
+}
+
+teammate_revive_client{
+  "teammate_revive_client:tag"{}
+}

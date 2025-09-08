@@ -1,0 +1,18 @@
+entity{
+  _template:t="nexus_round_mode_beacon"
+  transform:m=[[1, 0, 0] [0, 0.0409724, -0.999161] [-0, 0.999161, 0.0409724] [1.02996, 44.7909, 39.0122]]
+  nexus_beacon__id:i=1
+  nexus_beacon__name:t="Stadium"
+  nexus_beacon__symbol:t="A"
+}
+
+entity{
+  _template:t="nexus_round_mode_beacon_capture_device"
+  transform:m=[[1, 0, 0] [0, 0.807234, -0.590233] [-0, 0.590233, 0.807234] [0.978362, 43.9426, 39.3408]]
+  nexus_beacon_capture_device__parentId:i=1
+  item__setCustomUsePrompt:t="nexus_portal/Stadium"
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_itzal_kutan_point_a_decorations.blk"
+}

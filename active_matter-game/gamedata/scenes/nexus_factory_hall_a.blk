@@ -1,0 +1,85 @@
+entity{
+  _template:t="static_cam"
+  camera__active:b=yes
+  transform:m=[[0, 0, -1] [0, 1, 0] [1, 0, 0] [0, 0, 0]]
+}
+
+entity{
+  _template:t="dalniy_ambient_sound"
+}
+
+entity{
+  _template:t="shaderVars"
+
+  "shader_vars__vars:object"{
+    river1:c=142, 137, 71, 0
+    river0:c=76, 63, 5, 0
+    river_density:r=2
+    water_color_noise_size:r=71
+    ocean1:c=142, 137, 71, 0
+    ocean0:c=76, 63, 5, 0
+    ocean_density:r=1
+    paint_details_tex:t="sovmod_building_colors_tex_palette*"
+    river0:c=30, 81, 63, 0
+    river1:c=41, 104, 83, 0
+    ocean0:c=100, 110, 150, 0
+    ocean1:c=90, 100, 150, 0
+  }
+}
+
+entity{
+  _template:t="wind"
+  wind__noiseScale:r=100
+  wind__noiseSpeed:r=4
+  wind__strength:r=1
+}
+
+entity{
+  _template:t="clouds_hole_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+entity{
+  _template:t="am_teams"
+  am_teams__players:t="am_player_team_for_tests"
+}
+
+entity{
+  _template:t="door_mult_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_doors.blk"
+}
+
+entity{
+  _template:t="am_respawn_raid"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-22.8549, 0.5, 14.9252]]
+}
+
+entity{
+  _template:t="am_inventory"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-21.3844, 1.17935, 13.2951]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-130, 0, 0] [0, -20, 0] [0, 0, 130] [-28.94, 16, -60.7]]
+}
+
+entity{
+  _template:t="player_spawn_controller_default"
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_wave_mode_base_config.blk"
+}
+
+entity{
+  _template:t="level+level_synced_environment"
+  level__blk:t="levels/nexus_factory_hall_a.blk"
+  level__timeRange:p2=18, 18
+  level_synced_environment__timeOfDaySeed:i=1
+  level_synced_environment__weatherSeed:i=2
+
+  "level__weatherChoice:object"{
+    weather_dalniy_island_overcast:r=1
+  }
+}

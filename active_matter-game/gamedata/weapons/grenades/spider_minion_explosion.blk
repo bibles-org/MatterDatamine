@@ -1,0 +1,64 @@
+mass:r=1.1
+momentOfInertia:p3=0.02, 0.004, 0.02
+caliber:r=0.02
+speed:r=18.5
+speedPitch:r=3
+maxDistance:r=5
+physMat:t="walkRay"
+useFutureContacts:b=yes
+frictionGround:r=10
+logCCD:b=no
+entityTemplate:t="spider_minion_explosive_shell"
+entityPhysTemplate:t="spider_minion_explosive_shell_phys"
+explosiveType:t="tnt"
+explosiveMass:r=0.27
+
+collisionResource{
+  props{
+    volumeBox:t="box"
+  }
+}
+
+ccdSpheres{
+  ccd:p4=0, 0.02, 0, 0.03
+}
+
+detonation{
+  onHit:b=no
+  timer:r=5
+}
+
+splashDamage{
+  radius:p2=1, 3
+  penetration:p2=15, 2
+  damage:r=70
+  dmgOffset:p3=0, 0.25, 0
+}
+
+splash{
+  innerRadius:r=1
+  outerRadius:r=3
+  penetration:r=10
+  damage:r=70
+  dmgOffset:p3=0, 0.25, 0
+}
+
+explFx{
+  fxScale:p2=0.45, 0.65
+  effectTemplName:t="spider_minion_explosion_effect"
+}
+
+shellSound{
+  explosionPath:t="impact/grenade"
+}
+
+damage{
+  explosive{
+    strengthEquivalent:r=0.075
+    brisanceEquivalent:r=0.075
+  }
+}
+
+solver{
+  energyConservation:r=0.075
+}

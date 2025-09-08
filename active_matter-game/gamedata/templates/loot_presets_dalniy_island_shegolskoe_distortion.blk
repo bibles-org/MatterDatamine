@@ -1,0 +1,51 @@
+shegolskoe_distortion_xenohounds_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="xenohound_guarded_zone"
+      number:ip2=5, 5
+    }
+  }
+}
+
+shegolskoe_distortion_small_med_random_encounter_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="encounter_small_changed_guard_box"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_changed_guard_am"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_changed_guard_loot"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_core_guard"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_trap_container"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_crashed_uaz"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_changed_guard_uaz"
+      number:i=1
+    }
+  }
+}

@@ -1,0 +1,810 @@
+mod_item_in_world{
+  _use:t="base_item"
+  _use:t="item_in_world"
+}
+
+base_gun_mod{
+  _use:t="gun_mod_icon"
+  _use:t="base_item"
+  item__id:i=0
+  _replicated:t="item__id"
+  item__ui_priority:i=0
+  item__recreateOnGround:t="mod_item_in_world"
+  item__recreateInWorldPhys:t="item_in_world_phys"
+  item__recreateInInventory:t="base_invis_item"
+  item__recreateInGunModSlot:t="weapon_mod"
+  uniqueId:t="-1"
+  item__recreateOnDelayedMove:t="weapon_mod_move_with_blocking"
+  _tracked:t="slot_attach__attachedTo"
+  _replicated:t="slot_attach__attachedTo"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+
+  "attachmentUpdate:tag"{}
+  "slot_attach__attachedTo:eid"{}
+  "item__chronotracesProgressionInfo:object"{
+    "once:object"{}
+    "repeatedly:object"{
+      extract:i=100
+      militant_hits:i=1
+      monster_hits:i=1
+      trap_hits:i=1
+      militant_kills:i=35
+      monster_kills:i=25
+    }
+  }
+}
+
+gun_mod_effect{
+  _use:t="replicated_game_effect"
+
+  "gun_mod_effect:tag"{}
+}
+
+gun_mod_with_effect{
+  gun_mod__effectTemplate:t=""
+
+  "gun_mod__effectEid:eid"{}
+}
+
+base_gun_mod_slot{
+  _use:t="base_mod_slot"
+}
+
+base_weapon_mod_move{
+  "weapon_mod_move__weaponEid:eid"{}
+  "weapon_mod_move__inventoryEid:eid"{}
+  "weapon_mod_move__fakeModEid:eid"{}
+}
+
+weapon_mod_move_with_blocking{
+  _use:t="base_weapon_mod_move"
+  _use:t="block_item_all_actions"
+}
+
+fake_weapon_mod{
+  _use:t="base_nonreplicated_item"
+  _use:t="block_item_all_actions"
+  item__volume:r=0
+
+  "fake_weapon_mod__realModEid:eid"{}
+  "notExtractable:tag"{}
+}
+
+base_scope{
+  _use:t="base_gun_mod"
+  _use:t="scope_highlight"
+  item__lootType:t="scope"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  gunmod__camNode:t="scope_view"
+  gunmod__lensNode:t="lens_close"
+  gunmod__crosshairNode:t="crosshair"
+  gunmod__deviationMult:r=0.5
+  gunmod__camShiftMin:r=0.11
+  gunmod__camShiftMax:r=0.13
+  gunmod__camFovMin:r=28
+  gunmod__camFovMax:r=19
+  gunmod__lensBrightness:r=1
+  gunmod__distortionParams:p3=0.8, 0.1, 0.07
+  gunmod__lensActive:b=yes
+  gunmod__focusPlaneShift:r=0.5
+  gunmod__dofNearAmountPercent:r=50
+  gunmod__dofFarAmountPercent:r=0.02
+  gunmod__disableToggleAim:b=yes
+  gunmod__nightvisionTex_res:t=""
+  item__filterType:t="weapon_mods"
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 2.4
+
+  "drop_tms:list<m>"{
+    tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+    tm:m=[[0, 1, 0] [-1, 0, 0] [0, 0, 1] [0, 0, 0]]
+  }
+
+  "gunmod__nightvisionTex:SharedTex"{
+    _tags:t="render"
+  }
+
+  "late_transparent_render:tag"{}
+  "gunScope:tag"{}
+}
+
+base_collimator_scope{
+  _use:t="base_scope"
+  gunmod__camShiftMin:r=0.09
+  gunmod__camShiftMax:r=0.11
+  gunmod__zoomFactor:r=2
+  gunmod__sightingDistance:r=30
+  gunmod__lensNode:t="collimator_glass"
+
+  "isCameraAlwaysOnScope:tag"{}
+}
+
+scope_3_5x{
+  _use:t="base_scope"
+  animchar__res:t="scope_pu_char"
+  item__proto:t="scope_3_5x"
+  item__weight:r=0.55
+  item__volume:r=3
+  item__name:t="items/scope_3_5x"
+  item__marketPrice:i=1200
+  gunAttachable__slotName:t="scope"
+  collres__res:t="scope_pu_collision"
+  item__userstats__pickupName:t="pickup_scope_4x"
+  gunmod__zoomFactor:r=3.5
+  gunmod__lensBrightness:r=0.65
+  gunmod__distortionParams:p3=0.85, 0.2, 0.27
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_kochetov_slot"
+  }
+}
+
+scope_4x{
+  _use:t="base_scope"
+  animchar__res:t="scope_pu_char"
+  item__proto:t="scope_4x"
+  item__weight:r=0.55
+  item__volume:r=3
+  item__name:t="items/scope_4x"
+  gunAttachable__slotName:t="scope"
+  collres__res:t="scope_pso_collision"
+  item__userstats__pickupName:t="pickup_scope_4x"
+  gunmod__zoomFactor:r=4
+  gunmod__deviationMult:r=0.3
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_kochetov_slot"
+  }
+}
+
+scope_6x{
+  _use:t="base_scope"
+  animchar__res:t="scope_pu_char"
+  item__proto:t="scope_6x"
+  item__weight:r=0.55
+  item__volume:r=3
+  item__name:t="items/scope_6x"
+  gunAttachable__slotName:t="scope"
+  collres__res:t="scope_m84_collision"
+  item__userstats__pickupName:t="pickup_scope_6x"
+  gunmod__zoomFactor:r=6
+  gunmod__deviationMult:r=0.3
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_kochetov_slot"
+  }
+}
+
+scope_pso1{
+  _use:t="base_scope"
+  animchar__res:t="pso_1_1_char"
+  item__proto:t="scope_pso1"
+  item__weight:r=0.62
+  item__volume:r=4
+  item__name:t="items/scope_pso"
+  item__marketPrice:i=1750
+  gunAttachable__slotName:t="scope"
+  collres__res:t="pso_1_1_collision"
+  item__userstats__pickupName:t="pickup_scope_pso1"
+  gunmod__zoomFactor:r=4
+  gunmod__camShiftMax:r=0.041
+  gunmod__camShiftMin:r=0.041
+  gunmod__lensBrightness:r=0.7
+  gunmod__distortionParams:p3=0.11, 0.7, 0.15
+  gunmod__disableToggleAim:b=yes
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.4, 1.8
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_dovetail_slot"
+  }
+}
+
+scope_pso1_high{
+  _use:t="base_scope"
+  animchar__res:t="pso_1_akm_char"
+  item__proto:t="scope_pso1_high"
+  item__weight:r=0.7
+  item__volume:r=4
+  item__name:t="items/scope_pso_high"
+  item__marketPrice:i=1750
+  gunAttachable__slotName:t="scope"
+  collres__res:t="pso_1_akm_collision"
+  item__userstats__pickupName:t="pickup_scope_pso1_high"
+  gunmod__zoomFactor:r=4
+  gunmod__camShiftMax:r=0.15
+  gunmod__camShiftMin:r=0.15
+  gunmod__lensBrightness:r=0.7
+  gunmod__distortionParams:p3=0.12, 0.7, 0.15
+  gunmod__disableToggleAim:b=yes
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.4, 1.8
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_dovetail_high_slot"
+  }
+}
+
+scope_1p63{
+  _use:t="base_collimator_scope"
+  animchar__res:t="1p63_char"
+  item__proto:t="scope_1p63"
+  item__weight:r=0.6
+  item__volume:r=3
+  item__name:t="items/scope_1p63"
+  item__marketPrice:i=600
+  gunAttachable__slotName:t="scope"
+  collres__res:t="1p63_collision"
+  item__userstats__pickupName:t="pickup_scope_1p63"
+  weap__focusPlaneShift:r=0.3
+  weap__dofNearAmountPercent:r=2
+  gunmod__camNode:t="collimator_view"
+  gunmod__lensActive:b=no
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_dovetail_high_slot"
+  }
+}
+
+silencer_gun_effect{
+  _use:t="gun_mod_effect"
+  game_effect_sound__tag:t="gunSilenced"
+  gun_mod_effect__loudNoisePerShotMult:r=0.25
+  gun_mod_effect__damageMult:r=1
+  gun_mod_effect__adsSpeedMult:r=1
+
+  "gun_mod_effect__gunFlashFxDisabler:tag"{}
+}
+
+big_silencer_gun_effect{
+  _use:t="silencer_gun_effect"
+  gun_mod_effect__loudNoisePerShotMult:r=0.6
+  gun_mod_effect__adsSpeedMult:r=0.9
+}
+
+small_silencer_gun_effect{
+  _use:t="silencer_gun_effect"
+  gun_mod_effect__loudNoisePerShotMult:r=0.7
+  gun_mod_effect__adsSpeedMult:r=0.95
+}
+
+cal_9_18_silencer{
+  _use:t="base_gun_mod"
+  _use:t="pistol_silencer_muzzle_preset"
+  _use:t="gun_mod_with_effect"
+  animchar__res:t="makarov_silencer_char"
+  item__proto:t="cal_9_18_silencer"
+  item__weight:r=0.29
+  item__volume:r=3
+  item__name:t="items/cal_9_18_silencer"
+  item__filterType:t="weapon_mods"
+  item__marketPrice:i=500
+  gunAttachable__slotName:t="silencer"
+  collres__res:t="makarov_silencer_collision"
+  item__userstats__pickupName:t="pickup_cal_9_18_silencer"
+  gun_mod__effectTemplate:t="big_silencer_gun_effect"
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="cal_9_18_silencer_slot"
+  }
+}
+
+pbs1_silencer{
+  _use:t="base_gun_mod"
+  _use:t="rifle_silencer_muzzle_preset"
+  _use:t="gun_mod_with_effect"
+  animchar__res:t="pbs1_silencer_char"
+  item__proto:t="pbs1_silencer"
+  item__weight:r=0.435
+  item__volume:r=3
+  item__name:t="items/pbs1_silencer"
+  item__filterType:t="weapon_mods"
+  item__marketPrice:i=1775
+  gunAttachable__slotName:t="silencer"
+  collres__res:t="pbs1_silencer_collision"
+  item__userstats__pickupName:t="pickup_pbs1_silencer"
+  gun_mod__effectTemplate:t="big_silencer_gun_effect"
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="silencer_pbs1_slot"
+  }
+}
+
+banish_45_suppressor{
+  _use:t="base_gun_mod"
+  _use:t="rifle_silencer_muzzle_preset"
+  _use:t="gun_mod_with_effect"
+  animchar__res:t="banish_45_supressor_char"
+  item__proto:t="banish_45_suppressor"
+  item__weight:r=0.26
+  item__volume:r=3
+  item__name:t="items/banish_45_suppressor"
+  item__filterType:t="weapon_mods"
+  item__marketPrice:i=1100
+  gunAttachable__slotName:t="silencer"
+  collres__res:t="banish_45_supressor_collision"
+  item__userstats__pickupName:t="pickup_banish_45_suppressor"
+  gun_mod__effectTemplate:t="big_silencer_gun_effect"
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="9_19_silencer_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+banish_45_ext_suppressor{
+  _use:t="base_gun_mod"
+  _use:t="rifle_silencer_muzzle_preset"
+  _use:t="gun_mod_with_effect"
+  animchar__res:t="banish_45_supressor_extended_char"
+  item__proto:t="banish_45_ext_suppressor"
+  item__weight:r=0.32
+  item__volume:r=3
+  item__name:t="items/banish_45_ext_suppressor"
+  item__filterType:t="weapon_mods"
+  item__marketPrice:i=1300
+  gunAttachable__slotName:t="silencer"
+  collres__res:t="banish_45_supressor_extended_collision"
+  item__userstats__pickupName:t="pickup_banish_45_ext_suppressor"
+  gun_mod__effectTemplate:t="big_silencer_gun_effect"
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="45_silencer_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+hexagon_silencer{
+  _use:t="base_gun_mod"
+  _use:t="rifle_silencer_muzzle_preset"
+  _use:t="gun_mod_with_effect"
+  animchar__res:t="hexagon_silencer_char"
+  item__proto:t="hexagon_silencer"
+  item__weight:r=0.58
+  item__volume:r=3
+  item__name:t="items/hexagon_silencer"
+  item__filterType:t="weapon_mods"
+  item__marketPrice:i=1500
+  gunAttachable__slotName:t="silencer"
+  collres__res:t="hexagon_silencer_collision"
+  item__userstats__pickupName:t="pickup_hexagon_silencer"
+  gun_mod__effectTemplate:t="big_silencer_gun_effect"
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="545_silencer_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+ash_12_suppressor{
+  _use:t="base_gun_mod"
+  _use:t="rifle_silencer_muzzle_preset"
+  _use:t="gun_mod_with_effect"
+  animchar__res:t="ash12_silencer_a_char"
+  item__proto:t="ash_12_suppressor"
+  item__weight:r=0.7
+  item__volume:r=3
+  item__name:t="items/ash_12_suppressor"
+  item__filterType:t="weapon_mods"
+  item__marketPrice:i=1800
+  gunAttachable__slotName:t="silencer"
+  collres__res:t="ash12_silencer_a_collision"
+  item__userstats__pickupName:t="pickup_ash_12_suppressor"
+  gun_mod__effectTemplate:t="big_silencer_gun_effect"
+  item__iconYaw:r=205
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="ash_12_silencer_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+vssk_vyhlop_suppressor{
+  _use:t="base_gun_mod"
+  _use:t="rifle_silencer_muzzle_preset"
+  _use:t="gun_mod_with_effect"
+  animchar__res:t="ash12_silencer_b_char"
+  item__proto:t="vssk_vyhlop_suppressor"
+  item__weight:r=1.5
+  item__volume:r=12
+  item__name:t="items/vssk_vyhlop_suppressor"
+  item__filterType:t="weapon_mods"
+  item__marketPrice:i=4900
+  gunAttachable__slotName:t="silencer"
+  collres__res:t="ash12_silencer_b_collision"
+  item__userstats__pickupName:t="pickup_vssk_vyhlop_suppressor"
+  gun_mod__effectTemplate:t="big_silencer_gun_effect"
+  item__iconYaw:r=205
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{}
+  "item__cantBeCorrupted:tag"{}
+}
+
+pp19_vityaz_silencer{
+  _use:t="base_gun_mod"
+  _use:t="rifle_silencer_muzzle_preset"
+  _use:t="gun_mod_with_effect"
+  animchar__res:t="pp_19_vityaz_silencer_char"
+  item__proto:t="pp19_vityaz_silencer"
+  item__weight:r=0.53
+  item__volume:r=3
+  item__name:t="items/pp19_vityaz_silencer"
+  item__filterType:t="weapon_mods"
+  item__marketPrice:i=800
+  gunAttachable__slotName:t="silencer"
+  collres__res:t="pp_19_vityaz_silencer_collision"
+  item__userstats__pickupName:t="pickup_pp19_vityaz_silencer"
+  gun_mod__effectTemplate:t="big_silencer_gun_effect"
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
+  profile_server_data__enrichmentResearchAddChance:r=1
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="vityaz_silencer_slot"
+  }
+}
+
+oss_hxqd_762_suppressor{
+  _use:t="base_gun_mod"
+  _use:t="rifle_silencer_muzzle_preset"
+  _use:t="gun_mod_with_effect"
+  animchar__res:t="m110a1_silencer_char"
+  item__proto:t="oss_hxqd_762_suppressor"
+  item__weight:r=0.5
+  item__volume:r=3
+  item__name:t="items/oss_hxqd_762_suppressor"
+  item__filterType:t="weapon_mods"
+  item__marketPrice:i=3500
+  gunAttachable__slotName:t="silencer"
+  collres__res:t="m110a1_silencer_collision"
+  item__userstats__pickupName:t="pickup_oss_hxqd_762_suppressor"
+  gun_mod__effectTemplate:t="big_silencer_gun_effect"
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="m110a1_silencer_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+pp_2000_silencer{
+  _use:t="base_gun_mod"
+  _use:t="rifle_silencer_muzzle_preset"
+  _use:t="gun_mod_with_effect"
+  animchar__res:t="pp_2000_silencer_char"
+  item__proto:t="pp_2000_silencer"
+  item__weight:r=0.4
+  item__volume:r=3
+  item__name:t="items/pp_2000_silencer"
+  item__filterType:t="weapon_mods"
+  item__marketPrice:i=1200
+  gunAttachable__slotName:t="silencer"
+  collres__res:t="pp_2000_silencer_collision"
+  item__userstats__pickupName:t="pickup_pp_2000_silencer"
+  gun_mod__effectTemplate:t="big_silencer_gun_effect"
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="pp_2000_silencer_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+socom556_suppressor{
+  _use:t="base_gun_mod"
+  _use:t="rifle_silencer_muzzle_preset"
+  _use:t="gun_mod_with_effect"
+  animchar__res:t="surefire_socom556_suppressor_char"
+  item__proto:t="socom556_suppressor"
+  item__weight:r=0.49
+  item__volume:r=3
+  item__name:t="items/socom556_suppressor"
+  item__filterType:t="weapon_mods"
+  item__marketPrice:i=2200
+  gunAttachable__slotName:t="silencer"
+  collres__res:t="surefire_socom556_suppressor_collision"
+  item__userstats__pickupName:t="pickup_socom556_suppressor"
+  gun_mod__effectTemplate:t="small_silencer_gun_effect"
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="556_silencer_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+base_magazine_slot{
+  _use:t="base_gun_mod_slot"
+  mod_slot__icon:t="uiskin/submachine_gun.svg"
+  mod_slot__tooltip:t="slots/magazine"
+}
+
+base_scope_slot{
+  _use:t="base_gun_mod_slot"
+  mod_slot__icon:t="uiskin/scope.svg"
+  mod_slot__tooltip:t="slots/scope"
+}
+
+scope_kochetov_slot{
+  _use:t="base_scope_slot"
+  mod_slot__tooltip:t="slots/scope_kochetov"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/scope_type_kochetov"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="scope_3_5x"
+    i:t="scope_4x"
+    i:t="scope_6x"
+  }
+}
+
+scope_picatinny_short_slot{
+  _use:t="base_scope_slot"
+  mod_slot__tooltip:t="slots/scope_picatinny"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/scope_type_picatinny"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="scope_fastfire"
+    i:t="scope_moosemark"
+    i:t="scope_acog_ta31"
+    i:t="scope_eotech_exps3"
+    i:t="scope_pk06"
+    i:t="scope_vzor_1"
+    i:t="scope_aimpoint_micro_t2"
+    i:t="scope_aimpoint_pro"
+    i:t="scope_m68_cco"
+    i:t="scope_utg_t4"
+  }
+}
+
+scope_picatinny_long_slot{
+  _use:t="base_scope_slot"
+  mod_slot__tooltip:t="slots/scope_picatinny_long"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/scope_type_picatinny_long"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="scope_fastfire"
+    i:t="scope_moosemark"
+    i:t="scope_acog_ta31"
+    i:t="scope_eotech_exps3"
+    i:t="scope_pk06"
+    i:t="scope_1p69"
+    i:t="scope_schmidt_pm2"
+    i:t="scope_vzor_1"
+    i:t="scope_scotopia_s350f_thermal"
+    i:t="scope_an_pas_thermal"
+    i:t="scope_aimpoint_micro_t2"
+    i:t="scope_aimpoint_pro"
+    i:t="scope_m68_cco"
+    i:t="scope_utg_t4"
+    i:t="scope_sig_tango_6"
+    i:t="scope_ppo_5_15"
+  }
+}
+
+scope_dovetail_slot{
+  _use:t="base_scope_slot"
+  mod_slot__tooltip:t="slots/scope_dovetail"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/scope_type_dovetail"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="scope_pso1"
+    i:t="scope_1p63"
+    i:t="scope_shahin"
+    i:t="scope_pk_av"
+    i:t="scope_1p87"
+    i:t="scope_lpvo101"
+    i:t="scope_okp7_dovetail"
+  }
+}
+
+scope_dovetail_high_slot{
+  _use:t="base_scope_slot"
+  mod_slot__tooltip:t="slots/scope_dovetail_high"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/scope_type_dovetail_high"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="scope_pso1_high"
+    i:t="scope_1p63"
+    i:t="scope_shahin"
+    i:t="scope_pk_av"
+    i:t="scope_1p87"
+    i:t="scope_lpvo101"
+    i:t="scope_okp7_dovetail"
+  }
+}
+
+base_silencer_slot{
+  _use:t="base_gun_mod_slot"
+  mod_slot__icon:t="uiskin/silencer.svg"
+  mod_slot__tooltip:t="slots/silencer"
+}
+
+cal_9_18_silencer_slot{
+  _use:t="base_silencer_slot"
+  mod_slot__tooltip:t="slots/silencer_9_18"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/silencer_type_9_18"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="cal_9_18_silencer"
+  }
+}
+
+vityaz_silencer_slot{
+  _use:t="base_silencer_slot"
+  mod_slot__tooltip:t="slots/silencer_vityaz"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/silencer_type_vityaz"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="pp19_vityaz_silencer"
+  }
+}
+
+m110a1_silencer_slot{
+  _use:t="base_silencer_slot"
+  mod_slot__tooltip:t="slots/silencer_m110a1"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/silencer_type_m110a1"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="oss_hxqd_762_suppressor"
+  }
+}
+
+pp_2000_silencer_slot{
+  _use:t="base_silencer_slot"
+  mod_slot__tooltip:t="slots/silencer_pp_2000"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/silencer_type_pp_2000"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="pp_2000_silencer"
+  }
+}
+
+545_silencer_slot{
+  _use:t="base_silencer_slot"
+  mod_slot__tooltip:t="slots/silencer_545"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/silencer_type_545"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="hexagon_silencer"
+  }
+}
+
+silencer_pbs1_slot{
+  _use:t="base_silencer_slot"
+  mod_slot__tooltip:t="slots/silencer_pbs"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/silencer_type_pbs"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="pbs1_silencer"
+  }
+}
+
+45_silencer_slot{
+  _use:t="base_silencer_slot"
+  mod_slot__tooltip:t="slots/silencer_45"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/silencer_type_45"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="banish_45_ext_suppressor"
+  }
+}
+
+9_19_silencer_slot{
+  _use:t="base_silencer_slot"
+  mod_slot__tooltip:t="slots/silencer_9_19"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/silencer_type_9_19"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="banish_45_suppressor"
+  }
+}
+
+556_silencer_slot{
+  _use:t="base_silencer_slot"
+  mod_slot__tooltip:t="slots/silencer_556"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/silencer_type_556"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="socom556_suppressor"
+  }
+}
+
+ash_12_silencer_slot{
+  _use:t="base_silencer_slot"
+  mod_slot__tooltip:t="slots/silencer_ash_12"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/silencer_type_ash_12"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="ash_12_suppressor"
+  }
+}

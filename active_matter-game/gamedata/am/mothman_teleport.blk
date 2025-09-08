@@ -1,0 +1,32 @@
+mass:r=5
+logCCD:b=no
+addToWorld:b=no
+skipUpdateOnSleep:b=no
+sleepUpdateFrequency:i=0
+gravityMult:r=0.1
+entityTemplate:t="am_core_explosion_shell"
+entityPhysTemplate:t="am_core_explosion_phys"
+explodeHitPower:r=1
+explodeArmorPower:r=0
+explodeRadius:p2=10, 10
+
+collision{
+  body{
+    sphere{
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+      rad:r=0.5
+    }
+  }
+}
+
+ccdSpheres{
+  ccd:p4=0, 0, 0, 0.5
+}
+
+solver{
+  energyConservation:r=0
+}
+
+shellSound{
+  explosionPath:t="impact/core_explosion"
+}

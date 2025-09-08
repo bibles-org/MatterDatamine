@@ -1,0 +1,17 @@
+xvp_flamethrower_fire_stick{
+  _use:t="fire_source"
+  fire_source__fullForceTime:r=10
+  fire_source__fadeTime:r=5
+
+  _group{
+    _tags:t="render"
+    effect__name:t="fire_molotov_cmps_fx"
+  }
+}
+
+flamethrower_debug{
+  "flamethrower__debug:b"{
+    _tags:t="dev"
+    value:b=yes
+  }
+}

@@ -1,0 +1,188 @@
+repeat{
+  name:t="am_bees_guard_swarm"
+  selectStrategy:t="ordered"
+
+  utilitySelector{
+    utilVars{
+      updateTimeStep:r=0.05
+      ready:t="util_vars__ready"
+      var:t="util_vars__hasTargetToMove"
+      var:t="util_vars__hasTargetToAttack"
+      var:t="util_vars__battleReady"
+      var:t="util_vars__aggressionLevel"
+    }
+
+    sequencer{
+      utilFn:t="battleReady ? 0f : 1f"
+      name:t="recovery"
+
+      parallel{
+        repeat{
+          flyingSwarmRecoveryPopulation{}
+        }
+
+        swarmInvesigateSurroundings{}
+      }
+    }
+
+    sequencer{
+      utilFn:t="battleReady && (!hasTargetToMove && !hasTargetToAttack) ? 1f : 0f"
+      name:t="find_target"
+
+      returnToHive{}
+      parallel{
+        repeat{
+          flyingSwarmFindDanger{}
+          ifThen{
+            getAttractionPosition{}
+            flyingSwarmGetAttractionPosition{}
+          }
+        }
+
+        swarmInvesigateSurroundings{}
+      }
+    }
+
+    sequencer{
+      utilFn:t="(battleReady && hasTargetToMove ? 1f : 0f) * (hasTargetToAttack ? 0f : saturate(1f - aggressionLevel))"
+      name:t="move_to_position"
+
+      parallel{
+        repeat{
+          flyingSwarmFindDanger{}
+          ifThen{
+            getAttractionPosition{}
+            flyingSwarmGetAttractionPosition{}
+          }
+        }
+
+        sequencer{
+          flyingSwarmMoveToTargetSimple{}
+        }
+      }
+    }
+
+    sequencer{
+      utilFn:t="(battleReady ? 1f : 0f) * (hasTargetToAttack ? 1f : saturate(aggressionLevel))"
+      name:t="attack_target"
+
+      repeat{
+        orderedSelector{
+          sequencer{
+            flyingSwarmLeaderIsNear{
+              nearDistance:r=0.1
+            }
+
+            wait{
+              range:p2=0.5, 1
+              resetable:b=yes
+            }
+          }
+
+          sequencer{
+            flyingSwarmFindLeadingSwarm{}
+            flyingSwarmMoveToTargetSimple{}
+          }
+
+          sequencer{
+            flyingSwarmMoveToTarget{}
+            wait{
+              range:p2=2, 3
+              resetable:b=yes
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+repeat{
+  name:t="am_bees_solo_swarm"
+  selectStrategy:t="ordered"
+
+  utilitySelector{
+    utilVars{
+      updateTimeStep:r=0.05
+      ready:t="util_vars__ready"
+      var:t="util_vars__retired"
+      var:t="util_vars__hasTargetToAttack"
+      var:t="util_vars__hasPointsToInvestigate"
+      var:t="util_vars__battleReady"
+      var:t="util_vars__distanceFromHive"
+      var:t="util_vars__aggressionLevel"
+    }
+
+    exitHandler{
+      utilFn:t="(!hasTargetToAttack && !hasPointsToInvestigate) || !battleReady ? (1f - aggressionLevel) : 0f"
+      name:t="wandering"
+
+      sequencer{
+        modifyNode{
+          target:t="swarm_cluster__isWandering"
+          operator:t="="
+          arg:b=yes
+        }
+
+        parallel{
+          repeat{
+            ifThen{
+              isBeesInHive{}
+              flyingSwarmRecoveryPopulation{}
+            }
+          }
+
+          repeat{
+            flyingSwarmGetHivePosition{}
+            flyingSwarmMoveToTarget{}
+          }
+        }
+      }
+
+      modifyNode{
+        target:t="swarm_cluster__isWandering"
+        operator:t="="
+        arg:b=no
+      }
+    }
+
+    sequencer{
+      utilFn:t="hasPointsToInvestigate && !hasTargetToAttack && !retired && battleReady && distanceFromHive < 1f ? 1f : 0f"
+      name:t="investigate"
+
+      flyingSwarmGetAttractionPosition{}
+      success{
+        flyingSwarmMoveToTarget{}
+      }
+    }
+
+    sequencer{
+      utilFn:t="retired ? 0.f : hasTargetToAttack && battleReady && distanceFromHive < 1f ? 1f : aggressionLevel"
+      name:t="attack_target"
+
+      parallel{
+        repeat{
+          flyingSwarmDamageInArea{}
+        }
+
+        repeat{
+          orderedSelector{
+            flyingSwarmFindDanger{}
+            flyingSwarmGetAttractionPosition{}
+          }
+
+          flyingSwarmMoveToTarget{}
+        }
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="am_bees_solo_swarm_shooter"
+
+  selector{
+    flyingSwarmFindDanger{}
+    beesSwarmShoot{}
+  }
+}

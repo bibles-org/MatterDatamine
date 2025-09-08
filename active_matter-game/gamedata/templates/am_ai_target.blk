@@ -1,0 +1,27 @@
+flanking_ai_target{
+  flanking_ai_target__count:i=0
+  flanking_ai_target__maxCount:i=3
+  flanking_ai_target__updateAt:r=0
+  flanking_ai_target__interval:r=1
+  flanking_ai_target__radius:r=14
+
+  "flanking_ai_target__dirs:list<p3>"{}
+}
+
+simple_ai_target{
+  _use:t="flanking_ai_target"
+  ai_target__noiseLevel:r=0
+  team:i=0
+
+  ai_target{
+    _tags:t="server"
+  }
+}
+
+ignored_ai_target{
+  "ignored_ai_target:tag"{}
+}
+
+ai_danger_update_disabled{
+  "ai_danger_update_disabled:tag"{}
+}

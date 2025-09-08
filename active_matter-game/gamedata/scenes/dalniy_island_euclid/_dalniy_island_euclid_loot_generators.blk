@@ -1,0 +1,696 @@
+entity{
+  _template:t="used_game_objects_registry"
+  used_game_objects__type:t="loot_box"
+}
+
+entity{
+  _template:t="used_game_objects_registry"
+  used_game_objects__type:t="military_container_loot_box"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box"
+  transform:m=[[-10.3214, 0, -37.9023] [0, 12.6399, 0] [18.4771, 0, -5.03162] [548.869, 78.3055, -91.292]]
+  loot_generator__projAttempts:i=20
+  loot_generator__multiplier:r=1
+  loot_generator__gridStep:r=10
+  loot_generator__referenceGridCellsNum:i=650
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_building_1_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box"
+  transform:m=[[-10.3214, 0, -37.9023] [0, 12.6399, 0] [18.4771, 0, -5.03162] [564.854, 78.3055, -32.1136]]
+  loot_generator__projAttempts:i=20
+  loot_generator__multiplier:r=1
+  loot_generator__gridStep:r=10
+  loot_generator__referenceGridCellsNum:i=650
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_building_2_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box"
+  transform:m=[[-8.10656, 0, -32.436] [0, 14.9918, 0] [55.2093, 0, -13.7982] [607.641, 79.3733, 17.8509]]
+  loot_generator__projAttempts:i=20
+  loot_generator__multiplier:r=1
+  loot_generator__gridStep:r=10
+  loot_generator__referenceGridCellsNum:i=650
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_main_building_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="military_container_loot_box"
+  transform:m=[[-2.83635, 0, -11.3488] [0, 8.02605, 0] [34.7673, 0, -8.68919] [682.639, 78.3055, 22.7201]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_hangar_209_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="military_container_loot_box"
+  transform:m=[[-2.83635, 0, -11.3488] [0, 8.02605, 0] [34.7673, 0, -8.68919] [693.025, 78.3055, 60.137]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_hangar_148_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  transform:m=[[225.749, 0, 93.2481] [0, 10, -0] [-53.4936, 0, 129.505] [726.246, 80.09, 202.578]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_polygon_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="military_drop"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[282.181, 0, 116.558] [0, 113.766, -0] [-87.4185, 0, 211.636] [792.983, 85.2538, 170.411]]
+  loot_generator__lootPreset:t="euclid_military_garage_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="military_container_loot_box"
+  transform:m=[[-9.63478, 0, -6.63408] [0, 8.02605, 0] [20.3237, 0, -29.5164] [936.157, 68.2351, -397.729]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_hangar_84_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="military_container_loot_box"
+  transform:m=[[-11.6978, 0, -0.0432262] [0, 8.02605, 0] [0.132425, 0, -35.8365] [1844.58, 42.2189, -1464.1]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_hangar_17_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="military_container_loot_box"
+  transform:m=[[-11.6978, 0, -0.0432262] [0, 8.02605, 0] [0.132425, 0, -35.8365] [1810.12, 42.2189, -1464.1]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_hangar_18_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="military_container_loot_box"
+  transform:m=[[5.37253, 37.3731, 3.34802] [-8.90081, 1.26341, 0.179921] [0.0986971, -1.21741, 13.4313] [1887.6, 110.663, -882.938]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_hangar_274_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box"
+  loot_generator__lootPreset:t="euclid_overall_zone_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="am_core_spawn_box"
+  loot_generator__lootPreset:t="euclid_am_core_spawn_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="vehicle_civic_spawn_box"
+  loot_generator__lootPreset:t="euclid_vehicle_civic_spawn_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="vehicle_military_spawn_box"
+  loot_generator__lootPreset:t="euclid_vehicle_military_spawn_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="corrupted_workbench"
+  loot_generator__lootPreset:t="euclid_corrupted_workbench_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box_fuel"
+  loot_generator__lootPreset:t="euclid_fuel_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box_vehicle_parts"
+  loot_generator__lootPreset:t="euclid_vehicle_parts_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="hospital"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_hospital_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="hospital"
+  loot_generator__gameObjType:t="middle_furniture"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_hospital_middle_furniture_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="lake_village"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_lake_village_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="green_oaks"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_green_oaks_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="military_town"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_military_town_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="market"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_market_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="littletown"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_littletown_loot_preset"
+}
+
+entity{
+  _template:t="region_loot_generator_by_loot_preset"
+  regional_generator__region:t="redding"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_redding_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="military_drop"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[400.032, 0, 243.876] [0, 113.766, -0] [-94.2605, 0, 154.616] [562.362, 17.8947, -901.91]]
+  loot_generator__lootPreset:t="euclid_shegolskoe_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="military_drop"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[171.266, 0, 252.745] [0, 113.766, -0] [-189.559, 0, 128.45] [1458.12, 51.22, -1173.98]]
+  loot_generator__lootPreset:t="euclid_novo_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="quarry_underground"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[-92.1964, 0, -1.58867] [-2.61013, 0, 151.476] [0, 43.742, 0] [1290.44, 8.74489, -596.657]]
+  loot_generator__lootPreset:t="euclid_quarry_underground_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="quarry_military_camp_container"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[-76.8246, 0, 0.541409] [0.357336, 0, 50.705] [0, 38.8309, -0] [1265.6, 18.6519, -632.294]]
+  loot_generator__lootPreset:t="euclid_quarry_military_camp_container_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="quarry_military_camp_docs"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  transform:m=[[-38.4673, 0, 0.271092] [0.178924, 0, 25.3888] [0, 36.6688, -0] [1303.98, 15.7654, -683.85]]
+  loot_generator__lootPreset:t="euclid_quarry_military_camp_docs_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="tunnel_loot"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[-52.3784, 0, -0.902552] [-0.783651, 0, 45.4783] [0, 19.7011, 0] [434.868, 56.5646, -498.809]]
+  loot_generator__lootPreset:t="euclid_tunnel_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  transform:m=[[6.16174, 0, 15.977] [0, 4.73385, -0] [-10.9309, 0, 4.21565] [984.768, 77.6156, 84.0558]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_gas_station_1_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  transform:m=[[9.61046, 0, 14.1729] [0, 4.73385, -0] [-9.69664, 0, 6.57514] [789.073, 65.4836, -202.613]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_gas_station_2_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  transform:m=[[15.5567, 0, 7.15704] [0, 4.73385, -0] [-4.8966, 0, 10.6433] [283.459, 82.4778, -569.654]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_gas_station_3_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  transform:m=[[17.1225, 0, 0.229752] [0, 4.73385, -0] [-0.157188, 0, 11.7146] [284.624, 14.5152, -998.252]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_gas_station_4_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  transform:m=[[12.5856, 1.21716e-05, -10.3928] [-5.05756e-06, 4.34253, -1.03889e-06] [13.1224, 1.90848e-05, 15.8912] [770.749, 33.2068, -684.999]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_gas_station_5_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  transform:m=[[-1.62804, 1.21716e-05, -16.2406] [-3.67833e-06, 4.34253, 3.62326e-06] [20.5061, 1.90848e-05, -2.05563] [1790.01, 14.0222, -597.886]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_gas_station_6_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box"
+  transform:m=[[4.59184, 0, 26.0417] [0, 11.6766, 0] [-17.7637, 0, 3.13221] [725.517, 56.6885, -379.013]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_shop_1_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box_shop"
+  transform:m=[[0.248623, 0, 16.3201] [0, 4.34253, 0] [-20.6065, 0, 0.313923] [1756.93, 13.8448, -868.503]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_shop_2_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box_shop"
+  transform:m=[[-6.65551, 1.21716e-05, -14.9035] [-2.69558e-06, 4.34253, 3.82597e-06] [18.8177, -9.62887e-06, -8.40357] [756.963, 12.5836, -864.823]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="euclid_shop_3_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="secret_stash"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_secret_stash_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="radar_sphere_small"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[-75.4445, 0, 160.365] [0, 63.7555, 0] [-144.918, 0, -68.1776] [1519.88, 146.506, -284.709]]
+  loot_generator__lootPreset:t="euclid_radar_sphere_small_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="radar_sphere_big"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[-75.4445, 0, 160.365] [0, 63.7555, 0] [-144.918, 0, -68.1776] [1519.88, 146.506, -284.709]]
+  loot_generator__lootPreset:t="euclid_radar_sphere_big_loot_preset"
+}
+
+entity{
+  _template:t="am_pile_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1269.1, 49.3809, -778.071]]
+}
+
+entity{
+  _template:t="am_pile_cluster"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1243.8, 49.3809, -785.904]]
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="hidden_colt_nickel"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_hidden_colt_nickel_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="euclid_am_pile"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_am_pile_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="radio_tower_sniper"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_radio_tower_sniper_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="underwater_heli"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_underwater_heli_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="heat_labyrinth"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_heat_labyrinth_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="tower_sensor_1"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_tower_sensor_1_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="tower_sensor_2"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_tower_sensor_2_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="tower_sensor_3"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_tower_sensor_3_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="tower_sensor_4"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_tower_sensor_4_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="tower_sensor_5"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_tower_sensor_5_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="frog_trap_tower"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_frog_trap_tower_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="armory_1_akm_gun"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__compensateDropTm:b=yes
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_armory_1_akm_gun_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="armory_1_val_gun"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__compensateDropTm:b=yes
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_armory_1_val_gun_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="armory_1_akm_mag"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_armory_1_akm_mag_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="armory_1_val_mag"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_armory_1_val_mag_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="armory_2_akm_gun"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__compensateDropTm:b=yes
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_armory_2_akm_gun_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="armory_2_val_gun"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__compensateDropTm:b=yes
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_armory_2_val_gun_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="armory_2_akm_mag"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_armory_2_akm_mag_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="armory_2_val_mag"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_armory_2_val_mag_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="armory_key"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__compensateDropTm:b=yes
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_armory_key_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="church_sniper_gun"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__compensateDropTm:b=yes
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_church_sniper_gun_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="church_sniper_loot"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_church_sniper_loot_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="forest_ship"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_forest_ship_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="forest_ship_underwater_container"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_forest_ship_underwater_container_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="spike_room"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_spike_room_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="spike_container"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_spike_container_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="gravity_room"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_gravity_room_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="smuggler_garage_small"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_smuggler_garage_small_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="smuggler_garage_big"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_smuggler_garage_big_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="smuggler_garage_key"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__compensateDropTm:b=yes
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_smuggler_garage_key_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="forest_last_stand_sks"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__compensateDropTm:b=yes
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_forest_last_stand_sks_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="forest_last_stand_toz"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__compensateDropTm:b=yes
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_forest_last_stand_toz_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="forest_last_stand_toz_ammo"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_forest_last_stand_toz_ammo_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="forest_last_stand_sks_ammo"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_forest_last_stand_sks_ammo_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="forest_last_stand_med"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_forest_last_stand_med_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="dead_escort"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_dead_escort_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_indoor_shelves"
+  loot_generator__lootPreset:t="euclid_loot_indoor_shelves_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_indoor_table"
+  loot_generator__lootPreset:t="euclid_loot_indoor_table_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_indoor_shop"
+  loot_generator__lootPreset:t="euclid_loot_indoor_shop_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_indoor_floor"
+  loot_generator__lootPreset:t="euclid_loot_indoor_floor_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="shegolskoe_apartment_room_keys"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__compensateDropTm:b=yes
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="euclid_shegolskoe_apartment_room_keys_loot_preset"
+}

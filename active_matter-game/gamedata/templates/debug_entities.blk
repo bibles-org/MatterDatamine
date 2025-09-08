@@ -1,0 +1,206 @@
+smoke_occluder_debug{
+  _tags:t="gameClient,dev"
+  _singleton:b=yes
+
+  "smokeOccluderDebug:tag"{}
+}
+
+infinite_ammo{
+  "infiniteAmmo:tag"{}
+}
+
+infinite_ammo_effect{
+  _use:t="replicated_game_effect"
+  game_effect__attachedTemplate:t="infinite_ammo"
+
+  "infinite_ammo_effect:tag"{}
+}
+
+suspended_control{
+  _use:t="replicating"
+  spawn_sequence__connIdMemory:i=-1
+
+  "suspendedPlayerControl:tag"{}
+}
+
+bot_overtake_effect{
+  _use:t="replicated_game_effect"
+  game_effect__attachedTemplate:t="am_militant_bot_ai+suspended_control"
+  game_effect__temporarilyRemoveTemplate:t="human_hero_components_local"
+  game_effect__enableFlag:t="beh_tree__enabled"
+
+  "bot_overtake_effect:tag"{}
+}
+
+aim_ruler_debug{
+  _tags:t="gameClient"
+  _singleton:b=yes
+  shouldDraw:b=no
+  tracePos:p3=0, 0, 0
+  traceDir:p3=0, 0, 0
+
+  "aimRulerDebug:tag"{}
+}
+
+navmesh_mapping_debug{
+  _tags:t="gameClient"
+  _singleton:b=yes
+
+  "navmesh_mapping_debug:tag"{}
+}
+
+navmesh_mapping_debug_ruler{
+  _tags:t="gameClient"
+  _singleton:b=yes
+
+  "navmesh_mapping_debug_ruler:tag"{}
+}
+
+navigation_position_mapping_helper{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  position_mapping__radius:r=1
+
+  "position_mapping_helper__owner:eid"{}
+}
+
+nmesh_poly_debug{
+  _tags:t="gameClient"
+  _singleton:b=yes
+
+  "nmeshPolyDebug:tag"{}
+}
+
+camera_aim_debug{
+  _tags:t="gameClient"
+  _singleton:b=yes
+
+  "cameraAimDebug:tag"{}
+}
+
+gun_ammo_load_debug{
+  gun__loadAmmo:b=yes
+}
+
+debug_light_probe_gbuffer_sphere{
+  size:r=0.5
+  metallness:r=0.5
+  reflectance:r=0.5
+  smoothness:r=0.9
+  albedo:p3=0.1, 0.1, 0.1
+  cameraOffset:p3=0, 0, 4
+  isFixedToCamera:b=yes
+  triggerDeleteSphere:b=no
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "IsDebugGbufferSphereTag:tag"{}
+}
+
+custom_nav_debug{
+  _tags:t="gameClient,dev"
+  _singleton:b=yes
+
+  "customNavDebug:tag"{}
+}
+
+beh_tree_debug_wrapped{
+  "behTreeDebugWrapped:tag"{}
+}
+
+squad_sight_avoid_debug{
+  _tags:t="gameClient,dev"
+  _singleton:b=yes
+  squad_sight_avoid_debug__mode:i=0
+}
+
+bot_leader_nav_debug{
+  _tags:t="gameClient,dev"
+  _singleton:b=yes
+  bot_leader_nav_debug__mode:i=0
+  bot_leader_nav_debug__draw:b=no
+}
+
+shell_damage_explosion_info_debug{
+  _tags:t="gameClient,dev"
+  shell_damage_debug__pos:p3=0, 0, 0
+  shell_damage_debug__splashExplosiveRadius:r=0
+  shell_damage_debug__splashInnerRadius:r=0
+  shell_damage_debug__splashOuterRadius:r=0
+  shell_damage_debug__splashDamage:r=0
+  shell_damage_debug__shatterRadius:r=0
+  shell_damage_debug__shatterCount:i=0
+  shell_damage_debug__shatterDamage:r=0
+
+  "shellDamageDebugInfo:tag"{}
+}
+
+shell_damage_info_debug{
+  _tags:t="gameClient,dev"
+  shell_damage_debug__pos:p3=0, 0, 0
+  shell_damage_debug__showDuration:r=10
+  shell_damage_debug__createdAtTime:r=-1
+  shell_damage_debug__dist:r=0
+  shell_damage_debug__damageToParts:r=0
+  shell_damage_debug__splashMaxDamage:r=0
+  shell_damage_debug__splashDamage:r=0
+  shell_damage_debug__shatterSingleDamage:r=0
+  shell_damage_debug__shatterDamage:r=0
+
+  "shellDamageDebugInfo:tag"{}
+}
+
+spray_debug_draw{
+  _singleton:b=yes
+
+  "spray__drawDebugVolume:tag"{}
+}
+
+deformables_debug{
+  "deformablesDebug:tag"{}
+}
+
+debug_dynamic_ri_covers{
+  _singleton:b=yes
+
+  "debug_dynamic_ri_covers__allowed:list<u32>"{}
+}
+
+collision_debug{
+  collision_debug__collMaxDistSq:r=0
+  collision_debug__labelMaxDistSq:r=0
+  collision_debug__drawCanopy:b=no
+  collision_debug__drawCollidable:b=no
+  collision_debug__drawTraceable:b=no
+
+  "collision_debug:tag"{}
+}
+
+debug_input_event{
+  _singleton:b=yes
+  _tags:t="gameClient,dev"
+
+  "debugInputEventsTag:tag"{}
+}
+
+transform_debug_draw{
+  "transform__debug_draw:tag"{}
+}
+
+debug_marker_box{
+  _use:t="transform_debug_draw"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+loot_inspector{
+  loot_inspector__nearbyDistance:r=20
+  loot_inspector__itemTemplateFilter:t=""
+  loot_inspector__inspectedPreset:t=""
+  loot_inspector__presetNameFilter:t=""
+  loot_inspector__presetAllItemsFilter:t=""
+
+  "loot_inspector__selectedRarities:list<t>"{}
+  "loot_inspector__lastGeneratedSample:list<t>"{}
+}
+
+editor_active_marker{
+  editor_active_marker__isActive:b=no
+}

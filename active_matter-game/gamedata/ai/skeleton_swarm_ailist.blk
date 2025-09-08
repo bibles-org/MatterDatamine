@@ -1,0 +1,320 @@
+repeat{
+  name:t="skeleton_swarm"
+  selectStrategy:t="ordered"
+
+  utilitySelector{
+    utilVars{
+      updateTimeStep:r=0.1
+      ready:t="util_vars__ready"
+      var:t="util_vars__isSleeping"
+      var:t="util_vars__visibleTargets"
+      var:t="util_vars__offenderHitCoef"
+      var:t="util_vars__lastBulletReactionCoef"
+      var:t="util_vars__visibleAttractPoints"
+      var:t="util_vars__attractPointRatio"
+      var:t="util_vars__inSkeletonState"
+    }
+
+    sequencer{
+      utilFn:t="isSleeping ? 0.5 : 0.1"
+      name:t="sleeping"
+
+      modifyNode{
+        target:t="skeleton_swarm__aiState"
+        operator:t="="
+        arg:i=0
+      }
+
+      wait{
+        range:p2=1, 2
+        resetable:b=yes
+      }
+    }
+
+    sequencer{
+      utilFn:t="isSleeping ? 0.0 : 0.5"
+      name:t="gotoHome"
+
+      success{
+        sequencer{
+          not{
+            checkDistanceToPos{
+              posParam:t="zone_patroller__spawnPos"
+              radius:r=2
+            }
+          }
+
+          modifyNode{
+            target:t="skeleton_swarm__aiState"
+            operator:t="="
+            arg:i=1
+          }
+
+          nPhysCorridorMoveToPos{
+            posParam:t="zone_patroller__spawnPos"
+            forceToWalk:b=no
+            stopDist:r=0.25
+          }
+        }
+      }
+
+      modifyNode{
+        target:t="skeleton_swarm__aiState"
+        operator:t="="
+        arg:i=0
+      }
+
+      wait{
+        range:p2=1, 2
+        resetable:b=yes
+      }
+    }
+
+    sequencer{
+      utilFn:t="0.25f / (1f + visibleTargets)"
+      name:t="wander"
+
+      success{
+        sequencer{
+          not{
+            checkDistanceToPos{
+              posParam:t="zone_patroller__spawnPos"
+              radius:r=2
+            }
+          }
+
+          nPhysCorridorMoveToPos{
+            posParam:t="zone_patroller__spawnPos"
+          }
+        }
+      }
+
+      modifyNode{
+        target:t="skeleton_swarm__aiState"
+        operator:t="="
+        arg:i=0
+      }
+
+      wait{
+        range:p2=1, 2
+        resetable:b=yes
+      }
+    }
+
+    exitHandler{
+      utilFn:t="visibleTargets + (offenderHitCoef + lastBulletReactionCoef + visibleAttractPoints)"
+      canExitFn:t="inSkeletonState ? 0. : 1."
+      name:t="attack"
+
+      sequencer{
+        findDanger{
+          paramName:t="enemy"
+          radiusParamName:t="enemyRadius"
+          minDanger:r=0.1
+          tag:t="human"
+        }
+
+        modifyNode{
+          target:t="walker_agent__targetEid"
+          operator:t="="
+          argIntParam:t="enemy"
+        }
+
+        modifyNode{
+          target:t="skeleton_swarm__aiState"
+          operator:t="="
+          arg:i=1
+        }
+
+        success{
+          selector{
+            name:t="run_to_target"
+
+            checkDistanceToTarget{
+              targetParam:t="walker_agent__targetEid"
+              radius:r=4
+            }
+
+            nPhysCorridorMoveToTarget{
+              targetParam:t="walker_agent__targetEid"
+              forceToWalk:b=no
+              stopDist:r=4
+            }
+          }
+        }
+
+        repeatUntilFail{
+          count:i=4
+
+          subTree{
+            treeName:t="sub.skeletonWakeupSequence"
+          }
+
+          orderedSelector{
+            successChance{
+              chance:r=0.5
+            }
+
+            sequencer{
+              nPhysLookAtEntity{
+                targetParam:t="walker_agent__targetEid"
+              }
+
+              modifyNode{
+                target:t="skeleton_swarm__aiState"
+                operator:t="="
+                arg:i=2
+              }
+
+              wait{
+                range:p2=1, 2
+                resetable:b=yes
+              }
+
+              modifyNode{
+                target:t="skeleton_swarm__aiState"
+                operator:t="="
+                arg:i=1
+              }
+            }
+          }
+
+          nPhysCorridorMoveToTarget{
+            targetParam:t="walker_agent__targetEid"
+            forceToWalk:b=yes
+            stopDist:r=2
+          }
+
+          runAction{
+            action:t="stand_melee"
+          }
+
+          wait{
+            range:p2=0.1, 0.2
+            resetable:b=yes
+          }
+
+          nMeshFindPointNearTarget{
+            posParam:t="walker_agent__targetPos"
+            dist:p2=4, 5
+            oppositePoint:b=yes
+            targetParam:t="walker_agent__targetEid"
+            reusePrevPos:b=yes
+          }
+
+          nPhysCorridorMoveToPos{
+            posParam:t="walker_agent__targetPos"
+            forceToWalk:b=no
+          }
+
+          checkTarget{
+            targetUnitParam:t="enemy"
+          }
+        }
+      }
+
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        arg:i=0
+      }
+    }
+
+    sequencer{
+      utilFn:t="visibleAttractPoints > 0f ? 0.5 : 0f"
+      name:t="runToVisibleAttrackPoint"
+
+      subTree{
+        treeName:t="sub.skeletonWakeupSequence"
+      }
+
+      getVisibleAttractionPosition{}
+      modifyNode{
+        target:t="skeleton_swarm__aiState"
+        operator:t="="
+        arg:i=1
+      }
+
+      nPhysCorridorMoveToPos{
+        posParam:t="visual_attract__nearestNavPos"
+        forceToWalk:b=no
+        sprintTimerRange:p2=0, 0
+      }
+
+      parallel{
+        wait{
+          range:p2=1, 2
+          resetable:b=yes
+        }
+
+        nPhysStareAtEntity{
+          targetParam:t="walker_agent__targetEid"
+        }
+      }
+
+      subTree{
+        treeName:t="sub.skeleton_swarm_patroll_around_attract_pos"
+      }
+    }
+
+    sequencer{
+      utilFn:t="attractPointRatio"
+      name:t="runToAttrackPoint"
+
+      subTree{
+        treeName:t="sub.skeletonWakeupSequence"
+      }
+
+      modifyNode{
+        target:t="skeleton_swarm__aiState"
+        operator:t="="
+        arg:i=1
+      }
+
+      nPhysCorridorMoveToPos{
+        posParam:t="attract_point__targetPos"
+      }
+
+      wait{
+        range:p2=1, 2
+        resetable:b=yes
+      }
+
+      subTree{
+        treeName:t="sub.skeleton_swarm_patroll_around_attract_pos"
+      }
+    }
+  }
+}
+
+repeat{
+  name:t="sub.skeleton_swarm_patroll_around_attract_pos"
+  count:i=4
+
+  sequencer{
+    ignoreChance{
+      chance:r=0.5
+    }
+
+    nMeshFindRandomPointAroundPos{
+      posParam:t="walker_agent__targetPos"
+      dist:p2=5, 7
+      aroundPos:t="attract_point__targetPos"
+    }
+
+    nPhysCorridorMoveToPos{
+      posParam:t="walker_agent__targetPos"
+      forceToWalk:b=yes
+      sprintTimerRange:p2=0, 0
+    }
+
+    wait{
+      range:p2=1, 2
+      resetable:b=yes
+    }
+  }
+}
+
+wakeupSleepyhead{
+  name:t="sub.skeletonWakeupSequence"
+}

@@ -1,0 +1,69 @@
+base_sliding_door{
+  _use:t="sliding_rendinst"
+  _use:t="use_object_enabled"
+  item__setCustomUsePrompt:t="hud/open_door"
+  item__useActionAvailable:b=yes
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
+  isDoor:b=yes
+  door_operations__reqState:i=0
+  _tracked:t="door_operations__reqState"
+  _replicated:t="door_operations__reqState"
+  door_operations__state:i=0
+  _tracked:t="door_operations__state"
+  _replicated:t="door_operations__state"
+  door_operations__useAimTmForTrace:b=yes
+  net__scopeDistanceSq:r=108900
+  grid_obj__gridType:t="doors"
+  grid_obj__fixedTmScale:r=-1
+  item__useActionHintType:i=1
+  item_world_marker__offset:p3=0, 0, 0
+  item_world_marker__riColliderPoint:p3=0.5, 0.6, 0.5
+  item_world_marker__riColliderPointOffset:p3=0, 0, 0
+  _replicated:t="ri_extra__handle"
+  ri_extra__destroyed:b=no
+  loud_noise__radius:r=10
+  loud_noise__noisePerOperation:r=50
+
+  ri_extra{}
+  grid_obj{}
+  _group{
+    _tags:t="server"
+    obstacle__lastCheckTime:r=-1
+    obstacle__checkDelta:r=1
+    obstacle__handle:i=0
+    obstacle__padding:r=0.7
+    obstacle__bufferSize:p2=0.35, 0
+  }
+
+  "obstacle__isDestructible:tag"{}
+  "ri_extra__handle:u64"{
+    value:i64=-1
+  }
+}
+
+portal_bunker_sliding_door_rendinst_moving{
+  _use:t="sliding_rendinst_moving"
+  _use:t="sliding_rendinst_moving_sound"
+
+  _group{
+    _tags:t="sound"
+    sliding_rendinst_moving_sound__forwardPath:t="env_effects/doors/bunker_slide/open"
+    sliding_rendinst_moving_sound__backwardPath:t="env_effects/doors/bunker_slide/close"
+  }
+}
+
+portal_bunker_sliding_door_a{
+  _use:t="base_sliding_door"
+  _use:t="locked"
+  sliding_rendinst__axis:p3=0, -1, 0
+  sliding_rendinst__offset:r=2.85
+  sliding_rendinst__metersPerSecond:r=0.75
+  sliding_rendinst__smoothProgress:b=no
+  sliding_rendinst__movingTemplate:t="portal_bunker_sliding_door_rendinst_moving"
+  locked__isLocked:b=no
+  locked__reason:t=""
+  locked__statusTip:t=""
+
+  "sliding_rendinst__slideOnCollision:tag"{}
+}

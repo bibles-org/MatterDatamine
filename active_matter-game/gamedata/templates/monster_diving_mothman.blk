@@ -1,0 +1,209 @@
+monstrify_diving_mothman_sequence_spawn_effect{
+  _use:t="replicated_effect_with_duration"
+  monstrify_effect__template:t="monstrified_diving_mothman_human+monstrify_spawn_sequence_controller"
+}
+
+monstrify_diving_mothman_sequence{
+  _use:t="game_effect_sequence"
+
+  "spawn_sequence__fxEid:eid"{}
+  "locked_weapon__reload:tag"{}
+  "state__interruptReload:tag"{}
+  "entity_mod_effects:object"{
+    "hitpointsDmgMult+mult_diminishing":r=0
+  }
+
+  "game_effect_sequence__stages:array"{
+    "stage:object"{
+      affectTemplate:t="monstrify_extraction_sequence_init"
+      duration:r=0.25
+    }
+
+    "stage:object"{
+      affectTemplate:t="monstrify_sequence_portal_opens"
+      duration:r=0.1
+      setupTransform:b=yes
+    }
+
+    "stage:object"{
+      affectTemplate:t="monstrify_extraction_sequence_soldier_disappears+trans_portal_affect_start_sound"
+      duration:r=0.7
+    }
+
+    "stage:object"{
+      affectTemplate:t="monstrify_diving_mothman_sequence_spawn_effect"
+      duration:r=0.5
+    }
+  }
+}
+
+monstrified_diving_mothman_grab_enemy_lock_actions{
+  _use:t="activate_unarmed_affect"
+  _use:t="locked_loot_pickup_affect"
+  game_effect__disableFlag:t="human_inventory__canUseItems"
+
+  "locked_weapon__reload:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "locked_use_object__lockGrenadeRethrowing:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "game_effect__disableActions:tag"{}
+  "locked_use_object__lockVehicleUse:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_human_state__lockCrawl:tag"{}
+  "locked_human_state__lockCrouch:tag"{}
+}
+
+monstrified_diving_mothman_grab_enemy_affect_state{
+  _use:t="replicated_effect_with_duration"
+  monstrified_diving_mothman_grab_enemy_affect_state__state:i=0
+}
+
+monstrified_diving_mothman_grab_enemy_affect_grabbing{
+  _use:t="monstrified_diving_mothman_grab_enemy_affect_state"
+  _use:t="monstrified_diving_mothman_grab_enemy_lock_actions"
+  game_effect__forceAnimState:t="idle_presentation"
+  game_effect__forceAnimStateId:i=-1
+  ingame_rumble__onEffectAttach:t="ability"
+  monstrified_diving_mothman_grab_enemy_affect_state__state:i=1
+
+  "game_effect__uncontrollable:tag"{}
+}
+
+monstrified_diving_mothman_grab_enemy_affect_flight{
+  _use:t="monstrified_diving_mothman_grab_enemy_affect_state"
+  _use:t="monstrified_diving_mothman_grab_enemy_lock_actions"
+  monstrified_diving_mothman_grab_enemy_affect_state__state:i=2
+
+  "monstrified_diving_mothman_grab_enemy_affect_flight:tag"{}
+}
+
+monstrified_diving_mothman_grab_enemy_affect_hold{
+  _use:t="monstrified_diving_mothman_grab_enemy_affect_state"
+  _use:t="monstrified_diving_mothman_grab_enemy_lock_actions"
+  monstrified_diving_mothman_grab_enemy_affect_state__state:i=3
+
+  "game_effect__uncontrollable:tag"{}
+}
+
+monstrified_diving_mothman_grab_enemy_affect_end{
+  _use:t="monstrified_diving_mothman_grab_enemy_affect_state"
+  _use:t="monstrified_diving_mothman_grab_enemy_lock_actions"
+  monstrified_diving_mothman_grab_enemy_affect_state__state:i=0
+}
+
+mothman_diving_grab_ability{
+  _use:t="common_monster_ability"
+  mothman_diving_grab_ability__abilityIdx:i=-1
+  mothman_diving_grab_ability__state:i=0
+  _tracked:t="mothman_diving_grab_ability__state"
+  _replicated:t="mothman_diving_grab_ability__state"
+  mothman_diving_grab_ability__flightVelocity:r=15
+  mothman_diving_grab_ability__flightAcc:r=1.1
+  mothman_diving_grab_ability__potentialTargetSphereOffset:p3=1.5, 1.2, 0
+  mothman_diving_grab_ability__potentialTargetSphereRadius:r=2.25
+  mothman_diving_grab_ability__potentialTargetUpdateAt:r=0
+  mothman_diving_grab_ability__potentialTargetUpdateInterval:r=0.1
+  mothman_diving_grab_ability__grabOffset:p3=1, 0.1, 0
+  _tracked:t="mothman_diving_grab_ability__potentialTargetEid"
+  _tracked:t="mothman_diving_grab_ability__targetEid"
+  _replicated:t="mothman_diving_grab_ability__targetEid"
+  mothman_diving_grab_ability__targetAffectTemplate:t="mothman_diving_grab_ability_target_affect"
+  mothman_diving_grab_ability__targetStunAffectTemplate:t="mothman_diving_grab_ability_target_stun_affect"
+
+  "mothman_diving_grab_ability__potentialTargetEid:eid"{}
+  "mothman_diving_grab_ability__targetEid:eid"{}
+  "mothman_diving_grab_ability__targetAffectEid:eid"{}
+  "mothman_diving_grab_ability__targetStunAffectEid:eid"{}
+}
+
+mothman_diving_grab_ability_target_affect{
+  _use:t="replicated_game_effect"
+  _use:t="game_effect_geomtree_effects"
+  mothman_diving_grab_ability_target_affect__releaseProgress:r=0
+  _tracked:t="mothman_diving_grab_ability_target_affect__releaseProgress"
+  mothman_diving_grab_ability_target_affect__releaseSpeed:r=1.2
+  postfx_vignette_affect__factor:r=0.05
+
+  "game_effect__geomtreeEffectTemplates:list<t>"{
+    item:t="changed_human_miniboss_render_distortion_world_effect"
+    item:t="changed_render_distortion_effect"
+  }
+
+  "game_effect__ownerEid:eid"{}
+  "mothman_diving_grab_ability_target_affect:tag"{}
+  "game_effect__colorGrading:object"{
+    colorGain:p4=1, 1, 1, 1.5
+    colorGamma:p4=1, 1, 1, 0.9
+    colorContrast:p4=1, 1, 1, 1.3
+    colorSaturation:p4=1, 1, 1, 0.25
+    priority:i=90000
+    _tags:t="render"
+  }
+}
+
+mothman_diving_grab_ability_target_stun_affect{
+  _use:t="replicated_game_effect"
+  _use:t="activate_unarmed_affect"
+  game_effect__forceAnimState:t="trooper_worm_eaten"
+  game_effect__forceAnimStateId:i=-1
+
+  "game_effect__ownerEid:eid"{}
+}
+
+monstrified_diving_mothman_abilities{
+  _use:t="monster_flight_mode"
+  _use:t="mothman_diving_grab_ability"
+
+  "hero_ability__abilities:array"{
+    "mothman_sprint:object"{
+      name:t="mothman_sprint"
+      type:t="passive"
+      icon:t="uiskin/ability/mothman_rush.svg"
+    }
+
+    "mothman_grab_enemy:object"{
+      name:t="mothman_grab_enemy"
+      type:t="active"
+      icon:t="uiskin/ability/mothman_field.svg"
+      actionHandleName:t="MonsterMothman.GrabEnemy"
+      show_in_ui:b=no
+      cooldown:r=10
+
+      "stages:array"{
+        "grabbing:object"{
+          affectTemplate:t="monstrified_diving_mothman_grab_enemy_affect_grabbing"
+          duration:r=1.2
+          activePhase:b=yes
+          interruptible:b=yes
+          skippable:b=yes
+        }
+
+        "flight:object"{
+          affectTemplate:t="monstrified_diving_mothman_grab_enemy_affect_flight"
+          duration:r=0.4
+          activePhase:b=yes
+          skippable:b=yes
+        }
+
+        "hold:object"{
+          affectTemplate:t="monstrified_diving_mothman_grab_enemy_affect_hold"
+          duration:r=1.5
+          activePhase:b=yes
+          skippable:b=yes
+        }
+
+        "end:object"{
+          affectTemplate:t="monstrified_diving_mothman_grab_enemy_affect_end"
+          duration:r=0.25
+          exit:b=yes
+        }
+      }
+    }
+  }
+}
+
+monstrified_diving_mothman_human{
+  _use:t="monstrified_mothman_human_base"
+  _use:t="monstrified_diving_mothman_abilities"
+}

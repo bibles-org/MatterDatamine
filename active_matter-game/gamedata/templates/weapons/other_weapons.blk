@@ -1,0 +1,510 @@
+hawk_type_97_1_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="gun_with_builtin_ammo_holder"
+  _use:t="gun_check_weapon_no_magazine"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_shotgun"
+  _use:t="gun_icon"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="gun_anim"
+  _use:t="weapon_slot_indexed"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="shotgun_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_tiny"
+  _use:t="shotgun_preset"
+  animchar__res:t="hawk_type_97_1_char"
+  collres__res:t="hawk_type_97_1_collision"
+  gun__blk:t="gamedata/weapons/hawk_type_97_1.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="hawk_type_97_1_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="hawk_type_97_1_gun"
+  item__name:t="items/hawk_type_97_1"
+  item__weapType:t="shotgun"
+  item__baseWeight:r=3.5
+  item__volume:r=5
+  gun_shell_ejection__timeMult:r=0.35
+  gun__chokeSpread:r=1
+  gun__length:r=0.65
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.2
+  gun__recoilDir:r=0.15
+  gun__recoilDirAmount:r=0.64
+  gun__recoilOffsMult:r=1
+  gun_boxed_ammo_reload__batchReloadTime:r=3.5
+  gun__shotFreq:r=2.3
+  gun__sightsDistance:r=0.05
+  gun__statName:t="shotgun"
+  gun__useLocalPlayerTracer:b=no
+  gun__visualRecoilMult:r=1
+  gun_spread__maxDeltaAngle:r=0.15
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="directly_use_boxed_ammo"
+  gun__maxAmmo:i=5
+  gun_boxed_ammo_reload__loadPrepareTime:r=0.7
+  gun_boxed_ammo_reload__loadLoopTime:r=0.5
+  gun_boxed_ammo_reload__loadPostTime:r=1.2
+  _use:t="gun_sound_with_animchar"
+  _use:t="rifle_gun_aim_sound"
+  _use:t="rifle_gun_shot_dry_sound"
+  meleeSoundType:t="rifle"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+
+  "animchar__actOnDemand:tag"{}
+  "gun__ammoHolders:list<t>"{
+    ammoHolders:t="hawk_type_97_1_magazine"
+    ammoHolders:t="box_12_gauge_magazine"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/12_gauge.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="bolt_action"
+  }
+
+  _group{
+    _tags:t="sound"
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/rifle/spas_12"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/rifle/spas_12/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/rifle/spas_12/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/rifle/spas_12/reload3/change_ammo"
+    }
+
+    "boltAction:object"{
+      path:t="/weapon/rifle/spas_12/bolt_action"
+    }
+  }
+
+  "gun__mountPoints:shared:array"{
+    "point:object"{
+      type:t="rest"
+      recoil:r=0.65
+      offset:p3=0.52, -0.037, -0.002
+    }
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.02, -0.02, 0
+    crouch:p3=0.02, -0.02, 0
+    crawl:p3=0.02, -0.02, 0
+  }
+}
+
+crossbow_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="gun_with_builtin_ammo_holder"
+  _use:t="gun_check_weapon_no_magazine"
+  _use:t="ironsights_open_at_rifle"
+  _use:t="gun_icon"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="gun_anim"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="racked_weapon"
+  _use:t="camera_shake_on_shot_heavy"
+  _use:t="item_rarity_uncommon"
+  gun_hand_stamina__drainMult:r=2
+  animchar__res:t="crossbow_char"
+  collres__res:t="crossbow_collision"
+  gun__blk:t="gamedata/weapons/crossbow.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="crossbow_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="crossbow_gun"
+  item__name:t="items/crossbow"
+  item__weapType:t="crossbow"
+  item__baseWeight:r=2.7
+  item__volume:r=34
+  item__marketPrice:i=3050
+  gun__adsSpeedMult:r=0.4
+  gun__deviationInFireReady:r=1
+  gun__disableToggleAim:b=yes
+  gun__length:r=0.4
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.01
+  gun__recoilControlMult:r=0
+  gun__recoilDirAmount:r=0.8
+  gun__recoilOffsMult:r=1
+  gun_boxed_ammo_reload__batchReloadTime:r=1.3
+  gun__shotFreq:r=0.8
+  gun__sightsDistance:r=0.1
+  gun__statName:t="ranged"
+  gun__useLocalPlayerTracer:b=no
+  gun__visualRecoilMult:r=0.1
+  gun__zeroingAngle:r=-1
+  gun__zeroingDistance:r=50
+  gun__integratedScope:b=no
+  gun_deviation__extraDeviationTau:r=0.15
+  gun_deviation__maxDeviation:r=15
+  gun_deviation__movementDevInc:p2=0, 15
+  gun_deviation__movementRange:p2=2.1, 4
+  gun_deviation__omegaDevInc:p2=0.1, 0.5
+  gun_deviation__omegaRange:p2=30, 90
+  gun_deviation__onShotDeviationChange:r=0
+  gun_deviation__shotTau:r=0.1
+  gun_spread__maxDeltaAngle:r=0.05
+  combatFiringRange:p2=30, 100
+  combatShootTime:p2=0.2, 0.6
+  combatCooldownTime:p2=0.1, 0.3
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="directly_use_boxed_ammo"
+  _use:t="batch_reload"
+  gun__maxAmmo:i=1
+  gun__boxedAmmoHolderTemplate:t="crossbow_bolt_item"
+  _use:t="gun_sound_with_animchar"
+  _use:t="rifle_gun_aim_sound"
+  _use:t="rifle_gun_shot_dry_sound"
+  meleeSoundType:t="rifle"
+  loud_noise__noisePerShot:r=50
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.9, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[-1, 1.28869e-07, -8.74228e-08] [1.09762e-07, 0.185071, -0.982725] [-1.10463e-07, -0.982725, -0.185071] [0, -0.111755, -0.15799]]
+  gun__projectileTemplate:t="crossbow_bolt_projectile"
+  showroom_item__customZoom:r=1.2
+  showroom_item__customZoomBordersRng:p2=1, 1.5
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    scope:t="scope_picatinny_long_slot"
+  }
+
+  "isCameraAlwaysOnScope:tag"{}
+  "gun__ammoHolders:list<t>"{
+    ammoHolders:t="crossbow_bolt_item"
+    ammoHolders:t="crossbow_bolt_explosive_item"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/crossbow_bolt.blk"
+    shells:t="gamedata/weapons/shell/crossbow_bolt_explosive.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="manual"
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="bolt_action"
+  }
+
+  _group{
+    _tags:t="sound"
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/misc/crossbow"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/misc/crossbow/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/misc/crossbow/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/misc/crossbow/reload3/change_ammo"
+    }
+
+    "boltAction:object"{
+      path:t="/weapon/rifle/mosin/bolt_action"
+    }
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.06, -0.1, 0.05
+    crouch:p3=0.06, -0.1, 0.05
+    crawl:p3=0.06, -0.1, 0.05
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.075, 0.319, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [0.075, 0.318848, 0]]
+    }
+  }
+
+  "item__chronotracesProgressionInfo:object"{
+    "once:object"{}
+    "repeatedly:object"{
+      extract:i=100
+      militant_hits:i=5
+      monster_hits:i=5
+      trap_hits:i=5
+      militant_kills:i=50
+      monster_kills:i=35
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+flamethrower_magazine_slot{
+  _use:t="base_magazine_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="flamethrower_magazine"
+  }
+}
+
+flamethrower_corefan_gun{
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="gun_icon"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="smg_move_inertion"
+  _use:t="smg_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="camera_shake_on_shot_high_freq"
+  _use:t="flamethrower_deviation_preset"
+  _use:t="item_rarity_uncommon"
+  gun_hand_stamina__drainMult:r=3.5
+  animchar__res:t="xvp_flame_char"
+  collres__res:t="xvp_flame_collision"
+  gun__blk:t="gamedata/weapons/m2_flamethrower.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
+  item__proto:t="flamethrower_corefan_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
+  item__weapTemplate:t="flamethrower_corefan_gun"
+  item__name:t="items/flamethrower_corefan"
+  item__weapType:t="flamethrower"
+  item__baseWeight:r=4.2
+  item__volume:r=32
+  item__marketPrice:i=7500
+  gun__crawlRecoilMult:r=0.3
+  gun__length:r=0.5
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.01
+  gun__recoilControlMult:r=0.9
+  gun__recoilDirAmount:r=0.35
+  gun__recoilOffsMult:r=0.1
+  gun__recoilOriMultInAim:p3=0.25, 0.25, 0.1
+  gun_boxed_ammo_reload__batchReloadTime:r=2.6
+  gun__shotFreq:r=20
+  gun__sightsDistance:r=0.3
+  gun__statName:t="flamethrower"
+  gun__useLocalPlayerTracer:b=no
+  gun__visualRecoilMult:r=0.6
+  gun_spread__maxDeltaAngle:r=0.15
+  smoke_occluder__sphere:p4=0, 0, 0, 1
+  _replicated:t="flamethrower__active"
+  _tracked:t="flamethrower__active"
+  flamethrower__fireTemplate:t="xvp_flamethrower_fire_stick"
+  flamethrower__streamEffectTemplate:t="flamethrower_flame_stream_short_effect"
+  flamethrower__streamEffectNodeName:t="gunFx_main"
+  flamethrower__maxFlameLength:r=16
+  flamethrower__flameStreamRadius:r=0.03
+  flamethrower__flameCloudRadius:r=0.5
+  flamethrower__streamDamagePerSecond:r=10
+  flamethrower__cloudDamagePerSecond:r=1
+  flamethrower__friendlyStreamDamagePerSecond:r=0
+  flamethrower__friendlyCloudDamagePerSecond:r=0
+  flamethrower__minBetweenFireDist:r=1.02
+  flamethrower__maxFlameLengthTime:r=0.25
+  flamethrower__flameStartOffset:r=0
+  flamethrower__cloudStartOffset:r=1
+  flamethrower__shouldSetFriendlyOnFire:b=no
+  flamethrower__dropletLength:r=3
+  flamethrower__dropletSpreadYaw:r=0.3
+  flamethrower__dropletSpreadPitchMin:r=-0.1
+  flamethrower__dropletSpreadPitchMax:r=-2
+  flamethrower__dropletNormalOffset:r=0.3
+  flamethrower__addFullForceTimePerSec:r=2
+  flamethrower__maxFiresToReignite:i=3
+  flamethrower__backpackTemplate:t="flamethrower_backpack_roks_3_gasbag"
+  flamethrower__streamEffectNodeIdx:i=-1
+  flamethrower__active:b=no
+  flamethrower__flameSpeed:r=0
+  flamethrower__flameCurrentLength:r=0
+  flamethrower__underwater:b=no
+  flamethrower__underwaterCheckTimer:r=10
+  flamethrower__underwaterCheckTime:r=-1
+  _replicated:t="flamethrower__flameCurrentLength"
+  combatFiringRange:p2=0, 10
+  combatShootTime:p2=0.7, 0.9
+  combatCooldownTime:p2=0.5, 0.9
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  weap__sprintLerpFactor:r=0.75
+  weap__dofMult:r=0.85
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  _use:t="gun_sound_with_animchar"
+  _use:t="antivehicle_gun_aim_sound"
+  _use:t="flamethrower_gun_shot_dry_sound"
+  meleeSoundType:t="rifle"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[3.57628e-07, 9.31323e-10, 1] [-0.00823221, 0.999966, 1.86264e-09] [-0.999966, -0.00823221, 3.57628e-07] [-0.45, 0.0095674, -0.0311584]]
+
+  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    magazine:t="flamethrower_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/flamethrower_dummy.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+  }
+
+  "flamethrower__backpackEid:eid"{}
+  "flamethrower__streamEffectEid:eid"{}
+  _group{
+    _tags:t="sound"
+    gun_sound__forceOneshot:b=no
+    gun_sound__forceOneshotEnemy:b=no
+
+    "gun_sound__shotPath:shared:object"{
+      hero:t="player/weapon/misc/flamethrower"
+      enemy:t="enemy/weapon/misc/flamethrower"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/misc/flamethrower/reload1/change_ammo"
+    }
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=3.2
+    alt:r=3.2
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=3.3
+    alt:r=3.3
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1.5
+    alt:r=1.5
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2.3
+    alt:r=2.3
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.02, -0.1, 0
+    crouch:p3=0.02, -0.1, 0
+    crawl:p3=0.02, -0.1, 0
+  }
+
+  "racked_weapon__rackRendinsts:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.273682, -0.087018, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [0.240479, 0.1, 0]]
+    }
+  }
+
+  "item__chronotracesProgressionInfo:object"{
+    "once:object"{}
+    "repeatedly:object"{
+      extract:i=100
+      militant_hits:i=1
+      monster_hits:i=1
+      trap_hits:i=1
+      militant_kills:i=35
+      monster_kills:i=25
+    }
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}

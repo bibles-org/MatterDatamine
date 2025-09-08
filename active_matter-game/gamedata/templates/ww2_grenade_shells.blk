@@ -1,0 +1,513 @@
+f1_shell{
+  shell__expl_node:t="weaponRoot"
+  _use:t="shell"
+}
+
+f1_grenade{
+  _use:t="m24_grenade"
+  _use:t="f1_shell"
+  _use:t="f1_grenade_char"
+  item__name:t="items/f1"
+
+  "animchar__actOnDemand:tag"{}
+}
+
+f1_grenade_phys{
+  _use:t="m24_grenade_phys"
+  _use:t="f1_shell"
+  _use:t="hud_grenade_marker"
+  _use:t="f1_grenade_active_char"
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/f1.blk"
+
+  "retardable:tag"{}
+}
+
+base_animated_grenade{
+  anim_phys{}
+  phys_vars{}
+  "attachmentUpdate:tag"{}
+  "animchar__actOnDemand:tag"{}
+}
+
+base_grenade{
+  _use:t="projectile_with_shell"
+  slot_attach__visible:b=yes
+  _tracked:t="slot_attach__visible"
+  gun_attach__slot:t="r_hand"
+  gun_attach__mainSlotId:i=-1
+
+  "animchar__actOnDemand:tag"{}
+}
+
+m24_shell{
+  animchar__res:t="grenade_m24_char"
+  _use:t="shell"
+}
+
+m24_grenade_base{
+  _use:t="m24_shell"
+  slot_attach__visible:b=yes
+  _tracked:t="slot_attach__visible"
+  gun_attach__slot:t="r_hand"
+  gun_attach__mainSlotId:i=-1
+}
+
+m24_grenade{
+  _use:t="projectile_with_shell"
+  _use:t="m24_grenade_base"
+  item__name:t="items/m24_grenade"
+
+  "animchar__actOnDemand:tag"{}
+}
+
+m24_grenade_phys{
+  _use:t="m24_grenade_base"
+  _use:t="projectile_phys_with_shell"
+  _use:t="grenade_throw_sound"
+  _use:t="grenade_phys_collision_sound"
+  _use:t="hud_grenade_marker"
+  _use:t="shell_trap_activator"
+  _use:t="zones_visitor"
+  start_omega:p3=3, 0, -15
+  collres__res:t="grenade_m24_collision"
+  active:b=no
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/m24.blk"
+  _tracked:t="active"
+  explosion_flash__template:t="default_explosion_flash"
+  ai_target_node__node:t="weaponRoot"
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_grenade_explosion"
+  grenade_rethrow__lockRethrowDuration:r=2
+  zones_visitor__triggerTag:t="throwingItemsTriggerable"
+
+  "ai_target_node__nodeId:i"{
+    value:i=-1
+    _tags:t="server"
+  }
+
+  "retardable:tag"{}
+  "grav_zones_affected:tag"{}
+  "teleportation__once:tag"{}
+  _group{
+    _tags:t="render"
+    teleportation__fxNameIn:t="teleport_effect_in"
+    teleportation__fxNameOut:t="teleport_effect_out"
+  }
+}
+
+m24_smoke_grenade{
+  _use:t="m24_grenade"
+}
+
+m24_smoke_grenade_phys{
+  _use:t="projectile_phys_with_shell"
+  _use:t="m24_shell"
+  _use:t="grenade_throw_sound"
+  _use:t="grenade_phys_collision_sound"
+  _use:t="smoke_grenade_phys_sound_effect"
+  _use:t="smoke_occluders"
+  _use:t="hud_grenade_marker"
+  _use:t="shell_trap_activator"
+  start_omega:p3=3, 0, -15
+  collres__res:t="grenade_m24_collision"
+  active:b=no
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/m24_smoke.blk"
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_smoke_grenade_explosion"
+  _tracked:t="active"
+  effect__scale:r=0.1
+  _tracked:t="effect__scale"
+  smokeFadeTime:r=6
+  smokeStartTime:r=3
+  smokeFadeScale:r=0.1
+  shell__rethrowTime:r=180
+
+  "smoke_occluders__info:shared:array"{
+    _tags:t="server"
+
+    "little:object"{
+      windScale:r=0.6
+      expanseStartTime:r=6
+      expanseFullTime:r=12
+      fadeStartTime:r=50
+      totalTime:r=180
+      upSpeed:p3=0, 1, 0
+      normalSpeed:p3=0.4, 0.9, 0.07
+      radius:p3=0, 2, 0.3
+    }
+
+    "big:object"{
+      windScale:r=1.2
+      expanseStartTime:r=6
+      expanseFullTime:r=12
+      fadeStartTime:r=50
+      totalTime:r=180
+      upSpeed:p3=0, 2, 0
+      normalSpeed:p3=0.8, 0.8, 0
+      radius:p3=0, 2.6, 0.3
+    }
+  }
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_smoke_cmps_fx"
+  }
+
+  "extinguishUnderwater:tag"{}
+  "grav_zones_affected:tag"{}
+}
+
+m24_flash_grenade{
+  _use:t="m24_grenade"
+}
+
+m84_flash_grenade{
+  _use:t="m24_grenade"
+  _use:t="zarya_grenade_char"
+}
+
+mk2_shell{
+  animchar__res:t="grenade_mk2_char"
+  shell__expl_node:t="weaponRoot"
+  _use:t="shell"
+}
+
+mk2_grenade{
+  _use:t="m24_grenade"
+  _use:t="mk2_shell"
+  item__name:t="items/usa_mk2"
+  animchar__res:t="grenade_mk2_char"
+
+  "animchar__actOnDemand:tag"{}
+}
+
+mk2_grenade_phys{
+  _use:t="m24_grenade_phys"
+  _use:t="mk2_shell"
+  _use:t="grenade_throw_sound"
+  _use:t="grenade_phys_collision_sound"
+  _use:t="hud_grenade_marker"
+  collres__res:t="grenade_mk2_ready_collision"
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/usa_mk2.blk"
+
+  "retardable:tag"{}
+}
+
+rdg1_shell{
+  animchar__res:t="rdg_m_char"
+  _use:t="shell"
+}
+
+rdg1_smoke_grenade{
+  _use:t="m24_grenade"
+  _use:t="rdg1_shell"
+  animchar__res:t="rdg_m_char"
+
+  "animchar__actOnDemand:tag"{}
+}
+
+rdg1_smoke_grenade_phys{
+  _use:t="projectile_phys_with_shell"
+  _use:t="rdg1_shell"
+  _use:t="grenade_throw_sound"
+  _use:t="grenade_phys_collision_sound"
+  _use:t="smoke_grenade_phys_sound_effect"
+  _use:t="smoke_occluders"
+  _use:t="hud_grenade_marker"
+  _use:t="shell_trap_activator"
+  _use:t="zones_visitor"
+  start_omega:p3=3, 0, -15
+  collres__res:t="rdg_m_collision"
+  active:b=no
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/rdg1_smoke.blk"
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_smoke_grenade_explosion"
+  _tracked:t="active"
+  effect__scale:r=0.1
+  _tracked:t="effect__scale"
+  smokeFadeTime:r=6
+  smokeStartTime:r=3
+  smokeFadeScale:r=0.1
+  shell__rethrowTime:r=180
+  grenade_rethrow__lockRethrowDuration:r=2
+  zones_visitor__triggerTag:t="throwingItemsTriggerable"
+
+  "smoke_occluders__info:shared:array"{
+    _tags:t="server"
+
+    "little:object"{
+      windScale:r=0.6
+      expanseStartTime:r=5.5
+      expanseFullTime:r=12
+      fadeStartTime:r=12
+      totalTime:r=29
+      upSpeed:p3=0, 1, 0
+      normalSpeed:p3=0, 0.9, 0.25
+      radius:p3=0, 2, 1
+    }
+
+    "big:object"{
+      windScale:r=1.2
+      expanseStartTime:r=5.5
+      expanseFullTime:r=12
+      fadeStartTime:r=12
+      totalTime:r=29
+      upSpeed:p3=0, 2, 0
+      normalSpeed:p3=0, 0.8, 0
+      radius:p3=0, 2.4, 1
+    }
+  }
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="explosion_grenades_smoke_cmps_fx"
+  }
+
+  "extinguishUnderwater:tag"{}
+  "grav_zones_affected:tag"{}
+  "teleport_once:tag"{}
+  _group{
+    _tags:t="render"
+    teleportation__fxNameIn:t="teleport_effect_in"
+    teleportation__fxNameOut:t="teleport_effect_out"
+  }
+}
+
+m8_shell{
+  _use:t="rdg1_shell"
+  animchar__res:t="grenade_an_m8_char"
+}
+
+m8_smoke_grenade{
+  _use:t="rdg1_smoke_grenade"
+  animchar__res:t="grenade_an_m8_char"
+}
+
+m8_smoke_grenade_phys{
+  _use:t="rdg1_smoke_grenade_phys"
+  animchar__res:t="grenade_an_m8_char"
+  collres__res:t="grenade_an_m8_collision"
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/m8_smoke.blk"
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_smoke_grenade_explosion"
+}
+
+explosion_pack_shell{
+  animchar__res:t="tnt_explosive_char"
+  shell__expl_node:t="weaponRoot"
+  _use:t="shell"
+}
+
+explosion_pack{
+  _use:t="m24_grenade"
+  _use:t="explosion_pack_shell"
+  item__name:t="items/explosion_pack"
+  animchar__res:t="tnt_explosive_char"
+
+  "animchar__actOnDemand:tag"{}
+}
+
+explosion_pack_phys{
+  _use:t="m24_grenade_phys"
+  _use:t="explosion_pack_shell"
+  _use:t="explosion_pack_throw_sound"
+  _use:t="explosion_pack_phys_collision_sound"
+  _use:t="hud_grenade_marker"
+  collres__res:t="tnt_explosive_collision"
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/explosion_pack.blk"
+
+  "retardable:tag"{}
+}
+
+antitank_mine_phys{
+  _use:t="explosion_pack_phys"
+}
+
+antitank_mine_shell{
+  _use:t="projectile_with_shell"
+  animchar__res:t="tnt_explosive_char"
+  shell__expl_node:t="weaponRoot"
+  item__name:t="items/antitank_mine"
+  gun__statName:t="mine"
+
+  "shell__mine:tag"{}
+  "animchar_no_update:tag"{}
+}
+
+diakov_rifle_grenade_shell{
+  animchar__res:t="diakov_rifle_grenade_ammo_char"
+  collres__res:t="diakov_rifle_grenade_ammo_collision"
+  shell__hudMarkerTemplate:t="hud_grenade_marker"
+}
+
+diakov_rifle_grenade_phys{
+  _use:t="projectile_phys_with_shell"
+  _use:t="diakov_rifle_grenade_shell"
+  _use:t="hud_grenade_marker"
+  _use:t="shell_trap_activator"
+  _use:t="mortyr_grenade_launcher_shell_launch_sound"
+  havePairCollision:b=no
+  start_omega:p3=100, 0, 0
+  _use:t="block_rethrow_shell"
+  explTimeAdd:r=3
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/diakov_rifle_grenade.blk"
+  explosion_flash__template:t="default_explosion_flash"
+  shell__active:b=yes
+  shell__launchTime:r=-1
+  shell__cleanupTime:r=30
+  shell__fuseTime:r=0
+
+  "shell__explodeOnContact:tag"{}
+  "grav_zones_affected:tag"{}
+}
+
+molotov_base{
+  slot_attach__visible:b=yes
+  _tracked:t="slot_attach__visible"
+  gun_attach__slot:t="weapon"
+  gun_attach__mainSlotId:i=-1
+}
+
+molotov_shell_base{
+  _use:t="projectile"
+  _use:t="molotov_base"
+
+  "animchar__actOnDemand:tag"{}
+}
+
+molotov_spread{
+  molotov_spread__stepBack:r=0.4
+  molotov_spread__minHeight:r=0.4
+  molotov_spread__dropMaxHeight:r=20
+
+  "molotov_spread__localRays:list<p3>"{
+    v:p3=0, 0, 0
+  }
+
+  "molotov_spread__globalRays:list<p3>"{
+    v:p3=-24, -8.5, 7
+    v:p3=25, -8.5, 7
+    v:p3=0, -5, 9
+    v:p3=-45, -4.5, 9
+    v:p3=45, -4.5, 9
+  }
+}
+
+molotov_phys_base{
+  _use:t="molotov_base"
+  _use:t="molotov_spread"
+  _use:t="projectile_phys"
+  _use:t="impact_shell"
+  _use:t="hud_grenade_marker"
+  _use:t="molotov_throw_sound"
+  start_omega:p3=3, 0, -15
+  active:b=no
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/molotov_base.blk"
+  _tracked:t="active"
+  effect__scale:r=1
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_molotov_explosion"
+  on_exploded__create:t="molotov_fire+molotov_explode_sound"
+  molotov_fire__minDistanceBetween:r=1
+  ai_target_node__node:t="weaponRoot"
+  effect__recreateAfterTeleportIn:r=0.5
+
+  "ai_target_node__nodeId:i"{
+    value:i=-1
+    _tags:t="server"
+  }
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="molotov_throw_trail_cmps_fx"
+  }
+
+  "grav_zones_affected:tag"{}
+}
+
+ussr_molotov{
+  _use:t="molotov_shell_base"
+  _use:t="sovmod_molotov_char"
+  item__name:t="items/molotov"
+
+  "item__canBeQuickUsed:tag"{}
+}
+
+ussr_molotov_phys{
+  _use:t="molotov_phys_base"
+  _use:t="shell_trap_activator"
+  _use:t="sovmod_molotov_char"
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/ussr_molotov.blk"
+}
+
+molotov_fire{
+  _use:t="fire_source"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="fire_molotov_cmps_fx"
+  }
+}
+
+fast_fire_source{
+  _use:t="molotov_fire"
+  dmgzone__fireAffect:r=20
+  fire_source__spreadTime:r=0.5
+  fire_source__fullForceTime:r=10
+  fire_source__maxFullForceTime:r=20
+}
+
+long_fire_source{
+  _use:t="molotov_fire"
+  dmgzone__fireAffect:r=45
+  fire_source__spreadTime:r=0.5
+  fire_source__fullForceTime:r=40
+  fire_source__maxFullForceTime:r=50
+}
+
+m14_incendiary_grenade_phys_base{
+  _use:t="molotov_base"
+  _use:t="molotov_spread"
+  _use:t="projectile_phys"
+  _use:t="impact_shell"
+  _use:t="hud_grenade_marker"
+  _use:t="fire_grenade_throw_sound"
+  start_omega:p3=3, 0, -15
+  active:b=no
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/m14_incendiary_base.blk"
+  _tracked:t="active"
+  effect__scale:r=1
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_molotov_explosion"
+  on_exploded__create:t="fast_fire_source+fire_grenade_explode_sound"
+  molotov_fire__minDistanceBetween:r=1
+  ai_target_node__node:t="weaponRoot"
+
+  "ai_target_node__nodeId:i"{
+    value:i=-1
+    _tags:t="server"
+  }
+
+  "grav_zones_affected:tag"{}
+}
+
+m14_incendiary_grenade_phys{
+  _use:t="m14_incendiary_grenade_phys_base"
+  _use:t="shell_trap_activator"
+  _use:t="m14_incendiary_grenade_char"
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/m14_incendiary.blk"
+}
+
+m14_incendiary_grenade{
+  _use:t="molotov_shell_base"
+  _use:t="m14_incendiary_grenade_char"
+  item__name:t="items/fire_grenade"
+
+  "item__canBeQuickUsed:tag"{}
+}

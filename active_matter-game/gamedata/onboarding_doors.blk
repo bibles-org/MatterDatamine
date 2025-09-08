@@ -1,0 +1,57 @@
+sovmod_bunker_door_a_l:t="bunker_closed_door_left+bunker_rotating_door_sound"
+sovmod_bunker_door_a_r:t="bunker_closed_door_right+bunker_rotating_door_sound"
+sovmod_bunker_door_b_l:t="bunker_closed_door_left+bunker_rotating_door_sound"
+sovmod_bunker_door_b_r:t="bunker_closed_door_right+bunker_rotating_door_sound"
+sovmod_bunker_door_c_l:t="bunker_closed_door_left+bunker_rotating_door_sound"
+sovmod_bunker_door_c_r:t="bunker_closed_door_right+bunker_rotating_door_sound"
+portal_bunker_door_b_l:t="portal_bunker_door_left+bunker_rotating_door_sound"
+portal_bunker_door_b_r:t="portal_bunker_door_right+bunker_rotating_door_sound"
+portal_bunker_door_a:t="portal_bunker_sliding_door_a"
+sovmod_frameless_hangar_door_a:t="random_state_l_door+metal_gate_rotating_door_sound"
+sovmod_frameless_hangar_door_b:t="random_state_l_door+metal_gate_rotating_door_sound"
+
+sovmod_bunker_door_a_l{
+  rendinst__mass:r=80
+}
+
+sovmod_bunker_door_a_r{
+  rendinst__mass:r=80
+}
+
+sovmod_bunker_door_b_l{
+  rendinst__mass:r=80
+}
+
+sovmod_bunker_door_b_r{
+  rendinst__mass:r=80
+}
+
+sovmod_bunker_door_c_l{
+  rendinst__mass:r=80
+}
+
+sovmod_bunker_door_c_r{
+  rendinst__mass:r=80
+}
+
+portal_bunker_door_b_l{
+  rendinst__mass:r=80
+}
+
+portal_bunker_door_b_r{
+  rendinst__mass:r=80
+}
+
+portal_bunker_door_a{
+  rendinst__mass:r=300
+}
+
+sovmod_frameless_hangar_door_a{
+  rendinst__mass:r=0
+}
+
+sovmod_frameless_hangar_door_b{
+  rendinst__mass:r=0
+  door_operations__ajarAngleKoef:r=0.05
+  door_operations__ajarSpeedKoef:r=0.05
+}

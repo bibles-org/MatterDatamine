@@ -1,0 +1,797 @@
+_componentFilters{
+  scoring_player__medicineUsed:t="filter_same_player"
+  scoring_player__lootedSecretContainers:t="filter_same_player"
+  scoring_player__lootedCommonContainers:t="filter_same_player"
+  scoring_player__lootedBodies:t="filter_same_player"
+  scoring_player__receivedDamage:t="filter_same_player"
+  scoring_player__dealtDamage:t="filter_same_player"
+  player__isFinishedRaid:t="filter_friendly_team"
+  scoring_player__isExtractedSuccess:t="filter_friendly_team"
+}
+
+player_hits_counter{
+  _group{
+    _tags:t="server"
+    hits_counter__verified:i=0
+    hits_counter__failed:i=0
+  }
+}
+
+player_ribbons{
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    player_ribbons__curColors:ip2=-1, -1
+  }
+
+  _group{
+    _tags:t="server"
+    player_ribbons__rndColors:b=no
+  }
+}
+
+player{
+  _use:t="replicating"
+  _use:t="player_hits_counter"
+  _use:t="player_ribbons"
+  _use:t="dynamic_chevron"
+  connid:i=-1
+  platformUid:t=""
+  platform:t=""
+  countAsAlive:b=yes
+  appId:i=0
+  clientNetFlags:i=0
+
+  player{}
+  "net__notInInitialScope:tag"{}
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    name:t=""
+    scoring_player__firstSpawnTime:r=-1
+    scoring_player__playTime:p2=0, 0
+    scoring_player__medicineUsed:i=0
+    scoring_player__lootedSecretContainers:i=0
+    scoring_player__lootedCommonContainers:i=0
+    scoring_player__lootedBodies:i=0
+    scoring_player__receivedDamage:r=0
+    scoring_player__dealtDamage:r=0
+    scoring_player__playerPathLen:r=0
+    player__isFinishedRaid:b=no
+    scoring_player__isExtractedSuccess:b=no
+    player__spawnCount:i=0
+    groupId:i64=0
+    team:i=-1
+    disconnected:b=no
+
+    "player__stats:object"{}
+    "player__teamEid:eid"{}
+    "possessed:eid"{}
+    "specTarget:eid"{}
+  }
+
+  _group{
+    _tags:t="server"
+    startedAtTime:r=-1
+    connectedAtTime:r=-1
+    disconnectedAtTime:r=-1
+    receive_logerr:b=no
+    player__canBeLocal:b=yes
+
+    "player__usedContainers:list<eid>"{}
+    "killEntityTimer:u64"{
+      value:i64=0
+    }
+  }
+
+  _group{
+    _tags:t="gameClient"
+    activeCamName:t=""
+
+    "activeCamEid:eid"{}
+  }
+
+  "player_actions_log:list<t>"{}
+  _group{
+    _tags:t="gameClient"
+    _track:b=yes
+    is_local:b=no
+  }
+}
+
+spawn_entity_for_player_at_time{
+  spawn_entity_for_player_at_time__spawnAt:r=0
+
+  "spawn_entity_for_player_at_time__player:eid"{}
+}
+
+recreated_possessed{
+  "recreated_possessed:tag"{}
+}
+
+minimap_death_point{
+  minimap_death_point__position:p3=0, 0, 0
+  minimap_death_point__deactivationDistanceSq:r=4
+  map_object_marker__opacity:r=1
+
+  "minimap_death_point__hero:eid"{}
+}
+
+marker_self_destroy{
+  marker__selfDestroyTime:r=15
+  marker__selfDestroyProgress:r=0
+  marker__selfDestroyAt:r=-1
+
+  "marker_self_destroy:tag"{}
+}
+
+player_move_tracker{
+  player_move_track__lastCheckedPosition:p3=0, 0, 0
+  player_move_track__nextCheckAt:r=0
+  player_move_track__checkInterval:r=10
+  player_move_track__minDistanceToRecord:r=10
+  player_move_track__lastRegion:t=""
+
+  "player_move_tracker__trackPoints:array"{}
+}
+
+mindcontrolled{
+  _use:t="mindcontrolled_trigger_trap_activator"
+  kill_tracking_tag:t="turned_soldier"
+
+  "kill_tracking__taggedPlayers:object"{}
+  "cortical_hack_disabled:tag"{}
+  "hide_player_name:tag"{}
+  "monstrify_capable:tag"{}
+  "mindcontrolled:tag"{}
+}
+
+player_voice_assistant{
+  _tracked:t="assistant__currentScriptName"
+  _tracked:t="assistant__currentSoundName"
+
+  _group{
+    _tags:t="sound"
+    activity_helper__helpsLeft:i=5
+    assistant__startSpeakAt:r=-1
+    assistant__startSpeakDelay:r=0.3
+    assistant__startSpeakBeepSound:t="ui_sounds/voice_assiatant_beep"
+    assistant__speakGap:r=0.6
+    assistant__currentScriptStep:i=-1
+    assistant__currentScriptName:t=""
+    assistant__currentSoundName:t=""
+    assistant__currentSoundLenght:r=0
+
+    "assistant__currentSoundEvent:SoundEvent"{}
+    "assistant__scriptsRandomizerData:object"{}
+    "assistant__script:shared:object"{
+      "note_onboarding_wish:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_wish"
+        }
+      }
+
+      "note_onboarding_blocked_door:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_blocked_door"
+        }
+      }
+
+      "note_onboarding_bunker_first_visit:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_bunker_first_visit"
+        }
+      }
+
+      "note_onboarding_miniraid_start:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_miniraid_start_second"
+          i:t="voice_assistant/onboarding_miniraid_start"
+        }
+      }
+
+      "note_onboarding_miniraid_healing:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_miniraid_heal"
+        }
+      }
+
+      "note_onboarding_miniraid_body:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_miniraid_body_second"
+          i:t="voice_assistant/onboarding_miniraid_body"
+        }
+      }
+
+      "note_onboarding_miniraid_wall:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_miniraid_wall"
+        }
+      }
+
+      "note_onboarding_miniraid_trap:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_miniraid_trap_second"
+          i:t="voice_assistant/onboarding_miniraid_trap"
+        }
+      }
+
+      "note_onboarding_miniraid_am:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_miniraid_am"
+        }
+      }
+
+      "note_onboarding_miniraid_portal:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_miniraid_portal_second"
+          i:t="voice_assistant/onboarding_miniraid_portal"
+        }
+      }
+
+      "note_onboarding_contracts:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_contracts"
+          i:t="voice_assistant/onboarding_contracts_second"
+        }
+      }
+
+      "note_onboarding_monolith:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_monolith"
+        }
+      }
+
+      "note_onboarding_bunker_end:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_bunker_end"
+        }
+      }
+
+      "onboarding_monolith_waiting:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_monolith_waiting"
+        }
+      }
+
+      "onboarding_raid_waiting:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/onboarding_raid_waiting"
+        }
+      }
+
+      "note_shelter_replicator:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/note_shelter_replicator"
+        }
+      }
+
+      "note_shelter_refiner:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/note_shelter_refiner"
+        }
+      }
+
+      "note_shelter_alters:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/note_shelter_alters"
+        }
+      }
+
+      "note_shelter_market:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/note_shelter_market"
+        }
+      }
+
+      "note_shelter_storage:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/note_shelter_storage"
+        }
+      }
+
+      "note_remains_with_chronogenes:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/note_remains_with_chronogenes"
+        }
+      }
+
+      "note_saturated_item_on_pickup:object"{
+        selectOneFromArray:b=no
+
+        "scripts:array"{
+          i:t="voice_assistant/note_saturated_item_on_pickup"
+        }
+      }
+
+      "zone_start_move_message:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/ms_second_zone_start_move_message_01"
+          i:t="voice_assistant/ms_second_zone_start_move_message_02"
+          i:t="voice_assistant/ms_second_zone_start_move_message_03"
+          i:t="voice_assistant/ms_second_zone_start_move_message_04"
+          i:t="voice_assistant/ms_second_zone_start_move_message_05"
+          i:t="voice_assistant/ms_second_zone_start_move_message_06"
+        }
+      }
+
+      "portal_appear_message:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/ms_second_portal_appear_message_01"
+          i:t="voice_assistant/ms_second_portal_appear_message_02"
+          i:t="voice_assistant/ms_second_portal_appear_message_03"
+        }
+      }
+
+      "select_search_settings:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/search_setting_01"
+          i:t="voice_assistant/search_setting_02"
+          i:t="voice_assistant/search_setting_03"
+        }
+      }
+
+      "activity_help_bark:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/ms_second_activity_help_bark_01"
+          i:t="voice_assistant/ms_second_activity_help_bark_02"
+          i:t="voice_assistant/ms_second_activity_help_bark_03"
+          i:t="voice_assistant/ms_second_activity_help_bark_04"
+          i:t="voice_assistant/ms_second_activity_help_bark_05"
+          i:t="voice_assistant/ms_second_activity_help_bark_06"
+          i:t="voice_assistant/ms_second_activity_help_bark_07"
+        }
+      }
+
+      "hint_out_of_ammo:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/out_of_ammo_01"
+          i:t="voice_assistant/out_of_ammo_02"
+          i:t="voice_assistant/out_of_ammo_03"
+          i:t="voice_assistant/out_of_ammo_04"
+          i:t="voice_assistant/out_of_ammo_05"
+        }
+      }
+
+      "hint_jammed_gun:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/gun_jammed_01"
+          i:t="voice_assistant/gun_jammed_02"
+          i:t="voice_assistant/gun_jammed_03"
+          i:t="voice_assistant/gun_jammed_04"
+        }
+      }
+
+      "raid_die_message:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/ms_second_raid_die_message_01"
+          i:t="voice_assistant/ms_second_raid_die_message_02"
+          i:t="voice_assistant/ms_second_raid_die_message_03"
+          i:t="voice_assistant/ms_second_raid_die_message_04"
+          i:t="voice_assistant/ms_second_raid_die_message_05"
+          i:t="voice_assistant/ms_second_raid_die_message_06"
+          i:t="voice_assistant/ms_second_raid_die_message_07"
+          i:t="voice_assistant/ms_second_raid_die_message_08"
+        }
+      }
+
+      "monster_transformation:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/monster_transformation_01"
+          i:t="voice_assistant/monster_transformation_02"
+          i:t="voice_assistant/monster_transformation_03"
+          i:t="voice_assistant/monster_transformation_04"
+          i:t="voice_assistant/monster_transformation_05"
+        }
+      }
+
+      "hint_airdrop_coming:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/hint_airdrop_coming_01"
+          i:t="voice_assistant/hint_airdrop_coming_02"
+          i:t="voice_assistant/hint_airdrop_coming_03"
+          i:t="voice_assistant/hint_airdrop_coming_04"
+        }
+      }
+
+      "nexus_game_win:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_game_win_01"
+          i:t="voice_assistant/nexus_game_win_02"
+          i:t="voice_assistant/nexus_game_win_03"
+          i:t="voice_assistant/nexus_game_win_04"
+        }
+      }
+
+      "nexus_game_lose:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_game_lose_01"
+          i:t="voice_assistant/nexus_game_lose_02"
+          i:t="voice_assistant/nexus_game_lose_03"
+        }
+      }
+
+      "nexus_game_draw:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_game_draw"
+        }
+      }
+
+      "nexus_round_win_team_died:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_win_team_died_01"
+          i:t="voice_assistant/nexus_round_win_team_died_02"
+        }
+      }
+
+      "nexus_round_lose_team_died:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_lose_team_died_01"
+          i:t="voice_assistant/nexus_round_lose_team_died_02"
+        }
+      }
+
+      "nexus_round_win_capture:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_win_01"
+          i:t="voice_assistant/nexus_round_win_02"
+        }
+      }
+
+      "nexus_round_lose_capture:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_lose_01"
+          i:t="voice_assistant/nexus_round_lose_02"
+        }
+      }
+
+      "nexus_round_win_capture_advantage:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_win_01"
+          i:t="voice_assistant/nexus_round_win_02"
+        }
+      }
+
+      "nexus_round_lose_capture_advantage:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_lose_01"
+          i:t="voice_assistant/nexus_round_lose_02"
+        }
+      }
+
+      "nexus_round_win_points:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_win_01"
+          i:t="voice_assistant/nexus_round_win_02"
+        }
+      }
+
+      "nexus_round_lose_points:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_lose_01"
+          i:t="voice_assistant/nexus_round_lose_02"
+        }
+      }
+
+      "nexus_round_win_points_advantage:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_win_01"
+          i:t="voice_assistant/nexus_round_win_02"
+        }
+      }
+
+      "nexus_round_lose_points_advantage:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_lose_01"
+          i:t="voice_assistant/nexus_round_lose_02"
+        }
+      }
+
+      "nexus_round_draw_all_died:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_draw_01"
+          i:t="voice_assistant/nexus_round_draw_02"
+        }
+      }
+
+      "nexus_round_draw_points:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_draw_01"
+          i:t="voice_assistant/nexus_round_draw_02"
+        }
+      }
+
+      "nexus_round_draw_time_out:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_draw_01"
+          i:t="voice_assistant/nexus_round_draw_02"
+        }
+      }
+
+      "nexus_round_preparation:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_preparation_01"
+          i:t="voice_assistant/nexus_round_preparation_02"
+          i:t="voice_assistant/nexus_round_preparation_03"
+        }
+      }
+
+      "nexus_round_start:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_round_start_01"
+          i:t="voice_assistant/nexus_round_start_02"
+          i:t="voice_assistant/nexus_round_start_03"
+        }
+      }
+
+      "nexus_last_standing_you:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_last_standing_ally_01"
+          i:t="voice_assistant/nexus_last_standing_ally_02"
+          i:t="voice_assistant/nexus_last_standing_ally_03"
+        }
+      }
+
+      "nexus_last_standing_ally:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_last_standing_ally_01"
+          i:t="voice_assistant/nexus_last_standing_ally_02"
+          i:t="voice_assistant/nexus_last_standing_ally_03"
+        }
+      }
+
+      "nexus_last_standing_enemy:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{}
+      }
+
+      "nexus_you_captured_beacon:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{}
+      }
+
+      "nexus_ally_captured_beacon:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_ally_captured_beacon_01"
+          i:t="voice_assistant/nexus_ally_captured_beacon_02"
+          i:t="voice_assistant/nexus_ally_captured_beacon_03"
+        }
+      }
+
+      "nexus_enemy_captured_beacon:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/nexus_enemy_captured_beacon_01"
+          i:t="voice_assistant/nexus_enemy_captured_beacon_02"
+          i:t="voice_assistant/nexus_enemy_captured_beacon_03"
+          i:t="voice_assistant/nexus_enemy_captured_beacon_04"
+        }
+      }
+
+      "nexus_you_reseted_beacon:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{}
+      }
+
+      "nexus_ally_reseted_beacon:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{}
+      }
+
+      "nexus_enemy_reseted_beacon:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{}
+      }
+
+      "map_artifacts_appear:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:array"{
+          i:t="voice_assistant/map_artifacts_appear_01"
+          i:t="voice_assistant/map_artifacts_appear_02"
+          i:t="voice_assistant/map_artifacts_appear_03"
+          i:t="voice_assistant/map_artifacts_appear_04"
+        }
+      }
+    }
+  }
+}
+
+bot_player{
+  _use:t="player"
+
+  _group{
+    _tags:t="server"
+    player_ribbons__rndColors:b=yes
+    player__canBeLocal:b=no
+
+    "playerIsBot:tag"{}
+  }
+}
+
+active_matter_bot_player{
+  _use:t="bot_player"
+  _use:t="am_storage"
+  possessedTemplate:t=""
+
+  _group{
+    _tags:t="server"
+    player__loadoutRecieved:b=yes
+    active_matter_bot_player__freeResurrections:i=1
+
+    "initialHeroItems:array"{}
+  }
+}
+
+active_matter_player{
+  _use:t="player"
+  _use:t="map_mark_creator"
+  _use:t="player_move_tracker"
+  _use:t="player_voice_assistant"
+  _replicated:t="active_matter_player__unlockedNotes"
+  _tracked:t="active_matter_player__unlockedNotes"
+  currentHeroAM:i=0
+  waitingForRespawn:b=no
+  waitingForRespawnSpectatorEnabled:b=no
+  spawn_rules__respawnTimer:r=6
+
+  "active_matter_player__unlockedNotes:list<t>"{}
+  _group{
+    _tags:t="server"
+    player__spawnPlaceId:i=-1
+    profile_lock_equipment__heartbeatTime:r=300
+    profile_lock_equipment__nextHeartbeatAt:r=-1
+
+    "userid:u64"{
+      value:i64=-1
+    }
+
+    "userPermissions:list<t>"{}
+    "initialHeroItems:array"{}
+    "player__unlocks:list<t>"{}
+    "player__newUnlocks:list<t>"{}
+    "player__dailyStatsReward:object"{}
+    "player__dailyStatsRewardInfo:object"{}
+    "player__chronotracesProgression:object"{}
+  }
+
+  "currentHeroItems:array"{}
+  _group{
+    _track:b=yes
+    _tags:t="server"
+    player__loadoutRecieved:b=no
+  }
+
+  _group{
+    _replicate:b=yes
+    _track:b=yes
+    player__isRentedEquipment:b=no
+  }
+
+  "extractedItems:array"{}
+  "spawn_rules__respawnPrices:shared:list<i>"{
+    i:i=5
+    i:i=10
+    i:i=15
+  }
+
+  _group{
+    _tags:t="playingReplay"
+    replay_player__catchPossessEntity:b=no
+  }
+}
+
+active_matter_player_test{
+  _use:t="active_matter_player"
+  _use:t="bot_player"
+  active_matter_player_test__index:i=-1
+  possessedTemplate:t="am_militant_with_builtin_suit+spawn_sequence_controller"
+}

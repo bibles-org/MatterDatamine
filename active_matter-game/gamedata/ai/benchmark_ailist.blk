@@ -1,0 +1,21 @@
+repeat{
+  name:t="benchmark_always_shoot_ai"
+
+  repeatUntilFail{
+    setRealVar{
+      to:t="enemyRadius"
+      value:r=10
+    }
+
+    findDanger{
+      paramName:t="benchmarkEnemy"
+      radiusParamName:t="enemyRadius"
+      minDanger:r=0.1
+      shootTime:p2=10, 10
+    }
+
+    shootAtUnit{
+      targetUnitParam:t="benchmarkEnemy"
+    }
+  }
+}

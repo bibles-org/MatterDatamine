@@ -1,0 +1,260 @@
+orderedSelector{
+  name:t="nchanged_outdoor_mini"
+
+  reaction{
+    event:t="onHit"
+
+    sequencer{
+      orderedSelector{
+        compareNode{
+          lhs:t="beh_tree__interruptDisabled"
+          operator:t="=="
+          rhs:r=1
+        }
+
+        sequencer{
+          findFlankableTarget{
+            useLargeRadius:b=yes
+            backupTarget:t="agent_dangers__lastHitReactionOffenderEid"
+            minDanger:r=0.1
+          }
+
+          selectNode{
+            name:t="attack"
+          }
+        }
+
+        sequencer{
+          setBlind{
+            duration:p2=2, 5
+          }
+
+          recalculateTree{}
+        }
+      }
+    }
+  }
+
+  reaction{
+    event:t="onBulletNearby"
+
+    sequencer{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=0
+      }
+
+      findFlankableTarget{
+        useLargeRadius:b=yes
+        minDanger:r=0.1
+      }
+
+      selectNode{
+        name:t="attack"
+      }
+    }
+  }
+
+  reaction{
+    event:t="onBlindness"
+
+    sequencer{
+      modifyNode{
+        target:t="beh_tree__interruptDisabled"
+        operator:t="="
+        arg:i=0
+      }
+
+      recalculateTree{}
+    }
+  }
+
+  subTree{
+    treeName:t="sub.blindness"
+  }
+
+  subTree{
+    treeName:t="sub.leave_obstacle"
+  }
+
+  failed{
+    subTree{
+      treeName:t="sub.return_to_navmesh"
+    }
+  }
+
+  sequencer{
+    name:t="attack"
+
+    reaction{
+      event:t="regularCheck"
+
+      orderedSelector{
+        compareNode{
+          lhs:t="beh_tree__interruptDisabled"
+          operator:t="=="
+          rhs:r=1
+        }
+
+        subTree{
+          treeName:t="sub.attackReaction"
+        }
+
+        subTree{
+          treeName:t="sub.nchanged_outdoor_mini_check_out_of_origin"
+        }
+      }
+    }
+
+    subTree{
+      treeName:t="sub.changed.mini.run_to_target_and_attack"
+    }
+  }
+
+  subTree{
+    treeName:t="sub.changed.moveToAttraction"
+  }
+
+  subTree{
+    treeName:t="sub.aimlessly_walk_around_after_awaken"
+  }
+
+  subTree{
+    treeName:t="sub.changed.goToOrigin"
+  }
+
+  subTree{
+    treeName:t="sub.door_opener"
+  }
+}
+
+sequencer{
+  name:t="sub.nchanged_outdoor_mini_check_out_of_origin"
+
+  compareNode{
+    lhs:t="changed__loseInterestAt"
+    operator:t=">"
+    rhs:r=0
+  }
+
+  setTime{
+    to:t="agent_dangers__time"
+  }
+
+  compareNode{
+    lhs:t="changed__loseInterestAt"
+    operator:t="<"
+    rhs:t="agent_dangers__time"
+  }
+
+  orderedSelector{
+    sequencer{
+      checkDistanceToPos{
+        posParam:t="changed__origin"
+        radius:r=5
+      }
+
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0.1
+      }
+    }
+
+    modifyNode{
+      target:t="walker_agent__targetEid"
+      operator:t="="
+      arg:i=0
+    }
+  }
+
+  orderedSelector{
+    compareNode{
+      lhs:t="walker_agent__targetEid"
+      operator:t="!="
+      rhs:i=0
+    }
+
+    subTree{
+      treeName:t="sub.changed.goToOrigin"
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.nchanged_outdoor_mini_energy_attack"
+
+  pursueTargetWithBlinks{
+    targetParam:t="walker_agent__targetEid"
+    forceToWalk:b=no
+    stopDist:r=2.5
+    navLookAhead:r=0.75
+    useFlank:b=no
+  }
+
+  checkDistanceToTarget{
+    targetParam:t="walker_agent__targetEid"
+    radius:r=4
+  }
+
+  setTime{
+    to:t="energy_attack_controller__time"
+  }
+
+  compareNode{
+    lhs:t="energy_attack_controller__readyAt"
+    operator:t="<"
+    rhs:t="energy_attack_controller__time"
+  }
+
+  parallel{
+    nPhysStareAtEntity{
+      targetParam:t="walker_agent__targetEid"
+    }
+
+    wait{
+      range:p2=0.15, 0.4
+      resetable:b=yes
+    }
+  }
+
+  compareNode{
+    lhs:t="walker_agent__targetEid"
+    operator:t="!="
+    rhs:i=0
+  }
+
+  modifyNode{
+    target:t="beh_tree__interruptDisabled"
+    operator:t="="
+    arg:i=1
+  }
+
+  success{
+    parallel{
+      join{
+        applyGameAffect{
+          templateName:t="changed_human_mini_energy_attack_anim"
+          duration:p2=1.45, 1.45
+        }
+
+        applyGameAffect{
+          templateName:t="changed_human_mini_energy_attack"
+          delay:p2=0.35, 0.35
+          duration:p2=0.25, 0.25
+        }
+      }
+
+      nPhysStareAtEntity{
+        targetParam:t="walker_agent__targetEid"
+      }
+    }
+  }
+
+  modifyNode{
+    target:t="beh_tree__interruptDisabled"
+    operator:t="="
+    arg:i=0
+  }
+}

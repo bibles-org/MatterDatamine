@@ -1,0 +1,82 @@
+thermal_vision_base_color_scheme_preset{
+  _group{
+    _track:b=yes
+    thermal_vision__lowIntensityColor:p4=0, 0, 0, 0
+    thermal_vision__lowMidIntensityColor:p4=0.5, 0.5, 0.5, 0
+    thermal_vision__midHighIntensityColor:p4=0.5, 0.5, 0.5, 0
+    thermal_vision__highIntensityColor:p4=1, 1, 1, 0
+  }
+}
+
+thermal_vision_base_intensity_params_preset{
+  _group{
+    _track:b=yes
+    thermal_vision__lowIntensityTreshold:r=0
+    thermal_vision__lowMidIntensityTreshold:r=0.35
+    thermal_vision__midHighIntensityTreshold:r=0.75
+    thermal_vision__highIntensityTreshold:r=1
+  }
+}
+
+thermal_vision_preset{
+  _tags:t="render"
+  _use:t="thermal_vision_base_color_scheme_preset"
+  _use:t="thermal_vision_base_intensity_params_preset"
+  thermal_visionPaletteTex_res:t=""
+
+  "thermal_vision__isPreset:tag"{}
+  "thermal_visionPaletteTex:SharedTex"{
+    _tags:t="render"
+  }
+
+  _group{
+    _track:b=yes
+    thermal_vision__isActive:b=no
+    thermal_vision__prevIsActive:b=no
+    thermal_vision__noiseValue:r=0.03
+    thermal_vision__powValue:r=1.2
+    thermal_vision__blackIsHot:b=no
+    thermal_vision__pixelSize:i=4096
+    thermal_vision__ledEffectMode:i=1
+  }
+}
+
+thermal_vision_debug_preset{
+  _use:t="thermal_vision_preset"
+  _singleton:b=yes
+
+  "thermal_vision_debug:tag"{}
+}
+
+thermal_vision_renderer{
+  _tags:t="render"
+  _singleton:b=yes
+  thermal_vision__on:b=no
+
+  "thermal_vision_renderer:tag"{}
+  _group{
+    _track:b=yes
+    thermal_vision__debugMode:b=no
+
+    "thermal_vision__activePresetEid:eid"{}
+  }
+
+  "thermal_vision__noise_value:ShaderVar"{}
+  "thermal_vision__black_is_hot:ShaderVar"{}
+  "thermal_vision__pow_value:ShaderVar"{}
+  "thermal_vision__low_intensity_color:ShaderVar"{}
+  "thermal_vision__low_mid_intensity_color:ShaderVar"{}
+  "thermal_vision__mid_high_intensity_color:ShaderVar"{}
+  "thermal_vision__high_intensity_color:ShaderVar"{}
+  "thermal_vision__low_intensity_treshold:ShaderVar"{}
+  "thermal_vision__low_mid_intensity_treshold:ShaderVar"{}
+  "thermal_vision__mid_high_intensity_treshold:ShaderVar"{}
+  "thermal_vision__high_intensity_treshold:ShaderVar"{}
+  "thermal_vision__pixel_size:ShaderVar"{}
+  "thermal_vision__led_effect:ShaderVar"{}
+  "thermal_vision_node:dafg::NodeHandle"{}
+  "thermal_spectre_node:dafg::NodeHandle"{}
+  "thermal_spectre_debug_node:resource_slot::NodeHandleWithSlotsAccess"{}
+  "thermal_scope_mask_node:dafg::NodeHandle"{}
+  "thermal_vision_depth_for_fx_node:dafg::NodeHandle"{}
+}

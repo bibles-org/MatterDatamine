@@ -1,0 +1,92 @@
+repeat{
+  name:t="benchmark_nphys"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      subTree{
+        treeName:t="sub.clearPath"
+      }
+
+      sequencer{
+        updateObstaclePenetration{}
+        compareNode{
+          lhs:t="obstacle_avoider__penetration"
+          operator:t=">"
+          rhs:r=0.2
+        }
+
+        selectNode{
+          name:t="leave_obstacle"
+        }
+      }
+    }
+  }
+
+  subTree{
+    treeName:t="sub.leave_obstacle"
+  }
+
+  orderedSelector{
+    nPhysCorridorMoveToPosWithNavmeshMapping{
+      posParam:t="benchmarked_agent__targetPos"
+      forceToWalk:b=no
+      stopDist:r=1.2
+    }
+
+    sequencer{
+      wait{
+        range:p2=10, 10
+        resetable:b=yes
+      }
+    }
+  }
+
+  benchmarkSelectNextPos{}
+  subTree{
+    treeName:t="sub.door_opener"
+  }
+}
+
+repeat{
+  name:t="benchmark_human_phys"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      sequencer{
+        findObstaclesAlongsidePathMapped{}
+        findDoorObstacleWithNavmeshMapping{}
+        success{
+          tryOpenDoor{}
+        }
+      }
+    }
+  }
+
+  orderedSelector{
+    gravityMoveToPos{
+      posParam:t="benchmarkPos"
+      minStance:i=1
+      distThreshold:r=2.5
+      lookVisc:r=0.1
+      targetParam:t="lastShootEnemy"
+      timeToLookAtTarget:r=4
+      tryClimbing:b=yes
+      dangerPosParam:t="enemyPos"
+      dangerValidParam:t="enemyPosValid"
+      dangerLookRange:p2=1.5, 2.5
+    }
+
+    sequencer{
+      wait{
+        range:p2=10, 10
+        resetable:b=yes
+      }
+    }
+  }
+
+  benchmarkSelectNextPos{}
+}

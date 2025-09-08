@@ -1,0 +1,42 @@
+filter{
+  "^.*_door_.*$"{}
+  "^door_.$"{}
+  "^window_.*$"{}
+  "^gate_.*$"{}
+  "^.*_door$"{}
+  "^.*_window$"{}
+  "^.*_gate$"{}
+  "^metal_gate_.*$"{}
+  "^.*_stall_gate_.*$"{}
+  "^.*_gate_door_.*$"{}
+  "^.*sovmod_garage_._type.*$"{}
+  "^.*fence_.*_gate.*$"{}
+  "^.*_decor_gate_.*$"{}
+}
+
+filter_exclude{
+  "^counter_door_.*$"{}
+  "^.*_door_jamb_.*$"{}
+  "^.*_jamb_.*$"{}
+  "^.*_frame_.*$"{}
+  "^.*_posts_.*$"{}
+  "^geisel_library_door_.*$"{}
+  "^main_entrance_door_.*$"{}
+  "^.*_barricaded_.*$"{}
+  "^russia_monastery_gatetower_decor_door_3000_arc_a.*$"{}
+  "^kubelwagen_destroyed_door_.*$"{}
+  "^pv_opel_blitz_kfz_305_destroyed_[a,b]_door_.*$"{}
+  "^vw_beetle_destroyed_door_.*$"{}
+  "^africa_fortress_gate.*$"{}
+  "^mexican_fortress_gate.*$"{}
+  "^sovmod_kindergarten_door_[a-z]_j[au]mb.*$"{}
+  "^sovmod_fence_concrete_[k,l]_door_rot_.*$"{}
+  "^sovind_port_container_a_b_door_.*$"{}
+  "^portal_bunker_door_a$"{}
+  "^factory_innerwall_6000.*_door.*$"{}
+}
+
+filter_include{
+  "^russia_mansion_decor_window_frame_3400_arch_a_.*$"{}
+  "^russia_mansion_decor_window_jamb_wood_int_.*_flat_a_.*$"{}
+}
