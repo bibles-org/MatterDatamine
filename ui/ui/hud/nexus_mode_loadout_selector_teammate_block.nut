@@ -256,7 +256,8 @@ function mkTeammateBlock(data) {
     flow = FLOW_HORIZONTAL
     gap = hdpx(4)
     children = [
-      muteUnmuteButton(name, hudIsInteractive.get())
+      selLine,
+      muteUnmuteButton(name, hudIsInteractive.get()),
       {
         size = FLEX_H
         behavior = hudIsInteractive.get() && eid != localPlayerEid.get() ? Behaviors.Button : null
@@ -267,7 +268,6 @@ function mkTeammateBlock(data) {
         flow = FLOW_HORIZONTAL
         rendObj = ROBJ_WORLD_BLUR_PANEL
         children = [
-          selLine,
           @() {
             size = FLEX_H
             flow = FLOW_HORIZONTAL

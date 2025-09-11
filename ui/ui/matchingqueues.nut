@@ -76,18 +76,6 @@ function getNearestDisableTime(queue, time) {
   return nearestDisableTime
 }
 
-function getNearestHideTime(queue, time) {
-  local nearestHideTime = -1
-  if (queue?.disableSchedule != null) {
-    foreach(disableTime in queue.disableSchedule) {
-      let hideTime = disableTime.time - disableTime.overlap
-      if (hideTime < time && (nearestHideTime == -1 || hideTime < nearestHideTime))
-        nearestHideTime = hideTime
-    }
-  }
-  return nearestHideTime
-}
-
 function getNextEnableTime(queue, time) {
   local nextEnableTime = -1
   local nearestDisableTime = getNearestDisableTime(queue, time)
@@ -242,6 +230,5 @@ return {
   isQueueDisabledBySchedule
   getNearestEnableTime
   getNearestDisableTime
-  getNearestHideTime
   getNextEnableTime
 }

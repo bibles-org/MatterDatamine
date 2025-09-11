@@ -94,7 +94,7 @@ let mkOfflineRaidIcon = @(override = {}) faComp("isolated_raid.svg", {
   color = InfoTextValueColor
 }.__merge(override))
 
-function mkOfflineRaidCheckBox() {
+function mkOfflineRaidCheckBox(override = {}, isDisabled = false) {
   let leaderRaidStatus = Computed(function() {
     if (!isInSquad.get() || isSquadLeader.get())
       return null
@@ -116,7 +116,8 @@ function mkOfflineRaidCheckBox() {
     else
       wantOfflineRaid.set(false)
 
-    let color = !isOfflineRaidAvailableForQueue.get() || isQueueOfflineOnly.get() ? TextDisabled : InfoTextValueColor
+    let color = !isOfflineRaidAvailableForQueue.get() || isQueueOfflineOnly.get() || isDisabled
+      ? TextDisabled : InfoTextValueColor
     return {
       watch = [numOfflineRaidsAvailable, freeTicketsLimit, isOfflineRaidAvailableForQueue, isOfflineRaidAvailable,
         isQueueOfflineOnly, selectedRaid, leaderRaidStatus]
@@ -144,6 +145,10 @@ function mkOfflineRaidCheckBox() {
               }
               if (isInSquad.get() && !isSquadLeader.get()) {
                 showMsgbox({ text = loc("queue/offline_raids/only_leader") })
+                return
+              }
+              if (isDisabled) {
+                showMsgbox({ text = loc("queue/offline_raids/impossibleToChangeInPreparation") })
                 return
               }
               if (!v && isQueueOfflineOnly.get()) {
@@ -215,7 +220,7 @@ function mkOfflineRaidCheckBox() {
             })
           })
       ]
-    }
+    }.__merge(override)
   }
 }
 

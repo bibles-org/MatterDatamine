@@ -841,6 +841,11 @@ monstrified_mothman_human_base{
   _tracked:t="human_equipment__slotsFlags"
 
   _group{
+    _tags:t="gameClient"
+    hero_inventory_opened:b=no
+  }
+
+  _group{
     _tags:t="server"
     net_ragdoll__physObjTemplate:t="mothman_ragdoll"
     monstrified_mothman__maxTraceHeight:r=15

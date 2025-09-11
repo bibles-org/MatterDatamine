@@ -447,13 +447,17 @@ function mkBaseDebriefingMenu() {
   }
 }
 
-
-showDebriefingWindow.subscribe_with_nasty_disregard_of_frp_update(function(v) {
-  if (v) {
+let reactToRaidNeedShowDebriefing = function(needToShow) {
+  log($"reactToRaidNeedShowDebriefing: needToShow={needToShow}")
+  if (needToShow) {
     saveBattleResultToHistory(lastBattleResult.get())
     eventbus_send("hud_menus.open", { id = BaseDebriefingMenuId })
   }
-})
+}
+
+showDebriefingWindow.subscribe_with_nasty_disregard_of_frp_update(reactToRaidNeedShowDebriefing)
+
+reactToRaidNeedShowDebriefing(showDebriefingWindow.get())
 
 return {
   BaseDebriefingMenuId

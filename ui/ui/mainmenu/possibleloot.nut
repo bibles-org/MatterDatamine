@@ -165,7 +165,7 @@ function mkPossibleLootBlock(scene, description, params) {
     size = FLEX_H
     flow = FLOW_VERTICAL
     valign = ALIGN_CENTER
-    gap = hdpx(10)
+    gap = hdpx(4)
     children = [
       {
         size = FLEX_H

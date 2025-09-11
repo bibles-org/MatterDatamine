@@ -2821,6 +2821,7 @@ Wir entschuldigen uns für eventuelle Unannehmlichkeiten."
 "queue/offline_raids/left";"Isolated raid:";"Изолированный рейд:";"Isolierter Einsatz:"
 "queue/offline_raids/unavailable_squad";"Isolated raids are not available in squad.";"Изолированные рейды недоступны в отряде.";"Isolierte Einsätze sind im Trupp nicht verfügbar."
 "queue/offline_raids/unavailable_raid";"Not available for this raid.";"Недоступно для этого рейда.";"Für diesen Überfall nicht verfügbar."
+"queue/offline_raids/impossibleToChangeInPreparation";"Impossible to change during Raid Preparation, please use Missions Terminal";"Недоступно для изменения во время подготовки к рейду, пожалуйста, используйте Терминал Миссий.";"Impossible to change during Raid Preparation, please use Missions Terminal"
 "queue/offline_raids/unavailable";"Not available.";"Недоступно.";"Nicht verfügbar."
 "queue/offline_raids/only_offline";"This raid is only available as <accented>Isolated</accented>.
 
@@ -3633,12 +3634,12 @@ Es gibt mehrere Möglichkeiten, sie zu erhalten:
 "research/descMsgBox/closedIndependentNodeTitleDesc";"You don't have access to this blueprint research yet.
 
 Ways to get access to a blueprint research:
-<color=#d28c3c>- Extract enriched copy of an item from the Zone.
+<color=#d28c3c>- Extract enriched copy of an item marked ""Obtained in the raid"" out of the Zone.
 - Complete contract that give access to a blueprint as rewards.
 - Unlock item and its blueprint in the Monolith.</color>";"У вас нет доступа к исследованию данного чертежа.
 
 Cпособы получения доступа к исследованию чертежа:
-<color=#d28c3c>- Вынесите из Зоны обогащённую копию вещи.
+<color=#d28c3c>- Вынесите из Зоны обогащённую копию вещи с меткой ""Получено в рейде"".
 - Выполните контракт, который выдаст доступ к чертежу в награду.
 - Откройте доступ к предмету и его чертежу в Монолите.</color>";"Du hast noch keinen Zugang zu dieser Blaupausenforschung.
 
@@ -3750,7 +3751,7 @@ To unlock blueprint in the Replicator, you need to extract from the raid an item
 and also have a mark ""Obtained in the raid"".";"Выберите исследованный чертеж, только они могут быть использованы, чтобы начать репликацию.
 
 Чтобы открыть чертеж в Репликаторе, необходимо вынести из рейда предмет, соответствующий этому чертежу,
-и при этом предмет должен иметь отметку ""Получено в рейдe"".";"Wähle einen erforschten Bauplan, nur diese können für die Replikation verwendet werden."
+и при этом предмет должен иметь отметку ""Получено в рейде"".";"Wähle einen erforschten Bauplan, nur diese können für die Replikation verwendet werden."
 "craft/chooseReplicatorToStart";"Select a replicator module to start.";"Выберите модуль репликатора, чтобы начать.";"Wähle ein Replikator-Modul aus, um zu starten."
 "craft/repairCost";"Depletion restoration cost:";"Стоимость восстановления истощения:";"Kosten der Erschöpfungswiederherstellung:"
 "craft/repairCostWithPrice";"Depletion restoration cost:";"Стоимость восстановления истощения:";"Kosten für die Wiederherstellung der Erschöpfung:"
@@ -3963,12 +3964,43 @@ Die Agentur öffnet Extraktionsportale erst, wenn du <color=#d28c3c>alle</color>
 "contracts/report";"Report";"Завершить";"Berichten"
 "contracts/dailyContractUpdate";"New objectives in: ";"Новые задачи через: ";"Neue Ziele in:"
 "contracts/dailyContractTimer";"Contract Rotation: when the timer expires, the list of contracts will be updated.";"Ротация контрактов: по истечении таймера список контрактов обновится.";"Vertragsrotation: Wenn der Timer abläuft, wird die Liste der Verträge aktualisiert."
-"contracts/primaryContractTooltip";"Main objective of the raid";"Основная задача рейда";"Hauptziel des Raids"
+"contracts/primaryContractTooltip";"Primary objective of the raid";"Основная задача рейда";"Hauptziel des Raids"
 "contracts/secondaryContractTooltip";"Personal objective";"Персональная задача";"Persönliches Ziel"
-"contracts/storyContractTooltip";"Storyline contract";"Сюжетный контракт";"Storyline-Vertrag"
+"contracts/storyContractTooltip";"Storyline objective";"Сюжетная задача";"Storyline-Vertrag"
 "contracts/monolithContractTooltip";"Monolith synchronization objective";"Задача синхронизации с Монолитом";"Monolith-Synchronisierungsziel"
 "contracts/enemies";"Anomalies:";"Аномалии:";"Anomalien:"
 "contracts/environment";"Environment:";"Окружение:";"Umgebung:"
+"contracts/primaryList";"Primary Objectives:";"Основные Задачи:";"Primary Objectives:"
+"contracts/secondaryList";"Secondary Objectives:";"Дополнительные Задачи:";"Secondary Objectives:"
+"contracts/primaryListDesc";"Primary Objectives:
+• At least one primary objective must always be accepted.
+• You can choose which primary objectives to accept.
+• Primary objectives increase the difficulty of the raid.
+• Completing certain primary objectives in the raid is required to activate the extraction portal.
+• The same primary objective can be completed multiple times a day, but the reward after the first completion is reduced.";"Основные задачи:
+• Всегда должна быть принята хотя бы одна основная задача.
+• Можно выбрать, какие основные задачи принять.
+• Основные задачи повышают сложность рейда.
+• Выполнение некоторых основных задач в рейде является обязательным, чтобы активировать портал эвакуации.
+• Можно выполнять одну и ту же задачу много раз в день, но награда после первого выполнения снижается.";"Primary Objectives:
+• At least one primary objective must always be accepted.
+• You can choose which primary objectives to accept.
+• Primary objectives increase the difficulty of the raid.
+• Completing certain primary objectives in the raid is required to activate the extraction portal.
+• The same primary objective can be completed multiple times a day, but the reward after the first completion is reduced."
+"contracts/secondaryListDesc";"Secondary Objectives:
+• All secondary objectives are accepted automatically, no manual selection is required.
+• The list of secondary objectives is updated once a day.";"Дополнительные задачи:
+• Все дополнительные задачи приняты автоматически, не нужно выбирать вручную.
+• Список дополнительных задач обновляется раз в день.";"Secondary Objectives:
+• All secondary objectives are accepted automatically, no manual selection is required.
+• The list of secondary objectives is updated once a day."
+"contracts/nexusPrimaryListDesc";"Nexus Objectives:
+• Completing Nexus objectives affects the capture status of nodes.";"Задачи Нексуса:
+• Выполнение задач Нексуса влияет на статус захвата узловых точек.";"Nexus Objectives:
+• Completing Nexus objectives affects the capture status of nodes."
+"contracts/nexusSecondaryListDesc";"List of objectives that are updated daily.";"Список задач, которые обновляются ежедневно.";"List of objectives that are updated daily."
+"contracts/difficulty";"Difficulty:";"Сложность:";"Difficulty:"
 "rewards/collect";"Collect rewards";"Забрать награды";"Belohnungen sammeln"
 "startButton/warning/warningHeader";"Warning!";"Осторожно!";"Warnung!"
 "startButton/warning/noWeaponAmmo";"Weapons without ammo:";"Оружие без патронов:";"Waffen ohne Munition:"
@@ -4678,9 +4710,9 @@ Schließe alle aufgeführten Anforderungen für diese Zugriffsebene ab, um sie f
 "monolith/dalniy_cargoport_dark_operative/raid_success/desc";"Enter Cargo Port: Dark raids and successfully extract through the portal.";"Заходите в рейды в Грузовом порту: Тьма и успешно эвакуируйтесь через портал.";"Enter Cargo Port: Dark raids and successfully extract through the portal."
 "monolith/dalniy_scrapyard_operative/raid_success";"Successful raids to Scrapyard: {cur}/{needed}";"Успешных рейдов на Свалку: {cur}/{needed}";"Successful raids to Scrapyard: {cur}/{needed}"
 "monolith/dalniy_scrapyard_operative/raid_success/desc";"Enter Scrapyard raids and successfully extract through the portal.";"Заходите в рейды на Свалке и успешно эвакуируйтесь через портал.";"Enter Scrapyard raids and successfully extract through the portal."
-"monolith/operative/primary_objectives_complete";"Main objectives completed: {cur}/{needed}";"Выполнено основных задач: {cur}/{needed}";"Main objectives completed: {cur}/{needed}"
+"monolith/operative/primary_objectives_complete";"Primary objectives completed: {cur}/{needed}";"Выполнено основных задач: {cur}/{needed}";"Primary objectives completed: {cur}/{needed}"
 "monolith/operative/primary_objectives_complete/desc";"Accept main objectives and complete them in raids.";"Принимайте основные задачи и выполняйте их в рейдах.";"Accept main objectives and complete them in raids."
-"monolith/operative/secondary_objectives_complete";"Personal objectives completed: {cur}/{needed}";"Выполнено персональных задач: {cur}/{needed}";"Personal objectives completed: {cur}/{needed}"
+"monolith/operative/secondary_objectives_complete";"Secondary objectives completed: {cur}/{needed}";"Выполнено дополнительных задач: {cur}/{needed}";"Secondary objectives completed: {cur}/{needed}"
 "monolith/operative/secondary_objectives_complete/desc";"Complete personal objectives in raids. Personal objectives become available automatically every day.";"Выполняйте персональные задачи в рейдах. Персональные задачи становятся доступны автоматически ежедневно.";"Complete personal objectives in raids. Personal objectives become available automatically every day."
 "monolith/locked";"Need previous access level";"Требуется предыдущий уровень допуска";"Vorherige Zugriffsebene erforderlich"
 "monolith/unlocked";"Access level unlocked";"Уровень допуска открыт";"Zugangsebene freigeschaltet"
@@ -5095,6 +5127,9 @@ Um eine Eroberung zu starten, musst du dich dem Portal nähern und mit ihm inter
 "nexus/briefing";"Briefing";"Брифинг";"Briefing"
 "nexus/factionsView";"Factions view";"Список фракций";"Factions view"
 "nexus/raidsView";"Raids view";"Список рейдов";"Raids view"
+"nexus/select_node/button";"Deploy";"Высадка";"Deploy"
+"nexus/select_node/msg";"Select an active node to start";"Выберите активный узел чтобы начать";"Select an active node to start"
+"nexus/select_node/select_random";"Select random";"Выбрать случайный";"Select random"
 "nexus/factionsFittingRaids";"Maps in this battle:";"Карты в этом сражении:";"Maps in this battle:"
 "nexus/noNexusFittingQueues";"You haven’t selected a Nexus node to fight for.
 Go back to the previous screen and choose an available node on the map or from the faction or raid lists.";"Вы не выбрали узловую точку Нексуса, за которую собираетесь пойти в бой.
@@ -7189,7 +7224,7 @@ Refining this item will yield a large amount of chronotraces.";"Папка с д
 
 Die Veredelung dieses Gegenstands liefert eine große Menge Chronospuren."
 "items/item_created_by_zone";"Obtained in the raid.
-Can be used for contracts.";"Получено в рейдe.
+Can be used for contracts.";"Получено в рейде.
 Может быть использован для контрактов.";"Erhalten im Raid.
 Kann für Aufträge verwendet werden."
 "items/monster_impostor_artifact_item";"Artifact: Impostor";"Артефакт: Импостер";"Artefakt: Hochstapler"
@@ -9825,7 +9860,7 @@ aber du kannst weitere Spieler einladen, bis er voll ist."
 "items/svd";"SVD";"СВД";"SVD"
 "items/vss_vintorez";"VSS Vintorez";"ВСС Винторез";"VSS Vintorez"
 "items/ruger_10_22_specops";"10/22 Spec Ops";"10/22 Спецназ";"10/22 Spec Ops"
-"items/sv98";"SV-98";"СВ-98";"SV-98"
+"items/sv98";"SV-98 7.62x51";"СВ-98 7.62x51";"SV-98"
 "items/m110a1";"M110A1";"M110A1";"M110A1"
 "items/hk_g3a4";"G3A4";"G3A4";"G3A4"
 "items/barrett_m82a1";"M82A1";"M82A1";"M82A1"

@@ -43,7 +43,7 @@ def trace_footstep(human_eid : EntityId;
                    var human_net_phys : HumanActor? = null)
 
   let mayTraceDown = up.y > 0.9
-  let traceDir = mayTraceDown ? float3(0., -1., 0.) : -up
+  let traceDir = mayTraceDown ? float3(0., -1., 0.) : -normalize(up)
   let flags = ETF_LMESH/* | ETF_HEIGHTMAP*/ | ETF_FRT | ETF_RI | ETF_STRUCTURES
   let from = pos - traceDir * trace_offset_len.x
 

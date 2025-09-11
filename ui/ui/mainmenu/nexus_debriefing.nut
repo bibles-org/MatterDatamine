@@ -578,12 +578,17 @@ function mkNexusDebriefingMenu() {
   }
 }
 
-showNexusDebriefingWindow.subscribe_with_nasty_disregard_of_frp_update(function(v) {
-  if (v) {
+let reactToNexusNeedShowDebriefing = function(needToShow) {
+  log($"reactToNexusNeedShowDebriefing: needToShow={needToShow}")
+  if (needToShow) {
     saveNexusBattleResultToHistory(lastNexusResult.get().__merge({ isNexus = true }))
     eventbus_send("hud_menus.open", { id = NEXUS_DEBRIEFING_ID })
   }
-})
+}
+
+showNexusDebriefingWindow.subscribe_with_nasty_disregard_of_frp_update(reactToNexusNeedShowDebriefing)
+
+reactToNexusNeedShowDebriefing(showNexusDebriefingWindow.get())
 
 return {
   NEXUS_DEBRIEFING_ID

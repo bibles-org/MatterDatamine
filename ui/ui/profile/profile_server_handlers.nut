@@ -474,6 +474,7 @@ let inventoryDiffHandler = function(inventory_diff, comp) {
 }
 
 let lastBattleResultHandler = function(last_battle_result, _comp) {
+  log("Last battle result handler called")
   if ((last_battle_result?.dateTime ?? 0) == 0){
     lastBattleResult.set(null)
     return
@@ -482,7 +483,7 @@ let lastBattleResultHandler = function(last_battle_result, _comp) {
   let scene = last_battle_result?.battleAreaInfo?.scene
   if (scene == null || scene == "")
     return
-
+  log($"Scene = {scene} time = {last_battle_result?.dateTime} id = {last_battle_result?.id}")
   let encodedTrackPoints = last_battle_result?.trackPointsV2 ?? ""
   let trackPoints = encodedTrackPoints.len() > 0 ? parse_json(decodeString(encodedTrackPoints)) : []
   last_battle_result.trackPoints <- trackPoints
@@ -498,6 +499,7 @@ let lastBattleResultHandler = function(last_battle_result, _comp) {
 }
 
 let lastNexusResultHandler = function(last_nexus_result, _comp) {
+  log($"lastNexusResultHandler called, dateTime = {last_nexus_result?.dateTime}")
   if ((last_nexus_result?.dateTime ?? 0) == 0){
     lastNexusResult.set(null)
     return

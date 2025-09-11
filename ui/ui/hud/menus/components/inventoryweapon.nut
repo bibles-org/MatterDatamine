@@ -256,6 +256,7 @@ function mkMods(weapon, isCurrent, can_drop_dragged_item_to_mod_slot_cb, on_drop
     let modSlot = modSlot_
     if ((modSlot?.lockedInRaid ?? false) && !isOnPlayerBase.get())
       continue
+    #forbid-auto-freeze
     let dropData = isActionForbided || (modSlot.itemPropsId == 0) ? null : modSlot.__update({
       canDrop=true
       

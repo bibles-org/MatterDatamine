@@ -164,7 +164,7 @@ function isZoneUnlocked(queue_params, player_stats, matchingUTCTime, inSquadStat
     return leaderRaid?.extraParams.raidName != null
       && leaderRaid?.extraParams.raidName == queue_params?.extraParams.raidName
   return doesZoneFitRequirements(queue_params?.extraParams.requiresToSelect, player_stats)
-    && queue_params?.enabled && !isQueueHiddenBySchedule(queue_params, matchingUTCTime.get())
+    && queue_params?.enabled && !isQueueHiddenBySchedule(queue_params, matchingUTCTime?.get() ?? matchingUTCTime)
 }
 
 

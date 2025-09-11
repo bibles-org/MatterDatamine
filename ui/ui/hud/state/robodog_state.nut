@@ -12,7 +12,7 @@ ecs.register_es("change_owner_robodog", {
   [["onInit", "onChange"]] = function(eid, comp) {
     let herosRobodog = comp.ownerEid == get_controlled_hero()
     if (herosRobodog && comp.isAlive)
-      herosRobodogs.mutate(@(v) v[eid] <- comp.robodog__extractWithOwner)
+      herosRobodogs.mutate(@(v) v[eid] <- comp.signal_grenade_device__extractWithOwner)
     else if (herosRobodogs.get()?[eid] != null)
       herosRobodogs.mutate(@(v) v.$rawdelete(eid))
     haveRobodog.set(herosRobodogs.get().len() != 0)
@@ -29,7 +29,7 @@ ecs.register_es("change_owner_robodog", {
   comps_rq = [["robodog__hacker", ecs.TYPE_EID]],
   comps_track = [
     ["ownerEid", ecs.TYPE_EID],
-    ["robodog__extractWithOwner", ecs.TYPE_BOOL],
+    ["signal_grenade_device__extractWithOwner", ecs.TYPE_BOOL],
     ["isAlive", ecs.TYPE_BOOL]
   ],
 })

@@ -89,6 +89,15 @@ signal_grenade_phys{
   "signal_grenade__fx:eid"{}
 }
 
+signal_grenade_device_extraction{
+  signal_grenade_device__extractWithOwner:b=no
+  signal_grenade_device__createdByTemplate:t=""
+  signal_grenade_device__extractionEffect:t="extraction_sequence_affect_for_device"
+
+  "signal_grenade_device__deviceOwner:eid"{}
+  "signal_grenade_device__signalGrenadeEid:eid"{}
+}
+
 robodog_signal_grenade_item{
   _use:t="signal_grenade_item"
   _use:t="item_rarity_uncommon"

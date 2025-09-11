@@ -220,9 +220,14 @@ eventbus_subscribe("autosquad.invite_accepted", function(_) {
 
 function squadGatheringData() {
   let watch = autoSquadGatheringState
-  if (!autoSquadGatheringState.get())
-    return { watch }
   let timerMaxSize = calc_comp_size(mkText(loc("autosquad/timeRemaining", { time = secondsToStringLoc(58) })))
+  let textBlock = mkText(loc("autosquad/playersFound", { num = max(0, autosquadPlayers.get().len() - 1) }))
+  let textBlockHeight = calc_comp_size(textBlock)[1]
+  if (!autoSquadGatheringState.get())
+    return {
+      watch
+      size = [flex(), textBlockHeight]
+    }
   return {
     watch
     size = FLEX_H

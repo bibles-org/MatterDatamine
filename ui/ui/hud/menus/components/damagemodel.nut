@@ -245,7 +245,7 @@ function mkBodypartBlock(bodypart, bodySize, labelContent, equipmentContent = nu
 
 let dmgColor = Color(150,0,0)
 let mkDmgAnim = @(partName, baseColor) {
-  prop = AnimProp.color, from = baseColor, to = dmgColor, duration = 2,
+  prop = AnimProp.color, from = baseColor, to = Color(220, 220, 220, 220), duration = 1.5,
   loop = true, trigger = $"{partName}_dmg_anim", easing = CosineFull
 }
 

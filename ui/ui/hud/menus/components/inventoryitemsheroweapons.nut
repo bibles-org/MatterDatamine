@@ -295,17 +295,19 @@ function mkEquipmentWeapons() {
 }
 
 function mkEquipmentWeaponsSmall(data) {
+  #forbid-auto-freeze
   let res = data.map(function(weapon) {
     let { itemTemplate = "", isCurrent = false, name = "", mods = {},
       currentWeaponSlotName = "", weaponSlotKey = null } = weapon
-    let resMods = mods.map(function(mod) {
+    let resMods = mods.map(function(mod, idx) {
+      #forbid-auto-freeze
       let { slotTemplateName = "", attachedItemModSlotName = "" } = mod
       if (mod?.itemTemplate == "" || mod?.itemTemplate == null) {
         let slotTemplate = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(slotTemplateName)
         let defaultIcon = slotTemplate?.getCompValNullable("mod_slot__icon") ?? ""
         return mkFakeItem(mod?.itemTemplate ?? "", { slotTemplateName, defaultIcon, attachedItemModSlotName })
       }
-      return mkFakeItem(mod.itemTemplate, { slotTemplateName })
+      return mkFakeItem(mod.itemTemplate, { slotTemplateName, itemPropsId = idx + 999 })
     })
     local inventoryWeaponVisuals = {}
     if (itemTemplate != "" && itemTemplate != null) {
@@ -331,7 +333,6 @@ function mkEquipmentWeaponsSmall(data) {
       return res
     }, [])
 
-    #allow-auto-freeze
     let resWeapon = mkFakeItem(itemTemplate,
       inventoryWeaponVisuals.__merge({ isCurrent, name, currentWeaponSlotName, mods = resMods }), attachments)
     if (weaponSlotKey != null)
@@ -342,7 +343,7 @@ function mkEquipmentWeaponsSmall(data) {
     flow = FLOW_VERTICAL
     size = FLEX_V
     gap = hdpx(10)
-    children = res.map(@(weapon) weaponWidget(weapon, null, null, null, null, null, null))
+    children = res.map(@(weapon) weaponWidget(weapon, null, null, "", null, null, null))
   }
 }
 

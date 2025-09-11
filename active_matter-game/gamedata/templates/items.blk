@@ -1146,7 +1146,6 @@ robodog_alive{
   robodog__itemUseForTeammateAlt:t="hud/adoptRobodog"
   robodog__itemUseForEnemy:t="hud/hackRobodog"
   robodog__itemUseForLongUseEnemy:t="hud/hackRobodog"
-  robodog__itemByOrder:t="robodog_signal_grenade_item"
 
   _group{
     _tags:t="gameClient"
@@ -1155,7 +1154,6 @@ robodog_alive{
 
   "usableObject:tag"{}
   "clientUsable:tag"{}
-  "robodog__signalGrenadeEid:eid"{}
 }
 
 robodog{
@@ -1169,6 +1167,7 @@ robodog{
   _use:t="external_inventory_container"
   _use:t="lootable_net_ragdoll"
   _use:t="robodog_hitpoints"
+  _use:t="signal_grenade_device_extraction"
   material:t="metal"
   external_inventory__needTipNoAccess:b=no
   animchar__res:t="robo_dog_a_char"
@@ -1203,7 +1202,7 @@ robodog{
   robodog__extractWithOwner:b=no
   _tracked:t="robodog__extractWithOwner"
   _replicated:t="robodog__extractWithOwner"
-  robodog__extractionEffect:t="extraction_sequence_affect_for_device"
+  signal_grenade_device__createdByTemplate:t="robodog_signal_grenade_item"
 
   collres{}
   _group{
@@ -1278,7 +1277,7 @@ robodog{
 
 robodog_juan{
   _use:t="robodog"
-  robodog__itemByOrder:t="robodog_juan_signal_grenade_item"
+  signal_grenade_device__createdByTemplate:t="robodog_juan_signal_grenade_item"
   animchar__res:t="robo_dog_c_char"
   collres__res:t="robo_dog_c_collision"
   item__name:t="items/robodog_juan_item"

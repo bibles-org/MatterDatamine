@@ -20,9 +20,9 @@ from "%ui/mainMenu/clusters.nut" import mkClustersUi
 from "%ui/mainMenu/startButton.nut" import consoleRaidAdditionalButton, onboardingRaidButton
 from "%ui/components/button.nut" import textButton, button, buttonWithGamepadHotkey
 from "%ui/components/textarea.nut" import textarea
-from "%ui/mainMenu/contractWidget.nut" import contractsPanel, mkRewardBlock, reportContract
+from "%ui/mainMenu/contractWidget.nut" import contractsPanel, mkRewardBlock, reportContract, mkDifficultyBlock
 from "%ui/mainMenu/possibleLoot.nut" import mkPossibleLootBlock
-from "%ui/matchingQueues.nut" import getNearestEnableTime, getNextEnableTime, getNearestHideTime, isQueueDisabledBySchedule
+from "%ui/matchingQueues.nut" import getNearestEnableTime, getNextEnableTime, isQueueDisabledBySchedule
 from "%ui/quickMatchQueue.nut" import leaveQueue
 from "%ui/mainMenu/raidAutoSquad.nut" import autosquadWidget
 from "%ui/mainMenu/offline_raid_widget.nut" import mkOfflineRaidCheckBox, wantOfflineRaid, mkOfflineRaidIcon, isOfflineRaidAvailable
@@ -1564,7 +1564,7 @@ function getContent() {
 
     let header = function() {
       let textColor = getTextColorForSelectedPanelText(isSelected.get(), sf.get() & S_HOVER)
-      let isActiveFaction = (factionActiveContracts.get()?[$"{FACTION_PREFIX}{factionNum}"] ?? []).len() > 0
+      let isActiveFaction = (factionActiveContracts.get()?[factionKey] ?? []).len() > 0
       let textParams = {
         color = textColor
         fontFx = isSelected.get() ? null : FFT_GLOW
@@ -1575,7 +1575,16 @@ function getContent() {
         rendObj = ROBJ_BOX
         size = FLEX_H
         behavior = Behaviors.Button
-        onClick = @() selectedNexusFaction.set(isSelected.get() ? null : factionKey)
+        onClick = function(){
+          if (isSelected.get()) {
+            selectedNexusFaction.set(null)
+          } else {
+            selectedNexusFaction.set(factionKey)
+            let firstFactionContract = factionActiveContracts.get()?[factionKey][0]
+            let nodeId = playerProfileCurrentContracts.get()?[firstFactionContract].params.nodeId[0]
+            selectedNexusNode.set(nodeId)
+          }
+        }
         flow = FLOW_HORIZONTAL
         gap = hdpx(8)
         valign = ALIGN_CENTER
@@ -1858,9 +1867,8 @@ function getContent() {
   function autosquad(){
     return {
       watch = isOnboarding
-      flow = FLOW_HORIZONTAL
-      valign = ALIGN_CENTER
       size = FLEX_H
+      flow = FLOW_HORIZONTAL
       children = isOnboarding.get() ? null : [ autosquadWidget ]
     }
   }
@@ -1995,6 +2003,36 @@ function getContent() {
     )
   }
 
+  function getRandomActiveNode() {
+    let activeNodesData = shuffle(activeNodes.get().keys())
+    let nodesWithNotCompletedContracts = activeNodesData.filter(function(n) {
+      let contractId = activeNodes.get()[n]
+      let contract = playerProfileCurrentContracts.get()[contractId]
+      return contract.isReported || contract.currentValue >= contract.requireValue
+    })
+    if (nodesWithNotCompletedContracts.len() > 0)
+      return nodesWithNotCompletedContracts[0]
+    else if (activeNodesData.len() > 0)
+      return activeNodesData[0]
+
+    return null
+  }
+
+
+  let selectNexusNodeButton = buttonWithGamepadHotkey(
+    mkText(utf8ToUpper(loc("nexus/select_node/button")), { hplace = ALIGN_CENTER }.__merge(h2_txt)),
+    @() showMsgbox({ text = loc("nexus/select_node/msg"), buttons = [
+        {text=loc("Ok"), customStyle={hotkeys=[["^Esc | Enter"]]}}
+        {text=loc("nexus/select_node/select_random"), action = @() selectedNexusNode.set(getRandomActiveNode()) }
+      ]
+      }),
+    {
+      size = static [flex(), hdpx(70)]
+      halign = ALIGN_CENTER
+      hotkeys = [["J:Y", { description = { skip = true }}]]
+    }
+  )
+
   function mkPrepareButton(menuId) {
     return {
       size = FLEX_H
@@ -2054,14 +2092,20 @@ function getContent() {
   }
 
   function startRaidPanel(){
-    let unavaliableIn = Computed(function(){
-      let nearestHideTime = getNearestHideTime(selectedRaid.get(), matchingUTCTime.get())
-      return nearestHideTime == - 1 ? null : nearestHideTime - matchingUTCTime.get()
+    let isAvailable = Computed(function() {
+      let raid = selectedRaid.get()
+      let stat = playerStats.get()
+      let utc = matchingUTCTime.get()
+      let squad = isInSquad.get()
+      let isLeader = isSquadLeader.get()
+      let selectedByLeader = selectedRaidBySquadLeader.get()
+      return isZoneUnlocked(raid, stat, utc, squad, isLeader, selectedByLeader?.raidData)
     })
     let isNexus = selectedPlayerGameModeOption.get() == GameMode.Nexus
     let isOperative = selectedRaid.get() != null && !isNexus
     function buttons() {
-      let watch = [wantOfflineRaid, isOfflineRaidAvailable, unavaliableIn, selectedRaid, isInSquad, isSquadLeader, selectedRaidBySquadLeader]
+      let watch = [wantOfflineRaid, isOfflineRaidAvailable, isAvailable, selectedRaid, isInSquad, isSquadLeader,
+        selectedRaidBySquadLeader, selectedNexusNode, activeNodes]
       let { raidData = null } = selectedRaidBySquadLeader.get()
       if (wantOfflineRaid.get() && !isOfflineRaidAvailable.get() && !isNexus) {
         return {
@@ -2083,11 +2127,17 @@ function getContent() {
           size = FLEX_H
           children = anotherLeaderRaidButton
         }
-      if (unavaliableIn.get() != null && unavaliableIn.get() <= 0)
+      if (!isAvailable.get())
         return {
           watch
           size = FLEX_H
           children = raidButtonZoneLocked
+        }
+      if (isNexus && (selectedNexusNode.get() == null || activeNodes.get()?[selectedNexusNode.get()] == null))
+        return {
+          watch
+          size = FLEX_H
+          children = selectNexusNodeButton
         }
       if (isNexus)
         return {
@@ -2122,11 +2172,7 @@ function getContent() {
       valign = ALIGN_CENTER
       halign = ALIGN_RIGHT
       vplace = ALIGN_BOTTOM
-      children = [
-        isNexus ? null : mkOfflineRaidCheckBox(),
-        isNexus ? null : autosquad,
-        buttons
-      ]
+      children = buttons
     }
   }
 
@@ -2430,15 +2476,19 @@ function getContent() {
     ]
   }
 
-  let mkMissionDescriptionBlock = @(mapSize) @() {
-    watch = [currentPrimaryContract, selectedRaid, raidDesc]
-    size = [mapSize[0], flex()]
-    flow = FLOW_VERTICAL
-    gap = hdpx(10)
-    children = !selectedRaid.get()?.extraParams.nexus
-      ? mkPossibleLootBlock(selectedRaid.get()?.scenes[0].fileName, raidDesc.get(), { num_in_row = 6 total_items = 11})
-      : currentPrimaryContract.get() != null ? mkRewardBlock(currentPrimaryContract.get(), 7) : null
-
+  let mkMissionDescriptionBlock = @(mapSize) function() {
+    let isNexus = selectedRaid.get()?.extraParams.nexus ?? false
+    return {
+      watch = [currentPrimaryContract, selectedRaid, raidDesc]
+      size = [mapSize[0], flex()]
+      flow = FLOW_VERTICAL
+      gap = hdpx(4)
+      children = []
+        .append(!selectedRaid.get()?.extraParams.nexus
+          ? mkPossibleLootBlock(selectedRaid.get()?.scenes[0].fileName, raidDesc.get(), { num_in_row = 6 total_items = 11})
+          : currentPrimaryContract.get() != null ? mkRewardBlock(currentPrimaryContract.get(), 7) : null)
+        .append(isNexus ? null : mkOfflineRaidCheckBox({ halign = ALIGN_LEFT }), isNexus ? null : autosquad)
+    }
   }
 
   let mkFooterDescription = @(mapSize) {
@@ -2767,16 +2817,7 @@ function getContent() {
         viewportSize.set([elem.getWidth(), elem.getHeight()])
         gui_scene.resetTimeout(60, @() eventbus_send("profile.get_nexus_state"), "profile.get_nexus_state")
         if (selectedNexusNode.get() == null) {
-          let activeNodesData = shuffle(activeNodes.get().keys())
-          let nodesWithNotCompletedContracts = activeNodesData.filter(function(n) {
-            let contractId = activeNodes.get()[n]
-            let contract = playerProfileCurrentContracts.get()[contractId]
-            return contract.isReported || contract.currentValue >= contract.requireValue
-          })
-          if (nodesWithNotCompletedContracts.len() > 0)
-            selectedNexusNode.set(nodesWithNotCompletedContracts[0])
-          else if (activeNodesData.len() > 0)
-            selectedNexusNode.set(activeNodesData[0])
+          selectedNexusNode.set(getRandomActiveNode())
         }
       }
       onDetach = function(_) {
@@ -2899,12 +2940,20 @@ function getContent() {
       header = @() {
         size = FLEX_H
         flow = FLOW_HORIZONTAL
-        gap = hdpx(4)
+        gap = hdpx(20)
         valign = ALIGN_CENTER
         children = [
-          mkTitleString(loc("missions/preparation")).__update(static { margin = 0 })
-          icon
-          mkText(loc(zoneName), h2_txt)
+          {
+            flow = FLOW_HORIZONTAL
+            gap = hdpx(4)
+            valign = ALIGN_CENTER
+            children = [
+              mkTitleString(loc("missions/preparation")).__update(static { margin = 0 })
+              icon
+              mkText(loc(zoneName), h2_txt)
+            ]
+          }
+          isPreparation ? mkDifficultyBlock() : null
         ]
       }
     }

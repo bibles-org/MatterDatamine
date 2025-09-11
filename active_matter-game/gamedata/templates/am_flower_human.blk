@@ -349,6 +349,7 @@ flower_human_climb{
 flower_human_jump{
   _use:t="navmesh_phys_jumplinks_jump"
   _use:t="navmesh_phys_jumplinks_jump_anim"
+  navmesh_phys__climbJumpMaxDistSq:r=0
 }
 
 flower_human_awake_server{
@@ -1348,7 +1349,7 @@ flower_human_miniboss{
   nphys__mass:r=200
   navmesh_phys__rndWalkSpeed:p2=7.55, 7.55
   navmesh_phys__walkSpeedModifier:r=0.4
-  navmesh_phys__climbSpeed:r=2
+  navmesh_phys__climbSpeed:r=4
   navmesh_phys__defaultClimbHeight:r=2.5
   navmesh_phys__locomotionFactor:r=0.02
   agent_dangers__loseTargetTimeout:r=150

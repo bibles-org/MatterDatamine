@@ -661,6 +661,7 @@ quadro_bike_bombardier_800r_vehicle{
   _use:t="vehicle_fuel_use"
   _use:t="dune_buggy_vehicle_sound"
   _use:t="vehicle_anim_speedometer"
+  _use:t="signal_grenade_device_extraction"
   camera__offset:p3=0, 0, -3
   animchar__res:t="bombardier_outlander_800r_char"
   collres__res:t="bombardier_outlander_800r_collision"
@@ -672,6 +673,7 @@ quadro_bike_bombardier_800r_vehicle{
   vehicle__fuel:r=50
   vehicle__fuelUse:r=0.05
   vehicle__maxFuel:r=50
+  signal_grenade_device__createdByTemplate:t="quad_bike_signal_grenade_item"
 
   anim_phys{}
   "disableDMParts:list<t>"{}
@@ -707,6 +709,7 @@ quadro_bike_bombardier_800r_vehicle{
 
 quadro_bike_bombardier_800r_bonecrusher_vehicle{
   _use:t="quadro_bike_bombardier_800r_vehicle"
+  signal_grenade_device__createdByTemplate:t="quad_bike_bonecrusher_signal_grenade_item"
   animchar__res:t="bombardier_outlander_800r_a_char"
   collres__res:t="bombardier_outlander_800r_a_collision"
 }

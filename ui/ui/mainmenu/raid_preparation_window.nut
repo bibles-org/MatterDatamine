@@ -352,7 +352,7 @@ let mkPresetStashTabs = @(rotationTimer) function() {
         flow = FLOW_VERTICAL
         gap = hdpx(4)
         children = [
-          mkOfflineRaidCheckBox(),
+          mkOfflineRaidCheckBox({}, true),
           rotationTimer,
           backButton,
           [CURRENT_PRESET_UID, AGENCY_PRESET_UID].contains(selectedPreset.get()) ? null : buyOrEquipButton,

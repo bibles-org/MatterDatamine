@@ -20,7 +20,8 @@ function onUpdateSettings(_userId) {
   onlineSettingsInited.set(true)
 }
 
-if (userInfo.get()?.chardToken!=null && userInfo.get()?.get()!=null && !onlineSettingsInited.get()){ 
+if (userInfo.get()?.chardToken!=null && userInfo.get()?.userId!=null && !onlineSettingsInited.get()){ 
+  log("onUpdateSettings on script reload")
   onUpdateSettings(userInfo.get()?.userId)
 }
 
@@ -53,6 +54,7 @@ userInfo.subscribe(function (new_val) {
   if (new_val != null)
     return
   sendToServer()
+  log("Set onlineSettingUpdated to false due to userInfo change")
   onlineSettingUpdated.set(false)
 })
 
