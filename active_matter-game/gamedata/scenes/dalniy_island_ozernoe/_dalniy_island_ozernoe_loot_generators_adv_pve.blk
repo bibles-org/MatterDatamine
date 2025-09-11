@@ -1,0 +1,109 @@
+entity{
+  _template:t="used_game_objects_registry"
+  used_game_objects__type:t="loot_box"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box"
+  loot_generator__lootPreset:t="secret_notes_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="secret_stash"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [60, 0, -640]]
+  loot_generator__lootPreset:t="secret_stash_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box_shop"
+  transform:m=[[16.9048, 0, 20.3343] [0, 11.6766, -0] [-13.8705, 0, 11.5312] [23.1805, 80.1131, -662.177]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="ozernoe_adv_pve_shop_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box"
+  loot_generator__lootPreset:t="ozernoe_adv_pve_overall_zone_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_indoor_shelves"
+  loot_generator__lootPreset:t="ozernoe_adv_pve_loot_indoor_shelves_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_indoor_table"
+  loot_generator__lootPreset:t="ozernoe_adv_pve_loot_indoor_table_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_indoor_floor"
+  loot_generator__lootPreset:t="ozernoe_adv_pve_loot_indoor_floor_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="am_core_spawn_box"
+  loot_generator__lootPreset:t="ozernoe_adv_am_core_spawn_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="vehicle_civic_spawn_box"
+  loot_generator__lootPreset:t="ozernoe_adv_vehicle_civic_spawn_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box_fuel"
+  loot_generator__lootPreset:t="ozernoe_adv_fuel_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box_vehicle_parts"
+  loot_generator__lootPreset:t="ozernoe_adv_vehicle_parts_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="church_sniper_gun"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__compensateDropTm:b=yes
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="ozernoe_adv_church_sniper_gun_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="church_sniper_loot"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="ozernoe_adv_church_sniper_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="military_uaz"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="ozernoe_adv_military_uaz_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="gravizone_am_pile"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[2800, 0, 0] [0, 2800, 0] [0, 0, 2800] [1300, 0, -600]]
+  loot_generator__lootPreset:t="ozernoe_adv_pve_gravizone_am_pile_loot_preset"
+}

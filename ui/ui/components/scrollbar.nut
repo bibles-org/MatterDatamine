@@ -1,7 +1,7 @@
+from "%ui/components/colors.nut" import KnobNormal, KnobActive, KnobHover, ScrollBarBgColor
 from "%ui/ui_library.nut" import *
 
-let { BtnBgNormal, BtnBgActive, BtnBgHover } = require("%ui/components/colors.nut")
-let scrollBarBgColor = Color(5, 5, 5, 200)
+#allow-auto-freeze
 
 let minKnobSizePart = 0.005
 
@@ -9,11 +9,11 @@ let BarSound = freeze({ hover  = "ui_sounds/combobox_highlight" })
 
 let defBarScrollStyle = freeze({
   rendObj = ROBJ_SOLID
-  color = scrollBarBgColor
+  color = ScrollBarBgColor
   _width = fsh(1)
   _height = fsh(1)
   sound = BarSound
-  padding = [hdpx(1), hdpx(1)]
+  padding = hdpx(1)
   skipDirPadNav = true
 })
 
@@ -25,8 +25,8 @@ let defBarNoScrollStyle = freeze({
 })
 
 let colorKnobCalc = @(sf) sf & S_ACTIVE
-  ? BtnBgActive
-  : sf & S_HOVER ? BtnBgHover : BtnBgNormal
+  ? KnobActive
+  : sf & S_HOVER ? KnobHover : KnobNormal
 
 let knobSound = freeze({ active = "ui_sounds/combobox_action" })
 let defStyling = freeze({
@@ -34,16 +34,16 @@ let defStyling = freeze({
   BarHasScrollStyle = defBarScrollStyle
 })
 
-let reservePaddingBarNoScrollStyle = defBarNoScrollStyle.__merge({ _width = defBarScrollStyle._width _height = defBarScrollStyle._height})
+let reservePaddingBarNoScrollStyle = freeze(defBarNoScrollStyle.__merge({ _width = defBarScrollStyle._width _height = defBarScrollStyle._height}))
 let reservedPaddingStyle = freeze(defStyling.__merge({BarNoScrollStyle = reservePaddingBarNoScrollStyle}))
 
-let overlappedBarScrollStyle = defBarScrollStyle.__merge({margin = [0, 0, 0, hdpx(4)]})
+let overlappedBarScrollStyle = freeze(defBarScrollStyle.__merge({margin = static [0, 0, 0, hdpx(4)]}))
 let overlappedStyle = freeze(defStyling.__merge({BarHasScrollStyle = overlappedBarScrollStyle}))
 
-let thinBarScrollStyle = defBarScrollStyle.__merge({ _width = hdpx(5) _height = hdpx(5) })
+let thinBarScrollStyle = freeze(defBarScrollStyle.__merge({ _width = hdpx(5) _height = hdpx(5) }))
 let thinStyle = freeze(defStyling.__merge({BarHasScrollStyle = thinBarScrollStyle}))
 
-let thinBarReservedPaddingNoScrollStyle = defBarNoScrollStyle.__merge({ _width = thinBarScrollStyle._width _height = thinBarScrollStyle._height })
+let thinBarReservedPaddingNoScrollStyle = freeze(defBarNoScrollStyle.__merge({ _width = thinBarScrollStyle._width _height = thinBarScrollStyle._height }))
 let thinAndReservedPaddingStyle = freeze(thinStyle.__merge({BarNoScrollStyle = thinBarReservedPaddingNoScrollStyle}))
 
 let calcBarSize = @(bar_style, isVertical) isVertical ? [bar_style._width, flex()] : [flex(), bar_style._height]
@@ -211,7 +211,7 @@ let makeHVScrolls = kwarg(function(content, scrollHandler=null, rootBase=null, n
 })
 
 
-return {
+return freeze({
   mkScrollbar
   makeHorizScroll = @(content) makeSideScroll(content, {orientation = O_HORIZONTAL, scrollAlign = ALIGN_BOTTOM})
   makeVertScrollExt = makeSideScroll
@@ -221,4 +221,4 @@ return {
   overlappedStyle
   thinStyle
   thinAndReservedPaddingStyle
-}
+})

@@ -41,33 +41,6 @@ affected_by_attract_position{
   "attract_position__eid:eid"{}
 }
 
-climbing_agent{
-  walker_agent__climbingFrom:p3=0, 0, 0
-  walker_agent__climbingTo:p3=0, 0, 0
-  walker_agent__jumpVelociy:p3=0, 0, 0
-  walker_agent__climbingStart:r=0
-  walker_agent__climbingReach:r=0
-  walker_agent__climbingFinish:r=0
-  walker_agent__climbingDuration:r=0.5
-  walker_agent__maxJumpSpeed:r=9
-  _replicated:t="walker_agent__climbingStart"
-  _replicated:t="walker_agent__climbingFinish"
-  _replicated:t="walker_agent__climbingTo"
-}
-
-agent_in_climbing{
-  agent_in_climbing__template:t="agent_in_climbing"
-  agent_in_climbing__removeAt:r=0
-
-  "nphys__disabled:tag"{}
-  "agentInClimbing:tag"{}
-}
-
-agent_off_navmesh{
-  "nphys__disabled:tag"{}
-  "agent_off_navmesh:tag"{}
-}
-
 changed_human_ai{
   _use:t="get_attract_position_ai"
   _use:t="agent_dangers_bullet_reaction"
@@ -111,6 +84,7 @@ changed_human_ai{
   obstacle_avoider__horBuffer:r=3
   obstacle_avoider__vertBuffer:r=0.5
   obstacle_avoider__maxPathDst:r=8
+  nphys_dyn_obstacles__count:i=0
   beh_tree__debug:b=no
   navmesh_phys__maxWalkSpeed:r=1
   navmesh_phys__steeringAgentSineFactor:r=0.25
@@ -150,7 +124,6 @@ changed_human_ai{
   changed__flankingHpPercentTreshHold:r=40
   changed__awakenAt:r=0
 
-  "human_operate_door_action__noAnimation:tag"{}
   _group{
     _track:b=yes
     beh_tree__enabled:b=yes
@@ -210,25 +183,6 @@ changed_human_animchar_parts{
       distorted_top_shirt_a_char:r=3
       distorted_top_sweatshirt_char:r=3
       distorted_top_sweatshirt_hoodie_char:r=1
-    }
-  }
-}
-
-changed_human_loot{
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile"
-      dropChance:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_2"
-      dropChance:r=0.4
-    }
-
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_5"
-      dropChance:r=0.2
     }
   }
 }
@@ -561,7 +515,7 @@ changed_agro_fade{
 
 changed_human{
   _use:t="am_navmesh_creature_base"
-  _use:t="net_ragdoll"
+  _use:t="lootable_net_ragdoll"
   _use:t="nphys_homo_erectus"
   _use:t="nphys_pushable"
   _use:t="agent_switchable_collision"
@@ -587,6 +541,9 @@ changed_human{
   _use:t="non_human_phys_ik"
   _use:t="hit_effect_group_melee"
   _use:t="outline"
+  _use:t="loud_noise_on_death"
+  _use:t="navmesh_phys_drop_on_collision"
+  _use:t="loud_noise_direct"
   beh_tree__node:t="nchanged_wanderer"
   tamable_creature__behNode:t="nchanged_tamed"
   team:i=1
@@ -606,26 +563,22 @@ changed_human{
   collision_damage__velDeltaMult:r=2
   collision_damage__pushThreshold:r=1
   collision_damage__threshold:r=2
+  loud_noise_on_death__radius:r=10
+  loud_noise_on_death__noise:r=150
   agent_dangers__blindDistanceSq:r=2500
   agent_dangers__maxDangerDist:r=50
   phys_move_anim__runTimescale:r=0.4
   phys_move_anim__walkTimescale:r=1
   death_note__name:t="note_distorted"
   outline__always_visible:b=yes
+  action__operateDoor:t=""
 
   "kill_tracking__taggedPlayers:object"{}
   "grid_obj__updateAlways:tag"{}
   anim_phys{}
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="distorted_remains_item"
-      dropChance:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="distorted_remains_pristine_item"
-      dropChance:r=0.005
-    }
+  _group{
+    _tags:t="server"
+    net_ragdoll__physObjTemplate:t="changed_ragdoll_physobj"
   }
 
   _group{
@@ -638,6 +591,60 @@ changed_human{
 
   "custom_anim_params:object"{
     lying_type:ip2=0, 5
+  }
+
+  "dmgzoneVulnerable:tag"{}
+}
+
+changed_ragdoll_physobj{
+  _use:t="lootable_ragdoll_phys_obj_with_loot_preset"
+  item__setCustomUsePrompt:t="monsterCorpse/search"
+  loot_drop_system__lootPreset:t="changed_death_loot_preset"
+  human_inventory__maxVolume:i=100
+}
+
+changed_death_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="distorted_remains_preset"
+    }
+
+    "item:object"{
+      sub_preset:t="distorted_junk_loot_preset"
+    }
+  }
+}
+
+distorted_remains_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="distorted_remains_item"
+      weight:r=0.95
+    }
+
+    "item:object"{
+      template_name:t="distorted_remains_pristine_item"
+      weight:r=0.05
+    }
+  }
+}
+
+distorted_junk_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=0, 2
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+    }
   }
 }
 
@@ -712,8 +719,8 @@ household_changed_human{
   agent_dangers__hitTriggerMaxCount:i=3
   agent_dangers__killTriggerMaxCount:i=4
   loud_noise__outsideOfTmMulti:r=0
-  changed_loud_noise__awakeThreshold:r=0
-  changed_loud_noise__awakeThresholdRnd:p2=180, 350
+  loud_noise__fullAmount:r=0
+  changed_loud_noise__awakeThresholdRnd:p2=200, 200
   changed_loud_noise__thrillProgressVar:t="sleep_danger_val"
   changed_loud_noise__thrillProgressVarId:i=0
   changed_loud_noise__thrillStateName:t="sleep_danger"
@@ -724,7 +731,7 @@ household_changed_human{
   loud_noise__noisePerMeleeHit:r=50
   loud_noise__radius:r=10
   loud_noise__noisePercentPerAwake:r=0.4
-  _replicated:t="changed_loud_noise__awakeThreshold"
+  _replicated:t="loud_noise__fullAmount"
 }
 
 outdoor_sleeper_changed_human{
@@ -737,8 +744,8 @@ outdoor_sleeper_changed_human{
   hitpoints__maxHp:r=56
   beh_tree__blackboard__enemyRadius:r=40
   loud_noise__outsideOfTmMulti:r=1
-  changed_loud_noise__awakeThreshold:r=0
-  changed_loud_noise__awakeThresholdRnd:p2=200, 350
+  loud_noise__fullAmount:r=0
+  changed_loud_noise__awakeThresholdRnd:p2=200, 200
   changed_loud_noise__thrillProgressVar:t="sleep_danger_val"
   changed_loud_noise__thrillProgressVarId:i=0
   changed_loud_noise__thrillStateName:t="sleep_danger"
@@ -755,7 +762,7 @@ outdoor_sleeper_changed_human{
   agent_dangers__blindDistanceSq:r=4900
   agent_dangers__maxDangerDist:r=70
   beh_tree__blackboard__enemyRadiusLarge:r=70
-  _replicated:t="changed_loud_noise__awakeThreshold"
+  _replicated:t="loud_noise__fullAmount"
 }
 
 changed_snapshot_blink_geomtree_transition_effect_base{
@@ -1165,12 +1172,11 @@ outdoor_sleeper_changed_human_miniboss{
   phys_move_anim__runTimescale:r=0.7
   phys_move_anim__walkTimescale:r=1
   navmesh_phys__maxWalkSpeed:r=2.5
-  corpse_am__templateForCreation:t="active_matter_pile_attached_to_corpse+item_in_world+coin_item_count_30"
   sleeping_monster__templateAdd:t="changed_human_miniboss_appear_effect"
   miniboss__type:t="changed"
   kill_tracking_tag:t="changed_miniboss"
   tamable_creature__behNode:t=""
-  changed_loud_noise__awakeThresholdRnd:p2=150, 200
+  changed_loud_noise__awakeThresholdRnd:p2=150, 150
   changed_loud_noise__changedToHumanAwakeRatio:r=0
   loud_noise__muffledMultiplier:r=1
   loud_noise__noisePercentPerAwake:r=1
@@ -1195,6 +1201,14 @@ outdoor_sleeper_changed_human_miniboss{
   agent_dangers__loseTargetTimeout:r=150
   _use:t="human_animchar_parts"
   human_animchar_parts__partTemplate:t="changed_human_miniboss_animchar_attachable_part"
+
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_30"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+  }
 
   "anim_state__runStateName:list<t>"{
     i:t="lower_walk"
@@ -1255,7 +1269,7 @@ outdoor_sleeper_changed_human_minion{
   hitpoints__maxHp:r=65
   hitpoints__shellSplashDmgMult:r=0.3
   hitpoints__shellDmgMult:r=0.03
-  changed_loud_noise__awakeThresholdRnd:p2=280, 400
+  changed_loud_noise__awakeThresholdRnd:p2=220, 220
   changed_loud_noise__changedToHumanAwakeRatio:r=0
   loud_noise__muffledMultiplier:r=1
   loud_noise__noisePercentPerAwake:r=1
@@ -1327,7 +1341,7 @@ outdoor_sleeper_changed_human_minion{
 outdoor_sleeper_changed_human_minion_cirlce{
   _use:t="spawn_circle"
   _use:t="teaser_episode_entity"
-  spawn_circle__template:t="outdoor_sleeper_changed_human_minion+am_inside_body_3+sleeping_monster"
+  spawn_circle__template:t="outdoor_sleeper_changed_human_minion+am_inside_body_3+sleeping_changed_human"
   spawn_circle__radius:r=2
   spawn_circle__count:ip2=4, 6
   spawn_circle__offsetRnd:p2=0.1, 0.35
@@ -1463,6 +1477,11 @@ outdoor_sleeper_changed_human_mini{
   }
 }
 
+indoor_sleeper_changed_human_mini{
+  _use:t="outdoor_sleeper_changed_human_mini"
+  loud_noise__outsideOfTmMulti:r=0
+}
+
 changed_human_mini_energy_attack_flare_effect{
   _use:t="attached_effect_world_space_no_scale"
 
@@ -1566,12 +1585,6 @@ changed_human_mini_energy_attack{
   "game_effect__destroyWithOwner:tag"{}
 }
 
-awake_changed_around{
-  awake_changed__interval:r=0.3
-  awake_changed__updateAt:r=0
-  awake_changed__radius:r=0.85
-}
-
 test_tagging_changed_human{
   _use:t="changed_human"
   test_tagging__startPos:p3=0, 0, 0
@@ -1598,4 +1611,11 @@ test_tagging_xenohound{
   hitpoints__maxHp:r=1e+06
   hitpoints__hp:r=1e+06
   beh_tree__node:t="test_tagging"
+}
+
+sleeping_changed_human{
+  _use:t="sleeping_trap"
+  sleeping_monster__template:t="sleeping_changed_human"
+  sleeping_trap__radiusLimit:r=1
+  sleeping_trap__disturbProbabilityMult:r=99999
 }

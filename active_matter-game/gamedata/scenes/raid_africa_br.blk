@@ -3,17 +3,13 @@ import{
 }
 
 entity{
-  _template:t="activity_helper_manager"
-}
-
-entity{
   _template:t="zone_weather"
 }
 
 import{
   scene:t="gamedata/scenes/_africa_forsaken_sounds.blk"
   scene:t="gamedata/scenes/_africa_forsaken_gpu_objects.blk"
-  scene:t="gamedata/scenes/_africa_forsaken_envi_cover.blk"
+  scene:t="gamedata/scenes/_africa_forsaken_nbs.blk"
 }
 
 entity{
@@ -166,6 +162,7 @@ entity{
   tiled_map__tilesPath:t="maps/forsaken_africa"
   tiled_map__backgroundColor:c=35, 128, 97, 255
   fog_of_war__enabled:b=yes
+  fog_of_war__onlineSettingsPath:t="raid_africa_headquarters"
 }
 
 entity{

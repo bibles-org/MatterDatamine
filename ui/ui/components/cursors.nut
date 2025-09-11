@@ -1,11 +1,15 @@
+from "%dngscripts/platform.nut" import is_sony, is_xbox, is_mobile
+
+import "%ui/components/tooltipBox.nut" as tooltipBox
+
 from "%ui/ui_library.nut" import *
 
-let {isGamepad} = require("%ui/control/active_controls.nut")
-let {safeAreaVerPadding, safeAreaHorPadding} = require("%ui/options/safeArea.nut")
-let tooltipBox = require("tooltipBox.nut")
-let { is_sony, is_xbox, is_mobile } = require("%dngscripts/platform.nut")
+let { isGamepad } = require("%ui/control/active_controls.nut")
+let { safeAreaVerPadding, safeAreaHorPadding } = require("%ui/options/safeArea.nut")
 
 let tooltipComp = {content = null, elemPos = null}
+#allow-auto-freeze
+
 let tooltipGen = Watched(0)
 const MAX_GEN_INT = 1000
 function setTooltip(val, elemPos = null){
@@ -13,12 +17,14 @@ function setTooltip(val, elemPos = null){
   if (!isEqual(tooltipComp.content, val) || tooltipComp.elemPos != elemPos){
     tooltipComp.content = val
     tooltipComp.elemPos = elemPos
-    tooltipGen(tooltipGen.get() > MAX_GEN_INT ? 0 : tooltipGen.get() + 1)
+    tooltipGen.set(tooltipGen.get() > MAX_GEN_INT ? 0 : tooltipGen.get() + 1)
   }
 }
 
 let getTooltip = @() tooltipComp.content
+#forbid-auto-freeze
 let cursors = {getTooltip, setTooltip, tooltip = {}}
+#allow-auto-freeze
 let { cursorOverStickScroll, cursorOverClickable } = gui_scene
 let showGamepad = Computed(@() isGamepad.get() || is_xbox || is_sony)
 let hideCursor = is_mobile
@@ -100,7 +106,7 @@ let getEvenIntegerHdpx = @(px) hdpxi(0.5 * px) * 2
 
 let scroll_size = getEvenIntegerHdpx(20)
 
-let round_cursor = [
+let round_cursor = static [
   [VECTOR_WIDTH, hdpx(1.4)],
   [VECTOR_FILL_COLOR, Color(70, 80, 90, 90)],
   [VECTOR_COLOR, Color(100, 100, 100, 50)],
@@ -117,15 +123,15 @@ let round_cursor = [
 let joyScrollCursorImage = {
   key = "scroll-cursor"
   rendObj = ROBJ_IMAGE
-  size = [scroll_size, scroll_size]
+  size = scroll_size
   image = Picture($"!ui/skin#cursor_scroll.svg:{scroll_size}:{scroll_size}:K")
   keepAspect = true
-  pos = [hdpx(20), hdpx(30)]
+  pos = static [hdpx(20), hdpx(30)]
   opacity = 1
 
-  transform = {}
+  transform = static {}
 
-  animations = [
+  animations = static [
     { prop=AnimProp.opacity,  from=0.0,    to=1.0,     duration=0.3,  play=true, easing=OutCubic }
     { prop=AnimProp.opacity,  from=1.0,    to=0.0,     duration=0.1,  playFadeOut=true, easing=OutCubic }
     { prop=AnimProp.scale,    from=[0, 0], to=[1, 1],  duration=0.15, play=true, easing=OutCubic }
@@ -150,15 +156,15 @@ function mkPcCursor(children){
   children = clone children
   children.append(cursorImageComp)
   return {
-    size = [0, 0]
+    size = 0
     children = children
     watch = [showGamepad, cursorOverStickScroll]
   }
 }
 
-let gamepadCursorSize = [hdpxi(40), hdpxi(40)]
+let gamepadCursorSize = static [hdpxi(40), hdpxi(40)]
 
-let gamepadOnClickAnimationComp = {
+let gamepadOnClickAnimationComp = static {
   animations = [
     {prop=AnimProp.scale, from=[0.5, 0.5], to=[1, 1],  duration=0.5, play=true, loop=true }
   ]
@@ -182,12 +188,12 @@ function mkGamepadCursor(children){
   if (cursorOverClickable.get())
     children.append(gamepadOnClickAnimationComp)
   return {
-    hotspot = [hdpx(20), hdpx(20)]
+    hotspot = static [hdpx(20), hdpx(20)]
     watch = [showGamepad, cursorOverStickScroll, cursorOverClickable]
     size = gamepadCursorSize
     children = children
     halign = ALIGN_CENTER
-    transform = {
+    transform = static {
       pivot = [0.5, 0.5]
     }
   }
@@ -201,6 +207,7 @@ function mkHiddenCursor(children){
 }
 
 function mkCursorWithTooltip(children){
+  #forbid-auto-freeze
   if (type(children) != "array")
     children = [children]
   if (cursorOverStickScroll.get() && showGamepad.get())

@@ -1,65 +1,3 @@
-suit_militant_attachable_animchar{
-  _use:t="suit_attachable_animchar"
-  _use:t="militant_node_collapser"
-  _use:t="am_militant_ribbons"
-  _use:t="animchar_dynmodel_nodes_hider"
-  _use:t="attachable_wear_broken_bones"
-  _use:t="attachable_wear_projective_wounds_data"
-  type_of_wounds:i=2
-  collres__res:t=""
-
-  collres{}
-  "suit_militant_attachable_animchar:tag"{}
-  "slot_attach__initialAttachmentEids:list<eid>"{}
-}
-
-suit_militant_item_base{
-  _use:t="suit_item_base"
-  _use:t="equipment_with_mods"
-  _use:t="animchar_dynmodel_nodes_hider"
-  _use:t="block_item_move_to_backpack"
-  _use:t="block_item_move_to_ground"
-  _use:t="block_item_move_to_item_container"
-  item__iconYaw:r=20
-  item__iconRoll:r=10
-  item__iconPitch:r=0
-  item__iconScale:r=5
-  item__iconOffset:p2=-0.08, -0.81
-  suit__raidIcon:t="!ui/uiskin/raid_info/operative.svg"
-  item__baseWeight:r=0
-  item__weight:r=0
-  item__volume:r=0
-  item__filterType:t="alters"
-  _replicated:t="item__weight"
-  _tracked:t="item__weight"
-  equipment__setDefaultStubMeleeTemplate:t="default_stub_pocket_knife_weapon"
-  full_body_presentation_params:t="suit_full_body_presentation_parameters_base"
-  preview_presentation_params:t="suit_preview_presentation_parameters_base"
-
-  "item__dontUnequipOnDeath:tag"{}
-  "item__permanentItem:tag"{}
-  "item__chronogene:tag"{}
-  "item__cantBeCorrupted:tag"{}
-  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
-    item:t="pouches_1"
-    item:t="pouches_2"
-    item:t="pouches_3"
-  }
-
-  "suit_attachable_item__holsterAttachedAnimchars:list<t>"{
-    EWS_PRIMARY:t="top"
-    EWS_SECONDARY:t="top"
-    EWS_TERTIARY:t="top"
-    EWS_MELEE:t="top"
-    EWS_GRENADE:t="top"
-  }
-}
-
-suit_militant_male_item_base{
-  _use:t="suit_militant_item_base"
-  suit__suitType:i=0
-}
-
 suit_rootWalker_head_1_animchar{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="am_root_walker_head_1_char"
@@ -287,8 +225,6 @@ suit_monster_rootWalker_item{
   _use:t="item_rarity_rare"
   item__proto:t="suit_militant_light_i_item"
   item__name:t="items/suit_militant_light_i_item"
-  animchar__res:t="am_player_trooper_male_light_i_char"
-  collres__res:t="am_player_trooper_male_light_i_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
   preview_presentation_params:t="suit_militant_light_i_preview_presentation"

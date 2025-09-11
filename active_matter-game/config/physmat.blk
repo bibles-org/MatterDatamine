@@ -755,6 +755,64 @@ PhysMats{
     }
   }
 
+  glass_armored{
+    bf_class:t="glass"
+    damage_k:r=0.3
+    completelyTransparent:b=no
+    lightTransparent:b=yes
+
+    vehicleSound{
+      concrete:r=0.5
+    }
+
+    damageModel{
+      ricochetAngleMult:r=0.1
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.2
+      armorThickness:r=0.01
+    }
+
+    bulletHole{
+      type:t="bullet_hole"
+      scale:r=1
+    }
+
+    billboardDecal{
+      type:t="glass_bullet_hole"
+      scale:r=15
+    }
+  }
+
+  glass_broken{
+    bf_class:t="glass"
+    damage_k:r=0.3
+    completelyTransparent:b=yes
+    lightTransparent:b=yes
+
+    vehicleSound{
+      concrete:r=0.5
+    }
+
+    damageModel{
+      ricochetAngleMult:r=0.1
+      ricochetAngle:r=60
+      ricochetCosinePower:r=2
+      ricochetCosineMult:r=0.2
+      armorThickness:r=0.01
+    }
+
+    bulletHole{
+      type:t="bullet_hole"
+      scale:r=1
+    }
+
+    billboardDecal{
+      type:t="glass_bullet_hole"
+      scale:r=15
+    }
+  }
+
   steel{
     bf_class:t="steel"
     color:c=0, 0, 255, 200
@@ -1099,6 +1157,52 @@ PhysMats{
     }
   }
 
+  mimicBossFlesh{
+    bf_class:t="flesh"
+
+    shellHitFx{
+      bullet{
+        smoke:t="hit_blood_entry_black_huge_cmps_fx"
+        jet:t="hit_blood_entry_black_huge_cmps_fx"
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t=""
+
+      default{
+        fx:t="hit_blood_entry_black_huge_cmps_fx"
+      }
+    }
+
+    vehicleSound{
+      minMaxScrape:p2=0, 0
+    }
+  }
+
+  poltergeistFlesh{
+    bf_class:t="flesh"
+
+    shellHitFx{
+      bullet{
+        smoke:t=""
+        jet:t=""
+      }
+    }
+
+    meleeHitFx{
+      hitSfxMaterial:t=""
+
+      default{
+        fx:t=""
+      }
+    }
+
+    vehicleSound{
+      minMaxScrape:p2=0, 0
+    }
+  }
+
   flowermanFlesh{
     bf_class:t="flesh"
 
@@ -1359,7 +1463,7 @@ PhysMats{
   }
 
   roadGravel{
-    bf_class:t="roadSoil"
+    bf_class:t="gravel"
     deformable_width:r=0.05
     resistanceK:r=0.00015
 
@@ -2679,6 +2783,11 @@ InteractPropsList{
       rollingFrictionK:r=0.1
     }
 
+    gravel{
+      fk:r=0.75
+      rollingFrictionK:r=0.05
+    }
+
     rocks{
       fk:r=0.75
       rollingFrictionK:r=0.05
@@ -2787,6 +2896,11 @@ InteractPropsList{
     roadSnow{
       fk:r=1
       rollingFrictionK:r=0.009
+    }
+
+    gravel{
+      fk:r=1
+      rollingFrictionK:r=0.0085
     }
 
     rocks{

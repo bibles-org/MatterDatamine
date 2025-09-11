@@ -18,6 +18,16 @@ mir_ambient_sound{
   }
 }
 
+undeground_depot_ambient_sound{
+  _use:t="ambient_sound"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+    ambient_sound__path:t="ambient/undeground_depot"
+  }
+}
+
 nexus_vanilla_mall_ambient_sound{
   _use:t="ambient_sound"
   _singleton:b=yes

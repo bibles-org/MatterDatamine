@@ -39,7 +39,7 @@ let isLocalProfileServer = (get_setting_by_blk_path("debug")?.profile_server?.se
 
 function requestProfileServer(action, params, args, cb, id = null, token = null) {
   id = id ?? next_request_id.value++
-  token = token ?? userInfo.value?.token ?? (disableRemoteNetServices ? 1 : null)
+  token = token ?? userInfo.get()?.token ?? (disableRemoteNetServices ? 1 : null)
 
   if (disableRemoteNetServices && !isLocalProfileServer){
     logerr("Use local profile server with 'disableRemoteNetServices' feature!")

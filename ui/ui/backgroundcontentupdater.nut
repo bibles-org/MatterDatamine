@@ -1,7 +1,13 @@
+from "%sqGlob/offline_mode.nut" import disableRemoteNetServices
+from "%dngscripts/globalState.nut" import nestWatched
+from "vromfsUpdate" import get_remote_version_async
+from "vromfs" import get_updated_game_version
+from "eventbus" import eventbus_subscribe
+from "app" import get_circuit_conf
+from "settings" import get_setting_by_blk_path
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { disableRemoteNetServices } = require("%sqGlob/offline_mode.nut")
 let debug = require("%sqGlob/library_logs.nut").with_prefix("[CPTC] ")
 let contentUpdater = require_optional("contentUpdater")
 if (contentUpdater == null) {
@@ -10,8 +16,6 @@ if (contentUpdater == null) {
 }
 
 let { Version } = require("%sqstd/version.nut")
-let { get_remote_version_async } = require("vromfsUpdate")
-let { get_updated_game_version } = require("vromfs")
 
 let {
   start_updater, stop_updater, is_updater_running,
@@ -22,9 +26,8 @@ let {
   UPDATER_RESULT_SUCCESS
 } = contentUpdater
 
-let {isInBattleState} = require("%ui/state/appState.nut")
-let {isLoggedIn} = require("%ui/login/login_state.nut")
-let { nestWatched } = require("%dngscripts/globalState.nut")
+let { isInBattleState } = require("%ui/state/appState.nut")
+let { isLoggedIn } = require("%ui/login/login_state.nut")
 
 let isGetVersionInProgress = nestWatched("isGetVersionInProgress", false)
 
@@ -32,10 +35,7 @@ let remoteVromsVersion = nestWatched("remoteVromsVersion")
 let remoteVromsVersionNumber = nestWatched("remoteVromsVersionNumber")
 let downloadedVersion = nestWatched("downloadedVersion", Version(get_updated_game_version()).tostring())
 
-let { eventbus_subscribe } = require("eventbus")
 
-let {get_circuit_conf} = require("app")
-let {get_setting_by_blk_path} = require("settings")
 
 let disableVromsAutoUpdate = get_circuit_conf()?.disableVromsAutoUpdate ?? false
 let useAddonVromSrc        = get_setting_by_blk_path("debug/useAddonVromSrc") ?? false
@@ -47,7 +47,7 @@ let updaterEvents = {
   [UPDATER_EVENT_FINISH]   = function(evt) {
     let {result, version} = evt;
     if (result == UPDATER_RESULT_SUCCESS)
-      downloadedVersion(version)
+      downloadedVersion.set(version)
   },
   [UPDATER_EVENT_ERROR]    = @(_evt) null,
 }
@@ -60,36 +60,36 @@ eventbus_subscribe(ContentUpdaterEventId, function (evt) {
 })
 
 eventbus_subscribe("auth.get_remote_version_async", function(resp) {
-  if (isInBattleState.value)
+  if (isInBattleState.get())
     return
 
   let version       = resp?.version
   let versionNumber = resp?.versionNumber
 
-  isGetVersionInProgress(false)
+  isGetVersionInProgress.set(false)
 
-  debug($"remote: {version} ({versionNumber}); downloaded: {downloadedVersion.value}")
+  debug($"remote: {version} ({versionNumber}); downloaded: {downloadedVersion.get()}")
 
-  if (versionNumber == null || version == null || downloadedVersion.value == version)
+  if (versionNumber == null || version == null || downloadedVersion.get() == version)
     return
 
-  remoteVromsVersion(version)
-  remoteVromsVersionNumber(versionNumber)
+  remoteVromsVersion.set(version)
+  remoteVromsVersionNumber.set(versionNumber)
 
   debug($"Start download a new version: {version}")
   start_updater(ContentUpdaterEventId)
 })
 
 function update() {
-  if (!isLoggedIn.value || isGetVersionInProgress.value || is_updater_running() || isInBattleState.value)
+  if (!isLoggedIn.get() || isGetVersionInProgress.get() || is_updater_running() || isInBattleState.get())
     return
 
-  isGetVersionInProgress(true)
+  isGetVersionInProgress.set(true)
   get_remote_version_async()
 }
 
 if (!disableVromsAutoUpdate && !offlineBinaries && !useAddonVromSrc && !disableRemoteNetServices) {
-  isInBattleState.subscribe(function(inBattle) {
+  isInBattleState.subscribe_with_nasty_disregard_of_frp_update(function(inBattle) {
     if (inBattle) {
       debug($"Stop due to the battle")
       stop_updater()

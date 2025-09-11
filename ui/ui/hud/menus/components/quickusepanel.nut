@@ -1,33 +1,40 @@
+from "%ui/components/controlHudHint.nut" import controlHudHint
+from "%ui/hud/menus/components/inventoryStyle.nut" import itemHeight
+from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryItemImage
+from "%ui/hud/menus/components/inventorySuit.nut" import mkEquipmentSlot
+from "%ui/hud/menus/components/inventoryItem.nut" import chargesIndicator
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "string" import startswith
+import "%ui/hud/menus/components/dropMarker.nut" as dropMarker
+from "%ui/components/commonComponents.nut" import mkText
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mkUnloadAmmoButton, mkLoadAmmoButton, mkStopLoadUnloadAmmoButton
+from "%ui/hud/menus/components/itemFromTemplate.nut" import getSlotFromTemplate
+from "%ui/hud/menus/components/inventoryItemNexusPointPriceComp.nut" import nexusPointsCostComp
+from "%ui/hud/menus/weaponShowroom/weaponShowroom.nut" import inventoryShowroomItem
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { controlHudHint } = require("%ui/components/controlHudHint.nut")
-let { itemHeight } = require("%ui/hud/menus/components/inventoryStyle.nut")
 let { quickUseObjective, objectives } = require("%ui/hud/state/objectives_vars.nut")
-let { inventoryImageParams, inventoryItemImage } = require("%ui/hud/menus/components/inventoryItemImages.nut")
-let { mkEquipmentSlot } = require("%ui/hud/menus/components/inventorySuit.nut")
-let { chargesIndicator } = require("%ui/hud/menus/components/inventoryItem.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
+let { inventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
 let { equipmentModSlots } = require("%ui/hud/state/equipment.nut")
-let { startswith } = require("string")
 let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
 let { questItemInUse } = require("%ui/hud//state/quick_use_state.nut")
-let dropMarker = require("%ui/hud/menus/components/dropMarker.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
 let { currentMenuId } = require("%ui/hud/hud_menus_state.nut")
 let { Market_id } = require("%ui/mainMenu/marketMenu.nut")
-let { ClonesMenuId } = require("%ui/mainMenu/clonesMenu/clonesMenu.nut")
+let { ClonesMenuId, AlterSelectionSubMenuId } = require("%ui/mainMenu/clonesMenu/clonesMenuCommon.nut")
 let { POCKETS } = require("%ui/hud/menus/components/slotTypes.nut")
 let { BaseDebriefingMenuId } = require("%ui/mainMenu/baseDebriefing.nut")
 let { inventoryItemClickActions } = require("%ui/hud/menus/inventoryActions.nut")
-let { mkUnloadAmmoButton, mkLoadAmmoButton, mkStopLoadUnloadAmmoButton } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
 let { itemCompExtraInfoQuery } = require("%ui/hud/state/item_info.nut")
 let { HERO_ITEM_CONTAINER } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
 let { previewPreset, previewPresetCallbackOverride } = require("%ui/equipPresets/presetsState.nut")
-let { getSlotFromTemplate } = require("%ui/hud/menus/components/itemFromTemplate.nut")
 let { isNexusDebriefingState } = require("%ui/hud/state/nexus_round_mode_state.nut")
 let { droneEnableToUse, isDroneMode, quickUseDroneConsole } = require("%ui/hud/state/drone_state.nut")
 let { selectedObjectEid } = require("%ui/hud/state/actions_state.nut")
+let { logerr } = require("dagor.debug")
+
+#allow-auto-freeze
 
 let quickUseIsOpenedForEdit = Watched(false)
 
@@ -49,6 +56,7 @@ function mkPocketSlot(slot, idx, callbacks, actionsForbidden) {
         comps?.item_holder__customUiProps?.loadAmmoTooltip ?? "Inventory/load_ammo",
         comps?.item_holder__customUiProps?.loadAmmoIcon ?? "load_magazine.svg")
       mkStopLoadUnloadAmmoButton(slot.__merge({owner=controlledHeroEid.get()}), HERO_ITEM_CONTAINER)
+      nexusPointsCostComp(slot?.nexusCost)
     ]
   }
 }
@@ -58,10 +66,15 @@ function getEquipmentPockets(item) {
     return {}
 
   let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(item.itemTemplate)
+  if (template == null) {
+    logerr($"Quick use panel: cannot find template {item.itemTemplate}")
+    return {}
+  }
   return template.getCompValNullable("equipment_mods__slots")?.getAll().filter(@(_v, k) k.startswith("equipment_mod_pocket")) ?? {}
 }
 
 function quickUsePanelEdit() {
+  #forbid-auto-freeze
   local suitSlots = []
   local pouchesSlots = []
   if (previewPreset.get()) {
@@ -73,7 +86,7 @@ function quickUsePanelEdit() {
 
       let slotTemplate = getSlotFromTemplate(v)
       let previewItem = suitPreview?[k]
-      let fakeItem = previewItem?.itemTemplate ? mkFakeItem(previewItem.itemTemplate) : {}
+      let fakeItem = previewItem?.itemTemplate ? mkFakeItem(previewItem.itemTemplate, previewItem) : {}
       suitSlots.append(slotTemplate.__update(fakeItem, {
         noSuitableItemForPresetFoundCount = previewItem?.noSuitableItemForPresetFoundCount
         isItemToPurchase = previewItem?.isItemToPurchase
@@ -94,7 +107,7 @@ function quickUsePanelEdit() {
         noSuitableItemForPresetFoundCount = previewItem?.noSuitableItemForPresetFoundCount
         isItemToPurchase = previewItem?.isItemToPurchase
         slotName = POCKETS.name
-      }) : { slotName = POCKETS.name }
+      }.__update(previewItem)) : { slotName = POCKETS.name }
       pouchesSlots.append(slotTemplate.__update(fakeItem))
     }
 
@@ -109,6 +122,7 @@ function quickUsePanelEdit() {
 
   }
   else {
+    #forbid-auto-freeze
     let slots = pockets.get()
       .topairs()
       .sort(@(a, b) (a[0] != "chronogene_primary_1") <=> (b[0] != "chronogene_primary_1") || a[0] <=> b[0])
@@ -148,7 +162,7 @@ function quickUsePanelEdit() {
 
   return {
     watch = [ pockets, previewPreset, previewPresetCallbackOverride ]
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     vplace = ALIGN_BOTTOM
     hplace = ALIGN_CENTER
     children = [
@@ -184,6 +198,7 @@ function quickUsePanelEdit() {
 let mkControlHudHint = memoize(@(i) controlHudHint({ id = $"Human.QuickUse{i+1}" }))
 
 function quickUsePanelNoEdit(){
+  #forbid-auto-freeze
   let children = pockets.get().topairs().sort(@(a, b) (a[0] != "chronogene_primary_1") <=> (b[0] != "chronogene_primary_1") || a[0] <=> b[0])
     .map(@(pair) pair[1].topairs().sort(@(a, b) a[0] <=> b[0]).map(@(mod_pair) mod_pair[1]))
     .reduce(@(res, mod) res.extend(mod), [])
@@ -192,7 +207,7 @@ function quickUsePanelNoEdit(){
         throw null
       let { charges = null, maxCharges = null, countKnown = true } = slot
       return {
-        size = const [ itemHeight, itemHeight ]
+        size = static [ itemHeight, itemHeight ]
         rendObj = ROBJ_WORLD_BLUR_PANEL
         children = [
           inventoryItemImage(slot, inventoryImageParams)
@@ -201,7 +216,7 @@ function quickUsePanelNoEdit(){
         ]
       }
     })
-
+  #allow-auto-freeze
   return {
     watch = pockets
     size = SIZE_TO_CONTENT
@@ -218,8 +233,10 @@ function quickUsePanelNoEdit(){
 
 function mkQuickUsePanel() {
   let show = Computed(@() !quickUseIsOpenedForEdit.get()
+    && !inventoryShowroomItem.get()
     && currentMenuId.get() != Market_id
     && currentMenuId.get() != ClonesMenuId
+    && currentMenuId.get() != $"{ClonesMenuId}/{AlterSelectionSubMenuId}"
     && currentMenuId.get() != BaseDebriefingMenuId
     && !isNexusDebriefingState.get()
   )

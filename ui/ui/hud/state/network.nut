@@ -1,10 +1,10 @@
+from "%sqGlob/app_control.nut" import switch_to_menu_scene
+from "connectivity" import CONNECTIVITY_OK
+from "%ui/components/msgbox.nut" import showMsgbox, removeMsgboxByUid
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {CONNECTIVITY_OK} = require("connectivity")
-let {switch_to_menu_scene} = require("%sqGlob/app_control.nut")
-let {showMsgbox, removeMsgboxByUid} = require("%ui/components/msgbox.nut")
-let {isLoggedIn} = require("%ui/login/login_state.nut")
+let { isLoggedIn } = require("%ui/login/login_state.nut")
 
 let disconnectTimeout = 15.0
 let returnToMenuMsgBox = function() {
@@ -25,7 +25,7 @@ let closeReturnToMenuMsgBox = function() {
   removeMsgboxByUid("exit_on_disrupted_connection")
 }
 
-isLoggedIn.subscribe(function(logged){
+isLoggedIn.subscribe_with_nasty_disregard_of_frp_update(function(logged){
   if (logged)
     return
   closeReturnToMenuMsgBox()
@@ -54,9 +54,9 @@ ecs.register_es("ui_network_ui_es", {
               comp.ui_state__connectivity != CONNECTIVITY_OK)
         gui_scene.setTimeout(disconnectTimeout, returnToMenuMsgBox)
 
-    connectivity(comp.ui_state__connectivity)
+    connectivity.set(comp.ui_state__connectivity)
   }
-  onDestroy = @(_eid, _comp) connectivity(CONNECTIVITY_OK)
+  onDestroy = @(_eid, _comp) connectivity.set(CONNECTIVITY_OK)
   },
   {
     comps_track = [["ui_state__connectivity", ecs.TYPE_INT]]

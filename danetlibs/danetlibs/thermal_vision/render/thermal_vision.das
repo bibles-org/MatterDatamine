@@ -16,7 +16,7 @@ def set_thermal_vision_preset_value(eid aka preset_eid : EntityId;
                                     value : bool)
   query() <| $ [es] (eid : EntityId;
                      var thermal_vision__activePresetEid : EntityId&)
-    if preset_eid != INVALID_ENTITY_ID
+    if preset_eid != INVALID_ENTITY_ID && preset_eid |> has("thermal_vision__isActive")
       query(preset_eid) <| $ [es] (var thermal_vision__isActive : bool&;
                                    var thermal_vision__prevIsActive : bool&)
         thermal_vision__prevIsActive = thermal_vision__isActive

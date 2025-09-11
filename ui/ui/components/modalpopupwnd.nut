@@ -1,11 +1,13 @@
+from "%ui/components/modalWindows.nut" import addModalWindow, removeModalWindow
+from "%ui/components/colors.nut" import BtnBgNormal
 from "%ui/ui_library.nut" import *
 
 let JB = require("%ui/control/gui_buttons.nut")
-let {addModalWindow, removeModalWindow} = require("%ui/components/modalWindows.nut")
-let {safeAreaVerPadding, safeAreaHorPadding} = require("%ui/options/safeArea.nut")
-let {BtnBgNormal} = require("%ui/components/colors.nut")
+let { safeAreaVerPadding, safeAreaHorPadding } = require("%ui/options/safeArea.nut")
 
-let safeAreaBorders = Computed(@() [safeAreaVerPadding.value+fsh(1), safeAreaHorPadding.value+fsh(1)])
+#allow-auto-freeze
+
+let safeAreaBorders = Computed(@() [safeAreaVerPadding.get()+fsh(1), safeAreaHorPadding.get()+fsh(1)])
 
 let gap = hdpx(10)
 let POPUP_PARAMS = {
@@ -33,13 +35,14 @@ let removeModalPopup = @(uid) removeModalWindow(uid)
 function calcOffsets(rectOrPos, popupFlow, popupOffset, popupHalign, popupValign) {
   let isArray = typeof rectOrPos == "array"
   assert(isArray || (("l" in rectOrPos) && ("b" in rectOrPos)))
+  #forbid-auto-freeze
   let res = {
     pos = isArray ? rectOrPos : [rectOrPos.l, rectOrPos.t]
     halign = popupHalign
     valign = popupValign
   }
 
-  let size = isArray ? [0, 0] : [rectOrPos.r - rectOrPos.l, rectOrPos.b - rectOrPos.t]
+  let size = isArray ? static [0, 0] : [rectOrPos.r - rectOrPos.l, rectOrPos.b - rectOrPos.t]
 
   if (popupFlow == FLOW_VERTICAL) {
     if (res.valign == ALIGN_CENTER)
@@ -69,8 +72,8 @@ let translateAnimation = @(flow, halign, valign, duration)
       : (flow == FLOW_VERTICAL && valign == ALIGN_TOP) ? [0, -50]
       : (flow == FLOW_HORIZONTAL && halign == ALIGN_RIGHT) ? [50, 0]
       : (flow == FLOW_HORIZONTAL && halign == ALIGN_LEFT) ? [-50, 0]
-      : [0, 0]
-    to = [0,0],
+      : static [0, 0]
+    to = static [0,0],
   }
 
 
@@ -85,15 +88,15 @@ function addModalPopup(rectOrPos, popup) {
     key = popup.uid
     children = {
       key = $"__place_{popup.uid}"
-      size = [0, 0]
+      size = 0
       pos = offsets.pos
       halign = offsets.halign
       valign = offsets.valign
 
       children = {
         size = SIZE_TO_CONTENT
-        transform = {}
-        safeAreaMargin = safeAreaBorders.value
+        transform = static {}
+        safeAreaMargin = safeAreaBorders.get()
         behavior = Behaviors.BoundToArea
 
         children = {
@@ -101,7 +104,7 @@ function addModalPopup(rectOrPos, popup) {
           key = $"__anim_{popup.uid}"
           children = @() popup
 
-          transform = {}
+          transform = static {}
           animations = [
             translateAnimation(popup.popupFlow, offsets.halign, offsets.valign, popup.moveDuraton)
           ]

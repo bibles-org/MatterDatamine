@@ -3,6 +3,7 @@ onboarding_phase_base_key_insertion{
 
   "onboarding_phase_base_key_insertion:tag"{}
   "state_machine_state__createEntitiesWhenCurrent:list<t>"{
+    item:t="phase_temporary_entities"
     item:t="onboarding_teleport_hero_to_base"
     item:t="onboarding_heal_hero"
     item:t="onboarding_note_contracts_processor"
@@ -14,7 +15,15 @@ onboarding_phase_base_key_insertion{
     item:t="onboarding_monolith_access_trigger"
     item:t="onboarding_restore_pulse_and_stamina"
     item:t="disable_player_profile"
+    item:t="onboarding_enable_key_render_on_contract_completed"
+    item:t="onboarding_mark_contract_completed"
   }
+}
+
+onboarding_contract_reported{
+  _use:t="onboarding_phase_temporary_entity"
+
+  "onboarding_contract_reported:tag"{}
 }
 
 onboarding_note_contracts_processor{
@@ -28,6 +37,21 @@ onboarding_note_monolith_processor{
   game_trigger_processor_open_note__note:t="note_onboarding_monolith"
   game_trigger_processor__onTrigger:t="onboarding_contract_completed"
   game_trigger_processor_open_note__delay:r=1.5
+}
+
+onboarding_mark_contract_completed{
+  _use:t="game_trigger_processor_self_destroy"
+  _use:t="game_trigger_processor_create_entity"
+  game_trigger_processor_create_entity__template:t="onboarding_contract_reported"
+  game_trigger_processor_create_entity__initTransform:b=no
+  game_trigger_processor__onTrigger:t="onboarding_contract_completed"
+}
+
+onboarding_enable_key_render_on_contract_completed{
+  _use:t="game_trigger_processor_self_destroy"
+  game_trigger_processor__onTrigger:t="onboarding_contract_completed"
+
+  "onboarding_enable_key_render_on_contract_completed:tag"{}
 }
 
 onboarding_monolith_enable_interaction_processor{

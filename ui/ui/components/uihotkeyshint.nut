@@ -1,10 +1,13 @@
+from "%ui/fonts_style.nut" import sub_txt
+from "%ui/control/formatInputBinding.nut" import buildElems, textListFromAction
+import "%ui/components/parseDargHotkeys.nut" as parseDargHotkeys
+
 from "%ui/ui_library.nut" import *
 from "%ui/components/colors.nut" import HUD_TIPS_HOTKEY_FG
 
-let {sub_txt} = require("%ui/fonts_style.nut")
-let {buildElems, textListFromAction} = require("%ui/control/formatInputBinding.nut")
-let parseDargHotkeys =  require("%ui/components/parseDargHotkeys.nut")
-let {isGamepad} = require("%ui/control/active_controls.nut")
+let { isGamepad } = require("%ui/control/active_controls.nut")
+
+#allow-auto-freeze
 
 function container(children, params={}){
   return {
@@ -22,7 +25,7 @@ function container(children, params={}){
     }
     clipChildren = true
     size = SIZE_TO_CONTENT
-    padding = [hdpx(4), hdpx(6)]
+    padding = static [hdpx(4), hdpx(6)]
   }.__update(params)
 }
 

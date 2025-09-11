@@ -1,7 +1,9 @@
+from "%sqstd/string.nut" import hexStringToInt
+
 from "%ui/ui_library.nut" import *
 from "string" import format
 
-let { hexStringToInt } =  require("%sqstd/string.nut")
+#allow-auto-freeze
 
 let ActionBgColor = Color(217,193, 127)
 let ActionBgHoverColor = Color(227, 109, 0, 255)
@@ -16,6 +18,7 @@ let BtnBgNormal            = mul_color(ActionBgColor, 0.11, 6)
 let OptionRowBgHover = mul_color(ActionBgHoverColor, 0.3)
 let OptionRowBdHover =  BtnBdNormal
 
+#forbid-auto-freeze
 let colors = {
   CurrencyDefColor = Color(255,255,255)
   CurrencyUseColor = Color(200,200,200)
@@ -55,7 +58,7 @@ let colors = {
   BtnSuccessBgNormal     = mul_color(SuccessBdColor, 0.3, 0.7)
   BtnSuccessBdNormal     = mul_color(SuccessBdColor, 1, 0.95)
   BtnSuccessBgSelected   = Color(25, 240, 150)
-
+  BtnAlertBgNormal       = mul_color(Color(255, 180, 80), 0.3, 0.7)
   NotificationBg = MajorBdColor
 
   BtnTextActive          = Color(0, 0, 0)
@@ -87,6 +90,11 @@ let colors = {
   DropBdNormal           = Color(105, 65, 15, 75)
   DropBgDisabled         = Color(20, 5, 5, 15)
   DropBgNormal           = Color(25, 25, 15, 15)
+
+  KnobNormal             = mul_color(ActionBgColor, 0.18, 2)
+  KnobActive             = Color(255, 180, 100, 255)
+  KnobHover              = ActionBgHoverColor
+  ScrollBarBgColor       = Color(3, 3, 3, 30)
 
   HUD_TIPS_HOTKEY_FG     = Color(120, 120, 50, 20)
   InfoTextDescColor      = Color(160, 160, 160, 120)
@@ -128,6 +136,9 @@ let colors = {
   RedFailColor           = Color(228, 49, 45, 140)
   OrangeHighlightColor   = Color(248, 148, 68)
 
+
+  NexusPlayerPointsColor    = Color(170, 123, 0)
+
   noItemContainerBg      = Color(120, 20, 20, 170)
 
   negativeTextButtonStyle = {
@@ -140,9 +151,9 @@ let colors = {
   RarityCommon = Color(101, 101, 101)
   RarityUncommon = Color(80, 130, 80)
   RarityRare = Color(60, 100, 150)
-  RarityEpic = Color(230, 110, 250)
+  RarityEpic = Color(160, 100, 160)
 
-  TeammateColor = [Color(243, 190, 32, 230), Color(62, 181, 255, 230), Color(146, 81, 249, 230)]
+  TeammateColor = [Color(243, 190, 32, 200), Color(62, 181, 255, 200), Color(146, 81, 249, 200), Color(196, 181, 209, 200)]
 
   PlayerInfoVeryLow = Color(200, 100, 100, 200)
   PlayerInfoLow = Color(220, 180, 80, 200)
@@ -165,17 +176,35 @@ let colors = {
   
 
   
+  
   colorblindPalette = [
-    0xFFE69F00, 
-    0xFF56B4E9, 
-    0xFFF0E442, 
-    0xFFD55E00, 
-    0xFFCC79A7, 
-    0xFF000000, 
-    0xFF0072B2, 
-    0xFF009E73, 
+    
+    
+    0xffebce2b, 
+    0xff702c8c, 
+    0xffdb6917, 
+    0xff96cde6, 
+    0xffba1c30, 
+    0xffc0bd7f, 
+    
+    
+    0xff5fa641, 
+    0xffd485b2, 
+    0xff4277b6, 
+    0xff463397, 
+    0xffe1a11a, 
+    0xff91218c, 
+    0xffe8e948, 
+    0xff7e1510, 
+    0xff92ae31, 
+    0xff6f340d, 
+    0xffd32b1e, 
+    0xff2b3514, 
+    0xffdf8461, 
   ]
 }
+
+#allow-auto-freeze
 
 colors.__update({
   textColor = function(sf, isEqupped, defColor = colors.BtnTextNormal) {

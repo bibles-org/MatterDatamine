@@ -1,16 +1,19 @@
-from "%ui/ui_library.nut" import *
-from "%ui/ui_library.nut" import *
-from "%ui/components/colors.nut" import WindowBd
+from "%ui/fonts_style.nut" import h2_txt, body_txt
+from "%ui/components/button.nut" import fontIconButton, textButton, button
 
-let {isGamepad} = require("%ui/control/active_controls.nut")
-let JB = require("%ui/control/gui_buttons.nut")
-let {h2_txt} = require("%ui/fonts_style.nut")
-let { fontIconButton, textButton } = require("%ui/components/button.nut")
+from "%ui/ui_library.nut" import *
+from "%ui/components/colors.nut" import WindowBd, InfoTextValueColor, DangerTextValueColor
+from "%ui/components/tagsTable.style.nut" import defaultTagsTable
+import "%ui/control/gui_buttons.nut" as JB
+import "%ui/components/colorize.nut" as colorize
+
+let { isGamepad } = require("%ui/control/active_controls.nut")
+
+#allow-auto-freeze
 
 let eventHandlersStopper = {
-  ["HUD.ChatInput"] = @(_event) EVENT_BREAK
+  ["HUD.ChatInput"] = @(_event) EVENT_BREAK 
 }
-
 
 let defStyling = freeze({
   Root = {
@@ -21,14 +24,14 @@ let defStyling = freeze({
     stopHotkeys = true
     fillColor = Color(0,0,0,120)
     borderColor = WindowBd
-    borderWidth = [hdpx(1),0,hdpx(1),0]
-    padding = const [0, 0, hdpx(20), 0]
+    borderWidth = static [hdpx(1),0,hdpx(1),0]
+    padding = static [0, 0, hdpx(20), 0]
     vplace = ALIGN_CENTER
     valign = ALIGN_CENTER
-    size = const [sw(100), SIZE_TO_CONTENT]
+    size = static [sw(100), SIZE_TO_CONTENT]
     minHeight = fsh(40)
-    transform = const {pivot =[0.5,0.5]}
-    animations = const [
+    transform = static {pivot =[0.5,0.5]}
+    animations = static [
       { prop=AnimProp.opacity, from=0, to=1, duration=0.25, play=true, easing=OutCubic }
       { prop=AnimProp.scale,  from=[1, 0], to=[1,1], duration=0.2, play=true, easing=OutQuintic }
     ]
@@ -40,8 +43,8 @@ let defStyling = freeze({
   activateKeys = "Space | Enter"
 
   closeTxt = loc("mainmenu/btnClose")
-  BgOverlay = const {
-    size = [sw(100), sh(100)]
+  BgOverlay = static {
+    size = static [sw(100), sh(100)]
     color = Color(0,0,0,220)
     rendObj = ROBJ_SOLID
     stopMouse = true
@@ -59,6 +62,8 @@ let defStyling = freeze({
 
   button = function(desc, on_click) {
     let addKey = {key = desc?.key ?? desc}
+    if (desc?.customButton)
+      return button(desc.customButton, on_click, (desc?.customStyle!=null) ? desc.customStyle.__merge(addKey) : addKey)
     return textButton(desc?.text ?? "???", on_click, (desc?.customStyle!=null) ? desc.customStyle.__merge(addKey) : addKey)
   }
 
@@ -67,29 +72,31 @@ let defStyling = freeze({
     if (text instanceof Watched)
       text = text.get()
     return {
-      size = const [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       minHeight = fsh(50)
       halign = ALIGN_CENTER
       valign = ALIGN_CENTER
       flow = FLOW_VERTICAL
-      padding = const [fsh(2), 0]
+      padding = static [fsh(2), 0]
       children = [
         {
-          size = [flex(), SIZE_TO_CONTENT]
+          size = FLEX_H
           rendObj = ROBJ_TEXTAREA
           behavior = Behaviors.TextArea
           halign = ALIGN_CENTER
           text
+          tagsTable = params?.tagsTable ?? defaultTagsTable
         }.__update(params?.fontStyle ?? h2_txt)
         params?.children
       ]
     }
   }
 })
-
+#forbid-auto-freeze
 let widgets = persist("msgbox_widgets", @() [])
+#allow-auto-freeze
 let msgboxGeneration = persist("msgbox_msgboxGeneration", @() Watched(0))
-let hasMsgBoxes = Computed(@() msgboxGeneration.value >= 0 && widgets.len() > 0)
+let hasMsgBoxes = Computed(@() msgboxGeneration.get() >= 0 && widgets.len() > 0)
 
 function getCurMsgbox(){
   if (widgets.len()==0)
@@ -101,7 +108,7 @@ function getCurMsgbox(){
 
 function addWidget(w) {
   widgets.append(w)
-  defer(@() msgboxGeneration(msgboxGeneration.value+1))
+  defer(@() msgboxGeneration.modify(@(v) v+1))
 }
 
 function removeWidget(w, uid=null) {
@@ -109,12 +116,12 @@ function removeWidget(w, uid=null) {
   if (idx == null)
     return
   widgets.remove(idx)
-  msgboxGeneration(msgboxGeneration.value+1)
+  msgboxGeneration.modify(@(v) v+1)
 }
 
 function removeAllMsgboxes() {
   widgets.clear()
-  msgboxGeneration(msgboxGeneration.value+1)
+  msgboxGeneration.modify(@(v) v+1)
 }
 
 function updateWidget(w, uid){
@@ -132,7 +139,7 @@ function removeMsgboxByUid(uid) {
   if (idx == null)
     return false
   widgets.remove(idx)
-  msgboxGeneration(msgboxGeneration.value+1)
+  msgboxGeneration.modify(@(v) v+1)
   return true
 }
 
@@ -161,6 +168,7 @@ let defaultButtons = [{text="OK" customStyle={hotkeys=[["^Esc | Enter", skpdescr
 
 
 function showMsgbox(params, styling=defStyling) {
+  #forbid-auto-freeze
   log($"[MSGBOX] show: text = '{params?.text}'")
   let self = {v = null}
   let uid = params?.uid ?? {}
@@ -194,7 +202,7 @@ function showMsgbox(params, styling=defStyling) {
   local defCancel = null
   local initialBtnIdx = 0
 
-  foreach (idx, bd in btnsDesc.value) {
+  foreach (idx, bd in btnsDesc.get()) {
     if (bd?.isCurrent)
       initialBtnIdx = idx
     if (bd?.isCancel)
@@ -204,12 +212,12 @@ function showMsgbox(params, styling=defStyling) {
   let curBtnIdx = Watched(initialBtnIdx)
 
   function moveBtnFocus(dir) {
-    curBtnIdx.update((curBtnIdx.value + dir + btnsDesc.value.len()) % btnsDesc.value.len())
+    curBtnIdx.set((curBtnIdx.get() + dir + btnsDesc.get().len()) % btnsDesc.get().len())
   }
 
   function activateCurBtn() {
-    log($"[MSGBOX] handling active '{btnsDesc.value[curBtnIdx.value]?.text}' button: text = '{params?.text}'")
-    handleButton(btnsDesc.value[curBtnIdx.value]?.action)
+    log($"[MSGBOX] handling active '{btnsDesc.get()[curBtnIdx.get()]?.text}' button: text = '{params?.text}'")
+    handleButton(btnsDesc.get()[curBtnIdx.get()]?.action)
   }
 
   let buttonsBlockKey = {}
@@ -222,15 +230,15 @@ function showMsgbox(params, styling=defStyling) {
       flow = FLOW_HORIZONTAL
       gap = hdpx(40)
 
-      children = btnsDesc.value.map(function(desc, idx) {
+      children = btnsDesc.get().map(function(desc, idx) {
         let conHover = desc?.onHover
         function onHover(on){
           if (!on)
             return
-          curBtnIdx.update(idx)
+          curBtnIdx.set(idx)
           conHover?()
         }
-        let onAttach = (initialBtnIdx==idx && styling?.moveMouseCursor.value)
+        let onAttach = (initialBtnIdx==idx && styling?.moveMouseCursor.get())
           ? @(elem) move_mouse_cursor(elem)
           : null
         local behavior = desc?.customStyle?.behavior ?? desc?.customStyle?.behavior
@@ -281,14 +289,14 @@ function showMsgbox(params, styling=defStyling) {
 let msgboxComponent = @(){watch=msgboxGeneration children = getCurMsgbox()}
 
 let addDefOkButton = @(p) ("buttons" in p) ? p : p.__merge({
-  buttons = [
+  buttons = static [
     {
       text = loc("Ok")
       isCancel = true
       sound = {
         click  = "ui_sounds/button_ok"
         hover  = "ui_sounds/button_highlight"
-        }
+      }
     }
   ]
 })
@@ -296,7 +304,7 @@ let addDefOkButton = @(p) ("buttons" in p) ? p : p.__merge({
 let msgWithStyleTxt = function(s) {
   return {
     halign = ALIGN_CENTER
-    padding = [fsh(2), 0]
+    padding = static [fsh(2), 0]
     minHeight = fsh(50)
     valign = ALIGN_CENTER
     children = s.content
@@ -311,12 +319,12 @@ function showContentOnPictureBg(p) {
   let msgStyle = clone defStyling
   msgStyle.Root = defStyling.Root.__merge({ rendObj = null })
   msgStyle.BgOverlay = defStyling.BgOverlay.__merge({
-    size = [sw(100), sh(100)]
+    size = static [sw(100), sh(100)]
     rendObj = ROBJ_SOLID
     valign = ALIGN_CENTER
     halign = ALIGN_CENTER
     children = {
-      size = [SIZE_TO_CONTENT, sh(100)]
+      size = static [SIZE_TO_CONTENT, sh(100)]
       rendObj = ROBJ_IMAGE
       hplace = ALIGN_CENTER
       color = null
@@ -336,7 +344,7 @@ function showWithCloseButton(params) {
   let originalMessageText = defStyling.messageText
   let style = defStyling.__merge({
     messageText = @(textParams) {
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       children = [
         {
           flow = FLOW_HORIZONTAL
@@ -345,7 +353,7 @@ function showWithCloseButton(params) {
           children = [
             params?.topPanel
             fontIconButton("icon_buttons/x_btn.svg", @() textParams?.handleButton(params?.onButtonCloseCb), {
-              size = [fsh(5),fsh(5)]
+              size = fsh(5)
               hotkeys = [[JB.B, { description = { skip = true } }]]
             })
           ]
@@ -357,7 +365,7 @@ function showWithCloseButton(params) {
   showMsgbox(addDefOkButton(params), style)
 }
 
-return {
+return freeze({
   getCurMsgbox
   msgboxGeneration
   removeAllMsgboxes
@@ -371,4 +379,4 @@ return {
   showWithCloseButton
   styling = defStyling
   msgboxDefStyle = defStyling
-}
+})

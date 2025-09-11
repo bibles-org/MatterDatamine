@@ -1,36 +1,37 @@
+from "%ui/mainMenu/stdPanel.nut" import screenSize
+from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import findItemInAllItems, getChronogeneItemByUniqueId,
+  mkMainChronogeneInfoStrings, mkChronogeneDoll, getChronogenePreviewPresentation, mkChronogeneImage,
+  getChronogeneTooltip, ClonesMenuId, AlterSelectionSubMenuId
+from "%ui/hud/menus/components/inventorySuit.nut" import mkEquipmentSlot
+from "%ui/mainMenu/clonesMenu/cloneMenuState.nut" import sendRawChronogenes
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "%ui/components/commonComponents.nut" import mkText, mkSelectPanelItem, mkSelectPanelTextCtor, BD_LEFT, fontIconButton
+from "%ui/components/colors.nut" import BtnBgHover, panelRowColor, Inactive, ConsoleFillColor, BtnBdDisabled,
+  BtnBdHover, BtnBgSelected, SelBgNormal
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems
+from "%ui/components/button.nut" import button, textButton
+from "%ui/components/scrollbar.nut" import makeVertScrollExt, thinStyle
+from "%ui/components/msgbox.nut" import showMsgbox
+from "%ui/components/cursors.nut" import setTooltip
+import "%ui/components/faComp.nut" as faComp
+from "%ui/mainMenu/clonesMenu/mainChronogeneSelection.nut" import closeMainChronogeneSelection, mkAlterBackgroundTexture
+from "%ui/components/modalPopupWnd.nut" import addModalPopup, removeModalPopup
+from "%ui/hud/hud_menus_state.nut" import openMenu, convertMenuId
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 from "%ui/fonts_style.nut" import body_txt, fontawesome
-import "%ui/components/colors.nut" as colors
+import "%ui/components/fontawesome.map.nut" as fa
 
-let { mkEquipmentSlot } = require("%ui/hud/menus/components/inventorySuit.nut")
-let { currentChronogenes, sendRawChronogenes } = require("cloneMenuState.nut")
+let { currentChronogenes } = require("%ui/mainMenu/clonesMenu/cloneMenuState.nut")
 let { playerBaseState } = require("%ui/profile/profileState.nut")
-let { inventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
 let { humanEquipmentSlots } = require("%ui/hud/state/equipment_slots_stubs.nut")
 let { GENES_SECONDARY } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
-let { mkText, mkSelectPanelItem, mkSelectPanelTextCtor, BD_LEFT, fontIconButton } = require("%ui/components/commonComponents.nut")
-let { BtnBgHover, panelRowColor, Inactive, ConsoleFillColor } = require("%ui/components/colors.nut")
-let { secondaryGeneEquipped, allChronogenesInGame, selectedMainChronogeneItem } = require("itemGenes.nut")
-let { mergeNonUniqueItems } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
-let { button, textButton } =  require("%ui/components/button.nut")
-let { makeVertScrollExt, thinStyle } = require("%ui/components/scrollbar.nut")
-let { showMsgbox } = require("%ui/components/msgbox.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
+let { allChronogenesInGame, selectedMainChronogeneItem } = require("%ui/mainMenu/clonesMenu/itemGenes.nut")
 let { hoverHotkeysWatchedList } = require("%ui/components/pcHoverHotkeyHitns.nut")
 let { hoverPcHotkeysPresentation } = require("%ui/hud/menus/components/inventoryActionsHints.nut")
-let { findItemInAllItems,
-      getChronogeneItemByUniqueId, mkMainChronogeneInfoStrings,
-      mkChronogeneDoll, getChronogenePreviewPresentation, mkChronogeneImage, getChronogeneTooltip } = require("clonesMenuCommon.nut")
-let faComp = require("%ui/components/faComp.nut")
-let { openMainChronogeneSelection, closeMainChronogeneSelection } = require("mainChronogeneSelection.nut")
-let { addModalPopup, removeModalPopup } = require("%ui/components/modalPopupWnd.nut")
 let { stashItems } = require("%ui/hud/state/inventory_items_es.nut")
 let { equipment } = require("%ui/hud/state/equipment.nut")
-let fa = require("%ui/components/fontawesome.map.nut")
 let { safeAreaVerPadding } = require("%ui/options/safeArea.nut")
-let { screenSize } = require("%ui/mainMenu/stdPanel.nut")
 
 let mkChronogene = @(chronogene_template) mkFakeItem(chronogene_template, {
   isDragAndDropAvailable = false
@@ -43,34 +44,6 @@ function chronogeneOrStub(id){
   return humanEquipmentSlots.chronogene_secondary 
 }
 
-function mkChronogeneEquipmentSlot(container, chronogenListName, idx) {
-  let containerVal = type(container) == "instance" ? container.get() : container
-  let currentChronogeneIdx =  containerVal?[chronogenListName][idx] ?? 0
-
-  let slot = chronogeneOrStub(currentChronogeneIdx)
-  return mkEquipmentSlot(slot)
-}
-
-function mkGeneSlot(chronogeneItem, onClick) {
-  return function() {
-    let slotAndItem = chronogeneItem.__merge(humanEquipmentSlots.chronogene_secondary, { isDragAndDropAvailable = false })
-    return {
-      watch = currentChronogenes
-      rendObj = ROBJ_BOX
-      borderWidth = chronogeneItem?.itemTemplate != null ? hdpx(2) : 0
-      borderColor = BtnBgHover
-      children = mkEquipmentSlot(slotAndItem,
-        {
-          canDrop = @(_) false,
-          onClick
-        }
-        inventoryImageParams,
-        null
-      )
-    }
-  }
-}
-
 let lock = faComp("lock", {
   color = Inactive
   padding = hdpx(8)
@@ -80,8 +53,8 @@ let lock = faComp("lock", {
 })
 
 let getStyle = memoize(@(isCurrent) freeze({
-    BtnBgNormal = isCurrent ? colors.BtnBgSelected : colors.SelBgNormal
-    BtnBdNormal = mul_color(colors.BtnBdHover, 0.2, 10)
+    BtnBgNormal = isCurrent ? BtnBgSelected : SelBgNormal
+    BtnBdNormal = mul_color(BtnBdHover, 0.2, 10)
   })
 )
 function mkChronogeneSelectPanel(chronogeneItem, isAvailable, currentChronogeneIdx, curUniqueId, onClickOverrideFunc=null) {
@@ -91,12 +64,12 @@ function mkChronogeneSelectPanel(chronogeneItem, isAvailable, currentChronogeneI
   )
 
   return {
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     gap = hdpx(1)
     children = [
       button({
-          size = [ flex(), SIZE_TO_CONTENT ]
+          size = FLEX_H
           flow = FLOW_HORIZONTAL
           gap = hdpx(4)
           children = [
@@ -104,8 +77,8 @@ function mkChronogeneSelectPanel(chronogeneItem, isAvailable, currentChronogeneI
             mkText(loc(chronogeneItem?.itemName) ?? loc("clonesMenu/emptySecondaryChronogeneSlot"), {
               hplace = ALIGN_LEFT
               vplace = ALIGN_CENTER
-              size = [flex(), SIZE_TO_CONTENT]
-              padding = [0,0,0,hdpx(10)]
+              size = FLEX_H
+              padding = static [0,0,0,hdpx(10)]
             }),
             (chronogeneItem?.count ?? 0) <= 1 ? null : {
               rendObj = ROBJ_WORLD_BLUR_PANEL
@@ -133,7 +106,7 @@ function mkChronogeneSelectPanel(chronogeneItem, isAvailable, currentChronogeneI
             showMsgbox({ text = loc("clonesMenu/secondaryChronogeneNotAvailable") })
           }
       }, {
-        size = [ flex(), SIZE_TO_CONTENT ]
+        size = FLEX_H
         halign = ALIGN_LEFT
         valign = ALIGN_CENTER
         style = getStyle(isCurrent)
@@ -158,9 +131,9 @@ function mkChronogeneSelectPanel(chronogeneItem, isAvailable, currentChronogeneI
 let closeSecodaryChronogenesPanel = fontIconButton(
   "icon_buttons/x_btn.svg",
   @() removeModalPopup("secondaryChronogeneSelectionPopup"),
-  const {
+  static {
     fontSize = hdpx(30)
-    size = [ hdpx(30), hdpx(30) ]
+    size = hdpx(30)
     hplace = ALIGN_RIGHT
     skipDirPadNav = true
     sound = {
@@ -183,19 +156,19 @@ function chronogeneListPanel(currentChronogeneIdx, availableChronogenes, equippe
       .sort(@(a, b) loc(a.itemName) <=> loc(b.itemName))
 
   return {
-    size = [ hdpx(400), flex() ]
+    size = static [ hdpx(400), flex() ]
     flow = FLOW_VERTICAL
     gap = hdpx(10)
     children = [
       {
-        size = [ flex(), SIZE_TO_CONTENT ]
+        size = FLEX_H
         children = [
           mkText(loc("clonesMenu/secondaryChronogenes"), { vplace = ALIGN_CENTER }.__update(body_txt))
           closeSecodaryChronogenesPanel
         ]
       }
       makeVertScrollExt({
-        size = [ flex(), SIZE_TO_CONTENT ]
+        size = FLEX_H
         flow = FLOW_VERTICAL
         gap = -1
         xmbNode = XmbContainer({ scrollSpeed = 10.0 })
@@ -226,15 +199,15 @@ function mkSelectableChronogeneItem(chronogeneItem, idx) {
   let textCtor = mkSelectPanelTextCtor(loc(chronogeneItem?.itemName ?? $"{loc(humanEquipmentSlots.chronogene_secondary.slotTooltip)} #{idx+1}"), body_txt)
   return mkSelectPanelItem({
     children = @(params) {
-      size = [ flex(), SIZE_TO_CONTENT ]
+      size = FLEX_H
       flow = FLOW_HORIZONTAL
       clipChildren = true
-      padding = [ 0, hdpx(10), 0, hdpx(4)]
+      padding = static [ 0, hdpx(10), 0, hdpx(4)]
       gap = hdpx(15)
       children = [
         mkChronogeneImage(chronogeneItem)
         textCtor(params)
-        {size = [flex(), 0]}
+        {size = static [flex(), 0]}
         rightArrow(params)
       ]
     }
@@ -271,41 +244,11 @@ function mkSelectableChronogeneItem(chronogeneItem, idx) {
       })
     }
     visual_params = {
-      size = [ flex(), SIZE_TO_CONTENT ]
+      size = FLEX_H
       padding = 0
     }
     border_align = BD_LEFT
   })
-}
-
-let mkSpeedUpButton = @() {
-  watch = secondaryGeneEquipped
-  size = [ flex(), hdpx(44) ]
-  children = button(
-    {
-      size = flex()
-      flow = FLOW_HORIZONTAL
-      gap = hdpx(15)
-      valign = ALIGN_CENTER
-      halign = ALIGN_CENTER
-      children = [
-        faComp("refresh", {
-          fontSize = hdpx(26)
-          hplace = ALIGN_LEFT
-          vplace = ALIGN_CENTER
-        })
-        mkText(loc("clonesMenu/recharge"), body_txt)
-      ]
-    },
-    @() showMsgbox({ text = secondaryGeneEquipped.get().findvalue(@(v) v != "0" && v != 0) != null
-      ? loc("clonesMenu/noRecharge")
-      : loc("clonesMenu/noActive")
-    }),
-    {
-      size = flex()
-      onHover = @(on) setTooltip(on ? loc("clonesMenu/recharge") : null)
-    }
-  )
 }
 
 function equippedSecondaryChronogenes() {
@@ -322,17 +265,17 @@ function equippedSecondaryChronogenes() {
   }
   return {
     watch
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     gap = hdpx(5)
     children = [
       {
         rendobj = ROBJ_SOLID
-        size = [ flex(), SIZE_TO_CONTENT ]
+        size = FLEX_H
         color = panelRowColor
         flow = FLOW_VERTICAL
         gap = hdpx(4)
-        children = secondaryGeneItems.append(mkSpeedUpButton)
+        children = secondaryGeneItems
       }
     ]
   }
@@ -340,45 +283,70 @@ function equippedSecondaryChronogenes() {
 
 
 function mkEquippedMainChronogenes() {
-  let currentMainChronogeneId = currentChronogenes.get()?.primaryChronogenes[0]
-  let watch = currentChronogenes
-  if (currentMainChronogeneId == null) {
-    return { watch }
-  }
-  let currentAlter = getChronogeneItemByUniqueId(currentMainChronogeneId)
-  let children = [
-    {
-      flow = FLOW_HORIZONTAL
-      margin = [ hdpx(10), hdpx(10), hdpx(10), 0 ]
-      gap = hdpx(10)
-      children = [
-        currentAlter?.iconName != null ? mkChronogeneDoll(currentAlter.iconName, [ hdpxi(200), hdpxi(300)],
-          getChronogenePreviewPresentation(currentAlter?.itemTemplate)) : null
-        mkMainChronogeneInfoStrings(currentAlter, {margin = 0, size = [hdpx(300), flex()]})
-      ]
+  let stateFlags = Watched(0)
+  return function () {
+    let currentMainChronogeneId = currentChronogenes.get()?.primaryChronogenes[0]
+    let watch = [ currentChronogenes, equipment ]
+    if (currentMainChronogeneId == null) {
+      return { watch }
     }
-    textButton( loc("clonesMenu/selectMainChronogene"),
-      @() openMainChronogeneSelection(),
+    let currentAlter = getChronogeneItemByUniqueId(currentMainChronogeneId)
+    let children = [
       {
-        size = [flex(), hdpx(44)]
+        flow = FLOW_HORIZONTAL
+        size = static [ hdpxi(550), hdpxi(320) ]
         halign = ALIGN_CENTER
-        vplace = ALIGN_BOTTOM
-        margin = 0
+        valign = ALIGN_CENTER
+        gap = hdpx(10)
+        children = [
+          currentAlter?.iconName == null ? null
+            : @() {
+                watch = stateFlags
+                size = [hdpxi(200), hdpxi(300)]
+                behavior = Behaviors.Button
+                onElemState = @(sf) stateFlags.set(sf)
+                clipChildren = true
+                onClick = @() openMenu($"{ClonesMenuId}/{AlterSelectionSubMenuId}")
+                children = [
+                  mkAlterBackgroundTexture(currentAlter?.itemRarity)
+                  {
+                    transform = { scale = stateFlags.get() & S_HOVER ? [1.04, 1.04] : [1, 1] }
+                    transitions = [{ prop = AnimProp.scale, duration = 0.4, easing = OutQuintic }]
+                    children =  mkChronogeneDoll(currentAlter?.itemTemplate, [ hdpxi(200), hdpxi(300)],
+                      getChronogenePreviewPresentation(currentAlter?.itemTemplate))
+                  }
+                  {
+                    rendObj = ROBJ_BOX
+                    size = flex()
+                    borderWidth = hdpx(1)
+                    borderColor = stateFlags.get() & S_HOVER ? BtnBdHover : BtnBdDisabled
+                  }
+                ]
+            }
+          mkMainChronogeneInfoStrings(currentAlter, {margin = static [hdpx(10) ,0,0,0], size = static [hdpx(300), flex()]})
+        ]
       }
-    )
-  ]
+      textButton( loc("clonesMenu/selectMainChronogene"),
+        @() openMenu($"{ClonesMenuId}/{AlterSelectionSubMenuId}"),
+        {
+          size = static [flex(), hdpx(44)]
+          halign = ALIGN_CENTER
+          vplace = ALIGN_BOTTOM
+          margin = 0
+        }
+      )
+    ]
 
-  return {
-    watch
-    onDetach = closeMainChronogeneSelection
-    flow = FLOW_VERTICAL
-    children
+    return {
+      watch
+      onDetach = closeMainChronogeneSelection
+      flow = FLOW_VERTICAL
+      children
+    }
   }
 }
 
 return {
-  mkChronogeneEquipmentSlot
-  mkGeneSlot
   equippedSecondaryChronogenes
   mkEquippedMainChronogenes
   findItemInAllItems

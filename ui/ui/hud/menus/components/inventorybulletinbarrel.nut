@@ -1,11 +1,13 @@
+from "das.human_weap" import unload_ammo_from_gun_to_inventory, is_inventory_have_volume_for_ammo, try_load_weapon_ammo_from_inventory
+
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/hud/state/inventory_eids_common.nut" import getInventoryEidByListType
+
 from "%ui/ui_library.nut" import *
 
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { unload_ammo_from_gun_to_inventory, is_inventory_have_volume_for_ammo,
-      try_load_weapon_ammo_from_inventory } = require("das.human_weap")
-let { getInventoryEidByListType } = require("%ui/hud/state/inventory_eids_common.nut")
-let { HERO_ITEM_CONTAINER } = require("inventoryItemTypes.nut")
+let { HERO_ITEM_CONTAINER } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
 
+#allow-auto-freeze
 
 let ammoPic = Picture("ui/skin#bullet.svg:{0}:{0}:P".subst(hdpxi(15)))
 let unloadAmmoPic = Picture("ui/skin#unload_magazine.svg:{0}:{0}:P".subst(hdpxi(15)))
@@ -17,10 +19,11 @@ let BtnActiveColor = Color(255, 255, 255)
 function bulletInBarrelIndicator() {
   return {
     behavior = Behaviors.Button
+    skipDirPadNav = true
     onHover = @(on) setTooltip(on ? loc("Inventory/bullet_in_barrel") : null)
     rendObj = ROBJ_IMAGE
     image = ammoPic
-    size = [ hdpx(7), hdpx(16) ]
+    size = static [ hdpx(7), hdpx(16) ]
     color = BtnInactiveColor
     hplace = ALIGN_CENTER
     vplace = ALIGN_CENTER
@@ -38,19 +41,20 @@ function unloadAmmoAction(weapon, gun_slot) {
 function unloadableBulletInBarrelIndicator(weapon, gun_slot) {
   let unloadBtnStateFlags = Watched(0)
   return @() {
-    watch = [ unloadBtnStateFlags ]
+    watch = unloadBtnStateFlags
     behavior = Behaviors.Button
+    skipDirPadNav = true
     onClick = @() unloadAmmoAction(weapon, gun_slot)
-    onElemState = @(s) unloadBtnStateFlags(s)
+    onElemState = @(s) unloadBtnStateFlags.set(s)
     sound = {
       click  = "ui_sounds/button_click"
     }
     onHover = @(on) setTooltip(on ? loc("Inventory/unload_bullet_from_barrel") : null)
     rendObj = ROBJ_IMAGE
     image = unloadAmmoPic
-    size = [ hdpx(15), hdpx(15) ]
+    size = hdpx(15)
     color = ((unloadBtnStateFlags.get() & S_HOVER)) ? BtnActiveColor : BtnInactiveColor
-    margin = [0,hdpx(3),hdpx(3),0]
+    margin = static [0,hdpx(3),hdpx(3),0]
     hplace = ALIGN_RIGHT
     vplace = ALIGN_BOTTOM
   }
@@ -66,17 +70,18 @@ function loadableBulletInBarrelIndicator(gun_slot) {
   return @() {
     watch = [ loadBtnStateFlags ]
     behavior = Behaviors.Button
+    skipDirPadNav = true
     onClick = onLoadAmmoClick
-    onElemState = @(s) loadBtnStateFlags(s)
+    onElemState = @(s) loadBtnStateFlags.set(s)
     sound = {
       click  = "ui_sounds/button_click"
     }
     onHover = @(on) setTooltip(on ? loc("Inventory/load_bullet_to_barrel") : null)
     rendObj = ROBJ_IMAGE
     image = loadAmmoPic
-    size = [ hdpx(15), hdpx(15) ]
+    size = hdpx(15)
     color = ((loadBtnStateFlags.get() & S_HOVER)) ? BtnActiveColor : BtnInactiveColor
-    margin = [0,hdpx(3),hdpx(3),0]
+    margin = static [0,hdpx(3),hdpx(3),0]
     hplace = ALIGN_RIGHT
     vplace = ALIGN_BOTTOM
   }

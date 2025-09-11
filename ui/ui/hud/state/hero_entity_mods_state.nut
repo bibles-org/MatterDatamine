@@ -1,7 +1,8 @@
+from "gameevents" import EventOnModsChanged
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {EventOnModsChanged} = require("gameevents")
 
 let heroEntityMods = Watched({})
 
@@ -17,7 +18,7 @@ ecs.register_es("hero_entity_mods_es",
     comps_rq=[["watchedByPlr", ecs.TYPE_EID]],
   },
   {
-    after="entity_mod_values_init,entity_mod_effect_calc"
+    after="after_entity_mods_apply_sync_point"
   }
 )
 

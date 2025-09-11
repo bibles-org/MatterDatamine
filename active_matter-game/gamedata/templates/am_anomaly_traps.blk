@@ -177,19 +177,18 @@ frog_trap{
   _use:t="optimised_visual_effect_source"
   _use:t="triggerable_anomaly_trap_sound"
   _use:t="invulnerable"
+  _use:t="traceable_spheres_static_grid_object"
   optimised_effect_source__template:t="frog_trap_visual_fx_controller"
   entity_bound_area__name:t="POLYAREA_DANGER"
   entity_bound_area__radius:r=2
   material:t="steel"
   needsBlood:b=no
-  grid_obj__gridType:t="traceable_spheres"
   net__scopeDistanceSq:r=108900
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   sphere_zone__radius:r=0.9
   sphere_trigger_trap__triggerRadius:r=1
   trigger_trap__affectRadius:r=12
   frog_trap__pushAffectTemplate:t="frog_trap_anim_affect"
-  frog_trap__pushAffectMinDistancePercent:r=0.7
+  frog_trap__pushAffectMinDistancePercent:r=0.35
   frog_trap__pushPitch:r=0
   frog_trap__forceCenterYOffset:r=-1.5
   frog_trap__pushSpeed:r=18
@@ -206,7 +205,6 @@ frog_trap{
   loud_noise__noiseValue:r=180
 
   "trap_triggerable_by_projectile:tag"{}
-  grid_obj{}
   "trigger_trap__humanAffectTemplates:list<t>"{
     i:t="concussion_affect"
     i:t="confusion_affect"
@@ -325,14 +323,13 @@ teleport_trap{
   _use:t="optimised_visual_effect_source"
   _use:t="triggerable_anomaly_trap_sound"
   _use:t="invulnerable"
+  _use:t="traceable_spheres_static_grid_object"
   optimised_effect_source__template:t="teleport_trap_visual_fx_controller"
   entity_bound_area__name:t="POLYAREA_DANGER"
   entity_bound_area__radius:r=2
   material:t="steel"
   needsBlood:b=no
-  grid_obj__gridType:t="traceable_spheres"
   net__scopeDistanceSq:r=108900
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   sphere_zone__radius:r=0.9
   sphere_trigger_trap__triggerRadius:r=1
   trigger_trap__affectRadius:r=2.5
@@ -344,7 +341,6 @@ teleport_trap{
   loud_noise__noiseValue:r=30
 
   "trap_triggerable_by_projectile:tag"{}
-  grid_obj{}
   "trigger_trap__humanAffectTemplates:list<t>"{
     i:t="concussion_affect"
     i:t="confusion_affect"
@@ -513,6 +509,7 @@ invisible_wakeup_enemies_flowerman_trap{
   _use:t="entity_bound_area"
   _use:t="traceable_sphere"
   _use:t="invulnerable"
+  _use:t="traceable_spheres_static_grid_object"
   sphere_zone__radius:r=0.4
   trigger_trap__radius:r=0.7
   trigger_trap__addSubTemplateOnTrigger:t="trigger_trap_reset_in_5_sec"
@@ -520,11 +517,9 @@ invisible_wakeup_enemies_flowerman_trap{
   entity_bound_area__name:t="POLYAREA_DANGER"
   material:t="wood"
   needsBlood:b=no
-  grid_obj__gridType:t="traceable_spheres"
   net__scopeDistanceSq:r=108900
   nphys_obstacle__radius:r=0.3
   nphys_obstacle__numSegments:i=6
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 
   "trigger_trap__affectTemplates:list<t>"{
     it:t="flowerman_trap_wakeup_all_around"
@@ -541,5 +536,4 @@ invisible_wakeup_enemies_flowerman_trap{
 
   "trap_triggerable_by_projectile:tag"{}
   "flower_trap:tag"{}
-  grid_obj{}
 }

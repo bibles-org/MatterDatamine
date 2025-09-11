@@ -1,0 +1,43 @@
+entity{
+  _template:t="raid_description"
+  raid_description__raidType:t="pvp_domination"
+  raid_description__difficulty:t="dif_hard"
+
+  "raid_description__enemies:list<t>"{
+    item:t="operative"
+  }
+
+  "raid_description__images:list<t>"{
+    item:t="ui/zone_thumbnails/nexus_underground_depot_rush_1"
+    item:t="ui/zone_thumbnails/nexus_underground_depot_rush_2"
+    item:t="ui/zone_thumbnails/nexus_underground_depot_rush_3"
+  }
+
+  "raid_description__mcImages:list<t>"{}
+}
+
+entity{
+  _template:t="static_cam"
+  camera__active:b=yes
+  transform:m=[[-0.901817, -0.064383, 0.427295] [-0.183718, 0.952143, -0.244276] [-0.391119, -0.298794, -0.870488] [8.98699, 19.5686, 44.7337]]
+}
+
+entity{
+  _template:t="spawnBase+nexus_first_team"
+  transform:m=[[0.866025, 0, 0.5] [0, 1, -0] [-0.5, 0, 0.866025] [-94.2004, 10.8934, -12.2887]]
+  spawnBase__spawnRadius:r=2.5
+}
+
+entity{
+  _template:t="spawnBase+nexus_second_team"
+  transform:m=[[-0.965926, 0, -0.258819] [0, 1, 0] [0.258819, 0, -0.965927] [89.2759, 10.9073, 19.0817]]
+  spawnBase__spawnRadius:r=2.5
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_underground_depot_point_b.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_underground_depot_common.blk"
+}

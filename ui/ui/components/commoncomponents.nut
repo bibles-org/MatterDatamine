@@ -1,19 +1,25 @@
+from "%sqstd/math.nut" import getRomanNumeral
+from "%sqstd/time.nut" import secondsToTime
+from "%ui/fonts_style.nut" import h2_txt, body_txt, sub_txt, fontawesome
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/components/button.nut" import button, textButton, defButtonStyle, fontIconButton
+from "string" import format
+from "%ui/components/msgbox.nut" import showMsgbox
 from "%ui/ui_library.nut" import *
 from "dagor.debug" import logerr
-from "colors.nut" import ConsoleFillColor, ConsoleBorderColor,
-  BtnBgNormal, BtnBgHover, BtnBgSelected, BtnBgDisabled, BtnBdSelected, BtnBdTransparent, BtnBdHover, BtnTextHover, BtnTextActive, BtnTextHighlight, BtnTextNormal, BtnTextVisualDisabled,
-  SelBdSelected, SelBdNormal, SelBdDisabled, SelBdHover,
-  panelRowColor, InfoTextDescColor, InfoTextValueColor, TooltipBackground, ControlBgOpaque, DangerTextValueColor
+from "%ui/components/colors.nut" import ConsoleFillColor, ConsoleBorderColor, BtnBgNormal, BtnBgHover, BtnBgSelected,
+  BtnBgDisabled, BtnBdSelected, BtnBdTransparent, BtnBdHover, BtnTextHover, BtnTextActive, BtnTextHighlight,
+  BtnTextNormal, BtnTextVisualDisabled, SelBdSelected, SelBdNormal, SelBdDisabled, SelBdHover, panelRowColor,
+  InfoTextDescColor, InfoTextValueColor, TooltipBackground, ControlBgOpaque, DangerTextValueColor
+from "%ui/components/tagsTable.style.nut" import defaultTagsTable
+from "%ui/control/active_controls.nut" import isGamepad
+import "%ui/components/gamepadImgByKey.nut" as gamepadImgByKey
+import "%ui/components/fontawesome.map.nut" as fa
+import "%ui/components/faComp.nut" as faComp
 
-let { h2_txt, body_txt, sub_txt, fontawesome } = require("%ui/fonts_style.nut")
-let { getRomanNumeral } = require("%sqstd/math.nut")
-let fa = require("%ui/components/fontawesome.map.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { button, textButton, defButtonStyle, fontIconButton } = require("%ui/components/button.nut")
-let { secondsToTime } = require("%sqstd/time.nut")
-let { format } = require("string")
 let { locTable } = require("%ui/helpers/time.nut")
-let { showMsgbox } = require("%ui/components/msgbox.nut")
+
+#allow-auto-freeze
 
 function selectFillColor(sf, is_selected, style=null, disabled = false) {
   let styling = style != null ? defButtonStyle.__merge(style) : defButtonStyle
@@ -30,8 +36,8 @@ let defSound = freeze({
   active = "ui_sounds/button_action"
 })
 
-let VertSelectPanelGap = freeze({size=[flex(), hdpx(2)] color = BtnBgNormal opacity = 0.7 rendObj = ROBJ_SOLID})
-let VertSmallSelectPanelGap = freeze({size=[flex(), hdpx(1)] color = BtnBgNormal opacity = 0.8 rendObj = ROBJ_SOLID})
+let VertSelectPanelGap = freeze({size=static [flex(), hdpx(2)] color = BtnBgNormal opacity = 0.7 rendObj = ROBJ_SOLID})
+let VertSmallSelectPanelGap = freeze({size=static [flex(), hdpx(1)] color = BtnBgNormal opacity = 0.8 rendObj = ROBJ_SOLID})
 let not_set_state = {}
 
 const BD_TOP = 0
@@ -44,10 +50,7 @@ const BD_TOP_BOTTOM = 6
 const BD_NONE = 6
 
 let descriptionStyle = freeze({ fontFx = FFT_GLOW fontFxColor = Color(0, 0, 0, 255)
-  tagsTable={
-    accented = {color = InfoTextValueColor }
-    danger = {color = DangerTextValueColor }
-  }
+  tagsTable=defaultTagsTable
 })
 
 let selBorders = freeze({
@@ -83,45 +86,53 @@ function mkSelectPanelTextCtor(text, textStyle = null) {
       speed = hdpx(50)
       scrollOnHover=true
       color = getTextColorForSelectedPanelText(isSelected(), isHover, disabled)
-    }.__update(textStyle ?? const {})
+    }.__update(textStyle ?? static {})
   })
 }
-let mkSelectPanelTextWithFaIconCtor = @(fa_icon, text=null, font_style=body_txt) kwarg(@(stateFlags, watch, isSelected, disabled, group)
+
+let selectPanelTextFromCtor = @(ctor) ctor({stateFlags = Watched(0), watch = null, isSelected = @() false, disabled = false})
+
+let mkSelectPanelTextWithFaIconCtor = @(fa_icon, text=null, textParams = body_txt) kwarg(@(stateFlags, watch, isSelected, disabled, group)
   function() {
     let isHover = (stateFlags.get() & S_HOVER)
-    let color = disabled ? BtnTextVisualDisabled :
-         isSelected()
-           ? (isHover ? BtnTextHover : BtnTextActive)
-           : (isHover ? BtnTextHighlight : BtnTextNormal)
+    let color = disabled ? BtnTextVisualDisabled
+      : isSelected() ? (isHover ? BtnTextHover : BtnTextActive)
+      : (isHover ? BtnTextHighlight : BtnTextNormal)
     return {
+      watch
       flow = FLOW_HORIZONTAL
       gap = hdpx(5)
       valign = ALIGN_CENTER
-      watch
       group
       children = [
-        {
-          rendObj = ROBJ_TEXT
-          font = fontawesome.font
-          text = fa[fa_icon]
-          fontSize = (font_style.fontSize*0.91).tointeger()
+        faComp(fa_icon, {
+          fontSize = (textParams.fontSize*0.91).tointeger()
           color
-        }
+          needPreAlpha = false
+        }.__merge(textParams, { font = fontawesome.font }))
         body_txt.__merge({
           rendObj = ROBJ_TEXT
           text
           color
-        })
+        }.__merge(textParams))
       ]
     }
   }
 )
-let getBorderColor = @(sf, selected) sf & S_HOVER ? SelBdHover : (selected ? SelBdSelected : SelBdNormal)
+
+function getBorderColor(sf, selected, style = null) {
+  if (sf & S_HOVER)
+    return style?.SelBdHover ?? SelBdHover
+  if (selected)
+    return style?.SelBdSelected ?? SelBdSelected
+  return style?.SelBdNormal ?? SelBdNormal
+}
 
 let mkSelectPanelItem = kwarg(function(children, idx, state=null, onSelect=null, visual_params = null, onHover=null,
   sound = null, tooltip_text = null, multi=false, optional=false, default_state=not_set_state,
   border_align=BD_BOTTOM, disabled=false, cb = @(...) null, onDoubleClick = null, onlySelectedBd=false, onElemState=null, stateFlags=null, watch=null, group=null
 ){
+  #forbid-auto-freeze
   assert(state instanceof Watched, @() $"state={type(state)}")
   assert(stateFlags==null || onElemState!=null, "with provided stateFlags, onElemState is also required")
   default_state = default_state==not_set_state ? state.get() : default_state
@@ -169,18 +180,18 @@ let mkSelectPanelItem = kwarg(function(children, idx, state=null, onSelect=null,
       watch
       group
       fillColor =  selectFillColor(sf, selected, visual_params?.style, disabled)
-      size = const flex()
+      size = static flex()
       onHover = onHoverRes
       onElemState = resOnElemState
       behavior = Behaviors.Button
       borderWidth = !disabled && (!onlySelectedBd || ((sf & S_HOVER) || selected)) ? bdw : 0
-      borderColor = getBorderColor(sf, selected)
+      borderColor = getBorderColor(sf, selected, visual_params?.style)
       onClick = disabled ? null : onClick
       onDoubleClick = disabled ? null : onDoubleClick
-      padding = const hdpx(15)
+      padding = static hdpx(15)
       sound = merged_sound
       children
-    }.__update(visual_params ?? const {})
+    }.__update(visual_params ?? static {})
   }
 })
 
@@ -198,7 +209,7 @@ let bluredPanel = freeze({
 let bluredPanelWindow = freeze({
   rendObj = ROBJ_WORLD_BLUR_PANEL
   fillColor = ConsoleFillColor
-  borderWidth = const [hdpx(1), 0]
+  borderWidth = static [hdpx(1), 0]
   borderColor = ConsoleBorderColor
 })
 
@@ -210,33 +221,32 @@ function mkPanel(children, visual_params = null){
   }.__update(panelParams, visual_params ?? defParams))
 }
 
-let mkTitleString = @(text) {
+let mkTitleString = @[pure](text) {
   rendObj = ROBJ_TEXT
   margin = hdpx(10)
-  text = text
+  text
   fontFx = FFT_GLOW
   fontFxColor = Color(0, 0, 0, 255)
 }.__update(h2_txt)
 
-let mkPaddingString = @(text){
-  size = [flex(), SIZE_TO_CONTENT]
+let mkPaddingString = @[pure](text){
+  size = FLEX_H
   rendObj = ROBJ_TEXTAREA
   behavior = Behaviors.TextArea
-  text = text
-  margin = [0, hdpx(10)]
+  text
+  margin = static [0, hdpx(10)]
 }
 
-let mkTextWithFAIcon = @(fa_icon, text, font_style=body_txt) freeze({
+let mkTextWithFAIcon = @[pure](fa_icon, text, font_style=body_txt) freeze({
   flow = FLOW_HORIZONTAL
   gap = hdpx(5)
   valign = ALIGN_CENTER
   children = [
-    {
-      rendObj = ROBJ_TEXT
-      font = fontawesome.font
-      text = fa[fa_icon]
+    faComp(fa_icon, {
       fontSize = (font_style.fontSize*0.91).tointeger()
-    }
+      color = BtnTextNormal
+      needPreAlpha = false
+    })
     {
       rendObj = ROBJ_TEXT
       text
@@ -257,20 +267,21 @@ function mkConsoleScreen(children){
   }
 }
 
-let mkText = @(text, override = sub_txt) {
+let mkText = @[pure](text, override = sub_txt) {
   rendObj = ROBJ_TEXT
   fontFx = FFT_GLOW
   fontFxColor = Color(0, 0, 0, 255)
   text
 }.__update(override)
 
-let mkTextArea = @(text, override = {}) {
+let mkTextArea = @[pure](text, override = static {}) {
   rendObj = ROBJ_TEXTAREA
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   behavior = Behaviors.TextArea
   fontFx = FFT_GLOW
   fontFxColor = Color(0, 0, 0, 255)
   text
+  tagsTable = defaultTagsTable
 }.__update(override)
 
 let mkDescTextarea = @(text, override=null ) mkTextArea(text, descriptionStyle.__merge(override ?? {}))
@@ -289,23 +300,20 @@ function helpComponents(components){
   }.__update(body_txt))
   return {
     flow = FLOW_VERTICAL
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     children
   }
 }
 
-function helpFootnotes(footnotes){
+function helpFootnotes(footnotes) {
   if (footnotes == null)
     return null
-  let text = "; ".join(footnotes.map(@(x, idx) $"{idx+1}.{NBSP}{loc(x)}"))
+
   return {
-    rendObj = ROBJ_TEXTAREA
-    behavior = Behaviors.TextArea
-    text = text
-    size = [flex(), SIZE_TO_CONTENT]
-    fontFx = FFT_GLOW
-    fontFxColor = Color(0, 0, 0, 255)
-  }.__update(sub_txt)
+    size = FLEX_H
+    flow = FLOW_VERTICAL
+    children = footnotes.map(@(v, idx) mkTextArea($"{idx+1}.{NBSP}{loc(v)}", sub_txt))
+  }
 }
 
 function mkHelpConsoleScreen(device_image, help_data){
@@ -313,7 +321,7 @@ function mkHelpConsoleScreen(device_image, help_data){
     rendObj = ROBJ_WORLD_BLUR_PANEL
     fillColor = ConsoleFillColor
     borderColor = ConsoleBorderColor
-    borderWidth = [0, 0, hdpx(1), 0]
+    borderWidth = static [0, 0, hdpx(1), 0]
     size = flex()
     padding = hdpx(15)
     flow = FLOW_HORIZONTAL
@@ -324,15 +332,20 @@ function mkHelpConsoleScreen(device_image, help_data){
         size = flex(1)
         halign = ALIGN_CENTER
         color = TooltipBackground
-        padding = hdpx(20)
-        children = {
-          rendObj = ROBJ_TEXTAREA
-          behavior = Behaviors.TextArea
-          size = [flex(), SIZE_TO_CONTENT]
-          text = loc(help_data.content)
-          fontFx = FFT_GLOW
-          fontFxColor = Color(0, 0, 0, 255)
-        }.__update(body_txt)
+        padding = static hdpx(20)
+        flow = FLOW_VERTICAL
+        gap = static hdpx(20)
+        children = [
+          {
+            rendObj = ROBJ_TEXTAREA
+            behavior = Behaviors.TextArea
+            size = FLEX_H
+            text = loc(help_data.content)
+            fontFx = FFT_GLOW
+            fontFxColor = Color(0, 0, 0, 255)
+          }.__update(body_txt)
+          help_data?.firstAccess
+        ]
       },
       {
         rendObj = ROBJ_SOLID
@@ -352,7 +365,7 @@ function mkHelpConsoleScreen(device_image, help_data){
             flow = FLOW_VERTICAL
             vplace  = ALIGN_CENTER
             gap = hdpx(20)
-            size = [flex(3),SIZE_TO_CONTENT]
+            size = static [flex(3),SIZE_TO_CONTENT]
             children = [
               helpComponents(help_data?.components)
               helpFootnotes(help_data?.footnotes)
@@ -365,41 +378,41 @@ function mkHelpConsoleScreen(device_image, help_data){
 }
 
 
-function mkInfoTxt(title, val, textParam = {}){
+function mkInfoTxt(title, val, textParam = {}, override = {}){
   return {
     flow = FLOW_HORIZONTAL gap = hdpx(10)
     children = [
       mkText(title, { color = InfoTextDescColor }.__update(textParam))
       mkText(val, { color = InfoTextValueColor }.__update(textParam))
     ]
-  }
+  }.__update(override)
 }
 
 function underlineComp(children) {
   return {
     rendObj = ROBJ_BOX
     borderColor = BtnBdTransparent
-    borderWidth = [0,0,hdpx(1),0]
-    size = [flex(), SIZE_TO_CONTENT]
+    borderWidth = static [0,0,hdpx(1),0]
+    size = FLEX_H
     children
   }
 }
 
 function mkFlexInfoTxt(title, val, textParam = null){
   return underlineComp({
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     gap = hdpx(6)
     children = [
       mkTextArea(title, {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         color = InfoTextDescColor
         minWidth = SIZE_TO_CONTENT
         maxWidth = hdpx(250)
         hplace = ALIGN_LEFT
       }.__update(body_txt, textParam ?? {}))
       mkTextArea(val, {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         color = InfoTextValueColor
         halign = ALIGN_RIGHT
       }.__update(body_txt, textParam ?? {}))
@@ -412,7 +425,7 @@ function mkInfoTxtArea(title, val, textParam = null){
     rendObj = ROBJ_TEXTAREA
     behavior = Behaviors.TextArea
     color = InfoTextValueColor
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     text = $"<color={InfoTextDescColor}>{title}</color> {val}"
   }.__update(textParam ?? {})
 }
@@ -422,20 +435,20 @@ function mkFATextWithTextButton(sym, text, callback, params = null) {
   return button(children, callback, {
     isEnabled = params?.isEnabled ?? true,
     size = flex(),
-    style = { BtnBgDisabled = BtnBgDisabled, BtnBgNormal = Color(60, 60, 60, 120) }
+    style = static { BtnBgDisabled = BtnBgDisabled, BtnBgNormal = Color(60, 60, 60, 120) }
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
   }.__update(params ?? {}))
 }
 
 function mkTooltiped(content, tooltip, override = {}) {
-  return {
+  return freeze({
     behavior = Behaviors.Button
     onHover = @(on) setTooltip(on ? tooltip : null)
     skipDirPadNav = true
     children = content
     eventPassThrough = true
-  }.__update(override)
+  }.__update(override))
 }
 
 let sideNotificationStyle = freeze({
@@ -443,10 +456,10 @@ let sideNotificationStyle = freeze({
   rendObj = ROBJ_WORLD_BLUR_PANEL
   fillColor = Color(10, 10, 10, 40)
   borderColor = BtnBdSelected
-  borderWidth = [0, 0, 0, hdpx(2)]
+  borderWidth = static [0, 0, 0, hdpx(2)]
 
-  transform = {}
-  animations = [
+  transform = static {}
+  animations = static [
     { prop=AnimProp.opacity, from=0, to=1, duration=0.3, play=true, easing=OutCubic }
     { prop=AnimProp.opacity, from=1, to=0, duration=0.3, playFadeOut=true, easing=OutCubic }
   ]
@@ -454,11 +467,12 @@ let sideNotificationStyle = freeze({
 let mkTimeTxtStyle = memoize(@(fontStyle) {vplace = ALIGN_BOTTOM}.__merge(fontStyle))
 let mkTimeMonoTxtStyle = memoize(function(fontStyle) {
   let bs = mkTimeTxtStyle(fontStyle)
-  let monoWidth = calc_str_box({text="0"}.__update(bs))[0]
+  let monoWidth = calc_str_box({text="6"}.__update(bs))[0]
   return bs.__merge({monoWidth})
 })
 
 function mkMonospaceTimeComp(time, fontStyle = sub_txt, color = InfoTextValueColor) {
+  #forbid-auto-freeze
   let { days=0, hours=0, minutes=0, seconds=0 } = secondsToTime(time)
   let txtStyle = mkTimeTxtStyle(fontStyle).__merge({color})
   let monoStyle = mkTimeMonoTxtStyle(fontStyle).__merge({color})
@@ -484,13 +498,33 @@ function mkMonospaceTimeComp(time, fontStyle = sub_txt, color = InfoTextValueCol
   }
 }
 
+function mkTimeComp(time, fontStyle = sub_txt, color = InfoTextValueColor) {
+  #forbid-auto-freeze
+  let { days=0, hours=0, minutes=0, seconds=0 } = secondsToTime(time)
+  let txtStyle = mkTimeTxtStyle(fontStyle).__merge({color})
+
+  let children = []
+  if (days > 0)
+    children.append(mkText($"{days}{locTable.days} ", txtStyle))
+  if (hours > 0)
+    children.append(mkText($"{hours}{locTable.hours} ", txtStyle))
+  if (minutes > 0)
+    children.append(mkText($"{minutes}{locTable.minutes} ", txtStyle))
+  children.append(mkText(format("%02d", seconds), txtStyle))
+  children.append(mkText(locTable.seconds, txtStyle))
+  return {
+    flow = FLOW_HORIZONTAL
+    children
+  }
+}
+
 let tabSound = freeze({
   click  = "ui_sounds/button_click"
   hover  = "ui_sounds/menu_highlight"
   active = "ui_sounds/button_action"
 })
 
-function tabCtor(tab, is_current, handler) {
+function tabCtor(tab, is_current, handler, override) {
   let group = ElemGroup()
   let stateFlags = Watched(0)
   if ("isAvailable" in tab && (tab?.unavailableHoverHint ?? "")=="" ) {
@@ -512,7 +546,6 @@ function tabCtor(tab, is_current, handler) {
       rendObj = ROBJ_BOX
       halign = ALIGN_CENTER
       valign = ALIGN_CENTER
-      size = SIZE_TO_CONTENT
       group
       onHover = @(on) setTooltip(on && !enabled ? unavailableHoverHint : null)
       behavior = Behaviors.Button
@@ -522,7 +555,7 @@ function tabCtor(tab, is_current, handler) {
       fillColor
       borderColor
       borderWidth = selBorders[BD_BOTTOM]
-      padding = [fsh(1), fsh(2)]
+      padding = static [fsh(1), fsh(2)]
 
       onClick = enabled ? handler : @() showMsgbox({text = unavailableHoverHint ?? loc("Error/Unavailable")})
       onElemState = @(s) stateFlags.set(s)
@@ -537,11 +570,26 @@ function tabCtor(tab, is_current, handler) {
         color = textColor
         group
       })
-    }
+    }.__update(override)
   }
 }
 
-let mkTabs = kwarg(function(tabs, currentTab, onChange) {
+function changeTab(delta, tabsList, currentTabId, onChange) {
+  let curTabIdx = tabsList.findindex(@(v) v.id == currentTabId)
+  if (curTabIdx == null)
+    return
+  let newIdx = curTabIdx + delta
+  if (newIdx < 0 || newIdx >= tabsList.len())
+    return
+  let newTab = tabsList[newIdx]
+  let { isAvailable = Watched(true), unavailableHoverHint = null } = newTab
+  if (isAvailable.get())
+    onChange(tabsList[newIdx])
+  else
+    showMsgbox({text = unavailableHoverHint ?? loc("Error/Unavailable")})
+}
+
+let mkTabs = kwarg(function(tabs, currentTab, onChange, override = {}) {
   
   
   
@@ -552,19 +600,45 @@ let mkTabs = kwarg(function(tabs, currentTab, onChange) {
   
   
   
-  return {
-    rendObj = ROBJ_BOX
-    size = [flex(), SIZE_TO_CONTENT]
+  let { disableHotkeys = false } = override
+  let content = {
     flow = FLOW_HORIZONTAL
     gap = hdpx(2)
-    children = tabs.map(@(item) tabCtor(item, item.id == currentTab, @() onChange(item)))
+    children = tabs.map(@(item) tabCtor(item, item.id == currentTab, @() onChange(item), "tab_override" in override ? override.tab_override : override))
+  }.__merge(override)
+
+  function gamepadHotkeys() {
+    if (!isGamepad.get() || disableHotkeys)
+      return { watch = isGamepad }
+    let contentWidth = calc_comp_size(content)
+    return {
+      watch = isGamepad
+      size = [contentWidth[0], SIZE_TO_CONTENT]
+      vplace = ALIGN_CENTER
+      children = [
+        gamepadImgByKey.mkImageCompByDargKey("J:LT", static { pos = [-hdpx(10), 0]})
+        gamepadImgByKey.mkImageCompByDargKey("J:RT", static { hplace = ALIGN_RIGHT, pos = [hdpx(10), 0]})
+      ]
+    }.__merge(override)
+  }
+  return {
+    size = FLEX_H
+    hotkeys = disableHotkeys ? null : [
+      ["J:RT", { action = @() changeTab(1, tabs, currentTab, onChange)}],
+      ["J:LT", { action = @() changeTab(-1, tabs, currentTab, onChange)}]
+    ]
+    children = [
+      content
+      gamepadHotkeys
+    ]
   }
 })
 
-return{
+return freeze({
   mkTabs
   mkSelectPanelItem
   mkSelectPanelTextCtor
+  selectPanelTextFromCtor
   getTextColorForSelectedPanelText
   mkSelectPanelTextWithFaIconCtor
   mkPanel
@@ -592,6 +666,7 @@ return{
   VertSmallSelectPanelGap
   descriptionStyle
   mkMonospaceTimeComp
+  mkTimeComp
   BD_LEFT
   BD_RIGHT
   BD_CENTER
@@ -600,4 +675,5 @@ return{
   BD_LEFT_RIGHT
   BD_TOP_BOTTOM
   BD_NONE
-}
+  defSound
+})

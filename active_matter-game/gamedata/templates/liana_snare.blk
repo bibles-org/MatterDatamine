@@ -1,0 +1,228 @@
+liana_snare{
+  _use:t="am_triggerable_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  liana_snare__template:t="liana_snare_tentacle"
+  liana_snare__secondaryTemplate:t="liana_snare_tentacle_secondary"
+  liana_snare__tentacleCount:i=2
+  liana_snare__tentacleSubCount:ip2=3, 5
+  liana_snare__tentacleSubInterval:ip2=2, 5
+  liana_snare__tentacleSubAngleSpread:p2=0.4, 0.9
+  liana_snare__tentacleSubDelay:i=7
+  liana_snare__rayLength:r=7
+  liana_snare__activeTiers:i=0
+  liana_snare__maxTier:i=2
+
+  "liana_snare__targetEid:eid"{}
+  "liana_snare__tentacles:list<eid>"{}
+  "liana_snare__allowedMats:list<t>"{
+    mat:t="concrete"
+    mat:t="stone"
+    mat:t="default"
+  }
+
+  "liana_snare__allowedMatIds:list<i>"{}
+}
+
+base_liana_spline_gen{
+  _use:t="spline_gen_geometry"
+  spline_gen_geometry__lods_name:t="liana_tentacle"
+  spline_gen_geometry__radiusDef:p3=0.15, 0.01, 0
+  spline_gen_geometry__obj_size_mul:r=1
+  spline_gen_geometry__meter_between_objs:r=0.25
+  spline_gen_geometry__request_active:b=yes
+  liana_tentacle__shrinkTemplate:t="liana_shrinking_tentacle"
+  liana_tentacle__hitRadius:r=0.15
+  liana_tentacle__isDead:b=no
+
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.15
+    p:p2=0.995, 0.01
+    p:p2=1, 0
+  }
+}
+
+liana_snare_tentacle{
+  _use:t="replicating"
+  _use:t="base_liana_spline_gen"
+  liana_growth__dstBetweenPoints:r=0.15
+  liana_growth__stamp:r=0
+  liana_growth__physToVisDelay:r=0.3
+  liana_growth__maxPoints:i=80
+  spline_gen_geometry__radiusDef:p3=0.2, 0.02, 0
+  spline_gen_geometry__displacement_strength:r=0.75
+  spline_gen_geometry__tiles_around:i=1
+  spline_gen_geometry__tile_size_meters:r=0.75
+  surface_crawler__norm:p3=0, 0, 0
+  surface_crawler__dir:p3=0, 0, 0
+  surface_crawler__head:p3=0, 0, 0
+  surface_crawler__active:b=no
+  surface_crawler__frustration:i=0
+  surface_crawler__seed:i=0
+  surface_crawler__maxFrustration:i=10
+  surface_crawler__lookAhead:p2=0.3, 0.5
+  surface_crawler__lookDown:p3=0.1, 0.2, 0.3
+  surface_crawler__curvePerSecond:r=9
+  surface_crawler__curvePerSecondRnd:r=1
+  surface_crawler__rndInfluence:r=11
+  surface_crawler__targetInfluence:r=1.2
+  surface_crawler__attractionByLength:p4=0, 0.45, 0, 1
+  surface_crawler__speedByLength:p2=5, 1.4
+  surface_crawler__speed:r=1.4
+  surface_crawler__matId:i=0
+  surface_crawler__height:r=0
+  liana_tentacle__breakCooldown:r=2.5
+  liana_tentacle__nodeId:i=-1
+  liana_tentacle__nodeDir:r=1
+  liana_tentacle__dealsDamage:b=yes
+  liana_tentacle__coilRadius:r=-1
+  liana_tentacle__numCoils:r=-1
+  liana_tentacle__coilThickness:r=-1
+  liana_tentacle__numCoilPoints:i=-1
+  liana_tentacle__activeAt:r=0
+  liana_tentacle__attachStamp:r=0
+  liana_tentacle__damageAt:r=0
+  liana_tentacle__initialDstToNode:r=0
+  liana_tentacle__deathTemplate:t="liana_awaiting_death"
+  _replicated:t="liana_tentacle__targetEid"
+  _replicated:t="liana_tentacle__attachNodeEid"
+  _tracked:t="liana_tentacle__attachNodeEid"
+  liana_tentacle__coilingProgress:r=0
+  liana_tentacle__coilSpeed:r=0.2
+  liana_shrinking__speed:r=1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "lianaWallTentacle:tag"{}
+  "liana_bullet_collidable:tag"{}
+  "liana_growth__shadowPoints:list<p3>"{}
+  "liana_growth__shadowStamps:list<r>"{}
+  "liana_growth__spawnSubsAt:list<i>"{}
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.4
+    p:p2=0.995, 0.03
+    p:p2=1, 0
+  }
+
+  "liana_tentacle__childTentacles:list<eid>"{}
+  "liana_tentacle__targetEid:eid"{}
+  "liana_tentacle__attachNodeEid:eid"{}
+  _group{
+    _tags:t="gameClient"
+    liana_tentacle__reachNodeIdx:i=0
+    liana_tentacle__retractionProgress:r=0
+
+    "liana_tentacle__coilEid:eid"{}
+  }
+}
+
+liana_snare_tentacle_secondary{
+  _use:t="liana_snare_tentacle"
+  spline_gen_geometry__radiusDef:p3=0.1, 0.01, 0
+  spline_gen_geometry__displacement_strength:r=0.75
+  spline_gen_geometry__tiles_around:i=1
+  spline_gen_geometry__tile_size_meters:r=0.7
+  surface_crawler__targetInfluence:r=2.2
+  surface_crawler__attractionByLength:p4=0.1, 0.35, 0, 1
+  liana_growth__maxPoints:i=56
+
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.2
+    p:p2=0.995, 0.01
+    p:p2=1, 0
+  }
+}
+
+liana_awaiting_death{
+  game_effect__destroyAt:r=0
+}
+
+liana_coiling_tentacle{
+  _use:t="base_liana_spline_gen"
+  spline_gen_geometry__lods_name:t="liana_tentacle"
+  spline_gen_geometry__radiusDef:p3=0.04, 0.01, 0
+  spline_gen_geometry__displacement_strength:r=0.4
+  spline_gen_geometry__tiles_around:i=1
+  spline_gen_geometry__tile_size_meters:r=0.2
+  liana_tentacle__nodeId:i=-1
+  liana_tentacle__dealsDamage:b=yes
+  liana_tentacle__coilRadius:r=-1
+  liana_tentacle__numCoils:r=-1
+  liana_tentacle__coilThickness:r=-1
+  liana_tentacle__numCoilPoints:i=-1
+  liana_tentacle__activeAt:r=0
+  liana_tentacle__attachStamp:r=0
+  liana_tentacle__damageAt:r=0
+  liana_tentacle__initialDstToNode:r=0
+  liana_shrinking__speed:r=1
+  liana_tentacle__shrinkTemplate:t="liana_attached_shrinking_tentacle"
+
+  "lianaWallTentacle:tag"{}
+  "liana_bullet_collidable:tag"{}
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0
+    p:p2=0.01, 0.01
+    p:p2=0.1, 0.02
+    p:p2=0.5, 0.045
+    p:p2=0.9, 0.02
+    p:p2=0.99, 0.01
+    p:p2=1, 0
+  }
+
+  "liana_tentacle__targetEid:eid"{}
+  "liana_tentacle__parentEid:eid"{}
+  "spline_gen_geometry__attachVec:list<p3>"{}
+}
+
+liana_shrinking_tentacle{
+  _use:t="base_liana_spline_gen"
+  spline_gen_geometry__lods_name:t="liana_tentacle"
+  spline_gen_geometry__radiusDef:p3=0.04, 0.01, 0
+  spline_gen_geometry__meter_between_objs:r=999
+  liana_shrinking__speed:r=0
+  liana_shrinking__endAt:r=0
+  liana_shrinking__prevProgress:r=0
+  liana_shrinking__linearProgress:r=0
+  liana_shrinking__progressSpeed:r=0
+  liana_shrinking__startingLength:r=0
+  liana_tentacle__shrinkTemplate:t="liana_shrinking_tentacle"
+
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.04
+    p:p2=0.995, 0.01
+    p:p2=1, 0
+  }
+
+  "liana_shrinking_tentacle:tag"{}
+  "liana_bullet_collidable:tag"{}
+  "liana_shrinking__startingRadii:list<p2>"{}
+  "liana_shrinking__endingRadii:list<p2>"{}
+}
+
+liana_attached_shrinking_tentacle{
+  _use:t="base_liana_spline_gen"
+  spline_gen_geometry__lods_name:t="liana_tentacle"
+  spline_gen_geometry__radiusDef:p3=0.04, 0.01, 0
+  spline_gen_geometry__meter_between_objs:r=999
+  liana_shrinking__speed:r=0
+  liana_shrinking__endAt:r=0
+  liana_tentacle__nodeId:i=-1
+
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.04
+    p:p2=0.995, 0.01
+    p:p2=1, 0
+  }
+
+  "liana_shrinking_tentacle:tag"{}
+  "liana_tentacle__targetEid:eid"{}
+  "spline_gen_geometry__attachVec:list<p3>"{}
+}
+
+liana_root{
+  "liana_root:tag"{}
+}
+
+liana_root_bush{
+  _use:t="area_decor_flowerman"
+  _use:t="flowerman_anomaly_gpu_objects_trait"
+  _use:t="liana_root"
+}

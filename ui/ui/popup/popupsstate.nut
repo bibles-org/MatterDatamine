@@ -1,5 +1,6 @@
+from "%dngscripts/sound_system.nut" import sound_play
+
 from "%ui/ui_library.nut" import *
-let { sound_play } = require("%dngscripts/sound_system.nut")
 
 let POPUP_PARAMS = {
   id = ""
@@ -26,7 +27,7 @@ function removePopup(id) {
   if (idx == null)
     return
   popups.remove(idx)
-  popupsGen(popupsGen.value+1)
+  popupsGen.set(popupsGen.get()+1)
 }
 
 function addPopup(config) {
@@ -55,11 +56,11 @@ function addPopup(config) {
       function() {
         gui_scene.clearTimer(callee())
         removePopup(popup.id) 
-      })
+      }, uid)
     })
 
   popups.append(popup)
-  popupsGen(popupsGen.value+1)
+  popupsGen.set(popupsGen.get()+1)
 }
 
 console_register_command(@() addPopup({ text = $"Default popup\ndouble line {counter}" }),

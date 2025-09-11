@@ -1,22 +1,23 @@
+from "%ui/fonts_style.nut" import body_txt, sub_txt
+from "%ui/components/colors.nut" import InfoTextValueColor, BtnBgFocused
+from "%ui/components/commonComponents.nut" import mkText, mkTooltiped
+from "%ui/components/cursors.nut" import setTooltip
+
 
 from "%ui/ui_library.nut" import *
 
-let { body_txt, sub_txt } = require("%ui/fonts_style.nut")
-let { InfoTextValueColor, BtnBgFocused } = require("%ui/components/colors.nut")
-let { mkText, mkTooltiped } = require("%ui/components/commonComponents.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
 
-function mkPlusComp(text, fontSize, visParams= const {}, facomp=null, tooltip=null) {
+function mkPlusComp(text, fontSize, visParams= static {}, facomp=null, tooltip=null) {
   let tp = tooltip ? @(v) mkTooltiped(v, tooltip) :
     @(v) v
   return tp({
     rendObj = ROBJ_BOX
     fillColor = BtnBgFocused
     borderRadius = hdpx(20)
-    padding = const [ hdpx(2), hdpx(10), hdpx(2), hdpx(10) ]
+    padding = static [ hdpx(2), hdpx(10), hdpx(2), hdpx(10) ]
     hplace = ALIGN_RIGHT
     vplace = ALIGN_TOP
-    pos = const [ pw(10), ph(10) ]
+    pos = static [ pw(10), ph(10) ]
     flow = FLOW_HORIZONTAL
     gap = hdpx(5)
 
@@ -57,7 +58,7 @@ function mkItemPanel(icon, nameLoc, itemTypeLoc, count, tooltip, iconBlockSize, 
     children = [
       mkIcon(icon, count, iconBlockSize, fontSize, isAdded)
       {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_VERTICAL
         halign = ALIGN_CENTER
         valign = ALIGN_CENTER
@@ -66,7 +67,7 @@ function mkItemPanel(icon, nameLoc, itemTypeLoc, count, tooltip, iconBlockSize, 
           itemTypeLoc && isAdded ? mkText(itemTypeLoc, {color = infoTextColor}) : null
           nameLoc == null ? null : {
             rendObj = ROBJ_TEXTAREA
-            size = [flex(), SIZE_TO_CONTENT]
+            size = FLEX_H
             behavior = Behaviors.TextArea
             halign = ALIGN_CENTER
             text = nameLoc

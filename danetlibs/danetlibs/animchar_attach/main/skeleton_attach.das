@@ -9,21 +9,20 @@ require danetlibs.animchar_attach.main.attach_common
 require danetlibs.animchar_attach.main.attach_events
 
 
-[es(tag=server, on_appear, on_disappear, track=slot_attach__attachedTo)]
+[es(on_appear, on_disappear, track=animchar_attach__attachedTo)]
 def skeleton_attach_do_attach_es(evt : Event;
                                  eid : EntityId;
-                                 slot_attach__attachedTo : EntityId;
-                                 var skeleton_attach__attached : bool&;
-                                 var skeleton_attach__attachedTo : EntityId&)
-  let oldAttachedTo = skeleton_attach__attachedTo
-  skeleton_attach__attachedTo = slot_attach__attachedTo
-  if !skeleton_attach__attached && !!slot_attach__attachedTo
+                                 animchar_attach__attachedTo : EntityId;
+                                 slot_attach__inAttachedList : EntityId;
+                                 var skeleton_attach__attached : bool&)
+  let oldAttachedTo = slot_attach__inAttachedList
+  if !skeleton_attach__attached && !!animchar_attach__attachedTo
     skeleton_attach__attached = true
-    sendEvent(eid, EventItemAttached(attach_to = slot_attach__attachedTo))
-  elif !!slot_attach__attachedTo && oldAttachedTo != slot_attach__attachedTo
+    sendEvent(eid, EventItemAttached(attach_to = animchar_attach__attachedTo))
+  elif !!animchar_attach__attachedTo && oldAttachedTo != animchar_attach__attachedTo
     sendEvent(eid, EventItemDetached(detach_from = oldAttachedTo))
-    sendEvent(eid, EventItemAttached(attach_to = slot_attach__attachedTo))
-  elif skeleton_attach__attached && !slot_attach__attachedTo
+    sendEvent(eid, EventItemAttached(attach_to = animchar_attach__attachedTo))
+  elif skeleton_attach__attached && !animchar_attach__attachedTo
     skeleton_attach__attached = false
     sendEvent(eid, EventItemDetached(detach_from = oldAttachedTo))
 
@@ -61,14 +60,14 @@ def skeleton_attach_destroy_attach_es(evt : Event;
 //  Client: item's es - remap after entity will be replicated
 
 def skeleton_attach_remap_impl(attach_animchar : AnimcharBaseComponent;
-                               skeleton_attach__attachedTo : EntityId;
+                               animchar_attach__attachedTo : EntityId;
                                skeleton_attach__postfixIdx : int;
                                var out_skeleton_remap : UInt16List | UInt16List#;
                                var out_skeleton_recalc_branch : UInt8List | UInt8List#)
   var result = false
   clear(out_skeleton_remap)
   clear(out_skeleton_recalc_branch)
-  query(skeleton_attach__attachedTo) <| $ [es] (animchar aka attachedTo_animchar : AnimcharBaseComponent)
+  query(animchar_attach__attachedTo) <| $ [es] (animchar aka attachedTo_animchar : AnimcharBaseComponent)
     let attachedTonodesCount = int(attachedTo_animchar.nodeTree.nodeCount)
 
     if attachedTonodesCount == 0
@@ -104,24 +103,24 @@ def skeleton_attach_remap_impl(attach_animchar : AnimcharBaseComponent;
 def skeleton_attach_reinit_es(evt : Event;
                               eid : EntityId;
                               animchar : AnimcharBaseComponent&;
-                              skeleton_attach__attachedTo : EntityId;
+                              animchar_attach__attachedTo : EntityId;
                               skeleton_attach__postfixIdx : int = -1;
                               var skeleton_attach__skeletonRemap : UInt16List;
                               var skeleton_attach__skeletonRecalcBranch : UInt8List)
   let isSuccess = skeleton_attach_remap_impl(animchar,
-                                             skeleton_attach__attachedTo,
+                                             animchar_attach__attachedTo,
                                              skeleton_attach__postfixIdx,
                                              skeleton_attach__skeletonRemap,
                                              skeleton_attach__skeletonRecalcBranch)
   if !isSuccess
-    logerr("Could not skeleton attach {getEntityTemplateName(eid)} to {getEntityTemplateName(skeleton_attach__attachedTo)}")
+    logerr("Could not skeleton attach {getEntityTemplateName(eid)} to {getEntityTemplateName(animchar_attach__attachedTo)}")
 
 [es(tag=gameClient, on_appear, REQUIRE=skeleton_attach__skeletonRemap)]
 def skeleton_attach_init_es(evt : Event;
                             eid : EntityId;
-                            skeleton_attach__attachedTo : EntityId)
+                            animchar_attach__attachedTo : EntityId)
   var parentFound = false
-  query(skeleton_attach__attachedTo) <| $ [es(REQUIRE=animchar)] ()
+  query(animchar_attach__attachedTo) <| $ [es(REQUIRE=animchar)] ()
     sendEventImmediate(eid, CmdInitSkeletonAttach())
     parentFound = true
   if !parentFound // for case we change/destroy parent when async added sub template
@@ -131,10 +130,10 @@ def skeleton_attach_init_es(evt : Event;
 def skeleton_attach_remap_es(evt : Event;
                              eid : EntityId;
                              skeleton_attach__attached : bool;
-                             skeleton_attach__attachedTo : EntityId)
+                             animchar_attach__attachedTo : EntityId)
   if !skeleton_attach__attached
     return
-  query(skeleton_attach__attachedTo) <| $ [es] (animchar : AnimcharBaseComponent)
+  query(animchar_attach__attachedTo) <| $ [es] (animchar : AnimcharBaseComponent)
     let attachedToNodesCount = int(animchar.nodeTree.nodeCount)
 
     if attachedToNodesCount == 0
@@ -145,10 +144,10 @@ def skeleton_attach_remap_es(evt : Event;
 def skeleton_attach_server_init_es(evt : Event;
                                    eid : EntityId;
                                    skeleton_attach__attached : bool;
-                                   skeleton_attach__attachedTo : EntityId)
+                                   animchar_attach__attachedTo : EntityId)
   if !skeleton_attach__attached
     return
-  query(skeleton_attach__attachedTo) <| $ [es(REQUIRE=animchar)] ()
+  query(animchar_attach__attachedTo) <| $ [es(REQUIRE=animchar)] ()
     addSubTemplate(eid, "skeleton_attach_inited")
 
 [es(tag=server, on_appear, on_disappear, track=skeleton_attach__attached, REQUIRE=skeletonAttachInited)]

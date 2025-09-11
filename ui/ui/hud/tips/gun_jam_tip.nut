@@ -1,8 +1,9 @@
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { tipCmp }        = require("%ui/hud/tips/tipComponent.nut")
-let { isAlive }       = require("%ui/hud/state/health_state.nut")
+let { isAlive } = require("%ui/hud/state/health_state.nut")
 let { curWeapon } = require("%ui/hud/state/hero_weapons.nut")
 
 let tip = tipCmp({

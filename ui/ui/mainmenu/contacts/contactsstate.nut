@@ -1,29 +1,30 @@
+from "%ui/mainMenu/mailboxState.nut" import pushNotification, removeNotify, subscribeGroup, removeNotifyById
+import "%ui/charClient/charClient.nut" as charClient
+from "%ui/mainMenu/contacts/contactsWatchLists.nut" import getCrossnetworkChatEnabled
+from "%ui/mainMenu/contacts/contact.nut" import updateContact, validateNickNames, getContactNick
+from "%ui/matchingClient.nut" import matchingCall
+from "matching.api" import matching_listen_notify
+from "eventbus" import eventbus_subscribe
+from "%ui/components/msgbox.nut" import showMsgbox
+from "%ui/mainMenu/contacts/contactPresence.nut" import updatePresences
+from "%ui/helpers/platformUtils.nut" import canInterractCrossPlatform
+from "%ui/getAppIdsList.nut" import getAppIdsList
+from "%ui/restrictionWarnings.nut" import showCrossnetworkChatRestrictionMsgBox
+from "matching.errors" import INVALID_USER_ID
+from "dagor.time" import get_time_msec
 from "%ui/ui_library.nut" import *
 
-let charClient = require("%ui/charClient/charClient.nut")
-let { contactsLists, getCrossnetworkChatEnabled } = require("%ui/mainMenu/contacts/contactsWatchLists.nut")
-let { pushNotification, removeNotify, subscribeGroup, removeNotifyById
-} = require("%ui/mainMenu/mailboxState.nut")
-let { updateContact, validateNickNames, getContactNick } = require("%ui/mainMenu/contacts/contact.nut")
+let logC = require("%sqGlob/library_logs.nut").with_prefix("[CONTACTS STATE] ")
+let { contactsLists } = require("%ui/mainMenu/contacts/contactsWatchLists.nut")
 let userInfo = require("%sqGlob/userInfo.nut")
-let { matchingCall } = require("%ui/matchingClient.nut")
-let {matching_listen_notify} = require("matching.api")
-let { eventbus_subscribe } = require("eventbus")
-let {showMsgbox} = require("%ui/components/msgbox.nut")
 let platform = require("%dngscripts/platform.nut")
 let isContactsVisible = mkWatched(persist, "isContactsVisible", false)
-let { presences, updatePresences } = require("%ui/mainMenu/contacts/contactPresence.nut")
-let { canInterractCrossPlatform } = require("%ui/helpers/platformUtils.nut")
-let { crossnetworkChat, canCrossnetworkChatWithAll,
-  canCrossnetworkChatWithFriends } = require("%ui/state/crossnetwork_state.nut")
-let { getAppIdsList } = require("%ui/getAppIdsList.nut")
-let { showCrossnetworkChatRestrictionMsgBox } = require("%ui/restrictionWarnings.nut")
-let { INVALID_USER_ID } = require("matching.errors")
+let { presences } = require("%ui/mainMenu/contacts/contactPresence.nut")
+let { crossnetworkChat, canCrossnetworkChatWithAll, canCrossnetworkChatWithFriends } = require("%ui/state/crossnetwork_state.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
 
-let logC = require("%sqGlob/library_logs.nut").with_prefix("[CONTACTS STATE] ")
 
-isInBattleState.subscribe(function(isInBattle){
+isInBattleState.subscribe_with_nasty_disregard_of_frp_update(function(isInBattle){
   matchingCall("mpresence.set_presence", logC, {isInBattle})
 })
 
@@ -33,7 +34,7 @@ const APPROVED_MAIL = "approved_mail"
 const REQUESTS_TO_ME_MAIL = "requests_to_me_mail"
 let getContactsInviteId = @(uid) $"contacts_invite_{uid}"
 
-userInfo.subscribe(function(uInfo) {
+userInfo.subscribe_with_nasty_disregard_of_frp_update(function(uInfo) {
   if (uInfo?.userIdStr)
     updateContact(uInfo.userIdStr, uInfo.name)
 })
@@ -135,7 +136,7 @@ function onNotifyListChanged(body, mailId) {
       validateNickNames([contact],
         function() {
           let nick = getContactNick(contact)
-          if (canInterractCrossPlatform(nick, canCrossnetworkChatWithAll.value))
+          if (canInterractCrossPlatform(nick, canCrossnetworkChatWithAll.get()))
             pushNotification({
               id = getContactsInviteId(uid)
               mailId
@@ -161,7 +162,7 @@ function onNotifyListChanged(body, mailId) {
 
 function updatePresencesByList(new_presences) {
   logC("Update presences by list: new presences:", new_presences)
-  let curPresences = presences.value
+  let curPresences = presences.get()
   logC("Update presences by list: old presences:", curPresences)
   let updPresences = curPresences
   foreach (p in new_presences)
@@ -177,8 +178,8 @@ function updateGroup(new_contacts, uids, groupName) {
   local hasChanges = false
   let newUids = {}
   let cnChatWatchVal = groupName == buildFullListName("approved")
-    ? canCrossnetworkChatWithFriends.value
-    : canCrossnetworkChatWithAll.value
+    ? canCrossnetworkChatWithFriends.get()
+    : canCrossnetworkChatWithAll.get()
 
   foreach (member in members) {
     local { userId, nick } = member
@@ -186,13 +187,13 @@ function updateGroup(new_contacts, uids, groupName) {
       continue
 
     userId = userId.tostring()
-    hasChanges = hasChanges || userId not in uids.value
+    hasChanges = hasChanges || userId not in uids.get()
     updateContact(userId, nick) 
     newUids[userId] <- true
   }
 
-  if (hasChanges || uids.value.len() != newUids.len())
-    uids(newUids)
+  if (hasChanges || uids.get().len() != newUids.len())
+    uids.set(newUids)
 }
 
 function updateAllLists(new_contacts) {
@@ -230,13 +231,13 @@ function searchContactsOnline(nick, callback = null) {
     request,
     function (result) {
       if (!(result?.result?.success ?? true)) {
-        searchContactsResults({})
+        searchContactsResults.set({})
         if (callback)
           callback()
         return
       }
 
-      let myUserId = userInfo.value?.userIdStr ?? ""
+      let myUserId = userInfo.get()?.userIdStr ?? ""
       let resContacts = {}
       foreach (uidStr, name in result)
         if ((typeof name == "string")
@@ -254,7 +255,7 @@ function searchContactsOnline(nick, callback = null) {
           resContacts[uidStr] <- true
         }
 
-      searchContactsResults(resContacts)
+      searchContactsResults.set(resContacts)
       if (callback)
         callback()
     }
@@ -282,7 +283,6 @@ if (platform.is_sony)
 crossnetworkChat.subscribe(@(_) fetchContacts())
 
 
-let { get_time_msec } = require("dagor.time")
 let { chooseRandom } = require("%sqstd/rand.nut")
 
 let fakeList = Watched([])
@@ -298,19 +298,19 @@ function genFake(count) {
       presences = { online = (i % 2) == 0 }
     })
   let startTime = get_time_msec()
-  fakeList(fake)
+  fakeList.set(fake)
   logC($"Friends update time: {get_time_msec() - startTime}")
 }
 console_register_command(genFake, "contacts.generate_fake")
 
 function changeFakePresence(count) {
-  if (fakeList.value.len() == 0) {
+  if (fakeList.get().len() == 0) {
     logC("No fake contacts yet. Generate them first")
     return
   }
   let startTime = get_time_msec()
   for(local i = 0; i < count; i++) {
-    let f = chooseRandom(fakeList.value)
+    let f = chooseRandom(fakeList.get())
     f.presences.online = !f.presences.online
     updatePresences({ [f.userId] = f.presences })
   }

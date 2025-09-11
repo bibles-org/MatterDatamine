@@ -1,7 +1,7 @@
 from "%ui/ui_library.nut" import *
 
 let {chooseRandom} = require("%sqstd/rand.nut")
-let {appBgImages} = require("appBgImages.nut")
+let {appBgImages} = require("%ui/login/ui/appBgImages.nut")
 
 const default_bg = "ui/grad_vert"
 
@@ -24,7 +24,7 @@ function background() {
     color = Color(30,30,30)
     size = flex()
     children = [
-      {rendObj = ROBJ_IMAGE size = [sw(105),sh(105)] hplace = ALIGN_CENTER valign = ALIGN_CENTER image = PictureImmediate(default_bg) color = Color(40,30,15)}
+      {rendObj = ROBJ_IMAGE size = static [sw(105),sh(105)] hplace = ALIGN_CENTER valign = ALIGN_CENTER image = PictureImmediate(default_bg) color = Color(40,30,15)}
       {
         size = background_size(parallaxK)
         rendObj = ROBJ_IMAGE

@@ -1,16 +1,19 @@
+from "%dngscripts/sound_system.nut" import sound_play
+
+from "%ui/components/colors.nut" import HudTipFillColor, ItemIconBlocked, InfoTextDescColor, InfoTextValueColor,
+  ItemBgColor
+
+from "%ui/fonts_style.nut" import body_txt, tiny_txt
+from "%ui/components/commonComponents.nut" import mkTextArea, mkText
+from "%ui/hud/menus/components/inventoryItemRarity.nut" import mkRarityCorner, getRarityColor
+import "%ui/components/faComp.nut" as faComp
+from "%ui/components/itemIconComponent.nut" import itemIconNoBorder
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeAttachments
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { body_txt, tiny_txt } = require("%ui/fonts_style.nut")
-let { sound_play } = require("%dngscripts/sound_system.nut")
-let { mkTextArea, mkText } = require("%ui/components/commonComponents.nut")
-let { HudTipFillColor, ItemIconBlocked, InfoTextDescColor, InfoTextValueColor, ItemBgColor
-} = require("%ui/components/colors.nut")
 let { safeAreaHorPadding } = require("%ui/options/safeArea.nut")
-let { mkRarityCorner, getRarityColor } = require("%ui/hud/menus/components/inventoryItemRarity.nut")
-let faComp = require("%ui/components/faComp.nut")
-let { itemIconNoBorder } = require("%ui/components/itemIconComponent.nut")
-let { mkFakeAttachments } = require("%ui/hud/menus/components/fakeItem.nut")
 
 const MAX_LOGS_TO_SHOW = 5
 const MAX_REWARDS_TO_SHOW = 2
@@ -27,7 +30,7 @@ let playerLogsGen = Watched(0)
 let playerRewardsGen = Watched(0)
 let playerSpecialRewardsGen = Watched(0)
 
-let playerLogsColors = {
+let playerLogsColors = static {
   defaultLog = HudTipFillColor
   infoLog = ItemBgColor
   warningLog = Color(60, 0, 0, 100)
@@ -36,7 +39,7 @@ let playerLogsColors = {
 let defLogParams = freeze({
   id = ""
   content = ""
-  showTime = 4.0
+  showTime = 3.0
   size = [defPlayerLogWidth, SIZE_TO_CONTENT]
 })
 
@@ -63,7 +66,7 @@ function addPlayerLog(config) {
     return
 
   if (playerLogs.len() > MAX_LOGS_TO_SHOW)
-    playerLogs.remove(0)
+    removePlayerLog(playerLogs[0].id)
 
   let playerLog = defLogParams.__merge(config)
   sound_play(LOG_DEFAULT_SOUND)
@@ -74,7 +77,7 @@ function addPlayerLog(config) {
       function() {
         gui_scene.clearTimer(callee())
         removePlayerLog(id)
-      })
+      }, $"{id}_{playerLogsGen.get()}")
     })
 
   playerLogs.append(playerLog)
@@ -97,8 +100,8 @@ function playerLogBlock() {
       key = $"popup_{id}"
       transform = {}
       animations = [
-        { prop = AnimProp.translate, from = [sw(20), 0], to = [0, 0], duration = 0.2, trigger = $"popupMoveTop{id}", play = true, easing=OutCubic }
-        { prop = AnimProp.translate, from = [0, -100], to = [0, 0], duration = 0.2, trigger = $"popupMoveBottom{id}", easing=OutCubic }
+        { prop = AnimProp.translate, from = static [sw(20), 0], to = static [0, 0], duration = 0.2, trigger = $"popupMoveTop{id}", play = true, easing=OutCubic }
+        { prop = AnimProp.translate, from = static [0, -100], to = static [0, 0], duration = 0.2, trigger = $"popupMoveBottom{id}", easing=OutCubic }
       ]
       behavior = Behaviors.RecalcHandler
       onRecalcLayout = @(_initial) visibleIdx.set(curVisIdx)
@@ -117,7 +120,7 @@ function playerLogBlock() {
 
 let exampleLog = {
   rendObj = ROBJ_WORLD_BLUR_PANEL
-  size = [hdpx(300), SIZE_TO_CONTENT]
+  size = static [hdpx(300), SIZE_TO_CONTENT]
   color = 0xAAAAAAAA
   fillColor = HudTipFillColor
   flow = FLOW_HORIZONTAL
@@ -126,7 +129,7 @@ let exampleLog = {
   children = [
     {
       rendObj = ROBJ_BOX
-      size = [hdpx(50), hdpx(50)]
+      size = hdpx(50)
       borderWidth = hdpx(2)
       fillColor = 0xAAAA00AA
       halign = ALIGN_CENTER
@@ -157,7 +160,9 @@ let mkTitleFaIcon = @(icon) faComp(icon, { fontSize = tiny_txt.fontSize })
 
 function mkPurchaseLogData(templateName, attachments = [], slotData = null, count = null) {
   let itemData = getMarketItemInfo(templateName, count)
-  let { name, charges = 1, rarity = null } = itemData
+  let { name = null, charges = 1, rarity = null } = itemData
+  if (name == null)
+    return null
   local rarityColor = null
   if (rarity != null)
     getRarityColor(rarity, templateName)
@@ -175,7 +180,7 @@ function mkPurchaseLogData(templateName, attachments = [], slotData = null, coun
       silhouette = ItemIconBlocked
       shading = "full"
       vplace = ALIGN_CENTER
-      margin = [hdpx(4), 0, hdpx(4), hdpx(8)]
+      margin = static [hdpx(4), 0, hdpx(4), hdpx(8)]
     }, mkFakeAttachments(attachments))
 
   return {
@@ -194,7 +199,7 @@ function mkPurchaseLogData(templateName, attachments = [], slotData = null, coun
           hplace = ALIGN_RIGHT
           vplace = ALIGN_BOTTOM
           pos = [0, hdpx(4)]
-          size = [hdpx(12), hdpx(12)]
+          size = hdpx(12)
         })
       ]
     }
@@ -218,7 +223,7 @@ let mkPlayerLog = kwarg(function( titleFaIcon = null, titleText = null, bodyIcon
     minWidth = hdpx(300)
     fillColor = logColor
     valign = ALIGN_CENTER
-    padding = [0, hdpx(8)]
+    padding = static [0, hdpx(8)]
     children = [
       {
         flow = FLOW_HORIZONTAL
@@ -233,7 +238,7 @@ let mkPlayerLog = kwarg(function( titleFaIcon = null, titleText = null, bodyIcon
             vplace = ALIGN_CENTER
             flow = FLOW_VERTICAL
             valign = ALIGN_CENTER
-            padding = [hdpx(4), 0]
+            padding = static [hdpx(4), 0]
             children = [
               {
                 flow = FLOW_HORIZONTAL
@@ -274,10 +279,11 @@ function removePlayerSpecialReward(id) {
 
 function addPlayerReward(config) {
   let { id = null } = config
-  if (id == null)
+  if (id == null || playerRewards.findvalue(@(v) v.id == id) != null)
     return
+
   if (playerRewards.len() > MAX_REWARDS_TO_SHOW)
-    playerRewards.remove(0)
+    removePlayerReward(playerRewards[0].id)
 
   let playerReward = defLogParams.__merge(config)
   sound_play(LOG_DEFAULT_SOUND)
@@ -288,7 +294,7 @@ function addPlayerReward(config) {
       function() {
         gui_scene.clearTimer(callee())
         removePlayerReward(id)
-      })
+      }, $"{id}_{playerRewardsGen.get()}")
     })
 
   playerRewards.append(playerReward)
@@ -299,8 +305,9 @@ function addSpecialPlayerReward(config) {
   let { id = null } = config
   if (id == null)
     return
+
   if (playerSpecialRewards.len() > MAX_SPECIAL_REWARDS_TO_SHOW)
-    playerSpecialRewards.remove(0)
+    removePlayerSpecialReward(playerSpecialRewards[0].id)
 
   let playerSpecialReward = defLogParams.__merge(config)
   sound_play(LOG_DEFAULT_SOUND)
@@ -311,7 +318,7 @@ function addSpecialPlayerReward(config) {
       function() {
         gui_scene.clearTimer(callee())
         removePlayerSpecialReward(id)
-      })
+      }, id)
     })
 
   playerSpecialRewards.append(playerSpecialReward)
@@ -370,7 +377,7 @@ function playerRewardBlock() {
     children = [
       specialReward
       {
-        size = [SIZE_TO_CONTENT, hdpx(130)]
+        size = static [SIZE_TO_CONTENT, hdpx(130)]
         flow = FLOW_VERTICAL
         gap = hdpx(4)
         halign = ALIGN_CENTER
@@ -383,14 +390,14 @@ function playerRewardBlock() {
 function mkPlayerRewardLog(config) {
   let { message } = config
   return {
-    padding = [hdpx(2), hdpx(8)]
+    padding = static [hdpx(2), hdpx(8)]
     hplace = ALIGN_CENTER
     children = message
   }
 }
 
 
-return {
+return freeze({
   playerLogBlock
   addPlayerLog
   mkPlayerRewardLog
@@ -404,4 +411,4 @@ return {
   addSpecialPlayerReward
   playerSpecialRewards
   marketIconSize
-}
+})

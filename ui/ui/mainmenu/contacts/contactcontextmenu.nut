@@ -1,9 +1,10 @@
+import "%ui/components/contextMenu.nut" as contextMenu
+import "%ui/helpers/locByPlatform.nut" as locByPlatform
+from "%ui/mainMenu/contacts/externalIdsManager.nut" import searchContactByInternalId
+
 from "%ui/ui_library.nut" import *
 
-let contextMenu = require("%ui/components/contextMenu.nut")
-let locByPlatform = require("%ui/helpers/locByPlatform.nut")
 let { uid2console } = require("%ui/mainMenu/contacts/consoleUidsRemap.nut")
-let { searchContactByInternalId } = require("%ui/mainMenu/contacts/externalIdsManager.nut")
 let { consoleCompare } = require("%ui/helpers/platformUtils.nut")
 
 let expanderForUserId = Watched(null)
@@ -27,7 +28,7 @@ function openContextMenu(userId, event, actions) {
 }
 
 function open(contactValue, event, actions) {
-  if (contactValue.userId in uid2console.value) {
+  if (contactValue.userId in uid2console.get()) {
     openContextMenu(contactValue.userId, event, actions)
     return
   }

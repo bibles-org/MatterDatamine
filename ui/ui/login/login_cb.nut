@@ -1,14 +1,17 @@
+from "%dngscripts/sound_system.nut" import sound_play
+from "%sqGlob/userInfoState.nut" import userInfoUpdate
+
+from "%ui/components/msgbox.nut" import showMsgbox
+import "%ui/components/urlText.nut" as urlText
+from "%ui/login/loginActions.nut" import getLoginActions
+from "app" import exit_game
+from "%ui/login/permission_utils.nut" import readPermissions, readPenalties
+from "%ui/helpers/remap_nick.nut" import remap_nick
+from "das.profile" import update_authorization_token
+
 from "%ui/ui_library.nut" import *
 import "auth" as auth
 
-let {sound_play} = require("%dngscripts/sound_system.nut")
-let {showMsgbox} = require("%ui/components/msgbox.nut")
-let urlText = require("%ui/components/urlText.nut")
-let {userInfoUpdate} = require("%sqGlob/userInfoState.nut")
-let {getLoginActions} = require("loginActions.nut")
-let {exit_game} = require("app")
-let {readPermissions, readPenalties} = require("%ui/login/permission_utils.nut")
-let { remap_nick } = require("%ui/helpers/remap_nick.nut")
 
 
 function onSuccess(state) {
@@ -27,6 +30,7 @@ function onSuccess(state) {
     chardToken = state.stageResult?.char?.chard_token
     externalid = state.stageResult?.char?.externalid ?? []
   }.__update(state.userInfo))
+  update_authorization_token(authResult.token)
   getLoginActions()?.onAuthComplete?.filter(@(v) type(v)=="function")?.map(@(action) action())
 }
 
@@ -45,11 +49,13 @@ function getErrorText(state) {
   return null
 }
 
-function proccessUpdateError(state) {
-  if (state.stageResult?.error == "InvalidVersion") {
-    state.params?.afterErrorProcessed?(state)
-    return true
-  }
+function proccessUpdateError(_state) {
+
+
+
+
+
+
   return false
 }
 
@@ -90,9 +96,13 @@ function showStageErrorMsgBox(errText, state, mkChildren = @(defChild) defChild)
   showMsgbox(msgboxParams)
 }
 
-let onInterrupt = function (state) {
+function onInterrupt(state) {
+  log("onInterrupt")
   if (!proccessUpdateError(state))
     showStageErrorMsgBox(getErrorText(state), state)
+  else{
+    log("not proccessUpdateError")
+  }
 }
 
 return {

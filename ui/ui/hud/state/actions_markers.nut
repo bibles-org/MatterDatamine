@@ -1,9 +1,11 @@
+from "%sqGlob/dasenums.nut" import HumanUseObjectHintType
+
+from "dagor.math" import TMatrix, Point3
+from "dasevents" import EventActionMarkerStateChanged
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { HumanUseObjectHintType } = require("%sqGlob/dasenums.nut")
-let { TMatrix, Point3 } = require("dagor.math")
-let { EventActionMarkerStateChanged } = require("dasevents")
 
 
 let useObjectHintMarkers = Watched({})

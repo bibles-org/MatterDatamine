@@ -1,0 +1,12 @@
+death_sequence{
+  _use:t="game_effect_sequence"
+
+  "death_sequence:tag"{}
+  "game_effect_sequence__stages:array"{}
+}
+
+death_sequence_controller{
+  death_sequence_controller__sequenceTemplate:t="death_sequence"
+
+  "death_sequence_controller__sequenceEid:eid"{}
+}

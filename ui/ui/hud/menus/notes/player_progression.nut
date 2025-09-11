@@ -1,25 +1,33 @@
+from "%sqstd/string.nut" import utf8ToUpper
+
+from "%ui/fonts_style.nut" import h1_txt, h2_txt, sub_txt, giant_txt
+from "%ui/components/colors.nut" import InfoTextValueColor, RedWarningColor
+from "%ui/components/commonComponents.nut" import mkText, mkTextArea, mkTooltiped
+from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import getChronogeneFullBodyPresentation, mkChronogeneDoll, mkChronogeneSlot
+import "%ui/components/colorize.nut" as colorize
+from "%ui/helpers/remap_nick.nut" import remap_nick
+from "%ui/mainMenu/menus/options/player_interaction_option.nut" import isStreamerMode, playerRandName
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { h1_txt, h2_txt, sub_txt, giant_txt } = require("%ui/fonts_style.nut")
-let { InfoTextValueColor, RedWarningColor } = require("%ui/components/colors.nut")
 let { playerProfileExperience, playerExperienceToLevel, allPassiveChronogenes } = require("%ui/profile/profileState.nut")
-let { mkText, mkTextArea, mkTooltiped } = require("%ui/components/commonComponents.nut")
 let { equipment } = require("%ui/hud/state/equipment.nut")
-let { getChronogeneFullBodyPresentation, mkChronogeneDoll, mkChronogeneSlot } = require("%ui/mainMenu/clonesMenu/clonesMenuCommon.nut")
 let { allItems } = require("%ui/state/allItems.nut")
 let { recognitionImagePattern } = require("%ui/hud/menus/components/inventoryItem.nut")
-let colorize = require("%ui/components/colorize.nut")
-let { remap_nick } = require("%ui/helpers/remap_nick.nut")
 let userInfo = require("%sqGlob/userInfo.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
-let { utf8ToUpper } = require("%sqstd/string.nut")
+
+#allow-auto-freeze
 
 let levelLineExpColor = Color(186, 186, 186, 255)
 let levelLineExpBackgroundColor = Color(0, 0, 0, 50)
 
-
 let playerCurrentLevel = Computed(function() {
+  if (playerProfileExperience.get() != 0
+    && playerProfileExperience.get() == playerExperienceToLevel.get()?[playerExperienceToLevel.get().len() - 1]
+  )
+    return playerExperienceToLevel.get().len() - 1
   for (local i = 0; i < playerExperienceToLevel.get().len(); i++) {
     if (playerProfileExperience.get() < playerExperienceToLevel.get()[i]) {
       return i
@@ -45,7 +53,7 @@ let playerLevelExpLine = function() {
 
   return {
     watch = [ currentPlayerLevelHasExp, currentPlayerLevelNeedExp ]
-    size = const [ flex(), hdpx(10) ]
+    size = static [ flex(), hdpx(10) ]
     children = [
       {
         rendObj = ROBJ_SOLID
@@ -54,7 +62,7 @@ let playerLevelExpLine = function() {
       }
       {
         rendObj = ROBJ_SOLID
-        size = [ pw(levelRatio * 100), flex() ]
+        size = [ pw(clamp(100, 0, levelRatio * 100)), flex() ]
         color = levelLineExpColor
       }
     ]
@@ -62,19 +70,19 @@ let playerLevelExpLine = function() {
 }
 
 let levelBlock = {
-  size = [ flex(), SIZE_TO_CONTENT ]
+  size = FLEX_H
   flow = FLOW_VERTICAL
   gap = hdpx(12)
   vplace = ALIGN_CENTER
   children = [
     {
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       flow = FLOW_VERTICAL
       gap = hdpx(4)
       children = [
         playerLevelExpLine
         {
-          size = const [ flex(), SIZE_TO_CONTENT ]
+          size = FLEX_H
           children = [
             @() {
               watch = currentPlayerLevelHasExp
@@ -104,31 +112,32 @@ function mainChronogeneImage() {
   return {
     watch = equipment
     vplace = ALIGN_CENTER
-    padding = [0, hdpx(10)]
-    children = mkChronogeneDoll(iconName, [hdpxi(350), hdpxi(700)],
+    padding = static [0, hdpx(10)]
+    children = mkChronogeneDoll(templateName, [hdpxi(350), hdpxi(700)],
     getChronogeneFullBodyPresentation(templateName))
   }
 }
 
 let operativeData = {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   flow = FLOW_VERTICAL
   gap = hdpx(10)
   children = [
     mkText(loc("playerProfile/shortTitle"), h1_txt)
     {
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       flow = FLOW_VERTICAL
       gap = hdpx(2)
       children = [
         @() {
-          watch = userInfo
-          size = [flex(), SIZE_TO_CONTENT]
-          children = mkTextArea(loc("playerProfile/name", { name = colorize(InfoTextValueColor, remap_nick(userInfo.get().name)) }), h2_txt)
+          watch = [userInfo, isStreamerMode, playerRandName]
+          size = FLEX_H
+          children = mkTextArea(loc("playerProfile/name",
+            { name = colorize(InfoTextValueColor, remap_nick(isStreamerMode.get() ? playerRandName.get() : userInfo.get().name)) }), h2_txt)
         }
         @() {
           watch = playerCurrentLevel
-          size = [flex(), SIZE_TO_CONTENT]
+          size = FLEX_H
           children = mkTextArea(loc("playerProfile/levelTitle", { level = colorize(InfoTextValueColor, playerCurrentLevel.get() + 1) }), h2_txt)
         }
       ]
@@ -137,7 +146,7 @@ let operativeData = {
 }
 
 let playerHeader = {
-  size = [ flex(), SIZE_TO_CONTENT ]
+  size = FLEX_H
   flow = FLOW_VERTICAL
   gap = hdpx(10)
   children = [
@@ -146,7 +155,7 @@ let playerHeader = {
   ]
 }
 
-let visualParams = const {
+let visualParams = static {
   slotSize = [hdpxi(100), hdpxi(100)]
   height = hdpxi(80)
   width = hdpxi(80)
@@ -155,7 +164,7 @@ let visualParams = const {
 function agencyRewards() {
   let allPassiveChronogenesTemplates = allPassiveChronogenes.get().keys()
   let allRewardsCount = allPassiveChronogenes.get().values().reduce(@(acc, v) acc+=v, 0)
-
+  #forbid-auto-freeze
   let allRewards = []
 
   foreach (item in allItems.get()) {
@@ -165,7 +174,7 @@ function agencyRewards() {
   }
   for (local i = allRewards.len(); i < allRewardsCount; i++) {
     allRewards.append({
-      size = const [hdpxi(100), hdpxi(100)]
+      size = static [hdpxi(100), hdpxi(100)]
       children = mkTooltiped(recognitionImagePattern, loc("player_progression/unknownChronogenesTooltip"), { size = flex() })
     })
   }
@@ -182,10 +191,10 @@ function agencyRewards() {
   for (local i=0; i < allRewards.len(); i+=itemsPerRow) {
     rewardsLists.append(mkColumn(allRewards.slice(i, i + itemsPerRow)))
   }
-
+  #allow-auto-freeze
   return {
     watch = [ allItems, allPassiveChronogenes ]
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     hplace = ALIGN_CENTER
     halign = ALIGN_CENTER
     flow = FLOW_VERTICAL
@@ -194,7 +203,7 @@ function agencyRewards() {
       mkText(loc("player_progression/rewardBlockTitle"),  h1_txt)
       mkTextArea(loc("player_progression/rewardBlockExplain"), { hplace = ALIGN_CENTER, halign = ALIGN_CENTER }.__update(sub_txt))
       {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_VERTICAL
         gap = hdpx(10)
         padding = hdpx(20)
@@ -206,7 +215,7 @@ function agencyRewards() {
 }
 
 let dataContent = {
-  size = [hdpx(990), flex()]
+  size = static [hdpx(990), flex()]
   flow = FLOW_VERTICAL
   gap = hdpx(20)
   valign = ALIGN_CENTER
@@ -217,7 +226,7 @@ let dataContent = {
 }
 
 let unavailableProfileBlock = {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   flow = FLOW_VERTICAL
   gap = sh(20)
   halign = ALIGN_CENTER
@@ -240,7 +249,7 @@ let unavailableProfileBlock = {
 
 let playerProgression = @() @() {
   watch = isOnboarding
-  size = [ flex(), SIZE_TO_CONTENT ]
+  size = FLEX_H
   flow = FLOW_HORIZONTAL
   gap = hdpx(50)
   halign = ALIGN_CENTER

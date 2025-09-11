@@ -120,7 +120,7 @@ reverb_sound{
 }
 
 music_player{
-  _use:t="sound_banks_state"
+  _use:t="sound_preset"
   _use:t="replicating"
   _singleton:b=yes
   _tracked:t="music_player__volume"
@@ -170,6 +170,8 @@ entity_hit_sound{
 }
 
 turret_sound{
+  _use:t="sound_preset"
+
   _group{
     _tags:t="sound"
     turret_sound__path:t="player/vehicle/tank/common/turret"
@@ -262,7 +264,7 @@ am_sound_step_settings{
     _tags:t="sound"
 
     "sound_physmat__soundMaterials:list<t>"{
-      mat:t="grass"
+      mat:t="dirt"
       mat:t="concrete"
       mat:t="water"
       mat:t="wood"
@@ -278,6 +280,8 @@ am_sound_step_settings{
       mat:t="leaves"
       mat:t="plastic"
       mat:t="glass"
+      mat:t="glassbroken"
+      mat:t="grass"
     }
 
     "sound_physmat__physmatToSoundmat:object"{
@@ -294,11 +298,14 @@ am_sound_step_settings{
       ceramic:t="glass"
       changedFlesh:t="mud"
       concrete:t="concrete"
-      dirt:t="grass"
+      dirt:t="dirt"
       fabric:t="fabric"
       flesh:t="mud"
       flowermanFlesh:t="mud"
       glass:t="glass"
+      glass_broken:t="glassbroken"
+      grass:t="grass"
+      grassTall:t="grass"
       gravel:t="gravel"
       hay:t="highgrass"
       ice:t="ice"
@@ -318,7 +325,7 @@ am_sound_step_settings{
       roadMud:t="mud"
       roadSand:t="sand"
       roadSnow:t="snow"
-      roadSoil:t="grass"
+      roadSoil:t="dirt"
       rocks:t="concrete"
       rocksSlippery:t="concrete"
       rubber:t="fabric"
@@ -331,7 +338,7 @@ am_sound_step_settings{
       snowLower:t="snow"
       softSteelDoor:t="metal"
       softWoodDoor:t="wood"
-      soil:t="grass"
+      soil:t="dirt"
       steel:t="metal"
       stone:t="concrete"
       train:t="metal"
@@ -350,6 +357,41 @@ am_sound_step_settings{
       wood_snow:t="wood"
       wood_solid:t="wood"
       wood:t="wood"
+    }
+  }
+
+  _group{
+    _tags:t="sound"
+
+    "landmesh_biomes_to_sound_material__biomes:object"{
+      "grass_tall:object"{
+        soundmat:t="highgrass"
+      }
+
+      "forest:object"{
+        soundmat:t="leaves"
+      }
+
+      "rocks:object"{
+        soundmat:t="concrete"
+      }
+
+      "asphalt:object"{
+        soundmat:t="concrete"
+      }
+
+      "pebbles:object"{
+        soundmat:t="gravel"
+      }
+
+      "mud:object"{
+        soundmat:t="mud"
+      }
+
+      "snow:object"{
+        soundmat:t="snow"
+        overrideWater:b=yes
+      }
     }
   }
 }
@@ -474,5 +516,43 @@ am_scene_net_sounds{
       path:t="enemy/walker/changed/voice_fx/ability"
       range:r=1000
     }
+  }
+}
+
+blinking_light_sound{
+  _use:t="sound_control"
+
+  _group{
+    _tags:t="sound"
+    blinking_light_sound__playUntil:r=0
+    blinking_light_sound__path:t=""
+    blinking_light_sound__var:t="brightness"
+    blinking_light_sound__brightnessThreshold:r=0.01
+    blinking_light_sound__duration:r=1
+    blinking_light_sound__localOffset:p3=0, 0, 0
+
+    "blinking_light_sound__event:SoundEvent"{}
+  }
+}
+
+gravity_change_sound{
+  _group{
+    _tags:t="sound"
+    gravity_change_sound__volume:r=0
+    gravity_change_sound__dir:p3=0, 0, 0
+    gravity_change_sound__transitionUntil:r=0
+    gravity_change_sound__transitionSpeed:r=0
+    gravity_change_sound__transitionSpeedHistory:p4=0, 0, 0, 0
+    gravity_change_sound__path:t="player/effects/gravity"
+    gravity_change_sound__viscocity:r=0.5
+    gravity_change_sound__maxDistance:r=2
+    gravity_change_sound__transitionPath:t="player/effects/gravity_transition"
+    gravity_change_sound__transitionParam:t="speed"
+    gravity_change_sound__transitionDuration:r=0.5
+    gravity_change_sound__transitionSpeedMinMax:p2=0.01, 0.1
+    gravity_change_sound__transitionDecaySpeed:r=0.5
+
+    "gravity_change_sound__event:SoundEvent"{}
+    "gravity_change_sound__transitionEvent:SoundEvent"{}
   }
 }

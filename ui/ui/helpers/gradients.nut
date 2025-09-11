@@ -3,6 +3,10 @@ from "math" import sqrt, pow, sin, PI
 
 let { mkBitmapPicture } = require("%darg/helpers/bitmap.nut")
 
+let gradCircCornerSize = 20
+let getDistance = @(x, y) sqrt(x * x + y * y)
+let mkWhite = @(part) part + (part << 8) + (part << 16) + (part << 24)
+
 let easings = {
   function easeInOutCubic(x) {
     return x < 0.5 ? 4 * x * x * x : 1 - pow(-2 * x + 2, 3) / 2
@@ -38,6 +42,16 @@ let mkSmoothBWGradientY = kwarg(function(height = 12, isAlphaPremultiplied = tru
     }, isAlphaPremultiplied ? "" : "!")
 })
 
+let gradRadial = mkBitmapPicture(gradCircCornerSize * 2, gradCircCornerSize * 2,
+  function(_, bmp) {
+    for (local y = 0; y < gradCircCornerSize * 2; y++)
+      for (local x = 0; x < gradCircCornerSize * 2; x++) {
+        let distance = getDistance(x - gradCircCornerSize, y - gradCircCornerSize)
+        bmp.setPixel(x, y, mkWhite((0xFF * max(0.0, 1.0 - ((distance + 1) / gradCircCornerSize))).tointeger()))
+      }
+  })
+
 return {
   mkSmoothBWGradientY
+  gradRadial
 }

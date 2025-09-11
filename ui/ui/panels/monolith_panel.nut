@@ -1,42 +1,46 @@
+from "%ui/mainMenu/monolith/monolithMenu.nut" import getMonolithNotifications
+from "%ui/panels/console_common.nut" import mkFlashingInviteTextScreen, flashingScreen, mkStdPanel,
+textColor, waitingCursor, inviteText, consoleFontSize, consoleTitleFontSize, mkNotificationIndicator
+from "%ui/leaderboard/lb_state_base.nut" import curMonolithLbData, curMonolithLbPlayersCount, curMonolithLbVotesCount
 from "%ui/ui_library.nut" import *
 
-let { isOnboarding, onboardingMonolithFirstLevelUnlocked } = require("%ui/hud/state/onboarding_state.nut")
+let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 let { currentMonolithLevel } = require("%ui/mainMenu/monolith/monolith_common.nut")
-let { isMonolithMenuAvailable, getMonolithNotifications } = require("%ui/mainMenu/monolith/monolithMenu.nut")
-let { mkFlashingInviteTextScreen, flashingScreen, mkStdPanel, textColor, waitingCursor, inviteText, consoleFontSize, consoleTitleFontSize } = require("%ui/panels/console_common.nut")
+let { isMonolithMenuAvailable } = require("%ui/mainMenu/monolith/monolithMenu.nut")
 let { playerBaseState } = require("%ui/profile/profileState.nut")
-let { curLbData, curLbPlayersCount } = require("%ui/leaderboard/lb_state_base.nut")
+
+#allow-auto-freeze
 
 function monolithProgress() {
   let { playersCountToRestartProgress = 0 } = playerBaseState.get()
-  if (playersCountToRestartProgress == 0 || curLbPlayersCount.get() == null)
-    return const { watch = [playerBaseState, curLbData]}
-  let percent = curLbPlayersCount.get() / playersCountToRestartProgress.tofloat() * 100
+  if (playersCountToRestartProgress == 0 || curMonolithLbVotesCount.get() == null)
+    return static { watch = [playerBaseState, curMonolithLbData, curMonolithLbVotesCount]}
+  let percent = curMonolithLbVotesCount.get() / playersCountToRestartProgress.tofloat() * 100
 
   return {
-    watch  = const [playerBaseState, curLbData]
-    size = const [flex(), SIZE_TO_CONTENT]
+    watch  = static [playerBaseState, curMonolithLbData]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     gap = 6
     children = [
-      const { hplace = ALIGN_CENTER text = loc("monolith/resetProgressShort", "Harmonization"), rendObj = ROBJ_TEXT fontSize = consoleTitleFontSize color = textColor}
+      static { hplace = ALIGN_CENTER text = loc("monolith/resetProgressShort", "Harmonization"), rendObj = ROBJ_TEXT fontSize = consoleTitleFontSize color = textColor}
       {
         rendObj = ROBJ_BOX
-        size = const [flex(), 40]
+        size = static [flex(), 40]
         borderWidth = 2
         borderColor = textColor
-        transform = const {}
+        transform = static {}
         children = [
           {
             rendObj = ROBJ_SOLID
             size = [pw(percent), flex()]
-            margin = const [2, 0, 2, 2]
+            margin = static [2, 0, 2, 2]
             color = textColor
           }
           {
             rendObj = ROBJ_TEXT
-            text = $"{curLbPlayersCount.get()}/{playersCountToRestartProgress}"
-            fontFxColor = const Color(0,0,0,120)
+            text = $"{curMonolithLbPlayersCount.get()}/{playersCountToRestartProgress}"
+            fontFxColor = static Color(0,0,0,120)
             fontFx = FFT_BLUR
             fontFxFactor=8
             vplace = ALIGN_CENTER
@@ -50,52 +54,64 @@ function monolithProgress() {
   }
 }
 
-let monolithTitle = const {rendObj = ROBJ_TEXT text = loc("monolith/name", "Monolith") fontSize = consoleTitleFontSize color = textColor hplace = ALIGN_RIGHT}
+let monolithTitle = static {rendObj = ROBJ_TEXT text = loc("monolith/name", "Monolith") fontSize = consoleTitleFontSize color = textColor hplace = ALIGN_RIGHT}
+
+let mkMonolithNotification = @() Computed(getMonolithNotifications)
 
 return {
-  mkMonolithPanel = function(canvasSize, data) {
-    let notifications = Computed(getMonolithNotifications)
+  mkMonolithNotification
+  mkMonolithPanel = function(canvasSize, data, notifier=null) {
+    let notifications = mkMonolithNotification()
     return mkStdPanel(canvasSize, data, {
-      children = @() {
-        watch = isMonolithMenuAvailable
-        size = flex()
-        children = !isMonolithMenuAvailable.get() ? null : [
-          @() {
-            size = flex()
-            watch = const [notifications, isOnboarding],
-            children = (notifications.get() && !isOnboarding.get()) ? [
-              const {rendObj = ROBJ_TEXT text = $"UPGRADE NOW TO LEVEL:  {currentMonolithLevel.get()+1}" hplace = ALIGN_CENTER vplace = ALIGN_CENTER color=textColor fontSize = consoleTitleFontSize}
-              flashingScreen
-            ] : null
-          }
-          function() {
-            let needFirstUpgrade = isOnboarding.get() && !onboardingMonolithFirstLevelUnlocked.get()
-            return {
-              flow = FLOW_VERTICAL
-              watch = const [isOnboarding, onboardingMonolithFirstLevelUnlocked]
-              padding = 8
-              size = const flex()
-              gap = 2
-              children = needFirstUpgrade
-                ? const mkFlashingInviteTextScreen("Upgrade access level to Portal and Monoloth")
-                : [
-                  monolithTitle
-                  @() { watch = currentMonolithLevel children = currentMonolithLevel.get() < 10 ? null : monolithProgress size = const [flex(), SIZE_TO_CONTENT]}
-                  @() {
-                    watch = currentMonolithLevel
-                    text = loc($"monolith/level" { level = currentMonolithLevel.get()})
-                    color = textColor
-                    rendObj = ROBJ_TEXT
-                    fontSize = consoleTitleFontSize
+      children = [
+        @() {
+          watch = isMonolithMenuAvailable
+          size = flex()
+          children = !isMonolithMenuAvailable.get() ? null : [
+            {
+              size = flex()
+              padding = static [8, 18]
+              children = [
+                @() {
+                  size = flex()
+                  watch = [notifications, isOnboarding],
+                  children = (notifications.get() && !isOnboarding.get()) ? [
+                    {rendObj = ROBJ_TEXT text = loc("monolith/console/upgrade_to_level", {level = currentMonolithLevel.get()+1}) hplace = ALIGN_CENTER vplace = ALIGN_CENTER color=textColor fontSize = consoleTitleFontSize}
+                    flashingScreen("leaderboard_panel")
+                  ] : null
+                }
+                function() {
+                  let needFirstUpgrade = isOnboarding.get()
+                  return {
+                    flow = FLOW_VERTICAL
+                    watch = static [isOnboarding]
+                    padding = 8
+                    size = static flex()
+                    gap = 2
+                    children = needFirstUpgrade
+                      ? mkFlashingInviteTextScreen(loc("monolith/console/get_access"), "leaderboard_panel")
+                      : [
+                        monolithTitle
+                        @() { watch = currentMonolithLevel children = currentMonolithLevel.get() < 10 ? null : monolithProgress size = FLEX_H}
+                        @() {
+                          watch = currentMonolithLevel
+                          text = loc($"monolith/level" { level = currentMonolithLevel.get()})
+                          color = textColor
+                          rendObj = ROBJ_TEXT
+                          fontSize = consoleTitleFontSize
+                        }
+                        static {size = flex()}
+                        inviteText
+                        waitingCursor
+                    ]
                   }
-                  const {size = flex()}
-                  inviteText
-                  waitingCursor
+                }
               ]
             }
-          }
-        ]
-      }
+          ]
+        },
+        notifier
+      ]
     })
   }
 }

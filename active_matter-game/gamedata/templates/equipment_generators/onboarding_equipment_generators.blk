@@ -1,0 +1,40 @@
+miniraid_enemy_equipment_generator{
+  "equipment_generator__data:object"{
+    "equipments:object"{
+      "native_sector_militant_suit_2_item:object"{
+        chance:i=1
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="beretta_m9_gun"
+        weight:i=50
+
+        "magazine:object"{
+          beretta_m9_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          beretta_m9_magazine:i=100
+        }
+      }
+    }
+
+    "medicines:array"{
+      "i:object"{
+        "POUCH1:object"{
+          item_healing_ampoule:i=1
+        }
+      }
+    }
+
+    "trash:array"{
+      "i:object"{
+        "POUCH1:object"{
+          small_pouch:i=1
+        }
+      }
+    }
+  }
+}

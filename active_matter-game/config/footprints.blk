@@ -1,28 +1,29 @@
-NameToTexIdMap{
-  default:i=0
-  sand:i=1
-  mud:i=2
-  stone:i=3
-}
+texturePrefix:t="footprints_boot_sole_a"
+textureDiffuseSuffix:t="tex_d"
+textureNormalSuffix:t="tex_n"
+FootprintTypeNames:t="dirt"
+FootprintTypeNames:t="sand"
+FootprintTypeNames:t="mud"
+footprintsSize:r=0.25
+footprintSoleTypesCount:i=1
 
 PhysmatFootprintType{
-  default:t="default"
-  concrete:t="stone"
-  stone:t="stone"
-  soil:t="default"
+  default:t="dirt"
+  soil:t="dirt"
   mud:t="mud"
-  dirt:t="default"
-  roadSoil:t="default"
+  dirt:t="dirt"
+  roadSoil:t="dirt"
   sand:t="sand"
   quarrySand:t="sand"
   sand_slope:t="sand"
   roadSand:t="sand"
   quickSand:t="sand"
-  snow:t="default"
+  snow:t="dirt"
   ice:t="mud"
-  snowLower:t="default"
+  snowLower:t="dirt"
   roadSnow:t="mud"
-  rocks:t="stone"
-  rocksSlippery:t="stone"
-  gravel:t="stone"
+}
+
+EnviCoverFootprintType{
+  snow:t="dirt"
 }

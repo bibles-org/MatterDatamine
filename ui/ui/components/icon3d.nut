@@ -1,5 +1,7 @@
 from "%ui/ui_library.nut" import *
 
+#allow-auto-freeze
+
 let RENDER_PARAMS = @"{atlasName}render{
   itemName:t={itemName};animchar:t={animchar};autocrop:b=false;
   yaw:r={yaw};pitch:r={pitch};roll:r={roll};
@@ -7,7 +9,7 @@ let RENDER_PARAMS = @"{atlasName}render{
   outline:c={outlineColor};shading:t={shading};silhouette:c={silhouetteColor};
   silhouetteHasShadow:b={silhouetteHasShadow}
   silhouetteMinShadow:r={silhouetteMinShadow}
-  animation:t={animation}; enviExposure:r={enviExposure}; sun:c={sunColor}
+  animation:t={animation}; enviPanoramaTex:t={enviPanoramaTex}; enviExposure:r={enviExposure}; sun:c={sunColor}
   {animationParams}
   recalcAnimation:b={recalcAnimation}
   {zenith}{azimuth}
@@ -17,6 +19,7 @@ let RENDER_PARAMS = @"{atlasName}render{
   {objTexSetRules}
   {shaderColors}
   {lights}
+  {antiAliasing}
 }.render"
 
 let iconWidgetDef = {
@@ -30,9 +33,9 @@ let iconWidgetDef = {
   silhouetteHasShadow = false
   silhouetteMinShadow = 1.0
 }
-
+#forbid-auto-freeze
 let cachedPictures = {}
-
+#allow-auto-freeze
 function getPicture(source) {
   local pic = cachedPictures?[source]
   if (pic)
@@ -43,6 +46,7 @@ function getPicture(source) {
 }
 
 function getTexReplaceString(item) {
+  #forbid-auto-freeze
   let { objTexReplace = null } = item
   if (objTexReplace == null)
     return ""
@@ -88,6 +92,7 @@ let getTMatrixString = @(m)
   "[{0}]".subst(" ".join(array(4).map(@(_, i) $"[{m[i].x}, {m[i].y}, {m[i].z}]")))
 
 function getShaderColorsString(item) {
+  #forbid-auto-freeze
   let { shaderColors = null } = item
   if (shaderColors == null || type(shaderColors) != "table")
     return ""
@@ -104,7 +109,7 @@ function getShaderColorsString(item) {
 function getLightsString(lights) {
   if (lights.len() == 0)
     return ""
-
+  #forbid-auto-freeze
   let list = []
   list.append("lights {")
 
@@ -152,9 +157,11 @@ function iconWidget(item, params = iconWidgetDef) {
   let objTexReplace = getTexReplaceString(item)
   let objTexSet = getTexSetString(item)
   let shaderColors = getShaderColorsString(item)
-  let enviExposure = item?.enviExposure ?? 64.0
-  let lights = getLightsString(item?.lights ?? [])
-
+  let enviPanoramaTex = item?.enviPanoramaTex ?? params?.enviPanoramaTex ?? "icon_render_panorama_tex_d"
+  let enviExposure = item?.enviExposure ?? params?.enviExposure ?? 64.0
+  let lights = getLightsString(item?.lights ?? params?.lights ?? [])
+  let antiAliasing = item?.antiAliasing ?? 4
+  #forbid-auto-freeze
   let attachments = []
   local haveActiveAttachments = false
   foreach (i, attachment in item?.iconAttachments ?? []) {
@@ -217,8 +224,10 @@ function iconWidget(item, params = iconWidgetDef) {
     hideNodes = hideNodes.len() > 0 ? "hideNodes{{0}}".subst("".join(hideNodes)) : ""
     shaderColors,
     animationParams,
+    enviPanoramaTex,
     enviExposure,
-    lights
+    lights,
+    antiAliasing = "ssaaX:i={0};ssaaY:i={0};".subst(antiAliasing)
   })
 
   let image = getPicture(imageSource)
@@ -234,7 +243,7 @@ function iconWidget(item, params = iconWidgetDef) {
     keepAspect = true
     picSaturate = item?.picSaturate ?? 1.0
 
-    animations = const [{ prop=AnimProp.opacity, from=0, to=1, duration=0.7, play=true, easing=OutCubic }]
+    animations = static [{ prop=AnimProp.opacity, from=0, to=1, duration=0.7, play=true, easing=OutCubic }]
   }.__update(params)
 }
 

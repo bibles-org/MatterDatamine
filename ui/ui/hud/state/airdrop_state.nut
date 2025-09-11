@@ -1,9 +1,10 @@
+from "dagor.math" import Point3
+from "dagor.random" import rnd_float
+from "net" import get_sync_time
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { Point3 } = require("dagor.math")
-let { rnd_float } = require("dagor.random")
-let { get_sync_time } = require("net")
 
 let airdropPredictedPositions = Watched({})
 let sizeAirdropCirclesOnMap = Watched(30.0)
@@ -26,6 +27,7 @@ ecs.register_es("airdrop_create_circle", {
   }
   onDestroy = @(eid, _comp) airdropPredictedPositions.mutate(function(airdropCircle) { airdropCircle.$rawdelete(eid) })
 }, {
+    comps_rq = ["airdrop__createdByManager"]
     comps_ro = [
       [ "airdrop__moveTo", ecs.TYPE_POINT3 ],
       [ "airdrop__icon", ecs.TYPE_STRING ],
@@ -36,7 +38,7 @@ ecs.register_es("airdrop_create_circle", {
 
 ecs.register_es("airdrop_get_radius_on_map", {
   [["onInit"]] = function(_evt, _eid, comp) {
-    sizeAirdropCirclesOnMap(comp.airdrop_manager__radiusOnMapUi)
+    sizeAirdropCirclesOnMap.set(comp.airdrop_manager__radiusOnMapUi)
   }
 }, {
   comps_ro = [

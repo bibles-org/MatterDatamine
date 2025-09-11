@@ -1,8 +1,9 @@
-require app
+require app // get_sync_time
 require ecs
 require ecs.common
 require math.random
 require math.base
+require Dacoll
 require DagorMath
 require DagorSystem
 require walkerai
@@ -161,12 +162,42 @@ def move_navmesh_phys_pos(act : UpdateStageInfoAct;
                           navmesh_phys__atTime : float;
                           navmesh_phys__prevPos : float3;
                           navmesh_phys__currentPos : float3;
+                          navmesh_phys__upDir : float3 = float3(0, 1, 0);
+                          navmesh_phys__visualHeightOffsetShown : float = 0.0;
                           var transform : float3x4)
   let step = navmesh_phys__atTime - navmesh_phys__prevTime
   if step > 0f
     let k = (act.curTime - navmesh_phys__prevTime) / step
     let targetPos = lerp(navmesh_phys__prevPos, navmesh_phys__currentPos, float3(k))
-    transform[3] = targetPos
+    transform[3] = targetPos + navmesh_phys__upDir * navmesh_phys__visualHeightOffsetShown
+
+
+[es(tag=server, before=move_navmesh_phys_pos, REQUIRE_NOT=(deadEntity, nphys__disabled))]
+def nphys_calc_navmesh_drop_offset(upd : UpdateStageInfoAct;
+                                   navmesh_phys__currentPos : float3;
+                                   navmesh_phys__upDir : float3 = float3(0.0, 1.0, 0.0);
+                                   navmesh_phys__heightOffsetTraceSphereRadius : float;
+                                   navmesh_phys__heightOffsetTraceOffset : float;
+                                   navmesh_phys__heightOffsetMaxTraceDist : float;
+                                   navmesh_phys__heightOffsetTraceInterval : float2;
+                                   navmesh_phys__heightOffsetApproachViscocity : float;
+                                   var navmesh_phys__visualHeightOffsetShown : float&;
+                                   var navmesh_phys__heightOffsetTraceAt : float&;
+                                   var navmesh_phys__visualHeightOffsetDesired : float&)
+  navmesh_phys__visualHeightOffsetShown = approach(navmesh_phys__visualHeightOffsetShown, navmesh_phys__visualHeightOffsetDesired, upd.dt, navmesh_phys__heightOffsetApproachViscocity)
+  if upd.curTime < navmesh_phys__heightOffsetTraceAt
+    return
+
+  navmesh_phys__heightOffsetTraceAt = upd.curTime + rnd_float(navmesh_phys__heightOffsetTraceInterval)
+
+  let traceLen = navmesh_phys__heightOffsetTraceOffset + navmesh_phys__heightOffsetMaxTraceDist
+  let tracePos = navmesh_phys__currentPos + navmesh_phys__upDir * navmesh_phys__heightOffsetTraceOffset
+  let traceToPos = tracePos - navmesh_phys__upDir * traceLen
+  var castRes = ShapeQueryOutput()
+  var desiredHeightOffset = 0.0
+  if sphere_cast(tracePos, traceToPos, navmesh_phys__heightOffsetTraceSphereRadius, castRes, int(PhysLayer.EPL_STATIC))
+    desiredHeightOffset = -distance(castRes.res, navmesh_phys__currentPos)
+  navmesh_phys__visualHeightOffsetDesired = desiredHeightOffset
 
 
 [es(tag=server, after=(move_navmesh_phys_pos, move_navmesh_phys_lookdir), REQUIRE_NOT=(deadEntity, nphys__disabled))]

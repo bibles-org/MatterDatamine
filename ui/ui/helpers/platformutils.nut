@@ -1,9 +1,12 @@
-let { is_xbox, is_sony, is_pc, is_nswitch } = require("%dngscripts/platform.nut")
-let { endsWith, startsWith } = require("%sqstd/string.nut")
-let { CrossplayState } = require("%ui/state/crossnetwork_state.nut")
+from "%dngscripts/platform.nut" import is_xbox, is_sony, is_pc, is_nswitch
+
+from "%sqstd/string.nut" import endsWith, startsWith
+
+from "%ui/state/crossnetwork_state.nut" import CrossplayState
 
 
-let consoleCompare = {
+
+let consoleCompare = freeze({
   xbox = {
     isFromPlatform = @(name) endsWith(name, "@live") || startsWith(name, "^")
     isPlatform = is_xbox
@@ -12,7 +15,7 @@ let consoleCompare = {
     isFromPlatform = @(name) endsWith(name, "@psn") || startsWith(name, "*")
     isPlatform = is_sony
   }
-}
+})
 
 function isPlayerSuitableForContactsList(name, crossnetworkChatValue) {
   if (crossnetworkChatValue)
@@ -50,9 +53,9 @@ function canInterractCrossPlatformByCrossplay(name, crossplayValue) {
   return false
 }
 
-return {
+return freeze({
   isPlayerSuitableForContactsList
   canInterractCrossPlatform
   consoleCompare
   canInterractCrossPlatformByCrossplay
-}
+})

@@ -1,10 +1,11 @@
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/components/colors.nut" import Inactive
+import "%ui/components/urlText.nut" as urlText
+from "settings" import get_setting_by_blk_path
+
 from "%ui/ui_library.nut" import *
 
-let { body_txt } = require("%ui/fonts_style.nut")
-let {Inactive} = require("%ui/components/colors.nut")
-let urlText = require("%ui/components/urlText.nut")
-let {registerUrl} = require("loginUiParams.nut")
-let { get_setting_by_blk_path } = require("settings")
+let { registerUrl } = require("%ui/login/ui/loginUiParams.nut")
 
 function text(str) {
   return {
@@ -25,7 +26,7 @@ let regInfo = {
   ]
 }
 let loginWarning = {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   rendObj = ROBJ_TEXTAREA
   behavior = Behaviors.TextArea
   halign = ALIGN_CENTER
@@ -35,7 +36,7 @@ let legalUrl = get_setting_by_blk_path("legalsUrl") ?? "https://legal.gaijin.net
 let legalInfo = {
   flow = FLOW_VERTICAL
   halign = ALIGN_CENTER
-  size = [ flex(), SIZE_TO_CONTENT ]
+  size = FLEX_H
   children = [
     loginWarning
     urlText(loc("Legals"), legalUrl)
@@ -52,6 +53,5 @@ return {
   children = [
     legalInfo
     regInfo
-    urlText(loc("gameForum"), get_setting_by_blk_path("gaijinForumUrl") ?? "https://forum.activematter.game/")
   ]
 }

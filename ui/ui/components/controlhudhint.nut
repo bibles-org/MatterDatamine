@@ -1,12 +1,15 @@
+from "%ui/control/formatInputBinding.nut" import textListFromAction, buildElems, mkHasBinding
+
+from "%ui/fonts_style.nut" import sub_txt
+
 from "%ui/ui_library.nut" import *
 from "%ui/components/colors.nut" import HUD_TIPS_HOTKEY_FG
 
-let {sub_txt} = require("%ui/fonts_style.nut")
 let { controlsGeneration } = require("%ui/control/controls_generation.nut")
-let {
-  textListFromAction, buildElems, mkHasBinding, keysImagesMap
-} = require("%ui/control/formatInputBinding.nut")
+let { keysImagesMap } = require("%ui/control/formatInputBinding.nut")
 let { isGamepad } = require("%ui/control/active_controls.nut")
+
+#allow-auto-freeze
 
 function container(children, params={}){
   return {
@@ -23,7 +26,7 @@ function container(children, params={}){
     }
     clipChildren = true
     size = SIZE_TO_CONTENT
-    padding = [hdpx(4), hdpx(6)]
+    padding = static [hdpx(4), hdpx(6)]
   }.__update(params)
 }
 
@@ -46,12 +49,12 @@ function controlHudHint(params, _group = null) {
 
   let hasBinding = mkHasBinding(params.id)
   return function(){
-    local disableFrame = params?.disableFrame ?? isGamepad.value
-    let column = isGamepad.value ? 1 : 0
+    local disableFrame = params?.disableFrame ?? isGamepad.get()
+    let column = isGamepad.get() ? 1 : 0
     let textList = textListFromAction(params.id, column)
     local hasTexts = false
     foreach (e in textList) {
-      if (keysImagesMap.value?[e] == null){
+      if (keysImagesMap.get()?[e] == null){
         hasTexts=true
         break
       }
@@ -85,7 +88,7 @@ let defTextFunc = @(text){
     {rendObj=ROBJ_WORLD_BLUR size = flex() fillColor = Color(0,0,0,30)}
     {
       text color = HUD_TIPS_HOTKEY_FG, rendObj = ROBJ_TEXT
-      margin = [hdpx(1),hdpx(2)]
+      margin = static [hdpx(1),hdpx(2)]
       size = SIZE_TO_CONTENT
     }.__update(sub_txt)
   ]
@@ -98,7 +101,7 @@ function mkShortHudHintFromList(controlElems, watch = null){
     modifier = controlElems[1]
     controlElems = [controlElems[0]]
   }
-  modifier = {hplace = ALIGN_RIGHT, size = SIZE_TO_CONTENT, children = modifier, padding = [0,0,0,hdpx(15)], pos=[0,-hdpx(2)]}
+  modifier = {hplace = ALIGN_RIGHT, size = SIZE_TO_CONTENT, children = modifier, padding = static [0,0,0,hdpx(15)], pos=[0,-hdpx(2)]}
   controlElems.append(modifier)
   return {
     watch = [isGamepad].extend(watch ?? [])
@@ -118,7 +121,7 @@ function shortHudHint(params = {textFunc=defTextFunc, alternateId=null}){
   let hasBinding = mkHasBinding(params.id)
   let hasAltBinding = params?.alternateId != null ? mkHasBinding(params.alternateId) : null
   return function(){
-    let column = isGamepad.value ? 1 : 0
+    let column = isGamepad.get() ? 1 : 0
     local textList = textListFromAction(params.id, column, eventTypeToText)
     if (textList.len()==0 && params?.alternateId != null) {
       textList = textListFromAction(params.alternateId, column, eventTypeToText)

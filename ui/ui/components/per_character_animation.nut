@@ -1,6 +1,8 @@
-from "%ui/ui_library.nut" import *
-let utf8 = require("utf8")
+import "utf8" as utf8
 
+from "%ui/ui_library.nut" import *
+
+#allow-auto-freeze
 
 function mkAnim(ch, i, total, anim, params = {}){
   let l = total.len()
@@ -17,6 +19,7 @@ function mkAnim(ch, i, total, anim, params = {}){
 }
 
 function mkAnimText(txt, anim, params = {}) {
+  #forbid-auto-freeze
   let ut = utf8(txt)
   let chars = []
   for(local i=1; i <= ut.charCount(); i++){

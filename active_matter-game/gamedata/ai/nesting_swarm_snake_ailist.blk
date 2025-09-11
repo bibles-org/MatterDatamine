@@ -38,7 +38,7 @@ repeat{
             modifyNode{
               target:t="nesting_swarm_snake__state"
               operator:t="="
-              arg:i=2
+              arg:i=3
             }
 
             recalculateTree{}
@@ -50,6 +50,33 @@ repeat{
         target:t="nesting_swarm_snake__state"
         operator:t="="
         arg:i=2
+      }
+
+      copyEntityPos{
+        pos:t="nesting_swarm_snake__targetPos"
+        eid:t="walker_agent__targetEid"
+      }
+
+      wait{
+        range:p2=2, 5
+        resetable:b=yes
+      }
+
+      modifyNode{
+        target:t="nesting_swarm_snake__state"
+        operator:t="="
+        arg:i=3
+      }
+
+      copyEntityPos{
+        pos:t="nesting_swarm_snake__targetPos"
+        eid:t="walker_agent__targetEid"
+      }
+
+      nestingSwarmAddOffsetToTarget{
+        pos:t="nesting_swarm_snake__targetPos"
+        offset:r=1.1
+        dispersion:r=1
       }
 
       parallel{
@@ -84,7 +111,7 @@ repeat{
       modifyNode{
         target:t="nesting_swarm_snake__state"
         operator:t="="
-        arg:i=3
+        arg:i=4
       }
 
       copyEntityPos{
@@ -100,7 +127,7 @@ repeat{
       modifyNode{
         target:t="nesting_swarm_snake__state"
         operator:t="="
-        arg:i=2
+        arg:i=3
       }
 
       subTree{
@@ -213,7 +240,7 @@ orderedSelector{
     modifyNode{
       target:t="nesting_swarm_snake__state"
       operator:t="="
-      arg:i=2
+      arg:i=3
     }
 
     setTime{

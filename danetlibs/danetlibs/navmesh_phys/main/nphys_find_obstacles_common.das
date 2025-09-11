@@ -1,7 +1,6 @@
 module nphys_find_obstacles_common shared
 require ecs
 require ecs.common
-require app
 require math.base
 require math.linear
 require player

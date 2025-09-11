@@ -1,12 +1,15 @@
 options no_aot
 
-require app
 require ecs.fs
 require ECSGlobalTags
+require RenderLibsAllowed
 
 
 [export]
 def load_dm(base_path : string) : bool
+  if !is_render_lib_allowed("dm")
+    return true
+
   var ok = true
 
   ok = load_sub_folder(base_path, "main") && ok

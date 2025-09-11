@@ -1,7 +1,8 @@
+from "%ui/matchingClient.nut" import startLogin
+from "eventbus" import eventbus_subscribe_onehit
+
 from "%ui/ui_library.nut" import *
 
-let { startLogin } = require("%ui/matchingClient.nut")
-let { eventbus_subscribe_onehit } = require("eventbus")
 
 return {
   id = "matching"

@@ -1,36 +1,37 @@
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import isFastEquipItemPossible, getInventoryToMove
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { GROUND, STASH, EXTERNAL_ITEM_CONTAINER, BACKPACK0, HERO_ITEM_CONTAINER, REFINER_STASH, TRASH_BIN,
+let { GROUND, STASH, EXTERNAL_ITEM_CONTAINER, BACKPACK0, HERO_ITEM_CONTAINER, REFINER_STASH,
   REFINER, GENES_SECONDARY, GENES_MAIN, WORKBENCH, WORKBENCH_STASH, WORKBENCH_ITEMS_ON_PLAYER,
-  LOOTBOX_SHOW_RESULT
+  LOOTBOX_SHOW_RESULT, REPLICATOR_ITEM
 } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
 let { POCKETS, REPAIR, WEAPON, WEAPON_MOD, ITEM_PICKER, ON_BODY_SLOT } = require("%ui/hud/menus/components/slotTypes.nut")
 let { currentChronogenes } = require("%ui/mainMenu/clonesMenu/cloneMenuState.nut")
-let { isFastEquipItemPossible, getInventoryToMove } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
 
-let contextMenuHint = {
+let contextMenuHint = static {
   hotkeys = ["RMB"]
   locId = "item/action/contextMenuHint"
   order = 1
   showInTooltip = true
 }
 
-let inspectItemHint = {
+let inspectItemHint = static {
   hotkeys = ["RMB"]
   locId = "item/action/inspectContainer"
   order = 1
 }
 
-let pickupHint = {
+let pickupHint = static {
   hotkeys = ["LMB"]
   locId = "item/action/pickup"
   order = 0
   showInTooltip = true
 }
 
-let equipHint = {
+let equipHint = static {
   hotkeys = ["LMB"]
   locId = "action/backpack_equip"
   order = 0
@@ -38,6 +39,9 @@ let equipHint = {
 }
 
 function mkMoveHint(item, inventories) {
+  
+  if (item?.inventoryEid == null)
+    return null
   local inventory = getInventoryToMove(item, inventories)
   if (inventory == null)
     return null
@@ -50,7 +54,7 @@ function mkMoveHint(item, inventories) {
   }
 }
 
-let stackedItemsHints = [
+let stackedItemsHints = static [
   {
     locId = "item/action/moveAllHint"
     hotkeys = ["Shift", "LMB"]
@@ -110,17 +114,6 @@ let mkCommonWorkbenchHints = @(item) [
   }
 ].extend(mkStackedItemsHints(item), [contextMenuHint])
 
-let mkTrashBinHints = @(item) [
-  {
-    locId = "item/action/remove_from_trash_bin"
-    hotkeys = ["LMB"]
-    order = 0
-  }
-].extend(
-  canInspect(item) ? [inspectItemHint] : []
-  mkStackedItemsHints(item)
-)
-
 let mkRepairHints = @(_item) [
   {
     locId = "item/action/repair_item"
@@ -168,7 +161,14 @@ let removeChronogenHint = {
   order = 0
 }
 
-let mkMainChorogenHints = @(_item) [useChronogenHint]
+let mainChronogenHint = {
+  locId = "clonesMenu/selectEquipAlter"
+  hotkeys = ["LMB"]
+  additionalText = $"{loc("ui/multiply")}2"
+  order = 0
+}
+
+let mkMainChorogenHints = @(item) item?.mainChronogeneAvailable ? [mainChronogenHint] : []
 let mkSecondoryChronogenHints = @(item) item?.itemTemplate == null || item?.uniqueId == 0 ? []
   : [currentChronogenes.get()?.secondaryChronogenes.contains(item?.uniqueId)
       ? removeChronogenHint
@@ -247,36 +247,56 @@ function mkWeaponModsHint(item) {
   return res
 }
 
-let unequipSlotHint =  {
+let unequipSlotHint = static {
   locId = "item/action/unequip"
   hotkeys = ["LMB"]
   order = 0
 }
 
-let replaceItemHint =  {
+let noActionSlotHint = static {
+  locId = "action/noAction"
+  hotkeys = ["LMB"]
+  order = 0
+}
+
+let replaceItemHint = static {
   locId = "item/action/replace"
   hotkeys = ["LMB"]
   order = 0
 }
 
-let compareItemHint =  {
+let compareItemHint = static {
   locId = "item/action/compare"
   hotkeys = ["L.Alt"]
   order = 1
 }
 
-let moreInfoHint =  {
+let moreInfoHint = static {
   locId = "item/action/moreInfo"
   hotkeys = ["LMB"]
   order = 1
   showInTooltip = true
 }
 
+let doubleClickReplicationHint = static {
+  locId = "item/action/startFastestReplication"
+  hotkeys = ["LMB"]
+  order = 1
+  additionalText = $"{loc("ui/multiply")}2"
+  showInTooltip = true
+}
+
+function mkReplicatorHints(recipe) {
+  if (recipe == null)
+    return []
+  return [doubleClickReplicationHint]
+}
+
 function mkItemPickerHint(item) {
-  let { itemTemplate = "", needCompareHint = true } = item
+  let { itemTemplate = "", needCompareHint = true, isNoActionBtn = false } = item
   let res = []
   if (itemTemplate == "")
-    return res.append(unequipSlotHint)
+    return res.append(isNoActionBtn ? noActionSlotHint : unequipSlotHint)
   else if (!needCompareHint)
     return res.append(replaceItemHint)
   else {
@@ -290,11 +310,10 @@ function mkMoreInfoHint(...) {
   return [ moreInfoHint ]
 }
 
-let hoverPcHotkeysPresentation = {
+let hoverPcHotkeysPresentation = freeze({
   [GROUND.name] = mkOuterInventoryHints,
   [EXTERNAL_ITEM_CONTAINER.name] = mkOuterInventoryHints,
   [STASH.name] = @(item) mkCommonHeroInventoryHints(item, [HERO_ITEM_CONTAINER, BACKPACK0]),
-  [TRASH_BIN.name] = mkTrashBinHints,
   [REFINER_STASH.name] =  mkCommonRefinerHints,
   [BACKPACK0.name] = @(item) mkCommonHeroInventoryHints(item, [HERO_ITEM_CONTAINER]),
   [HERO_ITEM_CONTAINER.name] = @(item) mkCommonHeroInventoryHints(item, [BACKPACK0]),
@@ -310,9 +329,10 @@ let hoverPcHotkeysPresentation = {
   [WORKBENCH_STASH.name] = mkCommonWorkbenchHints,
   [WORKBENCH_ITEMS_ON_PLAYER.name] = mkCommonWorkbenchHints,
   [ITEM_PICKER.name] = mkItemPickerHint,
-  [LOOTBOX_SHOW_RESULT.name] = mkMoreInfoHint
-}
+  [LOOTBOX_SHOW_RESULT.name] = mkMoreInfoHint,
+  [REPLICATOR_ITEM.name] = mkReplicatorHints
+})
 
-return {
+return freeze({
   hoverPcHotkeysPresentation
-}
+})

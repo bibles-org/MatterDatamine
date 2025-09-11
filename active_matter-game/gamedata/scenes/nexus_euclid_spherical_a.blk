@@ -107,6 +107,11 @@ entity{
 }
 
 entity{
+  _template:t="volfog_nbs"
+  volfog_nbs__rootGraph:t="fog_gd_nexus_spherical_a.json"
+}
+
+entity{
   _template:t="level+level_synced_environment"
   level__blk:t="levels/gd_nexus_spherical_a.blk"
   level__timeRange:p2=6.5, 6.5

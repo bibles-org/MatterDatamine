@@ -119,8 +119,8 @@ entity{
 }
 
 entity{
-  _template:t="gravity_path_box"
-  transform:m=[[4.47714, -0.0707346, 2.52938] [1.40085, -0.0335618, -2.48053] [0.353516, 19.8911, -0.0694841] [986.708, 14.4634, 1559.27]]
+  _template:t="gravity_path_box_sparse"
+  transform:m=[[4.47714, -0.0707346, 2.52938] [1.40085, -0.0335618, -2.48053] [0.353516, 19.8911, -0.0694841] [987.332, 14.4485, 1558.17]]
   grav_zone__boxBorderX:p2=0.2, 0.2
   grav_zone__boxBorderY:p2=0, 1
   grav_zone__boxBorderZ:p2=3.5, 1
@@ -132,7 +132,7 @@ entity{
 }
 
 entity{
-  _template:t="gravity_path_box"
+  _template:t="gravity_path_box_sparse"
   transform:m=[[1.72309, -0.0708767, -4.84495] [-2.68422, -0.0334697, -0.954142] [-0.128361, 19.8911, -0.336638] [941.4, 14.8043, 1610.84]]
   grav_zone__boxBorderX:p2=0.2, 0.2
   grav_zone__boxBorderY:p2=0, 1

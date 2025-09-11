@@ -1,21 +1,24 @@
-from "%ui/ui_library.nut" import *
+import "%ui/components/gamepadImgByKey.nut" as gamepadImgByKey
 
-let {sub_txt} = require("%ui/fonts_style.nut")
-let {lastActiveControlsType, isGamepad} = require("%ui/control/active_controls.nut")
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/components/colors.nut" import BtnTextNormal
+from "%ui/hotkeysPanelStateComps.nut" import getHotkeysComps
+
+from "%ui/ui_library.nut" import *
+import "%ui/control/gui_buttons.nut" as JB
+
+let { lastActiveControlsType, isGamepad } = require("%ui/control/active_controls.nut")
 let controllerType = require("%ui/control/controller_type.nut")
 let controlsTypes = require("%ui/control/controls_types.nut")
-let gamepadImgByKey = require("%ui/components/gamepadImgByKey.nut")
 let navState = {v = []}
 let getNavState = @(...) navState.v
 let navStateGen = Watched(0)
-let {BtnTextNormal} = require("%ui/components/colors.nut")
-let JB = require("%ui/control/gui_buttons.nut")
-let {safeAreaHorPadding, safeAreaVerPadding, safeAreaAmount} = require("%ui/options/safeArea.nut")
-let {getHotkeysComps, hotkeysPanelCompsGen} = require("hotkeysPanelStateComps.nut")
+let { safeAreaHorPadding, safeAreaVerPadding, safeAreaAmount } = require("%ui/options/safeArea.nut")
+let { hotkeysPanelCompsGen, joyAHintOverrideText } = require("%ui/hotkeysPanelStateComps.nut")
 let {cursorPresent, cursorOverStickScroll, config, cursorOverClickable} = gui_scene
 
-let text_font = sub_txt?.font
-let text_size = sub_txt.fontSize
+let text_font = body_txt?.font
+let text_size = body_txt.fontSize
 
 let panel_ver_padding = fsh(1)
 
@@ -49,7 +52,7 @@ gui_scene.setHotkeysNavHandler(function(state) {
   navStateGen.modify(@(v) v+1)
 })
 
-let padding = hdpx(5)
+let padding = [0, hdpx(5), hdpx(5), hdpx(5)]
 let height = text_size
 
 function mkNavBtn(params = {hotkey=null, gamepad=true}){
@@ -70,8 +73,8 @@ function mkNavBtn(params = {hotkey=null, gamepad=true}){
     gap = fsh(0.5)
     flow = FLOW_HORIZONTAL
     valign = ALIGN_CENTER
-    children = children
-    padding = hdpx(5)
+    padding
+    children
   }
 }
 
@@ -122,10 +125,10 @@ function getJoyAHintText(data, filter_func) {
 
 
 let joyAHint = Computed(function() {
-  return getJoyAHintText(navState.v, filterFuncByGamepad[isGamepad.get()])
+  return joyAHintOverrideText.get() ?? getJoyAHintText(navState.v, filterFuncByGamepad[isGamepad.get()])
 })
 
-function svgImg(image){
+function svgImg(image) {
   let h = gamepadImgByKey.getBtnImageHeight(image, height)
   return {
     halign = ALIGN_CENTER
@@ -141,8 +144,8 @@ function manualHint(images, text=""){
     flow = FLOW_HORIZONTAL
     valign = ALIGN_CENTER
     gap = fsh(0.5)
+    padding
     children = images.map(@(image) svgImg(image)).append(mktext(text))
-    padding = padding
   }
 }
 
@@ -162,22 +165,19 @@ function gamepadcursorclick_image(imagesMap) {
 }
 
 function gamepadCursor() {
-  let clickHint = manualHint(gamepadcursorclick_image(gamepadImgByKey.keysImagesMap.value), joyAHint.get())
-  let clickHintStub = {size = [calc_comp_size(clickHint)[0], 0], key = {}}
-  let scrollHint = manualHint([gamepadImgByKey.keysImagesMap.value?["J:R.Thumb.hv"]], loc("ui/cursor.scroll"))
+  let clickHint = manualHint(gamepadcursorclick_image(gamepadImgByKey.keysImagesMap.get()), joyAHint.get())
+  let scrollHint = manualHint([gamepadImgByKey.keysImagesMap.get()?["J:R.Thumb.hv"]], loc("ui/cursor.scroll"))
   return {
+    watch = [joyAHint, lastActiveControlsType, cursorOverStickScroll, cursorOverClickable,gamepadImgByKey.keysImagesMap]
+    size = [SIZE_TO_CONTENT, height]
     flow = FLOW_HORIZONTAL
     hplace = ALIGN_LEFT
-    gap = fsh(2.5)
-    size = [SIZE_TO_CONTENT, height]
     valign = ALIGN_CENTER
     zOrder = Layers.MsgBox
-    watch = [joyAHint, lastActiveControlsType, cursorOverStickScroll, cursorOverClickable,gamepadImgByKey.keysImagesMap]
     children = [
-      manualHint(gamepadcursornav_images(controllerType.value),loc("ui/cursor.navigation"))
-      cursorOverClickable.value && joyAHint.value ? clickHint : clickHintStub
-      cursorOverStickScroll.value ? scrollHint : null
-      {size = [fsh(6),0]}
+      manualHint(gamepadcursornav_images(controllerType.get()),loc("ui/cursor.navigation"))
+      cursorOverClickable.get() && joyAHint.get() ? clickHint : null
+      cursorOverStickScroll.get() ? scrollHint : null
     ]
   }
 }
@@ -190,11 +190,11 @@ function tipsC(){
   tips.extend(filtered_hotkeys.map(@(hotkey) mkNavBtn({hotkey, gamepad=isGamepad.get()})))
   tips.extend(getHotkeysComps().values())
   return {
-    gap = fsh(2.5)
+    watch = [isGamepad, cursorPresent, navStateGen, hotkeysPanelCompsGen]
     size = SIZE_TO_CONTENT
     flow = FLOW_HORIZONTAL
-    watch = [isGamepad, cursorPresent, navStateGen, hotkeysPanelCompsGen]
     zOrder = Layers.MsgBox
+    valign = ALIGN_CENTER
     children = tips
   }
 }

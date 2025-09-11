@@ -1,9 +1,10 @@
+from "%ui/components/mkQuickMenu.nut" import mkQMenu
+from "%ui/hud/send_quick_chat_msg.nut" import sendQuickChatMsg
+from "dasevents" import CmdHideUiMenu
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { mkQMenu } = require("%ui/components/mkQuickMenu.nut")
-let { sendQuickChatMsg } = require("%ui/hud/send_quick_chat_msg.nut")
-let { CmdHideUiMenu } = require("dasevents")
 
 let quickChatMessages = [
   "quickchat/letsGo"

@@ -1,6 +1,7 @@
+import "auth" as auth
+
 from "%ui/ui_library.nut" import *
 
-let auth  = require("auth")
 
 function status_cb(cb) {
   return function(result) {
@@ -13,4 +14,3 @@ function status_cb(cb) {
 return {
   status_cb = status_cb
 }
-

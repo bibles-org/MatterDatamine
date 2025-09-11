@@ -12,13 +12,13 @@ function getInventoryEidByListType(list_type) {
   if (list_type == HERO_ITEM_CONTAINER)
     return get_controlled_hero()
   else if (list_type == EXTERNAL_ITEM_CONTAINER)
-    return externalInventoryEid.value
+    return externalInventoryEid.get()
   else if (list_type == BACKPACK0)
-    return backpackEid.value
+    return backpackEid.get()
   else if (list_type == STASH)
-    return stashEid.value
+    return stashEid.get()
   else if (list_type == SAFEPACK)
-    return safepackEid.value
+    return safepackEid.get()
   return ecs.INVALID_ENTITY_ID
 }
 

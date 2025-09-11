@@ -1,16 +1,18 @@
+from "%ui/hud/menus/components/inventoryItemsList.nut" import itemsPanelList, setupPanelsData
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems
+from "%ui/mainMenu/clonesMenu/cloneMenuState.nut" import sendRawChronogenes
+from "%ui/components/commonComponents.nut" import panelParams, mkText
+from "%ui/hud/menus/components/inventoryItemsListChecksCommon.nut" import MoveForbidReason
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
 let { stashItems } = require("%ui/hud/state/inventory_items_es.nut")
-let { itemsPanelList, setupPanelsData } = require("%ui/hud/menus/components/inventoryItemsList.nut")
-let { mergeNonUniqueItems } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
 let { equipment } = require("%ui/hud/state/equipment.nut")
-let { currentChronogenes, sendRawChronogenes } = require("cloneMenuState.nut")
+let { currentChronogenes } = require("%ui/mainMenu/clonesMenu/cloneMenuState.nut")
 let { GENES_SECONDARY } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
-let { panelParams, mkText } = require("%ui/components/commonComponents.nut")
-let { MoveForbidReason } = require("%ui/hud/menus/components/inventoryItemsListChecksCommon.nut")
 let { marketItems } = require("%ui/profile/profileState.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
 
 let selectedMainChronogeneItem = Watched(null)
 
@@ -64,14 +66,16 @@ function unequipChronogene(chronogene) {
 }
 
 let allChronogenesInGame = Computed(@() marketItems.get().values()?.map(function(i){
+    if (i?.itemType == "suits")
+      throw null
     let itemTemplate = i.children?.items[0]?.templateName
     if (itemTemplate == null)
       throw null
     let templ = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(itemTemplate)
     let filterName = templ?.getCompValNullable("item__filterType")
-    let sortingPriority = templ?.getCompValNullable("item__uiSortingPriority") ?? 0
     if (!["alters", "chronogene"].contains(filterName))
       throw null
+    let sortingPriority = templ?.getCompValNullable("item__uiSortingPriority") ?? 0
     return { itemTemplate, type = filterName, sortingPriority }
   }) ?? [])
 
@@ -95,7 +99,10 @@ function patchSecondaryGenes(items) {
   return items.map(@(item) item.__merge({ isDragAndDropAvailable = false, slotName = null }))
 }
 
-let chronogenesSorting = @(a, b) (b.sortingPriority ?? 0) <=> (a.sortingPriority ?? 0) || a.itemTemplate <=> b.itemTemplate
+let chronogenesSorting = @(a, b) (b?.sortingPriority ?? 0) <=> (a?.sortingPriority ?? 0) || a.itemTemplate <=> b.itemTemplate
+let mainChronogenesSorting = @(a, b) a?.itemRarity <=> b?.itemRarity
+  || a?.sortingPriority <=> b?.sortingPriority
+  || a?.name <=> b?.name
 
 let secondaryProcessItems = function(items) {
   items = patchSecondaryGenes(items)
@@ -103,7 +110,7 @@ let secondaryProcessItems = function(items) {
   items.sort(chronogenesSorting)
   numDisplayedSecondaryChronogenes.set(items.len())
 
-  items.extend(allChronogenesInGame.get()
+  return items.extend(allChronogenesInGame.get()
     ?.filter(@(i) i.type == "chronogene" && items.findindex(@(v) v.itemTemplate == i.itemTemplate) == null)
     ?.sort(chronogenesSorting)
     ?.map(@(i) mkFakeItem(i.itemTemplate, {
@@ -114,8 +121,6 @@ let secondaryProcessItems = function(items) {
         opacity = 0.5
       }
     })) ?? [])
-
-  return items
 }
 
 let secondaryPanelsData = setupPanelsData(getSecondaryGenesList,
@@ -129,7 +134,7 @@ function inventorySecondaryGenes() {
   let inventoryPanelParams = panelParams.__merge({
     size = flex()
     halign = ALIGN_CENTER
-    padding = [ 0, 0, hdpx(10), hdpx(5) ]
+    padding = static [ 0, 0, hdpx(10), hdpx(5) ]
   })
 
   let children = itemsPanelList({
@@ -137,7 +142,7 @@ function inventorySecondaryGenes() {
     list_type=GENES_SECONDARY,
     itemsPanelData=secondaryPanelsData.itemsPanelData,
     headers=[{
-      size = [ flex(), SIZE_TO_CONTENT ]
+      size = FLEX_H
       halign = ALIGN_CENTER
       children = mkText(loc("clonesMenu/secondaryGenesInventoryTitle"))
       padding = hdpx(3)
@@ -152,14 +157,14 @@ function inventorySecondaryGenes() {
       }
     },
     visualParams={
-      size = [ hdpx(260), flex() ]
+      size = static [ hdpx(260), flex() ]
       halign = ALIGN_CENTER
     },
     listVisualParams=inventoryPanelParams
   })
 
   return {
-    size = [ SIZE_TO_CONTENT, flex() ]
+    size = FLEX_V
     watch = [ secondaryPanelsData.numberOfPanels, numDisplayedSecondaryChronogenes ]
     children
     onAttach = secondaryPanelsData.onAttach
@@ -191,4 +196,5 @@ return {
   tryEquipGeneToContainer
   allChronogenesInGame
   chronogenesSorting
+  mainChronogenesSorting
 }

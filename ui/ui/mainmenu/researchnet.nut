@@ -1,27 +1,34 @@
+from "%sqstd/string.nut" import utf8ToLower
+
+from "%ui/mainMenu/craft_common_pkg.nut" import startReplication, getRecipeMonolithUnlock, showMonolithMsgBox, mkSmallMonolithLinkIcon,
+  getRecipeName, mkNotifMarkWithExclamationSign, gamepadHoveredPrototype, startRecipeReplication
+
+from "%ui/fonts_style.nut" import tiny_txt, h2_txt
+from "%ui/components/colors.nut" import BtnBgSelected, ControlBg
+from "%ui/mainMenu/craftIcons.nut" import getRecipeIcon, getNodeName
+from "%ui/components/button.nut" import button, defButtonStyle
+from "%ui/components/commonComponents.nut" import mkTextArea, mkText
+from "dagor.localize" import doesLocTextExist
+from "dagor.math" import Point2
+import "%ui/components/gamepadImgByKey.nut" as gamepadImgByKey
+
 from "%ui/ui_library.nut" import *
 from "math" import clamp, max, min
 import "%dngscripts/ecs.nut" as ecs
 
-let { tiny_txt, h2_txt } = require("%ui/fonts_style.nut")
-let { BtnBgSelected, ControlBg }  = require("%ui/components/colors.nut")
-let { playerProfileAllResearchNodes, playerProfileOpenedNodes, playerProfileOpenedRecipes, playerStats, marketItems,
-  allCraftRecipes } = require("%ui/profile/profileState.nut")
-let { getRecipeIcon, researchOpenedMarker, researchSelectedMarker, getNodeName } = require("craftIcons.nut")
-let { button, defButtonStyle } = require("%ui/components/button.nut")
-let { mkTextArea, mkText } = require("%ui/components/commonComponents.nut")
-let { doesLocTextExist } = require("dagor.localize")
+let { playerProfileAllResearchNodes, playerProfileOpenedNodes, playerStats, marketItems, allCraftRecipes
+} = require("%ui/profile/profileState.nut")
+let { researchOpenedMarker, researchSelectedMarker } = require("%ui/mainMenu/craftIcons.nut")
 let { monolithLevelOffers, currentMonolithLevel } = require("%ui/mainMenu/monolith/monolith_common.nut")
-let { selectedPrototype, startReplication, getRecipeMonolithUnlock, selectedPrototypeMonolithData, showMonolithMsgBox,
-  mkSmallMonolithLinkIcon, onlyEarnedRecipesFilter, onlyOpenedBlueprintsFilter, selectedCategory, prototypeTypes,
-  filterTextInput, getRecipeName, mkNotifMarkWithExclamationSign } = require("%ui/mainMenu/craft_common_pkg.nut")
-let { utf8ToLower } = require("%sqstd/string.nut")
+let { selectedPrototype, selectedPrototypeMonolithData, onlyEarnedRecipesFilter, onlyOpenedBlueprintsFilter,
+  selectedCategory, prototypeTypes, filterTextInput } = require("%ui/mainMenu/craft_common_pkg.nut")
+let { isGamepad } = require("%ui/control/active_controls.nut")
+let { REPLICATOR_ITEM } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
+let { hoverPcHotkeysPresentation } = require("%ui/hud/menus/components/inventoryActionsHints.nut")
+let { hoverHotkeysWatchedList } = require("%ui/components/pcHoverHotkeyHitns.nut")
 
-
-
-
-
-let mapViewPos = Watched([0, 0])
-let mapSize = [hdpx(1500), hdpx(1500)]
+let backgroundOffset = [ hdpx(100), hdpx(15) ] 
+let mapSize = Watched([hdpx(1500), hdpx(1500)])
 let selectedNetNode = Watched(null)
 let slotHeight = hdpxi(70)
 let notifCircleSize = hdpxi(20)
@@ -29,7 +36,7 @@ let notifCircleSize = hdpxi(20)
 let selectedColor = BtnBgSelected
 
 
-function mkMapBackground(pos, size) {
+function mkMapBackground(size) {
   let lines = [
     [ VECTOR_WIDTH, hdpx(3) ],
     [ VECTOR_COLOR, Color(55, 55, 55, 255) ],
@@ -66,22 +73,51 @@ function mkMapBackground(pos, size) {
 
   return {
     opacity = 0.5
-    pos
     size
     rendObj = ROBJ_VECTOR_CANVAS
     commands = lines
+    pos = static [-hdpx(44),0]
   }
 }
 
 
-function mkResearchMap(background, content) {
-  let children = [background].extend(content)
-  return @(){
-    size = mapSize
-    watch = [ mapViewPos ]
-    pos = mapViewPos.get()
+function onNetMoveResize(_dx, dy, _dw, _dh, scrollHandler) {
+  let yoffs = scrollHandler.elem?.getScrollOffsY() ?? 0
+  scrollHandler.scrollToY(yoffs - dy)
+}
 
-    children
+
+function mkResearchMap(background, content, scrollHandler) {
+  let children = [background].extend(content)
+  return {
+    size = flex()
+
+    behavior = [Behaviors.MoveResize, Behaviors.WheelScroll, Behaviors.ScrollEvent]
+    onMoveResize = @(dx, dy, dw, dh)
+        onNetMoveResize(dx, dy, dw, dh, scrollHandler)
+
+    joystickScroll = true
+    scrollHandler
+    isInteractive = true
+    wheelStep = 0.8
+    skipDirPadNav = true
+    scrollAlign = Point2(1, 1)
+    halign = ALIGN_LEFT
+    valign = ALIGN_LEFT
+    hplace = ALIGN_LEFT
+    vplace = ALIGN_LEFT
+
+    xmbNode = XmbContainer({
+      canFocus = false
+      scrollSpeed = 5.0
+      isViewport = true
+      scrollToEdge = true
+    })
+
+    children = @() {
+      children = children
+      size = mapSize.get()
+    }
   }
 }
 
@@ -102,6 +138,18 @@ function getRecipeProgress(current, needToResearch) {
 let ResearchItemStyle = defButtonStyle.__merge({ BtnBdNormal = Color(0,0,0)})
 let ResearchItemSelectedStyle = ResearchItemStyle.__merge({ BtnBgNormal = selectedColor})
 
+let mkStartReplicationHotkey = @(itemPrototype) function() {
+  if (!isGamepad.get() || itemPrototype != gamepadHoveredPrototype.get())
+    return { watch = [isGamepad, gamepadHoveredPrototype] }
+  return {
+    watch = [isGamepad, gamepadHoveredPrototype]
+    vplace = ALIGN_CENTER
+    hplace = ALIGN_CENTER
+    pos = [-slotHeight / 2, 0]
+    children = gamepadImgByKey.mkImageCompByDargKey("J:X")
+  }
+}
+
 function mkNode(id, node) {
   let isSelected = Computed(@() node?.containsRecipe == selectedPrototype.get())
   let nodeLocId = getNodeName(node)
@@ -109,17 +157,18 @@ function mkNode(id, node) {
   let title = {
     rendObj = ROBJ_WORLD_BLUR_PANEL
     vplace = ALIGN_TOP
+    hplace = ALIGN_CENTER
     pos = [0, (slotHeight / 2) + hdpx(4)]
     children = mkTextArea(nodeName, {
       size = SIZE_TO_CONTENT
-      padding = [ hdpx(1), hdpx(4) ]
+      padding = static [ hdpx(1), hdpx(4) ]
       halign = ALIGN_CENTER
       maxWidth = hdpx(110)
     }.__update(tiny_txt))
   }
-  let progress = node.recipeData == null
-    ? getRecipeProgress(node.openedData?.currentResearchPoints, node.requireResearchPointsToComplete)
-    : 1.0
+  let progress = node.isObtained
+    ? 1.0
+    : getRecipeProgress(node.openedData?.currentResearchPoints, node.requireResearchPointsToComplete)
   return function() {
     let playerResearch = playerProfileOpenedNodes.get().findvalue(@(v) v.prototypeId == id)
     let locked = playerResearch == null
@@ -130,10 +179,9 @@ function mkNode(id, node) {
       : mkSmallMonolithLinkIcon(monolithUnlockData, @() showMonolithMsgBox(monolithUnlockData))
     return {
       watch = [isSelected, marketItems, monolithLevelOffers, playerStats, playerProfileOpenedNodes]
-      pos = [ hdpx(node.visuals.nodeViewPosition.x), hdpx(node.visuals.nodeViewPosition.y)]
-      halign = ALIGN_CENTER
-      valign = ALIGN_CENTER
-      size = [0, 0]
+      pos = [hdpx(node.visuals.nodeViewPosition.x), hdpx(node.visuals.nodeViewPosition.y)]
+      size = 0
+      key = $"{id}"
       gap = hdpx(2)
       children = [
         button(
@@ -145,14 +193,14 @@ function mkNode(id, node) {
                     node.containsRecipe,
                     [slotHeight, slotHeight],
                     progress,
-                    node.recipeData != null ? "full" : "silhouette"
+                    node.isObtained ? "full" : "silhouette"
                   )
                   node.openedData && progress < 1.0 ? researchOpenedMarker : null
                   isSelected.get() ? researchSelectedMarker : null
                 ]
               }
               monolithLinkIcon
-              progress == 1 && node.recipeData == null ? mkNotifMarkWithExclamationSign(notifCircleSize) : null
+              progress == 1 && !node.isObtained ? mkNotifMarkWithExclamationSign(notifCircleSize) : null
             ]
           }
           function() {
@@ -161,22 +209,38 @@ function mkNode(id, node) {
           }
           {
             padding = hdpx(1)
+            xmbNode = XmbNode()
             opacity = node?.opacity ?? 1
             eventPassThrough = true
             hplace = ALIGN_CENTER
             vplace = ALIGN_CENTER
             style = isSelected.get() ? ResearchItemSelectedStyle : ResearchItemStyle
-            onHover = @(on) !on ? selectedNetNode.set(null)
-              : selectedNetNode.set({id})
-            onDoubleClick = function() {
-              if (monolithUnlockData != null) {
-                showMonolithMsgBox(monolithUnlockData)
-                return
+            hotkeys = [["J:X", { action = startRecipeReplication, description = loc("item/action/startReplication") }]]
+            onHover = function(on) {
+              if (!on) {
+                selectedNetNode.set({id})
+                hoverHotkeysWatchedList.set(null)
+                if (isGamepad.get()) {
+                  gamepadHoveredPrototype.set(null)
+                  selectedPrototypeMonolithData.set(null)
+                }
               }
-              startReplication()
+              else {
+                selectedNetNode.set(null)
+                if (isGamepad.get()) {
+                  gamepadHoveredPrototype.set(node?.containsRecipe ?? id)
+                  selectedPrototypeMonolithData.set(monolithUnlockData)
+                }
+                else {
+                  let pcHotkeysHints = hoverPcHotkeysPresentation[REPLICATOR_ITEM.name](id)
+                  hoverHotkeysWatchedList.set(pcHotkeysHints)
+                }
+              }
             }
+            onDoubleClick = startRecipeReplication
           }
         )
+        mkStartReplicationHotkey(id)
         title
       ]
     }
@@ -205,16 +269,15 @@ function getMaxMinOfTree(nodes) {
     treeMin[0] = min(treeMin[0], vMin[0])
     treeMin[1] = min(treeMin[1], vMin[1])
   }
+
   return {
-    treeMin
-    treeMax
+    treeMin = [ treeMin[0], treeMin[1] ]
+    treeMax = [ treeMax[0], treeMax[1] ]
   }
 }
 
-let researchNetSize = Watched([0, 0])
-
-let noRecipesFoundMsg = const {
-  size = [ flex(), sh(20) ]
+let noRecipesFoundMsg = static {
+  size = static [ flex(), sh(20) ]
   halign = ALIGN_CENTER
   valign = ALIGN_CENTER
   children = mkText(loc("craft/noRecipesFoundByFiltering"), h2_txt)
@@ -225,7 +288,7 @@ function mkResearchNet() {
     let selectedCat = selectedCategory.get()
     let protoTypes = prototypeTypes.get()
     let allRecipes = allCraftRecipes.get()
-    let openedRecipesArr = playerProfileOpenedRecipes.get()
+    let openedRecipesTab = allCraftRecipes.get().filter(@(v) v?.isOpened)
     let openedNodesArr = playerProfileOpenedNodes.get()
     let allNodesArr = playerProfileAllResearchNodes.get()
     let earned = onlyEarnedRecipesFilter.get()
@@ -234,8 +297,8 @@ function mkResearchNet() {
     let res = {}
 
     let openedRecipesMap = {}
-    foreach (i, v in openedRecipesArr)
-      openedRecipesMap[v.prototypeId] <- i
+    foreach (k, _v in openedRecipesTab)
+      openedRecipesMap[k] <- true
 
     let openedNodesMap = {}
     foreach (v in openedNodesArr)
@@ -246,15 +309,14 @@ function mkResearchNet() {
       allNodesMap[v.containsRecipe] <- i
 
     foreach (proto_id, prototype in allRecipes) {
-      let recipeIdx = openedRecipesMap?[proto_id]
       let playerResearch = openedNodesMap?[proto_id]
-      let recipeReceived = recipeIdx != null
+      let recipeReceived = proto_id in openedRecipesMap
       let nodeId = allNodesMap?[proto_id]
       if (nodeId == null)
         continue
 
       let matchesCategory = selectedCat == null ||
-        prototype.results.findindex(@(_v, k) protoTypes?[k] == selectedCat) != null
+        prototype.results.findindex(@(v) protoTypes?[v.keys()[0]] == selectedCat) != null
 
       local opacity = 1.0
       if (!matchesCategory)
@@ -272,7 +334,7 @@ function mkResearchNet() {
         opacity = 0.4
       let nodeData = allNodesArr[nodeId].__merge({
         openedData = playerResearch,
-        recipeData = recipeIdx
+        isObtained = recipeReceived
         opacity
       })
       res[nodeId] <- nodeData
@@ -281,16 +343,7 @@ function mkResearchNet() {
     return res
   })
 
-
-  function onNetMoveResize(dx, dy, _dw, _dh, backgroundPos, backgroundSize, netSize) {
-    let old = mapViewPos.get()
-    let newPos = [
-      -clamp(-(old[0] + dx), backgroundPos[0], backgroundPos[0] + max(0, backgroundSize[0] - netSize[0])),
-      -clamp(-(old[1] + dy), backgroundPos[1], backgroundPos[1] + max(0, backgroundSize[1] - netSize[1]))
-    ]
-    mapViewPos.set(newPos)
-  }
-
+  let scrollHandler = ScrollHandler()
   return function() {
     if (currentBranchNodes.get().len() <= 0)
       return {
@@ -300,53 +353,45 @@ function mkResearchNet() {
         color = ControlBg
         children = noRecipesFoundMsg
       }
-    let centralNodeId = 1
-    let firstNode = playerProfileAllResearchNodes.get()[centralNodeId]
-    let firstNodePos = [firstNode.visuals.nodeViewPosition.x, firstNode.visuals.nodeViewPosition.y]
 
-    let { treeMin, treeMax } = getMaxMinOfTree(currentBranchNodes.get())
-    let treeSize = [treeMax[0] - treeMin[0], treeMax[1] - treeMin[1]]
+    let { treeMax, treeMin } = getMaxMinOfTree(currentBranchNodes.get())
+    let treeSize = [treeMax[0] + treeMin[0], treeMax[1] + treeMin[1]]
 
-    let backgroundOffset = hdpx(75)
-    let backgroundPos = [ treeMin[0] - backgroundOffset, treeMin[1] - backgroundOffset ]
-    let backgroundSize = [ treeSize[0] + backgroundOffset * 2, treeSize[1] + backgroundOffset * 2 ]
+    let backgroundSize = [ treeSize[0] + backgroundOffset[0] * 2, treeSize[1] + backgroundOffset[1] * 2 + hdpx(25) ]
+    mapSize.set(backgroundSize)
 
     return {
       watch = [currentBranchNodes, playerProfileAllResearchNodes]
       rendObj = ROBJ_SOLID
-      key = $"researchNet"
       size = flex()
+      key = $"researchNet"
       color = ControlBg
       behavior = Behaviors.MoveResize
       clipChildren = true
-      onMoveResize = @(dx, dy, dw, dh)
-        onNetMoveResize(dx, dy, dw, dh, backgroundPos, backgroundSize, researchNetSize.get())
-      onAttach = function(elem) {
-        let selectedNode = playerProfileAllResearchNodes.get().findvalue(@(v) v.containsRecipe == selectedPrototype.get())
-        let selectedNodePos = [selectedNode?.visuals.nodeViewPosition.x, selectedNode?.visuals.nodeViewPosition.y]
-
-        researchNetSize.set([elem.getWidth(), elem.getHeight()])
-
-        let startPos = [
-          -clamp(-(elem.getWidth() / 2 - (selectedNodePos[0] ?? firstNodePos[0])),
-            backgroundPos[0], backgroundPos[0] + max(0, backgroundSize[0] - researchNetSize.get()[0])),
-          -clamp(-(elem.getHeight() / 2 - (selectedNodePos[1] ?? firstNodePos[1])),
-            backgroundPos[1], backgroundPos[1] + max(1, backgroundSize[1] - researchNetSize.get()[1]))
-        ]
-        mapViewPos.set(startPos)
-        onNetMoveResize(0, 0, 0, 0, backgroundPos, backgroundSize, researchNetSize.get())
+      onAttach = function(_) {
+        onNetMoveResize(0, 0, 0, 0, scrollHandler)
       }
-      children = mkResearchMap(
-        mkMapBackground(backgroundPos, backgroundSize)
-        mkNodesNet(currentBranchNodes.get())
-      )
+      XmbxmbNode = XmbContainer({
+        canFocus = false
+        wrap = false
+        scrollSpeed = 5.0
+      })
+      children = {
+        size = [ treeSize[0], flex() ]
+        hplace = ALIGN_CENTER
+        children = mkResearchMap(
+          mkMapBackground(backgroundSize)
+          mkNodesNet(currentBranchNodes.get())
+          scrollHandler
+        )
+      }
     }
   }
 }
 
-return {
+return freeze({
   mkResearchNet,
   selectedNetNode,
   selectedPrototype
   getRecipeProgress
-}
+})

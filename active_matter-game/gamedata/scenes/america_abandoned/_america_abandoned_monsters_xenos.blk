@@ -1,0 +1,49 @@
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house_monsters"
+  monster_gen_gen__householdCount:i=200
+  monster_gen_gen__minHouseholdVolume:r=350
+  monster_gen_gen__useHouseholdsOnEuclid:b=no
+
+  "monster_gen_gen__genTemplates:object"{
+    household_america_changed_monster_generator:i=100
+  }
+}
+
+entity{
+  _template:t="xenohound_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-404.382, 5.25527, 401.718]]
+  objective_static_target__tag:t="xenohound_zone_1"
+  quest_target_geometry_sphere__radius:r=15
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="xenohound_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-290.117, 5.25478, 269.781]]
+  objective_static_target__tag:t="xenohound_zone_2"
+  quest_target_geometry_sphere__radius:r=15
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="xenohound_contract_zone"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-473.612, 7.30779, 255.259]]
+  objective_static_target__tag:t="xenohound_zone_3"
+  quest_target_geometry_sphere__radius:r=15
+  map_object_zone__radius:r=15
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="threats"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [-383.46, 16, 284.91]]
+  loot_generator__lootPreset:t="america_abandoned_xenos_threats_loot_preset"
+}
+
+entity{
+  _template:t="distorted_guarded_zone"
+  quest_target_geometry_sphere__radius:r=6
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-438.798, 7.30779, 205.682]]
+}

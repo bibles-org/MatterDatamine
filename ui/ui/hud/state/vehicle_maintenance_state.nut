@@ -1,7 +1,8 @@
+from "net" import get_sync_time
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {get_sync_time} = require("net")
 
 let state = {
   isExtinguishing = Watched(false)
@@ -28,35 +29,35 @@ ecs.register_es("ui_maintenance_es",
       let isHeroRepairing = comp["repair__active"]
       let mntTgtEid = comp["maintenance__target"]
 
-      state.isExtinguishing(isHeroExtinguishing)
-      state.isRepairing(isHeroRepairing)
+      state.isExtinguishing.set(isHeroExtinguishing)
+      state.isRepairing.set(isHeroRepairing)
       if (mntTgtEid != ecs.INVALID_ENTITY_ID){
         maintenanceTargetQuery.perform(mntTgtEid, function(__eid, tgt_comp){
-          state.vehicleRepairTime((tgt_comp["repairable__inProgress"] && isHeroRepairing) ? tgt_comp["repairable__repairTime"] : null)
+          state.vehicleRepairTime.set((tgt_comp["repairable__inProgress"] && isHeroRepairing) ? tgt_comp["repairable__repairTime"] : null)
           if (tgt_comp["extinguishable__inProgress"] && isHeroExtinguishing) {
-            state.maintenanceTime(tgt_comp["extinguishable__extinguishTime"] + get_sync_time())
-            state.maintenanceTotalTime(tgt_comp["extinguishable__extinguishTotalTime"])
+            state.maintenanceTime.set(tgt_comp["extinguishable__extinguishTime"] + get_sync_time())
+            state.maintenanceTotalTime.set(tgt_comp["extinguishable__extinguishTotalTime"])
           }
           else if (tgt_comp["repairable__inProgress"] && isHeroRepairing) {
-            state.maintenanceTime(tgt_comp["repairable__repairTime"] + get_sync_time())
-            state.maintenanceTotalTime(tgt_comp["repairable__repairTotalTime"])
+            state.maintenanceTime.set(tgt_comp["repairable__repairTime"] + get_sync_time())
+            state.maintenanceTotalTime.set(tgt_comp["repairable__repairTotalTime"])
           }
           else {
-            state.maintenanceTime(0.0)
-            state.maintenanceTotalTime(0.0)
+            state.maintenanceTime.set(0.0)
+            state.maintenanceTotalTime.set(0.0)
           }
         })
       } else {
-        state.vehicleRepairTime(null)
-        state.maintenanceTime(0.0)
-        state.maintenanceTotalTime(0.0)
+        state.vehicleRepairTime.set(null)
+        state.maintenanceTime.set(0.0)
+        state.maintenanceTotalTime.set(0.0)
       }
     },
     function onDestroy(...){
-      state.vehicleRepairTime(null)
-      state.maintenanceTime(0.0)
-      state.isRepairing(false)
-      state.isExtinguishing(false)
+      state.vehicleRepairTime.set(null)
+      state.maintenanceTime.set(0.0)
+      state.isRepairing.set(false)
+      state.isExtinguishing.set(false)
     }
   },
   {

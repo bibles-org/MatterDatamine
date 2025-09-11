@@ -2,7 +2,6 @@ options no_aot
 options persistent_heap
 
 require ecs
-require app
 require daslib/debug
 require debugapi
 require strings

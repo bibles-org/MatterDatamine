@@ -1,11 +1,14 @@
+from "das.inventory" import is_item_inventory_move_blocked, is_item_pickup_blocked, is_inventory_have_free_volume_for_boxed_item_eid, is_inventory_have_free_volume_for_boxed_item_template,
+  is_inventory_have_free_volume, is_inventory_in_use, is_can_unfold_in_parent
+from "%ui/hud/state/inventory_eids_common.nut" import getInventoryEidByListType
+
+from "%ui/components/msgbox.nut" import showMsgbox
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 let { canModifyInventory } = require("%ui/hud/state/inventory_common_es.nut")
-let { is_item_inventory_move_blocked, is_item_pickup_blocked, is_inventory_have_free_volume_for_boxed_item_eid,
-      is_inventory_have_free_volume_for_boxed_item_template, is_inventory_have_free_volume, is_inventory_in_use } = require("das.inventory")
 let { isShiftPressed } = require("%ui/hud/state/inventory_state.nut")
 let { GROUND } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
-let { showMsgbox } = require("%ui/components/msgbox.nut")
 let { isInPlayerSession } = require("%ui/hud/state/gametype_state.nut")
 
 enum MoveForbidReason {
@@ -13,9 +16,16 @@ enum MoveForbidReason {
   VOLUME = 1
   ITEM_ALREADY_IN = 2
   OTHER = 3
+  FORBIDDEN = 4
 
-  REFINER_IN_USE = 4
-  TRYING_PUT_INTO_ITSELF = 5
+  REFINER_IN_USE = 5
+  TRYING_PUT_INTO_ITSELF = 6
+
+  FORBIDDEN_QUEUE_STATUS = 7
+  FORBIDDEN_READY_STATUS = 8
+  FORBIDDEN_REFINER_IN_PROGRESS = 9
+
+  PARENT_VOLUME_OVERFLOW = 10
 }
 
 function isDropForbiddenCommon(item, list_type) {
@@ -25,6 +35,8 @@ function isDropForbiddenCommon(item, list_type) {
     return MoveForbidReason.ITEM_ALREADY_IN
   if (item?.trashBinItemOrigin && item.trashBinItemOrigin != list_type)
     return MoveForbidReason.OTHER
+  if (!is_can_unfold_in_parent(getInventoryEidByListType(list_type)))
+    return MoveForbidReason.PARENT_VOLUME_OVERFLOW
   if (is_inventory_in_use(item.eid))
     return MoveForbidReason.OTHER
   if (
@@ -39,7 +51,7 @@ function isDropForbiddenCommon(item, list_type) {
 
 function checkVolume(item, containerEid) {
   if (item?.isBuiltInAmmo ?? false) {
-    return is_inventory_have_free_volume_for_boxed_item_template(containerEid, item.template)
+    return is_inventory_have_free_volume_for_boxed_item_template(containerEid, item.itemTemplate)
   }
   else if (item?.isBoxedItem ?? false) {
     return is_inventory_have_free_volume_for_boxed_item_eid(containerEid, item.eid)

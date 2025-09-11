@@ -1,7 +1,8 @@
+from "%ui/components/commonComponents.nut" import mkTabs
+from "%ui/components/uiHotkeysHint.nut" import mkHotkey
+
 from "%ui/ui_library.nut" import *
 
-let { mkTabs } = require("%ui/components/commonComponents.nut")
-let { mkHotkey } = require("%ui/components/uiHotkeysHint.nut")
 
 function settingsHeaderTabs(currentTab, sourceTabs) {
   let cTab = currentTab
@@ -9,11 +10,11 @@ function settingsHeaderTabs(currentTab, sourceTabs) {
   function changeTab(delta, cycle=false){
     let tabsSrc = sourceTabs
     foreach (idx, tab in tabsSrc) {
-      if (cTab.value == tab.id) {
+      if (cTab.get() == tab.id) {
         local next_idx = idx+delta
         let total = tabsSrc.len()
         next_idx = cycle ? ((next_idx+total)%total) : clamp(next_idx, 0, total-1)
-        cTab(tabsSrc[next_idx].id)
+        cTab.set(tabsSrc[next_idx].id)
         break
       }
     }
@@ -28,7 +29,7 @@ function settingsHeaderTabs(currentTab, sourceTabs) {
 
   function tabsHotkeys(){
     return {
-      size = [0,0]
+      size = 0
       valign = ALIGN_BOTTOM
       children = {
         flow = FLOW_HORIZONTAL
@@ -53,7 +54,7 @@ function settingsHeaderTabs(currentTab, sourceTabs) {
 
   return function() {
     return {
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       children = [
         sourceTabs.len() > 1 ? tabsHotkeys : null
         tabsContainer

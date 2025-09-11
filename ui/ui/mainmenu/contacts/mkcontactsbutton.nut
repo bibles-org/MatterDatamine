@@ -1,20 +1,21 @@
+from "%ui/components/colors.nut" import Alert
+import "%ui/mainMenu/contacts/buildCounter.nut" as buildCounter
+from "%ui/components/button.nut" import squareIconButton
+
 from "%ui/ui_library.nut" import *
 
-let { Alert } = require("%ui/components/colors.nut")
 let { friendsOnlineUids, requestsToMeUids } = require("%ui/mainMenu/contacts/contactsWatchLists.nut")
-let buildCounter = require("buildCounter.nut")
-let { squareIconButton } = require("%ui/components/button.nut")
 let { showCursor } = require("%ui/cursorState.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 
 let counterText = @(count) count > 0 ? count : null
 
 let onlineFriendsCounter = buildCounter(
-  Computed(@() counterText(friendsOnlineUids.value.len()))
+  Computed(@() counterText(friendsOnlineUids.get().len()))
   {pos = [hdpx(5), -hdpx(4)], hplace = ALIGN_RIGHT})
 
 let invitationsCounter = buildCounter(
-  Computed(@() counterText(requestsToMeUids.value.len())),
+  Computed(@() counterText(requestsToMeUids.get().len())),
   {
     pos = [hdpx(4), hdpx(2)]
     vplace = ALIGN_BOTTOM

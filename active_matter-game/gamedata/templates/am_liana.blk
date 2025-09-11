@@ -23,12 +23,17 @@ liana_anomaly_static_tentacle{
   _use:t="replicating"
   _use:t="spline_gen_geometry"
   spline_gen_geometry__lods_name:t="liana_tentacle"
-  spline_gen_geometry__radius:p3=0.1, 0.01, 0
   spline_gen_geometry__obj_size_mul:r=1
   spline_gen_geometry__meter_between_objs:r=0.25
   spline_gen_geometry__request_active:b=yes
 
   "lianaWallTentacle:tag"{}
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.1
+    p:p2=0.95, 0.01
+    p:p2=1, 0
+  }
+
   "liana__anomalyEid:eid"{}
 }
 
@@ -64,6 +69,7 @@ liana_crawler_spawner{
   surface_crawler__rndInfluence:r=30
   surface_crawler__speed:r=4
   surface_crawler__matId:i=0
+  surface_crawler__height:r=0
   liana_crawler_spawner__createdAt:r=0
   liana_crawler_spawner__maxLifetime:r=8
   liana_crawler_spawner__delay:r=0
@@ -143,7 +149,8 @@ liana_attach_node{
   liana_attach_node__num:r=0
   liana_attach_node__thickness:r=0
   liana_attach_node__dealsDamage:b=no
-  liana_attach_node__numCoilPoints:i=64
+  liana_attach_node__numCoilPoints:i=48
+  liana_attach_node__dir:r=1
 }
 
 base_liana_tentacle{
@@ -177,16 +184,20 @@ base_liana_tentacle{
 liana_tentacle_test{
   _use:t="spline_gen_test"
   spline_gen_geometry__lods_name:t="liana_tentacle"
-  spline_gen_geometry__radius:p3=0.1, 0.005, 0
   spline_gen_geometry__obj_size_mul:r=1
   spline_gen_geometry__meter_between_objs:r=0.25
+
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.1
+    p:p2=0.95, 0.005
+    p:p2=1, 0
+  }
 }
 
 liana_tentacle{
   _use:t="spline_gen_geometry"
   _use:t="base_liana_tentacle"
   spline_gen_geometry__lods_name:t="liana_tentacle"
-  spline_gen_geometry__radius:p3=0.1, 0.005, 0
   spline_gen_geometry__obj_size_mul:r=1
   spline_gen_geometry__meter_between_objs:r=0.25
   liana_tentacle__maxPoints:i=127
@@ -201,6 +212,12 @@ liana_tentacle{
   liana_tentacle__fallVelocity:r=0
   liana_tentacle__maxLength:r=0
   spline_gen_geometry__request_active:b=yes
+
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.1
+    p:p2=0.95, 0.005
+    p:p2=1, 0
+  }
 
   "spline_gen_geometry__points:list<p3>"{}
   "liana_tentacle__fallTargets:list<p3>"{}

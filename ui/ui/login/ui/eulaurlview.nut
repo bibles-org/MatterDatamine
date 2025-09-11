@@ -1,9 +1,10 @@
+from "%ui/fonts_style.nut" import sub_txt
+from "%ui/mainMenu/eula/eula.nut" import showEula
+import "%ui/components/urlText.nut" as urlText
+
 from "%ui/ui_library.nut" import *
 
-let { sub_txt } = require("%ui/fonts_style.nut")
-let {showEula} = require("%ui/mainMenu/eula/eula.nut")
-let urlText = require("%ui/components/urlText.nut")
-let {safeAreaHorPadding, safeAreaVerPadding} = require("%ui/options/safeArea.nut")
+let { safeAreaHorPadding, safeAreaVerPadding } = require("%ui/options/safeArea.nut")
 
 let eulaUrlView = {
     zOrder = 1
@@ -20,7 +21,7 @@ let bottomEulaUrl = @(){
   halign = ALIGN_LEFT
   valign = ALIGN_BOTTOM
   children = eulaUrlView
-  padding = [safeAreaVerPadding.value+fsh(5), safeAreaHorPadding.value+sw(4)]
+  padding = [safeAreaVerPadding.get()+fsh(5), safeAreaHorPadding.get()+sw(4)]
   watch=[safeAreaVerPadding]
 }
 return {

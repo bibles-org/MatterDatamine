@@ -1,9 +1,11 @@
+from "%sqstd/json.nut" import parse_json
+
+from "dagor.math" import Point3
+from "base64" import decodeString
+from "%ui/hud/state/objectives_vars.nut" import dispatchColorsAndSort
+
 from "%ui/ui_library.nut" import *
 
-let { Point3 } = require("dagor.math")
-let { decodeString } = require("base64")
-let { parse_json } = require("%sqstd/json.nut")
-let { dispatchColorsAndSort } = require("%ui/hud/state/objectives_vars.nut")
 
 
 let debriefingObjectives = Watched([])

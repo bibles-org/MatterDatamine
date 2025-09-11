@@ -1,13 +1,13 @@
+from "%dngscripts/platform.nut" import is_sony, is_xbox
+from "%ui/mainMenu/contacts/contact.nut" import updateContact
+from "%ui/mainMenu/contacts/consoleUidsRemap.nut" import updateUids
 from "%ui/ui_library.nut" import *
 
-let { is_sony, is_xbox } = require("%dngscripts/platform.nut")
+let logExt = require("%sqGlob/library_logs.nut").with_prefix("[EXT IDS MANAGER] ")
 let { isSteamRunning } = require("%ui/login/login_state.nut")
 let { char_request = null } = require("%ui/charClient/charClient.nut")
 let userInfo = require("%sqGlob/userInfo.nut")
-let { updateContact } = require("%ui/mainMenu/contacts/contact.nut")
-let { updateUids } = require("%ui/mainMenu/contacts/consoleUidsRemap.nut")
 
-let logExt = require("%sqGlob/library_logs.nut").with_prefix("[EXT IDS MANAGER] ")
 
 
 let EXTERNAL_TYPE_STEAM  = "s"
@@ -16,12 +16,12 @@ let EXTERNAL_TYPE_XBOX   = "x"
 
 let getExtType = @() is_sony ? EXTERNAL_TYPE_PSN
   : is_xbox ? EXTERNAL_TYPE_XBOX
-  : isSteamRunning.value ? EXTERNAL_TYPE_STEAM
+  : isSteamRunning.get() ? EXTERNAL_TYPE_STEAM
   : ""
 
 let getMyExtId = @() is_sony ? require("sony.user").accountIdString
   : is_xbox ? require("gdk.user").get_xuid().tostring()
-  : isSteamRunning.value ? require("steam").get_my_id()
+  : isSteamRunning.get() ? require("steam").get_my_id()
   : "-1"
 
 function setExternalId() {
@@ -55,7 +55,7 @@ function searchContactByExternalId(extIdsArray, callback = null) {
     "cln_find_users_by_external_id_list_json",
     request,
     function (result) {
-      let myUserIdStr = userInfo.value?.userIdStr ?? ""
+      let myUserIdStr = userInfo.get()?.userIdStr ?? ""
 
       foreach (uidStr, data in result)
         if (uidStr != myUserIdStr && uidStr != "" && data?.nick != null)

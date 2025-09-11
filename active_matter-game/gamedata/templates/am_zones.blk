@@ -79,13 +79,6 @@ anomaly_zone_confusion_branch{
       }
     }
 
-    "artifact_active_mattery_extraction_preset:array"{
-      "it:object"{
-        template:t="artifact_active_mattery_base"
-        projectToNavmesh:b=yes
-      }
-    }
-
     "active_mattery_pile_preset:array"{
       "it:object"{
         template:t="active_matter_pile+coin_item_count_5+item_in_world"
@@ -177,18 +170,6 @@ anomaly_zone_darkness_branch{
       }
     }
 
-    "artifact_sensor_preset:array"{
-      "it:object"{
-        template:t="artifact_sensor+alarm_on_pickup+item_in_world"
-        projectToNavmesh:b=yes
-      }
-
-      "it:object"{
-        template:t="area_decor_darkness"
-        scaleToBox:b=yes
-      }
-    }
-
     "artifact_active_mattery_preset:array"{
       "it:object"{
         template:t="active_matter_pile+coin_item_count_10+item_in_world"
@@ -198,13 +179,6 @@ anomaly_zone_darkness_branch{
       "it:object"{
         template:t="area_decor_darkness"
         scaleToBox:b=yes
-      }
-    }
-
-    "artifact_active_mattery_extraction_preset:array"{
-      "it:object"{
-        template:t="artifact_active_mattery_base"
-        projectToNavmesh:b=yes
       }
     }
 
@@ -345,26 +319,6 @@ anomaly_zone_flowerman_branch{
         spawnOnLeafs:b=yes
         projectToNavmesh:b=yes
         clientOnly:b=yes
-      }
-    }
-
-    "flower_human_sensor_preset:array"{
-      "it:object"{
-        template:t="flower_human_sensor+alarm_on_pickup+item_in_world"
-        projectToNavmesh:b=yes
-      }
-
-      "it:object"{
-        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
-        scaleToBox:b=yes
-        clientOnly:b=yes
-      }
-    }
-
-    "artifact_active_mattery_extraction_preset:array"{
-      "it:object"{
-        template:t="artifact_active_mattery_base"
-        projectToNavmesh:b=yes
       }
     }
 
@@ -532,26 +486,6 @@ anomaly_zone_flowerman_field_branch{
         spawnOnLeafs:b=yes
         projectToNavmesh:b=yes
         clientOnly:b=yes
-      }
-    }
-
-    "flower_human_sensor_preset:array"{
-      "it:object"{
-        template:t="flower_human_sensor+item_in_world"
-        projectToNavmesh:b=yes
-      }
-
-      "it:object"{
-        template:t="area_decor_flowerman+flowerman_anomaly_gpu_objects_trait"
-        scaleToBox:b=yes
-        clientOnly:b=yes
-      }
-    }
-
-    "artifact_active_mattery_extraction_preset:array"{
-      "it:object"{
-        template:t="artifact_active_mattery_base"
-        projectToNavmesh:b=yes
       }
     }
 
@@ -987,18 +921,6 @@ anomaly_zone_skeleton_swarm_branch{
       }
     }
 
-    "skeleton_swarm_sensor_preset:array"{
-      "it:object"{
-        template:t="skeleton_swarm_sensor+alarm_on_pickup+item_in_world"
-        projectToNavmesh:b=yes
-      }
-
-      "it:object"{
-        template:t="area_decor_skeleton_swarm"
-        scaleToBox:b=yes
-      }
-    }
-
     "artifact_active_mattery_preset:array"{
       "it:object"{
         template:t="active_matter_pile+coin_item_count_10+item_in_world"
@@ -1008,13 +930,6 @@ anomaly_zone_skeleton_swarm_branch{
       "it:object"{
         template:t="area_decor_confusion"
         scaleToBox:b=yes
-      }
-    }
-
-    "artifact_active_mattery_extraction_preset:array"{
-      "it:object"{
-        template:t="artifact_active_mattery_base"
-        projectToNavmesh:b=yes
       }
     }
 
@@ -1494,7 +1409,7 @@ anomaly_zone_changed_indoor_branch{
   "anomaly_zone__spawnPresets:object"{
     "indoor_creature_preset:array"{
       "it:object"{
-        template:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_monster+am_inside_body_3"
+        template:t="household_changed_human+changed_human_collision+sleeping_changed_human+am_inside_body_3"
         projectToNavmesh:b=yes
         minDistanceToWall:r=0.4
         spawnIndoor:b=yes
@@ -1503,7 +1418,7 @@ anomaly_zone_changed_indoor_branch{
 
     "indoor_mini_creature_preset:array"{
       "it:object"{
-        template:t="outdoor_sleeper_changed_human_mini+changed_human_collision+sleeping_monster+am_inside_body_2"
+        template:t="indoor_sleeper_changed_human_mini+changed_human_collision+sleeping_changed_human+am_inside_body_2"
         projectToNavmesh:b=yes
         minDistanceToWall:r=0.4
         spawnIndoor:b=yes
@@ -1588,7 +1503,7 @@ anomaly_zone_changed_indoor_t1_branch{
   "anomaly_zone__spawnPresets:object"{
     "indoor_creature_preset:array"{
       "it:object"{
-        template:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_monster+am_inside_body_3"
+        template:t="household_changed_human+changed_human_collision+sleeping_changed_human+am_inside_body_3"
         projectToNavmesh:b=yes
         minDistanceToWall:r=0.4
         spawnIndoor:b=yes
@@ -1597,7 +1512,7 @@ anomaly_zone_changed_indoor_t1_branch{
 
     "indoor_mini_creature_preset:array"{
       "it:object"{
-        template:t="outdoor_sleeper_changed_human_mini+changed_human_collision+sleeping_monster+am_inside_body_2"
+        template:t="indoor_sleeper_changed_human_mini+changed_human_collision+sleeping_changed_human+am_inside_body_2"
         projectToNavmesh:b=yes
         minDistanceToWall:r=0.4
         spawnIndoor:b=yes
@@ -1682,14 +1597,14 @@ anomaly_zone_changed_spiked_branch{
   "anomaly_zone__spawnPresets:object"{
     "creature_preset:array"{
       "it:object"{
-        template:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_monster+am_inside_body_3"
+        template:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_changed_human+am_inside_body_3"
         projectToNavmesh:b=yes
       }
     }
 
     "mini_creature_preset:array"{
       "it:object"{
-        template:t="outdoor_sleeper_changed_human_mini+changed_human_collision+sleeping_monster+am_inside_body_2"
+        template:t="outdoor_sleeper_changed_human_mini+changed_human_collision+sleeping_changed_human+am_inside_body_2"
         projectToNavmesh:b=yes
       }
     }

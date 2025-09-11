@@ -1,0 +1,3656 @@
+ordinary_equipment_generator{
+  "equipment_generator__data:object"{
+    "equipments:object"{
+      "sm_liquidator_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=40
+          armorplate_big_b:i=20
+          armorplate_big_c:i=30
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+
+      "suit_militant_male_outlaw_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=40
+          armorplate_big_b:i=20
+          armorplate_big_c:i=30
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+
+      "sm_mirage_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_small_a:i=40
+          armorplate_small_b:i=20
+          armorplate_small_c:i=30
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_small_a:i=40
+          armorplate_small_b:i=20
+          armorplate_small_c:i=30
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+    }
+
+    "main_weapons:array"{
+      "i:object"{
+        templateName:t="pm_63_rak_gun"
+        weight:i=100
+
+        "magazine:object"{
+          pm_63_rak_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          pm_63_rak_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          pm_63_rak_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          pm_63_rak_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_9mm_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_9mm_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          pm_63_rak_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="pp_91_kedr_gun"
+        weight:i=100
+
+        "magazine:object"{
+          pp_91_kedr_20_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          pp_91_kedr_20_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          pp_91_kedr_20_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          pp_91_kedr_20_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_9mm_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_9mm_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          pp_91_kedr_20_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="hk_mp5n_gun"
+        weight:i=100
+
+        "magazine:object"{
+          hk_mp5n_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          hk_mp5n_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          hk_mp5n_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          hk_mp5n_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_9x19_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_9x19_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          hk_mp5n_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_9x19_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="hk_ump_45_gun"
+        weight:i=50
+
+        "magazine:object"{
+          hk_ump_45_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          hk_ump_45_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          hk_ump_45_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          hk_ump_45_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_45_acp_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_45_acp_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          hk_ump_45_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_45_acp_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="toz_b_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mossberg_590_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="winchester_civil_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="winchester_specops_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="spas_12_gun"
+        weight:i=50
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m44_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m44_rust_gun"
+        weight:i=50
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m91_gun"
+        weight:i=100
+
+        "scope:object"{
+          EMPTY:i=80
+          scope_3_5x:i=20
+        }
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m91_rust_gun"
+        weight:i=50
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_hunt_gun"
+        weight:i=50
+
+        "scope:object"{
+          EMPTY:i=80
+          scope_pso1:i=20
+        }
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_rust_gun"
+        weight:i=50
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_civil_gun"
+        weight:i=100
+
+        "magazine:object"{
+          vepr_10rd_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=80
+          scope_pso1_high:i=20
+        }
+
+        "POUCH1:object"{
+          vepr_10rd_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=30
+          vepr_10rd_magazine:i=70
+        }
+
+        "POUCH3:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=50
+          vepr_10rd_magazine:i=50
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_gun"
+        weight:i=50
+
+        "magazine:object"{
+          akm_47_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=95
+          scope_pso1_high:i=5
+        }
+
+        "POUCH1:object"{
+          akm_47_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          akm_47_magazine:i=50
+        }
+
+        "POUCH3:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          akm_47_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_rust_gun"
+        weight:i=50
+
+        "magazine:object"{
+          akm_47_rust_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          akm_47_rust_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          akm_47_rust_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          akm_47_rust_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          akm_47_rust_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m4_gun"
+        weight:i=50
+
+        "magazine:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          m4a1_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_5_56_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          m4a1_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_56_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m4_rust_gun"
+        weight:i=50
+
+        "magazine:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          m4a1_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_5_56_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          m4a1_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_56_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="aks_74u_gun"
+        weight:i=50
+
+        "magazine:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          ak_74_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_5_45x39_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          ak_74_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_45x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="aks_74u_rust_gun"
+        weight:i=50
+
+        "magazine:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          ak_74_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_5_45x39_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          ak_74_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_45x39_magazine:i=30
+        }
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="EMPTY"
+        weight:i=100
+      }
+
+      "i:object"{
+        templateName:t="makarov_gun"
+        weight:i=100
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          makarov_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="makarov_rust_gun"
+        weight:i=20
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          makarov_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m45a1_gun"
+        weight:i=40
+
+        "magazine:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          m1911_colt_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_45_acp_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m1911_colt_gun"
+        weight:i=20
+
+        "magazine:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          m1911_colt_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_45_acp_magazine:i=30
+        }
+      }
+    }
+
+    "melee_weapons:object"{
+      knife_weapon:i=40
+      hammer_weapon:i=10
+      spear_weapon:i=10
+      axe_weapon:i=20
+      sov_knife_nr_40_weapon:i=5
+      ak_bayonet_weapon:i=5
+      mpl50_shovel:i=5
+      wrench_weapon:i=5
+      sovmod_flashlight_device:i=5
+      sovmod_diver_flashlight:i=5
+      screwdriver_a_weapon:i=1
+      screwdriver_b_weapon:i=1
+      chisel_a_weapon:i=1
+      chisel_a_weapon:i=1
+    }
+
+    "medicines:array"{
+      "i:object"{
+        "POUCH1:object"{
+          EMPTY:i=50
+          item_healing_ampoule:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          item_healing_ampoule:i=50
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          item_healing_ampoule:i=50
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=70
+          item_painkiller:i=30
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=80
+          loot_item_healkit_magazine_small:i=20
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=50
+          item_injector_hot:i=50
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=50
+          item_injector_hot:i=50
+        }
+
+        "BACKPACK3:object"{
+          EMPTY:i=70
+          item_healkit:i=30
+        }
+
+        "BACKPACK4:object"{
+          EMPTY:i=90
+          loot_item_healkit_magazine_avg:i=10
+        }
+      }
+    }
+  }
+}
+
+ordinary_equipment_female_generator{
+  "equipment_generator__data:object"{
+    "equipments:object"{
+      "sm_liquidator_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=40
+          armorplate_big_b:i=20
+          armorplate_big_c:i=30
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+
+      "suit_militant_male_outlaw_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=40
+          armorplate_big_b:i=20
+          armorplate_big_c:i=30
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+
+      "sm_mirage_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_small_a:i=40
+          armorplate_small_b:i=20
+          armorplate_small_c:i=30
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_small_a:i=40
+          armorplate_small_b:i=20
+          armorplate_small_c:i=30
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+    }
+
+    "main_weapons:array"{
+      "i:object"{
+        templateName:t="pm_63_rak_gun"
+        weight:i=100
+
+        "magazine:object"{
+          pm_63_rak_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          pm_63_rak_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          pm_63_rak_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          pm_63_rak_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_9mm_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_9mm_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          pm_63_rak_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="pp_91_kedr_gun"
+        weight:i=100
+
+        "magazine:object"{
+          pp_91_kedr_20_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          pp_91_kedr_20_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          pp_91_kedr_20_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          pp_91_kedr_20_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_9mm_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_9mm_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          pp_91_kedr_20_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="hk_mp5n_gun"
+        weight:i=100
+
+        "magazine:object"{
+          hk_mp5n_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          hk_mp5n_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          hk_mp5n_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          hk_mp5n_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_9x19_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_9x19_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          hk_mp5n_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_9x19_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="hk_ump_45_gun"
+        weight:i=50
+
+        "magazine:object"{
+          hk_ump_45_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          hk_ump_45_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          hk_ump_45_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          hk_ump_45_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_45_acp_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_45_acp_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          hk_ump_45_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_45_acp_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="toz_b_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mossberg_590_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="winchester_civil_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="winchester_specops_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="spas_12_gun"
+        weight:i=50
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m44_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m44_rust_gun"
+        weight:i=50
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m91_gun"
+        weight:i=100
+
+        "scope:object"{
+          EMPTY:i=80
+          scope_3_5x:i=20
+        }
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m91_rust_gun"
+        weight:i=50
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_hunt_gun"
+        weight:i=50
+
+        "scope:object"{
+          EMPTY:i=80
+          scope_pso1:i=20
+        }
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_rust_gun"
+        weight:i=50
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_civil_gun"
+        weight:i=100
+
+        "magazine:object"{
+          vepr_10rd_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=80
+          scope_pso1_high:i=20
+        }
+
+        "POUCH1:object"{
+          vepr_10rd_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=30
+          vepr_10rd_magazine:i=70
+        }
+
+        "POUCH3:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=50
+          vepr_10rd_magazine:i=50
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_gun"
+        weight:i=50
+
+        "magazine:object"{
+          akm_47_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=95
+          scope_pso1_high:i=5
+        }
+
+        "POUCH1:object"{
+          akm_47_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          akm_47_magazine:i=50
+        }
+
+        "POUCH3:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          akm_47_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_rust_gun"
+        weight:i=50
+
+        "magazine:object"{
+          akm_47_rust_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          akm_47_rust_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          akm_47_rust_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          akm_47_rust_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          akm_47_rust_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m4_gun"
+        weight:i=50
+
+        "magazine:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          m4a1_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_5_56_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          m4a1_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_56_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m4_rust_gun"
+        weight:i=50
+
+        "magazine:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          m4a1_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_5_56_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          m4a1_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_56_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="aks_74u_gun"
+        weight:i=50
+
+        "magazine:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          ak_74_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_5_45x39_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          ak_74_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_45x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="aks_74u_rust_gun"
+        weight:i=50
+
+        "magazine:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          ak_74_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_5_45x39_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          ak_74_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_45x39_magazine:i=30
+        }
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="EMPTY"
+        weight:i=100
+      }
+
+      "i:object"{
+        templateName:t="makarov_gun"
+        weight:i=100
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          makarov_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="makarov_rust_gun"
+        weight:i=20
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          makarov_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m45a1_gun"
+        weight:i=40
+
+        "magazine:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          m1911_colt_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_45_acp_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m1911_colt_gun"
+        weight:i=20
+
+        "magazine:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          m1911_colt_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_45_acp_magazine:i=30
+        }
+      }
+    }
+
+    "melee_weapons:object"{
+      knife_weapon:i=40
+      hammer_weapon:i=10
+      spear_weapon:i=10
+      axe_weapon:i=20
+      sov_knife_nr_40_weapon:i=5
+      ak_bayonet_weapon:i=5
+      mpl50_shovel:i=5
+      wrench_weapon:i=5
+      sovmod_flashlight_device:i=5
+      sovmod_diver_flashlight:i=5
+      screwdriver_a_weapon:i=1
+      screwdriver_b_weapon:i=1
+      chisel_a_weapon:i=1
+      chisel_a_weapon:i=1
+    }
+
+    "medicines:array"{
+      "i:object"{
+        "POUCH1:object"{
+          EMPTY:i=50
+          item_healing_ampoule:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          item_healing_ampoule:i=50
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          item_healing_ampoule:i=50
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=70
+          item_painkiller:i=30
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=80
+          loot_item_healkit_magazine_small:i=20
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=50
+          item_injector_hot:i=50
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=50
+          item_injector_hot:i=50
+        }
+
+        "BACKPACK3:object"{
+          EMPTY:i=70
+          item_healkit:i=30
+        }
+
+        "BACKPACK4:object"{
+          EMPTY:i=90
+          loot_item_healkit_magazine_avg:i=10
+        }
+      }
+    }
+
+    "equipments:object"{
+      "suit_militant_female_pulse_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=40
+          armorplate_big_b:i=20
+          armorplate_big_c:i=30
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+
+      "suit_militant_female_enforcer_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=40
+          armorplate_big_b:i=20
+          armorplate_big_c:i=30
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+
+      "suit_militant_female_light_a_item:object"{
+        chance:i=10
+
+        "equipment_mod_left_hand_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_hand_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+    }
+  }
+}
+
+burntout_equipment_generator{
+  "equipment_generator__data:object"{
+    "equipments:object"{
+      "sm_liquidator_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=40
+          armorplate_big_b:i=20
+          armorplate_big_c:i=30
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+
+      "suit_militant_male_outlaw_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=40
+          armorplate_big_b:i=20
+          armorplate_big_c:i=30
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+
+      "sm_mirage_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_small_a:i=40
+          armorplate_small_b:i=20
+          armorplate_small_c:i=30
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_small_a:i=40
+          armorplate_small_b:i=20
+          armorplate_small_c:i=30
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+    }
+
+    "main_weapons:array"{
+      "i:object"{
+        templateName:t="pm_63_rak_gun"
+        weight:i=100
+
+        "magazine:object"{
+          pm_63_rak_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          pm_63_rak_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          pm_63_rak_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          pm_63_rak_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_9mm_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_9mm_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          pm_63_rak_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="pp_91_kedr_gun"
+        weight:i=100
+
+        "magazine:object"{
+          pp_91_kedr_20_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          pp_91_kedr_20_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          pp_91_kedr_20_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          pp_91_kedr_20_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_9mm_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_9mm_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          pp_91_kedr_20_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="hk_mp5n_gun"
+        weight:i=100
+
+        "magazine:object"{
+          hk_mp5n_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          hk_mp5n_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          hk_mp5n_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          hk_mp5n_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_9x19_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_9x19_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          hk_mp5n_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_9x19_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="hk_ump_45_gun"
+        weight:i=50
+
+        "magazine:object"{
+          hk_ump_45_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          hk_ump_45_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          hk_ump_45_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          hk_ump_45_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_45_acp_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_45_acp_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          hk_ump_45_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_45_acp_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="toz_b_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mossberg_590_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="winchester_civil_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="winchester_specops_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="spas_12_gun"
+        weight:i=50
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m44_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m44_rust_gun"
+        weight:i=50
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m91_gun"
+        weight:i=100
+
+        "scope:object"{
+          EMPTY:i=80
+          scope_3_5x:i=20
+        }
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m91_rust_gun"
+        weight:i=50
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_hunt_gun"
+        weight:i=50
+
+        "scope:object"{
+          EMPTY:i=80
+          scope_pso1:i=20
+        }
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_rust_gun"
+        weight:i=50
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_civil_gun"
+        weight:i=100
+
+        "magazine:object"{
+          vepr_10rd_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=80
+          scope_pso1_high:i=20
+        }
+
+        "POUCH1:object"{
+          vepr_10rd_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=30
+          vepr_10rd_magazine:i=70
+        }
+
+        "POUCH3:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=50
+          vepr_10rd_magazine:i=50
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_gun"
+        weight:i=50
+
+        "magazine:object"{
+          akm_47_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=95
+          scope_pso1_high:i=5
+        }
+
+        "POUCH1:object"{
+          akm_47_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          akm_47_magazine:i=50
+        }
+
+        "POUCH3:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          akm_47_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_rust_gun"
+        weight:i=50
+
+        "magazine:object"{
+          akm_47_rust_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          akm_47_rust_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          akm_47_rust_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          akm_47_rust_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          akm_47_rust_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m4_gun"
+        weight:i=50
+
+        "magazine:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          m4a1_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_5_56_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          m4a1_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_56_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m4_rust_gun"
+        weight:i=50
+
+        "magazine:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          m4a1_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_5_56_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          m4a1_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_56_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="aks_74u_gun"
+        weight:i=50
+
+        "magazine:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          ak_74_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_5_45x39_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          ak_74_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_45x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="aks_74u_rust_gun"
+        weight:i=50
+
+        "magazine:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          ak_74_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_5_45x39_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          ak_74_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_45x39_magazine:i=30
+        }
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="EMPTY"
+        weight:i=100
+      }
+
+      "i:object"{
+        templateName:t="makarov_gun"
+        weight:i=100
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          makarov_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="makarov_rust_gun"
+        weight:i=20
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          makarov_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m45a1_gun"
+        weight:i=40
+
+        "magazine:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          m1911_colt_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_45_acp_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m1911_colt_gun"
+        weight:i=20
+
+        "magazine:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          m1911_colt_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_45_acp_magazine:i=30
+        }
+      }
+    }
+
+    "melee_weapons:object"{
+      knife_weapon:i=40
+      hammer_weapon:i=10
+      spear_weapon:i=10
+      axe_weapon:i=20
+      sov_knife_nr_40_weapon:i=5
+      ak_bayonet_weapon:i=5
+      mpl50_shovel:i=5
+      wrench_weapon:i=5
+      sovmod_flashlight_device:i=5
+      sovmod_diver_flashlight:i=5
+      screwdriver_a_weapon:i=1
+      screwdriver_b_weapon:i=1
+      chisel_a_weapon:i=1
+      chisel_a_weapon:i=1
+    }
+
+    "medicines:array"{
+      "i:object"{
+        "POUCH1:object"{
+          EMPTY:i=50
+          item_healing_ampoule:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          item_healing_ampoule:i=50
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          item_healing_ampoule:i=50
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=70
+          item_painkiller:i=30
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=80
+          loot_item_healkit_magazine_small:i=20
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=50
+          item_injector_hot:i=50
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=50
+          item_injector_hot:i=50
+        }
+
+        "BACKPACK3:object"{
+          EMPTY:i=70
+          item_healkit:i=30
+        }
+
+        "BACKPACK4:object"{
+          EMPTY:i=90
+          loot_item_healkit_magazine_avg:i=10
+        }
+      }
+    }
+
+    "equipments:object"{
+      "suit_militant_female_pulse_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=40
+          armorplate_big_b:i=20
+          armorplate_big_c:i=30
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+
+      "suit_militant_female_enforcer_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=40
+          armorplate_big_b:i=20
+          armorplate_big_c:i=30
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+
+      "suit_militant_female_light_a_item:object"{
+        chance:i=10
+
+        "equipment_mod_left_hand_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_hand_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=80
+          flashlight_device:i=20
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=30
+          small_pouch:i=50
+          medium_pouch:i=20
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=20
+          small_sovmod_backpack:i=30
+          medium_sovmod_backpack:i=10
+          small_backpack:i=50
+          medium_backpack:i=10
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=5
+          helmet_ussr_ssh40:i=20
+          helmet_d:i=10
+          helmet_pasgt:i=30
+          helmet_pasgt_tactical:i=30
+          helmet_kiver:i=30
+          helmet_galvion_viper_a3:i=10
+          helmet_fast_sf:i=1
+        }
+
+        "equipment_chronogene_dogtag_1:object"{
+          EMPTY:i=100
+          dogtag_chronogene_a:i=1
+        }
+      }
+    }
+
+    "equipments:object"{
+      "suit_mindcontrolled_militant_a_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=40
+          armorplate_big_b:i=20
+          armorplate_big_c:i=30
+        }
+      }
+
+      "suit_mindcontrolled_militant_b_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=40
+          armorplate_big_b:i=20
+          armorplate_big_c:i=30
+        }
+      }
+
+      "suit_mindcontrolled_militant_c_item:object"{
+        chance:i=10
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=40
+          armorplate_big_b:i=20
+          armorplate_big_c:i=30
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_left_hand_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_hand_0:object"{
+          EMPTY:i=65
+          armorplate_small_a:i=20
+          armorplate_small_b:i=5
+          armorplate_small_c:i=10
+        }
+      }
+    }
+  }
+}

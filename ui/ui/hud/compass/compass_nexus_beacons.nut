@@ -1,7 +1,10 @@
+from "%ui/hud/tips/nexus_header_components.nut" import mkBeacon
+
 from "%ui/ui_library.nut" import *
 
 let { nexusBeacons, nexusBeaconEids, isNexus } = require("%ui/hud/state/nexus_mode_state.nut")
-let { mkBeacon } = require("%ui/hud/tips/nexus_round_mode_header.nut")
+
+#allow-auto-freeze
 
 function mkCompassNexusBeacons(eids, stateWatched) {
   return eids.map(function(beaconEid) {

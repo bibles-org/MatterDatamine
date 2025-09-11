@@ -35,7 +35,7 @@ centipede_head{
   navmesh_phys__acceleration:r=15
   navmesh_phys__wriggleAmplitude:r=1.8
   navmesh_phys__wriggleFrequency:r=3
-  _use:t="human_grid_obj"
+  _use:t="humans_dynamic_grid_object"
   _use:t="centipede_ai"
   team:i=1
   beh_tree__node:t="centipede"

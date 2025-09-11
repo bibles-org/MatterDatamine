@@ -325,7 +325,7 @@ exitHandler{
 
         sequencer{
           not{
-            checkTargetVisibility{
+            amCheckTargetVisibility{
               targetUnitParam:t="shootEnemy"
               rayMat:t="aiRay"
             }
@@ -417,6 +417,11 @@ exitHandler{
           lookTime:r=0.5
         }
       }
+    }
+
+    amCheckTargetVisibility{
+      targetUnitParam:t="shootEnemy"
+      rayMat:t="aiRay"
     }
 
     success{
@@ -879,7 +884,7 @@ sequencer{
   findLoot{
     traceDist:r=12
     lootTargetParam:t="lootEntity"
-    maxPickupVolume:r=5
+    maxPickupVolume:i=50
     allowWeaponsWithoutAmmo:b=yes
   }
 
@@ -996,7 +1001,7 @@ sequencer{
   findLoot{
     traceDist:r=7
     lootTargetParam:t="lootEntity"
-    maxPickupVolume:r=5
+    maxPickupVolume:i=50
   }
 
   setPosFromEntity{

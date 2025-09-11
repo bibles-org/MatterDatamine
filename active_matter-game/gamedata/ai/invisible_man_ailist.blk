@@ -498,6 +498,10 @@ repeat{
                   }
                 }
 
+                checkAlive{
+                  targetParam:t="walker_agent__targetEid"
+                }
+
                 orderedSelector{
                   not{
                     amIsTargetLookingInMyDirection{
@@ -536,6 +540,10 @@ repeat{
                     range:p2=0.2, 0.3
                     resetable:b=yes
                   }
+                }
+
+                checkAlive{
+                  targetParam:t="walker_agent__targetEid"
                 }
 
                 orderedSelector{
@@ -1031,6 +1039,10 @@ sequencer{
 
     subTree{
       treeName:t="sub.invisible_man_find_danger"
+    }
+
+    checkAlive{
+      targetParam:t="walker_agent__targetEid"
     }
 
     orderedSelector{

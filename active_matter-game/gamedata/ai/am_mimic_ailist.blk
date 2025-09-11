@@ -1,4 +1,259 @@
 repeat{
+  name:t="am_mimic_crawl"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      sequencer{
+        compareNode{
+          lhs:t="stuck_detector__value"
+          operator:t=">"
+          rhs:r=0.8
+        }
+
+        compareNode{
+          lhs:t="surface_crawler__frustration"
+          operator:t=">"
+          rhs:r=10
+        }
+
+        modifyNode{
+          target:t="stuck_detector__value"
+          operator:t="="
+          arg:r=0
+        }
+
+        modifyNode{
+          target:t="surface_crawler__frustration"
+          operator:t="="
+          arg:r=0
+        }
+
+        selectNode{
+          name:t="mimic_crawler_unstuck"
+        }
+      }
+
+      sequencer{
+        not{
+          isOffNavMesh{}
+        }
+
+        findEnemyPosForCrawlerJump{
+          posParam:t="am_mimic__crawlJumpPos"
+          normParam:t="am_mimic__crawlJumpNormal"
+          minDst:r=3
+        }
+
+        prepareJumpToPos{
+          posParam:t="am_mimic__crawlJumpPos"
+          normParam:t="am_mimic__crawlJumpNormal"
+        }
+
+        selectNode{
+          name:t="performNavmeshShortcutJump_node"
+        }
+      }
+
+      sequencer{
+        hasTimePassed{
+          from:t="am_mimic__lastValidTargetStamp"
+          duration:t="am_mimic__sleepAfterNoThreat"
+        }
+
+        orderedSelector{
+          sequencer{
+            findRiToHideIn{}
+            selectNode{
+              name:t="crawl_to_hide_in_ri"
+            }
+          }
+
+          selectNode{
+            name:t="mimic_crawler_sleep_in_place"
+          }
+        }
+      }
+    }
+  }
+
+  sequencer{
+    compareNode{
+      lhs:t="am_mimic__isInsideRi"
+      operator:t="=="
+      rhs:i=1
+    }
+
+    mimicEmergeFromRi{}
+    modifyNode{
+      target:t="surface_crawler__active"
+      operator:t="="
+      arg:r=1
+    }
+  }
+
+  startCrawl{}
+  crawlOverSurface{}
+  recalculateTree{}
+  sequencer{
+    name:t="performNavmeshShortcutJump_node"
+
+    modifyNode{
+      target:t="surface_crawler__active"
+      operator:t="="
+      arg:r=0
+    }
+
+    wait{
+      range:p2=0.45, 0.55
+      resetable:b=yes
+    }
+
+    crawlerFlipToNormal{
+      normParam:t="am_mimic__crawlJumpNormal"
+    }
+
+    performNavmeshShortcutJump{
+      customOffNavmeshTemplate:t="am_mimic_damaging_jump"
+    }
+
+    modifyNode{
+      target:t="surface_crawler__active"
+      operator:t="="
+      arg:r=1
+    }
+
+    recalculateTree{}
+  }
+
+  sequencer{
+    name:t="crawl_to_hide_in_ri"
+
+    reaction{
+      event:t="regularCheck"
+
+      orderedSelector{
+        sequencer{
+          compareNode{
+            lhs:t="stuck_detector__value"
+            operator:t=">"
+            rhs:r=0.8
+          }
+
+          compareNode{
+            lhs:t="surface_crawler__frustration"
+            operator:t=">"
+            rhs:r=10
+          }
+
+          selectNode{
+            name:t="mimic_crawler_unstuck"
+          }
+        }
+
+        sequencer{
+          not{
+            isOffNavMesh{}
+          }
+
+          findEnemyPosForCrawlerJump{
+            posParam:t="am_mimic__crawlJumpPos"
+            normParam:t="am_mimic__crawlJumpNormal"
+            minDst:r=3
+          }
+
+          setTime{
+            to:t="am_mimic__lastValidTargetStamp"
+          }
+
+          prepareJumpToPos{
+            posParam:t="am_mimic__crawlJumpPos"
+            normParam:t="am_mimic__crawlJumpNormal"
+          }
+
+          selectNode{
+            name:t="performNavmeshShortcutJump_node"
+          }
+        }
+
+        sequencer{
+          hasTimePassed{
+            from:t="am_mimic__hideInRiStartedAt"
+            duration:t="am_mimic__maxHideInRiTime"
+          }
+
+          orderedSelector{
+            sequencer{
+              banCurrentHideRi{}
+              findRiToHideIn{}
+              setTime{
+                to:t="am_mimic__hideInRiStartedAt"
+              }
+            }
+
+            selectNode{
+              name:t="mimic_crawler_sleep_in_place"
+            }
+          }
+        }
+      }
+    }
+
+    setTime{
+      to:t="am_mimic__hideInRiStartedAt"
+    }
+
+    crawlOverSurfaceToRi{}
+    modifyNode{
+      target:t="surface_crawler__active"
+      operator:t="="
+      arg:r=0
+    }
+
+    sequencer{
+      reaction{
+        event:t="regularCheck"
+      }
+
+      mimicHideInRi{}
+      wait{
+        range:p2=0.2, 0.2
+        resetable:b=yes
+      }
+
+      mimicEmergeFromRi{}
+    }
+
+    modifyNode{
+      target:t="surface_crawler__active"
+      operator:t="="
+      arg:r=1
+    }
+
+    recalculateTree{}
+  }
+
+  sequencer{
+    name:t="mimic_crawler_sleep_in_place"
+
+    addTemplate{
+      name:t="sleeping_mimic"
+    }
+
+    resetBannedHideRi{}
+    recalculateTree{}
+  }
+
+  sequencer{
+    name:t="mimic_crawler_unstuck"
+
+    crawlToHistoryState{}
+    recalculateTree{}
+  }
+}
+
+repeat{
   name:t="am_mimic_jumper"
   selectStrategy:t="ordered"
 
@@ -12,7 +267,7 @@ repeat{
         compareNode{
           lhs:t="stuck_detector__value"
           operator:t=">"
-          rhs:r=0.2
+          rhs:r=0.3
         }
 
         findDoorObstacleWithNavmeshMapping{
@@ -167,16 +422,106 @@ repeat{
 
             checkDistanceToTarget{
               targetParam:t="walker_agent__targetEid"
-              radius:r=1.7
+              radius:r=1.5
             }
 
-            subTree{
-              treeName:t="sub.am_mimic_flank_target"
+            selector{
+              selectStrategy:t="random"
+              selectOnSuccess:b=yes
+
+              subTree{
+                treeName:t="sub.am_mimic_flank_target"
+              }
+
+              subTree{
+                treeName:t="sub.am_mimic_pursue_head_on"
+              }
             }
           }
 
-          amMimicAttack{
-            target:t="walker_agent__targetEid"
+          parallel{
+            amMimicAttack{
+              target:t="walker_agent__targetEid"
+            }
+
+            repeat{
+              orderedSelector{
+                sequencer{
+                  compareNode{
+                    lhs:t="am_mimic_attack__needToDash"
+                    operator:t=">="
+                    rhs:i=3
+                  }
+
+                  wait{
+                    range:p2=0.3, 0.3
+                    resetable:b=yes
+                  }
+
+                  nMeshDashForward{
+                    dir:t="am_mimic_attack__dashDir"
+                  }
+                }
+
+                sequencer{
+                  compareNode{
+                    lhs:t="am_mimic_attack__needToDash"
+                    operator:t=">="
+                    rhs:i=1
+                  }
+
+                  nPhysCorridorMoveToPosWithNavmeshMapping{
+                    posParam:t="am_mimic_attack__futurePos"
+                    forceToWalk:b=no
+                    stopDist:r=0.75
+                    navLookAhead:r=0.75
+                  }
+
+                  compareNode{
+                    lhs:t="am_mimic_attack__needToDash"
+                    operator:t=">="
+                    rhs:i=2
+                  }
+
+                  nPhysCorridorMoveToTargetWithNavmeshMapping{
+                    targetParam:t="walker_agent__targetEid"
+                    stopDist:r=2.4
+                    loseInvisibleTarget:b=no
+                    leading:r=0.4
+                  }
+                }
+              }
+
+              wait{
+                range:p2=2.5, 2.5
+                resetable:b=yes
+              }
+            }
+
+            sequencer{
+              success{
+                sequencer{
+                  compareNode{
+                    lhs:t="am_mimic_attack__needToDash"
+                    operator:t=">="
+                    rhs:i=4
+                  }
+
+                  modifyNode{
+                    target:t="irratic_walk__blockUntil"
+                    operator:t="="
+                    arg:i=0
+                  }
+
+                  setIrraticWalkSpeed{}
+                }
+              }
+
+              wait{
+                range:p2=2.5, 2.5
+                resetable:b=yes
+              }
+            }
           }
 
           orderedSelector{
@@ -301,26 +646,34 @@ repeat{
 
   recalculateTree{}
   sequencer{
-    name:t="am_mimic_crawl"
+    name:t="pre_offmesh_jump_HACK"
 
-    reaction{
-      event:t="regularCheck"
-
-      orderedSelector{
-        sequencer{
-          ignoreChance{
-            chance:r=0.6
-          }
-
-          stopCrawl{}
-          recalculateTree{}
-        }
-      }
-    }
-
-    crawlOverSurface{}
+    sequencer{}
   }
 
+  sequencer{
+    name:t="performNavmeshShortcutJump_node"
+
+    modifyNode{
+      target:t="surface_crawler__active"
+      operator:t="="
+      arg:r=0
+    }
+
+    wait{
+      range:p2=0.45, 0.55
+      resetable:b=yes
+    }
+
+    crawlerFlipToNormal{
+      normParam:t="am_mimic__crawlJumpNormal"
+    }
+
+    performNavmeshShortcutJump{}
+    stopCrawl{}
+  }
+
+  recalculateTree{}
   repeatUntilFail{
     name:t="sub.am_mimic_door_opener"
     count:i=1
@@ -387,6 +740,8 @@ repeat{
 
   sequencer{
     name:t="pre_jump_HACK"
+
+    sequencer{}
   }
 
   sequencer{
@@ -534,9 +889,39 @@ sequencer{
     sequencer{
       flankTarget{
         targetParam:t="walker_agent__targetEid"
-        stopDist:r=0.1
+        stopDist:r=0.5
         navLookAhead:r=0
+        predictionTime:r=0.3
       }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.am_mimic_pursue_head_on"
+
+  modifyNode{
+    target:t="nmesh_shortcut_jump__stopDst"
+    operator:t="="
+    arg:i=0
+  }
+
+  parallel{
+    repeat{
+      subTree{
+        treeName:t="sub.mimic_jump_pseudo_reaction"
+      }
+    }
+
+    repeat{
+      setIrraticWalkSpeed{}
+    }
+
+    nPhysCorridorMoveToTargetWithNavmeshMapping{
+      targetParam:t="walker_agent__targetEid"
+      stopDist:r=2.5
+      loseInvisibleTarget:b=no
+      leading:r=0.4
     }
   }
 }

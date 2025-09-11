@@ -1,0 +1,51 @@
+entity{
+  _template:t="nexus_vanilla_mall_sound_occlusion"
+}
+
+entity{
+  _template:t="nexus_vanilla_mall_ambient_sound"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="vanilla_wind_med_sphere"
+  compound_ambient_sound_type__path:t="ambient/positioned/wind_med"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="vanilla_wind_med_box"
+  compound_ambient_sound_type__path:t="ambient/positioned/wind_med"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="vanilla_wind_big_sphere"
+  compound_ambient_sound_type__path:t="ambient/positioned/wind_big"
+}
+
+entity{
+  _template:t="compound_ambient_sound_type"
+  compound_ambient_sound_type__soundType:t="vanilla_wind_big_box"
+  compound_ambient_sound_type__path:t="ambient/positioned/wind_big"
+}
+
+entity{
+  _template:t="compound_ambient_sound_controller"
+
+  "compound_ambient_sound_controller__soundTypes:list<t>"{
+    name:t="vanilla_wind_med_sphere"
+    name:t="vanilla_wind_med_box"
+    name:t="vanilla_wind_big_sphere"
+    name:t="vanilla_wind_big_box"
+  }
+}
+
+entity{
+  _template:t="game_object_sound_effect_generator"
+
+  "game_object_sound_effect_generator__gameObjectToEventPath:object"{
+    sfx_point_metal_creaks_big:t="env_effects/metal_creaks_big"
+    sfx_point_concrete_debries_small:t="env_effects/concrete_debries_small"
+  }
+}

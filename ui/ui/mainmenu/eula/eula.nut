@@ -1,19 +1,19 @@
+from "%dngscripts/globalState.nut" import nestWatched
+from "%sqstd/json.nut" import loadJson
+from "dagor.localize" import processHypenationsCN, processHypenationsJP
+from "%ui/fonts_style.nut" import h2_txt, body_txt
+from "%ui/components/msgbox.nut" import msgboxDefStyle, showMsgbox
+from "%ui/components/scrollbar.nut" import makeVertScrollExt
+from "dagor.fs" import read_text_from_file, file_exists
 from "%ui/ui_library.nut" import *
 import "%ui/components/colors.nut" as colors
 
-let { h2_txt, body_txt } = require("%ui/fonts_style.nut")
-let eulaLog = require("%sqstd/log.nut")().with_prefix("[EULA] ")
+let eulaLog = require("%sqGlob/library_logs.nut").with_prefix("[EULA] ")
 let platform = require("%dngscripts/platform.nut")
-let {msgboxDefStyle, showMsgbox} = require("%ui/components/msgbox.nut")
-let {makeVertScrollExt} = require("%ui/components/scrollbar.nut")
-let {safeAreaHorPadding, safeAreaVerPadding} = require("%ui/options/safeArea.nut")
-let {read_text_from_file, file_exists} = require("dagor.fs")
-let {loadJson} = require("%sqstd/json.nut")
-let {language} = require("%ui/state/clientState.nut")
+let { safeAreaHorPadding, safeAreaVerPadding } = require("%ui/options/safeArea.nut")
+let { language } = require("%ui/state/clientState.nut")
 let JB = require("%ui/control/gui_buttons.nut")
-let {hotkeysBarHeight} = require("%ui/hotkeysPanel.nut")
-let { nestWatched } = require("%dngscripts/globalState.nut")
-let {processHypenationsCN = @(v) v, processHypenationsJP = @(v) v} = require("dagor.localize")
+let { hotkeysBarHeight } = require("%ui/hotkeysPanel.nut")
 
 const NO_VERSION = -1
 
@@ -21,7 +21,7 @@ let json_load = @(file) loadJson(file, {logger = eulaLog, load_text_file = read_
 
 function loadConfig(fileName) {
   let config = file_exists(fileName) ? json_load(fileName) : null
-  local curLang = language.value.tolower()
+  local curLang = language.get().tolower()
   if (!(curLang in config))
     curLang = "english"
   return {
@@ -84,20 +84,20 @@ function show(version, filePath, decisionCb=null, isUpdated=false) {
   
   let eulaUiContent = @() {
     watch = [safeAreaHorPadding]
-    size = [sw(80), sh(80)]
+    size = static [sw(80), sh(80)]
     gap = hdpx(20)
     flow = FLOW_VERTICAL
     padding = [safeAreaVerPadding.get(), safeAreaHorPadding.get(), safeAreaVerPadding.get()+hotkeysBarHeight.get(), safeAreaHorPadding.get()]
     children = [
       {rendObj = ROBJ_TEXT text = loc("Legals") hplace = ALIGN_CENTER}.__update(h2_txt)
       makeVertScrollExt({
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         halign = ALIGN_LEFT
-        padding = [0, hdpx(20)]
+        padding = static [0, hdpx(20)]
         rendObj = ROBJ_SOLID
         color = Color(0,0,0)
         children = {
-          size = [flex(), SIZE_TO_CONTENT]
+          size = FLEX_H
           rendObj = ROBJ_TEXTAREA
           behavior = Behaviors.TextArea
           color = colors.BtnTextNormal

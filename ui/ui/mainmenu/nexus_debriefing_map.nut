@@ -1,17 +1,20 @@
+from "%ui/helpers/parseSceneBlk.nut" import get_zone_info, get_tiled_map_info, get_spawns, get_raid_description,
+  get_nexus_beacons, ensurePoint2, ensurePoint3
+
+from "%ui/hud/map/tiled_map_ctx.nut" import tiledMapSetup
+from "dagor.math" import Point3
+from "%ui/hud/map/map_nexus_beacons.nut" import mkNexusBeaconMarkers
+from "%ui/components/colors.nut" import BtnBgDisabled
+from "%ui/hud/map/map_spawn_points.nut" import mkSpawns
+from "dagor.localize" import doesLocTextExist
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 from "tiledMap.behaviors" import TiledMap
 
-let { currentMapVisibleRadius } = require("%ui/hud/minimap/map_state.nut")
-let { tiledMapContext, tiledMapSetup, tiledMapDefaultConfig } = require("%ui/hud/minimap/tiled_map_ctx.nut")
-let { raidZoneInfo, raidZone } = require("%ui/hud/minimap/minimap_restr_zones_raid_menu.nut")
-let { get_zone_info, get_tiled_map_info, get_spawns, get_raid_description, get_nexus_beacons,
-  ensurePoint2, ensurePoint3 } = require("%ui/helpers/parseSceneBlk.nut")
-let { Point3 } = require("dagor.math")
-let { mkNexusBeaconMarkers } = require("%ui/hud/minimap/minimap_nexus_beacons.nut")
-let { BtnBgDisabled } = require("%ui/components/colors.nut")
-let { mkSpawns } = require("%ui/hud/minimap/map_spawn_points.nut")
-let { doesLocTextExist } = require("dagor.localize")
+let { currentMapVisibleRadius } = require("%ui/hud/map/map_state.nut")
+let { tiledMapContext, tiledMapDefaultConfig } = require("%ui/hud/map/tiled_map_ctx.nut")
+let { raidZoneInfo, raidZone } = require("%ui/hud/map/map_restr_zones_raid_menu.nut")
 
 let debriefingScene = Watched(null)
 let debriefingRaidName = Watched(null)
@@ -84,7 +87,7 @@ let spawns = Computed(function() {
   let result = {}
   foreach (group in spawnGroups) {
     let locRaid = $"{raidName}/spawn_name/{group - offset}"
-    let locZone = $"{raidName?.split("+")?[0]}/spawn_name/{group - offset}"
+    let locZone = $"{raidName?.split("+")?[1]}/spawn_name/{group - offset}"
     result[group] <- {
       spawns = allSpawns.filter(@(v) v.spawnGroupId == group)
       locId = doesLocTextExist(locRaid) ? locRaid : locZone
@@ -116,7 +119,7 @@ function setupMapContext(scene, mapSizeToUse) {
   let mapInfo = get_tiled_map_info(scene)
 
   if (mapInfo == null){
-    tiledMapSetup("Raid Menu", tiledMapDefaultConfig)
+    tiledMapSetup("Missions Menu", tiledMapDefaultConfig)
     return
   }
 
@@ -132,7 +135,7 @@ function setupMapContext(scene, mapSizeToUse) {
     viewportHeight = mapSizeToUse[1]
     backgroundColor = mapInfo.backgroundColor
   }
-  tiledMapSetup("Raid Menu", config)
+  tiledMapSetup("Missions Menu", config)
   updateMapPos(scene)
 }
 

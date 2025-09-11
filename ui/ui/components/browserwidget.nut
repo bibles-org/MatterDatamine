@@ -1,16 +1,18 @@
+from "%ui/components/colors.nut" import TextNormal, ModalBgTint
+
+from "%ui/components/msgbox.nut" import showMsgbox
+from "%ui/components/modalWindows.nut" import addModalWindow, removeModalWindow
+from "%ui/components/button.nut" import fontIconButton
+from "eventbus" import eventbus_subscribe
+
 from "%ui/ui_library.nut" import *
 let {Browser = null} = require_optional("browser.behaviors")
 
-let {
-  TextNormal, ModalBgTint
-} = require("%ui/components/colors.nut")
-let { showMsgbox } = require("%ui/components/msgbox.nut")
-let {addModalWindow, removeModalWindow} = require("%ui/components/modalWindows.nut")
-let { fontIconButton } = require("%ui/components/button.nut")
-let { eventbus_subscribe } = require("eventbus")
 let { browser_go_back = @() null,
         browser_reload_page = @() null,
         can_use_embeded_browser = @() false } = require_optional("browser")
+
+#allow-auto-freeze
 
 let windowTitle = Watched(null)
 let canGoBack = Watched(false)
@@ -19,9 +21,9 @@ const WND_UID = "webbrowser_window"
 
 function handleBrowserEvent(val) {
   if ("canGoBack" in val)
-    canGoBack(!!val.canGoBack)
+    canGoBack.set(!!val.canGoBack)
   if ("title" in val)
-    windowTitle(val.title ?? "")
+    windowTitle.set(val.title ?? "")
 }
 
 eventbus_subscribe("browser_event", handleBrowserEvent)
@@ -30,15 +32,15 @@ let windowTitleHeader = @() {
   rendObj = ROBJ_TEXT
   vplace = ALIGN_CENTER
   watch = windowTitle
-  text = windowTitle.value
+  text = windowTitle.get()
   color = TextNormal
-  size = [flex(), SIZE_TO_CONTENT]
-  padding = [hdpx(5), hdpx(20)]
+  size = FLEX_H
+  padding = static [hdpx(5), hdpx(20)]
 }
 
 let btnstyle = freeze({padding = hdpx(5)})
 let controlPanel = @(onClose) {
-  size = [flex(), hdpx(35)]
+  size = static [flex(), hdpx(35)]
   flow = FLOW_HORIZONTAL
   gap = hdpx(5)
   children = [
@@ -64,7 +66,7 @@ function showBrowser(url = "", onClose = @() null) {
         flow = FLOW_VERTICAL
         
         
-        size = [hdpx(1200), hdpx(768)]
+        size = static [hdpx(1200), hdpx(768)]
         rendObj = ROBJ_SOLID
         color = Color(20,20,20,255)
         hplace = ALIGN_CENTER

@@ -1,11 +1,12 @@
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {tipCmp}        = require("%ui/hud/tips/tipComponent.nut")
-let {isAlive}       = require("%ui/hud/state/health_state.nut")
-let {isIndoor}      = require("%ui/hud/state/indoor_state_es.nut")
-let {hasFlashlight}       = require("%ui/hud/state/equipment.nut")
-let {get_controlled_hero} = require("%dngscripts/common_queries.nut")
+let { isAlive } = require("%ui/hud/state/health_state.nut")
+let { isIndoor } = require("%ui/hud/state/indoor_state_es.nut")
+let { hasFlashlight } = require("%ui/hud/state/equipment.nut")
+let { get_controlled_hero } = require("%dngscripts/common_queries.nut")
 let { isFlashlightTipEnabled } = require("%ui/mainMenu/menus/options/flashlight_tip_option.nut")
 
 let isFlashlighting = Watched(false)
@@ -19,30 +20,30 @@ let flashlightTipCooldownAfterShowSeconds = 15.0
 
 
 let onFlashlightTipCooldown = function() {
-  isFlashLightTipOnCooldown(false)
+  isFlashLightTipOnCooldown.set(false)
 }
 
 let onShowSwitchOnFlashlightTimeout = function() {
-  forceShowFlashlighTip(false)
-  isFlashLightTipOnCooldown(true)
-  blockFlashlightHintUntilOutdoors(true)
+  forceShowFlashlighTip.set(false)
+  isFlashLightTipOnCooldown.set(true)
+  blockFlashlightHintUntilOutdoors.set(true)
   gui_scene.resetTimeout(flashlightTipCooldownAfterShowSeconds, onFlashlightTipCooldown)
 }
 
-isIndoor.subscribe(function(value){
+isIndoor.subscribe_with_nasty_disregard_of_frp_update(function(value){
   if (!value && blockFlashlightHintUntilOutdoors.get())
-    blockFlashlightHintUntilOutdoors(false)
+    blockFlashlightHintUntilOutdoors.set(false)
 })
 
 ecs.register_es("catch_hero_switch_on_flashlight_es", {
   [["onInit", "onDestroy", "onChange"]] = function(_evt,_eid,comp){
-      if (get_controlled_hero() == comp["attached_flashlight__actorEid"])
-        isFlashlighting(comp["attached_flashlight__isOn"])
+      if (get_controlled_hero() == comp["flashlight_spot_light__actorEid"])
+        isFlashlighting.set(comp["flashlight_spot_light__isOn"])
     }
   },
   {
-    comps_ro = [["attached_flashlight__actorEid", ecs.TYPE_EID]]
-    comps_track = [["attached_flashlight__isOn", ecs.TYPE_BOOL]]
+    comps_ro = [["flashlight_spot_light__actorEid", ecs.TYPE_EID]]
+    comps_track = [["flashlight_spot_light__isOn", ecs.TYPE_BOOL]]
   },
   {tags = "gameClient"}
 )
@@ -64,15 +65,14 @@ let showSwitchOnFlashlight = Computed(function() {
     || forceShowFlashlighTip.get()
 })
 
-showSwitchOnFlashlight.subscribe(function(value){
+showSwitchOnFlashlight.subscribe_with_nasty_disregard_of_frp_update(function(value){
   if (value) {
     gui_scene.resetTimeout(flashlightTipDurationSeconds, onShowSwitchOnFlashlightTimeout)
-    forceShowFlashlighTip(true)
+    forceShowFlashlighTip.set(true)
   }
 })
 
 return @() {
   watch = showSwitchOnFlashlight
-  size = SIZE_TO_CONTENT
   children = showSwitchOnFlashlight.get() ? tip : null
 }

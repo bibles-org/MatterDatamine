@@ -1,0 +1,63 @@
+repeat{
+  name:t="vehicle_follow_closest_human"
+
+  findClosestEntityWithComponent{
+    componentName:t="human"
+    outParamName:t="targetEid"
+  }
+
+  setPosFromEntity{
+    to:t="targetPos"
+    from:t="targetEid"
+    projectToNavmesh:b=no
+  }
+
+  parallel{
+    driveTo{
+      to:t="targetPos"
+    }
+
+    sequencer{
+      wait{
+        range:p2=5, 5
+        resetable:b=yes
+      }
+
+      findClosestEntityWithComponent{
+        componentName:t="human"
+        outParamName:t="targetEid"
+      }
+
+      setPosFromEntity{
+        to:t="targetPos"
+        from:t="targetEid"
+        projectToNavmesh:b=no
+      }
+    }
+  }
+}
+
+repeat{
+  name:t="vehicle_follow_waypoints"
+
+  sequencer{
+    not{
+      vehicleWaypointsIsFinished{}
+    }
+
+    vehicleWaypointsGetNextPosition{
+      outParam:t="targetPos"
+    }
+
+    driveTo{
+      to:t="targetPos"
+    }
+
+    vehicleAdvanceWaypoint{}
+  }
+
+  wait{
+    range:p2=1, 1
+    resetable:b=yes
+  }
+}

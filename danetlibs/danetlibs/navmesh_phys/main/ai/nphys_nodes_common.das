@@ -1,6 +1,6 @@
 module nphys_nodes_common
 
-require app
+require app // get_sync_time
 require ecs
 require DagorSystem
 require BehNodes
@@ -110,6 +110,7 @@ def advance_path_corridor_ai(eid : EntityId; at_time : float; var path_corridor 
                              cur_poly : dtPolyRef;
                              path_corridor_ai__corridorUpdateStep : float;
                              navmesh_phys__climbJumpMaxUpHeight : float;
+                             nphys_pushable__unlockMovementAt : float;
                              var path_corridor_ai__corridorResult : int&;
                              var path_corridor_ai__nextCorridorUpdate : float&;
                              var path_corridor__corners : Point3List&;
@@ -130,7 +131,7 @@ def advance_path_corridor_ai(eid : EntityId; at_time : float; var path_corridor 
     let curTarget = path_corridor |> corridor_getTarget()
     let forceUpdate = path_corridor__forceUpdateThisFrame ?? false
     let reCorridor = at_time >= path_corridor_ai__nextCorridorUpdate || is_nan(curTarget) || distance_sq(curTarget, target_pos) > 0.25f || forceUpdate
-    if reCorridor && !(path_corridor__isClimbing ?? false) || forceUpdate // do not update corridor while agent is in air
+    if reCorridor && !(path_corridor__isClimbing ?? false) && nphys_pushable__unlockMovementAt <= at_time || forceUpdate // do not update corridor while agent is in air
       if path_corridor__forceUpdateThisFrame != null
         *path_corridor__forceUpdateThisFrame = false
       let extents = float3(.5, FLT_MAX, .5)
@@ -178,7 +179,7 @@ def advance_path_corridor_ai(eid : EntityId; at_time : float; var path_corridor 
 
       for it in corners
         path_corridor__corners |> push(it)
-      if path_corridor__overJumpLink != null && path_corridor__overJumpLinkStart != null && path_corridor__prevDstToJLEndSq != null
+      if path_corridor__overJumpLink != null && path_corridor__overJumpLinkStart != null && path_corridor__prevDstToJLEndSq != null && nphys_pushable__unlockMovementAt <= at_time
 
         var jumpEndPos : float3
         nmesh_move_over_jump_link_in_corridor(corridorPos, corners_res, path_corridor__corners,
@@ -317,6 +318,7 @@ class AbstractNPhysCorridorMoveTo : BehNodeAdapter
                           var navmesh_phys__currentPoly : int64&;
                           navmesh_phys__steeringAgentSize : float = 0.2f;
                           navmesh_phys__steeringAgentSineFactor : float = 1.0;
+                          nphys_pushable__unlockMovementAt : float = 0.0;
                           path_corridor__failsMax : int;
                           var path_corridor__isClimbing : bool?;
                           navmesh_phys__climbJumpMaxUpHeight : float = FLT_MAX;
@@ -371,7 +373,7 @@ class AbstractNPhysCorridorMoveTo : BehNodeAdapter
 
       var isPartial = false
       if advance_path_corridor_ai(eid, get_sync_time(), path_corridor, currentPos, targetPos, dtPolyRef(navmesh_phys__currentPoly),
-          path_corridor_ai__corridorUpdateStep, navmesh_phys__climbJumpMaxUpHeight, path_corridor_ai__corridorResult,
+          path_corridor_ai__corridorUpdateStep, navmesh_phys__climbJumpMaxUpHeight, nphys_pushable__unlockMovementAt, path_corridor_ai__corridorResult,
           path_corridor_ai__nextCorridorUpdate, path_corridor__corners, isPartial, path_corridor__isClimbing,
           path_corridor__overJumpLink, path_corridor__overJumpLinkStart, path_corridor__jumpLinkStart, path_corridor__jumpLinkEnd,
           path_corridor__prevDstToJLEndSq,
@@ -389,8 +391,9 @@ class AbstractNPhysCorridorMoveTo : BehNodeAdapter
         if navmesh_phys__rotationSpeed != null
           steer_agent_with_velocity(eid, dt, currentPos, targetCorner, navmesh_phys__steeringAgentSize, *navmesh_phys__rotationSpeed, navmesh_phys__wishWalkDir)
         else
+          let steeringMult = cvt(dirToTargetLen, 0., stopDist * 2.0 + 0.1, 0.2, 1.0)
           navmesh_phys__wishWalkDir = steer_agent(eid, currentPos, targetCorner, curTime, navmesh_phys__steeringAgentSize,
-                                                  navmesh_phys__steeringAgentSineFactor)
+                                                  navmesh_phys__steeringAgentSineFactor * steeringMult)
 
         var lookDir = navmesh_phys__wishWalkDir
         var prevPos = currentPos
@@ -472,6 +475,7 @@ class NPhysCorridorMoveToTargetBase : AbstractNPhysCorridorMoveTo
   @hidden targetParamHash : uint
   lastTargetPos : float3
   loseInvisibleTarget : bool = false
+  leading : float = .0
 
   def lostTarget(target_eid : EntityId) : bool
     if !loseInvisibleTarget
@@ -497,6 +501,7 @@ class NPhysCorridorMoveToTargetBase : AbstractNPhysCorridorMoveTo
     AbstractNPhysCorridorMoveTo`loadFromBlk(self, data)
     data |> load_ecs_param("targetParam", targetParam, targetParamHash, thisNode)
     loseInvisibleTarget = data |> datablock_getBool("loseInvisibleTarget", loseInvisibleTarget)
+    leading = data |> datablock_getReal("leading", leading)
 
   def override getTargetPos(agent_eid : EntityId; var res : float3&; var lost_target : bool&) : bool
     let targetPosRef = agent_eid |> get_Eid(targetParam, targetParamHash)
@@ -507,8 +512,10 @@ class NPhysCorridorMoveToTargetBase : AbstractNPhysCorridorMoveTo
       lost_target = true
       res = lastTargetPos
       return true
-    query(*targetPosRef) <| $ [es] (transform : float3x4)
+    query(*targetPosRef) <| $ [es] (transform : float3x4; human_net_phys : HumanActor const?)
       lastTargetPos = transform[3]
+      if human_net_phys != null
+        lastTargetPos += human_net_phys.phys.currentState.velocity * leading
     res = lastTargetPos
     return true
 

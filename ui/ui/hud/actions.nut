@@ -1,32 +1,33 @@
+from "%dngscripts/sound_system.nut" import sound_play
+from "%sqGlob/dasenums.nut" import HumanUseObjectHintType
+from "%ui/components/colors.nut" import TextNormal
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
+from "%ui/helpers/remap_nick.nut" import remap_nick
+from "%ui/hud/human_actions.nut" import ACTION_NONE, ACTION_USE, ACTION_EXTINGUISH, ACTION_REPAIR, ACTION_PICK_UP, ACTION_DENIED_TOO_MUCH_WEIGHT
+from "%ui/mainMenu/clonesMenu/clonesMenu.nut" import ClonesMenuId
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 from "dagor.debug" import logerr
 
-let { actionItemName, selectedObjectEid, useActionType, useAltActionType, useActionKey, useAltActionKey, useActionAvailable,
-      useActionHintType, customUsePrompt, customUsePromptParams,
-      customUseAltPrompt, customUseAltPromptParams } = require("%ui/hud/state/actions_state.nut")
+let { actionItemName, selectedObjectEid, useActionType, useAltActionType, useActionKey, useAltActionKey,
+  useActionAvailable, useActionHintType, customUsePrompt, customUsePromptParams, customUseAltPrompt,
+  customUseAltPromptParams } = require("%ui/hud/state/actions_state.nut")
 let { localPlayerEid, localPlayerTeam } = require("%ui/hud/state/local_player.nut")
 let { isInMonsterState } = require("%ui/hud/state/hero_monster_state.nut")
-let {inVehicle, inPlane, isVehicleAlive} = require("%ui/hud/state/vehicle_state.nut")
-let {TextNormal} = require("%ui/components/colors.nut")
-let {tipCmp} = require("%ui/hud/tips/tipComponent.nut")
-let {isDowned} = require("%ui/hud/state/health_state.nut")
-let { remap_nick } = require("%ui/helpers/remap_nick.nut")
-let {sound_play} = require("%dngscripts/sound_system.nut")
-let {ACTION_NONE, ACTION_USE, ACTION_EXTINGUISH, ACTION_REPAIR, ACTION_PICK_UP, ACTION_DENIED_TOO_MUCH_WEIGHT} = require("%ui/hud/human_actions.nut")
-let { HumanUseObjectHintType } = require("%sqGlob/dasenums.nut")
+let { inVehicle } = require("%ui/hud/state/vehicle_state.nut")
+let { isDowned } = require("%ui/hud/state/health_state.nut")
 let { currentMenuId } = require("%ui/hud/hud_menus_state.nut")
 let { Market_id } = require("%ui/mainMenu/marketMenu.nut")
 
 let showTeamQuickHint = Watched(true)
 let teamHintsQuery = ecs.SqQuery("teamHintsQuery", {comps_ro =[["team__id", ecs.TYPE_INT],["team__showQuickHint", ecs.TYPE_BOOL, true]]})
 
-localPlayerEid.subscribe(function(v) {
+localPlayerEid.subscribe_with_nasty_disregard_of_frp_update(function(v) {
   if ( v != ecs.INVALID_ENTITY_ID ) {
     teamHintsQuery.perform(function (_eid, comp) {
-        showTeamQuickHint(comp["team__showQuickHint"])
+        showTeamQuickHint.set(comp["team__showQuickHint"])
       },
-      $"eq(team__id, {localPlayerTeam.value})"
+      $"eq(team__id, {localPlayerTeam.get()})"
     )
   }
 })
@@ -47,7 +48,7 @@ let actionsMap = {
 
                               return loc("hud/use", "Use")
                             }
-                    textColorf = @(_item) useActionAvailable.value ? TextNormal : Color(120, 120, 120, 120) 
+                    textColorf = @(_item) useActionAvailable.get() ? TextNormal : Color(120, 120, 120, 120) 
   },
   [ACTION_EXTINGUISH] = {text = loc("hud/extinguish", "Hold to extinguish") key = extinguishkeyId},
   [ACTION_REPAIR] = {text = loc("hud/repair", "Hold to repair") key = extinguishkeyId},
@@ -80,8 +81,6 @@ let blinkAnimations = [
   { prop=AnimProp.translate, from=[0,0], to=[hdpx(20),0], duration=0.7, trigger = triggerBlinkAnimations, easing=Shake4, onEnter = @() sound_play("ui_sounds/login_fail")}
 ]
 
-let showExitAction = Computed(@() (!inPlane.value) && isVehicleAlive.value)
-
 function mkAction(
   use_action_type,
   use_action_key,
@@ -91,18 +90,17 @@ function mkAction(
 
   return function() {
     let res = {
-      size = SIZE_TO_CONTENT
       watch = [
         isDowned, selectedObjectEid, actionItemName, use_action_type, useActionAvailable,
-        inVehicle, showExitAction, custom_use_prompt, custom_use_prompt_params, isInMonsterState,
+        inVehicle, custom_use_prompt, custom_use_prompt_params, isInMonsterState,
         currentMenuId
       ]
     }
-    if (isDowned.value && !inVehicle.value)
+    if (isDowned.get() && !inVehicle.get())
       return res
 
     let curAction = use_action_type.get()
-    if (curAction == ACTION_NONE)
+    if (curAction == ACTION_NONE || (curAction == ACTION_USE && inVehicle.get()))
       return res
 
     let actScheme = act_scheme_cb()
@@ -111,26 +109,21 @@ function mkAction(
     local text = actScheme?.text
     local isVisible = true
     if (text == null && "textf" in actScheme) {
-      text = actScheme.textf({ eid=selectedObjectEid.value,
-                               item=loc(actionItemName.value),
-                               itemName=actionItemName.value,
-                               usePrompt = custom_use_prompt.value,
-                               usePromptParams = custom_use_prompt_params.value })
+      text = actScheme.textf({ eid=selectedObjectEid.get(),
+                               item=loc(actionItemName.get()),
+                               itemName=actionItemName.get(),
+                               usePrompt = custom_use_prompt.get(),
+                               usePromptParams = custom_use_prompt_params.get() })
     }
     local key = actScheme?.key
     if (key == null && "keyf" in actScheme) {
-      key = actScheme.keyf({ eid=selectedObjectEid.value })
+      key = actScheme.keyf({ eid=selectedObjectEid.get() })
     }
-    if (key == null && useActionAvailable.value && selectedObjectEid.value != ecs.INVALID_ENTITY_ID)
+    if (key == null && useActionAvailable.get() && selectedObjectEid.get() != ecs.INVALID_ENTITY_ID)
       key = use_action_key.get()
 
-    if (curAction == ACTION_USE && inVehicle.value) {
-      text = loc("hud/leaveVehicle")
-      isVisible = showExitAction.value
-    }
-
-    let textColor = ("textColorf" in actScheme) ? actScheme.textColorf({ eid=selectedObjectEid.value }) : actScheme?.textColor ?? TextNormal
-    isVisible = isVisible && (currentMenuId.get() != Market_id)
+    let textColor = ("textColorf" in actScheme) ? actScheme.textColorf({ eid=selectedObjectEid.get() }) : actScheme?.textColor ?? TextNormal
+    isVisible = isVisible && (currentMenuId.get() != Market_id) && (currentMenuId.get() != ClonesMenuId)
     children = !isVisible ? [] : [tipCmp({
       text = text
       inputId = key
@@ -172,7 +165,7 @@ function mainActionDefault() {
     watch = [useActionHintType]
   }
 
-  if (useActionHintType.value != HumanUseObjectHintType.DEFAULT)
+  if (useActionHintType.get() != HumanUseObjectHintType.DEFAULT)
     return res
 
   return mainAction()

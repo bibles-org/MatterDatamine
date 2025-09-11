@@ -1,5 +1,5 @@
 common_human_sound_components{
-  _use:t="watched_by_player_sound"
+  _use:t="watched_sound"
   _use:t="sound_event_group"
   _use:t="sound_control"
   _use:t="sound_player_components"
@@ -18,22 +18,34 @@ common_human_sound_components{
   }
 }
 
-base_human_sound{
-  _use:t="common_human_sound_components"
-  _use:t="human_voice_effects"
-  _use:t="human_melee_sound"
-  _use:t="base_human_melee_impact_sound"
+am_human_sound_landmesh_queries_setup{
+  _group{
+    _tags:t="sound"
+    human_sound_landmesh_queries__puddleQueryToDepth:p4=0.5, 0.8, 0, 0.05
+  }
+}
+
+am_human_steps_sound{
   _use:t="base_human_steps_sound"
-  _use:t="human_hit_net_sound"
-  _use:t="base_human_voice_sound"
-  _use:t="human_death_sound"
-  _use:t="human_hit_cry_sound"
-  _use:t="sound_banks_state"
+  _use:t="am_human_sound_landmesh_queries_setup"
 
   _group{
     _tags:t="sound"
     human_steps_sound__friendVolume:r=0.2
   }
+}
+
+base_human_sound{
+  _use:t="common_human_sound_components"
+  _use:t="human_voice_effects"
+  _use:t="human_melee_sound"
+  _use:t="base_human_melee_impact_sound"
+  _use:t="am_human_steps_sound"
+  _use:t="human_hit_net_sound"
+  _use:t="base_human_voice_sound"
+  _use:t="human_death_sound"
+  _use:t="human_hit_cry_sound"
+  _use:t="sound_preset"
 
   "human_voice_effect__allOrderedEffects:shared:list<t>"{
     _tags:t="sound"
@@ -45,10 +57,13 @@ base_human_sound{
     id:t="burn"
     id:t="heavyBreath"
   }
+}
 
+human_death_sound{
   _group{
     _tags:t="sound"
-    human_sound_landmesh_queries__puddleQueryToDepth:p4=0.5, 0.8, 0, 0.05
+
+    "human_death_sound__event:SoundEvent"{}
   }
 }
 
@@ -80,6 +95,7 @@ human_hit_net_sound{
   _group{
     _tags:t="sound"
 
+    "humanHitSound:tag"{}
     "human_hit_sound__paths:shared:object"{}
   }
 }
@@ -197,12 +213,14 @@ human_collision_scrape_sound{
   }
 }
 
-human_parachute_sound{
+human_parachute_effect_sound{
+  _use:t="sound_preset"
+
   _group{
     _tags:t="sound"
-    human_parachute_sound__openPath:t="player/effects/parachute_open"
-    human_parachute_sound__closePath:t="player/effects/parachute_landing"
-    human_parachute_sound__path:t="player/effects/parachute_flight"
+    human_parachute_effect_sound__openPath:t="player/effects/parachute_open"
+    human_parachute_effect_sound__closePath:t="player/effects/parachute_landing"
+    human_parachute_effect_sound__path:t="player/effects/parachute_flight"
   }
 }
 
@@ -302,10 +320,6 @@ human_sound_paths{
 
     "monolith_start:object"{
       path:t="cutscenes/intro/shimmer_start"
-    }
-
-    "smartwatch_tap_tap:object"{
-      path:t="am/ui/flower_human_sensor"
     }
 
     "monolith_touch:object"{
@@ -469,77 +483,68 @@ human_steps_sound_paths{
   }
 }
 
-projectile_hit_human_fx_sound{
-  _use:t="projectile_hit_entity_fx_sound"
+projectile_hit_human_net_sound{
+  _replicated:t="projectile_hit_human_net_sound__collNodeIdToSoundPath"
+  _replicated:t="projectile_hit_human_net_sound__collNodeToProtection"
 
-  "projectile_hit_entity_fx_sound__paths:shared:object"{
-    _tags:t="sound"
-
-    "bullet:object"{
-      "part_head:object"{
+  "projectile_hit_human_net_sound__collNodeIdToSoundPath:list<i>"{}
+  "projectile_hit_human_net_sound__collNodeToProtection:list<u8>"{}
+  "projectile_hit_human_net_sound__paths:shared:array"{
+    "head:object"{
+      "bullet:object"{
         hero:t="player/walker/am_trooper_male/hit/head/bullet"
         enemy:t="enemy/walker/am_trooper_male/hit/head/bullet"
-
-        "steel:object"{
-          hero:t="[armored=1]player/walker/am_trooper_male/hit/head/bullet"
-          enemy:t="[armored=1]enemy/walker/am_trooper_male/hit/head/bullet"
-        }
+        enemyFromHero:t="enemy/walker/am_trooper_male/hit/head/bullet_from_player"
       }
 
-      "part_torso:object"{
-        hero:t="player/walker/am_trooper_male/hit/body/bullet"
-        enemy:t="enemy/walker/am_trooper_male/hit/body/bullet"
-
-        "steel:object"{
-          hero:t="[armored=1]player/walker/am_trooper_male/hit/body/bullet"
-          enemy:t="[armored=1]enemy/walker/am_trooper_male/hit/body/bullet"
-        }
+      "shell:object"{
+        hero:t="impact/shell"
+        enemy:t="impact/shell"
+        enemyFromHero:t="impact/shell"
       }
 
-      "part_r_leg:object"{
-        hero:t="player/walker/am_trooper_male/hit/limbs/bullet"
-        enemy:t="enemy/walker/am_trooper_male/hit/limbs/bullet"
-
-        "steel:object"{
-          hero:t="[armored=1]player/walker/am_trooper_male/hit/limbs/bullet"
-          enemy:t="[armored=1]enemy/walker/am_trooper_male/hit/limbs/bullet"
-        }
-      }
-
-      "part_l_leg:object"{
-        hero:t="player/walker/am_trooper_male/hit/limbs/bullet"
-        enemy:t="enemy/walker/am_trooper_male/hit/limbs/bullet"
-
-        "steel:object"{
-          hero:t="[armored=1]player/walker/am_trooper_male/hit/limbs/bullet"
-          enemy:t="[armored=1]enemy/walker/am_trooper_male/hit/limbs/bullet"
-        }
-      }
-
-      "part_r_hand:object"{
-        hero:t="player/walker/am_trooper_male/hit/limbs/bullet"
-        enemy:t="enemy/walker/am_trooper_male/hit/limbs/bullet"
-
-        "steel:object"{
-          hero:t="[armored=1]player/walker/am_trooper_male/hit/limbs/bullet"
-          enemy:t="[armored=1]enemy/walker/am_trooper_male/hit/limbs/bullet"
-        }
-      }
-
-      "part_l_hand:object"{
-        hero:t="player/walker/am_trooper_male/hit/limbs/bullet"
-        enemy:t="enemy/walker/am_trooper_male/hit/limbs/bullet"
-
-        "steel:object"{
-          hero:t="[armored=1]player/walker/am_trooper_male/hit/limbs/bullet"
-          enemy:t="[armored=1]enemy/walker/am_trooper_male/hit/limbs/bullet"
-        }
+      "dmParts:list<t>"{
+        part:t="head"
       }
     }
 
-    "shell:object"{
-      hero:t="impact/shell"
-      enemy:t="impact/shell"
+    "body:object"{
+      "bullet:object"{
+        hero:t="player/walker/am_trooper_male/hit/body/bullet"
+        enemy:t="enemy/walker/am_trooper_male/hit/body/bullet"
+        enemyFromHero:t="enemy/walker/am_trooper_male/hit/body/bullet_from_player"
+      }
+
+      "shell:object"{
+        hero:t="impact/shell"
+        enemy:t="impact/shell"
+        enemyFromHero:t="impact/shell"
+      }
+
+      "dmParts:list<t>"{
+        part:t="torso"
+      }
+    }
+
+    "limb:object"{
+      "bullet:object"{
+        hero:t="player/walker/am_trooper_male/hit/limbs/bullet"
+        enemy:t="enemy/walker/am_trooper_male/hit/limbs/bullet"
+        enemyFromHero:t="enemy/walker/am_trooper_male/hit/limbs/bullet_from_player"
+      }
+
+      "shell:object"{
+        hero:t="impact/shell"
+        enemy:t="impact/shell"
+        enemyFromHero:t="impact/shell"
+      }
+
+      "dmParts:list<t>"{
+        part:t="r_leg"
+        part:t="l_leg"
+        part:t="r_hand"
+        part:t="l_hand"
+      }
     }
   }
 }
@@ -642,6 +647,10 @@ human_voice_sound_paths{
 
     "death:object"{
       name:t="death"
+    }
+
+    "deathEnemyFromHero:object"{
+      name:t="death_from_player"
     }
 
     "downed:object"{
@@ -860,6 +869,10 @@ human_net_sound{
       enemy:t="ui_sounds/set_point_notify_enemy"
     }
 
+    "uiScanPOI:object"{
+      path:t="ui_sounds/scan_poi"
+    }
+
     "pick_healing:object"{
       hero:t="player/walker/am_trooper_male/items/healing/pick"
       enemy:t="enemy/walker/am_trooper_male/items/healing/pick"
@@ -963,6 +976,11 @@ human_net_sound{
       hero:t="player/walker/am_trooper_male/items/other/use"
     }
 
+    "use_corticalVault:object"{
+      hero:t="player/walker/am_trooper_male/items/cortical_vault/use"
+      enemy:t="enemy/walker/am_trooper_male/items/cortical_vault/use"
+    }
+
     "pushAround:object"{
       hero:t="player/effects/pushback_shield"
     }
@@ -1002,13 +1020,12 @@ human_teleportation_sound{
 
 am_human_sound{
   _use:t="base_human_sound"
-  _use:t="possessable_human_sound"
   _use:t="human_loot_sound"
   _use:t="human_voice_effect_burning"
   _use:t="human_voice_effect_hold_breath"
   _use:t="human_sound_paths"
   _use:t="human_steps_sound_paths"
-  _use:t="projectile_hit_human_fx_sound"
+  _use:t="projectile_hit_human_net_sound"
   _use:t="human_hit_sound_paths"
   _use:t="human_voice_sound_paths"
   _use:t="human_melee_sound_paths"
@@ -1039,7 +1056,17 @@ am_human_sound{
   }
 }
 
+am_possessable_human_sound{
+  _use:t="am_human_sound"
+  _use:t="possessable_human_sound"
+}
+
 am_militant_sound{
   _use:t="am_human_sound"
   _use:t="am_solo_human_voice_type_no_speech"
+}
+
+am_possessable_militant_sound{
+  _use:t="am_militant_sound"
+  _use:t="possessable_human_sound"
 }

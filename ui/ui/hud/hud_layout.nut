@@ -1,32 +1,36 @@
+from "%ui/hud/menus/components/quickUsePanel.nut" import mkQuickUsePanel, quickUseObjectiveItemSlot, quickUseDroneConsoleItem
+
+from "%ui/hud/objectives/objectives_hud.nut" import objectivesHud
+from "%ui/hud/menus/chat.ui.nut" import chatRoot
+import "%ui/hud/player.nut" as playerBlock
+import "%ui/hud/tips/spectatorMode_tip.nut" as spectatorMode_tip
+from "%ui/hud/tips/drone_tip.nut" import droneTip, connectionQuality, droneWeakSignalTip
+import "%ui/hud/player_events.nut" as playerEventsRoot
+import "%ui/hud/human_teammates.nut" as human_teammates
+import "%ui/hud/vehicle_hud.nut" as vehicleHud
+import "%ui/hud/maintenance_progress_hint.nut" as maintenanceProgress
+import "%ui/hud/hacking_cortical_vault_progress_hint.nut" as hackingCorticalVaultProgress
+import "%ui/hud/tips/entity_usage.nut" as entity_usage
+from "%ui/hud/tips/nexus_round_mode_header.nut" import nexusHeaderBlock
+from "%ui/hud/tips/nexus_wave_mode_header.nut" import nexusWaveHeaderBlock
+import "%ui/hud/in_battle_squad_notification.nut" as inBattleSquadNotification
+from "%ui/hud/player_info/proxy_compass_strip.nut" import proxyCompassStrip
+from "%ui/hud/player_info/vital_proxy_info.ui.nut" import proxyDollBlock
+from "%ui/hud/nexus_kill_log.nut" import killLogUi
+from "%ui/hud/vehicle_hints.nut" import vehicleHintsBlock
+
 from "%ui/ui_library.nut" import *
 import "math" as math
 
-let {safeAreaVerPadding, safeAreaHorPadding} = require("%ui/options/safeArea.nut")
+let { safeAreaVerPadding, safeAreaHorPadding } = require("%ui/options/safeArea.nut")
 let { allDefaultActions } = require("%ui/hud/actions.nut")
-let {objectivesHud} = require("%ui/hud/objectives/objectives_hud.nut")
-let {chatRoot} = require("%ui/hud/menus/chat.ui.nut")
-let playerBlock = require("%ui/hud/player.nut")
-let { monsterUi } = require("player_info/monster_info.ui.nut")
-let spectatorMode_tip = require("%ui/hud/tips/spectatorMode_tip.nut")
-let {droneTip, connectionQuality, droneWeakSignalTip} = require("%ui/hud/tips/drone_tip.nut")
-let playerEventsRoot = require("%ui/hud/player_events.nut")
-let human_teammates = require("%ui/hud/human_teammates.nut")
-let vehicleHud = require("%ui/hud/vehicle_hud.nut")
-let maintenanceProgress = require("%ui/hud/maintenance_progress_hint.nut")
-let hackingCorticalVaultProgress = require("%ui/hud/hacking_cortical_vault_progress_hint.nut")
-let { mkQuickUsePanel, quickUseObjectiveItemSlot, quickUseDroneConsoleItem
-} = require("%ui/hud/menus/components/quickUsePanel.nut")
-let entity_usage = require("%ui/hud/tips/entity_usage.nut")
-let { nexusHeaderBlock } = require("%ui/hud/tips/nexus_round_mode_header.nut")
-let inBattleSquadNotification = require("%ui/hud/in_battle_squad_notification.nut")
-let { proxyCompassStrip } = require("%ui/hud/player_info/proxy_compass_strip.nut")
-let { proxyDollBlock } = require("%ui/hud/player_info/vital_proxy_info.ui.nut")
+let { monsterUi } = require("%ui/hud/player_info/monster_info.ui.nut")
 
 let debug_borders = mkWatched(persist, "debug_borders", false)
 console_register_command(@() debug_borders.modify(@(v) !v),"ui.hud_layout_borders_debug")
 
 let centerBottom = {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   halign = ALIGN_CENTER
   children = [
     entity_usage
@@ -51,13 +55,13 @@ let centerBottom = {
 
 
 let leftPanelTop = []
-let leftPanelMiddle = [inBattleSquadNotification, objectivesHud, vehicleHud, chatRoot, human_teammates]
+let leftPanelMiddle = [objectivesHud, vehicleHud, inBattleSquadNotification, chatRoot, human_teammates]
 let leftPanelBottom = [droneTip]
-let centerPanelTop = [proxyCompassStrip, nexusHeaderBlock, spectatorMode_tip, playerEventsRoot]
+let centerPanelTop = [proxyCompassStrip, nexusHeaderBlock, nexusWaveHeaderBlock, spectatorMode_tip, playerEventsRoot]
 let centerPanelMiddle = [droneWeakSignalTip]
 let centerPanelBottom = [centerBottom]
-let rightPanelTop = []
-let rightPanelMiddle = []
+let rightPanelTop = [killLogUi]
+let rightPanelMiddle = [vehicleHintsBlock]
 let rightPanelBottom = [connectionQuality, playerBlock, proxyDollBlock, monsterUi]
 
 let debug_borders_robj = @() debug_borders.get() ? ROBJ_FRAME: null
@@ -99,9 +103,9 @@ function leftPanel(params={}) {
   return panel (params.__merge({
     size = flex(1)
     children = [
-      mpanel(leftPanelTop, { size =[flex(),flex(1)], padding = [sh(10), 0, 0, 0]})
-      mpanel(leftPanelMiddle, { valign = ALIGN_BOTTOM size =[flex(),flex(3)]})
-      mpanel(leftPanelBottom, {  valign = ALIGN_BOTTOM maxHeight = flex(1) size = [flex(),SIZE_TO_CONTENT]})
+      mpanel(leftPanelTop, { size = FLEX_H, margin = static [sh(7), 0, 0, 0] })
+      mpanel(leftPanelMiddle, { valign = ALIGN_BOTTOM size = static [flex(), flex(3)] })
+      mpanel(leftPanelBottom, { valign = ALIGN_BOTTOM maxHeight = flex(1) size = FLEX_H })
     ]
   }))
 }
@@ -109,9 +113,9 @@ function centerPanel(params={}) {
   return panel (params.__merge({
     size = flex(2)
     children = [
-      mpanel(centerPanelTop, {halign = ALIGN_CENTER, size = [flex(),flex(3)]})
-      mpanel(centerPanelMiddle, {halign = ALIGN_CENTER, valign = ALIGN_BOTTOM, size = [flex(),flex(2)]})
-      mpanel(centerPanelBottom, {halign = ALIGN_CENTER valign = ALIGN_BOTTOM, size = [flex(), flex(1)]})
+      mpanel(centerPanelTop, {halign = ALIGN_CENTER, size = static [flex(),flex(3)]})
+      mpanel(centerPanelMiddle, {halign = ALIGN_CENTER, valign = ALIGN_BOTTOM, size = static [flex(),flex(2)]})
+      mpanel(centerPanelBottom, {halign = ALIGN_CENTER valign = ALIGN_BOTTOM, size = static [flex(), flex(1)]})
     ]
   }))
 }
@@ -120,9 +124,9 @@ function rightPanel(params={}) {
   return panel(params.__merge({
     size = flex(1)
     children = [
-      mpanel(rightPanelTop, { size =[flex(),flex(1)] halign=ALIGN_RIGHT})
-      mpanel(rightPanelMiddle, { size =[flex(),flex(2)] halign=ALIGN_RIGHT valign=ALIGN_CENTER})
-      mpanel(rightPanelBottom, { size =[flex(),flex(1)] halign=ALIGN_RIGHT valign=ALIGN_BOTTOM})
+      mpanel(rightPanelTop, { size =static [flex(),flex(1)] halign=ALIGN_RIGHT})
+      mpanel(rightPanelMiddle, { size =static [flex(),flex(2)] halign=ALIGN_RIGHT valign=ALIGN_CENTER})
+      mpanel(rightPanelBottom, { size =static [flex(),flex(1)] halign=ALIGN_RIGHT valign=ALIGN_BOTTOM})
     ]
   }))
 }
@@ -141,7 +145,7 @@ function header(size) {
     rendObj = debug_borders_robj()
     color = debug_colors()
     flow = FLOW_HORIZONTAL
-    padding = [0,fsh(2),0,fsh(2)]
+    padding = static [0,fsh(2),0,fsh(2)]
   }
 }
 
@@ -153,7 +157,7 @@ function HudLayout() {
       size = flex()
       children = [
         {size = [max(fsh(1), safeAreaHorPadding.get()),flex()]} 
-        leftPanel({size=[fsh(40),flex()]})
+        leftPanel({size=static [fsh(40),flex()]})
         centerPanel()
         rightPanel({szie=[fsh(40),flex()]})
         {size = [max(fsh(1), safeAreaHorPadding.get()),flex()]} 

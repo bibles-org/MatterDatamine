@@ -168,7 +168,7 @@ def damage_decal_spawn_on_ri_cmd(damage_type : string; caliber : float)
     return
 
   let decalPos = cameraTm[3] + t * cameraTm[2]
-  if !create_ri_projective_damage_decal(decalPos, cameraTm[2], norm, riDesc.riExtraHandle, caliber, pmid, damage_type)
+  if create_ri_projective_damage_decal(decalPos, cameraTm[2], norm, riDesc.riExtraHandle, caliber, pmid, damage_type) < 0
     console_print("failed to spawn")
 
 [console_cmd(name="damage_decals.toggle_glass_holes")]
@@ -177,3 +177,11 @@ def toggle_glass_hole_render_mode()
     glass_decals__hole_render = !glass_decals__hole_render
     let status = glass_decals__hole_render ? "ON" : "OFF"
     console_print("glass hole render is {status}")
+
+[console_cmd(name="damage_decals.reload_config")]
+def damage_decals_reload_config_cmd()
+  reload_expl_mat_config()
+
+[console_cmd(name="damage_decals.clear")]
+def damage_decals_clear_cmd()
+  damage_decals_clear()

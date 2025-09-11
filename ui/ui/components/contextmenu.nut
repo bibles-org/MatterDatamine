@@ -1,12 +1,16 @@
+from "%sqstd/timers.nut" import debounce
+
+import "%ui/components/gamepadImgByKey.nut" as gamepadImgByKey
+
+import "%ui/components/colors.nut" as colors
+from "%ui/components/modalPopupWnd.nut" import addModalPopup, removeModalPopup
+
 from "%ui/ui_library.nut" import *
 
-let { debounce } = require("%sqstd/timers.nut")
-let colors = require("%ui/components/colors.nut")
-let gamepadImgByKey = require("%ui/components/gamepadImgByKey.nut")
 let active_controls = require("%ui/control/active_controls.nut")
-let { addModalPopup, removeModalPopup } = require("%ui/components/modalPopupWnd.nut")
 let JB = require("%ui/control/gui_buttons.nut")
 
+#allow-auto-freeze
 
 function listItem(text, action) {
   let group = ElemGroup()
@@ -15,14 +19,14 @@ function listItem(text, action) {
   let activeBtn = gamepadImgByKey.mkImageCompByDargKey(JB.A,
     { height = height, hplace = ALIGN_RIGHT, vplace = ALIGN_CENTER})
   return function() {
-    let sf = stateFlags.value
+    let sf = stateFlags.get()
     let hover = sf & S_HOVER
     return {
       behavior = [Behaviors.Button]
       clipChildren=true
       rendObj = ROBJ_SOLID
       color = hover ? colors.BtnBgHover : colors.BtnBgNormal
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       group = group
       watch = [stateFlags, active_controls.isGamepad]
       padding = fsh(0.5)
@@ -40,20 +44,20 @@ function listItem(text, action) {
           rendObj = ROBJ_TEXT
           behavior = [Behaviors.Marquee]
           scrollOnHover=true
-          size=[flex(),SIZE_TO_CONTENT]
+          size=FLEX_H
           speed = hdpx(100)
           text = text
           group = group
-          color = (stateFlags.value & S_HOVER) ? colors.BtnTextHover : colors.BtnTextNormal
+          color = (stateFlags.get() & S_HOVER) ? colors.BtnTextHover : colors.BtnTextNormal
         }
-        active_controls.isGamepad.value && hover ? activeBtn : null
+        active_controls.isGamepad.get() && hover ? activeBtn : null
       ]
     }
   }
 }
 
 function mkMenu(width, actions, uid) {
-  let visibleActions = actions.filter(@(a) a?.isVisible.value ?? true)
+  let visibleActions = actions.filter(@(a) a?.isVisible.get() ?? true)
   let autoHide = debounce(@() removeModalPopup(uid), 0.01)
   return function() {
     if (visibleActions.len() == 0)
@@ -74,11 +78,12 @@ function mkMenu(width, actions, uid) {
 
 local uidCounter = 0
 return function(x, y, width, actions, cb = null) {
-  if (actions.findvalue(@(a) a?.isVisible.value ?? true) == null)
+  if (actions.findvalue(@(a) a?.isVisible.get() ?? true) == null)
     return 
 
   uidCounter++
   let uid = $"contextMenu{uidCounter}"
+  #forbid-auto-freeze
   return addModalPopup([x, y], {
     uid
     popupHalign = ALIGN_LEFT

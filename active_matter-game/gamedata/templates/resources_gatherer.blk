@@ -1,7 +1,7 @@
 resources_gatherer_hero{
   resources_gatherer__template:t="resources_gatherer_device"
   resources_gatherer_hero__enabled:b=yes
-  resources_gatherer_hero__nodeName:t="Bip01 L Finger21"
+  resources_gatherer_hero__nodeName:t="Bip01 L Hand"
   resources_gatherer_hero__nodeIdx:i=-1
   _replicated:t="resources_gatherer_hero__enabled"
 
@@ -14,14 +14,16 @@ resources_gatherer_hero_debug{
 
 resources_gatherer_device{
   _use:t="replicating"
+  resources_gatherer_device__curTickInterval:r=-1
   resources_gatherer_device__tickInterval:r=2
   resources_gatherer_device__range:r=3
   resources_gatherer_device__coneAngleDeg:r=50
   resources_gatherer_device__coneAngleCos:r=0
   resources_gatherer_device__pointBlankDist:r=0.35
-  resources_gatherer_device__gatherRatePerTick:r=5
+  resources_gatherer_device__gatherRatePerTick:r=1
   resources_gatherer_device__gatherMultiplier:r=1
-  resources_gatherer_device__gatherMultiplierIncVel:r=1.2
+  resources_gatherer_device__gatherMaxMultiplier:r=5
+  resources_gatherer_device__gatherMultiplierIncVel:r=1.5
   resources_gatherer_device__affectTemplate:t="resources_gatherer_affect"
 
   "resources_gatherer_device__ownerEid:eid"{}
@@ -48,5 +50,9 @@ resources_gatherer_device{
 resources_gatherer_affect{
   _use:t="replicated_game_effect"
 
+  "game_effect__disableShooting:tag"{}
+  "game_effect__disableMelee:tag"{}
+  "game_effect__activateUnarmed:tag"{}
+  "state__disableWeaponSwitch:tag"{}
   "state__interruptReload:tag"{}
 }

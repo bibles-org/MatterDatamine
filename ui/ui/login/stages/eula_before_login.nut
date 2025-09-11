@@ -1,8 +1,10 @@
+from "%ui/mainMenu/eula/eula.nut" import eulaVersion, showEula
+from "dagor.system" import dgs_get_settings
+from "settings" import set_setting_by_blk_path_and_save
+
 from "%ui/ui_library.nut" import *
 
-let { eulaVersion, showEula, acceptedEulaVersionBeforeLogin, FORCE_EULA } = require("%ui/mainMenu/eula/eula.nut")
-let { dgs_get_settings } = require("dagor.system")
-let { set_setting_by_blk_path_and_save} = require("settings")
+let { acceptedEulaVersionBeforeLogin, FORCE_EULA } = require("%ui/mainMenu/eula/eula.nut")
 
 function isNewDevice(){
   let acceptedEula = (dgs_get_settings()?["acceptedEulaVersionBeforeLogin"] ?? -1) > -1
@@ -20,14 +22,14 @@ function action(_login_status, cb) {
   if (isNewDevice()) {
     showEula(function(accept) {
       if (accept) {
-        acceptedEulaVersionBeforeLogin(eulaVersion)
+        acceptedEulaVersionBeforeLogin.set(eulaVersion)
         setAcceptedEulaVersionBeforeLogin(eulaVersion)
         cb({})
       }
     }, FORCE_EULA)
   }
   else {
-    acceptedEulaVersionBeforeLogin(eulaVersion)
+    acceptedEulaVersionBeforeLogin.set(eulaVersion)
     cb({})
   }
 }

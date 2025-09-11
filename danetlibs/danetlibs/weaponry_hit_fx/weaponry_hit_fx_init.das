@@ -1,12 +1,15 @@
 options no_aot
 
-require app
 require ecs.fs
 require ECSGlobalTags
+require RenderLibsAllowed
 
 
 [export]
 def load_weaponry_hit_fx(base_path : string) : bool
+  if !is_render_lib_allowed("weaponry_hit_fx")
+    return true
+
   var ok = true
 
   ok = load_sub_folder(base_path, "main") && ok

@@ -187,6 +187,30 @@ dagdp_has_jitter{
   }
 }
 
+dagdp_has_sample_range{
+  _track:b=yes
+
+  "dagdp__sample_range:r"{
+    value:r=-1
+
+    _info{
+      desc:t="If greater than 0, will sample 3 points in that range to get position and normal, instead of usual 1."
+    }
+  }
+}
+
+dagdp_has_placement_map{
+  _track:b=yes
+
+  "dagdp__placement_noise_scale:r"{
+    value:r=0.101
+
+    _info{
+      desc:t="World space scale of the noise used to select objects by weight. Make sure this is different from grid cell size!"
+    }
+  }
+}
+
 dagdp_has_seed{
   _track:b=yes
 
@@ -204,6 +228,8 @@ dagdp_placer_heightmap{
   _use:t="dagdp_has_biomes"
   _use:t="dagdp_has_density"
   _use:t="dagdp_has_jitter"
+  _use:t="dagdp_has_sample_range"
+  _use:t="dagdp_has_placement_map"
   _use:t="dagdp_has_seed"
 
   "dagdp_placer_heightmap:tag"{}
@@ -239,6 +265,30 @@ dagdp_placer_heightmap{
 
       _info{
         desc:t="Weights for each channel of the density mask.\nIf the weight is 0, then that channel of the mask is not used.\nThe densities from each channel are multiplied together to arrive at the combined density read from the mask.\n(And for each channel the weight is used as: `lerp(1, maskval, weight)`, in other words the value is interpolated between 1 and the maskval based on the weight)"
+      }
+    }
+
+    "dagdp__heightmap_use_decals:b"{
+      value:b=no
+
+      _info{
+        desc:t="Whether to overwrite biome with one from decals."
+      }
+    }
+
+    "dagdp__displacement_strength:r"{
+      value:r=0
+
+      _info{
+        desc:t="How much placed objects are moved horizontally by the displacement noise, in addition to jitter."
+      }
+    }
+
+    "dagdp__displacement_noise_scale:r"{
+      value:r=1
+
+      _info{
+        desc:t="World space scale of the displacement noise."
       }
     }
   }
@@ -355,6 +405,7 @@ dagdp_placer_on_meshes{
 
 dagdp_placer_volume{
   _use:t="dagdp_placer_on_meshes"
+  _use:t="dagdp_has_sample_range"
 
   "dagdp_placer_volume:tag"{}
   _info{
@@ -440,6 +491,7 @@ dagdp_placer_on_ri{
 dagdp_placer_around_ri{
   _use:t="dagdp_placer_on_meshes"
   _use:t="dagdp_has_resource_names"
+  _use:t="dagdp_has_sample_range"
 
   "dagdp_placer_around_ri:tag"{}
   "dagdp__volume_box_eids:list<eid>"{

@@ -1,29 +1,30 @@
+from "%ui/components/msgbox.nut" import msgboxGeneration
+from "%ui/fonts_style.nut" import h2_txt, body_txt, sub_txt
+import "%ui/login/ui/background.nut" as background
+from "app" import local_storage
+from "auth" import YU2_2STEP_AUTH, YU2_WRONG_LOGIN
+from "dagor.time" import get_time_msec
+import "%ui/components/urlText.nut" as urlText
+from "settings" import save_settings, get_setting_by_blk_path, set_setting_by_blk_path
+from "%ui/components/textInput.nut" import textInputUnderlined
+import "%ui/components/checkbox.nut" as checkBox
+import "%ui/components/progressText.nut" as progressText
+from "%ui/components/button.nut" import fontIconButton, textButton
+from "%ui/mainMsgBoxes.nut" import exitGameMsgBox
+from "%ui/components/msgbox.nut" import showMsgbox, getCurMsgbox
+from "dagor.system" import get_arg_value_by_name
+from "%ui/login/login_chain.nut" import startLogin
+from "%ui/components/accentButton.style.nut" import accentButtonStyle
 from "%ui/ui_library.nut" import *
 
-let { h2_txt, body_txt, sub_txt } = require("%ui/fonts_style.nut")
-let background = require("background.nut")
-let {local_storage} = require("app")
-let {YU2_2STEP_AUTH, YU2_WRONG_LOGIN} = require("auth")
-let {get_time_msec} = require("dagor.time")
-let urlText = require("%ui/components/urlText.nut")
-let { save_settings, get_setting_by_blk_path, set_setting_by_blk_path } = require("settings")
-let { isInternalCircuit } = require("%sqGlob/appInfo.nut")
-let {textInputUnderlined} = require("%ui/components/textInput.nut")
-let checkBox = require("%ui/components/checkbox.nut")
-let progressText = require("%ui/components/progressText.nut")
-let {fontIconButton, textButton} = require("%ui/components/button.nut")
-let {safeAreaHorPadding, safeAreaVerPadding} = require("%ui/options/safeArea.nut")
-let {exitGameMsgBox} = require("%ui/mainMsgBoxes.nut")
-let { showMsgbox, getCurMsgbox, msgboxGeneration } = require("%ui/components/msgbox.nut")
-let regInfo = require("reginfo.nut")
-let supportLink = require("supportLink.nut")
-let {get_arg_value_by_name} = require("dagor.system")
-let {showSettingsMenu} = require("%ui/mainMenu/menus/settings_menu.nut")
-let {isLoggedIn} = require("%ui/login/login_state.nut")
-let {startLogin, currentStage} = require("%ui/login/login_chain.nut")
-let loginDarkStripe = require("loginDarkStripe.nut")
-let { accentButtonStyle } = require("%ui/components/accentButton.style.nut")
-
+let { safeAreaHorPadding, safeAreaVerPadding } = require("%ui/options/safeArea.nut")
+let regInfo = require("%ui/login/ui/reginfo.nut")
+let supportLink = require("%ui/login/ui/supportLink.nut")
+let { showSettingsMenu } = require("%ui/mainMenu/menus/settings_menu.nut")
+let { isLoggedIn } = require("%ui/login/login_state.nut")
+let { currentStage } = require("%ui/login/login_chain.nut")
+let loginDarkStripe = require("%ui/login/ui/loginDarkStripe.nut")
+let { mkSelectLanguage } = require("%ui/login/ui/langComboBox.nut")
 
 let forgotPasswordUrl = get_setting_by_blk_path("forgotPasswordUrl") ?? "https://login.gaijin.net/ru/sso/forgot"
 let forgotPassword  = urlText(loc("forgotPassword"), forgotPasswordUrl, {opacity=0.7}.__update(sub_txt))
@@ -42,7 +43,7 @@ let need2Step = mkWatched(persist, "need2Step", false)
 local lastLoginCalled = - DUPLICATE_ACTION_DELAY_MSEC
 local focusedFieldIdxBeforeExitMsg = -1
 
-isLoggedIn.subscribe(@(_v) need2Step(false))
+isLoggedIn.subscribe_with_nasty_disregard_of_frp_update(@(_v) need2Step.set(false))
 
 let formStateLogin = Watched(storedLogin ?? "")
 let formStatePassword = Watched(storedPassword ?? "")
@@ -52,7 +53,7 @@ let formStateSavePassword = Watched(storedPassword != null)
 let formStateFocusedFieldIdx = Watched(null)
 let formStateAutoLogin = Watched(get_setting_by_blk_path(autologinBlkPath) ?? false)
 
-formStateAutoLogin.subscribe(function(v) {
+formStateAutoLogin.subscribe_with_nasty_disregard_of_frp_update(function(v) {
   set_setting_by_blk_path(autologinBlkPath, v)
   save_settings()
 })
@@ -83,8 +84,8 @@ let persistActions = persist("persistActions", @() {})
 persistActions[AFTER_ERROR_PROCESSED_ID] <- function(processState) {
   let status = processState?.status
   if (status == YU2_2STEP_AUTH) {
-    need2Step(true)
-    formStateTwoStepCode("")
+    need2Step.set(true)
+    formStateTwoStepCode.set("")
     set_kb_focus(formStateTwoStepCode)
   }
   else if (status == YU2_WRONG_LOGIN) {
@@ -92,7 +93,7 @@ persistActions[AFTER_ERROR_PROCESSED_ID] <- function(processState) {
     anim_start(formStateLogin)
   }
 }
-formStateLogin.subscribe(@(_) need2Step(false))
+formStateLogin.subscribe_with_nasty_disregard_of_frp_update(@(_) need2Step.set(false))
 function doPasswordLogin() {
   if (currentStage.get()!=null) {
     log($"Ignore start login due current loginStage is {currentStage.get()}")
@@ -143,8 +144,8 @@ function showExitMsgBox(){
 
 function makeFormItemHandlers(field, debugKey=null, idx=null) {
   return {
-    onFocus = @() formStateFocusedFieldIdx.update(idx)
-    onBlur = @() formStateFocusedFieldIdx.update(null)
+    onFocus = @() formStateFocusedFieldIdx.set(idx)
+    onBlur = @() formStateFocusedFieldIdx.set(null)
     onEscape = @() showExitMsgBox()
     onAttach = function(elem) {
       if (getCurMsgbox() != null)
@@ -185,17 +186,17 @@ function keyboardLang(){
     text = ""
   return {
     watch = gui_scene.keyboardLayout
-    rendObj = ROBJ_TEXT text=text color=keyboardLangColor  hplace=ALIGN_RIGHT vplace=ALIGN_CENTER padding=[0,hdpx(5),0,0]
+    rendObj = ROBJ_TEXT text=text color=keyboardLangColor  hplace=ALIGN_RIGHT vplace=ALIGN_CENTER padding=static [0,hdpx(5),0,0]
   }
 }
 
 function formPwd(field, options={}, idx=null) {
   return {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     children = [
       {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         children = [
           textInputUnderlined(field, options.__merge(makeFormItemHandlers(field, options?.debugKey, idx)))
           keyboardLang
@@ -212,16 +213,9 @@ let formCheckbox = @(field, options={}, idx=null) checkBox(field,
 let loginBtn = textButton(loc("Login"),
   function() {
     log("Start Login by login btn");
-    if (!isInternalCircuit.get()) {
-      showMsgbox({
-        text = loc("cbtDisclaimer")
-        onClose = doPasswordLogin
-      })
-    }
-    else
-      doPasswordLogin()
+    doPasswordLogin()
   },
-  { size = [flex(), hdpx(70)], halign = ALIGN_CENTER, margin = 0
+  { size = static [flex(), hdpx(70)], halign = ALIGN_CENTER, margin = 0
     hotkeys = [["^J:Y", { description = { skip = true }}]]
     sound = {
       click = "ui_sounds/menu_enter"
@@ -238,7 +232,7 @@ function createLoginForm() {
     vplace = ALIGN_TOP
     rendObj = ROBJ_IMAGE
     keepAspect = true
-    size = [ flex(), hdpx(100) ]
+    size = static [ flex(), hdpx(100) ]
     image = Picture("!ui/uiskin/amLogo.svg:{0}:{1}:K".subst(512, 128))
   }
 
@@ -255,14 +249,14 @@ function createLoginForm() {
     @() {
       flow = FLOW_VERTICAL
       vplace = ALIGN_CENTER
-      size = [ flex(), SIZE_TO_CONTENT ]
+      size = FLEX_H
       children = loginOptions
       watch = formStateSaveLogin
     }
     {
       vplace = ALIGN_BOTTOM
       halign = ALIGN_CENTER
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       flow = FLOW_VERTICAL
       gap = hdpx(10)
       children = currentStage.get() == null ? loginBtn : null
@@ -282,7 +276,7 @@ function loginRoot() {
     watch
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
-    size = [fsh(40), fsh(55)]
+    size = static [fsh(40), fsh(55)]
     pos = [-sw(15), -sh(5)]
     hplace = ALIGN_RIGHT
     vplace = ALIGN_CENTER
@@ -306,6 +300,7 @@ let enterHandler = @(){
     doPasswordLogin()
   }]]
 }
+
 return @() {
   size = flex()
   children = [
@@ -318,12 +313,13 @@ return @() {
       flow = FLOW_HORIZONTAL
       hplace = ALIGN_RIGHT
       margin = [fsh(2)+safeAreaVerPadding.get(), safeAreaHorPadding.get()+fsh(2)]
-      gap  = hdpx(2)
+      valign = ALIGN_CENTER
+      gap  = hdpx(6)
       children = [
+        mkSelectLanguage()
         fontIconButton("icon_buttons/sett_btn.svg", @() showSettingsMenu.modify(@(v) !v) )
         fontIconButton("icon_buttons/eac_btn.svg", showExitMsgBox )
       ]
     }
   ]
 }
-

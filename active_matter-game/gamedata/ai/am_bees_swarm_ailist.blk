@@ -16,6 +16,10 @@ repeat{
       utilFn:t="battleReady ? 0f : 1f"
       name:t="recovery"
 
+      flyingSwarmSetAttackState{
+        attackState:b=no
+      }
+
       parallel{
         repeat{
           flyingSwarmRecoveryPopulation{}
@@ -28,6 +32,10 @@ repeat{
     sequencer{
       utilFn:t="battleReady && (!hasTargetToMove && !hasTargetToAttack) ? 1f : 0f"
       name:t="find_target"
+
+      flyingSwarmSetAttackState{
+        attackState:b=no
+      }
 
       returnToHive{}
       parallel{
@@ -47,6 +55,10 @@ repeat{
       utilFn:t="(battleReady && hasTargetToMove ? 1f : 0f) * (hasTargetToAttack ? 0f : saturate(1f - aggressionLevel))"
       name:t="move_to_position"
 
+      flyingSwarmSetAttackState{
+        attackState:b=yes
+      }
+
       parallel{
         repeat{
           flyingSwarmFindDanger{}
@@ -65,6 +77,10 @@ repeat{
     sequencer{
       utilFn:t="(battleReady ? 1f : 0f) * (hasTargetToAttack ? 1f : saturate(aggressionLevel))"
       name:t="attack_target"
+
+      flyingSwarmSetAttackState{
+        attackState:b=yes
+      }
 
       repeat{
         orderedSelector{
@@ -90,6 +106,8 @@ repeat{
               range:p2=2, 3
               resetable:b=yes
             }
+
+            flyingSwarmChangeBoomZoomStage{}
           }
         }
       }

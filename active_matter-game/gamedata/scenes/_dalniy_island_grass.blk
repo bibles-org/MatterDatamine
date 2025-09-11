@@ -67,7 +67,7 @@ entity{
       height:r=0.2
       size_lod_mul:r=1.3
       size_lod_wide_mul:r=1
-      ht_rnd_add:r=0.5
+      ht_rnd_add:r=0.3
       hor_size:r=0.5
       hor_size_rnd_add:r=0.15
       height_from_weight_mul:r=0.05
@@ -90,10 +90,10 @@ entity{
       name:t="generic_grass_tall_b"
       diffuse:t="grass_generic_grass_tall_b_tex_d"
       normal:t="grass_generic_grass_tall_b_tex_n"
-      height:r=0.4
+      height:r=0.3
       size_lod_mul:r=1.3
       size_lod_wide_mul:r=1
-      ht_rnd_add:r=0.5
+      ht_rnd_add:r=0.3
       hor_size:r=0.5
       hor_size_rnd_add:r=0.15
       height_from_weight_mul:r=0.3
@@ -120,7 +120,7 @@ entity{
       size_lod_mul:r=1.3
       size_lod_wide_mul:r=1
       ht_rnd_add:r=0.5
-      hor_size:r=0.5
+      hor_size:r=0.3
       hor_size_rnd_add:r=0.15
       height_from_weight_mul:r=0.05
       height_from_weight_add:r=0.95
@@ -142,10 +142,10 @@ entity{
       name:t="generic_grass_dead_b"
       diffuse:t="grass_generic_grass_tall_b_tex_d"
       normal:t="grass_generic_grass_tall_b_tex_n"
-      height:r=0.5
+      height:r=0.3
       size_lod_mul:r=1.3
       size_lod_wide_mul:r=1
-      ht_rnd_add:r=0.5
+      ht_rnd_add:r=0.3
       hor_size:r=0.5
       hor_size_rnd_add:r=0.15
       height_from_weight_mul:r=0.3
@@ -172,7 +172,7 @@ entity{
       size_lod_mul:r=1.3
       size_lod_wide_mul:r=1
       ht_rnd_add:r=0.3
-      hor_size:r=0.4
+      hor_size:r=0.3
       hor_size_rnd_add:r=0.2
       height_from_weight_mul:r=0.7
       height_from_weight_add:r=0.3
@@ -195,10 +195,10 @@ entity{
       name:t="wheat_a"
       diffuse:t="grass_wheat_tex_d"
       normal:t="grass_wheat_tex_n"
-      height:r=0.8
+      height:r=0.5
       size_lod_mul:r=1.3
       size_lod_wide_mul:r=1
-      ht_rnd_add:r=0.7
+      ht_rnd_add:r=0.4
       hor_size:r=1.2
       hor_size_rnd_add:r=0.1
       height_from_weight_mul:r=0.3
@@ -269,14 +269,14 @@ entity{
       name:t="bush_dead_a"
       diffuse:t="grass_generic_bush_dead_a_tex_d"
       normal:t="grass_generic_bush_dead_a_tex_n"
-      height:r=1
-      hor_size:r=0.8
+      height:r=0.6
+      hor_size:r=0.5
       hor_size_rnd_add:r=0.2
       height_from_weight_mul:r=0.3
       height_from_weight_add:r=0.7
       density_from_weight_mul:r=0.2
       density_from_weight_add:r=0.6
-      height_rnd_add:r=0.6
+      height_rnd_add:r=0.4
       color_mask_r_from:c=130, 112, 109, 90
       color_mask_r_to:c=44, 24, 12, 90
       color_mask_g_from:c=26, 26, 26, 90
@@ -290,12 +290,12 @@ entity{
       name:t="bush_trunks_dead_a"
       diffuse:t="grass_generic_bush_trunks_dead_a_tex_d"
       normal:t="grass_generic_bush_trunks_dead_a_tex_n"
-      height:r=1
+      height:r=0.6
       size_lod_mul:r=1.3
       size_lod_wide_mul:r=1
-      ht_rnd_add:r=0.5
-      hor_size:r=0.8
-      hor_size_rnd_add:r=0.5
+      ht_rnd_add:r=0.4
+      hor_size:r=0.5
+      hor_size_rnd_add:r=0.2
       height_from_weight_mul:r=0.3
       height_from_weight_add:r=0.7
       density_from_weight_mul:r=0.35
@@ -345,9 +345,9 @@ entity{
       height:r=0.3
       size_lod_mul:r=1.3
       size_lod_wide_mul:r=1
-      ht_rnd_add:r=0.8
-      hor_size:r=0.4
-      hor_size_rnd_add:r=0.4
+      ht_rnd_add:r=0.4
+      hor_size:r=0.3
+      hor_size_rnd_add:r=0.2
       height_from_weight_mul:r=0.7
       height_from_weight_add:r=0.3
       density_from_weight_mul:r=0.2
@@ -368,11 +368,11 @@ entity{
       name:t="chamerion_angustifolium"
       diffuse:t="grass_plant_chamaenerion_var4_tex_d"
       normal:t="grass_plant_chamaenerion_var4_tex_n"
-      height:r=1
+      height:r=0.7
       size_lod_mul:r=1
       size_lod_wide_mul:r=1
       ht_rnd_add:r=0.3
-      hor_size:r=0.4
+      hor_size:r=0.2
       hor_size_rnd_add:r=0.2
       height_from_weight_mul:r=0.3
       height_from_weight_add:r=0.7
@@ -395,10 +395,10 @@ entity{
       name:t="ammophila_arenaria"
       diffuse:t="grass_ammophila_arenaria_tex_d"
       normal:t="grass_ammophila_arenaria_tex_n"
-      height:r=0.8
+      height:r=0.6
       size_lod_mul:r=1.3
       size_lod_wide_mul:r=1
-      ht_rnd_add:r=0
+      ht_rnd_add:r=0.2
       hor_size:r=0.8
       hor_size_rnd_add:r=0.2
       height_from_weight_mul:r=0.5
@@ -442,11 +442,11 @@ entity{
       name:t="tanacetum_vulgare"
       diffuse:t="grass_tanacetum_vulgare_var4_tex_d"
       normal:t="grass_tanacetum_vulgare_var4_tex_n"
-      height:r=0.9
+      height:r=0.7
       size_lod_mul:r=1.1
       size_lod_wide_mul:r=1
-      ht_rnd_add:r=0.4
-      hor_size:r=0.2
+      ht_rnd_add:r=0.3
+      hor_size:r=0.1
       hor_size_rnd_add:r=0.2
       height_from_weight_mul:r=0.5
       height_from_weight_add:r=0.5
@@ -524,7 +524,7 @@ entity{
       height:r=0.5
       size_lod_mul:r=1.3
       size_lod_wide_mul:r=1
-      ht_rnd_add:r=0.4
+      ht_rnd_add:r=0.3
       hor_size:r=0.5
       hor_size_rnd_add:r=0.3
       height_from_weight_mul:r=0.5
@@ -547,10 +547,10 @@ entity{
       name:t="heather"
       diffuse:t="grass_heather_tex_d"
       normal:t="grass_heather_tex_n"
-      height:r=0.6
+      height:r=0.5
       size_lod_mul:r=1.1
       size_lod_wide_mul:r=1
-      ht_rnd_add:r=0.5
+      ht_rnd_add:r=0.4
       hor_size:r=0.5
       hor_size_rnd_add:r=0.4
       height_from_weight_mul:r=0.6
@@ -573,11 +573,11 @@ entity{
       name:t="urtica_dioica"
       diffuse:t="grass_plant_urtica_dioica_var4_tex_d"
       normal:t="grass_plant_urtica_dioica_var4_tex_n"
-      height:r=0.5
+      height:r=0.6
       size_lod_mul:r=1.1
       size_lod_wide_mul:r=1
-      ht_rnd_add:r=0.8
-      hor_size:r=0.15
+      ht_rnd_add:r=0.4
+      hor_size:r=0.12
       hor_size_rnd_add:r=0.1
       height_from_weight_mul:r=0.7
       height_from_weight_add:r=0.3
@@ -692,17 +692,17 @@ entity{
       "weights:array"{
         "weight:object"{
           type:t="generic_grass_low_a"
-          weight:r=2
+          weight:r=4
         }
 
         "weight:object"{
           type:t="generic_grass_low_b"
-          weight:r=2
+          weight:r=4
         }
 
         "weight:object"{
           type:t="bush_a"
-          weight:r=1
+          weight:r=2
         }
 
         "weight:object"{
@@ -795,17 +795,17 @@ entity{
       "weights:array"{
         "weight:object"{
           type:t="generic_grass_low_a"
-          weight:r=2
+          weight:r=4
         }
 
         "weight:object"{
           type:t="generic_grass_low_b"
-          weight:r=2
+          weight:r=4
         }
 
         "weight:object"{
           type:t="bush_a"
-          weight:r=1
+          weight:r=2
         }
 
         "weight:object"{
@@ -815,7 +815,7 @@ entity{
 
         "weight:object"{
           type:t="urtica_dioica"
-          weight:r=1
+          weight:r=2
         }
       }
     }
@@ -1014,7 +1014,7 @@ entity{
       "weights:array"{
         "weight:object"{
           type:t="bush_trunks_dead_a"
-          weight:r=3
+          weight:r=1
         }
 
         "weight:object"{
@@ -1098,7 +1098,7 @@ entity{
 
         "weight:object"{
           type:t="bush_trunks_dead_a"
-          weight:r=5
+          weight:r=1
         }
 
         "weight:object"{
@@ -1115,22 +1115,22 @@ entity{
       "weights:array"{
         "weight:object"{
           type:t="generic_grass_tall_a"
-          weight:r=6
+          weight:r=12
         }
 
         "weight:object"{
           type:t="generic_grass_tall_b"
-          weight:r=5
+          weight:r=10
         }
 
         "weight:object"{
           type:t="bush_a"
-          weight:r=4
+          weight:r=8
         }
 
         "weight:object"{
           type:t="generic_grass_dead_a"
-          weight:r=3
+          weight:r=6
         }
 
         "weight:object"{
@@ -1147,22 +1147,22 @@ entity{
       "weights:array"{
         "weight:object"{
           type:t="generic_grass_dead_a"
-          weight:r=3
-        }
-
-        "weight:object"{
-          type:t="generic_grass_dead_b"
-          weight:r=2
-        }
-
-        "weight:object"{
-          type:t="bush_a"
           weight:r=4
         }
 
         "weight:object"{
+          type:t="generic_grass_dead_b"
+          weight:r=3
+        }
+
+        "weight:object"{
+          type:t="bush_a"
+          weight:r=6
+        }
+
+        "weight:object"{
           type:t="bush_trunks_dead_a"
-          weight:r=2
+          weight:r=1
         }
       }
     }
@@ -1199,7 +1199,7 @@ entity{
 
         "weight:object"{
           type:t="bush_trunks_dead_a"
-          weight:r=4
+          weight:r=1
         }
 
         "weight:object"{
@@ -1248,7 +1248,7 @@ entity{
 
         "weight:object"{
           type:t="bush_trunks_dead_a"
-          weight:r=4
+          weight:r=1
         }
 
         "weight:object"{
@@ -1385,7 +1385,7 @@ entity{
 
         "weight:object"{
           type:t="bush_trunks_dead_a"
-          weight:r=3
+          weight:r=1
         }
 
         "weight:object"{

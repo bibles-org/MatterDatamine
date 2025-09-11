@@ -1,24 +1,26 @@
+from "%ui/components/commonComponents.nut" import mkText
+from "%ui/fonts_style.nut" import fontawesome
+from "%ui/components/scrollbar.nut" import makeVertScrollExt
+from "%ui/components/colors.nut" import TextNormal, BtnBgSelected, BtnBgHover, BtnBgNormal, BtnBgActive
+from "%ui/helpers/time.nut" import secondsToStringLoc, secondsToTime
+from "%ui/hud/map/map_extraction_points.nut" import extractionIcon
+from "string" import endswith, format
 from "%ui/ui_library.nut" import *
+import "%ui/components/fontawesome.map.nut" as fa
+import "%dngscripts/ecs.nut" as ecs
 
-let { mkText } = require("%ui/components/commonComponents.nut")
-let { fontawesome } = require("%ui/fonts_style.nut")
-let { makeVertScrollExt } = require("%ui/components/scrollbar.nut")
-let fa = require("%ui/components/fontawesome.map.nut")
-let { TextNormal, BtnBgSelected, BtnBgHover, BtnBgNormal, BtnBgActive } = require("%ui/components/colors.nut")
 let { logEntries, chosenLogElement, hoveredLogElement } = require("%ui/mainMenu/debriefing/debriefing_log_state.nut")
-let { secondsToStringLoc, secondsToTime, locTable } = require("%ui/helpers/time.nut")
-let { extractionIcon } = require("%ui/hud/minimap/map_extraction_points.nut")
-let { endswith, format } = require("string")
+let { locTable } = require("%ui/helpers/time.nut")
 
 let iconParams = {size = [fontawesome.fontSize, fontawesome.fontSize], halign = ALIGN_CENTER}
 
 let longTime = 23*60 + 9 
-let timeTextSize = calc_comp_size(mkText(secondsToStringLoc(longTime), {padding=[0, hdpx(5), 0, 0]}))
+let timeTextSize = calc_comp_size(mkText(secondsToStringLoc(longTime), {padding=static [0, hdpx(5), 0, 0]}))
 
 let mkLogEntryText = @(time, text, icon) {
   flow = FLOW_HORIZONTAL
   gap = hdpx(5)
-  padding = [0, hdpx(5), 0, hdpx(5)]
+  padding = static [0, hdpx(5), 0, hdpx(5)]
   children = [
     icon
     {
@@ -90,7 +92,7 @@ let chooseLogPointIcon = function(point) {
   if (typeof icon == "function")
     iconToUse = icon(point)
   return {
-    size = [hdpx(21), hdpx(21)]
+    size = hdpx(21)
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
     children = iconToUse
@@ -111,14 +113,18 @@ let mkLogEntryTitle = function(point) {
       : loc("debriefing/log/kill", { victimType = victimTypeLoc })
   }
   if (point.eventType == "died") {
-    let { offenderType = "" } = point
+    let { offenderType = "", murderWeaponTemplate = null } = point
+    let template = murderWeaponTemplate == null ? null : ecs.g_entity_mgr.getTemplateDB().getTemplateByName(murderWeaponTemplate)
+    let weaponName = template == null ? null : loc(template.getCompValNullable("item__name"))
+
     let offenderTypeLoc = (offenderType != null && offenderType != "")
       ? loc($"debriefing/log/victim/{offenderType}") : ""
-    return (name != null && name != "")
+    let viaWeapon = weaponName != null ? loc("debriefing/log/death_from_weapon", {weapName=weaponName}) : ""
+    return ((name != null && name != "")
     ? loc("debriefing/log/died_name", { name })
     : offenderTypeLoc != ""
     ? loc("debriefing/log/died_monster", { offenderType = offenderTypeLoc })
-    : loc("debriefing/log/died")
+    : loc("debriefing/log/died")) + viaWeapon
   }
   if (point.eventType == "transformed") {
     let { monsterType = "Monster" } = point
@@ -148,10 +154,10 @@ let chooseFillColor = function(index, sf) {
 let mkLogEntry = function(point, index){
   let stateFlags = Watched(0)
   return @(){
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     watch = [chosenLogElement, hoveredLogElement, stateFlags]
     behavior = Behaviors.Button
-
+    xmbNode = XmbNode()
     onHover = @(v) v ? hoveredLogElement.set(index) : hoveredLogElement.set(null)
     onClick = @() chosenLogElement.modify(@(old_index) old_index == index ? null : index)
     onElemState = @(v) stateFlags.set(v)
@@ -160,7 +166,7 @@ let mkLogEntry = function(point, index){
     fillColor = chooseFillColor(index, stateFlags.get())
     children = mkLogEntryContent(point)
     borderColor = index == chosenLogElement.get() ? Color(200, 200, 200) : Color(230, 200, 90, 255)
-    borderWidth = [0, 0, 0, hdpx(2)]
+    borderWidth = static [0, 0, 0, hdpx(2)]
     data = { index }
     padding = hdpx(5)
     sound = {
@@ -173,9 +179,14 @@ let mkLogEntry = function(point, index){
 local scrollHandler = ScrollHandler()
 
 let debriefingLog = makeVertScrollExt(@() {
+  xmbNode = XmbContainer({
+    canFocus = false
+    wrap = false
+    scrollSpeed = 5.0
+  })
   flow = FLOW_VERTICAL
   watch = logEntries
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   children = logEntries.get().map(mkLogEntry)
   onDetach = @() scrollHandler = ScrollHandler()
 }, {

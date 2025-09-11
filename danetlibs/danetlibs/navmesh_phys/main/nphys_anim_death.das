@@ -1,4 +1,3 @@
-require app
 require ecs
 require ecs.safe
 require AnimV20

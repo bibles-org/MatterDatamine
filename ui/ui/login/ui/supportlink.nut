@@ -1,7 +1,8 @@
+import "%ui/components/urlText.nut" as urlText
+
 from "%ui/ui_library.nut" import *
 
-let urlText = require("%ui/components/urlText.nut")
-let {gaijinSupportUrl} = require("%ui/login/ui/supportUrls.nut")
+let { gaijinSupportUrl } = require("%ui/login/ui/supportUrls.nut")
 
 return {
   hplace=ALIGN_LEFT

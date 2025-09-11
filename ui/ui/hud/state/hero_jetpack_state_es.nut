@@ -24,9 +24,9 @@ let getSpectatorTarget = @() getSpectatorTargetQuery.perform(function(_, comp) {
 
 function trackComponents(_evt,eid,comp) {
   let replayTarget = getSpectatorTarget() ?? ecs.INVALID_ENTITY_ID
-  if (eid != controlledHeroEid.value && eid != replayTarget) {
-    showTakeoffHint(false)
-    jetfuel(-1.0)
+  if (eid != controlledHeroEid.get() && eid != replayTarget) {
+    showTakeoffHint.set(false)
+    jetfuel.set(-1.0)
     return
   }
   let fuel = comp["human_jetpack__fuel"]
@@ -38,19 +38,19 @@ function trackComponents(_evt,eid,comp) {
     takeoffHintStarted = -1.0
   }
   else if (takeoffHintStarted < 0)
-    takeoffHintStarted = curTime.value
+    takeoffHintStarted = curTime.get()
 
-  jetfuel.update(relativeFuel)
-  fuelAlert.update(comp["human_jetpack__fuelAlert"] && !comp["human_use_object__lockJetpackUse"])
-  showTakeoffHint.update(enabled && !comp["human_jetpack__flightMode"] && (fuel > 0 || maxFuel <= 0)
-                         && takeoffHintStarted >= 0 && curTime.value - takeoffHintStarted < takeoffHintShowTime)
-  lockUse.update(comp["human_use_object__lockJetpackUse"])
-  jetpackFuelsCount.update(comp["human_jetpack__inventoryFuelCount"])
+  jetfuel.set(relativeFuel)
+  fuelAlert.set(comp["human_jetpack__fuelAlert"] && !comp["human_use_object__lockJetpackUse"])
+  showTakeoffHint.set(enabled && !comp["human_jetpack__flightMode"] && (fuel > 0 || maxFuel <= 0)
+                         && takeoffHintStarted >= 0 && curTime.get() - takeoffHintStarted < takeoffHintShowTime)
+  lockUse.set(comp["human_use_object__lockJetpackUse"])
+  jetpackFuelsCount.set(comp["human_jetpack__inventoryFuelCount"])
 }
 
 ecs.register_es("hero_jetfuel_ui_es", {
     [["onChange", "onInit"]]=trackComponents,
-    onDestroy = @(_evt, _eid, _comp) jetfuel(-1)
+    onDestroy = @(_evt, _eid, _comp) jetfuel.set(-1)
   },
   {
     comps_track = [
@@ -69,8 +69,8 @@ ecs.register_es("hero_jetfuel_ui_es", {
 let showInBoosters = Watched(true)
 
 function updateShowInBoosters(item_owner, value) {
-  if (watchedHeroEid.value == item_owner)
-    showInBoosters(value)
+  if (watchedHeroEid.get() == item_owner)
+    showInBoosters.set(value)
 }
 
 ecs.register_es("check_show_jetpack_in_boosters_es", {
@@ -86,7 +86,7 @@ ecs.register_es("check_show_jetpack_in_boosters_es", {
 return {
   jetfuel
   fuelAlert
-  showTakeoffHint = Computed(@() showTakeoffHint.value && !isMachinegunner.value && !inVehicle.value && !isDowned.value)
+  showTakeoffHint = Computed(@() showTakeoffHint.get() && !isMachinegunner.get() && !inVehicle.get() && !isDowned.get())
   lockUse
   jetpackFuelsCount
   showInBoosters

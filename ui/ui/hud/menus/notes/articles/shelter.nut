@@ -1,5 +1,6 @@
+from "%ui/hud/menus/notes/articles/articles_common.nut" import get_paragraph_loc
+
 from "%ui/ui_library.nut" import *
-let { get_paragraph_loc } = require("%ui/hud/menus/notes/articles/articles_common.nut")
 
 function mkNote(id) {
   let paragraphs = [
@@ -32,13 +33,13 @@ function mkNote(id) {
 }
 
 
-let shelter = [
+let shelter = freeze([
   mkNote("note_shelter_replicator"),
   mkNote("note_shelter_refiner"),
   mkNote("note_shelter_alters"),
   mkNote("note_shelter_market"),
   mkNote("note_shelter_storage"),
-]
+])
 
 return {
   shelter

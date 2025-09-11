@@ -5,6 +5,10 @@ smoke_occluder_debug{
   "smokeOccluderDebug:tag"{}
 }
 
+hacking_device_debug_draw{
+  "hacking_device_debug_draw:tag"{}
+}
+
 infinite_ammo{
   "infiniteAmmo:tag"{}
 }
@@ -35,10 +39,15 @@ bot_overtake_effect{
 aim_ruler_debug{
   _tags:t="gameClient"
   _singleton:b=yes
-  shouldDraw:b=no
-  tracePos:p3=0, 0, 0
-  traceDir:p3=0, 0, 0
+  aim_ruler__shouldDraw:b=no
+  aim_ruler__drawBoxes:b=no
+  aim_ruler__drawPhysMap:b=no
+  aim_ruler__tracePos:p3=0, 0, 0
+  aim_ruler__traceDir:p3=0, 0, 0
+  aim_ruler__traceLen:r=0
+  _tracked:t="aim_ruler__drawPhysMap"
 
+  "aim_ruler__targetEid:eid"{}
   "aimRulerDebug:tag"{}
 }
 
@@ -203,4 +212,11 @@ loot_inspector{
 
 editor_active_marker{
   editor_active_marker__isActive:b=no
+}
+
+entities_in_zero_debug_log{
+  entities_in_zero_debug_log__radius:r=5
+
+  "entities_in_zero_debug_log__eidList:list<eid>"{}
+  "entities_in_zero_debug_log:tag"{}
 }

@@ -1,50 +1,50 @@
+from "%sqGlob/dasenums.nut" import NexusGameFinishReason
+
+from "%ui/fonts_style.nut" import giant_txt, h2_txt
+from "%ui/components/commonComponents.nut" import mkText
+from "%ui/components/colors.nut" import RedWarningColor, GreenSuccessColor, TextHighlight, ItemBgColor
+
 from "%ui/ui_library.nut" import *
 
-let { giant_txt, h2_txt } = require("%ui/fonts_style.nut")
-let { isNexusRoundMode } = require("%ui/hud/state/nexus_mode_state.nut")
-let { nexusRoundModeRoundEnded, nexusRoundModeRoundEndWinner, nexusRoundModeRoundEndReason, nexusRoundModeAllyTeam, nexusRoundModeEnemyTeam } = require("%ui/hud/state/nexus_round_mode_state.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
-let { RedWarningColor, GreenSuccessColor, TextHighlight, ItemBgColor } = require("%ui/components/colors.nut")
-let { NexusRoundFinishReason } = require("%sqGlob/dasenums.nut")
+let { isNexusRoundMode, nexusAllyTeam, nexusEnemyTeam } = require("%ui/hud/state/nexus_mode_state.nut")
+let { nexusRoundModeRoundEnded, nexusRoundModeRoundEndWinner, nexusRoundModeRoundEndReason } = require("%ui/hud/state/nexus_round_mode_state.nut")
 
 const ANIM_DURATION = 0.7
 
-let winDefeatBg = {
+let winDefeatBg = static {
   rendObj = ROBJ_SOLID
-  size = [sw(20), sh(10)]
+  size = static [sw(20), sh(10)]
   color = ItemBgColor
   transform = {}
   animations = [{ prop=AnimProp.translate, from=[-sw(20), 0], to=[0, 0],
     duration = ANIM_DURATION, play = true, easing = OutCubic }]
 }
 
-let nexusRoundEndReasonMap = {
-  [NexusRoundFinishReason.ALL_DIED] = "nexus_round_mode_round_finish/all_died",
-  [NexusRoundFinishReason.TEAM_DIED] = "nexus_round_mode_round_finish/team_died",
-  [NexusRoundFinishReason.CAPTURE] = "nexus_round_mode_round_finish/capture",
-  [NexusRoundFinishReason.CAPTURE_ADVANTAGE] = "nexus_round_mode_round_finish/capture_advantage",
-  [NexusRoundFinishReason.POINTS] = "nexus_round_mode_round_finish/points",
-  [NexusRoundFinishReason.POINTS_ADVANTAGE] = "nexus_round_mode_round_finish/points_advantage",
-  [NexusRoundFinishReason.POINTS_DRAW] = "nexus_round_mode_round_finish/points_draw",
-  [NexusRoundFinishReason.TIME_OUT] = "nexus_round_mode_round_finish/time_out"
-}
+let nexusRoundEndReasonMap = freeze({
+  [NexusGameFinishReason.ALL_DIED] = "nexus_round_mode_round_finish/all_died",
+  [NexusGameFinishReason.TEAM_DIED] = "nexus_round_mode_round_finish/team_died",
+  [NexusGameFinishReason.CAPTURE] = "nexus_round_mode_round_finish/capture",
+  [NexusGameFinishReason.CAPTURE_ADVANTAGE] = "nexus_round_mode_round_finish/capture_advantage",
+  [NexusGameFinishReason.POINTS] = "nexus_round_mode_round_finish/points",
+  [NexusGameFinishReason.POINTS_ADVANTAGE] = "nexus_round_mode_round_finish/points_advantage",
+  [NexusGameFinishReason.POINTS_DRAW] = "nexus_round_mode_round_finish/points_draw",
+  [NexusGameFinishReason.TIME_OUT] = "nexus_round_mode_round_finish/time_out"
+})
 
 function winnerBlock() {
   if (!nexusRoundModeRoundEnded.get())
-    return { watch = [nexusRoundModeRoundEnded, nexusRoundModeRoundEndWinner, nexusRoundModeAllyTeam, nexusRoundModeEnemyTeam] }
+    return { watch = [nexusRoundModeRoundEnded, nexusRoundModeRoundEndWinner, nexusAllyTeam, nexusEnemyTeam] }
 
-
-
-  let text = nexusRoundModeRoundEndWinner.get() == nexusRoundModeAllyTeam.get() ? loc("nexus/victory")
-    : nexusRoundModeRoundEndWinner.get() == nexusRoundModeEnemyTeam.get() ? loc("nexus/defeat")
+  let text = nexusRoundModeRoundEndWinner.get() == nexusAllyTeam.get() ? loc("nexus/victory")
+    : nexusRoundModeRoundEndWinner.get() == nexusEnemyTeam.get() ? loc("nexus/defeat")
     : loc("nexus/draw")
 
-  let color = nexusRoundModeRoundEndWinner.get() == nexusRoundModeAllyTeam.get() ? GreenSuccessColor
-    : nexusRoundModeRoundEndWinner.get() == nexusRoundModeEnemyTeam.get() ? RedWarningColor
+  let color = nexusRoundModeRoundEndWinner.get() == nexusAllyTeam.get() ? GreenSuccessColor
+    : nexusRoundModeRoundEndWinner.get() == nexusEnemyTeam.get() ? RedWarningColor
     : TextHighlight
 
   return {
-    watch = [nexusRoundModeRoundEnded, nexusRoundModeRoundEndWinner, nexusRoundModeAllyTeam, nexusRoundModeEnemyTeam]
+    watch = [nexusRoundModeRoundEnded, nexusRoundModeRoundEndWinner, nexusAllyTeam, nexusEnemyTeam]
     clipchildren = true
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
@@ -70,7 +70,7 @@ function reasonBlock() {
   return {
     watch = [nexusRoundModeRoundEnded, nexusRoundModeRoundEndReason]
     rendObj = ROBJ_SOLID
-    size = [sw(10), sh(5)]
+    size = static [sw(10), sh(5)]
     padding = hdpx(10)
     minWidth = SIZE_TO_CONTENT
     transform = {}
@@ -100,7 +100,7 @@ function nexusRoundResultBlock() {
   }
 }
 
-return {
+return freeze({
   nexusRoundResultBlock
   nexusRoundEndReasonMap
-}
+})

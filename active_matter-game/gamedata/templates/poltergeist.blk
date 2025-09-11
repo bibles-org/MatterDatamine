@@ -1,0 +1,112 @@
+poltergeist_phys_item_manager{
+  _tags:t="server"
+  poltergeist_phys_item_manager__physEntityTemplate:t="medium_syncable_ri_phys+poltergeist_item+poltergeist_item_sound+synced_poltherheist_item"
+
+  "poltergeist_phys_item_manager__applicableRendinsts:list<t>"{}
+  "poltergeist_phys_item_manager__riPools:list<i>"{}
+}
+
+poltergeist_ai{
+  _use:t="corridor_walker"
+  _use:t="walker_agent_danger_calc"
+  _use:t="obstacle_avoider"
+  agent_dangers__maxDangerDist:r=20
+  agent_dangers__nextDangersCheckTime:r=-1
+  walker_agent__standShootLocalPos:p3=0, 0.5, 0
+  beh_tree__enabled:b=yes
+  beh_tree__node:t="poltergeist"
+  beh_tree__debug:b=no
+  beh_tree__blackboard__enemyRadius:r=90
+  poltergeist__isAttacking:b=no
+  _replicated:t="poltergeist__isAttacking"
+
+  agent_dangers{
+    _tags:t="server"
+  }
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  _group{
+    _tags:t="server"
+    poltergeist__searchItemsRadius:r=10
+    poltergeist__selectedRiPos:p3=0, 0, 0
+    poltergeist__hideAwayPos:p3=0, 0, 0
+    poltergeist__thrownItemTemplate:t=""
+
+    "poltergeist__unreachableRis:list<u64>"{}
+    "poltergeist__selectedEnemy:eid"{}
+    "poltergeist__selectedRiHandle:u64"{
+      value:i64=-1
+    }
+  }
+}
+
+poltergeist{
+  _use:t="am_navmesh_creature_base"
+  _use:t="dont_create_nphys_obstacle"
+  _use:t="human_deformation_bbox_receiver"
+  _use:t="poltergeist_ai"
+  _use:t="base_dm_parts"
+  _use:t="nphys_position_mapping"
+  _use:t="poltergeist_creature_sound"
+  team:i=1
+  animchar__res:t="mimic_small_body_a_char"
+  collres__res:t="mimic_small_body_a_collision"
+  animchar_render__enabled:b=no
+  ai_target_node__node:t="col"
+  kill_tracking_tag:t="poltergeist"
+  needsBlood:b=no
+  material:t="poltergeistFlesh"
+  hitpoints__hp:r=38
+  hitpoints__maxHp:r=38
+  body_cleanup_server_after_death__delay:r=5
+  navmesh_phys__hitTagPower:r=0.3
+  navmesh_phys__hitTagDuration:r=0.6
+  nphys__mass:r=20
+  nphys__ccdOffset:p3=0, 0, 0
+  hit_verification__maxDistance:r=9
+  dm__bsphereRad:r=9
+  death_note__name:t="note_poltergeist"
+
+  "poltergeist:tag"{}
+  "capsule_approximation__nodeNames:array"{
+    node:t="col"
+  }
+
+  "capsule_approximation__complexNodeNames:array"{}
+  "disable_capsule_ao:tag"{}
+  "grid_obj__updateAlways:tag"{}
+  "kill_tracking__taggedPlayers:object"{}
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_2"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_1"
+      dropChance:r=0.25
+      dropHeight:r=1
+    }
+  }
+}
+
+poltergeist_possession_retry{
+  poltergeist_possession__retryAt:r=-1
+}
+
+poltergeist_possession{
+  poltergeist_possession__minRequiredThrowableItems:i=3
+  poltergeist_possession__numPoltergeists:ip2=2, 3
+  poltergeist_possession__finished:b=no
+  poltergeist_possession__retryIn:r=10
+  poltergeist_possession__retriesLeft:i=2
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+poltergeist_possessed_item{
+  "poltergeist_possessed_item:tag"{}
+}

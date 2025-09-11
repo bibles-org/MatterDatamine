@@ -7,18 +7,19 @@ entity{
 
   "monster_gen_gen__genTemplates:object"{
     household_changed_monster_generator:i=50
-    household_traps_generator:i=25
-    anomaly_encounter_changed_indoor_small:i=25
+    household_traps_generator:i=20
+    anomaly_encounter_changed_indoor_small:i=10
+    poltergeist_possession:i=20
   }
 }
 
 entity{
-  _template:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_monster+am_inside_body_3"
+  _template:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_changed_human+am_inside_body_3"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1690.88, 39.7698, -1447.5]]
 }
 
 entity{
-  _template:t="outdoor_sleeper_changed_human_mini+changed_human_collision+sleeping_monster+am_inside_body_3"
+  _template:t="outdoor_sleeper_changed_human_mini+changed_human_collision+sleeping_changed_human+am_inside_body_3"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1688.14, 38.4728, -1454.79]]
 }
 

@@ -1,13 +1,18 @@
+from "%sqGlob/dasenums.nut" import NexusGameStartState, NexusTeam
+from "%dngscripts/globalState.nut" import nestWatched
+from "dasevents" import EventNexusGameEnd, EventNexusGameDebriefing
+from "team" import TEAM_UNASSIGNED
+from "%ui/mainMenu/ribbons_colors_state.nut" import indexToColor
+from "dagor.math" import Point4
+from "app" import get_session_id
+import "%ui/voiceChat/voiceState.nut" as voiceState
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { TEAM_UNASSIGNED } = require("team")
-let { indexToColor } = require("%ui/mainMenu/ribbons_colors_state.nut")
-let { IPoint2 } = require("dagor.math")
 let { localPlayerTeam } = require("%ui/hud/state/local_player.nut")
-let { NexusGameStartState } = require("%sqGlob/dasenums.nut")
-let { nestWatched } = require("%dngscripts/globalState.nut")
+
 let nexusSelectedNames = nestWatched("nexusSelectedNames", {})
+let mutedNexusPlayersList = nestWatched("mutedNexusPlayersList", {})
 
 let isNexus = Watched(false)
 let isNexusWaveMode = Watched(false)
@@ -20,83 +25,61 @@ let nexusSpawnPoints = Watched({})
 let isNexusGameStarted = Watched(false)
 let isNexusGameFinished = Watched(false)
 let isNexusPlayerExists = Watched(false)
+let isNexusPlayerCanSpawn = Watched(false)
+let isNexusPlayerCanChangeLoadout = Watched(false)
 let isNexusPlayerSpawned = Watched(false)
-let nexusModeTeamColors = Watched(null)
-let nexusModeTeamColorIndices = Watched(null)
-let nexusModeMaxAdditionalWaves = Watched(0)
-let nexusModeSpawnedAdditionalWaves = Watched(0)
-let nexusModeAdditionalWavesLeft = Computed(@() nexusModeMaxAdditionalWaves.get() - nexusModeSpawnedAdditionalWaves.get())
-let nexusModeNextAdditionalWaveAt = Watched(-1.0)
+let isNexusEndGameDebriefing = Watched(false)
+let nexusModeTeamColors = Watched([Point4(0.7, 0.7, 0.7, 1).x, Point4(0.7, 0.7, 0.7, 1).y])
+let nexusModeTeamColorIndices = Watched([-1, -1])
+let nexusModeEnemiesColors = Watched([Point4(1, 1, 1, 1).x, Point4(1, 1, 1, 1).y])
+let nexusGameWinner = Watched(-1)
+let nexusPlayerSpawnCount = Watched(0)
 
+let nexusAllyTeam = Watched(-1)
+let nexusEnemyTeam = Computed(@() nexusAllyTeam.get() == NexusTeam.FIRST ? NexusTeam.SECOND : NexusTeam.FIRST)
+
+let allyTeam = Watched({})
+let enemyTeam = Watched({})
 
 ecs.register_es("nexus_battle_track_team_colors_es", {
-  [["onChange", "onInit"]] = function(_evt, _eid, comp) {
-    if (!comp.is_local) {
-      return
-    }
-    nexusModeTeamColors.set(comp.player_ribbons__curColors != IPoint2(-1, -1)
-      ? [indexToColor(comp.player_ribbons__curColors.x), indexToColor(comp.player_ribbons__curColors.y)]
-      : null)
-    nexusModeTeamColorIndices.set(comp.player_ribbons__curColors != IPoint2(-1, -1) ? [comp.player_ribbons__curColors.x, comp.player_ribbons__curColors.y] : null)
+  onInit = function(_evt, _eid, comp) {
+
+    nexusModeEnemiesColors.set([indexToColor(comp.ribbonNexusEnemyColor.x), indexToColor(comp.ribbonNexusEnemyColor.y)])
+    nexusModeTeamColors.set([indexToColor(comp.ribbonNexusAllyColor.x), indexToColor(comp.ribbonNexusAllyColor.y)])
+    nexusModeTeamColorIndices.set([comp.ribbonNexusAllyColor.x, comp.ribbonNexusAllyColor.y])
   }
   onDestroy = function(...) {
-    nexusModeTeamColors.set(null)
-    nexusModeTeamColorIndices.set(null)
+    nexusModeEnemiesColors.set([indexToColor(-1), indexToColor(-1)])
+    nexusModeTeamColors.set([indexToColor(-1), indexToColor(-1)])
+    nexusModeTeamColorIndices.set([-1, -1])
   }
 }, {
-  comps_track = [ ["player_ribbons__curColors", ecs.TYPE_IPOINT2] ],
-  comps_ro = [ ["is_local", ecs.TYPE_BOOL] ],
-  comps_rq = [ "nexus_player" ]
+  comps_ro = [["ribbonNexusEnemyColor", ecs.TYPE_IPOINT2], ["ribbonNexusAllyColor", ecs.TYPE_IPOINT2]]
 }, {tags = "gameClient"})
 
-let updateNexusBattleAdditionalWavesState = function(comp) {
-  nexusModeMaxAdditionalWaves.set(comp?.nexus_wave_mode_additional_waves_spawn_controller__numWaves ?? 0)
-  nexusModeSpawnedAdditionalWaves.set(comp?.nexus_wave_mode_additional_waves_spawn_controller__wavesSpawned ?? 0)
-  nexusModeNextAdditionalWaveAt.set(comp?.nexus_wave_mode_additional_waves_spawn_controller__spawnAt ?? -1.0)
-}
-
-let nexus_battle_additional_waves_comps = {
-  comps_ro = [
-    ["team", ecs.TYPE_INT],
-    ["nexus_wave_mode_additional_waves_spawn_controller__numWaves", ecs.TYPE_INT]
-  ],
-  comps_track = [
-    ["nexus_wave_mode_additional_waves_spawn_controller__wavesSpawned", ecs.TYPE_INT],
-    ["nexus_wave_mode_additional_waves_spawn_controller__spawnAt", ecs.TYPE_FLOAT]
-  ]
-}
-
-let nexus_battle_additional_waves_query = ecs.SqQuery("nexus_battle_additional_waves_query", nexus_battle_additional_waves_comps)
-
-ecs.register_es("nexus_battle_track_additional_waves", {
-  [["onChange", "onInit"]] = function(_evt, _eid, comp) {
-    if (comp.team != localPlayerTeam.get()) {
-      return
-    }
-
-    updateNexusBattleAdditionalWavesState(comp)
-  }
-  onDestroy = function(_evt, _eid, comp) {
-    if (comp.team != localPlayerTeam.get()) {
-      return
-    }
-
-    updateNexusBattleAdditionalWavesState({})
-  }
-}, nexus_battle_additional_waves_comps, {tags = "gameClient"})
-
-localPlayerTeam.subscribe(function(team) {
+localPlayerTeam.subscribe_with_nasty_disregard_of_frp_update(function(team) {
   if (team == TEAM_UNASSIGNED) {
     nexusSelectedNames.set({})
+    mutedNexusPlayersList.set({})
     return
   }
+})
 
-  nexus_battle_additional_waves_query.perform(function(_eid, comp) {
-    if (comp.team != team) {
+ecs.register_es("nexus_ally_team_es", {
+  [["onChange", "onInit"]] = function(_evt, _eid, comp){
+    if (!comp.is_local)
       return
-    }
-    updateNexusBattleAdditionalWavesState(comp)
-  })
+    nexusAllyTeam.set(comp.team)
+  },
+},
+{
+  comps_track = [
+    ["team", ecs.TYPE_INT],
+    ["is_local", ecs.TYPE_BOOL]
+  ]
+},
+{
+  tags = "gameClient"
 })
 
 ecs.register_es("track_nexus_game_start", {
@@ -191,7 +174,12 @@ ecs.register_es("nexus_battle_track_spawn_points_state", {
 
 ecs.register_es("detect_nexus_es", {
   onInit = @(...) isNexus.set(true)
-  onDestroy = @(...) isNexus.set(false)
+  onDestroy = function(...) {
+    isNexus.set(false)
+    allyTeam.set({})
+    enemyTeam.set({})
+    isNexusEndGameDebriefing.set(false)
+  }
 },
 {
   comps_rq = [ "nexus_mode" ]
@@ -214,10 +202,8 @@ ecs.register_es("detect_nexus_round_mode_es", {
 }, { tags = "gameClient" })
 
 
-let { get_session_id } = require("app")
-let voiceState = require("%ui/voiceChat/voiceState.nut")
 let voiceRoomName = Watched("")
-isNexus.subscribe(function(v){
+isNexus.subscribe_with_nasty_disregard_of_frp_update(function(v){
   if (v && voiceRoomName.get().len() == 0){
     let sessionId = get_session_id()
     let playerTeam = localPlayerTeam.get()
@@ -231,7 +217,7 @@ isNexus.subscribe(function(v){
     voiceRoomName.set("")
   }
 })
-localPlayerTeam.subscribe(function(v){
+localPlayerTeam.subscribe_with_nasty_disregard_of_frp_update(function(v){
   if (isNexus.get() && v != TEAM_UNASSIGNED){
     let sessionId = get_session_id()
     voiceRoomName.set($"__nexus_{sessionId}_room_{v}")
@@ -243,17 +229,29 @@ ecs.register_es("nexus_track_is_hero_spawned_es", {
   [["onChange", "onInit"]] = function(_evt, _eid, comp){
     if (!comp.is_local)
       return
-    isNexusPlayerSpawned.set(comp.nexus_player__spawned)
     isNexusPlayerExists.set(true)
+    isNexusPlayerCanSpawn.set(comp.nexus_player__canSpawn)
+    isNexusPlayerCanChangeLoadout.set(comp.nexus_player__canChangeLoadout)
+    isNexusPlayerSpawned.set(comp.nexus_player__spawned)
+    nexusPlayerSpawnCount.set(comp.nexus_player__spawnCount)
   }
   onDestroy = function(_eid, comp) {
     if (!comp.is_local)
       return
-    isNexusPlayerSpawned.set(false)
     isNexusPlayerExists.set(false)
+    isNexusPlayerCanSpawn.set(false)
+    isNexusPlayerCanChangeLoadout.set(false)
+    isNexusPlayerSpawned.set(false)
+    nexusPlayerSpawnCount.set(0)
   }
 },
-{ comps_track = [["nexus_player__spawned", ecs.TYPE_BOOL], ["is_local", ecs.TYPE_BOOL]]
+{
+  comps_track = [
+    ["nexus_player__canSpawn", ecs.TYPE_BOOL],
+    ["nexus_player__canChangeLoadout", ecs.TYPE_BOOL],
+    ["nexus_player__spawned", ecs.TYPE_BOOL],
+    ["nexus_player__spawnCount", ecs.TYPE_INT],
+    ["is_local", ecs.TYPE_BOOL]]
 },
 { tags = "gameClient" })
 
@@ -284,6 +282,39 @@ ecs.register_es("nexus_game_start_track_state_es", {
   tags = "gameClient"
 })
 
+ecs.register_es("nexus_game_debriefing_es", {
+  [[EventNexusGameDebriefing]] = function(_evt, _eid, comp) {
+    if (!comp.is_local)
+      return
+    isNexusEndGameDebriefing.set(true)
+  }
+},
+{
+  comps_ro = [
+    ["team", ecs.TYPE_INT],
+    ["is_local", ecs.TYPE_BOOL],
+  ]
+},
+{
+  tags = "gameClient"
+})
+
+ecs.register_es("nexus_game_end_es", {
+  [[EventNexusGameEnd]] = function(evt, _eid, comp){
+    if (!comp.is_local)
+      return
+    nexusGameWinner.set(evt.winner)
+  }
+},
+{
+  comps_ro = [
+    ["team", ecs.TYPE_INT],
+    ["is_local", ecs.TYPE_BOOL],
+  ]
+},
+{
+  tags = "gameClient"
+})
 
 return {
   isNexus,
@@ -292,19 +323,26 @@ return {
   isNexusGameStarted
   isNexusGameFinished,
   isNexusPlayerExists,
+  isNexusPlayerCanSpawn,
+  isNexusPlayerCanChangeLoadout,
   isNexusPlayerSpawned,
+  isNexusEndGameDebriefing,
   nexusBeacons,
   nexusBeaconEids,
   nexusSpawnPoints,
   nexusModeTeamColors,
+  nexusModeEnemiesColors,
   nexusModeTeamColorIndices,
-  nexusModeMaxAdditionalWaves,
-  nexusModeSpawnedAdditionalWaves,
-  nexusModeAdditionalWavesLeft,
-  nexusModeNextAdditionalWaveAt,
+  nexusGameWinner,
+  nexusPlayerSpawnCount,
+  nexusAllyTeam,
+  nexusEnemyTeam,
+  allyTeam,
+  enemyTeam
 
   nexusStartGameState
   nexusStartGameStateEndAll
   NexusGameStartState
   nexusSelectedNames
+  mutedNexusPlayersList
 }

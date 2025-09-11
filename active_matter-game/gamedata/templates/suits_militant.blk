@@ -1,4 +1,5 @@
 suit_militant_attachable_animchar{
+  _use:t="animchar_with_attaches"
   _use:t="suit_attachable_animchar"
   _use:t="militant_node_collapser"
   _use:t="am_militant_ribbons"
@@ -14,12 +15,19 @@ suit_militant_attachable_animchar{
 }
 
 suit_militant_item_base{
-  _use:t="suit_item_base"
+  _use:t="equipable_item"
   _use:t="equipment_with_mods"
   _use:t="animchar_dynmodel_nodes_hider"
   _use:t="block_item_move_to_backpack"
   _use:t="block_item_move_to_ground"
   _use:t="block_item_move_to_item_container"
+  item__recreateOnGround:t="suit_attachable_item_in_world"
+  item__recreateInWorldPhys:t="item_in_world_phys"
+  item__recreateInInventory:t="base_invis_item"
+  item__recreateInEquipment:t="suit_attachable_item_in_equipment"
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1, 2
+  use_object__offset:p3=0, 0.5, 0
   item__iconYaw:r=20
   item__iconRoll:r=10
   item__iconPitch:r=0
@@ -28,14 +36,21 @@ suit_militant_item_base{
   suit__raidIcon:t="!ui/uiskin/raid_info/operative.svg"
   item__baseWeight:r=0
   item__weight:r=0
-  item__volume:r=0
+  item__volume:i=0
   item__filterType:t="alters"
   _replicated:t="item__weight"
   _tracked:t="item__weight"
-  equipment__setDefaultStubMeleeTemplate:t="default_stub_pocket_knife_weapon"
   full_body_presentation_params:t="suit_full_body_presentation_parameters_base"
   preview_presentation_params:t="suit_preview_presentation_parameters_base"
 
+  "item__equipInsteadOfPickup:tag"{}
+  "suit_militant:tag"{}
+  "item__equipmentSlots:list<t>"{
+    slot:t="chronogene_primary_1"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{}
+  "equipment_item:tag"{}
   "item__dontUnequipOnDeath:tag"{}
   "item__permanentItem:tag"{}
   "item__chronogene:tag"{}
@@ -57,11 +72,15 @@ suit_militant_item_base{
 
 suit_militant_male_item_base{
   _use:t="suit_militant_item_base"
+  animchar__res:t="am_trooper_empty_model_male_char"
+  collres__res:t="am_trooper_empty_model_male_collision"
   suit__suitType:i=0
 }
 
 suit_militant_female_item_base{
   _use:t="suit_militant_item_base"
+  animchar__res:t="am_trooper_empty_model_female_char"
+  collres__res:t="am_trooper_empty_model_female_collision"
   suit__suitType:i=1
 
   "sound_mod_tags:list<t>"{
@@ -85,8 +104,6 @@ suit_militant_bloody_attachable_animchar{
 suit_militant_bloody_item{
   _use:t="suit_militant_male_item_base"
   item__proto:t="suit_militant_bloody_item"
-  animchar__res:t="bloody_body_char"
-  collres__res:t="bloody_body_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_a_full_body_presentation"
   preview_presentation_params:t="suit_militant_light_a_preview_presentation"
@@ -124,6 +141,12 @@ suit_corticalWatch{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="am_cortical_vault_watch_char"
   collres__res:t="am_cortical_vault_watch_collision"
+}
+
+suit_corticalWatch_nakedHand{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_cortical_vault_watch_naked_hand_char"
+  collres__res:t="am_cortical_vault_watch_naked_hand_collision"
 }
 
 suit_head_am_light_a{
@@ -174,6 +197,12 @@ suit_skull_mask{
   collres__res:t="skull_mask_collision"
 }
 
+suit_skull_simple_mask{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="mask_skull_char"
+  collres__res:t="mask_skull_collision"
+}
+
 suit_skull_white_mask{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="skull_mask_white_char"
@@ -189,13 +218,59 @@ suit_skull_paint_mask{
 suit_head_sniper_scarf{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="head_sniper_scarf_char"
+  animchar_fast_phys__res:t="head_sniper_scarf_fastphys"
   collres__res:t="head_sniper_scarf_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
 }
 
 suit_head_sniper_veil{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="sniper_veil_char"
+  animchar_fast_phys__res:t="sniper_veil_fastphys"
   collres__res:t="sniper_veil_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+}
+
+mask_beast_black{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="mask_beast_black_char"
+  collres__res:t="mask_beast_black_collision"
+}
+
+mask_skull_gold{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="mask_skull_metal_char"
+  collres__res:t="mask_skull_metal_collision"
+}
+
+mask_mesh{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="mask_mesh_char"
+  collres__res:t="mask_mesh_collision"
+}
+
+mask_mask_skull_hitech{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="mask_skull_hitech_char"
+  collres__res:t="mask_skull_hitech_collision"
+}
+
+mask_mask_skull_hitech_white{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="mask_skull_hitech_paint_char"
+  collres__res:t="mask_skull_hitech_paint_collision"
+}
+
+head_black_fireman{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_male_fireman_head_char"
+  collres__res:t="am_male_fireman_head_collision"
 }
 
 suit_top_am_light_a{
@@ -219,7 +294,12 @@ suit_top_am_light_c{
 suit_top_am_light_d{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="am_player_trooper_male_light_top_d_char"
+  animchar_fast_phys__res:t="am_player_trooper_male_light_top_d_fastphys"
   collres__res:t="am_player_trooper_male_light_top_d_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
 }
 
 suit_top_am_light_e{
@@ -237,7 +317,12 @@ suit_top_am_light_g{
 suit_top_am_light_h{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="am_player_trooper_male_light_top_h_char"
+  animchar_fast_phys__res:t="am_player_trooper_male_light_top_h_fastphys"
   collres__res:t="am_player_trooper_male_light_top_h_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
 }
 
 suit_top_am_light_i{
@@ -267,7 +352,12 @@ suit_top_alligator_sniper_cape{
 suit_top_alligator_sniper_cape_stripes{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="alligator_sniper_cape_stripes_char"
+  animchar_fast_phys__res:t="alligator_sniper_cape_stripes_fastphys"
   collres__res:t="alligator_sniper_cape_stripes_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
 }
 
 suit_top_down_vest{
@@ -279,7 +369,12 @@ suit_top_down_vest{
 suit_top_down_vest_hood{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="down_vest_hood_char"
+  animchar_fast_phys__res:t="down_vest_hood_fastphys"
   collres__res:t="down_vest_hood_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
 }
 
 suit_top_fishing_shirt{
@@ -336,10 +431,27 @@ suit_top_windproof{
   collres__res:t="jacket_windproof_collision"
 }
 
+suit_top_windproof_yellow{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="jacket_windproof_yellow_char"
+  collres__res:t="jacket_windproof_yellow_collision"
+}
+
 suit_top_winter{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="jacket_winter_char"
   collres__res:t="jacket_winter_collision"
+}
+
+suit_top_winter_with_belt{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="jacket_winter_with_belt_char"
+  animchar_fast_phys__res:t="jacket_winter_with_belt_fastphys"
+  collres__res:t="jacket_winter_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
 }
 
 suit_top_ru_flight_tunic{
@@ -360,6 +472,12 @@ suit_top_vest_jeans{
   collres__res:t="vest_jeans_collision"
 }
 
+suit_top_style{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="jacket_style_char"
+  collres__res:t="jacket_style_collision"
+}
+
 suit_top_style_yellow{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="jacket_style_yellow_char"
@@ -372,10 +490,50 @@ suit_top_style_black{
   collres__res:t="jacket_style_black_collision"
 }
 
+suit_top_style_black_with_pouches{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="jacket_style_black_with_pouches_char"
+  animchar_fast_phys__res:t="jacket_style_black_with_pouches_fastphys"
+  collres__res:t="jacket_style_black_with_pouches_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+}
+
 suit_top_sport_short{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="jacket_nike_char"
+  animchar_fast_phys__res:t="jacket_nike_fastphys"
   collres__res:t="jacket_nike_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+}
+
+suit_top_denim_vest{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="denim_vest_char"
+  collres__res:t="denim_vest_collision"
+}
+
+suit_top_grenadier_vest{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="grenadier_vest_char"
+  collres__res:t="grenadier_vest_collision"
+}
+
+suit_top_am_top_i{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_player_trooper_male_light_top_i_char"
+  collres__res:t="am_player_trooper_male_light_top_i_collision"
+}
+
+shirt_raid_polycotton{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="shirt_raid_polycotton_char"
+  collres__res:t="shirt_raid_polycotton_collision"
 }
 
 suit_boots_am_light_a{
@@ -420,6 +578,23 @@ suit_boots_zephyr{
   collres__res:t="zephyr_gtx_hi_tf_collision"
 }
 
+suit_bottom_am_trooper_heavy_c{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_player_trooper_male_heavy_bottom_c_char"
+  animchar_fast_phys__res:t="am_player_trooper_male_heavy_bottom_c_fastphys"
+  collres__res:t="am_player_trooper_male_heavy_bottom_c_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+
+  "slot_attach__initialAttachments:object"{
+    "holster:list<t>"{
+      i:t="pistol_holster_a_char"
+    }
+  }
+}
+
 suit_bottom_am_light_a{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="am_player_trooper_male_light_bottom_a_char"
@@ -441,31 +616,76 @@ suit_bottom_am_light_c{
 suit_bottom_am_light_d{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="am_player_trooper_male_light_bottom_d_char"
+  animchar_fast_phys__res:t="am_player_trooper_male_light_bottom_d_fastphys"
   collres__res:t="am_player_trooper_male_light_bottom_d_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+
+  "slot_attach__initialAttachments:object"{
+    "holster:list<t>"{
+      i:t="pistol_holster_a_char"
+    }
+  }
 }
 
 suit_bottom_am_light_e{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="am_player_trooper_male_light_bottom_e_char"
+  animchar_fast_phys__res:t="am_player_trooper_male_light_bottom_e_fastphys"
   collres__res:t="am_player_trooper_male_light_bottom_e_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+
+  "slot_attach__initialAttachments:object"{
+    "holster:list<t>"{
+      i:t="pistol_holster_a_char"
+    }
+  }
 }
 
 suit_bottom_am_light_f{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="am_player_trooper_male_light_bottom_f_char"
+  animchar_fast_phys__res:t="am_player_trooper_male_light_bottom_f_fastphys"
   collres__res:t="am_player_trooper_male_light_bottom_f_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+
+  "slot_attach__initialAttachments:object"{
+    "holster:list<t>"{
+      i:t="pistol_holster_a_char"
+    }
+  }
 }
 
 suit_bottom_am_light_g{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="am_player_trooper_male_light_bottom_g_char"
   collres__res:t="am_player_trooper_male_light_bottom_g_collision"
+
+  "slot_attach__initialAttachments:object"{
+    "holster:list<t>"{
+      i:t="pistol_holster_a_char"
+    }
+  }
 }
 
 suit_bottom_am_light_h{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="am_player_trooper_male_light_bottom_h_char"
   collres__res:t="am_player_trooper_male_light_bottom_h_collision"
+
+  "slot_attach__initialAttachments:object"{
+    "holster:list<t>"{
+      i:t="pistol_holster_a_char"
+    }
+  }
 }
 
 suit_bottom_am_light_i{
@@ -484,6 +704,36 @@ suit_bottom_am_light_k{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="am_player_trooper_male_light_bottom_k_char"
   collres__res:t="am_player_trooper_male_light_bottom_k_collision"
+}
+
+suit_bottom_am_ru_flight_pants{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="ru_flight_pants_long_char"
+  collres__res:t="ru_flight_pants_long_collision"
+}
+
+suit_bottom_g3_pants{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="g3_pants_char"
+  collres__res:t="g3_pants_collision"
+
+  "slot_attach__initialAttachments:object"{
+    "holster:list<t>"{
+      i:t="pistol_holster_a_char"
+    }
+  }
+}
+
+suit_bottom_male_heavy_a_pants{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_player_trooper_male_heavy_bottom_a_char"
+  collres__res:t="am_player_trooper_male_heavy_bottom_a_collision"
+
+  "slot_attach__initialAttachments:object"{
+    "holster:list<t>"{
+      i:t="pistol_holster_a_char"
+    }
+  }
 }
 
 suit_gloves_am_light_a{
@@ -564,6 +814,12 @@ suit_hands_long{
   collres__res:t="hands_long_collision"
 }
 
+suit_hands_long_black{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="hands_long_black_char"
+  collres__res:t="hands_long_black_collision"
+}
+
 suit_hands_long_tattoo_blackwork{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="hands_tattoo_blackwork_char"
@@ -582,9 +838,21 @@ suit_hands_oldschool_tattoo{
   collres__res:t="hands_tattoo_oldschool_collision"
 }
 
+suit_hands_japan_tattoo{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="hands_tattoo_japan_char"
+  collres__res:t="hands_tattoo_japan_collision"
+}
+
 suit_elbow_mtec{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="mtec_elbow_char"
+  collres__res:t="mtec_elbow_collision"
+}
+
+suit_liquidator_elbow_mtec{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="mtec_elbow_fireman_char"
   collres__res:t="mtec_elbow_collision"
 }
 
@@ -609,7 +877,12 @@ suit_kneepad_xform{
 suit_armor_kora_vo{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="kora_vo_armor_w_pouches_char"
+  animchar_fast_phys__res:t="kora_vo_armor_w_pouches_fastphys"
   collres__res:t="kora_vo_armor_w_pouches_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
 }
 
 suit_armor_schutzweste_infanterie_modifiziert{
@@ -618,10 +891,27 @@ suit_armor_schutzweste_infanterie_modifiziert{
   collres__res:t="schutzweste_infanterie_modifiziert_collision"
 }
 
+suit_armor_schutzweste_mehler_st{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="schutzweste_mehler_st_char"
+  collres__res:t="schutzweste_mehler_st_collision"
+}
+
 suit_armor_modular_scalable_vest{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="modular_scalable_vest_char"
   collres__res:t="modular_scalable_vest_collision"
+}
+
+suit_armor_modular_scalable_vest_with_pouches{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="modular_scalable_vest_with_pouches_char"
+  animchar_fast_phys__res:t="modular_scalable_vest_with_pouches_fastphys"
+  collres__res:t="modular_scalable_vest_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
 }
 
 suit_armor_tanker_armor_6B48{
@@ -630,13 +920,51 @@ suit_armor_tanker_armor_6B48{
   collres__res:t="tanker_armor_6B48_collision"
 }
 
+suit_armor_large_iotv{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="large_iotv_char"
+  collres__res:t="large_iotv_collision"
+}
+
+suit_armor_large_iotv_with_pouches{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="large_iotv_w_pouches_char"
+  animchar_fast_phys__res:t="large_iotv_w_pouches_fastphys"
+  collres__res:t="large_iotv_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+}
+
+suit_armor_6b43{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="6b43_armor_char"
+  collres__res:t="6b43_armor_collision"
+}
+
+suit_armor_asdag_vest{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="asdag_vest_char"
+  animchar_fast_phys__res:t="asdag_vest_fastphys"
+  collres__res:t="asdag_vest_collision"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+}
+
+suit_armor_heavy_top_b_char_vest{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_player_trooper_male_heavy_top_b_char"
+  collres__res:t="am_player_trooper_male_heavy_top_b_collision"
+}
+
 sm_redBerete_item{
   _use:t="suit_militant_male_item_base"
   _use:t="item_rarity_rare"
   item__proto:t="sm_redBerete_item"
   item__name:t="items/sm_redBerete_item"
-  animchar__res:t="am_player_trooper_male_light_i_char"
-  collres__res:t="am_player_trooper_male_light_i_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
   preview_presentation_params:t="suit_militant_light_i_preview_presentation"
@@ -689,11 +1017,9 @@ sm_jackal_item{
   _use:t="item_rarity_rare"
   item__proto:t="sm_jackal_item"
   item__name:t="items/sm_jackal_item"
-  animchar__res:t="am_player_trooper_male_light_i_char"
-  collres__res:t="am_player_trooper_male_light_i_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
-  preview_presentation_params:t="suit_militant_light_i_preview_presentation"
+  preview_presentation_params:t="sm_jackal_item_preview_presentation"
 
   "equipment_mods__slots:shared:object"{
     equipment_mod_body_0:t="armorplate_small_slot"
@@ -703,16 +1029,14 @@ sm_jackal_item{
   }
 
   "suit_attachable_item__animcharTemplates:object"{
-    corticalWath:t="suit_corticalWatch"
+    corticalWath:t="suit_corticalWatch_nakedHand"
     head:t="suit_jackal_mask"
-    top:t="suit_top_vest_jeans"
+    top:t="suit_top_down_vest_hood"
     gloves:t="suit_gloves_fingerless"
     bottom:t="suit_bottom_am_light_j"
     boots:t="suit_boots_am_light_j"
     hands:t="suit_hands_long_tattoo_blackwork"
-    armor:t="suit_armor_tanker_armor_6B48"
     elbow:t="suit_elbow_mtec"
-    scarf:t="suit_scarf_shemagh"
   }
 
   "suit_attachable_item__holsterAttachedAnimchars:list<t>"{
@@ -738,20 +1062,23 @@ sm_jackal_item{
   }
 
   "equipment__setDefaultStubEquipmentTemplates:object"{
-    helmet:t="hat_panama_carbonmask_item+default_stub_equipment"
+    helmet:t="hat_panama_black_item+default_stub_equipment"
   }
 }
 
-sm_scarecrow_item{
+sm_rebel_item{
   _use:t="suit_militant_male_item_base"
   _use:t="item_rarity_rare"
-  item__proto:t="sm_scarecrow_item"
-  item__name:t="items/sm_scarecrow_item"
-  animchar__res:t="am_player_trooper_male_light_i_char"
-  collres__res:t="am_player_trooper_male_light_i_collision"
+  item__proto:t="sm_rebel_item"
+  item__name:t="items/sm_rebel_item"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
-  preview_presentation_params:t="suit_militant_light_i_preview_presentation"
+  preview_presentation_params:t="sm_rebel_item_preview_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=4
+  }
 
   "equipment_mods__slots:shared:object"{
     equipment_mod_body_0:t="armorplate_small_slot"
@@ -765,7 +1092,7 @@ sm_scarecrow_item{
   "suit_attachable_item__animcharTemplates:object"{
     corticalWath:t="suit_corticalWatch"
     head:t="suit_skull_paint_mask"
-    top:t="suit_top_style_black"
+    top:t="suit_top_style_black_with_pouches"
     gloves:t="suit_gloves_am_light_k"
     bottom:t="suit_bottom_am_light_f"
     boots:t="suit_boots_am_light_a"
@@ -790,7 +1117,7 @@ sm_scarecrow_item{
   }
 
   "entity_mod_effects:object"{
-    "fasterChangePoseMult+mult_diminishing":r=1.2
+    "recoilMult+mult_diminishing":r=0.97
   }
 
   "equipment__setDefaultStubEquipmentTemplates:object"{
@@ -798,30 +1125,35 @@ sm_scarecrow_item{
   }
 }
 
-sm_marauder_item{
+sm_reaper_item{
   _use:t="suit_militant_male_item_base"
-  _use:t="item_rarity_rare"
-  item__proto:t="sm_marauder_item"
-  item__name:t="items/sm_marauder_item"
-  animchar__res:t="am_player_trooper_male_light_i_char"
-  collres__res:t="am_player_trooper_male_light_i_collision"
+  _use:t="item_rarity_epic"
+  item__proto:t="sm_reaper_item"
+  item__name:t="items/sm_reaper_item"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
-  preview_presentation_params:t="suit_militant_light_i_preview_presentation"
+  preview_presentation_params:t="sm_reaper_item_preview_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=0
+  }
 
   "equipment_mods__slots:shared:object"{
-    equipment_mod_body_0:t="armorplate_small_slot"
-    equipment_mod_body_1:t="armorplate_small_slot"
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_body_1:t="armorplate_big_slot"
+    equipment_mod_left_leg_0:t="armorplate_small_slot"
+    equipment_mod_right_leg_0:t="armorplate_small_slot"
     equipment_mod_pocket_0:t="pocket_slot"
     equipment_mod_pocket_1:t="pocket_slot"
   }
 
   "suit_attachable_item__animcharTemplates:object"{
     corticalWath:t="suit_corticalWatch"
-    head:t="suit_head_am_light_c"
+    head:t="suit_skull_simple_mask"
     top:t="suit_top_jacket_v3"
     gloves:t="suit_gloves_am_light_a"
-    bottom:t="suit_bottom_am_light_b"
+    bottom:t="suit_bottom_am_trooper_heavy_c"
     boots:t="suit_boots_am_light_a"
     armor:t="suit_armor_kora_vo"
   }
@@ -836,7 +1168,7 @@ sm_marauder_item{
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0
-    DM_MELEE:r=0.05
+    DM_MELEE:r=0
     DM_EXPLOSION:r=0
     DM_ZONE:r=0
     DM_COLLISION:r=0
@@ -845,7 +1177,9 @@ sm_marauder_item{
   }
 
   "entity_mod_effects:object"{
-    "fasterChangePoseMult+mult_diminishing":r=1.2
+    "meleeDamageMult+mult_diminishing":r=1.1
+    "fasterChangePoseMult+mult_diminishing":r=1.1
+    "shockReduction+add_diminishing":r=2
   }
 
   "equipment__setDefaultStubEquipmentTemplates:object"{
@@ -855,18 +1189,22 @@ sm_marauder_item{
 
 sm_psychologist_item{
   _use:t="suit_militant_male_item_base"
-  _use:t="item_rarity_rare"
+  _use:t="item_rarity_uncommon"
   item__proto:t="sm_psychologist_item"
   item__name:t="items/sm_psychologist_item"
-  animchar__res:t="am_player_trooper_male_light_i_char"
-  collres__res:t="am_player_trooper_male_light_i_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
-  preview_presentation_params:t="suit_militant_light_i_preview_presentation"
+  preview_presentation_params:t="sm_psychologist_item_preview_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=4
+  }
 
   "equipment_mods__slots:shared:object"{
-    equipment_mod_body_0:t="armorplate_small_slot"
-    equipment_mod_body_1:t="armorplate_small_slot"
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_left_leg_0:t="armorplate_small_slot"
+    equipment_mod_right_leg_0:t="armorplate_small_slot"
     equipment_mod_pocket_0:t="pocket_slot"
     equipment_mod_pocket_1:t="pocket_slot"
   }
@@ -892,7 +1230,7 @@ sm_psychologist_item{
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0
-    DM_MELEE:r=0.05
+    DM_MELEE:r=0
     DM_EXPLOSION:r=0
     DM_ZONE:r=0
     DM_COLLISION:r=0
@@ -901,23 +1239,27 @@ sm_psychologist_item{
   }
 
   "entity_mod_effects:object"{
-    "fasterChangePoseMult+mult_diminishing":r=1.2
+    "activeMatterGatherSpeed+mult_diminishing":r=1.2
   }
 }
 
-sm_ghost_item{
+sm_phantom_item{
   _use:t="suit_militant_male_item_base"
   _use:t="item_rarity_rare"
-  item__proto:t="sm_ghost_item"
-  item__name:t="items/sm_ghost_item"
-  animchar__res:t="am_player_trooper_male_light_i_char"
-  collres__res:t="am_player_trooper_male_light_i_collision"
+  item__proto:t="sm_phantom_item"
+  item__name:t="items/sm_phantom_item"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
-  preview_presentation_params:t="suit_militant_light_i_preview_presentation"
+  preview_presentation_params:t="sm_phantom_item_preview_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=6
+  }
 
   "equipment_mods__slots:shared:object"{
     equipment_mod_body_0:t="armorplate_small_slot"
+    equipment_mod_body_1:t="armorplate_small_slot"
     equipment_mod_left_leg_0:t="armorplate_small_slot"
     equipment_mod_right_leg_0:t="armorplate_small_slot"
     equipment_mod_pocket_0:t="pocket_slot"
@@ -926,13 +1268,13 @@ sm_ghost_item{
 
   "suit_attachable_item__animcharTemplates:object"{
     corticalWath:t="suit_corticalWatch"
-    head:t="suit_head_anti_g"
+    head:t="suit_head_sniper_scarf"
     top:t="suit_top_alligator_sniper_cape_stripes"
     gloves:t="suit_gloves_fingerless"
-    bottom:t="suit_bottom_am_light_i"
+    bottom:t="suit_bottom_am_light_a"
     boots:t="suit_boots_am_light_a"
     hands:t="suit_hands_long"
-    vest:t="suit_top_fishing_vest"
+    vest:t="suit_top_am_light_d"
   }
 
   "suit_attachable_item__holsterAttachedAnimchars:list<t>"{
@@ -943,9 +1285,13 @@ sm_ghost_item{
     EWS_GRENADE:t=""
   }
 
+  "suit_attachable_item__equipmentAttachedAnimchars:object"{
+    helmet:t="head"
+  }
+
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0
-    DM_MELEE:r=0.05
+    DM_MELEE:r=0
     DM_EXPLOSION:r=0
     DM_ZONE:r=0
     DM_COLLISION:r=0
@@ -954,20 +1300,24 @@ sm_ghost_item{
   }
 
   "entity_mod_effects:object"{
-    "fasterChangePoseMult+mult_diminishing":r=1.2
+    "fasterChangePoseMult+mult_diminishing":r=1.1
+    "itemUsageSpeed+mult_diminishing":r=1.05
   }
 }
 
-sm_tramp_item{
+sm_liquidator_item{
   _use:t="suit_militant_male_item_base"
   _use:t="item_rarity_rare"
-  item__proto:t="sm_tramp_item"
-  item__name:t="items/sm_tramp_item"
-  animchar__res:t="am_player_trooper_male_light_i_char"
-  collres__res:t="am_player_trooper_male_light_i_collision"
+  item__proto:t="sm_liquidator_item"
+  item__name:t="items/sm_liquidator_item"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
-  preview_presentation_params:t="suit_militant_light_i_preview_presentation"
+  preview_presentation_params:t="sm_liquidator_item_preview_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=0
+  }
 
   "equipment_mods__slots:shared:object"{
     equipment_mod_body_0:t="armorplate_big_slot"
@@ -978,14 +1328,14 @@ sm_tramp_item{
   }
 
   "suit_attachable_item__animcharTemplates:object"{
-    corticalWath:t="suit_corticalWatch"
-    head:t="suit_head_am_light_b"
+    corticalWath:t="suit_corticalWatch_nakedHand"
+    head:t="head_black_fireman"
     top:t="suit_top_down_vest_hood"
     bottom:t="suit_bottom_am_light_d"
     boots:t="suit_boots_am_light_a"
-    hands:t="suit_hands_oldschool_tattoo"
-    armor:t="suit_armor_modular_scalable_vest"
-    elbow:t="suit_elbow_mtec"
+    hands:t="suit_hands_long_black"
+    armor:t="suit_armor_modular_scalable_vest_with_pouches"
+    elbow:t="suit_liquidator_elbow_mtec"
   }
 
   "suit_attachable_item__holsterAttachedAnimchars:list<t>"{
@@ -998,7 +1348,7 @@ sm_tramp_item{
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0
-    DM_MELEE:r=0.05
+    DM_MELEE:r=0
     DM_EXPLOSION:r=0
     DM_ZONE:r=0
     DM_COLLISION:r=0
@@ -1007,11 +1357,8 @@ sm_tramp_item{
   }
 
   "entity_mod_effects:object"{
-    "fasterChangePoseMult+mult_diminishing":r=1.2
-  }
-
-  "equipment__setDefaultStubEquipmentTemplates:object"{
-    helmet:t="hat_winter_hat_item+default_stub_equipment"
+    "weightPenaltyReduction+mult_diminishing":r=1.05
+    "meleeDamageMult+mult_diminishing":r=1.05
   }
 }
 
@@ -1020,11 +1367,9 @@ sm_spider_item{
   _use:t="item_rarity_rare"
   item__proto:t="sm_spider_item"
   item__name:t="items/sm_spider_item"
-  animchar__res:t="am_player_trooper_male_light_i_char"
-  collres__res:t="am_player_trooper_male_light_i_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
-  preview_presentation_params:t="suit_militant_light_i_preview_presentation"
+  preview_presentation_params:t="sm_spider_item_preview_presentation"
 
   "equipment_mods__slots:shared:object"{
     equipment_mod_body_0:t="armorplate_small_slot"
@@ -1036,7 +1381,7 @@ sm_spider_item{
   "suit_attachable_item__animcharTemplates:object"{
     corticalWath:t="suit_corticalWatch"
     head:t="suit_head_sniper_scarf"
-    top:t="suit_top_am_light_c"
+    top:t="suit_top_am_top_i"
     gloves:t="suit_gloves_am_light_h"
     bottom:t="suit_bottom_am_light_c"
     boots:t="suit_boots_am_light_c"
@@ -1066,16 +1411,14 @@ sm_spider_item{
   }
 }
 
-sm_rebel_item{
+sm_biker_item{
   _use:t="suit_militant_male_item_base"
   _use:t="item_rarity_rare"
-  item__proto:t="sm_rebel_item"
-  item__name:t="items/sm_rebel_item"
-  animchar__res:t="am_player_trooper_male_light_i_char"
-  collres__res:t="am_player_trooper_male_light_i_collision"
+  item__proto:t="sm_biker_item"
+  item__name:t="items/sm_biker_item"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
-  preview_presentation_params:t="suit_militant_light_i_preview_presentation"
+  preview_presentation_params:t="sm_biker_item_preview_presentation"
 
   "equipment_mods__slots:shared:object"{
     equipment_mod_body_0:t="armorplate_small_slot"
@@ -1091,7 +1434,6 @@ sm_rebel_item{
     gloves:t="suit_gloves_am_light_b"
     bottom:t="suit_bottom_am_light_f"
     boots:t="suit_boots_am_light_c"
-    armor:t="suit_armor_modular_scalable_vest"
   }
 
   "suit_attachable_item__holsterAttachedAnimchars:list<t>"{
@@ -1121,16 +1463,19 @@ sm_rebel_item{
   }
 }
 
-sm_villager_item{
+sm_mirage_item{
   _use:t="suit_militant_male_item_base"
-  _use:t="item_rarity_rare"
-  item__proto:t="sm_villager_item"
-  item__name:t="items/sm_villager_item"
-  animchar__res:t="am_player_trooper_male_light_i_char"
-  collres__res:t="am_player_trooper_male_light_i_collision"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="sm_mirage_item"
+  item__name:t="items/sm_mirage_item"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
-  preview_presentation_params:t="suit_militant_light_i_preview_presentation"
+  preview_presentation_params:t="sm_mirage_item_preview_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=1
+  }
 
   "equipment_mods__slots:shared:object"{
     equipment_mod_body_0:t="armorplate_small_slot"
@@ -1142,9 +1487,9 @@ sm_villager_item{
   "suit_attachable_item__animcharTemplates:object"{
     corticalWath:t="suit_corticalWatch"
     head:t="suit_head_sniper_veil"
-    top:t="suit_top_winter"
+    top:t="suit_top_winter_with_belt"
     gloves:t="suit_gloves_am_light_b"
-    bottom:t="suit_bottom_am_light_f"
+    bottom:t="suit_bottom_am_light_h"
     boots:t="suit_boots_am_light_c"
   }
 
@@ -1158,16 +1503,12 @@ sm_villager_item{
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0
-    DM_MELEE:r=0.05
+    DM_MELEE:r=0.1
     DM_EXPLOSION:r=0
     DM_ZONE:r=0
     DM_COLLISION:r=0
     DM_HOLD_BREATH:r=0
     DM_FIRE:r=0
-  }
-
-  "entity_mod_effects:object"{
-    "fasterChangePoseMult+mult_diminishing":r=1.2
   }
 }
 
@@ -1176,11 +1517,130 @@ sm_hunter_item{
   _use:t="item_rarity_rare"
   item__proto:t="sm_hunter_item"
   item__name:t="items/sm_hunter_item"
-  animchar__res:t="am_player_trooper_male_light_i_char"
-  collres__res:t="am_player_trooper_male_light_i_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
-  preview_presentation_params:t="suit_militant_light_i_preview_presentation"
+  preview_presentation_params:t="sm_hunter_item_preview_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=7
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_body_1:t="armorplate_big_slot"
+    equipment_mod_left_hand_0:t="armorplate_small_slot"
+    equipment_mod_right_hand_0:t="armorplate_small_slot"
+    equipment_mod_left_leg_0:t="armorplate_small_slot"
+    equipment_mod_left_leg_1:t="armorplate_small_slot"
+    equipment_mod_right_leg_0:t="armorplate_small_slot"
+    equipment_mod_right_leg_1:t="armorplate_small_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    corticalWath:t="suit_corticalWatch"
+    head:t="mask_mask_skull_hitech"
+    top:t="suit_top_style_yellow"
+    gloves:t="suit_gloves_am_light_e"
+    bottom:t="suit_bottom_male_heavy_a_pants"
+    boots:t="suit_boots_am_light_c"
+    armor:t="suit_armor_large_iotv_with_pouches"
+  }
+
+  "suit_attachable_item__holsterAttachedAnimchars:list<t>"{
+    EWS_PRIMARY:t=""
+    EWS_SECONDARY:t=""
+    EWS_TERTIARY:t=""
+    EWS_MELEE:t=""
+    EWS_GRENADE:t=""
+  }
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0.03
+    DM_MELEE:r=0.05
+    DM_EXPLOSION:r=0
+    DM_ZONE:r=0
+    DM_COLLISION:r=0
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0
+  }
+
+  "equipment__setDefaultStubEquipmentTemplates:object"{
+    helmet:t="hat_panama_item+default_stub_equipment"
+  }
+}
+
+sm_beast_item{
+  _use:t="suit_militant_male_item_base"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="sm_beast_item"
+  item__name:t="items/sm_beast_item"
+  dm_part_armor__partName:t="*"
+  full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
+  preview_presentation_params:t="sm_beast_item_preview_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=2
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_left_leg_0:t="armorplate_small_slot"
+    equipment_mod_right_leg_0:t="armorplate_small_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    corticalWath:t="suit_corticalWatch_nakedHand"
+    head:t="mask_beast_black"
+    top:t="suit_top_flannel_shirt_short"
+    hands:t="suit_hands_japan_tattoo"
+    gloves:t="suit_gloves_am_light_e"
+    bottom:t="suit_bottom_g3_pants"
+    boots:t="suit_boots_am_light_j"
+    armor:t="suit_armor_asdag_vest"
+  }
+
+  "suit_attachable_item__holsterAttachedAnimchars:list<t>"{
+    EWS_PRIMARY:t=""
+    EWS_SECONDARY:t=""
+    EWS_TERTIARY:t=""
+    EWS_MELEE:t=""
+    EWS_GRENADE:t=""
+  }
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0
+    DM_MELEE:r=0
+    DM_EXPLOSION:r=0
+    DM_ZONE:r=0
+    DM_COLLISION:r=0
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0
+  }
+
+  "entity_mod_effects:object"{
+    "speedMult+mult_diminishing":r=1.1
+  }
+}
+
+sm_master_item{
+  _use:t="suit_militant_male_item_base"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="sm_master_item"
+  item__name:t="items/sm_master_item"
+  dm_part_armor__partName:t="*"
+  full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
+  preview_presentation_params:t="sm_master_item_preview_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=5
+  }
 
   "equipment_mods__slots:shared:object"{
     equipment_mod_body_0:t="armorplate_big_slot"
@@ -1192,12 +1652,11 @@ sm_hunter_item{
 
   "suit_attachable_item__animcharTemplates:object"{
     corticalWath:t="suit_corticalWatch"
-    head:t="suit_skull_mask"
-    top:t="suit_top_style_yellow"
+    head:t="mask_skull_gold"
+    top:t="suit_top_am_light_h"
     gloves:t="suit_gloves_am_light_e"
-    bottom:t="suit_bottom_am_light_i"
+    bottom:t="suit_bottom_am_light_g"
     boots:t="suit_boots_am_light_c"
-    armor:t="suit_armor_modular_scalable_vest"
   }
 
   "suit_attachable_item__holsterAttachedAnimchars:list<t>"{
@@ -1210,7 +1669,7 @@ sm_hunter_item{
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0
-    DM_MELEE:r=0.05
+    DM_MELEE:r=0
     DM_EXPLOSION:r=0
     DM_ZONE:r=0
     DM_COLLISION:r=0
@@ -1219,11 +1678,11 @@ sm_hunter_item{
   }
 
   "entity_mod_effects:object"{
-    "fasterChangePoseMult+mult_diminishing":r=1.2
+    "meleeDamageMult+mult_diminishing":r=1.05
   }
 
   "equipment__setDefaultStubEquipmentTemplates:object"{
-    helmet:t="hat_hood_mesh_item+default_stub_equipment"
+    helmet:t="hat_master_item+default_stub_equipment"
   }
 }
 
@@ -1251,8 +1710,6 @@ suit_militant_light_a_item{
   item__name:t="items/suit_militant_light_a_item"
   use_object__offset:p3=0, 1, 0
   item_world_marker__offset:p3=0, 1, 0
-  animchar__res:t="am_player_trooper_male_light_a_char"
-  collres__res:t="am_player_trooper_male_light_a_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_a_full_body_presentation"
   preview_presentation_params:t="suit_militant_light_a_preview_presentation"
@@ -1288,6 +1745,75 @@ suit_militant_light_a_item{
   }
 }
 
+suit_militant_male_outlaw_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_male_fugitive_char"
+  collres__res:t="am_male_fugitive_collision"
+  animchar_fast_phys__res:t="am_male_fugitive_fastphys"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+
+  "slot_attach__initialAttachments:object"{
+    "holster:list<t>"{
+      i:t="pistol_holster_a_char"
+    }
+  }
+}
+
+suit_militant_male_outlaw_item{
+  _use:t="suit_militant_male_item_base"
+  _use:t="item_rarity_rare"
+  item__proto:t="suit_militant_male_outlaw_item"
+  item__name:t="items/suit_militant_male_outlaw_item"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  dm_part_armor__partName:t="*"
+  full_body_presentation_params:t="suit_militant_light_a_full_body_presentation"
+  preview_presentation_params:t="sm_suit_militant_male_outlaw_item_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=2
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_left_leg_0:t="armorplate_small_slot"
+    equipment_mod_right_leg_0:t="armorplate_small_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_militant_male_outlaw_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "suit_attachable_item__equipmentAttachedAnimchars:object"{
+    helmet:t="top"
+  }
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0
+    DM_MELEE:r=0
+    DM_EXPLOSION:r=0
+    DM_ZONE:r=0
+    DM_COLLISION:r=0
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0
+  }
+
+  "entity_mod_effects:object"{
+    "speedMult+mult_diminishing":r=1.05
+    "walkNoiseMult+mult_diminishing":r=0.95
+  }
+}
+
 suit_militant_male_light_b_attachable_animchar{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="am_player_trooper_male_light_b_char"
@@ -1310,8 +1836,6 @@ suit_militant_light_b_item{
   _use:t="item_rarity_rare"
   item__proto:t="suit_militant_light_b_item"
   item__name:t="items/suit_militant_light_b_item"
-  animchar__res:t="am_player_trooper_male_light_b_char"
-  collres__res:t="am_player_trooper_male_light_b_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_b_full_body_presentation"
   preview_presentation_params:t="suit_militant_light_b_preview_presentation"
@@ -1353,11 +1877,6 @@ suit_militant_male_light_b_prem_attachable_animchar{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="am_player_trooper_male_light_b_prem_char"
   collres__res:t="am_player_trooper_male_light_b_prem_collision"
-  animchar_fast_phys__res:t="am_player_trooper_male_light_b_prem_fastphys"
-
-  animchar_fast_phys{
-    _tags:t="gameClient"
-  }
 
   "slot_attach__initialAttachments:object"{
     "holster:list<t>"{
@@ -1372,11 +1891,20 @@ suit_militant_light_b_prem_item{
   item__proto:t="suit_militant_light_b_prem_item"
   item__name:t="items/suit_militant_light_b_prem_item"
   animchar__res:t="am_player_trooper_male_light_b_prem_char"
+  animchar_fast_phys__res:t="am_player_trooper_male_light_b_prem_fastphys"
   collres__res:t="am_player_trooper_male_light_b_prem_collision"
   dm_part_armor__partName:t="*"
-  equipment__setDefaultStubMeleeTemplate:t="default_stub_sov_knife_nr_40_weapon"
   full_body_presentation_params:t="suit_militant_light_b_prem_full_body_presentation"
   preview_presentation_params:t="suit_militant_light_b_prem_preview_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=5
+  }
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
 
   "equipment_mods__slots:shared:object"{
     equipment_mod_left_hand_0:t="armorplate_small_slot"
@@ -1407,7 +1935,8 @@ suit_militant_light_b_prem_item{
   }
 
   "entity_mod_effects:object"{
-    "walkNoiseMult+mult":r=0.9
+    "walkNoiseMult+mult_diminishing":r=0.9
+    "attractionMult+mult_diminishing":r=0.9
   }
 }
 
@@ -1430,15 +1959,18 @@ suit_militant_male_light_c_attachable_animchar{
 
 suit_militant_light_c_item{
   _use:t="suit_militant_male_item_base"
-  _use:t="item_rarity_rare"
+  _use:t="item_rarity_uncommon"
   item__proto:t="suit_militant_light_c_item"
   item__name:t="items/suit_militant_light_c_item"
-  animchar__res:t="am_player_trooper_male_light_c_char"
-  collres__res:t="am_player_trooper_male_light_c_collision"
   dm_part_armor__partName:t="*"
-  item__inventoryExtension:r=5
+  item__inventoryExtension:i=50
   full_body_presentation_params:t="suit_militant_light_c_full_body_presentation"
   preview_presentation_params:t="suit_militant_light_c_preview_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=3
+  }
 
   "equipment_mods__slots:shared:object"{
     equipment_mod_left_hand_0:t="armorplate_small_slot"
@@ -1469,7 +2001,7 @@ suit_militant_light_c_item{
   }
 
   "entity_mod_effects:object"{
-    "weightPenaltyReduction+mult_diminishing":r=1.1
+    "itemRecognitionSpeed+mult_diminishing":r=1.05
   }
 }
 
@@ -1498,7 +2030,7 @@ suit_militant_light_c_prem_item{
   animchar__res:t="am_player_trooper_male_light_c_prem_char"
   collres__res:t="am_player_trooper_male_light_c_prem_collision"
   dm_part_armor__partName:t="*"
-  item__inventoryExtension:r=5
+  item__inventoryExtension:i=50
   full_body_presentation_params:t="suit_militant_light_c_prem_full_body_presentation"
   preview_presentation_params:t="suit_militant_light_c_prem_preview_presentation"
 
@@ -1531,7 +2063,7 @@ suit_militant_light_c_prem_item{
   }
 
   "entity_mod_effects:object"{
-    "weightPenaltyReduction+mult_diminishing":r=1.2
+    "itemRecognitionSpeed+mult_diminishing":r=1.05
   }
 }
 
@@ -1557,8 +2089,6 @@ suit_militant_light_d_item{
   _use:t="item_rarity_rare"
   item__proto:t="suit_militant_light_d_item"
   item__name:t="items/suit_militant_light_d_item"
-  animchar__res:t="am_player_trooper_male_light_d_char"
-  collres__res:t="am_player_trooper_male_light_d_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_d_full_body_presentation"
   preview_presentation_params:t="suit_militant_light_d_preview_presentation"
@@ -1616,8 +2146,6 @@ suit_militant_light_e_item{
   _use:t="item_rarity_rare"
   item__proto:t="suit_militant_light_e_item"
   item__name:t="items/suit_militant_light_e_item"
-  animchar__res:t="am_player_trooper_male_light_e_char"
-  collres__res:t="am_player_trooper_male_light_e_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_e_full_body_presentation"
   preview_presentation_params:t="suit_militant_light_e_preview_presentation"
@@ -1674,14 +2202,17 @@ suit_militant_male_light_f_attachable_animchar{
 
 suit_militant_light_f_item{
   _use:t="suit_militant_male_item_base"
-  _use:t="item_rarity_rare"
+  _use:t="item_rarity_epic"
   item__proto:t="suit_militant_light_f_item"
   item__name:t="items/suit_militant_light_f_item"
-  animchar__res:t="am_player_trooper_male_light_f_char"
-  collres__res:t="am_player_trooper_male_light_f_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_f_full_body_presentation"
   preview_presentation_params:t="suit_militant_light_f_preview_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=1
+  }
 
   "equipment_mods__slots:shared:object"{
     equipment_mod_left_hand_0:t="armorplate_small_slot"
@@ -1705,14 +2236,15 @@ suit_militant_light_f_item{
     DM_PROJECTILE:r=0
     DM_MELEE:r=0
     DM_EXPLOSION:r=0
-    DM_ZONE:r=0.1
+    DM_ZONE:r=0
     DM_COLLISION:r=0
     DM_HOLD_BREATH:r=0
-    DM_FIRE:r=0
+    DM_FIRE:r=0.3
   }
 
   "entity_mod_effects:object"{
     "activeMatterGatherSpeed+mult_diminishing":r=1.2
+    "healingMult+mult_diminishing":r=1.2
   }
 }
 
@@ -1751,8 +2283,6 @@ suit_militant_light_i_item{
   _use:t="item_rarity_rare"
   item__proto:t="suit_militant_light_i_item"
   item__name:t="items/suit_militant_light_i_item"
-  animchar__res:t="am_player_trooper_male_light_i_char"
-  collres__res:t="am_player_trooper_male_light_i_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_light_i_full_body_presentation"
   preview_presentation_params:t="suit_militant_light_i_preview_presentation"
@@ -1817,8 +2347,6 @@ suit_militant_heavy_a_item{
   _use:t="item_rarity_rare"
   item__proto:t="suit_militant_heavy_a_item"
   item__name:t="items/suit_militant_heavy_a_item"
-  animchar__res:t="am_player_trooper_male_heavy_a_char"
-  collres__res:t="am_player_trooper_male_heavy_a_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_heavy_a_full_body_presentation"
   preview_presentation_params:t="suit_militant_heavy_a_preview_presentation"
@@ -1879,8 +2407,6 @@ suit_militant_heavy_b_item{
   _use:t="item_rarity_rare"
   item__proto:t="suit_militant_heavy_b_item"
   item__name:t="items/suit_militant_heavy_b_item"
-  animchar__res:t="am_player_trooper_male_heavy_b_char"
-  collres__res:t="am_player_trooper_male_heavy_b_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_heavy_b_full_body_presentation"
   preview_presentation_params:t="suit_militant_heavy_b_preview_presentation"
@@ -1938,8 +2464,6 @@ suit_militant_heavy_c_item{
   _use:t="item_rarity_rare"
   item__proto:t="suit_militant_heavy_c_item"
   item__name:t="items/suit_militant_heavy_c_item"
-  animchar__res:t="am_player_trooper_male_heavy_c_char"
-  collres__res:t="am_player_trooper_male_heavy_c_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_heavy_c_full_body_presentation"
   preview_presentation_params:t="suit_militant_heavy_c_preview_presentation"
@@ -1975,6 +2499,144 @@ suit_militant_heavy_c_item{
   }
 }
 
+suit_militant_female_pulse_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_female_field_medic_char"
+  collres__res:t="am_female_field_medic_collision"
+  animchar_fast_phys__res:t="am_female_field_medic_fastphys"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+
+  "slot_attach__initialAttachments:object"{
+    "holster:list<t>"{
+      i:t="pistol_holster_a_char"
+    }
+  }
+}
+
+suit_militant_female_pulse_item{
+  _use:t="suit_militant_female_item_base"
+  _use:t="item_rarity_rare"
+  item__proto:t="suit_militant_female_pulse_item"
+  item__name:t="items/suit_militant_female_pulse_item"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  dm_part_armor__partName:t="*"
+  full_body_presentation_params:t="suit_militant_female_light_a_full_body_presentation"
+  preview_presentation_params:t="suit_militant_female_pulse_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=1
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_left_leg_0:t="armorplate_small_slot"
+    equipment_mod_right_leg_0:t="armorplate_small_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_militant_female_pulse_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "suit_attachable_item__equipmentAttachedAnimchars:object"{
+    helmet:t="top"
+  }
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0
+    DM_MELEE:r=0
+    DM_EXPLOSION:r=0
+    DM_ZONE:r=0
+    DM_COLLISION:r=0
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0
+  }
+
+  "entity_mod_effects:object"{
+    "healingMult+mult_diminishing":r=1.2
+    "itemUsageSpeed+mult_diminishing":r=1.05
+  }
+}
+
+suit_militant_female_enforcer_char_animchar{
+  _use:t="suit_militant_attachable_animchar"
+  animchar__res:t="am_female_police_char"
+  collres__res:t="am_female_police_collision"
+  animchar_fast_phys__res:t="am_female_police_fastphys"
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+
+  "slot_attach__initialAttachments:object"{
+    "holster:list<t>"{
+      i:t="pistol_holster_a_char"
+    }
+  }
+}
+
+suit_militant_female_enforcer_item{
+  _use:t="suit_militant_female_item_base"
+  _use:t="item_rarity_rare"
+  item__proto:t="suit_militant_female_enforcer_item"
+  item__name:t="items/suit_militant_female_enforcer_item"
+  use_object__offset:p3=0, 1, 0
+  item_world_marker__offset:p3=0, 1, 0
+  dm_part_armor__partName:t="*"
+  full_body_presentation_params:t="suit_militant_female_light_a_full_body_presentation"
+  preview_presentation_params:t="suit_militant_female_enforcer_presentation"
+
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=3
+  }
+
+  "equipment_mods__slots:shared:object"{
+    equipment_mod_body_0:t="armorplate_big_slot"
+    equipment_mod_left_leg_0:t="armorplate_small_slot"
+    equipment_mod_right_leg_0:t="armorplate_small_slot"
+    equipment_mod_pocket_0:t="pocket_slot"
+    equipment_mod_pocket_1:t="pocket_slot"
+  }
+
+  "suit_attachable_item__animcharTemplates:object"{
+    head:t=""
+    top:t="suit_militant_female_enforcer_char_animchar"
+    gloves:t=""
+    bottom:t=""
+    boots:t=""
+  }
+
+  "suit_attachable_item__equipmentAttachedAnimchars:object"{
+    helmet:t="top"
+  }
+
+  "dm_part_armor__protection:list<r>"{
+    DM_PROJECTILE:r=0
+    DM_MELEE:r=0
+    DM_EXPLOSION:r=0
+    DM_ZONE:r=0
+    DM_COLLISION:r=0
+    DM_HOLD_BREATH:r=0
+    DM_FIRE:r=0
+  }
+
+  "entity_mod_effects:object"{
+    "recoilMult+mult_diminishing":r=0.97
+    "itemRecognitionSpeed+mult_diminishing":r=1.1
+  }
+}
+
 suit_militant_female_light_a_attachable_animchar{
   _use:t="suit_militant_attachable_animchar"
   animchar__res:t="am_player_trooper_female_light_char"
@@ -1994,22 +2656,25 @@ suit_militant_female_light_a_attachable_animchar{
 
 suit_militant_female_light_a_item{
   _use:t="suit_militant_female_item_base"
-  _use:t="item_rarity_rare"
+  _use:t="item_rarity_uncommon"
   item__proto:t="suit_militant_female_light_a_item"
   item__name:t="items/suit_militant_female_light_a_item"
   use_object__offset:p3=0, 1, 0
   item_world_marker__offset:p3=0, 1, 0
-  animchar__res:t="am_player_trooper_female_light_char"
-  collres__res:t="am_player_trooper_female_light_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_female_light_a_full_body_presentation"
   preview_presentation_params:t="suit_militant_female_light_a_preview_presentation"
 
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=6
+  }
+
   "equipment_mods__slots:shared:object"{
+    equipment_mod_left_hand_0:t="armorplate_small_slot"
+    equipment_mod_right_hand_0:t="armorplate_small_slot"
     equipment_mod_left_leg_0:t="armorplate_small_slot"
     equipment_mod_right_leg_0:t="armorplate_small_slot"
-    equipment_mod_body_0:t="armorplate_small_slot"
-    equipment_mod_body_1:t="armorplate_small_slot"
     equipment_mod_pocket_0:t="pocket_slot"
     equipment_mod_pocket_1:t="pocket_slot"
   }
@@ -2056,18 +2721,21 @@ suit_militant_female_light_b_attachable_animchar{
 
 suit_militant_female_light_b_item{
   _use:t="suit_militant_female_item_base"
-  _use:t="item_rarity_rare"
+  _use:t="item_rarity_uncommon"
   item__proto:t="suit_militant_female_light_b_item"
   item__name:t="items/suit_militant_female_light_b_item"
-  animchar__res:t="am_player_trooper_female_light_b_char"
-  collres__res:t="am_player_trooper_female_light_b_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_female_light_b_full_body_presentation"
   preview_presentation_params:t="suit_militant_female_light_b_preview_presentation"
 
+  _group{
+    _tags:t="gameClient"
+    item__uiSortingPriority:i=0
+  }
+
   "equipment_mods__slots:shared:object"{
     equipment_mod_body_0:t="armorplate_big_slot"
-    equipment_mod_body_1:t="armorplate_big_slot"
+    equipment_mod_body_1:t="armorplate_small_slot"
     equipment_mod_pocket_0:t="pocket_slot"
     equipment_mod_pocket_1:t="pocket_slot"
   }
@@ -2083,15 +2751,11 @@ suit_militant_female_light_b_item{
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0
     DM_MELEE:r=0
-    DM_EXPLOSION:r=0
+    DM_EXPLOSION:r=0.3
     DM_ZONE:r=0
     DM_COLLISION:r=0
     DM_HOLD_BREATH:r=0
-    DM_FIRE:r=0.1
-  }
-
-  "entity_mod_effects:object"{
-    "itemUsageSpeed+mult_diminishing":r=1.1
+    DM_FIRE:r=0
   }
 }
 
@@ -2117,8 +2781,6 @@ suit_militant_female_light_c_item{
   _use:t="item_rarity_rare"
   item__proto:t="suit_militant_female_light_c_item"
   item__name:t="items/suit_militant_female_light_c_item"
-  animchar__res:t="am_player_trooper_female_light_c_char"
-  collres__res:t="am_player_trooper_female_light_c_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_female_light_c_full_body_presentation"
   preview_presentation_params:t="suit_militant_female_light_c_preview_presentation"
@@ -2175,8 +2837,6 @@ suit_militant_female_heavy_a_item{
   _use:t="item_rarity_rare"
   item__proto:t="suit_militant_female_heavy_a_item"
   item__name:t="items/suit_militant_female_heavy_a_item"
-  animchar__res:t="am_player_trooper_female_heavy_a_char"
-  collres__res:t="am_player_trooper_female_heavy_a_collision"
   dm_part_armor__partName:t="*"
   full_body_presentation_params:t="suit_militant_female_heavy_a_full_body_presentation"
   preview_presentation_params:t="suit_militant_female_heavy_a_preview_presentation"

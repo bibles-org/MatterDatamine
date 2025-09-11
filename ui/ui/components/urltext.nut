@@ -1,8 +1,10 @@
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/components/openUrl.nut" import openUrl
+from "%ui/components/colors.nut" import TextNormal, BtnBgHover, BtnBgActive
+
 from "%ui/ui_library.nut" import *
 
-let { body_txt } = require("%ui/fonts_style.nut")
-let openUrl = require("%ui/components/openUrl.nut")
-let {TextNormal, BtnBgHover, BtnBgActive} = require("%ui/components/colors.nut")
+#allow-auto-freeze
 
 function url(str, address, params = {}) {
   let group = ElemGroup()
@@ -27,7 +29,7 @@ function url(str, address, params = {}) {
       group
       children = {
         rendObj = ROBJ_FRAME
-        borderWidth = [0,0,2,0]
+        borderWidth = static [0,0,2,0]
         color
         group
         size = flex()

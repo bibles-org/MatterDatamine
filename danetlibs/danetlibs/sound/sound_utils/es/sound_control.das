@@ -30,11 +30,12 @@ def sound_control_update(evt : Event)
   let listener = get_listener_pos()
 
   query() <| $ [es] (eid : EntityId;
+                     sound_preset__isLoaded : bool;
+
                      sound_control__range : float;
                      sound_control__subtemplate : string;
                      var sound_control__state : int&;
                      var sound_control__haveSubTemplate : bool&;
-                     sound_banks_state__isPresetLoaded : bool;
                      sound_control__allowSound : bool;
                      is_watched_sound : bool = false;
 
@@ -47,17 +48,16 @@ def sound_control_update(evt : Event)
     sound_control__state = isHearable ? int(SoundControlState.SOUND_CONTROL_IS_HEARABLE) : 0
     if is_watched_sound
       sound_control__state |= int(SoundControlState.SOUND_CONTROL_IS_WATCHED)
-    if sound_banks_state__isPresetLoaded && sound_control__allowSound && disableSoundControl == null
+    if sound_preset__isLoaded && sound_control__allowSound && disableSoundControl == null
       sound_control__state |= int(SoundControlState.SOUND_CONTROL_IS_PLAYABLE)
 
     toggle_subtemplate(have_sound(sound_control__state), sound_control__haveSubTemplate, sound_control__subtemplate, eid)
 
 
-[es(tag=sound, on_appear, track=sound_banks_state__isPresetLoaded)]
+[es(tag=sound, on_appear, track=sound_preset__isLoaded)]
 def sound_control_init_range(evt : Event;
-                             sound_banks_state__isPresetLoaded : bool;
+                             sound_preset__isLoaded : bool;
                              sound_control__initRange : string;
                              var sound_control__range : float&)
-
-  if sound_banks_state__isPresetLoaded
+  if sound_preset__isLoaded
     sound_control__range = get_max_distance(sound_control__initRange)

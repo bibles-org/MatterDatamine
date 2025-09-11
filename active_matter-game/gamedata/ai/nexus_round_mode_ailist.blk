@@ -681,6 +681,7 @@ repeat{
             maxTrackSpeed:r=360
             time:p2=0.1, 1
             lostTargetCooldownRange:p2=3, 4
+            alwaysAiming:b=yes
           }
         }
       }
@@ -716,7 +717,7 @@ repeat{
 
           ifThen{
             not{
-              checkTargetVisibility{
+              amCheckTargetVisibility{
                 targetUnitParam:t="shootEnemy"
                 rayMat:t="aiRay"
               }
@@ -808,7 +809,7 @@ repeat{
         }
       }
 
-      checkTargetVisibility{
+      amCheckTargetVisibility{
         targetUnitParam:t="shootEnemy"
         rayMat:t="aiRay"
       }
@@ -886,6 +887,7 @@ repeat{
             maxAimSpeed:r=720
             maxTrackSpeed:r=360
             lostTargetCooldownRange:p2=3, 4
+            alwaysAiming:b=yes
           }
         }
       }
@@ -992,213 +994,6 @@ repeat{
     setIntVar{
       to:t="lastKnownEnemy"
       value:i=0
-    }
-  }
-
-  sequencer{
-    name:t="resurrect_ally"
-
-    reaction{
-      name:t="resurrect_reaction"
-      event:t="regularCheck"
-
-      subTree{
-        treeName:t="sub.nexusRoundModeReactions"
-      }
-    }
-
-    compareNode{
-      lhs:t="am_storage__value"
-      operator:t=">="
-      rhs:i=10
-    }
-
-    not{
-      findDanger{
-        paramName:t="newEnemy"
-        radiusParamName:t="enemyRadius"
-        minDanger:r=0.1
-      }
-    }
-
-    findDeadTeammate{
-      saveToParam:t="deadAlly"
-      findClosest:b=yes
-    }
-
-    orderedSelector{
-      name:t="aquire_cortical_vault"
-
-      checkHaveCorticalVaultForHero{
-        targetUnitParam:t="deadAlly"
-      }
-
-      sequencer{
-        findCorticalVault{
-          saveToParam:t="corticalVault"
-          saveContainerToParam:t="corticalContainer"
-          saveHumanOwnerToParam:t="corticalHumanOwner"
-          heroOwner:t="deadAlly"
-        }
-
-        orderedSelector{
-          sequencer{
-            name:t="aquire_from_person"
-
-            checkAliveBb{
-              target:t="corticalHumanOwner"
-            }
-
-            orderedSelector{
-              isEntityFriendly{
-                blackboardParamName:t="corticalHumanOwner"
-              }
-
-              sequencer{
-                name:t="kill_enemy_with_cortical"
-
-                gravityMoveToTarget{
-                  targetUnitParam:t="corticalHumanOwner"
-                  stopDistRange:p2=5, 5
-                  aimToTarget:b=yes
-                }
-
-                findDanger{
-                  paramName:t="potentialEnemy"
-                  radiusParamName:t="enemyRadius"
-                  minDanger:r=0.1
-                }
-
-                selectNode{
-                  name:t="enemy_attack"
-                }
-              }
-            }
-          }
-
-          sequencer{
-            name:t="aquire_from_container"
-
-            not{
-              isVarsIntEqual{
-                lhs:t="corticalContainer"
-                rhs_value:i=0
-              }
-            }
-
-            not{
-              checkAliveBb{
-                target:t="corticalHumanOwner"
-              }
-            }
-
-            setPosFromEntity{
-              to:t="corticalContainerPos"
-              from:t="corticalContainer"
-              projectToNavmesh:b=yes
-            }
-
-            gravityMoveToPos{
-              posParam:t="corticalContainerPos"
-              distThreshold:r=0.8
-            }
-
-            success{
-              parallel{
-                lookAtEntity{
-                  targetParam:t="corticalContainer"
-                }
-
-                wait{
-                  range:p2=1.1, 2.2
-                  resetable:b=yes
-                }
-              }
-            }
-
-            setPosFromEntity{
-              to:t="corticalContainerPos"
-              from:t="corticalContainer"
-              projectToNavmesh:b=no
-            }
-
-            checkDistanceToEntityBbox{
-              target:t="corticalContainer"
-              distance:r=1
-            }
-
-            takeItemFromContainer{
-              from:t="corticalContainer"
-              item:t="corticalVault"
-            }
-          }
-
-          sequencer{
-            name:t="aquire_from_ground"
-
-            doesEntityHaveComponent{
-              entityParam:t="corticalVault"
-              componentName:t="item_in_world"
-            }
-
-            setPosFromEntity{
-              to:t="corticalPos"
-              from:t="corticalVault"
-              projectToNavmesh:b=yes
-            }
-
-            gravityMoveToPos{
-              posParam:t="corticalPos"
-            }
-
-            success{
-              parallel{
-                lookAtEntity{
-                  targetParam:t="corticalVault"
-                }
-
-                wait{
-                  range:p2=0.3, 0.7
-                  resetable:b=yes
-                }
-              }
-            }
-
-            pickupItemEntity{
-              targetParam:t="corticalVault"
-            }
-          }
-        }
-      }
-    }
-
-    wait{
-      range:p2=0.5, 0.5
-      resetable:b=yes
-    }
-
-    ensureWeaponSlot{
-      slotName:t="unarmedWeaponSlot"
-    }
-
-    success{
-      resurrectAlly{
-        targetUnitParam:t="deadAlly"
-      }
-    }
-
-    wait{
-      range:p2=0.2, 0.2
-      resetable:b=yes
-    }
-
-    chooseBestWeapon{
-      selectWeapon:b=yes
-    }
-
-    wait{
-      range:p2=3.5, 3.5
-      resetable:b=yes
     }
   }
 

@@ -25,7 +25,7 @@ ecs.register_es("update_climbing_hint_marker_info",
       })
     }
     onDestroy = function(_evt, eid, _comp) {
-      if (eid in climbingHintMarkers.value)
+      if (eid in climbingHintMarkers.get())
         climbingHintMarkers.mutate(@(v) v.$rawdelete(eid))
     }
   },

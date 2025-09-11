@@ -1,18 +1,29 @@
+from "math" import floor
+from "dm" import DM_MELEE, DM_BACKSTAB, DM_PROJECTILE, DM_EXPLOSION, DM_ZONE, DM_COLLISION, DM_HOLD_BREATH, DM_FIRE, DM_BARBWIRE, DM_GAS
+from "dasevents" import CmdMusicPlayerStop
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
-
-let {get_controlled_hero} = require("%dngscripts/common_queries.nut")
-let {floor} = require("math")
-let { DM_MELEE, DM_PROJECTILE, DM_EXPLOSION, DM_ZONE, DM_COLLISION, DM_HOLD_BREATH, DM_FIRE, DM_BARBWIRE, DM_GAS } = require("dm")
-let {localPlayerSpecTarget} = require("%ui/hud/state/local_player.nut")
-let { CmdMusicPlayerStop } = require("dasevents")
 
 let bodyParts = mkWatched(persist, "bodyParts", {})
 let bodyPartsIsDamaged = mkWatched(persist, "bodyPartsIsDamaged", false)
 let curHp = mkWatched(persist, "curHp")
 let fullHp = mkWatched(persist, "fullHp")
 
-let getPossessedPartsQuery = ecs.SqQuery("getPossessedPartsQuery", { comps_ro=[["human_damage_model__parts", ecs.TYPE_OBJECT]] })
+let getPossessedPartsQuery = ecs.SqQuery("getPossessedPartsQuery", {
+  comps_rq = [["watchedByPlr"]],
+  comps_track = [
+    ["human_damage_model__partName", ecs.TYPE_STRING_LIST],
+    ["human_damage_model__partHp", ecs.TYPE_FLOAT_LIST],
+    ["human_damage_model__partInjured", ecs.TYPE_BOOL_LIST],
+  ],
+  comps_ro = [
+    ["human_damage_model__parts", ecs.TYPE_OBJECT],
+    ["human_damage_model__partName", ecs.TYPE_STRING_LIST],
+    ["human_damage_model__partHp", ecs.TYPE_FLOAT_LIST],
+    ["human_damage_model__partInjured", ecs.TYPE_BOOL_LIST],
+  ]
+})
 
 let currentPosName = Watched(null)
 local posSavedForEid = ecs.INVALID_ENTITY_ID
@@ -25,6 +36,7 @@ let poseNames = [POSE_STAND, POSE_CROUCH, POSE_CRAWL, POSE_DOWNED]
 
 let damageTypeToLang = {
   [DM_MELEE] = "melee",
+  [DM_BACKSTAB] = "melee",
   [DM_PROJECTILE] = "projectile",
   [DM_EXPLOSION] = "explosion",
   [DM_ZONE] = "zone",
@@ -47,7 +59,7 @@ function calculateHp(hp){
   return floor(hp)
 }
 
-function update_body_parts_state(parts){
+function update_body_parts_state(parts, parts_state = null){
 
   let obj = bodyParts.get()
   local sumMaxHp = 0.0
@@ -55,10 +67,10 @@ function update_body_parts_state(parts){
 
   foreach (name, newPartInfo in parts.getAll()){
     let newMaxHp = newPartInfo?.maxHp ?? 0.0
-    let newHp = calculateHp(newPartInfo?.hp ?? 0.0)
+    let newHp = calculateHp(parts_state?[name]?.hp ?? 0.0)
     let oldHp = calculateHp(obj?[name]?.hp ?? 0.0)
     let partName = newPartInfo?.name ?? "unknown"
-    let isInjured = newPartInfo?.isInjured ?? false
+    let isInjured = parts_state?[name]?.injured ?? false
 
     sumMaxHp += newMaxHp
     sumHp += newHp
@@ -79,7 +91,7 @@ function update_body_parts_state(parts){
     }
   }
 
-  bodyParts(obj)
+  bodyParts.set(obj)
   bodyParts.trigger()
 
   bodyPartsIsDamaged.set(sumHp < sumMaxHp)
@@ -87,13 +99,21 @@ function update_body_parts_state(parts){
   fullHp.set(sumMaxHp)
 }
 
-function human_damage_model_state_track_parts(eid, comp){
-  if (get_controlled_hero() == eid || localPlayerSpecTarget.value == eid)
-    update_body_parts_state(comp.human_damage_model__parts)
+let updateBodypartsState = function(_eid, comp) {
+  let partNames = comp.human_damage_model__partName.getAll()
+  let partHps = comp.human_damage_model__partHp.getAll()
+  let partInjures = comp.human_damage_model__partInjured.getAll()
+  if ((partNames.len() != partHps.len() || partHps.len() != partInjures.len()))
+    return
+  let partsState = partNames.map(@(v, i) [v, {
+    hp = partHps[i],
+    injured = partInjures[i]
+  }]).totable()
+
+  update_body_parts_state(comp.human_damage_model__parts, partsState)
 }
 
-let getPossessedParts = @(target)
-  getPossessedPartsQuery.perform(target, @(_, comp) update_body_parts_state(comp.human_damage_model__parts) )
+let getPossessedParts = @(target) getPossessedPartsQuery.perform(target, updateBodypartsState)
 
 function human_damage_model_state_track_possessed(_eid, comp){
   if (comp.is_local && comp.possessed != ecs.INVALID_ENTITY_ID)
@@ -108,10 +128,16 @@ function human_damage_model_state_track_spec_hero(_eid, comp){
 
 ecs.register_es("human_damage_model_state_track_parts",
   {
-    [["onInit", "onChange"]] = human_damage_model_state_track_parts
+    [["onInit", "onChange"]] = updateBodypartsState
   },
   {
-    comps_track = [["human_damage_model__parts", ecs.TYPE_OBJECT]]
+    comps_rq = [["watchedByPlr"]]
+    comps_ro = [["human_damage_model__parts", ecs.TYPE_OBJECT]]
+    comps_track = [
+      ["human_damage_model__partName", ecs.TYPE_STRING_LIST],
+      ["human_damage_model__partHp", ecs.TYPE_FLOAT_LIST],
+      ["human_damage_model__partInjured", ecs.TYPE_BOOL_LIST],
+    ]
   }
 )
 

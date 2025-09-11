@@ -1,10 +1,11 @@
+from "%ui/hud/tips/continuous_action_tip.nut" import mkContinuousActionTip
+from "%ui/hud/human_actions.nut" import ACTION_EXTINGUISH, ACTION_REPAIR
+from "%ui/helpers/timers.nut" import mkCountdownTimer
+
 from "%ui/ui_library.nut" import *
 
 let { useActionType } = require("%ui/hud/state/actions_state.nut")
 let { isExtinguishing, isRepairing, maintenanceTime, maintenanceTotalTime } = require("%ui/hud/state/vehicle_maintenance_state.nut")
-let { mkContinuousActionTip } = require("%ui/hud/tips/continuous_action_tip.nut")
-let { ACTION_EXTINGUISH, ACTION_REPAIR } = require("%ui/hud/human_actions.nut")
-let { mkCountdownTimer } = require("%ui/helpers/timers.nut")
 
 
 let maintenanceActions = {

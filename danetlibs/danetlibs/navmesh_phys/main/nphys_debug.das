@@ -1,6 +1,6 @@
 options no_aot
 require ecs
-require app
+require app // get_sync_time
 require math.base
 require pathfinder
 require DagorConsole

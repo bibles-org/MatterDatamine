@@ -3,6 +3,7 @@ require ecs
 
 [cpp_event(unicast)]
 struct CmdStartActionSfx
+  targetEid : EntityId
   pos : float3
   norm : float3
   pmid : int

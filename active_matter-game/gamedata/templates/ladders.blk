@@ -1,27 +1,5 @@
-ladders_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="ladders"
-  grid_holder__typeHash:i=0
-  grid_holder__cellSize:i=32
-
-  grid_holder{}
-}
-
-ladder_grid_obj{
-  grid_obj__gridType:t="ladders"
-  grid_obj__hidden:i=0
-  grid_obj__fixedTmScale:r=-1
-  _replicated:t="grid_obj__hidden"
-  _tracked:t="grid_obj__hidden"
-
-  grid_obj{}
-}
-
 ladder{
-  _use:t="ladder_grid_obj"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="ladders_static_grid_object"
   ladder__tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   ladder__steps:i=10
 }

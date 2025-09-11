@@ -125,3 +125,116 @@ indoor_euclid_distortion_spike{
   euclid_anomaly_visual__scaleRng:p2=0.005, 0.008
   euclid_anomaly_visual__totalScale:r=0.01
 }
+
+gd_serial_house_floating_chunks_movement{
+  _use:t="static_sinusoidal_oscillation"
+  _use:t="euler_sinusoidal_oscillation"
+  euler_sinusoidal_oscillation__frequency:p3=0.1, 0.3, 0.2
+  static_sinusoidal_oscillation__amplitude:r=0.2
+  static_sinusoidal_oscillation__frequency:r=0.3
+  static_sinusoidal_oscillation__generateSalt:b=no
+}
+
+gd_serial_house_floating_chunk_a{
+  _use:t="rendinst"
+  _use:t="replicating"
+  _use:t="gd_serial_house_floating_chunks_movement"
+  static_sinusoidal_oscillation__salt:r=1
+  ri_extra__name:t="sovmod_serial_house_floating_chunk_a"
+}
+
+gd_serial_house_floating_chunk_b{
+  _use:t="rendinst"
+  _use:t="replicating"
+  _use:t="gd_serial_house_floating_chunks_movement"
+  static_sinusoidal_oscillation__salt:r=2
+  ri_extra__name:t="sovmod_serial_house_floating_chunk_b"
+}
+
+gd_serial_house_floating_chunk_c{
+  _use:t="rendinst"
+  _use:t="replicating"
+  _use:t="gd_serial_house_floating_chunks_movement"
+  static_sinusoidal_oscillation__salt:r=3
+  ri_extra__name:t="sovmod_serial_house_floating_chunk_c"
+}
+
+gd_serial_house_floating_chunk_d{
+  _use:t="rendinst"
+  _use:t="replicating"
+  _use:t="gd_serial_house_floating_chunks_movement"
+  static_sinusoidal_oscillation__salt:r=4
+  ri_extra__name:t="sovmod_serial_house_floating_chunk_d"
+}
+
+gd_serial_house_floating_chunk_e{
+  _use:t="rendinst"
+  _use:t="replicating"
+  _use:t="gd_serial_house_floating_chunks_movement"
+  static_sinusoidal_oscillation__salt:r=5
+  ri_extra__name:t="sovmod_serial_house_floating_chunk_e"
+}
+
+gd_serial_house_floating_chunk_f{
+  _use:t="rendinst"
+  _use:t="replicating"
+  _use:t="gd_serial_house_floating_chunks_movement"
+  static_sinusoidal_oscillation__salt:r=6
+  ri_extra__name:t="sovmod_serial_house_floating_chunk_f"
+}
+
+gd_serial_house_floating_chunk_g{
+  _use:t="rendinst"
+  _use:t="replicating"
+  _use:t="gd_serial_house_floating_chunks_movement"
+  static_sinusoidal_oscillation__salt:r=7
+  ri_extra__name:t="sovmod_serial_house_floating_chunk_g"
+}
+
+gd_serial_house_floating_chunk_h{
+  _use:t="rendinst"
+  _use:t="replicating"
+  _use:t="gd_serial_house_floating_chunks_movement"
+  static_sinusoidal_oscillation__salt:r=8
+  ri_extra__name:t="sovmod_serial_house_floating_chunk_h"
+}
+
+gd_serial_house_floating_chunk_i{
+  _use:t="rendinst"
+  _use:t="replicating"
+  _use:t="gd_serial_house_floating_chunks_movement"
+  static_sinusoidal_oscillation__salt:r=9
+  ri_extra__name:t="sovmod_serial_house_floating_chunk_i"
+}
+
+gd_serial_house_floating_chunk_j{
+  _use:t="rendinst"
+  _use:t="replicating"
+  _use:t="gd_serial_house_floating_chunks_movement"
+  static_sinusoidal_oscillation__salt:r=10
+  ri_extra__name:t="sovmod_serial_house_floating_chunk_j"
+}
+
+gd_serial_house_floating_chunk_k{
+  _use:t="rendinst"
+  _use:t="replicating"
+  _use:t="gd_serial_house_floating_chunks_movement"
+  static_sinusoidal_oscillation__salt:r=11
+  ri_extra__name:t="sovmod_serial_house_floating_chunk_k"
+}
+
+gd_serial_house_floating_chunk_l{
+  _use:t="rendinst"
+  _use:t="replicating"
+  _use:t="gd_serial_house_floating_chunks_movement"
+  static_sinusoidal_oscillation__salt:r=12
+  ri_extra__name:t="sovmod_serial_house_floating_chunk_l"
+}
+
+gd_serial_house_floating_chunk_m{
+  _use:t="rendinst"
+  _use:t="replicating"
+  _use:t="gd_serial_house_floating_chunks_movement"
+  static_sinusoidal_oscillation__salt:r=13
+  ri_extra__name:t="sovmod_serial_house_floating_chunk_m"
+}

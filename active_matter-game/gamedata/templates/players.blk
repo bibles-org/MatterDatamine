@@ -7,6 +7,7 @@ _componentFilters{
   scoring_player__dealtDamage:t="filter_same_player"
   player__isFinishedRaid:t="filter_friendly_team"
   scoring_player__isExtractedSuccess:t="filter_friendly_team"
+  player__isDead:t="filter_friendly_team"
 }
 
 player_hits_counter{
@@ -19,7 +20,6 @@ player_hits_counter{
 
 player_ribbons{
   _group{
-    _track:b=yes
     _replicate:b=yes
     player_ribbons__curColors:ip2=-1, -1
   }
@@ -60,6 +60,8 @@ player{
     player__isFinishedRaid:b=no
     scoring_player__isExtractedSuccess:b=no
     player__spawnCount:i=0
+    player__isDead:b=no
+    player__am:i=0
     groupId:i64=0
     team:i=-1
     disconnected:b=no
@@ -151,8 +153,12 @@ player_voice_assistant{
   _tracked:t="assistant__currentSoundName"
 
   _group{
-    _tags:t="sound"
+    _tags:t="gameClient"
     activity_helper__helpsLeft:i=5
+  }
+
+  _group{
+    _tags:t="sound"
     assistant__startSpeakAt:r=-1
     assistant__startSpeakDelay:r=0.3
     assistant__startSpeakBeepSound:t="ui_sounds/voice_assiatant_beep"
@@ -168,537 +174,815 @@ player_voice_assistant{
       "note_onboarding_wish:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_wish"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_wish"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_wish_ru"
+          }
         }
       }
 
       "note_onboarding_blocked_door:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_blocked_door"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_blocked_door"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_blocked_door_ru"
+          }
+        }
+      }
+
+      "note_onboarding_body_choosing:object"{
+        selectOneFromArray:b=no
+
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_body_choosing_0"
+            i:t="voice_assistant/onboarding_body_choosing_1"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_body_choosing_0_ru"
+            i:t="voice_assistant/onboarding_body_choosing_1_ru"
+          }
         }
       }
 
       "note_onboarding_bunker_first_visit:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_bunker_first_visit"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_bunker_first_visit"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_bunker_first_visit_ru"
+          }
         }
       }
 
       "note_onboarding_miniraid_start:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_miniraid_start_second"
-          i:t="voice_assistant/onboarding_miniraid_start"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_miniraid_start_second"
+            i:t="voice_assistant/onboarding_miniraid_start"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_miniraid_start_second_ru"
+            i:t="voice_assistant/onboarding_miniraid_start_ru"
+          }
         }
       }
 
       "note_onboarding_miniraid_healing:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_miniraid_heal"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_miniraid_heal"
+            i:t="voice_assistant/onboarding_miniraid_heal_second"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_miniraid_heal_ru"
+            i:t="voice_assistant/onboarding_miniraid_heal_second_ru"
+          }
         }
       }
 
       "note_onboarding_miniraid_body:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_miniraid_body_second"
-          i:t="voice_assistant/onboarding_miniraid_body"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_miniraid_body_second"
+            i:t="voice_assistant/onboarding_miniraid_body"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_miniraid_body_second_ru"
+            i:t="voice_assistant/onboarding_miniraid_body_ru"
+          }
         }
       }
 
       "note_onboarding_miniraid_wall:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_miniraid_wall"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_miniraid_wall"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_miniraid_wall_ru"
+          }
         }
       }
 
       "note_onboarding_miniraid_trap:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_miniraid_trap_second"
-          i:t="voice_assistant/onboarding_miniraid_trap"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_miniraid_trap_second"
+            i:t="voice_assistant/onboarding_miniraid_trap"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_miniraid_trap_second_ru"
+            i:t="voice_assistant/onboarding_miniraid_trap_ru"
+          }
         }
       }
 
       "note_onboarding_miniraid_am:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_miniraid_am"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_miniraid_am"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_miniraid_am_ru"
+          }
         }
       }
 
       "note_onboarding_miniraid_portal:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_miniraid_portal_second"
-          i:t="voice_assistant/onboarding_miniraid_portal"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_miniraid_portal_second"
+            i:t="voice_assistant/onboarding_miniraid_portal"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_miniraid_portal_second_ru"
+            i:t="voice_assistant/onboarding_miniraid_portal_ru"
+          }
         }
       }
 
       "note_onboarding_contracts:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_contracts"
-          i:t="voice_assistant/onboarding_contracts_second"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_contracts"
+            i:t="voice_assistant/onboarding_contracts_second"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_contracts_ru"
+            i:t="voice_assistant/onboarding_contracts_second_ru"
+          }
         }
       }
 
       "note_onboarding_monolith:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_monolith"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_monolith"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_monolith_ru"
+          }
         }
       }
 
       "note_onboarding_bunker_end:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_bunker_end"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_bunker_end"
+            i:t="voice_assistant/onboarding_bunker_end_second"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_bunker_end_ru"
+            i:t="voice_assistant/onboarding_bunker_end_second_ru"
+          }
         }
       }
 
       "onboarding_monolith_waiting:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_monolith_waiting"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_monolith_waiting"
+          }
+
+          "Russian:list<t>"{
+            i:t="voice_assistant/onboarding_monolith_waiting_ru"
+          }
         }
       }
 
       "onboarding_raid_waiting:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/onboarding_raid_waiting"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/onboarding_raid_waiting"
+          }
         }
       }
 
       "note_shelter_replicator:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/note_shelter_replicator"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/note_shelter_replicator"
+          }
         }
       }
 
       "note_shelter_refiner:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/note_shelter_refiner"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/note_shelter_refiner"
+          }
         }
       }
 
       "note_shelter_alters:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/note_shelter_alters"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/note_shelter_alters"
+          }
         }
       }
 
       "note_shelter_market:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/note_shelter_market"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/note_shelter_market"
+          }
         }
       }
 
       "note_shelter_storage:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/note_shelter_storage"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/note_shelter_storage"
+          }
         }
       }
 
       "note_remains_with_chronogenes:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/note_remains_with_chronogenes"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/note_remains_with_chronogenes"
+          }
         }
       }
 
       "note_saturated_item_on_pickup:object"{
         selectOneFromArray:b=no
 
-        "scripts:array"{
-          i:t="voice_assistant/note_saturated_item_on_pickup"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/note_saturated_item_on_pickup"
+          }
         }
       }
 
       "zone_start_move_message:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/ms_second_zone_start_move_message_01"
-          i:t="voice_assistant/ms_second_zone_start_move_message_02"
-          i:t="voice_assistant/ms_second_zone_start_move_message_03"
-          i:t="voice_assistant/ms_second_zone_start_move_message_04"
-          i:t="voice_assistant/ms_second_zone_start_move_message_05"
-          i:t="voice_assistant/ms_second_zone_start_move_message_06"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/ms_second_zone_start_move_message_01"
+            i:t="voice_assistant/ms_second_zone_start_move_message_02"
+            i:t="voice_assistant/ms_second_zone_start_move_message_03"
+            i:t="voice_assistant/ms_second_zone_start_move_message_04"
+            i:t="voice_assistant/ms_second_zone_start_move_message_05"
+            i:t="voice_assistant/ms_second_zone_start_move_message_06"
+          }
         }
       }
 
       "portal_appear_message:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/ms_second_portal_appear_message_01"
-          i:t="voice_assistant/ms_second_portal_appear_message_02"
-          i:t="voice_assistant/ms_second_portal_appear_message_03"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/ms_second_portal_appear_message_01"
+            i:t="voice_assistant/ms_second_portal_appear_message_02"
+            i:t="voice_assistant/ms_second_portal_appear_message_03"
+          }
         }
       }
 
       "select_search_settings:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/search_setting_01"
-          i:t="voice_assistant/search_setting_02"
-          i:t="voice_assistant/search_setting_03"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/search_setting_01"
+            i:t="voice_assistant/search_setting_02"
+            i:t="voice_assistant/search_setting_03"
+          }
         }
       }
 
       "activity_help_bark:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/ms_second_activity_help_bark_01"
-          i:t="voice_assistant/ms_second_activity_help_bark_02"
-          i:t="voice_assistant/ms_second_activity_help_bark_03"
-          i:t="voice_assistant/ms_second_activity_help_bark_04"
-          i:t="voice_assistant/ms_second_activity_help_bark_05"
-          i:t="voice_assistant/ms_second_activity_help_bark_06"
-          i:t="voice_assistant/ms_second_activity_help_bark_07"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/ms_second_activity_help_bark_01"
+            i:t="voice_assistant/ms_second_activity_help_bark_02"
+            i:t="voice_assistant/ms_second_activity_help_bark_03"
+            i:t="voice_assistant/ms_second_activity_help_bark_04"
+            i:t="voice_assistant/ms_second_activity_help_bark_05"
+            i:t="voice_assistant/ms_second_activity_help_bark_06"
+            i:t="voice_assistant/ms_second_activity_help_bark_07"
+          }
         }
       }
 
       "hint_out_of_ammo:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/out_of_ammo_01"
-          i:t="voice_assistant/out_of_ammo_02"
-          i:t="voice_assistant/out_of_ammo_03"
-          i:t="voice_assistant/out_of_ammo_04"
-          i:t="voice_assistant/out_of_ammo_05"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/out_of_ammo_01"
+            i:t="voice_assistant/out_of_ammo_02"
+            i:t="voice_assistant/out_of_ammo_03"
+            i:t="voice_assistant/out_of_ammo_04"
+            i:t="voice_assistant/out_of_ammo_05"
+          }
         }
       }
 
       "hint_jammed_gun:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/gun_jammed_01"
-          i:t="voice_assistant/gun_jammed_02"
-          i:t="voice_assistant/gun_jammed_03"
-          i:t="voice_assistant/gun_jammed_04"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/gun_jammed_01"
+            i:t="voice_assistant/gun_jammed_02"
+            i:t="voice_assistant/gun_jammed_03"
+            i:t="voice_assistant/gun_jammed_04"
+          }
         }
       }
 
       "raid_die_message:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/ms_second_raid_die_message_01"
-          i:t="voice_assistant/ms_second_raid_die_message_02"
-          i:t="voice_assistant/ms_second_raid_die_message_03"
-          i:t="voice_assistant/ms_second_raid_die_message_04"
-          i:t="voice_assistant/ms_second_raid_die_message_05"
-          i:t="voice_assistant/ms_second_raid_die_message_06"
-          i:t="voice_assistant/ms_second_raid_die_message_07"
-          i:t="voice_assistant/ms_second_raid_die_message_08"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/ms_second_raid_die_message_01"
+            i:t="voice_assistant/ms_second_raid_die_message_02"
+            i:t="voice_assistant/ms_second_raid_die_message_03"
+            i:t="voice_assistant/ms_second_raid_die_message_04"
+            i:t="voice_assistant/ms_second_raid_die_message_05"
+            i:t="voice_assistant/ms_second_raid_die_message_06"
+            i:t="voice_assistant/ms_second_raid_die_message_07"
+            i:t="voice_assistant/ms_second_raid_die_message_08"
+          }
         }
       }
 
       "monster_transformation:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/monster_transformation_01"
-          i:t="voice_assistant/monster_transformation_02"
-          i:t="voice_assistant/monster_transformation_03"
-          i:t="voice_assistant/monster_transformation_04"
-          i:t="voice_assistant/monster_transformation_05"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/monster_transformation_01"
+            i:t="voice_assistant/monster_transformation_02"
+            i:t="voice_assistant/monster_transformation_03"
+            i:t="voice_assistant/monster_transformation_04"
+            i:t="voice_assistant/monster_transformation_05"
+          }
         }
       }
 
       "hint_airdrop_coming:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/hint_airdrop_coming_01"
-          i:t="voice_assistant/hint_airdrop_coming_02"
-          i:t="voice_assistant/hint_airdrop_coming_03"
-          i:t="voice_assistant/hint_airdrop_coming_04"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/hint_airdrop_coming_01"
+            i:t="voice_assistant/hint_airdrop_coming_02"
+            i:t="voice_assistant/hint_airdrop_coming_03"
+            i:t="voice_assistant/hint_airdrop_coming_04"
+          }
         }
       }
 
       "nexus_game_win:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_game_win_01"
-          i:t="voice_assistant/nexus_game_win_02"
-          i:t="voice_assistant/nexus_game_win_03"
-          i:t="voice_assistant/nexus_game_win_04"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_game_win_01"
+            i:t="voice_assistant/nexus_game_win_02"
+            i:t="voice_assistant/nexus_game_win_03"
+            i:t="voice_assistant/nexus_game_win_04"
+          }
         }
       }
 
       "nexus_game_lose:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_game_lose_01"
-          i:t="voice_assistant/nexus_game_lose_02"
-          i:t="voice_assistant/nexus_game_lose_03"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_game_lose_01"
+            i:t="voice_assistant/nexus_game_lose_02"
+            i:t="voice_assistant/nexus_game_lose_03"
+          }
         }
       }
 
       "nexus_game_draw:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_game_draw"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_game_draw"
+          }
         }
       }
 
       "nexus_round_win_team_died:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_win_team_died_01"
-          i:t="voice_assistant/nexus_round_win_team_died_02"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_win_team_died_01"
+            i:t="voice_assistant/nexus_round_win_team_died_02"
+          }
         }
       }
 
       "nexus_round_lose_team_died:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_lose_team_died_01"
-          i:t="voice_assistant/nexus_round_lose_team_died_02"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_lose_team_died_01"
+            i:t="voice_assistant/nexus_round_lose_team_died_02"
+          }
         }
       }
 
       "nexus_round_win_capture:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_win_01"
-          i:t="voice_assistant/nexus_round_win_02"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_win_01"
+            i:t="voice_assistant/nexus_round_win_02"
+          }
         }
       }
 
       "nexus_round_lose_capture:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_lose_01"
-          i:t="voice_assistant/nexus_round_lose_02"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_lose_01"
+            i:t="voice_assistant/nexus_round_lose_02"
+          }
         }
       }
 
       "nexus_round_win_capture_advantage:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_win_01"
-          i:t="voice_assistant/nexus_round_win_02"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_win_01"
+            i:t="voice_assistant/nexus_round_win_02"
+          }
         }
       }
 
       "nexus_round_lose_capture_advantage:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_lose_01"
-          i:t="voice_assistant/nexus_round_lose_02"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_lose_01"
+            i:t="voice_assistant/nexus_round_lose_02"
+          }
         }
       }
 
       "nexus_round_win_points:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_win_01"
-          i:t="voice_assistant/nexus_round_win_02"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_win_01"
+            i:t="voice_assistant/nexus_round_win_02"
+          }
         }
       }
 
       "nexus_round_lose_points:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_lose_01"
-          i:t="voice_assistant/nexus_round_lose_02"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_lose_01"
+            i:t="voice_assistant/nexus_round_lose_02"
+          }
         }
       }
 
       "nexus_round_win_points_advantage:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_win_01"
-          i:t="voice_assistant/nexus_round_win_02"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_win_01"
+            i:t="voice_assistant/nexus_round_win_02"
+          }
         }
       }
 
       "nexus_round_lose_points_advantage:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_lose_01"
-          i:t="voice_assistant/nexus_round_lose_02"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_lose_01"
+            i:t="voice_assistant/nexus_round_lose_02"
+          }
         }
       }
 
       "nexus_round_draw_all_died:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_draw_01"
-          i:t="voice_assistant/nexus_round_draw_02"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_draw_01"
+            i:t="voice_assistant/nexus_round_draw_02"
+          }
         }
       }
 
       "nexus_round_draw_points:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_draw_01"
-          i:t="voice_assistant/nexus_round_draw_02"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_draw_01"
+            i:t="voice_assistant/nexus_round_draw_02"
+          }
         }
       }
 
       "nexus_round_draw_time_out:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_draw_01"
-          i:t="voice_assistant/nexus_round_draw_02"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_draw_01"
+            i:t="voice_assistant/nexus_round_draw_02"
+          }
         }
       }
 
       "nexus_round_preparation:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_preparation_01"
-          i:t="voice_assistant/nexus_round_preparation_02"
-          i:t="voice_assistant/nexus_round_preparation_03"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_preparation_01"
+            i:t="voice_assistant/nexus_round_preparation_02"
+            i:t="voice_assistant/nexus_round_preparation_03"
+          }
         }
       }
 
       "nexus_round_start:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_round_start_01"
-          i:t="voice_assistant/nexus_round_start_02"
-          i:t="voice_assistant/nexus_round_start_03"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_round_start_01"
+            i:t="voice_assistant/nexus_round_start_02"
+            i:t="voice_assistant/nexus_round_start_03"
+          }
         }
       }
 
       "nexus_last_standing_you:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_last_standing_ally_01"
-          i:t="voice_assistant/nexus_last_standing_ally_02"
-          i:t="voice_assistant/nexus_last_standing_ally_03"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_last_standing_ally_01"
+            i:t="voice_assistant/nexus_last_standing_ally_02"
+            i:t="voice_assistant/nexus_last_standing_ally_03"
+          }
         }
       }
 
       "nexus_last_standing_ally:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_last_standing_ally_01"
-          i:t="voice_assistant/nexus_last_standing_ally_02"
-          i:t="voice_assistant/nexus_last_standing_ally_03"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_last_standing_ally_01"
+            i:t="voice_assistant/nexus_last_standing_ally_02"
+            i:t="voice_assistant/nexus_last_standing_ally_03"
+          }
         }
       }
 
       "nexus_last_standing_enemy:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{}
+        "scripts:object"{
+          "default:list<t>"{}
+        }
       }
 
       "nexus_you_captured_beacon:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{}
+        "scripts:object"{
+          "default:list<t>"{}
+        }
       }
 
       "nexus_ally_captured_beacon:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_ally_captured_beacon_01"
-          i:t="voice_assistant/nexus_ally_captured_beacon_02"
-          i:t="voice_assistant/nexus_ally_captured_beacon_03"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_ally_captured_beacon_01"
+            i:t="voice_assistant/nexus_ally_captured_beacon_02"
+            i:t="voice_assistant/nexus_ally_captured_beacon_03"
+          }
         }
       }
 
       "nexus_enemy_captured_beacon:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/nexus_enemy_captured_beacon_01"
-          i:t="voice_assistant/nexus_enemy_captured_beacon_02"
-          i:t="voice_assistant/nexus_enemy_captured_beacon_03"
-          i:t="voice_assistant/nexus_enemy_captured_beacon_04"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/nexus_enemy_captured_beacon_01"
+            i:t="voice_assistant/nexus_enemy_captured_beacon_02"
+            i:t="voice_assistant/nexus_enemy_captured_beacon_03"
+            i:t="voice_assistant/nexus_enemy_captured_beacon_04"
+          }
         }
       }
 
       "nexus_you_reseted_beacon:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{}
+        "scripts:object"{
+          "default:list<t>"{}
+        }
       }
 
       "nexus_ally_reseted_beacon:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{}
+        "scripts:object"{
+          "default:list<t>"{}
+        }
       }
 
       "nexus_enemy_reseted_beacon:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{}
+        "scripts:object"{
+          "default:list<t>"{}
+        }
       }
 
       "map_artifacts_appear:object"{
         selectOneFromArray:b=yes
 
-        "scripts:array"{
-          i:t="voice_assistant/map_artifacts_appear_01"
-          i:t="voice_assistant/map_artifacts_appear_02"
-          i:t="voice_assistant/map_artifacts_appear_03"
-          i:t="voice_assistant/map_artifacts_appear_04"
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/map_artifacts_appear_01"
+            i:t="voice_assistant/map_artifacts_appear_02"
+            i:t="voice_assistant/map_artifacts_appear_03"
+            i:t="voice_assistant/map_artifacts_appear_04"
+          }
+        }
+      }
+
+      "collapse_mode_10_sec_start:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/collapse_mode_10_sec_start_01"
+            i:t="voice_assistant/collapse_mode_10_sec_start_02"
+            i:t="voice_assistant/collapse_mode_10_sec_start_03"
+          }
+        }
+      }
+
+      "collapse_mode_start:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/collapse_mode_start_01"
+            i:t="voice_assistant/collapse_mode_start_02"
+            i:t="voice_assistant/collapse_mode_start_03"
+          }
+        }
+      }
+
+      "collapse_mode_new_round:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/collapse_mode_new_round_01"
+            i:t="voice_assistant/collapse_mode_new_round_02"
+          }
+        }
+      }
+
+      "collapse_mode_finish:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/collapse_mode_finish_01"
+            i:t="voice_assistant/collapse_mode_finish_02"
+          }
+        }
+      }
+
+      "collapse_mode_fail:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/collapse_mode_fail_01"
+            i:t="voice_assistant/collapse_mode_fail_02"
+          }
+        }
+      }
+
+      "collapse_mode_50_hp_allert:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/collapse_mode_50_hp_allert_01"
+            i:t="voice_assistant/collapse_mode_50_hp_allert_02"
+          }
+        }
+      }
+
+      "collapse_mode_25_hp_allert:object"{
+        selectOneFromArray:b=yes
+
+        "scripts:object"{
+          "default:list<t>"{
+            i:t="voice_assistant/collapse_mode_25_hp_allert_01"
+            i:t="voice_assistant/collapse_mode_25_hp_allert_02"
+          }
         }
       }
     }
@@ -719,7 +1003,6 @@ bot_player{
 
 active_matter_bot_player{
   _use:t="bot_player"
-  _use:t="am_storage"
   possessedTemplate:t=""
 
   _group{
@@ -744,6 +1027,11 @@ active_matter_player{
   spawn_rules__respawnTimer:r=6
 
   "active_matter_player__unlockedNotes:list<t>"{}
+  _group{
+    _tags:t="gameClient"
+    active_matter_player__sendBattleResultOnDisappear:b=no
+  }
+
   _group{
     _tags:t="server"
     player__spawnPlaceId:i=-1
@@ -794,4 +1082,6 @@ active_matter_player_test{
   _use:t="bot_player"
   active_matter_player_test__index:i=-1
   possessedTemplate:t="am_militant_with_builtin_suit+spawn_sequence_controller"
+
+  "active_matter_player_test:tag"{}
 }

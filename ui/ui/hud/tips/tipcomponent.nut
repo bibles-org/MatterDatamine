@@ -1,9 +1,9 @@
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/components/controlHudHint.nut" import controlHudHint, mkHasBinding
+from "%ui/components/colors.nut" import TextNormal, HudTipFillColor, TextHighlight
+from "%ui/components/per_character_animation.nut" import mkAnimText
 from "%ui/ui_library.nut" import *
 
-let {body_txt} = require("%ui/fonts_style.nut")
-let { controlHudHint, mkHasBinding } = require("%ui/components/controlHudHint.nut")
-let { TextNormal, HudTipFillColor, TextHighlight } = require("%ui/components/colors.nut")
-let { mkAnimText } = require("%ui/components/per_character_animation.nut")
 let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
 
 
@@ -37,16 +37,16 @@ function text_hint_no_anim(text, params={}) {
     fontFxColor = Color(0, 0, 0, 255)
   }
   if (text instanceof Watched)
-    return @() res.__update({ watch = text, text = text.value })
+    return @() res.__update({ watch = text, text = text.get() })
   return res
 }
 
-let defTipAnimations = [
+let defTipAnimations = freeze([
   { prop=AnimProp.scale, from=[0,1], to=[1,1], duration=0.25, play=true, easing=OutCubic }
   { prop=AnimProp.opacity, from=0, to=1, duration=0.15, play=true, easing=OutCubic }
   { prop=AnimProp.scale, from=[1,1], to=[0,1], duration=0.25, playFadeOut=true, easing=OutCubic }
   { prop=AnimProp.opacity, from=1, to=0, duration=0.25, playFadeOut=true, easing=OutCubic }
-]
+])
 
 function mkInputHintBlock(inputId, addChild = null) {
   if (inputId == null)
@@ -56,20 +56,21 @@ function mkInputHintBlock(inputId, addChild = null) {
   return @() {
     watch = hasBinding
     flow = FLOW_HORIZONTAL
-    children = hasBinding.value ? [inputHint, addChild] : null
+    children = hasBinding.get() ? [inputHint, addChild] : null
   }
 }
 
-let padding = { size = [fsh(1), 0] }
+let padding = freeze({ size = [fsh(1), 0] })
 
-let tipBack = {
+let tipBack = freeze({
   rendObj = ROBJ_WORLD_BLUR
-  padding = [hdpx(6), hdpx(10)]
+  borderRadius = hdpx(8)
+  padding = static [hdpx(6), hdpx(10)]
   fillColor = HudTipFillColor
   transform = { pivot = [0.5, 0.5] }
-}
+})
 
-function tipContents(params) {
+function [pure] tipContents(params) {
   local {
     text = null, inputId = null, extraCmp = null,
     size = SIZE_TO_CONTENT, animations = defTipAnimations,

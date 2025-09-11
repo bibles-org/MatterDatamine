@@ -1,20 +1,20 @@
+from "%ui/mainMenu/monolith/monolith_gate.nut" import monolithGateUi, isRequirementsMet, getPriceInItems
+from "%ui/mainMenu/stdPanel.nut" import wrapInStdPanel, mkBackBtn, mkCloseBtn, mkWndTitleComp, mkHeader
+from "%ui/components/commonComponents.nut" import mkConsoleScreen, mkTabs
+from "%ui/leaderboard/lb_state_base.nut" import refreshMonolithLb
+
 from "%ui/ui_library.nut" import *
 
-let { monolithGateUi, MONOLITH_LEVEL_ID, isRequirementsMet, getPriceInItems } = require("monolith_gate.nut")
+let { MONOLITH_LEVEL_ID } = require("%ui/mainMenu/monolith/monolith_gate.nut")
 let { monolithLbUi, MONOLITH_LB_ID } = require("%ui/mainMenu/monolith/monolith_lb.nut")
-let { wrapInStdPanel, mkBackBtn, mkCloseBtn, mkWndTitleComp, mkHeader } = require("%ui/mainMenu/stdPanel.nut")
-let { mkConsoleScreen, mkTabs } = require("%ui/components/commonComponents.nut")
-let { isOnboarding, onboardingContractReported, onboardingMonolithFirstLevelUnlocked } = require("%ui/hud/state/onboarding_state.nut")
-let { MonolithMenuId, monolithLevelOffers, currentMonolithLevel, monolithSectionToReturn
+let { isOnboarding, onboardingContractReported } = require("%ui/hud/state/onboarding_state.nut")
+let { MonolithMenuId, monolithLevelOffers, currentMonolithLevel, monolithSectionToReturn, currentTab
 } = require("%ui/mainMenu/monolith/monolith_common.nut")
-let { refreshMonolithLb } = require("%ui/leaderboard/lb_state_base.nut")
 let { playerProfileMonolithTokensCount } = require("%ui/profile/profileState.nut")
 let { stashItems, backpackItems, inventoryItems, safepackItems } = require("%ui/hud/state/inventory_items_es.nut")
 
 let monolithAccessTitle = loc("monolith/title")
 let monolithName = loc("monolith/name", "Monolith")
-
-let currentTab = Watched(MONOLITH_LEVEL_ID)
 
 let tabsList = [
   { id = MONOLITH_LEVEL_ID, text = loc("monolith/gateTab"), content = monolithGateUi }
@@ -45,11 +45,13 @@ function content() {
 let isMonolithMenuAvailable = Computed(@() onboardingContractReported.get() || !isOnboarding.get())
 
 function getMonolithNotifications(){
+  if (!isMonolithMenuAvailable.get())
+    return 0
   let notif = {
     notificationsCount = 1
     notificationsType = "action"
   }
-  if (isOnboarding.get() && !onboardingMonolithFirstLevelUnlocked.get()) {
+  if (isOnboarding.get()) {
     return notif
   }
   let currentAccessLevel = currentMonolithLevel.get()
@@ -75,7 +77,8 @@ let closeBtn = mkCloseBtn(MonolithMenuId)
 
 let monolithButtons = @() {
   watch = monolithSectionToReturn
-  children = monolithSectionToReturn.get() == null ? closeBtn : mkBackBtn(monolithSectionToReturn.get())
+  children = monolithSectionToReturn.get() == null ? closeBtn
+    : mkBackBtn(monolithSectionToReturn.get(), @() monolithSectionToReturn.set(null))
 }
 
 let header = mkHeader(mkWndTitleComp(monolithAccessTitle), monolithButtons)
@@ -99,4 +102,3 @@ return {
   isMonolithMenuAvailable
   getMonolithNotifications
 }
-

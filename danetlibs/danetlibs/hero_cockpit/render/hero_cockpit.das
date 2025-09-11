@@ -2,7 +2,6 @@ require ecs
 require DagorMath
 require Dacoll
 require DagorShaders
-require app
 require DngWeapon
 require DngHuman
 require Gun

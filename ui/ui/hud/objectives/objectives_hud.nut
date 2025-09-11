@@ -1,26 +1,27 @@
+from "%dngscripts/globalState.nut" import nestWatched
+from "%ui/components/colors.nut" import TextDisabled, TextNormal, InfoTextValueColor, GreenSuccessColor,
+  RedWarningColor, OrangeHighlightColor, colorblindPalette, HudTipFillColor,
+  ConsoleHeaderFillColor
+from "eventbus" import eventbus_subscribe
+from "dasevents" import EventSpawnSequenceEnd, EventRewardDailyContract
+from "%ui/hud/state/objectives_vars.nut" import dispatchColorsAndSort
+from "math" import rand
+from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog
+from "%ui/fonts_style.nut" import fontawesome, sub_txt, tiny_txt
+from "%ui/components/commonComponents.nut" import mkDescTextarea, descriptionStyle
+from "%ui/hud/objectives/objective_components.nut" import mkObjectiveIdxMark, idxMarkDefaultSize, idxMarkHeight, getContractProgressionText, color_common
+from "%ui/components/scrollbar.nut" import makeVertScrollExt, thinStyle
+from "%ui/components/cursors.nut" import setTooltip
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 import "%ui/components/faComp.nut" as faComp
+import "%ui/components/fontawesome.map.nut" as fa
 
-let { eventbus_subscribe } = require("eventbus")
-let { EventSpawnSequenceEnd, EventRewardDailyContract } = require("dasevents")
-let { dispatchColorsAndSort, objectives, objectiveAdditions } = require("%ui/hud/state/objectives_vars.nut")
+let { objectives, objectiveAdditions } = require("%ui/hud/state/objectives_vars.nut")
 let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
 let { hudIsInteractive } = require("%ui/hud/state/interactive_state.nut")
-let { TextDisabled, TextNormal, InfoTextValueColor,
-  GreenSuccessColor, RedWarningColor, OrangeHighlightColor
-  colorblindPalette, HudTipFillColor, ConsoleHeaderFillColor } = require("%ui/components/colors.nut")
-let { rand } = require("math")
 let { monolithTokensTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
-let { addPlayerLog, mkPlayerLog } = require("%ui/popup/player_event_log.nut")
-let { nestWatched } = require("%dngscripts/globalState.nut")
-let { fontawesome, sub_txt, tiny_txt } = require("%ui/fonts_style.nut")
-let { mkDescTextarea, descriptionStyle } = require("%ui/components/commonComponents.nut")
-let { mkObjectiveIdxMark, idxMarkDefaultSize, idxMarkHeight, getContractProgressionText, color_common } = require("%ui/hud/objectives/objective_components.nut")
 let { watchedHeroPlayerEid } = require("%ui/hud/state/watched_hero.nut")
-let { makeVertScrollExt, thinStyle } = require("%ui/components/scrollbar.nut")
-let fa = require("%ui/components/fontawesome.map.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
 
 let color_complete = Color(90,160,100)
 let color_complete_bright = mul_color(GreenSuccessColor, 0.8, 2)
@@ -32,23 +33,23 @@ let monolithContractText = {contract_monolith_danger = loc("contract_monolith_da
 
 let titleGap = hdpx(10)
 let titleIconFontSize = hdpxi(20)
-let extractionPicture = const {
+let extractionPicture = {
   rendObj = ROBJ_IMAGE
   hplace = ALIGN_CENTER
   vplace = ALIGN_BOTTOM
   image = Picture($"ui/skin#extraction_man.svg:{titleIconFontSize-hdpxi(2)}:{titleIconFontSize-hdpxi(2)}:P:K")
   color = Color(0,0,0)
   size = titleIconFontSize-hdpxi(2)
-  animations = const [{ prop=AnimProp.color, from=Color(0,0,0), to=color_complete, easing=CosineFull, duration=0.8, loop=true, play=true }]
+  animations = static [{ prop=AnimProp.color, from=Color(0,0,0), to=color_complete, easing=CosineFull, duration=0.8, loop=true, play=true }]
   keepAspect = KEEP_ASPECT_FIT
 }
 
-let extractionIcon = const {
+let extractionIcon = static {
   size = titleIconFontSize
   children = [
     {
       size = titleIconFontSize
-      animations = const [{ prop=AnimProp.opacity, from=1, to=0.3, easing=CosineFull, duration=0.8, loop=true, play=true }]
+      animations = static [{ prop=AnimProp.opacity, from=1, to=0.3, easing=CosineFull, duration=0.8, loop=true, play=true }]
       fillColor = color_addition
       rendObj = ROBJ_BOX
     }
@@ -58,21 +59,19 @@ let extractionIcon = const {
 
 let mkObjectiveStatus = function(idx, is_complete, is_failed, objectiveColor, requireExtraction, isRequirementComplete, progress) {
   if (is_failed)
-    return const faComp("close", {color = RedWarningColor, fontSize = titleIconFontSize})
+    return static faComp("close", {color = RedWarningColor, fontSize = titleIconFontSize})
   if (requireExtraction && isRequirementComplete)
     return extractionIcon
   if (is_complete)
-    return const faComp("check-square-o", {color = color_complete_bright, fontSize = titleIconFontSize})
+    return static faComp("check-square-o", {color = color_complete_bright, fontSize = titleIconFontSize})
   return mkObjectiveIdxMark($"{idx+1}", idxMarkDefaultSize, objectiveColor, progress)
 }
 
-let star = const $"<star>{fa["star"]}</star>"
-let starTagSub  = const { font = fontawesome.font fontSize = sub_txt.fontSize}
-let starTagTiny  = const { font = fontawesome.font fontSize = tiny_txt.fontSize}
+let starSub = static faComp("star", { color = InfoTextValueColor, fontSize = sub_txt.fontSize, margin = [hdpx(2),0,0,0]})
+let starTiny = static faComp("star", { color = InfoTextValueColor, fontSize = tiny_txt.fontSize, margin = [hdpx(2),0,0,0]})
 
-let warning = const $"<warning>{fa["warning"]}</warning>"
-let warningTagSub  = const { font = fontawesome.font fontSize = sub_txt.fontSize, color = RedWarningColor }
-let warningTagTiny  = const { font = fontawesome.font fontSize = tiny_txt.fontSize, color = RedWarningColor }
+let extractionBlockedSub = static faComp("extraction_point.svg", { color = RedWarningColor, margin = [hdpx(2),0,0,0] }.__merge(sub_txt))
+let extractionBlockedTiny = static faComp("extraction_point.svg", { color = RedWarningColor, margin = [hdpx(2),0,0,0] }.__merge(tiny_txt))
 
 let isPrimaryObjective = @(obj) (obj?.contractType ?? 1) == 0
 let isObjCompleted = @(obj) !obj?.requireExtraction && obj?.completed
@@ -82,16 +81,19 @@ let mkObjectiveTitle = function(obj, minimize=false) {
   let isPrimary = isPrimaryObjective(obj)
   let title = loc($"contract/{name}")
   let isCompleted = isObjCompleted(obj)
-  let texts = (blockExtraction && !completed && !failed ? [warning] : [])
-  if (isPrimary)
-    texts.append(star)
-  texts.append(title)
-  let ftext = " ".join(texts)
 
-  return mkDescTextarea(ftext, { color = failed ? color_failed : (isCompleted ? color_complete : InfoTextValueColor) }.__update(minimize
-    ? const {tagsTable={star=starTagTiny, warning = warningTagTiny}}.__update(tiny_txt)
-    : const {tagsTable={star=starTagSub, warning = warningTagSub}}.__update(sub_txt))
-  )
+  let descStyle = { color = failed ? color_failed : (isCompleted ? color_complete : InfoTextValueColor) }.__update(minimize ? tiny_txt : sub_txt)
+  return {
+    flow = FLOW_HORIZONTAL
+    size = FLEX_H
+    gap = hdpx(5)
+    valign = ALIGN_CENTER
+    children = [
+      isPrimary ? (minimize ? starTiny : starSub) : null,
+      (blockExtraction && !completed) ? (minimize ? extractionBlockedTiny : extractionBlockedSub) : null,
+      mkDescTextarea(title, descStyle)
+    ]
+  }
 }
 
 
@@ -106,31 +108,30 @@ function mkObjectiveProgression(text, handled_template, is_requirement_complete,
   return {
     rendObj = ROBJ_TEXTAREA
     behavior = Behaviors.TextArea
-    size = const [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     color
     text = getContractProgressionText({name = text, handledByGameTemplate = handled_template}.__update(params), false)
   }.__update(tiny_txt, descriptionStyle)
 }
-let failedText = loc($"contract/failed")
 
 let progressBackColor = mul_color(TextNormal, 0.5, 2)
 function mkProgressBar(currentValue, requiredValue, completed=false, failed=false) {
   let breakProgress = requiredValue <=20
   let progressText = {
     rendObj = ROBJ_TEXT text = $"{currentValue}/{requiredValue}"
-    color = currentValue>=requiredValue ? color_complete : TextNormal margin=[0,0,0,hdpx(10)]
+    color = currentValue>=requiredValue ? color_complete : TextNormal margin=static [0,0,0,hdpx(10)]
   }.__update(tiny_txt)
   let fullfiledcolor = failed || !completed ? TextNormal : color_complete_bright
   let backColor = failed ? mul_color(TextNormal, 0.3, 3) : progressBackColor
   return {
-    size = const [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     valign = ALIGN_CENTER
     gap  = breakProgress ? hdpx(2) : null
     children = (breakProgress
     ? array(requiredValue).map(@(_, i) {
         rendObj = ROBJ_SOLID
-        size = const [flex(), hdpx(4)]
+        size = static [flex(), hdpx(4)]
         color = i<currentValue ? fullfiledcolor : backColor
       }).append(progressText)
     : [
@@ -152,7 +153,7 @@ function mkProgressBar(currentValue, requiredValue, completed=false, failed=fals
 let mkObjectiveAddition = @(text){
   rendObj = ROBJ_TEXTAREA
   behavior = Behaviors.TextArea
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
   margin = [0, 0, 0, idxMarkHeight + titleGap]
   color = color_addition
   text =loc(text)
@@ -164,22 +165,23 @@ function mkRequiresExtraction(is_requirement_complete) {
   return {
     rendObj = ROBJ_TEXT
     text = loc("contract/require_extraction_short")
-    animations = is_requirement_complete ? const [{ prop=AnimProp.opacity, from=1, to=0.3, easing=CosineFull, duration=0.8, loop=true, play=true }] : null
+    animations = is_requirement_complete ? static [{ prop=AnimProp.opacity, from=1, to=0.3, easing=CosineFull, duration=0.8, loop=true, play=true }] : null
     color
-    margin = const [0, 0, 0, idxMarkHeight + titleGap]
+    margin = static [0, 0, 0, idxMarkHeight + titleGap]
   }.__update(tiny_txt)
 }
 
-let requiresExtractionPlaceholder = const {
-  size = calc_str_box(mkRequiresExtraction(false))
+let resize = calc_str_box(mkRequiresExtraction(false))
+let requiresExtractionPlaceholder = static {
+  size = resize
   margin = [0, 0, 0, idxMarkHeight + titleGap]
 }
 
 let objectiveDescription = @(text){
   rendObj = ROBJ_TEXTAREA
-  size = const [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   behavior = Behaviors.TextArea
-  margin = const [0, 0, 0, idxMarkHeight + titleGap]
+  margin = static [0, 0, 0, idxMarkHeight + titleGap]
   text
 }.__update(sub_txt, descriptionStyle)
 
@@ -508,27 +510,38 @@ function mkAnimations(trigger) {
 
 function setShowAllObjectives(value) {
   showDailyRewardObjectives.set(value)
-  log($"show all objectives({value}): have {objectiveStates.get().len()} objective states")
+  log($"show all objectives.set({value}): have {objectiveStates.get().len()} objective states")
   objectiveStates.mutate(@(states) states.each(@(state) state.show = value))
 }
 
 
 let areTooManyContacts = @(contracts) contracts.len() > 10
 
-let contractTypeHint = @(tag, locId) {
-  rendObj = ROBJ_TEXTAREA
-  behavior = Behaviors.TextArea
-  size = const [flex(), SIZE_TO_CONTENT]
-  color = InfoTextValueColor
-  text = " - ".concat(tag, loc(locId))
-  tagsTable = {star = starTagSub, warning = warningTagSub}
-}.__update(sub_txt)
+let contractTypeHint = @(tag, locId) freeze({
+  size = FLEX_H
+  flow = FLOW_HORIZONTAL
+  children = [
+    tag,
+    {
+      rendObj = ROBJ_TEXT
+      text = " - "
+      color = InfoTextValueColor
+    }.__update(sub_txt),
+    {
+      rendObj = ROBJ_TEXTAREA
+      behavior = Behaviors.TextArea
+      size = FLEX_H
+      color = InfoTextValueColor
+      text = loc(locId)
+    }.__update(sub_txt)
+  ]
+})
 
 let objectiveItem = function(obj, idx, allObjectives) {
   let totalNum = allObjectives.len()
 
   let { id, params, name, handledByGameTemplate, completed, currentValue, requireValue,
-    failed = false requireExtraction = false, colorIdx = null, blockExtraction = false } = obj
+    failed = false requireExtraction = false, colorIdx = null, blockExtraction = false, itemTags = null } = obj
   let objectiveColor = colorblindPalette?[colorIdx] ?? color_common
   let isComplete = !requireExtraction && completed
   let isFailed = failed
@@ -544,18 +557,18 @@ let objectiveItem = function(obj, idx, allObjectives) {
     borderWidth=1
     color = InfoTextValueColor
     rendObj = ROBJ_FRAME
-    size = const [sw(20), SIZE_TO_CONTENT]
+    size = static [sw(20), SIZE_TO_CONTENT]
     children = {
       flow = FLOW_VERTICAL
-      size = const [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       gap = hdpx(5)
-      padding = const [hdpx(10), hdpx(20)]
+      padding = static [hdpx(10), hdpx(20)]
       children = [
-        isPrimary ? const contractTypeHint(star, "contract/primary") : null
-        blockExtraction && !completed ? contractTypeHint(warning, "contract/required") : null
-        mkObjectiveProgression(name, handledByGameTemplate, completed, isFailed, { currentValue, requireValue, params })
+        isPrimary ? contractTypeHint(starSub, "contract/primary") : null
+        blockExtraction && !completed ? contractTypeHint(extractionBlockedSub, "contract/required") : null
+        mkObjectiveProgression(name, handledByGameTemplate, completed, isFailed, { currentValue, requireValue, params, itemTags })
         mkProgressBar(currentValue, requireValue, isComplete, isFailed)
-        requireExtraction ? { size = const [flex(),SIZE_TO_CONTENT] halign = ALIGN_CENTER children = mkRequiresExtraction(completed).__update(const {margin=null})} : null
+        requireExtraction ? { size = FLEX_H halign = ALIGN_CENTER children = mkRequiresExtraction(completed).__update(static {margin=null})} : null
         addition != null ? mkObjectiveAddition(addition) : null
         objectiveDescription(loc($"contract/{name}/desc", monolithContractText))
       ]
@@ -563,52 +576,52 @@ let objectiveItem = function(obj, idx, allObjectives) {
     }
   })
   let contract = @() {
-     watch = [hudIsInteractive, sf]
-     behavior = hudIsInteractive.get() ? Behaviors.Button : null
-     onElemState = @(s) sf.set(s)
-     rendObj = ROBJ_WORLD_BLUR_PANEL
-     fillColor = isPrimary ? Color(1, 5, 20, 100) : HudTipFillColor
+    watch = [hudIsInteractive, sf]
+    behavior = hudIsInteractive.get() ? Behaviors.Button : null
+    onElemState = @(s) sf.set(s)
+    rendObj = ROBJ_WORLD_BLUR_PANEL
+    fillColor = isPrimary ? Color(1, 5, 20, 100) : HudTipFillColor
 
-     onHover = @(on) setTooltip(!on ? null : descr)
+    onHover = @(on) setTooltip(!on ? null : descr)
 
-     padding = const [hdpx(5), hdpx(10)]
-     size = const [flex(), SIZE_TO_CONTENT]
-     flow = FLOW_HORIZONTAL
-     gap = hdpx(10)
-     valign = ALIGN_CENTER
-     children = [
-       mkObjectiveStatus(idx, isComplete, isFailed, objectiveColor, requireExtraction, completed, progress)
-       {
-         flow = FLOW_VERTICAL
-         size = const [flex(), SIZE_TO_CONTENT]
-         children = !showCompact ? [
-           mkObjectiveTitle(obj, tooMany),
-           tryToMinimize ? null :
-             mkObjectiveProgression(isFailed ? failedText : name, handledByGameTemplate, completed, isFailed, { currentValue, requireValue, params }),
-           addition != null ? mkObjectiveAddition(addition) : null,
-           !tryToMinimize || !completed ? {
-             flow = FLOW_HORIZONTAL
-             valign = ALIGN_CENTER
-             size = const [flex(), SIZE_TO_CONTENT]
-             children = [
-               mkProgressBar(currentValue, requireValue, isComplete, isFailed)
-               requireExtraction ? mkRequiresExtraction(completed) : requiresExtractionPlaceholder
-             ]
-           } : null
-         ] : [mkObjectiveTitle(obj, tooMany)]
-       }
-     ]
+    padding = static [hdpx(5), hdpx(10)]
+    size = FLEX_H
+    flow = FLOW_HORIZONTAL
+    gap = hdpx(10)
+    valign = ALIGN_CENTER
+    children = [
+      mkObjectiveStatus(idx, isComplete, isFailed, objectiveColor, requireExtraction, completed, progress)
+      {
+        flow = FLOW_VERTICAL
+        size = FLEX_H
+        children = !showCompact ? [
+          mkObjectiveTitle(obj, tooMany),
+          tryToMinimize ? null :
+            mkObjectiveProgression(name, handledByGameTemplate, completed, isFailed, { currentValue, requireValue, params, itemTags }),
+          addition != null ? mkObjectiveAddition(addition) : null,
+          !tryToMinimize || !completed ? {
+            flow = FLOW_HORIZONTAL
+            valign = ALIGN_CENTER
+            size = FLEX_H
+            children = [
+              mkProgressBar(currentValue, requireValue, isComplete, isFailed)
+              requireExtraction ? mkRequiresExtraction(completed) : requiresExtractionPlaceholder
+            ]
+          } : null
+        ] : [mkObjectiveTitle(obj, tooMany)]
+      }
+    ]
   }
   return function() {
     if ((!objectiveStates.get()?[id].show && !showDebugContracts.get()))
-      return const { watch = [objectiveStates, showDebugContracts] }
+      return static { watch = [objectiveStates, showDebugContracts] }
     return {
       flow = FLOW_HORIZONTAL
       watch = [objectiveStates, showDebugContracts]
       gap = hdpx(5)
       animations = mkAnimations(objectiveStates.get()?[id].fadeout)
       opacity = 1.0
-      size = const [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       children = contract
     }
   }
@@ -616,7 +629,7 @@ let objectiveItem = function(obj, idx, allObjectives) {
 
 function objectivesHud() {
   if ( isSpectator.get())
-    return const { watch = isSpectator }
+    return static { watch = isSpectator }
   let contracts = (showDebugContracts.get()
       ? dispatchColorsAndSort(debugContractList)
       : objectives.get()
@@ -624,12 +637,12 @@ function objectivesHud() {
 
   let content = @() {
     flow = FLOW_VERTICAL
-    size = const [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     gap = hdpx(1)
     children = [
       @() {
-        watch = const [objectiveStates, objectives, showDebugContracts, hudIsInteractive]
-        size = const [ flex(), SIZE_TO_CONTENT ]
+        watch = static [objectiveStates, objectives, showDebugContracts, hudIsInteractive]
+        size = FLEX_H
         children = (objectiveStates.get().findindex(@(v) v.show) != null || hudIsInteractive.get())
             && (showDebugContracts.get() ? dispatchColorsAndSort(debugContractList) : objectives.get())
                 .findvalue(@(v) v?.blockExtraction && !v?.isSecretObjective && !v?.completed)!=null ? {
@@ -638,33 +651,37 @@ function objectivesHud() {
           opacity = 1.0
           animations = mkAnimations(objectiveStates.get().findvalue(@(o) o?.show)?.fadeout)
           fillColor = Color(1, 5, 20, 100)
-          size = const [ flex(), SIZE_TO_CONTENT ]
-          children = const {
-            size = [ flex(), SIZE_TO_CONTENT ]
-            rendObj = ROBJ_TEXTAREA
-            behavior = Behaviors.TextArea
-            text = loc("contract/completeAllExtractionTip", {warning})
-            tagsTable = {warning=warningTagSub.__merge({color = RedWarningColor})}
-          }.__update(sub_txt)
-        }: null
+          size = FLEX_H
+          children = { 
+            flow = FLOW_HORIZONTAL
+            size = FLEX_H
+            gap = hdpx(5)
+            children = [
+              extractionBlockedSub,
+              {
+                rendObj = ROBJ_TEXTAREA
+                behavior = Behaviors.TextArea
+                size = FLEX_H
+                text = loc("contract/completeAllExtractionTip")
+              }.__update(sub_txt)
+            ]
+          }
+        } : null
       }
     ].extend(contracts.map(objectiveItem))
   }
   return {
-    watch = const [isSpectator, objectives, showDebugContracts]
-    size = const [flex(), SIZE_TO_CONTENT]
+    watch = static [isSpectator, objectives, showDebugContracts]
+    size = flex()
     key = "objectivesUI"
-    valign = ALIGN_CENTER
     flow = FLOW_VERTICAL
     children = [
       @() {
-        watch = const [objectives, showDebugContracts, hudIsInteractive]
-        size = const [flex(), hudIsInteractive.get() ? sh(80) : SIZE_TO_CONTENT]
-        maxHeight = sh(62)
+        watch = static [objectives, showDebugContracts, hudIsInteractive]
+        size = flex()
         clipChildren = true
-        children = areTooManyContacts(showDebugContracts.get() ? dispatchColorsAndSort(debugContractList) : objectives.get()) && hudIsInteractive.get()
-          ? makeVertScrollExt(content, const {size = [flex(), sh(62)], styling = thinStyle})
-          : content
+        valign = ALIGN_BOTTOM
+        children = makeVertScrollExt(content, {size = flex(), styling = thinStyle, isInteractive = hudIsInteractive.get()})
       }
     ]
   }

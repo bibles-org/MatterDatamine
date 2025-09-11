@@ -1,12 +1,16 @@
+from "%ui/components/commonComponents.nut" import mkConsoleScreen, mkTabs
+from "%ui/mainMenu/notificationMark.nut" import mkNotificationMark
+from "%ui/fonts_style.nut" import body_txt
+
 from "%ui/ui_library.nut" import *
 
 from "%ui/hud/menus/notes/notes.nut" import mkNoteTab, unreadCount
+from "%ui/hud/menus/notes/story_contracts.nut" import mkStoryContractsTab
 from "%ui/mainMenu/stdPanel.nut" import wrapInStdPanel
+from "%ui/hud/menus/notes/player_progression.nut" import playerProgression
+import "%ui/hud/menus/notes/career.nut" as careerTab
 import "%ui/hud/menus/notes/battle_results.nut" as mkBattleResultsTab
 
-let { mkConsoleScreen, mkTabs } = require("%ui/components/commonComponents.nut")
-let { mkNotificationMark } = require("%ui/mainMenu/notificationMark.nut")
-let { body_txt } = require("%ui/fonts_style.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 
@@ -17,7 +21,7 @@ function notesTabConstr(params) {
   return @(){
     flow = FLOW_HORIZONTAL
     watch = unreadCount
-    margin = const [fsh(1), fsh(2)]
+    margin = static [fsh(1), fsh(2)]
     children = [
       {
         rendObj = ROBJ_TEXT
@@ -29,12 +33,15 @@ function notesTabConstr(params) {
 }
 
 
-let tabsList = const [
-  { id="notes" childrenConstr=notesTabConstr getContent=mkNoteTab },
-  { id="battle_results" text=loc("battleResultsMenu") getContent = mkBattleResultsTab, filters={isOnPlayerBase = true}},
+let tabsList = static [
+  { id = "player_progression" text = loc("profile/playerProgression") getContent = playerProgression, filters = { isOnPlayerBase = true }},
+  { id = "career" text = loc("statisticsMenu") content = careerTab, filters = {isOnboarding = false, isOnPlayerBase = true} },
+  { id = "notes" childrenConstr=notesTabConstr getContent=mkNoteTab },
+  { id = "story_contracts" text=loc("journal/storyContracts") getContent = mkStoryContractsTab },
+  { id = "battle_results" text=loc("battleResultsMenu") getContent = mkBattleResultsTab, filters={isOnPlayerBase = true}}
 ]
 
-let currentTab = mkWatched(persist, "currentTab", "notes")
+let currentTab = mkWatched(persist, "currentTab", "player_progression")
 
 
 let content = function(){

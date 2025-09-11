@@ -1,11 +1,13 @@
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "das.inventory" import calc_stacked_item_volume
+from "dagor.debug" import logerr
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
 let { equipment } = require("%ui/hud/state/equipment.nut")
-let { calc_stacked_item_volume, convert_volume_to_int } = require("das.inventory")
 let { weaponSlotNames } = require("%ui/hud/state/hero_weapons.nut")
-let { logerr } = require("dagor.debug")
+
 
 let WEAPON_SLOTS_COUNT = weaponSlotNames.len()
 
@@ -97,7 +99,6 @@ function setSuitEquipment(presetTable, equipmentName, shopItems) {
 }
 
 function setInventory(presetTable, shopItems, inventoryName, inventoryMaxVolume, filterFunc=null) {
-  let intMaxVolume = convert_volume_to_int(inventoryMaxVolume)
   let filteredItems = filterFunc ? shopItems.filter(filterFunc) : shopItems
   let itemsArr = []
   local currentVolume = 0
@@ -105,7 +106,7 @@ function setInventory(presetTable, shopItems, inventoryName, inventoryMaxVolume,
     if (item.isBoxedItem) {
       let itemsCount = item.charges - (item?.marketToPresetBoxedCounted ?? 0)
       let itemVolume = calc_stacked_item_volume(item.countPerStack, itemsCount, item.volumePerStack)
-      if (itemsCount==0 || currentVolume + itemVolume >= intMaxVolume)
+      if (itemsCount==0 || currentVolume + itemVolume >= inventoryMaxVolume)
         continue
       currentVolume += itemVolume
 
@@ -120,8 +121,8 @@ function setInventory(presetTable, shopItems, inventoryName, inventoryMaxVolume,
       })
     }
     else {
-      let itemVolume = convert_volume_to_int(item?.volume ?? 0)
-      if (item?.marketToPresetCounted || currentVolume + itemVolume > intMaxVolume)
+      let itemVolume = item?.volume ?? 0
+      if (item?.marketToPresetCounted || currentVolume + itemVolume > inventoryMaxVolume)
         continue
       currentVolume += itemVolume
 
@@ -183,11 +184,11 @@ function mkPresetDataFromMarket(items) {
   let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName("militant_inventory")
   let humanInventoryCommonVoume = template?.getCompValNullable("human_inventory__maxVolume") ?? 0
   let pouchesVolume = humanInventoryCommonVoume + (pouchItem?.inventoryExtension ?? 0) 
-  let backpackVolume = backpackItem?.inventoryMaxVolumeFloat ?? 0
+  let backpackVolume = backpackItem?.inventoryMaxVolume ?? 0
 
   preset["inventories"] <- {}
   
-  setInventory(preset, fakedItems, "myItems", pouchesVolume, @(v) v.isBoxedItem || v.item__currentBoxedItemCount)
+  setInventory(preset, fakedItems, "myItems", pouchesVolume, @(v) v.isBoxedItem || v?.item__currentBoxedItemCount)
   
   setInventory(preset, fakedItems, "backpack", backpackVolume, null)
   

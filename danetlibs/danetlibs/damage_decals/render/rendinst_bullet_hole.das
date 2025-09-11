@@ -44,7 +44,12 @@ def projectile_bullet_hole_on_ri_es(evt : CmdRendinstBulletHole;
     decalSize = clamp(decalSize, bullet_holes__bulletCaliberMin, bullet_holes__bulletCaliberMax)
   else
     decalSize *= bullet_holes__shellCaliberMult // for tank shell we just increse caliber by  quarter, for consistent looking
-  let created = create_ri_projective_damage_decal(evt.pos, evt.dir, evt.norm, evt.riHandle, decalSize, evt.pmid, damageType)
+  let decalId = create_ri_projective_damage_decal(evt.pos, evt.dir, evt.norm, evt.riHandle, decalSize, evt.pmid, damageType)
+  let created = decalId >= 0
+  if created && damageType == "bomb_hit"
+    createEntity("rendinst_bomb_hit_decal") <| $(init)
+      set(init, "ri_bomb_hit_decal__id", decalId)
+      set(init, "ri_bomb_hit_decal__pos", evt.pos)
   if !created
     //billboard decal
     add_projectile_bullet_hole(evt.riHandle, evt.pos, evt.norm, evt.pmid, decalSize)

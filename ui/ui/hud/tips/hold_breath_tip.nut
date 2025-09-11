@@ -1,10 +1,11 @@
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
+
 from "%ui/ui_library.nut" import *
 
-let {isHoldBreath} = require("%ui/hud/player_info/breath.nut")
-let {isAiming} = require("%ui/hud/state/crosshair_state_es.nut")
+let { isHoldBreath } = require("%ui/hud/player_info/breath.nut")
+let { isAiming } = require("%ui/hud/state/crosshair_state_es.nut")
 let isMachinegunner = require("%ui/hud/state/machinegunner_state.nut")
-let {tipCmp} = require("tipComponent.nut")
-let {isSpectator} = require("%ui/hud/state/spectator_state.nut")
+let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
 
 let tip = tipCmp({
   inputId = "Human.HoldBreath"

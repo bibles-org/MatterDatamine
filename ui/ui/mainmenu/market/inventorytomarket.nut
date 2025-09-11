@@ -1,11 +1,13 @@
+from "%ui/components/commonComponents.nut" import mkTextArea
+from "math" import ceil
+from "%ui/components/colors.nut" import RedWarningColor, BtnTextHighlight
+from "%ui/mainMenu/currencyIcons.nut" import creditsTextIcon, premiumCreditsTextIcon, premiumColor, creditsColor
+from "%ui/profile/profileState.nut" import playerProfileCreditsCount, playerProfilePremiumCredits,
+  marketItems, playerStats
+import "%ui/components/colorize.nut" as colorize
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { marketItems, playerStats, playerProfileCreditsCount } = require("%ui/profile/profileState.nut")
-let { creditsTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
-let { ceil } = require("math")
-let { RedWarningColor, BtnTextHighlight } = require("%ui/components/colors.nut")
 
 let template2MarketIds = Computed(function() {
   let market = marketItems.get()
@@ -105,15 +107,22 @@ function getBaseUpgradeFromItem(item) {
 
 function getPriceFromLot(lot) {
   let marketItem = marketItems.get()?[lot]
-  return marketItem?.reqMoney ?? -1
+  let { reqMoney = -1, additionalPrice = {} } = marketItem
+  let isPremium = (additionalPrice?.premiumCreditsCount ?? 0) > 0
+  return {
+    isPremium
+    price = isPremium ? additionalPrice.premiumCreditsCount : reqMoney
+  }
 }
 
 function isLotAvailable(item, playerStat) {
   let isAdmin = (playerStat?.unlocks ?? []).findindex(@(v) v == "__ADMIN__") != null
   if (isAdmin)
     return true
-  let { reqMoney = 0, buyable = false } = item
-  if (!buyable || reqMoney <= 0)
+  let { reqMoney = 0, buyable = false, additionalPrice = {} } = item
+  let isPremium = (additionalPrice?.premiumCreditsCount ?? 0) > 0
+  let price = isPremium ? additionalPrice.premiumCreditsCount : reqMoney
+  if (!buyable || price <= 0)
     return false
 
   let req = item.requirements
@@ -135,17 +144,26 @@ function isLotAvailable(item, playerStat) {
   return true
 }
 
-let mkItemPrice = @(priceToShow, override = {}) @() {
-  watch = playerProfileCreditsCount
-  rendObj = ROBJ_BOX
-  borderRadius = [0, 0, 0,  hdpx(5)]
-  fillColor = Color(67, 67, 67)
-  hplace = ALIGN_RIGHT
-  vplace = ALIGN_TOP
-  padding = hdpx(3)
-  children = mkText($"{creditsTextIcon}{priceToShow}", {
-    color = priceToShow <= playerProfileCreditsCount.get() ? BtnTextHighlight : RedWarningColor
-  }.__update(override))
+function mkItemPrice(priceData, override = {}) {
+  let { price, isPremium } = priceData
+  let currencyIcon = isPremium ? premiumCreditsTextIcon : creditsTextIcon
+  let color = isPremium ? premiumColor : creditsColor
+  let currency = colorize(color, currencyIcon)
+  return @() {
+    watch = [playerProfileCreditsCount, playerProfilePremiumCredits]
+    rendObj = ROBJ_BOX
+    borderRadius = [0, 0, 0,  hdpx(5)]
+    fillColor = Color(67, 67, 67)
+    hplace = ALIGN_RIGHT
+    vplace = ALIGN_TOP
+    padding = hdpx(3)
+    children = mkTextArea($"{currency}{price}", {
+      color = isPremium
+        ? (price <= playerProfilePremiumCredits.get() ? BtnTextHighlight : RedWarningColor)
+        : (price <= playerProfileCreditsCount.get() ? BtnTextHighlight : RedWarningColor)
+        size = SIZE_TO_CONTENT
+    }.__update(override))
+  }
 }
 
 function getWeaponModsPrice(weaponMarketItem, attachments, playerStat) {
@@ -164,7 +182,7 @@ function getWeaponModsPrice(weaponMarketItem, attachments, playerStat) {
 
     if (!isLotAvailable(weaponMarketItem, playerStat))
       continue
-    let modPrice = getPriceFromLot(modMarketId)
+    let modPrice = getPriceFromLot(modMarketId).price
     let modPriceToAdd = countPerStack > 1
       ? modPrice * ceil(noSuitableItemForPresetFoundCount.tofloat() / countPerStack.tofloat())
       : modPrice * noSuitableItemForPresetFoundCount
@@ -186,12 +204,12 @@ function getItemPriceToShow(item) {
   if (noSuitableItemForPresetFoundCount == 0 && !needToShowPrice)
     return null
 
-  let price = getPriceFromLot(lot)
+  let { price, isPremium } = getPriceFromLot(lot)
   local priceToShow = countPerStack > 1
     ? price * ceil(noSuitableItemForPresetFoundCount.tofloat() / countPerStack.tofloat())
     : price * noSuitableItemForPresetFoundCount
 
-  return priceToShow
+  return { price = priceToShow, isPremium }
 }
 
 return {

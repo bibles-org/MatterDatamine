@@ -1,8 +1,9 @@
+from "dasevents" import CmdSendChatMessage, sendNetEvent
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
 let { find_local_player } = require("%dngscripts/common_queries.nut")
-let { CmdSendChatMessage, sendNetEvent } = require("dasevents")
 
 function sendChatMsg(params) {
   let data = ecs.CompObject()

@@ -1,10 +1,9 @@
 from "%ui/ui_library.nut" import *
-let { currencyMap } = require("%ui/mainMenu/currencyIcons.nut")
 let { marketItems, playerBaseState } = require("%ui/profile/profileState.nut")
 
-let MT = currencyMap["MT"]
 const MonolithMenuId = "monolithAccessWnd"
-let monolithSelectedLevel = Watched(0)
+let currentTab = Watched("monolithLevelId")
+let monolithSelectedLevel = Watched(1)
 let selectedMonolithUnlock = Watched("")
 let monolithSectionToReturn = Watched(null)
 
@@ -13,14 +12,22 @@ let monolithLevelOffers = Computed(function() {
   return monolithLelvels.map(@(v, k) v.__merge( {offerId = k} )).values().sort(@(a, b) a?.requirements.monolithAccessLevel <=> b?.requirements.monolithAccessLevel)
 })
 
+let permanentMonolithLevelOffers = Computed(function() {
+  let permanentLevelId = marketItems.get().findindex(@(v) v?.isPermanent)
+  if (permanentLevelId == null)
+    return []
+  return [marketItems.get()[permanentLevelId].__merge({ offerId = permanentLevelId })]
+})
+
 let currentMonolithLevel = Computed(@() playerBaseState.get()?.monolithAccessLevel ?? 0)
 
 return {
-  MT
   MonolithMenuId
   monolithSelectedLevel
   monolithLevelOffers
+  permanentMonolithLevelOffers
   selectedMonolithUnlock
   currentMonolithLevel
   monolithSectionToReturn
+  currentTab
 }

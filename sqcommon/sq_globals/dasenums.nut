@@ -100,6 +100,18 @@ enum HitResult {
 }
 let HitResult_COUNT = 4
 
+enum HumanScanMode {  
+  AUTO = 0
+  MANUAL = 1
+}
+let HumanScanMode_COUNT = 2
+
+enum HumanScanPointType {  
+  LOOT = 0
+  ENEMY = 1
+}
+let HumanScanPointType_COUNT = 2
+
 enum HumanUseObjectHintType {  
   DEFAULT = 0
   WORLD_MARKER = 1
@@ -120,6 +132,20 @@ enum NexusBeaconState {
   CAPTURED = 3
 }
 let NexusBeaconState_COUNT = 4
+
+enum NexusGameFinishReason {  
+  ALL_DIED = 0
+  TEAM_DIED = 1
+  CAPTURE = 2
+  CAPTURE_ADVANTAGE = 3
+  POINTS = 4
+  POINTS_ADVANTAGE = 5
+  POINTS_DRAW = 6
+  TIME_OUT = 7
+  ROUND_MODE_WIN = 8
+  ROUND_MODE_DRAW = 9
+}
+let NexusGameFinishReason_COUNT = 10
 
 enum NexusTeam {  
   FIRST = 2
@@ -144,18 +170,6 @@ enum NexusGameStartState {
   Started = 4
 }
 let NexusGameStartState_COUNT = 5
-
-enum NexusRoundFinishReason {  
-  ALL_DIED = 0
-  TEAM_DIED = 1
-  CAPTURE = 2
-  CAPTURE_ADVANTAGE = 3
-  POINTS = 4
-  POINTS_ADVANTAGE = 5
-  POINTS_DRAW = 6
-  TIME_OUT = 7
-}
-let NexusRoundFinishReason_COUNT = 8
 
 enum NexusRoundState {  
   None = 0
@@ -184,20 +198,20 @@ enum NexusStatType {
   LONGSHOT_KILL = 7
   BEACON_CAPTURE = 8
   BEACON_RESET = 9
-  DEATH = 10
+  ROUND_WIN = 10
+  ROUND_LOSE = 11
+  DEATH = 12
 }
-let NexusStatType_COUNT = 11
+let NexusStatType_COUNT = 13
 
 enum ContractType {  
   PRIMARY = 0
   SECONDARY = 1
   STORY = 2
   ITEM = 3
-  FREE_TO_USE = 4
-  FREE_TO_USE_2 = 5
-  MONSTER = 6
+  MONSTER = 4
 }
-let ContractType_COUNT = 7
+let ContractType_COUNT = 5
 
 enum ObjectivePhotographAffectState {  
   NONE = 0
@@ -213,6 +227,18 @@ enum PlayerSpawnControllerDefaultState {
   DONE = 4
 }
 let PlayerSpawnControllerDefaultState_COUNT = 5
+
+enum RobodogState {  
+  STAY = 0
+  WALK = 1
+  SPRINT = 2
+  ROTATE_RIGHT = 3
+  ROTATE_LEFT = 4
+  PRONE = 5
+  ACTIVATING = 6
+  DEACTIVATING = 7
+}
+let RobodogState_COUNT = 8
 
 return {
   AbilityUseFailedReason
@@ -237,20 +263,24 @@ return {
   GameEndReasons_COUNT
   HitResult
   HitResult_COUNT
+  HumanScanMode
+  HumanScanMode_COUNT
+  HumanScanPointType
+  HumanScanPointType_COUNT
   HumanUseObjectHintType
   HumanUseObjectHintType_COUNT
   PackFitCheckResult
   PackFitCheckResult_COUNT
   NexusBeaconState
   NexusBeaconState_COUNT
+  NexusGameFinishReason
+  NexusGameFinishReason_COUNT
   NexusTeam
   NexusTeam_COUNT
   NexusGameEndState
   NexusGameEndState_COUNT
   NexusGameStartState
   NexusGameStartState_COUNT
-  NexusRoundFinishReason
-  NexusRoundFinishReason_COUNT
   NexusRoundState
   NexusRoundState_COUNT
   NexusMvpReason
@@ -263,4 +293,6 @@ return {
   ObjectivePhotographAffectState_COUNT
   PlayerSpawnControllerDefaultState
   PlayerSpawnControllerDefaultState_COUNT
+  RobodogState
+  RobodogState_COUNT
 }

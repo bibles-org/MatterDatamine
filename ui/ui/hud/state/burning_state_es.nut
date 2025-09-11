@@ -5,8 +5,8 @@ let isBurning = Watched(false)
 
 ecs.register_es("hero_state_burning_es",
   {
-    [["onInit", "onChange"]] = @(_eid, comp) isBurning(comp["burning__isBurning"]),
-    onDestroy = @(_eid, _comp) isBurning(false)
+    [["onInit", "onChange"]] = @(_eid, comp) isBurning.set(comp["burning__isBurning"]),
+    onDestroy = @(_eid, _comp) isBurning.set(false)
   },
   {
     comps_rq = ["watchedByPlr"]

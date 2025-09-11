@@ -1,9 +1,9 @@
+from "dagor.time" import get_time_msec
+import "statsd" as statsd
+import "regexp2" as regexp2
 from "%ui/ui_library.nut" import *
 
-let {get_time_msec} = require("dagor.time")
-let statsd = require("statsd")
-let regexp2 = require("regexp2")
-let logLogin = require("%sqstd/log.nut")().with_prefix("[LOGIN_CHAIN]")
+let logLogin = require("%sqGlob/library_logs.nut").with_prefix("[LOGIN_CHAIN]")
 
 let stagesOrder = persist("stagesOrder", @() [])
 let currentStage = mkWatched(persist, "currentStage", null)
@@ -37,23 +37,23 @@ function makeStage(stageCfg) {
 }
 let persistActions = persist("persistActions", @() {})
 function makeStageCb() {
-  let curStage = currentStage.value
+  let curStage = currentStage.get()
   return @(result) persistActions[STEP_CB_ACTION_ID](curStage, result)
 }
 
 let reportLoginEnd = @(reportKey) statsd.send_profile("login_time", get_time_msec() - startLoginTs, {status=reportKey})
 
 function startStage(stageName) {
-  currentStage(stageName)
+  currentStage.set(stageName)
   stages[stageName].action(processState, makeStageCb())
 }
 
 function curStageActionOnReload() {
-  stages[currentStage.value].actionOnReload(processState, makeStageCb())
+  stages[currentStage.get()].actionOnReload(processState, makeStageCb())
 }
 
 function startLogin(params) {
-  assert(currentStage.value == null)
+  assert(currentStage.get() == null)
   assert(stagesOrder.len() > 0)
 
   processState.clear()
@@ -62,7 +62,7 @@ function startLogin(params) {
   processState.userInfo <- "userInfo" in params ? clone params.userInfo : {}
 
   startLoginTs = get_time_msec()
-  globalInterrupted(false)
+  globalInterrupted.set(false)
 
   startStage(stagesOrder[0])
 }
@@ -75,7 +75,7 @@ function fireAfterLoginOnceActions() {
 }
 
 function onStageResult(result) {
-  let stageName = currentStage.value
+  let stageName = currentStage.get()
   processState.stageResult[stageName] <- result
   if (result?.status != null)
     processState.status <- result.status
@@ -90,14 +90,17 @@ function onStageResult(result) {
 
   let needErrorMsg = result?.needShowError ?? true
   processState.stageResult.needShowError <- needErrorMsg
+  log(processState.stageResult)
 
   foreach (key in ["quitBtn"])
     if (key in result)
       processState.stageResult[key] <- result[key]
 
-  if (errorId != null || result?.stop == true || globalInterrupted.value == true) {
+  log("onInterrupt:", onInterrupt, "onSuccess", onSuccess)
+  if (errorId != null || result?.stop == true || globalInterrupted.get() == true) {
+    log("on error", errorId, globalInterrupted.get())
     processState.interrupted <- true
-    currentStage(null)
+    currentStage.set(null)
     reportLoginEnd("failure")
     afterLoginOnceActions.clear()
     onInterrupt?(processState)
@@ -108,8 +111,8 @@ function onStageResult(result) {
   if (idx==null)
     return
   if (idx == stagesOrder.len() - 1) {
-    loginTime.update(get_time_msec())
-    currentStage(null)
+    loginTime.set(get_time_msec())
+    currentStage.set(null)
     reportLoginEnd("success")
     onSuccess?(processState)
     fireAfterLoginOnceActions()
@@ -120,14 +123,14 @@ function onStageResult(result) {
 }
 
 persistActions[STEP_CB_ACTION_ID] <- function(curStage, result) {
-  if (curStage == currentStage.value)
+  if (curStage == currentStage.get())
     onStageResult(result)
   else
-    logLogin($"Receive cb from stage {curStage} but current is {currentStage.value}. Ignored.")
+    logLogin($"Receive cb from stage {curStage} but current is {currentStage.get()}. Ignored.")
 }
 
 function makeStages(config) {
-  assert(currentStage.value == null || stages.len() == 0)
+  assert(currentStage.get() == null || stages.len() == 0)
 
   let prevStagesOrder = clone stagesOrder
   stagesOrder.clear()
@@ -139,23 +142,23 @@ function makeStages(config) {
     stages[stage.id] <- makeStage(stage)
     stagesOrder.append(stage.id)
   }
-  isStagesInited(stages.len() > 0)
+  isStagesInited.set(stages.len() > 0)
 
   onSuccess = config.onSuccess
   onInterrupt = config.onInterrupt
 
-  if (currentStage.value == null)
+  if (currentStage.get() == null)
     return
 
   if (!isEqual(prevStagesOrder, stagesOrder)) {
     
     logLogin("Full restart")
-    currentStage(null)
+    currentStage.set(null)
     startLogin(processState?.params ?? {})
   }
   else {
     
-    logLogin($"Reload stage {currentStage.value}")
+    logLogin($"Reload stage {currentStage.get()}")
     curStageActionOnReload()
   }
 }
@@ -169,7 +172,7 @@ return {
   loginTime = loginTime
   currentStage = currentStage
   startLogin = startLogin
-  interrupt = @() globalInterrupted(true)
+  interrupt = @() globalInterrupted.set(true)
   setStagesConfig = setStagesConfig 
   isStagesInited = isStagesInited
   doAfterLoginOnce = @(action) afterLoginOnceActions.append(action) 

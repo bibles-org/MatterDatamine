@@ -1,8 +1,9 @@
+from "%sqstd/string.nut" import startsWith
+from "%sqstd/underscore.nut" import range
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { startsWith } = require("%sqstd/string.nut")
-let { range } = require("%sqstd/underscore.nut")
 
 function findAllItemChildren(loadoutItems, parentItemId) {
   return loadoutItems.filter(@(item) (item?.parentItemId) == parentItemId)
@@ -136,6 +137,10 @@ let convertSuit = function(loadout, preset) {
 
   local equip = {}
   findAllItemChildren(loadout, suitId).each(function(item) {
+    
+    
+    if (!startsWith(item.slotName, "equipment_mod"))
+      return
     equip[item.slotName] <- {
       slotTemplateName = slots?[item.slotName]
       itemTemplate = item.templateName

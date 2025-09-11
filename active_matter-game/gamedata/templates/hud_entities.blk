@@ -50,24 +50,39 @@ arc_trajectory{
   }
 }
 
+destroy_timer{
+  timer__destroyAt:r=-1
+  timer__timeToDestroy:r=1200
+}
+
+destroy_timer_5min{
+  _use:t="destroy_timer"
+  timer__timeToDestroy:r=300
+}
+
+destroy_timer_10min{
+  _use:t="destroy_timer"
+  timer__timeToDestroy:r=600
+}
+
+map_destroy_proximity{
+  proximity__radiusSq:r=9
+}
+
+map_destroy_teammate_proximity{
+  proximity__radiusSq:r=9
+
+  "map_destroy_teammate_proximity:tag"{}
+}
+
 map_user_point{
   _use:t="replicating"
   _replicated:t="transform"
   _replicated:t="team"
-  pointGroup:i=-1
-  countPoint:i=5
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   team:i=-1
   silentAppearance:b=no
   userPointType:t=""
-  userPointCustomIcon:t=""
-  timer__start:r=-1
-  timer__destroy:r=-1
-  timer__delta:r=1200
-  deleteAngle:r=0.01
-  userPointName:t=""
-  _replicated:t="userPointName"
-  _tracked:t="userPointName"
 
   "hudUserPoint:tag"{}
   "userPointOwner:eid"{}
@@ -75,12 +90,6 @@ map_user_point{
     hud_marker__max_distance:r=1500
     _tags:t="ui"
   }
-}
-
-user_point_entities_tracker{
-  countUserMark:i=1
-
-  "userPointTracker:tag"{}
 }
 
 ui_disabled{
@@ -102,6 +111,7 @@ fog_of_war{
   fog_of_war__dataGen:i=0
   _tracked:t="fog_of_war__dataGen"
   fog_of_war__enabled:b=no
+  fog_of_war__onlineSettingsPath:t=""
   fog_of_war__leftTop:p2=0, 0
   fog_of_war__rightBottom:p2=0, 0
   fog_of_war__resolution:r=5
@@ -144,6 +154,7 @@ tiled_map{
   tiled_map__tilesPath:t=""
   tiled_map__genExposure:r=1
   tiled_map__genHeight:r=-1
+  tiled_map__genHeightOffset:r=-1
   tiled_map__backgroundColor:c=0, 0, 0, 140
 
   "tiled_map:tag"{}

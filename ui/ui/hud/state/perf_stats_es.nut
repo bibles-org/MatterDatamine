@@ -1,6 +1,7 @@
+from "dagor.math" import Point3
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
-let { Point3 } = require("dagor.math")
 
 let warningsCompsTrack = [
   ["ui_perf_stats__server_tick_warn", 0],
@@ -18,7 +19,7 @@ let serverDtMinMaxAvg = Watched(Point3())
 
 ecs.register_es("script_perf_stats_es",
   {
-    [["onChange", "onInit"]] = @(_evt, _eid, comp) warnings(clone comp)
+    [["onChange", "onInit"]] = @(_evt, _eid, comp) warnings.set(clone comp)
   },
   {comps_track=warningsCompsTrack.map(@(v) [v[0], ecs.TYPE_INT])}
 )
@@ -26,12 +27,12 @@ ecs.register_es("script_perf_stats_es",
 ecs.register_es("server_stats_controller_ui_es",
   {
     [["onChange", "onInit"]] = function(_evt, _eid, comp){
-      serverStatsAvailable(true)
-      serverFps(comp.server_stats_controller__fps)
-      serverDtMinMaxAvg(comp.server_stats_controller__dtMinMaxAvg)
+      serverStatsAvailable.set(true)
+      serverFps.set(comp.server_stats_controller__fps)
+      serverDtMinMaxAvg.set(comp.server_stats_controller__dtMinMaxAvg)
     },
     onDestroy = function(_evt, _eid, _comp){
-      serverStatsAvailable(false)
+      serverStatsAvailable.set(false)
     }
   },
   {

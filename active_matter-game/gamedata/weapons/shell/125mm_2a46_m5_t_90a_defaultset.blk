@@ -1,0 +1,180 @@
+mass:r=19
+explosiveType:t="ocfol"
+explosiveMass:r=1.754
+caliber:r=0.125
+Cx:r=0.66
+speed:r=905
+maxDistance:r=7000
+normalizationPreset:t="heat"
+ricochetPreset:t="heat_fs"
+groundRicochetPreset:t="heat_fs"
+secondaryShattersPreset:t="ap"
+stabilityThreshold:r=0.5
+stabilityCaliberToArmorThreshold:r=5
+stabilityReductionAfterRicochet:r=0.3
+stabilityReductionAfterPenetration:r=0.15
+bulletType:t="heat_fs_tank"
+cumulativeSecondaryShattersPreset:t="heat_fs"
+explodeOnRendinst:b=yes
+fresnel:p3=0.23, 0.1, 2
+bulletName:t="125mm_3bk_18m"
+onHitChanceMultExplFuel:r=0.3
+relativeVelHitShift:p2=300, 1000
+relativeVelArmorShift:p2=200, 1000
+hitPower:r=260
+fuseDelayDist:r=0.05
+explodeTreshold:r=0.1
+
+stabilityRicochetModifier{
+  mod1:p2=0, 0.5
+  mod2:p2=15, 0.7
+  mod3:p2=30, 0.99
+}
+
+pressureDamage{
+  damageType:t="pressure"
+}
+
+hitpower{
+  HitPower0m:p2=1, 500
+  HitPower1000m:p2=0.9, 1000
+  HitPower1500m:p2=0.65, 1500
+  HitPower2500m:p2=0.5, 2500
+  HitPower7000m:p2=0, 7000
+}
+
+armorpower{
+  ArmorPower0m:p2=5, 10
+  ArmorPower10000m:p2=4, 10000
+}
+
+damage{
+  explosive{
+    radius:r=0.15
+    offset:r=0.2
+  }
+
+  shatter{
+    useRealShatters:b=yes
+    countPortion:r=0.22
+    damageType:t="shatter"
+
+    segment{
+      radiusScale:r=0.3
+      penetrationScale:r=2
+      damageScale:r=1.5
+      angles:p2=0, 5
+      countPortion:r=0.01
+      onHitChanceMultFire:r=10
+    }
+
+    segment{
+      radiusScale:r=0.15
+      penetrationScale:r=2
+      damageScale:r=1
+      angles:p2=0, 29
+      countPortion:r=0.03
+      onHitChanceMultFire:r=10
+    }
+
+    segment{
+      radiusScale:r=1
+      penetrationScale:r=1
+      damageScale:r=1
+      angles:p2=30, 69
+      countPortion:r=0.235
+    }
+
+    segment{
+      radiusScale:r=0.25
+      penetrationScale:r=1.7
+      damageScale:r=1.5
+      angles:p2=70, 110
+      countPortion:r=0.075
+      onHitChanceMultFire:r=50
+    }
+
+    segment{
+      radiusScale:r=1
+      penetrationScale:r=1
+      damageScale:r=1
+      angles:p2=111, 180
+      countPortion:r=0.15
+    }
+
+    segment{
+      radiusScale:r=1
+      penetrationScale:r=1
+      damageScale:r=1
+      angles:p2=181, 249
+      countPortion:r=0.15
+    }
+
+    segment{
+      radiusScale:r=0.25
+      penetrationScale:r=1.7
+      damageScale:r=1.5
+      angles:p2=250, 290
+      countPortion:r=0.075
+      onHitChanceMultFire:r=50
+    }
+
+    segment{
+      radiusScale:r=1
+      penetrationScale:r=1
+      damageScale:r=1
+      angles:p2=291, 329
+      countPortion:r=0.235
+    }
+
+    segment{
+      radiusScale:r=0.15
+      penetrationScale:r=2
+      damageScale:r=1
+      angles:p2=330, 359
+      countPortion:r=0.03
+      onHitChanceMultFire:r=10
+    }
+
+    segment{
+      radiusScale:r=0.3
+      penetrationScale:r=2
+      damageScale:r=1.5
+      angles:p2=355, 359
+      countPortion:r=0.01
+      onHitChanceMultFire:r=10
+    }
+  }
+}
+
+shatterDamage{
+  breachConeAngle:r=45
+}
+
+cumulativeDamage{
+  armorPower:r=550
+  distance:r=10
+  damage:r=500
+  onHitChanceMultFire:r=35
+  damageType:t="cumulative"
+}
+
+visual{
+  range_percent_of_ammo:p2=100, 0
+  traceFreq:i=1
+  tracer:t="100mmRed"
+  trail:t="black"
+}
+
+kineticDamage{
+  damageType:t="generic"
+}
+
+tracer{
+  headColor:c=255, 15, 15, 255
+  smokeColor:c=80, 80, 80, 186
+  startHeadColor:c=255, 248, 60, 120
+  startTime:r=0.025
+  smokeRadius:r=0.01
+  radius:r=0.12
+}

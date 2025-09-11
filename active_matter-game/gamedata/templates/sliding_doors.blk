@@ -1,10 +1,11 @@
 base_sliding_door{
   _use:t="sliding_rendinst"
   _use:t="use_object_enabled"
+  _use:t="doors_static_grid_object"
+  _use:t="enable_dynamic_grid_logic"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__setCustomUsePrompt:t="hud/open_door"
   item__useActionAvailable:b=yes
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  _tracked:t="transform"
   isDoor:b=yes
   door_operations__reqState:i=0
   _tracked:t="door_operations__reqState"
@@ -14,8 +15,6 @@ base_sliding_door{
   _replicated:t="door_operations__state"
   door_operations__useAimTmForTrace:b=yes
   net__scopeDistanceSq:r=108900
-  grid_obj__gridType:t="doors"
-  grid_obj__fixedTmScale:r=-1
   item__useActionHintType:i=1
   item_world_marker__offset:p3=0, 0, 0
   item_world_marker__riColliderPoint:p3=0.5, 0.6, 0.5
@@ -26,7 +25,6 @@ base_sliding_door{
   loud_noise__noisePerOperation:r=50
 
   ri_extra{}
-  grid_obj{}
   _group{
     _tags:t="server"
     obstacle__lastCheckTime:r=-1

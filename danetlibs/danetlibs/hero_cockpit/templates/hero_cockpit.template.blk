@@ -19,6 +19,7 @@ hero_cockpit_renderer{
   _singleton:b=yes
   _tags:t="render"
   render_hero_cockpit_into_early_prepass:b=no
+  is_hero_crawling:b=no
 
   "hero_cockpit_entities:list<eid>"{}
   "prepare_hero_cockpit_node:dafg::NodeHandle"{}

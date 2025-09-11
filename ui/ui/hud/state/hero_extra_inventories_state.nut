@@ -19,7 +19,7 @@ let safepackUniqueId = Watched("0")
 
 ecs.register_es("backpack_interactor_state_ui",
   {
-    [["onInit", "onChange"]] = @(_eid, comp) backpackEid(comp.militant_extra_inventories__backpackEid)
+    [["onInit", "onChange"]] = @(_eid, comp) backpackEid.set(comp.militant_extra_inventories__backpackEid)
   },
   {
     comps_rq=["watchedByPlr"]
@@ -32,7 +32,7 @@ ecs.register_es("backpack_interactor_state_ui",
 
 ecs.register_es("safepack_interactor_state_ui",
   {
-    [["onInit", "onChange"]] = @(_eid, comp) safepackEid(comp.militant_extra_inventories__safepackEid)
+    [["onInit", "onChange"]] = @(_eid, comp) safepackEid.set(comp.militant_extra_inventories__safepackEid)
   },
   {
     comps_rq=["watchedByPlr"]
@@ -44,7 +44,7 @@ ecs.register_es("safepack_interactor_state_ui",
 
 let trackBackpackComponents = {
   comps_ro=[
-    ["human_inventory__maxVolumeInt", ecs.TYPE_INT],
+    ["human_inventory__maxVolume", ecs.TYPE_INT],
     ["human_inventory__currentVolume", ecs.TYPE_INT],
     ["human_inventory__currentWeight", ecs.TYPE_FLOAT],
     ["itemContainer__uiItemsMergeEnabled", ecs.TYPE_BOOL, true],
@@ -58,23 +58,23 @@ let trackBackpackComponents = {
 let trackBackpackQuery = ecs.SqQuery("extra_inventories_stats_ui_Query", trackBackpackComponents)
 
 function trackBackpack(eid, comp){
-  if (eid != backpackEid.value)
+  if (eid != backpackEid.get())
     return
-  backpackMaxVolume(comp.human_inventory__maxVolumeInt / 10.0)
-  backpackCurrentVolume(comp.human_inventory__currentVolume / 10.0)
-  backpackCurrentWeight(comp.human_inventory__currentWeight)
-  backpackItemsMergeEnabled(comp.itemContainer__uiItemsMergeEnabled)
-  backpackItemsSortingEnabled(comp.itemContainer__uiItemsSortingEnabled)
-  backpackItemsOverrideSortingPriority(comp.itemContainer__uiItemsOverrideSortingPriority)
+  backpackMaxVolume.set(comp.human_inventory__maxVolume)
+  backpackCurrentVolume.set(comp.human_inventory__currentVolume)
+  backpackCurrentWeight.set(comp.human_inventory__currentWeight)
+  backpackItemsMergeEnabled.set(comp.itemContainer__uiItemsMergeEnabled)
+  backpackItemsSortingEnabled.set(comp.itemContainer__uiItemsSortingEnabled)
+  backpackItemsOverrideSortingPriority.set(comp.itemContainer__uiItemsOverrideSortingPriority)
   backpackUniqueId.set(comp.uniqueId)
 }
 
 function trackSafepack(eid, comp){
-  if (eid != safepackEid.value)
+  if (eid != safepackEid.get())
     return
 
-  safepackMaxVolume.set(comp.human_inventory__maxVolumeInt / 10.0)
-  safepackCurrentVolume.set(comp.human_inventory__currentVolume / 10.0)
+  safepackMaxVolume.set(comp.human_inventory__maxVolume)
+  safepackCurrentVolume.set(comp.human_inventory__currentVolume)
   safepackUniqueId.set(comp?.uniqueId ?? "0")
   safepackYVisualSize.set(comp?.safepack__visualYSize)
 }
@@ -85,26 +85,26 @@ let setItemRecognitionEnabledQuery = ecs.SqQuery("external_inventory_set_item_re
 })
 
 function setItemRecognitionEnabledECSValue(v){
-  setItemRecognitionEnabledQuery.perform(backpackEid.value, @(_, comp) comp.inventory__itemRecognitionEnabled = v)
+  setItemRecognitionEnabledQuery.perform(backpackEid.get(), @(_, comp) comp.inventory__itemRecognitionEnabled = v)
 }
 
 
-backpackEid.subscribe(function(v){
+backpackEid.subscribe_with_nasty_disregard_of_frp_update(function(v){
   if (v != ecs.INVALID_ENTITY_ID){
     trackBackpackQuery.perform(v, trackBackpack)
-    setItemRecognitionEnabledECSValue(backpackItemRecognitionEnabled.value)
+    setItemRecognitionEnabledECSValue(backpackItemRecognitionEnabled.get())
   }
 })
 
 
-safepackEid.subscribe(function(v){
+safepackEid.subscribe_with_nasty_disregard_of_frp_update(function(v){
   if (v != ecs.INVALID_ENTITY_ID){
     trackBackpackQuery.perform(v, trackSafepack)
-    setItemRecognitionEnabledECSValue(backpackItemRecognitionEnabled.value)
+    setItemRecognitionEnabledECSValue(backpackItemRecognitionEnabled.get())
   }
 })
 
-backpackItemRecognitionEnabled.subscribe(setItemRecognitionEnabledECSValue)
+backpackItemRecognitionEnabled.subscribe_with_nasty_disregard_of_frp_update(setItemRecognitionEnabledECSValue)
 
 
 ecs.register_es("late_init_extra_inventory_settings_ui", 

@@ -240,10 +240,6 @@ def human_spawn_blood_fx(victim_eid : EntityId; coll_node_id : int; blood_splash
 
 [es(tag=render)]
 def on_shell_hit_entity_fx_es(evt : OnShellHitEntityFx)
-  if evt.bloodSplash != HitBloodType.NONE
-    query(evt.projectileEid) <| $ [es] (projectile__fleshEffectCaliberGroup : float = -1.)
-      human_spawn_blood_fx(evt.victimEid, evt.nodeCollId, evt.bloodSplash, evt.pos, evt.dir, /*scale*/ 1., evt.norm, evt.shellId, projectile__fleshEffectCaliberGroup)
-
   if evt.directHit
     query(evt.projectileEid) <| $ [es] (launch_desc : LaunchDesc;
                                         dm_projectile_state : ProjectileState;
@@ -260,10 +256,17 @@ def on_shell_hit_entity_fx_es(evt : OnShellHitEntityFx)
                                  RIEX_HANDLE_NULL, /*rendinstPool*/ -1, projectile__isUnderwater, projectile__exploded, impactResult,
                                  projectile__lifeTime, projectile_tracer_props)
 
-  if evt.bloodSplash == HitBloodType.TWO_SIDE
-    create_blood_puddle_emitter(evt.victimEid, evt.nodeCollId)
-  elif evt.bloodSplash == HitBloodType.ONE_SIDE
-    add_hit_blood_effect(evt.pos, evt.dir)
+[es(tag=render)]
+def on_shell_hit_entity_blood_fx_es(evt : EventOnHitBloodFx; eid : EntityId)
+  if (evt.blood_splash == HitBloodType.NONE)
+    return
+  query(evt.projectile_eid) <| $ [es] (projectile__fleshEffectCaliberGroup : float = -1.)
+    human_spawn_blood_fx(eid, evt.coll_node, evt.blood_splash, evt.pos, evt.norm, /*scale*/ 1., evt.norm, evt.shell_id, projectile__fleshEffectCaliberGroup)
+
+  if evt.blood_splash == HitBloodType.TWO_SIDE
+    create_blood_puddle_emitter(eid, evt.coll_node)
+  elif evt.blood_splash == HitBloodType.ONE_SIDE
+    add_hit_blood_effect(evt.pos, evt.hit_dir)
 
 //This is for ricochetting off vehicles only!
 //Ricochetting off other surfaces is taken care of in projectile_hit_scene_es

@@ -3,7 +3,6 @@ from "%ui/ui_library.nut" import *
 
 
 
-
 let tiny_txt = freeze({
   font = Fonts.system
   fontSize = fsh(1.203)

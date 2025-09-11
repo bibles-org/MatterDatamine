@@ -1,5 +1,7 @@
 from "%ui/ui_library.nut" import *
 
+#allow-auto-freeze
+
 let defTransform = {}
 
 let outImage = freeze({
@@ -8,7 +10,7 @@ let outImage = freeze({
   children = {
     rendObj = ROBJ_IMAGE
     opacity = 0.7
-    size = [fsh(80), fsh(80)]
+    size = fsh(80)
     image = Picture("ui/aura_vision_arrow_a.avif")
   }
 })
@@ -18,7 +20,7 @@ let inImage = freeze({
   markerFlags = DngBhv.MARKER_SHOW_ONLY_IN_VIEWPORT
   children = {
     rendObj = ROBJ_IMAGE
-    size = [fsh(70), fsh(70)]
+    size = fsh(70)
     opacity = 0.5
     image = Picture("ui/aura_vision_arrow_a.avif")
   }

@@ -1,6 +1,6 @@
 from "%ui/ui_library.nut" import *
 
-let humanEquipmentSlots = {
+let humanEquipmentSlots = freeze({
   helmet = {
     defaultIcon = "skin#helmet_slot_icon.svg"
     slotTooltip = "slots/helmet"
@@ -9,6 +9,12 @@ let humanEquipmentSlots = {
   flashlight = {
     defaultIcon = "skin#flashlight_slot_icon.svg"
     slotTooltip = "slots/flashlight"
+    iconImageColor = Color(101, 101, 101, 51)
+  }
+  signal_grenade = {
+    defaultIcon = "skin#airdrop_icon.svg"
+    slotTooltip = "slots/signalGrenade"
+    slotKeyBindTip = "Human.UseSignalGrenade"
     iconImageColor = Color(101, 101, 101, 51)
   }
   pouch = {
@@ -51,8 +57,8 @@ let humanEquipmentSlots = {
     slotTooltip = "refiner/fuseResult"
     iconImageColor = Color(101, 101, 101, 51)
   }
-}
+})
 
-return {
+return freeze({
   humanEquipmentSlots
-}
+})

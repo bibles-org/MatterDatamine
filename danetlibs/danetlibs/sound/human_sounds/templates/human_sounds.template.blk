@@ -1,5 +1,6 @@
 sound_step_settings{
   _use:t="sound_physmat"
+  _use:t="landmesh_biomes_to_sound_material"
 
   _group{
     _tags:t="sound"
@@ -93,14 +94,6 @@ sound_step_settings{
   }
 
   "soundStepSettings:tag"{}
-}
-
-human_death_sound{
-  _group{
-    _tags:t="sound"
-
-    "human_death_sound__event:SoundEvent"{}
-  }
 }
 
 human_idle_sound{
@@ -215,8 +208,7 @@ human_sound_landmesh_queries{
   _group{
     _tags:t="sound"
     human_sound_landmesh_queries__lastQueryTime:r=-1
-    human_sound_landmesh_queries__biomePhysMatId:i=-1
-    human_sound_landmesh_queries__biomeOverridesWater:b=no
+    human_sound_landmesh_queries__biomeId:i=-1
     human_sound_landmesh_queries__biomeQueryId:i=-1
     human_sound_landmesh_queries__puddleDepth:r=0
     human_sound_landmesh_queries__puddleQueryId:i=-1
@@ -229,18 +221,6 @@ human_sound_landmesh_queries{
     human_sound_landmesh_queries__heroEnemyInAirInterval:p2=0.1, 0.5
     human_sound_landmesh_queries__lmeshDiff:r=2
     human_sound_landmesh_queries__puddleQueryToDepth:p4=0.1, 0.4, 0, 0.05
-
-    "human_sound_landmesh_queries__biomeToMaterial:list<ip2>"{}
-    "human_sound_landmesh_queries__biomes:object"{
-      "mud:object"{
-        physmat:t="mud"
-      }
-
-      "snow:object"{
-        physmat:t="snow"
-        overrideWater:b=yes
-      }
-    }
   }
 }
 
@@ -251,7 +231,7 @@ base_human_steps_sound{
   _group{
     _tags:t="sound"
     human_steps_sound__lastTimeOnGround:r=0
-    human_steps_sound__smid:r=-1
+    human_steps_sound__smid:i=-1
     human_steps_sound__waterDepth:r=0
     human_steps_sound__physStates:i=-1
     human_steps_sound__irqObjIdx:i=-1

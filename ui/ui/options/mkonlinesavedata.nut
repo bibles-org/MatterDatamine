@@ -1,6 +1,6 @@
 from "%ui/ui_library.nut" import *
 
-let {settings} = require("onlineSettings.nut")
+let {settings} = require("%ui/options/onlineSettings.nut")
 
 function mkOnlineSaveData(saveId, defValueFunc = @() null, validateFunc = @(v) v) {
   let watch = Computed(@() settings.get()?[saveId] ?? defValueFunc?())

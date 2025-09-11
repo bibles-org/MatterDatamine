@@ -1,12 +1,14 @@
+from "%dngscripts/platform.nut" import is_nswitch, is_sony, is_ps5, is_xbox, is_xbox_scarlett, is_pc, is_mobile
+from "dagor.system" import DBGLEVEL
+from "%ui/options/mkOnlineSaveData.nut" import mkOnlineSaveData
+import "dainput2" as dainput
+from "dagor.debug" import logerr
+from "settings" import save_settings, get_setting_by_blk_path, set_setting_by_blk_path
+from "%ui/control/active_controls.nut" import ControlsTypes, setForcedControlsType
+
 from "%ui/ui_library.nut" import *
 
-let {DBGLEVEL} = require("dagor.system")
-let { platformId, is_nswitch, is_sony, is_ps5, is_xbox, is_xbox_scarlett, is_pc, is_mobile } = require("%dngscripts/platform.nut")
-let { mkOnlineSaveData } = require("%ui/options/mkOnlineSaveData.nut")
-let dainput = require("dainput2")
-let { logerr } = require("dagor.debug")
-let { save_settings, get_setting_by_blk_path, set_setting_by_blk_path } = require("settings")
-let {ControlsTypes, setForcedControlsType } = require("%ui/control/active_controls.nut")
+let { platformId } = require("%dngscripts/platform.nut")
 
 
 
@@ -21,7 +23,7 @@ let uiClickRumbleSave = mkOnlineSaveData(clickRumbleSettingId,
   @() get_setting_by_blk_path(clickRumbleSettingId) ?? gui_scene.config.clickRumbleEnabled)
 
 let isUiClickRumbleEnabled = uiClickRumbleSave.watch
-gui_scene.setConfigProps({clickRumbleEnabled = isUiClickRumbleEnabled.value})
+gui_scene.setConfigProps({clickRumbleEnabled = isUiClickRumbleEnabled.get()})
 let setUiClickRumble = uiClickRumbleSave.setValue
 isUiClickRumbleEnabled.subscribe(function(val) {
   gui_scene.setConfigProps({clickRumbleEnabled = val})
@@ -63,7 +65,7 @@ let stick0Save = mkOnlineSaveData($"controls/{platformId}/stick0_dz_ver2", @() d
 let stick0_dz = stick0Save.watch
 
 function stick0_dz_apply(...) {
-  let stick_dz = stick0_dz.value
+  let stick_dz = stick0_dz.get()
   dainput.set_main_gamepad_stick_dead_zone(0, stick_dz)
   if (gui_scene.config.gamepadCursorAxisH == 0 || gui_scene.config.gamepadCursorAxisV == 1)
     setGamepadCursorDz(stick_dz)
@@ -76,7 +78,7 @@ let stick1Save = mkOnlineSaveData($"controls/{platformId}/stick1_dz_ver2", @() d
 let stick1_dz = stick1Save.watch
 
 function stick1_dz_apply(...) {
-  let stick_dz = stick1_dz.value
+  let stick_dz = stick1_dz.get()
   dainput.set_main_gamepad_stick_dead_zone(1, stick_dz)
   if (gui_scene.config.gamepadCursorAxisH == 2 || gui_scene.config.gamepadCursorAxisV == 3)
     setGamepadCursorDz(stick_dz)
@@ -112,7 +114,7 @@ function set_use_gamepad(v) {
   setForcedControlsType(v)
   useGamepad.setValue(v)
 }
-setForcedControlsType(use_gamepad_state.value)
+setForcedControlsType(use_gamepad_state.get())
 
 let onlineControls = {
   setUiClickRumble
@@ -135,4 +137,3 @@ let onlineControls = {
 }
 
 return onlineControls
-

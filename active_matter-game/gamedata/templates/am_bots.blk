@@ -7,6 +7,11 @@ am_bot_spawner_names{
   "bot_spawner__generatedNames:list<t>"{}
 }
 
+no_matching_bot_spawner{
+  "no_matching_bot_spawner:tag"{}
+  "no_matching_bot_spawner__teamSpawnDelays:list<r>"{}
+}
+
 am_bot_spawner{
   bot_spawner__playerTemplate:t="active_matter_bot_player"
   bot_spawner__spawnAt:r=0
@@ -18,8 +23,8 @@ am_bot_spawner{
   bot_spawner__stopOnZoneShrinkStart:b=yes
 
   "bot_spawner__heroTemplates:list<t>"{
-    i:t="am_militant_bot+equipped_bot+spawn_sequence_controller+equip_cortical_vault+allow_friendly_damage"
-    i:t="am_militant_bot_female+equipped_bot_female+spawn_sequence_controller+equip_cortical_vault+allow_friendly_damage"
+    i:t="am_militant_bot+equipped_bot+spawn_sequence_controller+allow_friendly_damage"
+    i:t="am_militant_bot_female+equipped_bot_female+spawn_sequence_controller+allow_friendly_damage"
   }
 
   "bot_spawner__mindcontrolledHeroTemplates:list<t>"{
@@ -106,6 +111,7 @@ am_militant_sector_dweller{
   _use:t="block_aim_in_air"
   _use:t="am_heartrate"
   _use:t="am_emotes"
+  body_cleanup_server_after_death__delay:r=-1
   kill_tracking_tag:t="militant"
   human_inventory__pickupRadius:r=1.5
   human_inventory__pickupHeight:r=1.5
@@ -120,7 +126,6 @@ am_militant_sector_dweller{
   nphys_obstacle__radius:r=0.25
   nphys_obstacle__numSegments:i=6
 
-  "dontBodyCleanupOnDeath:tag"{}
   "createObstacle:tag"{}
   "kill_tracking__taggedPlayers:object"{}
 }
@@ -180,23 +185,53 @@ am_guard_base{
   "encounter_item__encounterEid:eid"{}
   "kill_tracking__taggedPlayers:object"{}
   "cortical_hack_disabled:tag"{}
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="turned_soldier_remains_item"
-      dropChance:r=1
-      dropHeight:r=1
+  "human_inventory__deathDrop:array"{}
+  _group{
+    _tags:t="server"
+    net_ragdoll__physObjTemplate:t="turned_soldier_ragdoll_physobj"
+  }
+}
+
+turned_soldier_ragdoll_physobj{
+  _use:t="lootable_ragdoll_phys_obj_with_loot_preset"
+  item__setCustomUsePrompt:t="hud/search"
+  loot_drop_system__lootPreset:t="turned_soldier_death_loot_preset"
+}
+
+turned_soldier_death_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="turned_soldier_remains_item"
     }
 
-    "loot:object"{
-      itemTemplate:t="turned_soldier_remains_pristine_item"
-      dropChance:r=0.005
-      dropHeight:r=1
+    "item:object"{
+      sub_preset:t="turned_soldier_pristine_remains_preset"
+    }
+  }
+}
+
+turned_soldier_pristine_remains_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="turned_soldier_remains_pristine_item"
+      weight:r=0.005
+    }
+
+    "item:object"{
+      template_name:t="empty_loot_preset"
+      weight:r=0.995
     }
   }
 }
 
 am_modern_pmc_guard{
   _use:t="am_guard_base"
+  _use:t="am_militant_sound"
   _use:t="am_militant_suit_controller"
   beh_tree__blackboard__patrolRadius:r=12
   equipped_bot__equipmentGeneratorName:t="modern_pmc_equipment_generator"
@@ -206,6 +241,7 @@ am_modern_pmc_guard{
 
 am_modern_pmc_encounter_guard{
   _use:t="am_guard_base"
+  _use:t="am_militant_sound"
   _use:t="am_militant_suit_controller"
   beh_tree__blackboard__patrolRadius:r=8
   equipped_bot__equipmentGeneratorName:t="modern_pmc_equipment_generator"
@@ -213,37 +249,69 @@ am_modern_pmc_encounter_guard{
 
 am_dendroid_encounter_guard{
   _use:t="am_guard_base"
+  _use:t="am_dendroid_encounter_guard_sound"
   _use:t="am_militant_suit_controller"
   beh_tree__blackboard__patrolRadius:r=8
   equipped_bot__equipmentGeneratorName:t="tree_horde_equipment_generator"
   kill_tracking_tag:t="dendroid"
   death_note__name:t="note_dendroid"
 
+  _group{
+    _tags:t="server"
+    net_ragdoll__physObjTemplate:t="dendroid_ragdoll_physobj"
+  }
+
   "kill_tracking__taggedPlayers:object"{}
   "cortical_hack_disabled:tag"{}
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="dendroid_remains_item"
-      dropChance:r=1
-      dropHeight:r=1
+}
+
+dendroid_ragdoll_physobj{
+  _use:t="lootable_ragdoll_phys_obj_with_loot_preset"
+  item__setCustomUsePrompt:t="hud/search"
+  loot_drop_system__lootPreset:t="dendroid_death_loot_preset"
+}
+
+dendroid_death_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="dendroid_remains_item"
     }
 
-    "loot:object"{
-      itemTemplate:t="dendroid_remains_pristine_item"
-      dropChance:r=0.005
-      dropHeight:r=1
+    "item:object"{
+      sub_preset:t="dendroid_pristine_remains_preset"
+    }
+  }
+}
+
+dendroid_pristine_remains_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="dendroid_remains_pristine_item"
+      weight:r=0.005
+    }
+
+    "item:object"{
+      template_name:t="empty_loot_preset"
+      weight:r=0.995
     }
   }
 }
 
 am_mindcontrolled_encounter_guard{
   _use:t="am_guard_base"
+  _use:t="am_militant_sound"
   _use:t="am_militant_suit_controller"
   beh_tree__blackboard__patrolRadius:r=8
 }
 
 am_area_guard{
   _use:t="am_guard_base"
+  _use:t="am_militant_sound"
   _use:t="am_militant_suit_controller"
   beh_tree__blackboard__patrolRadius:r=12
   equipped_bot__equipmentGeneratorName:t="military_guard_equipment_generator"
@@ -270,6 +338,7 @@ am_corrupted_boss_game_effect{
 
 am_corrupted_boss_heavy_a{
   _use:t="am_guard_base"
+  _use:t="am_militant_sound"
   _use:t="am_militant_suit_base"
   beh_tree__blackboard__patrolRadius:r=12
   equipped_bot__equipmentGeneratorName:t="corrupted_boss_a_equipment_generator"
@@ -283,7 +352,7 @@ am_corrupted_boss_heavy_a{
   animchar_fast_phys__res:t="am_soldier_corrupted_male_heavy_a_fastphys"
   human_net_phys__blk:t="gamedata/units/corrupted_boss.blk"
   refill_magazines__refillVolumeRng:p2=0.65, 0.95
-  human_inventory__maxVolume:r=100
+  human_inventory__maxVolume:i=1000
 
   "area_guard__setOriginOnSpawn:tag"{}
   animchar_fast_phys{
@@ -294,11 +363,18 @@ am_corrupted_boss_heavy_a{
     i:t="am_corrupted_boss_game_effect"
   }
 
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+
+    "human_damage_model__partName:list<t>"{}
+    "human_damage_model__partHp:list<r>"{}
+    "human_damage_model__partInjured:list<b>"{}
+  }
+
   "human_damage_model__parts:object"{
     "head:object"{
       maxHp:r=1000
-      hp:r=1000
-      isInjured:b=no
       removeInjuryHp:r=10
       explosionImpact:b=yes
       collisionImpact:b=no
@@ -319,8 +395,6 @@ am_corrupted_boss_heavy_a{
 
     "body:object"{
       maxHp:r=2500
-      hp:r=2500
-      isInjured:b=no
       removeInjuryHp:r=10
       explosionImpact:b=yes
       collisionImpact:b=no
@@ -340,8 +414,6 @@ am_corrupted_boss_heavy_a{
 
     "right_hand:object"{
       maxHp:r=1500
-      hp:r=1500
-      isInjured:b=no
       removeInjuryHp:r=10
       distributionDamageMult:r=0.75
       explosionImpact:b=yes
@@ -365,8 +437,6 @@ am_corrupted_boss_heavy_a{
 
     "left_hand:object"{
       maxHp:r=1500
-      hp:r=1500
-      isInjured:b=no
       removeInjuryHp:r=10
       distributionDamageMult:r=0.75
       explosionImpact:b=yes
@@ -390,8 +460,6 @@ am_corrupted_boss_heavy_a{
 
     "right_leg:object"{
       maxHp:r=1500
-      hp:r=1500
-      isInjured:b=no
       removeInjuryHp:r=10
       distributionDamageMult:r=1.25
       explosionImpact:b=yes
@@ -414,8 +482,6 @@ am_corrupted_boss_heavy_a{
 
     "left_leg:object"{
       maxHp:r=1500
-      hp:r=1500
-      isInjured:b=no
       removeInjuryHp:r=10
       distributionDamageMult:r=1.25
       explosionImpact:b=yes
@@ -503,6 +569,54 @@ equipped_bot{
 equipped_bot_female{
   _use:t="equipped_bot"
   equipped_bot__equipmentGeneratorName:t="ordinary_equipment_female_generator"
+}
+
+test_all_equipped_bot{
+  _use:t="equipped_bot"
+  equipped_bot__equipmentGeneratorName:t="test_equipment_generator"
+}
+
+test_all_equipped_bot_female{
+  _use:t="equipped_bot_female"
+  equipped_bot__equipmentGeneratorName:t="test_equipment_female_generator"
+}
+
+burntout_equipped_bot{
+  equipped_bot__equipmentGeneratorName:t="burntout_equipment_generator"
+  equipped_bot__equipmentGeneratorCorruptionChance:r=0.75
+}
+
+burntout_bot_slots{
+  "human_equipment__slots:object"{
+    "helmet:eid"{}
+    "backpack:eid"{}
+    "flashlight:eid"{}
+    "pouch:eid"{}
+    "chronogene_primary_1:eid"{}
+  }
+
+  "slots_holder__slotTemplates:shared:object"{
+    backpack:t="backpack_slot"
+    flashlight:t="flashlight_slot"
+    pouch:t="pouch_slot"
+    helmet:t="helmet_slot"
+    chronogene_primary_1:t="chronogene_primary_slot"
+    chronogene_secondary_1:t="chronogene_secondary_slot"
+    chronogene_secondary_2:t="chronogene_secondary_slot"
+    chronogene_secondary_3:t="chronogene_secondary_slot"
+    chronogene_secondary_4:t="chronogene_secondary_slot"
+    chronogene_melee_1:t="chronogene_melee_slot"
+    chronogene_dogtag_1:t="chronogene_dogtag_slot"
+    primary:t="primary_secondary_slot"
+    secondary:t="primary_secondary_slot"
+    tertiary:t="tertiary_slot"
+    melee:t="melee_slot"
+  }
+}
+
+burntout_operative{
+  _use:t="am_militant_bot"
+  _use:t="burntout_bot_slots"
 }
 
 create_bot_player_for_hero{
@@ -777,10 +891,9 @@ suicide_effect_in_1_sec{
 am_militant_suicide_bot{
   _use:t="am_militant_bot"
   _use:t="equipped_bot"
-  _use:t="equip_cortical_vault"
   _use:t="create_bot_player_for_hero"
   beh_tree__enabled:b=no
-  bodyCleanupTime:r=500000
+  body_cleanup_server_after_death__delay:r=-1
 
   "human_voice_sound__descs:shared:object"{
     _tags:t="sound"

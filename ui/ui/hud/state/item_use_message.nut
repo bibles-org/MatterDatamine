@@ -1,7 +1,9 @@
+import "%ui/components/msgbox.nut" as msgbox
+
+from "dasevents" import TryUseItem
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
-let {TryUseItem} = require("dasevents")
-let msgbox = require("%ui/components/msgbox.nut")
 
 let itemMessageQuery = ecs.SqQuery("itemMessageQuery", {comps_ro = [["item__useMessage", ecs.TYPE_STRING]]})
 

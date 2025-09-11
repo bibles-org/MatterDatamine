@@ -1,6 +1,9 @@
+from "%ui/hud/actions.nut" import mainAction, altAction
+
 from "%ui/ui_library.nut" import *
-let { mainAction, altAction } = require("%ui/hud/actions.nut")
 let { showInteraction } = require("%ui/hud/menus/interaction.nut")
+
+#allow-auto-freeze
 
 function action_marker_ctors(eid, worldPos){
   let data = {

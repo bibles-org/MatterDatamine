@@ -1,0 +1,26 @@
+entity{
+  _template:t="nexus_beacon"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [26.1812, 108.855, 17.2927]]
+  nexus_beacon__id:i=1
+  nexus_beacon__name:t="Market hall"
+  nexus_beacon__symbol:t="A"
+  nexus_beacon__allCaptureDevicesCount:i=2
+}
+
+entity{
+  _template:t="nexus_beacon_capture_device"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [26.1773, 104.489, 17.3017]]
+  nexus_beacon_capture_device__parentId:i=1
+  item__setCustomUsePrompt:t="nexus_portal/Market_hall floor"
+}
+
+entity{
+  _template:t="nexus_beacon_capture_device"
+  transform:m=[[-1, 8.74228e-08, 0] [-8.74228e-08, -1, 0] [0, 0, 1] [26.1773, 113.256, 17.3017]]
+  nexus_beacon_capture_device__parentId:i=1
+  item__setCustomUsePrompt:t="nexus_portal/Market_hall ceiling"
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_vanilla_mall_point_a_decorations.blk"
+}

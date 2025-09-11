@@ -56,37 +56,31 @@ tree_burnt_tall_a_dmg{
 debris_clothes_a{
   hp:r=5
   material:t="fabric"
-  physRes:t="debris_clothes_a_destr_phobj"
 }
 
 debris_clothes_b{
   hp:r=5
   material:t="fabric"
-  physRes:t="debris_clothes_b_destr_phobj"
 }
 
 debris_clothes_c{
   hp:r=5
   material:t="fabric"
-  physRes:t="debris_clothes_c_destr_phobj"
 }
 
 debris_clothes_d{
   hp:r=5
   material:t="fabric"
-  physRes:t="debris_clothes_d_destr_phobj"
 }
 
 debris_clothes_e{
   hp:r=5
   material:t="fabric"
-  physRes:t="debris_clothes_e_destr_phobj"
 }
 
 debris_clothes_f{
   hp:r=5
   material:t="fabric"
-  physRes:t="debris_clothes_f_destr_phobj"
 }
 
 soil_heap_medium_a{
@@ -182,33 +176,6 @@ bag_grain_stand_a{
   fxScale:r=1
 }
 
-tree_fence_iron_a{
-  hp:r=60
-  impulseThreshold:r=2
-  material:t="steel"
-  fxTemplate:t="envir_destr_basic_small_effect"
-  fxScale:r=1
-  physRes:t="tree_fence_iron_a_destr_phobj"
-}
-
-tree_fence_iron_b{
-  hp:r=60
-  impulseThreshold:r=2
-  material:t="steel"
-  fxTemplate:t="envir_destr_basic_small_effect"
-  fxScale:r=1
-  physRes:t="tree_fence_iron_b_destr_phobj"
-}
-
-tree_fence_iron_c{
-  hp:r=60
-  impulseThreshold:r=2
-  material:t="steel"
-  fxTemplate:t="envir_destr_basic_small_effect"
-  fxScale:r=1
-  physRes:t="tree_fence_iron_c_destr_phobj"
-}
-
 road_block_concrete_a{
   destructionImpulse:r=5000
   impulseThreshold:r=256
@@ -252,56 +219,6 @@ tree_stump_b{
   fxScale:r=1
   physRes:t="tree_stump_b_destr_phobj"
   material:t="wood"
-}
-
-door_steel_2115x1320_a_l{
-  hp:r=10
-  impulseThreshold:r=50
-  material:t="steel"
-  isParent:b=no
-  fxTemplate:t="envir_destr_metal_med_effect"
-  fxScale:r=1
-  physRes:t="door_steel_2115x1320_a_l_destr_phobj"
-}
-
-modern_store_metal_door_a_shutter{
-  hp:r=10
-  impulseThreshold:r=50
-  material:t="steel"
-  isParent:b=no
-  fxTemplate:t="envir_destr_metal_med_effect"
-  fxScale:r=1
-  physRes:t="modern_store_metal_door_a_shutter_destr_phobj"
-}
-
-modern_store_metal_door_b_shutter_l{
-  hp:r=10
-  impulseThreshold:r=50
-  material:t="steel"
-  isParent:b=no
-  fxTemplate:t="envir_destr_metal_med_effect"
-  fxScale:r=1
-  physRes:t="modern_store_metal_door_b_shutter_l_destr_phobj"
-}
-
-modern_store_metal_door_b_shutter_r{
-  hp:r=10
-  impulseThreshold:r=50
-  material:t="steel"
-  isParent:b=no
-  fxTemplate:t="envir_destr_metal_med_effect"
-  fxScale:r=1
-  physRes:t="modern_store_metal_door_b_shutter_r_destr_phobj"
-}
-
-modern_store_metal_door_c_shutter{
-  hp:r=10
-  impulseThreshold:r=50
-  material:t="steel"
-  isParent:b=no
-  fxTemplate:t="envir_destr_metal_med_effect"
-  fxScale:r=1
-  physRes:t="modern_store_metal_door_c_shutter_destr_phobj"
 }
 
 sovmod_police_lattice_door_a{
@@ -468,181 +385,6 @@ military_dining_entrance_door_r{
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
   physRes:t="military_dining_entrance_door_r_destr_phobj"
-}
-
-european_gas_station_a_door_a_l{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="window_wood"
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="european_gas_station_a_door_a_l_destr_phobj"
-}
-
-european_gas_station_a_door_a_l_damaged{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="window_wood"
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="european_gas_station_a_door_a_l_destr_phobj"
-}
-
-european_gas_station_a_door_a_r{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="window_wood"
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="european_gas_station_a_door_a_r_destr_phobj"
-}
-
-european_gas_station_a_door_a_r_damaged{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="window_wood"
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="european_gas_station_a_door_a_r_destr_phobj"
-}
-
-european_gas_station_a_door_b{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="softWoodDoor"
-  fxTemplate:t="envir_destr_wood_door_med_effect"
-  fxScale:r=1
-  physRes:t="european_gas_station_a_door_b_destr_phobj"
-}
-
-european_gas_station_a_door_b_damaged{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="softWoodDoor"
-  fxTemplate:t="envir_destr_wood_door_med_effect"
-  fxScale:r=1
-  physRes:t="european_gas_station_a_door_b_destr_phobj"
-}
-
-european_gas_station_a_door_c{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="window_wood"
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="european_gas_station_a_door_c_destr_phobj"
-}
-
-european_gas_station_a_door_c_damaged{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="window_wood"
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="european_gas_station_a_door_c_destr_phobj"
-}
-
-european_gas_station_a_wc_door{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="softWoodDoor"
-  fxTemplate:t="envir_destr_wood_door_med_effect"
-  fxScale:r=1
-  physRes:t="european_gas_station_a_wc_door_destr_phobj"
-}
-
-modern_plastic_door_shutter_1200x2200_a{
-  hp:r=60
-  destructionImpulse:r=28
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="modern_plastic_door_shutter_1200x2200_a_destr_phobj"
-}
-
-modern_plastic_door_shutter_3000x3100_a_l{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="window_wood"
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="modern_plastic_door_shutter_3000x3100_a_l_destr_phobj"
-}
-
-modern_plastic_door_shutter_3000x3100_a_r{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="window_wood"
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="modern_plastic_door_shutter_3000x3100_a_r_destr_phobj"
-}
-
-modern_plastic_door_shutter_3000x3100_b_l{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="window_wood"
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="modern_plastic_door_shutter_3000x3100_b_l_destr_phobj"
-}
-
-modern_plastic_door_shutter_3000x3100_b_r{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="window_wood"
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="modern_plastic_door_shutter_3000x3100_b_r_destr_phobj"
-}
-
-modern_plastic_door_shutter_3000x3100_b_l_damaged{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="window_wood"
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="modern_plastic_door_shutter_3000x3100_b_l_destr_phobj"
-}
-
-modern_plastic_door_shutter_3000x3100_b_r_damaged{
-  hp:r=60
-  destructionImpulse:r=28
-  material:t="window_wood"
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="modern_plastic_door_shutter_3000x3100_b_r_destr_phobj"
-}
-
-modern_plastic_door_shutter_1200x2200_a_damaged{
-  hp:r=60
-  destructionImpulse:r=28
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="modern_plastic_door_shutter_1200x2200_a_destr_phobj"
-}
-
-modern_plastic_window_1500x2000_a{
-  nextRes:t="modern_plastic_window_1500x2000_a_dmg"
-  hp:r=30
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="modern_plastic_window_1500x2000_a_destr_phobj"
-}
-
-modern_plastic_window_1500x2000_a_damaged_a{
-  nextRes:t="modern_plastic_window_1500x2000_a_damaged_a_dmg"
-  hp:r=30
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="modern_plastic_window_1500x2000_a_damaged_a_destr_phobj"
-}
-
-modern_plastic_window_1500x2000_a_damaged_b{
-  nextRes:t="modern_plastic_window_1500x2000_a_damaged_b_dmg"
-  hp:r=30
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-  physRes:t="modern_plastic_window_1500x2000_a_damaged_b_destr_phobj"
 }
 
 ph_1605am_shop_door_a_l{
@@ -865,7 +607,7 @@ afr_command_office_door_metal_a{
   isParent:b=no
   fxTemplate:t="envir_destr_metal_med_effect"
   fxScale:r=1
-  physRes:t="modern_store_metal_door_b_shutter_l_destr_phobj"
+  physRes:t="afr_command_office_door_metal_a_destr_phobj"
 }
 
 afr_command_office_door_metal_b{
@@ -875,7 +617,7 @@ afr_command_office_door_metal_b{
   isParent:b=no
   fxTemplate:t="envir_destr_metal_med_effect"
   fxScale:r=1
-  physRes:t="modern_store_metal_door_b_shutter_l_destr_phobj"
+  physRes:t="afr_command_office_door_metal_b_destr_phobj"
 }
 
 african_plastic_door_1150x2300_a{
@@ -883,7 +625,7 @@ african_plastic_door_1150x2300_a{
   destructionImpulse:r=8
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
-  physRes:t="modern_plastic_door_shutter_1200x2200_a_destr_phobj"
+  physRes:t="african_plastic_door_1150x2300_a_destr_phobj"
 }
 
 african_plastic_door_1650x2400_a_l{
@@ -892,7 +634,7 @@ african_plastic_door_1650x2400_a_l{
   material:t="window_wood"
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
-  physRes:t="modern_store_metal_door_c_shutter_destr_phobj"
+  physRes:t="african_plastic_door_1650x2400_a_l_destr_phobj"
 }
 
 african_plastic_door_1650x2400_a_r{
@@ -901,7 +643,7 @@ african_plastic_door_1650x2400_a_r{
   material:t="window_wood"
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
-  physRes:t="modern_store_metal_door_c_shutter_destr_phobj"
+  physRes:t="african_plastic_door_1650x2400_a_r_destr_phobj"
 }
 
 ph_1605am_door_a{
@@ -1356,6 +1098,24 @@ is_african_wicker_basket_a{
 is_african_wicker_basket_b{
   hp:r=30
   fxTemplate:t="envir_destr_wood_med_effect"
+  fxScale:r=1
+}
+
+is_african_wicker_plates_a{
+  hp:r=5
+  fxTemplate:t="envir_destr_wood_small_effect"
+  fxScale:r=1
+}
+
+is_african_wicker_plates_b{
+  hp:r=5
+  fxTemplate:t="envir_destr_wood_small_effect"
+  fxScale:r=1
+}
+
+is_african_wicker_plates_c{
+  hp:r=5
+  fxTemplate:t="envir_destr_wood_small_effect"
   fxScale:r=1
 }
 
@@ -10305,6 +10065,54 @@ african_slum_football_goal{
   physRes:t="african_slum_football_goal_destr_phobj"
 }
 
+garbadge_pile_large_a_a{
+  impulseThreshold:r=5
+  destructionImpulse:r=500
+  fxTemplate:t="envir_destr_basic_med_effect"
+  fxScale:r=1
+  physRes:t="garbadge_pile_large_a_a_destr_phobj"
+}
+
+garbadge_pile_large_a_b{
+  impulseThreshold:r=5
+  destructionImpulse:r=500
+  fxTemplate:t="envir_destr_basic_med_effect"
+  fxScale:r=1
+  physRes:t="garbadge_pile_large_a_b_destr_phobj"
+}
+
+garbadge_pile_large_b_a{
+  impulseThreshold:r=5
+  destructionImpulse:r=500
+  fxTemplate:t="envir_destr_basic_med_effect"
+  fxScale:r=1
+  physRes:t="garbadge_pile_large_b_a_destr_phobj"
+}
+
+garbadge_pile_large_b_b{
+  impulseThreshold:r=5
+  destructionImpulse:r=500
+  fxTemplate:t="envir_destr_basic_med_effect"
+  fxScale:r=1
+  physRes:t="garbadge_pile_large_b_b_destr_phobj"
+}
+
+garbadge_pile_large_c_a{
+  impulseThreshold:r=5
+  destructionImpulse:r=500
+  fxTemplate:t="envir_destr_basic_med_effect"
+  fxScale:r=1
+  physRes:t="garbadge_pile_large_c_a_destr_phobj"
+}
+
+garbadge_pile_large_c_b{
+  impulseThreshold:r=5
+  destructionImpulse:r=500
+  fxTemplate:t="envir_destr_basic_med_effect"
+  fxScale:r=1
+  physRes:t="garbadge_pile_large_c_b_destr_phobj"
+}
+
 is_modern_film_case_a{
   hp:r=10
   material:t="steel"
@@ -11681,46 +11489,67 @@ tire_fence_b{
 }
 
 brick_fence_a_1500_a{
-  hp:r=50
+  hp:r=60
   impulseThreshold:r=19
-  fxTemplate:t="envir_destr_basic_small_effect"
+  fxTemplate:t="envir_destr_concrete_med_effect"
   fxScale:r=1
+  physRes:t="brick_fence_a_1500_a_destr_phobj"
+  nextRes:t="brick_fence_a_1500_a_dmg"
 }
 
 brick_fence_a_3000_a{
-  nextRes:t="brick_fence_a_3000_a_dmg"
+  hp:r=60
   impulseThreshold:r=19
-  hp:r=50
-  fxTemplate:t="envir_destr_basic_small_effect"
+  fxTemplate:t="envir_destr_concrete_med_effect"
   fxScale:r=1
   physRes:t="brick_fence_a_3000_a_destr_phobj"
+  nextRes:t="brick_fence_a_3000_a_dmg"
 }
 
 brick_fence_a_3000_b{
-  nextRes:t="brick_fence_a_3000_b_dmg"
+  hp:r=60
   impulseThreshold:r=19
-  hp:r=50
-  fxTemplate:t="envir_destr_basic_small_effect"
+  fxTemplate:t="envir_destr_concrete_med_effect"
   fxScale:r=1
   physRes:t="brick_fence_a_3000_b_destr_phobj"
+  nextRes:t="brick_fence_a_3000_b_dmg"
 }
 
 brick_fence_a_3000_c{
-  nextRes:t="brick_fence_a_3000_c_dmg"
+  hp:r=60
   impulseThreshold:r=19
-  hp:r=50
-  fxTemplate:t="envir_destr_basic_small_effect"
+  fxTemplate:t="envir_destr_concrete_med_effect"
   fxScale:r=1
-  physRes:t="brick_fence_a_3000_c_destr_phobj"
+  physRes:t="brick_fence_a_3000_a_destr_phobj"
+  nextRes:t="brick_fence_a_3000_c_dmg"
+}
+
+brick_fence_a_3000_d{
+  hp:r=60
+  impulseThreshold:r=19
+  fxTemplate:t="envir_destr_concrete_med_effect"
+  fxScale:r=1
+  physRes:t="brick_fence_a_3000_d_destr_phobj"
+  nextRes:t="brick_fence_a_3000_d_dmg"
+}
+
+brick_fence_a_3000_e{
+  hp:r=60
+  impulseThreshold:r=19
+  fxTemplate:t="envir_destr_concrete_med_effect"
+  fxScale:r=1
+  physRes:t="brick_fence_a_3000_e_destr_phobj"
+  nextRes:t="brick_fence_a_3000_e_dmg"
 }
 
 brick_fence_a_a_column_a{
-  nextRes:t="brick_fence_a_a_column_a_dmg"
+  hp:r=80
   impulseThreshold:r=19
-  hp:r=50
-  fxTemplate:t="envir_destr_basic_small_effect"
+  isParent:b=yes
+  fxTemplate:t="envir_destr_concrete_med_effect"
   fxScale:r=1
   physRes:t="brick_fence_a_a_column_a_destr_phobj"
+  nextRes:t="brick_fence_a_a_column_a_dmg"
 }
 
 brick_fence_a_a_palette_a{
@@ -11815,6 +11644,7 @@ brick_fence_c_pallete_c{
 
 metal_netting_barbed_fence_a{
   destructionImpulse:r=1000
+  isParent:b=yes
   fxTemplate:t="envir_destr_basic_small_effect"
   fxScale:r=2
   physRes:t="metal_netting_barbed_fence_a_destr_phobj"
@@ -11823,6 +11653,7 @@ metal_netting_barbed_fence_a{
 
 metal_netting_barbed_fence_b{
   destructionImpulse:r=1000
+  isParent:b=yes
   fxTemplate:t="envir_destr_basic_small_effect"
   fxScale:r=2
   physRes:t="metal_netting_barbed_fence_b_destr_phobj"
@@ -11831,6 +11662,7 @@ metal_netting_barbed_fence_b{
 
 metal_netting_barbed_fence_c{
   destructionImpulse:r=1000
+  isParent:b=yes
   fxTemplate:t="envir_destr_basic_small_effect"
   fxScale:r=2
   physRes:t="metal_netting_barbed_fence_c_destr_phobj"
@@ -11839,10 +11671,43 @@ metal_netting_barbed_fence_c{
 
 metal_netting_barbed_fence_d{
   destructionImpulse:r=1000
+  isParent:b=yes
   fxTemplate:t="envir_destr_basic_small_effect"
   fxScale:r=2
   physRes:t="metal_netting_barbed_fence_d_destr_phobj"
   nextRes:t="metal_netting_barbed_fence_d_dmg"
+}
+
+metal_netting_barbed_wire_a{
+  destructionImpulse:r=1000
+  material:t="barbwire"
+  fxTemplate:t="envir_destr_basic_small_effect"
+  fxScale:r=2
+  physRes:t="metal_netting_barbed_wire_a_destr_phobj"
+}
+
+metal_netting_barbed_wire_b{
+  destructionImpulse:r=1000
+  material:t="barbwire"
+  fxTemplate:t="envir_destr_basic_small_effect"
+  fxScale:r=2
+  physRes:t="metal_netting_barbed_wire_b_destr_phobj"
+}
+
+metal_netting_barbed_wire_c{
+  destructionImpulse:r=1000
+  material:t="barbwire"
+  fxTemplate:t="envir_destr_basic_small_effect"
+  fxScale:r=2
+  physRes:t="metal_netting_barbed_wire_c_destr_phobj"
+}
+
+metal_netting_barbed_wire_d{
+  destructionImpulse:r=1000
+  material:t="barbwire"
+  fxTemplate:t="envir_destr_basic_small_effect"
+  fxScale:r=2
+  physRes:t="metal_netting_barbed_wire_d_destr_phobj"
 }
 
 fence_park_a_column_a{
@@ -15051,7 +14916,7 @@ afr_airport_hangar_crane_a{
   destructionImpulse:r=20
   fxTemplate:t="envir_destr_metal_big_effect"
   fxScale:r=1
-  physRes:t="afr_airport_hangar_crane_destra_phobj"
+  physRes:t="afr_airport_hangar_crane_a_destr_phobj"
 }
 
 afr_airport_hangar_lift_a{
@@ -17644,7 +17509,6 @@ clothesline_a_a{
   hp:r=80
   material:t="steel"
   isParent:b=yes
-  destructibleByParent:b=yes
   fxTemplate:t="envir_destr_metal_med_effect"
   fxScale:r=1
 }
@@ -17654,7 +17518,6 @@ clothesline_a_b{
   hp:r=80
   material:t="steel"
   isParent:b=yes
-  destructibleByParent:b=yes
   fxTemplate:t="envir_destr_metal_med_effect"
   fxScale:r=1
 }
@@ -17664,18 +17527,17 @@ clothesline_b_a{
   hp:r=80
   material:t="steel"
   isParent:b=yes
-  destructibleByParent:b=no
   destroyNeighbourDepth:i=3
   fxTemplate:t="envir_destr_metal_med_effect"
   fxScale:r=1
 }
 
 clothesline_b_b{
-  physRes:t="clothesline_a_b_destr_phobj"
+  physRes:t="clothesline_b_b_destr_phobj"
   hp:r=80
   material:t="steel"
   isParent:b=yes
-  destructibleByParent:b=yes
+  destroyNeighbourDepth:i=3
   fxTemplate:t="envir_destr_metal_med_effect"
   fxScale:r=1
 }
@@ -17782,16 +17644,18 @@ sheets_fabric_d_d{
 clothesline_b_rope_a{
   physRes:t="clothesline_b_rope_a_destr_phobj"
   hp:r=1
+  isParent:b=yes
+  destructibleByParent:b=yes
   material:t="fabric"
-  isParent:b=no
   fxScale:r=1
 }
 
 clothesline_b_rope_b{
   physRes:t="clothesline_b_rope_b_destr_phobj"
   hp:r=1
+  isParent:b=yes
+  destructibleByParent:b=yes
   material:t="fabric"
-  isParent:b=no
   fxScale:r=1
 }
 
@@ -18315,14 +18179,6 @@ modern_commercial_fridge_a_glass{
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
   physRes:t="modern_commercial_fridge_a_glass_destr_phobj"
-}
-
-coffee_machine_a{
-  hp:r=30
-  material:t="steel"
-  fxTemplate:t="envir_destr_metal_small_effect"
-  fxScale:r=1
-  physRes:t="coffee_machine_a_destr_phobj"
 }
 
 modern_commercial_fridge_a{
@@ -22458,29 +22314,29 @@ water_cistern_plastic_a{
 }
 
 fish_a{
-  hp:r=5
-  fxTemplate:t="envir_destr_wood_small_effect"
+  hp:r=1
+  fxTemplate:t="envir_destr_sandbags_effect"
   fxScale:r=1
   physRes:t="fish_a_destr_phobj"
 }
 
 fish_b{
-  hp:r=5
-  fxTemplate:t="envir_destr_wood_small_effect"
+  hp:r=1
+  fxTemplate:t="envir_destr_sandbags_effect"
   fxScale:r=1
   physRes:t="fish_b_destr_phobj"
 }
 
 fish_c{
-  hp:r=5
-  fxTemplate:t="envir_destr_wood_small_effect"
+  hp:r=1
+  fxTemplate:t="envir_destr_sandbags_effect"
   fxScale:r=1
   physRes:t="fish_c_destr_phobj"
 }
 
 fish_d{
-  hp:r=5
-  fxTemplate:t="envir_destr_wood_small_effect"
+  hp:r=1
+  fxTemplate:t="envir_destr_sandbags_effect"
   fxScale:r=1
   physRes:t="fish_d_destr_phobj"
 }
@@ -23998,8 +23854,8 @@ is_shop_shelving_wood_c{
 }
 
 advertising_stand_a{
-  hp:r=150
-  impulseThreshold:r=20
+  hp:r=40
+  impulseThreshold:r=2
   fxScale:r=1
   material:t="window_wood"
   fxTemplate:t="envir_destr_wood_small_effect"
@@ -24007,40 +23863,40 @@ advertising_stand_a{
 }
 
 advertising_stand_b{
-  hp:r=150
-  impulseThreshold:r=20
+  hp:r=70
+  impulseThreshold:r=2
   fxScale:r=1
   fxTemplate:t="envir_destr_wood_small_effect"
   physRes:t="advertising_stand_b_destr_phobj"
 }
 
 advertising_stand_c{
-  hp:r=150
-  impulseThreshold:r=20
+  hp:r=40
+  impulseThreshold:r=2
   fxScale:r=1
   fxTemplate:t="envir_destr_wood_small_effect"
   physRes:t="advertising_stand_c_destr_phobj"
 }
 
 advertising_stand_d{
-  hp:r=150
-  impulseThreshold:r=20
+  hp:r=40
+  impulseThreshold:r=2
   fxScale:r=1
   fxTemplate:t="envir_destr_wood_small_effect"
   physRes:t="advertising_stand_d_destr_phobj"
 }
 
 advertising_stand_e{
-  hp:r=150
-  impulseThreshold:r=20
+  hp:r=40
+  impulseThreshold:r=2
   fxScale:r=1
   fxTemplate:t="envir_destr_wood_small_effect"
   physRes:t="advertising_stand_e_destr_phobj"
 }
 
 advertising_stand_f{
-  hp:r=150
-  impulseThreshold:r=20
+  hp:r=70
+  impulseThreshold:r=2
   fxScale:r=1
   fxTemplate:t="envir_destr_wood_small_effect"
   physRes:t="advertising_stand_f_destr_phobj"
@@ -24991,6 +24847,27 @@ is_washbasin_mirror_a_damaged_b{
   physRes:t="is_washbasin_mirror_a_damaged_b_destr_phobj"
 }
 
+ford_transit_a{
+  nextRes:t="ford_transit_a_dmg"
+  physRes:t="ford_transit_a_destr_phobj"
+  destructionImpulse:r=40000
+  impulseThreshold:r=2000
+  fxTemplate:t="envir_destr_metal_med_effect"
+  fxScale:r=1
+  isParent:b=yes
+}
+
+ford_transit_a_body{
+  nextRes:t="ford_transit_a_dmg"
+  physRes:t="ford_transit_a_body_destr_phobj"
+  destructionImpulse:r=40000
+  impulseThreshold:r=2000
+  destroyNeighbourDepth:i=2
+  fxTemplate:t="envir_destr_metal_med_effect"
+  fxScale:r=1
+  isParent:b=yes
+}
+
 ford_transit_door_bl{
   hp:r=150
   destructionImpulse:r=5
@@ -25260,7 +25137,7 @@ nissan_patrol_mirror_sideview_left_a{
   destructionImpulse:r=5
   fxTemplate:t="envir_destr_metal_small_effect"
   fxScale:r=1
-  physRes:t="nissan_patrol_mirror_sideview_left_a _destr_phobj"
+  physRes:t="nissan_patrol_mirror_sideview_left_a_destr_phobj"
 }
 
 nissan_patrol_mirror_sideview_right_a{
@@ -25452,7 +25329,7 @@ nissan_patrol_glass_window_left_front_a_a{
   destructibleByParent:b=yes
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
-  physRes:t="nissan_patrol_glass_window_left_front_a_a _destr_phobj"
+  physRes:t="nissan_patrol_glass_window_left_front_a_a_destr_phobj"
 }
 
 nissan_patrol_glass_window_left_front_a_b{
@@ -25461,7 +25338,7 @@ nissan_patrol_glass_window_left_front_a_b{
   destructibleByParent:b=yes
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
-  physRes:t="nissan_patrol_glass_window_left_front_a_b _destr_phobj"
+  physRes:t="nissan_patrol_glass_window_left_front_a_b_destr_phobj"
 }
 
 nissan_patrol_glass_window_left_front_a_c{
@@ -25470,7 +25347,7 @@ nissan_patrol_glass_window_left_front_a_c{
   destructibleByParent:b=yes
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
-  physRes:t="nissan_patrol_glass_window_left_front_a_c _destr_phobj"
+  physRes:t="nissan_patrol_glass_window_left_front_a_c_destr_phobj"
 }
 
 nissan_patrol_glass_window_left_front_a_d{
@@ -25479,7 +25356,7 @@ nissan_patrol_glass_window_left_front_a_d{
   destructibleByParent:b=yes
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
-  physRes:t="nissan_patrol_glass_window_left_front_a_d _destr_phobj"
+  physRes:t="nissan_patrol_glass_window_left_front_a_d_destr_phobj"
 }
 
 nissan_patrol_glass_window_left_middle_a_a{
@@ -25640,6 +25517,7 @@ nissan_sunny_car_body_a{
   destructionImpulse:r=40000
   impulseThreshold:r=2000
   destroyNeighbourDepth:i=5
+  tag:t="car_body"
   isParent:b=yes
   material:t="steel"
   fxTemplate:t="envir_destr_metal_big_effect"
@@ -25651,6 +25529,7 @@ nissan_sunny_car_body_a{
 nissan_sunny_bumper_back_a{
   hp:r=150
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_metal_big_effect"
   fxScale:r=1
   physRes:t="nissan_sunny_bumper_back_a_destr_phobj"
@@ -25659,21 +25538,16 @@ nissan_sunny_bumper_back_a{
 nissan_sunny_bumper_front_a{
   hp:r=150
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_metal_big_effect"
   fxScale:r=1
   physRes:t="nissan_sunny_bumper_front_a_destr_phobj"
 }
 
-nissan_sunny_mirror_sideview_left_a{
-  hp:r=20
-  destructionImpulse:r=5
-  fxTemplate:t="envir_destr_glass_effect"
-  fxScale:r=1
-}
-
 nissan_sunny_hood_a{
   hp:r=150
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_metal_big_effect"
   fxScale:r=1
   physRes:t="nissan_sunny_hood_a_destr_phobj"
@@ -25682,6 +25556,7 @@ nissan_sunny_hood_a{
 nissan_sunny_trunk_a{
   hp:r=150
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   isParent:b=yes
   destructibleByParent:b=yes
   fxTemplate:t="envir_destr_metal_big_effect"
@@ -25689,9 +25564,39 @@ nissan_sunny_trunk_a{
   physRes:t="nissan_sunny_trunk_a_destr_phobj"
 }
 
-nissan_sunny_door_left_back_a{
+nissan_sunny_trunk_a_loot{
   hp:r=150
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
+  isParent:b=yes
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_metal_big_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_trunk_a_loot_destr_phobj"
+}
+
+nissan_sunny_car_glove_box_a{
+  hp:r=40
+  destructionImpulse:r=5
+  destroyedByTag:t="car_body"
+  fxTemplate:t="envir_destr_metal_small_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_car_glove_box_a_destr_phobj"
+}
+
+nissan_sunny_car_glove_box_a_loot{
+  hp:r=40
+  destructionImpulse:r=5
+  destroyedByTag:t="car_body"
+  fxTemplate:t="envir_destr_metal_small_effect"
+  physRes:t="nissan_sunny_car_glove_box_a_destr_phobj"
+  fxScale:r=1
+}
+
+nissan_sunny_door_left_back_a{
+  hp:r=120
+  destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   isParent:b=yes
   destroyNeighbourDepth:i=4
   destructibleByParent:b=yes
@@ -25701,8 +25606,9 @@ nissan_sunny_door_left_back_a{
 }
 
 nissan_sunny_door_left_front_a{
-  hp:r=150
+  hp:r=120
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   isParent:b=yes
   destroyNeighbourDepth:i=4
   destructibleByParent:b=yes
@@ -25712,8 +25618,9 @@ nissan_sunny_door_left_front_a{
 }
 
 nissan_sunny_door_right_back_a{
-  hp:r=150
+  hp:r=120
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   isParent:b=yes
   destroyNeighbourDepth:i=4
   destructibleByParent:b=yes
@@ -25723,8 +25630,9 @@ nissan_sunny_door_right_back_a{
 }
 
 nissan_sunny_door_right_front_a{
-  hp:r=150
+  hp:r=120
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   isParent:b=yes
   destroyNeighbourDepth:i=4
   destructibleByParent:b=yes
@@ -25958,9 +25866,235 @@ nissan_sunny_glass_window_left_back_a_d{
   physRes:t="nissan_sunny_glass_window_left_back_a_d_destr_phobj"
 }
 
+nissan_sunny_glass_window_front_damaged_a_a{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_front_damaged_a_a_destr_phobj"
+}
+
+nissan_sunny_glass_window_front_damaged_a_b{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_front_damaged_a_b_destr_phobj"
+}
+
+nissan_sunny_glass_window_front_damaged_a_c{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_front_damaged_a_c_destr_phobj"
+}
+
+nissan_sunny_glass_window_front_damaged_a_d{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_front_damaged_a_d_destr_phobj"
+}
+
+nissan_sunny_glass_window_front_damaged_a_e{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_front_damaged_a_e_destr_phobj"
+}
+
+nissan_sunny_glass_window_back_damaged_a_a{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_back_damaged_a_a_destr_phobj"
+}
+
+nissan_sunny_glass_window_back_damaged_a_b{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_back_damaged_a_b_destr_phobj"
+}
+
+nissan_sunny_glass_window_back_damaged_a_c{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_back_damaged_a_c_destr_phobj"
+}
+
+nissan_sunny_glass_window_back_damaged_a_d{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_back_damaged_a_d_destr_phobj"
+}
+
+nissan_sunny_glass_window_right_front_damaged_a_a{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_right_front_damaged_a_a_destr_phobj"
+}
+
+nissan_sunny_glass_window_right_front_damaged_a_b{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_right_front_damaged_a_b_destr_phobj"
+}
+
+nissan_sunny_glass_window_right_front_damaged_a_c{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_right_front_damaged_a_c_destr_phobj"
+}
+
+nissan_sunny_glass_window_right_front_damaged_a_d{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_right_front_damaged_a_d_destr_phobj"
+}
+
+nissan_sunny_glass_window_right_back_damaged_a_a{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_right_back_damaged_a_a_destr_phobj"
+}
+
+nissan_sunny_glass_window_right_back_damaged_a_b{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_right_back_damaged_a_b_destr_phobj"
+}
+
+nissan_sunny_glass_window_right_back_damaged_a_c{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_right_back_damaged_a_c_destr_phobj"
+}
+
+nissan_sunny_glass_window_right_back_damaged_a_d{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_right_back_damaged_a_d_destr_phobj"
+}
+
+nissan_sunny_glass_window_left_front_damaged_a_a{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_left_front_damaged_a_a_destr_phobj"
+}
+
+nissan_sunny_glass_window_left_front_damaged_a_b{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_left_front_damaged_a_b_destr_phobj"
+}
+
+nissan_sunny_glass_window_left_front_damaged_a_c{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_left_front_damaged_a_c_destr_phobj"
+}
+
+nissan_sunny_glass_window_left_front_damaged_a_d{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_left_front_damaged_a_d_destr_phobj"
+}
+
+nissan_sunny_glass_window_left_back_damaged_a_a{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_left_back_damaged_a_a_destr_phobj"
+}
+
+nissan_sunny_glass_window_left_back_damaged_a_b{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_left_back_damaged_a_b_destr_phobj"
+}
+
+nissan_sunny_glass_window_left_back_damaged_a_c{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_left_back_damaged_a_c_destr_phobj"
+}
+
+nissan_sunny_glass_window_left_back_damaged_a_d{
+  hp:r=15
+  destructionImpulse:r=5
+  destructibleByParent:b=yes
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_glass_window_left_back_damaged_a_d_destr_phobj"
+}
+
 nissan_sunny_headlight_left_a{
   hp:r=15
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
   physRes:t="nissan_sunny_headlight_left_a_destr_phobj"
@@ -25969,6 +26103,7 @@ nissan_sunny_headlight_left_a{
 nissan_sunny_headlight_left_base_a{
   hp:r=15
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_metal_small_effect"
   physRes:t="nissan_sunny_headlight_left_base_a_destr_phobj"
   fxScale:r=1
@@ -25977,6 +26112,7 @@ nissan_sunny_headlight_left_base_a{
 nissan_sunny_headlight_right_a{
   hp:r=15
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
   physRes:t="nissan_sunny_headlight_right_a_destr_phobj"
@@ -25985,6 +26121,7 @@ nissan_sunny_headlight_right_a{
 nissan_sunny_headlight_right_base_a{
   hp:r=15
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_metal_small_effect"
   physRes:t="nissan_sunny_headlight_right_base_a_destr_phobj"
   fxScale:r=1
@@ -25998,8 +26135,17 @@ nissan_sunny_mirror_sideview_right_a{
   physRes:t="nissan_sunny_mirror_sideview_right_a_destr_phobj"
 }
 
+nissan_sunny_mirror_sideview_left_a{
+  hp:r=15
+  destructionImpulse:r=5
+  fxTemplate:t="envir_destr_glass_effect"
+  fxScale:r=1
+  physRes:t="nissan_sunny_mirror_sideview_right_a_destr_phobj"
+}
+
 nissan_sunny_radiator_grill_a{
   hp:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
   physRes:t="nissan_sunny_radiator_grill_a_destr_phobj"
@@ -26008,6 +26154,7 @@ nissan_sunny_radiator_grill_a{
 nissan_sunny_taillight_left_a{
   hp:r=15
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
   physRes:t="nissan_sunny_taillight_left_a_destr_phobj"
@@ -26016,6 +26163,7 @@ nissan_sunny_taillight_left_a{
 nissan_sunny_taillight_left_base_a{
   hp:r=15
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
   physRes:t="nissan_sunny_taillight_left_base_a_destr_phobj"
@@ -26024,6 +26172,7 @@ nissan_sunny_taillight_left_base_a{
 nissan_sunny_taillight_right_a{
   hp:r=15
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
   physRes:t="nissan_sunny_taillight_right_a_destr_phobj"
@@ -26032,6 +26181,7 @@ nissan_sunny_taillight_right_a{
 nissan_sunny_taillight_right_base_a{
   hp:r=15
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
   physRes:t="nissan_sunny_taillight_right_base_a_destr_phobj"
@@ -26040,6 +26190,7 @@ nissan_sunny_taillight_right_base_a{
 nissan_sunny_trunklight_right{
   hp:r=15
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
   physRes:t="nissan_sunny_trunklight_right_destr_phobj"
@@ -26048,6 +26199,7 @@ nissan_sunny_trunklight_right{
 nissan_sunny_trunklight_left{
   hp:r=15
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
   physRes:t="nissan_sunny_trunklight_left_destr_phobj"
@@ -26056,6 +26208,7 @@ nissan_sunny_trunklight_left{
 nissan_sunny_wiper_left_a{
   hp:r=15
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_metal_med_effect"
   fxScale:r=1
   physRes:t="nissan_sunny_wiper_left_a_destr_phobj"
@@ -26064,9 +26217,42 @@ nissan_sunny_wiper_left_a{
 nissan_sunny_wiper_right_a{
   hp:r=15
   destructionImpulse:r=5
+  destroyedByTag:t="car_body"
   fxTemplate:t="envir_destr_metal_med_effect"
   fxScale:r=1
   physRes:t="nissan_sunny_wiper_right_a_destr_phobj"
+}
+
+nissan_sunny_car_wheel_front_a{
+  fxTemplate:t="envir_destr_metal_med_effect"
+  destroyedByTag:t="car_body"
+  destructibleByParent:b=yes
+  fxScale:r=1
+  physRes:t="nissan_sunny_car_wheel_front_a_destr_phobj"
+}
+
+nissan_sunny_car_wheel_front_b{
+  fxTemplate:t="envir_destr_metal_med_effect"
+  destroyedByTag:t="car_body"
+  destructibleByParent:b=yes
+  fxScale:r=1
+  physRes:t="nissan_sunny_car_wheel_front_b_destr_phobj"
+}
+
+nissan_sunny_car_wheel_back_a{
+  fxTemplate:t="envir_destr_metal_med_effect"
+  destroyedByTag:t="car_body"
+  destructibleByParent:b=yes
+  fxScale:r=1
+  physRes:t="nissan_sunny_car_wheel_back_a_destr_phobj"
+}
+
+nissan_sunny_car_wheel_back_b{
+  fxTemplate:t="envir_destr_metal_med_effect"
+  destroyedByTag:t="car_body"
+  destructibleByParent:b=yes
+  fxScale:r=1
+  physRes:t="nissan_sunny_car_wheel_back_b_destr_phobj"
 }
 
 mitsubishi_l300_body{
@@ -26087,7 +26273,7 @@ mitsubishi_l300_car_body_a{
   material:t="steel"
   fxTemplate:t="envir_destr_metal_big_effect"
   fxScale:r=1
-  physRes:t="mitsubishi_l300_body_destr_phobj"
+  physRes:t="mitsubishi_l300_car_body_a_destr_phobj"
   nextRes:t="mitsubishi_l300_body_dmg"
 }
 
@@ -29122,7 +29308,6 @@ generic_truck_a_glass_window_front_a_h{
   destructionImpulse:r=5
   fxTemplate:t="envir_destr_glass_effect"
   fxScale:r=1
-  physRes:t="generic_truck_a_glass_window_front_a_h_destr_phobj"
 }
 
 generic_truck_a_glass_window_left_a_a{

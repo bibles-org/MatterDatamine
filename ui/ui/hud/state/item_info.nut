@@ -1,21 +1,18 @@
+from "%sqstd/math.nut" import round_by_value
+
+from "das.inventory" import is_item_use_blocked, is_move_mod_from_weapon, is_hero_can_use_item
+
+from "dagor.math" import Point2
+from "humaninv" import INVALID_ITEM_ID
+from "net" import get_sync_time
+from "dagor.debug" import logerr
+from "%ui/hud/state/hero_entity_mods_state.nut" import getHeroModValue
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {Point2} = require("dagor.math")
-let {watchedHeroEid} = require("%ui/hud/state/watched_hero.nut")
-let {INVALID_ITEM_ID} = require("humaninv")
-let { is_item_useful_for_weapon, is_item_use_blocked,
-  is_move_mod_from_weapon, get_current_revive_price, ceil_volume, is_hero_can_use_item } = require("das.inventory")
-let {get_sync_time} = require("net")
-let is_teams_friendly = require("%ui/hud/state/is_teams_friendly.nut")
-let get_player_team = require("%ui/hud/state/get_player_team.nut")
-let {localPlayerTeam} = require("%ui/hud/state/local_player.nut")
-let {logerr} = require("dagor.debug")
-let {getHeroModValue} = require("%ui/hud/state/hero_entity_mods_state.nut")
-let {locTable} = require("%ui/helpers/time.nut")
-
-
-let is_item_potentially_useful = @(...) true
+let { watchedHeroEid } = require("%ui/hud/state/watched_hero.nut")
+let { locTable } = require("%ui/helpers/time.nut")
 
 
 function mkItemType(comp){
@@ -29,6 +26,8 @@ function mkItemType(comp){
   else if (typ=="container")
     return "special"
   else if (typ=="scope")
+    return typ
+  else if (typ=="stock")
     return typ
   else if (typ=="armor" || typ == "bag")
     return "equipment"
@@ -48,7 +47,12 @@ let mkAttachedChar = @(slot, animchar, objTexReplaceS=[]) {
   objTexReplace = "objTexReplaceRules{{0}}".subst("".join(objTexReplaceS))
 }
 
-let item_comps = [
+let item_comps = freeze([
+  
+
+
+
+
   ["item__id", ecs.TYPE_INT, INVALID_ITEM_ID],
   ["uniqueId", ecs.TYPE_STRING, "-1"],
   ["gunAttachable__slotName", ecs.TYPE_STRING, null],
@@ -62,10 +66,8 @@ let item_comps = [
   ["item__iconRoll", ecs.TYPE_FLOAT, 0.0],
   ["item__iconScale", ecs.TYPE_FLOAT, 1.0],
   ["item__iconRecalcAnimation", ecs.TYPE_BOOL, false],
-  ["item__volume", ecs.TYPE_FLOAT, 0.0],
+  ["item__volume", ecs.TYPE_INT, 0],
   ["item__weight", ecs.TYPE_FLOAT, 0.0],
-  ["am_storage__value", ecs.TYPE_INT, null],
-  ["am_storage__maxValue", ecs.TYPE_INT, null],
   ["item__count", ecs.TYPE_INT, 1],
   ["item__alwaysShowCount", ecs.TYPE_TAG, null],
   ["item__equipmentSlots", ecs.TYPE_STRING_LIST, null],
@@ -81,71 +83,63 @@ let item_comps = [
   ["boxed_item__template", ecs.TYPE_STRING, null],
   ["item_holder__boxedItemTemplate", ecs.TYPE_STRING, null],
   ["item__countPerStack", ecs.TYPE_INT, 0],
-  ["item__volumePerStack", ecs.TYPE_FLOAT, 0.0],
-  ["item__weapTemplate", ecs.TYPE_STRING, null],
+  ["item__volumePerStack", ecs.TYPE_INT, 0],
   ["item__weaponSlots", ecs.TYPE_STRING_LIST, null],
   ["item__nonDroppable", ecs.TYPE_TAG, null],
   ["item__weapType", ecs.TYPE_STRING, null],
   ["playerItemOwner", ecs.TYPE_EID, ecs.INVALID_ENTITY_ID],
   ["animchar__objTexReplace", ecs.TYPE_OBJECT, null],
-  ["item__inventoryExtension", ecs.TYPE_FLOAT, 0.0],
-  ["item__useMessage", ecs.TYPE_STRING, ""],
+  ["item__inventoryExtension", ecs.TYPE_INT, 0],
   ["item__recognizeTime", ecs.TYPE_FLOAT, 0.0],
   ["item__recognizeTimeLeft", ecs.TYPE_FLOAT, 0.0],
   ["item__containerOwnerEid", ecs.TYPE_EID, ecs.INVALID_ENTITY_ID],
-  ["item__canBeQuickUsed", ecs.TYPE_TAG, null],
   ["item__hp", ecs.TYPE_FLOAT, null],
-  ["item__amount", ecs.TYPE_INT, null],
   ["item_created_by_zone", ecs.TYPE_TAG, null],
-  ["weapon_mod_move__weaponEid", ecs.TYPE_EID, ecs.INVALID_ENTITY_ID],
   ["weaponMod", ecs.TYPE_TAG, null],
   ["item__invisible", ecs.TYPE_TAG, null],
   ["item__disablePickup", ecs.TYPE_BOOL, false],
   ["slot_attach__slotName", ecs.TYPE_STRING, null],
   ["gunAttachable__slotName", ecs.TYPE_STRING, null],
   ["equipmentAttachable__slotName", ecs.TYPE_STRING, null],
-  ["slot_attach__attachedTo", ecs.TYPE_EID, ecs.INVALID_ENTITY_ID],
+  ["item__amount", ecs.TYPE_INT, null],
+  ["animchar_attach__attachedTo", ecs.TYPE_EID, ecs.INVALID_ENTITY_ID],
   ["gun_mods__curModInSlots", ecs.TYPE_OBJECT, null],
   ["equipment_mods__slots", ecs.TYPE_SHARED_OBJECT, null],
   ["equipment_mods__curModInSlots", ecs.TYPE_OBJECT, null],
   ["itemContainer", ecs.TYPE_EID_LIST, null],
   ["questItem", ecs.TYPE_TAG, null],
-  ["cortical_vault", ecs.TYPE_TAG, null],
-  ["cortical_vault_inactive__ownerNickname", ecs.TYPE_STRING, null],
   ["dm_part_armor__protection", ecs.TYPE_FLOAT_LIST, null],
   ["dm_part_armor__protectionMinHpKoef", ecs.TYPE_FLOAT, null],
-  ["human_inventory__maxVolumeInt", ecs.TYPE_INT, 0],
+  ["human_inventory__maxVolume", ecs.TYPE_INT, 0],
   ["item_enriched", ecs.TYPE_TAG, null],
   ["item_replica", ecs.TYPE_TAG, null],
   ["item__isDirectlyUsable", ecs.TYPE_TAG, null],
   ["item__uiSortingPriority", ecs.TYPE_INT, -1],
   ["item__filterType", ecs.TYPE_STRING, "loot"],
   ["animchar_dynmodel_nodes_hider__hiddenNodes", ecs.TYPE_STRING_LIST, null],
-  ["gun__firingModeNames", ecs.TYPE_ARRAY, null],
   ["item__healTemplateName", ecs.TYPE_STRING, null],
   ["item_healkit_magazine", ecs.TYPE_TAG, null],
   ["fake_weapon_mod__realModEid", ecs.TYPE_EID, ecs.INVALID_ENTITY_ID],
-  ["item__boostTemplateName", ecs.TYPE_STRING, ""],
   ["ammo_holder__ammoCountKnown", ecs.TYPE_EID_LIST, null],
-  ["item__marketPrice", ecs.TYPE_INT, null],
+  ["item__marketPrice", ecs.TYPE_INT, null], 
   ["animchar__res", ecs.TYPE_STRING, ""],
   ["item__animcharInInventoryName", ecs.TYPE_STRING, null],
-  ["gun_jamming__isJammed", ecs.TYPE_BOOL, false]
+  ["gun_jamming__isJammed", ecs.TYPE_BOOL, false],
+  ["default_stub_item", ecs.TYPE_TAG, null],
+  ["foldable_container__foldedVolume", ecs.TYPE_INT, null],
+  ["item__dontMergeInventoryUi", ecs.TYPE_TAG, null],
   
   
-]
-
-let item_comps2 = [
-  ["default_stub_item", ecs.TYPE_TAG, null]
-]
+])
 
 let get_item_info_query = ecs.SqQuery("get_item_info_query", {
   comps_ro = item_comps
 })
 
-let get_item_info2_query = ecs.SqQuery("get_item_info2_query", {
-  comps_ro = item_comps2
+let get_foldable_container_res_query = ecs.SqQuery("get_foldable_container_res_query", {
+  comps_ro = [["foldable_container__res", ecs.TYPE_STRING]]
 })
+
 
 function getSlotAvailableMods(slot_template_name) {
   let slotTemplate = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(slot_template_name)
@@ -198,12 +192,9 @@ function getItemInfo(eid, comp){
 
   let uniqueId = comp["uniqueId"]
   let iconOffs = comp["item__iconOffset"]
-  let equipSlots = comp["item__equipmentSlots"]?.getAll?() ?? []
-  local validWeaponSlots = []
-  if ([null, ""].indexof(comp["item__weapTemplate"])==null && comp["item__weaponSlots"]?.getAll()!=null)
-    validWeaponSlots = comp["item__weaponSlots"].getAll()
-  let useMsg = comp["item__useMessage"]
-  let isUsable = ((comp["item__useTime"] ?? 0) > 0 || useMsg != "" || comp["item__isDirectlyUsable"]) && !is_item_use_blocked(eid) && is_hero_can_use_item(eid)
+  let equipSlots = comp["item__equipmentSlots"]?.getAll() ?? []
+  let validWeaponSlots = comp["item__weaponSlots"]?.getAll()
+  let isUsable = ((comp["item__useTime"] ?? 0) > 0 || comp["item__isDirectlyUsable"]) && !is_item_use_blocked(eid) && is_hero_can_use_item(eid)
   let isWeaponMod = comp["gunAttachable__slotName"] != null
   let isEquipmentMod = comp["equipmentAttachable__slotName"] != null && comp["equipmentAttachable__slotName"] != ""
   let add = {}
@@ -212,7 +203,6 @@ function getItemInfo(eid, comp){
       weapModSlotName = comp["gunAttachable__slotName"]
     })
   }
-  let heroEid = watchedHeroEid.value ?? ecs.INVALID_ENTITY_ID
   let mods = {}
   if (comp["gun_mods__slots"]) {
     foreach (slotName, slotTemplateName in comp["gun_mods__slots"]) {
@@ -250,11 +240,8 @@ function getItemInfo(eid, comp){
   let isDelayedMoveMod = false
   let inactiveItem = false
 
-  let revivePrice = comp.cortical_vault ? is_teams_friendly(localPlayerTeam.value, get_player_team(comp["playerItemOwner"])) && get_current_revive_price(comp["playerItemOwner"]) : null
-
   let hp = comp["item__hp"]
   let amount = comp["item__amount"]
-
   local modInSlots = {}
   local iconAttachments = []
 
@@ -295,18 +282,22 @@ function getItemInfo(eid, comp){
   let maxAmount = tmpl?.getCompValNullable("item__maxAmount")
   let canLoadOnlyOnBase = tmpl?.getCompValNullable("item_holder__canLoadOnlyOnBase") != null
 
+  local animcharIconOverride = null
+  if (comp.foldable_container__foldedVolume != null && comp.foldable_container__foldedVolume == comp.item__volume) {
+    get_foldable_container_res_query.perform(eid, @(_eid, container_comp) animcharIconOverride = container_comp.foldable_container__res)
+  }
+
   return {
     eid
     eids = [eid]
-    owner = comp["item__containerOwnerEid"]
+    inventoryEid = comp["item__containerOwnerEid"]
+    playerOwnerEid = comp["playerItemOwner"]
     uniqueId
     uniqueIds = [uniqueId]
-    isUseful = is_item_useful_for_weapon(heroEid, eid)
-    isPotentiallyUseful = is_item_potentially_useful(heroEid, eid)
     itemName
     itemDescription = comp.item__desc
     key
-    iconName = comp.item__animcharInInventoryName ?? comp.animchar__res
+    iconName = animcharIconOverride ?? comp.item__animcharInInventoryName ?? comp.animchar__res
     iconYaw = comp["item__iconYaw"]
     iconPitch = comp["item__iconPitch"]
     iconRoll = comp["item__iconRoll"]
@@ -317,59 +308,50 @@ function getItemInfo(eid, comp){
     iconScale = comp["item__iconScale"]
     recognizeTime = comp["item__recognizeTime"] / heroRecognitionSpeed
     recognizeTimeLeft = comp["item__recognizeTimeLeft"] / heroRecognitionSpeed
-    volume = ceil_volume(comp["item__volume"])
-    weight = comp["item__weight"],
-    countPerItem = comp["item__count"],
+    volume = comp["item__volume"]
+    foldedVolume = comp.foldable_container__foldedVolume
+    weight = comp["item__weight"]
+    countPerItem = comp["item__count"]
     id = comp["item__id"]
     count = 1
     alwaysShowCount = comp["item__alwaysShowCount"] != null
-    maxCount = comp["item_holder__maxItemCount"] != null ? comp["item_holder__maxItemCount"] : -1,
     countPerStack = comp["item__countPerStack"]
-    volumePerStack = ceil_volume(comp["item__volumePerStack"])
-    currentStackVolume = ceil_volume(comp["item__countPerStack"] > 0 ? min(comp["item__volumePerStack"], comp["item__volume"]) : comp["item__volume"])
+    volumePerStack = comp["item__volumePerStack"]
+    currentStackVolume = comp["item__countPerStack"] > 0 ? min(comp["item__volumePerStack"], comp["item__volume"]) : comp["item__volume"]
     isEquipment = (equipSlots?.len?() ?? 0) > 0,
     canDrop = !(type(comp["item__nonDroppable"])=="string"),
     isUsable,
-    useMsg,
     equipmentSlots = equipSlots,
     validWeaponSlots = validWeaponSlots,
-    isWeapon =  validWeaponSlots.len() > 0,
-    weapType =  comp["item__weapType"],
+    isWeapon = (validWeaponSlots?.len() ?? 0) > 0,
+    weapType = comp["item__weapType"],
     isWeaponMod,
     isEquipmentMod,
     isAmmo = comp["ammo_holder__id"]!=null,
-    isCorticalVault = comp.am_storage__maxValue != null,
     isBoxedItem = comp["boxed_item__template"] != null,
-    isHealkit = comp.item__healTemplateName != null || comp.item_healkit_magazine != null || comp.item__boostTemplateName != "",
-    isAmStorage = comp.am_storage__value != null,
+    isHealkit = comp.item__healTemplateName != null || comp.item_healkit_magazine != null,
     ammoId = comp["ammo_holder__id"],
     ammoHolders = comp["gun__ammoHolderIds"]?.getAll() ?? [],
     gunAmmo = comp.gun__ammo
     gunDirectlyUseBoxedAmmo = comp.gun_boxed_ammo_reload__reloadState != null
     gunBoxedAmmoTemplate = comp.gun__boxedAmmoHolderTemplate
     boxTemplate = comp["boxed_item__template"],
-    boxId = comp["boxed_item__template"] == null ? null : ecs.calc_hash(comp["boxed_item__template"]),
     boxedItemTemplate = comp["item_holder__boxedItemTemplate"],
-    ownerNickname = comp["cortical_vault_inactive__ownerNickname"],
     objTexReplace = "objTexReplaceRules{{0}}".subst("".join(objTexReplaceS))
-    stacks = !isDelayedMoveMod
+    stacks = !isDelayedMoveMod && comp["item__dontMergeInventoryUi"] == null
     hp
     maxHp
-    amount
     maxAmount
     createdByZone = comp.item_created_by_zone
-    charges = (comp.am_storage__value ??
-               ((!comp.boxed_item__template  && !inactiveItem) ? comp.item__currentBoxedItemCount : null) ??
+    charges = (((!comp.boxed_item__template  && !inactiveItem) ? comp.item__currentBoxedItemCount : null) ??
                hp ?? amount)
     countKnown = comp?.ammo_holder__ammoCountKnown?.getAll()?.contains(watchedHeroEid.get()) ?? true
-    maxCharges = (comp.am_storage__maxValue ??
-                  ((!comp.boxed_item__template && !inactiveItem) ? comp.item_holder__maxItemCount : null) ??
+    maxCharges = (((!comp.boxed_item__template && !inactiveItem) ? comp.item_holder__maxItemCount : null) ??
                   maxHp ?? maxAmount)
     ammoCount = comp.item__currentBoxedItemCount
     maxAmmoCount = comp.item_holder__maxItemCount
     inventoryExtension = comp["item__inventoryExtension"]
     isFoundInRaid = uniqueId == 0
-    canBeQuickUsed = comp["item__canBeQuickUsed"]
     isDelayedMoveMod
     inactiveItem
     syncTime = get_sync_time()
@@ -377,14 +359,12 @@ function getItemInfo(eid, comp){
     modInSlots
     iconAttachments
     hideNodes = comp.animchar_dynmodel_nodes_hider__hiddenNodes?.getAll() ?? []
-    firingModeNames = comp.gun__firingModeNames?.getAll() ?? []
     itemContainerItems = comp.itemContainer?.getAll()
     isQuestItem = comp["questItem"] != null
-    revivePrice
     protection = comp["dm_part_armor__protection"]?.getAll() ?? []
     protectionMinHpKoef = comp["dm_part_armor__protectionMinHpKoef"]
-    inventoryMaxVolume = comp["human_inventory__maxVolumeInt"] / 10.0
-    attachedTo = comp["slot_attach__attachedTo"]
+    inventoryMaxVolume = comp["human_inventory__maxVolume"]
+    attachedTo = comp["animchar_attach__attachedTo"]
     isCorrupted = comp.item_enriched != null
     isReplica = comp.item_replica != null
     sortingPriority = comp.item__uiSortingPriority
@@ -397,22 +377,12 @@ function getItemInfo(eid, comp){
     itemRarity
     canLoadOnlyOnBase
     isJammed = comp.gun_jamming__isJammed
+    default_stub_item = comp["default_stub_item"] 
   }.__update(add)
-}
-
-function getItemInfo2(_eid, comp){
-  return {
-    isStubItem = comp["default_stub_item"] != null
-  }
 }
 
 function get_item_info(item_eid) {
   local info = get_item_info_query.perform(item_eid, getItemInfo)
-  if (info != null) {
-    let info2 = get_item_info2_query.perform(item_eid, getItemInfo2)
-    if (info2 != null)
-      info.__update(info2)
-  }
 
   return info
 }
@@ -424,37 +394,33 @@ function get_nearby_item_info(item_eid) {
   return info
 }
 
-let calcProtection = @(v) (1.0 - 1.0 / (v ?? 1.0)) * 100.0
+let calcProtection = @(v) round_by_value( (v - 1.0) * 100.0, 0.01)
 
 let chronogeneStatCustom = {
   shockReduction = { calc = @(v) v ?? 0.0, defVal = 0.0, measurement = loc(locTable.seconds) }
   meleeProtectionMult = { calc = calcProtection, defVal = 1.0 }
   bulletProtectionMult = { calc = calcProtection, defVal = 1.0 }
   hrFatigueThresholdAdd = { calc = @(v) v ?? 0.0, defVal = 0.0, measurement = "" }
-  fasterChangePoseMult = { defVal = 4.0 }
-}
-
-let chronogeneEffectCalc = {
-  add = @(defVal, v) defVal + (v ?? 0.0)
-  add_diminishing = @(defVal, v) defVal + (v ?? 0.0)
-  mult = @(defVal, v) defVal * (v ?? 1.0)
-  mult_diminishing = @(defVal, v) defVal * (v ?? 1.0)
+  fasterChangePoseMult = { calc = @(v) (v ?? 0.0) / 4.0 * 100.0 , defVal = 4.0 }
 }
 
 let chronogeneStatDefault = { calc = @(v) (v ?? 1.0) * 100.0, defVal = 1.0, measurement = "%" }
 
 function get_equipped_magazine_current_ammo_count(item) {
+  local ammo = null
   if ((item?.isWeaponMod ?? false) && (item?.attachedTo ?? ecs.INVALID_ENTITY_ID) != ecs.INVALID_ENTITY_ID &&
     item?.charges != null && item?.maxCharges != null) {
     let gunInfo = get_item_info(item?.attachedTo)
     let gunAmmo = gunInfo?.gunAmmo ?? 0
     let isGunJammed = gunInfo?.isJammed ?? false
     let bulletInBarrel = isGunJammed ? 0 : 1
-    let ammo = (item?.boxedItemTemplate ?? "") != "" ? max(0, gunAmmo - bulletInBarrel) : gunAmmo
-    return ammo
+    ammo = (item?.boxedItemTemplate ?? "") != "" ? max(0, gunAmmo - bulletInBarrel) : gunAmmo
+  }
+  if ((item?.isLoadingAmmo ?? false) && item?.charges != null) {
+    ammo = (ammo ?? 0) + item.charges
   }
 
-  return null
+  return ammo
 }
 
 let itemCompExtraInfoQuery = ecs.SqQuery("itemCompExtraInfoQuery",
@@ -465,7 +431,7 @@ let itemCompExtraInfoQuery = ecs.SqQuery("itemCompExtraInfoQuery",
   }
 )
 
-return {
+return freeze({
   item_comps
   getSlotAvailableMods
   getItemInfo
@@ -476,7 +442,6 @@ return {
   mkAttachedChar
   chronogeneStatCustom
   chronogeneStatDefault
-  chronogeneEffectCalc
   itemCompExtraInfoQuery
   getTemplateNameByEid
-}
+})

@@ -1,60 +1,90 @@
+from "%sqstd/string.nut" import utf8ToUpper
+import "utf8" as utf8
+
+from "%ui/hud/menus/components/inventoryItemsHeroExtraInventories.nut" import mkHeroBackpackItemContainerItemsList, mkHeroSafepackItemContainerItemsList
+from "%ui/hud/menus/components/inventoryItemsPresetPreview.nut" import mkSafepackInventoryPresetPreview, mkHeroInventoryPresetPreview, mkBackpackInventoryPresetPreview, inventoryCapacity
+from "%ui/mainMenu/raid_preparation_window_state.nut" import checkImportantPresetSlotEmptiness, checkRaidAvailability
+
+from "%ui/components/colors.nut" import TextDisabled, NexusPlayerPointsColor, RedWarningColor
+from "%ui/hud/menus/components/damageModel.nut" import bodypartsPanel
+from "%ui/hud/menus/components/chronogenesWidget.nut" import chronogenesWidget
+from "%ui/components/commonComponents.nut" import bluredPanel, mkText, mkSelectPanelItem, BD_RIGHT, BD_NONE,
+  mkTimeComp, mkTooltiped, mkTextArea
+from "%dngscripts/sound_system.nut" import sound_play
+from "%ui/hud/menus/components/inventoryCommon.nut" import mkInventoryHeaderText
+from "%ui/fonts_style.nut" import body_txt, sub_txt, h2_txt, tiny_txt
+from "%ui/hud/menus/components/inventoryItemsHeroWeapons.nut" import mkEquipmentWeapons
+from "%ui/hud/menus/components/quickUsePanel.nut" import quickUsePanelEdit
+from "%ui/hud/menus/components/inventoryItemsHeroItemContainer.nut" import mkHeroItemContainerItemsList
+from "%ui/hud/menus/inventoryActions.nut" import moveItemWithKeyboardMode
+from "%ui/equipPresets/presetsState.nut" import makePresetDataFromCurrentEquipment, unfoldCountItems, defaultFilterFunction
+from "eventbus" import eventbus_send
+from "%ui/components/button.nut" import textButton, button, buttonWithGamepadHotkey
+from "%ui/equipPresets/convert_loadout_to_preset.nut" import loadoutToPreset, presetToLoadout
+from "%ui/components/textInput.nut" import textInput
+from "%ui/components/modalWindows.nut" import addModalWindow, removeModalWindow
+from "%ui/mainMenu/stdPanel.nut" import mkCloseStyleBtn
+from "%ui/mainMenu/startButton.nut" import startButton
+import "dagor.random" as random
+from "%ui/components/modalPopupWnd.nut" import addModalPopup, removeModalPopup
+from "das.equipment" import generate_loadout_by_seed
+from "%ui/helpers/timers.nut" import mkCountdownTimer
+from "%ui/hud/menus/components/inventoryItemsList.nut" import itemsPanelList, setupPanelsData, inventoryItemSorting
+from "%ui/hud/hud_menus_state.nut" import openMenu
+from "%ui/hud/menus/components/inventoryItemsListChecksCommon.nut" import MoveForbidReason
+from "das.nexus" import get_generator_indexes_bind
+from "%ui/hud/menus/components/inventoryFilter.nut" import filterItemByInventoryFilter
+from "%ui/hud/menus/components/inventoryStashFiltersWidget.nut" import inventoryFiltersWidget
+from "das.inventory" import calc_stacked_item_volume
+from "%ui/components/scrollbar.nut" import makeVertScroll
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/hud/menus/components/inventoryItemNexusPointPriceComp.nut" import nexusPointsIcon, nexusPointsIconSize
+from "%ui/components/msgbox.nut" import showMsgbox
+from "%ui/mainMenu/clonesMenu/mainChronogeneSelection.nut" import MAIN_CHRONOGENE_UID
+import "%ui/components/faComp.nut" as faComp
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/mainMenu/raid_preparation_window_state.nut" import getNexusStashItems, bannedMintItem
 
-let { TextDisabled } = require("%ui/components/colors.nut")
 let { shiftPressedMonitor, isAltPressedMonitor, isShiftPressed } = require("%ui/hud/state/inventory_state.nut")
-let { bodypartsPanel } = require("%ui/hud/menus/components/damageModel.nut")
-let { secondaryChronogenesWidget } = require("%ui/hud/menus/components/secondaryChronogenesWidget.nut")
-let { bluredPanel, mkText, mkSelectPanelItem, BD_RIGHT, mkMonospaceTimeComp } = require("%ui/components/commonComponents.nut")
-let { mkInventoryHeaderText } = require("%ui/hud/menus/components/inventoryCommon.nut")
 let { safeAreaAmount } = require("%ui/options/safeArea.nut")
-let { body_txt, sub_txt, h2_txt } = require("%ui/fonts_style.nut")
-let { mkEquipmentWeapons } = require("%ui/hud/menus/components/inventoryItemsHeroWeapons.nut")
-let { quickUsePanelEdit } = require("%ui/hud/menus/components/quickUsePanel.nut")
-let { mkHeroItemContainerItemsList } = require("%ui/hud/menus/components/inventoryItemsHeroItemContainer.nut")
 let { backpackEid, safepackEid, safepackYVisualSize } = require("%ui/hud/state/hero_extra_inventories_state.nut")
-let { moveItemWithKeyboardMode, inventoryItemClickActions } = require("%ui/hud/menus/inventoryActions.nut")
+let { inventoryItemClickActions } = require("%ui/hud/menus/inventoryActions.nut")
 let { HERO_ITEM_CONTAINER, BACKPACK0, SAFEPACK, NEXUS_ALTER_STASH } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
-let { mkHeroBackpackItemContainerItemsList,
-  mkHeroSafepackItemContainerItemsList } = require("%ui/hud/menus/components/inventoryItemsHeroExtraInventories.nut")
-let { mkSafepackInventoryPresetPreview, mkHeroInventoryPresetPreview, mkBackpackInventoryPresetPreview,
-      inventoryCapacity } = require("%ui/hud/menus/components/inventoryItemsPresetPreview.nut")
-let { previewPreset, previewPresetCallbackOverride, makePresetDataFromCurrentEquipment, unfoldCountItems } = require("%ui/equipPresets/presetsState.nut")
-let { alterMints, loadoutsAgency, playerProfileOpenedRecipes, allCraftRecipes, marketItems, playerStats
-      playerProfileNexusLoadoutStorageCount } = require("%ui/profile/profileState.nut")
-let { eventbus_send } = require("eventbus")
-let { textButton, button } = require("%ui/components/button.nut")
-let { loadoutToPreset, presetToLoadout } = require("%ui/equipPresets/convert_loadout_to_preset.nut")
-let { textInput } = require("%ui/components/textInput.nut")
-let { addModalWindow, removeModalWindow } = require("%ui/components/modalWindows.nut")
-let { mkCloseStyleBtn } = require("%ui/mainMenu/stdPanel.nut")
-let { startButton } = require("%ui/mainMenu/startButton.nut")
-let random = require("dagor.random")
-let { mintEditState, checkImportantPresetSlotEmptiness, slotsWithWarning
-} = require("%ui/mainMenu/raid_preparation_window_state.nut")
-let { utf8ToUpper } = require("%sqstd/string.nut")
-let { addModalPopup, removeModalPopup } = require("%ui/components/modalPopupWnd.nut")
-let { generate_loadout_by_seed } = require("%ui/profile/server_game_profile.nut")
-let { mkCountdownTimer } = require("%ui/helpers/timers.nut")
-let { itemsPanelList, setupPanelsData, inventoryItemSorting } = require("%ui/hud/menus/components/inventoryItemsList.nut")
+let { previewPreset, previewPresetCallbackOverride } = require("%ui/equipPresets/presetsState.nut")
+let { alterMints, loadoutsAgency, allCraftRecipes, marketItems, playerStats, playerProfileNexusLoadoutStorageCount
+} = require("%ui/profile/profileState.nut")
+let { mintEditState, slotsWithWarning } = require("%ui/mainMenu/raid_preparation_window_state.nut")
 let { stashItems } = require("%ui/hud/state/inventory_items_es.nut")
-let { openMenu } = require("%ui/hud/hud_menus_state.nut")
-let { MoveForbidReason } = require("%ui/hud/menus/components/inventoryItemsListChecksCommon.nut")
-let { get_generator_indexes_bind } = require("das.nexus")
-let { agencyLoadoutGenerators } = require("%ui/hud/menus/mintMenu/mintState.nut")
-let { filterItemByInventoryFilter } = require("%ui/hud/menus/components/inventoryFilter.nut")
-let { inventoryFiltersWidget, activeFilters } = require("%ui/hud/menus/components/inventoryStashFiltersWidget.nut")
+let { agencyLoadoutGenerators, nexusItemCost, updateNexusCostsOfPreviewPreset, getCostOfPreset } = require("%ui/hud/menus/mintMenu/mintState.nut")
+let { activeFilters } = require("%ui/hud/menus/components/inventoryStashFiltersWidget.nut")
 let { weaponSlotsKeys } = require("%ui/types/weapon_slots.nut")
-let { defaultMaxVolume } = require("%ui/hud/state/inventory_common_es.nut")
-let { calc_stacked_item_volume } = require("das.inventory")
-let { makeVertScroll } = require("%ui/components/scrollbar.nut")
+let { maxVolume } = require("%ui/hud/state/inventory_common_es.nut")
+let JB = require("%ui/control/gui_buttons.nut")
 
 let currentMint = Watched(null)
 let mintSelectionState = Watched(null)
+let showNameWarning = Watched(false)
 let editingAlterId = Watched(null)
 let ALTER_CONTEXT_MENU_ID = "AlterContextMenu"
 let iconHeight = hdpxi(18)
+
+let selectedAlterIsFree = Computed(function() {
+  let { seed = 0, count = 0 } = loadoutsAgency.get()
+  if (count == 0)
+    return false
+
+  let generatorsCount = agencyLoadoutGenerators.get()?.len()
+  if (!generatorsCount)
+    return false
+  let generatorIndexes = get_generator_indexes_bind(seed, generatorsCount, count)
+  let freeListIdx = generatorIndexes?[mintSelectionState.get()]
+  if (freeListIdx == null)
+    return false
+
+  return agencyLoadoutGenerators.get()?[freeListIdx].isFree
+})
 
 function resetMintState() {
   previewPreset.set(null)
@@ -62,7 +92,7 @@ function resetMintState() {
   mintSelectionState.set(null)
 }
 
-function showMintNamePopup(cb, currentMintName = null) {
+function showMintNamePopup(cb, currentMintName = null, isRenaming = false) {
   let weapons = previewPreset.get().weapons
   let weaponTemplateName =
     weapons?[0].itemTemplate ??
@@ -76,7 +106,8 @@ function showMintNamePopup(cb, currentMintName = null) {
     weaponLoc = loc(template.getCompValNullable("item__name"))
   }
 
-  let offeredMintName = currentMintName ?? $"Alter {weaponLoc} #{random.rnd_int(1, 10000)}"
+  let offeredMintName = isRenaming ? currentMintName
+    : $"{currentMintName ?? loc("clonesMenu/mainChronogenesTitle")} {weaponLoc} #{random.rnd_int(1, 10000)}"
   let alterName = Watched(offeredMintName)
 
   let options = {
@@ -85,9 +116,30 @@ function showMintNamePopup(cb, currentMintName = null) {
       cb(alterName.get())
       removeModalWindow("mintNamePopup")
     }
+    setValue = function(v) {
+      alterName.set(v)
+      let nameChars = utf8(v)
+      let charsCount = nameChars.charCount()
+      if (charsCount < 3)
+        showNameWarning.set(true)
+      else
+        showNameWarning.set(false)
+    }
     maxChars = 16
     onAttach = @(elem) set_kb_focus(elem)
   }.__update(sub_txt)
+
+  let noEnoughCharsWarning = @() {
+    watch = showNameWarning
+    size = static [flex(), hdpx(14)]
+    children = !showNameWarning.get() ? null : mkTextArea(loc("mint/minNameLength"), {
+      color = RedWarningColor
+      transform = {}
+      animations = [{ prop = AnimProp.opacity, from = 0.4, to = 1, duration = 1,
+        play = true, easing = CosineFull, trigger = "noEnoughCharsWarning" }]
+    }.__merge(tiny_txt))
+  }
+
   addModalWindow({
     rendObj = ROBJ_WORLD_BLUR_PANEL
     key = "mintNamePopup"
@@ -95,23 +147,30 @@ function showMintNamePopup(cb, currentMintName = null) {
     onClick = @() null
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
+    onDetach = @() showNameWarning.set(false)
     children = {
-      size = const [ hdpx(400), SIZE_TO_CONTENT ]
+      size = static [ hdpx(400), SIZE_TO_CONTENT ]
       flow = FLOW_VERTICAL
-      gap = const hdpx(14)
-      padding = const hdpx(10)
+      gap = static hdpx(14)
+      padding = static hdpx(10)
       children = [
         {
-          size = [flex(), SIZE_TO_CONTENT]
+          size = FLEX_H
           flow = FLOW_HORIZONTAL
           valign = ALIGN_CENTER
           children = [
-            mkText(utf8ToUpper(loc("mint/chooseName")), { size = [flex(), SIZE_TO_CONTENT] }.__update(body_txt))
+            mkText(utf8ToUpper(loc("mint/chooseName")), { size = FLEX_H }.__update(body_txt))
             mkCloseStyleBtn(@() removeModalWindow("mintNamePopup"))
           ]
         }
         textInput(alterName, options)
+        noEnoughCharsWarning
         textButton(loc("Accept"), function() {
+          if (showNameWarning.get()) {
+            anim_start("noEnoughCharsWarning")
+            sound_play("ui_sounds/button_click_inactive")
+            return
+          }
           cb(alterName.get())
           removeModalWindow("mintNamePopup")
         }, {
@@ -123,22 +182,22 @@ function showMintNamePopup(cb, currentMintName = null) {
 }
 
 let mkContextMenuBtn = @(locId, action, icon) button({
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   flow = FLOW_HORIZONTAL
-  gap = const hdpx(4)
+  gap = static hdpx(4)
   valign = ALIGN_CENTER
   children = [
     {
       rendObj = ROBJ_IMAGE
-      size = [iconHeight, iconHeight]
+      size = iconHeight
       image = Picture($"ui/skin#context_icons/{icon}:{0}:{0}:P".subst(iconHeight))
     }
-    mkText(loc(locId), { size = [flex(), SIZE_TO_CONTENT] })
+    mkText(loc(locId), static { size = FLEX_H })
   ]
-}, action, {
-  size = [flex(), SIZE_TO_CONTENT]
+}, action, static {
+  size = FLEX_H
   halign = ALIGN_CENTER
-  padding = const [hdpx(4), hdpx(6)]
+  padding = static [hdpx(4), hdpx(6)]
   borderWidth = 0
 })
 
@@ -147,43 +206,169 @@ function setPreviewPresetFromMintPreset(mintPreset) {
     return
   let playerPreset = loadoutToPreset(mintPreset).__update({ overrideMainChronogeneDoll = true })
   previewPreset.set(playerPreset)
+  updateNexusCostsOfPreviewPreset()
 }
 
-function showAlterContextMenu(point, alterIdx) {
-  let mint = alterMints.get()[alterIdx]
+function setWeaponInPreviewPreset(item, weaponIdx) {
+  let prevItem = previewPreset.get()?.weapons[weaponIdx].nexusCost
 
-  let ranameMint = mkContextMenuBtn(loc("mint/rename"), function() {
-    removeModalPopup(ALTER_CONTEXT_MENU_ID)
-    showMintNamePopup(function(v) {
-      eventbus_send("profile_server.rename_mint", { mint_id = mint.id.tostring(), mint_name = v })
-    }, currentMint.get().name)
-  }, "rename_alter.svg")
-
-  let deleteMint = mkContextMenuBtn(loc("mint/delete"), function() {
-    removeModalPopup(ALTER_CONTEXT_MENU_ID)
-    eventbus_send("profile_server.delete_mint", mint.id.tostring())
-  }, "trash.svg")
-
-  let editMint = mkContextMenuBtn(loc("mint/edit"), function() {
-    removeModalPopup(ALTER_CONTEXT_MENU_ID)
-    setPreviewPresetFromMintPreset(mint)
-    editingAlterId.set(mint.id.tostring())
-    mintEditState.set(true)
-  }, "edit_alter.svg")
-
-  addModalPopup(point, {
-    size = [hdpx(200), SIZE_TO_CONTENT]
-    uid = ALTER_CONTEXT_MENU_ID
-    flow = FLOW_VERTICAL
-    popupValign = ALIGN_TOP
-    padding = 0
-    moveDuraton = 0
-    children = [
-      editMint
-      ranameMint
-      deleteMint
-    ]
+  previewPreset.mutate(function(v) {
+    v.weapons[weaponIdx].itemTemplate <- item?.itemTemplate
+    v.weapons[weaponIdx].attachments <- {}
+    v.weapons[weaponIdx].nexusCost <- item?.nexusCost
   })
+
+  if (prevItem)
+    updateNexusCostsOfPreviewPreset()
+}
+
+function setWeaponModInPreviewPreset(item, weaponIdx, modSlotName) {
+  let prevItem = previewPreset.get()?.weapons[weaponIdx].attachments[modSlotName].nexusCost
+
+  previewPreset.mutate(function(v) {
+    let itemTemplate = item?.itemTemplate
+    if (itemTemplate) {
+      v.weapons[weaponIdx].attachments[modSlotName] <- {
+        itemTemplate
+        nexusCost = item?.nexusCost
+      }
+    }
+    else {
+      if (modSlotName in v.weapons[weaponIdx].attachments)
+        v.weapons[weaponIdx].attachments[modSlotName] = { itemTemplate }
+    }
+  })
+
+  if (prevItem)
+    updateNexusCostsOfPreviewPreset()
+}
+
+function setEquipmentInPreviewPreset(item, slotName) {
+  if (previewPreset.get() == null)
+    previewPreset.set({})
+  let prevItem = previewPreset.get()?[slotName].nexusCost
+
+  previewPreset.mutate(function(preview) {
+    let itemTemplate = item?.itemTemplate
+    if (itemTemplate) {
+      preview[slotName] <- {
+        itemTemplate = item.itemTemplate
+        nexusCost = item?.nexusCost
+      }
+    }
+    else {
+      preview[slotName] <- null
+    }
+
+    if (preview?.inventories[slotName]) {
+      preview.inventories.rawdelete(slotName)
+    }
+  })
+
+  if (prevItem)
+    updateNexusCostsOfPreviewPreset()
+}
+
+function setEquipmentModInPreviewPreset(item, equipment, slotName) {
+  let prevItem = previewPreset.get()?[equipment].attachments[slotName].nexusCost
+
+  previewPreset.mutate(function(preview) {
+    if ("attachments" not in preview[equipment]) {
+      preview[equipment]["attachments"] <- {}
+    }
+
+    preview[equipment].attachments[slotName] <-
+      (
+        preview[equipment].attachments?[slotName] ?? {}).__merge({
+          itemTemplate = item?.itemTemplate
+          nexusCost = item?.nexusCost
+        }
+      )
+  })
+
+  if (prevItem)
+    updateNexusCostsOfPreviewPreset()
+}
+
+function getEquipmentSlots(item) {
+  if (item?.itemTemplate == null)
+    return {}
+
+  let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(item.itemTemplate)
+  return template.getCompValNullable("equipment_mods__slots")?.getAll() ?? {}
+}
+
+function setEquipmentMods(preset, presetCallbacks, equipments) {
+  foreach (equipKey in equipments) {
+    let equipVal = preset?[equipKey] ?? {}
+    let equip = equipKey
+    let tbl = {
+      onDrop = @(item) setEquipmentInPreviewPreset(item, equip)
+      attachments = {}
+    }
+    if (equipVal?.itemTemplate == null) {
+      presetCallbacks[equip] <- tbl
+      continue
+    }
+
+    let slots = getEquipmentSlots(equipVal)
+    foreach (modKey, _modVal in slots) {
+      let mod = modKey
+      tbl.attachments[modKey] <- {
+        onDrop = @(item) setEquipmentModInPreviewPreset(item, equip, mod)
+      }
+    }
+    presetCallbacks[equip] <- tbl
+  }
+}
+
+
+function setPrimaryChronogene(item) {
+  if (!item?.mainChronogeneAvailable) {
+    showMsgbox({text = loc("clonesMenu/notAvailableChronogene/msg")})
+    return
+  }
+  previewPreset.mutate(function(v) {
+    v.chronogene_primary_1.itemTemplate = item.itemTemplate
+  })
+  removeModalWindow(MAIN_CHRONOGENE_UID)
+}
+
+
+function setSuitModInPreviewPreset(item, slotName) {
+  let prevItem = previewPreset.get()?.chronogene_primary_1[slotName].nexusCost
+
+  previewPreset.mutate(function(preview) {
+    if (item?.itemTemplate) {
+      preview.chronogene_primary_1[slotName] <- (preview.chronogene_primary_1?[slotName] ?? {}).__merge({
+        itemTemplate = item.itemTemplate
+        charges = item?.isBoxedItem ? 1 : null
+        nexusCost = item?.nexusCost
+      })
+    }
+    else {
+      preview.chronogene_primary_1[slotName] = null
+    }
+  })
+
+  if (prevItem)
+    updateNexusCostsOfPreviewPreset()
+}
+
+
+function setSuitMods(preset, presetCallbacks) {
+  let suitSlotName = "chronogene_primary_1"
+  let suit = preset?[suitSlotName]
+  let slots = getEquipmentSlots(suit)
+
+  let callbacks = { onDrop = @(item) setPrimaryChronogene(item) }
+  foreach (modKey, _modVal in slots) {
+    let keyToDrop = modKey
+    callbacks[modKey] <- {
+      onDrop = @(item) setSuitModInPreviewPreset(item, keyToDrop)
+    }
+  }
+  presetCallbacks[suitSlotName] <- callbacks
 }
 
 function removeFromList(item, listName, shiftPresed) {
@@ -209,73 +394,11 @@ function removeFromList(item, listName, shiftPresed) {
     else {
       preset.inventories[listName].items.remove(idx)
     }
+
+    updateNexusCostsOfPreviewPreset()
   })
 }
 
-function setWeaponInPreviewPreset(item, weaponIdx) {
-  previewPreset.mutate(function(v) {
-    v.weapons[weaponIdx]["itemTemplate"] <- item?.itemTemplate
-    v.weapons[weaponIdx]["attachments"] <- {}
-  })
-}
-
-function setWeaponModInPreviewPreset(item, weaponIdx, modSlotName) {
-  previewPreset.mutate(function(v) {
-    let itemTemplate = item?.itemTemplate
-    if (itemTemplate) {
-      v.weapons[weaponIdx].attachments[modSlotName] <- {
-        itemTemplate
-      }
-    }
-    else {
-      if (modSlotName in v.weapons[weaponIdx].attachments)
-        v.weapons[weaponIdx].attachments[modSlotName] = { itemTemplate }
-    }
-  })
-}
-
-function setPrimaryChronogene(item) {
-  previewPreset.mutate(function(v) {
-    v.chronogene_primary_1.itemTemplate = item.itemTemplate
-  })
-}
-
-function setEquipmentInPreviewPreset(item, slotName) {
-  previewPreset.mutate(function(preview) {
-    let itemTemplate = item?.itemTemplate
-    if (itemTemplate) {
-      preview[slotName] <- { itemTemplate = item.itemTemplate }
-    }
-    else {
-      preview[slotName] = null
-    }
-  })
-}
-
-function setEquipmentModInPreviewPreset(item, equipment, slotName) {
-  previewPreset.mutate(function(preview) {
-    if ("attachments" not in preview[equipment]) {
-      preview[equipment]["attachments"] <- {}
-    }
-
-    preview[equipment].attachments[slotName] <- (preview[equipment].attachments?[slotName] ?? {}).__merge({ itemTemplate = item?.itemTemplate })
-  })
-}
-
-
-function setSuitModInPreviewPreset(item, slotName) {
-  previewPreset.mutate(function(preview) {
-    if (item?.itemTemplate) {
-      preview.chronogene_primary_1[slotName] <- (preview.chronogene_primary_1?[slotName] ?? {}).__merge({
-        itemTemplate = item.itemTemplate
-        charges = item?.isBoxedItem ? 1 : null
-      })
-    }
-    else {
-      preview.chronogene_primary_1[slotName] = null
-    }
-  })
-}
 
 function dropToInventory(item, inventoryName) {
   previewPreset.mutate(function(preview) {
@@ -322,10 +445,107 @@ function dropToInventory(item, inventoryName) {
   })
 }
 
+function setInventoriesCallbacks(callbacksOverride, inventoriesName) {
+  let inventories = {}
+  foreach (inv in inventoriesName) {
+    let inventoryName = inv
+    inventories[inv] <- {
+      on_item_dropped_to_list_cb = @(item, _list) dropToInventory(item, inventoryName)
+    }
+  }
+  callbacksOverride["inventories"] <- inventories
+}
+
+function updatePreviewCallbacks(preview, isEditMode) {
+  if (!isEditMode) {
+    previewPresetCallbackOverride.set(null)
+    return
+  }
+  if (!preview)
+    return
+  let callbacksOverride = { weapons = [] }
+  for (local i = 0; i < min((preview?.weapons ?? 0).len(), 4); i++) {
+    let idx = i
+    callbacksOverride.weapons.append({
+      onDropToSlot = function(item, _weapon) {
+        setWeaponInPreviewPreset(item, idx)
+      }
+      onDropToMod = function(item, _weapon, modSlotName, _modSlot) {
+        setWeaponModInPreviewPreset(item, idx, modSlotName)
+      }
+      canDropToMod = function(item, _weapon, _modSlotName, modSlot) {
+        return modSlot.allowed_items.findindex(@(v) v == item.itemTemplate) != null
+      }
+    })
+  }
+  setEquipmentMods(preview, callbacksOverride, [
+    "flashlight", "helmet", "safepack", "backpack", "pouch",
+    "chronogene_secondary_1", "chronogene_secondary_2", "chronogene_secondary_3", "chronogene_secondary_4"
+  ])
+  setSuitMods(preview, callbacksOverride)
+  setInventoriesCallbacks(callbacksOverride, [ "myItems", "backpack" ])
+  previewPresetCallbackOverride.set(callbacksOverride)
+}
+
+
+function setMintEditState(isEditState) {
+  mintEditState.set(isEditState)
+  updatePreviewCallbacks(previewPreset.get(), isEditState)
+}
+
+function showAlterContextMenu(point, alterIdx) {
+  let mint = alterMints.get()[alterIdx]
+
+  let ranameMint = mkContextMenuBtn(loc("mint/rename"), function() {
+    removeModalPopup(ALTER_CONTEXT_MENU_ID)
+    showMintNamePopup(function(v) {
+      eventbus_send("profile_server.rename_mint", { mint_id = mint.id.tostring(), mint_name = v })
+    }, mint.name, true)
+  }, "rename_alter.svg")
+
+  let deleteMint = mkContextMenuBtn(loc("mint/delete"), function() {
+    removeModalPopup(ALTER_CONTEXT_MENU_ID)
+    eventbus_send("profile_server.delete_mint", mint.id.tostring())
+  }, "trash.svg")
+
+  let editMint = mkContextMenuBtn(loc("mint/edit"), function() {
+    removeModalPopup(ALTER_CONTEXT_MENU_ID)
+    setPreviewPresetFromMintPreset(mint)
+    editingAlterId.set(mint.id.tostring())
+    mintSelectionState.set(alterIdx)
+    setMintEditState(true)
+  }, "edit_alter.svg")
+
+  addModalPopup(point, {
+    size = static [hdpx(200), SIZE_TO_CONTENT]
+    uid = ALTER_CONTEXT_MENU_ID
+    flow = FLOW_VERTICAL
+    popupValign = ALIGN_TOP
+    padding = 0
+    moveDuraton = 0
+    children = [
+      editMint
+      ranameMint
+      deleteMint
+    ]
+  })
+}
+
 let nexusStashItems = Computed(function() {
-  let res = getNexusStashItems(stashItems.get(), playerProfileOpenedRecipes.get(), allCraftRecipes.get(),
+  let openedRecipes = allCraftRecipes.get().filter(@(v) v?.isOpened)
+  let res = getNexusStashItems(stashItems.get(), openedRecipes, allCraftRecipes.get(),
     marketItems.get(), playerStats.get())
-  return res.sort(inventoryItemSorting)
+
+  let nexusCost = nexusItemCost.get()
+  return res.sort(inventoryItemSorting).map(function(itm) {
+    if (itm?.item__nexusCost == null)
+      return itm
+
+    if (nexusCost?[itm.itemTemplate].cost == null)
+      return itm.__merge({ nexusCost = itm.item__nexusCost })
+
+    return itm.__merge({ nexusCost = nexusCost[itm.itemTemplate].cost })
+  })
 })
 
 let stashItemsProceed = function(items) {
@@ -334,16 +554,8 @@ let stashItemsProceed = function(items) {
 
 let stashRefineItemsPanelData = setupPanelsData(nexusStashItems,
                                 4,
-                                [nexusStashItems, activeFilters],
+                                [nexusStashItems, activeFilters, nexusItemCost],
                                 stashItemsProceed)
-
-function getEquipmentSlots(item) {
-  if (item?.itemTemplate == null)
-    return {}
-
-  let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(item.itemTemplate)
-  return template.getCompValNullable("equipment_mods__slots")?.getAll() ?? {}
-}
 
 let fastMoveItemFromStash = function(item) {
   let preset = previewPreset.get()
@@ -424,17 +636,17 @@ let fastMoveItemFromStash = function(item) {
       return calc_stacked_item_volume(countPerStack, ammoCount, volumePerStack)
     }
     else {
-      return (template?.getCompValNullable("item__volume") ?? 0) * 10.0
+      return (template?.getCompValNullable("item__volume") ?? 0)
     }
   }
 
-  let itemVolume = getItemVolume(item) / 10.0
+  let itemVolume = getItemVolume(item)
   
   local currentMyItemsVolume = 0
   foreach (inventoryItem in (preset?.inventories.myItems.items ?? [])) {
-    currentMyItemsVolume += (getItemVolume(inventoryItem) / 10.0)
+    currentMyItemsVolume += (getItemVolume(inventoryItem))
   }
-  local myItemsCapacity = defaultMaxVolume.get() * 10.0
+  local myItemsCapacity = maxVolume.get()
   let pouchTemplate = previewPreset.get()?.pouch.itemTemplate
   if (pouchTemplate) {
     let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(pouchTemplate)
@@ -453,7 +665,7 @@ let fastMoveItemFromStash = function(item) {
 
     local inventoryVolume = 0
     foreach (inventoryItem in (preset?.inventories[inventoryName].items ?? [])) {
-      inventoryVolume += (getItemVolume(inventoryItem) / 10.0)
+      inventoryVolume += getItemVolume(inventoryItem)
     }
 
     if (inventoryVolume + itemVolume <= inventoryCap) {
@@ -463,7 +675,38 @@ let fastMoveItemFromStash = function(item) {
   }
 }
 
+function selectAvaliableAlter() {
+  let alterToSelect = alterMints.get()?[0]
+  if (alterToSelect) {
+    mintSelectionState.set(alterMints.get()?[0].id)
+    setPreviewPresetFromMintPreset(alterMints.get()?[0])
+    currentMint.set(alterMints.get()?[0])
+  }
+  else {
+    let idx = 0
+    let { seed = 0, count = 0 } = loadoutsAgency.get()
+    let generatorIndexes = get_generator_indexes_bind(seed, agencyLoadoutGenerators.get().len(), count)
+    let generatorIndex = generatorIndexes[0]
+    let agencyLoadoutGenerator = agencyLoadoutGenerators.get()[generatorIndex]
+    let generatorName = agencyLoadoutGenerator.generator
+
+    let compArray = ecs.CompArray()
+    let seedInt = seed.tointeger()
+    generate_loadout_by_seed(generatorName, seedInt, compArray)
+    let preset = loadoutToPreset({ items = compArray.getAll() }).__merge({ overrideMainChronogeneDoll = true })
+    previewPreset.set(preset)
+    mintSelectionState.set(idx)
+  }
+}
+
 let stashContent = function() {
+  let nexusPointPrice = Computed(function() {
+    local cost = 0
+    foreach (_k, v in nexusItemCost.get() ?? {}) {
+      cost += v.overallCost
+    }
+    return cost
+  })
   return function() {
     stashRefineItemsPanelData.resetScrollHandlerData()
 
@@ -480,7 +723,7 @@ let stashContent = function() {
       gap = hdpx(4)
       children = [
         @() {
-          watch = [ nexusStashItems, activeFilters ]
+          watch = [ nexusStashItems, activeFilters, nexusItemCost ]
           size = flex()
           children = itemsPanelList({
             outScrollHandlerInfo=stashRefineItemsPanelData.scrollHandlerData,
@@ -506,26 +749,68 @@ let stashContent = function() {
             xSize = 4
           })
         }
-        textButton(loc("mint/save"), function() {
-          let items = presetToLoadout(previewPreset.get())
-          if (editingAlterId.get() == null) {
-            showMintNamePopup(function(name) {
-              eventbus_send("profile_server.create_mint", { items = items, name })
-              mintEditState.set(false)
-              resetMintState()
-              editingAlterId.set(null)
-            })
-          }
-          else {
-            eventbus_send("profile_server.change_mint", { items = items, mint_id = editingAlterId.get() })
-            editingAlterId.set(null)
-            mintEditState.set(false)
-          }
-        }, { size = [ flex(), SIZE_TO_CONTENT ], halign = ALIGN_CENTER })
-        textButton(loc("Cancel"), function() {
-          mintEditState.set(false)
-          resetMintState()
-        }, { size = [ flex(), SIZE_TO_CONTENT ], halign = ALIGN_CENTER })
+        button({
+            size = SIZE_TO_CONTENT
+            flow = FLOW_HORIZONTAL
+            margin = [fsh(1), fsh(3)]
+            gap = hdpx(10)
+            children = [
+              mkText(loc("mint/save"), body_txt)
+              @() {
+                watch = nexusPointPrice
+                children = {
+                  rendObj = ROBJ_BOX
+                  flow = FLOW_HORIZONTAL
+                  gap = hdpx(4)
+                  padding = [ 0, hdpx(10) ]
+                  fillColor = NexusPlayerPointsColor
+                  borderRadius = hdpx(2)
+                  children = nexusPointPrice.get() > 0 ? [
+                    {
+                      rendObj = ROBJ_IMAGE
+                      image = nexusPointsIcon
+                      size = nexusPointsIconSize
+                      vplace = ALIGN_CENTER
+                    }
+                    mkText(nexusPointPrice.get(), body_txt)
+                  ] : null
+                }
+              }
+            ]
+          },
+          function() {
+              let items = presetToLoadout(previewPreset.get())
+              if (editingAlterId.get() == null) {
+                let alterTemplate = items.findvalue(@(v) v?.slotName == "equipment_chronogene_primary_1")?.templateName
+                local alterName = null
+                if (alterTemplate != null) {
+                  let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(alterTemplate)
+                  alterName = loc(template.getCompValNullable("item__name"))
+                }
+                showMintNamePopup(function(name) {
+                  eventbus_send("profile_server.create_mint", { items = items, name })
+                  setMintEditState(false)
+                  resetMintState()
+                  editingAlterId.set(null)
+                  selectAvaliableAlter()
+                }, alterName)
+              }
+              else {
+                eventbus_send("profile_server.change_mint", { items = items, mint_id = editingAlterId.get() })
+                editingAlterId.set(null)
+                setMintEditState(false)
+              }
+            },
+            {
+              size = FLEX_H
+              halign = ALIGN_CENTER
+            }
+          )
+          textButton(loc("Cancel"), function() {
+            setMintEditState(false)
+            resetMintState()
+            selectAvaliableAlter()
+          }, { size = FLEX_H, halign = ALIGN_CENTER })
       ]
     }.__update(bluredPanel)
   }
@@ -538,56 +823,6 @@ let stashTab = {
     stashContent()
     inventoryFiltersWidget
   ]
-}
-
-function setEquipmentMods(preset, presetCallbacks, equipments) {
-  foreach (equipKey in equipments) {
-    let equipVal = preset?[equipKey] ?? {}
-    let equip = equipKey
-    let tbl = {
-      onDrop = @(item) setEquipmentInPreviewPreset(item, equip)
-      attachments = {}
-    }
-    if (equipVal?.itemTemplate == null) {
-      presetCallbacks[equip] <- tbl
-      continue
-    }
-
-    let slots = getEquipmentSlots(equipVal)
-    foreach (modKey, _modVal in slots) {
-      let mod = modKey
-      tbl.attachments[modKey] <- {
-        onDrop = @(item) setEquipmentModInPreviewPreset(item, equip, mod)
-      }
-    }
-    presetCallbacks[equip] <- tbl
-  }
-}
-
-function setSuitMods(preset, presetCallbacks) {
-  let suitSlotName = "chronogene_primary_1"
-  let suit = preset?[suitSlotName]
-  let slots = getEquipmentSlots(suit)
-
-  let callbacks = { onDrop = @(item) setPrimaryChronogene(item) }
-  foreach (modKey, _modVal in slots) {
-    let keyToDrop = modKey
-    callbacks[modKey] <- {
-      onDrop = @(item) setSuitModInPreviewPreset(item, keyToDrop)
-    }
-  }
-  presetCallbacks[suitSlotName] <- callbacks
-}
-
-function setInventoriesCallbacks(callbacksOverride, inventoriesName) {
-  let inventories = {}
-  foreach (inv in inventoriesName) {
-    let inventoryName = inv
-    inventories[inv] <- {
-      on_item_dropped_to_list_cb = @(item, _list) dropToInventory(item, inventoryName)
-    }
-  }
-  callbacksOverride["inventories"] <- inventories
 }
 
 function removeFromInventory(inventoryName, item) {
@@ -609,49 +844,18 @@ function removeFromInventory(inventoryName, item) {
   })
 }
 
-function updatePreviewCallbacks(preview, isEditMode) {
-  if (!isEditMode) {
-    previewPresetCallbackOverride.set(null)
-    return
-  }
-  if (!preview)
-    return
-  let callbacksOverride = { weapons = [] }
-  for (local i = 0; i < min((preview?.weapons ?? 0).len(), 4); i++) {
-    let idx = i
-    callbacksOverride.weapons.append({
-      onDropToSlot = function(item, _weapon) {
-        setWeaponInPreviewPreset(item, idx)
-      }
-      onDropToMod = function(item, _weapon, modSlotName, _modSlot) {
-        setWeaponModInPreviewPreset(item, idx, modSlotName)
-      }
-      canDropToMod = function(item, _weapon, _modSlotName, modSlot) {
-        return modSlot.allowed_items.findindex(@(v) v == item.itemTemplate) != null
-      }
-    })
-  }
-  setEquipmentMods(preview, callbacksOverride, [
-    "flashlight", "helmet", "safepack", "backpack", "pouch",
-    "chronogene_secondary_1", "chronogene_secondary_2", "chronogene_secondary_3", "chronogene_secondary_4"
-  ])
-  setSuitMods(preview, callbacksOverride)
-  setInventoriesCallbacks(callbacksOverride, [ "myItems", "backpack" ])
-  previewPresetCallbackOverride.set(callbacksOverride)
-}
-
 let mintsList = function() {
   return {
     watch = alterMints
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     children = {
-      size = [ flex(), SIZE_TO_CONTENT ]
+      size = FLEX_H
       flow = FLOW_VERTICAL
       gap = hdpx(6)
       children = [
         {
           padding = hdpx(6)
-          size = [ flex(), SIZE_TO_CONTENT ]
+          size = FLEX_H
           flow = FLOW_VERTICAL
           children = [
             mkText(loc("mint/mintListTitle"), { hplace = ALIGN_CENTER })
@@ -659,76 +863,106 @@ let mintsList = function() {
           ]
         },
         {
-          size = [ flex(), SIZE_TO_CONTENT ]
+          size = FLEX_H
           flow = FLOW_VERTICAL
           gap = hdpx(4)
           children = alterMints.get().map(function(mint, idx) {
             let { name } = mint
+            let playerPreset = loadoutToPreset(mint).__update({ overrideMainChronogeneDoll = true })
 
-            return mkSelectPanelItem({
-              border_align = BD_RIGHT
-              children = @(...) {
-                size = flex()
-                flow = FLOW_HORIZONTAL
-                gap = hdpx(10)
-                valign = ALIGN_CENTER
-                children = [
-                  mkText(name, {
-                    size = [flex(), SIZE_TO_CONTENT]
-                    behavior = Behaviors.Marquee
-                    speed = hdpx(50)
-                  }.__update(h2_txt))
-                  button({
-                      rendObj = ROBJ_IMAGE
-                      size = [hdpxi(22), hdpxi(22)]
-                      image = Picture($"!ui/skin#triple_dot.svg:{0}:{0}:K".subst(hdpxi(22)))
-                    },
-                    function(event) {
+            return {
+              flow = FLOW_HORIZONTAL
+              size = FLEX_H
+              children = [
+                mkSelectPanelItem({
+                  border_align = BD_NONE
+                  children = @(...) {
+                    size = flex()
+                    gap = hdpx(10)
+                    valign = ALIGN_CENTER
+                    flow = FLOW_HORIZONTAL
+                    children = [
+                      mkText(name, {
+                        size = FLEX_H
+                        behavior = Behaviors.Marquee
+                        speed = hdpx(50)
+                      }.__update(h2_txt))
+                      {
+                        hplace = ALIGN_RIGHT
+                        valign = ALIGN_CENTER
+                        flow = FLOW_HORIZONTAL
+                        rendObj = ROBJ_BOX
+                        gap = hdpx(4)
+                        padding = [ 0, hdpx(10) ]
+                        fillColor = NexusPlayerPointsColor
+                        size = FLEX_V
+                        borderRadius = [ hdpx(2), 0, 0, hdpx(2) ]
+                        children = [
+                          {
+                            rendObj = ROBJ_IMAGE
+                            image = nexusPointsIcon
+                            size = nexusPointsIconSize
+                          }
+                          mkText(getCostOfPreset(playerPreset), body_txt.__merge({ color = Color(255, 255, 255, 255) }))
+                        ]
+                      }
+                    ]
+                  }
+                  idx = mint.id
+                  state = mintSelectionState
+                  onSelect = function(newIdx) {
+                    previewPreset.set(playerPreset)
+                    updateNexusCostsOfPreviewPreset()
+                    currentMint.set(mint)
+                    mintSelectionState.set(newIdx)
+                  }
+                  cb = function(event) {
+                    if (event.button == 1) {
                       let { screenX, screenY } = event
                       showAlterContextMenu([ screenX, screenY ], idx)
-                    },
-                    {
-                      halign = ALIGN_CENTER
-                      valign = ALIGN_CENTER
-                      size = [hdpx(40), flex()]
-                      margin = [0, hdpx(4),0,0]
-                      stopMouse = true
                     }
-                  )
-                ]
-              }
-              idx = mint.id
-              state = mintSelectionState
-              onSelect = function(newIdx) {
-                setPreviewPresetFromMintPreset(mint)
-                currentMint.set(mint)
-                mintSelectionState.set(newIdx)
-              }
-              cb = function(event) {
-                if (event.button == 1) {
-                  let { screenX, screenY } = event
-                  showAlterContextMenu([ screenX, screenY ], idx)
-                }
-              }
-              visual_params = {
-                size = [ flex(), hdpx(40) ]
-                padding = [ 0, hdpx(2), 0, hdpx(10) ]
-              }
-            })
+                  }
+                  visual_params = {
+                    size = static [ flex(), hdpx(40) ]
+                    padding = static [ 0, hdpx(2), 0, hdpx(10) ]
+                    xmbNode = XmbNode()
+                  }
+                })
+                button({
+                    rendObj = ROBJ_IMAGE
+                    size = hdpxi(22)
+                    image = Picture($"!ui/skin#triple_dot.svg:{0}:{0}:K".subst(hdpxi(22)))
+                  },
+                  function(event) {
+                    let { screenX, screenY } = event
+                    showAlterContextMenu([ screenX, screenY ], idx)
+                  },
+                  {
+                    halign = ALIGN_CENTER
+                    valign = ALIGN_CENTER
+                    size = static [hdpx(40), flex()]
+                    stopMouse = true
+                  }
+                )
+              ]
+            }
           }).append(
             (alterMints.get()?.len() ?? 0) < playerProfileNexusLoadoutStorageCount.get() ? textButton(loc("mint/createNew"),
               function() {
-                let prs = makePresetDataFromCurrentEquipment(@(item) !bannedMintItem(item?.itemTemplate))
+                let prs = makePresetDataFromCurrentEquipment(function(item) {
+                  return !bannedMintItem(item?.itemTemplate) && defaultFilterFunction(item)
+                })
                 prs.__update({ overrideMainChronogeneDoll = true })
                 if (prs?.inventories.myItems.items)
                   prs.inventories.myItems.items = unfoldCountItems(prs.inventories.myItems.items)
                 if (prs?.inventories.backpack.items)
                   prs.inventories.backpack.items = unfoldCountItems(prs.inventories.backpack.items)
                 previewPreset.set(prs)
-                mintEditState.set(true)
+                setMintEditState(true)
+                updateNexusCostsOfPreviewPreset()
               },
               {
-                size = [ flex(), SIZE_TO_CONTENT ]
+                size = FLEX_H
                 halign = ALIGN_CENTER
               }
             ) : null
@@ -741,15 +975,17 @@ let mintsList = function() {
 
 let mintManage = {
   vplace = ALIGN_BOTTOM
-  size = [ flex(), SIZE_TO_CONTENT ]
+  size = FLEX_H
   children = startButton
 }
 
-let backButton = textButton(loc("mainmenu/btnBack"), @() openMenu("Raid") {
-  size = [flex(), SIZE_TO_CONTENT]
-  halign = ALIGN_CENTER
-  hotkeys = [["Esc", { description = loc("mainmenu/btnBack") }]]
-})
+let backButton = buttonWithGamepadHotkey(mkText(loc("mainmenu/btnBack"), { hplace = ALIGN_CENTER }.__merge(body_txt)),
+  @() openMenu("Missions"),
+  {
+    size = FLEX_H
+    halign = ALIGN_CENTER
+    hotkeys = [[$"Esc | {JB.B}", { description = { skip = true } }]]
+  })
 
 function agencyAlters() {
   let updateAltersTimer = Computed(function() {
@@ -768,78 +1004,104 @@ function agencyAlters() {
       return { watch = agencyLoadoutGenerators }
     let generatorIndexes = get_generator_indexes_bind(seed, agencyLoadoutGenerators.get().len(), count)
     for (local i = 0; i < count; i++) {
-      let idx = $"agency_{i}"
+      let idx = i
       let generatorIndex = generatorIndexes[i]
       let agencyLoadoutGenerator = agencyLoadoutGenerators.get()[generatorIndex]
       let generatorName = agencyLoadoutGenerator.generator
       let loadoutName = agencyLoadoutGenerator.name
+      let isFree = agencyLoadoutGenerator.isFree
 
       
       let iter = i
 
+      let compArray = ecs.CompArray()
+      let seedInt = seed.tointeger() + iter
+      generate_loadout_by_seed(generatorName, seedInt, compArray)
+      let playerPreset = loadoutToPreset({ items = compArray.getAll() }).__merge({ overrideMainChronogeneDoll = true })
+
       agencyPanels.append(
         mkSelectPanelItem({
           border_align = BD_RIGHT
-          children = @(...) {
+          children = {
             size = flex()
             flow = FLOW_HORIZONTAL
             gap = hdpx(10)
             valign = ALIGN_CENTER
             children = [
               mkText(loadoutName, {
-                size = [flex(), SIZE_TO_CONTENT]
+                size = FLEX_H
                 behavior = Behaviors.Marquee
                 speed = hdpx(50)
               }.__update(h2_txt))
+              isFree ? null : {
+                flow = FLOW_HORIZONTAL
+                hplace = ALIGN_RIGHT
+                valign = ALIGN_CENTER
+                padding = static [ 0, hdpx(10) ]
+                gap = hdpx(4)
+                rendObj = ROBJ_BOX
+                fillColor = NexusPlayerPointsColor
+                size = FLEX_V
+                borderRadius = static [ hdpx(2), 0, 0, hdpx(2) ]
+                children = [
+                  {
+                    rendObj = ROBJ_IMAGE
+                    image = nexusPointsIcon
+                    size = nexusPointsIconSize
+                  }
+                  mkText(getCostOfPreset(playerPreset), static body_txt.__merge({ color = Color(255, 255, 255, 255) }))
+                ]
+              }
             ]
           }
           idx
           state = mintSelectionState
           onSelect = function(...) {
-            let compArray = ecs.CompArray()
-            let seedInt = seed.tointeger() + iter
-            generate_loadout_by_seed(generatorName, seedInt, compArray)
-            let preset = loadoutToPreset({ items = compArray.getAll() }).__merge({ overrideMainChronogeneDoll = true })
-            previewPreset.set(preset)
+            previewPreset.set(playerPreset)
             mintSelectionState.set(idx)
+
+            if (!isFree) {
+              updateNexusCostsOfPreviewPreset()
+            }
           }
           visual_params = {
-            size = [ flex(), hdpx(40) ]
-            padding = [ 0, hdpx(2), 0, hdpx(10) ]
+            size = static [ flex(), hdpx(40) ]
+            padding = static [ 0, hdpx(2), 0, hdpx(10) ]
+            xmbNode = XmbNode()
           }
         })
       )
     }
     return {
-      watch = updateAltersTimer
-      size = [ flex(), SIZE_TO_CONTENT ]
+      watch = [ updateAltersTimer ]
+      size = FLEX_H
       flow = FLOW_VERTICAL
       children = [
         {
-          size = [ flex(), SIZE_TO_CONTENT ]
+          size = FLEX_H
           padding = hdpx(6)
           flow = FLOW_VERTICAL
           children = [
             {
-              size = [ flex(), SIZE_TO_CONTENT ]
+              size = FLEX_H
               children = [
                 mkText(loc("mint/agencyAltersTitle"), { hplace = ALIGN_CENTER })
               ]
             }
             @() {
               watch = timer
-              size = [ flex(), SIZE_TO_CONTENT ]
+              size = FLEX_H
               halign = ALIGN_CENTER
               flow = FLOW_HORIZONTAL
               children = [
                 mkText(loc("mint/agencyUpdateIn"), {color = TextDisabled}),
-                mkMonospaceTimeComp(timer.get())
+                mkTimeComp(timer.get())
               ]
             }
           ]
         }
         {
-          size = [ flex(), SIZE_TO_CONTENT ]
+          size = FLEX_H
           flow = FLOW_VERTICAL
           gap = hdpx(4)
           children = agencyPanels
@@ -850,13 +1112,18 @@ function agencyAlters() {
 }
 
 
-let mintList = {
+let mkMintList = @(rotationTimer) {
   size = flex()
   flow = FLOW_VERTICAL
   gap = hdpx(12)
   children = [
     makeVertScroll({
-      size = [ flex(), SIZE_TO_CONTENT ]
+      xmbNode = XmbContainer({
+        canFocus = false
+        wrap = false
+        scrollSpeed = 5.0
+      })
+      size = FLEX_H
       flow = FLOW_VERTICAL
       gap = hdpx(20)
       children = [
@@ -865,11 +1132,12 @@ let mintList = {
       ]
     })
     {
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       flow = FLOW_VERTICAL
       gap = hdpx(4)
       vplace = ALIGN_BOTTOM
       children = [
+        rotationTimer
         backButton
         mintManage
       ]
@@ -890,16 +1158,16 @@ function heroInventories() {
 
   return {
     watch = [ backpackEid, previewPreset, mintEditState ]
-    size = [SIZE_TO_CONTENT, flex()]
+    size = FLEX_V
     flow = FLOW_VERTICAL
     gap = hdpx(10)
     children = [
       {
-        size = [SIZE_TO_CONTENT, flex()]
+        size = FLEX_V
         children = pouches
       }.__update(bluredPanel)
       backpack == null ? null : {
-        size = [SIZE_TO_CONTENT, flex()]
+        size = FLEX_V
         children = backpack
       }.__update(bluredPanel)
       function() {
@@ -924,7 +1192,7 @@ function heroInventories() {
 
 let weaponPanels = @() {
   watch = [ safeAreaAmount, mintEditState ]
-  size = [SIZE_TO_CONTENT, flex()]
+  size = FLEX_V
   flow = FLOW_VERTICAL
   gap = safeAreaAmount.get() == 1 ? hdpx(6) : 0
   padding = safeAreaAmount.get() == 1 ? hdpx(10) : 0
@@ -938,68 +1206,107 @@ let weaponPanels = @() {
 }.__update(bluredPanel)
 
 
+function priceTitle() {
+  let nexusPointPrice = Computed(function() {
+    local cost = 0
+    foreach (_k, v in nexusItemCost.get() ?? {}) {
+      cost += v.overallCost
+    }
+    return cost
+  })
+
+  return @() {
+    watch = [ nexusPointPrice, selectedAlterIsFree ]
+    rendObj = ROBJ_BOX
+    borderRadius = [ 0, 0, 0, hdpx(5) ]
+    fillColor = NexusPlayerPointsColor
+    hplace = ALIGN_RIGHT
+    vplace = ALIGN_TOP
+    padding = hdpx(10)
+    children = selectedAlterIsFree.get() || nexusPointPrice.get() == 0 ? null : {
+      children = [
+        mkTooltiped(
+          {
+            gap = hdpx(4)
+            flow = FLOW_HORIZONTAL
+            children = [
+              mkText(loc("mint/nexusPointsTitle")),
+              {
+                size = nexusPointsIconSize
+                rendObj = ROBJ_IMAGE
+                image = nexusPointsIcon
+              },
+              mkText(nexusPointPrice.get()),
+              faComp("question-circle", {
+                padding = [ 0, hdpx(5) ]
+                color = Color(255,255,255,255)
+              })
+            ]
+          }
+          loc("mint/nexusPointsTitleTooltip")
+        )
+      ]
+    }
+  }
+}
+
+
 let bodyPartsPanel = {
-  size = [SIZE_TO_CONTENT, flex()]
+  size = FLEX_V
   valign = ALIGN_CENTER
-  padding = hdpx(10)
   children = [
-    bodypartsPanel
-    secondaryChronogenesWidget
+    {
+      size = FLEX_V
+      padding = [ 0, hdpx(10), hdpx(10), hdpx(10) ]
+      children = [
+        bodypartsPanel
+        chronogenesWidget
+      ]
+    }
+    priceTitle()
   ]
 }.__update(bluredPanel)
 
 
-function presetStashTabs() {
-  return {
-    watch = mintEditState
-    size = [hdpx(364), flex()]
-    flow = FLOW_VERTICAL
-    gap = hdpx(10)
-    children = mintEditState.get() ?
-      stashTab : mintList
-  }
+let mkPresetStashTabs = @(rotationTimer) @() {
+  watch = mintEditState
+  size = static [hdpx(364), flex()]
+  flow = FLOW_VERTICAL
+  gap = hdpx(10)
+  children = mintEditState.get() ? stashTab : mkMintList(rotationTimer)
 }
 
-function mintContent() {
-  previewPreset.subscribe(function(preset) {
-    updatePreviewCallbacks(preset, mintEditState.get())
-    checkImportantPresetSlotEmptiness(preset)
-  })
-  mintEditState.subscribe(@(isEditState) updatePreviewCallbacks(previewPreset.get(), isEditState))
+
+function updateDataAfterPresetChange(preset) {
+  updatePreviewCallbacks(preset, mintEditState.get())
+  checkImportantPresetSlotEmptiness(preset)
+}
+
+function resetMintMenuState() {
+  setMintEditState(false)
+  resetMintState()
+  selectAvaliableAlter()
+}
+
+function mkMintContent(rotationTimer) {
+  previewPreset.subscribe_with_nasty_disregard_of_frp_update(@(preset) updateDataAfterPresetChange(preset))
   return {
     size = flex()
     flow = FLOW_HORIZONTAL
     gap = { size = flex() }
     padding = hdpx(4)
     onAttach = function() {
-      let alterToSelect = alterMints.get()?[0]
-      if (alterToSelect) {
-        mintSelectionState.set(alterMints.get()?[0].id)
-        setPreviewPresetFromMintPreset(alterMints.get()?[0])
-        currentMint.set(alterMints.get()?[0])
-      }
-      else {
-        let idx = $"agency_0"
-        let { seed = 0, count = 0 } = loadoutsAgency.get()
-        let generatorIndexes = get_generator_indexes_bind(seed, agencyLoadoutGenerators.get().len(), count)
-        let generatorIndex = generatorIndexes[0]
-        let agencyLoadoutGenerator = agencyLoadoutGenerators.get()[generatorIndex]
-        let generatorName = agencyLoadoutGenerator.generator
-
-        let compArray = ecs.CompArray()
-        let seedInt = seed.tointeger()
-        generate_loadout_by_seed(generatorName, seedInt, compArray)
-        let preset = loadoutToPreset({ items = compArray.getAll() }).__merge({ overrideMainChronogeneDoll = true })
-        previewPreset.set(preset)
-        mintSelectionState.set(idx)
-      }
+      gui_scene.setInterval(10, checkRaidAvailability)
+      selectAvaliableAlter()
     }
     onDetach = function() {
       previewPreset.set(null)
+      previewPreset.unsubscribe(updateDataAfterPresetChange)
       previewPresetCallbackOverride.set(null)
       mintEditState.set(false)
       editingAlterId.set(null)
       slotsWithWarning.set({})
+      gui_scene.clearTimer(checkRaidAvailability)
     }
     children = [
       shiftPressedMonitor
@@ -1007,11 +1314,12 @@ function mintContent() {
       bodyPartsPanel
       weaponPanels
       heroInventories
-      presetStashTabs
+      mkPresetStashTabs(rotationTimer)
     ]
   }
 }
 
 return {
-  mintContent
+  mkMintContent
+  resetMintMenuState
 }

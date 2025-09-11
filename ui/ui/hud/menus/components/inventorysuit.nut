@@ -1,50 +1,52 @@
+from "%ui/components/colors.nut" import BtnBgHover, BtnBdHover, BtnBgTransparent, ItemBgColor,
+  ItemBdColor, noItemContainerBg
+from "%ui/hud/menus/components/inventoryItem.nut" import chargesIndicator, corruptedItemImageBackground, addStorageType, mkStorageIcon
+from "das.inventory" import is_item_inventory_move_blocked, is_item_pickup_blocked, is_on_equip_equipment_prev_can_fit, notify_equip_in_occupied_slot_failed,
+  is_equip_to_slot_cause_inventory_overflow, is_equip_to_slot_cause_from_pocket_drop, move_item_from_ground_to_slot, move_item_from_inventory_to_slot,
+  is_on_equip_equipment_mod_prev_can_fit, install_equipment_mod_to_slot
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems, needShowQuickSlotPurchase, purchaseItemsToSlot
+
+from "math" import ceil
+import "%ui/hud/menus/components/dropMarker.nut" as dropMarker
+from "%ui/hud/state/equipment.nut" import getEquipmentModSlots, isEquipmentHasSlot
+from "%ui/hud/menus/components/inventoryItemTooltip.nut" import buildInventoryItemTooltip
+from "string" import startswith
+from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryItemImage
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/components/msgbox.nut" import showMsgbox
+from "%dngscripts/sound_system.nut" import sound_play
+from "%ui/hud/menus/components/itemFromTemplate.nut" import getSlotFromTemplate
+from "%ui/hud/state/inventory_eids_common.nut" import getInventoryEidByListType
+from "%ui/mainMenu/currencyIcons.nut" import creditsIcon
+from "%ui/hud/menus/components/inventoryItemsList.nut" import inventoryItemSorting
+from "%ui/components/chocolateWnd.nut" import openChocolateWnd
+from "%ui/hud/menus/components/inventoryItemRarity.nut" import mkRarityIconByItem
+from "%ui/mainMenu/raid_preparation_window_state.nut" import mkWarningSign
+from "%ui/mainMenu/market/inventoryToMarket.nut" import getItemPriceToShow, mkItemPrice
+from "%ui/hud/state/entity_use_state.nut" import calcItemUseProgress
+from "%ui/hud/menus/components/inventoryItemNexusPointPriceComp.nut" import nexusPointsCostComp
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
-from "%ui/mainMenu/raid_preparation_window_state.nut" import getNexusStashItems
+from "%ui/mainMenu/raid_preparation_window_state.nut" import getNexusStashItemsForChocolateMenu
 
-let { playerProfileOpenedRecipes, allCraftRecipes, marketItems, playerStats } = require("%ui/profile/profileState.nut")
-let { ceil } = require("math")
-let { focusedData, draggedData, isAltPressed } = require("%ui/hud/state/inventory_state.nut")
-let dropMarker = require("dropMarker.nut")
-let { BtnBgHover, BtnBdHover, BtnBgTransparent, ItemBgColor, ItemBdColor, noItemContainerBg
-} = require("%ui/components/colors.nut")
+let { allCraftRecipes, marketItems, playerStats } = require("%ui/profile/profileState.nut")
+let { focusedData, draggedData, isAltPressed, mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
 let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
-let { getEquipmentModSlots, equipment, isEquipmentHasSlot } = require("%ui/hud/state/equipment.nut")
-let { buildInventoryItemTooltip } = require("%ui/hud/menus/components/inventoryItemTooltip.nut")
-let { startswith } = require("string")
-let { inventoryImageParams, inventoryItemImage } = require("inventoryItemImages.nut")
-let { chargesIndicator, corruptedItemImageBackground, addStorageType, mkStorageIcon
-} = require("%ui/hud/menus/components/inventoryItem.nut")
-let { setTooltip }= require("%ui/components/cursors.nut")
+let { equipment } = require("%ui/hud/state/equipment.nut")
+let { inventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
 let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
-let { is_item_inventory_move_blocked, is_item_pickup_blocked,
-      is_on_equip_equipment_prev_can_fit, notify_equip_in_occupied_slot_failed,
-      is_equip_to_slot_cause_inventory_overflow, is_equip_to_slot_cause_from_pocket_drop,
-      move_item_from_ground_to_slot, move_item_from_inventory_to_slot,
-      is_on_equip_equipment_mod_prev_can_fit, install_equipment_mod_to_slot } = require("das.inventory")
 let { canModifyInventory } = require("%ui/hud/state/inventory_common_es.nut")
-let { GROUND, STASH } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
-let { showMsgbox } = require("%ui/components/msgbox.nut")
+let { GROUND, STASH, REFINER } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
 let { isInPlayerSession } = require("%ui/hud/state/gametype_state.nut")
-let { getSlotFromTemplate } = require("%ui/hud/menus/components/itemFromTemplate.nut")
-let { getInventoryEidByListType } = require("%ui/hud/state/inventory_eids_common.nut")
-let { creditsIcon } = require("%ui/mainMenu/currencyIcons.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 
-let { backpackItems, stashItems, inventoryItems, safepackItems
-} = require("%ui/hud/state/inventory_items_es.nut")
-let { inventoryItemSorting } = require("%ui/hud/menus/components/inventoryItemsList.nut")
-let { mergeNonUniqueItems, needShowQuickSlotPurchase, purchaseItemsToSlot
-} = require("%ui/hud/menus/components/inventoryItemUtils.nut")
-let { openChocolateWnd } = require("%ui/components/chocolateWnd.nut")
+let { backpackItems, stashItems, inventoryItems, safepackItems } = require("%ui/hud/state/inventory_items_es.nut")
 let { hoverHotkeysWatchedList } = require("%ui/components/pcHoverHotkeyHitns.nut")
 let { hoverPcHotkeysPresentation } = require("%ui/hud/menus/components/inventoryActionsHints.nut")
-let { mkRarityIconByItem } = require("%ui/hud/menus/components/inventoryItemRarity.nut")
-let { slotsWithWarning, mkWarningSign, isPreparationOpened, mintEditState
-} = require("%ui/mainMenu/raid_preparation_window_state.nut")
-let { getItemPriceToShow, mkItemPrice } = require("%ui/mainMenu/market/inventoryToMarket.nut")
+let { slotsWithWarning, mintEditState } = require("%ui/mainMenu/raid_preparation_window_state.nut")
 let { curTime } = require("%ui/hud/state/time_state.nut")
-let { entityToUse, calcItemUseProgress } = require("%ui/hud/state/entity_use_state.nut")
+let { entityToUse } = require("%ui/hud/state/entity_use_state.nut")
 
 let modFillDragColor = ItemBgColor
 let modBorderColor = ItemBdColor
@@ -177,13 +179,15 @@ function canDropToModSlot(item, slot) {
 }
 
 function canDropItemToSlot(item, slot) {
+  if (item?.fromList.name == REFINER.name)
+    return false
   if (slot?.slotTemplateName && item?.slotTemplateName == slot?.slotTemplateName)
     return true
   return ( canDropToEquipment(item, slot) || canDropToModSlot(item, slot) )
 }
 
 function dropItemToSlot(item, slot) {
-  if (!canDropItemToSlot(item, slot))
+  if (mutationForbidenDueToInQueueState.get() || !canDropItemToSlot(item, slot))
     return
   if (slot?.attachedToEquipment == controlledHeroEid.get())
     dropEquipmentToSlot(item, slot)
@@ -220,19 +224,16 @@ let mkSlotWarning = @(slotName) function() {
   }
 }
 
-function mkPriceBlock(item, price) {
-  let watch = isPreparationOpened
-  if (!isPreparationOpened.get())
-    return @() { watch }
-  let priceToShow = price > 0 ? price : getItemPriceToShow(item)
-  if (priceToShow <= 0)
-    return @() { watch }
-  return @() {
-    watch
+function mkPriceBlock(item, priceData) {
+  let priceDataToUse = (priceData?.price ?? 0) > 0 ? priceData : getItemPriceToShow(item)
+  let { price = 0 } = priceDataToUse
+  if (price <= 0)
+    return null
+  return {
     hplace = ALIGN_RIGHT
     vplace = ALIGN_TOP
     pos = [-hdpx(1), hdpx(1)]
-    children = mkItemPrice(priceToShow)
+    children = mkItemPrice(priceDataToUse)
   }
 }
 
@@ -252,10 +253,12 @@ function itemUseProgressComp(item) {
   }
 }
 
-function mkEquipmentSlot(itemOrSlot, callbacks={}, itemIconParams=inventoryImageParams, list_type = null, isActionForbided = false) {
+function mkEquipmentSlot(itemOrSlot, callbacks={}, itemIconParams=inventoryImageParams, list_type = null,
+  isActionForbided = false, override = {}
+) {
   let { itemTemplate = null, slotTooltip = null, borderless = false, isDragAndDropAvailable = true, isItemToPurchase = false,
     notInteractive = false, slotName = null, countKnown = true, itemStorage = null, noSuitableItemForPresetFoundCount = null
-    marketPrice = -1, needTooltip = true, isStubItem = false } = itemOrSlot
+    marketPrice = -1, needTooltip = true, isStubItem = false, default_stub_item = null } = itemOrSlot
 
   let {
     canDrop = @(item) canDropItemToSlot(item, itemOrSlot), onDrop = @(item) dropItemToSlot(item, itemOrSlot)
@@ -275,6 +278,8 @@ function mkEquipmentSlot(itemOrSlot, callbacks={}, itemIconParams=inventoryImage
   })
 
   let onClickFunc = function(event) {
+    if (mutationForbidenDueToInQueueState.get())
+      return
     if (isActionForbided)
       return
     if (event.button == 1)
@@ -288,7 +293,8 @@ function mkEquipmentSlot(itemOrSlot, callbacks={}, itemIconParams=inventoryImage
         if (!mintEditState.get())
           fittingItems = itemsForSlot(itemOrSlot)
         else {
-          fittingItems = getNexusStashItems(stashItems.get(), playerProfileOpenedRecipes.get(), allCraftRecipes.get(),
+          let openedRecipes = allCraftRecipes.get().filter(@(v) v?.isOpened)
+          fittingItems = getNexusStashItemsForChocolateMenu(itemOrSlot, stashItems.get(), openedRecipes, allCraftRecipes.get(),
             marketItems.get(), playerStats.get(), ["equipment", "medicines", "ammunition"])
               .filter(@(v) canDropItemToSlot(v, itemOrSlot))
               .sort(inventoryItemSorting)
@@ -311,69 +317,80 @@ function mkEquipmentSlot(itemOrSlot, callbacks={}, itemIconParams=inventoryImage
     : (sf & S_DRAG) ? modFillDragColor
     : (sf & S_HOVER) && isUnloadable ? BtnBgHover : modFillColor
 
-  return watchElemState(@(sf) {
-    watch = needDropMark
-    rendObj = ROBJ_BOX
-    key = $"{itemOrSlot?.slotName}__{itemOrSlot?.slotTemplateName}"
-    transform = {}
-    fillColor = borderless ? 0 : getFillColor(sf)
-    borderColor = (sf & S_HOVER) ? BtnBdHover : modBorderColor
-    borderWidth = borderless ? 0 : hdpx(1)
-    behavior = notInteractive ? null :
-      !isSpectator.get() && !isActionForbided ? Behaviors.DragAndDrop : Behaviors.Button
-    onClick = onClickFunc
-    onDrop
-    canDrop
-    onHover = function(on) {
-      callbacks?.onHover(on)
-      if (!needTooltip)
-        return
+  let needLowOpacity = default_stub_item || noSuitableItemForPresetFoundCount != null
 
-      if (on) {
-        if (!hasItem && slotTooltip)
-          setTooltip(loc(slotTooltip))
-        else if (itemTooltip)
-          setTooltip(itemTooltip)
+  let stateFlags = Watched(0)
+  return function() {
+    let sf = stateFlags.get()
+    return {
+      watch = [stateFlags, needDropMark, mutationForbidenDueToInQueueState]
+      onElemState = @(s) stateFlags.set(s)
+      rendObj = ROBJ_BOX
+      key = $"{itemOrSlot?.slotName}__{itemOrSlot?.slotTemplateName}"
+      transform = {}
+      fillColor = borderless ? 0 : getFillColor(sf)
+      borderColor = (sf & S_HOVER) ? BtnBdHover : modBorderColor
+      borderWidth = borderless ? 0 : hdpx(1)
+      behavior = notInteractive ? null :
+        !isSpectator.get() && !isActionForbided && isDragAndDropAvailable ? Behaviors.DragAndDrop : Behaviors.Button
+      onClick = onClickFunc
+      onDrop
+      canDrop
+      onHover = function(on) {
+        callbacks?.onHover(on)
+        if (!needTooltip)
+          return
 
-        let pcHotkeysHints = isActionForbided ? null : hoverPcHotkeysPresentation?[list_type?.name]?(itemOrSlot)
-        if (pcHotkeysHints)
-          hoverHotkeysWatchedList.set(pcHotkeysHints)
-        focusedData.set(itemOrSlot)
+        if (on) {
+          if (!hasItem && slotTooltip)
+            setTooltip(loc(slotTooltip))
+          else if (itemTooltip)
+            setTooltip(itemTooltip)
+
+          let pcHotkeysHints = isActionForbided ? null : hoverPcHotkeysPresentation?[list_type?.name]?(itemOrSlot)
+          if (pcHotkeysHints)
+            hoverHotkeysWatchedList.set(pcHotkeysHints)
+          focusedData.set(itemOrSlot)
+        }
+        else {
+          focusedData.set(null)
+          setTooltip(null)
+          hoverHotkeysWatchedList.set(null)
+        }
       }
-      else {
-        focusedData.set(null)
-        setTooltip(null)
-        hoverHotkeysWatchedList.set(null)
+      onDragMode = function(on, item) {
+        draggedData.set(on ? item : null)
+        if (on)
+          sound_play("ui_sounds/inventory_item_take")
       }
-    }
-    onDragMode = function(on, item) {
-      draggedData.update(on ? item : null)
-    }
-    dropData = !hasItem || isStubItem ? null : itemOrSlot.__merge({
-      canDrop=true
-      id=itemOrSlot?.itemPropsId
-    })
-
-    children = [
-      itemOrSlot?.isCorrupted ? corruptedItemImageBackground : null
-      !isItemToPurchase ? null : creditsIcon(hdpxi(40), {
-        hplace = ALIGN_RIGHT
-        pos = [-hdpx(2), -hdpx(25)]
+      dropData = !hasItem || isStubItem || mutationForbidenDueToInQueueState.get() || default_stub_item ? null : itemOrSlot.__merge({
+        canDrop=true
+        id=itemOrSlot?.itemPropsId
       })
-      inventoryItemImage(itemOrSlot, itemIconParams.__update({ opacity = noSuitableItemForPresetFoundCount != null ? 0.5 : 1 }))
-      mkStorageIcon(itemStorage)
-      mkRarityIconByItem(itemOrSlot)
-      needDropMark.get() ? dropMarker(sf) : null
-      chargesIndicator(
-        itemOrSlot?.charges,
-        itemOrSlot?.maxCharges,
-        countKnown)
-      hasItem ? null : mkSlotWarning(slotName)
-      hasItem && (noSuitableItemForPresetFoundCount > 0 || marketPrice > 0)
-        ? mkPriceBlock(itemOrSlot, marketPrice) : null
-      itemUseProgressComp(itemOrSlot)
-    ]
-  })
+
+      children = [
+        itemOrSlot?.isCorrupted ? corruptedItemImageBackground : null
+        !isItemToPurchase ? null : creditsIcon(hdpxi(40), {
+          hplace = ALIGN_RIGHT
+          pos = [-hdpx(2), -hdpx(25)]
+        })
+        inventoryItemImage(itemOrSlot, itemIconParams.__merge({ opacity = needLowOpacity ? 0.5 : 1 }))
+        mkStorageIcon(itemStorage)
+        mkRarityIconByItem(itemOrSlot)
+        needDropMark.get() ? dropMarker(sf, mutationForbidenDueToInQueueState.get(), mutationForbidenDueToInQueueState.get() ? "" : null) : null
+        default_stub_item ? null : chargesIndicator(
+          itemOrSlot?.charges,
+          itemOrSlot?.maxCharges,
+          countKnown
+        )
+        hasItem ? null : mkSlotWarning(slotName)
+        hasItem && (noSuitableItemForPresetFoundCount > 0 || marketPrice > 0)
+          ? mkPriceBlock(itemOrSlot, marketPrice) : null
+        itemUseProgressComp(itemOrSlot)
+        nexusPointsCostComp(itemOrSlot?.nexusCost)
+      ]
+    }.__update(override)
+  }
 }
 
 function mkSuitSlots(suit, part_name, list_type = null, custom_actions = {}, isActionForbided = false) {
@@ -415,4 +432,5 @@ return {
   mkSuitTemplatePreviewSlots
   isEquipmentHasSlot
   mkEquipmentSlot
+  findItemsForSlot
 }

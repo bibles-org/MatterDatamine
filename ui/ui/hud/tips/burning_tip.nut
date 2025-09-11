@@ -1,8 +1,9 @@
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
+
 from "%ui/ui_library.nut" import *
 
-let {isBurning} = require("%ui/hud/state/burning_state_es.nut")
-let {tipCmp} = require("tipComponent.nut")
-let {isAlive} = require("%ui/hud/state/health_state.nut")
+let { isBurning } = require("%ui/hud/state/burning_state_es.nut")
+let { isAlive } = require("%ui/hud/state/health_state.nut")
 
 let color0 = Color(200,200,40,110)
 let color1 = Color(200,200,200,180)
@@ -28,6 +29,6 @@ return function() {
   return {
     watch = [isBurning, isAlive]
     size = SIZE_TO_CONTENT
-    children = isBurning.value && isAlive.value ? tip : null
+    children = isBurning.get() && isAlive.get() ? tip : null
   }
 }

@@ -1,0 +1,18 @@
+entity{
+  _template:t="nexus_beacon"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [3.2552, 17.708, -35.2852]]
+  nexus_beacon__id:i=3
+  nexus_beacon__name:t="Repair shop"
+  nexus_beacon__symbol:t="C"
+}
+
+entity{
+  _template:t="nexus_beacon_capture_device"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [3.2552, 16.1952, -35.2852]]
+  nexus_beacon_capture_device__parentId:i=3
+  item__setCustomUsePrompt:t="nexus_portal/Repair shop"
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_underground_depot_point_c_decorations.blk"
+}

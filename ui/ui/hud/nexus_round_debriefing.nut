@@ -1,40 +1,41 @@
+from "%dngscripts/sound_system.nut" import sound_play
+
+from "%ui/hud/menus/nexus_stats.nut" import fillPlayersToGetStats, mkMvpBlock
+
+from "%ui/fonts_style.nut" import giant_txt, body_txt, h2_txt
+from "%ui/components/colors.nut" import RedWarningColor, TextHighlight, VictoryColor
+from "%ui/components/commonComponents.nut" import mkText, mkTimeComp
+from "%ui/mainMenu/stdPanel.nut" import wrapInStdPanel
+from "%ui/hud/state/interactive_state.nut" import addInteractiveElement, removeInteractiveElement
+from "%ui/helpers/timers.nut" import mkCountdownTimerPerSec
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { giant_txt, body_txt, h2_txt } = require("%ui/fonts_style.nut")
-let { RedWarningColor, TextHighlight, VictoryColor } = require("%ui/components/colors.nut")
-let { mkText, mkMonospaceTimeComp } = require("%ui/components/commonComponents.nut")
-let { nexusRoundModeRoundEnded, nexusRoundModeRoundEndWinner, nexusRoundModeAllyTeam,
-  nexusRoundModeEnemyTeam, isNexusDebriefingState, nexusRoundModeRoundNumber, nexusRoundModeDebriefingAt,
-  nexusRoundModeRoundEndReason } = require("%ui/hud/state/nexus_round_mode_state.nut")
-let { wrapInStdPanel } = require("%ui/mainMenu/stdPanel.nut")
-let { teamStatsBlock, fillPlayersToGetStats, statsToShow, TOTAL_STATS_ID, mkMvpBlock
-} = require("%ui/hud/menus/nexus_stats.nut")
-let { isNexus } = require("%ui/hud/state/nexus_mode_state.nut")
+let { nexusRoundModeRoundEnded, nexusRoundModeRoundEndWinner, isNexusDebriefingState, nexusRoundModeRoundNumber, nexusRoundModeDebriefingAt, nexusRoundModeRoundEndReason } = require("%ui/hud/state/nexus_round_mode_state.nut")
+let { teamStatsBlock, statsToShow, TOTAL_STATS_ID } = require("%ui/hud/menus/nexus_stats.nut")
+let { isNexus, nexusAllyTeam, nexusEnemyTeam } = require("%ui/hud/state/nexus_mode_state.nut")
 let { areHudMenusOpened } = require("%ui/hud/hud_menus_state.nut")
 let { nexusRoundEndReasonMap } = require("%ui/hud/tips/nexus_round_mode_round_result.nut")
-let { addInteractiveElement, removeInteractiveElement } = require("%ui/hud/state/interactive_state.nut")
-let { sound_play } = require("%dngscripts/sound_system.nut")
-let { mkCountdownTimerPerSec } = require("%ui/helpers/timers.nut")
 
 const ANIM_STEP_DURATION = 0.4
 
 function victoryDefeatBlock() {
-  let winDefeat = nexusRoundModeRoundEndWinner.get() == nexusRoundModeAllyTeam.get() ? loc("nexus/victory")
-    : nexusRoundModeRoundEndWinner.get() == nexusRoundModeEnemyTeam.get() ? loc("nexus/defeat")
+  let winDefeat = nexusRoundModeRoundEndWinner.get() == nexusAllyTeam.get() ? loc("nexus/victory")
+    : nexusRoundModeRoundEndWinner.get() == nexusEnemyTeam.get() ? loc("nexus/defeat")
     : loc("nexus/draw")
-  let color = nexusRoundModeRoundEndWinner.get() == nexusRoundModeAllyTeam.get() ? VictoryColor
-    : nexusRoundModeRoundEndWinner.get() == nexusRoundModeEnemyTeam.get() ? RedWarningColor
+  let color = nexusRoundModeRoundEndWinner.get() == nexusAllyTeam.get() ? VictoryColor
+    : nexusRoundModeRoundEndWinner.get() == nexusEnemyTeam.get() ? RedWarningColor
     : TextHighlight
   let reasonLocId = nexusRoundEndReasonMap?[nexusRoundModeRoundEndReason.get()]
   return {
-    watch = [nexusRoundModeRoundEnded, nexusRoundModeRoundEndWinner, nexusRoundModeAllyTeam, nexusRoundModeEnemyTeam, nexusRoundModeRoundEndReason]
+    watch = [nexusRoundModeRoundEnded, nexusRoundModeRoundEndWinner, nexusAllyTeam, nexusEnemyTeam, nexusRoundModeRoundEndReason]
     hplace = ALIGN_CENTER
     flow = FLOW_VERTICAL
     halign = ALIGN_CENTER
-    transform = {}
-    animations = [{ prop = AnimProp.translate, from = [0, -sh(30)], to = [0, 0], duration = ANIM_STEP_DURATION,
-      play = true, easing = InOutCubic, onStart = sound_play("ui_sounds/interface_open") }]
+    transform = static {}
+    animations = static [{ prop = AnimProp.translate, from = [0, -sh(30)], to = [0, 0], duration = ANIM_STEP_DURATION,
+      play = true, easing = InOutCubic, onStart = @() sound_play("ui_sounds/interface_open") }]
     children = [
       mkText(winDefeat, { color }.__update(giant_txt))
       mkText(loc(reasonLocId), body_txt)
@@ -62,8 +63,8 @@ let roundDebriefing = {
     mkMvpBlock(ANIM_STEP_DURATION)
     {
       size = flex()
-      transform = const {}
-      animations = const [
+      transform = static {}
+      animations = static [
         {
           prop = AnimProp.translate, from = [0, sh(100)], to = [0, sh(100)], duration = ANIM_STEP_DURATION * 3,
           play = true
@@ -89,12 +90,12 @@ function mkNextRoundTimer() {
       valign = ALIGN_CENTER
       hplace = ALIGN_CENTER
       flow = FLOW_HORIZONTAL
-      gap = const hdpx(10)
-      padding = const [0, hdpx(6)]
-      margin = [fsh(4), 0,0,0]
+      gap = static hdpx(10)
+      padding = static [0, hdpx(6)]
+      margin = static [fsh(4), 0,0,0]
       children = [
-        mkText(loc("nexus/roundStartTimer"), const { color = TextHighlight }.__update(h2_txt))
-        mkMonospaceTimeComp(timer.get(), h2_txt, const mul_color(TextHighlight, Color(220,120,120)))
+        mkText(loc("nexus/roundStartTimer"), static { color = TextHighlight }.__update(h2_txt))
+        mkTimeComp(timer.get(), h2_txt, static mul_color(TextHighlight, Color(220,120,120)))
       ]
     }
   }
@@ -111,7 +112,7 @@ function roundDebriefingUi() {
     size = flex()
     children = [
       mkNextRoundTimer()
-      wrapInStdPanel("nexusRoundDebriefing", roundDebriefing, null, null, { size = [0, 0] })
+      wrapInStdPanel("nexusRoundDebriefing", roundDebriefing, null, null, static { size = 0 })
     ]
   }
 }

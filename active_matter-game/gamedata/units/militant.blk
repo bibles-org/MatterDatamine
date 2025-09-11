@@ -3,7 +3,7 @@ sprintStaminaDrain:r=0
 restStaminaRestore:r=30
 jumpStaminaDrain:r=0
 climbStaminaDrain:r=0
-jumpVertSpeed:r=3.75
+jumpVertSpeed:r=2.81
 sprintJumpHorzSpeed:r=0
 ladderQuickMoveUpSpeedMult:r=-1
 ladderQuickMoveDownSpeedMult:r=-1
@@ -16,6 +16,7 @@ maxClimbHorzVel:r=2.55
 climbHorzAccel:r=13
 swimPosOffset:p3=0, 1.2, 0
 underwaterSwimPosOffset:p3=0, 0.6, 0
+swimmingLevelBias:r=0.25
 collisionRadius:r=0.25
 ccdRadius:r=0.15
 allowWeaponSwitchOnSprint:b=yes
@@ -49,6 +50,7 @@ aimSpeed:r=8
 zoomSpeed:r=4
 canCrawl:b=yes
 canCrouch:b=yes
+hasExternalHeight:b=no
 
 standState{
   walkSpeed:r=2.2

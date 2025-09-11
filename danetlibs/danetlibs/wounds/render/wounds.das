@@ -14,6 +14,6 @@ def reset_bones_damage_cmd_es(evt : CmdResetTornWoundBoneDamage)
 [es(tag=render, on_disappear, REQUIRE=human__breakable_bones)]
 def destroy_attached_gibs_es(evt : Event; eid : EntityId)
   let ownerBodyEid = eid
-  ecs::query() <| $ [es(REQUIRE=attachable_gibs)] (eid, slot_attach__attachedTo : EntityId)
-    if slot_attach__attachedTo == ownerBodyEid
+  ecs::query() <| $ [es(REQUIRE=attachable_gibs)] (eid, animchar_attach__attachedTo : EntityId)
+    if animchar_attach__attachedTo == ownerBodyEid
       destroyEntity(eid)

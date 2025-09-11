@@ -1,27 +1,27 @@
+from "%ui/components/hudMarkersLayout.nut" import makeMarkersLayout
+from "%ui/hud/hud_markers/item_ctor.nut" import item_ctor
+from "%ui/hud/hud_markers/hud_markers_ctors.nut" import game_trigger_marker_ctors, visible_interactable_ctor
+from "%ui/hud/hud_markers/action_marker_ctor.nut" import action_marker_ctors
+from "%ui/hud/hud_markers/climbing_marker_ctor.nut" import climbing_markers_ctor
+from "%ui/hud/hud_markers/check_weapon_marker_ctor.nut" import check_weapon_marker_ctors
+from "%ui/hud/hud_markers/hunter_vision_ctor.nut" import hunter_vision_target_marker_arrow_ctors, hunter_vision_target_marker_main_ctors
+from "%ui/hud/hud_markers/hunter_minion_ctor.nut" import hunter_minion_markers_ctor, hunter_minion_arrow_markers_ctor
 from "%ui/ui_library.nut" import *
 
-let {makeMarkersLayout} = require("%ui/components/hudMarkersLayout.nut")
 
-let {loot_markers} = require("%ui/hud/state/loot_markers.nut")
-let {item_ctor} = require("%ui/hud/hud_markers/item_ctor.nut")
+let { loot_markers } = require("%ui/hud/state/loot_markers.nut")
 
-let {help_ctors} = require("%ui/hud/hud_markers/help_ctor.nut")
-let {help_markers} = require("%ui/hud/state/help_markers.nut")
+let { help_ctors } = require("%ui/hud/hud_markers/help_ctor.nut")
+let { help_markers } = require("%ui/hud/state/help_markers.nut")
 
-let {game_trigger_markers, visible_interactables, hunter_vision_targets, hunter_minions} = require("state/markers.nut")
-let {game_trigger_marker_ctors, visible_interactable_ctor} = require("hud_markers/hud_markers_ctors.nut")
+let { game_trigger_markers, visible_interactables, hunter_vision_targets, hunter_minions } = require("%ui/hud/state/markers.nut")
 
-let {useObjectHintMarkers} = require("state/actions_markers.nut")
-let {action_marker_ctors} = require("hud_markers/action_marker_ctor.nut")
+let { useObjectHintMarkers } = require("%ui/hud/state/actions_markers.nut")
 
-let {climbingHintMarkers} = require("state/climbing_hint.nut")
-let {climbing_markers_ctor} = require("hud_markers/climbing_marker_ctor.nut")
+let { climbingHintMarkers } = require("%ui/hud/state/climbing_hint.nut")
 
 let { checkAmmoMarkers } = require("%ui/hud/state/check_ammo_state.nut")
-let { check_weapon_marker_ctors } = require("hud_markers/check_weapon_marker_ctor.nut")
 
-let { hunter_vision_target_marker_arrow_ctors, hunter_vision_target_marker_main_ctors} = require("hud_markers/hunter_vision_ctor.nut")
-let { hunter_minion_markers_ctor, hunter_minion_arrow_markers_ctor } = require("hud_markers/hunter_minion_ctor.nut")
 
 let markersCtorsAndState = {
   [loot_markers] = item_ctor,

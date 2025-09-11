@@ -1,5 +1,10 @@
 entity{
+  _template:t="collimator_moa_fg"
+}
+
+entity{
   _template:t="collimator_moa_render"
+  collimator_moa_render__calibration_range_cm:r=160
 }
 
 entity{

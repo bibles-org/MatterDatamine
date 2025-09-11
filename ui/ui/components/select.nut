@@ -1,14 +1,17 @@
 from "%ui/ui_library.nut" import *
 from "%ui/components/colors.nut" import BtnTextNormal, BtnTextHover, BtnTextActive, ComboboxBorderColor, BtnBgSelected, BtnBgHover, BtnBgNormal
 
+#allow-auto-freeze
+
 let borderRadius = hdpx(1)
 let borderWidth=1
 let padding = hdpx(5)
 
 let mkSelItem = @(state, extraChildren=null, onClickCtor=null, isCurrent=null, textCtor=null) function selItem(p, idx, list) {
+  #forbid-auto-freeze
   let stateFlags = Watched(0)
-  isCurrent = isCurrent ?? @(v, _idx) v==state.value
-  let onClick = onClickCtor!=null ? onClickCtor(p, idx) : @() state(p)
+  isCurrent = isCurrent ?? @(v, _idx) v==state.get()
+  let onClick = onClickCtor!=null ? onClickCtor(p, idx) : @() state.set(p)
   let text = textCtor != null ? textCtor(p, idx, stateFlags) : p
   return function(){
     let selected = isCurrent(p, idx)

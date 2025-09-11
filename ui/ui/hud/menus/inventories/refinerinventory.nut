@@ -1,16 +1,22 @@
+from "%sqstd/math.nut" import truncateToMultiple
+
+from "%ui/hud/state/item_info.nut" import get_item_info, getTemplateNameByEid
+from "math" import ceil
+import "%ui/components/colorize.nut" as colorize
+from "%ui/components/colors.nut" import InfoTextValueColor
+from "%dngscripts/sound_system.nut" import sound_play
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "%ui/hud/menus/components/inventoryItem.nut" import addStorageType
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { cleanableItems, marketPriceSellMultiplier, playerProfileAMConvertionRate,
-      refinedItemsList, refinerFusingRecipes } = require("%ui/profile/profileState.nut")
-let { isShiftPressed } = require("%ui/hud/state/inventory_state.nut")
-let { get_item_info, getTemplateNameByEid } = require("%ui/hud/state/item_info.nut")
-let { ceil } = require("math")
+let { cleanableItems, marketPriceSellMultiplier, playerProfileAMConvertionRate } = require("%ui/profile/profileState.nut")
 let { template2MarketOffer } = require("%ui/mainMenu/market/inventoryToMarket.nut")
-let { truncateToMultiple } = require("%sqstd/math.nut")
 let { creditsTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
-let colorize = require("%ui/components/colorize.nut")
-let { InfoTextValueColor } = require("%ui/components/colors.nut")
+let { itemsInRefiner } = require("%ui/hud/menus/inventories/refinerInventoryCommon.nut")
+
+#allow-auto-freeze
 
 enum RefinedInfo {
   UNKNOWN = 0
@@ -18,7 +24,6 @@ enum RefinedInfo {
   KEY_ITEM = 2
 }
 
-let itemsInRefiner = Watched([])
 let currentRefinerIsReadOnly = Watched(false)
 let refineGettingInProgress = Watched(false)
 
@@ -33,6 +38,40 @@ let refinerFillAmount = Computed(function() {
     return acc
   }, 0)
 })
+
+function considerRefine(item) {
+  let idx = itemsInRefiner.get().findindex(@(v) v.eid == item.eid)
+
+  if (idx == null)
+    return item
+
+  let foundItem = itemsInRefiner.get()[idx]
+
+
+  if (foundItem.isBoxedItem) {
+    let boxedItemCount = item.ammoCount - foundItem.ammoCount
+
+    if (boxedItemCount <= 0)
+      return null
+
+    return item.__merge({
+      charges = boxedItemCount
+      ammoCount = boxedItemCount
+    })
+  }
+
+  return null
+}
+
+function considerRefineItems(items) {
+  return items.map(function(item) {
+    let newItem = considerRefine(item)
+    if (newItem == null)
+      throw null
+
+    return newItem
+  })
+}
 
 let minimalRefinerItemComp = [
   ["item_enriched", ecs.TYPE_TAG, null],
@@ -73,7 +112,8 @@ function itemRefinedResult(item, refinedList, refinerRecipes) {
   return isKeyItem ? RefinedInfo.KEY_ITEM : RefinedInfo.REGULAR_ITEM
 }
 
-function patchItemRefineData(item) {
+function additionalDescFunc(item, refinedItems, refinerRecipes) {
+  #forbid-auto-freeze
   let stringsFromAttachments = {}
   let stringsFromItemsInside = {}
 
@@ -104,7 +144,7 @@ function patchItemRefineData(item) {
       }
     }
   }
-
+  #allow-auto-freeze
   function refineDataFromContainerItems(containerItems) {
     foreach (itemEid in containerItems) {
       let foldedItem = getMinimalRefinerItem(itemEid)
@@ -115,8 +155,13 @@ function patchItemRefineData(item) {
       refineDataFromAttachedMods(foldedItem)
       let str = loc(foldedItem?.itemName)
       if (str) {
-        if (foldedItem.itemTemplate in stringsFromItemsInside)
-          stringsFromItemsInside[foldedItem.itemTemplate].count++
+        if (foldedItem.itemTemplate in stringsFromItemsInside) {
+          let strs = stringsFromItemsInside[foldedItem.itemTemplate]
+          stringsFromItemsInside[foldedItem.itemTemplate] <- {
+            str = strs.str
+            count = strs.count + 1
+          }
+        }
         else {
           stringsFromItemsInside[foldedItem.itemTemplate] <- {
             str = str
@@ -155,7 +200,7 @@ function patchItemRefineData(item) {
   else {
     nonCorruptedPrice = getPriceOfNonCorruptedItem(template2MarketOffer.get(), marketPriceSellMultiplier.get(), item)
   }
-
+  #forbid-auto-freeze
   let stringsToShow = []
   if (minMoney > 0 || maxMoney > 0) {
     let moneyStr = minMoney==maxMoney ?
@@ -206,7 +251,7 @@ function patchItemRefineData(item) {
     stringsToShow.append(moneyStr)
   }
 
-  let refined = item?.isCorrupted == true ? itemRefinedResult(item, refinedItemsList.get(), refinerFusingRecipes.get()) : RefinedInfo.REGULAR_ITEM
+  let refined = item?.isCorrupted == true ? itemRefinedResult(item, refinedItems, refinerRecipes) : RefinedInfo.REGULAR_ITEM
   if (refined == RefinedInfo.REGULAR_ITEM) {
     stringsToShow.append(loc("amClean/regularItemTooltip"))
   }
@@ -217,72 +262,127 @@ function patchItemRefineData(item) {
     stringsToShow.append(loc("amClean/unknownResultTooltip"))
   }
 
-  item["additionalDesc"] <- stringsToShow
+  return stringsToShow
 }
 
-function dropToRefiner(item, fromListName) {
+function dropToRefiner(item, fromListName, count) {
   if (currentRefinerIsReadOnly.get())
     return
 
-  let indexToProceed = isShiftPressed.get() ? item.uniqueIds.len() : 1
-  itemsInRefiner.mutate(function(refiner) {
-    for (local i=0; i < indexToProceed; i++) {
-      let defParams = {
-        count = 1
-        charges = null
-      }
-      let additionalFields = {
-        uniqueId = item.uniqueIds[i]
-        uniqueIds = [ item.uniqueIds[i] ]
-        eid = item.eids[i]
-        eids = [ item.eids[i] ]
-        refiner__fromList = fromListName
-        id = item.id
-      }.__update(defParams)
-      let foldedItemParams = {
-        inactiveSlot = true
-        picSaturate = 0.0
-        opacity = 0.4
-        backgroundColor = Color(40,40,40,205)
-        isDragAndDropAvailable = false
-        countPerStack = 1 
-      }
+  if (item?.isBoxedItem) {
+    let boxedItemCount = min(count, item.ammoCount)
+    itemsInRefiner.mutate(function(refiner) {
+      let alreadyInIdx = refiner.findindex(@(v) v.eid == item.eid)
 
-      local hasFoldedItems = false
-      foreach (_k, v in (item?.itemContainerItems ?? {} )) {
-        refiner.append(get_item_info(v).__update(foldedItemParams, { sortAfterEid = item.eid }))
-        hasFoldedItems = true
+      if (alreadyInIdx != null) {
+        let oldBoxedItemCount = refiner[alreadyInIdx].ammoCount
+        refiner[alreadyInIdx].__update({
+          charges = oldBoxedItemCount + boxedItemCount
+          ammoCount = oldBoxedItemCount + boxedItemCount
+        })
       }
-      foreach (_k, v in (item?.modInSlots ?? {} )) {
-        refiner.append(get_item_info(v.eid).__update(foldedItemParams, { sortAfterEid = item.eid }))
-        hasFoldedItems = true
+      else {
+        local faked = mkFakeItem(item.itemTemplate, {
+          charges = boxedItemCount
+          ammoCount = boxedItemCount
+          eid = item.eid
+          uniqueId = item.uniqueId
+          itemStorage = item?.itemStorage ?? item?.fromList.name
+          refiner__fromList = item?.fromList ?? fromListName
+        })
+        refiner.append(faked)
       }
+    })
+  }
+  else {
+    let indexToProceed = min(count, item.uniqueIds.len())
+    itemsInRefiner.mutate(function(refiner) {
+      for (local i=0; i < indexToProceed; i++) {
+        let defParams = {
+          count = 1
+          charges = null
+        }
+        let additionalFields = {
+          uniqueId = item.uniqueIds[i]
+          uniqueIds = [ item.uniqueIds[i] ]
+          eid = item.eids[i]
+          eids = [ item.eids[i] ]
+          refiner__fromList = item?.fromList ?? fromListName
+          id = item.id
+          itemStorage = item?.itemStorage ?? item?.fromList.name
+        }.__update(defParams)
+        let foldedItemParams = {
+          inactiveSlot = true
+          picSaturate = 0.0
+          opacity = 0.4
+          backgroundColor = Color(40,40,40,205)
+          isDragAndDropAvailable = false
+          countPerStack = 1 
+        }
 
-      refiner.append(item?.itemOverridedWithProto ?
-        get_item_info(item.eids[i]).__update(additionalFields, hasFoldedItems ? { hasFoldedItems } : {} ) :
-        item.__merge(additionalFields, hasFoldedItems ? { hasFoldedItems } : {})
-      )
-    }
-  })
+        local hasFoldedItems = false
+        foreach (_k, v in (item?.itemContainerItems ?? {} )) {
+          refiner.append(get_item_info(v).__update(foldedItemParams, { sortAfterEid = item.eid }))
+          hasFoldedItems = true
+        }
+        foreach (_k, v in (item?.modInSlots ?? {} )) {
+          refiner.append(get_item_info(v.eid).__update(foldedItemParams, { sortAfterEid = item.eid }))
+          hasFoldedItems = true
+        }
+
+        refiner.append(item?.itemOverridedWithProto ?
+          get_item_info(item.eids[i]).__update(additionalFields, hasFoldedItems ? { hasFoldedItems } : {} ) :
+          item.__merge(additionalFields, hasFoldedItems ? { hasFoldedItems } : {})
+        )
+      }
+    })
+  }
 }
 
-function removeFromRefiner(item) {
-  if (currentRefinerIsReadOnly.get() || item?.inactiveSlot)
+function removeFromRefiner(item, count) {
+  if (currentRefinerIsReadOnly.get() || item?.inactiveSlot) {
+    sound_play("ui_sounds/button_click_inactive")
     return
+  }
 
-  let indexToProceed = isShiftPressed.get() ? item.uniqueIds.len() : 1
-  let eidsToRemove = []
-  for(local i=0; i < indexToProceed; i++){
-    let eid = item.eids[i]
-    eidsToRemove.append(eid)
-    if (item?.hasFoldedItems) {
-      foreach (refinerItem in itemsInRefiner.get()) {
-        if (refinerItem?.sortAfterEid == eid)
-          eidsToRemove.append(refinerItem.eid)
-      }
+  if (item.isBoxedItem) {
+    let removeCount = min(count, item.ammoCount)
+    let newCount = item.ammoCount - removeCount
+    if (newCount <= 0) {
+      itemsInRefiner.mutate(function(refiner) {
+        let idx = refiner.findindex(@(v) v.eid == item.eid)
+        if (idx != null)
+          refiner.remove(idx)
+      })
+    }
+    else {
+      itemsInRefiner.mutate(function(refiner) {
+        let idx = refiner.findindex(@(v) v.eid == item.eid)
+        if (idx != null) {
+          refiner[idx].__update({
+            charges = newCount
+            ammoCount = newCount
+          })
+        }
+      })
     }
   }
-  itemsInRefiner.set(itemsInRefiner.get().filter(@(v) !eidsToRemove.contains(v.eid) ))
+  else {
+    #forbid-auto-freeze
+    let indexToProceed = min(count, item.uniqueIds.len())
+    let eidsToRemove = []
+    for(local i=0; i < indexToProceed; i++){
+      let eid = item.eids[i]
+      eidsToRemove.append(eid)
+      if (item?.hasFoldedItems) {
+        foreach (refinerItem in itemsInRefiner.get()) {
+          if (refinerItem?.sortAfterEid == eid)
+            eidsToRemove.append(refinerItem.eid)
+        }
+      }
+    }
+    itemsInRefiner.set(itemsInRefiner.get().filter(@(v) !eidsToRemove.contains(v.eid) ))
+  }
 }
 
 return {
@@ -293,8 +393,10 @@ return {
   dropToRefiner
   removeFromRefiner
   REFINER_ALARM
-  patchItemRefineData
+  additionalDescFunc
   getPriceOfNonCorruptedItem
   getMinimalRefinerItem
   maxFoldedItemsToShow
+  considerRefineItems
+  considerRefine
 }

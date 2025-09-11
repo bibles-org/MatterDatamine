@@ -1,0 +1,143 @@
+VehiclePhys{
+  normalSuspensionForceLerp:r=0
+  sideFrictionProjLerp:r=0
+  skipUpdateOnSleep:b=yes
+
+  Mass{
+    Empty:r=5500
+    Fuel:r=500
+    TakeOff:r=6000
+    momentOfInertia:p3=2, 2, 4
+    CenterOfGravity:p3=-0.1, 0.4, 0
+    CenterOfGravityClampY:p2=0, 0.5
+    AdvancedMass:b=yes
+    trackMass:r=40
+    engineInertialMass:r=400
+  }
+
+  tracks{
+    animationMultiplier:r=0.5
+    height:r=0
+    width:r=0.4
+    trackPhysMat:t="wheel"
+  }
+
+  collisionProps{
+    cls_turret:t="convex_hull"
+    cls_body:t="convex_hull"
+    cls_body_01:t="convex_hull"
+    cls_body_02:t="convex_hull"
+  }
+
+  engine{
+    horsePowers:r=160
+    maxRPM:r=2800
+    minRPM:r=600
+    rpmTau:r=1.9
+  }
+
+  mechanics{
+    maxBrakeForce:r=25000
+    driveGearRadius:r=0.6
+    mainGearRatio:r=6.95
+    sideGearRatio:r=1.05
+    tracked:b=no
+
+    gearRatios{
+      ratio:r=-4
+      ratio:r=-5
+      ratio:r=-6
+      ratio:r=-8
+      ratio:r=0
+      ratio:r=8
+      ratio:r=6
+      ratio:r=5
+      ratio:r=3
+      ratio:r=2.75
+      ratio:r=1.03
+    }
+  }
+
+  suspension{
+    suspensionOffsets:p3=-0.15, -0.12, 0.1
+    defaultGearRadius:r=0.55
+    defaultDampeningForce:p2=28000, 28000
+    hasSuspensionOnDriveGear:b=yes
+    dampeningRelaxationRatio:r=0.4
+    dampeningCompressionRatio:r=0.15
+    brokenWheelSteeringDeflection:r=-15
+    recalcWtms:b=yes
+
+    steeringDeflection{
+      wheel_l_01:r=20
+      wheel_r_01:r=20
+      steeringTau:r=1e+06
+      steeringSpd:r=1
+      steeringNeutralSpd:r=3
+    }
+
+    wheelsWidth{
+      wheel_l_01:r=0.4
+      wheel_l_02:r=0.4
+      wheel_r_01:r=0.4
+      wheel_r_02:r=0.4
+    }
+
+    driven{
+      wheel_l_01:b=yes
+      wheel_r_01:b=yes
+      wheel_l_02:b=yes
+      wheel_r_02:b=yes
+    }
+
+    handBraken{
+      wheel_l_02:b=yes
+      wheel_r_02:b=yes
+    }
+
+    wheelsDamageWeight{
+      wheel_l_01:r=0.4
+      wheel_r_01:r=0.4
+      wheel_l_02:r=0.4
+      wheel_r_02:r=0.4
+    }
+  }
+}
+
+DamageParts{
+  formatVersion:i=2
+  armorClass:t="RHA_tank"
+  hp:r=300
+
+  engine{
+    hp:r=50
+
+    engine{
+      createSecondaryShatters:b=no
+      armorThickness:r=0.3
+      armorThrough:r=10
+      fireProtectionHp:r=100
+    }
+  }
+
+  transmission{
+    hp:r=50
+
+    transmission{
+      createSecondaryShatters:b=no
+      armorThickness:r=0.3
+      armorThrough:r=10
+    }
+  }
+}
+
+DamageEffects{
+  part{
+    name:t="engine"
+
+    onKill{
+      fire:r=1
+      fHitCritical:b=yes
+    }
+  }
+}

@@ -26,6 +26,13 @@ entity{
 
 entity{
   _template:t="ssss"
+  transmittance__thickness_bias:r=-0.001
+  transmittance__thickness_min:r=0.001
+  transmittance__thickness_scale:r=160
+  transmittance__translucency_scale:r=0.74
+  transmittance__blur_scale:r=0.01
+  transmittance__sample_count:i=3
+  transmittance__normal_offset:r=0.015
 }
 
 entity{
@@ -127,6 +134,24 @@ entity{
 }
 
 entity{
+  _template:t="lens_flare_sun_settings"
+}
+
+entity{
+  _template:t="sun_lens_flare"
+  sun_flare_provider__flare_config:t="lens_flares_sun_cinematic"
+}
+
+entity{
+  _template:t="lens_flare_dynamic_lights_settings"
+}
+
+entity{
+  _template:t="dynamic_light_lens_flare"
+  dynamic_light_lens_flare__flare_config:t="lens_flares_dynamic_lights_cinematic"
+}
+
+entity{
   _template:t="glass_decals_renderer"
 }
 
@@ -172,9 +197,20 @@ entity{
 }
 
 entity{
+  _template:t="footprints"
+}
+
+entity{
   _template:t="biome_fx_color_replacement"
 }
 
 entity{
   _template:t="glass_gbuffer_renderer"
+}
+
+entity{
+  _template:t="water_ripples_settings"
+  water_ripples_drop_force:p4=60, 0, 80, 1
+  water_ripples_back_force:p4=25, 5, -5, 2
+  water_ripples_damping:p4=5, 0, -1.3, 2
 }

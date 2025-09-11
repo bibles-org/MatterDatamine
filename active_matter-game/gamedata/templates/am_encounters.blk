@@ -310,7 +310,7 @@ household_changed_monster_generator{
   monster_gen__density:p2=0.00135, 0.00135
 
   "monster_gen__templates:list<t>"{
-    i:t="household_changed_human+sleeping_monster+am_inside_body_3"
+    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
   }
 }
 
@@ -320,7 +320,7 @@ household_milbase_changed_monster_generator{
   monster_gen__density:p2=0.0008, 0.0008
 
   "monster_gen__templates:list<t>"{
-    i:t="household_changed_human+sleeping_monster+am_inside_body_3"
+    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
   }
 }
 
@@ -330,7 +330,7 @@ household_euclid_changed_monster_generator{
   monster_gen__density:p2=0.001, 0.001
 
   "monster_gen__templates:list<t>"{
-    i:t="household_changed_human+sleeping_monster+am_inside_body_3"
+    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
   }
 }
 
@@ -340,7 +340,7 @@ household_changed_monster_t1_generator{
   monster_gen__density:p2=0.001, 0.001
 
   "monster_gen__templates:list<t>"{
-    i:t="household_changed_human+sleeping_monster+am_inside_body_3"
+    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
   }
 }
 
@@ -350,7 +350,17 @@ household_africa_changed_monster_generator{
   monster_gen__density:p2=0.0042, 0.0042
 
   "monster_gen__templates:list<t>"{
-    i:t="household_changed_human+sleeping_monster+am_inside_body_3"
+    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
+  }
+}
+
+household_america_changed_monster_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="changed"
+  monster_gen__density:p2=0.0005, 0.0005
+
+  "monster_gen__templates:list<t>"{
+    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
   }
 }
 
@@ -360,7 +370,7 @@ household_distortion_changed_monster_generator{
   monster_gen__density:p2=0.0021, 0.0021
 
   "monster_gen__templates:list<t>"{
-    i:t="household_changed_human+sleeping_monster+am_inside_body_3"
+    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
   }
 }
 
@@ -440,8 +450,8 @@ outdoor_sleeper_changed_monster_generator{
   monster_gen__spawnInterval:r=0.5
 
   "monster_gen__templates:list<t>"{
-    i:t="outdoor_sleeper_changed_human+sleeping_monster+am_inside_body_3"
-    i:t="outdoor_sleeper_changed_human_mini+sleeping_monster+am_inside_body_2"
+    i:t="outdoor_sleeper_changed_human+sleeping_changed_human+am_inside_body_3"
+    i:t="outdoor_sleeper_changed_human_mini+sleeping_changed_human+am_inside_body_2"
   }
 }
 
@@ -461,8 +471,19 @@ outdoor_sleeper_changed_tm_generator{
   monster_gen__density:p2=0.0025, 0.0025
 
   "monster_gen__templates:list<t>"{
-    i:t="outdoor_sleeper_changed_human+sleeping_monster+am_inside_body_3"
-    i:t="outdoor_sleeper_changed_human_mini+sleeping_monster+am_inside_body_2"
+    i:t="outdoor_sleeper_changed_human+sleeping_changed_human+am_inside_body_3"
+    i:t="outdoor_sleeper_changed_human_mini+sleeping_changed_human+am_inside_body_2"
+  }
+}
+
+indoor_sleeper_changed_tm_generator{
+  _use:t="tm_monster_generator"
+  monster_gen__type:t="changed"
+  monster_gen__density:p2=0.0025, 0.0025
+
+  "monster_gen__templates:list<t>"{
+    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
+    i:t="indoor_sleeper_changed_human_mini+sleeping_changed_human+am_inside_body_2"
   }
 }
 
@@ -473,8 +494,8 @@ forest_changed_generator{
   monster_gen__spawnInterval:r=0.5
 
   "monster_gen__templates:list<t>"{
-    i:t="outdoor_sleeper_changed_human+sleeping_monster+am_inside_body_3"
-    i:t="outdoor_sleeper_changed_human_mini+sleeping_monster+am_inside_body_2"
+    i:t="outdoor_sleeper_changed_human+sleeping_changed_human+am_inside_body_3"
+    i:t="outdoor_sleeper_changed_human_mini+sleeping_changed_human+am_inside_body_2"
   }
 }
 
@@ -681,8 +702,8 @@ changed_group_cluster{
   star_cluster__grid:t="humans"
 
   "star_cluster__spawnTemplates:list<t>"{
-    i:t="outdoor_sleeper_changed_human+sleeping_monster+am_inside_body_3+star_cluster_child"
-    i:t="outdoor_sleeper_changed_human_mini+sleeping_monster+am_inside_body_2+star_cluster_child"
+    i:t="outdoor_sleeper_changed_human+sleeping_changed_human+am_inside_body_3+star_cluster_child"
+    i:t="outdoor_sleeper_changed_human_mini+sleeping_changed_human+am_inside_body_2+star_cluster_child"
   }
 }
 
@@ -832,7 +853,7 @@ xenohounds_group_cluster{
   star_cluster__grid:t="humans"
 
   "star_cluster__spawnTemplates:list<t>"{
-    i:t="xenohound_creature+am_xenohound_mm+am_inside_body_1+star_cluster_child"
+    i:t="xenohound_creature+am_xenohound_mm+am_inside_body_1+star_cluster_child+sleeping_xenohound"
   }
 }
 
@@ -854,4 +875,18 @@ dendroids_group_cluster{
   "star_cluster__spawnTemplates:list<t>"{
     i:t="am_dendroid_area_guard+star_cluster_child"
   }
+}
+
+household_mimic_crawler_monster_generator{
+  _use:t="editor_selected_box_preview"
+  monster_gen__destroyGeneratedEntitiesOnDestroy:b=no
+  monster_gen__maxCount:i=5
+  monster_gen__spawnPercentage:r=0.5
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  monster_gen__type:t="mimic_crawler"
+  hidden_mimic_gen__detector:t="hidden_mimic_detector"
+  hidden_mimic_gen__ri:t="hidden_mimic_inside"
+  hidden_mimic_gen__mimic:t="am_mimic_crawl+generated_monster+hidden_mimic"
+
+  "monster_gen__genGenEid:eid"{}
 }

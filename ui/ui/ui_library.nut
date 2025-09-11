@@ -1,11 +1,12 @@
+from "console" import register_command, command
+from "dagor.workcycle" import defer
+
+import "%darg/darg_library.nut" as darg_library
 from "math" import min, max, clamp
 from "%sqstd/frp.nut" import WatchedRo, WatchedImmediate
+from "%dngscripts/localizations.nut" import loc
+from "daRg" import sh, sw
 
-let { loc } = require("%dngscripts/localizations.nut")
-let { register_command, command } = require("console")
-let { defer } = require("dagor.workcycle")
-let darg_library = require("%darg/darg_library.nut")
-let { sh, sw } = require("daRg")
 
 global enum Layers {
   Default
@@ -24,18 +25,18 @@ let export = {
   defer
 }
 
-local hdpx = @(pixels) sh(100.0 * pixels / 1080)
-local hdpxi = @(pixels) hdpx(pixels).tointeger()
-local fsh = @(val) sh(val)
+local hdpx = @[pure](pixels) sh(100.0 * pixels / 1080)
+local hdpxi = @[pure](pixels) hdpx(pixels).tointeger()
+local fsh = @[pure](val) sh(val)
 
 let defCoef = 1920.0 / 1080
 let isWideScreen = sw(100).tofloat() / sh(100) > defCoef
 if (!isWideScreen) {
   let curCoef = sw(100).tofloat() / sh(100)
   let delta = curCoef / defCoef
-  hdpx = @(pixels) sh(100.0 * pixels * delta / 1080)
-  hdpxi = @(pixels) hdpx(pixels).tointeger()
-  fsh = @(val) sh(val * delta)
+  hdpx = @[pure](pixels) sh(100.0 * pixels * delta / 1080)
+  hdpxi = @[pure](pixels) hdpx(pixels).tointeger()
+  fsh = @[pure](val) sh(val * delta)
 }
 
 let AMLibrary = darg_library.__merge({
@@ -44,7 +45,7 @@ let AMLibrary = darg_library.__merge({
   fsh
 })
 
-return export.__update(
+return freeze(export.__update(
   {min, max, clamp, WatchedRo, WatchedImmediate},
   require("daRg"),
   require("frp"),
@@ -52,4 +53,4 @@ return export.__update(
   AMLibrary,
   require("%sqstd/functools.nut")
   {DngBhv = require("dng.behaviors")}
-)
+))

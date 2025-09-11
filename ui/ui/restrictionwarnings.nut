@@ -1,11 +1,14 @@
+from "%dngscripts/platform.nut" import is_xbox
+
+import "%ui/components/msgbox.nut" as msgbox
+
+from "%ui/components/colors.nut" import Alert
+from "%ui/helpers/remap_nick.nut" import remap_nick
+
 from "%ui/ui_library.nut" import *
 
-let msgbox = require("%ui/components/msgbox.nut")
-let { Alert } = require("%ui/components/colors.nut")
-let { remap_nick } = require("%ui/helpers/remap_nick.nut")
-let { is_xbox } = require("%dngscripts/platform.nut")
 
-let getMembersNames = @(members) members.map(@(m) remap_nick(m.state.value.name))
+let getMembersNames = @(members) members.map(@(m) remap_nick(m.state.get().name))
 
 local showCrossnetworkChatRestrictionMsgBox = @() msgbox.showMsgbox({ text = loc("contacts/msg/crossnetworkChatRestricted", {color = Alert})})
 if (is_xbox) {

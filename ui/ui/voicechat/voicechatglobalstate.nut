@@ -1,7 +1,9 @@
-let {nestWatched} = require("%dngscripts/globalState.nut")
-let {Watched} = require("frp")
+from "%dngscripts/globalState.nut" import nestWatched
+
+from "frp" import Watched
+from "settings" import get_setting_by_blk_path
+
 let platform = require("%dngscripts/platform.nut")
-let { get_setting_by_blk_path } = require("settings")
 
 const FIRST_USE_CHAT_WARN = "voice/voiceChatShouldShowFirstWarning"
 let voiceChatShouldShowFirstWarning = Watched(platform.is_android && (get_setting_by_blk_path(FIRST_USE_CHAT_WARN) ?? true))

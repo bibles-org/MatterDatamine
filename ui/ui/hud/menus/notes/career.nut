@@ -1,17 +1,20 @@
+from "%ui/components/commonComponents.nut" import mkText, underlineComp
+from "%ui/components/colors.nut" import InfoTextValueColor, InfoTextDescColor
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/components/scrollbar.nut" import makeVertScroll
+from "%ui/components/mkSelection.nut" import mkSelection
+import "%ui/components/checkbox.nut" as checkBox
+
 from "%ui/ui_library.nut" import *
+
+#allow-auto-freeze
 
 let { playerStats,
       playerProfileAllResearchNodes,
       playerProfileOpenedNodes,
       playerBaseState,
       playerProfileUnlocksData } = require("%ui/profile/profileState.nut")
-let { mkText, underlineComp } = require("%ui/components/commonComponents.nut")
-let { InfoTextValueColor, InfoTextDescColor } = require("%ui/components/colors.nut")
-let { body_txt } = require("%ui/fonts_style.nut")
-let { makeVertScroll } = require("%ui/components/scrollbar.nut")
-let { mkSelection } = require("%ui/components/mkSelection.nut")
 let { matchingQueuesMap } = require("%ui/matchingQueues.nut")
-let checkBox = require("%ui/components/checkbox.nut")
 
 let gameModeOptions = [
   { locId = "stats/game_mode/operative" }
@@ -34,6 +37,10 @@ let killsStats = [
   "kills_monster_changed_boss"
   "kills_monster_worms"
   "kills_monster_corrupted_soldiers"
+  "kills_monster_mimic"
+  "kills_monster_xenohound"
+  "kills_monster_dendroid"
+  "kills_monster_statue"
 ]
 
 let raidStats = [
@@ -53,11 +60,11 @@ let explorationStats = [
 function mkStatString(statName, statValue) {
   return {
     padding = hdpx(5)
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     children = [
       mkText(statName, { color = InfoTextDescColor })
-      { size = [flex(), 0] }
+      { size = static [flex(), 0] }
       mkText(statValue, { color = InfoTextValueColor })
     ]
   }
@@ -70,15 +77,15 @@ function mkSectionStrings(data, sectionStats) {
 
 let mkStatSection = @(stats, sectionName=null) stats?.len() ? {
   flow = FLOW_VERTICAL
-  size = [ flex(), SIZE_TO_CONTENT ]
+  size = FLEX_H
   padding = hdpx(10)
   gap = hdpx(10)
   children = [
     sectionName ? mkText(sectionName, body_txt) : null
     {
-      padding = [0, 0, 0, hdpx(10)]
+      padding = static [0, 0, 0, hdpx(10)]
       flow = FLOW_VERTICAL
-      size = [ flex(), SIZE_TO_CONTENT ]
+      size = FLEX_H
       gap = hdpx(5)
       children = stats
     }
@@ -101,6 +108,7 @@ function mkUnlocks() {
 }
 
 function getResearchStats() {
+  #forbid-auto-freeze
   let researchStats = {}
   let researchStat = {
     maxPoints = 0
@@ -108,6 +116,7 @@ function getResearchStats() {
     researches = 0
     researchesOpened = 0
   }
+  #allow-auto-freeze
   foreach (id, research in playerProfileAllResearchNodes.get()) {
       researchStat.maxPoints += research.requireResearchPointsToComplete
       researchStat.researches++
@@ -123,8 +132,9 @@ function getResearchStats() {
       stat.currentPoints += openedRes.currentResearchPoints
     }
   }
-
+  #forbid-auto-freeze
   let content = []
+  #allow-auto-freeze
   let summary = researchStats.reduce(@(res, v) res.__update({
     currentPoints = res.currentPoints + v.currentPoints
     maxPoints = res.maxPoints + v.maxPoints
@@ -139,7 +149,7 @@ function getResearchStats() {
   )
 
   return mkStatSection( {
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     gap = hdpx(5)
     children = content
@@ -148,21 +158,23 @@ function getResearchStats() {
 
 function leftSide() {
   let stats = playerStats.get()?.statsCurrentSeason ?? {}
-  let zoneOptions = stats.reduce(function(acc, _val, key){
+  #forbid-auto-freeze
+  let zoneOptions = stats.reduce(function(acc, _val, key) {
     let zone = key.replace("_operative", "").replace("_monster", "")
     let isAlreadyAdded = acc.findvalue(@(v) v.locId == zone) != null
     if (!isAlreadyAdded && zone != "operative" && zone != "monster")
       acc.append({locId = zone})
     return acc
   }, [])
+  #allow-auto-freeze
   let sortedZones = zoneOptions.sort(function(a, b) {
     let extraparamsA = matchingQueuesMap.get().findvalue(@(v) v?.extraParams.zone == a.locId)
     let extraparamsB = matchingQueuesMap.get().findvalue(@(v) v?.extraParams.zone == b.locId)
     return (extraparamsA?.extraParams.uiOrder ?? 999) <=> (extraparamsB?.extraParams.uiOrder ?? 999)
-  }).insert(0, { locId = "stats/zone/all" })
+  }).insert(0, static { locId = "stats/zone/all" })
   let gameModeSelection = mkSelection(gameModeOptions, selectedGameMode)
   let zoneSelection = mkSelection(sortedZones, selectedZone)
-  let isGlobalStatsSelection = checkBox(isGlobalStats, loc("career/showGlobalStatCheckbox"), { textOnTheLeft = true override = { padding = hdpx(4) } })
+  let isGlobalStatsSelection = checkBox(isGlobalStats, loc("career/showGlobalStatCheckbox"), static { textOnTheLeft = true override = { padding = hdpx(4) } })
 
   let data = Computed(function(){
     let mode = gameModeOptions.findvalue(@(v) v.locId == selectedGameMode.get().locId)?.locId ?? ""
@@ -173,12 +185,12 @@ function leftSide() {
     if (zone == "stats/zone/all")
       return allData?[gameMode] ?? {}
 
-    return allData?[$"{zone}_{gameMode}"] ?? {}
+    return allData?[$"{zone}_{gameMode}"] ?? allData?[$"{zone}"]  ?? {}
   })
 
   let statsComp = makeVertScroll(@(){
     watch = data
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     gap = hdpx(15)
     flow = FLOW_VERTICAL
     children = [].append(
@@ -188,6 +200,7 @@ function leftSide() {
       selectedGameMode.get().locId == "stats/game_mode/operative" ? mkUnlocks() : null
     )
   })
+  #allow-auto-freeze
   return {
     watch = playerStats
     size = flex()
@@ -195,13 +208,13 @@ function leftSide() {
     gap = hdpx(4)
     children = [
       {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_HORIZONTAL
         gap = hdpx(10)
         children = [
           {
             flow = FLOW_VERTICAL
-            size = [flex(), SIZE_TO_CONTENT]
+            size = FLEX_H
             gap = hdpx(4)
             children = [
               zoneSelection
@@ -210,7 +223,7 @@ function leftSide() {
           }
           {
             flow = FLOW_VERTICAL
-            size = [flex(), SIZE_TO_CONTENT]
+            size = FLEX_H
             gap = hdpx(4)
             children = [
               gameModeSelection
@@ -227,7 +240,7 @@ let rightSide = {
   size = flex()
   children = makeVertScroll(@(){
     watch = playerStats
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     gap = hdpx(15)
     flow = FLOW_VERTICAL
     children = [].append(

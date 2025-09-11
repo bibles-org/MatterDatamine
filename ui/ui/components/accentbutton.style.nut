@@ -1,7 +1,8 @@
+from "%ui/components/glareAnimation.nut" import glareAnimation, animChildren
 from "%ui/ui_library.nut" import *
 import "%ui/components/colors.nut" as colors
 
-let { glareAnimation, animChildren } = require("%ui/components/glareAnimation.nut")
+#allow-auto-freeze
 
 let fgChild = animChildren(glareAnimation())
 
@@ -32,6 +33,13 @@ let successButtonStyle = {
   fgChild
 }
 
+let AlertButtonStyle = {
+  style = {
+    BtnBgNormal = colors.BtnAlertBgNormal
+
+  }
+}
+
 let stopButtonStyle = {
   style = {
     TextNormal = colors.RedWarningColor
@@ -43,4 +51,5 @@ return freeze({
   accentSelectedButtonStyle
   successButtonStyle
   stopButtonStyle
+  AlertButtonStyle
 })

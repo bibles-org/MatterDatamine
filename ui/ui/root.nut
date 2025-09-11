@@ -1,16 +1,23 @@
 from "%ui/ui_library.nut" import *
+from "frame_label.nut" import frameLabel
 import "%dngscripts/ecs.nut" as ecs
+from "eventbus" import eventbus_subscribe
+from "dagor.system" import DBGLEVEL
+import "%dngscripts/platform.nut" as  platform
+import "%sqstd/regScriptProfiler.nut" as registerScriptProfiler
+from "dagor.localize" import getCurrentLanguage
+from "frp" import warn_on_deprecated_methods
+require("%ui/ui_config.nut")
 
 #default:forbid-root-table
 
-ecs.clear_vm_entity_systems()
 require("%dngscripts/globalState.nut").setUniqueNestKey("Overlay")
+ecs.clear_vm_entity_systems()
 let { isInBattleState } = require("%ui/state/appState.nut")
 require("%ui/notifications/profileNotification.nut")
 require("%ui/login/initLogin.nut")
 require("%ui/profile/ribbonState.nut")
 require("%ui/autotest_commands.nut")
-let { eventbus_subscribe } = require("eventbus")
 
 let { closeAllMenus } = require("%ui/hud/hud_menus_state.nut")
 let { showCursor } = require("%ui/cursorState.nut")
@@ -18,49 +25,44 @@ let {serviceInfo} = require("%ui/service_info.nut")
 let {dbgSafeArea} = require("%ui/dbgSafeArea.nut")
 let {doesNavSceneExist, navScenesListGen, getTopNavScene} = require("%ui/navState.nut")
 
-let {showUIinEditor, editorIsActive, editor} = require("editor.nut")
+let {showUIinEditor, editorIsActive, editor} = require("%ui/editor.nut")
 let {extraPropPanelCtors = null} = require("%daeditor/state.nut")
 if (extraPropPanelCtors!=null)
-  extraPropPanelCtors([require("editorCustomView.nut")])
+  extraPropPanelCtors.set([require("editorCustomView.nut")])
 
 require("%sqstd/regScriptDebugger.nut")(debugTableData)
 require("%ui/backgroundContentUpdater.nut")
 
 log($"loading overlay VM")
 
-require("%ui/ui_config.nut")
-require("voiceChat/voiceStateHandlers.nut")
+require("%ui/voiceChat/voiceStateHandlers.nut")
 require("%ui/state/roomState.nut")
 require("%ui/notifications/webHandlers.nut")
 let perfStats = require("%ui/hud/perf_stats.nut")
 let {showDebriefing} = require("%ui/mainMenu/debriefing/debriefingState.nut")
 let {debriefingUi} = require("%ui/mainMenu/debriefing/debriefingUi.nut")
-let friendlyErrorsBtn = require("friendly_logerr.ui.nut")
+let friendlyErrorsBtn = require("%ui/friendly_logerr.ui.nut")
 let {hotkeysButtonsBar} = require("%ui/hotkeysPanel.nut")
-let platform = require("%dngscripts/platform.nut")
 let cursors = require("%ui/components/cursors.nut")
 let {msgboxGeneration, getCurMsgbox } = require("%ui/components/msgbox.nut")
 let {modalWindowsComponent, hideAllModalWindows} = require("%ui/components/modalWindows.nut")
 let {isLoggedIn} = require("%ui/login/login_state.nut")
 let globInput = require("%ui/glob_input.nut")
-let {DBGLEVEL} = require("dagor.system")
 set_nested_observable_debug( DBGLEVEL > 0)
+set_subscriber_validation( DBGLEVEL > 0)
+warn_on_deprecated_methods( DBGLEVEL > 0 )
 require("daRg.debug").requireFontSizeSlot(DBGLEVEL>0 && VAR_TRACE_ENABLED) 
 let {popupBlock} = require("%ui/popup/popupBlock.nut")
 let { playerLogBlock, playerRewardBlock } = require("%ui/popup/player_event_log.nut")
-let registerScriptProfiler = require("%sqstd/regScriptProfiler.nut")
 let {safeAreaAmount, safeAreaVerPadding, safeAreaHorPadding} = require("%ui/options/safeArea.nut")
-let {getCurrentLoginUi, loginUiVersion} = require("login/currentLoginUi.nut")
-let {versionInfo, alphaWatermark} = require("versionInfo.nut")
-let connectionInProgress = require("connectionInProgress.nut")
+let {getCurrentLoginUi, loginUiVersion} = require("%ui/login/currentLoginUi.nut")
+let { versionInfo } = require("%ui/versionInfo.nut")
+let connectionInProgress = require("%ui/connectionInProgress.nut")
 let {noServerStatus, saveDataStatus} = require("%ui/mainMenu/info_icons.nut")
 let speakingList = require("%ui/speaking_list.nut")
-let {onlineSettingUpdated} = require("%ui/options/onlineSettings.nut")
-let { getCurrentLanguage } = require("dagor.localize")
-let {language} = require("%ui/state/clientState.nut")
-let replayHudLayout = require("%ui/hud/replay/replay_hud_layout.nut")
-let { isReplay } = require("%ui/hud/state/replay_state.nut")
-let {canShowReplayHud} = require("%ui/hud/replay/replayState.nut")
+let { onlineSettingUpdated, changeSettingsWithPath } = require("%ui/options/onlineSettings.nut")
+let { language, LANGUAGE_BLK_PATH } = require("%ui/state/clientState.nut")
+let { replayHudLayout, isReplay } = require("%ui/hud/replay/replay_hud_layout.nut")
 let hudComp = require("%ui/hud_root.nut")
 let { queueTip } = require("%ui/queueWaitingInfo.nut")
 let { hoverHotkeyHints } = require("%ui/components/pcHoverHotkeyHitns.nut")
@@ -71,39 +73,44 @@ let { selectLoadout } = require("%ui/hud/nexus_mode_loadout_selection_screen.nut
 
 require("%ui/sound_console.nut")
 require("%ui/panels/panels.nut")
-let { hasAlreadySetGamma, openGammaSettingWindow } = require("%ui/options/gamma_settings_window.nut")
-hudIsInteractive.subscribe(@(v) !v ? hideAllModalWindows() : null)
+let { hasAlreadySetGamma, openGammaSettingWindow, app_is_test_mode } = require("%ui/options/gamma_settings_window.nut")
+hudIsInteractive.subscribe_with_nasty_disregard_of_frp_update(@(v) !v ? hideAllModalWindows() : null)
 
-isInBattleState.subscribe(function(_) {
+isInBattleState.subscribe_with_nasty_disregard_of_frp_update(function(_) {
   hideAllModalWindows()
-  if (!hasAlreadySetGamma())
+  if (!hasAlreadySetGamma() && !app_is_test_mode())
     openGammaSettingWindow()
 })
 
 if (platform.is_pc) {
-  onlineSettingUpdated.subscribe(@(...) language(getCurrentLanguage()))
+  onlineSettingUpdated.subscribe_with_nasty_disregard_of_frp_update(function(...) {
+    changeSettingsWithPath(LANGUAGE_BLK_PATH, language.get())
+  })
 }
 
 
 let {mkSettingsMenuUi, showSettingsMenu} = require("%ui/mainMenu/menus/settings_menu.nut")
-let settingsMenuUi = mkSettingsMenuUi({onClose = @() showSettingsMenu(false)})
+let settingsMenuUi = mkSettingsMenuUi({onClose = @() showSettingsMenu.set(false)})
 
 let {controlsMenuUi, showControlsMenu} = require("%ui/mainMenu/menus/controls_setup.nut")
 
 let onPlatfomLoadModulePath = platform.is_sony ? "%ui/sony/onLoad.nut"
+  : platform.is_gdk ? "%ui/gdk/onLoad.nut"
   : null
 if (onPlatfomLoadModulePath != null)
   require(onPlatfomLoadModulePath)
 
-require("send_player_loadout.nut")
-require("send_player_permissions.nut")
-require("netUtils.nut")
-require("autoexec.nut")
+require("%ui/send_player_loadout.nut")
+require("%ui/send_player_permissions.nut")
+require("%ui/netUtils.nut")
+require("%ui/autoexec.nut")
 require("%ui/charClient/charClient.nut")
-require("sound_handlers.nut")
+require("%ui/sound_handlers.nut")
 require("%ui/mainMenu/chat/chatState.nut").subscribeHandlers()
 require("%ui/equipPresets/presetPatching.nut")
-require("replay_finalize_session_es.nut")
+require("%ui/replay_finalize_session_es.nut")
+require("%ui/playTimeTracker.nut")
+require("%ui/checkPatchnotes.nut")
 
 function battleMenu(){
   local children = null
@@ -130,12 +137,12 @@ let logerrsUi = @(){
   watch = safeAreaAmount
   halign = ALIGN_RIGHT
   hplace = ALIGN_CENTER
-  vplace = ALIGN_CENTER size = [sw(100)*safeAreaAmount.value, sh(100)*safeAreaAmount.value]
+  vplace = ALIGN_CENTER size = [sw(100)*safeAreaAmount.get(), sh(100)*safeAreaAmount.get()]
   children = friendlyErrorsBtn
 }
 
 let infoIcons = @(){
-  margin = [max(safeAreaVerPadding.value/2.0,fsh(2)), max(safeAreaHorPadding.value/1.2,fsh(2))]
+  margin = [max(safeAreaVerPadding.get()/2.0,fsh(2)), max(safeAreaHorPadding.get()/1.2,fsh(2))]
   watch = [safeAreaHorPadding, safeAreaVerPadding]
   children = [noServerStatus, saveDataStatus]
   hplace = ALIGN_RIGHT
@@ -164,7 +171,7 @@ function curScreen(){
     children = children.append(getTopNavScene())
   return {
     size = flex()
-    watch = [isLoggedIn, showDebriefing, showSettingsMenu, showControlsMenu, navScenesListGen]
+    watch = [isLoggedIn, showSettingsMenu, showControlsMenu, navScenesListGen]
     children
   }
 }
@@ -177,16 +184,34 @@ eventbus_subscribe("closeAllMenus", function(_){
 })
 
 let outOfBattleChildren = freeze([
-  versionInfo, alphaWatermark,
-  hudComp, curScreen,
+  versionInfo, hudComp, curScreen,
   queueTip, connectionInProgress,
   modalWindowsComponent, msgboxesUI, popupBlock, playerLogBlock, speakingList, logerrsUi, infoIcons,
   subtitlesBlock, perfStats, hoverHotkeyHints, hotkeysButtonsBar, dbgSafeArea, globInput
 ])
 
+function inBattleCurScreen(){
+  let children = []
+  if (showSettingsMenu.get()){
+    children.clear()
+    children.replace([settingsMenuUi])
+  }
+  else if (showControlsMenu.get()) {
+    children.clear()
+    children.replace([controlsMenuUi])
+  }
+  if (doesNavSceneExist(navScenesListGen.get()))
+    children.append(getTopNavScene())
+  return {
+    size = flex()
+    watch = [showSettingsMenu, showControlsMenu, navScenesListGen]
+    children
+  }
+}
+
 let inBattleUiChildren = freeze([
-  alphaWatermark, versionInfo, roundDebriefingUi, hudComp, selectLoadout,
-  playerRewardBlock, battleMenu, modalWindowsComponent, msgboxesUI, playerLogBlock, speakingList, infoIcons,
+  versionInfo, roundDebriefingUi, hudComp, selectLoadout,
+  playerRewardBlock, battleMenu, inBattleCurScreen, modalWindowsComponent, msgboxesUI, playerLogBlock, speakingList, infoIcons,
   subtitlesBlock, perfStats, hoverHotkeyHints, hotkeysButtonsBar, dbgSafeArea, globInput
 ])
 
@@ -194,12 +219,10 @@ let replayHudChildren = freeze([
   hudComp, replayHudLayout, battleMenu,
   modalWindowsComponent, msgboxesUI,
   hotkeysButtonsBar, dbgSafeArea, globInput,
-  {
-    eventHandlers = {
-      ["Replay.DisableHUD"] = @(_event) canShowReplayHud.modify(@(v) !v),
-    }
-  }
 ])
+
+gui_scene.forceCursorActive(showCursor.get())
+showCursor.subscribe(@(v) gui_scene.forceCursorActive(v))
 
 return function Root() {
   return {
@@ -209,7 +232,7 @@ return function Root() {
     onAttach = function(){
       log($"Overlay UI started")
     }
-    watch = [ isInBattleState, showUi, editorIsActive, showCursor ]
+    watch = [ isInBattleState, showUi, editorIsActive, showCursor, isReplay ]
     children = []
       .extend(!showUi.get()
         ? []
@@ -220,7 +243,8 @@ return function Root() {
               : outOfBattleChildren
       ).append(
         editorIsActive.get() ? editor : null,
-        serviceInfo
+        serviceInfo,
+        frameLabel
       )
   }
 }

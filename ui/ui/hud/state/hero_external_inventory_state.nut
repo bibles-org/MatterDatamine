@@ -1,13 +1,11 @@
+from "%ui/hud/state/inventory_items_es.nut" import updateEidInventoryContainer
+from "%ui/hud/state/item_info.nut" import get_item_info
+from "dasevents" import NotifyItemRecognitionStarted
+from "dagor.debug" import debug
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-
-let {EXTERNAL_ITEM_CONTAINER} = require("%ui/hud/menus/components/inventoryItemTypes.nut")
-let {updateEidInventoryContainer} = require("%ui/hud/state/inventory_items_es.nut")
-let { trackInventory } = require("%ui/hud/state/unified_inventory_state.nut")
-let {get_item_info} = require("%ui/hud/state/item_info.nut")
-let { NotifyItemRecognitionStarted } = require("dasevents")
-let { debug } = require("dagor.debug")
+let { EXTERNAL_ITEM_CONTAINER } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
 
 let externalInventoryEid = Watched(0)
 let prevExternalInventoryEid = Watched(0)
@@ -21,10 +19,11 @@ let externalInventoryCurrentWeight = Watched(0.0)
 let externalInventoryItemsMergeEnabled = Watched(true)
 let externalInventoryItemsSortingEnabled = Watched(true)
 let externalInventoryItemsOverrideSortingPriority = Watched(false)
+let externalInventoryContainerOwnerEid = Watched(ecs.INVALID_ENTITY_ID)
 
 
 function updateExternalInventoryState(_eid, comp) {
-  prevExternalInventoryEid.set(externalInventoryEid.value)
+  prevExternalInventoryEid.set(externalInventoryEid.get())
   externalInventoryEid.set(comp.external_inventory_interactor__inventoryEid)
 }
 
@@ -54,12 +53,13 @@ let trackExternalInventoryQuery = ecs.SqQuery("external_inventory_items_ui_Query
     ["itemContainer__name", ecs.TYPE_STRING, null],
     ["itemContainer__questName", ecs.TYPE_STRING, null],
     ["itemContainer", ecs.TYPE_EID_LIST],
-    ["human_inventory__maxVolumeInt", ecs.TYPE_INT],
+    ["human_inventory__maxVolume", ecs.TYPE_INT],
     ["human_inventory__currentVolume", ecs.TYPE_INT],
     ["human_inventory__currentWeight", ecs.TYPE_FLOAT],
     ["itemContainer__uiItemsMergeEnabled", ecs.TYPE_BOOL, true],
     ["itemContainer__uiItemsSortingEnabled", ecs.TYPE_BOOL, true],
-    ["itemContainer__uiItemsOverrideSortingPriority", ecs.TYPE_BOOL, false]
+    ["itemContainer__uiItemsOverrideSortingPriority", ecs.TYPE_BOOL, false],
+    ["item__containerOwnerEid", ecs.TYPE_EID, ecs.INVALID_ENTITY_ID]
   ]
 })
 
@@ -68,21 +68,20 @@ function trackExternalInventory(eid, comp){
     return
 
   let items = comp[EXTERNAL_ITEM_CONTAINER.containerName]?.getAll() ?? []
-  updateEidInventoryContainer(ecs.calc_hash(EXTERNAL_ITEM_CONTAINER.containerName),
-                              externalInventoryItems, items)
+  updateEidInventoryContainer(externalInventoryItems, items)
 
-  trackInventory(eid, comp)
-  externalInventoryName(comp.item__name ?? comp.itemContainer__name)
-  externalInventoryQuestName(comp?.itemContainer__questName)
-  externalInventoryMaxVolume(comp.human_inventory__maxVolumeInt / 10.0)
-  externalInventoryCurrentVolume(comp.human_inventory__currentVolume / 10.0)
-  externalInventoryCurrentWeight(comp.human_inventory__currentWeight)
-  externalInventoryItemsMergeEnabled(comp.itemContainer__uiItemsMergeEnabled)
-  externalInventoryItemsSortingEnabled(comp.itemContainer__uiItemsSortingEnabled)
-  externalInventoryItemsOverrideSortingPriority(comp.itemContainer__uiItemsOverrideSortingPriority)
+  externalInventoryName.set(comp.item__name ?? comp.itemContainer__name)
+  externalInventoryQuestName.set(comp?.itemContainer__questName)
+  externalInventoryMaxVolume.set(comp.human_inventory__maxVolume)
+  externalInventoryCurrentVolume.set(comp.human_inventory__currentVolume)
+  externalInventoryCurrentWeight.set(comp.human_inventory__currentWeight)
+  externalInventoryItemsMergeEnabled.set(comp.itemContainer__uiItemsMergeEnabled)
+  externalInventoryItemsSortingEnabled.set(comp.itemContainer__uiItemsSortingEnabled)
+  externalInventoryItemsOverrideSortingPriority.set(comp.itemContainer__uiItemsOverrideSortingPriority)
+  externalInventoryContainerOwnerEid.set(comp?.item__containerOwnerEid)
 }
 
-externalInventoryEid.subscribe(function(v){
+externalInventoryEid.subscribe_with_nasty_disregard_of_frp_update(function(v){
   if (v != ecs.INVALID_ENTITY_ID)
     trackExternalInventoryQuery.perform(v, trackExternalInventory)
 })
@@ -98,7 +97,7 @@ ecs.register_es("external_inventory_items_ui_es",
     ]
     comps_track = [
       ["itemContainer", ecs.TYPE_EID_LIST],
-      ["human_inventory__maxVolumeInt", ecs.TYPE_INT],
+      ["human_inventory__maxVolume", ecs.TYPE_INT],
       ["human_inventory__currentVolume", ecs.TYPE_INT],
       ["human_inventory__currentWeight", ecs.TYPE_FLOAT]
     ]
@@ -116,8 +115,8 @@ ecs.register_es("external_inventory_items_ui_es",
 ecs.register_es("update_single_external_inventory_item_ui_es",
   {
     [["onChange", NotifyItemRecognitionStarted]] = function(eid, comp){
-      if (externalInventoryEid.value != ecs.INVALID_ENTITY_ID &&
-          comp.item__containerOwnerEid == externalInventoryEid.value){
+      if (externalInventoryEid.get() != ecs.INVALID_ENTITY_ID &&
+          comp.item__containerOwnerEid == externalInventoryEid.get()){
         externalInventoryItems.mutate(function(v){
           local itemFound = false
           for (local i = 0; i < v.len(); i++){
@@ -130,7 +129,7 @@ ecs.register_es("update_single_external_inventory_item_ui_es",
           if (!itemFound) {
             
             
-            debug($"[Recognizable Items] Item {eid} is not found in external inventory ({externalInventoryEid.value}) items!")
+            debug($"[Recognizable Items] Item {eid} is not found in external inventory ({externalInventoryEid.get()}) items!")
           }
         })
       }
@@ -161,4 +160,5 @@ return {
   externalInventoryItemsMergeEnabled
   externalInventoryItemsSortingEnabled
   externalInventoryItemsOverrideSortingPriority
+  externalInventoryContainerOwnerEid
 }

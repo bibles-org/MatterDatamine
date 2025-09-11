@@ -1,20 +1,20 @@
 tiny_loot_item{
-  item__volume:r=0
+  item__volume:i=0
   profile_server_data__enrichmentAMCount:ip2=3, 3
 }
 
 small_loot_item{
-  item__volume:r=0.5
+  item__volume:i=5
   profile_server_data__enrichmentAMCount:ip2=3, 3
 }
 
 medium_loot_item{
-  item__volume:r=1
+  item__volume:i=10
   profile_server_data__enrichmentAMCount:ip2=5, 5
 }
 
 big_loot_item{
-  item__volume:r=5
+  item__volume:i=50
   profile_server_data__enrichmentAMCount:ip2=25, 25
 }
 
@@ -152,7 +152,7 @@ canister_gasoline_item{
   item__name:t="items/canister_gasoline"
   item__proto:t="canister_gasoline_item"
   item__weight:r=8
-  item__volume:r=20
+  item__volume:i=200
   item__marketPrice:i=100
   item__recreateOnGround:t="item_in_world"
   item__recreateInWorldPhys:t="item_in_world_phys"
@@ -176,7 +176,7 @@ canister_gasoline_big_item{
   item__name:t="items/canister_gasoline_big"
   item__proto:t="canister_gasoline_big_item"
   item__weight:r=18
-  item__volume:r=35
+  item__volume:i=350
   vehicle_fuel__amount:r=25
   item__iconPitch:r=0
   item__iconRoll:r=0
@@ -1043,6 +1043,8 @@ item_junk_home_sovmod_radio_base{
   item__iconYaw:r=15
   showroom_item__customZoom:r=2
   showroom_item__customZoomBordersRng:p2=1.6, 3
+
+  "item_electronics:tag"{}
 }
 
 item_junk_home_sovmod_radio_a{
@@ -1626,6 +1628,8 @@ item_junk_industrial_small_glasscutter{
   item__iconRoll:r=80
   item__iconYaw:r=225
   item__iconScale:r=1
+
+  "item_tools:tag"{}
 }
 
 item_junk_industrial_small_calipers{
@@ -1674,6 +1678,8 @@ item_junk_industrial_small_hammer{
   item__iconRoll:r=65
   item__iconYaw:r=45
   item__iconScale:r=1
+
+  "item_tools:tag"{}
 }
 
 item_junk_industrial_small_nippers{
@@ -1685,6 +1691,8 @@ item_junk_industrial_small_nippers{
   item__iconRoll:r=65
   item__iconYaw:r=45
   item__iconScale:r=1
+
+  "item_tools:tag"{}
 }
 
 item_junk_industrial_small_planer{
@@ -1696,6 +1704,8 @@ item_junk_industrial_small_planer{
   item__iconRoll:r=25
   item__iconYaw:r=45
   item__iconScale:r=1
+
+  "item_tools:tag"{}
 }
 
 item_junk_industrial_small_pliers{
@@ -1707,6 +1717,8 @@ item_junk_industrial_small_pliers{
   item__iconRoll:r=65
   item__iconYaw:r=45
   item__iconScale:r=1
+
+  "item_tools:tag"{}
 }
 
 item_junk_industrial_small_duct_tape{
@@ -1731,6 +1743,8 @@ item_junk_industrial_small_micrometer{
   item__iconRoll:r=50
   item__iconYaw:r=55
   item__iconOffset:p2=0.1, 0
+
+  "item_tools:tag"{}
 }
 
 item_junk_industrial_rag_a{
@@ -1852,6 +1866,8 @@ item_junk_industrial_tool_case{
   item__name:t="items/item_junk_industrial_tool_case"
   item__weight:r=6
   item__iconScale:r=0.9
+
+  "item_tools:tag"{}
 }
 
 item_junk_industrial_big_tool_case{
@@ -1865,6 +1881,8 @@ item_junk_industrial_big_tool_case{
   item__iconRoll:r=20
   item__iconYaw:r=40
   item__iconScale:r=1
+
+  "item_tools:tag"{}
 }
 
 item_junk_industrial_modern_car_spare_parts{
@@ -2147,6 +2165,7 @@ item_aurora_cam_a{
   _use:t="big_loot_item"
   _use:t="big_uncommon_item_am"
   _use:t="item_rarity_uncommon"
+  dropTm:m=[[0, -1, 0] [1, 0, 0] [0, 0, 1] [0, 0.03, 0]]
   animchar__res:t="loot_aurora_cam_a_char"
   collres__res:t="loot_aurora_cam_a_collision"
   item__proto:t="item_aurora_cam_a"
@@ -3079,9 +3098,9 @@ item_cd_base{
   item__name:t="items/item_cd_base"
   item__desc:t="items/sound_track/desc"
   item__weight:r=0.1
-  item__iconYaw:r=15
-  item__iconPitch:r=75
-  item__iconRoll:r=105
+  item__iconYaw:r=80
+  item__iconPitch:r=-35
+  item__iconRoll:r=80
 
   "item__alwaysUseful:tag"{}
   "item_civil:tag"{}
@@ -3698,6 +3717,25 @@ item_civilian_surveillance_logs{
   "item_civil:tag"{}
 }
 
+item_weapon_specifications_docs{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  _use:t="item_rarity_rare"
+  animchar__res:t="sovmod_folder_b_char"
+  collres__res:t="sovmod_folder_b_collision"
+  item__proto:t="item_weapon_specifications_docs"
+  item__name:t="items/item_weapon_specifications_docs"
+  item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=250, 250
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=80
+  item__iconPitch:r=-35
+  item__iconRoll:r=80
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+}
+
 item_info_notes_base{
   _use:t="item"
   _use:t="tiny_loot_item"
@@ -4099,5 +4137,467 @@ am_fillers_inventory{
       templ:t="valuable_civil_item+item_in_world"
       count:i=3
     }
+  }
+}
+
+item_tf_shopping_list{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_tf_shopping_list"
+  item__name:t="items/item_tf_shopping_list"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_tf_shopping_list"
+  }
+}
+
+item_lore_soldier_letter{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_soldier_letter"
+  item__name:t="items/item_lore_soldier_letter"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_soldier_letter"
+  }
+}
+
+item_lore_prayer1{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_prayer1"
+  item__name:t="items/item_lore_prayer1"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_prayer1"
+  }
+}
+
+item_lore_prayer2{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_prayer2"
+  item__name:t="items/item_lore_prayer2"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_prayer2"
+  }
+}
+
+item_lore_denunciation{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_denunciation"
+  item__name:t="items/item_lore_denunciation"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_denunciation"
+  }
+}
+
+item_lore_love_letter{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_love_letter"
+  item__name:t="items/item_lore_love_letter"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_love_letter"
+  }
+}
+
+item_lore_search_report1{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_search_report1"
+  item__name:t="items/item_lore_search_report1"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_search_report1"
+  }
+}
+
+item_lore_search_report2{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_search_report2"
+  item__name:t="items/item_lore_search_report2"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_search_report2"
+  }
+}
+
+item_lore_quartermaster_letter{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_quartermaster_letter"
+  item__name:t="items/item_lore_quartermaster_letter"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_quartermaster_letter"
+  }
+}
+
+item_lore_researcher_diary1{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_researcher_diary1"
+  item__name:t="items/item_lore_researcher_diary1"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_researcher_diary1"
+  }
+}
+
+item_lore_researcher_diary1_2{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_researcher_diary1_2"
+  item__name:t="items/item_lore_researcher_diary1_2"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_researcher_diary1_2"
+  }
+}
+
+item_lore_researcher_diary2{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_researcher_diary2"
+  item__name:t="items/item_lore_researcher_diary2"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_researcher_diary2"
+  }
+}
+
+item_lore_researcher_diary2_2{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_researcher_diary2_2"
+  item__name:t="items/item_lore_researcher_diary2_2"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_researcher_diary2_2"
+  }
+}
+
+item_lore_evacuation_drill{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_evacuation_drill"
+  item__name:t="items/item_lore_evacuation_drill"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_evacuation_drill"
+  }
+}
+
+item_lore_troitsky_to_platon{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_troitsky_to_platon"
+  item__name:t="items/item_lore_troitsky_to_platon"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_troitsky_to_platon"
+  }
+}
+
+item_lore_platon_to_troitsky{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_platon_to_troitsky"
+  item__name:t="items/item_lore_platon_to_troitsky"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_platon_to_troitsky"
+  }
+}
+
+item_lore_soldier_am_contact1{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_soldier_am_contact1"
+  item__name:t="items/item_lore_soldier_am_contact1"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_soldier_am_contact1"
+  }
+}
+
+item_lore_soldier_am_contact2{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_soldier_am_contact2"
+  item__name:t="items/item_lore_soldier_am_contact2"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_soldier_am_contact2"
+  }
+}
+
+item_lore_Savushkina_letter1{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_Savushkina_letter1"
+  item__name:t="items/item_lore_Savushkina_letter1"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_Savushkina_letter1"
+  }
+}
+
+item_lore_Savushkina_letter2{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_Savushkina_letter2"
+  item__name:t="items/item_lore_Savushkina_letter2"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_Savushkina_letter2"
+  }
+}
+
+item_lore_revvol_to_sokolov{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_revvol_to_sokolov"
+  item__name:t="items/item_lore_revvol_to_sokolov"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_revvol_to_sokolov"
+  }
+}
+
+item_lore_sokolov_to_revvol{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_sokolov_to_revvol"
+  item__name:t="items/item_lore_sokolov_to_revvol"
+  item__weight:r=0.1
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_sokolov_to_revvol"
   }
 }

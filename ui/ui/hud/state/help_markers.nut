@@ -25,12 +25,12 @@ ecs.register_es("help_markers_visible_ui_es",
       if (comp["help__visible"]) {
         updateHelp(eid, comp)
       }
-      else if (eid in helps.value) {
+      else if (eid in helps.get()) {
         helps.mutate(@(v) v.$rawdelete(eid))
       }
     },
     function onDestroy(eid, _comp){
-      if (eid in helps.value)
+      if (eid in helps.get())
         helps.mutate(@(v) v.$rawdelete(eid))
     }
   },

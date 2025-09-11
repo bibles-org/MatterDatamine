@@ -1,5 +1,4 @@
 options always_export_initializer = true
-require app
 require ecs
 require DagorSystem
 require BehNodes

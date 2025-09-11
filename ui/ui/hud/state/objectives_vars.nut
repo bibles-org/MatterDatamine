@@ -1,10 +1,11 @@
+from "%dngscripts/sound_system.nut" import sound_play
+from "eventbus" import eventbus_send
+from "%ui/components/colors.nut" import colorblindPalette
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { sound_play } = require("%dngscripts/sound_system.nut")
-let { eventbus_send } = require("eventbus")
 let { localPlayerEid } = require("%ui/hud/state/local_player.nut")
-let { colorblindPalette } = require("%ui/components/colors.nut")
+let { watchedHeroPlayerEid } = require("%ui/hud/state/watched_hero.nut")
 
 let objectives = Watched([])
 let quickUseObjective = Watched()
@@ -20,11 +21,11 @@ console_register_command(@(soundName) sound_play(soundName, 1.0), "play.sound")
 
 function sendStateBusEvent(ids, eventType){
   log($"objectives: send state bus event: type={eventType}, num ids={ids.len()}")
-  let addedObjectives   = eventType == BusEventType.ADD ? ids : const []
-  let updatedObjectives = eventType == BusEventType.UPDATE ? ids : const []
-  let deletedObjectives = eventType == BusEventType.DELETE ? ids : const []
-
-
+  let addedObjectives   = eventType == BusEventType.ADD ? ids : static []
+  let updatedObjectives = eventType == BusEventType.UPDATE ? ids : static []
+  let deletedObjectives = eventType == BusEventType.DELETE ? ids : static []
+  if (updatedObjectives.len() + addedObjectives.len()> 0 && watchedHeroPlayerEid.get() != ecs.INVALID_ENTITY_ID)
+    sound_play("ui_sounds/interface_back", 1.0)
   eventbus_send("objectives.update_state",{
     deletedObjectives
     updatedObjectives
@@ -55,9 +56,10 @@ function dispatchColorsAndSort(obj){
   return obj
 }
 
-function addObjective(comp){
+function addObjective(eid, comp){
   objectives.mutate(function(v){
     v.append({
+      eid                   = eid
       name                  = comp.objective__name,
       handledByGameTemplate = comp.objective__templateName,
       currentValue          = comp.objective__currentValue,
@@ -77,6 +79,7 @@ function addObjective(comp){
       failed                = comp.objective__isFailed,
       completed             = comp.objective__isCompleted,
       isSecretObjective     = comp.secretObjective != null
+      itemTags              = "+".join(comp.objective__itemTags?.getAll() ?? [])
     })
 
     dispatchColorsAndSort(v)
@@ -113,7 +116,7 @@ function updateObjective(comp){
 
 ecs.register_es("objectives_state",
   {
-    [["onInit","onChange"]] = function(_eid, comp){
+    [["onInit","onChange"]] = function(eid, comp){
       if (comp.objective__playerEid != localPlayerEid.get())
         return
 
@@ -128,7 +131,7 @@ ecs.register_es("objectives_state",
       }
 
       if (comp.objective__show)
-        addObjective(comp)
+        addObjective(eid, comp)
     }
     onDestroy = function(_eid, comp){
       deleteObjective(comp)
@@ -150,11 +153,11 @@ ecs.register_es("objectives_state",
       ["objective__id", ecs.TYPE_STRING],
       ["objective__templateName", ecs.TYPE_STRING],
       ["objective__requireExtraction", ecs.TYPE_BOOL],
-      ["objective__isStoryContract", ecs.TYPE_BOOL],
       ["objective__requireFullCompleteInSession", ecs.TYPE_BOOL],
       ["objective__isReported", ecs.TYPE_BOOL],
       ["secretObjective", ecs.TYPE_TAG, null],
-      ["objective__blockExtractionWhenIncomplete", ecs.TYPE_BOOL]
+      ["objective__blockExtractionWhenIncomplete", ecs.TYPE_BOOL],
+      ["objective__itemTags", ecs.TYPE_STRING_LIST, null]
     ]
   }
 )
@@ -173,24 +176,24 @@ let getPlayerObjectivesQuery = ecs.SqQuery("getPlayerObjectivesQuery", {
     ["objective__name", ecs.TYPE_STRING],
     ["objective__templateName", ecs.TYPE_STRING],
     ["objective__requireExtraction", ecs.TYPE_BOOL],
-    ["objective__isStoryContract", ecs.TYPE_BOOL],
     ["objective__requireFullCompleteInSession", ecs.TYPE_BOOL],
     ["objective__isReported", ecs.TYPE_BOOL],
     ["secretObjective", ecs.TYPE_TAG, null],
-    ["objective__blockExtractionWhenIncomplete", ecs.TYPE_BOOL]
+    ["objective__blockExtractionWhenIncomplete", ecs.TYPE_BOOL],
+    ["objective__itemTags", ecs.TYPE_STRING_LIST, null]
   ]
 })
 
 
 let addAllPlayerObjectives = function(player_eid) {
-  getPlayerObjectivesQuery.perform(function(_eid, comp){
+  getPlayerObjectivesQuery.perform(function(eid, comp){
     if (comp.objective__playerEid == player_eid && comp.objective__show)
-      addObjective(comp)
+      addObjective(eid, comp)
   })
 }
 
 
-localPlayerEid.subscribe(function(eid){
+localPlayerEid.subscribe_with_nasty_disregard_of_frp_update(function(eid){
   if (eid != ecs.INVALID_ENTITY_ID && objectives.get().len() == 0){
     addAllPlayerObjectives(eid)
     return
@@ -214,7 +217,6 @@ ecs.register_es("quick_use_objective_track_es",
     comps_rq=["hero"]
   }
 )
-
 
 return {
   objectives

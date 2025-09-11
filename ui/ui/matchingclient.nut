@@ -1,12 +1,14 @@
+import "%ui/components/msgbox.nut" as msgbox
+
+from "matching.api" import matching_notify, matching_call
+import "matching.errors" as matching_errors
+from "eventbus" import eventbus_subscribe_onehit, eventbus_subscribe
+
 from "%ui/ui_library.nut" import *
 
-let msgbox = require("%ui/components/msgbox.nut")
-let { matching_notify, matching_call } = require("matching.api")
-let matching_errors = require("matching.errors")
 let connectHolder = require("%ui/connectHolderR.nut")
 let loginState = require("%ui/login/login_state.nut")
 let appInfo =  require("%sqGlob/appInfo.nut")
-let { eventbus_subscribe_onehit, eventbus_subscribe } = require("eventbus")
 
 local matchingLoginActions = []
 let debugDelay = mkWatched(persist, "debugDelay", 0)
@@ -34,9 +36,9 @@ function matchingCallImpl(cmd, cb = null, params = null) {
     cb(res)
 }
 
-let matchingCall = @(cmd, cb = null, params = null) debugDelay.value <= 0
+let matchingCall = @(cmd, cb = null, params = null) debugDelay.get() <= 0
   ? matchingCallImpl(cmd, cb, params)
-  : gui_scene.setTimeout(debugDelay.value, @() matchingCallImpl(cmd, cb, params))
+  : gui_scene.setTimeout(debugDelay.get(), @() matchingCallImpl(cmd, cb, params))
 
 function matchingNotify(cmd, params=null) {
   netStateCall(function() { matching_notify(cmd, params) })
@@ -81,13 +83,13 @@ function startLogin(userInfo) {
     userId = userInfo.userId
     userName = userInfo.name
     token = userInfo.chardToken
-    versionStr = appInfo.version.value
+    versionStr = appInfo.version.get()
   }
 
   connectHolder.activate_matching_login(loginInfo)
 }
 
-console_register_command(@(delay) debugDelay(delay), "matching.delay_calls")
+console_register_command(@(delay) debugDelay.set(delay), "matching.delay_calls")
 console_register_command(
   function() {
     matchingCall(

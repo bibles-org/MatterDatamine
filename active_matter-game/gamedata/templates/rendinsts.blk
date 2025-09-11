@@ -1,4 +1,4 @@
-rendinst_base{
+dynamic_rendinst_base{
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   _tracked:t="transform"
   ri_extra__destroyed:b=no
@@ -14,16 +14,8 @@ rendinst_base{
   ri_extra{}
 }
 
-rendinst_handle{
-  _use:t="rendinst_base"
-
-  "ri_extra__handle:u64"{
-    value:i64=-1
-  }
-}
-
 rendinst{
-  _use:t="rendinst_base"
+  _use:t="dynamic_rendinst_base"
   ri_extra__name:t="sandbags_wall_medium_rounded_a"
   ri_extra__bboxMin:p3=0, 0, 0
   ri_extra__bboxMax:p3=0, 0, 0

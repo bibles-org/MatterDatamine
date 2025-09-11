@@ -79,41 +79,10 @@ onboarding_phase_temporary_entity{
   "onboarding_phase_temporary_entity:tag"{}
 }
 
-onboarding_custom_action{
-  onboarding_custom_action__name:t=""
-  onboarding_custom_action__hintText:t=""
-  onboarding_custom_action__hintDelay:r=1
-  onboarding_custom_action__showHint:b=yes
-  _tracked:t="onboarding_custom_action__showHint"
-
-  "onboarding_custom_action__handle:u16"{
-    value:i=-1
-  }
-}
-
-onboarding_look_around_wait_for_action{
-  _use:t="game_effect_base"
-  _use:t="onboarding_destroy_on_custom_action"
-
-  "onboarding_look_around_wait_for_action:tag"{}
-}
-
-onboarding_destroy_on_custom_action{
-  game_trigger_processor__onTrigger:t="onboarding_custom_action"
-  game_trigger_processor__onTriggerHash:i=0
-
-  "game_trigger_processor_self_destroy:tag"{}
-}
-
 onboarding_show_action_hint{
   _use:t="game_effect_base"
 
   "onboarding_show_action_hint:tag"{}
-}
-
-onboarding_look_around_with_continue_option{
-  _use:t="onboarding_show_action_hint"
-  _use:t="onboarding_look_around_wait_for_action"
 }
 
 onboarding_remove_base_components{
@@ -206,6 +175,27 @@ onboarding_heal_hero{
   "onboarding_heal_hero:tag"{}
 }
 
+onboarding_dmg_hero{
+  onboarding_dmg_hero__partName:t="body"
+  onboarding_dmg_hero__value:r=5
+}
+
+onboarding_tiled_map{
+  _use:t="tiled_map"
+  tiled_map__leftTop:p2=50, -220
+  tiled_map__rightBottom:p2=350, 80
+  tiled_map__visibleRange:p2=40, 1000
+  tiled_map__tileWidth:i=512
+  tiled_map__zlevels:i=2
+  tiled_map__northAngle:r=0
+  tiled_map__tilesPath:t="maps/am_monolyth_island"
+  tiled_map__genExposure:r=0.7
+  tiled_map__genHeightOffset:r=20
+  fog_of_war__enabled:b=yes
+  fog_of_war__onlineSettingsPath:t="onboarding_miniraid"
+  fog_of_war__resolution:r=2
+}
+
 override_weather_preset{
   override_weather_preset__newPreset:t=""
   override_weather_preset__newSkiesTime:r=-1
@@ -272,8 +262,6 @@ onboarding_forced_parametrized_animation_effect{
 onboarding_teleport_to_base{
   _use:t="game_effect_base"
   game_effect__teleportToEntityWithTag:t="respbase"
-
-  "game_effect__tempDisableSsr:tag"{}
 }
 
 onboarding_teleport_hero_to_base{
@@ -325,6 +313,14 @@ onboarding_fame_door_selected{
 onboarding_trigger_on_monolith_selection_death{
   _use:t="state_machine_transition_trigger"
   game_trigger_processor__onTrigger:t="onboarding_monolith_selection_death"
+  game_trigger_processor__onTriggerHash:i=0
+
+  "trigger_transition_on_game_trigger:tag"{}
+}
+
+onboarding_debug_finish{
+  _use:t="state_machine_transition_trigger"
+  game_trigger_processor__onTrigger:t="onboarding_debug_finish"
   game_trigger_processor__onTriggerHash:i=0
 
   "trigger_transition_on_game_trigger:tag"{}
@@ -469,11 +465,27 @@ transition_base_key_insertion_to_finished{
   }
 }
 
+debug_transition_any_to_finished{
+  _use:t="state_machine_transition"
+  state_machine_transition__advanceProfileOnboardingTo:t="onboarding_finished"
+  state_machine_transition__savePlayerItems:b=no
+
+  "state_machine_transition__requiredNextStateComps:list<t>"{
+    item:t="onboarding_phase_finished"
+  }
+
+  "state_machine_transition__triggerTemplates:list<t>"{
+    item:t="onboarding_debug_finish"
+  }
+}
+
 onboarding_state_machine{
   _use:t="state_machine"
+  onboarding_state_machine__character:t="suit_militant_female_enforcer_item"
 
   "onboarding_state_machine:tag"{}
   "hide_base_ambient_sound:tag"{}
+  "disable_shooting_range_mannequins:tag"{}
   "state_machine__stateTemplates:list<t>"{
     item:t="onboarding_phase_monolith"
     item:t="onboarding_phase_monolith_selection"
@@ -493,5 +505,6 @@ onboarding_state_machine{
     item:t="transition_failed_miniraid_to_base_first_time"
     item:t="transition_miniraid_to_base_key_insertion"
     item:t="transition_base_key_insertion_to_finished"
+    item:t="debug_transition_any_to_finished"
   }
 }

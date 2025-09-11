@@ -1,17 +1,18 @@
+from "matching.errors" import INVALID_USER_ID
+from "team" import TEAM_UNASSIGNED
+from "%ui/helpers/platformUtils.nut" import canInterractCrossPlatform
+from "%ui/mainMenu/chat/chatApi.nut" import sendMessage
+from "dasevents" import CmdSendChatMessage, EventChatMessage, sendNetEvent
+from "dagor.time" import get_time_msec
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { INVALID_USER_ID } = require("matching.errors")
-let { TEAM_UNASSIGNED } = require("team")
 let { blockedUids } = require("%ui/mainMenu/contacts/contactsWatchLists.nut")
 let { chatId } = require("%ui/squad/squadManager.nut")
 let { chatLogs } = require("%ui/mainMenu/chat/chatState.nut")
-let { canInterractCrossPlatform } = require("%ui/helpers/platformUtils.nut")
-let { sendMessage } = require("%ui/mainMenu/chat/chatApi.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
 let { find_local_player } = require("%dngscripts/common_queries.nut")
-let { CmdSendChatMessage, EventChatMessage, sendNetEvent } = require("dasevents")
-let {get_time_msec} = require("dagor.time")
+let { mutedNexusPlayersList } = require("%ui/hud/state/nexus_mode_state.nut")
 
 let lines = mkWatched(persist, "lines", [])
 let totalLines = mkWatched(persist, "totalLines", 0)
@@ -119,7 +120,8 @@ function onChatMessage(evt, _eid, _comp) {
     name = "unknown",
     senderUserId = INVALID_USER_ID
   } = data
-
+  if (name in mutedNexusPlayersList.get())
+    return
   let text = mkTextFromQchatMsg(data)
   pushMsg(team, name, senderUserId, text, mode, qmsg)
 }
@@ -153,13 +155,13 @@ function proceedMatchingMessages(messages) {
   totalLines.set(newLog.len())
 }
 
-chatId.subscribe(function(id) {
+chatId.subscribe_with_nasty_disregard_of_frp_update(function(id) {
   if (isInBattleState.get())
     return
   proceedMatchingMessages(chatLogs.get()?[id] ?? [])
 })
 
-chatLogs.subscribe(function(v) {
+chatLogs.subscribe_with_nasty_disregard_of_frp_update(function(v) {
   if (chatId.get() == null)
     return
   let logs = v?[chatId.get()]

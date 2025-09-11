@@ -11,6 +11,29 @@ entity{
     household_traps_generator:i=25
     anomaly_encounter_changed_indoor_small:i=20
   }
+
+  "monster_gen_gen__excludeBoxes:list<m>"{
+    t:m=[[13.764, 0, -78.0595] [0, 10.5971, 0] [39.7038, 0, 7.00084] [-367.537, 34.1813, -913.052]]
+  }
+}
+
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house changeds"
+  monster_gen_gen__householdCount:i=20
+  monster_gen_gen__minHouseholdVolume:r=100
+  monster_gen_gen__useHouseholdsOnEuclid:b=yes
+
+  "monster_gen_gen__genTemplates:object"{
+    household_changed_monster_generator:i=100
+    poltergeist_possession:i=50
+  }
+}
+
+entity{
+  _template:t="poltergeist_possession"
+  poltergeist_possession__numPoltergeists:ip2=5, 6
+  transform:m=[[13.764, 0, -78.0595] [0, 10.5971, 0] [39.7038, 0, 7.00084] [-367.537, 34.1813, -913.052]]
 }
 
 entity{
@@ -49,4 +72,24 @@ entity{
   loot_generator__projAttempts:i=0
   transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [-340, 0, -980]]
   loot_generator__lootPreset:t="dogorsk_worm_nest_loot_preset"
+}
+
+entity{
+  _template:t="am_mindcontrolled_encounter_guard"
+  transform:m=[[-0.798091, -0.533672, -0.279723] [-0.48457, 0.844397, -0.22844] [0.358109, -0.0467708, -0.932508] [-366.248, 82.1039, -805.158]]
+}
+
+entity{
+  _template:t="am_mindcontrolled_encounter_guard"
+  transform:m=[[0.201879, 0.362049, 0.910036] [-0.48457, 0.844397, -0.22844] [-0.851139, -0.394859, 0.345904] [-363.525, 84.6833, -801.4]]
+}
+
+entity{
+  _template:t="am_mindcontrolled_encounter_guard"
+  transform:m=[[0.46477, 0.0272871, -0.885011] [-0.48457, 0.844397, -0.22844] [0.741068, 0.535022, 0.405673] [-360.383, 82.8717, -814.763]]
+}
+
+entity{
+  _template:t="am_mindcontrolled_encounter_guard"
+  transform:m=[[0.863019, 0.504111, 0.0327279] [-0.48457, 0.844397, -0.22844] [-0.142795, 0.18129, 0.973008] [-360.012, 84.3857, -809.954]]
 }

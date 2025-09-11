@@ -1,0 +1,19 @@
+entity{
+  _template:t="civil_africa_pve_lootable_rendinst_manager"
+}
+
+entity{
+  _template:t="military_africa_pve_lootable_rendinst_manager"
+}
+
+import{
+  scene:t="gamedata/scenes/africa_headquarters/_africa_headquarters_encounters_pve.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/africa_headquarters/_africa_headquarters_loot_generators_pve.blk"
+}
+
+entity{
+  _template:t="airdrop_pve_manager"
+}

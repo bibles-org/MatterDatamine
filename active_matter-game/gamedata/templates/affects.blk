@@ -33,6 +33,12 @@ replicated_game_effect_with_duration{
   _use:t="replicating"
 }
 
+zone_attached_effect{
+  _use:t="game_effect_base"
+
+  "zone_attached_effect__zoneEid:eid"{}
+}
+
 vehicle_game_effect{
   _use:t="replicated_game_effect"
 
@@ -83,6 +89,7 @@ concussion_affect{
   concussion__handsShakeMagnitude:r=0.2
   concussion__handsShakeSpeedMult:r=6
   concussion__handsShakeFadeTime:r=5
+  concussion__handsStamina:r=20
   concussion__duration:r=10
   concussion__startedAtTime:r=0
   concussion__replaced:b=no
@@ -99,6 +106,7 @@ confusion_affect{
   confusion__startedAtTime:r=0
   confusion__intensity:r=0.005
   confusion__speed:r=1
+  confusion__serverCreated:b=yes
 
   "confusionAffect:tag"{}
   "confusionScreenEffect:tag"{}
@@ -114,6 +122,7 @@ postfx_fade_affect{
   _use:t="base_postfx_fade_affect"
   postfx_fade_affect__fadeInTime:r=0.3
   postfx_fade_affect__fadeOutTime:r=0.5
+  postfx_fade_affect__fadeColor:c=5, 7, 5, 255
 }
 
 postfx_fadein_affect{
@@ -132,6 +141,13 @@ flash_blind_affect{
   flash_blind__intensity:r=1
 
   "flashBlindScreenEffect:tag"{}
+}
+
+suggest_use_items_in_zone_effect{
+  _use:t="replicated_game_effect"
+  _use:t="zone_attached_effect"
+
+  "game_effect__canUseItemsInZone:list<t>"{}
 }
 
 directional_push_affect{
@@ -318,7 +334,7 @@ human_unarmed_on_ladder{
 gravity_hook_effect{
   _use:t="replicated_game_effect"
   gravity_hook_effect__pushTime:r=0.5
-  gravity_hook_effect__pushLength:r=5
+  gravity_hook_effect__pushLength:r=7
   gravity_hook_effect__time:r=0
   gravity_hook_effect__tickStart:i=0
   gravity_hook_effect__tickEnd:i=-1
@@ -358,9 +374,8 @@ ampoule_healing_effect{
   game_effect__forceAnimUpperStateId:i=-1
   game_effect__forceAnimUpperState:t="healing_by_sovmod_meds"
   four_step_healing__progressVarId:i=-1
-  four_step_healing__didAnimLoopEnd:b=no
   four_step_healing__healAt:r=-1
-  four_step_healing__selectedBodypartIdx:i=0
+  four_step_healing__selectedBodypartName:t=""
 
   "game_effect__destroyWithOwner:tag"{}
   "state__interruptInteractable:tag"{}
@@ -375,27 +390,47 @@ ampoule_healing_effect{
     item:t="human_net_phys__canSprint"
   }
 
-  "four_step_healing__animationInOutDurations:shared:list<p3>"{
-    0:p3=1.26, 2.73, 0.66
-    1:p3=1.26, 1.9, 0.66
-    2:p3=1.26, 4.13, 0.83
-    3:p3=1.26, 2.63, 0.66
-    4:p3=1.26, 2.06, 0.66
-    5:p3=1.26, 2.16, 0.9
+  "four_step_healing__animationData:shared:object"{
+    "body:object"{
+      inOutDurations:p3=1.26, 2.73, 0.66
+      inOutDurationsCrawl:p3=1.23, 1.06, 1.16
+      useAlternativeSlots:b=no
+    }
+
+    "right_leg:object"{
+      inOutDurations:p3=1.26, 2.9, 0.66
+      inOutDurationsCrawl:p3=1.23, 1.06, 1.16
+      useAlternativeSlots:b=no
+    }
+
+    "right_hand:object"{
+      inOutDurations:p3=1.26, 4.13, 0.83
+      inOutDurationsCrawl:p3=1.23, 0.76, 1.16
+      useAlternativeSlots:b=yes
+    }
+
+    "left_hand:object"{
+      inOutDurations:p3=1.26, 2.63, 0.66
+      inOutDurationsCrawl:p3=1.23, 1.26, 1.16
+      useAlternativeSlots:b=no
+    }
+
+    "head:object"{
+      inOutDurations:p3=1.26, 2.06, 0.66
+      inOutDurationsCrawl:p3=1.23, 1.06, 1.16
+      useAlternativeSlots:b=no
+    }
+
+    "left_leg:object"{
+      inOutDurations:p3=1.26, 3.16, 0.9
+      inOutDurationsCrawl:p3=1.23, 1.06, 0.66
+      useAlternativeSlots:b=yes
+    }
   }
 
   "four_step_healing__animcharAlternativeSlots:shared:list<t>"{
     i:t="syringe_cap_L"
     i:t="syringe_L"
-  }
-
-  "four_step_healing__useAlternativeSlots:shared:list<b>"{
-    0:b=no
-    1:b=no
-    2:b=yes
-    3:b=no
-    4:b=no
-    5:b=yes
   }
 
   "four_step_healing__item:eid"{}
@@ -433,9 +468,9 @@ injector_healing_effect{
   game_effect__forceAnimUpperStateId:i=-1
   game_effect__forceAnimUpperState:t="healing_by_injector_meds"
   four_step_healing__progressVarId:i=-1
-  four_step_healing__didAnimLoopEnd:b=no
   four_step_healing__healAt:r=-1
-  four_step_healing__selectedBodypartIdx:i=0
+  four_step_healing__selectedBodypartName:t=""
+  four_step_healing__alwaysBodypartName:t="injector"
 
   "game_effect__destroyWithOwner:tag"{}
   "state__interruptInteractable:tag"{}
@@ -449,15 +484,14 @@ injector_healing_effect{
     item:t="human_net_phys__canSprint"
   }
 
-  "four_step_healing__animationInOutDurations:shared:list<p3>"{
-    0:p3=0, 1.99, 0.66
+  "four_step_healing__animationData:shared:object"{
+    "injector:object"{
+      inOutDurations:p3=0, 1.99, 0.66
+      useAlternativeSlots:b=no
+    }
   }
 
   "four_step_healing__animcharAlternativeSlots:shared:list<t>"{}
-  "four_step_healing__useAlternativeSlots:shared:list<b>"{
-    0:b=no
-  }
-
   "four_step_healing__item:eid"{}
   "four_step_healing__animcharTemplateNames:shared:list<t>"{
     i:t="injector_cap_animchar_affect"
@@ -504,9 +538,9 @@ injector_2_healing_effect{
   game_effect__forceAnimStateId:i=-1
   game_effect__forceAnimState:t="healing_by_injector_meds_2"
   four_step_healing__progressVarId:i=-1
-  four_step_healing__didAnimLoopEnd:b=no
   four_step_healing__healAt:r=-1
-  four_step_healing__selectedBodypartIdx:i=0
+  four_step_healing__selectedBodypartName:t=""
+  four_step_healing__alwaysBodypartName:t="injector"
 
   "game_effect__destroyWithOwner:tag"{}
   "state__interruptInteractable:tag"{}
@@ -521,15 +555,14 @@ injector_2_healing_effect{
     item:t="human_net_phys__canSprint"
   }
 
-  "four_step_healing__animationInOutDurations:shared:list<p3>"{
-    0:p3=0, 1.93, 0.66
+  "four_step_healing__animationData:shared:object"{
+    "injector:object"{
+      inOutDurations:p3=0, 1.93, 0.66
+      useAlternativeSlots:b=no
+    }
   }
 
   "four_step_healing__animcharAlternativeSlots:shared:list<t>"{}
-  "four_step_healing__useAlternativeSlots:shared:list<b>"{
-    0:b=no
-  }
-
   "four_step_healing__item:eid"{}
   "four_step_healing__animcharTemplateNames:shared:list<t>"{
     i:t="injector_cap_2_animchar_affect"
@@ -573,8 +606,8 @@ injector_boby_2_animchar_affect{
 instant_healing_effect{
   _use:t="replicated_game_effect_with_duration"
   game_effect__timeToDestroy:r=1
-  healing_effect__healAmount:r=50
-  healing_effect__bodypartIdx:i=-1
+  healing_effect__healAmount:r=75
+  healing_effect__bodypartName:t=""
   healing_effect__effectVisualStrength:r=5
 }
 
@@ -632,7 +665,6 @@ teammate_revive_effect{
   teammate_revive__progressVarId:i=-1
   teammate_revive_effect__animcharTemplate:t="cortical_vault_revive_animchar_affect"
 
-  "game_effect__destroyWithOwner:tag"{}
   "state__interruptInteractable:tag"{}
   "state__interruptGather:tag"{}
   "state__disableStoneThrow:tag"{}
@@ -765,6 +797,7 @@ cortical_vault_revive_phys_subtemplate{
 
 cortical_vault_portal{
   _use:t="extraction_sequence_portal_effect"
+  _use:t="sound_effect"
   portal__wishScale:r=0
   portal__curScale:r=0
   portal__scalingSpd:r=0
@@ -783,6 +816,11 @@ cortical_vault_portal{
   }
 
   "extraction_visual__ownerEid:eid"{}
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="am/objects/teleport/teleport_loop_2"
+  }
+
   "hero_spawn_portal__openEffects:object"{}
   "hero_spawn_portal__effects:list<eid>"{}
   "hero_spawn_portal:tag"{}
@@ -801,4 +839,25 @@ cortical_vault_scale_animation{
 
 teammate_revive_client{
   "teammate_revive_client:tag"{}
+}
+
+teammate_revive_effect_simple{
+  _use:t="replicated_game_effect"
+  teammate_revive_effect_simple__reviveOffset:p3=2, 1, 0
+  cortical_vault_revive__traceParams:p3=0.35, 0, 1.6
+
+  "state__interruptInteractable:tag"{}
+  "state__interruptGather:tag"{}
+  "state__disableStoneThrow:tag"{}
+  "locked_weapon__grenadeThrowing:tag"{}
+  "locked_inventory__lockPickup:tag"{}
+  "locked_view__lockLootVisibility:tag"{}
+  "locked_use_object__lockStationaryGunUse:tag"{}
+  "locked_use_object__lockDoorUse:tag"{}
+  "game_effect__disableFlags:list<t>"{
+    item:t="human_net_phys__canSprint"
+  }
+
+  "teammate_revive_effect__playerItemOwner:eid"{}
+  "teammate_revive_effect_simple:tag"{}
 }

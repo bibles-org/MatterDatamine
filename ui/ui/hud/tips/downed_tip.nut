@@ -1,18 +1,19 @@
+from "%ui/fonts_style.nut" import body_txt
+import "string" as string
+
 from "%ui/ui_library.nut" import *
 
-let {body_txt} = require("%ui/fonts_style.nut")
-let {isDowned, isAlive} = require("%ui/hud/state/health_state.nut")
-let {isSpectator} = require("%ui/hud/state/spectator_state.nut")
-let {downedEndTime} = require("%ui/hud/state/downed_state.nut")
-let {medkitEndTime, medkitStartTime} = require("%ui/hud/state/entity_use_state.nut")
-let {curTime} = require("%ui/hud/state/time_state.nut")
+let { isDowned, isAlive } = require("%ui/hud/state/health_state.nut")
+let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
+let { downedEndTime } = require("%ui/hud/state/downed_state.nut")
+let { medkitEndTime, medkitStartTime } = require("%ui/hud/state/entity_use_state.nut")
+let { curTime } = require("%ui/hud/state/time_state.nut")
 let { tipBack } = require("%ui/hud/tips/tipComponent.nut")
-let string = require("string")
 
 let color0 = Color(200,200,40,110)
 let color1 = Color(200,200,200,180)
 let overlapTipWithHeal = 1.0
-let isInDowned = Computed(@() isDowned.value && isAlive.value)
+let isInDowned = Computed(@() isDowned.get() && isAlive.get())
 
 let animColor = [
   { prop=AnimProp.color, from=color0, to=color1, duration=1.0, play=true, loop=true, easing=CosineFull }
@@ -27,8 +28,8 @@ let tip = tipBack.__merge({
   children = [
     @(){
       rendObj = ROBJ_TEXT
-      text = loc(isSpectator.value ? "tips/spectator_downed_tip" : "tips/downed_tip", {
-        timeLeft = string.format("%d", max(downedEndTime.value - curTime.value, 0.0))
+      text = loc(isSpectator.get() ? "tips/spectator_downed_tip" : "tips/downed_tip", {
+        timeLeft = string.format("%d", max(downedEndTime.get() - curTime.get(), 0.0))
       })
       color = color0
       transform = pivot
@@ -39,18 +40,17 @@ let tip = tipBack.__merge({
 })
 function mkTip(){
   let needTip = Computed(@()
-      (downedEndTime.value > curTime.value) && ((medkitEndTime.value < curTime.value) || (medkitStartTime.value + overlapTipWithHeal > curTime.value)))
+      (downedEndTime.get() > curTime.get()) && ((medkitEndTime.get() < curTime.get()) || (medkitStartTime.get() + overlapTipWithHeal > curTime.get())))
   return @(){
     watch = needTip
     size = SIZE_TO_CONTENT
-    children = needTip.value ? tip : null
+    children = needTip.get() ? tip : null
   }
 }
 return function() {
   return {
     watch = isInDowned
     size = SIZE_TO_CONTENT
-    children = !isInDowned.value ? null : mkTip()
+    children = !isInDowned.get() ? null : mkTip()
   }
 }
-

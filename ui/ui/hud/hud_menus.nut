@@ -1,5 +1,12 @@
+from "%ui/hud/hud_menus_state.nut" import convertMenuId, replaceCurrentHudMenus, openMenuInteractive, closeMenu, toggleMenu
+from "%ui/mainMenu/notificationMark.nut" import mkNotificationMark
+from "%ui/hud/am_hud_menus.nut" import playerBaseHudMenus, battleHudMenus
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/helpers/gradients.nut" import mkSmoothBWGradientY
+from "%ui/components/colors.nut" import HUD_TIPS_HOTKEY_FG, BtnBdSelected, BtnBdHover
+from "%ui/mainMenu/dropDownMenu.nut" import mkDropDownMenuBtn, mkDropDownMenu
+from "%ui/mainMenu/player_profile_widget.nut" import profileWidget
 from "%ui/ui_library.nut" import *
-
 from "%ui/components/uiHotkeysHint.nut" import mkHotkey
 from "%ui/hud/tips/tipComponent.nut" import tipCmp
 import "%ui/mainMenu/contacts/mkContactsButton.nut" as mkContactsButton
@@ -7,33 +14,19 @@ from "%ui/mainMenu/contacts/mkSquadWidget.nut" import squadWidget
 import "%ui/mainMenu/mailboxButton.ui.nut" as mailboxButton
 import "%ui/hud/state/notes.nut" as notesState
 
-
-let { mkNotificationMark } = require("%ui/mainMenu/notificationMark.nut")
 let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
 let { safeAreaHorPadding, safeAreaVerPadding } = require("%ui/options/safeArea.nut")
-let { playerBaseHudMenus, battleHudMenus, playerBaseHudMenuTabs, battleHudMenuTabs } = require("am_hud_menus.nut")
+let { playerBaseHudMenuTabs, battleHudMenuTabs } = require("%ui/hud/am_hud_menus.nut")
 let { isBurning } = require("%ui/hud/state/burning_state_es.nut")
 let { isAlive } = require("%ui/hud/state/health_state.nut")
 let { showDebriefing } = require("%ui/mainMenu/debriefing/debriefingState.nut")
-let { body_txt } = require("%ui/fonts_style.nut")
-let { mkSmoothBWGradientY } = require("%ui/helpers/gradients.nut")
 let { showCursor } = require("%ui/cursorState.nut")
-let { HUD_TIPS_HOTKEY_FG, BtnBdSelected, BtnBdHover } = require("%ui/components/colors.nut")
 let { isContactsVisible } = require("%ui/mainMenu/contacts/contactsListWnd.nut")
-let { mkDropDownMenuBtn, mkDropDownMenu } = require("%ui/mainMenu/dropDownMenu.nut")
 let { currencyPanel } = require("%ui/mainMenu/currencyPanel.nut")
-let { profileWidget } = require("%ui/mainMenu/player_profile_widget.nut")
-let { isGamepad } = require("%ui/control/active_controls.nut")
 let hideHud = require("%ui/hud/state/hide_hud.nut")
 let { isNexus } = require("%ui/hud/state/nexus_mode_state.nut")
-let { currentMenuId,
-      convertMenuId,
-      replaceCurrentHudMenus,
-      openMenuInteractive,
-      closeMenu,
-      toggleMenu,
-      areHudMenusOpened } = require("%ui/hud/hud_menus_state.nut")
+let { currentMenuId, areHudMenusOpened } = require("%ui/hud/hud_menus_state.nut")
 let { BaseDebriefingMenuId } = require("%ui/mainMenu/baseDebriefing.nut")
 let { isOnboarding, onboardingStateMachineCurrentStateEid, onboardingStateMachineBaseKeyInsertionStateEid } = require("%ui/hud/state/onboarding_state.nut")
 let { inShootingRange } = require("%ui/hud/state/shooting_range_state.nut")
@@ -54,11 +47,11 @@ function mkMenuEventHandlers(menu) {
   }
 }
 
-let underline = freeze({rendObj = ROBJ_SOLID color = BtnBdSelected size = [flex(), hdpx(5)] vplace = ALIGN_BOTTOM})
-let empty = freeze({size = [flex(), hdpx(5)] vplace = ALIGN_BOTTOM})
-let prevUnderline = freeze({rendObj = ROBJ_SOLID color = BtnBdHover size = [flex(), hdpx(5)] vplace = ALIGN_BOTTOM})
+let underline = freeze({rendObj = ROBJ_SOLID color = BtnBdSelected size = static [flex(), hdpx(5)] vplace = ALIGN_BOTTOM})
+let empty = freeze({size = static [flex(), hdpx(5)] vplace = ALIGN_BOTTOM})
+let prevUnderline = freeze({rendObj = ROBJ_SOLID color = BtnBdHover size = static [flex(), hdpx(5)] vplace = ALIGN_BOTTOM})
 
-let mkHotkeyComp = @(hotkey, action) mkHotkey(hotkey, action, { padding = [hdpx(8), hdpx(5), hdpx(15), hdpx(5)] })
+let mkHotkeyComp = @(hotkey, action) mkHotkey(hotkey, action, { padding = static [hdpx(8), hdpx(5), hdpx(15), hdpx(5)] })
 let hotkeyPlaceholder = function(hotkey) {
   let size = calc_comp_size(mkHotkeyComp(hotkey, null))
   return {
@@ -104,21 +97,21 @@ updatePlayerBaseAvailable()
 battleHudMenuTabs.each(function(id) {
   let isAvailable = battleHudMenus?[id]?.isAvailable
   if (isAvailable != null)
-    isAvailable.subscribe(updateBattleAvailable)
+    isAvailable.subscribe_with_nasty_disregard_of_frp_update(updateBattleAvailable)
 })
 
 playerBaseHudMenuTabs.each(function(id) {
   let isAvailable = playerBaseHudMenus?[id]?.isAvailable
   if (isAvailable != null)
-    isAvailable.subscribe(updatePlayerBaseAvailable)
+    isAvailable.subscribe_with_nasty_disregard_of_frp_update(updatePlayerBaseAvailable)
 })
 
-isInBattleState.subscribe(function(v) {
+isInBattleState.subscribe_with_nasty_disregard_of_frp_update(function(v) {
   if (!v && convertMenuId(currentMenuId.get())[0] != BaseDebriefingMenuId)
     closeMenu(currentMenuId.get())
 })
 
-inShootingRange.subscribe(@(_) closeMenu(currentMenuId.get()))
+inShootingRange.subscribe_with_nasty_disregard_of_frp_update(@(_) closeMenu(currentMenuId.get()))
 
 let lastTabId = Computed(function(prev) {
   let availableTabs = isInBattleState.get() || inShootingRange.get() ? battleAvailable : playerBaseAvailable
@@ -151,7 +144,7 @@ let openMenuTip = tipCmp({
   animations = []
   style = {
     rendObj = ROBJ_BOX
-    padding = [hdpx(8), hdpx(5), hdpx(15), hdpx(5)]
+    padding = static [hdpx(8), hdpx(5), hdpx(15), hdpx(5)]
     fillColor = Color(0,0,0,0)
   }
 })
@@ -231,7 +224,7 @@ function menusUi() {
             ? underline
             : prevActive ? prevUnderline : empty
         ]
-        sound = const {
+        sound = static {
           click  = "ui_sounds/menu_enter"
           hover  = "ui_sounds/menu_highlight"
         }
@@ -245,30 +238,7 @@ function menusUi() {
     let prevHotkey = showCursor.get() && !notesState.editMode.get() ? mkHotkeyComp("Q | J:LB", prevTab) : hotkeyPlaceholder("Q | J:LB")
     let nextHotkey = showCursor.get() && !notesState.editMode.get() ? mkHotkeyComp("E | J:RB", nextTab) : hotkeyPlaceholder("E | J:RB")
 
-    let activateBtnRect = {r=hdpx(20), b=hdpx(20)}
-    function onAttachActivateBtn(elem){
-      let x = elem.getScreenPosX()
-      let y = elem.getScreenPosY()
-      let height = elem.getContentHeight()
-      let width = elem.getWidth()
-      activateBtnRect.__update({x, y, height, width,
-        r = x + width,
-        b = y + height
-      })
-    }
-
-    function activateBtn(){
-      return {
-        onAttach = onAttachActivateBtn
-        watch = areHudMenusOpened
-        vplace = ALIGN_CENTER
-        hotkeys = !areHudMenusOpened.get()
-          ? null
-          : [["J:Start", { action = @() mkDropDownMenu()({targetRect = activateBtnRect}) }]]
-      }
-    }
-
-    let children = [!areHudMenusOpened.get() ? openMenuTip : const {size = openMenuTipSize}]
+    let children = [!areHudMenusOpened.get() ? openMenuTip : static {size = openMenuTipSize}]
     if (buttons.len() != 0)
       if (buttons.len() > 1)
         children
@@ -287,17 +257,17 @@ function menusUi() {
         !isOnboarding.get() ? [mailboxButton, contactsButton] : []
       )
     }
-    serviceButtons.append(mkDropDownMenuBtn(), activateBtn)
+    serviceButtons.append(mkDropDownMenuBtn())
     children.append({size = flex()}).extend(serviceButtons)
 
     let cid = convertMenuId(currentMenuId.get())[0]
     let showTopBar = ( cid != null && hudMenuTabs.contains(cid)) || !isInBattle
     return {
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       gap = hdpx(12)
       flow = FLOW_HORIZONTAL
       valign = ALIGN_CENTER
-      padding = [fsh(1), fsh(2)]
+      padding = static [fsh(1), fsh(2)]
       watch = [currentMenuId, showCursor, isInBattleState, notesState.editMode, availableTabs, isOnboarding]
       children = showTopBar ? children : null
     }
@@ -324,8 +294,8 @@ function menusUi() {
     return {
       children = squadWidget
       pos = [0, fsh(5)]
-      padding = [0, fsh(3)]
-      size = [flex(), SIZE_TO_CONTENT]
+      padding = static [0, fsh(3)]
+      size = FLEX_H
     }
   }
   let content = @() {
@@ -335,24 +305,14 @@ function menusUi() {
     valign = ALIGN_CENTER
     children = hudMenus?[convertMenuId(currentMenuId.get())[0]].getContent()
   }
-  let inventoryTip = tipCmp({
-    text = loc("controls/HUD.Inventory")
-    inputId = "HUD.Inventory"
-    textColor = HUD_TIPS_HOTKEY_FG
-    style = const {
-      rendObj=null
-      vplace = ALIGN_BOTTOM
-      padding = [sh(2), sh(5)]
-    }
-  })
 
   let showDropDownMenu = function() {
     mkDropDownMenu()({targetRect = {r=hdpx(20), b=hdpx(20)}})
   }
-
   return {
     watch = [isNexus, hideHud, isSpectator, isBurning, isAlive, isInBattleState, inShootingRange]
     size = flex()
+    key = needMenu
     eventHandlers = needMenu ? mkAllEventHandlers(hudMenus) : null
     children = needMenu ? [
       @() {
@@ -362,7 +322,6 @@ function menusUi() {
         children = [
           content
           squad
-          !isInBattle && isGamepad.get() ? inventoryTip : null
         ]
       }
       topBar

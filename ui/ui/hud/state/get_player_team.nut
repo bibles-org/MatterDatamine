@@ -1,5 +1,6 @@
+from "team" import TEAM_UNASSIGNED
+
 import "%dngscripts/ecs.nut" as ecs
-let { TEAM_UNASSIGNED } = require("team")
 
 let get_player_team_Query = ecs.SqQuery("get_player_team_Query",  {comps_ro = [["team", ecs.TYPE_INT]]})
 function get_player_team(player_eid) {

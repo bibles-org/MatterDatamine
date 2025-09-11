@@ -223,10 +223,7 @@ opel_olympia{
   _use:t="four_seats_vehicle"
   _use:t="simple_damage_model"
   _use:t="vehicle_fuel_use"
-  _use:t="vehicle_seats_effectors"
   _use:t="opel_olympia_vehicle_sound"
-  vehicleType:t="civil_car"
-  vehicleName:t="opel_olympia_38"
   animchar__res:t="pv_opel_olympia_char"
   collres__res:t="pv_opel_olympia_collision"
   vehicle_net_phys__blk:t="gamedata/units/vehicles/opel_olympia_ol38.blk:VehiclePhys"
@@ -290,10 +287,7 @@ gaz_67{
   _use:t="open_seats_vehicle"
   _use:t="simple_damage_model"
   _use:t="vehicle_fuel_use"
-  _use:t="vehicle_seats_effectors"
   _use:t="gaz_67_vehicle_sound"
-  vehicleType:t="offroad_car"
-  vehicleName:t="gaz_67"
   animchar__res:t="pv_gaz_67_char"
   collres__res:t="pv_gaz_67_collision"
   vehicle_net_phys__blk:t="gamedata/units/vehicles/gaz_67.blk:VehiclePhys"
@@ -341,10 +335,7 @@ vw_beetle{
   _use:t="four_seats_vehicle"
   _use:t="simple_damage_model"
   _use:t="vehicle_fuel_use"
-  _use:t="vehicle_seats_effectors"
   _use:t="vw_beetle_vehicle_sound"
-  vehicleType:t="civil_car"
-  vehicleName:t="vw_beetle"
   animchar__res:t="pv_vw_beetle_char"
   collres__res:t="pv_vw_beetle_collision"
   vehicle_net_phys__blk:t="gamedata/units/vehicles/vw_beetle.blk:VehiclePhys"
@@ -404,10 +395,6 @@ vw_beetle{
   }
 }
 
-vehicle_seats_effectors{
-  "vehicle_seats__effectors:array"{}
-}
-
 vehicle_lights{
   _use:t="dynmat_params_base"
   vehicle__stopLightsState:b=no
@@ -436,14 +423,11 @@ dune_buggy{
   _use:t="base_civil_fire_ready_vehicle"
   _use:t="five_seats_vehicle"
   _use:t="simple_damage_model"
-  _use:t="vehicle_seats_effectors"
   _use:t="vehicle_lights"
   _use:t="vehicle_fuel_use"
   _use:t="dune_buggy_vehicle_sound"
   _use:t="vehicle_anim_speedometer"
   camera__offset:p3=0, 0, -3
-  vehicleType:t="offroad_car"
-  vehicleName:t="dune_buggy"
   animchar__res:t="dune_buggy_char"
   collres__res:t="dune_buggy_collision"
   vehicle_net_phys__blk:t="gamedata/units/vehicles/dune_buggy.blk:VehiclePhys"
@@ -510,16 +494,12 @@ ural_flatbed{
   _use:t="base_civil_fire_ready_vehicle"
   _use:t="three_seats_vehicle"
   _use:t="simple_damage_model"
-  _use:t="vehicle_seats_effectors"
   _use:t="vehicle_lights"
   _use:t="vehicle_fuel_use"
   _use:t="ural_vehicle_sound"
   _use:t="vehicle_anim_speedometer"
   _use:t="vehicle_anim_rpm_meter"
   _use:t="vehicle_anim_fuel_meter"
-  cdeviceName:t=""
-  vehicleType:t="civil_car"
-  vehicleName:t="ural"
   animchar__res:t="ural_flatbed_char"
   collres__res:t="ural_flatbed_collision"
   vehicle_net_phys__blk:t="gamedata/units/vehicles/ural.blk:VehiclePhys"
@@ -529,8 +509,6 @@ ural_flatbed{
   vehicle_anim__steeringAnimVarId:i=-1
   vehicle_anim__steeringMult:r=60
   vehicle_seats__restrictToTeam:i=-1
-  camera__offset:p3=0, -1, -6
-  camera__firstPersonOffset:p3=-0.05, -0.08, 0
   vehicle__fuel:r=90
   vehicle__fuelUse:r=0.2
   vehicle__maxFuel:r=300
@@ -613,16 +591,12 @@ ford_f250_superduty{
   _use:t="base_civil_fire_ready_vehicle"
   _use:t="two_seats_vehicle"
   _use:t="simple_damage_model"
-  _use:t="vehicle_seats_effectors"
   _use:t="vehicle_lights"
   _use:t="vehicle_fuel_use"
   _use:t="ford_f250_vehicle_sound"
   _use:t="vehicle_anim_speedometer"
   _use:t="vehicle_anim_rpm_meter"
   _use:t="vehicle_anim_fuel_meter"
-  cdeviceName:t=""
-  vehicleType:t="civil_car"
-  vehicleName:t="ford_f250_superduty"
   animchar__res:t="ford_f250_char"
   collres__res:t="ford_f250_collision"
   vehicle_net_phys__blk:t="gamedata/units/vehicles/ford_f250_superduty.blk:VehiclePhys"
@@ -681,39 +655,58 @@ ford_f250_superduty{
   }
 }
 
-maxxpro_armored_car{
+quadro_bike_bombardier_800r_vehicle{
   _use:t="base_civil_fire_ready_vehicle"
-  _use:t="maxxpro_seats_vehicle"
   _use:t="simple_damage_model"
-  _use:t="vehicle_seats_effectors"
-  _use:t="vehicle_lights"
   _use:t="vehicle_fuel_use"
-  _use:t="maxxpro_armored_car_vehicle_sound"
+  _use:t="dune_buggy_vehicle_sound"
   _use:t="vehicle_anim_speedometer"
-  _use:t="vehicle_anim_rpm_meter"
-  _use:t="vehicle_anim_fuel_meter"
-  cdeviceName:t=""
-  vehicleType:t="civil_car"
-  vehicleName:t="maxxpro_armored_car"
-  animchar__res:t="maxxpro_armored_car_char"
-  collres__res:t="maxxpro_armored_car_collision"
-  vehicle_net_phys__blk:t="gamedata/units/vehicles/maxxpro_armored_car.blk:VehiclePhys"
-  damage_model__blk:t="gamedata/units/vehicles/maxxpro_armored_car.blk"
-  vehicle_seats__enumVarName:t="opel_blitz_omnibus"
+  camera__offset:p3=0, 0, -3
+  animchar__res:t="bombardier_outlander_800r_char"
+  collres__res:t="bombardier_outlander_800r_collision"
+  vehicle_net_phys__blk:t="gamedata/units/vehicles/quad_bike.blk:VehiclePhys"
+  damage_model__blk:t="gamedata/units/vehicles/quad_bike.blk"
+  vehicle_seats__enumVarName:t="dune_buggy"
   vehicle_anim__steeringAnimVarId:i=-1
-  vehicle_anim__steeringMult:r=60
-  vehicle_seats__restrictToTeam:i=-1
-  camera__offset:p3=0, -1, -6
-  camera__firstPersonOffset:p3=-0.03, 0, -0.05
-  vehicle__fuel:r=90
-  vehicle__fuelUse:r=0.2
-  vehicle__maxFuel:r=300
-  collision_damage__forwardDamageToHumanMult:r=9
+  vehicle_anim__steeringMult:r=30
+  vehicle__fuel:r=50
+  vehicle__fuelUse:r=0.05
+  vehicle__maxFuel:r=50
 
   anim_phys{}
-  _group{
-    _tags:t="render"
-    vehicle_anim__speedometerMinMax:p2=0, 120
-    vehicle_anim__rpmMeterMinMax:p2=0, 30
+  "disableDMParts:list<t>"{}
+  "vehicle_seats_can_acquire_controls:list<i>"{}
+  "vehicle_seats__canAcquireControls:shared:object"{
+    "driver:object"{
+      movement:b=yes
+    }
   }
+
+  "vehicle_seats__seats:shared:array"{
+    "seats:object"{
+      name:t="driver"
+      locName:t="vehicle_seats/car_driver"
+      seatOwnsEntityControl:b=yes
+      attachNode:t="char_driver_pivot"
+      entranceNode:t="char_driver_landing"
+      attachTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+      seatComponent:t="isDriver"
+      nextSeat:t="driver"
+      canPlaceManually:b=yes
+      seatEnum:t="left_seat"
+
+      "effectors:object"{
+        l.hand:t="ik_hand_left"
+        r.hand:t="ik_hand_right"
+        l.foot:t="ik_foot_left"
+        r.foot:t="ik_foot_right"
+      }
+    }
+  }
+}
+
+quadro_bike_bombardier_800r_bonecrusher_vehicle{
+  _use:t="quadro_bike_bombardier_800r_vehicle"
+  animchar__res:t="bombardier_outlander_800r_a_char"
+  collres__res:t="bombardier_outlander_800r_a_collision"
 }

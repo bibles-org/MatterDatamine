@@ -5,12 +5,26 @@ suit_preview_presentation_parameters_base{
   iconOffsX:r=-0.15
   iconOffsY:r=-0.8
   iconScale:r=4
-  sunColor:c=255, 80, 0, 255
-  lightZenith:r=100
-  lightAzimuth:r=90
   presentation_idle_type:r=0
   presentation_idle_frame:r=0
   animation:t="presentation_idle_parametric"
+  enviExposure:r=20
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=3
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=3
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
 }
 
 suit_full_body_presentation_parameters_base{
@@ -20,12 +34,26 @@ suit_full_body_presentation_parameters_base{
   iconOffsX:r=0
   iconOffsY:r=0
   iconScale:r=1
-  sunColor:c=255, 80, 20, 1
-  lightZenith:r=-20
-  lightAzimuth:r=140
   presentation_idle_type:r=0
   presentation_idle_frame:r=0
   animation:t="presentation_idle_parametric"
+  enviExposure:r=1
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=3
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=3
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
 }
 
 suit_militant_light_a_full_body_presentation{
@@ -190,17 +218,444 @@ modern_pmc_suit_3_full_body_presentation{
   _use:t="suit_full_body_presentation_parameters_base"
 }
 
-suit_militant_light_a_preview_presentation{
+sm_jackal_item_preview_presentation{
   _use:t="suit_preview_presentation_parameters_base"
   presentation_idle_type:r=5
-  presentation_idle_frame:r=0.5
-  iconOffsX:r=-0.01
+  presentation_idle_frame:r=0.8
+  iconOffsX:r=0.3
   iconOffsY:r=-0.5
-  lightZenith:r=-10
-  lightAzimuth:r=135
-  iconYaw:r=10
+  iconYaw:r=-70
+  iconRoll:r=-1
+  iconScale:r=2.5
+  enviExposure:r=40
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=3
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=4
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
+}
+
+sm_rebel_item_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=5
+  presentation_idle_frame:r=0
+  iconOffsX:r=0.2
+  iconOffsY:r=-0.55
+  iconYaw:r=-50
+  iconRoll:r=-1
+  iconScale:r=3.5
+  enviExposure:r=20
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=5
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=3
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
+}
+
+sm_reaper_item_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=2
+  presentation_idle_frame:r=1
+  iconOffsX:r=0.1
+  iconOffsY:r=-0.5
+  iconYaw:r=-50
+  iconRoll:r=-1
+  iconScale:r=3
+  enviExposure:r=10
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=10
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=2
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
+}
+
+sm_psychologist_item_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=6
+  presentation_idle_frame:r=0.1
+  iconOffsX:r=0.4
+  iconOffsY:r=-0.58
+  iconYaw:r=-50
+  iconRoll:r=-1
+  iconScale:r=3.3
+  enviExposure:r=40
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=1
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=1
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
+}
+
+sm_phantom_item_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=3
+  presentation_idle_frame:r=0.1
+  iconOffsX:r=0.1
+  iconOffsY:r=-0.6
+  iconYaw:r=-50
+  iconRoll:r=10
+  iconScale:r=3
+  enviExposure:r=30
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=1
+      zenith:r=0
+      azimuth:r=110
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=2
+      zenith:r=0
+      azimuth:r=-45
+    }
+  }
+}
+
+sm_liquidator_item_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=5
+  presentation_idle_frame:r=0.7
+  iconOffsX:r=-0.19
+  iconOffsY:r=-0.5
+  iconYaw:r=50
   iconRoll:r=-5
-  iconScale:r=2.8
+  iconScale:r=3.3
+  enviExposure:r=20
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=3
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=3
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
+}
+
+sm_spider_item_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=3
+  presentation_idle_frame:r=0.7
+  iconOffsX:r=-0
+  iconOffsY:r=-0.62
+  iconYaw:r=0
+  iconRoll:r=5
+  iconScale:r=3.3
+  enviExposure:r=30
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=5
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=2
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
+}
+
+sm_biker_item_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=2
+  presentation_idle_frame:r=0.25
+  iconOffsX:r=-0.1
+  iconOffsY:r=-0.65
+  iconYaw:r=40
+  iconScale:r=3
+  enviExposure:r=30
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=3
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=3
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
+}
+
+sm_mirage_item_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=5
+  presentation_idle_frame:r=0.2
+  iconOffsX:r=0
+  iconOffsY:r=-0.55
+  iconYaw:r=10
+  iconRoll:r=-1
+  iconScale:r=3.3
+  enviExposure:r=20
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=3
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=4
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
+}
+
+sm_hunter_item_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=5
+  presentation_idle_frame:r=0.7
+  iconOffsX:r=-0.1
+  iconOffsY:r=-0.5
+  iconYaw:r=60
+  iconRoll:r=-5
+  iconScale:r=3.5
+  enviExposure:r=40
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=3
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=4
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
+}
+
+sm_beast_item_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=5
+  presentation_idle_frame:r=0.8
+  iconOffsX:r=0.05
+  iconOffsY:r=-0.55
+  iconYaw:r=-15
+  iconRoll:r=-1
+  iconScale:r=3
+  enviExposure:r=40
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=5
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=4
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
+}
+
+sm_master_item_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=4
+  presentation_idle_frame:r=0.1
+  iconOffsX:r=0.2
+  iconOffsY:r=-0.48
+  iconYaw:r=-30
+  iconRoll:r=-1
+  iconScale:r=3.7
+  enviExposure:r=40
+
+  "lights:array"{
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=2
+      zenith:r=10
+      azimuth:r=0
+    }
+  }
+}
+
+suit_militant_female_pulse_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=1
+  presentation_idle_frame:r=0.2
+  iconOffsX:r=0.16
+  iconOffsY:r=-0.56
+  iconYaw:r=-40
+  iconRoll:r=0
+  iconScale:r=3.3
+  enviExposure:r=20
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=3
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=3
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
+}
+
+suit_militant_female_enforcer_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=1
+  presentation_idle_frame:r=0.7
+  iconOffsX:r=-0.4
+  iconOffsY:r=-0.62
+  iconYaw:r=30
+  iconRoll:r=-0.2
+  iconScale:r=3.6
+  enviExposure:r=20
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=3
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=3
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
+}
+
+sm_suit_militant_male_outlaw_item_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=1
+  presentation_idle_frame:r=0.2
+  iconOffsX:r=-0.2
+  iconOffsY:r=-0.55
+  iconYaw:r=20
+  iconRoll:r=-0.1
+  iconScale:r=3.4
+  enviExposure:r=20
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=3
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=3
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
+}
+
+suit_militant_female_light_b_preview_presentation{
+  _use:t="suit_preview_presentation_parameters_base"
+  presentation_idle_type:r=2
+  presentation_idle_frame:r=0.2
+  iconOffsX:r=0.32
+  iconOffsY:r=-0.58
+  iconYaw:r=-30
+  iconRoll:r=0
+  iconScale:r=3.2
+  enviExposure:r=20
+
+  "lights:array"{
+    "light:object"{
+      color:c=200, 225, 255, 1
+      brightness:r=5
+      zenith:r=0
+      azimuth:r=80
+    }
+
+    "light:object"{
+      color:c=255, 222, 170, 1
+      brightness:r=3
+      zenith:r=45
+      azimuth:r=-60
+    }
+  }
 }
 
 suit_militant_light_b_preview_presentation{
@@ -212,8 +667,6 @@ suit_militant_light_b_preview_presentation{
   iconOffsX:r=-0.01
   iconOffsY:r=-0.5
   iconScale:r=3.25
-  lightZenith:r=-5
-  lightAzimuth:r=120
 }
 
 suit_militant_light_b_prem_preview_presentation{
@@ -225,8 +678,6 @@ suit_militant_light_b_prem_preview_presentation{
   iconOffsX:r=0.2
   iconOffsY:r=-0.5
   iconScale:r=3.1
-  lightZenith:r=-5
-  lightAzimuth:r=145
 }
 
 suit_militant_light_c_preview_presentation{
@@ -238,8 +689,6 @@ suit_militant_light_c_preview_presentation{
   iconOffsX:r=-0.12
   iconOffsY:r=-0.4
   iconScale:r=2.3
-  lightZenith:r=-5
-  lightAzimuth:r=125
 }
 
 suit_militant_light_c_prem_preview_presentation{
@@ -251,8 +700,6 @@ suit_militant_light_c_prem_preview_presentation{
   iconOffsX:r=0.1
   iconOffsY:r=-0.4
   iconScale:r=2.1
-  lightZenith:r=-5
-  lightAzimuth:r=125
 }
 
 suit_militant_light_d_preview_presentation{
@@ -264,8 +711,6 @@ suit_militant_light_d_preview_presentation{
   iconScale:r=3.9
   iconYaw:r=65
   iconRoll:r=-7
-  lightZenith:r=5
-  lightAzimuth:r=125
 }
 
 suit_militant_light_e_preview_presentation{
@@ -277,8 +722,6 @@ suit_militant_light_e_preview_presentation{
   iconScale:r=2.7
   iconYaw:r=30
   iconRoll:r=15
-  lightZenith:r=0
-  lightAzimuth:r=115
 }
 
 suit_militant_light_f_preview_presentation{
@@ -289,8 +732,6 @@ suit_militant_light_f_preview_presentation{
   iconOffsX:r=0.22
   iconScale:r=3
   iconYaw:r=-10
-  lightZenith:r=0
-  lightAzimuth:r=125
 }
 
 suit_militant_light_i_preview_presentation{
@@ -302,8 +743,6 @@ suit_militant_light_i_preview_presentation{
   iconScale:r=2.4
   iconYaw:r=5
   iconRoll:r=10
-  lightZenith:r=-5
-  lightAzimuth:r=130
 }
 
 suit_militant_heavy_a_preview_presentation{
@@ -315,8 +754,6 @@ suit_militant_heavy_a_preview_presentation{
   iconScale:r=2.5
   iconYaw:r=10
   iconRoll:r=5
-  lightZenith:r=-5
-  lightAzimuth:r=125
 }
 
 suit_militant_heavy_b_preview_presentation{
@@ -327,8 +764,6 @@ suit_militant_heavy_b_preview_presentation{
   iconOffsX:r=0.2
   iconScale:r=1.9
   iconYaw:r=-30
-  lightZenith:r=-5
-  lightAzimuth:r=125
 }
 
 suit_militant_heavy_c_preview_presentation{
@@ -339,8 +774,6 @@ suit_militant_heavy_c_preview_presentation{
   iconOffsX:r=0.23
   iconScale:r=1.8
   iconYaw:r=-30
-  lightZenith:r=-5
-  lightAzimuth:r=125
 }
 
 suit_militant_female_light_a_preview_presentation{
@@ -352,21 +785,6 @@ suit_militant_female_light_a_preview_presentation{
   iconScale:r=2.45
   iconYaw:r=-35
   iconRoll:r=5
-  lightZenith:r=-5
-  lightAzimuth:r=135
-}
-
-suit_militant_female_light_b_preview_presentation{
-  _use:t="suit_preview_presentation_parameters_base"
-  presentation_idle_type:r=3
-  presentation_idle_frame:r=0.6
-  iconOffsY:r=-0.62
-  iconOffsX:r=0.23
-  iconScale:r=2.4
-  iconYaw:r=-50
-  iconRoll:r=15
-  lightZenith:r=5
-  lightAzimuth:r=130
 }
 
 suit_militant_female_light_c_preview_presentation{
@@ -378,8 +796,6 @@ suit_militant_female_light_c_preview_presentation{
   iconScale:r=2.55
   iconYaw:r=-20
   iconRoll:r=-10
-  lightZenith:r=0
-  lightAzimuth:r=120
 }
 
 suit_militant_female_heavy_a_preview_presentation{
@@ -390,8 +806,6 @@ suit_militant_female_heavy_a_preview_presentation{
   iconOffsX:r=0.25
   iconScale:r=2.3
   iconYaw:r=-45
-  lightZenith:r=0
-  lightAzimuth:r=120
 }
 
 native_sector_militant_suit_1_preview_presentation{

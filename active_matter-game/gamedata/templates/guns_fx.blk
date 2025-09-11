@@ -178,6 +178,16 @@ global_hit_fx_info{
             penetrationFx:t="hit_blood_entry_black_effect"
           }
 
+          "mimicBossFlesh:object"{
+            fx:t="hit_blood_entry_black_huge_effect"
+            penetrationFx:t="hit_blood_entry_black_huge_effect"
+          }
+
+          "poltergeistFlesh:object"{
+            fx:t=""
+            penetrationFx:t=""
+          }
+
           "flowermanFlesh:object"{
             fx:t="hit_blood_entry_flower_effect"
             penetrationFx:t="hit_blood_entry_flower_effect"
@@ -301,6 +311,16 @@ global_hit_fx_info{
           "invisibleManFlesh:object"{
             fx:t="hit_blood_entry_black_effect"
             penetrationFx:t="hit_blood_entry_black_effect"
+          }
+
+          "mimicBossFlesh:object"{
+            fx:t="hit_blood_entry_black_huge_effect"
+            penetrationFx:t="hit_blood_entry_black_huge_effect"
+          }
+
+          "poltergeistFlesh:object"{
+            fx:t=""
+            penetrationFx:t=""
           }
 
           "flowermanFlesh:object"{
@@ -428,6 +448,16 @@ global_hit_fx_info{
             penetrationFx:t="hit_blood_entry_black_effect"
           }
 
+          "mimicBossFlesh:object"{
+            fx:t="hit_blood_entry_black_huge_effect"
+            penetrationFx:t="hit_blood_entry_black_huge_effect"
+          }
+
+          "poltergeistFlesh:object"{
+            fx:t=""
+            penetrationFx:t=""
+          }
+
           "flowermanFlesh:object"{
             fx:t="hit_blood_entry_flower_effect"
             penetrationFx:t="hit_blood_entry_flower_effect"
@@ -551,6 +581,16 @@ global_hit_fx_info{
           "invisibleManFlesh:object"{
             fx:t="hit_blood_entry_black_effect"
             penetrationFx:t="hit_blood_entry_black_effect"
+          }
+
+          "mimicBossFlesh:object"{
+            fx:t="hit_blood_entry_black_huge_effect"
+            penetrationFx:t="hit_blood_entry_black_huge_effect"
+          }
+
+          "poltergeistFlesh:object"{
+            fx:t=""
+            penetrationFx:t=""
           }
 
           "flowermanFlesh:object"{
@@ -2101,6 +2141,13 @@ hit_effect_group_big{
   gun_hit_fx__fleshEffectCaliberGroup:r=12
 }
 
+hit_effect_group_100_150{
+  _use:t="hit_effect_flesh_medium"
+  gun_hit_fx__hitEffectGroupName:t="100_150mm_he"
+  gun_hit_fx__hitEffectDescriptor:i=0
+  gun_hit_fx__fleshEffectCaliberGroup:r=120
+}
+
 hit_effect_group_melee{
   _tags:t="render"
   melee_fx__default:t="hit_melee_wood_effect"
@@ -2117,6 +2164,8 @@ hit_effect_group_melee{
     glass:t="hit_basic_glass_effect"
     ice:t="hit_melee_snow_effect"
     invisibleManFlesh:t="hit_blood_entry_black_effect"
+    mimicBossFlesh:t="hit_blood_entry_black_huge_effect"
+    poltergeistFlesh:t=""
     flowermanFlesh:t="hit_blood_entry_flower_effect"
     metal_grid:t="hit_melee_metal_effect"
     metal:t="hit_melee_metal_effect"

@@ -7,8 +7,16 @@ var
   DAS_PAK_ROOT = "."
 
 let commonMountPointPrefixes <- {
-                                    "danetlibs" => "daNetGameLibs"
-                                }
+  "danetlibs" => "daNetGameLibs",
+  "ecs" => "%dasGameLibs/ecs",
+  "docs" => "%dasGameLibs/docs",
+  "math" => "%dasGameLibs/math",
+  "daFrameGraph" => "%dasGameLibs/daFrameGraph",
+  "daslib" => "%daslib",
+  "imgui" => "%dasImgui",
+  "debug" => "%dngdas/debug",
+  "remote" => "%dngdas/remote"
+}
 
 
 [export]

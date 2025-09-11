@@ -1,18 +1,14 @@
+from "%ui/mainMenu/menus/options/options_lib.nut" import optionSpinner, optionCtor, optionPercentTextSliderCtor, mkDisableableCtor
+from "%ui/voiceChat/voice_settings.nut" import voicePlaybackVolumeUpdate, voiceRecordVolumeUpdate, voiceChatModeUpdate, voiceActivationModeUpdate
+
+from "%ui/sound_state.nut" import soundRecordDeviceUpdate
+
 from "%ui/ui_library.nut" import *
 
-let {
-  optionSpinner, optionCtor, optionPercentTextSliderCtor, mkDisableableCtor
-} = require("options_lib.nut")
 let platform = require("%dngscripts/platform.nut")
-let {
-  voicePlaybackVolume, voicePlaybackVolumeUpdate,
-  voiceRecordVolume, voiceRecordVolumeUpdate,
-  voiceChatMode, voiceChatModeUpdate,
-  voiceActivationMode, voiceActivationModeUpdate,
-  voice_activation_modes, voice_modes
-} = require("%ui/voiceChat/voice_settings.nut")
-let {soundRecordDevicesList, soundRecordDevice, soundRecordDeviceUpdate} = require("%ui/sound_state.nut")
-let {voiceChatEnabled, voiceChatRestricted} = require("%ui/voiceChat/voiceChatGlobalState.nut")
+let { voicePlaybackVolume, voiceRecordVolume, voiceChatMode, voiceActivationMode, voice_activation_modes, voice_modes } = require("%ui/voiceChat/voice_settings.nut")
+let { soundRecordDevicesList, soundRecordDevice } = require("%ui/sound_state.nut")
+let { voiceChatEnabled, voiceChatRestricted } = require("%ui/voiceChat/voiceChatGlobalState.nut")
 
 let optPlaybackVolume = optionCtor({
   name = loc("voicechat/playback_volume")
@@ -22,10 +18,10 @@ let optPlaybackVolume = optionCtor({
   defVal = 1.0
   min = 0 max = 1 unit = 0.05 pageScroll = 0.05 mult = 100
   var = voicePlaybackVolume
-  originalVal = voicePlaybackVolume.value
+  originalVal = voicePlaybackVolume.get()
   setValue = voicePlaybackVolumeUpdate
   restart = false
-  isAvailable = @() voiceChatEnabled.value
+  isAvailable = @() voiceChatEnabled.get()
 })
 
 let optMicVolume = optionCtor({
@@ -36,28 +32,28 @@ let optMicVolume = optionCtor({
   defVal = 1.0
   min = 0 max = 1 unit = 0.05 pageScroll = 0.05 mult = 100
   var = voiceRecordVolume
-  originalVal = voiceRecordVolume.value
+  originalVal = voiceRecordVolume.get()
   setValue = voiceRecordVolumeUpdate
   restart = false
-  isAvailable = @() voiceChatEnabled.value
+  isAvailable = @() voiceChatEnabled.get()
 })
 
 let optMode = optionCtor({
   name = loc("voicechat/mode")
   tab = "VoiceChat"
   widgetCtor = mkDisableableCtor(
-    Computed(@() voiceChatRestricted.value ? loc("voicechat/parental") : null),
+    Computed(@() voiceChatRestricted.get() ? loc("voicechat/parental") : null),
     optionSpinner)
   blkPath = "voice/mode"
-  defVal = voiceChatMode.value
+  defVal = voiceChatMode.get()
   var = voiceChatMode
   setValue = voiceChatModeUpdate
-  originalVal = voiceChatMode.value
+  originalVal = voiceChatMode.get()
   restart = false
   available = voice_modes.keys()
   valToString = @(v) loc($"voicechat/{v}")
   isEqual = @(a,b) a==b
-  isAvailable = @() voiceChatEnabled.value
+  isAvailable = @() voiceChatEnabled.get()
 })
 
 let optActivationMode = optionCtor({
@@ -65,15 +61,15 @@ let optActivationMode = optionCtor({
   tab = "VoiceChat"
   widgetCtor = optionSpinner
   blkPath = "voice/activation_mode"
-  defVal = voiceActivationMode.value
+  defVal = voiceActivationMode.get()
   var = voiceActivationMode
   setValue = voiceActivationModeUpdate
-  originalVal = voiceActivationMode.value
+  originalVal = voiceActivationMode.get()
   restart = false
   available = voice_activation_modes.keys()
   valToString = @(v) loc($"voicechat/{v}")
   isEqual = @(a,b) a==b
-  isAvailable = @() voiceChatEnabled.value && platform.is_pc
+  isAvailable = @() voiceChatEnabled.get() && platform.is_pc
 })
 
 let optRecordDevice = optionCtor({
@@ -81,8 +77,8 @@ let optRecordDevice = optionCtor({
   tab = "VoiceChat"
   widgetCtor = optionSpinner
   blkPath = "sound/record_device"
-  isAvailableWatched = Computed(@() platform.is_pc && voiceChatEnabled.value &&
-                    soundRecordDevicesList.value.len() > 0)
+  isAvailableWatched = Computed(@() platform.is_pc && voiceChatEnabled.get() &&
+                    soundRecordDevicesList.get().len() > 0)
   var = soundRecordDevice
   setValue = soundRecordDeviceUpdate
   available = soundRecordDevicesList

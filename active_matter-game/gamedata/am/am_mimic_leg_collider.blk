@@ -1,0 +1,20 @@
+logCCD:b=no
+addToWorld:b=no
+gravityMult:r=0
+skipUpdateOnSleep:b=no
+sleepUpdateFrequency:i=0
+frictionGround:r=1.5
+physLayer:i=4
+physMask:i=-7
+ignoreCollision:b=yes
+physMat:t="walkRay"
+
+collision{
+  body{
+    capsule{
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+      height:r=1
+      rad:r=0.25
+    }
+  }
+}

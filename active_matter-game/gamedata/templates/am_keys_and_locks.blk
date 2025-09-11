@@ -12,6 +12,13 @@ locked{
   }
 }
 
+hackable_locked{
+  hackable_locked__hackingZoneTemplate:t="hacking_zone"
+
+  "hackable_locked:tag"{}
+  "hackable_locked__hackingZone:eid"{}
+}
+
 locked_door_marker{
   _use:t="editor_box_preview"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
@@ -46,7 +53,7 @@ base_quest_key{
   _use:t="base_consumable_key_item"
   _use:t="item_rarity_rare"
   item__weight:r=0
-  item__volume:r=0
+  item__volume:i=0
 
   "questItemTooltip:tag"{}
   "item__cantBeCorrupted:tag"{}
@@ -62,7 +69,7 @@ base_key_item{
   item__name:t="items/base_key_item"
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.05, 0]]
   item__weight:r=0.02
-  item__volume:r=1
+  item__volume:i=10
   item__iconRoll:r=80
 
   "item__alwaysUseful:tag"{}
@@ -105,7 +112,6 @@ key_hangar_148_item{
 
   "key__scenes:list<t>"{
     scene:t="gamedata/scenes/raid_dalniy_island_military_base_statues.blk"
-    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
   }
 
   "item__cantBeCorrupted:tag"{}
@@ -124,7 +130,6 @@ key_hangar_209_item{
 
   "key__scenes:list<t>"{
     scene:t="gamedata/scenes/raid_dalniy_island_military_base_statues.blk"
-    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
   }
 
   "item__cantBeCorrupted:tag"{}
@@ -142,8 +147,7 @@ key_hangar_84_item{
   }
 
   "key__scenes:list<t>"{
-    scene:t="gamedata/scenes/nexus_scrapyard.blk"
-    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_scrapyard.blk"
   }
 
   "item__cantBeCorrupted:tag"{}
@@ -161,10 +165,8 @@ key_hangar_17_item{
   }
 
   "key__scenes:list<t>"{
-    scene:t="gamedata/scenes/raid_dalniy_island_factory.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_factory_adv.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_factory_hive.blk"
-    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
   }
 
   "item__cantBeCorrupted:tag"{}
@@ -182,10 +184,8 @@ key_hangar_18_item{
   }
 
   "key__scenes:list<t>"{
-    scene:t="gamedata/scenes/raid_dalniy_island_factory.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_factory_adv.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_factory_hive.blk"
-    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
   }
 
   "item__cantBeCorrupted:tag"{}
@@ -204,6 +204,7 @@ key_hangar_29_item{
 
   "key__scenes:list<t>"{
     scene:t="gamedata/scenes/raid_dalniy_island_dogorsk.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_dogorsk_escape.blk"
   }
 
   "item__cantBeCorrupted:tag"{}
@@ -222,6 +223,7 @@ key_hangar_35_item{
 
   "key__scenes:list<t>"{
     scene:t="gamedata/scenes/raid_dalniy_island_dogorsk.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_dogorsk_escape.blk"
   }
 
   "item__cantBeCorrupted:tag"{}
@@ -307,7 +309,6 @@ key_ozernoe_firestation_safe_item{
   }
 
   "key__scenes:list<t>"{
-    scene:t="gamedata/scenes/raid_dalniy_island_ozernoe.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_ozernoe_adv.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_ozernoe_overgrowth.blk"
   }
@@ -327,7 +328,6 @@ key_euclid_armory_1_item{
   "key__scenes:list<t>"{
     scene:t="gamedata/scenes/raid_dalniy_island_military_base.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_military_base_statues.blk"
-    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
   }
 
   "item__cantBeCorrupted:tag"{}
@@ -347,7 +347,6 @@ key_euclid_armory_2_item{
   "key__scenes:list<t>"{
     scene:t="gamedata/scenes/raid_dalniy_island_military_base.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_military_base_statues.blk"
-    scene:t="gamedata/scenes/raid_dalniy_island_euclid.blk"
   }
 
   "item__cantBeCorrupted:tag"{}
@@ -469,7 +468,6 @@ key_shegolskoe_house_item{
   }
 
   "key__scenes:list<t>"{
-    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_adv.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_distortion.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_overgrowth.blk"
@@ -488,7 +486,6 @@ key_shegolskoe_apartment_item{
   }
 
   "key__scenes:list<t>"{
-    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_adv.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_distortion.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_overgrowth.blk"
@@ -509,7 +506,6 @@ key_factory_basement_item{
   }
 
   "key__scenes:list<t>"{
-    scene:t="gamedata/scenes/raid_dalniy_island_factory.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_factory_adv.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_factory_hive.blk"
   }
@@ -529,7 +525,6 @@ key_factory_lab_item{
   }
 
   "key__scenes:list<t>"{
-    scene:t="gamedata/scenes/raid_dalniy_island_factory.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_factory_adv.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_factory_hive.blk"
   }
@@ -566,6 +561,7 @@ key_dogorsk_cinema_storage_item{
 
   "key__scenes:list<t>"{
     scene:t="gamedata/scenes/raid_dalniy_island_dogorsk.blk"
+    scene:t="gamedata/scenes/raid_dalniy_island_dogorsk_escape.blk"
   }
 
   "item__cantBeCorrupted:tag"{}
@@ -666,6 +662,42 @@ key_cargoport_chief_stash_item{
   }
 }
 
+key_dogorsk_escape_exit_item{
+  _use:t="base_quest_key"
+  animchar__res:t="junk_keys_b_char"
+  collres__res:t="junk_keys_b_collision"
+  item__proto:t="key_dogorsk_escape_exit_item"
+  item__name:t="items/key_dogorsk_escape_exit_item"
+  map_object_marker__tag:t="dogorsk_escape_exit_keys"
+  map_object_marker__tooltip:t="items/key_dogorsk_escape_exit_item"
+
+  "key__tags:list<t>"{
+    i:t="dogorsk_escape_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_dalniy_island_dogorsk_escape.blk"
+  }
+}
+
+key_america_xenos_device_item{
+  _use:t="base_quest_key"
+  animchar__res:t="am_keycard_a_char"
+  collres__res:t="am_keycard_a_collision"
+  item__proto:t="key_america_xenos_device_item"
+  item__name:t="items/key_america_xenos_device_item"
+  map_object_marker__tag:t="america_xenos_key_body"
+  map_object_marker__tooltip:t="items/key_america_xenos_device_item"
+
+  "key__tags:list<t>"{
+    i:t="america_xenos_device_lock"
+  }
+
+  "key__scenes:list<t>"{
+    scene:t="gamedata/scenes/raid_america_abandoned_xenos.blk"
+  }
+}
+
 key_shegolskoe_4_attic_item{
   _use:t="base_consumable_key_item"
   animchar__res:t="junk_keys_a_char"
@@ -678,7 +710,6 @@ key_shegolskoe_4_attic_item{
   }
 
   "key__scenes:list<t>"{
-    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_adv.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_distortion.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_overgrowth.blk"
@@ -699,7 +730,6 @@ key_shegolskoe_8_attic_item{
   }
 
   "key__scenes:list<t>"{
-    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_adv.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_distortion.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_overgrowth.blk"
@@ -720,7 +750,6 @@ key_shegolskoe_11_attic_item{
   }
 
   "key__scenes:list<t>"{
-    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_adv.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_distortion.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_overgrowth.blk"
@@ -741,7 +770,6 @@ key_shegolskoe_15_attic_item{
   }
 
   "key__scenes:list<t>"{
-    scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_adv.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_distortion.blk"
     scene:t="gamedata/scenes/raid_dalniy_island_shegolskoe_overgrowth.blk"

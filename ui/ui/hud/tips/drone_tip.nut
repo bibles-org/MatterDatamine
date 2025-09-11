@@ -1,11 +1,12 @@
+from "%ui/fonts_style.nut" import sub_txt, giant_txt
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
+from "%ui/components/commonComponents.nut" import mkTextArea
+from "%ui/components/colors.nut" import RedWarningColor
+
 from "%ui/ui_library.nut" import *
 
-let {sub_txt, giant_txt} = require("%ui/fonts_style.nut")
-let {tipCmp} = require("%ui/hud/tips/tipComponent.nut")
-let {isDroneMode, droneConnectionQuality, droneShowConnectionWarning} = require("%ui/hud/state/drone_state.nut")
-let {mkTextArea} = require("%ui/components/commonComponents.nut")
-let {isSpectator} = require("%ui/hud/state/spectator_state.nut")
-let {RedWarningColor} = require("%ui/components/colors.nut")
+let { isDroneMode, droneConnectionQuality, droneShowConnectionWarning } = require("%ui/hud/state/drone_state.nut")
+let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
 
 let DRONE_TIPS = ["Helicopter.Fly", "Helicopter.Nose", "Helicopter.Roll", "Drone.DropGrenade", "Drone.Leave"]
 let DRONE_LOCALS = ["Helicopter.Fly", "Helicopter.Nose", "Helicopter.Roll", "Drone.DropGrenade", "Drone.Leave"]
@@ -21,7 +22,7 @@ let function prepareTipCmp(key, localeKey) {
 let function prepareConnectionQuality(idx) {
   let height = 40 * idx
   let colors = [Color(255,112,112,200), Color(255,255,112,200), Color(112,255,112,200)]
-  let color = (idx <= droneConnectionQuality.value) ? colors[max(0, droneConnectionQuality.value - 1)] : Color(77,77,77,200)
+  let color = (idx <= droneConnectionQuality.get()) ? colors[max(0, droneConnectionQuality.get() - 1)] : Color(77,77,77,200)
   return {
     rendObj = ROBJ_BOX
     fillColor = color
@@ -31,7 +32,7 @@ let function prepareConnectionQuality(idx) {
 
 let function connectionQuality() {
   let res = { watch = isDroneMode }
-  if (!isDroneMode.value)
+  if (!isDroneMode.get())
     return res
   return {
     watch = [isDroneMode, droneConnectionQuality]
@@ -48,7 +49,7 @@ let function connectionQuality() {
 
 let function droneTip() {
   let res = { watch = [isDroneMode, isSpectator] }
-  if (!isDroneMode.value || isSpectator.value)
+  if (!isDroneMode.get() || isSpectator.get())
     return res
   return {
     watch = [isDroneMode, isSpectator]
@@ -61,7 +62,7 @@ let function droneTip() {
 
 function droneWeakSignalTip() {
   let watch = [isDroneMode, droneShowConnectionWarning]
-  if (!isDroneMode.value || !droneShowConnectionWarning.value)
+  if (!isDroneMode.get() || !droneShowConnectionWarning.get())
     return { watch }
   return {
     watch

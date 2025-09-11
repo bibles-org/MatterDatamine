@@ -3,6 +3,3 @@ require ecs
 
 [cpp_event(unicast)]
 struct OnChangeThermalActivePreset{}
-
-[cpp_event(unicast)]
-struct OnActiveThermalActivePreset{}

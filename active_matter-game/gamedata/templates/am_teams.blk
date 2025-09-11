@@ -27,20 +27,9 @@ am_player_team_for_tests{
   }
 }
 
-am_player_team_for_tests_fa{
-  _use:t="raid_player_team"
-  team__capacity:i=1
-
-  "team__unitTemplates:object"{
-    "am_militant_with_attachable_suit_fa+spawn_sequence_controller+allow_friendly_damage":r=1
-  }
-}
-
 test_hidden_slots{
   human_inventory__showSuitSlot:b=yes
   _tracked:t="human_inventory__showSuitSlot"
-  human_inventory__showCorticalVaultSlot:b=yes
-  _tracked:t="human_inventory__showCorticalVaultSlot"
 
   "test_hidden_slots:tag"{}
 }
@@ -50,7 +39,7 @@ am_player_team_for_test_all{
   team__capacity:i=1
 
   "team__unitTemplates:object"{
-    "am_militant_with_attachable_suit+spawn_sequence_controller_simple+equip_cortical_vault+autorespawn+allow_friendly_damage":r=1
+    "am_militant_with_attachable_suit+spawn_sequence_controller_simple+autorespawn+allow_friendly_damage":r=1
   }
 }
 
@@ -72,7 +61,7 @@ player_base_stash_inventory{
   inventory__name:t="stash"
   profile_server__slotName:t="stash"
   uniqueId:t="0"
-  human_inventory__maxVolume:r=-1
+  human_inventory__maxVolume:i=-1
 
   "human_inventory__alwaysRecognizedItems:tag"{}
   "stash_inventory__heroEid:eid"{}
@@ -131,7 +120,7 @@ am_player_raid_team{
 
   "net__notInInitialScope:tag"{}
   "team__unitTemplates:object"{
-    "am_militant_with_attachable_suit+spawn_sequence_controller+equip_cortical_vault+allow_friendly_damage":r=1
+    "am_militant_with_attachable_suit+spawn_sequence_controller+allow_friendly_damage":r=1
   }
 
   "player_team:tag"{}
@@ -235,12 +224,12 @@ debug_spawn_points{
 
 ribbon_colors{
   _use:t="replicating"
-  ribbonInvalidColor:p4=0.7, 0.7, 0.7, 1
+  ribbon_colors__invalidColor:p4=0.7, 0.7, 0.7, 1
   ribbonNexusEnemyColor:ip2=0, 1
   ribbonNexusAllyColor:ip2=10, 6
-  ribbonInvalidColorName:t="grey"
+  ribbon_colors__invalidColorName:t="grey"
 
-  "ribbonColorsList:list<p4>"{
+  "ribbon_colors__colors:list<p4>"{
     value:p4=0.984, 0.341, 0, 1
     value:p4=1, 0, 0, 1
     value:p4=0.898, 0.2, 0.263, 1
@@ -254,7 +243,7 @@ ribbon_colors{
     value:p4=0.2, 0.173, 0.149, 1
   }
 
-  "ribbonColorsListNames:list<t>"{
+  "ribbon_colors__colorsNames:list<t>"{
     value:t="orange"
     value:t="red"
     value:t="raspberry"
@@ -266,6 +255,15 @@ ribbon_colors{
     value:t="qiwi"
     value:t="green"
     value:t="black"
+  }
+
+  "ribbon_colors__patterns:list<t>"{
+    i:t="iff_crime_tex_d"
+    i:t="iff_danger_tex_d"
+    i:t="iff_houndstooth_tex_d"
+    i:t="iff_skulls_tex_d"
+    i:t="iff_tiger_tex_d"
+    i:t="iff_zebra_tex_d"
   }
 }
 

@@ -6,8 +6,10 @@ timelapse_screener_es{}
 msg_sink_es{}
 net_scope_grid_adder_es{}
 replication_es{}
+player_creation_prepared{}
 before_entity_mods_apply_sync_point{}
 after_entity_mods_apply_sync_point{}
+vehicle_cockpit_slits_init{}
 exhaust_fx_es{}
 track_dirt_fx_es{}
 player_disorientated_es{}
@@ -79,7 +81,6 @@ animchar_before_render_es{}
 spectator_bhv_es{}
 node_cam_input_es{}
 human_optics_deviation_es{}
-hud_minimap_es{}
 camera_view_es{}
 hero_human_pre_use_object_es{}
 hero_human_final_use_object_sync{}
@@ -95,6 +96,7 @@ wreckage_remover_es{}
 human_weap_request_reload_es{}
 camera_set_sync{}
 before_camera_sync{}
+shooter_cam_updated_tm{}
 after_camera_sync{}
 fatal_explosion_fx_check_es{}
 fatal_explosion_fire_check_es{}
@@ -108,3 +110,6 @@ quest_camera_watching_affect_update{}
 server_init_gun_es{}
 human_anim_ragdoll_es{}
 cockpit_change_active_camera_effects{}
+melee_weapon_created{}
+rendinst_inited{}
+gameapp_started{}

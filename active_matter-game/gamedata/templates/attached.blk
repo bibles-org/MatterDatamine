@@ -1,34 +1,21 @@
-node_attached_base{
+node_attached_itm{
   node_attached__nodeId:i=-1
+  node_attached__localTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 
   "node_attached__entity:eid"{}
 }
 
-node_attached_tm_base{
-  node_attached__localTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-}
-
-node_attached_pos_base{
-  node_attached__localPos:p3=0, 0, 0
-}
-
-node_attached_itm{
-  _use:t="node_attached_base"
-  _use:t="node_attached_tm_base"
-}
-
 node_attached_pos{
-  _use:t="node_attached_base"
-  _use:t="node_attached_pos_base"
-}
+  node_attached__nodeId:i=-1
+  node_attached__localPos:p3=0, 0, 0
 
-attached_base{
-  "attached__entity:eid"{}
+  "node_attached__entity:eid"{}
 }
 
 attached_pos{
-  _use:t="attached_base"
   attached__localPos:p3=0, 0, 0
+
+  "attached__entity:eid"{}
 }
 
 composit_spawn{
@@ -65,4 +52,31 @@ rendinst_attach_rotatable{
   rendinst_attach__localTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 
   "rendinst_attach__riexEid:eid"{}
+}
+
+rendinst_attach_door_part{
+  _use:t="hierarchial_entity"
+  ri_extra__name:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "hierarchy_transform__set:tag"{}
+  "rendinst_phys_move__enabled:tag"{}
+  ri_extra{}
+}
+
+sovmod_serial_house_door_kitchen_a_go{
+  _use:t="random_state_r_door"
+  _use:t="metal_rotating_door_sound"
+  _use:t="hierarchial_entity"
+  ri_extra__name:t="sovmod_serial_house_door_kitchen_a_rl_no_handle"
+}
+
+sovmod_serial_house_door_kitchen_a_glass_go{
+  _use:t="rendinst_attach_door_part"
+  ri_extra__name:t="sovmod_serial_house_door_kitchen_a_rl_glass"
+}
+
+sovmod_serial_house_door_handle_go{
+  _use:t="rendinst_attach_door_part"
+  ri_extra__name:t="sovmod_serial_house_door_handle"
 }

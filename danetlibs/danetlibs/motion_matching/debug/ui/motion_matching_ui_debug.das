@@ -1,4 +1,5 @@
 options no_aot
+options persistent_heap
 require ecs
 require DagorImgui
 require danetlibs.motion_matching.debug.modules.mm_ui_common

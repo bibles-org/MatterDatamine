@@ -1,4 +1,4 @@
-require app
+require app // get_sync_time
 require ecs
 require ecs.safe
 require ecs.common
@@ -43,10 +43,8 @@ def random_direction_in_sphere(axis_dir : float3; theta_range : float2 = float2(
   var sin_phi = 0.0
   var cos_phi = 0.0
   sincos(phi, sin_phi, cos_phi)
-  let theta = rnd_float(theta_range.x, theta_range.y)
-  var sin_theta = 0.0
-  var cos_theta = 0.0
-  sincos(theta, sin_theta, cos_theta)
+  let sin_theta = rnd_float(sin(theta_range.x), sin(theta_range.y))
+  let cos_theta = sqrt(1.0 - square(sin_theta))
   var tm = float3x3()
   tm[0] = normalize(axis_dir)
   tm[1] = normalize_default(cross(tm[0], float3(1, 0, 0)), float3(0, 1, 0))
@@ -237,7 +235,8 @@ def shell_explode_es(shellExpl : CmdShellExplodeClient)
       logerr("Projectile props not found for shellId={shellExpl.shellId.shellId}!
 offender=<{shellExpl.offender}> ({getEntityTemplateName(shellExpl.offender)})
 explPos={shellExpl.pos}
-fxInfoEid=<{shellExpl.fxInfoEid}> ({getEntityTemplateName(shellExpl.fxInfoEid)})")
+fxInfoEid=<{shellExpl.fxInfoEid}> ({getEntityTemplateName(shellExpl.fxInfoEid)})
+curTime={get_sync_time()}")
 
   find_query() <| $ [es(REQUIRE=msg_sink)] (eid : EntityId)
     sendEventImmediate(

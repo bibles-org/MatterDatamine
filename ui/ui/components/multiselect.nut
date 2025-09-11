@@ -1,10 +1,13 @@
+from "%dngscripts/sound_system.nut" import sound_play
+
+import "%ui/components/faComp.nut" as faComp
+from "%ui/components/sounds.nut" import stateChangeSounds
+from "%ui/fonts_style.nut" import sub_txt
+
 from "%ui/ui_library.nut" import *
 from "%ui/components/colors.nut" import BtnBdNormal, BtnBdActive, BtnBdHover, BtnBgNormal, BtnBgHover
 
-let faComp = require("%ui/components/faComp.nut")
-let {sound_play} = require("%dngscripts/sound_system.nut")
-let {stateChangeSounds} = require("%ui/components/sounds.nut")
-let { sub_txt } = require("%ui/fonts_style.nut")
+#allow-auto-freeze
 
 let {font, fontSize} = sub_txt
 
@@ -35,7 +38,7 @@ function box(isSelected, sf) {
 }
 
 let label = @(text, sf) {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   rendObj = ROBJ_TEXT
   color = calcColor(sf)
   text
@@ -51,8 +54,8 @@ function optionCtor(option, isSelected, onClick) {
     let sf = stateFlags.get()
 
     return {
-      size = [flex(), SIZE_TO_CONTENT]
-      padding = [fsh(0.5),fsh(1.0),fsh(0.5),fsh(1.0)]
+      size = FLEX_H
+      padding = static [fsh(0.5),fsh(1.0),fsh(0.5),fsh(1.0)]
       watch = stateFlags
       behavior = Behaviors.Button
       onElemState = @(s) stateFlags.set(s)
@@ -76,7 +79,7 @@ function optionCtor(option, isSelected, onClick) {
 
 let baseStyle = {
   root = {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     gap
   }
@@ -87,10 +90,10 @@ let baseStyle = {
 
 let mkMultiselect = @(selected , options , minOptions = 0, maxOptions = 0, rootOverride = {}, style = baseStyle)
   function() {
-    let numSelected = Computed(@() selected.value.filter(@(v) v).len())
+    let numSelected = Computed(@() selected.get().filter(@(v) v).len())
     let mkOnClick = @(option) function() {
-      let curVal = selected.value?[option.key] ?? false
-      let resultNum = numSelected.value + (curVal ? -1 : 1)
+      let curVal = selected.get()?[option.key] ?? false
+      let resultNum = numSelected.get() + (curVal ? -1 : 1)
       if ((minOptions == 0 || resultNum >= minOptions) 
           && (maxOptions==0 || resultNum <= maxOptions))
         selected.mutate(function(s) { s[option.key] <- !curVal })
@@ -98,7 +101,7 @@ let mkMultiselect = @(selected , options , minOptions = 0, maxOptions = 0, rootO
     }
     return style.root.__merge({
       watch = selected
-      children = options.map(@(option) style.optionCtor(option, selected.value?[option.key] ?? false, mkOnClick(option)))
+      children = options.map(@(option) style.optionCtor(option, selected.get()?[option.key] ?? false, mkOnClick(option)))
     })
     .__merge(rootOverride)
  }

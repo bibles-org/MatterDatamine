@@ -1,28 +1,32 @@
+from "%dngscripts/globalState.nut" import nestWatched
+from "%sqstd/math.nut" import round_by_value, lerp, truncateToMultiple
+from "%ui/hud/state/item_info.nut" import get_item_info, getSlotAvailableMods, get_equipped_magazine_current_ammo_count
+from "%ui/hud/state/human_damage_model_state.nut" import getDamageTypeStr
+from "%ui/helpers/remap_nick.nut" import remap_nick
+from "dagor.system" import DBGLEVEL
+import "%ui/components/tooltipBox.nut" as tooltipBox
+from "%ui/components/pcHoverHotkeyHitns.nut" import tooltipHotkeyHints
+from "%ui/components/colors.nut" import RarityCommon, corruptedItemColor
+import "console" as console
+import "%ui/components/colorize.nut" as colorize
+from "%ui/fonts_style.nut" import body_txt, sub_txt
+from "das.inventory" import calc_stacked_item_volume, get_current_revive_price, mod_effect_calc
+import "%ui/hud/state/get_player_team.nut" as get_player_team
+import "%ui/hud/state/is_teams_friendly.nut" as is_teams_friendly
+from "math" import ceil
+from "dagor.debug" import logerr
+import "string" as string
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
-let { getDamageTypeStr } = require("%ui/hud/state/human_damage_model_state.nut")
-let { round_by_value, lerp, truncateToMultiple } = require("%sqstd/math.nut")
-let { remap_nick } = require("%ui/helpers/remap_nick.nut")
-let { get_item_info, getSlotAvailableMods, chronogeneStatCustom, chronogeneStatDefault, chronogeneEffectCalc,
-  get_equipped_magazine_current_ammo_count } = require("%ui/hud/state/item_info.nut")
-let { playerProfileAMConvertionRate, playerProfileAllResearchNodes, playerProfileOpenedNodes,
-  allCraftRecipes, marketItems } = require("%ui/profile/profileState.nut")
-let { creditsTextIcon, amTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
-let { matchingQueuesMap } = require("%ui/matchingQueues.nut")
-let { DBGLEVEL } = require("dagor.system")
-let { nestWatched } = require("%dngscripts/globalState.nut")
-let tooltipBox = require("%ui/components/tooltipBox.nut")
-let { tooltipHotkeyHints } = require("%ui/components/pcHoverHotkeyHitns.nut")
-let { rarityColorTable } = require("%ui/hud/menus/components/inventoryItemRarity.nut")
-let { RarityCommon, corruptedItemColor } = require("%ui/components/colors.nut")
-let console = require("console")
-let colorize = require("%ui/components/colorize.nut")
-let { body_txt } = require("%ui/fonts_style.nut")
-let { calc_stacked_item_volume } = require("das.inventory")
+from "%ui/hud/menus/components/inventoryItemRarity.nut" import rarityColorTable
+from "%ui/components/controlHudHint.nut" import controlHudHint
+from "%ui/components/commonComponents.nut" import mkText
 
-let { ceil } = require("math")
-let { logerr } = require("dagor.debug")
-let string = require("string")
+let { chronogeneStatCustom, chronogeneStatDefault } = require("%ui/hud/state/item_info.nut")
+let { playerProfileAllResearchNodes, playerProfileOpenedNodes, allCraftRecipes, marketItems } = require("%ui/profile/profileState.nut")
+let { amTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
+let { matchingQueuesMap } = require("%ui/matchingQueues.nut")
+let { localPlayerTeam } = require("%ui/hud/state/local_player.nut")
 
 let itemTooltipNameColor = Color(200,200,200)
 let itemQuestTooltipStatColor = Color(245,150,0)
@@ -35,7 +39,7 @@ let itemTooltipStatValueDecreasedColor = Color(255, 40, 40)
 
 let corruptedItemBackground = {
   rendObj = ROBJ_IMAGE
-  size = [flex(), hdpxi(100)]
+  size = static [flex(), hdpxi(100)]
   color = corruptedItemColor
   image = Picture("ui/skin#corruptedWeaponBorder.svg:{0}:{1}:K".subst(hdpxi(200), hdpxi(200)))
 }
@@ -47,12 +51,8 @@ let semiAutoBursts = {
 
 let shootNoiseTbl = [
   {
-    limit = 60,
-    locId = "desc/shotSilent"
-  }
-  {
     limit = 110
-    locId = "desc/shotQuiet"
+    locId = "desc/shotLoudReduced"
   }
   {
     limit = 170
@@ -62,7 +62,7 @@ let shootNoiseTbl = [
 
 let tooltipSeparator = {
   rendObj = ROBJ_SOLID
-  size = [flex(), hdpx(1)]
+  size = static [flex(), hdpx(1)]
   color = itemStubTooltipStatColor
 }
 
@@ -75,7 +75,6 @@ let inventoryItemTooltipQuery = ecs.SqQuery("inventoryItemTooltipQuery",
   {
     
     comps_ro = [
-      ["gun__recoilAmount", ecs.TYPE_FLOAT, null],
       ["gun_deviation__maxDeviation", ecs.TYPE_FLOAT, null],
       ["loud_noise__noisePerShot", ecs.TYPE_FLOAT, null],
       ["gun_entity_mods__loudNoisePerShotMult", ecs.TYPE_FLOAT, null],
@@ -100,8 +99,9 @@ let inventoryItemTooltipQuery = ecs.SqQuery("inventoryItemTooltipQuery",
       ["itemContainer", ecs.TYPE_EID_LIST, null],
       ["human_inventory__tooltipItems", ecs.TYPE_TAG, null],
       ["weapon_stat__rpm", ecs.TYPE_FLOAT, null],
+      ["item_stat__luminosity", ecs.TYPE_INT, null],
       ["item__weight", ecs.TYPE_FLOAT, 0],
-      ["item__volume", ecs.TYPE_FLOAT, 0],
+      ["item__volume", ecs.TYPE_INT, 0],
       ["dm_part_armor__protection", ecs.TYPE_FLOAT_LIST, null],
       ["gun__firingModeNames", ecs.TYPE_ARRAY, []],
       ["gun_boxed_ammo_reload__batchReloadTime", ecs.TYPE_FLOAT, 0],
@@ -111,10 +111,13 @@ let inventoryItemTooltipQuery = ecs.SqQuery("inventoryItemTooltipQuery",
       ["gun_boxed_ammo_reload__loadLoopTime", ecs.TYPE_FLOAT, 0],
       ["item__weapType", ecs.TYPE_STRING, null],
       ["dogtag_item", ecs.TYPE_TAG, null],
+      ["cortical_vault_inactive__ownerNickname", ecs.TYPE_STRING, null],
+      ["gun__recoilAmount", ecs.TYPE_FLOAT, null],
+      ["gun_entity_mods__recoilMult", ecs.TYPE_FLOAT, 1.0]
     ].extend(DBGLEVEL != 0 ? [
       ["weapon_stat__damage", ecs.TYPE_FLOAT, 0.0],
       ["weapon_stat__damageCount", ecs.TYPE_INT, 1],
-      ["weapon_stat__dps", ecs.TYPE_FLOAT, 0.0]
+      ["weapon_stat__dps", ecs.TYPE_FLOAT, 0.0],
     ] : [])
   }
 )
@@ -215,7 +218,7 @@ function buildInventoryItemName(item) {
   return loc(
     item?.itemName,
     {
-      nickname = remap_nick(item?.ownerNickname)
+      nickname = remap_nick(item?.cortical_vault_inactive__ownerNickname)
     },
     "") ?? ""
 }
@@ -226,7 +229,6 @@ function getFromTemplate(template) {
 
   
   return {
-    gun__recoilAmount = template.getCompValNullable("gun__recoilAmount")
     gun_deviation__maxDeviation = template.getCompValNullable("gun_deviation__maxDeviation")
     loud_noise__noisePerShot = template.getCompValNullable("loud_noise__noisePerShot")
     gun_entity_mods__loudNoisePerShotMult = template.getCompValNullable("gun_entity_mods__loudNoisePerShotMult")
@@ -257,11 +259,17 @@ function getFromTemplate(template) {
     gun__maxAmmo = template.getCompValNullable("gun__maxAmmo") ?? 0
     gun__shotFreq = template.getCompValNullable("gun__shotFreq") ?? 1
     weapon_stat__rpm = (template.getCompValNullable("gun__shotFreq") ?? 0.0) * 60.0 
+    item_stat__luminosity = template.getCompValNullable("item_stat__luminosity")
     gun_boxed_ammo_reload__loadPrepareTime = template.getCompValNullable("gun_boxed_ammo_reload__loadPrepareTime") ?? 0
     gun_boxed_ammo_reload__loadLoopTime = template.getCompValNullable("gun_boxed_ammo_reload__loadLoopTime") ?? 0
     gun_boxed_ammo_reload__loadPostTime = template.getCompValNullable("gun_boxed_ammo_reload__loadPostTime") ?? 0
     item__weapType = template.getCompValNullable("item__weapType") ?? ""
     itemDescription = template.getCompValNullable("item__desc")
+    cortical_vault_inactive__ownerNickname = null 
+    foldable_container__foldedVolume = template.getCompValNullable("foldable_container__foldedVolume")
+    dogtag_item = template.getCompValNullable("dogtag_item")
+    gun__recoilAmount = template.getCompValNullable("gun__recoilAmount")
+    gun_entity_mods__recoilMult = template.getCompValNullable("dogtag_item") ?? 1.0
   }
 }
 
@@ -320,20 +328,21 @@ let get_dogtag_info_query = ecs.SqQuery("get_dogtag_info_query", {
   comps_rq = ["dogtag_item"]
 })
 
-function buildInventoryItemTooltip(item, additionalHints={}) {
+
+function getInventoryItemTooltipLines(item, additionalHints={}) {
   if ((item == null || item?.itemTemplate == null || ecs.g_entity_mgr.getTemplateDB().getTemplateByName(item.itemTemplate) == null) &&
     additionalHints != null && additionalHints.len() == 0) {
-    return {}
+    return null
   }
 
-  let comps = item ? getComps(item) : {}
+  let comps = getComps(item).__update(item)
 
   local tooltip = []
 
   let itemsCount = item?.count ?? 0
 
   
-  let name = buildInventoryItemName(item)
+  let name = buildInventoryItemName(comps)
   if (name != "") {
     let countText = itemsCount > 1 ? $" ({loc("ui/multiply")}{itemsCount})" : null
     tooltip.append(headerText(name, countText))
@@ -518,8 +527,10 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
   }
 
   
-  if ((comps?.gun__recoilAmount ?? 0.0) >= 0.01)
-    statsTooltip.append(coloredStatText(loc("desc/recoil"), round_by_value(comps?.gun__recoilAmount ?? 0.0, 0.01)))
+  if ((comps?.gun__recoilAmount ?? 0.0) >= 0.01) {
+    let recoil = (comps?.gun__recoilAmount ?? 0.0) * comps.gun_entity_mods__recoilMult * 100
+    statsTooltip.append(coloredStatText(loc("desc/recoil"), round_by_value(recoil, 0.01)))
+  }
 
   
   if ((comps?.gun_deviation__maxDeviation ?? 0.0) > 0.0)
@@ -546,11 +557,17 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
 
 
   
-  if (item?.revivePrice) {
+  if (item?.playerOwnerEid && item?.playerOwnerEid != ecs.INVALID_ENTITY_ID && is_teams_friendly(localPlayerTeam.get(), get_player_team(item.playerOwnerEid))) {
+    let revivePrice = get_current_revive_price(item.playerOwnerEid)
     statsTooltip.append(loc("desc/revive"))
-    statsTooltip.append(coloredStatText(loc("desc/revive_cost"), $"{item?.revivePrice}{amTextIcon}"))
+    statsTooltip.append(coloredStatText(loc("desc/revive_cost"), $"{revivePrice}{amTextIcon}"))
   }
 
+  
+  if (comps?.item_stat__luminosity != null) {
+    let luminosityStr = $"{comps.item_stat__luminosity} <color={itemTooltipBonusDescColor}>{loc("desc/luminosity_units")}</color>"
+    statsTooltip.append(coloredStatText(loc("desc/luminosity"), luminosityStr))
+  }
 
   
   let healsHP = comps?.item__ampouleHealAmount ?? 0.0
@@ -568,10 +585,7 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
   else if (item?.charges != null) {
     let statName = (comps?.item_healkit_magazine != null) ? loc("desc/healing_ampoule_ammoCount") :
                    (item?.isAmmo ?? false) ? loc("desc/ammoCount") :
-                   (item?.isAmStorage ?? false) ? loc("desc/active_matter") :
                    loc("desc/charges")
-    let am2Money = item?.isAmStorage ? $" ({creditsTextIcon}{(item?.charges ?? 1) * playerProfileAMConvertionRate.get()})" : ""
-    let amMark = item?.isAmStorage ? amTextIcon : ""
     let isCountKnown = item?.countKnown ?? true
 
     if (item?.maxCharges != null && (item?.maxCharges ?? 0) > 0) {
@@ -586,8 +600,6 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
         statsTooltip.append(coloredStatText(statName, $"{chargesText}/{ceil(item?.maxCharges).tointeger()}"))
       }
     }
-    else
-      statsTooltip.append(coloredStatText(statName, $"{ceil(item?.charges).tointeger()}{amMark}{am2Money}"))
 
     if (item.canLoadOnlyOnBase)
       statsTooltip.append(loc("desc/item_holder_can_load_only_on_base"))
@@ -707,7 +719,7 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
     foreach (partName, armor in armors) {
       let armorLocs = []
       foreach (armorType, armorCount in armor) {
-        armorLocs.append($"{loc($"desc/{armorType}")} {armorCount}")
+        armorLocs.append($"{loc($"desc/{armorType}")} {loc("ui/multiply")}{armorCount}")
       }
 
       if (armorLocs.len() > 0) {
@@ -762,22 +774,31 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
   }
 
   
-  let chronogeneEffect = comps?.entity_mod_effects.getAll() ?? {}
-  foreach (effectKey, effectVal in chronogeneEffect) {
-    let effectName = effectKey.split("+")?[0] ?? ""
-    let effectCalcType = effectKey.split("+")?[1] ?? ""
-    let effectLoc = loc($"clonesMenu/stats/{effectName}")
-    let measurement = chronogeneStatCustom?[effectName]?.measurement ?? chronogeneStatDefault.measurement
+  if (comps?.entity_mod_effects && item?.itemTemplate) {
+    let entity_mods = ecs.CompObject()
+    let entity_mod_values = ecs.CompObject()
 
-    let defVal = chronogeneStatCustom?[effectName]?.defVal ?? chronogeneStatDefault.defVal
-    let defEffect = chronogeneStatCustom?[effectName]?.calc(defVal) ?? chronogeneStatDefault.calc(defVal)
-    let resultVal = chronogeneEffectCalc?[effectCalcType](defVal, effectVal) ?? defVal
-    let resultEffect = chronogeneStatCustom?[effectName]?.calc(resultVal) ?? chronogeneStatDefault.calc(resultVal)
+    let baseEntityTmpl = ecs.g_entity_mgr.getTemplateDB().getTemplateByName("base_entity_mods")
+    let templateEntityModValues = baseEntityTmpl.getCompValNullable("entity_mod_values")
 
-    let effectDiff = resultEffect - defEffect
-    chronogeneTooltips.append(coloredStatText(effectLoc, $"{effectDiff > 0 ? "+" : ""}{string.format("%.1f", effectDiff)}{measurement}"))
+    foreach (k, v in templateEntityModValues) {
+      entity_mod_values[k] <- v
+    }
+
+    mod_effect_calc(entity_mods, entity_mod_values, [ item.itemTemplate ])
+
+    foreach(k, v in entity_mod_values.getAll()) {
+      if (v.value == v.defaultValue)
+        continue
+
+      let measurement = chronogeneStatCustom?[k]?.measurement ?? chronogeneStatDefault.measurement
+      let effectLoc = loc($"clonesMenu/stats/{k}")
+      let curVal = chronogeneStatCustom?[k]?.calc(v.value) ?? chronogeneStatDefault.calc(v.value)
+      let defVal = chronogeneStatCustom?[k]?.calc(v.defaultValue) ?? chronogeneStatDefault.calc(v.defaultValue)
+      let result = curVal - defVal
+      chronogeneTooltips.append(coloredStatText(effectLoc, $"{result > 0 ? "+" : ""}{string.format("%.1f", result)}{measurement}"))
+    }
   }
-
 
   
   if (comps?.itemContainer != null &&
@@ -820,21 +841,27 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
 
   
   if (comps?.dogtag_item != null) {
+    local cortical_vault_inactive__killerNickname = comps?.cortical_vault_inactive__killerNickname
+    local cortical_vault_inactive__killedByWeapon = comps?.cortical_vault_inactive__killedByWeapon
+    local cortical_vault_inactive__deathReason = comps?.cortical_vault_inactive__deathReason
     get_dogtag_info_query.perform(item?.eid, function(_eid, querycomp) {
-      if (querycomp.cortical_vault_inactive__killerNickname != "")
-        statsTooltip.append(coloredStatText(loc("desc/killerNickname"), $"{querycomp.cortical_vault_inactive__killerNickname}"))
-      let damageTypeStr = querycomp.cortical_vault_inactive__deathReason
+      cortical_vault_inactive__killerNickname = querycomp.cortical_vault_inactive__killerNickname
+      cortical_vault_inactive__killedByWeapon = querycomp.cortical_vault_inactive__killedByWeapon
+      cortical_vault_inactive__deathReason = querycomp.cortical_vault_inactive__deathReason
+    })
 
-      
-      if (damageTypeStr == "")
-        return
+    if (cortical_vault_inactive__killerNickname != "")
+      statsTooltip.append(coloredStatText(loc("desc/killerNickname"), $"{cortical_vault_inactive__killerNickname}"))
+    let damageTypeStr = cortical_vault_inactive__deathReason
 
-      local dogtagDescr = item?.itemDescription
+    
+    if (damageTypeStr != null && damageTypeStr != "") {
+      local dogtagDescr = $"{item?.itemName}/death_cause"
 
       
       if (damageTypeStr == "0" || damageTypeStr == "1" || damageTypeStr == "2" || damageTypeStr == "8" ||
-          (damageTypeStr == "6" && querycomp.cortical_vault_inactive__killerNickname != "")) {
-        dogtagDescr = loc($"{dogtagDescr}/weapon", {weaponName = loc(querycomp.cortical_vault_inactive__killedByWeapon)})
+          (damageTypeStr == "6" && cortical_vault_inactive__killerNickname != "")) {
+        dogtagDescr = loc($"{dogtagDescr}/weapon", {weaponName = loc(cortical_vault_inactive__killedByWeapon)})
         statsTooltip.append(coloredStatText(loc("desc/dogtagWeapon"), $"{dogtagDescr}"))
       }
       
@@ -847,7 +874,7 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
         dogtagDescr = loc($"{dogtagDescr}/{damageTypeStr}")
         statsTooltip.append(coloredStatText(loc("desc/dogtagDeathReason"), $"{dogtagDescr}"))
       }
-    })
+    }
   }
 
   
@@ -860,10 +887,11 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
 
   
   local physParamsTooltip = []
-  local volume = item?.isBoxedItem ? calc_stacked_item_volume(item.countPerStack, item?.ammoCount, item.volumePerStack) / 10.
-    : item?.volume ?? 0
+  local volume = item?.isBoxedItem
+    ? calc_stacked_item_volume(item.countPerStack, item?.ammoCount ?? 0, item.volumePerStack)
+    : (item?.volume ?? 0)
+  let isFolded = item?.foldedVolume != null && item?.volume != null && item.foldedVolume == item.volume
   let weight = comps?.item__weight ?? item?.weight ?? 0.0
-
   if (weight > 0.0) {
     let weightRounded = truncateToMultiple(weight, 0.01)
     let weightText = itemsCount > 1 ? $"{weight * itemsCount} ({weightRounded} {loc("ui/multiply")} {itemsCount})" : $"{weightRounded}"
@@ -871,16 +899,21 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
   }
   if (volume > 0.0) {
     let volumeRounded = truncateToMultiple(volume, 0.01)
-    let volumeText = itemsCount > 1 && !item?.isBoxedItem ? $"{volume * itemsCount} ({volume} {loc("ui/multiply")} {itemsCount})"
-      : $"{volumeRounded}"
+    let volumeText =
+      itemsCount > 1 && !item?.isBoxedItem ? $"{volume * itemsCount} ({volume} {loc("ui/multiply")} {itemsCount})" :
+      isFolded ? $"{volumeRounded} ({loc("desc/folded")})" :
+      $"{volumeRounded}"
     physParamsTooltip.append(coloredText(itemTooltipStatColor, loc("desc/volume"), volumeText))
   }
 
-  let additionalDesc = item?.additionalDesc ?? []
+  local additionalDescStrings = []
+  if (item?.additionalDescFunc) {
+    additionalDescStrings = item.additionalDescFunc(item)
+  }
 
   let tooltipStrings = "\n\n".join([
     "\n".join(tooltip),
-    "\n".join(additionalDesc),
+    "\n".join(additionalDescStrings),
     "\n".join(statsTooltip),
     "\n".join(chronogeneTooltips),
     "\n".join(descriptionTooltip),
@@ -889,8 +922,18 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
     "\n".join(backupWeapon)
   ], @(v) v.len() > 0)
 
+  return tooltipStrings
+}
+
+
+function buildInventoryItemTooltip(item, additionalHints={}) {
+  let tooltipStrings = getInventoryItemTooltipLines(item, additionalHints)
+
+  #allow-auto-freeze
+  if (tooltipStrings == null)
+    return null
+
   return tooltipBox({
-    key = tooltip
     children = [
       item?.isCorrupted ? corruptedItemBackground : null
       {
@@ -898,17 +941,36 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
         gap = tooltipSeparator
         children = [
           {
-            rendObj = ROBJ_TEXTAREA
-            behavior = Behaviors.TextArea
-            maxWidth = hdpxi(500)
-            color = Color(180, 180, 180, 120)
-            text = tooltipStrings
-            margin = fsh(1)
-            tagsTable = {
-              header = {
-                fontSize = body_txt.fontSize
+            children = [
+              {
+                rendObj = ROBJ_TEXTAREA
+                behavior = Behaviors.TextArea
+                maxWidth = hdpxi(500)
+                color = Color(180, 180, 180, 120)
+                text = tooltipStrings
+                margin = fsh(1)
+                tagsTable = {
+                  header = {
+                    fontSize = body_txt.fontSize
+                  }
+                }
               }
-            }
+              item?.slotKeyBindTip ? {
+                vplace = ALIGN_BOTTOM
+                hplace = ALIGN_RIGHT
+                flow = FLOW_HORIZONTAL
+                valign = ALIGN_CENTER
+                gap = hdpx(4)
+                padding = fsh(1)
+                children = [
+                  mkText(loc("hud/use"))
+                  controlHudHint({
+                    id = item.slotKeyBindTip
+                    text_params = sub_txt
+                  })
+                ]
+              } : null
+            ]
           }
           tooltipHotkeyHints
         ]
@@ -919,4 +981,5 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
 
 return {
   buildInventoryItemTooltip
+  getInventoryItemTooltipLines
 }

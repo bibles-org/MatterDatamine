@@ -145,6 +145,7 @@ mothman_monster_effect{
   }
 
   "mothman_monster_effect:tag"{}
+  "monster_effect:tag"{}
   "locked_use_object__lockVehicleUse:tag"{}
   "locked_use_object__lockStationaryGunUse:tag"{}
   "game_effect__colorGrading:object"{
@@ -397,11 +398,18 @@ riextra_with_impulse_on_destruction{
 mothman_damage_model{
   _use:t="human_damage_model"
 
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+
+    "human_damage_model__partName:list<t>"{}
+    "human_damage_model__partHp:list<r>"{}
+    "human_damage_model__partInjured:list<b>"{}
+  }
+
   "human_damage_model__parts:object"{
     "head:object"{
       maxHp:r=100
-      hp:r=100
-      isInjured:b=no
       removeInjuryHp:r=10
       explosionImpact:b=yes
       collisionImpact:b=no
@@ -422,8 +430,6 @@ mothman_damage_model{
 
     "body:object"{
       maxHp:r=250
-      hp:r=250
-      isInjured:b=no
       removeInjuryHp:r=10
       explosionImpact:b=yes
       collisionImpact:b=no
@@ -445,8 +451,6 @@ mothman_damage_model{
 
     "right_hand:object"{
       maxHp:r=150
-      hp:r=150
-      isInjured:b=no
       removeInjuryHp:r=10
       distributionDamageMult:r=0.75
       explosionImpact:b=yes
@@ -470,8 +474,6 @@ mothman_damage_model{
 
     "left_hand:object"{
       maxHp:r=150
-      hp:r=150
-      isInjured:b=no
       removeInjuryHp:r=10
       distributionDamageMult:r=0.75
       explosionImpact:b=yes
@@ -495,8 +497,6 @@ mothman_damage_model{
 
     "right_leg:object"{
       maxHp:r=150
-      hp:r=150
-      isInjured:b=no
       removeInjuryHp:r=10
       distributionDamageMult:r=1.25
       explosionImpact:b=yes
@@ -519,8 +519,6 @@ mothman_damage_model{
 
     "left_leg:object"{
       maxHp:r=150
-      hp:r=150
-      isInjured:b=no
       removeInjuryHp:r=10
       distributionDamageMult:r=1.25
       explosionImpact:b=yes
@@ -591,7 +589,7 @@ mothman_attack_sound{
 }
 
 monstrified_mothman_human_sound{
-  _use:t="am_human_sound"
+  _use:t="am_possessable_human_sound"
   _use:t="mothman_idle_sound"
   _use:t="mothman_attack_sound"
   _use:t="mothman_flight_sound"
@@ -631,6 +629,64 @@ monstrified_mothman_floating_objects{
     item:t="mothman_projectile_stone_part_f"
     item:t="mothman_projectile_stone_part_g"
     item:t="mothman_projectile_stone_part_h"
+  }
+}
+
+mothman_extraction_aura_affect_fps{
+  _use:t="human_extraction_aura_affect_fps"
+
+  "game_effect__geomtreeEffectIgnoreNodeNames:list<t>"{
+    item:t="Bip001 Head"
+    item:t="Bip001 Spine"
+    item:t="Bip001 L Clavicle"
+    item:t="Bip001 R Clavicle"
+    item:t="Bip001 L UpperArm"
+    item:t="Bip001 R UpperArm"
+  }
+}
+
+mothman_extraction_sequence_init{
+  _use:t="extraction_sequence_init"
+
+  "spawn_sequence_game_effect__gameClientAffects:array"{
+    "human_extraction_aura_affect:object"{
+      fps:t="mothman_extraction_aura_affect_fps"
+      tps:t="human_extraction_aura_affect_tps"
+      time:r=7.5
+    }
+  }
+}
+
+mothman_extraction_sequence_affect{
+  _use:t="extraction_sequence_affect"
+
+  "game_effect_sequence__stages:array"{
+    "stage:object"{
+      affectTemplate:t="mothman_extraction_sequence_init"
+      duration:r=0.25
+    }
+
+    "stage:object"{
+      affectTemplate:t="extraction_sequence_portal_opens"
+      duration:r=0.1
+      setupTransform:b=yes
+    }
+
+    "stage:object"{
+      affectTemplate:t="extraction_sequence_soldier_disappears+trans_portal_affect_start_sound"
+      duration:r=1
+    }
+  }
+}
+
+mothman_extraction_preparing_affect{
+  _use:t="extraction_preparing_affect"
+
+  "extraction_preparing_affect__gameClientAffects:array"{
+    "human_extraction_aura_affect:object"{
+      fps:t="mothman_extraction_aura_affect_fps"
+      tps:t="human_extraction_aura_affect_tps"
+    }
   }
 }
 
@@ -678,7 +734,6 @@ monstrified_mothman_human_base{
   _use:t="loc_snapshots_hero_awareness"
   _use:t="am_militant_base_ability"
   _use:t="find_player_target"
-  _use:t="am_emotes"
   _use:t="human_climbing_hint"
   _use:t="player_name_marker"
   _use:t="check_ammo_controller"
@@ -698,7 +753,6 @@ monstrified_mothman_human_base{
   _use:t="loud_noise_meter"
   _use:t="am_heartrate"
   _use:t="militant_swarm_target"
-  _use:t="awake_changed_around"
   _use:t="ammo_count_knowledge_controller"
   _use:t="hero_extraction"
   _use:t="stalker_statue_target"
@@ -714,14 +768,14 @@ monstrified_mothman_human_base{
   _use:t="am_militant_suit_base"
   _use:t="monstrified_mothman_human_sound"
   _use:t="monstrified_human_locked_melee_only"
+  _use:t="human_weapon_bipod"
+  body_cleanup_server_after_death__delay:r=-1
+  teammate_revive__effectTemplateName:t="teammate_revive_effect_simple"
+  extraction__extractionSequenceTemplate:t="mothman_extraction_sequence_affect"
+  extraction__customExtractionPreparingAffect:t="mothman_extraction_preparing_affect"
   monstrified_mothman__maxTraceLenCeiling:r=2.5
   monstrified_mothman__minDistToCeiling:r=2.1
   monstrified_mothman__distToCeiling:r=0
-  monstrified_mothman__maxTraceHeight:r=15
-  monstrified_mothman__currentHeightNearGround:r=0
-  _replicated:t="monstrified_mothman__currentHeightNearGround"
-  monstrified_mothman__isNearGround:b=no
-  _replicated:t="monstrified_mothman__isNearGround"
   net_ragdoll__animcharNodeForCreationPositionName:t="Bip001 Spine"
   killcam__neckNodeName:t="Bip001 Neck1"
   lightning_emitter__templateName:t="euclid_central_sphere_lightning_effect"
@@ -752,6 +806,8 @@ monstrified_mothman_human_base{
   collres__centerNode:t="Bip001 Pelvis"
   human_death_anim__defaultDeathState:t=""
   hit_reaction__animNodeDefault:t="block"
+  action__operateDoor:t="mothman_operate_door_action"
+  action__pickupItem:t="mothman_pickup_action"
   offender_marks__updateOffenderPos:b=no
   kill_tracking_tag:t="mothman"
   agent_dangers__tag:t="mothman"
@@ -765,8 +821,6 @@ monstrified_mothman_human_base{
   item__name:t="items/suit_militant_mothman_item"
   suit__raidIcon:t="!ui/uiskin/raid_info/mothman.svg"
   item__desc:t="items/suit_militant_mothman_item/desc"
-  am_storage__value:i=10
-  am_storage__maxValue:i=300
   animchar__res:t="mothman_leader_char"
   collres__res:t="mothman_leader_collision"
   animchar_fast_phys__res:t="mothman_leader_fastphys"
@@ -786,10 +840,12 @@ monstrified_mothman_human_base{
   human_coll_damage__minDmgSpd:r=100
   _tracked:t="human_equipment__slotsFlags"
 
-  "dontBodyCleanupOnDeath:tag"{}
   _group{
     _tags:t="server"
     net_ragdoll__physObjTemplate:t="mothman_ragdoll"
+    monstrified_mothman__maxTraceHeight:r=15
+    monstrified_mothman__currentHeightNearGround:r=0
+    monstrified_mothman__isNearGround:b=no
   }
 
   "flying_creature:tag"{}
@@ -986,31 +1042,9 @@ monstrified_mothman_human_base{
       irq:t="melee"
       varName:t="action_progress"
     }
-
-    "action:object"{
-      name:t="pickup"
-      state:t="pickup_item"
-      actionTime:r=0.6
-      applyAt:r=0.3
-      props:t="gamedata/actions/pickup.blk"
-      irq:t="pickup_act"
-      varName:t="action_progress"
-    }
-
-    "action:object"{
-      name:t="operate_door"
-      state:t="operate_door"
-      actionTime:r=0.6
-      applyAt:r=0.3
-      props:t="gamedata/actions/open_door.blk"
-      irq:t="door_act"
-      varName:t="action_progress"
-    }
   }
 
   "actions__actions_enabled:array"{
-    enabled:b=yes
-    enabled:b=yes
     enabled:b=yes
     enabled:b=yes
   }
@@ -1021,8 +1055,8 @@ monstrified_mothman_human_base{
   "nestedSwarmTarget:tag"{}
   "update_default_stub_melee_on_appear:tag"{}
   "human_equipment__slots:object"{
-    "cortical_vault:eid"{}
     "chronogene_primary_1:eid"{}
+    "cortical_vault:eid"{}
   }
 
   "monster_hunter:tag"{}
@@ -1191,4 +1225,14 @@ mothman_floating_object_destruction{
   _use:t="thrown_object_trail_fx"
   mothman_floating_object_destruction__destroyAt:r=0
   mothman_floating_object_destruction__stoppingViscosity:r=10
+}
+
+mothman_operate_door_action{
+  _use:t="common_operate_door_action"
+  action__animStateName:t=""
+}
+
+mothman_pickup_action{
+  _use:t="common_pickup_action"
+  action__animStateName:t=""
 }

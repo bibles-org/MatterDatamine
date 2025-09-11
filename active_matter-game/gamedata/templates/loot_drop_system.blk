@@ -4,6 +4,7 @@ loot_drop_system{
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   loot_drop_system__lootPreset:t=""
   loot_drop_system__dropPreset:t=""
+  loot_drop_system__generated:b=no
 }
 
 loot_preset{
@@ -488,4 +489,23 @@ drop_in_places_award_box{
   "drop_in_places_from_list__placesList:list<m>"{
     place:m=[[0, 1, 0] [-1, 0, -0.000922843] [-0.000922843, 0, 1] [-0.000198364, 0.0639799, 0.0565491]]
   }
+}
+
+drop_phys_in_collres_preset{
+  _use:t="base_drop_preset"
+  drop_phys_in_collres_preset__boxScale:r=0.4
+  drop_preset__impulseVelocityRng:p2=0.5, 1.25
+  drop_preset__impulseOmegaRng:p2=0.15, 0.25
+}
+
+base_drop_items_preset{
+  "drop_items_preset__ownerEid:eid"{}
+  "drop_items_preset__items:list<eid>"{}
+}
+
+drop_phys_items_in_collres_preset{
+  _use:t="base_drop_items_preset"
+  drop_phys_items_in_collres_preset__boxScale:r=0.4
+  drop_preset__impulseVelocityRng:p2=0.5, 1.25
+  drop_preset__impulseOmegaRng:p2=0.15, 0.25
 }

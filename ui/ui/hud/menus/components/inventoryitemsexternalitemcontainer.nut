@@ -1,22 +1,23 @@
+from "%sqstd/string.nut" import utf8ToLower
+
+from "%ui/hud/menus/components/inventoryItemsList.nut" import itemsPanelList, setupPanelsData, inventoryItemSorting, inventoryItemOverridePrioritySorting
+
+from "%ui/hud/menus/components/inventoryCommon.nut" import mkInventoryHeader
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems
+from "%ui/hud/menus/components/inventoryVolumeWidget.nut" import mkVolumeHdr
+from "%ui/hud/menus/components/inventoryItemsListChecks.nut" import isExternalInventoryDropForbidden
+from "%ui/components/button.nut" import button
+from "%ui/components/commonComponents.nut" import mkText
+from "dasevents" import CmdCloseExternalInventoryRequest, sendNetEvent
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let {mkInventoryHeader} = require("%ui/hud/menus/components/inventoryCommon.nut")
 let { externalInventoryName, externalInventoryQuestName, externalInventoryItems, externalInventoryItemsMergeEnabled,
-    externalInventoryItemsSortingEnabled, externalInventoryItemsOverrideSortingPriority,
-    externalInventoryCurrentVolume, externalInventoryMaxVolume, externalInventoryEid
-  } = require("%ui/hud/state/hero_external_inventory_state.nut")
-let {itemsPanelList, setupPanelsData, inventoryItemSorting, inventoryItemOverridePrioritySorting
-} = require("%ui/hud/menus/components/inventoryItemsList.nut")
-let { mergeNonUniqueItems } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
-let {EXTERNAL_ITEM_CONTAINER} = require("%ui/hud/menus/components/inventoryItemTypes.nut")
-let { mkVolumeHdr } = require("%ui/hud/menus/components/inventoryVolumeWidget.nut")
-let { isExternalInventoryDropForbidden } = require("%ui/hud/menus/components/inventoryItemsListChecks.nut")
-let { button } = require("%ui/components/button.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
-let { CmdCloseExternalInventoryRequest, sendNetEvent} = require("dasevents")
+      externalInventoryItemsSortingEnabled, externalInventoryItemsOverrideSortingPriority, externalInventoryCurrentVolume,
+      externalInventoryMaxVolume, externalInventoryEid, externalInventoryContainerOwnerEid } = require("%ui/hud/state/hero_external_inventory_state.nut")
+let { EXTERNAL_ITEM_CONTAINER } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
 let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
-let { utf8ToLower } = require("%sqstd/string.nut")
 
 function patchItem(item) {
   return item == null ? null : item.__merge({inExternalItemContainer = true, canTake = true})
@@ -61,7 +62,7 @@ function mkExternalItemContainerItemsList(on_item_dropped_to_list_cb, on_click_a
       itemsPanelData=panelsData.itemsPanelData,
       headers= @() {
         watch = [externalInventoryName, externalInventoryQuestName]
-        size = [ flex(), SIZE_TO_CONTENT ]
+        size = FLEX_H
         children = mkInventoryHeader(
           getExternalContainerLoc(externalInventoryName.get(), externalInventoryQuestName.get()),
           mkVolumeHdr(externalInventoryCurrentVolume, externalInventoryMaxVolume, EXTERNAL_ITEM_CONTAINER.name)
@@ -74,26 +75,26 @@ function mkExternalItemContainerItemsList(on_item_dropped_to_list_cb, on_click_a
     })
 
     return {
-      watch = [externalInventoryName, panelsData.numberOfPanels]
-      size = [ SIZE_TO_CONTENT, flex() ]
+      watch = [externalInventoryName, panelsData.numberOfPanels, externalInventoryContainerOwnerEid]
+      size = FLEX_V
       flow = FLOW_VERTICAL
       gap = hdpx(4)
       onAttach = panelsData.onAttach
       onDetach = panelsData.onDetach
       children = [
         children
-        button(
+        externalInventoryContainerOwnerEid.get() != ecs.INVALID_ENTITY_ID ? button(
           {
-            size = [flex(), SIZE_TO_CONTENT]
+            size = FLEX_H
             halign = ALIGN_CENTER
             valign = ALIGN_CENTER
             children = mkText($"{loc("mainmenu/btnClose")} { utf8ToLower(loc(externalInventoryName.get() ?? "inventory/externalItemContainer")) }")
           },
           @() sendNetEvent(controlledHeroEid.get(), CmdCloseExternalInventoryRequest({ inventoryEid = externalInventoryEid.get() })),
           {
-            size = [flex(), hdpx(40)]
+            size = static [flex(), hdpx(40)]
           }
-        )
+        ) : null
       ]
     }
   }

@@ -1,38 +1,38 @@
+from "%sqstd/json.nut" import object_to_json_string
+
+import "%ui/components/msgbox.nut" as msgbox
+
+from "dasevents" import MatchingRoomExtraParams, CmdStartMenuExtractionSequence, CmdConnectToHost, CmdHideAllUiMenus
+
+from "net" import DC_CONNECTION_CLOSED, EventOnNetworkDestroyed, EventOnConnectedToServer, EventOnDisconnectedFromServer
+from "dagor.system" import DBGLEVEL
+from "dagor.debug" import logerr
+from "app" import get_circuit
+from "base64" import encodeString
+from "%ui/matchingClient.nut" import matchingCall, netStateCall
+from "%ui/gameLauncher.nut" import startGame
+from "matching.api" import matching_listen_rpc, matching_listen_notify, matching_send_response
+from "%ui/mainMenu/chat/chatApi.nut" import leaveChat, createChat, joinChat
+from "%ui/mainMenu/chat/chatState.nut" import clearChatState
+import "%ui/voiceChat/voiceState.nut" as voiceState
+from "%ui/permissions/permissions.nut" import checkMultiplayerPermissions
+from "eventbus" import eventbus_send, eventbus_subscribe
+from "matching.errors" import OK, error_string
+from "%ui/mainMenu/mailboxState.nut" import pushNotification, removeNotify, subscribeGroup
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-from "%ui/squad/squadState.nut" import isInSquad, isSquadLeader, squadLeaderState, squadId
+from "%ui/squad/squadState.nut" import isInSquad, isSquadLeader, squadId, squadLeaderState
 from "%ui/mainMenu/raid_preparation_window_state.nut" import currentPrimaryContractIds
 
-let { DC_CONNECTION_CLOSED, EventOnNetworkDestroyed, EventOnConnectedToServer, EventOnDisconnectedFromServer} = require("net")
-let { DBGLEVEL } = require("dagor.system")
-let { logerr } = require("dagor.debug")
 let { system = null } = require_optional("system")
-let { get_circuit } = require("app")
-let { encodeString } = require("base64")
-let { object_to_json_string } = require("%sqstd/json.nut")
 let userInfo = require("%sqGlob/userInfo.nut")
-let { matchingCall, netStateCall } = require("%ui/matchingClient.nut")
 let { oneOfSelectedClusters } = require("%ui/clusterState.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
-let { startGame } = require("%ui/gameLauncher.nut")
-let { matching_listen_rpc, matching_listen_notify, matching_send_response } = require("matching.api")
-let msgbox = require("%ui/components/msgbox.nut")
-let {isInQueue} = require("%ui/quickMatchQueue.nut")
+let { isInQueue, curQueueParam } = require("%ui/quickMatchQueue.nut")
 let loginChain = require("%ui/login/login_chain.nut")
-let {leaveChat, createChat, joinChat} = require("%ui/mainMenu/chat/chatApi.nut")
-let {clearChatState} = require("%ui/mainMenu/chat/chatState.nut")
-let voiceState = require("%ui/voiceChat/voiceState.nut")
-let {checkMultiplayerPermissions} = require("%ui/permissions/permissions.nut")
-let { eventbus_send, eventbus_subscribe } = require("eventbus")
-let { OK, error_string } = require("matching.errors")
-let { pushNotification, removeNotify, subscribeGroup } = require("%ui/mainMenu/mailboxState.nut")
 let { watchedHeroEid } = require("%ui/hud/state/watched_hero.nut")
-let { MatchingRoomExtraParams,
-      CmdStartMenuExtractionSequence,
-      CmdConnectToHost,
-      CmdHideAllUiMenus
-    } = require("dasevents")
 let { useAgencyPreset } = require("%ui/equipPresets/presetsState.nut")
 let { alterMints } = require("%ui/profile/profileState.nut")
 
@@ -65,22 +65,22 @@ let hostId  = mkWatched(persist, "hostId", null)
 let chatId = mkWatched(persist, "chatId", null)
 let squadVoiceChatId = mkWatched(persist, "squadVoiceChatId", null)
 let doConnectToHostOnHostNotfy = mkWatched(persist, "doConnectToHostOnHostNotfy", true)
-let lobbyLauncherState = Computed(@() room.value?.public.launcherState ?? "no_session")
+let lobbyLauncherState = Computed(@() room.get()?.public.launcherState ?? "no_session")
 let myInfoUpdateInProgress = Watched(false)
 let playersWaitingResponseFor = Watched({})
 let joinedRoomWithInvite = Watched(false)
 
 let canStartWithLocalDedicated = DBGLEVEL > 0 && system != null
-  ? Computed(@() roomIsLobby.value && room.value?.public != null)
+  ? Computed(@() roomIsLobby.get() && room.get()?.public != null)
   : WatchedRo(false)
 
 let lastRoomResult = mkWatched(persist, "lastRoomResult", null)
 let lastSessionStartData = mkWatched(persist, "lastSessionStartData", null)
 let isWaitForDedicatedStart = Watched(false)
 let lobbyStatus = Computed(function() {
-  if (isWaitForDedicatedStart.value)
+  if (isWaitForDedicatedStart.get())
     return LobbyStatus.WaitForDedicatedStart
-  let launcherState = lobbyLauncherState.value
+  let launcherState = lobbyLauncherState.get()
   if(launcherState == LobbyStatus.NotEnoughPlayers)
     return LobbyStatus.NotEnoughPlayers
   if(launcherState == LobbyStatus.WaitingBeforeLauch)
@@ -91,8 +91,8 @@ let lobbyStatus = Computed(function() {
       || launcherState == ServerLauncherState.WaitingForHost)
     return LobbyStatus.CreatingGame
   if (launcherState == ServerLauncherState.Launched)
-    return isInBattleState.value ? LobbyStatus.GameInProgress
-      : !connectAllowed.value ? LobbyStatus.CreatingGame
+    return isInBattleState.get() ? LobbyStatus.GameInProgress
+      : !connectAllowed.get() ? LobbyStatus.CreatingGame
       : LobbyStatus.GameInProgressNoLaunched
   return LobbyStatus.ReadyToStart
 })
@@ -100,55 +100,55 @@ let lobbyStatus = Computed(function() {
 roomIsLobby.subscribe(@(val) log($"roomIsLobby {val}"))
 
 let myMemberInfo = Computed(function() {
-  let { userId = null } = userInfo.value
-  return roomMembers.value.findvalue(@(m) m.userId == userId)
+  let { userId = null } = userInfo.get()
+  return roomMembers.get().findvalue(@(m) m.userId == userId)
 })
-let canOperateRoom = Computed(@() myMemberInfo.value?.public.operator ?? false)
+let canOperateRoom = Computed(@() myMemberInfo.get()?.public.operator ?? false)
 
-let getRoomMember =  @(user_id) roomMembers.value.findvalue(@(member) member.userId == user_id)
-let hasSquadMates =  @(squad_id) roomMembers.value.findvalue(@(member) member.public?.squadId == squad_id) != null
+let getRoomMember =  @(user_id) roomMembers.get().findvalue(@(member) member.userId == user_id)
+let hasSquadMates =  @(squad_id) roomMembers.get().findvalue(@(member) member.public?.squadId == squad_id) != null
 
 function cleanupRoomState() {
   log("cleanupRoomState")
-  room.update(null)
-  playersWaitingResponseFor({})
-  roomInvites.update([])
-  roomMembers.update([])
-  roomIsLobby.update(false)
-  hostId.update(null)
-  connectAllowed.update(null)
-  isWaitForDedicatedStart(false)
+  room.set(null)
+  playersWaitingResponseFor.set({})
+  roomInvites.set([])
+  roomMembers.set([])
+  roomIsLobby.set(false)
+  hostId.set(null)
+  connectAllowed.set(null)
+  isWaitForDedicatedStart.set(false)
   if (chatId.get() != null) {
     leaveChat(chatId.get(), null)
     clearChatState(chatId.get())
-    chatId(null)
+    chatId.set(null)
   }
 
-  if (squadVoiceChatId.value != null) {
-    voiceState.leave_voice_chat(squadVoiceChatId.value)
-    squadVoiceChatId(null)
+  if (squadVoiceChatId.get() != null) {
+    voiceState.leave_voice_chat(squadVoiceChatId.get())
+    squadVoiceChatId.set(null)
   }
 }
 
 function addRoomMember(member) {
   if (member.public?.host) {
     log("found host ", member.name,"(", member.userId,")")
-    hostId(member.userId)
+    hostId.set(member.userId)
   }
   roomMembers.mutate(@(value) value.append(member))
   return member
 }
 
 function removeRoomMember(user_id) {
-  roomMembers(roomMembers.value.filter(@(member) member.userId != user_id))
+  roomMembers.set(roomMembers.get().filter(@(member) member.userId != user_id))
 
-  if (user_id == hostId.value) {
+  if (user_id == hostId.get()) {
     log("host leaved from room")
-    hostId.update(null)
-    connectAllowed.update(null)
+    hostId.set(null)
+    connectAllowed.set(null)
   }
 
-  if (user_id == userInfo.value?.userId)
+  if (user_id == userInfo.get()?.userId)
     cleanupRoomState()
 }
 
@@ -157,17 +157,17 @@ function makeCreateRoomCb(user_cb) {
     if (response.error != 0) {
       log("failed to create room:", error_string(response.error))
     } else {
-      roomIsLobby(true)
-      room.update(response)
+      roomIsLobby.set(true)
+      room.set(response)
       log("you have created the room", response.roomId)
       foreach (member in response.members)
         addRoomMember(member)
     }
 
-    if (squadId.value != null) {
+    if (squadId.get() != null) {
       matchingCall("mrooms.set_member_attributes", null, {
                         public = {
-                          squadId = squadId.value
+                          squadId = squadId.get()
                         }
                       })
     }
@@ -182,7 +182,7 @@ function createRoom(params, user_cb) {
     if (chat_resp.error == 0) {
       params.public.chatId <- chat_resp.chatId
       params.public.chatKey <- chat_resp.chatKey
-      chatId(chat_resp.chatId)
+      chatId.set(chat_resp.chatId)
     }
     matchingCall("mrooms.create_room", makeCreateRoomCb(user_cb), params)
   })
@@ -193,18 +193,18 @@ function changeAttributesRoom(params, user_cb) {
 
 let delayedMyAttribs = mkWatched(persist, "delayedMyAttribs", null)
 function setMemberAttributes(params) {
-  if (myInfoUpdateInProgress.value) {
-    delayedMyAttribs(params)
+  if (myInfoUpdateInProgress.get()) {
+    delayedMyAttribs.set(params)
     return
   }
-  myInfoUpdateInProgress(true)
-  delayedMyAttribs(null)
+  myInfoUpdateInProgress.set(true)
+  delayedMyAttribs.set(null)
   let self = callee()
   matchingCall("mrooms.set_member_attributes",
     function(_res) {
-      myInfoUpdateInProgress(false)
-      if (delayedMyAttribs.value != null)
-        self(delayedMyAttribs.value)
+      myInfoUpdateInProgress.set(false)
+      if (delayedMyAttribs.get() != null)
+        self(delayedMyAttribs.get())
     },
     params)
 }
@@ -217,8 +217,8 @@ function makeLeaveRoomCb(user_cb) {
       cleanupRoomState()
     }
 
-    if (room.value) {
-      log("you left the room", room.value.roomId)
+    if (room.get()) {
+      log("you left the room", room.get().roomId)
     }
 
     if (user_cb)
@@ -227,7 +227,7 @@ function makeLeaveRoomCb(user_cb) {
 }
 
 function leaveRoom(user_cb = null) {
-  if (isInBattleState.value) {
+  if (isInBattleState.get()) {
     if (user_cb != null)
       user_cb({error = "Can't do that while game is running"})
     return
@@ -241,7 +241,7 @@ function forceLeaveRoom() {
 }
 
 function destroyRoom(user_cb) {
-  if (isInBattleState.value) {
+  if (isInBattleState.get()) {
     if (user_cb != null)
       user_cb({error = "Can't do that while game is running"})
     return
@@ -257,27 +257,27 @@ function makeJoinRoomCb(lobby, user_cb) {
       log("failed to join room:", error_string(response.error))
     }
     else {
-      roomIsLobby(lobby)
+      roomIsLobby.set(lobby)
 
-      room.update(response)
+      room.set(response)
       let roomId = response.roomId
       log("you joined room", roomId)
       foreach (member in response.members)
         addRoomMember(member)
 
-      let newChatId = room.value?.public.chatId
+      let newChatId = room.get()?.public.chatId
       if (newChatId) {
-        joinChat(newChatId, room.value.public.chatKey,
+        joinChat(newChatId, room.get().public.chatKey,
         function(chat_resp) {
           if (chat_resp.error == 0)
-            chatId(newChatId)
+            chatId.set(newChatId)
         })
       }
-      let squadSelfMember = getRoomMember(userInfo.value?.userId)
+      let squadSelfMember = getRoomMember(userInfo.get()?.userId)
       let selfSquadId = squadSelfMember?.public?.squadId
       if (selfSquadId != null && hasSquadMates(selfSquadId)) {
-        squadVoiceChatId($"__squad_${selfSquadId}_room_${roomId}")
-        voiceState.join_voice_chat(squadVoiceChatId.value)
+        squadVoiceChatId.set($"__squad_${selfSquadId}_room_${roomId}")
+        voiceState.join_voice_chat(squadVoiceChatId.get())
       }
     }
 
@@ -306,17 +306,17 @@ function makeStartSessionCb(user_cb) {
 
 function startSession(user_cb) {
   let params = {
-    cluster = oneOfSelectedClusters.value
+    cluster = oneOfSelectedClusters.get()
   }
   matchingCall("mrooms.start_session", makeStartSessionCb(user_cb), params)
 }
 
 function startSessionWithLocalDedicated(user_cb, loadTimeout = 30.0) {
-  if (!canStartWithLocalDedicated.value) {
+  if (!canStartWithLocalDedicated.get()) {
     logerr("Try to start local dedicated when it not allowed")
     return
   }
-  let { scene = null } = room.value?.public
+  let { scene = null } = room.get()?.public
   if (scene == null) {
     logerr("Try to start local dedicated when scene not set for the current room")
     return
@@ -326,15 +326,15 @@ function startSessionWithLocalDedicated(user_cb, loadTimeout = 30.0) {
     .subst({
       circuit = get_circuit()
       scene
-      inviteData = encodeString(object_to_json_string({ mode_info = room.value.public }, false))
+      inviteData = encodeString(object_to_json_string({ mode_info = room.get().public }, false))
     })
   log("Start local dedicated: ", cmdText)
   system(cmdText)
-  isWaitForDedicatedStart(true)
+  isWaitForDedicatedStart.set(true)
   gui_scene.setTimeout(loadTimeout, function() {
-    if (!isWaitForDedicatedStart.value)
+    if (!isWaitForDedicatedStart.get())
       return
-    isWaitForDedicatedStart(false)
+    isWaitForDedicatedStart.set(false)
     matchingCall("mrooms.start_session", makeStartSessionCb(user_cb), { cluster = "debug" })
   })
 }
@@ -346,33 +346,36 @@ function onRoomDestroyed(_notify) {
 function signBattleLoadout() {
   
   ecs.g_entity_mgr.broadcastEvent(CmdHideAllUiMenus())
+  let queueParam = isInSquad.get() && !isSquadLeader.get() ? squadLeaderState.get()?.curQueueParam : curQueueParam.get()
 
-  if (room.value.public?.extraParams.nexus ?? false)
+  if (room.get().public?.extraParams.nexus ?? false)
     eventbus_send("profile_server.get_nexus_loadout", {
-      session_id = (room.value.public?.sessionId ?? 0).tostring(),
-      raid_name = room.value.public?.extraParams?.raidName ?? "",
+      session_id = (room.get().public?.sessionId ?? 0).tostring(),
+      raid_name = room.get().public?.extraParams?.raidName ?? "",
       selected_mints=alterMints.get().map(@(v) v.id),
       primary_contract_ids = currentPrimaryContractIds.get()
     })
   else
     eventbus_send("profile_server.get_battle_loadout", {
-      session_id = (room.value.public?.sessionId ?? 0).tostring(),
-      raid_name = room.value.public?.extraParams?.raidName ?? "",
+      session_id = (room.get().public?.sessionId ?? 0).tostring(),
+      raid_name = room.get().public?.extraParams?.raidName ?? "",
+      queue_id = queueParam?.queueId ?? "",
       is_rented_equipment = useAgencyPreset.get(),
-      primary_contract_ids = currentPrimaryContractIds.get()
+      primary_contract_ids = currentPrimaryContractIds.get(),
+      is_offline = false
     })
 }
 
 function startConnectToHostSequence(...) {
-  if (hostId.value == null)
+  if (hostId.get() == null)
     return
 
-  if (!room.value) {
+  if (!room.get()) {
     log("ConnectToHost error: room leaved while wait for callback")
     return
   }
 
-  ecs.g_entity_mgr.sendEvent(watchedHeroEid.get(), CmdStartMenuExtractionSequence())
+  ecs.g_entity_mgr.sendEvent(watchedHeroEid.get(), CmdStartMenuExtractionSequence({isOffline=false}))
 }
 
 eventbus_subscribe("battle_loadout_sign_success", startConnectToHostSequence)
@@ -380,16 +383,16 @@ eventbus_subscribe("battle_loadout_sign_failed", @(...) forceLeaveRoom())
 
 function finishConnectingToHost() {
 
-  local selfMember = getRoomMember(userInfo.value?.userId)
+  local selfMember = getRoomMember(userInfo.get()?.userId)
   let launchParams = {
-    host_urls = getRoomMember(hostId.value)?.public?.host_urls
-    sessionId = room.value.public?.sessionId
-    game = room.value.public?.gameName
+    host_urls = getRoomMember(hostId.get())?.public?.host_urls
+    sessionId = room.get().public?.sessionId
+    game = room.get().public?.gameName
     authKey = selfMember?.private?.id_hmac
     encKey = selfMember?.private?.enc_key
-    modManifestUrl = room.value.public?.modManifestUrl ?? ""
-    modHashes = room.value.public?.modHashes ?? ""
-    baseModsFilesUrl = room.value.public?.baseModsFilesUrl ?? ""
+    modManifestUrl = room.get().public?.modManifestUrl ?? ""
+    modHashes = room.get().public?.modHashes ?? ""
+    baseModsFilesUrl = room.get().public?.baseModsFilesUrl ?? ""
   }
 
   launchParams.each(function(val, key) {
@@ -398,12 +401,12 @@ function finishConnectingToHost() {
     }
   })
 
-  lastSessionStartData({
+  lastSessionStartData.set({
     sessionId = launchParams.sessionId
-    loginTime = loginChain.loginTime.value
+    loginTime = loginChain.loginTime.get()
   })
   room.mutate(@(v) v.gameStarted <- true)
-  lastRoomResult(null)
+  lastRoomResult.set(null)
   ecs.g_entity_mgr.broadcastEvent(CmdHideAllUiMenus())
   startGame(launchParams)
 }
@@ -413,9 +416,9 @@ ecs.register_es("enlist_connect_to_host_es", {
 }, {comps_rq=["eid"]})
 
 function onDisconnectedFromServer(evt, _eid, _comp) {
-  if (!roomIsLobby.value)
+  if (!roomIsLobby.get())
     forceLeaveRoom()
-  if (lastSessionStartData.value == null)
+  if (lastSessionStartData.get() == null)
     return
 
   local connLost = true
@@ -423,20 +426,20 @@ function onDisconnectedFromServer(evt, _eid, _comp) {
     connLost = false
   }
 
-  let { sessionId, loginTime } = lastSessionStartData.value
-  lastSessionStartData(null)
-  let wasRelogin = loginTime != loginChain.loginTime.value
-  if (!wasRelogin && !connLost && !roomIsLobby.value) {
+  let { sessionId, loginTime } = lastSessionStartData.get()
+  lastSessionStartData.set(null)
+  let wasRelogin = loginTime != loginChain.loginTime.get()
+  if (!wasRelogin && !connLost && !roomIsLobby.get()) {
     matchingCall("enlmm.remove_from_match", null, { sessionId })
-    lastRoomResult({ connLost, sessionId })
+    lastRoomResult.set({ connLost, sessionId })
   }
 }
 
 function onConnectedToServer() {
-  if (room.value?.public?.extraParams == null) {
+  if (room.get()?.public?.extraParams == null) {
     return
   }
-  let extraParams = room.value?.public?.extraParams
+  let extraParams = room.get()?.public?.extraParams
   ecs.g_entity_mgr.broadcastEvent(MatchingRoomExtraParams({
       routeEvaluationChance = extraParams?.routeEvaluationChance ?? 0.0,
       ddosSimulationChance = extraParams?.ddosSimulationChance ?? 0.0,
@@ -454,18 +457,18 @@ ecs.register_es("enlist_connected_to_server_es", {
 
 function onHostNotify(notify) {
   log("onHostNotify", notify)
-  if (notify.hostId != hostId.value) {
-    log($"warning: got host notify from host that is not in current room {notify.hostId} != {hostId.value}")
+  if (notify.hostId != hostId.get()) {
+    log($"warning: got host notify from host that is not in current room {notify.hostId} != {hostId.get()}")
     return
   }
 
-  if (notify.roomId != room.value?.roomId) {
+  if (notify.roomId != room.get()?.roomId) {
     log("warning: got host notify for wrong room")
     return
   }
 
   if (notify.message == "connect-allowed")
-    connectAllowed(true)
+    connectAllowed.set(true)
   else {
     msgbox.showMsgbox({text=loc("msgboxtext/connectNotAllowed")})
     forceLeaveRoom()
@@ -478,32 +481,32 @@ function onHostNotify(notify) {
     return
   }
 
-  if (doConnectToHostOnHostNotfy.value || isWaitForDedicatedStart.value) {
-    isWaitForDedicatedStart(false)
+  if (doConnectToHostOnHostNotfy.get() || isWaitForDedicatedStart.get()) {
+    isWaitForDedicatedStart.set(false)
     signBattleLoadout()
   }
 }
 
 function onRoomMemberJoined(notify) {
-  if (notify.roomId != room.value?.roomId)
+  if (notify.roomId != room.get()?.roomId)
     return
   log("{0} ({1}) joined room".subst(notify.name, notify.userId))
-  if (notify.userId != userInfo.value?.userId) {
+  if (notify.userId != userInfo.get()?.userId) {
     let newmember = addRoomMember(notify)
-    if (squadVoiceChatId.value == null) {
-      let squadSelfMember = getRoomMember(userInfo.value?.userId)
+    if (squadVoiceChatId.get() == null) {
+      let squadSelfMember = getRoomMember(userInfo.get()?.userId)
       let selfSquadId = squadSelfMember?.public?.squadId
       if (selfSquadId != null && selfSquadId == newmember?.squadId) {
-        let roomId = room.value.roomId
-        squadVoiceChatId($"__squad_${selfSquadId}_room_${roomId}")
-        voiceState.join_voice_chat(squadVoiceChatId.value)
+        let roomId = room.get().roomId
+        squadVoiceChatId.set($"__squad_${selfSquadId}_room_${roomId}")
+        voiceState.join_voice_chat(squadVoiceChatId.get())
       }
     }
   }
 }
 
 function onRoomMemberLeft(notify) {
-  if (notify.roomId != room.value?.roomId)
+  if (notify.roomId != room.get()?.roomId)
     return
   log("{0} ({1}) left from room".subst(notify.name, notify.userId))
   removeRoomMember(notify.userId)
@@ -526,7 +529,7 @@ function merge_attribs(upd_data, attribs) {
 }
 
 function onRoomAttrChanged(notify) {
-  if (!room.value)
+  if (!room.get())
     return
 
   room.mutate(function(roomVal){
@@ -541,7 +544,7 @@ function onRoomAttrChanged(notify) {
 }
 
 function onRoomMemberAttrChanged(notify) {
-  if (!roomMembers.value)
+  if (!roomMembers.get())
     return
 
   roomMembers.mutate(function(membs) {
@@ -560,11 +563,11 @@ function onRoomMemberAttrChanged(notify) {
   })
 }
 
-let canInviteToRoom = Computed(@() room.value != null
-  && (room.value?.public.slotsCnt ?? 0) < (room.value?.public.maxPlayers ?? 0))
+let canInviteToRoom = Computed(@() room.get() != null
+  && (room.get()?.public.slotsCnt ?? 0) < (room.get()?.public.maxPlayers ?? 0))
 
 function isInMyRoom(newMemberId){
-  return roomMembers.value.findvalue(@(member) member.userId == newMemberId) != null
+  return roomMembers.get().findvalue(@(member) member.userId == newMemberId) != null
 }
 
 function joinCb(response) {
@@ -583,17 +586,17 @@ subscribeGroup(INVITE_ACTION_ID, {
     buttons = [
       { text = loc("Yes"), isCurrent = true,
         function action() {
-          let { userId = null } = userInfo.value
+          let { userId = null } = userInfo.get()
           let params = { roomId = notify.roomId.tointeger() }
           joinRoom(params, true, joinCb)
           notify.send_resp({ accept = true, user_id = userId })
-          joinedRoomWithInvite(true)
+          joinedRoomWithInvite.set(true)
           removeNotify(notify)
         }
       }
       { text = loc("No"), isCancel = true,
         function action() {
-          let { userId = null } = userInfo.value
+          let { userId = null } = userInfo.get()
           removeNotify(notify)
           notify.send_resp({ accept = false, user_id = userId })
         }
@@ -603,9 +606,9 @@ subscribeGroup(INVITE_ACTION_ID, {
   onRemove = @(notify) notify.send_resp({ accept = false })
 })
 
-room.subscribe(function(v){
+room.subscribe_with_nasty_disregard_of_frp_update(function(v){
   if(v == null)
-    joinedRoomWithInvite(false)
+    joinedRoomWithInvite.set(false)
 })
 
 function onRoomInvite(reqctx) {
@@ -632,7 +635,7 @@ function onRoomInvite(reqctx) {
 
 
 function inviteToRoom(user_id){
-  if(isInMyRoom(user_id) || !canInviteToRoom.value){
+  if(isInMyRoom(user_id) || !canInviteToRoom.get()){
     log("Player can not be invited to lobby")
     return
   }
@@ -653,14 +656,14 @@ function onMatchInvite(reqctx) {
 }
 
 function list_invites(){
-  foreach (i, invite in roomInvites.value){
+  foreach (i, invite in roomInvites.get()){
     log(
       "{0} from {1} ({2}), roomId {3}".subst(
         i, invite.senderName, invite.senderId, invite.roomId))
   }
 }
 
-let gameIsLaunching = Computed(@() !((roomIsLobby.value || !room.value) && !isInQueue.value))
+let gameIsLaunching = Computed(@() !((roomIsLobby.get() || !room.get()) && !isInQueue.get()))
 
 console_register_command(list_invites, "mrooms.list_invites")
 
@@ -692,7 +695,7 @@ let allowReconnect = mkWatched(persist, "allowReconnect", true)
 
 return {
   room
-  isInRoom = Computed(@() room.value != null)
+  isInRoom = Computed(@() room.get() != null)
   roomInvites
   roomMembers
   roomIsLobby

@@ -6,7 +6,7 @@ attack_grenade_item{
   item__shell:t="gamedata/weapons/grenades/attack_grenade.blk"
   item__name:t="items/attack_grenade"
   item__weight:r=0.6
-  item__volume:r=2
+  item__volume:i=20
   item__marketPrice:i=300
 }
 
@@ -30,9 +30,10 @@ zarya_flash_grenade_item{
   item__shell:t="gamedata/weapons/grenades/zarya_flash_grenade.blk"
   item__name:t="items/zarya_3_flash"
   item__weight:r=0.18
-  item__volume:r=2
+  item__volume:i=20
   item__grenadeType:t="flash"
   item__marketPrice:i=360
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 }
 
 m14_incendiary_grenade_char{
@@ -48,21 +49,30 @@ m14_incendiary_grenade_char{
   }
 }
 
+m14_incendiary_grenade_active_char{
+  animchar__res:t="m_18_violet_active_char"
+  collres__res:t="m_18_violet_active_collision"
+
+  "animchar__objTexReplace:object"{
+    "m18_violet_tex_d*":t="m14_incen_tex_d*"
+    "m18_violet_tex_n*":t="m14_incen_tex_n*"
+  }
+}
+
 m14_incendiary_grenade_item{
   _use:t="item_grenade"
   _use:t="m14_incendiary_grenade_char"
   item__shell:t="gamedata/weapons/grenades/m14_incendiary.blk"
   item__proto:t="m14_incendiary_grenade_item"
   item__grenadeType:t="flame"
-  item__userstats__pickupName:t="pickup_m14_incendiary_grenade"
   item__name:t="items/fire_grenade"
   item__weight:r=0.8
-  item__volume:r=3
+  item__volume:i=30
   item__marketPrice:i=390
   loud_noise__noisePerExplosion:r=120
   loud_noise__radius:r=40
   weapon_stat__dps:r=30
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 }
 
 fire_grenade_item{
@@ -71,7 +81,7 @@ fire_grenade_item{
   item__shell:t="gamedata/weapons/grenades/fire_grenade.blk"
   item__name:t="items/fire_grenade"
   item__weight:r=0.4
-  item__volume:r=2
+  item__volume:i=20
   item__marketPrice:i=275
 }
 
@@ -95,17 +105,17 @@ rdgm_smoke_grenade_item{
   item__shell:t="gamedata/weapons/grenades/rdgm_smoke_grenade.blk"
   item__name:t="items/rdgm_smoke_grenade"
   item__weight:r=0.35
-  item__volume:r=2
+  item__volume:i=20
   item__grenadeType:t="smoke"
   item__marketPrice:i=240
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 }
 
 attraction_grenade_item{
   _use:t="item_grenade"
   item__name:t="items/xvp_attraction_grenade"
   item__weight:r=0.4
-  item__volume:r=0.5
+  item__volume:i=5
   item__shell:t="gamedata/weapons/grenades/attraction_grenade.blk"
   item__proto:t="attraction_grenade_item"
   animchar__res:t="spaceMarine_grenade_char"

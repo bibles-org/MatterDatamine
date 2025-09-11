@@ -1,12 +1,16 @@
+from "%ui/components/commonComponents.nut" import mkText
+from "%ui/fonts_style.nut" import tiny_txt
+from "%ui/components/colors.nut" import BtnBgActive
+from "math" import fabs
+from "das.inventory" import get_inventory_content_volume
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { mkText } = require("%ui/components/commonComponents.nut")
-let { tiny_txt } = require("%ui/fonts_style.nut")
 let { focusedData, draggedData, isShiftPressed } = require("%ui/hud/state/inventory_state.nut")
-let { BtnBgActive } = require("%ui/components/colors.nut")
-let { fabs } = require("math")
-let { trashBinItems } = require("%ui/hud/menus/components/trashBin.nut")
+let { STASH } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
+
+#allow-auto-freeze
 
 let focusedItemVolumeTextColor = Color(224, 202, 58, 255)
 let itemVolumeColor = Color(186, 186, 186, 255)
@@ -16,7 +20,7 @@ let volumeProgressBlinkInventory = [
   {prop = AnimProp.opacity, from = 0.4, to = 1.0, duration = 2.0 , loop = true, play = true, easing = CosineFull}
 ]
 
-let mkProgress = function(progress, focused, maxVolume, override = {}) {
+let mkProgress = function(progress, focused, maxVolume) {
   let currentProgress = progress.tofloat() / maxVolume.tofloat() * 100
   let overvolume = progress + focused > maxVolume
   let focusedProgress = overvolume ? 0 : focused.tofloat() / maxVolume.tofloat() * 100
@@ -24,14 +28,14 @@ let mkProgress = function(progress, focused, maxVolume, override = {}) {
   return {
     key = focused
     rendObj = ROBJ_SOLID
-    size = [ flex(), hdpx(4) ]
+    size = static [ flex(), hdpx(4) ]
     color = Color(0, 0, 0, 50)
     children = [
       {
         rendObj = ROBJ_SOLID
         color = currentProgress > 100 ? overVolumeColor : itemVolumeColor
         size = [ pw(min(currentProgress, 100)), flex() ]
-      }.__update(override),
+      },
       hasFocused ? {
         rendObj = ROBJ_SOLID
         size = [ pw(min(fabs(focusedProgress), 100)), flex() ]
@@ -61,11 +65,11 @@ function blinkingOverlay(eid){
   }
 }
 
-function mkVolumeText(curvolume, maxVolume, focusedVolume, override = {}) {
+function mkVolumeText(curvolume, maxVolume, focusedVolume) {
   let focusedStr = $"({focusedVolume > 0 ? "+" : ""}{fabs(focusedVolume)})"
   let overweight = curvolume + focusedVolume > maxVolume
   return {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     children = [
       {
         hplace = ALIGN_LEFT
@@ -73,21 +77,21 @@ function mkVolumeText(curvolume, maxVolume, focusedVolume, override = {}) {
         flow = FLOW_HORIZONTAL
         gap = hdpx(2)
         children = [
-          mkText(curvolume, override.__update(tiny_txt))
+          mkText(curvolume, tiny_txt)
           !focusedVolume ? null
             : mkText(focusedStr, { color = overweight ? overVolumeColor : focusedItemVolumeTextColor }
-                .__update(tiny_txt, override))
+                .__update(tiny_txt))
         ]
       }
       {
         hplace = ALIGN_CENTER
         vplace = ALIGN_BOTTOM
-        children = mkText(loc("desc/volume_no_dots"), override)
+        children = mkText(loc("desc/volume_no_dots"))
       }
       {
         hplace = ALIGN_RIGHT
         vplace = ALIGN_BOTTOM
-        children = mkText(maxVolume, override.__update(tiny_txt))
+        children = mkText(maxVolume, tiny_txt)
       }
     ]
   }
@@ -95,7 +99,7 @@ function mkVolumeText(curvolume, maxVolume, focusedVolume, override = {}) {
 
 let volumeHdrHeight = calc_comp_size(mkProgress(1,1,1))[1] + calc_comp_size(mkVolumeText(1,1,1))[1] + hdpx(2) 
 
-function mkVolumeHdr(carried, max_volume, inventory_item_type, eid = ecs.INVALID_ENTITY_ID, override = {}) {
+function mkVolumeHdr(carried, max_volume, inventory_item_type, eid = ecs.INVALID_ENTITY_ID) {
   let focusedVolume = Computed(function() {
 
     if ( focusedData.get()?.itemTemplate == "small_safepack"
@@ -110,37 +114,27 @@ function mkVolumeHdr(carried, max_volume, inventory_item_type, eid = ecs.INVALID
       : focusedData.get()?.currentStackVolume ?? 0.0
     let draggedVolume = isShiftPressed.get() ? (draggedData.get()?.count ?? 1) * (draggedData.get()?.volume ?? 0.0)
       : draggedData.get()?.currentStackVolume ?? 0.0
-    return (usedFocused ? focusedVolume : draggedVolume) * sign
+    let contentVolume = inventory_item_type == STASH.name && sign == 1.0 
+      ? get_inventory_content_volume((usedFocused ? focusedData.get()?.eid : draggedData.get()?.eid) ?? ecs.INVALID_ENTITY_ID)
+      : 0.0
+    return (usedFocused ? focusedVolume : draggedVolume) * sign + contentVolume
   })
 
-  let trashBinVolume = Computed(function() {
-    let itemsInTrash = trashBinItems.get()
-    local itemsVolume = 0
-    foreach (item in itemsInTrash) {
-      let { volume = 0, trashBinItemOrigin = {}, count = 1 } = item
-      if (inventory_item_type != trashBinItemOrigin?.name)
-        continue
-      itemsVolume += volume * count
-    }
-    if (itemsVolume == 0)
-      return null
-    return -itemsVolume
-  })
-
+  let size = [ flex(), volumeHdrHeight ]
   return @() {
-    watch = [carried, max_volume, focusedVolume, trashBinVolume]
-    size = const [ flex(), volumeHdrHeight ]
+    watch = [carried, max_volume, focusedVolume]
     valign = ALIGN_CENTER
+    size
     children = max_volume.get() > 0.0 ? [
       blinkingOverlay(eid),
       {
         flow = FLOW_VERTICAL
-        size = const [ flex(), volumeHdrHeight ]
+        size
         gap = hdpx(2)
         children = [
-          mkVolumeText(carried.get(), max_volume.get(), trashBinVolume.get() ?? focusedVolume.get(), override)
-          mkProgress(carried.get().tofloat(), (trashBinVolume.get() ?? focusedVolume.get()).tofloat(),
-            max_volume.get().tofloat(), override)
+          mkVolumeText(carried.get(), max_volume.get(), focusedVolume.get())
+          mkProgress(carried.get().tofloat(), (focusedVolume.get()).tofloat(),
+            max_volume.get().tofloat())
         ]
       }
     ] : []

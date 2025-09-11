@@ -1,0 +1,1622 @@
+nexus_trooper_equipment_generator{
+  "equipment_generator__data:object"{
+    "equipments:object"{
+      "suit_militant_female_light_a_item:object"{
+        chance:i=10
+
+        "equipment_helmet:object"{
+          helmet_pasgt:i=10
+          helmet_pasgt_tactical:i=10
+          helmet_kiver:i=5
+          helmet_d:i=10
+        }
+
+        "equipment_mod_left_hand_0:object"{
+          EMPTY:i=10
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_hand_0:object"{
+          EMPTY:i=10
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=10
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=10
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_pouch:object"{
+          medium_pouch:i=5
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_mod_pocket_0:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "equipment_mod_pocket_1:object"{
+          item_painkiller:i=10
+        }
+      }
+
+      "sm_rebel_item:object"{
+        chance:i=15
+
+        "equipment_helmet:object"{
+          EMPTY:i=30
+          helmet_pasgt:i=10
+          helmet_pasgt_tactical:i=10
+          helmet_kiver:i=5
+          helmet_d:i=10
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=20
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=20
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=10
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=10
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_pouch:object"{
+          medium_pouch:i=5
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_mod_pocket_0:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "equipment_mod_pocket_1:object"{
+          item_painkiller:i=10
+        }
+      }
+    }
+
+    "main_weapons:array"{
+      "i:object"{
+        templateName:t="hk_mp5n_gun"
+        weight:i=10
+
+        "magazine:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH3:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH4:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH5:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH6:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH7:object"{
+          hk_mp5n_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="hk_ump_45_gun"
+        weight:i=10
+
+        "magazine:object"{
+          hk_ump_45_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          hk_ump_45_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          hk_ump_45_magazine:i=10
+        }
+
+        "POUCH3:object"{
+          hk_ump_45_magazine:i=10
+        }
+
+        "POUCH4:object"{
+          hk_ump_45_magazine:i=10
+        }
+
+        "POUCH5:object"{
+          hk_ump_45_magazine:i=10
+        }
+
+        "POUCH6:object"{
+          hk_ump_45_magazine:i=10
+        }
+
+        "POUCH7:object"{
+          hk_ump_45_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="aks_74u_gun"
+        weight:i=5
+
+        "magazine:object"{
+          ak_74_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          ak_74_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          ak_74_magazine:i=10
+        }
+
+        "POUCH3:object"{
+          ak_74_magazine:i=10
+        }
+
+        "POUCH4:object"{
+          ak_74_magazine:i=10
+        }
+
+        "POUCH5:object"{
+          ak_74_magazine:i=10
+        }
+
+        "POUCH6:object"{
+          ak_74_magazine:i=10
+        }
+
+        "POUCH7:object"{
+          ak_74_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="mossberg_590_gun"
+        weight:i=10
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=10
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=10
+        }
+
+        "POUCH4:object"{
+          box_12_gauge_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_gun"
+        weight:i=10
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=10
+        }
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="makarov_gun"
+        weight:i=10
+
+        "magazine:object"{
+          makarov_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          makarov_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="m1911_colt_gun"
+        weight:i=10
+
+        "magazine:object"{
+          m1911_colt_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          m1911_colt_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="beretta_m9_gun"
+        weight:i=5
+
+        "magazine:object"{
+          beretta_m9_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          beretta_m9_magazine:i=10
+        }
+      }
+    }
+
+    "melee_weapons:object"{
+      EMPTY:i=10
+      knife_weapon:i=10
+      sov_knife_nr_40_weapon:i=10
+      ak_bayonet_weapon:i=10
+      mpl50_shovel:i=5
+    }
+
+    "medicines:array"{
+      "i:object"{
+        "POUCH1:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "POUCH2:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "POUCH3:object"{
+          item_healing_ampoule:i=10
+        }
+      }
+    }
+  }
+}
+
+nexus_cqb_equipment_generator{
+  "equipment_generator__data:object"{
+    "equipments:object"{
+      "sm_hunter_item:object"{
+        chance:i=10
+
+        "equipment_helmet:object"{
+          helmet_kiver:i=10
+          helmet_galvion_viper_a3:i=5
+          helmet_d:i=10
+        }
+
+        "equipment_mod_body_0:object"{
+          armorplate_big_c:i=20
+          armorplate_big_a:i=10
+        }
+
+        "equipment_mod_body_1:object"{
+          EMPTY:i=10
+        }
+
+        "equipment_mod_left_hand_0:object"{
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_hand_0:object"{
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_left_leg_1:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_1:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_pouch:object"{
+          medium_pouch:i=5
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_mod_pocket_0:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "equipment_mod_pocket_1:object"{
+          item_painkiller:i=10
+        }
+      }
+
+      "suit_militant_light_c_item:object"{
+        chance:i=10
+
+        "equipment_helmet:object"{
+          helmet_kiver:i=10
+          helmet_galvion_viper_a3:i=5
+          helmet_d:i=10
+        }
+
+        "equipment_mod_body_0:object"{
+          armorplate_big_c:i=20
+          armorplate_big_a:i=10
+        }
+
+        "equipment_mod_left_hand_0:object"{
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_hand_0:object"{
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_pouch:object"{
+          medium_pouch:i=5
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_mod_pocket_0:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "equipment_mod_pocket_1:object"{
+          item_painkiller:i=10
+        }
+      }
+    }
+
+    "main_weapons:array"{
+      "i:object"{
+        templateName:t="pm_63_rak_gun"
+        weight:i=10
+
+        "magazine:object"{
+          pm_63_rak_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          pm_63_rak_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          pm_63_rak_magazine:i=10
+        }
+
+        "POUCH3:object"{
+          pm_63_rak_magazine:i=10
+        }
+
+        "POUCH4:object"{
+          pm_63_rak_magazine:i=10
+        }
+
+        "POUCH5:object"{
+          pm_63_rak_magazine:i=10
+        }
+
+        "POUCH6:object"{
+          pm_63_rak_magazine:i=10
+        }
+
+        "POUCH7:object"{
+          pm_63_rak_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="pp_91_kedr_gun"
+        weight:i=10
+
+        "magazine:object"{
+          pp_91_kedr_20_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          pp_91_kedr_20_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          pp_91_kedr_20_magazine:i=10
+        }
+
+        "POUCH3:object"{
+          pp_91_kedr_20_magazine:i=10
+        }
+
+        "POUCH4:object"{
+          pp_91_kedr_20_magazine:i=10
+        }
+
+        "POUCH5:object"{
+          pp_91_kedr_20_magazine:i=10
+        }
+
+        "POUCH6:object"{
+          pp_91_kedr_20_magazine:i=10
+        }
+
+        "POUCH7:object"{
+          pp_91_kedr_20_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="toz_b_gun"
+        weight:i=10
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=10
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=10
+        }
+
+        "POUCH4:object"{
+          box_12_gauge_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="winchester_civil_gun"
+        weight:i=10
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=10
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=10
+        }
+
+        "POUCH4:object"{
+          box_12_gauge_magazine:i=10
+        }
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="makarov_gun"
+        weight:i=10
+
+        "magazine:object"{
+          makarov_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          makarov_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="m1911_colt_gun"
+        weight:i=10
+
+        "magazine:object"{
+          m1911_colt_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          m1911_colt_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="beretta_m9_gun"
+        weight:i=10
+
+        "magazine:object"{
+          beretta_m9_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          beretta_m9_magazine:i=10
+        }
+      }
+    }
+
+    "melee_weapons:object"{
+      hammer_weapon:i=10
+      spear_weapon:i=10
+      axe_weapon:i=10
+      mpl50_shovel:i=10
+    }
+
+    "medicines:array"{
+      "i:object"{
+        "POUCH1:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "POUCH2:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "POUCH3:object"{
+          item_healing_ampoule:i=10
+        }
+      }
+    }
+  }
+}
+
+nexus_sniper_equipment_generator{
+  "equipment_generator__data:object"{
+    "equipments:object"{
+      "sm_phantom_item:object"{
+        chance:i=10
+
+        "equipment_helmet:object"{
+          EMPTY:i=10
+        }
+
+        "equipment_mod_body_0:object"{
+          armorplate_small_a:i=10
+          armorplate_small_b:i=10
+        }
+
+        "equipment_mod_body_1:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_pouch:object"{
+          medium_pouch:i=5
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_mod_pocket_0:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "equipment_mod_pocket_1:object"{
+          item_painkiller:i=10
+        }
+      }
+
+      "sm_mirage_item:object"{
+        chance:i=10
+
+        "equipment_helmet:object"{
+          EMPTY:i=10
+        }
+
+        "equipment_mod_body_0:object"{
+          armorplate_small_a:i=10
+        }
+
+        "equipment_mod_body_1:object"{
+          armorplate_small_a:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_pouch:object"{
+          medium_pouch:i=5
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_mod_pocket_0:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "equipment_mod_pocket_1:object"{
+          item_painkiller:i=10
+        }
+      }
+    }
+
+    "main_weapons:array"{
+      "i:object"{
+        templateName:t="sks_carbine_hunt_gun"
+        weight:i=10
+
+        "scope:object"{
+          scope_pso1:i=10
+        }
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=10
+        }
+
+        "POUCH3:object"{
+          box_7_62x39_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_civil_gun"
+        weight:i=10
+
+        "magazine:object"{
+          vepr_10rd_magazine:i=10
+        }
+
+        "scope:object"{
+          scope_pso1_high:i=10
+        }
+
+        "POUCH1:object"{
+          vepr_10rd_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          vepr_10rd_magazine:i=10
+        }
+
+        "POUCH3:object"{
+          vepr_10rd_magazine:i=10
+        }
+
+        "POUCH4:object"{
+          vepr_10rd_magazine:i=10
+        }
+
+        "POUCH5:object"{
+          vepr_10rd_magazine:i=10
+        }
+
+        "POUCH6:object"{
+          vepr_10rd_magazine:i=10
+        }
+
+        "POUCH7:object"{
+          vepr_10rd_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m91_gun"
+        weight:i=10
+
+        "scope:object"{
+          scope_3_5x:i=10
+        }
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          box_7_62x54_magazine:i=10
+        }
+
+        "POUCH3:object"{
+          box_7_62x54_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="crossbow_gun"
+        weight:i=5
+
+        "scope:object"{
+          scope_utg_t4:i=10
+        }
+
+        "POUCH1:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH2:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH3:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH4:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH5:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH6:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH7:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH8:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH9:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH10:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH11:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH12:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH13:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH14:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH15:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH16:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH17:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH18:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH19:object"{
+          crossbow_bolt_item:i=10
+        }
+
+        "POUCH20:object"{
+          crossbow_bolt_item:i=10
+        }
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="m1911_colt_gun"
+        weight:i=10
+
+        "magazine:object"{
+          m1911_colt_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          m1911_colt_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          m1911_colt_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="beretta_m9_gun"
+        weight:i=10
+
+        "magazine:object"{
+          beretta_m9_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          beretta_m9_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          beretta_m9_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="mp_443_gun"
+        weight:i=10
+
+        "magazine:object"{
+          mp_443_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          mp_443_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          mp_443_magazine:i=10
+        }
+      }
+    }
+
+    "melee_weapons:object"{
+      EMPTY:i=10
+      knife_weapon:i=10
+      sov_knife_nr_40_weapon:i=10
+      ak_bayonet_weapon:i=10
+      mpl50_shovel:i=5
+    }
+
+    "medicines:array"{
+      "i:object"{
+        "POUCH1:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "POUCH2:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "POUCH3:object"{
+          item_healing_ampoule:i=10
+        }
+      }
+    }
+  }
+}
+
+nexus_bomber_equipment_generator{
+  "equipment_generator__data:object"{
+    "equipments:object"{
+      "sm_beast_item:object"{
+        chance:i=10
+
+        "equipment_helmet:object"{
+          EMPTY:i=40
+          helmet_pasgt:i=10
+          helmet_pasgt_tactical:i=10
+          helmet_kiver:i=5
+          helmet_ussr_ssh40:i=10
+          helmet_ussr_ssh40_rust:i=5
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=10
+          armorplate_big_c:i=10
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=10
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=10
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_pouch:object"{
+          medium_pouch:i=5
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_mod_pocket_0:object"{
+          f1_grenade_item:i=10
+        }
+
+        "equipment_mod_pocket_1:object"{
+          ussr_molotov_item:i=10
+        }
+      }
+
+      "sm_psychologist_item:object"{
+        chance:i=10
+
+        "equipment_helmet:object"{
+          EMPTY:i=40
+          helmet_pasgt:i=10
+          helmet_pasgt_tactical:i=10
+          helmet_kiver:i=5
+          helmet_ussr_ssh40:i=10
+          helmet_ussr_ssh40_rust:i=5
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=10
+          armorplate_big_a:i=10
+          armorplate_big_c:i=10
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          EMPTY:i=10
+          armorplate_small_c:i=10
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          EMPTY:i=10
+          armorplate_small_c:i=10
+        }
+
+        "equipment_flashlight:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_pouch:object"{
+          medium_pouch:i=5
+        }
+
+        "equipment_backpack:object"{
+          EMPTY:i=5
+        }
+
+        "equipment_mod_pocket_0:object"{
+          f1_grenade_item:i=10
+        }
+
+        "equipment_mod_pocket_1:object"{
+          ussr_molotov_item:i=10
+        }
+      }
+    }
+
+    "main_weapons:array"{
+      "i:object"{
+        templateName:t="hk_mp5n_gun"
+        weight:i=10
+
+        "magazine:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH3:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH4:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH5:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH6:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH7:object"{
+          hk_mp5n_magazine:i=10
+        }
+
+        "POUCH8:object"{
+          f1_grenade_item:i=10
+        }
+
+        "POUCH9:object"{
+          rdgm_smoke_grenade_item:i=10
+          ussr_molotov_item:i=10
+        }
+
+        "POUCH10:object"{
+          rdgm_smoke_grenade_item:i=10
+          ussr_molotov_item:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="winchester_civil_gun"
+        weight:i=10
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=10
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=10
+        }
+
+        "POUCH4:object"{
+          box_12_gauge_magazine:i=10
+        }
+
+        "POUCH5:object"{
+          f1_grenade_item:i=10
+        }
+
+        "POUCH6:object"{
+          rdgm_smoke_grenade_item:i=10
+          ussr_molotov_item:i=10
+        }
+
+        "POUCH7:object"{
+          rdgm_smoke_grenade_item:i=10
+          ussr_molotov_item:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="flamethrower_corefan_gun"
+        weight:i=10
+
+        "magazine:object"{
+          flamethrower_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          flamethrower_magazine:i=10
+        }
+
+        "POUCH2:object"{
+          flamethrower_magazine:i=10
+        }
+
+        "POUCH3:object"{
+          f1_grenade_item:i=10
+        }
+
+        "POUCH4:object"{
+          rdgm_smoke_grenade_item:i=10
+          ussr_molotov_item:i=10
+        }
+
+        "POUCH5:object"{
+          rdgm_smoke_grenade_item:i=10
+          ussr_molotov_item:i=10
+        }
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="makarov_gun"
+        weight:i=10
+
+        "magazine:object"{
+          makarov_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          makarov_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="m1911_colt_gun"
+        weight:i=10
+
+        "magazine:object"{
+          m1911_colt_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          m1911_colt_magazine:i=10
+        }
+      }
+
+      "i:object"{
+        templateName:t="beretta_m9_gun"
+        weight:i=10
+
+        "magazine:object"{
+          beretta_m9_magazine:i=10
+        }
+
+        "POUCH1:object"{
+          beretta_m9_magazine:i=10
+        }
+      }
+    }
+
+    "melee_weapons:object"{
+      EMPTY:i=10
+      screwdriver_a_weapon:i=10
+      screwdriver_b_weapon:i=10
+      mpl50_shovel:i=5
+    }
+
+    "medicines:array"{
+      "i:object"{
+        "POUCH1:object"{
+          item_painkiller:i=10
+        }
+
+        "POUCH2:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "POUCH3:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "POUCH4:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "POUCH5:object"{
+          item_healing_ampoule:i=10
+        }
+
+        "POUCH6:object"{
+          item_healing_ampoule:i=10
+        }
+      }
+    }
+  }
+}
+
+nexus_epic_equipment_generator{
+  "equipment_generator__data:object"{
+    "equipments:object"{
+      "suit_militant_light_f_item:object"{
+        chance:i=100
+
+        "equipment_helmet:object"{
+          helmet_fast_sf:i=100
+          helmet_g:i=100
+          helmet_h:i=100
+        }
+
+        "equipment_mod_body_0:object"{
+          armorplate_big_a:i=100
+          armorplate_big_b:i=100
+        }
+
+        "equipment_mod_left_hand_0:object"{
+          armorplate_small_b:i=100
+        }
+
+        "equipment_mod_right_hand_0:object"{
+          armorplate_small_b:i=100
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          armorplate_small_b:i=100
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          armorplate_small_b:i=100
+        }
+
+        "equipment_flashlight:object"{
+          flashlight_device:i=100
+        }
+
+        "equipment_pouch:object"{
+          large_pouch:i=100
+        }
+
+        "equipment_backpack:object"{
+          small_backpack:i=100
+        }
+
+        "equipment_mod_pocket_0:object"{
+          item_big_healkit:i=100
+        }
+
+        "equipment_mod_pocket_1:object"{
+          item_injector_streaming:i=100
+        }
+      }
+
+      "suit_militant_light_b_prem_item:object"{
+        chance:i=100
+
+        "equipment_helmet:object"{
+          helmet_fast_sf:i=100
+          helmet_g:i=100
+          helmet_h:i=100
+        }
+
+        "equipment_mod_body_0:object"{
+          armorplate_big_a:i=100
+          armorplate_big_b:i=100
+        }
+
+        "equipment_mod_left_hand_0:object"{
+          armorplate_small_b:i=100
+        }
+
+        "equipment_mod_right_hand_0:object"{
+          armorplate_small_b:i=100
+        }
+
+        "equipment_mod_left_leg_0:object"{
+          armorplate_small_b:i=100
+        }
+
+        "equipment_mod_right_leg_0:object"{
+          armorplate_small_b:i=100
+        }
+
+        "equipment_flashlight:object"{
+          flashlight_device:i=100
+        }
+
+        "equipment_pouch:object"{
+          large_pouch:i=100
+        }
+
+        "equipment_backpack:object"{
+          small_backpack:i=100
+        }
+
+        "equipment_mod_pocket_0:object"{
+          item_big_healkit:i=100
+        }
+
+        "equipment_mod_pocket_1:object"{
+          item_injector_streaming:i=100
+        }
+      }
+    }
+
+    "main_weapons:array"{
+      "i:object"{
+        templateName:t="m110a1_gun"
+        weight:i=100
+
+        "magazine:object"{
+          m110a1_magazine:i=100
+        }
+
+        "scope:object"{
+          scope_sig_tango_6:i=100
+        }
+
+        "silencer:object"{
+          oss_hxqd_762_suppressor:i=100
+        }
+
+        "POUCH1:object"{
+          m110a1_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          m110a1_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          m110a1_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          m110a1_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          m110a1_magazine:i=100
+        }
+
+        "POUCH6:object"{
+          m110a1_magazine:i=100
+        }
+
+        "BACKPACK1:object"{
+          m110a1_magazine:i=100
+        }
+
+        "BACKPACK2:object"{
+          m110a1_magazine:i=100
+        }
+
+        "BACKPACK3:object"{
+          m110a1_magazine:i=100
+        }
+
+        "BACKPACK4:object"{
+          m110a1_magazine:i=100
+        }
+
+        "BACKPACK5:object"{
+          m110a1_magazine:i=100
+        }
+
+        "BACKPACK6:object"{
+          m110a1_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="ak_12_gun"
+        weight:i=100
+
+        "magazine:object"{
+          ak_12_magazine:i=100
+        }
+
+        "scope:object"{
+          scope_moosemark:i=100
+        }
+
+        "silencer:object"{
+          hexagon_silencer:i=100
+        }
+
+        "POUCH1:object"{
+          ak_12_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          ak_12_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          ak_12_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          ak_12_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          ak_12_magazine:i=100
+        }
+
+        "BACKPACK1:object"{
+          ak_12_magazine:i=100
+        }
+
+        "BACKPACK2:object"{
+          ak_12_magazine:i=100
+        }
+
+        "BACKPACK3:object"{
+          ak_12_magazine:i=100
+        }
+
+        "BACKPACK4:object"{
+          ak_12_magazine:i=100
+        }
+
+        "BACKPACK5:object"{
+          ak_12_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="hk416a5_gun"
+        weight:i=100
+
+        "magazine:object"{
+          m4a1_magazine:i=100
+        }
+
+        "scope:object"{
+          scope_eotech_exps3:i=100
+        }
+
+        "POUCH1:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          m4a1_magazine:i=100
+        }
+
+        "BACKPACK1:object"{
+          m4a1_magazine:i=100
+        }
+
+        "BACKPACK2:object"{
+          m4a1_magazine:i=100
+        }
+
+        "BACKPACK3:object"{
+          m4a1_magazine:i=100
+        }
+
+        "BACKPACK4:object"{
+          m4a1_magazine:i=100
+        }
+
+        "BACKPACK5:object"{
+          m4a1_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="pk_gun"
+        weight:i=100
+
+        "magazine:object"{
+          pk_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          pk_magazine:i=100
+        }
+
+        "BACKPACK1:object"{
+          pk_magazine:i=100
+        }
+
+        "BACKPACK2:object"{
+          pk_magazine:i=100
+        }
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="m45a1_gun"
+        weight:i=100
+
+        "magazine:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          m1911_colt_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="mp_443_gun"
+        weight:i=100
+
+        "magazine:object"{
+          mp_443_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          mp_443_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          mp_443_magazine:i=100
+        }
+      }
+    }
+
+    "melee_weapons:object"{
+      knife_weapon:i=100
+      ak_bayonet_weapon:i=100
+    }
+
+    "medicines:array"{
+      "i:object"{
+        "POUCH1:object"{
+          item_painkiller:i=100
+        }
+
+        "POUCH2:object"{
+          item_painkiller:i=100
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,176 @@
+am_mimic_car{
+  _use:t="am_mimic_boss"
+  _use:t="am_mimic_car_headlight"
+  animchar__res:t="zaz_968_mim_char"
+  collres__res:t="zaz_968_mim_collision"
+  animchar_fast_phys__res:t="zaz_968_mim_fastphys"
+  collres__centerNode:t="col"
+  ai_target_node__node:t="col"
+  am_mimic__innerRadius:r=0.5
+  animchar__turnDir:b=no
+  am_mimic_net__legTemplate:t="am_mimic_car_spike_leg"
+  am_mimic_net__legsCount:ip2=12, 12
+  am_mimic_net__legGrowNormRespectLen:i=30
+  am_mimic_net__minLegBendDot:r=-0.5
+  animchar_with_dynamic_emission__color:c=255, 255, 204, 255
+  _tracked:t="animchar_with_dynamic_emission__color"
+  animchar_with_dynamic_emission__brightness:r=0
+  animchar_with_dynamic_emission__fullBrightness:r=12
+  _tracked:t="animchar_with_dynamic_emission__brightness"
+  am_mimic_light__warmup:r=0
+  am_mimic_light__warmupTime:r=3
+  am_mimic_attack__reach:r=12
+  am_mimic_attack__approachDst:r=10
+  am_mimic_attack__traceRadius:r=0.75
+  am_mimic_attack__aimDuration:r=0.6
+  am_mimic_attack__chargeDuration:r=1.5
+  am_mimic_attack__totalDuration:r=3
+  am_mimic_attack__pushStrength:r=4
+  am_mimic__pushAroundAttackPointSpeed:r=2.3
+  am_mimic__pushAroundAttackPointRadius:r=3.5
+  am_mimic_net__tentacleTemplate:t="am_mimic_car_spike_attack_tentacle"
+
+  "am_mimic_car:tag"{}
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+
+  "capsule_approximation__nodeNames:array"{
+    node:t="col"
+  }
+
+  _group{
+    _tags:t="gameClient"
+    am_mimic_tentacle__decorTentacleMaxLen:p2=4, 5
+    am_mimic__decorTentaclesCount:ip2=0, 0
+    am_mimic__decorNoiseAmplitudeRng:p2=2, 3
+    am_mimic__stepCameraShakeValue:r=0.05
+  }
+
+  "am_mimic__attachNodeNames:list<t>"{
+    i:t="emtr_tentacle_a"
+    i:t="emtr_tentacle_b"
+    i:t="emtr_tentacle_c"
+    i:t="emtr_tentacle_d"
+    i:t="emtr_tentacle_c"
+    i:t="emtr_tentacle_d"
+    i:t="emtr_tentacle_e"
+    i:t="emtr_tentacle_f"
+    i:t="emtr_tentacle_g"
+    i:t="emtr_tentacle_h"
+    i:t="emtr_tentacle_g"
+    i:t="emtr_tentacle_h"
+  }
+
+  _group{
+    _tags:t="server"
+    am_mimic_server__orientTau:r=0.95
+    am_mimic_net__leanFwdAngle:r=-0.35
+    am_mimic_net__traceLegDownKoefs:p3=14.2, 17, 20
+    am_mimic_net__traceLegFrontKoefs:p3=25, 18, 12
+    am_mimic_net__traceLegMinInterval:r=0.01
+    am_mimic_net__minLegsCount:i=2
+  }
+}
+
+am_mimic_car_headlight{
+  _use:t="animchar_with_dynamic_emission"
+
+  "am_mimic_car__createLight:list<t>"{
+    i:t="am_mimic_car_light_l"
+    i:t="am_mimic_car_light_r"
+  }
+
+  "am_mimic_car__lights:list<eid>"{}
+}
+
+am_mimic_car_light_l{
+  _use:t="spot_light_little_b"
+  _use:t="node_attached_itm"
+  _use:t="light_flicker_updater_light"
+  _use:t="light_flicker_3state"
+  node_attached__localTm:m=[[0, -1, 0] [0, 0, 1] [1, 0, 0] [0, 0, 0]]
+  light_flicker__fullBrightness:r=1
+  node_attached__nodeName:t="headlight_l"
+  light_flicker__name:t="am_mimic_car_headlights_l"
+  light_flicker_updater__template:t="am_mimic_car_headlights_l"
+  light__max_radius:r=28
+
+  "node_attached__entity:eid"{}
+}
+
+am_mimic_car_light_r{
+  _use:t="am_mimic_car_light_l"
+  node_attached__nodeName:t="headlight_r"
+  light_flicker__name:t="am_mimic_car_headlights_r"
+  light_flicker_updater__template:t="am_mimic_car_headlights_r"
+}
+
+am_mimic_car_spike_leg{
+  _use:t="am_mimic_boss_spike_leg"
+  spike_leg__maxLen:r=9
+  spike_leg__speed:r=16
+  spike_leg__branchCount:i=4
+  spike_leg__branchLenFactor:r=0.75
+  spike_leg__pointsCount:i=50
+  spike_leg__noiseFactor:r=1
+  spike_leg__noiseSpeed:r=0.2
+  spike_leg__noiseAmplitude:p2=1.2, 0.7
+  spike_leg__noiseAmplitudePow:r=1.2
+  spike_leg__noiseMult:p2=1, 0.7
+  spike_leg__noiseMultPow:r=1.5
+  spike_leg__kneeFactorTau:r=2.25
+  spike_leg__fingerShiftLen:r=0.4
+  spike_leg__smoothFingers:b=yes
+  spike_leg__dieSpeedMult:r=0.35
+  spike_leg__agilityRange:p2=0.8, 1
+  spike_leg__branchTemplate:t="am_mimic_car_spike_leg_branch"
+  spike_leg__speedRndBaseKoef:r=0.8
+  spike_leg__speedRndKoefs:p2=0.4, 1.2
+  spike_leg__speedRndMults:p2=1, 0.75
+  spike_leg__SShapedLeg:b=yes
+}
+
+am_mimic_car_spike_leg_branch{
+  _use:t="spike_leg_branch"
+  _use:t="replicating"
+  spline_gen_geometry__lods_name:t="am_mimic_boss_spike_tentacle"
+  spline_gen_geometry__obj_size_mul:r=1
+  spline_gen_geometry__meter_between_objs:r=0.25
+  spline_gen_geometry__request_active:b=yes
+  spline_gen_geometry__displacement_strength:r=0.75
+  spline_gen_geometry__tiles_around:i=1
+  spline_gen_geometry__tile_size_meters:r=2
+
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.01
+    p:p2=0.05, 0.12
+    p:p2=0.2, 0.08
+    p:p2=0.95, 0.04
+    p:p2=1, 0.012
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="mimic_boss_leg_aura_distortion_fx"
+
+    effect{}
+  }
+}
+
+am_mimic_car_spike_attack_tentacle{
+  _use:t="spike_attack_tentacle_net"
+  am_mimic_tentacle__retractTime:r=0.825
+  am_mimic_tentacle__freezeRelTime:r=0.6
+  am_mimic_tentacle__lungeRelTime:r=0.8
+  spline_gen_geometry__lods_name:t="am_mimic_boss_spike_tentacle"
+  spline_gen_geometry__tiles_around:i=1
+  spline_gen_geometry__tile_size_meters:r=3
+
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.01
+    p:p2=0.2, 0.15
+    p:p2=0.95, 0.04
+    p:p2=1, 0.02
+  }
+}

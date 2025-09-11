@@ -47,8 +47,39 @@ game_obj_to_ranked_item_slot_mapping{
 }
 
 player_base_light{
+  _use:t="decor_static_grid_object"
   player_base_light__defaultBrightness:r=0
   player_base_light__onboardingBrightness:r=0
+}
+
+squadmate_mannequin_placer{
+  squadmate_mannequin_placer__idx:i=0
+  squadmate_mannequin_placer__mannequinTemplate:t="squadmate_mannequin"
+  _tracked:t="squadmate_mannequin_placer__data"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "squadmate_mannequin_placer__data:object"{}
+  "squadmate_mannequin_placer__mannequin:eid"{}
+}
+
+squadmate_mannequin{
+  _use:t="am_militant"
+  _use:t="am_militant_suit_controller"
+  _use:t="am_militant_bot_ai"
+  _use:t="bot_allies"
+  beh_tree__enabled:b=yes
+  beh_tree__node:t="squadmate_mannequin"
+  squadmate_mannequin__ribbonColorIndices:ip2=-1, -1
+  _tracked:t="squadmate_mannequin__ribbonColorIndices"
+  squadmate_mannequin__selectedWeaponIndex:i=-1
+  squadmate_mannequin__onAppearEffect:t="teleport_effect_out"
+  team:i=2
+
+  "squadmate_mannequin__placer:eid"{}
+}
+
+squadmate_mannequin_attachment{
+  "squad_mannequin_attachment__attachedTo:eid"{}
 }
 
 player_base_animchar_with_dynamic_emission{
@@ -132,7 +163,61 @@ portal_platform_b_column_lamps_a{
 
 portal_platform_b_column_lamps_b{
   _use:t="animchar_with_dynamic_emission"
+  _use:t="game_trigger_processor_attach_game_effect"
+  _use:t="portal_platform_b_column_lamps_b_blinking_light_sound"
   animchar__res:t="portal_platform_b_column_lamp_b_char"
+  animchar_with_dynamic_emission__brightness:r=0
+  game_trigger_processor_attach_game_effect__template:t="session_search_animchar_effect"
+  game_trigger_processor_attach_game_effect__attachOnTrigger:t="enter_search_queue"
+  game_trigger_processor_attach_game_effect__removeOnTrigger:t="exit_search_queue"
+  game_trigger_processor_attach_game_effect__toSelf:b=yes
+}
+
+portal_platform_b_column_lamps_b_blinking_light_sound{
+  _use:t="blinking_light_sound"
+
+  _group{
+    _tags:t="sound"
+    sound_control__initRange:t="env_effects/raid_terminal_activated"
+  }
+
+  _group{
+    _tags:t="sound"
+    blinking_light_sound__path:t="env_effects/raid_terminal_activated"
+    blinking_light_sound__localOffset:p3=0.2, 2, 0
+  }
+}
+
+session_search_animchar_effect{
+  _use:t="animate_float_component_by_function"
+  animate_float_component__restoreValueOnDestroy:b=yes
+  animate_float_component__function:t="sin"
+  animate_float_component__functionAnimationDuration:r=6.283
+  animate_float_component__timeMultiplier:r=6
+  animate_float_component__isRepeated:b=yes
+  animate_float_component__componentName:t="animchar_with_dynamic_emission__brightness"
+  animate_float_component__valueMin:r=0.05
+  animate_float_component__valueMax:r=5
+}
+
+light_flicker_on_session_search_effect{
+  _use:t="animate_float_component_by_function"
+  animate_float_component__restoreValueOnDestroy:b=yes
+  animate_float_component__function:t="sin"
+  animate_float_component__functionAnimationDuration:r=6.283
+  animate_float_component__timeMultiplier:r=3
+  animate_float_component__isRepeated:b=yes
+  animate_float_component__componentName:t="light__brightness"
+  animate_float_component__valueMin:r=0.05
+  animate_float_component__valueMax:r=1
+}
+
+light_flicker_on_session_search{
+  _use:t="game_trigger_processor_attach_game_effect"
+  game_trigger_processor_attach_game_effect__template:t="light_flicker_on_session_search_effect"
+  game_trigger_processor_attach_game_effect__attachOnTrigger:t="enter_search_queue"
+  game_trigger_processor_attach_game_effect__removeOnTrigger:t="exit_search_queue"
+  game_trigger_processor_attach_game_effect__toSelf:b=yes
 }
 
 player_base_ri_additional_entities_manager{
@@ -362,15 +447,15 @@ player_profile{
     player_profile__isLoaded:b=no
     player_profile__creditsCount:i=0
     player_profile__monolithTokensCount:i=0
-    player_profile__stashMaxVolume:r=0
+    player_profile__stashMaxVolume:i=0
     player_profile__applyTransactionsInProgress:b=no
     player_profile__amResource:i=0
     player_profile__replicatorDevicesCount:i=0
     player_profile__amCleaningDevicesCount:i=0
-    player_profile__alterIdsChanged:b=no
 
     "player_profile__unlocks:list<t>"{}
     "player_profile__allItems:array"{}
+    "player_profile__playerNexusPresets:object"{}
     "player_profile__loadout:array"{}
     "player_profile__queuedTransactions:array"{}
     "player_profile__itemAdditionQueue:array"{}

@@ -1,0 +1,15 @@
+tank_cockpit_lighting{
+  _tags:t="render"
+  cockpit__lightingBrightness:r=0
+  cockpit__slitSpotlightLocalOffset:p3=0.9, 0.44, 0
+  cockpit__slitSpotlightColor:c=205, 230, 255, 255
+  cockpit__slitSpotlightRadius:r=1.2
+  cockpit__slitSpotlightAttenuation:r=0.7
+  cockpit__slitSpotlightAngleDegrees:r=15
+  cockpit__fakeAmbientLight:r=5
+  cockpit__slitLightingEnabled:b=yes
+
+  "cockpit__slitSpotlightIds:list<i>"{}
+  "tank_cockpit__bsphere:ShaderVar"{}
+  "cockpit__cubemap_tex:SharedTexHolder"{}
+}

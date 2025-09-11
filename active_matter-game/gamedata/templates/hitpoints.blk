@@ -1,8 +1,30 @@
-base_hitpoints{
-  _replicated:t="hitpoints__lastHitNodeId"
+hitpoints_last_offender{
   hitpoints__lastOffenderTime:r=-1
-  hitpoints__shellDmgMult:r=0.08
   hitpoints__lastHitNodeId:i=-1
+  _replicated:t="hitpoints__lastHitNodeId"
+
+  "hitpoints__lastOffender:eid"{}
+  "hitpoints__lastOffenderWeapon:eid"{}
+  "hitpoints__lastOffenderPlayer:eid"{}
+  "hitpoints__lastVictimPlayer:eid"{}
+}
+
+hitpoints_death_desc{
+  _group{
+    _tags:t="server"
+    death_desc__damageType:i=-1
+    death_desc__gunPropsId:i=-1
+    death_desc__shellId:i=-1
+    death_desc__collNodeId:i=-1
+    death_desc__victimTeam:i=-1
+    death_desc__offenderTeam:i=-1
+  }
+}
+
+base_hitpoints{
+  _use:t="hitpoints_last_offender"
+  _use:t="hitpoints_death_desc"
+  hitpoints__shellDmgMult:r=0.08
 
   _group{
     _track:b=yes
@@ -17,21 +39,9 @@ base_hitpoints{
 
   _group{
     _tags:t="server"
-    death_desc__damageType:i=-1
-    death_desc__gunPropsId:i=-1
-    death_desc__shellId:i=-1
-    death_desc__collNodeId:i=-1
-    death_desc__victimTeam:i=-1
-    death_desc__offenderTeam:i=-1
 
     "hitpoints:tag"{}
   }
-
-  "lastCriticalOffender:eid"{}
-  "hitpoints__lastOffender:eid"{}
-  "hitpoints__lastOffenderWeapon:eid"{}
-  "hitpoints__lastOffenderPlayer:eid"{}
-  "hitpoints__lastVictimPlayer:eid"{}
 }
 
 downabled_hitpoints{

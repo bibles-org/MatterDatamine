@@ -1,9 +1,10 @@
+from "%ui/hud/state/item_info.nut" import get_item_info, getSlotAvailableMods
+from "%ui/hud/menus/components/itemFromTemplate.nut" import getSlotFromTemplate
+from "gameevents" import EventHeroChanged
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { get_item_info, getSlotAvailableMods } = require("%ui/hud/state/item_info.nut")
-let { getSlotFromTemplate } = require("%ui/hud/menus/components/itemFromTemplate.nut")
-let { EventHeroChanged } = require("gameevents")
 let { watchedHeroEid } = require("%ui/hud/state/watched_hero.nut")
 
 let equipment = Watched({})
@@ -61,9 +62,9 @@ function update_equipment_mod_slots() {
   equipmentModSlots.set(modSlots)
 }
 
-equipment.subscribe(function(v) {
+equipment.subscribe_with_nasty_disregard_of_frp_update(function(v) {
   let flashlightEid = v?["flashlight"]?.eid
-  hasFlashlight(flashlightEid != null && flashlightEid != ecs.INVALID_ENTITY_ID)
+  hasFlashlight.set(flashlightEid != null && flashlightEid != ecs.INVALID_ENTITY_ID)
 
   update_equipment_mod_slots()
 })
@@ -75,7 +76,7 @@ ecs.register_es("hero_equipment_mod_hp_track_ui_es", {
 },
 {
   comps_ro = [
-    ["slot_attach__attachedTo", ecs.TYPE_EID]
+    ["animchar_attach__attachedTo", ecs.TYPE_EID]
   ],
   comps_track = [
     ["item__hp", ecs.TYPE_FLOAT, 0.0],
@@ -164,7 +165,7 @@ ecs.register_es("hero_equipment_script_es", {
 
 ecs.register_es("equipment_mods_track_cur_mod_in_slots_ui_es", {
   [["onChange"]] = function(_evt, _eid, _comp) {
-    get_heroslots_info_query.perform(watchedHeroEid.value, updateEquipment)
+    get_heroslots_info_query.perform(watchedHeroEid.get(), updateEquipment)
   }
 },
 {
@@ -177,16 +178,16 @@ ecs.register_es("equipment_mods_track_cur_mod_in_slots_ui_es", {
 
 ecs.register_es("hero_equipment_hp_track_ui_es", {
   [["onChange"]] = function(_evt, _eid, comp) {
-    let heroEidV = watchedHeroEid.value
+    let heroEidV = watchedHeroEid.get()
 
-    let attachedToEid = comp["slot_attach__attachedTo"]
+    let attachedToEid = comp["animchar_attach__attachedTo"]
     if (attachedToEid == heroEidV)
       get_heroslots_info_query.perform(heroEidV, updateEquipment)
   }
 },
 {
   comps_ro = [
-    ["slot_attach__attachedTo", ecs.TYPE_EID]
+    ["animchar_attach__attachedTo", ecs.TYPE_EID]
   ],
   comps_track = [
     ["item__hp", ecs.TYPE_FLOAT],
@@ -197,25 +198,52 @@ ecs.register_es("hero_equipment_hp_track_ui_es", {
   ]
 })
 
+
+ecs.register_es("hero_equipment_volume_track_ui_es", {
+  [["onChange"]] = function(_evt, _eid, _comp) {
+    get_heroslots_info_query.perform(watchedHeroEid.get(), updateEquipment)
+  }
+},
+{
+  comps_track = [
+    ["item__volume", ecs.TYPE_INT],
+  ],
+  comps_rq = [
+    ["equipment_item", ecs.TYPE_TAG],
+    ["watchedPlayerItem", ecs.TYPE_TAG]
+  ]
+})
+
+let addAttach = function(eid, comp) {
+  let hideNodes = []
+  if (comp.animchar_dynmodel_nodes_hider__hiddenNodes != null){
+    let showNodes = comp.animchar_dynmodel_nodes_hider__forceShownNodes.getAll()
+    hideNodes.extend(
+      comp.animchar_dynmodel_nodes_hider__hiddenNodes.getAll().filter(@(i) !showNodes.contains(i))
+    )
+  }
+  let entry = {
+    animchar = comp.animchar__res
+    slotName = comp.slot_attach__slotName
+    objTexReplace = comp?.animchar__objTexReplace.getAll()
+    itemProto = comp.item__proto
+    equipmentSlot = comp?.equipable_item__curSlot
+  }.__merge(hideNodes.len() > 0 ? { hideNodes } : {})
+  attachedEquipment.mutate(@(t) t[eid] <- entry)
+}
+
 ecs.register_es("hero_attached_equipment_track_ui_es", {
   onInit = function(eid, comp){
-    let hideNodes = []
-    if (comp.animchar_dynmodel_nodes_hider__hiddenNodes != null){
-      let showNodes = comp.animchar_dynmodel_nodes_hider__forceShownNodes.getAll()
-      hideNodes.extend(
-        comp.animchar_dynmodel_nodes_hider__hiddenNodes.getAll().filter(@(i) !showNodes.contains(i))
-      )
-    }
-    if (comp.item__invisible == null) {
-      let entry = {
-        animchar = comp.animchar__res
-        slotName = comp.slot_attach__slotName
-        objTexReplace = comp?.animchar__objTexReplace.getAll()
-      }.__merge(hideNodes.len() > 0 ? { hideNodes } : {})
-      attachedEquipment.mutate(@(t) t[eid] <- entry)
-    }
+    if (comp.item__invisible != null)
+      return
+
+    addAttach(eid, comp)
   }
   onChange = function(eid, comp) {
+    if (comp.item__invisible != null)
+      attachedEquipment.mutate(@(t) eid in t ? t.$rawdelete(eid) : null)
+    if (comp.item__invisible == null && !(eid in attachedEquipment))
+      addAttach(eid, comp)
     if (eid in attachedEquipment.get()) {
       attachedEquipment.mutate(function(t) {
         if (comp.animchar_dynmodel_nodes_hider__forceShownNodes != null) {
@@ -230,21 +258,25 @@ ecs.register_es("hero_attached_equipment_track_ui_es", {
       })
     }
   }
-  onDestroy = @(eid, _comp) attachedEquipment.mutate(@(t) eid in t ? t.$rawdelete(eid) : null)
+  onDestroy = function(eid, _comp) {
+    attachedEquipment.mutate(@(t) eid in t ? t.$rawdelete(eid) : null)
+  }
 },
 {
   comps_ro = [
     ["animchar__res", ecs.TYPE_STRING],
     ["item__invisible", ecs.TYPE_TAG, null],
+    ["item__proto", ecs.TYPE_STRING, null],
     ["slot_attach__slotName", ecs.TYPE_STRING, null],
     ["animchar__objTexReplace", ecs.TYPE_OBJECT, null]
   ],
   comps_track = [
     ["animchar_dynmodel_nodes_hider__hiddenNodes", ecs.TYPE_STRING_LIST, null],
     ["animchar_dynmodel_nodes_hider__forceShownNodes", ecs.TYPE_STRING_LIST, null],
-    ["slot_attach__slotId", ecs.TYPE_INT, null]
+    ["slot_attach__slotId", ecs.TYPE_INT, null],
+    ["equipable_item__curSlot", ecs.TYPE_STRING, null]
   ],
-  comps_rq = ["watchedPlayerItem", "slot_attach__visible", "attachedToParent"],
+  comps_rq = ["watchedPlayerItem", "attachedToParent"],
   comps_no = ["suit_attachable_item_in_equipment", "gun", "gunAttachable", "gun__melee", "item_in_equipment_hided_on_doll"]
 })
 

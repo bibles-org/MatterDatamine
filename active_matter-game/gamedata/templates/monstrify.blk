@@ -13,6 +13,7 @@ monstrify_trap{
   _use:t="optimised_visual_effect_source"
   _use:t="monstrify_trap_sound"
   _use:t="entity_bound_area"
+  _use:t="traceable_spheres_static_grid_object"
   entity_bound_area__name:t="POLYAREA_DANGER"
   entity_bound_area__radius:r=2
   trigger_trap__allowBots:b=no
@@ -20,9 +21,7 @@ monstrify_trap{
   monstrify_trap__icon:t="!ui/uiskin/raid_info/distorted.svg"
   monstrify_trap__sequenceTemplate:t="monstrify_sequence"
   trigger_trap__triggered:b=no
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   sphere_zone__radius:r=1
-  grid_obj__gridType:t="traceable_spheres"
   optimised_effect_source__template:t="monstrify_trap_visual_fx_controller"
 
   "trigger_trap__maskItems:shared:list<t>"{
@@ -34,7 +33,6 @@ monstrify_trap{
   }
 
   "net__alwaysInScope:tag"{}
-  grid_obj{}
   _group{
     _tags:t="gameClient"
     anomaly_trap__triggerFx:t="explosion_anomaly_frog_trap_cmps_fx"

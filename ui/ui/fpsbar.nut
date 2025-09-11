@@ -1,11 +1,9 @@
+from "%ui/mainMenu/menus/options/performance_metrics_options.nut" import PERF_METRICS_OFF, PERF_METRICS_FPS, PERF_METRICS_COMPACT, PERF_METRICS_FULL
+
+from "%ui/fonts_style.nut" import tiny_txt, basic_text_shadow
+
 from "%ui/ui_library.nut" import *
-let {tiny_txt, basic_text_shadow} = require("%ui/fonts_style.nut")
-let { perfMetricsValue,
-  PERF_METRICS_OFF,
-  PERF_METRICS_FPS,
-  PERF_METRICS_COMPACT,
-  PERF_METRICS_FULL
-} = require("%ui/mainMenu/menus/options/performance_metrics_options.nut")
+let { perfMetricsValue } = require("%ui/mainMenu/menus/options/performance_metrics_options.nut")
 
 let fpsBarStyle = {
   rendObj = ROBJ_TEXT
@@ -29,13 +27,13 @@ let latencyTextMap = {
 
 let fpsBar = @(){
   behavior = Behaviors.FpsBar
-  size = fpsTextMap?[perfMetricsValue.value] ?? [sw(20), SIZE_TO_CONTENT]
+  size = fpsTextMap?[perfMetricsValue.get()] ?? [sw(20), SIZE_TO_CONTENT]
   watch = perfMetricsValue
 }.__update(fpsBarStyle)
 
 let latencyBar = @(){
   behavior = Behaviors.LatencyBar
-  size = latencyTextMap?[perfMetricsValue.value] ?? [sw(20), SIZE_TO_CONTENT]
+  size = latencyTextMap?[perfMetricsValue.get()] ?? [sw(20), SIZE_TO_CONTENT]
   watch = perfMetricsValue
 }.__update(fpsBarStyle)
 

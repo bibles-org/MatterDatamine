@@ -73,6 +73,11 @@ import{
 }
 
 entity{
+  _template:t="volfog_nbs"
+  volfog_nbs__rootGraph:t="fog_dalniy_island_sparse.json"
+}
+
+entity{
   _template:t="level+level_synced_environment"
   level__blk:t="levels/nexus_factory_hall_a.blk"
   level__timeRange:p2=18, 18

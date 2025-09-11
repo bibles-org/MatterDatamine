@@ -71,6 +71,13 @@ rendinst_shatter_decals_params{
   }
 }
 
+rendinst_bomb_hit_decal{
+  _use:t="ecs_no_debug"
+  _tags:t="render"
+  ri_bomb_hit_decal__id:i=0
+  ri_bomb_hit_decal__pos:p3=0, 0, 0
+}
+
 rendinst_shatter_decals_tracer{
   _use:t="ecs_no_debug"
   _tags:t="render"
@@ -100,4 +107,15 @@ glass_decals_renderer{
   "glass_decals__hole_mask_node:dafg::NodeHandle"{}
   "glass_decals__depth_copy_node:dafg::NodeHandle"{}
   "glass_decals__rename_node:dafg::NodeHandle"{}
+}
+
+shell_explosion_decal_info{
+  _singleton:b=yes
+  _use:t="replicating"
+  shell_explosion_decal__damageType:t=""
+  shell_explosion_decal__size:r=1
+  shell_explosion_decal__traceShootDir:b=no
+  shell_explosion_decal__traceOffset:r=0.05
+  shell_explosion_decal__traceLength:r=0.35
+  shell_explosion_decal__sideTraceLength:r=0.6
 }

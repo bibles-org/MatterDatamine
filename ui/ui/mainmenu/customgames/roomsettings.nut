@@ -1,12 +1,14 @@
+from "%sqstd/underscore.nut" import flatten
+
+from "string" import startswith
+import "dagor.random" as random
+from "settings" import get_setting_by_blk_path
+from "dagor.fs" import scan_folder
+from "dagor.system" import dgs_get_settings
+
 from "%ui/ui_library.nut" import *
 
-let {startswith} = require("string")
-let random = require("dagor.random")
 let localSettings = require("%ui/options/localSettings.nut")("createRoom/")
-let {get_setting_by_blk_path} = require("settings")
-let {scan_folder} = require("dagor.fs")
-let {dgs_get_settings} = require("dagor.system")
-let {flatten} = require("%sqstd/underscore.nut")
 
 let settings = {
   minPlayers = 1
@@ -44,10 +46,10 @@ let lscenes = flatten(scenesFolders
 
 settings.savedSceneId <- localSettings("", "scene")
 let scenes = WatchedRo(lscenes)
-let scene = Watched(scenes.value
-  .findvalue(@(s) s.id == settings.savedSceneId.value) ?? scenes.value?[0])
+let scene = Watched(scenes.get()
+  .findvalue(@(s) s.id == settings.savedSceneId.get()) ?? scenes.get()?[0])
 
-scene.subscribe(@(s) settings.savedSceneId(s?.id ?? ""))
+scene.subscribe_with_nasty_disregard_of_frp_update(@(s) settings.savedSceneId(s?.id ?? ""))
 
 settings.__update({scenes, scene})
 return settings

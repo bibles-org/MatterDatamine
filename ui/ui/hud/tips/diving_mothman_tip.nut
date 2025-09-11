@@ -1,7 +1,8 @@
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { tipCmp } = require("%ui/hud/tips/tipComponent.nut")
 let { mothmanDivingGrabAbilityPotentialTargetEid, mothmanDivingGrabAbilityTargetEid,
   isContolledHeroGrabbedByMothman, mothmanGrabbingReleaseProgress } = require("%ui/hud/state/monster_diving_mothman_state.nut")
 
@@ -28,7 +29,7 @@ let mkReleaseProgress = function(progress) {
   let currentProgress = progress.tofloat() * 100
   return {
     rendObj = ROBJ_SOLID
-    size = [ flex(), hdpx(4) ]
+    size = static [ flex(), hdpx(4) ]
     color = Color(0, 0, 0, 50)
     children = [
       {

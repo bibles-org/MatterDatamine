@@ -1,29 +1,27 @@
+import "%sqstd/time.nut" as timeBase
+from "string" import format
 from "%ui/ui_library.nut" import *
 
-let {format} = require("string")
-let timeBase = require("%sqstd/time.nut")
-let {secondsToTimeFormatString, roundTime, secondsToTime} = timeBase
-
-let locTable ={
+let locTable = static {
   seconds =loc("measureUnits/seconds"),
   days =loc("measureUnits/days"),
   minutes =loc("measureUnits/minutes")
   hours =loc("measureUnits/hours")
 }
 
-let locFullTable ={
+let locFullTable = static {
   seconds =loc("measureUnits/seconds"),
   days =loc("measureUnits/full/days"),
   minutes =loc("measureUnits/full/minutes")
   hours =loc("measureUnits/full/hours")
 }
 
-let secondsToStringLoc = @(time) secondsToTimeFormatString(time).subst(locTable)
+let secondsToStringLoc = @(time) timeBase.secondsToTimeFormatString(time).subst(locTable)
 
-let secondsToHoursLoc = @(time) secondsToTimeFormatString(roundTime(time)).subst(locTable)
+let secondsToHoursLoc = @(time) timeBase.secondsToTimeFormatString(timeBase.roundTime(time)).subst(locTable)
 
 function secondsToTimeFormatStringWithSec(time) {
-  let {days=0, hours=0, minutes=0, seconds=0} = secondsToTime(time)
+  let {days=0, hours=0, minutes=0, seconds=0} = timeBase.secondsToTime(time)
   let res = []
   if (days>0)
     res.append("{0}{days}".subst(days))
@@ -35,10 +33,10 @@ function secondsToTimeFormatStringWithSec(time) {
   return " ".join(res)
 }
 
-let secondsToHoursLocFull = @(time) secondsToTimeFormatString(roundTime(time)).subst(locFullTable)
+let secondsToHoursLocFull = @(time) timeBase.secondsToTimeFormatString(timeBase.roundTime(time)).subst(locFullTable)
 let secondsToString = timeBase.secondsToTimeSimpleString
 
-return timeBase.__merge({
+return freeze(timeBase.__merge({
   secondsToString
   secondsToTimeFormatStringWithSec
   secondsToStringLoc
@@ -46,4 +44,4 @@ return timeBase.__merge({
   secondsToHoursLocFull
   locTable
   locFullTable
-})
+}))

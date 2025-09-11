@@ -182,11 +182,6 @@ HUD.Inventory{
   btn:i=15
 }
 
-HUD.NexusLoadout{
-  dev:i=1
-  btn:i=38
-}
-
 HUD.Interactive{
   dev:i=1
   btn:i=56
@@ -257,15 +252,20 @@ Human.Aim2{
   type:i=0
 }
 
-Human.Zoom{
-  dev:i=2
-  btn:i=1
-  type:i=0
+Human.BipodToggle{
+  dev:i=1
+  btn:i=22
 }
 
 Human.Melee{
   dev:i=2
   btn:i=2
+}
+
+Human.ChooseGrenade{
+  dev:i=1
+  btn:i=34
+  type:i=1
 }
 
 Human.Throw{
@@ -352,13 +352,13 @@ Human.FiringModeNext{
 
 Human.SeatNext{
   dev:i=1
-  btn:i=49
+  btn:i=44
   type:i=5
 }
 
 Human.DriverSeat{
   dev:i=1
-  btn:i=49
+  btn:i=44
   type:i=1
 }
 
@@ -652,6 +652,17 @@ Vehicle.AutomaticTransmission{
   btn:i=20
 }
 
+Vehicle.Shoot{
+  dev:i=2
+  btn:i=0
+}
+
+Vehicle.Zoom{
+  dev:i=2
+  btn:i=1
+  type:i=5
+}
+
 Spectator.Prev{
   dev:i=1
   btn:i=30
@@ -662,11 +673,6 @@ Spectator.Next{
   dev:i=1
   btn:i=32
   type:i=0
-}
-
-Spectator.LoadoutHub{
-  dev:i=1
-  btn:i=33
 }
 
 Replay.ToggleCamera{
@@ -729,6 +735,16 @@ Replay.Camera3{
   btn:i=4
 }
 
+Replay.Camera4{
+  dev:i=1
+  btn:i=5
+}
+
+Replay.Camera5{
+  dev:i=1
+  btn:i=6
+}
+
 Replay.NextCamera{
   dev:i=1
   btn:i=18
@@ -757,6 +773,16 @@ Drone.Leave{
 Human.Flashlight{
   dev:i=1
   btn:i=47
+}
+
+Human.FlashlightWeapon{
+  dev:i=1
+  btn:i=12
+}
+
+Human.UseSignalGrenade{
+  dev:i=1
+  btn:i=48
 }
 
 Human.UseEmote{

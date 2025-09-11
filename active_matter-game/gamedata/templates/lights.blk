@@ -17,7 +17,19 @@ local_light{
     light__force_max_light_radius:b=no
     light__enable_lens_flares:b=no
     light__approximate_static:b=no
+    light__shadow_two_sided:b=no
   }
+}
+
+screen_panel_spot_light{
+  _use:t="base_spot_light"
+  light__color:c=255, 150, 20, 255
+  spot_light__inner_attenuation:r=0.5
+  spot_light__cone_angle:r=170
+  light__max_radius:r=2
+  light__force_max_light_radius:b=yes
+  light__brightness:r=0
+  screen_light__panelName:t=""
 }
 
 light_turned_off{
@@ -67,10 +79,6 @@ light{
   _use:t="replicating"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   _replicated:t="transform"
-  grid_obj__gridType:t="decor"
-  net__scopeDistanceSq:r=108900
-
-  grid_obj{}
 }
 
 omni_light_restriction_box{
@@ -160,6 +168,7 @@ attached_omni_light{
 undestroyable_omni_light{
   _use:t="local_omni_light"
   _use:t="replicating"
+  _use:t="decor_static_grid_object"
 
   "light:tag"{}
 }
@@ -167,12 +176,9 @@ undestroyable_omni_light{
 omni_light{
   _use:t="local_omni_light"
   _use:t="replicating"
+  _use:t="decor_static_grid_object"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  _replicated:t="transform"
-  grid_obj__gridType:t="decor"
   net__scopeDistanceSq:r=108900
-
-  grid_obj{}
 }
 
 base_spot_light{
@@ -207,6 +213,7 @@ base_spot_light{
     spot_light__dynamic_obj_shadows:b=no
     spot_light__contact_shadows:b=no
     spot_light__shadow_shrink:i=0
+    spot_light__illuminating_disc_radius:r=0
   }
 }
 
@@ -574,6 +581,7 @@ gunlight_spot{
   lightModTm:m=[[1.25, 0, 0] [0, 1.25, 0] [0, 0, 1.25] [0, 0, 0.2]]
   light__color:c=255, 250, 200, 255
   light__brightness:r=130
+  light__shadow_two_sided:b=yes
 
   _group{
     _track:b=yes
@@ -590,6 +598,8 @@ gunlight_spot{
     spot_light__shadowsDstSq:r=1600
     spot_light__dynShadowsDstSq:r=1600
     spot_light__priority:i=200
+
+    "light__high_priority_update:tag"{}
   }
 }
 
@@ -1670,6 +1680,27 @@ teleport_blue_light_flicker_template{
   light_flicker__noise_time:r=12
 }
 
+sovmod_lamp_fluorescent_stadium_a_30m_warm_light{
+  _use:t="omni_light"
+  light__max_radius:r=100
+  light__offset:p3=0, 0, 0
+  light__color:c=255, 240, 200, 255
+  light__brightness:r=25
+  light__contact_shadows:b=no
+  light__texture_name:t="ies_ceiling_smooth_a"
+  light__use_box:b=no
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    _replicate:b=yes
+    omni_light__shadows:b=no
+    omni_light__dynamic_obj_shadows:b=no
+    omni_light__shadow_shrink:i=0
+    omni_light__shadow_quality:i=2
+  }
+}
+
 sovmod_lamp_fluorescent_a_type_b_4m_warm_light{
   _use:t="omni_light"
   light__max_radius:r=4
@@ -2167,4 +2198,719 @@ bunker_lamp_orange_omni_light{
     omni_light__shadow_shrink:i=0
     omni_light__shadow_quality:i=2
   }
+}
+
+combined_fluorescent_lamp_a_light{
+  _use:t="omni_light"
+  light__max_radius:r=45
+  light__offset:p3=0, 0, 0
+  light__color:c=255, 240, 200, 255
+  light__brightness:r=15
+  light__contact_shadows:b=no
+  light__texture_name:t="ies_ceiling_smooth_b"
+  light__use_box:b=no
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    _replicate:b=yes
+    omni_light__shadows:b=yes
+    omni_light__dynamic_obj_shadows:b=no
+    omni_light__inner_attenuation:r=0.5
+    omni_light__shadow_shrink:i=2
+    omni_light__shadow_quality:i=0
+  }
+}
+
+combined_fluorescent_lamp_a_flicker_a{
+  _use:t="combined_fluorescent_lamp_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="combined_fluorescent_lamp_a_flicker_a_template"
+}
+
+combined_fluorescent_lamp_a_mesh_a{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="combined_fluorescent_lamp_a_flicker_char"
+  light_flicker_updater__template:t="combined_fluorescent_lamp_a_flicker_a_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+combined_fluorescent_lamp_a_flicker_a_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.01, 0.1
+  light_flicker__on_time:p2=2.5, 15.5
+  light_flicker__release_time:p2=0.1, 0.5
+  light_flicker__off_time:p2=0.15, 0.5
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=22.27
+}
+
+combined_fluorescent_lamp_a_flicker_b{
+  _use:t="combined_fluorescent_lamp_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="combined_fluorescent_lamp_a_flicker_b_template"
+}
+
+combined_fluorescent_lamp_a_mesh_b{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="combined_fluorescent_lamp_a_flicker_char"
+  light_flicker_updater__template:t="combined_fluorescent_lamp_a_flicker_b_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+combined_fluorescent_lamp_a_flicker_b_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.01, 0.1
+  light_flicker__on_time:p2=2, 10
+  light_flicker__release_time:p2=0.1, 0.5
+  light_flicker__off_time:p2=0.5, 1
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.1, 0.75
+  light_flicker__noise_brightness_off:p2=0, 0.75
+  light_flicker__noise_time:r=20.17
+}
+
+combined_fluorescent_lamp_a_flicker_c{
+  _use:t="combined_fluorescent_lamp_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="combined_fluorescent_lamp_a_flicker_c_template"
+}
+
+combined_fluorescent_lamp_a_mesh_c{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="combined_fluorescent_lamp_a_flicker_char"
+  light_flicker_updater__template:t="combined_fluorescent_lamp_a_flicker_c_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+combined_fluorescent_lamp_a_flicker_c_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.01, 0.1
+  light_flicker__on_time:p2=1.5, 7.5
+  light_flicker__release_time:p2=0.3, 1.5
+  light_flicker__off_time:p2=1.5, 4.5
+  light_flicker__on_brightness:p2=0.6, 0.9
+  light_flicker__off_brightness:p2=0, 0.1
+  light_flicker__noise_brightness_on:p2=0.5, 0.8
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=19.27
+}
+
+cable_lamp_a_light{
+  _use:t="omni_light"
+  light__max_radius:r=5
+  light__offset:p3=0, 0, 0
+  light__color:c=230, 255, 100, 255
+  light__brightness:r=1.5
+  light__contact_shadows:b=no
+  light__texture_name:t="ies_ribbed_a"
+  light__use_box:b=no
+
+  _group{
+    _tags:t="render"
+    omni_light__shadows:b=yes
+    omni_light__dynamic_obj_shadows:b=no
+    omni_light__inner_attenuation:r=0.1
+    omni_light__shadow_shrink:i=1
+    omni_light__shadow_quality:i=2
+  }
+}
+
+cable_lamp_a_flicker_a{
+  _use:t="cable_lamp_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="cable_lamp_a_flicker_a_template"
+}
+
+cable_lamp_a_mesh_a{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="cable_lamp_a_flicker_char"
+  light_flicker_updater__template:t="cable_lamp_a_flicker_a_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+cable_lamp_a_flicker_a_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.01, 0.1
+  light_flicker__on_time:p2=2.2, 13.5
+  light_flicker__release_time:p2=0.1, 0.5
+  light_flicker__off_time:p2=0.15, 0.5
+  light_flicker__on_brightness:p2=0.8, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=25.27
+}
+
+cable_lamp_a_flicker_b{
+  _use:t="cable_lamp_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="cable_lamp_a_flicker_b_template"
+}
+
+cable_lamp_a_mesh_b{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="cable_lamp_a_flicker_char"
+  light_flicker_updater__template:t="cable_lamp_a_flicker_b_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+cable_lamp_a_flicker_b_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.01, 0.3
+  light_flicker__on_time:p2=1.2, 7.5
+  light_flicker__release_time:p2=0.1, 1.5
+  light_flicker__off_time:p2=0.25, 1.5
+  light_flicker__on_brightness:p2=0.8, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=18.17
+}
+
+cable_lamp_a_flicker_c{
+  _use:t="cable_lamp_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="cable_lamp_a_flicker_c_template"
+}
+
+cable_lamp_a_mesh_c{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="cable_lamp_a_flicker_char"
+  light_flicker_updater__template:t="cable_lamp_a_flicker_c_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+cable_lamp_a_flicker_c_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.01, 1
+  light_flicker__on_time:p2=0.2, 1.5
+  light_flicker__release_time:p2=0.5, 2.5
+  light_flicker__off_time:p2=1.25, 5.5
+  light_flicker__on_brightness:p2=0.8, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=12.17
+}
+
+electric_lamp_a_a_light{
+  _use:t="omni_light"
+  light__max_radius:r=8
+  light__offset:p3=0, 0, 0
+  light__color:c=220, 255, 140, 255
+  light__brightness:r=3
+  light__contact_shadows:b=no
+  light__texture_name:t="ies_ribbed_a"
+  light__use_box:b=no
+
+  _group{
+    _tags:t="render"
+    omni_light__shadows:b=yes
+    omni_light__dynamic_obj_shadows:b=yes
+    omni_light__inner_attenuation:r=0.1
+    omni_light__shadow_shrink:i=1
+    omni_light__shadow_quality:i=1
+  }
+}
+
+electric_lamp_a_a_flicker_a{
+  _use:t="electric_lamp_a_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="electric_lamp_a_a_flicker_a_template"
+}
+
+electric_lamp_a_a_mesh_a{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="electric_lamp_a_a_flicker_char"
+  light_flicker_updater__template:t="electric_lamp_a_a_flicker_a_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+electric_lamp_a_a_flicker_a_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.01, 0.15
+  light_flicker__on_time:p2=12.3, 17.5
+  light_flicker__release_time:p2=0.1, 0.7
+  light_flicker__off_time:p2=0.15, 0.7
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=32.27
+}
+
+electric_lamp_a_a_flicker_b{
+  _use:t="electric_lamp_a_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="electric_lamp_a_a_flicker_b_template"
+}
+
+electric_lamp_a_a_mesh_b{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="electric_lamp_a_a_flicker_char"
+  light_flicker_updater__template:t="electric_lamp_a_a_flicker_b_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+electric_lamp_a_a_flicker_b_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.1, 0.35
+  light_flicker__on_time:p2=3.3, 12.5
+  light_flicker__release_time:p2=0.1, 0.7
+  light_flicker__off_time:p2=0.15, 2.8
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=20.21
+}
+
+electric_lamp_a_a_flicker_c{
+  _use:t="electric_lamp_a_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="electric_lamp_a_a_flicker_c_template"
+}
+
+electric_lamp_a_a_mesh_c{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="electric_lamp_a_a_flicker_char"
+  light_flicker_updater__template:t="electric_lamp_a_a_flicker_c_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+electric_lamp_a_a_flicker_c_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.1, 0.75
+  light_flicker__on_time:p2=1.3, 5.5
+  light_flicker__release_time:p2=0.1, 0.7
+  light_flicker__off_time:p2=3.15, 5.8
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=16.19
+}
+
+electric_lamp_a_b_light{
+  _use:t="omni_light"
+  light__max_radius:r=9
+  light__offset:p3=0, 0, 0
+  light__color:c=255, 235, 200, 255
+  light__brightness:r=2.5
+  light__contact_shadows:b=no
+  light__texture_name:t="ies_ribbed_a"
+  light__use_box:b=no
+
+  _group{
+    _tags:t="render"
+    omni_light__shadows:b=yes
+    omni_light__dynamic_obj_shadows:b=no
+    omni_light__inner_attenuation:r=0.1
+    omni_light__shadow_shrink:i=1
+    omni_light__shadow_quality:i=1
+  }
+}
+
+electric_lamp_a_b_flicker_a{
+  _use:t="electric_lamp_a_b_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="electric_lamp_a_b_flicker_a_template"
+}
+
+electric_lamp_a_b_mesh_a{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="electric_lamp_a_b_flicker_char"
+  light_flicker_updater__template:t="electric_lamp_a_b_flicker_a_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+electric_lamp_a_b_flicker_a_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.02, 0.15
+  light_flicker__on_time:p2=12.3, 17.7
+  light_flicker__release_time:p2=0.2, 0.7
+  light_flicker__off_time:p2=0.15, 0.8
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=31.27
+}
+
+electric_lamp_a_b_flicker_b{
+  _use:t="electric_lamp_a_b_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="electric_lamp_a_b_flicker_b_template"
+}
+
+electric_lamp_a_b_mesh_b{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="electric_lamp_a_b_flicker_char"
+  light_flicker_updater__template:t="electric_lamp_a_b_flicker_b_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+electric_lamp_a_b_flicker_b_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.01, 0.35
+  light_flicker__on_time:p2=3.3, 13.5
+  light_flicker__release_time:p2=0.1, 0.7
+  light_flicker__off_time:p2=0.15, 3.8
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=19.21
+}
+
+electric_lamp_a_b_flicker_c{
+  _use:t="electric_lamp_a_b_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="electric_lamp_a_b_flicker_c_template"
+}
+
+electric_lamp_a_b_mesh_c{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="electric_lamp_a_b_flicker_char"
+  light_flicker_updater__template:t="electric_lamp_a_b_flicker_c_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+electric_lamp_a_b_flicker_c_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.1, 0.75
+  light_flicker__on_time:p2=0.3, 3.5
+  light_flicker__release_time:p2=0.1, 0.7
+  light_flicker__off_time:p2=1.15, 7.8
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=12.19
+}
+
+fluorescent_armored_lamp_a_light{
+  _use:t="omni_light"
+  light__max_radius:r=6
+  light__offset:p3=0, 0, 0
+  light__color:c=145, 255, 225, 255
+  light__brightness:r=2
+  light__contact_shadows:b=no
+  light__texture_name:t="ies_ceiling_smooth_b"
+  light__use_box:b=no
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    _replicate:b=yes
+    omni_light__shadows:b=yes
+    omni_light__dynamic_obj_shadows:b=no
+    omni_light__inner_attenuation:r=0.5
+    omni_light__shadow_shrink:i=1
+    omni_light__shadow_quality:i=1
+  }
+}
+
+fluorescent_armored_lamp_a_flicker_a{
+  _use:t="fluorescent_armored_lamp_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="fluorescent_armored_lamp_a_flicker_a_template"
+}
+
+fluorescent_armored_lamp_a_mesh_a{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="fluorescent_armored_lamp_a_flicker_char"
+  light_flicker_updater__template:t="fluorescent_armored_lamp_a_flicker_a_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+fluorescent_armored_lamp_a_flicker_a_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.01, 0.05
+  light_flicker__on_time:p2=3.5, 14.5
+  light_flicker__release_time:p2=0.1, 0.5
+  light_flicker__off_time:p2=0.15, 0.8
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=27.27
+}
+
+fluorescent_armored_lamp_a_flicker_b{
+  _use:t="fluorescent_armored_lamp_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="fluorescent_armored_lamp_a_flicker_b_template"
+}
+
+fluorescent_armored_lamp_a_mesh_b{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="fluorescent_armored_lamp_a_flicker_char"
+  light_flicker_updater__template:t="fluorescent_armored_lamp_a_flicker_b_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+fluorescent_armored_lamp_a_flicker_b_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.03, 0.5
+  light_flicker__on_time:p2=3.5, 14.5
+  light_flicker__release_time:p2=0.1, 1.5
+  light_flicker__off_time:p2=1.15, 3.8
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=21.21
+}
+
+fluorescent_armored_lamp_a_flicker_c{
+  _use:t="fluorescent_armored_lamp_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="fluorescent_armored_lamp_a_flicker_c_template"
+}
+
+fluorescent_armored_lamp_a_mesh_c{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="fluorescent_armored_lamp_a_flicker_char"
+  light_flicker_updater__template:t="fluorescent_armored_lamp_a_flicker_c_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+fluorescent_armored_lamp_a_flicker_c_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.03, 0.75
+  light_flicker__on_time:p2=3.5, 6.5
+  light_flicker__release_time:p2=0.3, 2.5
+  light_flicker__off_time:p2=2.15, 7.8
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=11.21
+}
+
+fluorescent_armored_lamp_b_light{
+  _use:t="omni_light"
+  light__max_radius:r=9
+  light__offset:p3=0, 0, 0
+  light__color:c=125, 220, 255, 255
+  light__brightness:r=3
+  light__contact_shadows:b=no
+  light__texture_name:t="ies_ceiling_smooth_b"
+  light__use_box:b=no
+
+  _group{
+    _tags:t="render"
+    _track:b=yes
+    _replicate:b=yes
+    omni_light__shadows:b=yes
+    omni_light__dynamic_obj_shadows:b=no
+    omni_light__inner_attenuation:r=0.5
+    omni_light__shadow_shrink:i=1
+    omni_light__shadow_quality:i=1
+  }
+}
+
+fluorescent_armored_lamp_b_flicker_a{
+  _use:t="fluorescent_armored_lamp_b_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="fluorescent_armored_lamp_b_flicker_a_template"
+}
+
+fluorescent_armored_lamp_b_mesh_a{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="fluorescent_armored_lamp_b_flicker_char"
+  light_flicker_updater__template:t="fluorescent_armored_lamp_b_flicker_a_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+fluorescent_armored_lamp_b_flicker_a_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.01, 0.05
+  light_flicker__on_time:p2=2.5, 14.5
+  light_flicker__release_time:p2=0.1, 0.5
+  light_flicker__off_time:p2=0.15, 0.7
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=28.27
+}
+
+fluorescent_armored_lamp_b_flicker_b{
+  _use:t="fluorescent_armored_lamp_b_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="fluorescent_armored_lamp_b_flicker_b_template"
+}
+
+fluorescent_armored_lamp_b_mesh_b{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="fluorescent_armored_lamp_b_flicker_char"
+  light_flicker_updater__template:t="fluorescent_armored_lamp_b_flicker_b_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+fluorescent_armored_lamp_b_flicker_b_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.03, 0.5
+  light_flicker__on_time:p2=3.75, 15.5
+  light_flicker__release_time:p2=0.1, 1.5
+  light_flicker__off_time:p2=1.15, 2.8
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=20.23
+}
+
+fluorescent_armored_lamp_b_flicker_c{
+  _use:t="fluorescent_armored_lamp_b_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="fluorescent_armored_lamp_b_flicker_c_template"
+}
+
+fluorescent_armored_lamp_b_mesh_c{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="fluorescent_armored_lamp_b_flicker_char"
+  light_flicker_updater__template:t="fluorescent_armored_lamp_b_flicker_c_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+fluorescent_armored_lamp_b_flicker_c_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.03, 0.75
+  light_flicker__on_time:p2=3.3, 5.5
+  light_flicker__release_time:p2=0.3, 2.5
+  light_flicker__off_time:p2=1.75, 4.8
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.2
+  light_flicker__noise_time:r=10.18
+}
+
+floodlight_lamp_a_light{
+  _use:t="spot_light"
+  light__max_radius:r=20
+  light__color:c=255, 225, 150, 255
+  light__brightness:r=8
+  light__texture_name:t="ies_sovmod_lamp_fluorescent_a_type_a"
+  light__nightly:b=no
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    spot_light__inner_attenuation:r=0.1
+  }
+
+  _group{
+    _tags:t="render"
+    spot_light__shadows:b=no
+    spot_light__dynamic_obj_shadows:b=no
+    spot_light__shadow_shrink:i=1
+  }
+}
+
+floodlight_lamp_a_flicker_a{
+  _use:t="floodlight_lamp_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="floodlight_lamp_a_flicker_a_template"
+}
+
+floodlight_lamp_a_mesh_a{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="floodlight_lamp_a_flicker_char"
+  light_flicker_updater__template:t="floodlight_lamp_a_flicker_a_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+floodlight_lamp_a_flicker_a_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.01, 0.03
+  light_flicker__on_time:p2=3.5, 11.5
+  light_flicker__release_time:p2=0.1, 0.5
+  light_flicker__off_time:p2=0.5, 1.5
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.1
+  light_flicker__noise_time:r=26.27
+}
+
+floodlight_lamp_a_flicker_b{
+  _use:t="floodlight_lamp_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="floodlight_lamp_a_flicker_b_template"
+}
+
+floodlight_lamp_a_mesh_b{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="floodlight_lamp_a_flicker_char"
+  light_flicker_updater__template:t="floodlight_lamp_a_flicker_b_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+floodlight_lamp_a_flicker_b_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.05, 0.3
+  light_flicker__on_time:p2=1.5, 5.5
+  light_flicker__release_time:p2=0.1, 0.5
+  light_flicker__off_time:p2=1.5, 4.5
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.1
+  light_flicker__noise_time:r=19.05
+}
+
+floodlight_lamp_a_flicker_c{
+  _use:t="floodlight_lamp_a_light"
+  _use:t="light_flicker_updater_light"
+  light_flicker_updater__template:t="floodlight_lamp_a_flicker_c_template"
+}
+
+floodlight_lamp_a_mesh_c{
+  _use:t="light_flicker_updater_mesh"
+  animchar__res:t="floodlight_lamp_a_flicker_char"
+  light_flicker_updater__template:t="floodlight_lamp_a_flicker_c_template"
+
+  "destroyable_with_rendinst:tag"{}
+}
+
+floodlight_lamp_a_flicker_c_template{
+  _use:t="light_flicker_with_sparks"
+  light_flicker__attack_time:p2=0.2, 1
+  light_flicker__on_time:p2=0.5, 3.5
+  light_flicker__release_time:p2=0.1, 0.5
+  light_flicker__off_time:p2=2.5, 6.5
+  light_flicker__on_brightness:p2=1, 1
+  light_flicker__off_brightness:p2=0, 0.5
+  light_flicker__noise_brightness_on:p2=0.5, 1
+  light_flicker__noise_brightness_off:p2=0, 0.1
+  light_flicker__noise_time:r=19.05
 }

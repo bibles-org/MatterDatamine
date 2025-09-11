@@ -2,42 +2,10 @@ item_artifact_am{
   _use:t="item"
   collres__res:t="medkit_collision"
   item__weight:r=0.5
-  item__volume:r=1
+  item__volume:i=10
 
   "item_artifact_am:tag"{}
   "item__alwaysUseful:tag"{}
-}
-
-sensor{
-  sensor__searchRange:p2=10, 30
-  sensor__searchRadExtensionMult:r=1.5
-  sensor__directionPerSensors:i=3
-}
-
-sensor_item{
-  _use:t="sensor"
-  sensor__itemSearchTag:t=""
-}
-
-sensor_enemy{
-  _use:t="sensor"
-  sensor__enemySearchTag:t=""
-}
-
-sensor_artifact_sensor{
-  _use:t="sensor_item"
-  sensor__searchRange:p2=30, 60
-  sensor__itemSearchTag:t="item_artifact_am"
-}
-
-sensor_flower_human_sensor{
-  _use:t="sensor_enemy"
-  sensor__enemySearchTag:t="flowerHuman"
-}
-
-sensor_skeleton_swarm_sensor{
-  _use:t="sensor_enemy"
-  sensor__enemySearchTag:t="skeletonSwarm"
 }
 
 artifact_crystal_model{
@@ -60,30 +28,6 @@ artifact_spidereye_model{
   collres__res:t="sample_spidereye_collision"
 }
 
-flower_human_sensor{
-  _use:t="item_artifact_am"
-  _use:t="sensor_flower_human_sensor"
-  _use:t="artifact_spidereye_model"
-  item__proto:t="flower_human_sensor"
-  item__name:t="items/flower_human_sensor"
-}
-
-skeleton_swarm_sensor{
-  _use:t="item_artifact_am"
-  _use:t="sensor_skeleton_swarm_sensor"
-  _use:t="artifact_neuron_model"
-  item__proto:t="skeleton_swarm_sensor"
-  item__name:t="items/skeleton_swarm_sensor"
-}
-
-artifact_sensor{
-  _use:t="item_artifact_am"
-  _use:t="sensor_artifact_sensor"
-  _use:t="artifact_grape_model"
-  item__proto:t="artifact_sensor"
-  item__name:t="items/artifact_sensor"
-}
-
 artifact_legendary{
   _use:t="item_artifact_am"
   _use:t="artifact_crystal_model"
@@ -102,69 +46,6 @@ artifact_legendary_effect{
   }
 }
 
-extracting_item{
-  "itemExtracting:tag"{}
-}
-
-extractable_item{
-  _use:t="animchar"
-  outline__enabled:b=no
-  grid_obj__gridType:t="interactable"
-  grid_obj__fixedTmScale:r=-1
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  artifact__subTemplateInWorking:t="extracting_item"
-  artifact__extractionTime:r=120
-  artifact__extractionTimeAt:r=0
-  artifact__reloadTime:r=600
-  artifact__isReloading:b=no
-  artifact__isExtracting:b=no
-  artifact__reloadAt:r=0
-  _replicated:t="artifact__isExtracting"
-  _tracked:t="artifact__isExtracting"
-  _replicated:t="artifact__extractionTimeAt"
-  _tracked:t="artifact__extractionTimeAt"
-
-  grid_obj{}
-  "artifact__extractable:tag"{}
-}
-
-increasing_attract_point{
-  _use:t="attract_point"
-  game_effect__timeToDestroy:r=60
-  attract_point__magnitude:r=1.5
-  attract_point__magnitudeLimits:p2=0.4, 2
-}
-
-artifact_active_mattery_base{
-  _use:t="replicating"
-  _use:t="extractable_item"
-  _use:t="attached_omni_light"
-  _use:t="artifact_wakeup_all_around"
-  artifact__attractPointTemplateName:t="increasing_attract_point"
-  artifact__extractionPrize:t="active_matter_pile"
-  artifact__extractionPrizeLimits:ip2=3, 3
-  artifact__extractionPrizeCoinCount:ip2=20, 30
-  artifact__moveTo:p3=0, 0, 0
-  artifact__offset:p3=0, 1.2, 0
-  artifact__curScale:r=4
-  artifact__scalesLimits:p2=4, 0.1
-  animchar__res:t="am_crystal_i_char"
-  collres__res:t="am_crystal_i_collision"
-  light__max_radius:r=5
-  light__color:c=255, 0, 153, 255
-  light__brightness:r=20
-
-  "artifact__attractPointEid:eid"{}
-  _group{
-    _tags:t="render"
-    effect__name:t="am_crystal_distortion_a_fx"
-
-    effect{}
-  }
-
-  collres{}
-}
-
 artifact_stand{
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   _use:t="replicating"
@@ -180,7 +61,7 @@ artifact_active_mattery{
   item__proto:t="artifact_active_mattery"
   item__name:t="items/artifact_active_mattery"
   item__weight:r=0.1
-  item__volume:r=2
+  item__volume:i=20
   item__scaleMult:r=0.5
 }
 
@@ -191,8 +72,8 @@ active_matter_pile_light{
   light__max_radius:r=2
   light__force_max_light_radius:b=yes
   light__offset:p3=0, 0, 0
-  light__color:c=180, 255, 200, 255
-  light__brightness:r=0.02
+  light__color:c=100, 255, 140, 255
+  light__brightness:r=0.002
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 }
 
@@ -212,26 +93,8 @@ active_matter_pile_effect{
   }
 }
 
-active_matter_gather_effect{
-  active_matter_gather_effect__flySpeed:r=7.5
-  active_matter_gather_effect__pilePos:p3=0, 0, 0
-  active_matter_gather_effect__gatherPos:p3=0, 0, 0
-  active_matter_gather_effect__requiredDistanceToTarget:r=0.1
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-
-  effect{
-    _tags:t="render"
-  }
-
-  "effects:object"{
-    am_absorbtion_flow_flare_fx:r=1
-    am_absorbtion_flow_pinch_fx:r=1
-  }
-}
-
 am_pile_sound{
   _use:t="replicating"
-  _use:t="sound_banks_state"
   _singleton:b=yes
 
   _group{
@@ -315,18 +178,22 @@ am_core_part{
   item__proto:t="am_core_part"
   item__name:t="items/am_core_part"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
 
   "item__alwaysUseful:tag"{}
 }
 
 active_matter_pile_shell_free_fall{
   _use:t="replicating"
+  _use:t="shell_free_fall_effect"
   ballistic_phys__velocity:p3=0, 0, 0
+  ballistic_phys__gravMult:r=0.33
   shell_free_fall_effect__recreateOnFallTemplate:t="active_matter_pile+item_in_world"
   shell_free_fall_effect__addHeight:r=0.3
   shell_free_fall_effect__fallOn:p3=0, 0, 0
   _replicated:t="shell_free_fall_effect__fallOn"
+
+  "active_matter_pile_shell_free_fall:tag"{}
 }
 
 am_shell_core_companion{
@@ -351,7 +218,7 @@ base_active_matter_pile{
   animchar__res:t="am_crystal_c_char"
   collres__res:t="am_crystal_c_collision"
   item__weight:r=0
-  item__volume:r=0
+  item__volume:i=0
   item__count:i=1
   item__lootType:t="coin"
   item__recreateOnGround:t="item_in_world"
@@ -359,7 +226,7 @@ base_active_matter_pile{
   item__proto:t="active_matter_pile"
   item__name:t="items/active_matter_pile"
   item__disablePickup:b=yes
-  active_matter_pile__locked:b=yes
+  active_matter_pile__locked:b=no
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.3, 0]]
   _replicated:t="item__count"
   _tracked:t="item__count"
@@ -369,80 +236,11 @@ base_active_matter_pile{
   "item__noVisibilityUpdate:tag"{}
 }
 
-active_matter_pile_attached_to_corpse{
-  _use:t="base_active_matter_pile"
-  _use:t="usable_object_base"
-  am_pile_visual__velMult:r=2
-  am_pile_visual__influenceEffectName:t="active_matter_gather_effect"
-  item__useActionHintType:i=1
-  item__setCustomUsePrompt:t="items/active_matter_pile/pickup"
-  item_world_marker__pos:p3=0, 0, 0
-  _tracked:t="item_world_marker__pos"
-  item_world_marker__attachToNode:t="Bip01 Spine1"
-  item_world_marker__attachToNodeIdx:i=-1
-  item__disablePickup:b=yes
-  active_matter_pile__locked:b=no
-
-  "am_pile_attached_to_corpse__corpseEid:eid"{}
-  "am_pile_visual__influenceFromGatherers:list<p3>"{}
-  "am_pile_visual__influenceFromGatherersEffects:list<eid>"{}
-  "usableObject:tag"{}
-  "item_world_marker__attachedToEid:eid"{}
-}
-
-active_matter_pile_provider{
-  am_pile_visual__velMult:r=2
-  am_pile_visual__influenceEffectName:t="active_matter_gather_effect"
-  active_matter_pile_provider__team:i=-1
-
-  "active_matter_pile_provider:tag"{}
-  "active_matter_pile_provider__amSourceEid:eid"{}
-  "am_pile_visual__influenceFromGatherers:list<p3>"{}
-  "am_pile_visual__influenceFromGatherersEffects:list<eid>"{}
-}
-
-active_matter_pile_attached_to_obj_effect{
-  _use:t="replicated_game_effect"
-
-  _group{
-    _tags:t="render"
-    effect__name:t="item_aura_composite_fx"
-
-    effect{}
-  }
-}
-
-active_matter_pile_attached_to_obj{
-  _use:t="base_active_matter_pile"
-  _use:t="usable_object_base"
-  _use:t="active_matter_pile_attached_to_obj_effect"
-  _use:t="item_in_world"
-  item__count:i=0
-  am_pile_visual__velMult:r=2
-  am_pile_visual__influenceEffectName:t="active_matter_gather_effect"
-  item__useActionHintType:i=1
-  item__setCustomUsePrompt:t="items/active_matter_pile/pickup"
-  item__disablePickup:b=yes
-  active_matter_pile__locked:b=no
-
-  "server_transform_from_transform:tag"{}
-  "am_pile_attached_to_obj__objEid:eid"{}
-  "am_pile_visual__influenceFromGatherers:list<p3>"{}
-  "am_pile_visual__influenceFromGatherersEffects:list<eid>"{}
-  "usableObject:tag"{}
-}
-
-attach_am_to_obj_on_appear{
-  attach_am_to_obj_on_appear__template:t="active_matter_pile_attached_to_obj"
-  attach_am_to_obj_on_appear__count:ip2=1, 1
-}
-
 active_matter_pile{
   _use:t="base_active_matter_pile"
   item__useActionHintType:i=1
   item__setCustomUsePrompt:t="items/active_matter_pile/pickup"
   item__disablePickup:b=yes
-  active_matter_pile__emissionFieldTemplate:t="am_emission_field"
   am_pile__visualItemPosOffset:p3=0, 0.3, 0
 
   "usableObject:tag"{}
@@ -456,98 +254,31 @@ active_matter_pile{
 
     "active_matter_pile__lightEid:eid"{}
     "active_matter_pile__visualEid:eid"{}
-    "active_matter_pile__sleepingVisualEid:eid"{}
-    "active_matter_pile__animchars:shared:array"{
-      "animchar:object"{
-        countRnd:ip2=1, 1
-        animchar_res:t="am_crystal_q1_char"
-      }
-
-      "animchar:object"{
-        countRnd:ip2=2, 4
-        animchar_res:t="am_crystal_q2_char"
-      }
-
-      "animchar:object"{
-        countRnd:ip2=5, 9
-        animchar_res:t="am_crystal_q3_char"
-      }
-
-      "animchar:object"{
-        countRnd:ip2=10, 19
-        animchar_res:t="am_crystal_q4_char"
-      }
-
-      "animchar:object"{
-        countRnd:ip2=20, 1000
-        animchar_res:t="am_crystal_q5_char"
-      }
-    }
   }
 }
 
 am_pile_visual{
-  _use:t="animchar"
   _use:t="am_pile_sound_source"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  animchar__res:t="am_crystal_c_char"
   collres__res:t="am_crystal_c_collision"
-  animchar_render__enabled:b=yes
-  am_pile_visual__salt:r=-1
-  am_pile_visual__verticalMoveAltitude:r=0.05
-  am_pile_visual__verticalMoveFrequency:r=0.17
-  am_pile_visual__influenceEffectName:t="active_matter_gather_effect"
-  am_pile_visual__rotationFrequency:r=0.1
-  am_pile_visual__rotInStateStep:r=0
-  am_pile_visual__rotOutStateStep:r=0
-  am_pile_visual__rotationFrequencyDrift:r=0.331
-  am_pile_visual__rotationFrequencyCurDrift:r=0
-  am_pile_visual__rotationFrequencyDriftSpeed:r=0.67
-  am_pile_visual__curRotAngle:r=0
-  am_pile_visual__rotationFrequencyAdd:r=0
-  am_pile_visual__gatherRotationFreqMult:r=3
-  am_pile_visual__gatherRotationFreqChangeTime:r=0.5
-  am_pile_visual__precessionMaxAngle:r=45
-  am_pile_visual__precessionCurAngle:r=180
-  am_pile_visual__precessionTime:r=100
-  am_pile_visual__precessionOscillationCurAngle:r=0
-  am_pile_visual__precessionOscillationAngle:r=45
-  am_pile_visual__precessionOscillationSpeed:r=0.513
-  am_pile_visual__pulsInStateStep:r=0
-  am_pile_visual__pulsOutStateStep:r=0
-  am_pile_visual__scale:r=0.01
-  am_pile_visual__gatherPulsationMult:r=1.3
-  am_pile_visual__gatherPulsationInOutTime:p2=1.5, 0.5
-  am_pile_visual__scaleMult:r=1
-  am_pile_visual__minScaleProc:r=0.8
-  am_pile_visual__startScaleMult:r=0
-  am_pile_visual__startScaleDelay:r=0.2
-  am_pile_visual__startScaleStartAt:r=0
-  am_pile_visual__startScaleSpeed:r=2
-  am_pile_visual__sleep:b=no
-  am_pile_visual__sleepWishScale:r=0.1
-  am_pile_visual__sleepScale:r=1
-  am_pile_visual__sleepScaleSpeed:r=1
-  am_pile_visual__changeAnimcharTime:r=-1
-  am_pile_visual__changeAnimcharTimeDuration:r=1
   am_pile_visual__renderRadius:r=50
   am_pile_visual__nextCheckRenderTime:r=0
   am_pile_visual__nextCheckRenderTimeDuration:r=3
   am_pile_visual__effectsDisabled:b=yes
   am_pile_visual__effectsTemplate:t="active_matter_pile_effect"
-  _tracked:t="am_pile_visual__sleep"
   am_pile_visual__originalTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  am_pile_visual__startOffset:p3=0, 0, 0
 
   "am_crystal_random_noise_offset:tag"{}
-  "requires_distortion_render:tag"{}
   "am_pile_visual__attachedTo:eid"{}
-  "am_pile_visual__influenceFromGatherers:list<p3>"{}
-  "am_pile_visual__influenceFromGatherersEffects:list<eid>"{}
-}
-
-am_pile_visual_destroying{
-  am_pile_visual_destroying__speed:r=10
+  "am_pile_visual__influenceFromGatherers:list<p4>"{}
+  _group{
+    _tags:t="gameClient"
+    active_matter_pile__self_time:r=0
+    active_matter_pile__activity:r=0
+    am_pile_visual__itemCount:r=0
+    am_pile_visual__wishCount:r=0
+    am_pile_visual__countApproachVisc:r=0.1
+  }
 }
 
 item_freefalling{
@@ -623,93 +354,6 @@ coin_item_count_100{
   item__count:i=100
   animchar__res:t="am_crystal_j_char"
   collres__res:t="am_crystal_j_collision"
-}
-
-sensor_abilities_sound{
-  sensor_abilities_sound__timeMult:r=20
-  sensor_abilities_sound__updateTime:r=1
-  sensor_abilities_sound__nextUpdateTime:r=0
-  sensor_abilities_sound__enable:b=no
-
-  "sensor_abilities_sound__types:object"{
-    "flower_human_sensor:object"{
-      path:t="am/ui/flower_human_sensor"
-      lastPlayedTime:r=0
-      intensity:r=0
-      volumeRng:p2=0.1, 0.3
-    }
-
-    "skeleton_swarm_sensor:object"{
-      path:t="am/ui/skeleton_swarm_sensor"
-      lastPlayedTime:r=0
-      intensity:r=0
-      volumeRng:p2=0.1, 0.3
-    }
-
-    "artifact_sensor:object"{
-      path:t="am/ui/artifact_sensor"
-      lastPlayedTime:r=0
-      intensity:r=0
-      volumeRng:p2=0.1, 0.3
-    }
-  }
-
-  "sensor_abilities_sound__pulsesPerSenseValue:shared:array"{
-    "node:object"{
-      senseValueMin:r=0.75
-      pulseCount:i=1
-      pauseCount:i=0
-      pause:b=no
-    }
-
-    "node:object"{
-      senseValueMin:r=0.5
-      pulseCount:i=3
-      pauseCount:i=4
-      pause:b=yes
-    }
-
-    "node:object"{
-      senseValueMin:r=0.25
-      pulseCount:i=2
-      pauseCount:i=4
-      pause:b=yes
-    }
-
-    "node:object"{
-      senseValueMin:r=0
-      pulseCount:i=1
-      pauseCount:i=4
-      pause:b=yes
-    }
-  }
-}
-
-sensor_abilities{
-  _use:t="sensor_abilities_sound"
-  sensor_abilities__updateTime:r=1
-  sensor_abilities__nextUpdateTime:r=0
-  _replicated:t="sensor_abilities__abilitiesProps"
-  _replicated:t="sensor_abilities__abilitiesStates"
-  _tracked:t="sensor_abilities__abilitiesStates"
-
-  "sensor_abilities__abilitiesProps:array"{}
-  "sensor_abilities__abilitiesStates:array"{}
-}
-
-am_emission_field{
-  _use:t="replicating"
-  _use:t="animchar"
-  animchar__res:t="am_emission_field_a_char"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  game_effect__timeToDestroy:r=0.8
-  game_effect__destroyAt:r=-1
-  am_emission_field__scaleMult:r=0
-  am_emission_field__wishScaleMult:r=1
-  am_emmision_field__scaleRng:p2=1, 0
-
-  "requires_distortion_render:tag"{}
-  "am_emission_field__ownerEid:eid"{}
 }
 
 am_emission_field_effect_base{
@@ -791,34 +435,54 @@ alter_tube_flow_distortion{
   }
 }
 
-am_inside_body{
-  bodyCleanupTime:r=99999
-  am_inside_body__emptyBodyCleanupTime:r=120
-}
-
 am_inside_body_1{
-  _use:t="am_inside_body"
-  corpse_am__templateForCreation:t="active_matter_pile_attached_to_corpse+item_in_world+coin_item_count_1"
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_1"
+      dropChance:r=0.5
+      dropHeight:r=1
+    }
+  }
 }
 
 am_inside_body_2{
-  _use:t="am_inside_body"
-  corpse_am__templateForCreation:t="active_matter_pile_attached_to_corpse+item_in_world+coin_item_count_2"
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_2"
+      dropChance:r=0.5
+      dropHeight:r=1
+    }
+  }
 }
 
 am_inside_body_3{
-  _use:t="am_inside_body"
-  corpse_am__templateForCreation:t="active_matter_pile_attached_to_corpse+item_in_world+coin_item_count_3"
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_3"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+  }
 }
 
 am_inside_body_5{
-  _use:t="am_inside_body"
-  corpse_am__templateForCreation:t="active_matter_pile_attached_to_corpse+item_in_world+coin_item_count_5"
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_5"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+  }
 }
 
 am_inside_body_20{
-  _use:t="am_inside_body"
-  corpse_am__templateForCreation:t="active_matter_pile_attached_to_corpse+item_in_world+coin_item_count_20"
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_20"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+  }
 }
 
 safepack_destroy_effect{

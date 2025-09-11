@@ -1,6 +1,8 @@
+from "%ui/components/colors.nut" import BtnBdSelected
+
 from "%ui/ui_library.nut" import *
 
-let { BtnBdSelected, } = require("%ui/components/colors.nut")
+#allow-auto-freeze
 
 let isIntersect = @(b1, b2) !(b1.l >= b2.r || b2.l >= b1.r || b1.t >= b2.b || b2.t >= b1.b)
 
@@ -27,6 +29,7 @@ function cutBlock(block, cutter) {
   if (!isIntersect(block, cutter))
     return [block]
 
+  #forbid-auto-freeze
   let res = []
   if (block.l < cutter.l)
     res.append({ l = block.l, t = block.t, r = cutter.l, b = block.b})
@@ -49,6 +52,7 @@ let wndAnimationParams = [
 ]
 
 function createHighlight(boxes) {
+  #forbid-auto-freeze
   local darkBlocks = [{ l = 0, t = 0, r = sw(100), b = sh(100) }]
   let lightBlocks = []
 
@@ -92,6 +96,7 @@ function getBox(keys) {
 }
 
 function mkLightBox(boxes) {
+  #forbid-auto-freeze
   let boxesToUse = []
   foreach (box in boxes) {
     if ("l" in box) {

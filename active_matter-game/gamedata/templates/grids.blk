@@ -1,0 +1,271 @@
+dev_trackable_transform{
+  _group{
+    _tags:t="gameClient,dev"
+    dev_trackable_transform__lastTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+    dev_trackable_transform__nextCheckAt:r=-1
+    dev_trackable_transform__checkTime:r=2
+  }
+}
+
+hidable_grid_object{
+  grid_obj__hidden:i=0
+  _replicated:t="grid_obj__hidden"
+  _tracked:t="grid_obj__hidden"
+}
+
+base_static_grid_object{
+  _use:t="dev_trackable_transform"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  grid_obj{}
+}
+
+base_dynamic_grid_object{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  grid_obj{}
+  "grid_obj__updateAlways:tag"{}
+}
+
+enable_dynamic_grid_logic{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [2, 0, 0]]
+  _tracked:t="transform"
+
+  _group{
+    _tags:t="gameClient,dev"
+
+    "dev_trackable_transform__disabled:tag"{}
+  }
+}
+
+humans_static_grid_object{
+  _use:t="base_static_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="humans"
+}
+
+humans_dynamic_grid_object{
+  _use:t="base_dynamic_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="humans"
+}
+
+human_grid_obj{
+  _use:t="humans_dynamic_grid_object"
+}
+
+obstacles_static_grid_object{
+  _use:t="base_static_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="obstacles"
+}
+
+projectile_phys_dynamic_grid_object{
+  _use:t="base_dynamic_grid_object"
+  grid_obj__gridType:t="projectile_phys"
+}
+
+traceable_spheres_static_grid_object{
+  _use:t="base_static_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="traceable_spheres"
+}
+
+traceable_spheres_dynamic_grid_object{
+  _use:t="base_dynamic_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="traceable_spheres"
+}
+
+creatures_static_grid_object{
+  _use:t="base_static_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="creatures"
+}
+
+creatures_dynamic_grid_object{
+  _use:t="base_dynamic_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="creatures"
+}
+
+zones_static_grid_object{
+  _use:t="base_static_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="zones"
+}
+
+interactable_static_grid_object{
+  _use:t="base_static_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="interactable"
+}
+
+interactable_dynamic_grid_object{
+  _use:t="base_dynamic_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="interactable"
+}
+
+vehicles_dynamic_grid_object{
+  _use:t="base_dynamic_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="vehicles"
+}
+
+ladders_static_grid_object{
+  _use:t="base_static_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="ladders"
+}
+
+gravity_zones_static_grid_object{
+  _use:t="base_static_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="gravity_zones"
+  grid_obj__fixedTmScale:r=1
+
+  "grid_obj__scaledBoxBounding:tag"{}
+}
+
+loot_static_grid_object{
+  _use:t="base_static_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="loot"
+}
+
+loot_dynamic_grid_object{
+  _use:t="base_dynamic_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="loot"
+}
+
+doors_static_grid_object{
+  _use:t="base_static_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="doors"
+}
+
+doors_dynamic_grid_object{
+  _use:t="base_dynamic_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="doors"
+}
+
+am_cores_dynamic_grid_object{
+  _use:t="base_dynamic_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="am_cores"
+}
+
+decor_static_grid_object{
+  _use:t="base_static_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="decor"
+}
+
+jump_quest_rendinsts_dynamic_grid_object{
+  _use:t="base_dynamic_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="jump_quest_rendinsts"
+}
+
+attract_point_static_grid_object{
+  _use:t="base_static_grid_object"
+  _use:t="hidable_grid_object"
+  grid_obj__gridType:t="attract_point"
+}
+
+base_grid{
+  editableObj:b=no
+  _use:t="replicating"
+  _singleton:b=yes
+  grid_holder__typeHash:i=0
+  grid_holder__cellSize:i=32
+
+  grid_holder{}
+}
+
+humans_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="humans"
+}
+
+obstacles_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="obstacles"
+}
+
+projectile_phys_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="projectile_phys"
+  grid_holder__cellSize:i=128
+}
+
+traceable_spheres_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="traceable_spheres"
+}
+
+creatures_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="creatures"
+}
+
+zones_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="zones"
+}
+
+interactable_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="interactable"
+}
+
+vehicles_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="vehicles"
+}
+
+ladders_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="ladders"
+}
+
+gravity_zones_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="gravity_zones"
+}
+
+loot_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="loot"
+}
+
+doors_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="doors"
+  grid_holder__cellSize:i=16
+}
+
+am_cores_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="am_cores"
+  grid_holder__cellSize:i=128
+}
+
+decor_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="decor"
+  grid_holder__cellSize:i=128
+}
+
+jump_quest_rendinsts_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="jump_quest_rendinsts"
+}
+
+attract_points_grid{
+  _use:t="base_grid"
+  grid_holder__type:t="attract_point"
+}

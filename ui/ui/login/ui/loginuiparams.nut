@@ -1,7 +1,8 @@
+from "settings" import get_setting_by_blk_path
+import "auth" as auth
+
 from "%ui/ui_library.nut" import *
 
-let { get_setting_by_blk_path } = require("settings")
-let auth  = require("auth")
 
 function addQueryParam(url, name, value) {
   let delimiter = url.contains("?") ? "&" : "?"

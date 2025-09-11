@@ -1,5 +1,7 @@
 from "%ui/ui_library.nut" import *
 
+#allow-auto-freeze
+
 return @(content, override = {}) {
   rendObj = ROBJ_WORLD_BLUR_PANEL
   fillColor = Color(30, 30, 30, 160)

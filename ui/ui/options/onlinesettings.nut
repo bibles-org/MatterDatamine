@@ -1,11 +1,11 @@
+from "%sqstd/timers.nut" import throttle
+import "%ui/state/shutdownHandler.nut" as shutdownHandler
+from "eventbus" import eventbus_subscribe
 from "%ui/ui_library.nut" import *
 import "onlineStorage" as online_storage
 
-let shutdownHandler = require("%ui/state/shutdownHandler.nut")
-let { eventbus_subscribe } = require("eventbus")
+let logOS = require("%sqGlob/library_logs.nut").with_prefix("[ONLINE_SETTINGS] ")
 let userInfo = require("%sqGlob/userInfo.nut")
-let { throttle } = require("%sqstd/timers.nut")
-let logOS = require("%sqstd/log.nut")().with_prefix("[ONLINE_SETTINGS] ")
 
 let onlineSettingUpdated = mkWatched(persist, "onlineSettingUpdated", false)
 let onlineSettingsInited = mkWatched(persist, "onlineSettingsInited", false)
@@ -16,8 +16,8 @@ const SEND_PENDING_TIMEOUT_SEC = 600
 function onUpdateSettings(_userId) {
   let fromOnline = online_storage.get_table_from_online_storage("GBT_GENERAL_SETTINGS")
   settings.set(fromOnline)
-  onlineSettingUpdated(true)
-  onlineSettingsInited(true)
+  onlineSettingUpdated.set(true)
+  onlineSettingsInited.set(true)
 }
 
 if (userInfo.get()?.chardToken!=null && userInfo.get()?.get()!=null && !onlineSettingsInited.get()){ 
@@ -53,14 +53,14 @@ userInfo.subscribe(function (new_val) {
   if (new_val != null)
     return
   sendToServer()
-  onlineSettingUpdated(false)
+  onlineSettingUpdated.set(false)
 })
 
 function save() {
   if (userInfo.get()==null || userInfo.get()?.chardToken==null || !onlineSettingsInited.get())
     return
   logOS("Save settings")
-  online_storage.save_table_to_online_storage(settings.value, "GBT_GENERAL_SETTINGS")
+  online_storage.save_table_to_online_storage(settings.get(), "GBT_GENERAL_SETTINGS")
 }
 
 let lazySave = throttle(save, 10)
@@ -87,6 +87,22 @@ shutdownHandler.add(function() {
 
 console_register_command(@() settings.set({}), "online_settings.clear")
 
+function changeSettingsWithPath(path, value){
+  path = type(path)=="array" ? path : path.split("/")
+  settings.mutate(function(v){
+    local c = v
+    foreach (i, subpath in path){
+      if (i == path.len()-1) {
+        c[path]<-value
+        break
+      }
+      if (!path.blockExists(subpath))
+        v.addBlock(subpath)
+      c = v.getBlock(subpath)
+    }
+  })
+}
+
 return {
   onUpdateSettings
   onlineSettingUpdated
@@ -94,4 +110,5 @@ return {
   loadFromCloud
   startSendToSrvTimer
   sendToServer
+  changeSettingsWithPath
 }

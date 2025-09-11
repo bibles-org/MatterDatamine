@@ -35,12 +35,6 @@ wakeup_all_around{
   game_effect__destroyAt:r=-1
 }
 
-artifact_wakeup_all_around{
-  artifact__wakeupRadius:p2=1, 3.5
-  artifact__awakeUnitsAround:i=4
-  artifact__wakeupNextUpdateSleepModeAdd:r=5
-}
-
 flowerman_trap_wakeup_all_around{
   _use:t="wakeup_all_around"
   wakeup__radius:r=30

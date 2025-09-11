@@ -99,7 +99,6 @@ struct SoundLandmeshQueries
   transform : float3x4
   human_sound_landmesh_queries_vars__speedSq : float
   human_sound_landmesh_queries_vars__isOnGround : bool
-  human_sound_landmesh_queries__biomes : Object
   human_sound_landmesh_queries__lmeshDiff : float
   human_sound_landmesh_queries__farawayThreshold : float
   human_sound_landmesh_queries__heroSpeedToQueryInterval : float4
@@ -108,8 +107,6 @@ struct SoundLandmeshQueries
   human_sound_landmesh_queries__lastQueryTime : float
   human_sound_landmesh_queries__biomeQueryId : int
   human_sound_landmesh_queries__puddleQueryId : int
-  human_sound_landmesh_queries__biomeToMaterial : IPoint2List
-  human_sound_landmesh_queries__biomePhysMatId : int
-  human_sound_landmesh_queries__biomeOverridesWater : bool
+  human_sound_landmesh_queries__biomeId : int
   human_sound_landmesh_queries__puddleQueryToDepth : float4
   human_sound_landmesh_queries__puddleDepth : float

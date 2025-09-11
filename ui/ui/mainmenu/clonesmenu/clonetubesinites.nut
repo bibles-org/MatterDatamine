@@ -1,6 +1,7 @@
+from "dasevents" import EventAlterHighlight
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
-let { EventAlterHighlight } = require("dasevents")
 let { alterContainers, currentAlter, playerBaseState } = require("%ui/profile/profileState.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 

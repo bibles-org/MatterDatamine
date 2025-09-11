@@ -24,29 +24,29 @@ let state = {
   inShip = inShip
   isVehicleAlive = isVehicleAlive
 }
-state.inVehicle <- Computed(@() inGroundVehicle.value || inPlane.value)
+state.inVehicle <- Computed(@() inGroundVehicle.get() || inPlane.get())
 
 ecs.register_es("ui_in_vehicle_eid_es",
   {
     [["onChange", "onInit"]] = function (_evt, eid, comp) {
-      state.controlledVehicleEid(eid)
+      state.controlledVehicleEid.set(eid)
       let inPlaneC = comp["airplane"] != null
       let inTankC = comp["isTank"] != null
       let inShipC = comp["ship"] != null
-      state.inPlane(inPlaneC)
-      state.inGroundVehicle(!inPlaneC)
-      state.inTank(inTankC)
-      state.inShip(inShipC)
+      state.inPlane.set(inPlaneC)
+      state.inGroundVehicle.set(!inPlaneC)
+      state.inTank.set(inTankC)
+      state.inShip.set(inShipC)
 
-      state.isVehicleAlive(comp["isAlive"])
+      state.isVehicleAlive.set(comp["isAlive"])
     },
     function onDestroy(_evt, _eid, _comp){
-      state.inPlane(false)
-      state.inGroundVehicle(false)
-      state.inTank(false)
-      state.inShip(false)
-      state.controlledVehicleEid(ecs.INVALID_ENTITY_ID)
-      state.isVehicleAlive(false)
+      state.inPlane.set(false)
+      state.inGroundVehicle.set(false)
+      state.inTank.set(false)
+      state.inShip.set(false)
+      state.controlledVehicleEid.set(ecs.INVALID_ENTITY_ID)
+      state.isVehicleAlive.set(false)
     }
   },
   {
@@ -65,14 +65,14 @@ ecs.register_es("ui_in_vehicle_eid_es",
 ecs.register_es("ui_vehicle_role_es",
   {
     [["onChange", "onInit"]] = function (_evt, _eid, comp) {
-      state.isDriver(comp["isDriver"] && comp["isInVehicle"])
-      state.isGunner(comp["isGunner"] && comp["isInVehicle"])
-      state.isPassenger(comp["isPassenger"] && comp["isInVehicle"])
+      state.isDriver.set(comp["isDriver"] && comp["isInVehicle"])
+      state.isGunner.set(comp["isGunner"] && comp["isInVehicle"])
+      state.isPassenger.set(comp["isPassenger"] && comp["isInVehicle"])
     },
     function onDestroy(_evt, _eid, _comp) {
-      state.isDriver(false)
-      state.isGunner(false)
-      state.isPassenger(false)
+      state.isDriver.set(false)
+      state.isGunner.set(false)
+      state.isPassenger.set(false)
     }
   },
   {

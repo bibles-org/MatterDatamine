@@ -2,17 +2,17 @@ base_inventory{
   inventory__name:t="backpack"
   _tracked:t="itemContainer"
   _skipInitialReplication:t="itemContainer"
-  human_inventory__maxVolume:r=80
 
   "human_inventory:tag"{}
   "item__notConsumedWhenUsed:tag"{}
+  "item__blockMoveToSafepack:tag"{}
   "itemContainer:list<eid>"{}
   _group{
     _track:b=yes
     _replicate:b=yes
-    human_inventory__maxVolumeInt:i=0
     human_inventory__currentVolume:i=0
     human_inventory__currentWeight:r=0
+    human_inventory__maxVolume:i=800
 
     "inventory__humanOwnerEid:eid"{}
   }
@@ -29,7 +29,7 @@ hammerspace_inventory{
   _use:t="base_inventory"
   inventory__name:t="hammerspace"
   inventory__itemRecognitionEnabled:b=no
-  human_inventory__maxVolume:r=1e+09
+  human_inventory__maxVolume:i=-1
 }
 
 hammerspace_inventory_owner{

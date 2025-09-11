@@ -1,7 +1,9 @@
+from "%ui/fonts_style.nut" import h2_txt, sub_txt
+from "%ui/components/colors.nut" import TextNormal
+
 from "%ui/ui_library.nut" import *
 
-let {h2_txt, sub_txt} = require("%ui/fonts_style.nut")
-let {TextNormal} = require("%ui/components/colors.nut")
+#allow-auto-freeze
 
 function textarea(txt, params={}) {
   if (type(txt)=="table") {
@@ -9,7 +11,7 @@ function textarea(txt, params={}) {
     txt = params?.text
   }
   return {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     color = TextNormal
     text = txt
   }.__update(h2_txt, params, {
@@ -22,7 +24,7 @@ function smallTextarea(txt, params={}) {
   if (type(txt)=="table")
     txt = params?.text ?? ""
   return {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     halign = ALIGN_LEFT
     rendObj=ROBJ_TEXTAREA
     behavior = Behaviors.TextArea

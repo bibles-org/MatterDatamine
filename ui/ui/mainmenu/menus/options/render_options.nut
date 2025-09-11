@@ -1,38 +1,31 @@
+from "%dngscripts/globalState.nut" import nestWatched
+from "%sqstd/math.nut" import floor
+from "%ui/options/safeArea.nut" import safeAreaSetAmount, safeAreaCanChangeInOptions
+from "%ui/mainMenu/menus/options/options_lib.nut" import loc_opt, defCmp, getOnlineSaveData, mkSliderWithText,
+  optionPercentTextSliderCtor, optionCheckBox, optionCombo, optionSlider, mkDisableableCtor, optionSpinner, optionCtor
+from "%ui/mainMenu/menus/options/dlss_state.nut" import DLSS_OFF, dlssSetValue, dlssgSetValue, DLSSG_OFF
+from "%ui/mainMenu/menus/options/low_latency_options.nut" import LOW_LATENCY_OFF, lowLatencySetValue_NV, lowLatencySetValue_AMD, lowLatencySetValue_Intel, isVsyncEnabledFromLowLatency
+from "%ui/mainMenu/menus/options/performance_metrics_options.nut" import PERF_METRICS_FPS, perfMetricsSetValue
+from "videomode" import is_dx12, is_vulkan, is_hdr_available, is_hdr_enabled, change_paper_white_nits, change_gamma, is_nvidia_gpu, is_amd_gpu, is_intel_gpu, is_rendinst_tessellation_supported, is_only_low_gi_supported
+from "settings" import get_setting_by_blk_path
+from "dagor.system" import DBGLEVEL, dgs_get_settings
+from "%ui/mainMenu/menus/options/monitor_state.nut" import get_friendly_monitor_name
+from "%ui/mainMenu/menus/options/fps_list.nut" import UNLIMITED_FPS_LIMIT
+from "dagor.debug" import logerr
+from "%ui/components/msgbox.nut" import showMsgbox
+from "%ui/mainMenu/menus/options/resolution_state.nut" import resolutionList, availableResolutions, resolutionValue, overrideAvalilableResolutions, getResolutions
 from "%ui/ui_library.nut" import *
+import "%dngscripts/platform.nut" as platform
 
-let { floor } = require("%sqstd/math.nut")
-let {get_setting_by_blk_path} = require("settings")
-let {safeAreaAmount, safeAreaBlkPath, safeAreaList, safeAreaSetAmount,
-  safeAreaCanChangeInOptions} = require("%ui/options/safeArea.nut")
-let platform = require("%dngscripts/platform.nut")
-let { DBGLEVEL, dgs_get_settings } = require("dagor.system")
+let {gameLanguage, language, availableLanguages, nativeLanguageNames, LANGUAGE_BLK_PATH, changeLanguage} = require("%ui/state/clientState.nut")
+let { safeAreaAmount, safeAreaBlkPath, safeAreaList } = require("%ui/options/safeArea.nut")
 
-let {loc_opt, defCmp, getOnlineSaveData, mkSliderWithText,
-  optionPercentTextSliderCtor, optionCheckBox, optionCombo, optionSlider,
-  mkDisableableCtor, optionSpinner,
-  optionCtor
-} = require("options_lib.nut")
-let { resolutionList, resolutionValue } = require("resolution_state.nut")
-let { DLSS_BLK_PATH, DLSS_OFF, dlssAvailable, dlssValue, dlssToString,
-  dlssSetValue, dlssNotAllowLocId, DLSSG_BLK_PATH, dlssgAvailable, dlssgValue, dlssgSetValue,
-  dlssgNotAllowLocId, dlssgToString, DLSSG_OFF
-} = require("dlss_state.nut")
-let { LOW_LATENCY_BLK_PATH, LOW_LATENCY_OFF, LOW_LATENCY_NV_ON,
-  LOW_LATENCY_NV_BOOST, lowLatencyAvailable, lowLatencyValue,
-  lowLatencySetValue, lowLatencyToString, lowLatencySupported
-} = require("low_latency_options.nut")
-let { PERF_METRICS_BLK_PATH, PERF_METRICS_FPS,
-  perfMetricsAvailable, perfMetricsValue, perfMetricsSetValue, perfMetricsToString
-} = require("performance_metrics_options.nut")
-let { is_dx12, is_vulkan, is_hdr_available,
-  is_hdr_enabled, change_paper_white_nits, change_gamma,
-  is_rendinst_tessellation_supported, is_only_low_gi_supported } = require("videomode")
-let { availableMonitors, monitorValue, get_friendly_monitor_name } = require("monitor_state.nut")
-let { fpsList, UNLIMITED_FPS_LIMIT } = require("fps_list.nut")
-let {isBareMinimum} = require("quality_preset_common.nut")
-let { logerr } = require("dagor.debug")
-let { nestWatched } = require("%dngscripts/globalState.nut")
-let { showMsgbox } = require("%ui/components/msgbox.nut")
+let { DLSS_BLK_PATH, dlssAvailable, dlssValue, dlssToString, dlssNotAllowLocId, DLSSG_BLK_PATH, dlssgAvailable, dlssgValue, dlssgNotAllowLocId, dlssgToString } = require("%ui/mainMenu/menus/options/dlss_state.nut")
+let { LOW_LATENCY_BLK_PATH__NVIDIA, LOW_LATENCY_BLK_PATH__AMD, LOW_LATENCY_BLK_PATH__INTEL, lowLatencyValue_NV, lowLatencyValue_AMD, lowLatencyValue_Intel, lowLatencyToString, lowLatencyAvailable, lowLatencySupported } = require("%ui/mainMenu/menus/options/low_latency_options.nut")
+let { PERF_METRICS_BLK_PATH, perfMetricsAvailable, perfMetricsValue, perfMetricsToString } = require("%ui/mainMenu/menus/options/performance_metrics_options.nut")
+let { get_available_monitors, monitorValue } = require("%ui/mainMenu/menus/options/monitor_state.nut")
+let { fpsList } = require("%ui/mainMenu/menus/options/fps_list.nut")
+let { isBareMinimum } = require("%ui/mainMenu/menus/options/quality_preset_common.nut")
 
 let resolutionToString = @(v) typeof v == "string" ? v : $"{v[0]} x {v[1]}"
 
@@ -41,14 +34,30 @@ let gammaCorrectionSave = getOnlineSaveData("graphics/gamma_correction",
   @(p) clamp(p, 0.5, 1.5)
 )
 
-let bareOffText = Computed(@() isBareMinimum.value ? loc("option/off") : null)
-let bareLowText = Computed(@() isBareMinimum.value ? loc("option/low") : null)
+let bareOffText = Computed(@() isBareMinimum.get() ? loc("option/off") : null)
+let bareLowText = Computed(@() isBareMinimum.get() ? loc("option/low") : null)
 
 let consoleGfxSettingsBlk = get_setting_by_blk_path("graphics/consoleGfxSettings")
 let consoleSettingsEnabled = (consoleGfxSettingsBlk != null) && (consoleGfxSettingsBlk == true)
 
 let isOptAvailable = @() platform.is_pc || (DBGLEVEL > 0 && (platform.is_sony || platform.is_xbox) && consoleSettingsEnabled)
 let isPcDx12 = @() platform.is_pc && is_dx12()
+
+let optLanguage = optionCtor({
+  name = loc("options/language")
+  widgetCtor = optionCombo
+  isAvailable = @() platform.is_pc || (DBGLEVEL > 0 && (platform.is_sony || platform.is_xbox) && consoleSettingsEnabled)
+  setValue = changeLanguage
+  tab = "Interface"
+  blkPath = LANGUAGE_BLK_PATH
+  var = language
+  defVal = gameLanguage
+  available = availableLanguages
+  valToString = @(v) nativeLanguageNames?[v] ?? v
+  
+  
+})
+
 
 let optSafeArea = optionCtor({
   name = loc("options/safeArea")
@@ -82,31 +91,37 @@ let optVideoMode = optionCtor({
   restart = !platform.is_windows
   valToString = @(s) loc($"options/mode_{s}")
   isEqual = defCmp
+  setValue = function(v) {
+    videoModeVar.set(v)
+    if (["fullscreenwindowed", "fullscreen"].indexof(v) != null)
+      resolutionValue.set("auto")
+    else
+      monitorValue.set("auto")
+  }
   hint = loc("guiHints/mode")
 })
 
 let optMonitorSelection = optionCtor({
   name = loc("options/monitor", "Monitor")
   widgetCtor = mkDisableableCtor(
-    Computed(@() videoModeVar.value == "windowed" ? loc("options/auto") : null),
+    Computed(@() videoModeVar.get() == "windowed" ? loc("options/auto") : null),
     optionSpinner)
   tab = "Graphics"
   blkPath = "video/monitor"
   isAvailable = isOptAvailable
-  defVal = availableMonitors.current
-  available = availableMonitors.list
-  originalVal = availableMonitors.current
+  defVal = get_available_monitors().current
+  available = get_available_monitors().list
+  originalVal = get_available_monitors().current
   var = monitorValue
   valToString = @(v) (v == "auto") ? loc("options/auto") : get_friendly_monitor_name(v)
   isEqual = defCmp
+  setValue = function(v) {
+    monitorValue.set(v)
+    overrideAvalilableResolutions(v)
+    resolutionList.set(availableResolutions.list)
+    resolutionValue.set("auto")
+  }
   hint = loc("guiHints/monitor")
-})
-
-videoModeVar.subscribe(function(val){
-  if (["fullscreenwindowed", "fullscreen"].indexof(val)!=null)
-    resolutionValue("auto")
-  else
-    monitorValue("auto")
 })
 
 let normalize_res_string = @(res) typeof res == "string" ? res.replace(" ", "") : res
@@ -138,7 +153,7 @@ let optHdr = optionCtor({
   blkPath = "video/enableHdr"
   isAvailable = isPcDx12
   widgetCtor = mkDisableableCtor(
-    Computed(@() is_hdr_available(monitorValue.value) ? null : "{0} ({1})".subst(loc("option/off"), loc("option/monitor_does_not_support", "Monitor doesn't support"))),
+    Computed(@() is_hdr_available(monitorValue.get()) ? null : "{0} ({1})".subst(loc("option/off"), loc("option/monitor_does_not_support", "Monitor doesn't support"))),
     optionCheckBox)
   defVal = false
   hint = loc("guiHints/enableHdr")
@@ -178,7 +193,8 @@ let optVsync = optionCtor({
   tab = "Graphics"
   isAvailable = isOptAvailable
   widgetCtor = mkDisableableCtor(
-    Computed(@() lowLatencyValue.value != LOW_LATENCY_NV_ON && lowLatencyValue.value != LOW_LATENCY_NV_BOOST ? null
+    Computed(@() isVsyncEnabledFromLowLatency(lowLatencyValue_NV.get())
+                   ? null
                    : "{0} ({1})".subst(loc("option/off"), loc("option/off_by_reflex"))),
     optionCheckBox)
   restart = !platform.is_windows
@@ -202,26 +218,58 @@ let optFpsLimit = optionCtor({
   hint = loc("guiHints/fpsLimit")
 })
 
-let optLatency = optionCtor({
-  name = loc("option/latency", "NVIDIA Reflex Low Latency")
+let optLatencyNVidia = optionCtor({
+  name = loc("options/latency_nvidia", "NVIDIA Reflex Low Latency")
   tab = "Graphics"
   widgetCtor = mkDisableableCtor(
-    Computed(@() isBareMinimum.value ?
-                 loc("option/off") :
-                 (lowLatencySupported.value ?
-                   (dlssgValue.value > 0 ?
-                     "{0} ({1})".subst(loc("option/nv_boost"), loc("option/forced_by_frame_generation")) :
-                     null) :
-                   "{0} ({1})".subst(loc("option/off"), loc("option/unavailable")))),
-    optionSpinner)
-  isAvailable = isOptAvailable
-  blkPath = LOW_LATENCY_BLK_PATH
+    Computed(@() lowLatencySupported.get() ?
+                      (dlssgValue.get() > 0 ?
+                        "{0} ({1})".subst(loc("option/nv_boost"), loc("option/forced_by_frame_generation")) :
+                        null) :
+                      "{0} ({1})".subst(loc("option/off"), loc("option/unavailable"))),
+        optionSpinner)
+  isAvailable = @() is_nvidia_gpu() && isOptAvailable()
+  blkPath = LOW_LATENCY_BLK_PATH__NVIDIA
   defVal = LOW_LATENCY_OFF
-  var = lowLatencyValue
-  setValue = lowLatencySetValue
+  var = lowLatencyValue_NV
+  setValue = lowLatencySetValue_NV
   available = lowLatencyAvailable
   valToString = @(v) loc(lowLatencyToString[v])
-  hint = loc("guiHints/latency")
+  hint = loc("guiHints/latency_nvidia")
+})
+let optLatencyAMD = optionCtor({
+  name = loc("options/latency_amd", "AMD Radeon Anti-Lag 2")
+  tab = "Graphics"
+  widgetCtor = mkDisableableCtor(
+    Computed(@() lowLatencySupported.get()
+                      ? null
+                      : "{0} ({1})".subst(loc("option/off"), loc("option/unavailable"))),
+        optionSpinner)
+  isAvailable = @() is_amd_gpu() && isOptAvailable()
+  blkPath = LOW_LATENCY_BLK_PATH__AMD
+  defVal = LOW_LATENCY_OFF
+  var = lowLatencyValue_AMD
+  setValue = lowLatencySetValue_AMD
+  available = lowLatencyAvailable
+  valToString = @(v) loc(lowLatencyToString[v])
+  hint = loc("guiHints/latency_amd")
+})
+let optLatencyIntel = optionCtor({
+  name = loc("options/latency_intel", "Intel Xe Low Latency")
+  tab = "Graphics"
+  widgetCtor = mkDisableableCtor(
+    Computed(@() lowLatencySupported.get()
+                      ? null
+                      : "{0} ({1})".subst(loc("option/off"), loc("option/unavailable"))),
+        optionSpinner)
+  isAvailable = @() is_intel_gpu() && isOptAvailable()
+  blkPath = LOW_LATENCY_BLK_PATH__INTEL
+  defVal = LOW_LATENCY_OFF
+  var = lowLatencyValue_Intel
+  setValue = lowLatencySetValue_Intel
+  available = lowLatencyAvailable
+  valToString = @(v) loc(lowLatencyToString[v])
+  hint = loc("guiHints/latency_intel")
 })
 let isDevBuild = @() platform.is_pc && DBGLEVEL != 0
 let optPerformanceMetrics = optionCtor({
@@ -251,10 +299,24 @@ let optShadowsQuality = optionCtor({
   getMoreBlkSettings = function(val){
     return [
       {blkPath = "graphics/dynamicShadowsQuality", val = val}
+      {blkPath = "graphics/grassShadowsQuality", val = val}
     ]
   }
   hint = loc("guiHints/shadowsQuality")
 })
+
+let optLensFlares = optionCtor({
+  optId = "lensFlares"
+  name = loc("options/lensFlares", "Lens Flares")
+  blkPath = "graphics/lensFlares"
+  widgetCtor = mkDisableableCtor(bareOffText, optionCheckBox)
+  defVal = true
+  tab = "Graphics"
+  isAvailable = @() true
+  restart = false
+  hint = loc("guiHints/lensFlares")
+})
+
 let optEffectsShadows = optionCtor({
   name = loc("options/effectsShadows", "Shadows from Effects")
   tab = "Graphics"
@@ -267,7 +329,7 @@ let optEffectsShadows = optionCtor({
 })
 
 
-let giLowText = Computed(@() (isBareMinimum.value || is_only_low_gi_supported()) ? loc("option/low") : null)
+let giLowText = Computed(@() (isBareMinimum.get() || is_only_low_gi_supported()) ? loc("option/low") : null)
 
 let optGiAlgorithm = optionCtor({
   name = loc("options/giAlgorithm")
@@ -420,7 +482,7 @@ let optGroundDeformations = optionCtor({
 })
 
 let optImpostor = optionCtor({
-  name = loc("options/impostor", "Impostor quality")
+  name = loc("options/impostor", "Impostor Quality")
   widgetCtor = optionSpinner
   isAvailable = isDevBuild
   tab = "Graphics"
@@ -448,22 +510,22 @@ let antiAliasingModeToString = {
   [antiAliasingMode.SSAA] = { optName = "options/optSSAA", defLocString = "SSAA" },
 }
 
-let antiAliasingModeDefault = Computed(@() platform.is_nswitch || isBareMinimum.value ? antiAliasingMode.FXAA : antiAliasingMode.TSR)
-let antiAliasingModeChosen = Watched(get_setting_by_blk_path("video/antiAliasingMode") ?? antiAliasingModeDefault.value)
-let antiAliasingModeSetValue = @(v) antiAliasingModeChosen(v)
+let antiAliasingModeDefault = Computed(@() platform.is_nswitch || isBareMinimum.get() ? antiAliasingMode.FXAA : antiAliasingMode.TSR)
+let antiAliasingModeChosen = Watched(get_setting_by_blk_path("video/antiAliasingMode") ?? antiAliasingModeDefault.get())
+let antiAliasingModeSetValue = @(v) antiAliasingModeChosen.set(v)
 let antiAliasingModeAvailable = Computed(@() [ platform.is_nswitch ? antiAliasingMode.OFF : null,
                                                antiAliasingMode.FXAA,
                                                !platform.is_nswitch ? antiAliasingMode.TSR : null,
                                                dlssNotAllowLocId.get() == null && !is_vulkan() ? antiAliasingMode.DLSS : null,
                                                antiAliasingMode.SSAA
                                               ].filter(@(q) q != null))
-let antiAliasingModeValue = Computed(@() isBareMinimum.value ? antiAliasingMode.FXAA : (antiAliasingModeAvailable.value.contains(antiAliasingModeChosen.value) ?
-                                                                                        antiAliasingModeChosen.value :
-                                                                                        antiAliasingModeDefault.value))
+let antiAliasingModeValue = Computed(@() isBareMinimum.get() ? antiAliasingMode.FXAA : (antiAliasingModeAvailable.get().contains(antiAliasingModeChosen.get()) ?
+                                                                                        antiAliasingModeChosen.get() :
+                                                                                        antiAliasingModeDefault.get()))
 
 let optAntiAliasingMode = optionCtor({
   name = loc("options/antiAliasingMode", "Anti-aliasing Mode")
-  widgetCtor = mkDisableableCtor(Computed(@() isBareMinimum.value ? loc("option/fxaa", "FXAA") : null), optionSpinner)
+  widgetCtor = mkDisableableCtor(Computed(@() isBareMinimum.get() ? loc("option/fxaa", "FXAA") : null), optionSpinner)
   tab = "Graphics"
   originalVal = antiAliasingModeValue
   blkPath = "video/antiAliasingMode"
@@ -476,7 +538,7 @@ let optAntiAliasingMode = optionCtor({
   hint = loc("guiHints/antiAliasingMode")
   getMoreBlkSettings = function(v){
     return [
-      {blkPath = "video/overrideAAforAutoResolution", val = v == 3},
+      {blkPath = "video/overrideAAforAutoResolution", val = v == antiAliasingMode.TSR},
     ]
   }
 })
@@ -494,9 +556,9 @@ let optDlss = optionCtor({
   name = loc("options/dlssQuality", "NVIDIA DLSS Quality")
   tab = "Graphics"
   widgetCtor = mkDisableableCtor(
-    Computed(@() dlssNotAllowLocId.value == null ? null : "{0} ({1})".subst(loc("option/off"), loc(dlssNotAllowLocId.value))),
+    Computed(@() dlssNotAllowLocId.get() == null ? null : "{0} ({1})".subst(loc("option/off"), loc(dlssNotAllowLocId.get()))),
     optionSpinner)
-  isAvailableWatched = Computed(@() isOptAvailable() && antiAliasingModeValue.value == antiAliasingMode.DLSS && is_dlss_selected())
+  isAvailableWatched = Computed(@() isOptAvailable() && antiAliasingModeValue.get() == antiAliasingMode.DLSS && is_dlss_selected())
   blkPath = DLSS_BLK_PATH
   defVal = DLSS_OFF
   var = dlssValue
@@ -511,11 +573,11 @@ let optDlssFrameGeneration = optionCtor({
   name = loc("options/dlssFrameGeneration", "Frame Generation")
   blkPath = DLSSG_BLK_PATH
   widgetCtor = mkDisableableCtor(
-    Computed(@() dlssgNotAllowLocId.value == null ? null : "{0} ({1})".subst(loc("option/off"), loc(dlssgNotAllowLocId.value))),
+    Computed(@() dlssgNotAllowLocId.get() == null ? null : "{0} ({1})".subst(loc("option/off"), loc(dlssgNotAllowLocId.get()))),
     optionSpinner)
   defVal = DLSSG_OFF
   tab = "Graphics"
-  isAvailableWatched = Computed(@() isOptAvailable() && isPcDx12() && antiAliasingModeValue.value == antiAliasingMode.DLSS)
+  isAvailableWatched = Computed(@() isOptAvailable() && isPcDx12() && antiAliasingModeValue.get() == antiAliasingMode.DLSS)
   var = dlssgValue
   setValue = dlssgSetValue
   available = dlssgAvailable
@@ -531,7 +593,7 @@ let tsrQualityValue = Watched(get_setting_by_blk_path(TSR_QUALITY_BLK_PATH) ?? T
 let optTemporalUpsamplingRatio = optionCtor({
   name = loc("options/temporal_upsampling_ratio", "Temporal Resolution Scale")
   tab = "Graphics"
-  isAvailableWatched = Computed(@() isOptAvailable() && resolutionValue.value != "auto" && antiAliasingModeValue.value == antiAliasingMode.TSR && tsrQualityValue.value == TSR_QUALITY_HIGH)
+  isAvailableWatched = Computed(@() isOptAvailable() && resolutionValue.get() != "auto" && antiAliasingModeValue.get() == antiAliasingMode.TSR && tsrQualityValue.get() == TSR_QUALITY_HIGH)
   widgetCtor = optionPercentTextSliderCtor
   blkPath = "video/temporalUpsamplingRatio"
   defVal = 100.0
@@ -546,7 +608,7 @@ let optTemporalUpsamplingRatio = optionCtor({
 let optStaticResolutionScale = optionCtor({
   name = loc("options/static_resolution_scale", "Static Resolution Scale")
   tab = "Graphics"
-  isAvailableWatched = Computed(@() isOptAvailable() && isBareMinimum.value)
+  isAvailableWatched = Computed(@() isOptAvailable() && isBareMinimum.get())
   widgetCtor = optionPercentTextSliderCtor
   blkPath = "video/staticResolutionScale"
   defVal = 100.0
@@ -631,7 +693,7 @@ let optScreenSpaceWeatherEffects = optionCtor({
 let optFXAAQuality = optionCtor({
   name = loc("options/FXAAQuality")
   tab = "Graphics"
-  isAvailableWatched = Computed(@() antiAliasingModeValue.value == antiAliasingMode.FXAA)
+  isAvailableWatched = Computed(@() antiAliasingModeValue.get() == antiAliasingMode.FXAA)
   widgetCtor = optionSpinner
   defVal = "medium"
   blkPath = "graphics/fxaaQuality"
@@ -657,10 +719,10 @@ let optSSRQuality = optionCtor({
 let optScopeImageQuality = optionCtor({
   name = loc("options/scopeImageQuality", "Scope Image Quality")
   tab = "Graphics"
-  isAvailable = isOptAvailable
+  isAvailable = @() false
   widgetCtor = mkDisableableCtor(bareLowText, optionSpinner)
   blkPath = "graphics/scopeImageQuality"
-  defVal = 0
+  defVal = 3
   available = [0, 1, 2, 3]
   valToString = loc_opt
   restart = false
@@ -668,22 +730,40 @@ let optScopeImageQuality = optionCtor({
   hint = loc("guiHints/scopeImageQuality")
 })
 
+let optScopeZoomMode = optionCtor({
+  name = loc("options/realSnipingZoom")
+  tab = "Graphics"
+  isAvailable = isOptAvailable
+  widgetCtor = optionCheckBox
+  blkPath = "graphics/realSnipingZoom"
+  defVal = true
+  getMoreBlkSettings = function(v){
+    return [
+      {blkPath = "renderFeatures/cameraInCamera", val = v},
+    ]
+  }
+  valToString = @(v) loc(v ? "option/on" : "option/off")
+  restart = false
+  isEqual = defCmp
+})
+
+
 const SCREENSHOT_FORMAT_BLK_PATH = "screenshots/format"
 const SCREENSHOT_FORMAT_JPEG = "jpeg"
 const SCREENSHOT_FORMAT_TGA = "tga"
 const SCREENSHOT_FORMAT_PNG = "png"
 const SCREENSHOT_FORMAT_EXR = "exr"
 
-let screenshotFormatAvailable = Computed(@() is_hdr_available(monitorValue.value) && hdrWatched.value ?
+let screenshotFormatAvailable = Computed(@() is_hdr_available(monitorValue.get()) && hdrWatched.get() ?
                                 [SCREENSHOT_FORMAT_JPEG, SCREENSHOT_FORMAT_PNG, SCREENSHOT_FORMAT_TGA, SCREENSHOT_FORMAT_EXR] :
                                 [SCREENSHOT_FORMAT_JPEG, SCREENSHOT_FORMAT_PNG, SCREENSHOT_FORMAT_TGA])
 
 let screenshotFormatValueChosen = Watched(get_setting_by_blk_path(SCREENSHOT_FORMAT_BLK_PATH) ?? SCREENSHOT_FORMAT_JPEG)
 
-let screenshotFormatSetValue = @(v) screenshotFormatValueChosen(v)
+let screenshotFormatSetValue = @(v) screenshotFormatValueChosen.set(v)
 
-let screenshotFormatValue = Computed(@() screenshotFormatAvailable.value.indexof(screenshotFormatValueChosen.value) != null
-  ? screenshotFormatValueChosen.value : SCREENSHOT_FORMAT_JPEG)
+let screenshotFormatValue = Computed(@() screenshotFormatAvailable.get().indexof(screenshotFormatValueChosen.get()) != null
+  ? screenshotFormatValueChosen.get() : SCREENSHOT_FORMAT_JPEG)
 
 let optScreenshotFormat = optionCtor({
   optId = "screenshotFormat"
@@ -704,7 +784,7 @@ let optScreenshotFormat = optionCtor({
 let optFSR = optionCtor({
   name = loc("options/optFSR", "AMD FidelityFX Super Resolution 1.0")
   tab = "Graphics"
-  isAvailableWatched = Computed(@() isOptAvailable() && (antiAliasingModeValue.value == antiAliasingMode.TSR && tsrQualityValue.value == TSR_QUALITY_LOW))
+  isAvailableWatched = Computed(@() isOptAvailable() && (antiAliasingModeValue.get() == antiAliasingMode.TSR && tsrQualityValue.get() == TSR_QUALITY_LOW))
   widgetCtor = mkDisableableCtor(bareOffText, optionSpinner)
   defVal = "off"
   blkPath = "video/fsr"
@@ -773,6 +853,17 @@ let optHQVolfog= optionCtor({
   hint = loc("guiHints/HQVolfog")
 })
 
+let optHQSSR = optionCtor({
+  name = loc("options/HQSSR")
+  tab = "Graphics"
+  isAvailable = @() platform.is_pc
+  widgetCtor = mkDisableableCtor(bareOffText, optionCheckBox)
+  defVal = false
+  blkPath = "graphics/HQSSR"
+  restart = false
+  hint = loc("guiHints/HQSSR")
+})
+
 let optSSSS = optionCtor({
   name = loc("options/ssss")
   tab = "Graphics"
@@ -826,14 +917,14 @@ let optMotionBlur = optionCtor({
 let wasSSAAWarningShown  = nestWatched("wasSSAAWarningShown", false)
 let wasSSAAWarningShownUpdate = @(v) wasSSAAWarningShown.set(v)
 
-antiAliasingModeValue.subscribe(function(mode) {
-  if (!wasSSAAWarningShown.value && mode == antiAliasingMode.SSAA) {
+antiAliasingModeValue.subscribe_with_nasty_disregard_of_frp_update(function(mode) {
+  if (!wasSSAAWarningShown.get() && mode == antiAliasingMode.SSAA) {
     wasSSAAWarningShownUpdate(true)
     showMsgbox({text=loc("settings/ssaa_warning")})
   }
 })
 
-return {
+return freeze({
   resolutionToString
   optResolution
   optSafeArea
@@ -842,10 +933,13 @@ return {
   optHdr
   optPaperWhiteNits
   optPerformanceMetrics
-  optLatency
+  optLatencyNVidia
+  optLatencyAMD
+  optLatencyIntel
   optVsync
   optFpsLimit
   optShadowsQuality
+  optLensFlares
   optEffectsShadows
   optGiAlgorithm
   optGiAlgorithmQuality
@@ -866,6 +960,7 @@ return {
   optScreenSpaceWeatherEffects
   optSSRQuality
   optScopeImageQuality
+  optScopeZoomMode
   optScreenshotFormat
   optDlss
   optTemporalUpsamplingRatio
@@ -878,10 +973,11 @@ return {
   optAntiAliasingMode
   optHQVolumetricClouds
   optHQVolfog
+  optHQSSR
+  optLanguage
 
   renderOptions = [
     optSafeArea,
-
     
     {name = loc("group/display", "Display") isSeparator=true tab="Graphics"},
     optResolution,
@@ -891,7 +987,9 @@ return {
     optPaperWhiteNits,
     optGammaCorrection,
     optPerformanceMetrics,
-    optLatency,
+    optLatencyNVidia,
+    optLatencyAMD,
+    optLatencyIntel,
     optVsync,
     optFpsLimit,
 
@@ -934,10 +1032,12 @@ return {
     optGroundDeformations,
     optOnlyonlyHighResFx,
     optScopeImageQuality,
+    optScopeZoomMode,
 
     
     {name = loc("group/postfx_effects", "Postfx effects") isSeparator=true tab="Graphics"},
     optScreenSpaceWeatherEffects,
+    optLensFlares,
     optChromaticAberration,
     optFilmGrain,
     optMotionBlur,
@@ -958,5 +1058,6 @@ return {
     { name = loc("group/advanced", "Advanced options"), isSeparator = true, tab = "Graphics" },
     optHQVolumetricClouds,
     optHQVolfog,
+    optHQSSR,
   ]
-}
+})

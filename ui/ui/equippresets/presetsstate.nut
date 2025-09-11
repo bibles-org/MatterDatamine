@@ -1,21 +1,23 @@
+from "%ui/options/mkOnlineSaveData.nut" import mkOnlineSaveData
+from "dagor.debug" import logerr
+import "utf8" as utf8
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems
+from "das.inventory" import load_player_preset, get_preset_unequip_volume_int
+from "%ui/components/msgbox.nut" import showMsgbox
 from "%ui/ui_library.nut" import *
+import "console" as console
 import "%dngscripts/ecs.nut" as ecs
 
 let { equipment } = require("%ui/hud/state/equipment.nut")
-let { mkOnlineSaveData } = require("%ui/options/mkOnlineSaveData.nut")
-let { logerr } = require("dagor.debug")
 let { onlineSettingUpdated } = require("%ui/options/onlineSettings.nut")
-let utf8 = require("utf8")
 let { weaponsList } = require("%ui/hud/state/hero_weapons.nut")
 let { inventoryItems, backpackItems, safepackItems } = require("%ui/hud/state/inventory_items_es.nut")
-let { mergeNonUniqueItems } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
 let { maxVolume } = require("%ui/hud/state/inventory_common_es.nut")
 let { backpackMaxVolume, backpackEid, safepackMaxVolume, safepackEid } = require("%ui/hud/state/hero_extra_inventories_state.nut")
 let { get_controlled_hero } = require("%dngscripts/common_queries.nut")
-let { load_player_preset, get_preset_unequip_volume_int, convert_volume_to_int } = require("das.inventory")
 let { stashVolume, stashMaxVolume } = require("%ui/state/allItems.nut")
-let { showMsgbox } = require("%ui/components/msgbox.nut")
 let { levelIsLoading } = require("%ui/state/appState.nut")
+let { tostring_r } = require("%sqstd/string.nut")
 
 const PLAYER_PRESETS_IN_ONLINE_SETTINGS = "player_presets"
 const MAX_PRESETS_COUNT = 5
@@ -23,7 +25,7 @@ const MAX_NAME_CHARS_COUNT = 16
 const PRESET_PREFIX = "playerPreset"
 const LAST_USED_EQUIPMENT = "lastUsed"
 const AGENCY_PRESET_UID = "agencyPreset"
-const PRESET_VERSION = 2
+const PRESET_VERSION = 5
 const PRESET_VERSION_KEY = "preset_version"
 
 let playerPresetStorage = mkOnlineSaveData(PLAYER_PRESETS_IN_ONLINE_SETTINGS, @() {})
@@ -34,10 +36,11 @@ let previewPresetCallbackOverride = Watched(null)
 let previewPresetOverrideRibbons = Watched(null)
 let useAgencyPreset = Watched(false)
 
-levelIsLoading.subscribe(@(v) v ? useAgencyPreset.set(false) : null)
+levelIsLoading.subscribe_with_nasty_disregard_of_frp_update(@(v) v ? useAgencyPreset.set(false) : null)
 
 function setPlayerPreset(presetIdx, data, needChangeName = false) {
   if (!onlineSettingUpdated.get()) {
+    showMsgbox({ text = loc("playerPreset/cantSavePresetRightNow") })
     logerr("Trying to save player presets while settings is unavailable")
     return
   }
@@ -89,7 +92,7 @@ function equipPreset(data) {
     return
 
   let neededVolumeInt = get_preset_unequip_volume_int(get_controlled_hero(), backpackEid.get(), safepackEid.get())
-  if (convert_volume_to_int(stashVolume.get()) + neededVolumeInt > convert_volume_to_int(stashMaxVolume.get())) {
+  if (stashVolume.get() + neededVolumeInt > stashMaxVolume.get()) {
     showMsgbox({text=loc("playerPreset/notEnoughStashVolume")})
     return
   }
@@ -101,7 +104,7 @@ function equipPreset(data) {
 }
 
 function addEquipmentPresetsTable(arr, slot, item) {
-  if (item?.itemTemplate == null)
+  if (item?.itemTemplate == null || item?.default_stub_item)
     return
   arr[slot] <- {
     itemTemplate = item?.itemTemplate
@@ -142,7 +145,14 @@ function addInventoryItems(preset, itemsInInventory, inventoryName, capacity) {
   }
 }
 
-function makePresetDataFromCurrentEquipment(filterFunction = @(_item) true) {
+function defaultFilterFunction(item) {
+  if (item?.filterType == "dog_tags")
+    return false
+
+  return true
+}
+
+function makePresetDataFromCurrentEquipment(filterFunction = defaultFilterFunction) {
   let preset = {}
   let weapons = weaponsList.get() ?? []
   preset["weapons"] <- []
@@ -200,6 +210,13 @@ function makeDataToSave() {
   return preset
 }
 
+console.register_command(function() {
+  let preset = makePresetDataFromCurrentEquipment()
+  log(tostring_r(preset, { maxdeeplevel = 6 }))
+
+}, "playerPresets.printCurrentEquip")
+
+
 function saveLastEquipmentPreset() {
   let presetData = makeDataToSave().__merge({ presetName = loc("playerPreset/lastUsed")})
   playerPresetSetDirect(playerPresetWatch.get().__merge({[$"{PRESET_PREFIX}_{LAST_USED_EQUIPMENT}"] = presetData}))
@@ -230,4 +247,5 @@ return {
   useAgencyPreset
   makePresetDataFromCurrentEquipment
   unfoldCountItems
+  defaultFilterFunction
 }

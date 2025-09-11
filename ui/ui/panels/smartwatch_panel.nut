@@ -1,28 +1,34 @@
-import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
+import "%ui/hud/compass/mk_compass_strip.nut" as mkCompassStrip
 import "math" as math
 
+from "%ui/helpers/timers.nut" import mkCountdownTimer
+from "%ui/hud/menus/components/damageModel.nut" import miniBodypartsPanel
+from "%ui/hud/player_info/affects_widget.nut" import mkWatchfaceAffectsWidget
+from "%ui/hud/player_info/player_vitality_panel.nut" import mkVitalityPanel
+from "%ui/hud/state/am_storage_state.nut" import heroAmValue, heroAmMaxValue
+from "%ui/hud/state/watched_hero.nut" import watchedHeroEid
+from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import getCurrentHeroEffectModsQuery
+from "dagor.random" import rnd_int
+from "dasevents" import EventDesiredHeroIrqHappened, EventGameTrigger, broadcastNetEvent
+from "net" import get_sync_time
+
 let { assistantSpeakingScript } = require("%ui/hud/state/notes.nut")
-let { rnd_int } = require("dagor.random")
 let { shuffle } = require("%sqstd/rand.nut")
-let { EventDesiredHeroIrqHappened, EventGameTrigger, broadcastNetEvent } = require("dasevents")
-let { mkCountdownTimer } = require("%ui/helpers/timers.nut")
-let { get_sync_time } = require("net")
 let { loudNoiseLevel } = require("%ui/hud/player_info/loud_noise_ui.nut")
-let { miniBodypartsPanel } = require("%ui/hud/menus/components/damageModel.nut")
-let mkCompassStrip = require("%ui/hud/compass/mk_compass_strip.nut")
 let corticalVaultCompassItems = require("%ui/hud/compass/compass_cortical_vault.nut")
+let { mkCompassAssistantPoints } = require("%ui/hud/compass/compass_assistant_points.nut")
 let compassNexusPortals = require("%ui/hud/compass/compass_nexus_beacons.nut")
 let teammatesCompass = require("%ui/hud/compass/compass_teammates.nut")
 let airdropCompass = require("%ui/hud/compass/compass_airdrop.nut")
 let hideHud = require("%ui/hud/state/hide_hud.nut")
-let { mkWatchfaceAffectsWidget } = require("%ui/hud/player_info/affects_widget.nut")
 let { levelLoaded } = require("%ui/state/appState.nut")
 let { handStaminaPanel } = require("%ui/hud/player_info/hand_stamina.nut")
 let { breathPanel } = require("%ui/hud/player_info/breath.nut")
 let { heartbeatPanel } = require("%ui/hud/player_info/heartrate.nut")
-let { mkVitalityPanel } = require("%ui/hud/player_info/player_vitality_panel.nut")
+
+#allow-auto-freeze
 
 let smartwatchCircleSectionsScale = Watched([])
 let smartwatchCircleSectionsOpacity = Watched([])
@@ -177,6 +183,33 @@ ecs.register_es("smartwatch_show_loading",
   { tags = "gameClient" }
 )
 
+let amGathererTickInterval = Watched(1)
+let amGathererTickAt = Watched(0)
+ecs.register_es("resources_gatherer_active_ui_es",
+  {
+    [["onInit", "onChange"]] = function(_eid, comp) {
+      if (comp["resources_gatherer_device__ownerEid"] == watchedHeroEid.get()) {
+        let speedMult = getCurrentHeroEffectModsQuery.perform(@(_eid, comps) comps.entity_mod_values.getAll()?["activeMatterGatherSpeed"].value ?? 1)
+        amGathererTickInterval.set(comp["resources_gatherer_device__tickInterval"] / speedMult)
+        amGathererTickAt.set(comp["resources_gatherer_device__tickAt"])
+      }
+    },
+    onDestroy = function(_eid, comp){
+      if (comp["resources_gatherer_device__ownerEid"] == watchedHeroEid.get() || watchedHeroEid.get() == ecs.INVALID_ENTITY_ID)
+        amGathererTickAt.set(0)
+    }
+  },
+  {
+    comps_track = [["resources_gatherer_device__tickAt", ecs.TYPE_FLOAT]]
+    comps_ro = [
+      ["resources_gatherer_device__tickInterval", ecs.TYPE_FLOAT],
+      ["resources_gatherer_device__ownerEid", ecs.TYPE_EID]
+    ]
+  },
+  { tags = "gameClient" }
+)
+
+
 console_register_command(
   @(level) applySmartwatchInterferenceLevel(level),
   "smartwatch.setInterferenceLevel"
@@ -312,13 +345,13 @@ let bodyparts = @(customHdpx=hdpx) @() {
 
 function indicators(customHdpx, override = {}) {
   return @() {
-    watch = [ hideHud, loadingInProgress ]
+    watch = [ hideHud, loadingInProgress, amGathererTickAt ]
     size = flex()
     flow = FLOW_HORIZONTAL
     halign = ALIGN_CENTER
     gap = customHdpx(5)
-    pos = [ customHdpx(5), 0]
-    children = hideHud.get() || !levelLoaded.get() ? null : [
+    pos = [customHdpx(5), 0]
+    children = hideHud.get() || !levelLoaded.get() || (amGathererTickAt.get() > 0) ? null : [
       {
         hplace = ALIGN_CENTER
         vplace = ALIGN_CENTER
@@ -337,25 +370,47 @@ function indicators(customHdpx, override = {}) {
   }
 }
 
+
+let amCompFontSize = 32
+function amComp(customHdpxi = hdpxi) {
+  return @() {
+    watch = [heroAmValue, amGathererTickAt]
+    halign = ALIGN_CENTER
+    valign = ALIGN_CENTER
+    size = flex()
+    children = (amGathererTickAt.get() > 0) ? {
+      rendObj = ROBJ_TEXT
+      font = Fonts.system
+      pos = [0, customHdpxi(40)]
+      fontSize = customHdpxi(amCompFontSize)
+      text = $"{heroAmValue.get()}"
+    } : null
+  }
+}
+
+
 let watchfaceDasScript = load_das("%ui/panels/watchface.das")
 
 function mkWatchface(radius){
   return @(){
     size = [2 * radius, 2 * radius]
-    watch = [ loudNoiseLevel, assistantSpeakingScript ]
+    watch = [loudNoiseLevel, assistantSpeakingScript, amGathererTickAt, amGathererTickInterval, heroAmValue, heroAmMaxValue]
     rendObj = ROBJ_DAS_CANVAS
     script = watchfaceDasScript
     setupFunc = "setup_data"
     drawFunc = "draw_watchface"
     loudness = loudNoiseLevel.get()
     speech = assistantSpeakingScript.get() != null
+    amGathererTickInterval = amGathererTickInterval.get()
+    amGathererTickAt = amGathererTickAt.get()
+    amStorageFull = heroAmMaxValue.get() <= heroAmValue.get()
   }
 }
 
 let copmassStrips = @(radius) @() {
   watch = levelLoaded
   children = mkCompassStrip({
-    compassObjects = [corticalVaultCompassItems, teammatesCompass, compassNexusPortals, airdropCompass],
+    compassObjects = [mkCompassAssistantPoints(), corticalVaultCompassItems, teammatesCompass, compassNexusPortals, airdropCompass],
     diameter=radius * 2,
     override = levelLoaded.get() ? {} : {
       transform = {}
@@ -372,6 +427,7 @@ let mkSmartwatchUi = @(radius = hdpx(smartwatchUiPx)){
     mkWatchface(radius)
     indicators(hdpxi)
     copmassStrips(radius)
+    amComp(hdpxi)
     mkWatchfaceAffectsWidget(radius)
   ]
 }
@@ -386,11 +442,12 @@ function mkSmartwatch(radius) {
       loadingScreen(customHdpx)
       mkWatchface(radius)
       indicators(customHdpx)
+      amComp(customHdpx)
     ]
   }
 }
 
-function mkSmartwatchOnboardingInitializationPanel(canvasSize, data) {
+function mkSmartwatchOnboardingInitializationPanel(canvasSize, data, _=null) {
   return {
     
     worldAnchor   = PANEL_ANCHOR_ENTITY

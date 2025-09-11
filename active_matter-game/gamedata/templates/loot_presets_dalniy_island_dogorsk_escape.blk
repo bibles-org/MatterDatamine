@@ -1,0 +1,43 @@
+dogorsk_escape_device_safe_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="encounter_quest_dogorsk_escape"
+      number:i=1
+    }
+  }
+}
+
+dogorsk_escape_exit_keys_safe_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="dogorsk_escape_exit_keys_safe_lootable_rendinst"
+      number:i=1
+    }
+  }
+}
+
+dogorsk_escape_turned_patrol_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_guards_group_cluster"
+      number:ip2=2, 3
+    }
+  }
+}
+
+dogorsk_escape_worm_nest_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="nesting_swarm_snake_nest_placer"
+      number:i=3
+    }
+  }
+}

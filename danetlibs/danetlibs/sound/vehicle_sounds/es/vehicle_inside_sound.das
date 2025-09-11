@@ -7,11 +7,9 @@ require soundEvent
 require sound_utils.modules.sound_player_common
 
 
-[es(tag=sound, on_appear, track=(is_watched_sound, vehicleCameraType, sound_banks_state__isPresetLoaded), on_event=EventOnSeatOwnersChanged)]
+[es(tag=sound, on_appear, on_event=EventOnSeatOwnersChanged, track=(vehicleCameraType, sound_preset__isLoaded), REQUIRE=vehicleWithWatched)]
 def vehicle_inside_sound_enabled(evt : Event;
-                                 is_watched_sound : bool;
-                                 sound_banks_state__isPresetLoaded : bool;
-
+                                 sound_preset__isLoaded : bool;
                                  @shared_comp vehicle_inside_sound_enabled__forSeats : StringList;
                                  vehicle_inside_sound_enabled__ifCommanderCameraType : bool;
                                  vehicleCameraType = int(VehicleCameraType.VEHICLE_CAMERA_NONE);
@@ -19,8 +17,7 @@ def vehicle_inside_sound_enabled(evt : Event;
                                  @shared_comp vehicle_seats__seats : Array;
                                  vehicle_seats__seatEids : EidList;
                                  var vehicle_inside_sound_enabled : bool&)
-
-  if !sound_banks_state__isPresetLoaded || !is_watched_sound
+  if !sound_preset__isLoaded
     vehicle_inside_sound_enabled = false
     return
 
@@ -42,8 +39,13 @@ def vehicle_inside_sound_enabled(evt : Event;
           vehicle_inside_sound_enabled ||= find_index(vehicle_inside_sound_enabled__forSeats, seatName) >= 0
 
 
+[es(tag=sound, on_disappear, REQUIRE=vehicleWithWatched)]
+def vehicle_inside_snapshot_sound_on_disappear(evt : Event;
+                                               var vehicle_inside_sound_enabled : bool&)
+  vehicle_inside_sound_enabled = false
 
-[es(tag=sound, REQUIRE=vehicleWithWatched, on_event=ParallelUpdateFrameDelayed, after=(animchar_before_render_es, sound_begin_update_es), before=sound_end_update_es)]
+
+[es(tag=sound, on_event=ParallelUpdateFrameDelayed, REQUIRE=vehicleWithWatched, after=(animchar_before_render_es, sound_begin_update_es), before=sound_end_update_es)]
 def vehicle_inside_snapshot_sound(evt : Event;
                                   var vehicle_inside_snapshot_sound__event : SoundEvent&;
                                   vehicle_inside_snapshot_sound__path : string;
@@ -53,14 +55,7 @@ def vehicle_inside_snapshot_sound(evt : Event;
     set_pos(vehicle_inside_snapshot_sound__event, transform[3])
 
 
-[es(tag=sound, REQUIRE=vehicleWithWatched, on_disappear)]
-def vehicle_inside_snapshot_sound_disappear(evt : Event;
-                                            var vehicle_inside_snapshot_sound__event : SoundEvent&)
-  abandon_play_or(vehicle_inside_snapshot_sound__event)
-
-
-
-[es(tag=sound, REQUIRE=vehicleWithWatched, on_event=ParallelUpdateFrameDelayed, after=(animchar_before_render_es, sound_begin_update_es), before=sound_end_update_es)]
+[es(tag=sound, on_event=ParallelUpdateFrameDelayed, REQUIRE=vehicleWithWatched, after=(animchar_before_render_es, sound_begin_update_es), before=sound_end_update_es)]
 def vehicle_inside_vibration_sound(evt : Event;
                                    var vehicle_inside_vibration_sound__event : SoundEvent&;
                                    vehicle_inside_vibration_sound__path : string;
@@ -72,7 +67,13 @@ def vehicle_inside_vibration_sound(evt : Event;
     set_var(vehicle_inside_vibration_sound__event, "speed", vehicle_sound_speed_state__speed)
 
 
-[es(tag=sound, REQUIRE=vehicleWithWatched, on_disappear)]
-def vehicle_inside_vibration_sound_disappear(evt : Event;
-                                             var vehicle_inside_vibration_sound__event : SoundEvent&)
+[es(tag=sound, on_disappear, REQUIRE=vehicleWithWatched)]
+def vehicle_inside_snapshot_sound_on_not_watched(evt : Event;
+                                                 var vehicle_inside_snapshot_sound__event : SoundEvent&)
+  abandon_play_or(vehicle_inside_snapshot_sound__event)
+
+
+[es(tag=sound, on_disappear, REQUIRE=vehicleWithWatched)]
+def vehicle_inside_vibration_sound_on_not_watched(evt : Event;
+                                                  var vehicle_inside_vibration_sound__event : SoundEvent&)
   abandon_play_or(vehicle_inside_vibration_sound__event)

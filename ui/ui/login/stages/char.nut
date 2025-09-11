@@ -1,12 +1,14 @@
+from "%sqstd/string.nut" import tostring_r
+
+from "settings" import get_setting_by_blk_path
+from "%ui/charClient/charClient.nut" import char_request
+
 from "%ui/ui_library.nut" import *
 
-let {get_setting_by_blk_path} = require("settings")
 let contactsGameId = get_setting_by_blk_path("contactsGameId")
 
-let {char_request} = require("%ui/charClient/charClient.nut")
 let sysinfo = require_optional("sysinfo")
-let {version, build_number} = require("%sqGlob/appInfo.nut")
-let {tostring_r} = require("%sqstd/string.nut")
+let { version, build_number } = require("%sqGlob/appInfo.nut")
 
 function char_login(auth_token, user_cb) {
   let request = {
@@ -15,8 +17,8 @@ function char_login(auth_token, user_cb) {
 
   if (sysinfo) {
     local si = sysinfo.get_user_system_info()
-    si.game_version <- version.value
-    si.game_build <- build_number.value
+    si.game_version <- version.get()
+    si.game_build <- build_number.get()
     request["sysinfo"] <- si
   }
 

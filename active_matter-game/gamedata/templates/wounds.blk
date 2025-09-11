@@ -549,11 +549,8 @@ am_wounds_decal_resources{
 }
 
 attachable_wear_wounds_base{
+  _use:t="animchar_additional_data"
   type_of_wounds:i=0
-
-  "additional_data:list<p4>"{
-    _tags:t="render"
-  }
 }
 
 attachable_wear_projective_wounds_data{

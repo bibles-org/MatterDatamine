@@ -40,12 +40,12 @@ def test_tags(opt : Object; all_tags : Object) : bool
   return true
 
 
-def get_option_path_string(obj : Object const; is_watched : bool; var result : string&) : bool
-  if is_watched && has(obj, "hero")
-    result = obj.hero ?? "error"
+def get_option_path_string(obj : Object const; is_watched : bool; var result : string&; watched_key = "hero"; unwatched_key = "enemy") : bool
+  if is_watched && has(obj, watched_key)
+    result = obj[watched_key] ?? "error"
     return true
-  elif !is_watched && has(obj, "enemy")
-    result = obj.enemy ?? "error"
+  elif !is_watched && has(obj, unwatched_key)
+    result = obj[unwatched_key] ?? "error"
     return true
   elif has(obj, "path")
     result = obj.path ?? "error"
@@ -53,31 +53,31 @@ def get_option_path_string(obj : Object const; is_watched : bool; var result : s
   return false
 
 
-def get_option_path(path : Object; path_id : int; is_watched : bool; var result : string&) : bool
+def get_option_path(path : Object; path_id : int; is_watched : bool; var result : string&; watched_key = "hero"; unwatched_key = "enemy") : bool
   if !has(path, "options")
     if path_id == 0
-      return get_option_path_string(path, is_watched, result)
+      return get_option_path_string(path, is_watched, result, watched_key, unwatched_key)
     return false
   let opts = *(path["options"]) as Array
   if opts != null
     if path_id >= 0 && path_id < length(*opts)
       let opt = (*opts)[path_id] as Object
       if opt != null
-        return get_option_path_string(*opt, is_watched, result)
+        return get_option_path_string(*opt, is_watched, result, watched_key, unwatched_key)
   return false
 
 
-def get_option_path(path : Object; tags : Object; is_watched : bool; var result : string&) : bool
+def get_option_path(path : Object; tags : Object; is_watched : bool; var result : string&; watched_key = "hero"; unwatched_key = "enemy") : bool
   if !has(path, "options")
     if test_tags(path, tags)
-      return get_option_path_string(path, is_watched, result)
+      return get_option_path_string(path, is_watched, result, watched_key, unwatched_key)
     return false
   let opts = *(path["options"]) as Array
   if opts != null
     for it in *opts
       let opt = it as Object
       if opt != null && test_tags(*opt, tags)
-        return get_option_path_string(*opt, is_watched, result)
+        return get_option_path_string(*opt, is_watched, result, watched_key, unwatched_key)
   return false
 
 
@@ -441,9 +441,11 @@ def play_or_abandon(var event : SoundEvent&; name : string; should_play : bool)
   return play_or_release_impl(event, name, should_play, true)
 
 def release_play_or(var event : SoundEvent&)
-  event |> release()
+  if is_valid_handle_value(event)
+    event |> release()
   event.enabled = false
 
 def abandon_play_or(var event : SoundEvent&)
-  event |> abandon()
+  if is_valid_handle_value(event)
+    event |> abandon()
   event.enabled = false

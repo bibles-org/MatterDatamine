@@ -1,21 +1,23 @@
+from "%dngscripts/globalState.nut" import nestWatched
+
+from "%ui/helpers/remap_nick.nut" import remap_others
+from "%ui/netUtils.nut" import request_nick_by_uid_batch
+
 from "%ui/ui_library.nut" import *
 
-let { remap_others } = require("%ui/helpers/remap_nick.nut")
 let invalidNickName = "????????"
-let {request_nick_by_uid_batch} = require("%ui/netUtils.nut")
-let {nestWatched} = require("%dngscripts/globalState.nut")
 let contacts = nestWatched("contacts", {})
 
 
 
 function updateContact(userIdStr, name=invalidNickName) {
   let uidStr = userIdStr.tostring()
-  if (uidStr not in contacts.value) {
+  if (uidStr not in contacts.get()) {
     let contact = { userId = uidStr, uid = userIdStr.tointeger(), realnick = name }
     contacts.mutate(@(v) v[uidStr] <- contact)
     return contact
   }
-  let contact = contacts.value[uidStr]
+  let contact = contacts.get()[uidStr]
   if (name != invalidNickName && name != contact.realnick)
     contact.realnick = name
   contacts.mutate(@(v) v[uidStr] <- contact)

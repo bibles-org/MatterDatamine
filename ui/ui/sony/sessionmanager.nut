@@ -1,15 +1,15 @@
+from "base64" import encodeString, decodeString
 from "%ui/ui_library.nut" import *
 
+let logP = require("%sqGlob/library_logs.nut").with_prefix("[PSNSESSION] ")
 let { send, sessionManager } = require("%sonyLib/webApi.nut")
 let { createPushContext } = require("%sonyLib/notifications.nut")
-let { encodeString, decodeString } = require("base64")
 let supportedPlatforms = require("%ui/sony/supportedPlatforms.nut")
 let { uid2console } = require("%ui/mainMenu/contacts/consoleUidsRemap.nut")
-let logP = require("%sqGlob/library_logs.nut").with_prefix("[PSNSESSION] ")
 
 let createSessionData = @(pushContextId, name, customData1) {
   playerSessions = [{
-    supportedPlatforms = supportedPlatforms.value
+    supportedPlatforms = supportedPlatforms.get()
     maxPlayers = 4
     maxSpectators = 0
     joinDisabled = false
@@ -58,14 +58,14 @@ function createSession(squadId, on_success) {
 }
 
 function changeLeader(leaderUid) {
-  let accountId = uid2console.value?[leaderUid.tostring()]
+  let accountId = uid2console.get()?[leaderUid.tostring()]
   logP($"change leader of {currentSessionId} to {accountId}/{leaderUid}")
   if (currentSessionId && accountId)
     send(sessionManager.changeLeader(currentSessionId, accountId, "PS5"))
 }
 
 function invite(uid, on_success) {
-  let accountId = uid2console.value?[uid.tostring()]
+  let accountId = uid2console.get()?[uid.tostring()]
   logP($"invite {accountId}/{uid} to {currentSessionId}")
   if (currentSessionId && accountId)
     send(sessionManager.invite(currentSessionId, [accountId]),

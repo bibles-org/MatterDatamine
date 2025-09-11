@@ -1,21 +1,18 @@
+from "%ui/voiceChat/voice_settings.nut" import voiceRecordVolumeUpdate, voiceChatModeUpdate, voicePlaybackVolumeUpdate, voiceActivationModeUpdate
+from "%ui/matchingClient.nut" import matchingCall
 from "%ui/ui_library.nut" import *
 
 let localSettings = require("%ui/options/localSettings.nut")("voice/", false)
-let {voiceChatEnabled} = require("%ui/voiceChat/voiceChatGlobalState.nut")
+let { voiceChatEnabled } = require("%ui/voiceChat/voiceChatGlobalState.nut")
 let voiceApi = require_optional("voiceApi")
-let {voiceRecordVolume, voiceRecordVolumeUpdate,
-  voiceChatMode, voiceChatModeUpdate,
-  voicePlaybackVolume, voicePlaybackVolumeUpdate,
-  voiceActivationMode, voiceActivationModeUpdate,
-  voice_modes, voice_activation_modes} = require("%ui/voiceChat/voice_settings.nut")
-let { matchingCall } = require("%ui/matchingClient.nut")
+let { voiceRecordVolume, voiceChatMode, voicePlaybackVolume, voiceActivationMode, voice_modes, voice_activation_modes } = require("%ui/voiceChat/voice_settings.nut")
 
 let initialized = mkWatched(persist, "initialized", false)
 let joinedVoiceRooms = persist("joinedVoiceRooms", @() {})
 
 let validation_tbl = {
-  voiceChatMode = @(v) voice_modes?[v] ?? voiceChatMode.value
-  voiceActivationMode = @(v) voice_activation_modes?[v] ?? voiceActivationMode.value
+  voiceChatMode = @(v) voice_modes?[v] ?? voiceChatMode.get()
+  voiceActivationMode = @(v) voice_activation_modes?[v] ?? voiceActivationMode.get()
 }
 
 let validate_setting = @(key, val) validation_tbl?[key](val) ?? val
@@ -23,24 +20,24 @@ let validate_setting = @(key, val) validation_tbl?[key](val) ?? val
 function loadVoiceSettings() {
   log("loadVoiceSettings")
   let noop = { 
-    voiceRecordVolume = [localSettings(voiceRecordVolume.value, "record_volume"), voiceRecordVolumeUpdate]
-    voicePlaybackVolume = [localSettings(voicePlaybackVolume.value, "playback_volume"), voicePlaybackVolumeUpdate]
-    voiceChatMode = [voiceChatEnabled.value ? localSettings(voiceChatMode.value, "mode") : Watched(voice_modes.off), voiceChatModeUpdate]
-    voiceActivationMode = [localSettings(voiceActivationMode.value, "activation_mode"), voiceActivationModeUpdate]
+    voiceRecordVolume = [localSettings(voiceRecordVolume.get(), "record_volume"), voiceRecordVolumeUpdate]
+    voicePlaybackVolume = [localSettings(voicePlaybackVolume.get(), "playback_volume"), voicePlaybackVolumeUpdate]
+    voiceChatMode = [voiceChatEnabled.get() ? localSettings(voiceChatMode.get(), "mode") : Watched(voice_modes.off), voiceChatModeUpdate]
+    voiceActivationMode = [localSettings(voiceActivationMode.get(), "activation_mode"), voiceActivationModeUpdate]
   }.each(function(v, key) {
     let [watched, update] = v
-    update(validate_setting(key, watched.value))
+    update(validate_setting(key, watched.get()))
   })
 }
 
 
-if (!initialized.value && voiceApi != null) {
+if (!initialized.get() && voiceApi != null) {
   loadVoiceSettings()
-  initialized(true)
+  initialized.set(true)
 }
 
 function leave_voice_chat(voice_chat_id, cb = null) {
-  if (voiceApi && voiceChatEnabled.value && voice_chat_id in joinedVoiceRooms) {
+  if (voiceApi && voiceChatEnabled.get() && voice_chat_id in joinedVoiceRooms) {
     matchingCall("mproxy.voice_leave_channel", function(_) { cb?() }, { channel = voice_chat_id })
     voiceApi.leave_room(joinedVoiceRooms[voice_chat_id]?.chanUri ?? "")
     joinedVoiceRooms.$rawdelete(voice_chat_id)
@@ -49,7 +46,7 @@ function leave_voice_chat(voice_chat_id, cb = null) {
 
 function join_voice_chat(voice_chat_id) {
   log($"joining voice {voice_chat_id}")
-  if (voiceApi && voiceChatEnabled.value && !(voice_chat_id in joinedVoiceRooms)) {
+  if (voiceApi && voiceChatEnabled.get() && !(voice_chat_id in joinedVoiceRooms)) {
     matchingCall("mproxy.voice_join_channel",
                       function(response) {
                         debugTableData(response)

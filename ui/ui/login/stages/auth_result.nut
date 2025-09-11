@@ -1,7 +1,8 @@
+from "auth" import get_user_info
+from "%ui/login/stages/auth_helpers.nut" import status_cb
+
 from "%ui/ui_library.nut" import *
 
-let {get_user_info} = require("auth")
-let {status_cb} = require("%ui/login/stages/auth_helpers.nut")
 
 return {
   id = "auth_result"

@@ -5,7 +5,7 @@ require DagorShaders
 require AnimV20
 require DagorMaterials
 require math.base
-require app
+require app // get_sync_time
 require danetlibs.light_flicker.render.light_flicker_common
 require daSkies
 
@@ -56,6 +56,48 @@ def init_flicker_light(evt : Event;
 
   light_flicker__time = get_sync_time()
   light_flicker__seed = int(uint(eid)) ^ get_rnd_seed()
+
+[es(tag=render, after=after_camera_sync)]
+def light_flicker_update2_es(info : UpdateStageInfoAct;
+                             light_flicker__brightnesses : float3;
+                             light_flicker__timings : float3;
+                             light_flicker__timingMul : float;
+                             light_flicker__brigtnessDeviation : float;
+                             light_flicker__timeDeviation : float;
+                             light_flicker__noiseToFlatRatio : float;
+                             light_flicker__noisePhase : float;
+                             light_flicker__noiseVelocity : float;
+                             var light_flicker__currentBase : float&;
+                             var light_flicker__changeAt : float&;
+                             var light_flicker__seed : int&;
+                             var light_flicker__brightness : float&)
+  if light_flicker__changeAt < info.curTime
+    let nextStateRnd = _rnd_float(light_flicker__seed, .0, 3.0)
+    if nextStateRnd < 1.0
+      light_flicker__currentBase = light_flicker__brightnesses.x
+    elif nextStateRnd < 2.0
+      light_flicker__currentBase = light_flicker__brightnesses.y
+    else
+      light_flicker__currentBase = light_flicker__brightnesses.z
+
+    light_flicker__currentBase *= _rnd_float(light_flicker__seed, 1.0 - light_flicker__brigtnessDeviation, 1.0 + light_flicker__brigtnessDeviation)
+
+    let nextTimeRnd = _rnd_float(light_flicker__seed, .0, 3.0)
+    var duration = .0
+    if nextTimeRnd < 1.0
+      duration = light_flicker__timings.x
+    elif nextTimeRnd < 2.0
+      duration = light_flicker__timings.y
+    else
+      duration = light_flicker__timings.z
+
+    duration *= light_flicker__timingMul
+    light_flicker__changeAt = info.curTime + duration * _rnd_float(light_flicker__seed, 1.0 - light_flicker__timeDeviation, 1.0 + light_flicker__timeDeviation)
+
+  let noise = perlin_noise1(light_flicker__noiseVelocity * info.curTime + light_flicker__noisePhase)
+  light_flicker__brightness = light_flicker__currentBase + noise * light_flicker__noiseToFlatRatio
+
+
 
 [es(tag=render, after=after_camera_sync)]
 def light_flicker_update_es(info : UpdateStageInfoAct;

@@ -1,10 +1,14 @@
+from "%dngscripts/platform.nut" import isPlatformRelevant
+
+from "%sqstd/string.nut" import split
+
 from "%ui/ui_library.nut" import *
 
-let formatters = require("textFormatters.nut")
+let formatters = require("%ui/components/textFormatters.nut")
 let mkFormatAst = require("%darg/helpers/mkFormatAst.nut")
-let { isPlatformRelevant } = require("%dngscripts/platform.nut")
-let { split } = require("%sqstd/string.nut")
 let { defStyle } = formatters
+
+#allow-auto-freeze
 
 let filter = @(object) ("platform" in object) && !isPlatformRelevant(split(object.platform, ","))
 let defParams = { formatters, style = defStyle, filter }

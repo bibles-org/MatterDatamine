@@ -1,30 +1,31 @@
+from "%ui/fonts_style.nut" import h2_txt, body_txt
+from "settings" import get_setting_by_blk_path
+from "math" import fabs
+from "%ui/options/mkOnlineSaveData.nut" import mkOnlineSaveData
+from "%ui/components/button.nut" import textButton
+from "%ui/components/selectWindow.nut" import mkSelectWindow, mkOpenSelectWindowBtn
+import "%ui/components/slider.nut" as slider
+import "%ui/components/spinnerList.nut" as spinnerList
+import "%ui/mainMenu/menus/options/optionTextSlider.nut" as mkSliderWithText
+
 from "%ui/ui_library.nut" import *
 
-let {h2_txt, body_txt} = require("%ui/fonts_style.nut")
-let { get_setting_by_blk_path } = require("settings")
-let { fabs } = require("math")
-let { mkOnlineSaveData } = require("%ui/options/mkOnlineSaveData.nut")
-let { textButton } = require("%ui/components/button.nut")
-let {mkSelectWindow, mkOpenSelectWindowBtn} = require("%ui/components/selectWindow.nut")
-let slider = require("%ui/components/slider.nut")
-let spinnerList = require("%ui/components/spinnerList.nut")
 
-let mkSliderWithText = require("optionTextSlider.nut")
 
 let getOnlineSaveData = memoize(@(saveId, defValueFunc, validateFunc = @(v) v) mkOnlineSaveData(saveId, defValueFunc, validateFunc), 1)
 
-function optionCombo(opt, _group, _xmbNode){
+function optionCombo(opt, _group, xmbNode){
   let {var, valToString, setValue=null} = opt
   let ItemWrapper = class{
     item = null
     constructor(item_)   { this.item = item_ }
     function _tostring() { return valToString(this.item) }
-    function isCurrent() { return opt.isEqual(this.item, opt.var.value)}
+    function isCurrent() { return opt.isEqual(this.item, opt.var.get())}
     function value()     { return this.item }
   }
   let { available } = opt
   let items = available instanceof Watched
-    ? Computed(@() available.value.map(@(v) ItemWrapper(v)))
+    ? Computed(@() available.get().map(@(v) ItemWrapper(v)))
     : available.map(@(v) ItemWrapper(v))
 
   let openScenesMenu = mkSelectWindow({
@@ -40,7 +41,7 @@ function optionCombo(opt, _group, _xmbNode){
   return @() {
     size = flex()
     watch = var
-    children = mkOpenSelectWindowBtn(var, openScenesMenu, valToString, null, opt?.hint)
+    children = mkOpenSelectWindowBtn(var, openScenesMenu, valToString, null, opt?.hint, xmbNode)
   }
 }
 
@@ -57,7 +58,7 @@ function optionCheckBox(opt, group, xmbNode) {
       setValue = opt?.setValue
       curValue = opt.var
       valToString = opt?.valToString ?? @(val) val ? locOn : locOff
-      allValues = available.value
+      allValues = available.get()
       xmbNode
       group
     })
@@ -73,6 +74,7 @@ function optionSlider(opt, group, xmbNode) {
       max = opt?.max ?? 1
       unit = opt?.unit ?? 0.1
       scaling = opt?.scaling
+      ignoreWheel = opt?.ignoreWheel ?? false
       pageScroll = opt?.pageScroll ?? 0.1
       group
       xmbNode
@@ -95,7 +97,7 @@ function optionSpinner(opt, group, xmbNode) {
       setValue = opt?.setValue
       curValue = opt.var
       valToString = opt?.valToString ?? @(val) val ? locOn : locOff
-      allValues = available.value
+      allValues = available.get()
       xmbNode
       group
       hint = opt?.hint
@@ -106,11 +108,11 @@ function optionSpinner(opt, group, xmbNode) {
 
 
 let optionButton = @(opt, _group, xmbNode){
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   children = @() {
     watch = opt.var
     stopHover = true
-    children = textButton(opt.var.value?.text, @() opt.var.value?.handler(), {
+    children = textButton(opt.var.get()?.text, @() opt.var.get()?.handler(), {
       xmbNode
       stopHover = true
       tooltipText = opt?.hint
@@ -131,7 +133,7 @@ function optionPercentTextSliderCtor(opt, group, xmbNode) {
 }
 
 let optionDisabledText = @(text) {
-  size = const [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   clipChildren = true
   rendObj = ROBJ_TEXT 
   text
@@ -145,17 +147,18 @@ let mkDisableableCtor = @(disableWatch, enabledCtor, disabledCtor = optionDisabl
       watch = disableWatch
       size = flex()
       valign = ALIGN_CENTER
-      children = disableWatch.value == null ? enabledWidget
-        : disabledCtor(disableWatch.value)
+      children = disableWatch.get() == null ? enabledWidget
+        : disabledCtor(disableWatch.get())
     }
   }
 
 function optionCtor(opt){
+  #forbid-auto-freeze
   if (opt?.originalVal == null)
     opt.originalVal <- (type(opt?.blkPath)==type("")
       ? get_setting_by_blk_path(opt.blkPath)
       : opt?.var
-        ? opt.var.value
+        ? opt.var.get()
         : null
     ) ?? opt?.defVal
   if ("convertFromBlk" in opt)

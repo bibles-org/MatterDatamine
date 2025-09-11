@@ -6,8 +6,8 @@ def get_node_no(node : uint16)
 
 def find_base_attach_parent(parent_eid : EntityId)
   var parent = parent_eid
-  query(parent_eid) <| $ [es] (slot_attach__attachedTo : EntityId)
-    parent = find_base_attach_parent(slot_attach__attachedTo)
+  query(parent_eid) <| $ [es] (animchar_attach__attachedTo : EntityId)
+    parent = find_base_attach_parent(animchar_attach__attachedTo)
   return parent
 
 def get_remapped_node_no(node : uint16)

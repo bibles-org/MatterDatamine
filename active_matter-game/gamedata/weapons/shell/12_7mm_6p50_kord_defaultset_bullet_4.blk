@@ -1,0 +1,83 @@
+mass:r=0.0538
+caliber:r=0.0127
+speed:r=850
+Cx:r=0.34135
+damageMass:r=0.039
+ballisticCaliber:r=0.0127
+damageCaliber:r=0.01095
+maxDistance:r=3400
+breakingArmorThicknessEffective:b=yes
+breakingArmorThickness:p2=2, 40
+breakingCriticalSpeed:r=700
+breakingDistance:r=0.02
+normalizationPreset:t="default"
+ricochetPreset:t="default"
+groundRicochetPreset:t="default"
+stabilityThreshold:r=0.05
+stabilityCaliberToArmorThreshold:r=5
+stabilityReductionAfterRicochet:r=0.5
+stabilityReductionAfterPenetration:r=0.3
+bulletType:t="apcr_i_ball_bs41"
+slopeEffectPreset:t="ap"
+onHitChanceMultFire:r=10
+effectiveDistance:r=3000
+relativeVelHitShift:p2=300, 3000
+waterRicochetEffect:t="hit_12_18mm_water"
+groundRicochetEffect:t="hit_12_18mm_dirt_ap"
+secondaryShattersPreset:t="ap"
+
+stabilityRicochetModifier{
+  mod1:p2=0, 0.05
+  mod2:p2=20, 0.1
+  mod3:p2=30, 0.2
+  mod3:p2=45, 0.3
+}
+
+hitpower{
+  HitPower10m:p2=1, 10
+  HitPower1000m:p2=0.95, 1000
+  HitPower1500m:p2=0.85, 1500
+  HitPower2000m:p2=0.3, 2000
+  HitPower2500m:p2=0.2, 2500
+  HitPower3000m:p2=0.1, 3000
+}
+
+damage{
+  kinetic{
+    damageType:t="generic"
+    demarrePenetrationK:r=0.85
+    demarreSpeedPow:r=1.43
+    demarreMassPow:r=0.71
+    demarreCaliberPow:r=1.07
+  }
+
+  breakingScaleByArmor{
+    mod0:p2=2, 1
+    mod1:p2=4, 0.7
+    mod2:p2=15, 0.5
+  }
+
+  breakingScaleByAir{
+    mod0:p2=0.1, 1
+    mod1:p2=0.3, 0.8
+    mod2:p2=1, 0.6
+  }
+}
+
+visual{
+  range_percent_of_ammo:p2=100, 0
+  traceFreq:i=1
+  tracer:t="noColor"
+}
+
+kineticDamage{
+  damageType:t="generic"
+}
+
+tracer{
+  headColor:c=0, 0, 0, 0
+  smokeColor:c=0, 0, 0, 0
+  startHeadColor:c=0, 0, 0, 0
+  startTime:r=0
+  smokeRadius:r=0.01
+}

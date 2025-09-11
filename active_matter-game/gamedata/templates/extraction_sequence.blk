@@ -39,9 +39,19 @@ extraction_sequence_affect{
   }
 }
 
+extraction_sequence_affect_for_device{
+  _use:t="extraction_sequence_affect"
+
+  "extraction_sequence_affect__finalStage:object"{
+    affectTemplate:t="extraction_sequence_process_destroy"
+    duration:r=1
+  }
+}
+
 menu_extraction_sequence_affect{
   _use:t="extraction_sequence_affect"
   game_effect_server_sound__appear:t="onBattleStart"
+  menu_extraction_sequence_affect__isOffline:b=no
 
   "extraction_sequence_affect__finalStage:object"{
     affectTemplate:t="extraction_sequence_connect_to_host"

@@ -1,8 +1,9 @@
+from "dagor.math" import Point2
+from "dagor.debug" import logerr
+
 from "%ui/ui_library.nut" import *
-let { Point2 } = require("dagor.math")
 let { lastBattleResult } = require("%ui/profile/profileState.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
-let { logerr } = require("dagor.debug")
 let { journalBattleResult } = require("%ui/profile/battle_results.nut")
 
 

@@ -1,10 +1,13 @@
+from "%dngscripts/platform.nut" import is_ps5
+
+from "%ui/fonts_style.nut" import body_txt
+import "dainput2" as dainput
+import "string" as string
+
 from "%ui/ui_library.nut" import *
 
-let { body_txt } = require("%ui/fonts_style.nut")
 let controlsTypes = require("%ui/control/controls_types.nut")
 let controllerType = require("%ui/control/controller_type.nut")
-let dainput = require("dainput2")
-let { is_ps5 } = require("%dngscripts/platform.nut")
 let startButton = is_ps5? "start_ps5" : "start"
 
 local dargJKeys2X1Image = {
@@ -84,6 +87,7 @@ local dargJKeys2X1Image = {
   "J:SensorY" : "sensor_y",
 }
 
+#allow-auto-freeze
 
 
 
@@ -109,7 +113,9 @@ function keyAndImg(table, list, prefix, offs){
       table[key] <- img
    }
 }
+#forbid-auto-freeze
 let basicJBtns = {}
+#allow-auto-freeze
 keyAndImg(basicJBtns, btnsNum, "J:Button", 1)
 keyAndImg(basicJBtns, axisNum, "J:Axis", 1)
 keyAndImg(basicJBtns, btnsNum, "J:B", 0)
@@ -184,8 +190,8 @@ let updateBasicJBtns = @(controller_type, btns) btns.map(updateButtonByCType?[co
 
 let keysImagesMap = Computed(@() mouseKeyboardImg
   .__merge(eventTypesImg)
-  .__update(dargJKeysToImage(controllerType.value))
-  .__update(updateBasicJBtns(controllerType.value, basicJBtns))
+  .__update(dargJKeysToImage(controllerType.get()))
+  .__update(updateBasicJBtns(controllerType.get(), basicJBtns))
 )
 
 let defHeightMul = 1.35 
@@ -200,6 +206,8 @@ let heightMuls = {
   ["x1/rtrigger"] = 1,
   ["x1/lshoulder"] = 1.2,
   ["x1/rshoulder"] = 1.2,
+  ["x1/rstick_4"] = 1,
+  ["x1/lstick_4"] = 1,
   ["ds4/a"] = 1,
   ["ds4/b"] = 1,
   ["ds4/x"] = 1,
@@ -254,14 +262,14 @@ let controlsTypeMap = {
 function mkImageCompByDargKey(key, params={}) {
   let cType = params?.controlsType ?? controllerType
   return function(){
-    let gamepadMap = controlsTypeMap?[cType.value] ?? (dargJKeysToImage(cType.value))
+    let gamepadMap = controlsTypeMap?[cType.get()] ?? (dargJKeysToImage(cType.get()))
     return (gamepadMap?[key] != null)
     ? mkImageComp(gamepadMap?[key] ?? key, params.__merge({watch=controllerType}))
     : {rendObj=ROBJ_FRAME, size = [defHeight, defHeight]}.__merge(params)
   }
 }
 
-return {
+return freeze({
   mkImageComp
   dargJKeys2X1Image
   mouseKeyboardImg
@@ -272,4 +280,4 @@ return {
   getBtnImageHeight
   sticksAliases
   defHeight
-}
+})

@@ -1,6 +1,7 @@
+from "eventbus" import eventbus_subscribe
+
 from "%ui/ui_library.nut" import *
 
-let { eventbus_subscribe } = require("eventbus")
 
 let list = []
 

@@ -1,10 +1,10 @@
+from "team" import TEAM_UNASSIGNED
+from "matching.errors" import INVALID_SQUAD_ID
+from "net" import get_user_id
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { TEAM_UNASSIGNED } = require("team")
-let { INVALID_SQUAD_ID } = require("matching.errors")
-let {get_user_id} = require("net")
-let logObs = require("%sqstd/log.nut")().with_prefix("[OBSERVER]")
+let logObs = require("%sqGlob/library_logs.nut").with_prefix("[OBSERVER]")
 
 const INVALID_USER_ID = 0
 
@@ -23,39 +23,39 @@ let groupmateQuery = ecs.SqQuery("groupmateQuery", {comps_ro = [["groupId", ecs.
 localPlayerSpecTarget.subscribe(@(eid) logObs($"spectated: {eid}"))
 
 function addGroupmate(eid, comp) {
-  if (comp["groupId"] == localPlayerGroupId.value) {
-    if (eid in localPlayerGroupMembers.value)
+  if (comp["groupId"] == localPlayerGroupId.get()) {
+    if (eid in localPlayerGroupMembers.get())
       return
     localPlayerGroupMembers.mutate(@(v) v[eid] <- true)
   }
 }
 
 function resetData() {
-  localPlayerEid(ecs.INVALID_ENTITY_ID)
-  localPlayerTeam(TEAM_UNASSIGNED)
-  localPlayerTeamEid(ecs.INVALID_ENTITY_ID)
-  localPlayerUserId(get_user_id())
-  localPlayerSpecTarget(ecs.INVALID_ENTITY_ID)
-  localPlayerGroupId(INVALID_SQUAD_ID)
+  localPlayerEid.set(ecs.INVALID_ENTITY_ID)
+  localPlayerTeam.set(TEAM_UNASSIGNED)
+  localPlayerTeamEid.set(ecs.INVALID_ENTITY_ID)
+  localPlayerUserId.set(get_user_id())
+  localPlayerSpecTarget.set(ecs.INVALID_ENTITY_ID)
+  localPlayerGroupId.set(INVALID_SQUAD_ID)
 }
 
 function trackComponents(_evt, eid, comp) {
   if (comp.is_local) {
-    localPlayerEid(eid)
-    localPlayerTeam(comp.team)
-    localPlayerTeamEid(comp.player__teamEid)
-    localPlayerName(comp.name)
-    localPlayerUserId(get_user_id())
-    localPlayerSpecTarget(comp.specTarget)
-    localPlayerGroupId(comp.groupId)
+    localPlayerEid.set(eid)
+    localPlayerTeam.set(comp.team)
+    localPlayerTeamEid.set(comp.player__teamEid)
+    localPlayerName.set(comp.name)
+    localPlayerUserId.set(get_user_id())
+    localPlayerSpecTarget.set(comp.specTarget)
+    localPlayerGroupId.set(comp.groupId)
     groupmateQuery.perform(addGroupmate)
-  } else if (localPlayerEid.value == eid) {
+  } else if (localPlayerEid.get() == eid) {
     resetData()
   }
 }
 
 function onDestroy(_evt, eid, _comp) {
-  if (localPlayerEid.value == eid)
+  if (localPlayerEid.get() == eid)
     resetData()
 }
 
@@ -81,7 +81,7 @@ ecs.register_es("local_player_group_es",
   {
     [["onInit"]] = @ (_, eid, comp) addGroupmate(eid, comp)
     onDestroy = function (_evt, eid, _comp) {
-      if (eid in localPlayerGroupMembers.value)
+      if (eid in localPlayerGroupMembers.get())
         localPlayerGroupMembers.mutate(@(v) v.$rawdelete(eid))
     }
   },
@@ -95,14 +95,14 @@ let localPlayerTeamParamsQuery = ecs.SqQuery("localPlayerTeamParamsQuery",  {
   ]
 })
 
-localPlayerTeamEid.subscribe(function(val) {
+localPlayerTeamEid.subscribe_with_nasty_disregard_of_frp_update(function(val) {
   if (val == ecs.INVALID_ENTITY_ID) {
-    localPlayerTeamIsIncognito(false)
+    localPlayerTeamIsIncognito.set(false)
     return
   }
 
   localPlayerTeamParamsQuery.perform(val, function(_eid, comp) {
-    localPlayerTeamIsIncognito(comp.team__incognito != null)
+    localPlayerTeamIsIncognito.set(comp.team__incognito != null)
   })
 })
 

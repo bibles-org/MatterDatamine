@@ -1,9 +1,14 @@
+from "%sqstd/math.nut" import round_by_value
+
+from "%ui/hud/state/human_damage_model_state.nut" import getDamageTypeStr
+from "math" import ceil
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { bodyParts, getDamageTypeStr } = require("%ui/hud/state/human_damage_model_state.nut")
-let { round_by_value } = require("%sqstd/math.nut")
-let { ceil } = require("math")
+let { bodyParts } = require("%ui/hud/state/human_damage_model_state.nut")
+
+#allow-auto-freeze
 
 
 let dmTooltipNameColor = Color(200,200,200)

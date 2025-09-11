@@ -1,10 +1,11 @@
+from "%ui/components/colors.nut" import ControlBg, Active, BtnBgHover, BtnBgSelected,
+  TextInputBdNormal
+
 from "%darg/ui_imports.nut" import *
 from "string" import regexp, split_by_chars
 
-let {ControlBg, Active,
-  BtnBgHover, BtnBgSelected, TextInputBdNormal
-} = require("colors.nut")
 
+#allow-auto-freeze
 let placeHolderColor = Color(80,80,80,80)
 let textColor = Active
 let backGroundColor = ControlBg
@@ -62,15 +63,15 @@ function isStringLikelyEmail(str, _verbose=true) {
 function defaultFrame(inputObj, group, sf) {
   return {
     rendObj = ROBJ_FRAME
-    borderWidth = [hdpx(1), hdpx(1), 0, hdpx(1)]
-    size = [flex(), SIZE_TO_CONTENT]
+    borderWidth = static [hdpx(1), hdpx(1), 0, hdpx(1)]
+    size = FLEX_H
     color = (sf & S_KB_FOCUS) ? Color(180, 180, 180) : Color(120, 120, 120)
     group = group
 
     children = {
       rendObj = ROBJ_FRAME
-      borderWidth = [0, 0, hdpx(1), 0]
-      size = [flex(), SIZE_TO_CONTENT]
+      borderWidth = static [0, 0, hdpx(1), 0]
+      size = FLEX_H
       color = (sf & S_KB_FOCUS) ? Color(250, 250, 250) : Color(180, 180, 180)
       group = group
 
@@ -108,11 +109,11 @@ let interactiveValidTypes = ["num","lat","integer","float"]
 function textInput(text_state, options={}, frameCtor=defaultFrame) {
   let group = ElemGroup()
   let {
-    setValue = @(v) text_state(v), inputType = null,
+    setValue = @(v) text_state.set(v), inputType = null,
     placeholder = null, showPlaceHolderOnFocus = false, password = null, maxChars = null,
     title = null, font = null, fontSize = null, hotkeys = null,
-    size = [flex(), fontH(100)], textmargin = [sh(1), sh(0.5)], valignText = ALIGN_BOTTOM,
-    margin = [sh(1), 0], padding = 0, borderRadius = hdpx(3), valign = ALIGN_CENTER,
+    size = [flex(), fontH(100)], textmargin = static [sh(1), sh(0.5)], valignText = ALIGN_BOTTOM,
+    margin = static [sh(1), 0], padding = 0, borderRadius = hdpx(3), valign = ALIGN_CENTER,
     xmbNode = null, imeOpenJoyBtn = null, charMask = null,
 
     
@@ -133,19 +134,19 @@ function textInput(text_state, options={}, frameCtor=defaultFrame) {
   let stateFlags = Watched(0)
 
   function onBlurExt() {
-    if (!isValidResult(text_state.value))
+    if (!isValidResult(text_state.get()))
       anim_start(text_state)
     onBlur?()
   }
 
   function onReturnExt(){
-    if (!isValidResult(text_state.value))
+    if (!isValidResult(text_state.get()))
       anim_start(text_state)
     onReturn?()
   }
 
   function onEscapeExt(){
-    if (!isValidResult(text_state.value))
+    if (!isValidResult(text_state.get()))
       anim_start(text_state)
     onEscape()
   }
@@ -167,10 +168,10 @@ function textInput(text_state, options={}, frameCtor=defaultFrame) {
       fontSize
       color = placeHolderColor
       animations = [failAnim(text_state)]
-      margin = [0, sh(0.5)]
+      margin = static [0, sh(0.5)]
     }
     placeholderObj = placeholder instanceof Watched
-      ? @() phBase.__update({ watch = placeholder, text = placeholder.value })
+      ? @() phBase.__update({ watch = placeholder, text = placeholder.get() })
       : phBase
   }
 
@@ -189,7 +190,7 @@ function textInput(text_state, options={}, frameCtor=defaultFrame) {
 
     animations = [failAnim(text_state)]
 
-    text = text_state.value
+    text = text_state.get()
     title
     inputType = inputType
     password = password
@@ -211,7 +212,7 @@ function textInput(text_state, options={}, frameCtor=defaultFrame) {
     xmbNode
     imeOpenJoyBtn
 
-    children = (text_state.value?.len() ?? 0)== 0
+    children = (text_state.get()?.len() ?? 0)== 0
         && (showPlaceHolderOnFocus || !(stateFlags.get() & S_KB_FOCUS))
       ? placeholderObj
       : null
@@ -219,7 +220,7 @@ function textInput(text_state, options={}, frameCtor=defaultFrame) {
 
   return @() {
     watch = [stateFlags]
-    onElemState = @(sf) stateFlags(sf)
+    onElemState = @(sf) stateFlags.set(sf)
     margin
     padding
 
@@ -228,7 +229,7 @@ function textInput(text_state, options={}, frameCtor=defaultFrame) {
     borderWidth = 0
     borderRadius
     clipChildren = true
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     group
     animations = [failAnim(text_state)]
     valign
@@ -245,13 +246,13 @@ function makeFrame(inputObj, group, sf) {
     rendObj = ROBJ_BOX
     borderWidth = hdpx(1)
     fillColor = 0
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     borderColor = isHover
         ? BtnBgHover
         : isKbdFocus ? BtnBgSelected : TextInputBdNormal
     group
     children = inputObj
-    padding = [0, hdpx(1)]
+    padding = static [0, hdpx(1)]
   }
 }
 
@@ -261,9 +262,9 @@ function makeUnderline(inputObj, group, sf) {
   let isKbdFocus = sf & S_KB_FOCUS
   return {
     rendObj = ROBJ_BOX
-    borderWidth = [0, 0, hdpx(1), 0]
+    borderWidth = static [0, 0, hdpx(1), 0]
     fillColor = 0
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     group = group
     borderColor = isHover
         ? BtnBgHover

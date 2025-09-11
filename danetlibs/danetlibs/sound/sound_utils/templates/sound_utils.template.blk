@@ -31,13 +31,13 @@ sound_debug_draw_template{
   }
 }
 
-sound_banks_state{
-  _tracked:t="sound_banks_state__isPresetLoaded"
+sound_preset{
+  _tracked:t="sound_preset__isLoaded"
 
   _group{
     _tags:t="sound"
-    sound_banks_state__presetName:t="master"
-    sound_banks_state__isPresetLoaded:b=no
+    sound_preset__name:t="master"
+    sound_preset__isLoaded:b=no
   }
 }
 
@@ -50,14 +50,8 @@ watched_sound{
   }
 }
 
-watched_by_player_sound{
-  _use:t="watched_sound"
-
-  "watchedByPlayerSound:tag"{}
-}
-
 sound_control{
-  _use:t="sound_banks_state"
+  _use:t="sound_preset"
   _tracked:t="sound_control__state"
   _tracked:t="sound_control__allowSound"
 

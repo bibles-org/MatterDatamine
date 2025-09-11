@@ -17,7 +17,6 @@ ecs.register_es("track_showroom_active_es",
   }
 )
 
-
 return{
   showroomActive
 }

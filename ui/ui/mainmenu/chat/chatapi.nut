@@ -1,6 +1,7 @@
+from "%ui/matchingClient.nut" import matchingCall
+
 from "%ui/ui_library.nut" import *
 
-let { matchingCall } = require("%ui/matchingClient.nut")
 
 function createChat(cb = null) {
   matchingCall("chat.create_chat", cb)

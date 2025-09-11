@@ -1,13 +1,16 @@
+from "%sqGlob/offline_mode.nut" import disableRemoteNetServices
+
+from "%ui/login/currentLoginUi.nut" import getCurrentLoginUi, setCurrentLoginUi
+from "%ui/login/login_chain.nut" import setStagesConfig
+
 from "%ui/ui_library.nut" import *
 
 let platform = require("%dngscripts/platform.nut")
-let { getCurrentLoginUi, setCurrentLoginUi } = require("currentLoginUi.nut")
-let { setStagesConfig, isStagesInited } = require("login_chain.nut")
+let { isStagesInited } = require("%ui/login/login_chain.nut")
 let { linkSteamAccount } = require("%ui/login/login_state.nut")
-let { disableRemoteNetServices } = require("%sqGlob/offline_mode.nut")
 
-if (!isStagesInited.value)
-  setStagesConfig(require("defaultLoginStages.nut"))
+if (!isStagesInited.get())
+  setStagesConfig(require("%ui/login/defaultLoginStages.nut"))
 
 if (getCurrentLoginUi() == null) { 
 
@@ -21,7 +24,7 @@ if (getCurrentLoginUi() == null) {
     let steam = require("steam")
 
     let updatePcComp = function() {
-      if (steam.is_running() && !linkSteamAccount.value)
+      if (steam.is_running() && !linkSteamAccount.get())
         setCurrentLoginUi(require("%ui/login/ui/steam.nut"))
       else
         setCurrentLoginUi(require("%ui/login/ui/go.nut"))

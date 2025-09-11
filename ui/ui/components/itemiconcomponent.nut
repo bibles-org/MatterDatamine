@@ -1,7 +1,9 @@
+import "%ui/components/icon3d.nut" as mkIcon3d
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let mkIcon3d = require("%ui/components/icon3d.nut")
+#allow-auto-freeze
 
 let defaultIcon = "!ui/skin#info/info_icon.svg"
 
@@ -27,7 +29,7 @@ function getIconInfoByGameTemplate(template, params = {}, iconAttachments = []){
     iconAttachments
   }
 }
-
+#forbid-auto-freeze
 function iconByGameTemplate(gametemplate, params = {}, iconAttachments = []){
   if (gametemplate != null) {
     let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(gametemplate)

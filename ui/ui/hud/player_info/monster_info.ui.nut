@@ -1,25 +1,28 @@
+from "%sqGlob/dasenums.nut" import AbilityUseFailedReason
+
+from "%sqstd/timers.nut" import debounceImmediate
+
+from "%ui/components/colors.nut" import TextNormal, RedWarningColor, OrangeHighlightColor, BtnBgActive,
+  TextDisabled, BtnBdHover, BtnBdFocused
+
+from "%ui/components/commonComponents.nut" import mkText
+import "%ui/hud/compass/mk_straight_compass_strip.nut" as mkStraightCompassStrip
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/helpers/timers.nut" import mkCountdownTimer
+from "%ui/components/controlHudHint.nut" import controlHudHint
+from "dasevents" import AbilityUseFailed, AbilityUseFailedClient
+from "%ui/fonts_style.nut" import body_txt
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { TextNormal, RedWarningColor, OrangeHighlightColor, BtnBgActive, TextDisabled,
-      BtnBdHover, BtnBdFocused } = require("%ui/components/colors.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
 let hideHud = require("%ui/hud/state/hide_hud.nut")
 let { isInMonsterState } = require("%ui/hud/state/hero_monster_state.nut")
 let { fullHp, curHp } = require("%ui/hud/state/human_damage_model_state.nut")
-let mkStraightCompassStrip = require("%ui/hud/compass/mk_straight_compass_strip.nut")
 let corticalVaultCompassItems = require("%ui/hud/compass/compass_cortical_vault.nut")
 let teammatesCompass = require("%ui/hud/compass/compass_teammates.nut")
-let { screamAvailableCount, screamMaxCount,
-  SCREAM_ABILITY_NAME } = require("%ui/hud/state/dash_ability_state.nut")
+let { screamAvailableCount, screamMaxCount, SCREAM_ABILITY_NAME } = require("%ui/hud/state/dash_ability_state.nut")
 let { hudIsInteractive } = require("%ui/hud/state/interactive_state.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { mkCountdownTimer } = require("%ui/helpers/timers.nut")
-let { controlHudHint } = require("%ui/components/controlHudHint.nut")
-let { AbilityUseFailed, AbilityUseFailedClient } = require("dasevents")
-let { AbilityUseFailedReason } = require("%sqGlob/dasenums.nut")
-let { body_txt } = require("%ui/fonts_style.nut")
-let { debounceImmediate } = require("%sqstd/timers.nut")
 
 const MONSTER_ANIM_TRIGGER = "monsterBorderAnim"
 
@@ -215,7 +218,7 @@ function vitalityBlock() {
         }
         {
           rendObj = ROBJ_IMAGE
-          size = [ iconSize, iconSize ]
+          size = iconSize
           image = Picture($"ui/skin#stamina_arrow.svg:{iconSize}:{iconSize}:P")
         }
       ] : null
@@ -283,21 +286,26 @@ let mkAbilityAnimations = memoize(@(name) freeze([
 function mkAbilityCtor(abilityInfo, content = null, cooldown=0) {
   let { name = null } = abilityInfo
   let tooltip = name != null ? loc($"{name}/desc", {cooldown}) : null
-  return watchElemState(@(sf) {
-    watch = hudIsInteractive
-    key = $"ability_{name}"
-    rendObj = ROBJ_BOX
-    fillColor = 0x00000000
-    borderWidth = hdpx(1)
-    borderColor = (sf & S_HOVER) != 0 && hudIsInteractive.get() ? BtnBdHover : 0x00000000
-    behavior = hudIsInteractive.get() ? Behaviors.Button : null
-    onHover = @(on, elemPose) setTooltip(on ? tooltip : null, elemPose)
-    valign = ALIGN_CENTER
-    padding = hdpx(1)
-    transform = {}
-    animations = mkAbilityAnimations(name)
-    children = content
-  })
+  let stateFlags = Watched(0)
+  return function() {
+    let sf = stateFlags.get()
+    return {
+      watch = [stateFlags, hudIsInteractive]
+      onElemState = @(s) stateFlags.set(s)
+      key = $"ability_{name}"
+      rendObj = ROBJ_BOX
+      fillColor = 0x00000000
+      borderWidth = hdpx(1)
+      borderColor = (sf & S_HOVER) != 0 && hudIsInteractive.get() ? BtnBdHover : 0x00000000
+      behavior = hudIsInteractive.get() ? Behaviors.Button : null
+      onHover = @(on, elemPose) setTooltip(on ? tooltip : null, elemPose)
+      valign = ALIGN_CENTER
+      padding = hdpx(1)
+      transform = {}
+      animations = mkAbilityAnimations(name)
+      children = content
+    }
+  }
 }
 
 let mkScreamEncounterBlock = @(ability) function() {
@@ -327,12 +335,12 @@ let abilityIconPic = memoize(@(iconName) iconName == null ? null : {
 })
 
 let abText = memoize(@(name) name != null ? mkText(loc(loc($"{name}/name"))) : null)
-let mkHint = memoize( @(actionHandleName) { children = controlHudHint({ id = actionHandleName text_params={padding=[hdpx(0), hdpx(4)]}}) rendObj = ROBJ_WORLD_BLUR_PANEL hplace = ALIGN_CENTER})
+let mkHint = memoize( @(actionHandleName) { children = controlHudHint({ id = actionHandleName text_params={padding=static [hdpx(0), hdpx(4)]}}) rendObj = ROBJ_WORLD_BLUR_PANEL hplace = ALIGN_CENTER})
 
 let mkAbility = function(abilityInfo, cooldown, nextUse) {
 
-  let cdTimer = mkCountdownTimer(Watched(nextUse))
   let { name, actionHandleName = null } = abilityInfo
+  let cdTimer = mkCountdownTimer(Watched(nextUse), name)
   let icoProgress = @() {
     watch = cdTimer
     rendObj = ROBJ_PROGRESS_CIRCULAR
@@ -355,10 +363,16 @@ let mkAbility = function(abilityInfo, cooldown, nextUse) {
     hintWasShown[name] <- true
     showHint.set(false)
   }
-  let abNameHint = @() {
-    size = [0,SIZE_TO_CONTENT]
-    watch = showHint
-    children = showHint.get() ? abText(name) : null halign = ALIGN_RIGHT onAttach = @() gui_scene.resetTimeout(20, hideHint)
+  function abNameHint() {
+    if (!showHint.get())
+      return { watch = showHint }
+    return {
+      watch = showHint
+      size = static [0,SIZE_TO_CONTENT]
+      halign = ALIGN_RIGHT
+      onAttach = @() gui_scene.resetTimeout(20, hideHint, name)
+      children = abText(name)
+    }
   }
   let abilityComp = {
     
@@ -394,7 +408,7 @@ function stonesGatherBlock() {
     return { watch = gatherStonesAblityCurStones }
   let content = {
     rendObj = ROBJ_WORLD_BLUR_PANEL
-    padding = [hdpx(8), hdpx(4), hdpx(8), hdpx(12)]
+    padding = static [hdpx(8), hdpx(4), hdpx(8), hdpx(12)]
     gap = hdpx(8)
     flow = FLOW_HORIZONTAL
     valign = ALIGN_CENTER
@@ -405,7 +419,7 @@ function stonesGatherBlock() {
         size = [abilityIconHeight, abilityIconHeight]
         image = Picture($"ui/skin#ability/stones.svg:{abilityIconHeight}:{abilityIconHeight}:P")
       }
-      mkText($"{gatherStonesAblityCurStones.get()}", { color = calcStonesColor(), size = [hdpx(18), SIZE_TO_CONTENT] }.__update(body_txt))
+      mkText($"{gatherStonesAblityCurStones.get()}", { color = calcStonesColor(), size = static [hdpx(18), SIZE_TO_CONTENT] }.__update(body_txt))
     ]
   }
 
@@ -450,4 +464,3 @@ return {
   monsterCompassBlock
   monsterUi
 }
-

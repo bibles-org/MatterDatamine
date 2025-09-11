@@ -1,8 +1,9 @@
+import "%ui/notifications/matchingNotifications.nut" as matchingNotifications
+from "%ui/profile/server_game_profile.nut" import loadFullProfile
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let matchingNotifications = require("%ui/notifications/matchingNotifications.nut")
-let { loadFullProfile } = require("%ui/profile/server_game_profile.nut")
 
 let is_player_base_query = ecs.SqQuery("is_player_base_query", { comps_rq=[["player_base", ecs.TYPE_TAG]] })
 

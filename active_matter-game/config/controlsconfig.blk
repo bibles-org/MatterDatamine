@@ -99,9 +99,12 @@ actionSets{
   }
 
   HUDBase{
+    HUD.SystemMenu{
+      type:t="digital_button"
+    }
+
     HUD.GameMenu{
       type:t="digital_button"
-      group_tag:t="UI"
     }
 
     HUD.BigMap{
@@ -110,11 +113,6 @@ actionSets{
     }
 
     HUD.Journal{
-      type:t="digital_button"
-      group_tag:t="UI"
-    }
-
-    HUD.NexusLoadout{
       type:t="digital_button"
       group_tag:t="UI"
     }
@@ -136,7 +134,6 @@ actionSets{
 
     HUD.LeaveMatchingQueue{
       type:t="digital_button"
-      group_tag:t="UI"
     }
   }
 
@@ -165,6 +162,10 @@ actionSets{
 
     HUD.CloseMenu{
       type:t="digital_button"
+    }
+
+    HUD.LeaveMatchingQueue{
+      reuse_defined_earlier:b=yes
     }
   }
 
@@ -252,7 +253,7 @@ actionSets{
       group_tag:t="Weapon"
     }
 
-    Human.Zoom{
+    Human.BipodToggle{
       type:t="digital_button"
       group_tag:t="Weapon"
     }
@@ -324,6 +325,11 @@ actionSets{
     }
 
     Human.Throw{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.ChooseGrenade{
       type:t="digital_button"
       group_tag:t="Weapon"
     }
@@ -468,7 +474,17 @@ actionSets{
       group_tag:t="Weapon"
     }
 
+    Human.FlashlightWeapon{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
     Human.NightVisionDevice{
+      type:t="digital_button"
+      group_tag:t="Weapon"
+    }
+
+    Human.UseSignalGrenade{
       type:t="digital_button"
       group_tag:t="Weapon"
     }
@@ -693,6 +709,18 @@ actionSets{
     }
   }
 
+  VehicleTurret{
+    group_tag:t="Vehicle"
+
+    Vehicle.Zoom{
+      type:t="digital_button"
+    }
+
+    Vehicle.Shoot{
+      type:t="digital_button"
+    }
+  }
+
   Onboarding{
     internal:b=yes
 
@@ -738,11 +766,6 @@ actionSets{
     Spectator.Next{
       type:t="digital_button"
       group_tag:t="Spectator"
-    }
-
-    Spectator.LoadoutHub{
-      type:t="digital_button"
-      group_tag:t="UI"
     }
   }
 
@@ -806,6 +829,16 @@ actionSets{
     }
 
     Replay.Camera3{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.Camera4{
+      type:t="digital_button"
+      group_tag:t="Replay"
+    }
+
+    Replay.Camera5{
       type:t="digital_button"
       group_tag:t="Replay"
     }
@@ -949,6 +982,7 @@ actionSetsOrder{
   Helicopter{}
   HelicopterTouch{}
   HelicopterMouse{}
+  VehicleTurret{}
   Vehicle{}
   MonsterChanged{}
   MonsterMothman{}

@@ -1,20 +1,21 @@
+from "%ui/hud/map/map_debriefing_ctors.nut" import mapDebriefingCtors
+from "%ui/hud/map/tiled_map_ctx.nut" import tiledMapSetup, getFogOfWarData
+from "%ui/helpers/parseSceneBlk.nut" import ensurePoint2, ensurePoint3, get_tiled_map_info, get_zone_info
+from "dagor.math" import Point2
+
 from "%ui/ui_library.nut" import *
 
 import "%dngscripts/ecs.nut" as ecs
 import "%ui/control/mouse_buttons.nut" as mouseButtons
 from "tiledMap.behaviors" import TiledMap, TiledMapInput
 
-let { lastBattleResult  } = require("%ui/profile/profileState.nut")
+let { lastBattleResult } = require("%ui/profile/profileState.nut")
 let { journalBattleResult } = require("%ui/profile/battle_results.nut")
-let { mmDebriefingCtors } = require("%ui/hud/minimap/mmDebriefingCtors.nut")
-let { currentMapVisibleRadius } = require("%ui/hud/minimap/minimap_state.nut")
-let { tiledMapContext, tiledMapContextData, tiledMapSetup, normalizeSceneName } = require("%ui/hud/minimap/tiled_map_ctx.nut")
-let { ensurePoint2, ensurePoint3, get_tiled_map_info, get_zone_info } = require("%ui/helpers/parseSceneBlk.nut")
-let { settings } = require("%ui/options/onlineSettings.nut")
-let { Point2 } = require("dagor.math")
+let { currentMapVisibleRadius } = require("%ui/hud/map/map_state.nut")
+let { tiledMapContext, tiledMapContextData } = require("%ui/hud/map/tiled_map_ctx.nut")
 
-let mapHgt = min(fsh(71), sw(45)) 
-let mapSize = [mapHgt, mapHgt]
+let mapHgt = min(fsh(71), sw(45))
+let mapSize = static [mapHgt, mapHgt]
 let mapTransform = { }
 let markersTransform = { }
 
@@ -53,15 +54,14 @@ function updateMapContext(scene, size) {
     tileWidth = mapInfo.tileWidth
     zlevels = mapInfo.zlevels
     fogOfWarEnabled = mapInfo.fogOfWarEnabled
+    fogOfWarSavePath = mapInfo.fogOfWarSavePath
     isClampToBorder = true
     zoomToFitMapEdges = false
     zoomToFitBorderEdges = false
   }
 
   if (config.fogOfWarEnabled) {
-    let sceneName = normalizeSceneName(scene)
-
-    let data = settings.get()?["fog_of_war"][sceneName]
+    let data = getFogOfWarData(config.fogOfWarSavePath)
     config.fogOfWarOldDataBase64 <- data?.b64
     config.fogOfWarOldLeftTop <- ensurePoint2(data?.leftTop)
     config.fogOfWarOldRightBottom <- ensurePoint2(data?.rightBottom)
@@ -115,13 +115,13 @@ function mkDebriefingMap(battleResult, size) {
     panMouseButton = mouseButtons.LMB
     color = Color(255, 255, 255, 255)
     behavior = [TiledMap, TiledMapInput]
-
+    skipDirPadNav = true
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
 
     clipChildren = true
     eventPassThrough = true
-    children = mmDebriefingCtors.map(@(c) mkMapLayer(c, layerParams, size))
+    children = mapDebriefingCtors.map(@(c) mkMapLayer(c, layerParams, size))
   }
 }
 
@@ -137,8 +137,8 @@ let framedMap = @(size = mapSize) function() {
   }
 }
 
-return {
+return freeze({
   mkDebriefingMap = framedMap
   mapSize
   updateMapContext
-}
+})

@@ -1,17 +1,21 @@
+from "%dngscripts/platform.nut" import isPlatformRelevant
+from "%dngscripts/globalState.nut" import nestWatched
+
+from "%ui/matchingClient.nut" import matchingCall
+from "matching.api" import matching_listen_notify
+from "app" import get_app_id
+from "eventbus" import eventbus_subscribe
+from "%ui/devInfo.nut" import addTabToDevInfo
+from "%ui/helpers/levelUtils.nut" import patchMatchingQueuesWithLevelInfo
+from "%ui/state/matchingUtils.nut" import get_matching_utc_time
+
 from "%ui/ui_library.nut" import *
+from "math" import min
 
 let { isInBattleState } = require("%ui/state/appState.nut")
-let { matchingCall } = require("matchingClient.nut")
-let {matching_listen_notify} = require("matching.api")
 let connectHolder = require("%ui/connectHolderR.nut")
-let { isPlatformRelevant } = require("%dngscripts/platform.nut")
-let { get_app_id } = require("app")
-let { eventbus_subscribe } = require("eventbus")
-let {nestWatched} = require("%dngscripts/globalState.nut")
-let { addTabToDevInfo } = require("devInfo.nut")
-let { patchMatchingQueuesWithLevelInfo } = require("%ui/helpers/levelUtils.nut")
-let { get_matching_utc_time } = require("%ui/state/matchingUtils.nut")
 
+let matchingTime = Watched(get_matching_utc_time())
 let matchingQueuesRaw = nestWatched("matchingQueuesRaw", [])
 let matchingQueuesScheduleRaw = nestWatched("matchingQueuesScheduleRaw", [])
 
@@ -84,23 +88,35 @@ function getNearestHideTime(queue, time) {
   return nearestHideTime
 }
 
-function getScheduleEnableTime(schedule, id, matchingTime) {
+function getNextEnableTime(queue, time) {
+  local nextEnableTime = -1
+  local nearestDisableTime = getNearestDisableTime(queue, time)
+  if (queue?.enableSchedule != null) {
+    foreach(enableTime in queue.enableSchedule) {
+      if (enableTime.time > time && (nextEnableTime == -1 || enableTime.time < nextEnableTime) && (!queue.enabled || nearestDisableTime < enableTime.time))
+        nextEnableTime = enableTime.time
+    }
+  }
+  return nextEnableTime
+}
+
+function getScheduleEnableTime(schedule, id, matching_time) {
   local result = []
   if (schedule.len()==0)
     return result
   foreach(v in schedule) {
-    if (v.queue_id == id && v.action == "enable_queue" && v.time > matchingTime)
+    if (v.queue_id == id && v.action == "enable_queue" && v.time > matching_time)
       result.append({time = v.time})
   }
   return result
 }
 
-function getScheduleDisableTime(schedule, id, matchingTime) {
+function getScheduleDisableTime(schedule, id, matching_time) {
   local result = []
   if (schedule.len()==0)
     return result
   foreach(v in schedule) {
-    if (v.queue_id == id && v.action == "disable_queue" && v.time > matchingTime)
+    if (v.queue_id == id && v.action == "disable_queue" && v.time > matching_time)
       result.append({time = v.time, overlap = v?.overlap ?? 0.0})
   }
   return result
@@ -118,9 +134,9 @@ function processQueues(queuesRaw, queuesScheduleRaw) {
       allowFillGroup = queue?.allowFillGroup ?? true
     }.__update(queue).__update(getGroupSizes(queue))
 
-    let matchingTime = get_matching_utc_time()
-    let enableSchedule = getScheduleEnableTime(queuesScheduleRaw, queue.queueId, matchingTime)
-    let disableSchedule = getScheduleDisableTime(queuesScheduleRaw, queue.queueId, matchingTime)
+    let matching_time = get_matching_utc_time()
+    let enableSchedule = getScheduleEnableTime(queuesScheduleRaw, queue.queueId, matching_time)
+    let disableSchedule = getScheduleDisableTime(queuesScheduleRaw, queue.queueId, matching_time)
 
     if (enableSchedule.len() > 0)
       result.__update({enableSchedule})
@@ -159,8 +175,9 @@ function fetch_matching_queues() {
         gui_scene.resetTimeout(5, fetchMatchingQueues)
         return
       }
-      matchingQueuesRaw.update(patchMatchingQueuesWithLevelInfo(response?.queues ?? []))
-    }, {appId = get_app_id(), rulesVersion="1.0"})
+      matchingQueuesRaw.set(patchMatchingQueuesWithLevelInfo(response?.queues ?? []))
+      matchingTime.set(get_matching_utc_time())
+    }, static {appId = get_app_id(), rulesVersion="1.0"})
 }
 
 
@@ -175,7 +192,7 @@ function fetch_matching_queues_schedule() {
         gui_scene.resetTimeout(5, fetchMatchingQueuesSchedule)
         return
       }
-      matchingQueuesScheduleRaw.update(response?.list ?? [])
+      matchingQueuesScheduleRaw.set(response?.list ?? [])
     }, {appId = get_app_id(), rulesVersion="1.0"})
 }
 
@@ -185,14 +202,31 @@ eventbus_subscribe("matching.logged_in", function(...) {
   fetch_matching_queues_schedule()
 })
 
+const INITIAL_DELAY = 15
+const MAX_DELAY = 180
+local currentDelay = INITIAL_DELAY
+local timerForEmptyQueues 
+
 function checkEmptyQueues(){
-  if (matchingQueuesRaw.get().len()!=0 || !connectHolder.is_logged_in())
+  if (matchingQueuesRaw.get().len() != 0 || !connectHolder.is_logged_in()) {
+    currentDelay = INITIAL_DELAY
     return
+  }
+  
+  currentDelay = min(currentDelay * 2, MAX_DELAY)
   fetch_matching_queues()
   fetch_matching_queues_schedule()
+  gui_scene.clearTimer(timerForEmptyQueues)
+  gui_scene.resetTimeout(currentDelay, timerForEmptyQueues)
 }
 
-gui_scene.setInterval(15, checkEmptyQueues) 
+timerForEmptyQueues = function() {
+  if (isInBattleState.get())
+    return
+  checkEmptyQueues()
+}
+
+gui_scene.setInterval(INITIAL_DELAY, timerForEmptyQueues)
 
 matching_listen_notify("enlmm.notify_games_list_changed")
 matching_listen_notify("enlmm.notify_schedule_list_changed")
@@ -203,9 +237,11 @@ addTabToDevInfo("matchingQueues", matchingQueues)
 
 return {
   matchingQueues
+  matchingTime
   matchingQueuesMap
   isQueueDisabledBySchedule
   getNearestEnableTime
   getNearestDisableTime
   getNearestHideTime
+  getNextEnableTime
 }

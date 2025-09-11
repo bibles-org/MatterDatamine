@@ -1,9 +1,10 @@
+from "%ui/hud/state/item_info.nut" import getSlotAvailableMods
+from "dagor.debug" import logerr
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
 let { template2MarketIds } = require("%ui/mainMenu/market/inventoryToMarket.nut")
-let { getSlotAvailableMods } = require("%ui/hud/state/item_info.nut")
-let { logerr } = require("dagor.debug")
 
 let customFilter = Watched({ filterToUse = null })
 

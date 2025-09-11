@@ -1,0 +1,324 @@
+pve_event{
+  pve_event__idx:i=-1
+  pve_event__waveEndsAt:r=0
+  pve_event__waveSpawnsLeft:r=0
+  pve_event__seed:i=0
+  pve_event__radiusRange:p2=20, 30
+  pve_event__portalTemplate:t="pve_event_portal"
+  pve_event__isPaused:b=no
+  pve_event__rescanTargetsOnWaveStart:b=no
+  pve_event__isCyclic:b=no
+
+  "pve_event__waves:array"{
+    "item:object"{
+      duration:p2=10, 20
+
+      "spawn:object"{
+        xenohound_creature:ip2=10, 20
+        am_mimic:ip2=2, 2
+      }
+    }
+
+    "item:object"{
+      duration:p2=10, 10
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=10, 20
+
+      "spawn:object"{
+        am_mimic:ip2=5, 5
+      }
+    }
+  }
+
+  "pve_event__targets:list<eid>"{}
+}
+
+pve_event_portal{
+  _use:t="replicating"
+  _use:t="xenohound_portal_visuals"
+  _use:t="xenohound_teleport_trap"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  pve_event_portal__updateAt:r=0
+  pve_event_portal__endAt:r=0
+  pve_event_portal__spawnsLeft:i=0
+  pve_event_portal__spawnCooldown:p2=0, 0
+  pve_event_portal__template:t=""
+
+  "pve_event_portal__targetEid:eid"{}
+}
+
+pve_event_auto{
+  _use:t="pve_event"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  pve_event__gatherTargtesRadius:r=100
+}
+
+pve_event_item_controlled{
+  _use:t="pve_event_auto"
+  pve_event__rescanTargetsOnWaveStart:b=yes
+  pve_event__isCyclic:b=yes
+}
+
+pve_event_target{
+  "pveEventTarget:tag"{}
+}
+
+pve_event_auto_dogorsk_escape{
+  _use:t="pve_event_auto"
+  pve_event__radiusRange:p2=10, 15
+
+  "pve_event__waves:array"{
+    "item:object"{
+      duration:p2=20, 20
+
+      "spawn:object"{
+        xenohound_creature:ip2=8, 10
+      }
+    }
+
+    "item:object"{
+      duration:p2=10, 10
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=10, 15
+
+      "spawn:object"{
+        xenohound_creature:ip2=10, 15
+      }
+    }
+  }
+}
+
+pve_event_dogorsk_escape_device{
+  _use:t="pve_event_item_controlled"
+  pve_event__radiusRange:p2=15, 20
+  pve_event__gatherTargtesRadius:r=30
+
+  "pve_event__waves:array"{
+    "item:object"{
+      duration:p2=2, 3
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=3, 3
+
+      "spawn:object"{
+        am_mimic:ip2=4, 7
+      }
+    }
+
+    "item:object"{
+      duration:p2=15, 20
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=10, 15
+
+      "spawn:object"{
+        xenohound_creature:ip2=10, 12
+        am_mimic:ip2=6, 10
+      }
+    }
+
+    "item:object"{
+      duration:p2=80, 100
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=10, 15
+
+      "spawn:object"{
+        invisible_man:ip2=2, 3
+        am_mimic:ip2=10, 12
+      }
+    }
+
+    "item:object"{
+      duration:p2=70, 90
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=3, 3
+
+      "spawn:object"{
+        am_mimic:ip2=4, 4
+      }
+    }
+
+    "item:object"{
+      duration:p2=20, 30
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=10, 15
+
+      "spawn:object"{
+        xenohound_creature:ip2=10, 12
+        am_mimic:ip2=10, 10
+      }
+    }
+
+    "item:object"{
+      duration:p2=70, 90
+
+      "spawn:object"{}
+    }
+  }
+}
+
+pve_event_auto_america_xenos_key{
+  _use:t="pve_event_auto"
+  pve_event__radiusRange:p2=10, 15
+  pve_event__gatherTargtesRadius:r=50
+
+  "pve_event__waves:array"{
+    "item:object"{
+      duration:p2=10, 20
+
+      "spawn:object"{
+        am_mimic:ip2=6, 10
+      }
+    }
+  }
+}
+
+pve_event_auto_america_xenos{
+  _use:t="pve_event_auto"
+  pve_event__radiusRange:p2=15, 20
+  pve_event__gatherTargtesRadius:r=50
+
+  "pve_event__waves:array"{
+    "item:object"{
+      duration:p2=5, 10
+
+      "spawn:object"{
+        am_mimic:ip2=8, 12
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 40
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=60, 120
+
+      "spawn:object"{
+        am_mimic:ip2=10, 20
+      }
+    }
+  }
+}
+
+item_for_pve_event{
+  _use:t="create_on_picked_up"
+  create_on_picked_up__template:t="pve_event_item_controlled"
+
+  "itemSyncedWithPveEvent:tag"{}
+}
+
+item_for_pve_dogorsk_escape_device_event{
+  _use:t="create_on_picked_up"
+  create_on_picked_up__template:t="pve_event_dogorsk_escape_device"
+  objective_item__isForAll:b=yes
+
+  "itemSyncedWithPveEvent:tag"{}
+}
+
+pve_event_auto_cargoport_guard_device{
+  _use:t="pve_event_auto"
+  pve_event__radiusRange:p2=8, 10
+  pve_event__gatherTargtesRadius:r=30
+
+  "pve_event__waves:array"{
+    "item:object"{
+      duration:p2=10, 10
+
+      "spawn:object"{
+        invisible_man:ip2=2, 2
+      }
+    }
+
+    "item:object"{
+      duration:p2=10, 10
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=10, 15
+
+      "spawn:object"{
+        "changed_human+am_inside_body_3":ip2=4, 5
+      }
+    }
+
+    "item:object"{
+      duration:p2=20, 20
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=1, 1
+
+      "spawn:object"{
+        invisible_man:ip2=1, 2
+      }
+    }
+  }
+}
+
+create_on_accessed_america_military_post_container{
+  create_on_accessed__template:t="pve_event_auto_america_military_post"
+  create_on_accessed__timesLeft:i=1
+}
+
+pve_event_auto_america_military_post{
+  _use:t="pve_event_auto"
+  pve_event__radiusRange:p2=8, 12
+  pve_event__gatherTargtesRadius:r=30
+
+  "pve_event__waves:array"{
+    "item:object"{
+      duration:p2=10, 20
+
+      "spawn:object"{
+        "changed_human+am_inside_body_3":ip2=4, 5
+      }
+    }
+
+    "item:object"{
+      duration:p2=8, 10
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=1, 1
+
+      "spawn:object"{
+        invisible_man:ip2=1, 1
+      }
+    }
+  }
+}

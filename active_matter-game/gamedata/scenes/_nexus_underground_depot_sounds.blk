@@ -1,0 +1,15 @@
+entity{
+  _template:t="undeground_depot_ambient_sound"
+}
+
+entity{
+  _template:t="game_object_sound_effect_generator"
+
+  "game_object_sound_effect_generator__gameObjectToEventPath:object"{
+    sfx_point_evacuation_alarm:t="env_effects/evacuation_alarm_depo"
+  }
+}
+
+entity{
+  _template:t="nexus_underground_depot_sound_occlusion"
+}

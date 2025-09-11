@@ -1,3 +1,7 @@
+from "%sqstd/underscore.nut" import deep_clone
+
+from "%ui/quickMatchQueue.nut" import leaveQueue
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 import "%ui/components/faComp.nut" as faComp
@@ -5,7 +9,7 @@ import "utf8" as utf8
 import "%ui/components/msgbox.nut" as msgbox
 
 from "%dngscripts/common_queries.nut" import find_local_player
-from "%ui/components/button.nut" import button
+from "%ui/components/button.nut" import button, buttonWithGamepadHotkey
 from "%ui/components/colors.nut" import ControlBg, TextInputBdNormal, TextInputBdActive,
   TextInputBgNormal, TextInputBgActive, TextNormal, TextHighlight, TextDisabled
 from "%ui/components/commonComponents.nut" import mkSelectPanelItem, mkSelectPanelTextCtor, mkText, VertSelectPanelGap, BD_LEFT
@@ -18,13 +22,15 @@ from "%ui/hud/state/notes.nut" import predefinedNotes, saveUnreadNotes, addUserN
   NEWSPAPER_ID, SHELTER_ID, WORLD_ID
 from "%ui/mainMenu/notificationMark.nut" import mkNotificationCircle, notificationCircleSize
 from "dasevents" import CmdStartAssistantSpeak, CmdStopAssistantSpeak, CmdStartOnboardingMemory, CmdInterruptOnboardingMemory
-let { isInQueue, leaveQueue } = require("%ui/quickMatchQueue.nut")
+let { isInQueue } = require("%ui/quickMatchQueue.nut")
 let { isInSquad, isSquadLeader, myExtSquadData } = require("%ui/squad/squadManager.nut")
 let { isOnboarding, isOnboardingMemory } = require("%ui/hud/state/onboarding_state.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
 let { settings } = require("%ui/options/onlineSettings.nut")
-let { deep_clone } = require("%sqstd/underscore.nut")
 let { localPlayerEid } = require("%ui/hud/state/local_player.nut")
+let JB = require("%ui/control/gui_buttons.nut")
+
+#allow-auto-freeze
 
 const USER_NOTE_BLOCK_ID = "userNote"
 
@@ -35,7 +41,7 @@ let iconHeight = hdpxi(20)
 
 let mkNotesIcon = @(icon) {
   rendObj = ROBJ_IMAGE
-  size = [iconHeight, iconHeight]
+  size = iconHeight
   hplace = ALIGN_CENTER
   vplace = ALIGN_CENTER
   color = TextDisabled
@@ -137,7 +143,7 @@ function confirmDelete(userNotes) {
 }
 
 
-let addNoteButton = button({
+let addNoteButton = buttonWithGamepadHotkey({
     rendObj = ROBJ_TEXT
     text = loc("notes/add")
     hplace = ALIGN_CENTER
@@ -154,7 +160,8 @@ let addNoteButton = button({
     }
   },
   {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
+    hotkeys = [["J:Y", { description = { skip = true } }]]
   }
 )
 
@@ -167,7 +174,7 @@ let addNoteButtonDisabled = button({
   }.__update(body_txt),
   @() null,
   {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     isEnabled = false
   }
 )
@@ -176,30 +183,30 @@ let circleButton = function(fa, txt, func) {
   let stateFlags = Watched(0)
   let children = {
     flow = FLOW_HORIZONTAL
-    gap = hdpx(10)
+    gap = static hdpx(10)
     halign = ALIGN_LEFT
     valign = ALIGN_CENTER
     children = [
       {
         rendObj = ROBJ_VECTOR_CANVAS
-        size = [ hdpx(20), hdpx(20) ]
+        size = static hdpx(20)
         commands = [
           [VECTOR_WIDTH, 1],
           [VECTOR_FILL_COLOR, (stateFlags.get() & S_HOVER) ? Color(100, 100, 100, 100) : Color(0, 0, 0, 0)],
           [VECTOR_ELLIPSE, 50, 50, 50, 50]
         ]
         children = faComp(fa, {
-          pos = [ hdpx(1), 0 ]
+          pos = static [ hdpx(1), 0 ]
           hplace = ALIGN_CENTER
           vplace = ALIGN_CENTER
-          fontSize = hdpx(8)
+          fontSize = static hdpx(9)
         })
       }
       mkText(txt)
     ]
   }
   return button(children, func, {
-    padding = hdpx(10)
+    padding = static hdpx(10)
   })
 }
 
@@ -246,7 +253,7 @@ function mkDeleteButton(userNotes) {
 
 function splitTitleAndContent(note, limit = null) {
   if (!note?.noteText)
-    return const { title = "", content = "" }
+    return static { title = "", content = "" }
   let paragraphs = note.noteText.split("\n")
   local title
   if (limit && paragraphs[0].len() > limit)
@@ -281,26 +288,18 @@ function mkEditButton(){
 }
 
 function mkApplyButton() {
-  return button({
-    rendObj = ROBJ_TEXT
-    text = loc("notes/apply")
-    hplace = ALIGN_CENTER
-    vplace = ALIGN_CENTER
-    padding = hdpx(10)
-  }, function() {
-    updateUserNote(curNote.get(), userNoteText.get())
-    editMode.set(false)
-  })
+  return buttonWithGamepadHotkey(mkText(loc("notes/apply"), { padding = static[0, hdpx(34)] }),
+    function() {
+      updateUserNote(curNote.get(), userNoteText.get())
+      editMode.set(false)
+    }, {
+      hotkeys = [["J:Y", { description = { skip = true } }]]
+    })
 }
 
 function mkCancelButton(){
-  return button({
-    rendObj = ROBJ_TEXT
-    text = loc("notes/cancel")
-    hplace = ALIGN_CENTER
-    vplace = ALIGN_CENTER
-    padding = hdpx(10)
-  }, cancelEditWithConfirm)
+  return buttonWithGamepadHotkey(mkText(loc("notes/cancel"), { padding = static [0, hdpx(34)] }),
+    cancelEditWithConfirm, { hotkeys = [[$"{JB.B}", { description = { skip = true } }]] })
 }
 
 function mkTextAreaEdit(state, size, fontsStyle, limit) {
@@ -345,12 +344,12 @@ function mkTextAreaEdit(state, size, fontsStyle, limit) {
 
 function mkEditNote(note){
   userNoteText.set(note.noteText)
-  let content = mkTextAreaEdit(userNoteText, [flex(), SIZE_TO_CONTENT], body_txt, MAX_MESSAGE_CHARS)
+  let content = mkTextAreaEdit(userNoteText, FLEX_H, body_txt, MAX_MESSAGE_CHARS)
   return {
-    size = [flex(3), SIZE_TO_CONTENT]
+    size = static [flex(3), SIZE_TO_CONTENT]
     flow = FLOW_VERTICAL
     gap = hdpx(10)
-    margin = [hdpx(20), 0, 0, 0]
+    margin = static [hdpx(20), 0, 0, 0]
     children = [
       content
     ]
@@ -391,6 +390,7 @@ function setDefaultNote(list, blockId = null) {
 function mkNoteTab(){
   let userNotes = Computed(function() {
     if (settings.get()?.userNotes != null) {
+      #forbid-auto-freeze
       let res = []
       settings.get().userNotes.each(@(v) res.append(v.__merge({ type = USER_NOTE_BLOCK_ID })))
       return res
@@ -407,7 +407,7 @@ function mkNoteTab(){
   setDefaultNote(notesList.get(), selectedNoteBlockId.get())
 
   let mkNotesListBlock = @(list) {
-    size = [sw(19), SIZE_TO_CONTENT]
+    size = static [sw(19), SIZE_TO_CONTENT]
     flow = FLOW_VERTICAL
     gap = VertSelectPanelGap
     hplace = ALIGN_RIGHT
@@ -420,7 +420,7 @@ function mkNoteTab(){
         title = note.title
 
       let icon = raidNoteIcon
-      let textCtor = mkSelectPanelTextCtor(title, { size = [flex(), SIZE_TO_CONTENT]  }.__update(body_txt))
+      let textCtor = mkSelectPanelTextCtor(title, { size = FLEX_H  }.__update(body_txt))
       return mkSelectPanelItem({
         state = curNote
         idx = note.id
@@ -435,10 +435,11 @@ function mkNoteTab(){
           markNoteAsRead(idx)
         }
         visual_params = {
-          size = [flex(), hdpx(50)]
+          size = static [flex(), hdpx(50)]
+          xmbNode = XmbNode()
         }
         children = @(params) {
-          size = [flex(), SIZE_TO_CONTENT]
+          size = FLEX_H
           flow = FLOW_HORIZONTAL
           gap = hdpx(5)
           valign = ALIGN_CENTER
@@ -474,7 +475,8 @@ function mkNoteTab(){
           selectedNoteBlockId.set(null)
       }
       visual_params = {
-        size = [flex(), hdpx(50)]
+        size = static [flex(), hdpx(50)]
+        xmbNode = XmbNode()
       }
       children = @(params) {
         size = flex()
@@ -500,7 +502,7 @@ function mkNoteTab(){
       let hasAnyUnseen = noteListToShow.findvalue(@(v) v?.markUnread) != null
       return {
         watch = [isSelected, debugShowAllNotes, notesList]
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_VERTICAL
         gap = VertSelectPanelGap
         children = [
@@ -510,24 +512,29 @@ function mkNoteTab(){
       }
     }
   }
-
+  #forbid-auto-freeze
   let blocks = notesList.get().reduce(function(acc, note) {
     if (acc.findindex(@(v) v.id == note.type) == null)
       acc.append({ id = note.type, locId = $"notes/{note.type}"})
     return acc
   }, [])
-
+  #allow-auto-freeze
   let leftColumn = @() {
     watch = editMode
-    size = [sw(20), flex()]
+    size = static [sw(20), flex()]
     color = ControlBg
     flow = FLOW_VERTICAL
     gap = hdpx(40)
     children = [
       makeVertScrollExt({
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_VERTICAL
         gap = hdpx(5)
+        xmbNode = XmbContainer({
+          canFocus = false
+          wrap = false
+          scrollSpeed = 5.0
+        })
         children = blocks.map(mkNotesBlock)
       }, {
         size = flex()
@@ -575,7 +582,7 @@ function mkNoteTab(){
               action = function() {
                 leaveQueue()
                 if (isInSquad.get() && !isSquadLeader.get())
-                  myExtSquadData.ready(false)
+                  myExtSquadData.ready.set(false)
                 ecs.g_entity_mgr.broadcastEvent(CmdStartOnboardingMemory())
               }
               isCurrent = true
@@ -598,7 +605,7 @@ function mkNoteTab(){
             {
               text = loc("Yes")
               action = function() {
-                myExtSquadData.ready(false)
+                myExtSquadData.ready.set(false)
                 ecs.g_entity_mgr.broadcastEvent(CmdStartOnboardingMemory())
               }
               isCurrent = true
@@ -619,6 +626,7 @@ function mkNoteTab(){
   }
 
   function buttonsRow() {
+    #forbid-auto-freeze
     if (!curNote.get())
       return { watch = curNote }
     let children = []
@@ -644,6 +652,7 @@ function mkNoteTab(){
       children
     }
   }
+  #allow-auto-freeze
   let watch = [curNote, notesList, editMode, selectedNoteBlockId, userNotes]
   let _getFirstNote = @() notesList.get().filter(@(note) note?.isUnlocked)
   let getFirstNote = @() _getFirstNote()?[0].id
@@ -679,10 +688,10 @@ function mkNoteTab(){
       watch
       onAttach = setCurNoteIfNeeded
       rendObj = ROBJ_SOLID
-      size = [flex(3), flex()]
+      size = static [flex(3), flex()]
       flow = FLOW_VERTICAL
       color = ControlBg
-      padding = [0, hdpx(10)]
+      padding = static [0, hdpx(10)]
       children = [
         buttonsRow,
         makeVertScrollExt(content, { size = flex() })

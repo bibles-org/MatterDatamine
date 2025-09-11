@@ -1,33 +1,93 @@
+from "%ui/hud/menus/components/inventoryCommon.nut" import mkInventoryHeader
+from "%ui/hud/menus/components/inventoryItemsList.nut" import itemsPanelList, setupPanelsData, inventoryItemSorting
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems
+from "%ui/hud/menus/components/inventoryVolumeWidget.nut" import mkVolumeHdr
+from "das.inventory" import calc_stacked_item_volume
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "%ui/hud/menus/components/inventoryItemsListChecksCommon.nut" import MoveForbidReason
+from "string" import startswith
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { mkInventoryHeader } = require("%ui/hud/menus/components/inventoryCommon.nut")
-let { itemsPanelList, setupPanelsData, inventoryItemSorting } = require("%ui/hud/menus/components/inventoryItemsList.nut")
-let { mergeNonUniqueItems } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
 let { previewPreset, previewPresetCallbackOverride } = require("%ui/equipPresets/presetsState.nut")
-let { mkVolumeHdr } = require("%ui/hud/menus/components/inventoryVolumeWidget.nut")
-let { calc_stacked_item_volume, convert_volume_to_int } = require("das.inventory")
-let { mkFakeItem } = require("fakeItem.nut")
-let { defaultMaxVolume } = require("%ui/hud/state/inventory_common_es.nut")
-let { MoveForbidReason } = require("%ui/hud/menus/components/inventoryItemsListChecksCommon.nut")
-let { startswith } = require("string")
+let { defaultVolume } = require("%ui/hud/state/inventory_common_es.nut")
 let { HERO_ITEM_CONTAINER, BACKPACK0, SAFEPACK } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
+
+
+function fakeItemAsAttaches(suitTemplateName, bodyTypeId, slotKey=null, unhideNodes=[]) {
+  let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(suitTemplateName)
+
+  let reverseViewLogic = template?.getCompValNullable("slot_attach__attached_show_dynmodel_nodes__forceShownNodes") != null
+  if (reverseViewLogic) {
+    return []
+  }
+
+  local hideNodes = (template?.getCompValNullable("animchar_dynmodel_nodes_hider__hiddenNodes")?.getAll() ?? [])
+  hideNodes = hideNodes.filter(function(hidden) {
+    return unhideNodes.findindex(@(unhideIdx) hidden == unhideIdx) == null
+  })
+
+  let stubs = (template?.getCompValNullable("equipment__setDefaultStubEquipmentTemplates").getAll() ?? {}).map(function(v) {
+    return v.split("+")[0]
+  })
+  let attachableAnimchar = stubs.__update(template?.getCompValNullable("suit_attachable_item__animcharTemplates").getAll() ?? {})
+
+  let ret = []
+
+  if (attachableAnimchar?.len()) {
+    foreach (animKey, animTemplate in attachableAnimchar) {
+      let templ = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(animTemplate)
+      let attachTemplateName = templ?.getCompValNullable("sex_based_subattach_controller__animcharTemplates").getAll()[bodyTypeId] ?? animTemplate
+      let attachTempl = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(attachTemplateName)
+      let animchar = attachTempl?.getCompValNullable("animchar__res")
+      let isSkeleton = attachTempl?.hasComponent("skeleton_attach__attached") ?? false
+
+      if (animchar == null)
+        continue
+
+      ret.append({
+        slotName = isSkeleton ? null : animKey
+        animchar
+        hideNodes = []
+      })
+    }
+  }
+  else {
+    let attachTemplateName = template?.getCompValNullable("sex_based_subattach_controller__animcharTemplates").getAll()[bodyTypeId] ?? suitTemplateName
+    let attachTempl = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(attachTemplateName)
+    let animchar = attachTempl?.getCompValNullable("animchar__res")
+    let isSkeleton = attachTempl?.hasComponent("skeleton_attach__attached") ?? false
+
+    if (animchar) {
+      ret.append({
+        slotName = isSkeleton ? null : slotKey
+        animchar = animchar
+        hideNodes
+      })
+    }
+  }
+
+  return ret
+}
 
 function fakeEquipmentAsAttaches(equipment) {
   let unhide = []
   local bodyTypeId = 0
   let suit = equipment?["chronogene_primary_1"]
-  if (suit && suit?.itemTemplate) {
-    let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(suit.itemTemplate)
-    bodyTypeId = template?.getCompValNullable("suit__suitType") ?? 0
-  }
+
+  if (suit?.itemTemplate == null)
+    return []
+
+  let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(suit.itemTemplate)
+  bodyTypeId = template?.getCompValNullable("suit__suitType") ?? 0
 
   foreach (item in equipment) {
     if (item?.itemTemplate == null)
       continue
-    let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(item.itemTemplate)
+    let itemTemplate = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(item.itemTemplate)
 
-    let curUnhide = template?.getCompValNullable("slot_attach__attached_show_dynmodel_nodes__forceShownNodes")?.getAll() ?? []
+    let curUnhide = itemTemplate?.getCompValNullable("slot_attach__attached_show_dynmodel_nodes__forceShownNodes")?.getAll() ?? []
 
     unhide.extend(curUnhide)
   }
@@ -35,54 +95,33 @@ function fakeEquipmentAsAttaches(equipment) {
   let ret = []
 
   foreach (slotKey, slotItem in equipment) {
-    
-    if (slotItem?.itemTemplate == null || startswith(slotKey, "chronogene_secondary"))
-      continue
-    let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(slotItem.itemTemplate)
+    if (
+        slotItem?.itemTemplate == null ||
+        startswith(slotKey, "chronogene_secondary") || 
+        slotKey == "chronogene_primary_1" 
+      )
+        continue
 
-    let reverseViewLogic = template?.getCompValNullable("slot_attach__attached_show_dynmodel_nodes__forceShownNodes") != null
-    if (reverseViewLogic) {
-      continue
-    }
+    let attaches = fakeItemAsAttaches(slotItem.itemTemplate, bodyTypeId, slotKey, unhide)
 
-    local hideNodes = (template?.getCompValNullable("animchar_dynmodel_nodes_hider__hiddenNodes")?.getAll() ?? [])
-    hideNodes = hideNodes.filter(function(hidden) {
-      return unhide.findindex(@(unhideIdx) hidden == unhideIdx) == null
-    })
-
-    let attachableAnimchar = template?.getCompValNullable("suit_attachable_item__animcharTemplates").getAll()
-
-    if (attachableAnimchar?.len()) {
-      foreach (_animKey, animTemplate in attachableAnimchar) {
-        let templ = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(animTemplate)
-        let attachTemplateName = templ?.getCompValNullable("suit_attachable_item__suitTypeBasedAnimcharTemplates").getAll()[bodyTypeId] ?? animTemplate
-        let attachTempl = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(attachTemplateName)
-        let animchar = attachTempl?.getCompValNullable("animchar__res")
-
-        if (animchar == null)
+    foreach (newAtt in attaches) {
+      if (newAtt.slotName) {
+        let alreadyExists = ret.findindex(@(v) v.slotName == newAtt.slotName) != null
+        if (alreadyExists)
           continue
-
-        ret.append({
-          slotName = null
-          animchar
-          hideNodes = []
-        })
       }
+      ret.append(newAtt)
     }
-    else {
-      let attachTemplateName = template?.getCompValNullable("suit_attachable_item__suitTypeBasedAnimcharTemplates").getAll()[bodyTypeId] ?? slotItem.itemTemplate
-      let attachTempl = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(attachTemplateName)
-      let animchar = attachTempl?.getCompValNullable("animchar__res")
-      let isSkeleton = attachTempl?.getCompValNullable("skeleton_attach__attachedTo") != null
+  }
 
-      if (animchar) {
-        ret.append({
-          slotName = isSkeleton ? null : slotKey
-          animchar = animchar
-          hideNodes
-        })
-      }
+  let attaches = fakeItemAsAttaches(equipment["chronogene_primary_1"].itemTemplate, bodyTypeId, "chronogene_primary_1", unhide)
+  foreach (newAtt in attaches) {
+    if (newAtt.slotName) {
+      let alreadyExists = ret.findindex(@(v) v.slotName == newAtt.slotName) != null
+      if (alreadyExists)
+        continue
     }
+    ret.append(newAtt)
   }
 
   return ret
@@ -93,7 +132,7 @@ let processItems = @(v) v
 
 let inventoryBlocksPanelsData = {}
 let getInventoryBlockData = function(inventoryBlockName) {
-  if (!(inventoryBlockName in inventoryBlocksPanelsData)) {
+  if (inventoryBlockName not in inventoryBlocksPanelsData) {
     let fakeItemsWatched = Watched([])
     let panelsData = setupPanelsData(fakeItemsWatched,
                                       itemsInRow,
@@ -111,7 +150,7 @@ let getInventoryBlockData = function(inventoryBlockName) {
 function getItemVolume(item) {
   return item.isBoxedItem ?
     calc_stacked_item_volume(item.countPerStack, item?.ammoCount ?? 0, item.volumePerStack) :
-    convert_volume_to_int(item.volume)
+    item.volume
 }
 
 function mkInventoryPresetPreview(inventoryBlockName, list_type, actions = null, visualYSize = null, capacityWatch = Watched(0)) {
@@ -135,7 +174,7 @@ function mkInventoryPresetPreview(inventoryBlockName, list_type, actions = null,
     fakeItems.each(function(item) {
       volume += getItemVolume(item)
     })
-    let totalVolume = Watched(volume /= 10)
+    let totalVolume = Watched(volume)
     fakeItems = mergeNonUniqueItems(fakeItems)
 
     fakeItems.sort(inventoryItemSorting)
@@ -178,7 +217,7 @@ function mkInventoryPresetPreview(inventoryBlockName, list_type, actions = null,
 
     return {
       watch = [ panelsData.numberOfPanels, previewPreset, previewPresetCallbackOverride]
-      size = [ SIZE_TO_CONTENT, flex() ]
+      size = FLEX_V
       children,
       
       
@@ -190,7 +229,7 @@ function mkInventoryPresetPreview(inventoryBlockName, list_type, actions = null,
 
 function mkHeroInventoryPresetPreview(actions=null, visualYSize = null) {
   let capacity = Computed(function() {
-    local cap = defaultMaxVolume.get() * 10
+    local cap = defaultVolume.get()
     let itemTemplate = previewPreset.get()?.pouch.itemTemplate
     if (itemTemplate) {
       let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(itemTemplate)
@@ -232,6 +271,7 @@ function mkSafepackInventoryPresetPreview(actions=null, visualYSize = null) {
 return {
   mkInventoryPresetPreview
   fakeEquipmentAsAttaches
+  fakeItemAsAttaches
   mkHeroInventoryPresetPreview
   mkBackpackInventoryPresetPreview
   mkSafepackInventoryPresetPreview

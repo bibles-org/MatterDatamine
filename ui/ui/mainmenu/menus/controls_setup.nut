@@ -1,67 +1,56 @@
+from "%dngscripts/platform.nut" import is_pc, is_xbox, is_sony, is_nswitch, is_mobile
+from "%sqstd/math.nut" import round_by_value
+from "%ui/control/formatInputBinding.nut" import buildElems, buildDigitalBindingText, isValidDevice, textListFromAction, getSticksText
+from "%ui/mainMenu/menus/controls_online_storage.nut" import setUiClickRumble, setInBattleRumble, isAimAssistExists, setAimAssist, set_stick0_dz, set_stick1_dz, aim_smooth_set, set_use_gamepad
+from "%ui/mainMenu/menus/controls_state.nut" import nextGeneration, getActionsList, getActionTags, mkSubTagsFind
+from "%ui/fonts_style.nut" import h2_txt, body_txt, fontawesome
+from "eventbus" import eventbus_send
+from "%sqstd/string.nut" import utf8ToLower
+from "%ui/components/textInput.nut" import textInput
+from "%ui/components/colors.nut" import TextNormal, ControlBg, BtnBdHover, BtnBdNormal, BtnTextHover, BtnTextNormal, OptionRowBgHover, OptionRowBdHover, MenuRowBgOdd, MenuRowBgEven
+from "%ui/components/msgbox.nut" import showMsgbox
+from "%ui/components/button.nut" import textButton, button, buttonWithGamepadHotkey
+from "%ui/components/scrollbar.nut" import makeVertScroll
+import "%ui/components/checkbox.nut" as checkbox
+import "%ui/components/slider.nut" as slider
+import "%ui/mainMenu/menus/options/optionTextSlider.nut" as mkSliderWithText
+import "%ui/mainMenu/menus/settingsHeaderTabs.nut" as settingsHeaderTabs
+from "%ui/components/commonComponents.nut" import mkText, fontIconButton
+from "%ui/components/text.nut" import dtext
+import "console" as console
+import "%ui/components/select.nut" as select
+import "%ui/helpers/locByPlatform.nut" as locByPlatform
+import "DataBlock" as DataBlock
+from "dagor.system" import DBGLEVEL
+from "%ui/control/active_controls.nut" import ControlsTypes
+from "settings" import get_setting_by_blk_path
 from "%ui/ui_library.nut" import *
 import "onlineStorage" as online_storage
 import "dainput2" as dainput
 import "control" as control
 from "dagor.debug" import logerr
+import "%ui/components/fontawesome.map.nut" as fa
+import "%ui/control/gui_buttons.nut" as JB
 
-let {h2_txt, body_txt, fontawesome} = require("%ui/fonts_style.nut")
-let { eventbus_send } = require("eventbus")
-let {CONTROLS_SETUP_CHANGED_EVENT_ID} = require("%ui/control/controls_generation.nut")
-let {round_by_value} = require("%sqstd/math.nut")
-let {TextNormal, ControlBg, BtnBdHover, BtnBdNormal, BtnTextHover, BtnTextNormal, OptionRowBgHover, OptionRowBdHover, MenuRowBgOdd, MenuRowBgEven} = require("%ui/components/colors.nut")
-let JB = require("%ui/control/gui_buttons.nut")
-let {safeAreaHorPadding} = require("%ui/options/safeArea.nut")
-let {showMsgbox} = require("%ui/components/msgbox.nut")
-let { textButton } = require("%ui/components/button.nut")
-let { makeVertScroll } = require("%ui/components/scrollbar.nut")
-let checkbox = require("%ui/components/checkbox.nut")
-let slider = require("%ui/components/slider.nut")
-let mkSliderWithText = require("options/optionTextSlider.nut")
-let settingsHeaderTabs = require("settingsHeaderTabs.nut")
-let fa = require("%ui/components/fontawesome.map.nut")
-let {dtext} = require("%ui/components/text.nut")
-let console = require("console")
-let { buildElems, buildDigitalBindingText, isValidDevice,eventTypeLabels,
-      textListFromAction, getSticksText } = require("%ui/control/formatInputBinding.nut")
+let { showControlsMenu } = require("%ui/mainMenu/menus/menuState.nut")
+let { CONTROLS_SETUP_CHANGED_EVENT_ID } = require("%ui/control/controls_generation.nut")
+let { safeAreaHorPadding } = require("%ui/options/safeArea.nut")
+let { eventTypeLabels } = require("%ui/control/formatInputBinding.nut")
 let userInfo = require("%sqGlob/userInfo.nut")
 let { onlineSettingUpdated } = require("%ui/options/onlineSettings.nut")
 let {format_ctrl_name} = dainput
 let {get_action_handle} = dainput
 let { BTN_pressed, BTN_pressed_long, BTN_pressed2, BTN_pressed3,
-          BTN_released, BTN_released_long, BTN_released_short } = dainput
-let select = require("%ui/components/select.nut")
-let locByPlatform = require("%ui/helpers/locByPlatform.nut")
-let DataBlock = require("DataBlock")
-let {
-  platformId, is_pc, is_xbox, is_sony, is_nswitch, is_mobile
-} = require("%dngscripts/platform.nut")
-let { DBGLEVEL } = require("dagor.system")
+  BTN_released, BTN_released_long, BTN_released_short } = dainput
+let { platformId } = require("%dngscripts/platform.nut")
 
 let controlsSettingOnlyForGamePad = Watched(is_xbox || is_sony || is_nswitch || is_mobile)
-let {wasGamepad, isGamepad, ControlsTypes } = require("%ui/control/active_controls.nut")
-let {
-  setUiClickRumble,
-  isUiClickRumbleEnabled,
-  setInBattleRumble,
-  isInBattleRumbleEnabled,
-  isAimAssistExists,
-  isAimAssistEnabled,
-  setAimAssist,
-  stick0_dz,
-  set_stick0_dz,
-  stick1_dz,
-  set_stick1_dz,
-  aim_smooth,
-  aim_smooth_set,
-  use_gamepad_state,
-  set_use_gamepad
-} = require("controls_online_storage.nut")
-let {
-  importantGroups, generation, nextGeneration, availablePresets, haveChanges, Preset,
-  getActionsList, getActionTags, mkSubTagsFind
-} = require("controls_state.nut")
+let { wasGamepad, isGamepad } = require("%ui/control/active_controls.nut")
+let { isUiClickRumbleEnabled, isInBattleRumbleEnabled, isAimAssistEnabled, stick0_dz, stick1_dz, aim_smooth, use_gamepad_state } = require("%ui/mainMenu/menus/controls_online_storage.nut")
+let { importantGroups, generation, availablePresets, haveChanges, Preset } = require("%ui/mainMenu/menus/controls_state.nut")
 let { voiceChatEnabled } = require("%ui/voiceChat/voiceChatGlobalState.nut")
-let { get_setting_by_blk_path } = require("settings")
+
+let customSettingsFilter = Watched("")
 
 function menuRowColor(sf, isOdd) {
   return (sf & S_HOVER)
@@ -78,7 +67,7 @@ function saveConfig(){
 }
 
 function resetC0BindingsForOnlyGamepadsPlatforms(defaultPreset) {
-  if (controlsSettingOnlyForGamePad.value) {
+  if (controlsSettingOnlyForGamePad.get()) {
     let origBlk = DataBlock()
     dainput.save_user_config(origBlk, true)
     origBlk.removeBlock("c0") 
@@ -90,7 +79,7 @@ function resetC0BindingsForOnlyGamepadsPlatforms(defaultPreset) {
     let presetPath = splitedPresetPath?[0] ?? defaultPreset
     let presetPlatform = splitedPresetPath?[1] ?? ""
     let newBasePresetName = $"{presetPath}~{platformId}"
-    if (presetPlatform.tolower() == platformId.tolower() || availablePresets.value.findvalue(@(v) v.preset.indexof(newBasePresetName)!=null) == null)
+    if (presetPlatform.tolower() == platformId.tolower() || availablePresets.get().findvalue(@(v) v.preset.indexof(newBasePresetName)!=null) == null)
       return
     else {
       origBlk.setStr("preset", newBasePresetName)
@@ -103,7 +92,7 @@ function resetC0BindingsForOnlyGamepadsPlatforms(defaultPreset) {
 }
 
 console.register_command(function(){
-  controlsSettingOnlyForGamePad(false)
+  controlsSettingOnlyForGamePad.set(false)
   let origBlk = DataBlock()
   origBlk.setStr("preset", "content/{0}/config/active_matter.default")
   dainput.load_user_config(origBlk)
@@ -114,20 +103,19 @@ console.register_command(function(){
 let findSelectedPreset = function(selected) {
   let defaultPreset = dainput.get_user_config_base_preset()
   resetC0BindingsForOnlyGamepadsPlatforms(defaultPreset)
-  return availablePresets.value.findvalue(@(v) selected.indexof(v.preset)!=null) ??
-         availablePresets.value.findvalue(@(v) ($"{defaultPreset}~{platformId}").indexof(v.preset)!=null) ??
+  return availablePresets.get().findvalue(@(v) selected.indexof(v.preset)!=null) ??
+         availablePresets.get().findvalue(@(v) ($"{defaultPreset}~{platformId}").indexof(v.preset)!=null) ??
          Preset(defaultPreset)
 }
 let selectedPreset = Watched(findSelectedPreset(dainput.get_user_config_base_preset()))
-let currentPreset =  Watched(selectedPreset.value)
-currentPreset.subscribe(@(v) selectedPreset(findSelectedPreset(v.preset)))
-let updateCurrentPreset = @() currentPreset(findSelectedPreset(dainput.get_user_config_base_preset()))
+let currentPreset =  Watched(selectedPreset.get())
+currentPreset.subscribe_with_nasty_disregard_of_frp_update(@(v) selectedPreset.set(findSelectedPreset(v.preset)))
+let updateCurrentPreset = @() currentPreset.set(findSelectedPreset(dainput.get_user_config_base_preset()))
 
 let actionRecording = Watched(null)
 let configuredAxis = Watched(null)
 let configuredButton = Watched(null)
 
-let showControlsMenu = mkWatched(persist, "showControlsMenu", false)
 
 
 function isGamepadColumn(col) {
@@ -168,12 +156,13 @@ let getAllowedBindingsTypes = memoize(function(ah) {
 
 
 local tabsList = []
+local optionsList = []
 let isActionDisabledToCustomize = memoize(
   @(action_handler) getActionTags(action_handler).indexof("disabled") != null)
 
 function makeTabsList() {
-  tabsList = [ {id="Options" text=loc("controls/tab/Control")} ]
-  let isVoiceChatAvailable = is_pc && voiceChatEnabled.value
+  local res = [ {id="Options" text=loc("controls/tab/Control")} ]
+  let isVoiceChatAvailable = is_pc && voiceChatEnabled.get()
   let bindingTabs = [
     {id="Movement" text=loc("controls/tab/Movement")}
     {id="Weapon" text=loc("controls/tab/Weapon")}
@@ -200,21 +189,66 @@ function makeTabsList() {
         hasActions[tag] <- true
     }
   }
-  tabsList.extend(bindingTabs.filter(@(t) (hasActions?[t.id] ?? false) && (t?.isEnabled?() ?? true)))
+  res = res.extend(bindingTabs.filter(@(t) (hasActions?[t.id] ?? false) && (t?.isEnabled?() ?? true)))
+    .map(@(v) v.__merge({
+      isAvailable = Computed(@() customSettingsFilter.get().len() <= 0)
+      unavailableHoverHint = loc("controls/activeSearch")
+    }))
+  tabsList = res
 }
 controlsSettingOnlyForGamePad.subscribe(@(_v) makeTabsList())
 makeTabsList()
+
+
+function deleteInputTextBtn() {
+  let watch = customSettingsFilter
+  if (customSettingsFilter.get().len() <= 0)
+    return { watch }
+  return {
+    watch
+    hplace = ALIGN_RIGHT
+    vplace = ALIGN_CENTER
+    margin = static [0, hdpx(10),0,0]
+    children = fontIconButton("icon_buttons/x_btn.svg", @() customSettingsFilter.set(""),
+      { padding = hdpx(2) }
+    )
+  }
+}
+
+let searchInputBlock = {
+  flow = FLOW_HORIZONTAL
+  gap = hdpx(4)
+  children = [
+    {
+      size = static [hdpx(400), SIZE_TO_CONTENT]
+      children = textInput(customSettingsFilter, {
+        placeholder = loc("search by name")
+        textmargin = hdpx(5)
+        margin = 0
+        onChange = function(value) {
+          customSettingsFilter.set(value)
+        }
+        onEscape = function() {
+          if (customSettingsFilter.get() == "")
+            set_kb_focus(null)
+          customSettingsFilter.set("")
+        }
+      }.__update(body_txt))
+    }
+    deleteInputTextBtn
+  ]
+}
 
 
 let currentTab = mkWatched(persist, "currentTab", tabsList[0].id)
 let selectedBindingCell = mkWatched(persist, "selectedBindingCell")
 let selectedAxisCell = mkWatched(persist, "selectedAxisCell")
 
-isGamepad.subscribe(function(isGp) {
+isGamepad.subscribe_with_nasty_disregard_of_frp_update(function(isGp) {
   if (!isGp)
     return
-  selectedBindingCell(null)
-  selectedAxisCell(null)
+  selectedBindingCell.set(null)
+  selectedAxisCell.set(null)
 })
 
 function isEscape(blk) {
@@ -236,7 +270,7 @@ function startRecording(cell_data) {
     dainput.start_recording_bindings_for_single_button()
   else
     dainput.start_recording_bindings(cell_data.ah)
-  actionRecording(cell_data)
+  actionRecording.set(cell_data)
 }
 
 function makeBgToggle(initial=true) {
@@ -296,8 +330,8 @@ function loadPreviousBindingParametersTo(blk, ah, col) {
 
 function checkRecordingFinished() {
   if (dainput.is_recording_complete()) {
-    let cellData = actionRecording.value
-    actionRecording(null)
+    let cellData = actionRecording.get()
+    actionRecording.set(null)
     let ah = cellData?.ah
 
     let blk = DataBlock()
@@ -342,7 +376,7 @@ function checkRecordingFinished() {
               binding.eventType = getAllowedBindingsTypes(ah)[0]
           }
           nextGeneration()
-          haveChanges(true)
+          haveChanges.set(true)
         }
 
         let conflicts = dainput.check_bindings_conflicts(ah, checkConflictsBlk)
@@ -373,7 +407,7 @@ function checkRecordingFinished() {
 
 function cancelRecording() {
   gui_scene.clearTimer(checkRecordingFinished)
-  actionRecording(null)
+  actionRecording.set(null)
 
   let blk = DataBlock()
   dainput.finish_recording_bindings(blk)
@@ -386,7 +420,7 @@ let mediumText = @(text, params={}) dtext(text, {color = TextNormal,}.__update(b
 function recordingWindow() {
   
   local text
-  let cellData = actionRecording.value
+  let cellData = actionRecording.get()
   let name = cellData?.name
   if (cellData) {
     let actionType = dainput.get_action_type(cellData.ah)
@@ -418,7 +452,7 @@ function recordingWindow() {
     flow = FLOW_VERTICAL
     gap = fsh(8)
     children = [
-      {size=[0, flex(3)]}
+      {size=static [0, flex(3)]}
       dtext(locActionName(name), {color = Color(100,100,100)}.__update(h2_txt))
       mediumText(text, {
         function onAttach() {
@@ -429,7 +463,7 @@ function recordingWindow() {
           gui_scene.clearTimer(checkRecordingFinished)
         }
       })
-      {size=[0, flex(5)]}
+      {size=static [0, flex(5)]}
     ]
   }
 }
@@ -452,7 +486,7 @@ function applyPreset(text, target=null) {
   showMsgbox({
     text
     children = dtext(loc("controls/preset", {
-      preset = target?.name ?? selectedPreset.value.name
+      preset = target?.name ?? selectedPreset.get().name
     }), {margin = hdpx(50)})
     buttons = [
       { text = loc("Yes"), action = doReset }
@@ -472,7 +506,7 @@ function changePreset(target) {
 }
 
 function clearBinding(cellData){
-  haveChanges(true)
+  haveChanges.set(true)
   if (cellData.singleBtn) {
     set_single_button_analogue_binding(cellData.ah, cellData.column, cellData.actionProp, DataBlock())
   } else if (cellData.tag == "modifiers") {
@@ -491,49 +525,66 @@ function discardChanges() {
     return
   control.restore_saved_config()
   nextGeneration()
-  haveChanges(false)
+  haveChanges.set(false)
 }
+
+let btnPadding = static [0, hdpx(32)]
 
 function actionButtons() {
   local children = null
-  let cellData = selectedBindingCell.value
-
+  let cellData = selectedBindingCell.get()
   if (cellData != null) {
     let actionType = dainput.get_action_type(cellData.ah)
     let actionTypeGroup = actionType & dainput.TYPEGRP__MASK
 
     if (!isActionDisabledToCustomize(cellData.ah)) {
       children = [
-        textButton(loc("controls/clearBinding"), function() {
-          clearBinding(cellData)
-          nextGeneration()
-        }, { hotkeys = [["^J:X"]], skipDirPadNav = true })
+        buttonWithGamepadHotkey(mkText(loc("controls/clearBinding"), { padding = btnPadding }.__merge(body_txt)),
+          function() {
+            clearBinding(cellData)
+            nextGeneration()
+          },
+          static {
+            hotkeys = [["^J:X", { description = { skip = true } }]]
+            skipDirPadNav = true
+            size = [SIZE_TO_CONTENT, hdpx(50)]
+          })
       ]
-
       if (actionTypeGroup == dainput.TYPEGRP_AXIS || actionTypeGroup == dainput.TYPEGRP_STICK) {
-        children.append(
-          textButton(loc("controls/axisSetup", "Axis setup"),
-            function() { configuredAxis(cellData) },
-            { hotkeys = [["^{0}".subst(JB.A), { description = loc("controls/axisSetup") }]], skipDirPadNav = true })
+        children.append(buttonWithGamepadHotkey(mkText(loc("controls/axisSetup"), { padding = btnPadding }.__merge(body_txt)),
+          @() configuredAxis.set(cellData),
+          static {
+            hotkeys = [["^{0}".subst(JB.A), { description = { skip = true } }]]
+            skipDirPadNav = true
+            size = [SIZE_TO_CONTENT, hdpx(50)]
+          })
         )
       }
       else if (actionTypeGroup == dainput.TYPEGRP_DIGITAL) {
         children.append(
-          textButton(loc("controls/buttonSetup", "Button setup"),
-            function() { configuredButton(cellData) },
-            { hotkeys = [["^J:Y"]], skipDirPadNav = true })
+          buttonWithGamepadHotkey(mkText(loc("controls/buttonSetup"), { padding = btnPadding }.__merge(body_txt)),
+            @() configuredButton.set(cellData),
+            static {
+              hotkeys = [["^J:Y", { description = { skip = true } }]]
+              skipDirPadNav = true
+              size = [SIZE_TO_CONTENT, hdpx(50)]
+            })
 
-          textButton(loc("controls/bindBinding"),
-            function() { startRecording(cellData) },
-            { hotkeys = [["^{0}".subst(JB.A), { description = loc("controls/bindBinding") }]], skipDirPadNav = true })
-        )
+          buttonWithGamepadHotkey(mkText(loc("controls/bindBinding"), { padding = btnPadding }.__merge(body_txt)),
+            @() startRecording(cellData),
+            static {
+              hotkeys = [["^{0}".subst(JB.A), { description = { skip = true } }]]
+              skipDirPadNav = true
+              size = [SIZE_TO_CONTENT, hdpx(50)]
+            })
+          )
       }
     }
   }
   return {
     watch = selectedBindingCell
-    children
     flow = FLOW_HORIZONTAL
+    children
   }
 }
 
@@ -541,14 +592,14 @@ function collectBindableColumns() {
   let nColumns = dainput.get_actions_binding_columns()
   let colRange = []
   for (local i=0; i<nColumns; ++i) {
-    if (!controlsSettingOnlyForGamePad.value || isGamepadColumn(i))
+    if (!controlsSettingOnlyForGamePad.get() || isGamepadColumn(i))
       colRange.append(i)
   }
   return colRange
 }
 
 function getNotBoundActions() {
-  let importantTabs = importantGroups.value
+  let importantTabs = importantGroups.get()
 
   let colRange = collectBindableColumns()
   let notBoundActions = {}
@@ -649,10 +700,7 @@ function onDiscardChanges() {
   })
 }
 
-let skipDirPadNav = { skipDirPadNav = true }
-let applyHotkeys = { hotkeys = [["^{0} | J:Start | Esc".subst(JB.B), { description={skip=true} }]] }
-
-let onClose = @() showControlsMenu(false)
+let onClose = @() showControlsMenu.set(false)
 
 function mkWindowButtons(width) {
   function onApply() {
@@ -687,12 +735,29 @@ function mkWindowButtons(width) {
     rendObj = ROBJ_SOLID
     color = ControlBg
     children = wrap([
-      textButton(loc("controls/btnResetToDefaults"), resetToDefault, skipDirPadNav)
-      haveChanges.value ? textButton(loc("mainmenu/btnDiscard"), onDiscardChanges, skipDirPadNav) : null
-      {size = [flex(), 0]}
-      actionButtons
-      textButton(loc(haveChanges.value ? "mainmenu/btnApply" : "Ok"), onApply, skipDirPadNav.__merge(applyHotkeys, {hplace = ALIGN_RIGHT}))
-    ], {width, flowElemProto = {size = [flex(), SIZE_TO_CONTENT] halign = ALIGN_RIGHT, padding = fsh(0.5), }})
+      {
+        flow = FLOW_HORIZONTAL
+        children = [
+          textButton(loc("controls/btnResetToDefaults"), resetToDefault)
+          haveChanges.get() ? textButton(loc("mainmenu/btnDiscard"), onDiscardChanges) : null
+        ]
+      }
+      {
+        size = FLEX_H
+        flow = FLOW_HORIZONTAL
+        halign = ALIGN_RIGHT
+        children = [
+          actionButtons
+          buttonWithGamepadHotkey(mkText(loc("mainmenu/btnApply"), { padding = btnPadding }.__merge(body_txt)),
+            onApply,
+            static {
+              hotkeys = [["^{0} | J:Start | Esc".subst(JB.B), { description= { skip = true } }]]
+              skipDirPadNav = true
+              size = [SIZE_TO_CONTENT, hdpx(50)]
+            })
+        ]
+      }
+    ], {width, flowElemProto = {size = FLEX_H halign = ALIGN_RIGHT, padding = fsh(0.5) }})
   }
 }
 
@@ -712,8 +777,8 @@ function mkActionRowLabel(name, group=null){
     rendObj = ROBJ_TEXT
     color = TextNormal
     text = locActionName(name)
-    margin = [0, fsh(1), 0, 0]
-    size = [flex(1.5), SIZE_TO_CONTENT]
+    margin = static [0, fsh(1), 0, 0]
+    size = static [flex(1.5), SIZE_TO_CONTENT]
     halign = ALIGN_RIGHT
     group
   }.__update(body_txt)
@@ -722,7 +787,7 @@ function mkActionRowLabel(name, group=null){
 function mkActionRowCells(label, columns){
   let children = [label].extend(columns)
   if (columns.len() < 2)
-    children.append({size=[flex(0.75), 0]})
+    children.append({size=static [flex(0.75), 0]})
   return children
 }
 
@@ -731,28 +796,34 @@ function makeActionRow(_ah, name, columns, xmbNode, showBgGen) {
   let isOdd = showBgGen()
   let label = mkActionRowLabel(name, group)
   let children = mkActionRowCells(label, columns)
-  return watchElemState(@(sf) {
-    xmbNode
-    key = name
-    size = [flex(), SIZE_TO_CONTENT]
-    flow = FLOW_HORIZONTAL
-    valign = ALIGN_CENTER
-    behavior = Behaviors.Button
-    skipDirPadNav = true
-    children
-    rendObj = ROBJ_BOX
-    fillColor = menuRowColor(sf, isOdd)
-    borderWidth = (sf & S_HOVER) ? [hdpx(2), 0] : 0
-    borderColor = OptionRowBdHover
-    group
-  })
+  let stateFlags = Watched(0)
+  return function() {
+    let sf = stateFlags.get()
+    return {
+      watch = stateFlags
+      onElemState = @(s) stateFlags.set(s)
+      xmbNode
+      key = name
+      size = FLEX_H
+      flow = FLOW_HORIZONTAL
+      valign = ALIGN_CENTER
+      behavior = Behaviors.Button
+      skipDirPadNav = true
+      children
+      rendObj = ROBJ_BOX
+      fillColor = menuRowColor(sf, isOdd)
+      borderWidth = (sf & S_HOVER) ? [hdpx(2), 0] : 0
+      borderColor = OptionRowBdHover
+      group
+    }
+  }
 }
 
 
 let bindingColumnCellSize = [flex(1), fontH(240)]
 
 function isCellSelected(cell_data, selection) {
-  let selected = selection.value
+  let selected = selection.get()
   return (selected!=null) && selected.column==cell_data.column && selected.ah==cell_data.ah
     && selected.actionProp==cell_data.actionProp && selected.tag==cell_data.tag
 }
@@ -790,12 +861,15 @@ function bindingCell(ah, column, action_prop, list, tag, selection, name=null, x
   let group = ElemGroup()
   let isForGamepad = isGamepadColumn(column)
 
-  return watchElemState(function(sf) {
+  let stateFlags = Watched(0)
+  return function() {
+    let sf = stateFlags.get()
     let hovered = (sf & S_HOVER)
     let selected = isCellSelected(cellData, selection)
-    let isBindable = isForGamepad || !isGamepad.value
+    let isBindable = isForGamepad || !isGamepad.get()
     return {
-      watch = [selection, isGamepad]
+      watch = [stateFlags, selection, isGamepad]
+      onElemState = @(s) stateFlags.set(s)
       size = bindingColumnCellSize
 
       behavior = isBindable ? Behaviors.Button : null
@@ -827,18 +901,18 @@ function bindingCell(ah, column, action_prop, list, tag, selection, name=null, x
           || cellData.singleBtn || cellData.tag == "modifiers" || cellData.tag == "axis")
           startRecording(cellData)
         else
-          configuredAxis(cellData)
+          configuredAxis.set(cellData)
       }
 
-      onClick = isGamepad.value ? null : isActionDisabledToCustomize(ah) ? showDisabledMsgBox : @() selection(cellData)
-      onHover = isGamepad.value ? @(on) selection(on ? cellData : null) : null
+      onClick = isGamepad.get() ? null : isActionDisabledToCustomize(ah) ? showDisabledMsgBox : @() selection.set(cellData)
+      onHover = isGamepad.get() ? @(on) selection.set(on ? cellData : null) : null
 
       function onDetach() {
         if (isCellSelected(cellData, selection))
-          selection(null)
+          selection.set(null)
       }
     }
-  })
+  }
 }
 
 let colorTextHdr = Color(120,120,120)
@@ -859,7 +933,7 @@ function mkBindingsHeader(colRange){
                                                   ? loc("controls/type/pc/gamepad")
                                                   : loc("controls/type/pc/keyboard")))
   return {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     children = mkActionRowCells(mkActionRowLabel(null), cols)
     valign = ALIGN_CENTER
@@ -869,10 +943,20 @@ function mkBindingsHeader(colRange){
   }
 }
 
-function bindingsPage(section_name) {
+let emptyBlockText = mkText(loc("controls/activeSearchEmpty"), {
+  hplace = ALIGN_CENTER
+  vplace = ALIGN_CENTER
+}.__merge(h2_txt))
+
+function bindingsPage(section_name, nameFilter) {
   let scrollHandler = ScrollHandler()
-  let filteredActions = getActionsList().filter(@(ah) getActionTags(ah).indexof(section_name) != null)
-  let xmbRootNode = XmbContainer({wrap=true})
+  let filteredActions = getActionsList().filter(function(ah) {
+    if (nameFilter.len() > 0)
+      return utf8ToLower(locActionName(dainput.get_action_name(ah))).contains(utf8ToLower(nameFilter))
+    else
+      return getActionTags(ah).indexof(section_name) != null
+    })
+  let xmbRootNode = XmbContainer()
 
 
   return function() {
@@ -890,27 +974,30 @@ function bindingsPage(section_name) {
         let bindings = colRange.map(@(col) dainput.get_digital_action_binding(ah, col))
         let colTexts = bindings.map(buildDigitalBindingText)
         let colComps = colTexts.map(@(col_text, idx) bindingCell(ah, colRange[idx], null, col_text, null, selectedBindingCell, actionName, XmbNode()))
-        actionRows.append(makeActionRow(ah, actionName, colComps, XmbNode({isGridLine=true}), toggleBg))
+        actionRows.append(makeActionRow(ah, actionName, colComps, XmbNode(), toggleBg))
       }
       else if (dainput.TYPEGRP_AXIS == atFlag || dainput.TYPEGRP_STICK ==atFlag) {
         let colTexts = colRange.map(@(col, _) textListFromAction(actionName, col))
         let colComps = colTexts.map(@(col_text, idx) bindingCell(ah, colRange[idx], null, col_text, null, selectedBindingCell, actionName, XmbNode()))
-        actionRows.append(makeActionRow(ah, actionName, colComps, XmbNode({isGridLine=true}), toggleBg))
+        actionRows.append(makeActionRow(ah, actionName, colComps, XmbNode(), toggleBg))
       }
     }
-
+    local actionsList = actionRows
+    if (nameFilter.len() > 0)
+      actionsList = [].extend(actionRows, optionsList.filter(@(v) utf8ToLower(v?().key ?? "").contains(nameFilter)))
     let bindingsArea = makeVertScroll({
       xmbNode = xmbRootNode
       flow = FLOW_VERTICAL
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       clipChildren = true
-      children = actionRows
+      children = actionsList.len() > 0 ? actionsList : emptyBlockText
       scrollHandler
     })
 
     return {
+      watch = generation
       size = flex()
-      padding = [fsh(1), 0]
+      padding = static [fsh(1), 0]
       flow = FLOW_VERTICAL
       key = section_name
       animations = pageAnim
@@ -920,18 +1007,26 @@ function bindingsPage(section_name) {
 }
 
 function optionRowContainer(children, isOdd, params) {
-  return watchElemState(@(sf) params.__merge({
-    size = [flex(), SIZE_TO_CONTENT]
-    flow = FLOW_HORIZONTAL
-    valign = ALIGN_CENTER
-    
-    skipDirPadNav = true
-    children = children
-    rendObj = ROBJ_SOLID
-    color = menuRowColor(sf, isOdd)
-    gap = fsh(2)
-    padding = [0, fsh(2)]
-  }))
+  let stateFlags = Watched(0)
+  return function() {
+    let sf = stateFlags.get()
+    return {
+      watch = stateFlags
+      size = FLEX_H
+      onElemState = @(s) stateFlags.set(s)
+      children = params.__merge({
+        rendObj = ROBJ_SOLID
+        size = FLEX_H
+        flow = FLOW_HORIZONTAL
+        gap = static fsh(2)
+        valign = ALIGN_CENTER
+        skipDirPadNav = true
+        color = menuRowColor(sf, isOdd)
+        padding = static [0, fsh(2)]
+        children = children
+      })
+    }
+  }
 }
 
 function optionRow(labelText, comp, isOdd) {
@@ -940,7 +1035,7 @@ function optionRow(labelText, comp, isOdd) {
     color = TextNormal
     text = labelText
     margin = fsh(1)
-    size = [flex(1), SIZE_TO_CONTENT]
+    size = static [flex(1), SIZE_TO_CONTENT]
     
     halign = ALIGN_RIGHT
   }.__update(body_txt)
@@ -986,10 +1081,10 @@ function invertCheckbox(action_names, column, axis) {
   let val = Watched((valAnd == valOr) ? valAnd : null)
 
   function setValue(new_val) {
-    val(new_val)
+    val.set(new_val)
     foreach (b in bindings)
       b[invertFields[axis]] = new_val
-    haveChanges(true)
+    haveChanges.set(true)
   }
 
   return checkbox(val, null, { setValue = setValue, override = { size = flex(), valign = ALIGN_CENTER } useHotkeys=true xmbNode=XmbNode()})
@@ -1017,10 +1112,10 @@ function axisSetupSlider(action_names, column, prop, params) {
   let opt = params.__merge({
     var = val,
     function setValue(new_val) {
-      val(new_val)
+      val.set(new_val)
       foreach (b in bindings)
         b[prop] = new_val
-      haveChanges(true)
+      haveChanges.set(true)
     }
   })
   return mkSliderWithText(opt, group, XmbNode(), params?.morphText ?? mkRounded)
@@ -1046,7 +1141,7 @@ function sensMulSlider(prop) {
   let opt = {
     var,
     function setValue(new_val) {
-      var(new_val)
+      var.set(new_val)
       sensScale[prop] = new_val
       
     }
@@ -1091,33 +1186,33 @@ function deadZoneScaleSlider(val, setVal){
 }
 let isUserConfigCustomized = Watched(false)
 function checkUserConfigCustomized(){
-  isUserConfigCustomized(dainput.is_user_config_customized())
+  isUserConfigCustomized.set(dainput.is_user_config_customized())
 }
 
 function updateAll(...) { updateCurrentPreset(); checkUserConfigCustomized()}
-generation.subscribe(updateAll)
-haveChanges.subscribe(updateAll)
-let showPresetsSelect = Computed(@() availablePresets.value.len()>0)
+generation.subscribe_with_nasty_disregard_of_frp_update(updateAll)
+haveChanges.subscribe_with_nasty_disregard_of_frp_update(updateAll)
+let showPresetsSelect = Computed(@() availablePresets.get().len()>0)
 
-let onClickCtor = @(p, _idx) @() p.preset != selectedPreset.value.preset || isUserConfigCustomized.value ? changePreset(p) : null 
-let isCurrent = @(p, _idx) p.preset==selectedPreset.value.preset
+let onClickCtor = @(p, _idx) @() p.preset != selectedPreset.get().preset || isUserConfigCustomized.get() ? changePreset(p) : null 
+let isCurrent = @(p, _idx) p.preset==selectedPreset.get().preset
 let textCtor = @(p, _idx, _stateFlags) p?.name!=null ? loc(p?.name) : null
-let selectPreset = select({state=selectedPreset, options=availablePresets.value, onClickCtor, isCurrent, textCtor})
+let selectPreset = select({state=selectedPreset, options=availablePresets.get(), onClickCtor, isCurrent, textCtor})
 
 let currentControls = @(){
   size = flex()
   watch = [showPresetsSelect, isUserConfigCustomized]
   flow = FLOW_HORIZONTAL
   valign = ALIGN_CENTER
-  gap = {size = [hdpx(10),0]}
-  children = showPresetsSelect.value
-            ? [selectPreset].append(isUserConfigCustomized.value
+  gap = {size = static [hdpx(10),0]}
+  children = showPresetsSelect.get()
+            ? [selectPreset].append(isUserConfigCustomized.get()
                 ? dtext(loc("controls/modifiedControls"), {color = TextNormal})
                 : null)
             : null
 }
 function pollSettings() {
-  if (isUserConfigCustomized.value)
+  if (isUserConfigCustomized.get())
     return
   updateAll()
 }
@@ -1129,54 +1224,56 @@ let controlsTypesMap = {
 }
 
 function options() {
-  let onlyGamePad = controlsSettingOnlyForGamePad.value
+  let onlyGamePad = controlsSettingOnlyForGamePad.get()
   let toggleBg = makeBgToggle()
-  let showGamepadOpts = wasGamepad.value
-  let isGyroAvailable = availablePresets.value.findvalue(
+  let showGamepadOpts = wasGamepad.get()
+  let isGyroAvailable = availablePresets.get().findvalue(
     @(v) (v?.name.indexof(loc("".concat("gyro~",platformId))) != null)
   )
+  let children = [
+    [true, loc("controls/curControlPreset"), currentControls],
+    [!onlyGamePad, loc("controls/pc/useGamepad"),
+      select({state=use_gamepad_state, options=[ControlsTypes.AUTO, ControlsTypes.KB_MOUSE, ControlsTypes.GAMEPAD],
+        onClickCtor=@(p, _idx) @() p != use_gamepad_state.get() ? set_use_gamepad(p) : null,
 
+        textCtor=@(p, _idx, _stateFlags) controlsTypesMap?[p] ?? loc(p)})
+    ],
+    [!onlyGamePad, loc("controls/mouseAimXInvert"), invertCheckbox(["Human.Aim", "Vehicle.Aim"], 0, 0)],
+    [!onlyGamePad, loc("controls/mouseAimYInvert"), invertCheckbox(["Human.Aim", "Vehicle.Aim"], 0, 1)],
+    [isGyroAvailable, locByPlatform("controls/gyroAimXInvert"), invertCheckbox(["Human.AimDelta", "Vehicle.AimDelta"], 1, 0)],
+    [isGyroAvailable, locByPlatform("controls/gyroAimYInvert"), invertCheckbox(["Human.AimDelta", "Vehicle.AimDelta"], 1, 1)],
+    [showGamepadOpts, loc("controls/joyAimXInvert"), invertCheckbox(["Human.Aim", "Vehicle.Aim"], 1, 0)],
+    [showGamepadOpts, loc("controls/joyAimYInvert"), invertCheckbox(["Human.Aim", "Vehicle.Aim"], 1, 1)],
+    [!onlyGamePad, loc("controls/mouseAimSensitivity"), sensitivitySlider(["Human.Aim", "Vehicle.Aim"], 0)],
+    [isGyroAvailable, locByPlatform("controls/gyroAimSensitivity"), sensitivitySlider(["Human.AimDelta", "Vehicle.AimDelta"], 1)],
+    [showGamepadOpts, loc("controls/joyAimSensitivity"), sensitivitySlider(["Human.Aim", "Vehicle.Aim"], 1)],
+    [true, loc("controls/sensScale/humanAiming"), sensMulSlider("humanAiming")],
+    [DBGLEVEL > 0, loc("controls/sensScale/humanTpsCam"), sensMulSlider("humanTpsCam")],
+    [DBGLEVEL > 0, loc("controls/sensScale/humanFpsCam"), sensMulSlider("humanFpsCam")],
+    [true, loc("controls/sensScale/vehicleCam"), sensMulSlider("vehicleCam")],
+    [showGamepadOpts, loc("gamepad/stick0_deadzone"), deadZoneScaleSlider(stick0_dz, set_stick0_dz)],
+    [showGamepadOpts, loc("gamepad/stick1_deadzone"), deadZoneScaleSlider(stick1_dz, set_stick1_dz)],
+    [showGamepadOpts && isAimAssistExists,
+      loc("options/aimAssist"),
+      checkbox(isAimAssistEnabled, null,
+        { setValue = setAimAssist, useHotkeys = true, override={size=flex() valign = ALIGN_CENTER xmbNode=XmbNode()}})
+    ],
+    [showGamepadOpts, loc("controls/uiClickRumble"),
+      checkbox(isUiClickRumbleEnabled, null,
+        { setValue = setUiClickRumble, override = { size = flex(), valign = ALIGN_CENTER } useHotkeys=true xmbNode=XmbNode()})],
+    [showGamepadOpts, loc("controls/inBattleRumble"),
+      checkbox(isInBattleRumbleEnabled, null,
+        { setValue = setInBattleRumble, override = { size = flex(), valign = ALIGN_CENTER } useHotkeys=true xmbNode=XmbNode()})],
+
+    [true, loc("controls/aimSmooth"), smoothMulSlider("Human.Aim")],
+  ].map(@(v) v[0] ? optionRow.call(null, v[1],v[2], toggleBg()) : null)
+
+  optionsList = children
   let bindingsArea = makeVertScroll({
     flow = FLOW_VERTICAL
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     clipChildren = true
-    children = [
-      [true, loc("controls/curControlPreset"), currentControls],
-      [!onlyGamePad, loc("controls/pc/useGamepad"),
-        select({state=use_gamepad_state, options=[ControlsTypes.AUTO, ControlsTypes.KB_MOUSE, ControlsTypes.GAMEPAD],
-          onClickCtor=@(p, _idx) @() p != use_gamepad_state.value ? set_use_gamepad(p) : null,
-
-          textCtor=@(p, _idx, _stateFlags) controlsTypesMap?[p] ?? loc(p)})
-      ],
-      [!onlyGamePad, loc("controls/mouseAimXInvert"), invertCheckbox(["Human.Aim", "Vehicle.Aim"], 0, 0)],
-      [!onlyGamePad, loc("controls/mouseAimYInvert"), invertCheckbox(["Human.Aim", "Vehicle.Aim"], 0, 1)],
-      [isGyroAvailable, locByPlatform("controls/gyroAimXInvert"), invertCheckbox(["Human.AimDelta", "Vehicle.AimDelta"], 1, 0)],
-      [isGyroAvailable, locByPlatform("controls/gyroAimYInvert"), invertCheckbox(["Human.AimDelta", "Vehicle.AimDelta"], 1, 1)],
-      [showGamepadOpts, loc("controls/joyAimXInvert"), invertCheckbox(["Human.Aim", "Vehicle.Aim"], 1, 0)],
-      [showGamepadOpts, loc("controls/joyAimYInvert"), invertCheckbox(["Human.Aim", "Vehicle.Aim"], 1, 1)],
-      [!onlyGamePad, loc("controls/mouseAimSensitivity"), sensitivitySlider(["Human.Aim", "Vehicle.Aim"], 0)],
-      [isGyroAvailable, locByPlatform("controls/gyroAimSensitivity"), sensitivitySlider(["Human.AimDelta", "Vehicle.AimDelta"], 1)],
-      [showGamepadOpts, loc("controls/joyAimSensitivity"), sensitivitySlider(["Human.Aim", "Vehicle.Aim"], 1)],
-      [true, loc("controls/sensScale/humanAiming"), sensMulSlider("humanAiming")],
-      [DBGLEVEL > 0, loc("controls/sensScale/humanTpsCam"), sensMulSlider("humanTpsCam")],
-      [DBGLEVEL > 0, loc("controls/sensScale/humanFpsCam"), sensMulSlider("humanFpsCam")],
-      [true, loc("controls/sensScale/vehicleCam"), sensMulSlider("vehicleCam")],
-      [showGamepadOpts, loc("gamepad/stick0_deadzone"), deadZoneScaleSlider(stick0_dz, set_stick0_dz)],
-      [showGamepadOpts, loc("gamepad/stick1_deadzone"), deadZoneScaleSlider(stick1_dz, set_stick1_dz)],
-      [showGamepadOpts && isAimAssistExists,
-        loc("options/aimAssist"),
-        checkbox(isAimAssistEnabled, null,
-          { setValue = setAimAssist, useHotkeys = true, override={size=flex() valign = ALIGN_CENTER xmbNode=XmbNode()}})
-      ],
-      [showGamepadOpts, loc("controls/uiClickRumble"),
-        checkbox(isUiClickRumbleEnabled, null,
-          { setValue = setUiClickRumble, override = { size = flex(), valign = ALIGN_CENTER } useHotkeys=true xmbNode=XmbNode()})],
-      [showGamepadOpts, loc("controls/inBattleRumble"),
-        checkbox(isInBattleRumbleEnabled, null,
-          { setValue = setInBattleRumble, override = { size = flex(), valign = ALIGN_CENTER } useHotkeys=true xmbNode=XmbNode()})],
-
-      [true, loc("controls/aimSmooth"), smoothMulSlider("Human.Aim")],
-    ].map(@(v) v[0] ? optionRow.call(null, v[1],v[2], toggleBg()) : null)
+    children
   })
 
   return {
@@ -1201,7 +1298,7 @@ function sectionHeader(text) {
     rendObj = ROBJ_TEXT
     text
     color = TextNormal
-    padding = [fsh(3), fsh(1), fsh(1)]
+    padding = static [fsh(3), fsh(1), fsh(1)]
   }.__update(h2_txt), false, {
     halign = ALIGN_CENTER
   })
@@ -1209,7 +1306,7 @@ function sectionHeader(text) {
 
 
 function axisSetupWindow() {
-  let cellData = configuredAxis.value
+  let cellData = configuredAxis.get()
   let stickBinding = dainput.get_analog_stick_action_binding(cellData.ah, cellData.column)
   let axisBinding = dainput.get_analog_axis_action_binding(cellData.ah, cellData.column)
   let binding = stickBinding ?? axisBinding
@@ -1227,27 +1324,27 @@ function axisSetupWindow() {
 
   function buttons() {
     let children = []
-    if (selectedAxisCell.value)
+    if (selectedAxisCell.get())
       children.append(
         textButton(loc("controls/bindBinding"),
-          function() { startRecording(selectedAxisCell.value) },
+          function() { startRecording(selectedAxisCell.get()) },
           { hotkeys = [["^{0}".subst(JB.A), { description = loc("controls/bindBinding") }]] })
         textButton(loc("controls/clearBinding"),
           function() {
-            clearBinding(selectedAxisCell.value)
+            clearBinding(selectedAxisCell.get())
             nextGeneration()
           },
           { hotkeys = [["^J:X"]] })
        )
 
     children.append(textButton(loc("mainmenu/btnOk", "OK"),
-      function() { configuredAxis(null) },
+      function() { configuredAxis.set(null) },
       { hotkeys = [["^{0} | J:Start | Esc".subst(JB.B), { description={skip=true} }]] }))
 
     return {
       watch = selectedAxisCell
 
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       flow = FLOW_HORIZONTAL
       halign = ALIGN_RIGHT
       children
@@ -1374,8 +1471,8 @@ function axisSetupWindow() {
     makeVertScroll({
       flow = FLOW_VERTICAL
       key = "axis"
-      size = [flex(), SIZE_TO_CONTENT]
-      padding = [fsh(1), 0]
+      size = FLEX_H
+      padding = static [fsh(1), 0]
       clipChildren = true
 
       children = rows
@@ -1397,11 +1494,11 @@ function axisSetupWindow() {
     color = Color(190,190,190,255)
 
     function onClick() {
-      configuredAxis(null)
+      configuredAxis.set(null)
     }
 
     children = {
-      size = [sw(80), sh(80)]
+      size = static [sw(80), sh(80)]
       rendObj = ROBJ_WORLD_BLUR
       color = Color(120,120,120,255)
       flow = FLOW_VERTICAL
@@ -1455,7 +1552,7 @@ function actionTypeSelect(_cell_data, watched, value) {
 }
 
 let selectEventTypeHdr = {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   rendObj = ROBJ_TEXT
   text = loc("controls/actionEventType", "Action on")
   color = TextNormal
@@ -1463,23 +1560,23 @@ let selectEventTypeHdr = {
 }.__update(body_txt)
 
 function buttonSetupWindow() {
-  let cellData = configuredButton.value
+  let cellData = configuredButton.get()
   let binding = dainput.get_digital_action_binding(cellData.ah, cellData.column)
   let eventTypeValue = Watched(binding.eventType)
   let modifierType = Watched(binding.unordCombo)
   let needShowModType = Watched(binding.modCnt > 0)
-  modifierType.subscribe(function(new_val) {
+  modifierType.subscribe_with_nasty_disregard_of_frp_update(function(new_val) {
     binding.unordCombo = new_val
-    haveChanges(true)
+    haveChanges.set(true)
   })
 
   let currentBinding = {
     flow = FLOW_HORIZONTAL
     children = bindedComp(buildDigitalBindingText(binding))
   }
-  eventTypeValue.subscribe(function(new_val) {
+  eventTypeValue.subscribe_with_nasty_disregard_of_frp_update(function(new_val) {
     binding.eventType = new_val
-    haveChanges(true)
+    haveChanges.set(true)
   })
 
   let actionName = dainput.get_action_name(cellData.ah)
@@ -1491,18 +1588,18 @@ function buttonSetupWindow() {
   }.__update(h2_txt)
 
   let stickyToggle = Watched(binding.stickyToggle)
-  stickyToggle.subscribe(function(new_val) {
+  stickyToggle.subscribe_with_nasty_disregard_of_frp_update(function(new_val) {
     binding.stickyToggle = new_val
-    haveChanges(true)
+    haveChanges.set(true)
   })
 
   let buttons = {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     halign = ALIGN_RIGHT
     children = [
       textButton(loc("mainmenu/btnOk", "OK"), function() {
-        configuredButton(null)
+        configuredButton.set(null)
       }, {
           hotkeys = [
             ["^{0} | J:Start | Esc".subst(JB.B), { description={skip=true} }],
@@ -1512,7 +1609,7 @@ function buttonSetupWindow() {
   }
 
   let isStickyToggle = {
-    margin = [fsh(1), 0, 0, fsh(0.4)]
+    margin = static [fsh(1), 0, 0, fsh(0.4)]
     children = checkbox(stickyToggle,
       {
         color = TextNormal
@@ -1527,13 +1624,13 @@ function buttonSetupWindow() {
 
   let selectEventType = @() {
     flow = FLOW_VERTICAL
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     watch = eventTypeValue
     children = eventTypesChildren
   }
 
   let triggerTypeArea = {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     valign = ALIGN_TOP
     gap = fsh(2)
@@ -1547,7 +1644,7 @@ function buttonSetupWindow() {
     watch = needShowModType
     hplace = ALIGN_CENTER
     valign = ALIGN_CENTER
-    children = needShowModType.value ? [
+    children = needShowModType.get() ? [
       checkbox(modifierType, {text = loc("controls/unordCombo")})
     ] : null
   }
@@ -1579,11 +1676,11 @@ function buttonSetupWindow() {
     color = Color(190,190,190,255)
 
     function onClick() {
-      configuredAxis(null)
+      configuredAxis.set(null)
     }
 
     children = {
-      size = [sw(80), sh(80)]
+      size = static [sw(80), sh(80)]
       rendObj = ROBJ_WORLD_BLUR
       color = Color(120,120,120,255)
       flow = FLOW_VERTICAL
@@ -1595,35 +1692,45 @@ function buttonSetupWindow() {
   }
 }
 
-let saSize = Computed(@() sw(100)-2*safeAreaHorPadding.value)
+let saSize = Computed(@() sw(100)-2*safeAreaHorPadding.get())
 
 function controlsSetup() {
-  let width = min(sw(90), saSize.value)
+  let width = min(sw(90), saSize.get())
   let menu = {
+    rendObj = ROBJ_WORLD_BLUR
+    size = [width, sh(85)]
+    fillColor = Color(0,0,0,180)
     transform = {}
     hplace = ALIGN_CENTER
     vplace = ALIGN_CENTER
-    size = [width, sh(85)]
-    rendObj = ROBJ_WORLD_BLUR
-    fillColor = Color(0,0,0,180)
     flow = FLOW_VERTICAL
+    gap = static hdpx(4)
     
     stopMouse = true
-
     children = [
-      settingsHeaderTabs(currentTab, tabsList),
+      settingsHeaderTabs(currentTab, tabsList)
       {
         size = flex()
-        padding=[hdpx(5),hdpx(10)]
-        children = currentTab.get() == "Options" ? options : bindingsPage(currentTab.get())
-      },
+        flow = FLOW_VERTICAL
+        gap = static hdpx(4)
+        padding = static [hdpx(5),hdpx(10)]
+        children = [
+          searchInputBlock
+          @() {
+            watch = [customSettingsFilter, currentTab]
+            size = flex()
+            children = currentTab.get() == "Options" && customSettingsFilter.get().len() <= 0 ? options
+              : bindingsPage(currentTab.get(), customSettingsFilter.get())
+          }
+        ]
+      }
       mkWindowButtons(width)
     ]
   }
 
   let root = {
     key = "controls"
-    size = [sw(100), sh(100)]
+    size = static [sw(100), sh(100)]
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
     watch = [
@@ -1632,28 +1739,28 @@ function controlsSetup() {
     ]
 
     children = [
-      {
-        size = [sw(100), sh(100)]
+      static {
+        size = static [sw(100), sh(100)]
         stopHotkeys = true
         stopMouse = true
         rendObj = ROBJ_WORLD_BLUR
         color = Color(130,130,130)
       }
-      actionRecording.value==null ? menu : null
-      configuredAxis.value!=null ? axisSetupWindow : null
-      configuredButton.value!=null ? buttonSetupWindow : null
-      actionRecording.value!=null ? recordingWindow : null
+      menu
+      configuredAxis.get()!=null ? axisSetupWindow : null
+      configuredButton.get()!=null ? buttonSetupWindow : null
+      actionRecording.get()!=null ? recordingWindow : null
     ]
 
-    transform = {
+    transform = static {
       pivot = [0.5, 0.25]
     }
     animations = pageAnim
-    sound = {
+    sound = static {
       attach="ui_sounds/menu_enter"
       detach="ui_sounds/menu_exit"
     }
-
+    onDetach = @() customSettingsFilter.set("")
     behavior = DngBhv.ActivateActionSet
     actionSet = "StopInput"
   }

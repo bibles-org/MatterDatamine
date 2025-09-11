@@ -1,6 +1,7 @@
+from "%ui/login/login_chain.nut" import startLogin
+
 from "%ui/ui_library.nut" import *
 
-let {startLogin} = require("%ui/login/login_chain.nut")
 
 function loginRoot() {
   startLogin({})

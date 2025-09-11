@@ -16,6 +16,19 @@ simple_hitpoints{
   }
 }
 
+simple_hitpoints_regeneration{
+  _use:t="simple_hitpoints"
+  _use:t="hitpoints_last_offender"
+
+  _group{
+    _tags:t="server"
+    hitpoints_regeneration__updateAt:r=0
+    hitpoints_regeneration__updateInterval:r=1
+    hitpoints_regeneration__timeFromLastDamage:r=60
+    hitpoints_regeneration__hp:r=10
+  }
+}
+
 cellular_hitpoints{
   cellular_hitpoints__maxCellHp:r=1
   cellular_hitpoints__maxCells:i=10

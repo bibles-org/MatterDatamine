@@ -198,21 +198,17 @@ beehive{
   _use:t="damageable_rendinst"
   ri_extra__name:t="hive_wasp_wall_a"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  ri_extra__riAfterDestruction:t="hive_wasp_wall_a_dmg"
+  ri_preload__name:t="hive_wasp_wall_a_dmg"
   hive_body__destructionTriggered:b=no
   hive_body__spawnChance:r=0.4
   hive_body__spawnOffset:p3=-3.5, -4, 0
-  hive_honeycomb__spawnChance:r=0.66
+  hive_honeycomb__spawnChance:r=0
   hive_honeycomb__spawnOffset:p3=-3.5, -4, 0
   drop_preset_owner__dropOffset:p3=-4.5, -4, 0
   loot_drop_system__lootPreset:t="hive_loot_preset"
   loot_drop_system__dropPreset:t="hive_drop_preset"
 
   "beehive:tag"{}
-  "isRendinstDestr:tag"{
-    _tags:t="render"
-  }
-
   "hive_body__templates:array"{
     "item:object"{
       template:t="hive_dead_body_container_corrupted_male_a"
@@ -320,10 +316,8 @@ hive_enhanced_honeycomb_piece_phys{
 hive_enhanced_honeycomb_piece{
   _use:t="replicating"
   _use:t="animchar"
-  _use:t="attach_am_to_obj_on_appear"
   _use:t="hive_enhanced_honeycomb_piece_phys"
   _use:t="server_destroy_in_10_min"
-  attach_am_to_obj_on_appear__count:ip2=4, 14
   animchar__res:t="hive_chunk_a_char"
   collres__res:t="hive_chunk_a_collision"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]

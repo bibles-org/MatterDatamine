@@ -1,0 +1,19 @@
+entity{
+  _template:t="civil_lootable_rendinst_manager"
+}
+
+entity{
+  _template:t="military_lootable_rendinst_manager"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_shegolskoe/_dalniy_island_shegolskoe_encounters_adv.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_shegolskoe/_dalniy_island_shegolskoe_loot_generators_adv.blk"
+}
+
+entity{
+  _template:t="airdrop_manager"
+}

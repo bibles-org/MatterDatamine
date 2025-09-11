@@ -1,37 +1,45 @@
+from "%ui/fonts_style.nut" import h2_txt, giant_txt, body_txt
+from "%ui/quickMatchQueue.nut" import leaveQueue, joinQueue
+from "%ui/components/button.nut" import button, textButton, buttonWithGamepadHotkey
+from "%ui/components/msgbox.nut" import showMsgbox, showMessageWithContent
+from "%ui/components/colors.nut" import BtnBgDisabled, InfoTextValueColor, BtnBgHover
+from "%ui/components/commonComponents.nut" import mkText, mkDescTextarea
+from "%ui/squad/squadManager.nut" import leaveSquad
+from "%ui/gameModeState.nut" import isGroupAvailable
+from "%ui/matchingQueues.nut" import isQueueDisabledBySchedule
+from "%ui/components/accentButton.style.nut" import accentButtonStyle
+from "%ui/state/queueState.nut" import doesZoneFitRequirements
+from "%ui/hud/hud_menus_state.nut" import openMenu
+from "%ui/hud/state/item_info.nut" import getSlotAvailableMods
+from "%ui/mainMenu/raid_preparation_window_state.nut" import closePreparationsScreens
+from "dasevents" import CmdRequestOnboardingRaid, CmdHideAllUiMenus, CmdRequestOnboardingReportContract
+from "%ui/state/matchingUtils.nut" import get_matching_utc_time
+from "%ui/mainMenu/offline_raid_widget.nut" import wantOfflineRaid, isOfflineRaidAvailable
+from "%ui/profile/profileState.nut" import playerStats, numOfflineRaidsAvailable, playerProfileCurrentContracts
+from "%ui/mainMenu/monolith/monolith_common.nut" import MonolithMenuId
+from "%ui/components/profileAnswerMsgBox.nut" import showMsgBoxResult
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { h2_txt, giant_txt } = require("%ui/fonts_style.nut")
-let {isInQueue, leaveQueue, joinQueue} = require("%ui/quickMatchQueue.nut")
-let { button, textButton } = require("%ui/components/button.nut")
+let { isInQueue } = require("%ui/quickMatchQueue.nut")
 let roomState = require("%ui/state/roomState.nut")
-let {showCreateRoom} = require("%ui/mainMenu/customGames/showCreateRoom.nut")
-let { showMsgbox } = require("%ui/components/msgbox.nut")
+let { showCreateRoom } = require("%ui/mainMenu/customGames/showCreateRoom.nut")
 let { isInSquad, isSquadLeader, squadSelfMember, allMembersState, selfUid } = require("%ui/squad/squadState.nut")
-let { BtnBgDisabled, InfoTextValueColor }  = require("%ui/components/colors.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
-let { myExtSquadData, leaveSquad } = require("%ui/squad/squadManager.nut")
-let { isGroupAvailable, selectedSpawn, selectedRaid,
-      queueRaid } = require("%ui/gameModeState.nut")
-let { matchingQueuesMap, isQueueDisabledBySchedule } = require("%ui/matchingQueues.nut")
-let { accentButtonStyle } = require("%ui/components/accentButton.style.nut")
-let { joiningQueueName, doesZoneFitRequirements } = require("%ui/state/queueState.nut")
-let { getSlotAvailableMods } = require("%ui/hud/state/item_info.nut")
+let { myExtSquadData } = require("%ui/squad/squadManager.nut")
+let { selectedRaid, queueRaid, selectedNexusNode, showNexusFactions, selectedPlayerGameModeOption, GameMode } = require("%ui/gameModeState.nut")
+let { matchingQueuesMap } = require("%ui/matchingQueues.nut")
+let { joiningQueueName } = require("%ui/state/queueState.nut")
 let { loadoutItems, stashVolume, stashMaxVolume } = require("%ui/state/allItems.nut")
-let { playerStats } = require("%ui/profile/profileState.nut")
-let { closePreparationsScreens } = require("%ui/mainMenu/raid_preparation_window_state.nut")
 let { isOnboarding, onboardingStateMachineCurrentStateEid, onboardingStateMachineBaseFirstTimeStateEid
       playerProfileOnboardingContracts, onboardingContractReported } = require("%ui/hud/state/onboarding_state.nut")
-let { CmdRequestOnboardingRaid, CmdHideAllUiMenus, CmdRequestOnboardingReportContract } = require("dasevents")
 let { weaponsList } = require("%ui/hud/state/hero_weapons.nut")
-let { get_matching_utc_time } = require("%ui/state/matchingUtils.nut")
 let { useAgencyPreset } = require("%ui/equipPresets/presetsState.nut")
 
 
 let skip_descr = {description = {skip=true}}
 
 let defQuickMatchBtnParams = {
-  size = [flex(), hdpx(70)]
+  size = static [flex(), hdpx(70)]
   halign = ALIGN_CENTER
   sound = { click = "ui_sounds/button_raid" }
   textParams = { rendObj=ROBJ_TEXT}.__update(h2_txt)
@@ -48,24 +56,25 @@ function quickMatchFn() {
     showMsgbox({ text = loc("zoneNotSelected") })
     return
   }
+  if (wantOfflineRaid.get() && !isOfflineRaidAvailable.get()) {
+    showMsgbox({ text = loc("queue/offline_raids/noTickets") })
+    return
+  }
   let q = selectedRaid.get()
   let isDisabled = doesZoneFitRequirements(q?.extraParams.requiresToSelect, playerStats.get())
     && (q?.enabled == null || !q.enabled || isQueueDisabledBySchedule(q, get_matching_utc_time()))
   if (isDisabled) {
-    showMsgbox({ text = loc("raid/unavailable") })
+    showMsgbox({ text = loc("missions/unavailable") })
     closePreparationsScreens()
     return
   }
   if (roomState.room.get())
     roomState.leaveRoom(@(...) null)
 
-  showCreateRoom.update(false)
+  showCreateRoom.set(false)
   queueRaid.set(selectedRaid.get())
 
-  let selectedSpawns = selectedSpawn.get()?.mteams
-  let mteams = selectedSpawns ?? [-1]
-
-  joinQueue(queueRaid.get(), {mteams})
+  joinQueue(queueRaid.get())
 }
 
 let mkAbortText = @(mainText) @() {
@@ -91,11 +100,11 @@ let leaveQuickMatchButton = button(mkAbortText(loc("startButton/leaveQueue")),
 
 let setNotReadyButton = button(mkAbortText(loc("startButton/setNotReady")),
   function() {
-    myExtSquadData.ready(false)
+    myExtSquadData.ready.set(false)
     if (isInQueue.get())
       leaveQueue()
   },
-  disabledQuickMatchBtnParams.__merge({ hotkeys = [ ["^J:B", skip_descr ] ] })
+  disabledQuickMatchBtnParams
 )
 
 function isMagazineInLoadoutWithAmmo(magName) {
@@ -156,7 +165,7 @@ let mkCheckEquipmentStateHandler = @(callback) function () {
       flow = FLOW_HORIZONTAL
       hplace = ALIGN_CENTER
       gap = hdpx(5)
-      children = mkText(loc(v), )
+      children = mkText(loc(v))
     }))
   }
   let noWeaponsMsg = mkText(loc("startButton/warning/noWeapons"), {color = InfoTextValueColor}.__update(h2_txt))
@@ -198,26 +207,76 @@ let setCannotTakeSafepackMsg = @() showMsgbox({
 })
 
 let setCannotTakeSafepackBtn = textButton(loc("startButton/cannotTakeSafepack"),
-  setCannotTakeSafepackMsg,
-  disabledQuickMatchBtnParams.__merge({ hotkeys = [ ["^J:B", skip_descr ] ] }))
+  setCannotTakeSafepackMsg, disabledQuickMatchBtnParams)
 
-let mkJoinQuickMatchButton = textButton(loc("raidStart"),
+let mkJoinQuickMatchButton = buttonWithGamepadHotkey(mkText(loc("missionStart"), { hplace = ALIGN_CENTER }.__merge(h2_txt)),
   mkCheckEquipmentStateHandler(@() quickMatchFn()), quickMatchBtnParams)
+
+
+let nexusFittingQueues = Computed(function() {
+  let raidName = playerProfileCurrentContracts.get().findvalue(
+    @(v) selectedNexusNode.get() != null && v?.params.nodeId[0] == selectedNexusNode.get()
+  )?.raidName
+
+  if (raidName == null)
+    return {}
+
+  let qs = matchingQueuesMap.get().filter(function(q) {
+    let isFitting = q?.extraParams.raidName.startswith(raidName)
+    let isDisabled = doesZoneFitRequirements(q?.extraParams.requiresToSelect, playerStats.get())
+      && (q?.enabled == null || !q.enabled || isQueueDisabledBySchedule(q, get_matching_utc_time()))
+    return isFitting && !isDisabled
+  })
+  return qs
+})
+
+
+function joinNexusFittingQueues() {
+  if (!showNexusFactions.get()) {
+    quickMatchFn()
+    return
+  }
+
+  if (nexusFittingQueues.get().len() == 0) {
+    showMsgbox({ text = loc("nexus/noNexusFittingQueues") })
+    return
+  }
+
+  foreach (queue in nexusFittingQueues.get()) {
+    joinQueue(queue, { waitingInfoLocId = queue.extraParams.raidName.split("+")[1] })
+  }
+}
+
+
+let mkJoinNexusMatchButton = buttonWithGamepadHotkey(mkText(loc("missionStart"), { hplace = ALIGN_CENTER }.__merge(h2_txt)),
+  joinNexusFittingQueues, quickMatchBtnParams)
 
 let quickMatchButton = @() {
   watch = [isInQueue, loadoutItems, stashVolume, stashMaxVolume]
-  size = [flex(), SIZE_TO_CONTENT]
-  children = isInQueue.get() ? leaveQuickMatchButton
-           : checkSafepack() ? mkJoinQuickMatchButton : setCannotTakeSafepackBtn
+  size = FLEX_H
+  children = isInQueue.get()
+              ? leaveQuickMatchButton
+              : !checkSafepack()
+                ? setCannotTakeSafepackBtn
+                : selectedPlayerGameModeOption.get() == GameMode.Nexus
+                  ? mkJoinNexusMatchButton
+                  : mkJoinQuickMatchButton
 }
 
-let pressWhenReadyBtn = textButton(loc("startButton/pressWhenReady"),
-  mkCheckEquipmentStateHandler(@() myExtSquadData.ready(true)),
-  stdQuickMatchBtnParams.__merge({ hotkeys = [ ["^J:Y", skip_descr ] ] }))
+let pressWhenReadyBtn = buttonWithGamepadHotkey(
+  mkText(loc("startButton/pressWhenReady"), { hplace = ALIGN_CENTER }.__merge(h2_txt))
+  function() {
+    if (isInSquad.get() && !isSquadLeader.get() && wantOfflineRaid.get() && numOfflineRaidsAvailable.get() <= 0) {
+      showMsgbox({ text = loc("queue/offline_raids/noTickets") })
+      return
+    }
+    mkCheckEquipmentStateHandler(@() myExtSquadData.ready.set(true))()
+  },
+  quickMatchBtnParams)
 
 let setNotAllReadyBtn = textButton(loc("startButton/notWholeSquadIsReady"),
   @() null,
-  disabledQuickMatchBtnParams.__merge({ hotkeys = [ ["^J:B", skip_descr ] ] }))
+  disabledQuickMatchBtnParams)
 
 let setNotPossibleBtn = textButton(loc("startButton/raidIsNotAvailableInSquad"),
   @() showMsgbox(
@@ -227,7 +286,7 @@ let setNotPossibleBtn = textButton(loc("startButton/raidIsNotAvailableInSquad"),
         { text = loc("mainmenu/btnBack"), isCancel = true }
       ]
     }),
-  disabledQuickMatchBtnParams.__merge({ hotkeys = [ ["^J:B", skip_descr ] ] }))
+  disabledQuickMatchBtnParams)
 
 function squadQuickMatchButton() {
   local myUid = selfUid.get()
@@ -244,14 +303,14 @@ function squadQuickMatchButton() {
     btn = myExtSquadData.ready.get() ? setNotReadyButton : pressWhenReadyBtn
   return {
     watch = [isSquadLeader, squadSelfMember, myExtSquadData.ready, allMembersState, loadoutItems, stashVolume, stashMaxVolume]
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     children = btn
   }
 }
 
 let startButton = @() {
   watch = isInSquad
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   children = isInSquad.get() ? squadQuickMatchButton : quickMatchButton
 }
 
@@ -275,34 +334,63 @@ function consoleRaidAdditionalButton() {
     btn = myExtSquadData.ready.get() ? setNotReadyButton : null
   return {
     watch = [isInQueue, isSquadLeader, allMembersState, selfUid]
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     children = btn
   }
 }
 
-let onboardingRaidStartButton = textButton(loc("raidStart"),
+let onboardingRaidStartButton = buttonWithGamepadHotkey(mkText(loc("missionStart"), { hplace = ALIGN_CENTER }.__merge(h2_txt)),
   function() {
     ecs.g_entity_mgr.broadcastEvent(CmdRequestOnboardingRaid())
     ecs.g_entity_mgr.broadcastEvent(CmdHideAllUiMenus())
   }, quickMatchBtnParams)
 
-let onboardingFinishButton = textButton(loc("contract/report"),
+let onboardingFinishButton = buttonWithGamepadHotkey(mkText(loc("contract/report"), { hplace = ALIGN_CENTER }.__merge(h2_txt)),
   function() {
     foreach (_, v in playerProfileOnboardingContracts.get()) {
       if (v?.onReport)
         v.onReport()
+      let rewards = (v?.rewards?[0] ?? {}).map(@(rew) rew.x)
+      showMsgBoxResult(loc("craft/resultReceived"), rewards)
     }
     ecs.g_entity_mgr.broadcastEvent(CmdRequestOnboardingReportContract())
-    ecs.g_entity_mgr.broadcastEvent(CmdHideAllUiMenus())
   }, quickMatchBtnParams)
 
-let onboardingLockedButton = textButton(loc("closedDoor/accessDenied"),
-  @() showMsgbox(
-    {text=loc("monolith/itemRequiresMonolithLevel"),
+let onboardingLockedButton = textButton(loc("onboarding/accessDenied"),
+  @() showMessageWithContent({
+    content = {
+      size = static [sw(80), SIZE_TO_CONTENT]
+      halign = ALIGN_CENTER
+      flow = FLOW_VERTICAL
+      gap = static hdpx(20)
+      children = [
+        mkDescTextarea(loc("onboarding/raidRequiresMonolithLevel"), { halign = ALIGN_CENTER }.__merge(body_txt))
+        {
+          rendObj = ROBJ_IMAGE
+          size = static [hdpx(600), hdpx(400)]
+          imageValign = ALIGN_TOP
+          imageHalign = ALIGN_CENTER
+          keepAspect = KEEP_ASPECT_FILL
+          image = Picture("ui/gate_portal_thumbnails/gate_to_monolith_activated.avif")
+        }
+      ]
+    }
     buttons = [
+      {
+        text = loc("market/goToMonolith"),
+        action = @() openMenu(MonolithMenuId)
+        customStyle = accentButtonStyle
+      }
       { text = loc("mainmenu/btnBack"), isCancel = true }
     ]
-  }), disabledQuickMatchBtnParams)
+  }), disabledQuickMatchBtnParams.__merge({
+    textParams = body_txt
+    style = {}
+    transform = {}
+    animations = [{ prop = AnimProp.fillColor, from = BtnBgHover, to = BtnBgDisabled,
+      duration = 1, play = true, loop = true, easing = CosineFull
+    }]
+  }))
 
 
 function onboardingRaidButton() {
@@ -310,7 +398,7 @@ function onboardingRaidButton() {
     return { watch = isOnboarding }
   return {
     watch = [isOnboarding, onboardingStateMachineCurrentStateEid, onboardingStateMachineBaseFirstTimeStateEid]
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     children = onboardingStateMachineCurrentStateEid.get() == onboardingStateMachineBaseFirstTimeStateEid.get()
       ? onboardingRaidStartButton
       : (onboardingContractReported.get() ? onboardingLockedButton : onboardingFinishButton)
@@ -320,6 +408,7 @@ function onboardingRaidButton() {
 return {
   startButton,
   consoleRaidAdditionalButton,
-  mkCheckEquipmentStateHandler,
   onboardingRaidButton,
+  quickMatchBtnParams,
+  leaveBtnParams,
 }

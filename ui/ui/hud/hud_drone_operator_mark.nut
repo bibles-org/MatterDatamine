@@ -1,11 +1,13 @@
+from "%sqstd/math.nut" import round_by_value
+
+from "%ui/fonts_style.nut" import sub_txt
+from "%ui/helpers/common_queries.nut" import get_pos
+from "dagor.math" import Point3
+
 from "%ui/ui_library.nut" import *
 
 let { droneOperator, isDroneMode, distanceToOperator, droneOperatorLang } = require("%ui/hud/state/drone_state.nut")
 let { curTime } = require("%ui/hud/state/time_state.nut")
-let { round_by_value } = require("%sqstd/math.nut")
-let { sub_txt } = require("%ui/fonts_style.nut")
-let { get_pos } = require("%ui/helpers/common_queries.nut")
-let { Point3 } = require("dagor.math")
 
 let lineWidth = 0.20
 let viewfinderLineLength = 33

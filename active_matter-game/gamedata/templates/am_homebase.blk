@@ -16,7 +16,6 @@ floating_sleeve{
   _use:t="navmesh_phys_forced_anim_state"
   anim_state__forceAnimState:t="flask_float"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  animchar__res:t="am_flask_body_char"
   animchar__rndVarOnAppearName:t="flask_floating_type"
   animchar__rndVarOnAppearRng:p2=0, 2
   animchar__appliedAnimSpeed:r=1
@@ -174,6 +173,86 @@ am_alter_tube_place_03_gameobj{
   alter_tube_place__number:i=3
 }
 
+am_alter_tube_place_04_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=4
+}
+
+am_alter_tube_place_05_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=5
+}
+
+am_alter_tube_place_06_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=6
+}
+
+am_alter_tube_place_07_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=7
+}
+
+am_alter_tube_place_08_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=8
+}
+
+am_alter_tube_place_09_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=9
+}
+
+am_alter_tube_place_10_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=10
+}
+
+am_alter_tube_place_11_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=11
+}
+
+am_alter_tube_place_12_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=12
+}
+
+am_alter_tube_place_13_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=13
+}
+
+am_alter_tube_place_14_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=14
+}
+
+am_alter_tube_place_15_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=15
+}
+
+am_alter_tube_place_16_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=16
+}
+
+am_alter_tube_place_17_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=17
+}
+
+am_alter_tube_place_18_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=18
+}
+
+am_alter_tube_place_19_gameobj{
+  _use:t="alter_tube_place"
+  alter_tube_place__number:i=19
+}
+
 open_console_menu_on_use{
   _use:t="usable_object_base"
   _use:t="use_object_enabled"
@@ -277,6 +356,7 @@ am_screen_crafter_gameobj{
   _use:t="dynamic_screen_ui_panel"
   _use:t="ui_panel"
   _use:t="open_console_menu_on_use"
+  _use:t="screen_with_linked_notification_lamp_small"
   item__setCustomUsePrompt:t="console/press_to_replicator"
   open_console_menu_on_use__menuName:t="craftWindow"
   use_object__offset:p3=0.05, 0, 0
@@ -300,6 +380,7 @@ am_screen_recycler_gameobj{
   _use:t="dynamic_screen_ui_panel"
   _use:t="ui_panel"
   _use:t="open_console_menu_on_use"
+  _use:t="screen_with_linked_notification_lamp_small"
   item__setCustomUsePrompt:t="console/press_to_recycler"
   open_console_menu_on_use__menuName:t="Am_clean"
   use_object__offset:p3=0.05, 0, 0
@@ -323,6 +404,8 @@ am_screen_monolyth_gameobj{
   _use:t="dynamic_screen_ui_panel"
   _use:t="ui_panel"
   _use:t="open_console_menu_on_use"
+  _use:t="screen_with_linked_light"
+  _use:t="screen_with_linked_notification_lamp_big"
   item__setCustomUsePrompt:t="console/press_to_monolith"
   open_console_menu_on_use__menuName:t="monolithAccessWnd"
   use_object__offset:p3=0, 0.5, 0
@@ -386,19 +469,93 @@ am_intercom_c_gameobj{
   "worldAnchorEntity:eid"{}
 }
 
+screen_panel_blinking_light_sound{
+  _use:t="blinking_light_sound"
+
+  _group{
+    _tags:t="sound"
+    sound_control__initRange:t="env_effects/terminal_blink"
+  }
+
+  _group{
+    _tags:t="sound"
+    blinking_light_sound__path:t="env_effects/terminal_blink"
+  }
+}
+
+screen_with_linked_light{
+  screen_with_linked_light__linkedLightOffset:p3=0.2, 0.2, 0
+  screen_with_linked_light__linkedLightTemplate:t="screen_panel_spot_light+screen_panel_blinking_light_sound"
+
+  "screen_with_linked_light__linkedLight:eid"{}
+}
+
+screen_with_linked_notification_lamp{
+  screen_with_linked_notification_lamp__localOffset:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  screen_with_linked_notification_lamp__lampTemplate:t="notification_lamp"
+
+  "screen_with_linked_notification_lamp__lamp:eid"{}
+}
+
+screen_with_linked_notification_lamp_big{
+  _use:t="screen_with_linked_notification_lamp"
+  screen_with_linked_notification_lamp__localOffset:m=[[0, -1, 0] [1, 0, 0] [0, 0, 1] [-0.03, 0.678, -0.35]]
+}
+
+screen_with_linked_notification_lamp_small{
+  _use:t="screen_with_linked_notification_lamp"
+  screen_with_linked_notification_lamp__localOffset:m=[[0, -1, 0] [1, 0, 0] [0, 0, 1] [0.038, 0.383, -0.14]]
+}
+
+screen_panel_notification_omni_light{
+  _use:t="omni_light"
+  light__color:c=30, 220, 253, 255
+  light__max_radius:r=2
+  light__radius_scale:r=2.5
+  light__brightness:r=0
+}
+
+notification_lamp{
+  _use:t="screen_panel_notification_omni_light"
+  _use:t="animchar_with_dynamic_emission"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="intercom_d_lamp_c_char"
+  animchar_with_dynamic_emission__brightness:r=0
+  animchar_with_dynamic_emission__color:c=20, 220, 253, 255
+  notification_lamp__panelName:t=""
+  notification_lamp__enabledLightBrightness:r=0.009
+  notification_lamp__enabledEmissionBrightness:r=0.9
+}
+
+screen_panel_spot_light_blinking_effect{
+  _use:t="animate_float_component_by_function"
+  animate_float_component__function:t="sin"
+  animate_float_component__functionAnimationDuration:r=6.283
+  animate_float_component__timeMultiplier:r=12.566
+  animate_float_component__isRepeated:b=yes
+  animate_float_component__componentName:t="light__brightness"
+  animate_float_component__valueMin:r=0
+  animate_float_component__valueMax:r=1
+  animate_float_component__restoreValueOnDestroy:b=yes
+
+  "screen_panel_spot_light_blinking_effect:tag"{}
+}
+
 am_screen_portal_gameobj{
   _use:t="animchar"
   _use:t="dynamic_screen"
   _use:t="dynamic_screen_ui_panel"
   _use:t="ui_panel"
   _use:t="open_console_menu_on_use"
+  _use:t="screen_with_linked_light"
+  _use:t="screen_with_linked_notification_lamp_small"
   item__setCustomUsePrompt:t="console/press_to_raid"
-  open_console_menu_on_use__menuName:t="Raid"
+  open_console_menu_on_use__menuName:t="Missions"
   use_object__offset:p3=0.05, 0, 0
   item_world_marker__offset:p3=0.05, 0, 0
   animchar__res:t="am_base_screen_char"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  panel_name:t="raid_panel"
+  panel_name:t="missions_panel"
 
   _group{
     _tags:t="render"

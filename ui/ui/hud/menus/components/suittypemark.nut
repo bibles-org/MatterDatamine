@@ -1,9 +1,11 @@
+from "%ui/hud/menus/components/inventoryStyle.nut" import itemHeight
+from "%ui/components/cursors.nut" import setTooltip
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 let { equipment } = require("%ui/hud/state/equipment.nut")
-let { itemHeight } = require("%ui/hud/menus/components/inventoryStyle.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
 
+#allow-auto-freeze
 
 let itemTooltipNameColor = Color(178,178,250)
 let itemTooltipDescColor = Color(180,180,180)

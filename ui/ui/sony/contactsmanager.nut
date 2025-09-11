@@ -1,23 +1,25 @@
+from "%ui/sony/psn_state.nut" import psn_friendsUpdate, psn_blocked_usersUpdate
+from "settings" import get_setting_by_blk_path
+import "%ui/sony/auth_friends.nut" as auth_friends
+from "%ui/mainMenu/contacts/contactPresence.nut" import updatePresences
+from "%ui/mainMenu/contacts/contact.nut" import updateContact, isValidContactNick
+from "eventbus" import eventbus_send
+import "voiceApi" as voiceApi
+import "%ui/sony/profile.nut" as profile
+from "%ui/mainMenu/contacts/externalIdsManager.nut" import searchContactByExternalId
+from "%ui/mainMenu/contacts/consoleUidsRemap.nut" import updateUids
 from "%ui/ui_library.nut" import *
 
-let { get_setting_by_blk_path } = require("settings")
-let auth_friends = require("%ui/sony/auth_friends.nut")
+let logpsn = require("%sqGlob/library_logs.nut").with_prefix("[PSN CONTACTS] ")
 let pswa = require("%sonyLib/webApi.nut")
-let { psn_friendsUpdate, psn_blocked_users, psn_blocked_usersUpdate
-} = require("%ui/sony/psn_state.nut")
+let { psn_blocked_users } = require("%ui/sony/psn_state.nut")
 let { isLoggedIn } = require("%ui/login/login_state.nut")
-let { updatePresences, presences } = require("%ui/mainMenu/contacts/contactPresence.nut")
-let { updateContact, isValidContactNick } = require("%ui/mainMenu/contacts/contact.nut")
-let { eventbus_send } = require("eventbus")
-let voiceApi = require("voiceApi")
-let profile = require("%ui/sony/profile.nut")
-let { searchContactByExternalId } = require("%ui/mainMenu/contacts/externalIdsManager.nut")
+let { presences } = require("%ui/mainMenu/contacts/contactPresence.nut")
 let { psnApprovedUids, psnBlockedUids } = require("%ui/mainMenu/contacts/contactsWatchLists.nut")
-let { console2uid, updateUids } = require("%ui/mainMenu/contacts/consoleUidsRemap.nut")
+let { console2uid } = require("%ui/mainMenu/contacts/consoleUidsRemap.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
 
 
-let logpsn = require("%sqGlob/library_logs.nut").with_prefix("[PSN CONTACTS] ")
 
 let gameAppId = get_setting_by_blk_path("authGameId") ?? "cr"
 
@@ -48,7 +50,7 @@ function psnConstructFriendsList(psn_friends, contacts) {
   updateUids(psn2uid)
   updatePresences(updPresences)
   psn_friendsUpdate(result)
-  psnApprovedUids(uidsList)
+  psnApprovedUids.set(uidsList)
 
   eventbus_send("PSNAuthContactsReceived", null)
 }
@@ -75,8 +77,8 @@ function onGetPsnFriends(pfriends) {
 }
 
 function onGetBlockedUsers(users) {
-  let unblockedList = psn_blocked_users.value.filter(@(u) users.findvalue(@(u2) u.userId == u2.userId) == null)
-  let blockedList = users.filter(@(u) psn_blocked_users.value.findvalue(@(u2) u.userId == u2.userId) == null)
+  let unblockedList = psn_blocked_users.get().filter(@(u) users.findvalue(@(u2) u.userId == u2.userId) == null)
+  let blockedList = users.filter(@(u) psn_blocked_users.get().findvalue(@(u2) u.userId == u2.userId) == null)
 
   foreach (u in unblockedList)
     voiceApi.unmute_player_by_uid(u.userId.tointeger())
@@ -121,16 +123,16 @@ function onGetBlockedUsers(users) {
     foreach (uidStr, _ in res)
       bl[uidStr] <- true
 
-    psnBlockedUids.update(bl)
+    psnBlockedUids.set(bl)
   })
 }
 
 function onPresenceUpdate(data) {
   let accountId = data?.accountId
   if (accountId) {
-    let userId = console2uid.value?[accountId.tostring()]
-    if (userId != null && userId in presences.value)
-      updatePresences({ [userId] = { online = !(presences.value[userId]?.online ?? false) }})
+    let userId = console2uid.get()?[accountId.tostring()]
+    if (userId != null && userId in presences.get())
+      updatePresences({ [userId] = { online = !(presences.get()[userId]?.online ?? false) }})
   }
 }
 
@@ -165,8 +167,8 @@ function eventSubscribeOutOfBattle(v) {
     pswa.unsubscribeFromPresenceUpdates(onPresenceUpdate)
   }
 }
-let needRequestContacts = keepref(Computed(@() !isInBattleState.value && isLoggedIn.value))
-eventSubscribeOutOfBattle(needRequestContacts.value)
+let needRequestContacts = keepref(Computed(@() !isInBattleState.get() && isLoggedIn.get()))
+eventSubscribeOutOfBattle(needRequestContacts.get())
 needRequestContacts.subscribe(eventSubscribeOutOfBattle)
 
 function initHandlers() {
@@ -182,7 +184,7 @@ function disposeHandlers() {
   pswa.unsubscribe.blocklist(onBlocklistUpdate)
 }
 
-if (isLoggedIn.value)
+if (isLoggedIn.get())
   initHandlers()
 
 isLoggedIn.subscribe(@(v) v

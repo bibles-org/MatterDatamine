@@ -1,3 +1,17 @@
+from "%sqstd/string.nut" import utf8ToLower
+
+from "%ui/mainMenu/market/inventoryToMarket.nut" import getLotFromItem, isLotAvailable
+from "%ui/hud/state/item_info.nut" import getSlotAvailableMods
+import "%ui/components/faComp.nut" as faComp
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/fonts_style.nut" import fontawesome
+from "math" import ceil
+from "%ui/hud/hud_menus_state.nut" import convertMenuId
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "%ui/state/queueState.nut" import isQueueHiddenBySchedule
+from "%ui/state/matchingUtils.nut" import get_matching_utc_time
+from "%ui/components/msgbox.nut" import showMsgbox
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
@@ -5,39 +19,45 @@ from "%ui/squad/squadState.nut" import squadLeaderState
 from "%sqGlob/dasenums.nut" import ContractType
 from "%ui/profile/profileState.nut" import playerProfileCurrentContracts
 
-let { getLotFromItem, isLotAvailable } = require("%ui/mainMenu/market/inventoryToMarket.nut")
 let { marketItems } = require("%ui/profile/profileState.nut")
-let { getSlotAvailableMods } = require("%ui/hud/state/item_info.nut")
-let faComp = require("%ui/components/faComp.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { fontawesome } = require("%ui/fonts_style.nut")
 let { weaponsList } = require("%ui/hud/state/hero_weapons.nut")
 let { previewPreset } = require("%ui/equipPresets/presetsState.nut")
-let { ceil } = require("math")
-let { utf8ToLower } = require("%sqstd/string.nut")
-let { currentMenuId, convertMenuId } = require("%ui/hud/hud_menus_state.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
+let { currentMenuId, setCurrentMenuId } = require("%ui/hud/hud_menus_state.nut")
+let { isInQueue } = require("%ui/state/queueState.nut")
+let { selectedRaid, leaderSelectedRaid } = require("%ui/gameModeState.nut")
+let { PREPARATION_NEXUS_SUBMENU_ID, nexusItemCost } = require("%ui/hud/menus/mintMenu/mintState.nut")
 
 const PREPARATION_SUBMENU_ID = "PREPARATION_SUBMENU_ID"
-const PREPARATION_NEXUS_SUBMENU_ID = "PREPARATION_NEXUS_SUBMENU_ID"
-const Raid_id = "Raid"
+const Missions_id = "Missions"
 
 let mintEditState = Watched(false)
 let currentPrimaryContractIds = Watched({})
 
 function closePreparationsScreens(){
-  let sid = currentMenuId.get()
+  let sid = convertMenuId(currentMenuId.get())
   let id = sid[0]
-  if (id == Raid_id)
-    currentMenuId.set(Raid_id)
+  if (id == Missions_id)
+    setCurrentMenuId(Missions_id)
 }
 let isPreparationOpened_ = @(subid) Computed(function() {
   let [id, sumbenus] = convertMenuId(currentMenuId.get())
-  return id==Raid_id && subid==sumbenus?[0]
+  return id==Missions_id && subid==sumbenus?[0]
 })
 
 let isPreparationOpened = isPreparationOpened_(PREPARATION_SUBMENU_ID)
 let isNexusPreparationOpened = isPreparationOpened_(PREPARATION_NEXUS_SUBMENU_ID)
+
+function checkRaidAvailability() {
+  let raid = selectedRaid.get()
+  let isHidden = isQueueHiddenBySchedule(raid, get_matching_utc_time())
+  if (isHidden) {
+    if (!isInQueue.get()) {
+      showMsgbox({ text = loc("missions/unavailable") })
+      leaderSelectedRaid.set({ raidData = null, isOffline = false })
+      closePreparationsScreens()
+    }
+  }
+}
 
 let slotsWithWarning = Watched({})
 
@@ -88,7 +108,7 @@ function getPresetMissedItemsMarketIds(preset, playerStat) {
           let itemsToPurchase = countPerStack > 1
             ? ceil((mod?.noSuitableItemForPresetFoundCount ?? noSuitableItemForPresetFoundCount).tofloat() / countPerStack.tofloat())
             : (mod?.noSuitableItemForPresetFoundCount ?? noSuitableItemForPresetFoundCount)
-          toBuyItems.append({ id = modMarketId, count = itemsToPurchase })
+          toBuyItems.append({ id = modMarketId, count = itemsToPurchase, usePremium = false })
         }
       }
     }
@@ -97,7 +117,7 @@ function getPresetMissedItemsMarketIds(preset, playerStat) {
       let itemsToPurchase = countPerStack > 1 ?
         ceil(noSuitableItemForPresetFoundCount.tofloat() / countPerStack.tofloat()) :
         noSuitableItemForPresetFoundCount
-      toBuyItems.append({ id = marketId, count = itemsToPurchase })
+      toBuyItems.append({ id = marketId, count = itemsToPurchase, usePremium = false })
     }
   }
   return toBuyItems
@@ -119,7 +139,7 @@ function getPresetMissedBoxedItemsMarketIds(preset, playerStat) {
     let toBuyCount = v / countPerStack + 1
 
     if (lotId)
-      ret.append({ id = lotId, count = toBuyCount })
+      ret.append({ id = lotId, count = toBuyCount, usePremium = false })
   }
   return ret
 }
@@ -137,12 +157,12 @@ function isMagazineInLoadoutWithAmmo(magName, loadout) {
   return loadout.findindex(@(v) v.templateName == magName && (v?.charges ?? 0) > 0) != null
 }
 
-function checkWeaponAmmo(weapon, loadout, templateName) {
+function checkWeaponAmmo(weapon, loadout, slot) {
   let gunMods = weapon?.getCompValNullable("gun_mods__slots").getAll() ?? {}
   let magazineSlotTemplateName = gunMods?.magazine
   if (!magazineSlotTemplateName) {
     let weapons = weaponsList.get()
-    let weaponToCheck = weapons.findvalue(@(v) v?.itemTemplate == templateName)
+    let weaponToCheck = weapons.findvalue(@(v) v?.currentWeaponSlotName == weaponSlots?[slot])
     return (weaponToCheck?.curAmmo ?? 0) > 0
   }
 
@@ -168,7 +188,7 @@ function getWarningSlots(loadout) {
     if (!isWeapon || itemInSlot?.templateName == null)
       continue
     let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(itemInSlot.templateName)
-    if(!checkWeaponAmmo(template, loadout, itemInSlot.templateName)) {
+    if(!checkWeaponAmmo(template, loadout, slot)) {
       let locname = template?.getCompValNullable("item__name") ?? "unknown"
       weapWithoutAmmo.append({ slot = weaponSlots?[slot] ?? slot, weapon = locname })
     }
@@ -295,6 +315,7 @@ function getNexusStashItems(stashItems, openedRecipes, allRecipes, shopItems, pS
       item?.filterType == "loot" ||
       item?.filterType == "other" ||
       item?.filterType == "keys" ||
+      item?.filterType == "goods" ||
       
       item.itemTemplate in itemTbl ||
       
@@ -310,26 +331,13 @@ function getNexusStashItems(stashItems, openedRecipes, allRecipes, shopItems, pS
     itemTbl[item.itemTemplate] <- mkFakeItem(item.itemTemplate, { canDrop = false, canTake = true })
   }
 
-  foreach (recipe in openedRecipes) {
-    foreach (k, v in (allRecipes?[recipe.prototypeId].results ?? {})) {
-      let marketItem = shopItems?[k]
-
-      if (marketItem) {
-        foreach (item in v?.children.items ?? {}) {
-          if (item.templateName in itemTbl)
-            continue
-
-          let fake = mkFakeItem(item.itemTemplate, { canDrop = false, canTake = true })
-
+  foreach (recipeKey, _ in openedRecipes) {
+    foreach (craftResult in (allRecipes?[recipeKey].results ?? [])) {
+      foreach (itemName, _itemSlot in craftResult) {
+        if (itemName not in itemTbl) {
+          let fake = mkFakeItem(itemName, { canDrop = false, canTake = true })
           if(!isItemNotForNexusStash(fake))
-            itemTbl[item.templateName] <- fake
-        }
-      }
-      else {
-        if (k not in itemTbl) {
-          let fake = mkFakeItem(k, { canDrop = false, canTake = true })
-          if(!isItemNotForNexusStash(fake))
-            itemTbl[k] <- fake
+            itemTbl[itemName] <- fake
         }
       }
     }
@@ -356,6 +364,25 @@ function getNexusStashItems(stashItems, openedRecipes, allRecipes, shopItems, pS
 }
 
 
+function getNexusStashItemsForChocolateMenu(curItem, stashItems, openedRecipes, allRecipes, shopItems, pStats, allowedTypes = []) {
+  let costs = nexusItemCost.get()
+  function setNexusCost(itm) {
+    if (curItem?.itemTemplate && curItem.itemTemplate  == itm.itemTemplate)
+      return itm.__update({ nexusCost = curItem?.nexusCost })
+
+    if (itm?.item__nexusCost == null)
+      return itm
+
+    if (costs?[itm.itemTemplate].cost == null)
+      return itm.__update({ nexusCost = itm.item__nexusCost })
+
+    return itm.__update({ nexusCost = costs[itm.itemTemplate].cost })
+  }
+
+  return getNexusStashItems(stashItems, openedRecipes, allRecipes, shopItems, pStats, allowedTypes).map(setNexusCost)
+}
+
+
 return {
   getPresetMissedItemsMarketIds
   getPresetMissedBoxedItemsMarketIds
@@ -365,12 +392,14 @@ return {
   PREPARATION_SUBMENU_ID
   PREPARATION_NEXUS_SUBMENU_ID
   closePreparationsScreens
-  Raid_id
+  Missions_id
   isPreparationOpened
   isNexusPreparationOpened
   mkWarningSign
   mintEditState
   currentPrimaryContractIds
   getNexusStashItems
+  getNexusStashItemsForChocolateMenu
   bannedMintItem
+  checkRaidAvailability
 }

@@ -1,9 +1,12 @@
-let { Computed, max } = require("%ui/ui_library.nut")
+from "%sqstd/string.nut" import floatToStringRounded
+
+from "%ui/ui_library.nut" import max
+from "dagor.math" import Point3
+
+let { Computed } = require("%ui/ui_library.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
 let { lastBattleResult } = require("%ui/profile/profileState.nut")
 let { playerPath } = require("%ui/mainMenu/debriefing/debriefing_player_path_state.nut")
-let { Point3 } = require("dagor.math")
-let { floatToStringRounded } = require("%sqstd/string.nut")
 let { journalBattleResult } = require("%ui/profile/battle_results.nut")
 
 let calcSegmentLength = @(segment, all_points) all_points.slice(segment[0], segment[1]).reduce(function(acc, point, i) {

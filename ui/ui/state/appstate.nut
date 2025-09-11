@@ -1,17 +1,19 @@
+from "%sqGlob/app_control.nut" import switch_to_menu_scene
+from "%dngscripts/globalState.nut" import nestWatched
+
+from "dagor.debug" import logerr
+from "dagor.system" import SANITIZER
+from "gameevents" import EventOnDisconnectedFromServer
+from "%ui/components/msgbox.nut" import showMsgbox
+from "dagor.workcycle" import setInterval, resetTimeout, clearTimer
+from "settings" import get_setting_by_blk_path
+from "dagor.time" import get_time_msec
+from "dasevents" import EventGameSessionFinished, EventGameSessionStarted
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 import "net" as net
 
-let { logerr } = require("dagor.debug")
-let { SANITIZER } = require("dagor.system")
-let { EventOnDisconnectedFromServer } = require("gameevents")
-let { showMsgbox } = require("%ui/components/msgbox.nut")
-let { setInterval, resetTimeout, clearTimer } = require("dagor.workcycle")
-let { switch_to_menu_scene } = require("%sqGlob/app_control.nut")
-let { get_setting_by_blk_path } = require("settings")
-let { nestWatched } = require("%dngscripts/globalState.nut")
-let { get_time_msec } = require("dagor.time")
-let { EventGameSessionFinished, EventGameSessionStarted } = require("dasevents")
 
 let levelLoaded = nestWatched("levelLoaded", false)
 let levelIsLoading = nestWatched("levelIsLoading", false)
@@ -19,7 +21,7 @@ let levelLoadingStartedTime = nestWatched("levelLoadingStartedTime", -1)
 let currentLevelBlk = nestWatched("currentLevelBlk", null)
 let disableMenu = get_setting_by_blk_path("disableMenu") ?? false
 let isInBattleState = nestWatched("isInBattleState", disableMenu)
-let isRealBattleStarted = nestWatched("isRealBattleStarted", false)
+let isRealBattleStarted = nestWatched("isRealBattleStarted", disableMenu)
 let isCheckRequired = nestWatched("isCheckRequired", false)
 let uiDisabled = Watched(false)
 let dbgLoading = mkWatched(persist, "dbgLoading", false)
@@ -48,6 +50,7 @@ function setNotInBattle(){
   isCheckRequired.set(false)
   if (isRealBattleStarted.get())
     return
+  println("setNotInBattle")
   isInBattleState.set(false)
 }
 
@@ -56,8 +59,11 @@ if (isCheckRequired.get()){
 }
 
 let isInBattleStateUpdate = function(v) {
+  log($"isInBattleStateUpdate: {v}, isInBattleState={isInBattleState.get()}")
+  if (v != isInBattleState.get())
+    clearMemoizeCaches()
+  log($"isInBattleStateUpdate: {v}")
   isInBattleState.set(v)
-  clearMemoizeCaches()
   if (v) {
     isCheckRequired.set(true)
     resetTimeout(JoiningWatchdogTime, setNotInBattle)
@@ -137,6 +143,10 @@ ecs.register_es(
     },
   }
 )
+
+
+ecs.register_es("init_player_base_ui_es", { onInit = @() log("init_player_base_ui_es") ?? isInBattleStateUpdate(false) }, {comps_rq = ["player_base"]})
+ecs.register_es("init_player_session_ui_es", { onInit = @() log("init_player_session_ui_es") ?? isInBattleStateUpdate(true) }, {comps_rq = ["player_session"]})
 
 if (levelIsLoading.get()) {
   clearTimer(loadingWatchdog)

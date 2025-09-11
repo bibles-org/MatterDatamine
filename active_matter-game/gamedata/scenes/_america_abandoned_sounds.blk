@@ -1,0 +1,13 @@
+entity{
+  _template:t="america_abandoned_sound_occlusion"
+}
+
+entity{
+  _template:t="jungle_ambient_sound"
+}
+
+entity{
+  _template:t="water_sound_field"
+  water_sound_field__worldAABB:p4=-2000, -2000, 2000, 2000
+  water_sound_field__cellSize:r=10
+}

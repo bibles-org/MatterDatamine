@@ -1,16 +1,24 @@
+from "%ui/mainMenu/stdPanel.nut" import screenSize
+
+from "%ui/fonts_style.nut" import sub_txt, body_txt
+from "%ui/components/colors.nut" import BtnBgFocused
+from "%ui/components/modalPopupWnd.nut" import addModalPopup, removeModalPopup
+from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryItemImage
+from "%ui/hud/menus/components/inventoryStyle.nut" import itemHeight
+from "%ui/components/commonComponents.nut" import mkText, bluredPanel
+from "%ui/components/slider.nut" import Horiz
+from "math" import ceil
+from "%ui/components/button.nut" import textButton
+
 from "%ui/ui_library.nut" import *
 
-let { sub_txt, body_txt } = require("%ui/fonts_style.nut")
-let { BtnBgFocused } = require("%ui/components/colors.nut")
-let { addModalPopup, removeModalPopup } = require("%ui/components/modalPopupWnd.nut")
-let { screenSize } = require("%ui/mainMenu/stdPanel.nut")
-let { inventoryItemImage, inventoryImageParams} = require("inventoryItemImages.nut")
-let { itemHeight } = require("%ui/hud/menus/components/inventoryStyle.nut")
-let { mkText, bluredPanel } = require("%ui/components/commonComponents.nut")
-let { Horiz } = require("%ui/components/slider.nut")
-let { ceil } = require("math")
-let { textButton } = require("%ui/components/button.nut")
+let { inventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
 let { canModifyInventory } = require("%ui/hud/state/inventory_common_es.nut")
+let { mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
+let { backpackEid, safepackEid } = require("%ui/hud/state/hero_extra_inventories_state.nut")
+let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
+
+#allow-auto-freeze
 
 let splitCount = Watched(0)
 
@@ -19,7 +27,16 @@ let offset = hdpx(50)
 let countWidth = hdpx(30)
 
 function canSplitStack(item) {
-  let { itemTemplate = null, isBoxedItem = false, ammoCount = 0, count = 0 } = item
+  let { itemTemplate = null, isBoxedItem = false, ammoCount = 0, count = 0, inventoryEid = 0 } = item
+
+  if (mutationForbidenDueToInQueueState.get() && (
+    inventoryEid == safepackEid.get() ||
+    inventoryEid == backpackEid.get() ||
+    inventoryEid == controlledHeroEid.get()
+  )) {
+    return false
+  }
+
   let itemCount = isBoxedItem ? ammoCount : count
   if (itemTemplate == null || itemCount <= 1 || !canModifyInventory.get())
     return false
@@ -54,7 +71,7 @@ let mkItemToShow = @(item) {
 let wndTitle = mkText(loc("splitStacks/header"), body_txt)
 
 let mkSlider = @(maxCount) {
-  size = [flex(), hdpx(20)]
+  size = static [flex(), hdpx(20)]
   children = Horiz(splitCount, {
     min = 1
     max = maxCount
@@ -70,7 +87,7 @@ let function mkSldierBlock(item) {
   let maxCount = itemCount
   splitCount.set(ceil(itemCount / 2.0))
   return {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     gap = hdpx(10)
     children = [
@@ -80,7 +97,7 @@ let function mkSldierBlock(item) {
         children = mkText(loc("splitStack/move", { count = splitCount.get() }), body_txt)
       }
       {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_HORIZONTAL
         gap = hdpx(20)
         valign = ALIGN_CENTER
@@ -111,10 +128,10 @@ let mkItemBlock = @(item) {
 }
 
 let mkButtonsBlock = @(item, cb) {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   flow = FLOW_HORIZONTAL
   gap = { size = flex() }
-  padding = [0, hdpx(50)]
+  padding = static [0, hdpx(50)]
   children = [
     textButton(loc("item/action/move"), function () {
       removeModalPopup(item.itemTemplate)
@@ -136,7 +153,7 @@ let mkSplitStackWindow = @(item, cb) {
   valign = ALIGN_CENTER
   flow = FLOW_VERTICAL
   gap = hdpx(10)
-  padding = [hdpx(10), hdpx(20)]
+  padding = static [hdpx(10), hdpx(20)]
   children = [
     wndTitle
     mkItemBlock(item)
@@ -150,6 +167,7 @@ function openSplitStacksWindow(item, cb) {
     return
   let uid = item?.itemTemplate
   let { x, y } = get_mouse_cursor_pos()
+  #forbid-auto-freeze
   let posToAppear = [x - contentSize[0] / 2, y - contentSize[1] / 2]
   for (local i = 0; i < posToAppear.len(); i++) {
     let wndBorder = posToAppear[i] + contentSize[i] / 2 + offset

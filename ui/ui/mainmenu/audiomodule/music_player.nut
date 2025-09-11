@@ -1,22 +1,22 @@
+from "%dngscripts/globalState.nut" import nestWatched
+from "%ui/fonts_style.nut" import h2_txt, body_txt
+from "%ui/components/commonComponents.nut" import mkText, bluredPanel, mkTextArea, mkSelectPanelItem, mkSelectPanelTextCtor, BD_LEFT
+from "%ui/components/scrollbar.nut" import makeVertScroll
+import "%ui/components/faComp.nut" as faComp
+from "%ui/components/button.nut" import button
+from "%ui/components/msgbox.nut" import showMsgbox
+from "%ui/components/itemIconComponent.nut" import itemIconNoBorder
+from "%ui/helpers/time.nut" import secondsToString
+from "%ui/components/slider.nut" import Vert
+from "%ui/components/cursors.nut" import setTooltip
+from "dasevents" import EventUnlockAppear, CmdMusicPlayerPlay, CmdMusicPlayerStop
+from "%ui/options/mkOnlineSaveData.nut" import mkOnlineSaveData
+from "%ui/mainMenu/notificationMark.nut" import mkNotificationCircle
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 from "%ui/components/colors.nut" import BtnBgNormal, BtnBgHover, BtnBgSelected, TextNormal, BtnBgFocused
 
-let { h2_txt, body_txt } = require("%ui/fonts_style.nut")
-let { mkText, bluredPanel, mkTextArea, mkSelectPanelItem, mkSelectPanelTextCtor, BD_LEFT } = require("%ui/components/commonComponents.nut")
-let { makeVertScroll } = require("%ui/components/scrollbar.nut")
-let faComp = require("%ui/components/faComp.nut")
-let { button } = require("%ui/components/button.nut")
-let { showMsgbox } = require("%ui/components/msgbox.nut")
-let { itemIconNoBorder } = require("%ui/components/itemIconComponent.nut")
-let { secondsToString } = require("%ui/helpers/time.nut")
-let { Vert } = require("%ui/components/slider.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { nestWatched } = require("%dngscripts/globalState.nut")
-let { EventUnlockAppear, CmdMusicPlayerPlay, CmdMusicPlayerStop } = require("dasevents")
 let { playerStats } = require("%ui/profile/profileState.nut")
-let { mkOnlineSaveData } = require("%ui/options/mkOnlineSaveData.nut")
-let { mkNotificationCircle } = require("%ui/mainMenu/notificationMark.nut")
 
 enum SoundStatus {
   SOUND_PLAY = "play"
@@ -313,7 +313,7 @@ function mkSoundIcon(soundData, stateFlags, group) {
         valign = ALIGN_CENTER
         children = {
           rendObj = ROBJ_VECTOR_CANVAS
-          size = [hdpx(50), hdpx(50)]
+          size = hdpx(50)
           commands = [
             [VECTOR_FILL_COLOR, BtnBgNormal],
             [VECTOR_ELLIPSE, 50, 50, 50, 50],
@@ -331,14 +331,14 @@ function mkSoundIcon(soundData, stateFlags, group) {
 
 let mkIconFromItemProtoBig = mkMkIconFromItemProto([hdpxi(230), hdpxi(230)], largeIconParams)
 let mkLargeSoundIcon = @(item__proto) {
-  size = [hdpxi(250), hdpxi(250)] valign = ALIGN_CENTER halign = ALIGN_CENTER children = mkIconFromItemProtoBig(item__proto)
+  size = hdpxi(250) valign = ALIGN_CENTER halign = ALIGN_CENTER children = mkIconFromItemProtoBig(item__proto)
 }
 
 let tracknameStyle = {hplace = ALIGN_LEFT}.__update(body_txt)
 let authorStyle = {hplace = ALIGN_LEFT, opacity = 0.5}
 
 let notificationIcon = freeze({
-  size = [ hdpx(14), hdpx(14) ]
+  size = hdpx(14)
   padding = hdpx(2)
   vplace = ALIGN_TOP
   children = mkNotificationCircle([0, 100])
@@ -349,24 +349,29 @@ function mkSoundRow(soundData) {
   let curTrack = Computed(@() playingSound.get()?.soundTrack)
   let group = ElemGroup()
   let isUnseen = Computed(@() soundData?.pickup_unlock__name in unseenTracks.get())
-  let visual_params = {group, onDoubleClick = @() startPlayer(playingSound.get()), size = [flex(), SIZE_TO_CONTENT] padding=0,
+  let visual_params = {
+    group
+    onDoubleClick = @() startPlayer(playingSound.get())
+    size = FLEX_H
+    padding=0,
     onHover = function(on) {
       if (on && soundData?.pickup_unlock__name in unseenTracks.get()) {
         unseenTracks.mutate(@(v) v?.$rawdelete(soundData?.pickup_unlock__name))
         unseenTracksCount.modify(@(v) v - 1)
       }
     }
+    xmbNode = XmbNode()
   }
   let textTrackCompCtor = mkSelectPanelTextCtor(loc(soundData.soundTrack), tracknameStyle)
   let textAuthorCompCtor = mkSelectPanelTextCtor(loc(soundData.author), authorStyle)
   return mkSelectPanelItem({
     children = @(params) @() {
       watch = isUnseen
+      size = FLEX_H
       flow = FLOW_HORIZONTAL
       gap = hdpx(10)
       valign = ALIGN_CENTER
-      padding = [0, hdpx(4), 0, hdpx(5)]
-      size = [flex(), SIZE_TO_CONTENT]
+      padding = static [0, hdpx(4), 0, hdpx(5)]
       children = [
         mkSoundIcon(soundData, params.stateFlags, group)
         {
@@ -375,7 +380,7 @@ function mkSoundRow(soundData) {
           flow = FLOW_VERTICAL
           group
           speed = hdpx(50)
-          size = [flex(), SIZE_TO_CONTENT]
+          size = FLEX_H
           children = [
             textTrackCompCtor(params)
             textAuthorCompCtor(params)
@@ -394,17 +399,18 @@ function mkSoundRow(soundData) {
 
 let soundsListBlock = @() {
   watch = trackList
-  size = [hdpx(377), flex()]
+  size = static [hdpx(377), flex()]
   children = trackList.get().len() <= 0
     ? mkTextArea(loc("musicPlayer/noAudiosFound"), {
-      margin = [hdpx(10), 0]
+      margin = static [hdpx(10), 0]
       padding = hdpx(10)
       halign = ALIGN_CENTER
     })
     : makeVertScroll({
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_VERTICAL
-        gap = hdpx(2)
+        gap = static hdpx(2)
+        xmbNode = XmbContainer({ canFocus = false, wrap = false })
         children = trackList.get().map(mkSoundRow)
       })
 }.__update(bluredPanel)
@@ -415,7 +421,7 @@ let curTrackTime = Watched(getPos())
 function mkTimeLine() {
   let setCurTrackTime = @() curTrackTime.set(getPos())
   let onAttach = function() {
-    curTrackTime(getPos())
+    curTrackTime.set(getPos())
     gui_scene.clearTimer(setCurTrackTime)
     gui_scene.setInterval(1, setCurTrackTime)
   }
@@ -424,14 +430,14 @@ function mkTimeLine() {
     return {
       watch = [soundLength, isPlaying, playingSound]
       key = playingSound.get()
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       flow = FLOW_VERTICAL
       gap = hdpx(5)
       onAttach
       children = [
         {
           rendObj = ROBJ_SOLID
-          size = [hdpx(460), hdpx(10)]
+          size = static [hdpx(460), hdpx(10)]
           color = BtnBgNormal
           children = sl == 0 ? null : @() {
             rendObj = ROBJ_SOLID
@@ -441,7 +447,7 @@ function mkTimeLine() {
           }
         }
         {
-          size = [flex(), SIZE_TO_CONTENT]
+          size = FLEX_H
           children = [
             @() {
               watch = curTrackTime
@@ -500,8 +506,8 @@ function trackInfo() {
         gap = hdpx(20)
         children = [
           mkDeltaButton(-1)
-          mkPlayButton(playingSound.get())
-          mkStopButton(playingSound.get())
+          playingSound.get() == null ? mkPlayButton(playingSound.get()) : null
+          playingSound.get()!=null ? mkStopButton(playingSound.get()) : null
           playerLoopButton
           mkDeltaButton(1)
         ]
@@ -515,21 +521,21 @@ function trackInfo() {
         speed = hdpx(50)
       }.__update(h2_txt))
       mkText(loc(author), {opacity = 0.5})
-      {size=[0, hdpx(10)]}
+      {size=static [0, hdpx(10)]}
       mkTimeLine()
     ]
   }
 }
 
 let musicVolumeBlock =  freeze({
-  size = [SIZE_TO_CONTENT, ph(40)]
+  size = static [SIZE_TO_CONTENT, ph(40)]
   hplace = ALIGN_RIGHT
   flow = FLOW_HORIZONTAL
   gap = hdpx(4)
   children = [
     {
-      size = [SIZE_TO_CONTENT, flex()]
-      padding = [hdpx(20), 0]
+      size = FLEX_V
+      padding = static [hdpx(20), 0]
       halign = ALIGN_CENTER
       flow = FLOW_VERTICAL
       gap = { size  = flex() }
@@ -539,8 +545,8 @@ let musicVolumeBlock =  freeze({
       ]
     }
     {
-      size = [fsh(2), flex()]
-      padding = [hdpx(20), 0]
+      size = static [fsh(2), flex()]
+      padding = static [hdpx(20), 0]
       children = Vert(musicPlayerVolumeWatch, {
         min = 0
         max = 2
@@ -565,7 +571,7 @@ let playerBlock = freeze({
   halign = ALIGN_CENTER
   children = [
     {
-      size = [hdpx(500), flex()]
+      size = static [hdpx(500), flex()]
       children = [
         trackInfo
         musicVolumeBlock
@@ -574,14 +580,14 @@ let playerBlock = freeze({
   ]
 })
 
-let musicPlayerTab = {
+let musicPlayerTab = freeze({
   flow = FLOW_VERTICAL
   size = flex()
   gap = hdpx(10)
   children = [
     {
-      size = [flex(), hdpx(50)]
-      padding = [0, hdpx(4)]
+      size = static [flex(), hdpx(50)]
+      padding = static [0, hdpx(4)]
       valign = ALIGN_CENTER
       children = mkText(loc("statisticsMenu/musicPlayer"), h2_txt)
     }
@@ -595,9 +601,9 @@ let musicPlayerTab = {
       ]
     }
   ]
-}
+})
 
-return {
+return freeze({
   musicPlayerTab
   unseenTracksCount
   MUSIC_PLAYER_ID
@@ -611,4 +617,4 @@ return {
   musicPlayerVolumeWatch
   musicPlayerVolumeSet
   musicPlayerSetVolume
-}
+})

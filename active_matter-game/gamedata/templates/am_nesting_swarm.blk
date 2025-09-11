@@ -103,7 +103,7 @@ nesting_swarm_nest{
   _use:t="animchar"
   _use:t="base_dm_parts"
   _use:t="militant_dm_parts"
-  _use:t="human_grid_obj"
+  _use:t="humans_dynamic_grid_object"
   _use:t="militant_node_collapser"
   _use:t="nesting_swarm_nest_light"
   _use:t="lifetime_affects_client"
@@ -122,7 +122,7 @@ nesting_swarm_nest{
   team:i=1
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   collres__centerNode:t="Bip01 Pelvis"
-  bodyCleanupTime:r=0
+  body_cleanup_server_after_death__delay:r=0
   nesting_swarm_nest__createOnDestroyTemplate:t="nesting_swarm_nest_explosion"
   nesting_swarm_nest__createOnDestroyOffset:p3=0, 1, 0
   animchar__appliedAnimSpeed:r=0
@@ -144,7 +144,6 @@ nesting_swarm_nest{
   }
 
   collres{}
-  "grid_obj__updateAlways:tag"{}
   capsule_approximation{}
   "preloadSpawnActivatedShellProps:list<t>"{
     template:t="nesting_swarm_nest_explosion"
@@ -257,7 +256,6 @@ nesting_swarm_nest_swarm{
   swarm__groundAvoidanceMin:r=0
   swarm__traceGridOffset:r=1
   swarm__heightGridCreationPos:p3=0, 0, 0
-  _replicated:t="swarm_cluster__targetPos"
   death_note__name:t="note_devourer"
 }
 
@@ -493,7 +491,7 @@ dementor_stride{
 
 nesting_swarm_snake_segment_attacking{
   nesting_swarm_snake_segment_attacking__timer:r=0
-  nesting_swarm_snake_segment_attacking__interval:r=0.1
+  nesting_swarm_snake_segment_attacking__interval:r=0.05
   nesting_swarm_snake_segment_attacking__prevPos:p3=0, 0, 0
 
   "nesting_swarm_snake_segment_attacking:tag"{}
@@ -508,8 +506,8 @@ nesting_swarm_snake_segment{
   nesting_swarm_snake_segment__attackingTemplate:t="nesting_swarm_snake_segment_attacking"
   nesting_swarm_snake_segment__attackingEnabled:b=yes
   nesting_swarm_snake_segment__attackInterval:r=1
-  nesting_swarm_snake_segment__attackRng:p2=4.2, 4.4
-  nesting_swarm_snake_segment__attackRadius:r=0.3
+  nesting_swarm_snake_segment__attackRng:p2=8.4, 8.8
+  nesting_swarm_snake_segment__attackRadius:r=0.5
   nesting_swarm_snake_segment__pushRng:p2=1.5, 1.7
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 
@@ -584,7 +582,6 @@ nesting_swarm_snake_segment_visual{
   swarm__groundAvoidanceMin:r=0
   swarm__traceGridOffset:r=1
   swarm__heightGridCreationPos:p3=0, 0, 0
-  _replicated:t="swarm_cluster__targetPos"
   swarm__lmeshOrientation:b=yes
   swarm_cluster__radius:r=0.6
   swarm__extraAttractors:b=no
@@ -635,11 +632,11 @@ nesting_swarm_snake_ai{
   flyer__directionViscosity:r=0.005
   stride__lengthAt100:p2=20, 30
   stride__lengthAt0:p2=0.4, 1
-  stride__focus:r=0.7
+  stride__focus:r=0.9
   stride__absoluteFocusDistance:p2=4, 2
   stride__worstDot:r=-0.4
   stride__approachPosDistance:r=0.3
-  stride__approachTargetDistance:r=1.35
+  stride__approachTargetDistance:r=2
 
   "walker_agent__targetEid:eid"{}
   agent_dangers{
@@ -697,12 +694,20 @@ nesting_swarm_snake{
   nesting_swarm_snake__nestSegmentLengthMin:r=0.001
   nesting_swarm_snake__nestSegmentLengthDesired:r=0.002
   nesting_swarm_snake__nestSegmentLengthMax:r=0.003
-  nesting_swarm_snake__nestSpeed:r=2
+  nesting_swarm_snake__nestSpeed:r=5
+  nesting_swarm_snake__prepareSpeed:r=10
+  nesting_swarm_snake__ellipseDiameters:p2=3, 0.1
+  nesting_swarm_snake__prepareAngle:r=0
+  nesting_swarm_snake__prepareSmallDiameter:r=0
+  nesting_swarm_snake__prepareAngularSpeed:r=0
+  nesting_swarm_snake__prepareAngularMaxSpeed:r=25
+  nesting_swarm_snake__prepareAimViscosity:r=2
+  nesting_swarm_snake__prepareOffset:r=2
   nesting_swarm_snake__flySegmentLengthMin:r=0.1
   nesting_swarm_snake__flySegmentLengthDesired:r=0.3
   nesting_swarm_snake__flySegmentLengthMax:r=0.4
-  nesting_swarm_snake__flySpeed:r=18
-  nesting_swarm_snake__attackSpeed:r=26
+  nesting_swarm_snake__flySpeed:r=120
+  nesting_swarm_snake__attackSpeed:r=120
   nesting_swarm_snake__segmentLengthMin:r=0.1
   nesting_swarm_snake__segmentLengthDesired:r=0.1
   nesting_swarm_snake__segmentLengthMax:r=0.1
@@ -735,6 +740,7 @@ nesting_swarm_snake_nest{
   _use:t="truce_zone_creature"
   _use:t="nesting_swarm_nest"
   _use:t="nesting_swarm_snake_nest_sound"
+  body_cleanup_server__cleanupForbiddenHeroRadiusSq:r=0
   nesting_swarm_nest__warriorTemplate:t="nesting_swarm_snake"
   nesting_swarm_nest__supplyTemplate:t=""
   needsBlood:b=no
@@ -771,6 +777,7 @@ nesting_swarm_snake_nest_generator{
 nesting_swarm_fx_origin{
   nesting_swarm_fx__maxDisturbedDstSq:r=15000
   nesting_swarm_fx__maxRunnerDstSq:r=3600
+  nesting_swarm_fx__maxCount:i=20
 }
 
 nesting_snake_runner_swarm{
@@ -784,7 +791,7 @@ nesting_snake_runner_swarm{
   swarm__initialBoidsCount:i=0
   swarm__trajectoryLength:r=2.5
   trajectoryHistory:i=25
-  surface_runner_swarm__spawnCount:ip2=1, 3
+  surface_runner_swarm__spawnCount:ip2=1, 2
   surface_runner_swarm__activeRunnersCount:i=0
 
   "swarmCustomSteering:tag"{}
@@ -808,6 +815,7 @@ nesting_snake_runner{
   surface_crawler__rndInfluence:r=40
   surface_crawler__speed:r=4
   surface_crawler__matId:i=0
+  surface_crawler__height:r=0
   nesting_snake_runner__lifeDuration:r=12
   nesting_snake_runner__buryDuration:r=3
   nesting_snake_runner__buryAt:r=0
@@ -816,6 +824,7 @@ nesting_snake_runner{
   nesting_snake_runner__buryOffset:p3=0, -0.3, 0
 
   "customSteeringBoid:tag"{}
+  "nesting_snake_runner:tag"{}
 }
 
 wormhuman_debug_log{

@@ -603,7 +603,7 @@ repeat{
 
           ifThen{
             not{
-              checkTargetVisibility{
+              amCheckTargetVisibility{
                 targetUnitParam:t="shootEnemy"
                 rayMat:t="aiRay"
               }
@@ -925,7 +925,7 @@ repeat{
             findLoot{
               traceDist:r=7
               lootTargetParam:t="lootEntity"
-              maxPickupVolume:r=1
+              maxPickupVolume:i=10
             }
 
             setPosFromEntity{

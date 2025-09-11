@@ -2,24 +2,26 @@ resurrect_device{
   _use:t="replicating"
   _use:t="base_quest_device_animchar"
   _use:t="resurect_device_hitpoints"
+  _use:t="interactable_static_grid_object"
+  _use:t="iteractable_drop_on_ri_destroy"
   animchar__res:t="am_respawn_beacon_char"
   collres__res:t="am_respawn_beacon_collision"
   animchar_render__enabled:b=yes
   phys_obj_net_phys__blk:t="gamedata/weapons/grenades/planted_bomb.blk"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   resurrect_device__noiseRadius:r=8
   resurrect_device__noise:r=5
+  self_resurrection_device__used:b=no
   resurrect_device__builderTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   map_object_marker__iconName:t="!ui/skin#microchip.svg"
   map_object_marker__tooltip:t="items/resurrect_device"
   map_object__show:b=no
-  resurrect_device__destroyEffectTemplate:t="teleport_effect_in"
   effect__scale:r=0.5
 
   "self_resurrection_device:tag"{}
   _group{
     _tags:t="render"
     effect__name:t="item_aura_composite_fx"
+    resurrect_device__destroyEffectTemplate:t="teleport_effect_in"
 
     effect{}
   }
@@ -40,11 +42,9 @@ resurect_device_hitpoints{
   hitpoints__shellDmgMult:r=1
   hitpoints__shellSplashDmgMult:r=1
   needsBlood:b=no
-  grid_obj__gridType:t="interactable"
 
   "killer:eid"{}
   "allow_friendly_damage:tag"{}
-  grid_obj{}
   collres{}
 }
 
@@ -86,8 +86,8 @@ resurrect_device_item{
   item__proto:t="resurrect_device_item"
   item__filterType:t="medicines"
   item__weight:r=1
-  item__volume:r=4
-  item__marketPrice:i=8900
+  item__volume:i=40
+  item__marketPrice:i=0
   item__iconPitch:r=-40
   item__iconRoll:r=0
   item__iconYaw:r=-45
@@ -104,13 +104,11 @@ resurrect_device_item{
   "item__blockUseOnPlayerBase:tag"{}
   "device_item__ability:object"{
     name:t="diy"
-    type:t="ultimate"
     activeMatterPrice:i=0
     cooldown:r=0
     lockWhileSwimming:b=yes
     lockInVehicle:b=yes
-    isNoWeaponMode:b=yes
-    manualSoulsWithdrawl:b=yes
+    profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
 
     "stages:array"{
       "placement_stage:object"{
@@ -133,7 +131,7 @@ resurrect_device_item{
   "mintBannedItem:tag"{}
 }
 
-resurrect_device_self_destruction_effect{
+resurrect_device_force_resurrect_effect{
   _use:t="replicated_game_effect"
   team:i=-1
   resurrect_device__destroyAt:r=-1

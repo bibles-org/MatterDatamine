@@ -1,24 +1,27 @@
+from "%sqstd/underscore.nut" import deep_clone
+
+from "%ui/hud/menus/components/inventoryItemsListVisibility.nut" import mkScrollHandlerData, resetScrollHandlerDataCommon, updatePanelsVisibilityDataCommon
+
+from "%ui/hud/menus/components/inventoryItem.nut" import inventoryItemPanel, itemShadedBg
+from "%ui/components/scrollbar.nut" import makeVertScrollExt, thinAndReservedPaddingStyle
+from "%ui/hud/state/inventory_state.nut" import doForAllEidsWhenShift
+from "das.inventory" import get_inventory_for_item_by_volume, move_item_from_inventory_to_inventory
+from "%ui/hud/menus/components/dropMarkerConstructor.nut" import mkDropMarkerFunc
+from "%dngscripts/sound_system.nut" import sound_play
+from "dasevents" import CmdItemPickup, sendNetEvent
+from "%ui/hud/menus/components/inventoryStyle.nut" import itemHeight
+from "%ui/hud/menus/components/inventoryFilter.nut" import filterItemByInventoryFilter
+from "%ui/hud/state/inventory_common_es.nut" import didItemDataChange
+from "%ui/hud/menus/components/inventoryItemsListChecksCommon.nut" import MoveForbidReason
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 from "math" import min, max
+from "dagor.debug" import logerr
 
-let {inventoryItemPanel, itemShadedBg} = require("%ui/hud/menus/components/inventoryItem.nut")
-let {makeVertScrollExt, thinAndReservedPaddingStyle} = require("%ui/components/scrollbar.nut")
-let {draggedData, doForAllEidsWhenShift} = require("%ui/hud/state/inventory_state.nut")
-let {get_controlled_hero} = require("%dngscripts/common_queries.nut")
-let {get_inventory_for_item_by_volume, move_item_from_inventory_to_inventory} = require("das.inventory")
-let { mkDropMarkerFunc } = require("%ui/hud/menus/components/dropMarkerConstructor.nut")
-let { CmdItemPickup, sendNetEvent } = require("dasevents")
-let { isItemInTrashBin, trashBinItems } = require("%ui/hud/menus/components/trashBin.nut")
-let { itemHeight } = require("%ui/hud/menus/components/inventoryStyle.nut")
-let { deep_clone } = require("%sqstd/underscore.nut")
-let { inventoryImageParams } = require("inventoryItemImages.nut")
-let { filterItemByInventoryFilter } = require("%ui/hud/menus/components/inventoryFilter.nut")
-let { didItemDataChange } = require("%ui/hud/state/inventory_common_es.nut")
-let { mkScrollHandlerData,
-      resetScrollHandlerDataCommon,
-      updatePanelsVisibilityDataCommon } = require("%ui/hud/menus/components/inventoryItemsListVisibility.nut")
-let { MoveForbidReason } = require("%ui/hud/menus/components/inventoryItemsListChecksCommon.nut")
+let { draggedData } = require("%ui/hud/state/inventory_state.nut")
+let { get_controlled_hero } = require("%dngscripts/common_queries.nut")
+let { inventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
 
 let itemsListGap = hdpx(5)
 let scrollHandlers = memoize(@(_v) ScrollHandler())
@@ -60,8 +63,10 @@ let itemsPanelList = kwarg(function(outScrollHandlerInfo, itemsPanelData, list_t
     let moveForbidReason = can_drop_dragged_cb?(data)
     if (moveForbidReason == MoveForbidReason.NONE)
       on_item_dropped_to_list_cb?(data, list_type)
-    else
+    else {
+      sound_play("ui_sounds/button_click_inactive")
       on_item_dropped_forbid_cb?(moveForbidReason)
+    }
   }
   let stateFlags = Watched(0)
   let hasItems = itemsPanelData.len() > 0
@@ -117,7 +122,7 @@ let itemsPanelList = kwarg(function(outScrollHandlerInfo, itemsPanelData, list_t
   })
 
   let emptySlotsY = blankRowsNumToShow > 0 ? {
-    size = [ flex(), 0 ]
+    size = static [ flex(), 0 ]
     flow = FLOW_VERTICAL
     gap = itemsListGap
     children = blankRows
@@ -137,7 +142,7 @@ let itemsPanelList = kwarg(function(outScrollHandlerInfo, itemsPanelData, list_t
     {
       scrollHandler = outScrollHandlerInfo.handler
       styling = thinAndReservedPaddingStyle
-      size = [SIZE_TO_CONTENT, flex()]
+      size = FLEX_V
     })
   )
 
@@ -157,9 +162,9 @@ let itemsPanelList = kwarg(function(outScrollHandlerInfo, itemsPanelData, list_t
         size = flex()
       }
       {
-        size = [ SIZE_TO_CONTENT, flex() ]
+        size = FLEX_V
         flow = FLOW_VERTICAL
-        padding = [0, hdpx(10)]
+        padding = static [0, hdpx(10)]
         gap = itemsListGap
         children = content
       }.__update(listVisualParams)
@@ -169,6 +174,7 @@ let itemsPanelList = kwarg(function(outScrollHandlerInfo, itemsPanelData, list_t
           children = getDropMarker(stateFlags)
           size = flex()
           watch = stateFlags
+          skipDirPadNav = true
           behavior = hasItems ? null : Behaviors.DragAndDrop
         }
       }
@@ -265,47 +271,15 @@ function inventoryItemOverridePrioritySorting(itemA, itemB) {
   )
 }
 
-function considerTrashBinItems(listItems) {
-  if (trashBinItems.get().len() == 0)
-    return listItems
-
-  return listItems.map(function(item) {
-    let idx = isItemInTrashBin(item)
-    if (idx == null)
-      return item
-
-    let itemInTrash = trashBinItems.get()[idx]
-    if (item?.isBoxedItem) {
-      if (item.ammoCount == itemInTrash.ammoCount)
-        throw null
-
-      let newItem = deep_clone(item)
-      newItem.ammoCount -= itemInTrash.ammoCount
-      return newItem
-    }
-    else {
-      if (itemInTrash.count == item.count)
-        throw null
-
-      let newItem = deep_clone(item)
-      newItem.count = newItem.count - itemInTrash.count
-      let remove = function(arr, val) {
-        let i = arr.findindex(@(v) v == val)
-        if (i)
-          arr.remove(i)
-      }
-      foreach (v in itemInTrash.eids)
-        remove(newItem.eids, v)
-      foreach (v in itemInTrash.uniqueIds)
-        remove(newItem.uniqueIds, v)
-      return newItem
-    }
-  })
-}
-
 function filterItems(item) {
-  if (item.filterType == "alters" || item.filterType == "chronogene")
-    return false
+  if (
+      item.filterType == "alters" ||
+      item.filterType == "chronogene" ||
+      item.filterType == "dogtag_chronogene" ||
+      item.filterType == "stub_melee_weapon"
+    ) {
+      return false
+    }
 
   return filterItemByInventoryFilter(item)
 }
@@ -363,60 +337,67 @@ let setupPanelsData = function(itemsList,
                                updateDataOn,
                                processItemsCb) {
   let getItemsList = itemsList instanceof Watched ? ( @() itemsList.get() ) : itemsList
+  let itemsPanelData = []
+  let numberOfPanels = Watched(0)
+  let scrollHandlerData = mkScrollHandlerData()
+  let isElementShown = Watched(false)
   let res = {
-    itemsPanelData = [],
-    numberOfPanels = Watched(0),
-    scrollHandlerData = mkScrollHandlerData(),
-    isElementShown = Watched(false),
+    itemsPanelData
+    numberOfPanels
+    scrollHandlerData
+    isElementShown
     elementAttachCounter = 0
   }
 
-  let resetScrollHandlerData = @() resetScrollHandlerDataCommon(res.scrollHandlerData)
+  let resetScrollHandlerData = @() resetScrollHandlerDataCommon(scrollHandlerData)
 
   let updateItemsPanelData = function() {
-    updatePanelsDataCommon(res.itemsPanelData,
-                           res.numberOfPanels,
+    updatePanelsDataCommon(itemsPanelData,
+                           numberOfPanels,
                            processItemsCb(getItemsList()),
                            itemsInRow)
   }
 
   let updatePanelsVisibilityData = function() {
-    updatePanelsVisibilityDataCommon(res.scrollHandlerData,
-                                     res.numberOfPanels,
-                                     res.itemsPanelData,
+    updatePanelsVisibilityDataCommon(scrollHandlerData,
+                                     numberOfPanels,
+                                     itemsPanelData,
                                      itemsInRow)
   }
 
-  let onAttach = function() {
-    if (res.elementAttachCounter == 0) {
-      gui_scene.setInterval(visibilityUpdateFrequency, updatePanelsVisibilityData)
-      updatePanelsVisibilityData()
-      res.isElementShown.set(true)
-    }
-
-    res.elementAttachCounter += 1
-  }
-
-  let onDetach = function() {
-    res.elementAttachCounter -= 1
-    if (res.elementAttachCounter == 0) {
-      res.isElementShown.set(false)
-      gui_scene.clearTimer(updatePanelsVisibilityData)
-    }
-  }
-
   let updateData = function(_) {
-    if (!res.isElementShown.get()) {
+    if (!isElementShown.get()) {
       return
     }
 
     updateItemsPanelData()
   }
 
-  foreach(watched in updateDataOn) {
-    watched.subscribe(updateData)
+  let onAttach = function() {
+    if (res.elementAttachCounter == 0) {
+      gui_scene.setInterval(visibilityUpdateFrequency, updatePanelsVisibilityData, res)
+      updatePanelsVisibilityData()
+      isElementShown.set(true)
+    }
+
+    res.elementAttachCounter += 1
+    foreach (watched in updateDataOn) {
+      watched.subscribe_with_nasty_disregard_of_frp_update(updateData)
+    }
+    isElementShown.subscribe_with_nasty_disregard_of_frp_update(updateData)
   }
-  res.isElementShown.subscribe(updateData)
+
+  let onDetach = function() {
+    res.elementAttachCounter -= 1
+    if (res.elementAttachCounter == 0) {
+      isElementShown.set(false)
+      gui_scene.clearTimer(res)
+      foreach (watched in updateDataOn) {
+        watched.unsubscribe(updateData)
+      }
+      isElementShown.unsubscribe(updateData)
+    }
+  }
 
   return res.__update({
     updateItemsPanelData,
@@ -431,7 +412,6 @@ return {
   itemsPanelList
   inventoryItemSorting
   inventoryItemOverridePrioritySorting
-  considerTrashBinItems
   updatePanelsDataCommon
   setupPanelsData
   filterItems

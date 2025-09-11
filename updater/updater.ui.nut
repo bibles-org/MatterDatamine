@@ -16,7 +16,7 @@ let updaterError = Watched(null)
 function progress() {
   let size = [sw(100)-sh(50)-sh(20), sh(2)]
 
-  if (updaterProgress.value == null) {
+  if (updaterProgress.get() == null) {
     return {
       size = size
       watch = updaterProgress
@@ -33,7 +33,7 @@ function progress() {
 
     children = {
       rendObj = ROBJ_SOLID
-      size = [pw(updaterProgress.value), flex()]
+      size = [pw(updaterProgress.get()), flex()]
       color = Color(200,200,200,100)
     }
   }
@@ -76,10 +76,10 @@ function Root() {
 
 
 let updaterEvents = {
-  [UPDATER_EVENT_STAGE]    = @(evt) updaterStage(evt?.stage),
-  [UPDATER_EVENT_PROGRESS] = @(evt) updaterProgress(evt?.percent),
+  [UPDATER_EVENT_STAGE]    = @(evt) updaterStage.set(evt?.stage),
+  [UPDATER_EVENT_PROGRESS] = @(evt) updaterProgress.set(evt?.percent),
   [UPDATER_EVENT_FINISH]   = @(_evt) null,
-  [UPDATER_EVENT_ERROR]    = @(evt) updaterError(evt?.error),
+  [UPDATER_EVENT_ERROR]    = @(evt) updaterError.set(evt?.error),
 }
 
 

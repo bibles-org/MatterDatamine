@@ -1,43 +1,47 @@
+from "%sqGlob/dasenums.nut" import EquipmentSlotFlags
+
+from "%sqstd/math.nut" import lerp
+
+import "math" as math
+from "%ui/fonts_style.nut" import tiny_txt
+import "%ui/hud/menus/components/dropMarker.nut" as dropMarker
+from "dasevents" import CmdHideUiMenu, CmdShowUiMenu, TryUseItem, CmdShowHealingDoll
+import "%ui/components/icon3d.nut" as mkIcon3d
+from "das.ribbons_color" import get_primary_color_of_hero, get_secondary_color_of_hero, get_color_idx_of_hero
+from "%ui/hud/menus/components/inventorySuit.nut" import mkSuitPartModsPanel, mkSuitSlots, mkEquipmentSlot
+from "%ui/hud/menus/components/damageModelTooltip.nut" import buildDamageModelPartTooltip
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/hud/state/interactive_state.nut" import removeInteractiveElement, addInteractiveElement
+from "das.healing" import verify_healing_attempt_bind, show_healing_tip_bind, set_wish_part_to_heal_bind, get_most_needed_heal_item_bind
+from "%ui/hud/menus/components/inventoryStyle.nut" import itemHeight
+from "%ui/hud/menus/components/itemFromTemplate.nut" import getSlotFromTemplate
+from "%ui/hud/menus/components/inventoryItemsPresetPreview.nut" import fakeEquipmentAsAttaches
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "string" import startswith
+from "%ui/hud/menus/inventoryActions.nut" import fastEquipItem
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import isFastEquipItemPossible
+from "%ui/components/colors.nut" import TextHighlight, TextActive
+from "%ui/hud/state/item_info.nut" import getSlotAvailableMods
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
-let math = require("math")
 
-let { tiny_txt } = require("%ui/fonts_style.nut")
-let { lerp } = require("%sqstd/math.nut")
-let dropMarker = require("%ui/hud/menus/components/dropMarker.nut")
 let { draggedData } = require("%ui/hud/state/inventory_state.nut")
 let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
-let { CmdHideUiMenu, CmdShowUiMenu, TryUseItem, CmdShowHealingDoll } = require("dasevents")
-let { bodyParts,
-      bodyPartsIsDamaged,
-      currentPosName,
-    } = require("%ui/hud/state/human_damage_model_state.nut")
-let { EquipmentSlotFlags } = require("%sqGlob/dasenums.nut")
-let mkIcon3d = require("%ui/components/icon3d.nut")
-let { get_primary_color_of_hero, get_secondary_color_of_hero } = require("das.ribbons_color")
+let { bodyParts, bodyPartsIsDamaged, currentPosName } = require("%ui/hud/state/human_damage_model_state.nut")
 let { watchedHeroAnimcharEid, watchedHeroMainAnimcharRes, watchedHeroEid, watchedHeroSex } = require("%ui/hud/state/watched_hero.nut")
-let { mkSuitPartModsPanel, mkSuitSlots, mkEquipmentSlot } = require("%ui/hud/menus/components/inventorySuit.nut")
 let { equipmentModSlots, equipment, attachedEquipment } = require("%ui/hud/state/equipment.nut")
-let { buildDamageModelPartTooltip } = require("%ui/hud/menus/components/damageModelTooltip.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { removeInteractiveElement, addInteractiveElement } = require("%ui/hud/state/interactive_state.nut")
-let { verify_healing_attempt_bind, show_healing_tip_bind, set_wish_part_to_heal_bind, get_most_needed_heal_item_bind } = require("das.healing")
 let { previewPreset, previewPresetOverrideRibbons, previewPresetCallbackOverride } = require("%ui/equipPresets/presetsState.nut")
 let { ribbonsChanged } = require("%ui/mainMenu/ribbons_colors_state.nut")
 let { humanEquipmentSlots } = require("%ui/hud/state/equipment_slots_stubs.nut")
-let { itemHeight } = require("%ui/hud/menus/components/inventoryStyle.nut")
-let { getSlotFromTemplate } = require("%ui/hud/menus/components/itemFromTemplate.nut")
-let { fakeEquipmentAsAttaches } = require("%ui/hud/menus/components/inventoryItemsPresetPreview.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
-let { startswith } = require("string")
-let { fastEquipItem, inventoryItemClickActions } = require("%ui/hud/menus/inventoryActions.nut")
-let { isFastEquipItemPossible } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
-let { TextHighlight, TextActive } = require("%ui/components/colors.nut")
+let { inventoryItemClickActions } = require("%ui/hud/menus/inventoryActions.nut")
 let { ON_BODY_SLOT } = require("%ui/hud/menus/components/slotTypes.nut")
-let { inventoryImageParams } = require("inventoryItemImages.nut")
-let { isPreparationOpened } = require("%ui/mainMenu/raid_preparation_window_state.nut")
+let { inventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
+let { isPreparationOpened, isNexusPreparationOpened } = require("%ui/mainMenu/raid_preparation_window_state.nut")
 let { isInMonsterState, isMonsterInventoryEnabled } = require("%ui/hud/state/hero_monster_state.nut")
-let { getSlotAvailableMods } = require("%ui/hud/state/item_info.nut")
+let { isNexus } = require("%ui/hud/state/nexus_mode_state.nut")
+
+#allow-auto-freeze
 
 const HealingDollId = "HealingDoll"
 local healingDollItemEid = Watched(ecs.INVALID_ENTITY_ID)
@@ -106,44 +110,96 @@ let miniBodypartPanelOffset = {
     ["pose_crawl"] = [ 5, -45]
 }
 
-let mkIconAttachments = @(equipmentAttach, overrideRibbonsColors = {}) @() equipmentAttach.map(@(v){
-  shading = "same"
-  active = true
-  attachType = v.slotName ? "slot" : "skeleton"
-  animchar = v.animchar
-  slot = v.slotName ?? ""
-  parentNode = "root"
-  hideNodes = v?.hideNodes ?? []
-  objTexReplace = v?.objTexReplace ?? {}
-  shaderColors={
-    primary_color=overrideRibbonsColors?.primaryColor ?? get_primary_color_of_hero(watchedHeroEid.get())
-    secondary_color=overrideRibbonsColors?.secondaryColor ?? get_secondary_color_of_hero(watchedHeroEid.get())
-  }
-})
+let mkIconAttachments = @(equipmentAttach, overrideRibbonsColors = {}) function() {
+  let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName("ribbon_colors")
+  let countOfSimpleColors = template?.getCompValNullable("ribbon_colors__colors").getAll().len() ?? 0
+  let patterns = template?.getCompValNullable("ribbon_colors__patterns").getAll() ?? {}
+  let textureIdx = get_color_idx_of_hero(watchedHeroEid.get()).x - countOfSimpleColors
+
+  return equipmentAttach.map(function(v) {
+    let objReplace = v?.objTexReplace ?? {}
+
+    local needRibbonColors = true
+    if (patterns?[textureIdx] != null) {
+      objReplace["iff_tape_band_a_tex_d*"] <-  $"{patterns?[textureIdx]}*"
+      needRibbonColors = false
+    }
+
+    return {
+      shading = "same"
+      active = true
+      attachType = v.slotName ? "slot" : "skeleton"
+      animchar = v.animchar
+      slot = v.slotName ?? ""
+      parentNode = "root"
+      hideNodes = v?.hideNodes ?? []
+      objTexReplace = objReplace
+      shaderColors={
+        primary_color= needRibbonColors ?
+          (overrideRibbonsColors?.primaryColor ?? get_primary_color_of_hero(watchedHeroEid.get()))
+          : [ 1.0, 1.0, 1.0, 1.0 ]
+        secondary_color= needRibbonColors ?
+          (overrideRibbonsColors?.secondaryColor ?? get_secondary_color_of_hero(watchedHeroEid.get()))
+          : [ 1.0, 1.0, 1.0, 1.0 ]
+      }
+    }
+  })
+}
 
 let mkHeroDoll = @(doll_animchar, attachments, doll_size, params=null, overrideRibbons=null, overrideIconParams=null) @() {
+  watch = ribbonsChanged
   hplace = ALIGN_CENTER
   vplace = ALIGN_CENTER
-  watch = const [ ribbonsChanged ]
   children =
     mkIcon3d({
       iconName=doll_animchar
       iconAttachments=attachments?()
       atlasName="ui/hero#"
       animation="presentation_idle"
-      lightZenith=100
-      lightAzimuth=90
-      sunColor="255,210,180,255"
+      enviPanoramaTex = "daylight_clouds_panorama_tex_d"
+      enviExposure = 0.1
+      lights = [
+        {
+          color = "50,50,80,255"
+          brightness = 2.079
+          zenith = 45
+          azimuth = -230
+        }
+        {
+          color = "255,255,255,255"
+          brightness = 0.198
+          zenith = 145
+          azimuth = -10
+        }
+        {
+          color = "220,220,220,255"
+          brightness = 1.0395
+          zenith = 45
+          azimuth = -55
+        }
+        {
+          color = "22,55,66,255"
+          brightness = 0.198
+          zenith = 25
+          azimuth = -60
+        }
+        {
+          color = "220,220,220,255"
+          brightness = 1.32
+          zenith = 78
+          azimuth = -60
+        }
+      ]
 
       shaderColors={
         primary_color = overrideRibbons?.primaryColor ?? get_primary_color_of_hero(watchedHeroEid.get())
         secondary_color = overrideRibbons?.secondaryColor ?? get_secondary_color_of_hero(watchedHeroEid.get())
       }
-    }.__update(overrideIconParams ?? const {}),{
+    }.__update(overrideIconParams ?? static {}),{
       width=doll_size[0]
       height=doll_size[1]
       shading = "full"
-    }.__merge(params ?? const {}))
+    }.__merge(params ?? static {}))
   }
 
 let mkHintDoll = @(iconName, doll_size, pose, override = {color = Color(192,192,192,200)}, hide = null)
@@ -323,7 +379,7 @@ function mkPartHp(bodypart, showCurrent, interactable) {
         valign = ALIGN_CENTER
         halign = ALIGN_CENTER
         onAttach = triggerAnimation
-        transform = const {}
+        transform = static {}
         animations = [
           mkInjuredAnim(partName, fillColor),
           mkDmgAnim(partName, fillColor),
@@ -337,10 +393,10 @@ function mkPartHp(bodypart, showCurrent, interactable) {
   return @() {
     watch = [draggedData, stateFlag]
     minWidth
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     behavior = interactable ? [Behaviors.Button, Behaviors.DragAndDrop] : null
     skipDirPadNav = true
-    onElemState = @(val) stateFlag(val)
+    onElemState = @(val) stateFlag.set(val)
 
     hplace = bodypart[2] == hpElementHintLine.RIGHT ? ALIGN_RIGHT :
               bodypart[2] == hpElementHintLine.LEFT ? ALIGN_LEFT :
@@ -369,7 +425,7 @@ function mkPartHp(bodypart, showCurrent, interactable) {
     children = [
       {
         flow = FLOW_VERTICAL
-        size = [ flex(), SIZE_TO_CONTENT ]
+        size = FLEX_H
         valign = ALIGN_BOTTOM
         children = [
           partNameComp
@@ -390,7 +446,7 @@ function mkActivePresetHp(bodypart) {
       ALIGN_CENTER
   return {
     minWidth = itemHeight
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     valign = ALIGN_BOTTOM
     hplace
@@ -419,7 +475,7 @@ function previewToSlot(previewItem, slotName) {
   let fakeSlot = humanEquipmentSlots?[slotName] ?? getSlotFromTemplate(slotName)
   let fakeItem = previewItem?.itemTemplate != null ? mkFakeItem(previewItem.itemTemplate, previewItem) : {}
 
-  return fakeItem.__update(fakeSlot, { slotName })
+  return fakeItem.__merge(fakeSlot, { slotName })
 }
 
 function mkSuitSlotCallbacks(slotName, previewCallbacks) {
@@ -430,6 +486,7 @@ function mkSuitSlotCallbacks(slotName, previewCallbacks) {
 }
 
 function mkPartSuitEquipment(bodypart, suit, isActionForbidden = false) {
+  #forbid-auto-freeze
   let partName = bodypart[0]
   local slots = []
   if (previewPreset.get() != null) {
@@ -481,7 +538,7 @@ function getEquipmentSlotData(preview, equip, slotName) {
     return slot ? previewToSlot(slot, slotName) : humanEquipmentSlots[slotName].__merge({ slotName })
   }
   else {
-    return equip?[slotName] ?? humanEquipmentSlots[slotName]
+    return equip?[slotName].__merge(humanEquipmentSlots[slotName]) ?? humanEquipmentSlots[slotName]
   }
 }
 
@@ -548,14 +605,14 @@ function mkFakeSuit(suitTemplate) {
   return suitType == 0 ? "am_trooper_empty_model_male_char" : "am_trooper_empty_model_female_char"
 }
 
-let highlightDollParams = const {
+let highlightDollParams = static {
   silhouette = [25, 25, 15, 150],
   silhouetteInactive = [25, 25, 15, 150],
   shading = "silhouette",
   animations = [{ prop=AnimProp.opacity, from=0.0, to=1, duration=1.2, play=true, loop=true, easing=CosineFull }]
 }
 
-let outlineDollParams = const {
+let outlineDollParams = static {
   outline = [56, 44, 18, 255],
   outlineInactive = [56, 44, 18, 255],
   shading = "silhouette",
@@ -567,7 +624,7 @@ let bodypartsPanel = @(isActionForbidden = false, iconParams=null) function() {
   let width = isPreparationOpened.get() ? hdpx(565) : hdpx(600)
   let panelSize = [width, hdpx(800)]
   let bodyPanelSize = [panelSize[0], hdpx(750)]
-  let dollSize = const [ hdpx(487), hdpx(750) ]
+  let dollSize = static [ hdpx(487), hdpx(750) ]
 
   let suit = previewPreset.get() != null
     ? {
@@ -600,22 +657,24 @@ let bodypartsPanel = @(isActionForbidden = false, iconParams=null) function() {
             mkSuitSlotCallbacks(ON_BODY_SLOT.name, previewPresetCallbackOverride.get()?.backpack),
             inventoryImageParams,
             ON_BODY_SLOT,
-            isActionForbidden || (previewPreset.get() != null && previewPresetCallbackOverride.get()?.backpack == null)
+            isActionForbidden && (previewPreset.get() != null && previewPresetCallbackOverride.get()?.backpack != null)
           ) : null
           pouchSlotIsVisible ? mkEquipmentSlot(
             getEquipmentSlotData(previewPreset.get(), equipment.get(), "pouch")
             mkSuitSlotCallbacks(ON_BODY_SLOT.name, previewPresetCallbackOverride.get()?.pouch),
             inventoryImageParams,
             ON_BODY_SLOT,
-            isActionForbidden || (previewPreset.get() != null && previewPresetCallbackOverride.get()?.pouch == null)
+            isActionForbidden && (previewPreset.get() != null && previewPresetCallbackOverride.get()?.pouch != null)
           ) : null
         ]
       }
       function() {
         let safepackSlotIsVisible = !safepackSlotIsRemoved
           && !(isInMonsterState.get() && !isMonsterInventoryEnabled.get())
+          && !isNexus.get()
+          && !isNexusPreparationOpened.get()
         return {
-          watch = [isInMonsterState, isMonsterInventoryEnabled]
+          watch = [isInMonsterState, isMonsterInventoryEnabled, isNexus, isNexusPreparationOpened]
           flow = FLOW_HORIZONTAL
           gap = hdpx(5)
           children = [
@@ -624,7 +683,7 @@ let bodypartsPanel = @(isActionForbidden = false, iconParams=null) function() {
               mkSuitSlotCallbacks(ON_BODY_SLOT.name, previewPresetCallbackOverride.get()?.safepack),
               inventoryImageParams,
               ON_BODY_SLOT,
-              isActionForbidden || (previewPreset.get() != null && previewPresetCallbackOverride.get()?.safepack == null)
+              isActionForbidden || (previewPreset.get() != null && previewPresetCallbackOverride.get()?.safepack != null)
             ) : null
           ]
         }
@@ -635,14 +694,37 @@ let bodypartsPanel = @(isActionForbidden = false, iconParams=null) function() {
   let backpackAndPouchPart = mkBodypartBlock(backpackAndPouchesDoll, panelSize, null, backpackAndPouch)
 
   let flashlightSlotIsVisible = getEquipmentVisibility(previewPreset.get(), equipment.get(), "flashlight")
-  let flashlightSlot = flashlightSlotIsVisible ? mkEquipmentSlot(
-    getEquipmentSlotData(previewPreset.get(), equipment.get(), "flashlight"),
-    mkSuitSlotCallbacks(ON_BODY_SLOT.name, previewPresetCallbackOverride.get()?.flashlight),
-    inventoryImageParams,
-    ON_BODY_SLOT,
-    isActionForbidden || (previewPreset.get() != null && previewPresetCallbackOverride.get()?.flashlight == null)
-  ) : null
-  let flashlightPart = mkBodypartBlock(flashlightDoll, panelSize, null, flashlightSlot)
+  let signalGrenadeSlotIsVisible = getEquipmentVisibility(previewPreset.get(), equipment.get(), "signal_grenade")
+  let devices = @(){
+    watch = [equipment, attachedEquipment, previewPreset, isNexusPreparationOpened]
+    flow = FLOW_VERTICAL
+    gap = hdpx(5)
+    halign = ALIGN_RIGHT
+    children = [
+      {
+        flow = FLOW_HORIZONTAL
+        gap = hdpx(5)
+        children = [
+          flashlightSlotIsVisible ? mkEquipmentSlot(
+            getEquipmentSlotData(previewPreset.get(), equipment.get(), "flashlight"),
+            mkSuitSlotCallbacks(ON_BODY_SLOT.name, previewPresetCallbackOverride.get()?.flashlight),
+            inventoryImageParams,
+            ON_BODY_SLOT,
+            isActionForbidden || (previewPreset.get() != null && previewPresetCallbackOverride.get()?.flashlight == null)
+          ) : null
+          signalGrenadeSlotIsVisible && !isNexusPreparationOpened.get() ? mkEquipmentSlot(
+            getEquipmentSlotData(previewPreset.get(), equipment.get(), "signal_grenade")
+            mkSuitSlotCallbacks(ON_BODY_SLOT.name, previewPresetCallbackOverride.get()?.pouch),
+            inventoryImageParams,
+            ON_BODY_SLOT,
+            isActionForbidden && (previewPreset.get() != null && previewPresetCallbackOverride.get()?.signal_grenade != null)
+          ) : null
+        ]
+      }
+    ]
+  }
+
+  let flashlightPart = mkBodypartBlock(flashlightDoll, panelSize, null, devices)
 
   let helmetSlotIsVisible = getEquipmentVisibility(previewPreset.get(), equipment.get(), "helmet")
   let headPart = helmetSlotIsVisible ? mkBodypartBlock(headDoll, panelSize, mkPartHpBlock(headDoll), mkHelmet(isActionForbidden))
@@ -660,8 +742,8 @@ let bodypartsPanel = @(isActionForbidden = false, iconParams=null) function() {
   let outlineDoll = mkHeroDoll(watchedHeroMainAnimcharRes.get(), mkIconAttachments(equipAttached), dollSize, outlineDollParams, null, iconParams)
 
   let normalDollComp = @(){
-    size = flex()
     watch = draggedData
+    size = flex()
     hplace = ALIGN_CENTER
     children = [
       normalDoll,
@@ -679,6 +761,7 @@ let bodypartsPanel = @(isActionForbidden = false, iconParams=null) function() {
     watch = [equipment, bodyParts, watchedHeroAnimcharEid, watchedHeroMainAnimcharRes, attachedEquipment,
       previewPreset, draggedData, equipmentModSlots, isPreparationOpened, previewPresetCallbackOverride]
     size = panelSize
+    skipDirPadNav = true
     behavior = Behaviors.DragAndDrop
     onDrop = function(item){
       if (verify_healing_attempt_bind(controlledHeroEid.get(), item.eid))
@@ -699,37 +782,9 @@ let bodypartsPanel = @(isActionForbidden = false, iconParams=null) function() {
   }
 }
 
-function mkSuitItemPreview(suit, dollHeight, interactable=true){
-  let dollSize = getDollSize(dollHeight)
-
-  let suitTemplatName = suit?.itemTemplate ?? suit
-  let animchar = suitTemplatName ?
-    ecs.g_entity_mgr.getTemplateDB().getTemplateByName(suitTemplatName).getCompValNullable("animchar__res") :
-    "am_trooper_empty_model_male_char"
-
-  let bodyEquipment = mkPartSuitEquipment(bodyDoll, suit)
-  let bodyPart = mkBodypartBlock(bodyDoll, dollSize, mkPartHpBlock(bodyDoll, false, interactable), bodyEquipment)
-  let headPart = mkBodypartBlock(headDoll, dollSize, mkPartHpBlock(headDoll, false, interactable), null)
-
-  return {
-    size = dollSize
-    hplace = ALIGN_CENTER
-    vplace = ALIGN_CENTER
-    children = bodyParts.get() ? [ headPart ].extend(
-      limbsDoll.map(function(i) {
-        let equip = mkPartSuitEquipment(i, suit)
-        return mkBodypartBlock(i, dollSize, mkPartHpBlock(i, false, interactable), equip)
-      }),
-      [
-        mkHeroDoll(animchar, null, dollSize)
-        bodyPart
-      ]) : null
-  }
-}
-
 function mkSuitPreview(suitTemplatName){
-  let panelSize = const [ hdpx(600), hdpx(800)]
-  let dollSize = const [ hdpx(487), hdpx(750) ]
+  let panelSize = static [ hdpx(600), hdpx(800)]
+  let dollSize = static [ hdpx(487), hdpx(750) ]
 
   let suitTemplate = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(suitTemplatName)
   if (!suitTemplate)
@@ -748,7 +803,7 @@ function mkSuitPreview(suitTemplatName){
 
 function mkMiniBodyPartsChildren(iconName, pos_name, size){
   return [
-    mkHintDoll(iconName, size, pos_name, const { color = Color(192, 192, 192, 200), outline = [18, 18, 18, 255] }),
+    mkHintDoll(iconName, size, pos_name, static { color = Color(192, 192, 192, 200), outline = [18, 18, 18, 255] }),
   ].extend(bodyParts.get().values()
     .sort(@(a,b) dummyNodeNames[a.name].zpos <=> dummyNodeNames[b.name].zpos)
     .map(function(bp){
@@ -832,7 +887,6 @@ return {
   bodypartsPanel = bodypartsPanel(false)
   nonInteractiveBodypartsPanel = bodypartsPanel(true)
   nonInteractiveDesaturateBodypartsPanel = bodypartsPanel(true, {picSaturate=0})
-  mkSuitItemPreview
   miniBodypartsPanel
   healingDollPanel
   HealingDollId
@@ -841,4 +895,5 @@ return {
   mkHeroDoll
   mkSuitPreview
   hpElementHintLine
+  mkIconAttachments
 }

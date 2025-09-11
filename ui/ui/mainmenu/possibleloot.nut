@@ -1,14 +1,14 @@
+from "%ui/helpers/parseSceneBlk.nut" import get_possible_loot
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem, mkFakeAttachments
+from "%ui/hud/menus/components/inventoryItemTooltip.nut" import buildInventoryItemTooltip
+from "%ui/components/commonComponents.nut" import mkTooltiped, mkText
+from "%ui/components/itemIconComponent.nut" import itemIconNoBorder
+from "%ui/components/colors.nut" import ItemBgColor
+from "%ui/hud/menus/components/inventoryItemRarity.nut" import mkRarityIconByTemplateName
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
 
-let { get_possible_loot } = require("%ui/helpers/parseSceneBlk.nut")
-let { mkFakeItem, mkFakeAttachments } = require("%ui/hud/menus/components/fakeItem.nut")
-let { buildInventoryItemTooltip } = require("%ui/hud/menus/components/inventoryItemTooltip.nut")
-let { mkTooltiped, mkText } = require("%ui/components/commonComponents.nut")
-let { itemIconNoBorder } = require("%ui/components/itemIconComponent.nut")
-let { ItemBgColor } = require("%ui/components/colors.nut")
-let { mkRarityIconByTemplateName } = require("%ui/hud/menus/components/inventoryItemRarity.nut")
 
 
 let forbiddenItemComponents = [
@@ -119,7 +119,7 @@ function lineFromComps(comps) {
     gap = hdpx(3)
     valign = ALIGN_CENTER
     halign = ALIGN_LEFT
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     children = comps
   }
 }
@@ -134,7 +134,7 @@ function mkPossibleLootBlock(scene, description, params) {
     .map(@(v) mkFakeItem(v))
     .filter(filter_possible_loot)
     .sort(sort_possible_loot)
-  let itemsToShow = (description?.possibleLoot?.map(@(v) mkFakeItem(v)) ?? parsedPossibleItems.slice(0, total_items).sort(sort_shown_loot))
+  let itemsToShow = (description?.possibleLoot.map(@(v) mkFakeItem(v)) ?? parsedPossibleItems).slice(0, total_items).sort(sort_shown_loot)
 
   let notShownItemsNum = max((description?.overrideMoreLootNum ?? 0), parsedPossibleItems.len() - itemsToShow.len())
   
@@ -154,7 +154,7 @@ function mkPossibleLootBlock(scene, description, params) {
 
   let possibleLootComps = itemsToShow.map(possibleLootItemComp).append(moreButton)
 
-  local lines = []
+  let lines = []
   for (local i = 0; i < possibleLootComps.len(); i += num_in_row) {
     if (i >= total_items)
       break
@@ -162,13 +162,13 @@ function mkPossibleLootBlock(scene, description, params) {
   }
 
   return {
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     valign = ALIGN_CENTER
     gap = hdpx(10)
     children = [
       {
-        size = [ flex(), SIZE_TO_CONTENT ]
+        size = FLEX_H
         halign = ALIGN_LEFT
         children = mkText(loc("possibleLoot/title"))
       }

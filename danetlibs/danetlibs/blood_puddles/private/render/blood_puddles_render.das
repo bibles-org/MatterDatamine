@@ -1,6 +1,6 @@
 require ecs
 require BloodPuddles
-require app
+require app // dgs_get_game_params
 require DagorDataBlock
 require danetlibs.renderer.includes.render_events
 require danetlibs.blood_puddles.blood_puddles_events

@@ -1,6 +1,8 @@
+from "%ui/mainMenu/eula/eula.nut" import eulaVersion, showEula
+
 from "%ui/ui_library.nut" import *
 
-let { eulaVersion, showEula, acceptedEulaVersionBeforeLogin } = require("%ui/mainMenu/eula/eula.nut")
+let { acceptedEulaVersionBeforeLogin } = require("%ui/mainMenu/eula/eula.nut")
 
 
 let onlineSettings = require("%ui/options/onlineSettings.nut")

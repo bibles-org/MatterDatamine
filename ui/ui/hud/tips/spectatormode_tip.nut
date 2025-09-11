@@ -1,8 +1,9 @@
+from "%ui/components/commonComponents.nut" import mkText
+
 from "%ui/ui_library.nut" import *
 
 let { spectatingPlayerName } = require("%ui/hud/state/spectator_state.nut")
 let { showDebriefing } = require("%ui/mainMenu/debriefing/debriefingState.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
 
 let spectatingName = Computed(function() {
   if (!showDebriefing.get() && spectatingPlayerName.get() != null)

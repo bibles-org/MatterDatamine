@@ -34,7 +34,12 @@ entity{
 }
 
 entity{
-  _template:t="nexus_round_mode_beacon"
+  _template:t="navmesh_battle_area"
+  transform:m=[[4000, 0, 0] [0, 4000, 0] [0, 0, 4000] [0, 0, 0]]
+}
+
+entity{
+  _template:t="nexus_beacon"
   transform:m=[[1, 0, 0] [-0, -4.37114e-08, 1] [0, -1, -4.37114e-08] [-36.6313, 13.7388, 29.044]]
   nexus_beacon__id:i=1
   nexus_beacon__name:t="Power plant"
@@ -42,14 +47,14 @@ entity{
 }
 
 entity{
-  _template:t="nexus_round_mode_beacon_capture_device"
+  _template:t="nexus_beacon_capture_device"
   transform:m=[[1, 0, -0] [0, 1, 1.06581e-14] [0, -1.06581e-14, 1] [-36.6313, 12.6779, 29.044]]
   nexus_beacon_capture_device__parentId:i=1
   item__setCustomUsePrompt:t="nexus_portal/Power plant"
 }
 
 entity{
-  _template:t="nexus_round_mode_beacon"
+  _template:t="nexus_beacon"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [22.2206, 13.5147, -13.4498]]
   nexus_beacon__id:i=2
   nexus_beacon__name:t="Factory Yard"
@@ -58,21 +63,21 @@ entity{
 }
 
 entity{
-  _template:t="nexus_round_mode_beacon_capture_device"
+  _template:t="nexus_beacon_capture_device"
   transform:m=[[-1, 8.74228e-08, 0] [-8.74228e-08, -1, 0] [0, 0, 1] [22.2206, 16.83, -13.4498]]
   nexus_beacon_capture_device__parentId:i=2
   item__setCustomUsePrompt:t="nexus_portal/Factory Yard ceiling"
 }
 
 entity{
-  _template:t="nexus_round_mode_beacon_capture_device"
+  _template:t="nexus_beacon_capture_device"
   transform:m=[[-1, -8.74228e-08, 7.64274e-15] [-8.74228e-08, 1, -8.74228e-08] [0, -8.74228e-08, -1] [22.2206, 11.5207, -13.4498]]
   nexus_beacon_capture_device__parentId:i=2
   item__setCustomUsePrompt:t="nexus_portal/Factory Yard floor"
 }
 
 entity{
-  _template:t="nexus_round_mode_beacon"
+  _template:t="nexus_beacon"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [35.3654, 6.42737, -45.4525]]
   nexus_beacon__id:i=3
   nexus_beacon__name:t="Club"
@@ -80,7 +85,7 @@ entity{
 }
 
 entity{
-  _template:t="nexus_round_mode_beacon_capture_device"
+  _template:t="nexus_beacon_capture_device"
   transform:m=[[0.997937, 0, 0.064203] [0, 1, -0] [-0.064203, 0, 0.997937] [35.3725, 5.33303, -45.4396]]
   nexus_beacon_capture_device__parentId:i=3
   item__setCustomUsePrompt:t="nexus_portal/Club"
@@ -377,12 +382,7 @@ entity{
 
 entity{
   _template:t="gravity_zone_box"
-  transform:m=[[-5.37323, -4.69743e-07, 0] [2.99519e-07, -3.42611, 0] [0, 0, 18.6764] [32, 16.7407, -13.5741]]
-}
-
-entity{
-  _template:t="gravity_zone_box"
-  transform:m=[[-6.55532, -5.73085e-07, 0] [3.44295e-07, -3.93826, 0] [0, 0, 19.8169] [37.9074, 17.0105, -14.2292]]
+  transform:m=[[-10.7941, -9.43651e-07, 0] [2.99519e-07, -3.42611, 0] [0, 0, 17.2562] [34.7028, 16.7407, -12.8147]]
 }
 
 entity{
@@ -405,6 +405,11 @@ entity{
 entity{
   _template:t="gravity_zone_box"
   transform:m=[[-2.57048, -2.24717e-07, 0] [2.3027e-07, -2.63398, 0] [0, 0, 4.55192] [27.9535, 17.4956, -24.8283]]
+}
+
+entity{
+  _template:t="volfog_nbs"
+  volfog_nbs__rootGraph:t="fog_factory_mir.json"
 }
 
 entity{
@@ -912,4 +917,9 @@ entity{
 entity{
   _template:t="teleport_blue_light_flicker"
   transform:m=[[-1.11326e-08, 0.967024, -0.254685] [4.227e-08, 0.254685, 0.967024] [1, -8.88178e-16, -4.37114e-08] [-35.503, 10.2201, 4.32881]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-4.43884, -3.88056e-07, 0] [2.99519e-07, -3.42611, 0] [0, 0, 2.33894] [39.1935, 16.7407, -21.6698]]
 }

@@ -1,4 +1,5 @@
-let { isModForEquipmentSlot } = require("%ui/hud/state/equipment.nut")
+from "%ui/hud/state/equipment.nut" import isModForEquipmentSlot
+
 
 function isAmmoForWeapon(ammo, weapon){
   if (ammo?.boxTemplate != null && ammo.boxTemplate == weapon?.gunBoxedAmmoTemplate)

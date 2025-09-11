@@ -1,9 +1,11 @@
+from "%sqGlob/dasenums.nut" import HumanUseObjectHintType
+
+from "%ui/hud/human_actions.nut" import ACTION_NONE
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {ACTION_NONE} = require("%ui/hud/human_actions.nut")
 
-let { HumanUseObjectHintType } = require("%sqGlob/dasenums.nut")
 let useActionType = Watched(ACTION_NONE)
 let useAltActionType = Watched(false)
 let useActionAvailable = Watched(false)

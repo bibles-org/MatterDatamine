@@ -1,7 +1,8 @@
+from "%ui/fonts_style.nut" import sub_txt
+from "%ui/components/colors.nut" import TextHighlight, BtnTextHover
+
 from "%ui/ui_library.nut" import *
 
-let { sub_txt } = require("%ui/fonts_style.nut")
-let {TextHighlight, BtnTextHover} = require("%ui/components/colors.nut")
 
 let buildCounter = @(counterWatch, overrride = {}) @() {
   watch = counterWatch
@@ -12,7 +13,7 @@ let buildCounter = @(counterWatch, overrride = {}) @() {
   color = TextHighlight
   fontFx = FFT_GLOW
   fontFxColor = BtnTextHover
-  text = counterWatch.value
+  text = counterWatch.get()
 }.__update(sub_txt, overrride)
 
 return buildCounter

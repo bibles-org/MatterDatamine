@@ -37,23 +37,30 @@ nvd_down_visual_sequence{
 }
 
 night_vision_device_infrared_light_controller{
-  night_vision_device__maxObstacleTraceDistance:r=10
+  night_vision_device__maxObstacleTraceDistance:r=30
   night_vision_device__nextObstacleTraceAt:r=0
   night_vision_device__obstacleTracesInterval:r=0.2
   night_vision_device__obstacleTraceSphereRadius:r=0.35
-  night_vision_device__flashlightBrightnessRange:p2=0.005, 1.5
+  night_vision_device__flashlightBrightnessRange:p2=5, 45.5
   night_vision_device__flashlightTargetBrightness:r=0
-  night_vision_device__flashlightAdaptationFactor:r=3
+  night_vision_device__flashlightAdaptationFactor:r=3.5
+}
+
+night_vision_device_infrared_flashlight_spot_light{
+  _use:t="controlled_infrared_flashlight_spot_light"
+
+  "night_vision_device_infrared_flashlight_spot_light:tag"{}
 }
 
 attached_infrared_flashlight_controller{
-  _tracked:t="attached_flashlight_controller__entityEid"
-  _replicated:t="attached_flashlight_controller__entityEid"
-  attached_flashlight_controller__templateName:t="attached_infrared_flashlight"
-  attached_flashlight_controller__nodeName:t="d_eye_l"
-  attached_flashlight_controller__nodeId:i=0
+  _tracked:t="attached_flashlight_controller__spotLightEid"
+  _replicated:t="attached_flashlight_controller__spotLightEid"
+  attached_flashlight_controller__spotLightTemplate:t="night_vision_device_infrared_flashlight_spot_light"
+  attached_flashlight_controller__spotLightAttachNodeName:t="d_eye_l"
+  attached_flashlight_controller__spotLightAttachNodeId:i=-1
 
-  "attached_flashlight_controller__entityEid:eid"{}
+  "attached_flashlight_controller__spotLightEid:eid"{}
+  "attached_flashlight_controller__spotLightAttachEid:eid"{}
 }
 
 night_vision_device{
@@ -63,13 +70,15 @@ night_vision_device{
   _use:t="attached_infrared_flashlight_controller"
   _use:t="item_rarity_uncommon"
   item__recreateInEquipmentModSlot:t="visible_item_in_equipment_mod"
+  night_vision_device__nightLightMult:r=0.08
+  night_vision_device__nightLightDistanceMult:r=0.001
   night_vision_device__isOn:b=no
   _tracked:t="night_vision_device__isOn"
   _replicated:t="night_vision_device__isOn"
   item__proto:t="night_vision_device"
   item__name:t="items/night_vision_device1"
   item__weight:r=0.51
-  item__volume:r=12
+  item__volume:i=120
   item__marketPrice:i=3750
   item__iconPitch:r=-10
   item__iconRoll:r=40
@@ -86,6 +95,8 @@ night_vision_device{
   _tracked:t="slot_attach__ignoreParentVisibility"
   showroom_item__customZoom:r=1.8
   showroom_item__customZoomBordersRng:p2=1.6, 2.2
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=3, 3
+  item__nexusCost:i=50
 
   "item__dropOnGroundIfParentDestroyed:tag"{}
   "night_vision_device:tag"{}
@@ -94,14 +105,15 @@ night_vision_device{
   "item__cantBeCorrupted:tag"{}
 }
 
-attached_infrared_flashlight{
-  _use:t="attached_flashlight"
+controlled_infrared_flashlight_spot_light{
+  _use:t="controlled_flashlight_spot_light"
   light__radius_scale:r=3
-  lightModTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0.2]]
-  attached_flashlight__type:i=1
-  attached_flashlight__normalBrightness:r=0
-  attached_flashlight__lightScale:r=0.4
-  attached_flashlight__extraRotation:p3=-7, 0, 0
+  lightModTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  light__offset:p3=0, 0, 0.2
+  flashlight_spot_light__type:i=1
+  flashlight_spot_light__normalBrightness:r=0
+  flashlight_spot_light__lightScale:r=0.5
+  flashlight_spot_light__extraRotation:p3=-7, 0, 0
   light__color:c=255, 0, 0, 255
 }
 

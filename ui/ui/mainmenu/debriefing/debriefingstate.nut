@@ -1,24 +1,22 @@
+from "%dngscripts/globalState.nut" import nestWatched
+from "%sqGlob/app_control.nut" import switch_to_menu_scene
+from "%sqGlob/dasenums.nut" import GameEndReasons, EndgameControllerState
+from "%sqstd/json.nut" import loadJson, saveJson
+from "net" import get_sync_time
+from "%ui/helpers/remap_nick.nut" import remap_nick
+from "app" import get_session_id
+from "eventbus" import eventbus_send
+from "%ui/devInfo.nut" import addTabToDevInfo
+from "dasevents" import EventOnboardingRaidExit, CmdStartAssistantSpeak
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { nestWatched } = require("%dngscripts/globalState.nut")
-let { loadJson, saveJson } = require("%sqstd/json.nut")
-let {get_sync_time} = require("net")
 let userInfo = require("%sqGlob/userInfo.nut")
-let { remap_nick } = require("%ui/helpers/remap_nick.nut")
-let { switch_to_menu_scene } = require("%sqGlob/app_control.nut")
-let { get_session_id } = require("app")
-let { GameEndReasons, EndgameControllerState } = require("%sqGlob/dasenums.nut")
-let { eventbus_send } = require("eventbus")
-let { endgameControllerState, endgameControllerDebriefingReason,
-  endgameControllerDebriefingTeam, endgameControllerDebriefingAllowSpectate,
-  endgameControllerAutoExit } = require("%ui/hud/state/endgame_controller_state.nut")
-let { deathCause } = require("death_cause.nut")
+let { endgameControllerState, endgameControllerDebriefingReason, endgameControllerDebriefingTeam, endgameControllerDebriefingAllowSpectate, endgameControllerAutoExit } = require("%ui/hud/state/endgame_controller_state.nut")
+let { deathCause } = require("%ui/mainMenu/debriefing/death_cause.nut")
 let { heroAmValue } = require("%ui/hud/state/am_storage_state.nut")
-let { addTabToDevInfo } = require("%ui/devInfo.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
-let { EventOnboardingRaidExit, CmdStartAssistantSpeak } = require("dasevents")
 let { isAlive } = require("%ui/hud/state/health_state.nut")
 let { localPlayerEid } = require("%ui/hud/state/local_player.nut")
 
@@ -116,7 +114,7 @@ let computedDebriefingData = Computed(function() {
   if ((state == EndgameControllerState.FADEIN || state == EndgameControllerState.DEBRIEFING)
       && isLocalTeam && !isReplay()) {
     return {
-      playerName = remap_nick(userInfo.value?.name)
+      playerName = remap_nick(userInfo.get()?.name)
       allowSpectate
       result = {
         fail = !success
@@ -132,7 +130,7 @@ let computedDebriefingData = Computed(function() {
 })
 
 function exitBattle(){
-  showDebriefing(false)
+  showDebriefing.set(false)
   if (isOnboarding.get()){
     let success = computedDebriefingData.get()?.result.success ?? true
     ecs.g_entity_mgr.broadcastEvent(EventOnboardingRaidExit({success}))
@@ -150,7 +148,7 @@ console commands:
 let missSecondPlayedThisDeath = nestWatched("missSecondPlayedThisDeath", false)
 
 
-computedDebriefingData.subscribe(function(v) {
+computedDebriefingData.subscribe_with_nasty_disregard_of_frp_update(function(v) {
   log($"[debriefing data]: autoExit={v?.autoExit} ; realDebriefing={v?.result != null} ; success={v?.result?.success}")
   if (v?.autoExit ?? false) {
     exitBattle()
@@ -162,14 +160,14 @@ computedDebriefingData.subscribe(function(v) {
     eventbus_send("closeAllMenus", null)
   }
 
-  showDebriefing(isRealDebriefing)
+  showDebriefing.set(isRealDebriefing)
   if (isRealDebriefing && !(v?.result?.success ?? false) && !missSecondPlayedThisDeath.get()) {
     ecs.g_entity_mgr.sendEvent(localPlayerEid.get(), CmdStartAssistantSpeak({scriptName = "raid_die_message", skipBeepSound = true}))
     missSecondPlayedThisDeath.set(true)
   }
 })
 
-isAlive.subscribe(@(v) v ? missSecondPlayedThisDeath.set(false) : null)
+isAlive.subscribe_with_nasty_disregard_of_frp_update(@(v) v ? missSecondPlayedThisDeath.set(false) : null)
 
 function loadDebriefing(path = null) {
   path = path ?? "%ui/mainMenu/debriefing/debriefing_sample.json"
@@ -194,12 +192,12 @@ console_register_command(@(path="") saveDebriefing(path), "ui.debriefing_save")
 
 console_register_command(function() {
   loadDebriefing()
-  showDebriefing(true)
+  showDebriefing.set(true)
 }, "ui.show_sample_debriefing")
 
 console_register_command(function(path) {
   loadDebriefing(path)
-  showDebriefing(true)
+  showDebriefing.set(true)
 }, "ui.load_debriefing")
 
 return {

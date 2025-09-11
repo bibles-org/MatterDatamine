@@ -2,7 +2,7 @@ ragdoll_phys_obj{
   _use:t="replicating"
   _use:t="base_net_phys"
   _use:t="deformation_bbox_receiver"
-  _use:t="interactable_grid_obj"
+  _use:t="interactable_dynamic_grid_object"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   _tracked:t="transform"
   phys_obj_net_phys__blk:t="gamedata/templates/ragdoll_phys.blk"
@@ -44,13 +44,13 @@ lootable_ragdoll_phys_obj{
   itemContainer__name:t="container/deadBody"
   itemContainer__type:t="deadBody"
   use_object__offset:p3=0, 0, 0
+  use_object__netServerExtraUseDistance:r=0.5
 
   "lootable_ragdoll_phys_obj:tag"{}
 }
 
 militant_ragdoll_phys_obj{
   _use:t="lootable_ragdoll_phys_obj"
-  _use:t="am_storage"
   am_storage__hacked:b=no
   am_storage__hackedAmPileTemplate:t="active_matter_pile+item_in_world"
   item__setCustomUseAltPrompt:t=""
@@ -110,7 +110,7 @@ lootable_ragdoll_container{
   item_world_marker__enabled:b=yes
   item_world_marker__attachToNode:t="Bip01 Spine1"
   item_world_marker__attachToNodeIdx:i=-1
-  human_inventory__maxVolume:r=-1
+  human_inventory__maxVolume:i=-1
 
   "net_sound__descs:shared:object"{
     "start_search:object"{
@@ -220,15 +220,39 @@ dead_body_container{
 lootable_ragdoll_phys_obj_with_loot_preset{
   _use:t="lootable_ragdoll_phys_obj"
   loot_drop_system__lootPreset:t="inventory_chest_test_loot_preset"
-  loot_drop_system_delayed_loot_generation__generated:b=no
-  human_inventory__maxVolume:r=10000
+  loot_drop_system__generated:b=no
+  human_inventory__maxVolume:i=600
+
+  "loot_drop_system_delayed_loot_generation:tag"{}
 }
 
 lootable_ragdoll_preset_chronogene_scan_body{
   _use:t="lootable_ragdoll_phys_obj"
   loot_drop_system__lootPreset:t="chronogene_scan_body_loot_preset"
-  loot_drop_system_delayed_loot_generation__generated:b=no
-  human_inventory__maxVolume:r=50
+  loot_drop_system__generated:b=no
+  human_inventory__maxVolume:i=500
+
+  "loot_drop_system_delayed_loot_generation:tag"{}
+}
+
+robodog_ragdoll{
+  _use:t="lootable_ragdoll_phys_obj"
+  itemContainer__name:t="container/destroyedRobotDog"
+  item__setCustomUsePrompt:t="lootingDestroyedRobodog/search"
+  item__setCustomUseAltPrompt:t=""
+  item_world_marker__enabled:b=yes
+  item_world_marker__attachToNode:t="bone_body"
+  item_world_marker__attachToNodeIdx:i=-1
+  item_world_marker__pos:p3=0, 0, 0
+  _tracked:t="item_world_marker__pos"
+
+  "ragdoll_phys_obj__links:array"{
+    "spine:object"{
+      nodeIdx:i=-1
+      nodeName:t="bone_body"
+      root:b=yes
+    }
+  }
 }
 
 dead_body_container_trooper_male_light_a{
@@ -256,15 +280,19 @@ dead_body_container_trooper_male_light_b{
 lootable_ragdoll_preset_close_range_weapons_body{
   _use:t="lootable_ragdoll_phys_obj"
   loot_drop_system__lootPreset:t="close_range_soviet_weapons_t1_loot_preset"
-  loot_drop_system_delayed_loot_generation__generated:b=no
-  human_inventory__maxVolume:r=80
+  loot_drop_system__generated:b=no
+  human_inventory__maxVolume:i=800
+
+  "loot_drop_system_delayed_loot_generation:tag"{}
 }
 
 lootable_ragdoll_preset_long_range_weapons_body{
   _use:t="lootable_ragdoll_phys_obj"
   loot_drop_system__lootPreset:t="long_range_soviet_weapons_t1_loot_preset"
-  loot_drop_system_delayed_loot_generation__generated:b=no
-  human_inventory__maxVolume:r=80
+  loot_drop_system__generated:b=no
+  human_inventory__maxVolume:i=800
+
+  "loot_drop_system_delayed_loot_generation:tag"{}
 }
 
 dead_body_container_close_range_weapons{
@@ -297,8 +325,10 @@ lootable_ragdoll_preset_secret_docs_stash_journal{
   secret_quest_item_generator__objectiveName:t="contract_secret_docs_stash_journal"
   secret_quest_item_generator__tag:t="secret_docs_stash_journal"
   loot_drop_system__lootPreset:t="close_range_soviet_weapons_t1_loot_preset"
-  loot_drop_system_delayed_loot_generation__generated:b=no
-  human_inventory__maxVolume:r=80
+  loot_drop_system__generated:b=no
+  human_inventory__maxVolume:i=800
+
+  "loot_drop_system_delayed_loot_generation:tag"{}
 }
 
 dead_body_container_secret_docs_stash_journal{
@@ -319,13 +349,15 @@ lootable_ragdoll_preset_spike_room_scientist{
   map_object_marker__iconName:t="!ui/skin#bagpack_icon.svg"
   objective_static_target__tag:t="spike_room_scientist"
   loot_drop_system__lootPreset:t="spike_room_scientist_loot_preset"
-  loot_drop_system_delayed_loot_generation__generated:b=no
-  human_inventory__maxVolume:r=80
+  loot_drop_system__generated:b=no
+  human_inventory__maxVolume:i=800
 
   "showMapObjectOnQuestTargetAssignition:tag"{}
   "container_target__discoveredItemTemplates:list<t>"{
     item:t="item_homemade_am_storage_empty"
   }
+
+  "loot_drop_system_delayed_loot_generation:tag"{}
 }
 
 dead_body_container_spike_room_scientist{
@@ -348,8 +380,10 @@ lootable_ragdoll_preset_secret_scientist_escort{
   secret_quest_item_generator__objectiveName:t="contract_secret_scientist_escort_order"
   secret_quest_item_generator__tag:t="secret_scientist_escort_order"
   loot_drop_system__lootPreset:t="close_range_soviet_weapons_t1_loot_preset"
-  loot_drop_system_delayed_loot_generation__generated:b=no
-  human_inventory__maxVolume:r=80
+  loot_drop_system__generated:b=no
+  human_inventory__maxVolume:i=800
+
+  "loot_drop_system_delayed_loot_generation:tag"{}
 }
 
 dead_body_container_secret_scientist_escort{
@@ -367,10 +401,11 @@ lootable_ragdoll_preset_factory_basement_key{
   _use:t="lootable_ragdoll_phys_obj"
   _use:t="base_container_quest_target"
   loot_drop_system__lootPreset:t="close_range_soviet_weapons_t1_loot_preset"
-  loot_drop_system_delayed_loot_generation__generated:b=no
-  human_inventory__maxVolume:r=80
+  loot_drop_system__generated:b=no
+  human_inventory__maxVolume:i=800
   objective_static_target__tag:t="factory_basement_keys"
 
+  "loot_drop_system_delayed_loot_generation:tag"{}
   "container_target__discoveredItemTemplates:list<t>"{
     item:t="key_factory_basement_item"
   }
@@ -394,13 +429,15 @@ lootable_ragdoll_preset_africa_headquarters_commander_1{
   itemContainer__name:t="container/dead_commander"
   map_object_marker__iconName:t="!ui/skin#bagpack_icon.svg"
   objective_static_target__tag:t="africa_headquarters_flashdrive_1_body"
-  loot_drop_system_delayed_loot_generation__generated:b=no
-  human_inventory__maxVolume:r=80
+  loot_drop_system__generated:b=no
+  human_inventory__maxVolume:i=800
 
   "showMapObjectOnQuestTargetAssignition:tag"{}
   "container_target__discoveredItemTemplates:list<t>"{
     item:t="item_africa_headquarters_flashdrive_1"
   }
+
+  "loot_drop_system_delayed_loot_generation:tag"{}
 }
 
 dead_body_container_africa_headquarters_commander_1{
@@ -424,8 +461,10 @@ lootable_ragdoll_preset_secret_africa_headquarters_commander_4{
   secret_quest_item_generator__tag:t="secret_africa_headquarters_flashdrive_4"
   itemContainer__name:t="container/dead_commander"
   loot_drop_system__lootPreset:t="close_range_soviet_weapons_t2_loot_preset"
-  loot_drop_system_delayed_loot_generation__generated:b=no
-  human_inventory__maxVolume:r=80
+  loot_drop_system__generated:b=no
+  human_inventory__maxVolume:i=800
+
+  "loot_drop_system_delayed_loot_generation:tag"{}
 }
 
 dead_body_container_secret_africa_headquarters_commander_4{
@@ -436,5 +475,39 @@ dead_body_container_secret_africa_headquarters_commander_4{
   _group{
     _tags:t="server"
     net_ragdoll__physObjTemplate:t="lootable_ragdoll_preset_secret_africa_headquarters_commander_4"
+  }
+}
+
+create_on_accessed_america_xenos_key_body{
+  create_on_accessed__template:t="pve_event_auto_america_xenos_key"
+  create_on_accessed__timesLeft:i=1
+}
+
+lootable_ragdoll_preset_america_xenos_key_body{
+  _use:t="lootable_ragdoll_phys_obj"
+  _use:t="base_container_quest_target"
+  _use:t="create_on_accessed_america_xenos_key_body"
+  itemContainer__name:t="container/dead_agent"
+  map_object_marker__iconName:t="!ui/skin#bagpack_icon.svg"
+  objective_static_target__tag:t="america_xenos_key_body"
+  loot_drop_system__generated:b=no
+  human_inventory__maxVolume:i=800
+
+  "container_target__discoveredItemTemplates:list<t>"{
+    item:t="key_america_xenos_device_item"
+  }
+
+  "loot_drop_system_delayed_loot_generation:tag"{}
+}
+
+dead_body_container_america_xenos_key_body{
+  _use:t="dead_body_container"
+  animchar__res:t="am_player_trooper_male_light_b_char"
+  collres__res:t="am_player_trooper_male_light_b_collision"
+
+  "animchar__physSymDependence:tag"{}
+  _group{
+    _tags:t="server"
+    net_ragdoll__physObjTemplate:t="lootable_ragdoll_preset_america_xenos_key_body"
   }
 }

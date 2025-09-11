@@ -1,52 +1,60 @@
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mkCheckAmmoButton, mkStopCheckAmmoButton, mkItemCheckAmmoProgress, needShowQuickSlotPurchase,
+  purchaseItemsToSlot, mkStopLoadUnloadAmmoButton
+
+from "%ui/fonts_style.nut" import tiny_txt
+from "%ui/hud/state/inventory_state.nut" import getSlotOpacity
+from "%ui/components/cursors.nut" import setTooltip
+import "%ui/hud/menus/components/dropMarker.nut" as dropMarker
+from "%ui/hud/menus/components/moveMarker.nut" import moveMarker
+from "%ui/components/colors.nut" import BtnBgHover, BtnBdFocused, ItemBgColor, BtnBdSelected, noItemContainerBg
+from "%ui/hud/menus/components/inventoryItemTooltip.nut" import buildInventoryItemTooltip
+from "%ui/hud/menus/components/inventoryStyle.nut" import itemHeight
+from "%ui/hud/menus/components/inventoryItem.nut" import chargesIndicator, corruptedItemImageBackground
+from "%ui/hud/state/item_info.nut" import get_equipped_magazine_current_ammo_count
+from "%ui/components/chocolateWnd.nut" import openChocolateWnd
+from "%dngscripts/sound_system.nut" import sound_play
+import "%ui/components/faComp.nut" as faComp
+from "%ui/components/mkDotPaginatorList.nut" import mkVertPaginatorList
+from "%ui/components/commonComponents.nut" import mkText
+from "%ui/mainMenu/market/inventoryToMarket.nut" import getItemPriceToShow, mkItemPrice
+from "%ui/hud/state/entity_use_state.nut" import calcItemUseProgress
+from "%ui/hud/menus/components/inventoryItemNexusPointPriceComp.nut" import nexusPointsCostComp
+from "dagor.debug" import logerr
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { tiny_txt } = require("%ui/fonts_style.nut")
-let { draggedData, focusedData, getSlotOpacity, isAltPressed } = require("%ui/hud/state/inventory_state.nut")
-let {setTooltip} = require("%ui/components/cursors.nut")
-let dropMarker = require("dropMarker.nut")
-let {moveMarker} = require("moveMarker.nut")
-let {BtnBgHover, BtnBdHover, ItemBgColor, BtnBdSelected, noItemContainerBg } = require("%ui/components/colors.nut")
-let {isSpectator} = require("%ui/hud/state/spectator_state.nut")
-let { buildInventoryItemTooltip } = require("%ui/hud/menus/components/inventoryItemTooltip.nut")
-let { itemHeight } = require("%ui/hud/menus/components/inventoryStyle.nut")
-let { mkCheckAmmoButton, mkStopCheckAmmoButton, mkItemCheckAmmoProgress, needShowQuickSlotPurchase,
-  purchaseItemsToSlot } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
-let { chargesIndicator, corruptedItemImageBackground } = require("%ui/hud/menus/components/inventoryItem.nut")
-let { get_equipped_magazine_current_ammo_count } = require("%ui/hud/state/item_info.nut")
-let {entityToUse} = require("%ui/hud/state/entity_use_state.nut")
-let { openChocolateWnd } = require("%ui/components/chocolateWnd.nut")
+let { draggedData, focusedData, isAltPressed, mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
+let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
+let { entityToUse } = require("%ui/hud/state/entity_use_state.nut")
+let { curTime } = require("%ui/hud/state/time_state.nut")
 let { hoverPcHotkeysPresentation } = require("%ui/hud/menus/components/inventoryActionsHints.nut")
 let { WEAPON_MOD } = require("%ui/hud/menus/components/slotTypes.nut")
 let { hoverHotkeysWatchedList } = require("%ui/components/pcHoverHotkeyHitns.nut")
-let faComp = require("%ui/components/faComp.nut")
-let { mkVertPaginatorList } = require("%ui/components/mkDotPaginatorList.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
 let { inventoryItemClickActions } = require("%ui/hud/menus/inventoryActions.nut")
-let { getItemPriceToShow, mkItemPrice } = require("%ui/mainMenu/market/inventoryToMarket.nut")
-let { isPreparationOpened, mintEditState } = require("%ui/mainMenu/raid_preparation_window_state.nut")
+let { mintEditState } = require("%ui/mainMenu/raid_preparation_window_state.nut")
 let { previewPreset } = require("%ui/equipPresets/presetsState.nut")
-let { logerr } = require("dagor.debug")
 let { weaponSlotsKeys } = require("%ui/types/weapon_slots.nut")
+let { HERO_ITEM_CONTAINER } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
+
+let activeModsSlots = Watched({})
+#allow-auto-freeze
 
 let modFillDragColor = ItemBgColor
 let modBorderColor = Color(30,30,30,5)
 let defItemColor = Color(138, 138, 138)
 const MAX_MODS_TO_SHOW = 3
-let activeModsSlots = Watched({})
 
-let mkPriceBlock = @(mod, weapon) function() {
-  let watch = isPreparationOpened
-  if (!isPreparationOpened.get() || weapon == null)
-    return { watch }
-  let weaponPrice = getItemPriceToShow(weapon) ?? 0
-  if (weaponPrice <= 0)
-    return { watch }
+function mkPriceBlock(mod, weapon) {
+  if (weapon == null)
+    return null
+  let weaponPriceData = getItemPriceToShow(weapon) ?? 0
+  if ((weaponPriceData?.price ?? 0) <= 0)
+    return null
   let price = getItemPriceToShow(mod) ?? 0
   if (price <= 0)
-    return { watch }
+    return null
   return {
-    watch
     hplace = ALIGN_RIGHT
     children = mkItemPrice(price)
   }
@@ -57,44 +65,55 @@ function weaponModWidgetContent(slotData, dropData, image, text, isUnloadable, g
 ) {
   let opacity = getSlotOpacity(dropData)
   let { rmbAction = null, lmbAltAction = null } = inventoryItemClickActions?[WEAPON_MOD.name]
-  return watchElemState(function(sf) {
+
+  let stateFlags = Watched(0)
+  return function() {
     let hint = buildInventoryItemTooltip(slotData)
 
     let isChargesIndicatorVisible = (dropData != null && dropData?.eid != null &&
-      entityToUse.get() != dropData.eid && !(dropData?.isDelayedMoveMod ?? false))
+      entityToUse.get() != dropData.eid && !(dropData?.isDelayedMoveMod ?? false)) || (dropData?.isLoadingAmmo ?? false)
 
     let ammoCountSource = (dropData?.isBuiltInAmmo ?? false) ? dropData.__merge({
         eid = dropData?.weaponEid ?? ecs.INVALID_ENTITY_ID}) : dropData
 
+    function itemUseProgressComp(){
+      let showProgress = dropData?.eid != null && entityToUse.get() == dropData.eid && (dropData?.isLoadingAmmo ?? false)
+      let progressVal = showProgress ? clamp(calcItemUseProgress(curTime.get()).tointeger(), 0, 100) : 0.0
+      return {
+        rendObj = ROBJ_SOLID
+        size = [pw(progressVal), pw(1) ]
+        color = Color(100,120,90,40)
+        vplace = ALIGN_BOTTOM
+        margin = fsh(0.1)
+        watch = showProgress ? [curTime, entityToUse] : entityToUse
+      }
+    }
+
     return  {
-      behavior = isUnloadable && !isSpectator.get() ? Behaviors.DragAndDrop : Behaviors.Button
+      watch = [stateFlags, mutationForbidenDueToInQueueState]
+      rendObj = ROBJ_WORLD_BLUR_PANEL
+      size = static flex()
       transform = {}
-      rendObj = ROBJ_BOX
-      fillColor =
-        (slotData?.noSuitableItemForPresetFoundCount ?? 0) > 0 ? noItemContainerBg
-        : (sf & S_DRAG) ? modFillDragColor
-        : (sf & S_HOVER) && isUnloadable ? BtnBgHover : Color(0,0,0,0)
-      borderColor = (sf & S_DRAG) ? modBorderColor : (sf & S_HOVER) ?
-                    BtnBdHover : Color(67, 67, 67)
-      borderWidth = (sf & S_HOVER) && !isUnloadable ? hdpx(2.0) : 0
-      key = {}
-      size = flex()
-      clipChildren = true
-      padding = hdpx(1)
+      behavior = isUnloadable && !isSpectator.get() ? Behaviors.DragAndDrop : Behaviors.Button
+      onElemState = @(sf) stateFlags.set(sf)
+      fillColor = 0x22000000
       onClick = function(event) {
-        if (event.button == 1 && !previewPreset.get()) {
-          if ("allowed_items" not in slotData) {
-            let slotTemplate = slotData?.template ?? slotData?.itemTemplate
-            if (slotTemplate == null) {
-              logerr("[inventoryWeaponMod] null slot data")
-              print("[inventoryWeaponMod] Slot data:")
-              print(slotData)
-              return
-            }
-            let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(slotTemplate)
-            let ammoName = template?.getCompValNullable("boxed_item__template")
-            slotData.__update({ allowed_items = [ammoName] })
+        if (mutationForbidenDueToInQueueState.get()) {
+          return
+        }
+        if ("allowed_items" not in slotData) {
+          let slotTemplate = slotData?.template ?? slotData?.itemTemplate
+          if (slotTemplate == null) {
+            logerr("[inventoryWeaponMod] null slot data")
+            print("[inventoryWeaponMod] Slot data:")
+            print(slotData)
+            return
           }
+          let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(slotTemplate)
+          let ammoName = template?.getCompValNullable("boxed_item__template")
+          slotData.__update({ allowed_items = [ammoName] })
+        }
+        if (event.button == 1 && !previewPreset.get()) {
           rmbAction?(slotData.__merge({
             charges = get_equipped_magazine_current_ammo_count(dropData)
           }), event)
@@ -120,48 +139,20 @@ function weaponModWidgetContent(slotData, dropData, image, text, isUnloadable, g
                 onDrop(item)
               }
               itemInSlot = dropData
-              shopData =  mintEditState.get() ? null
+              shopData = mintEditState.get() ? null
                 : needShowQuickSlotPurchase(slotData) ? purchaseItemsToSlot(slotData, event) : null
             })
           }
         }
       }
-      children = [
-        slotData?.isCorrupted ? corruptedItemImageBackground : null
-        {
-          vplace=ALIGN_CENTER
-          hplace=ALIGN_CENTER
-          size=SIZE_TO_CONTENT
-          children = image
-          opacity
-        }
-        {
-          transform = {}
-          behavior = isUnloadable ? [Behaviors.Marquee] : null
-          vplace = ALIGN_BOTTOM
-          hplace = ALIGN_CENTER
-          maxWidth = pw(100)
-          children = {
-            rendObj = ROBJ_TEXT
-            text
-            vplace = ALIGN_BOTTOM
-            fontFxColor = Color(30,30,30)
-            fontFx = FFT_BLUR
-            margin = fsh(0.3)
-          }.__update(tiny_txt)
-        }
-        isChargesIndicatorVisible ? chargesIndicator(
-          get_equipped_magazine_current_ammo_count(dropData),
-          dropData?.maxCharges,
-          dropData?.countKnown ?? true,
-          "") : null
-        mkCheckAmmoButton(ammoCountSource)
-        mkStopCheckAmmoButton(ammoCountSource)
-        mkItemCheckAmmoProgress(ammoCountSource)
-      ]
       function onHover(on) {
-        if (on && (dropData?.ammoCount ?? 0) == 0)
-          focusedData.set(isUnloadable ? dropData : {weaponModItems = slotData?.allowed_items, weaponModAmmo = slotData?.ammoHolders})
+        if (on && (dropData?.ammoCount ?? 0) == 0) {
+          focusedData.set(isUnloadable ? slotData : {
+            allowed_items = slotData?.allowed_items
+            weaponModAmmo = slotData?.ammoHolders
+            weapModSlotName = slotData?.weapModSlotName
+          })
+        }
         else
           focusedData.set(null)
 
@@ -179,54 +170,106 @@ function weaponModWidgetContent(slotData, dropData, image, text, isUnloadable, g
           hoverHotkeysWatchedList.set(null)
         }
       }
-
       onDragMode = function(on, item) {
-        draggedData.update(on ? item : null)
+        draggedData.set(on ? item : null)
+        if (on)
+          sound_play("ui_sounds/inventory_item_take")
       }
-      dropData
-      stopHover=true
+      dropData = mutationForbidenDueToInQueueState.get() ? null : dropData
+      stopHover = true
+      children = {
+        rendObj = ROBJ_BOX
+        size = static flex()
+        fillColor = (slotData?.noSuitableItemForPresetFoundCount ?? 0) > 0 ? noItemContainerBg
+          : (stateFlags.get() & S_DRAG) ? modFillDragColor
+          : (stateFlags.get() & S_HOVER) && isUnloadable ? BtnBgHover : Color(0,0,0,0)
+        borderColor = (stateFlags.get() & S_DRAG) ? modBorderColor
+          : (stateFlags.get() & S_HOVER) ? BtnBdFocused
+          : Color(67, 67, 67)
+        borderWidth = (stateFlags.get() & S_HOVER) && !isUnloadable ? hdpxi(2) : 0
+        padding = static hdpx(1)
+        children = [
+          slotData?.isCorrupted ? corruptedItemImageBackground : null
+          {
+            vplace = ALIGN_CENTER
+            hplace = ALIGN_CENTER
+            opacity
+            children = image
+          }
+          {
+            behavior = isUnloadable ? [Behaviors.Marquee] : null
+            vplace = ALIGN_BOTTOM
+            hplace = ALIGN_CENTER
+            maxWidth = static pw(100)
+            children = {
+              rendObj = ROBJ_TEXT
+              text
+              vplace = ALIGN_BOTTOM
+              fontFxColor = static Color(30,30,30)
+              fontFx = FFT_BLUR
+              margin = fsh(0.3)
+            }.__update(tiny_txt)
+          }
+          isChargesIndicatorVisible ? chargesIndicator(
+            get_equipped_magazine_current_ammo_count(dropData),
+            dropData?.maxCharges,
+            dropData?.countKnown ?? true,
+            "") : null
+          nexusPointsCostComp(slotData?.nexusCost)
+          itemUseProgressComp
+          mkCheckAmmoButton(ammoCountSource)
+          mkStopCheckAmmoButton(ammoCountSource)
+          mkItemCheckAmmoProgress(ammoCountSource)
+          mkStopLoadUnloadAmmoButton(dropData, HERO_ITEM_CONTAINER)
+        ]
+      }
     }
   }
-)}
+}
 
 let nullFunc = @(...) null
 let mkWeaponModWidget = kwarg(
   function mkWeaponModWidget(size=[itemHeight, itemHeight], text="", isUnloadable=true, slotData=null,
-  isActionForbided = false, dropData=null, onDrop=nullFunc, canDropDragged=nullFunc, image=null, children=null,
-  getFittingMods = @() null, weapon = null, modSlotName=null ) {
-    let needBlink = (dropData?.isDelayedMoveMod ?? false)
-    let opacity = getSlotOpacity(dropData)
+    isActionForbided = false, dropData=null, onDrop=nullFunc, canDropDragged=nullFunc, image=null, children=null,
+    getFittingMods = @() null, weapon = null, modSlotName=null ) {
+      let needBlink = (dropData?.isDelayedMoveMod ?? false)
+      let opacity = getSlotOpacity(dropData)
 
-    if (dropData != null) {
-      dropData = dropData.__merge({
-        RMB = "item/action/unequip"
-      })
-    }
-    let cont = weaponModWidgetContent(slotData, dropData, image, text, isUnloadable,
-      getFittingMods, onDrop, needBlink, weapon, modSlotName)
-    let stateFlags = Watched(0)
-    children = type(children)=="array" ? children : [children]
-    function weaponModWidget() {
-      let needMark = ((draggedData.value != null) && canDropDragged(draggedData.value))
-      let sf = stateFlags.get()
-      return {
-        size
-        clipChildren = true
-        onElemState = @(s) stateFlags.set(s)
-
-        children = [cont]
-          .extend(children)
-          .append(needBlink ? moveMarker(sf, opacity) : null,
-            needMark ? dropMarker(sf) : null,
-            mkPriceBlock(slotData, weapon))
-        behavior = isActionForbided ? Behaviors.Button : [Behaviors.Button, Behaviors.DragAndDrop]
-        watch = [draggedData, stateFlags]
-        canDrop = canDropDragged
-        onDrop
+      if (dropData != null) {
+        dropData = dropData.__merge({
+          RMB = "item/action/unequip"
+        })
       }
+      let cont = weaponModWidgetContent(slotData, dropData, image, text, isUnloadable,
+        getFittingMods, onDrop, needBlink, weapon, modSlotName)
+      let stateFlags = Watched(0)
+      children = type(children)=="array" ? children : [children]
+      function weaponModWidget() {
+        let needMark = ((draggedData.get() != null) && canDropDragged(draggedData.get()))
+        let sf = stateFlags.get()
+        return {
+          watch = [draggedData, stateFlags]
+          size
+          clipChildren = true
+          onElemState = @(s) stateFlags.set(s)
+          behavior = isActionForbided ? Behaviors.Button : [Behaviors.Button, Behaviors.DragAndDrop]
+          canDrop = canDropDragged
+          onDrop
+          children = [cont]
+            .extend(children)
+            .append(needBlink ? moveMarker(sf, opacity) : null,
+              needMark ?
+                (
+                  mutationForbidenDueToInQueueState.get() ?
+                    dropMarker(sf, true, "") :
+                    dropMarker(sf)
+                )
+              : null,
+              mkPriceBlock(slotData, weapon))
+        }
+      }
+      return weaponModWidget
     }
-    return weaponModWidget
-  }
 )
 
 function mkToggleIcon(modsData, weaponSlot) {
@@ -246,13 +289,16 @@ function mkToggleIcon(modsData, weaponSlot) {
     return res
   }, 0)
   let needBlik = modsData.findvalue(@(mod) mod?.dropData.isDelayedMoveMod) != null
-  return watchElemState(function(sf) {
+  let stateFlags = Watched(0)
+  return function() {
+    let sf = stateFlags.get()
     let markIdx = modsData.findindex(@(mod)
       draggedData.get() != null && mod.canDropDragged(draggedData.get()))
     let curMod = modsData?[markIdx]
     let { canDropDragged = null, onDrop = null, dropData = null } = curMod
     return {
-      watch = [isActive, draggedData, isSpectator]
+      watch = [stateFlags, isActive, draggedData, isSpectator]
+      onElemState = @(s) stateFlags.set(s)
       rendObj = ROBJ_BOX
       size = [itemHeight, itemHeight]
       fillColor = (sf & S_DRAG) ? modFillDragColor
@@ -273,7 +319,9 @@ function mkToggleIcon(modsData, weaponSlot) {
       halign = ALIGN_CENTER
       stopMouse = true
       onDragMode = function(on, item) {
-        draggedData.update(on ? item : null)
+        draggedData.set(on ? item : null)
+        if (on)
+          sound_play("ui_sounds/inventory_item_take")
       }
       function onHover(on) {
         if (draggedData.get() != null)
@@ -299,7 +347,7 @@ function mkToggleIcon(modsData, weaponSlot) {
         markIdx != null ? dropMarker(sf) : null
       ]
     }
-  })
+  }
 }
 
 function mkModsToggler(mods, modsData, weaponSlot) {
@@ -312,8 +360,8 @@ function mkModsToggler(mods, modsData, weaponSlot) {
         style = {
           transform = {}
           animations = [
-            { prop=AnimProp.translate, from = [sw(-20), 0], to = [0,0], duration = 0.1, play = true }
-            { prop=AnimProp.translate, from = [0, 0], to = [-sw(10), 0], playFadeOut = true,
+            static { prop=AnimProp.translate, from = [sw(-20), 0], to = [0,0], duration = 0.1, play = true }
+            { prop=AnimProp.translate, from = static [0, 0], to = static [-sw(10), 0], playFadeOut = true,
               duration = 0.1, trigger = $"{weaponSlot}",
               onFinish = @() activeModsSlots.mutate(@(v) v.$rawdelete(weaponSlot)) }
           ]

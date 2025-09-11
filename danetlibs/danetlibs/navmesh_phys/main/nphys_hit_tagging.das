@@ -1,5 +1,5 @@
 require ecs
-require app
+require app // get_sync_time
 require DngDm
 require danetlibs.navmesh_phys.main.nphys_events
 require danetlibs.navmesh_phys.main.nphys_common

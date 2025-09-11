@@ -1,15 +1,18 @@
+from "%ui/squad/squadManager.nut" import leaveSquad
+
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/mainMenu/contacts/contact.nut" import getContact
+from "%ui/mainMenu/contacts/contactsListWnd.nut" import showContactsWnd
+from "%ui/components/button.nut" import squareIconButton
+from "%ui/mainMenu/contacts/contactBlock.nut" import mkContactWidgetBlock, mkRaidSelectionNotif
+
 from "%ui/ui_library.nut" import *
 
-let { body_txt } = require("%ui/fonts_style.nut")
-let { isInSquad, squadMembers, isInvitedToSquad, squadId, isLeavingWillDisbandSquad, enabledSquad,
-  canInviteToSquad, leaveSquad } = require("%ui/squad/squadManager.nut")
+let { isInSquad, squadMembers, isInvitedToSquad, squadId, isLeavingWillDisbandSquad, enabledSquad, canInviteToSquad } = require("%ui/squad/squadManager.nut")
 let maxSquadSize = require("%ui/state/queueState.nut").availableSquadMaxMembers
-let { getContact, contacts } = require("%ui/mainMenu/contacts/contact.nut")
-let { showContactsWnd, display } = require("%ui/mainMenu/contacts/contactsListWnd.nut")
-let { squareIconButton } = require("%ui/components/button.nut")
-let { mkContactWidgetBlock } = require("contactBlock.nut")
-let {INVITE_TO_FRIENDS, INVITE_TO_PSN_FRIENDS, REMOVE_FROM_SQUAD, PROMOTE_TO_LEADER,
-  REVOKE_INVITE, SHOW_USER_LIVE_PROFILE, LEAVE_SQUAD } = require("%ui/mainMenu/contacts/contactActions.nut")
+let { contacts } = require("%ui/mainMenu/contacts/contact.nut")
+let { display } = require("%ui/mainMenu/contacts/contactsListWnd.nut")
+let { INVITE_TO_FRIENDS, INVITE_TO_PSN_FRIENDS, REMOVE_FROM_SQUAD, PROMOTE_TO_LEADER, REVOKE_INVITE, SHOW_USER_LIVE_PROFILE, LEAVE_SQUAD } = require("%ui/mainMenu/contacts/contactActions.nut")
 let { showCursor } = require("%ui/cursorState.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 let userInfo = require("%sqGlob/userInfo.nut")
@@ -42,7 +45,7 @@ let squadControls = function() {
   let controls = []
 
   if (!isOnboarding.get()) {
-    if (squadMembers.value.len() < maxSquadSize.value && canInviteToSquad.value) {
+    if (squadMembers.get().len() < maxSquadSize.get() && canInviteToSquad.get()) {
       controls.append(addUserButton())
     }
     if (squadMembers.get().len() > 0)
@@ -68,7 +71,7 @@ let horizontalContact = @(contact) {
 }
 
 let squadMembersUi = function() {
-  let squadList = []
+  let squadList = [mkRaidSelectionNotif()]
   let sortedMembers = squadMembers.get().values().sort(@(a, b)
     (b.userId == userInfo.get().userId) <=> (a.userId == userInfo.get().userId)
     || b.isLeader <=> a.isLeader)
@@ -76,7 +79,7 @@ let squadMembersUi = function() {
   foreach (_id, member in sortedMembers){
     squadList.append(horizontalContact(getContact(member.userId.tostring(), contacts.get())))}
 
-  foreach(uid, _val in isInvitedToSquad.value)
+  foreach(uid, _val in isInvitedToSquad.get())
     squadList.append(horizontalContact(getContact(uid.tostring(), contacts.get())))
 
   return {
@@ -99,7 +102,7 @@ function squadWidget() {
     valign = ALIGN_CENTER
     gap = hdpx(4)
     hplace = ALIGN_RIGHT
-    padding = [hdpx(2),0,0,0]
+    padding = static [hdpx(2),0,0,0]
     children = enabledSquad.get() ? [
         squadMembersUi
         squadControls

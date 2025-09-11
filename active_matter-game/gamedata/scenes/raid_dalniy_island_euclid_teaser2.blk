@@ -126,10 +126,18 @@ entity{
 }
 
 entity{
-  _template:t="minimap"
-  mapTex:t="dalniy_island_sparse_det_minimap*"
-  left_top:p2=-2048, 2048
-  right_bottom:p2=2048, -2048
+  _template:t="tiled_map"
+  tiled_map__leftTop:p2=-2304, -2304
+  tiled_map__rightBottom:p2=2304, 2304
+  tiled_map__leftTopBorder:p2=-3000, -3000
+  tiled_map__rightBottomBorder:p2=3000, 3000
+  tiled_map__visibleRange:p2=144, 4000
+  tiled_map__tileWidth:i=512
+  tiled_map__zlevels:i=5
+  tiled_map__northAngle:r=0
+  tiled_map__tilesPath:t="maps/dalniy_island_sparse"
+  tiled_map__backgroundColor:c=35, 128, 97, 255
+  fog_of_war__enabled:b=no
 }
 
 import{

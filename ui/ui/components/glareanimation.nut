@@ -1,5 +1,7 @@
 from "%ui/ui_library.nut" import *
 
+#allow-auto-freeze
+
 let animChild = @(size, color, animations = []) {
   rendObj = ROBJ_SOLID
   size
@@ -7,7 +9,7 @@ let animChild = @(size, color, animations = []) {
   pos = [0, -size[1]/2]
   opacity = 0.5
   animations
-  transform = {
+  transform = static {
     rotate = 45.0
   }
 }
@@ -24,9 +26,9 @@ let animChildren = @(animations) {
   ]
 }
 
-let glareAnimation = @(delay = 0) [
+let glareAnimation = @(override = {}) [
   { prop = AnimProp.translate, from = [-hdpx(1200), 0], to = [hdpx(1200), 0],
-    duration = 4, play = true, loop = true, delay }
+    duration = 4, play = true, loop = true, delay = 0 }.__merge(override)
 ]
 
 let marketAnimChildren = @(animations) {

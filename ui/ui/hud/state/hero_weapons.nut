@@ -1,3 +1,15 @@
+from "%sqstd/string.nut" import tostring_r
+
+from "weaponevents" import CmdTrackHeroWeapons
+from "dagor.math" import Point2
+from "humaninv" import INVALID_ITEM_ID
+from "%ui/profile/profile_functions.nut" import getTemplateComponent
+from "das.inventory" import get_current_move_mod_for_weapon, is_move_mod_from_weapon
+from "%ui/hud/state/item_info.nut" import get_item_info, getSlotAvailableMods
+from "%ui/hud/state/gametype_state.nut" import isOnPlayerBase
+from "%ui/squad/squadState.nut" import isInSquad
+from "dagor.debug" import logerr
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
@@ -28,9 +40,6 @@ from "%ui/ui_library.nut" import *
 
 
 
-let { CmdTrackHeroWeapons } = require("weaponevents")
-let {tostring_r} = require("%sqstd/string.nut")
-let {Point2} = require("dagor.math")
 
 
 const EES_HOLSTERING = 1
@@ -38,25 +47,23 @@ const EES_EQUIPING = 2
 
 
 let weaponSlots = require("%ui/types/weapon_slots.nut")
-let {watchedHeroEid} = require("%ui/hud/state/watched_hero.nut")
-let { INVALID_ITEM_ID } = require("humaninv")
-let { getTemplateComponent } = require("%ui/profile/profile_functions.nut")
-let { get_current_move_mod_for_weapon, is_move_mod_from_weapon } = require("das.inventory")
-let { get_item_info, getSlotAvailableMods } = require("%ui/hud/state/item_info.nut")
-let { logerr } = require("dagor.debug")
+let { watchedHeroEid } = require("%ui/hud/state/watched_hero.nut")
 
 let weaponsList = Watched([])  
+let squadWeaponsList = Watched([])
 let curWeapon = Watched(null)
 
 let weaponSlotNames = ["primary", "secondary", "tertiary", "melee"]
 
-let updateWeaponsList = @(list) weaponsList(list)
-
+let updateWeaponsList = @(list) weaponsList.set(list)
 weaponsList.whiteListMutatorClosure(updateWeaponsList)
 
+let updateSquadWeaponsList = @(list) squadWeaponsList.set(list)
+squadWeaponsList.whiteListMutatorClosure(updateSquadWeaponsList)
+
 console_register_command(function() {
-                            if (weaponsList.value != null) {
-                              foreach (w in weaponsList.value) {
+                            if (weaponsList.get() != null) {
+                              foreach (w in weaponsList.get()) {
                                 vlog(tostring_r(w))
                               }
                             }
@@ -169,6 +176,7 @@ let modQuery = ecs.SqQuery("modQuery", {
     ["gun__ammo", ecs.TYPE_INT, 0],
     ["item__weight", ecs.TYPE_FLOAT, 0],
     ["gun", null, null],
+    ["item_holder_in_weapon_load", ecs.TYPE_TAG, null]
   ]
 })
 
@@ -198,7 +206,9 @@ function trackHeroWeapons(_evt, _eid, comp) {
                      comp["human_net_phys__weapEquipCurState"] == EES_EQUIPING
 
   let weaponDescs = []
+  let squadWeaponDescs = []
   weaponDescs.resize(weaponSlotNames.len(), null)
+  squadWeaponDescs.resize(weaponSlotNames.len(), null)
   for (local j = 0; j < weaponSlotNames.len(); ++j) {
     let i = weaponSlots.weaponSlotsKeys.findindex(@(v) v==weaponSlotNames[j])
     if (i == null)
@@ -250,7 +260,6 @@ function trackHeroWeapons(_evt, _eid, comp) {
       })
 
       weaponDesc.__update({
-        maxMagazineAmmo = 0
         usesBoxedAmmo = gunComp.gun_boxed_ammo_reload__reloadState != null
       })
 
@@ -287,11 +296,11 @@ function trackHeroWeapons(_evt, _eid, comp) {
             allowed_items = getSlotAvailableMods(slotTemplateName)
             isActivated = currentGunEid != mainGunEid
           })
+          modProps.lockedInRaid <- slotTemplate?.hasComponent("mod_slot__lockedInRaid") ?? false
           if (modEid == ecs.INVALID_ENTITY_ID) {
             modProps.defaultIcon <- slotTemplate?.getCompValNullable("mod_slot__icon") ?? ""
             modProps.slotTooltip <- slotTemplate?.getCompValNullable("mod_slot__tooltip") ?? ""
           }
-          let isDelayedMoveMod = (modEid == curMoveEid)
           local modTempl = ""
           let info = get_item_info(modEid)
           if (info != null)
@@ -299,6 +308,8 @@ function trackHeroWeapons(_evt, _eid, comp) {
 
           modQuery.perform(modEid, function (___eid, modComp) {
             local additionalWeight = 0.0
+            let isLoadingAmmo = modComp["item_holder_in_weapon_load"] != null
+            let isDelayedMoveMod = (modEid == curMoveEid) && !isLoadingAmmo
             let boxedTemplateName = modComp?["item_holder__boxedItemTemplate"]
             if (boxedTemplateName) {
               let boxedTemplate = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(boxedTemplateName)
@@ -320,6 +331,7 @@ function trackHeroWeapons(_evt, _eid, comp) {
               itemTemplate = modComp["item__proto"] ?? ""
               isWeapon = modComp["gun"] != null
               weight = modComp["item__weight"] + additionalWeight
+              isLoadingAmmo = isLoadingAmmo
               isDelayedMoveMod = isDelayedMoveMod
               inactiveItem = !isDelayedMoveMod || is_move_mod_from_weapon(modEid)
             })
@@ -332,14 +344,27 @@ function trackHeroWeapons(_evt, _eid, comp) {
       return weaponDesc
     })
     weaponDescs[i] = (desc == null) ? clone weapon_proto : desc
-    if (((weaponDescs[i]?.iconName ?? "") == ""))
-      weaponDescs[i].weaponSlotKey <- weaponSlots.weaponSlotsKeys[i]
+    weaponDescs[i].weaponSlotKey <- weaponSlots.weaponSlotsKeys[i]
     weaponDescs[i].currentWeaponSlotName <- weaponSlotNames[i]
     let slotHolderTemplateName = comp.slots_holder__slotTemplates[weaponSlots.weaponSlotsKeys[i]]
     weaponDescs[i].__update({allowed_items = getWeaponSlotAvailableGun(slotHolderTemplateName)})
+    squadWeaponDescs[i] = {
+      itemTemplate = weaponDescs?[i].itemTemplate
+      isCurrent = weaponDescs?[i].isCurrent
+      name = weaponDescs?[i].name
+      currentWeaponSlotName = weaponDescs?[i].currentWeaponSlotName
+      mods = weaponDescs?[i].mods.map(@(v) {
+        itemTemplate = v?.itemTemplate
+        slotTemplateName = v?.slotTemplateName
+        attachedItemModSlotName = v?.attachedItemModSlotName
+      }) ?? {}
+    }
+    if (weaponDescs?[i].weaponSlotKey != null)
+      squadWeaponDescs[i].__update({ weaponSlotKey = weaponDescs?[i].weaponSlotKey })
   }
 
   updateWeaponsList(weaponDescs)
+  updateSquadWeaponsList(squadWeaponDescs)
   if (type(weaponDescs) != "array" || weaponDescs.len() == 0)
     return
   let weapon = weaponDescs.findvalue(@(w) w.isCurrent)
@@ -381,11 +406,22 @@ ecs.register_es("hero_state_weapons_ui_by_weapon_es",
   }
 )
 
+ecs.register_es("hero_state_weapons_update_loading_magazine",
+  {
+    [["onChange"]] = @(_evt, _eid, _comp) ecs.g_entity_mgr.sendEvent(watchedHeroEid.get(), CmdTrackHeroWeapons())
+  },
+  {
+    comps_rq = [["watchedPlayerItem"], ["item_holder_in_weapon_load"]]
+    comps_track = [["item__currentBoxedItemCount", ecs.TYPE_INT],
+                   ["ammo_holder__ammoCountKnown", ecs.TYPE_EID_LIST, null]]
+  }
+)
+
 
 
 ecs.register_es("hero_state_mod_ui_es",
   {
-    [["onChange", "onInit"]] = @(_evt, _eid, _comp) ecs.g_entity_mgr.sendEvent(watchedHeroEid.value, CmdTrackHeroWeapons())
+    [["onChange", "onInit"]] = @(_evt, _eid, _comp) ecs.g_entity_mgr.sendEvent(watchedHeroEid.get(), CmdTrackHeroWeapons())
   },
   {
     comps_rq = [
@@ -399,7 +435,7 @@ ecs.register_es("hero_state_mod_ui_es",
 )
 
 function trackWeapon(_evt, _eid, comp) {
-  let hero = watchedHeroEid.value
+  let hero = watchedHeroEid.get()
   if (comp["gun__owner"] == hero)
     ecs.g_entity_mgr.sendEvent(hero, CmdTrackHeroWeapons())
 }
@@ -431,6 +467,7 @@ ecs.register_es("hero_state_gun_workaround_ui_es",
 
 return {
   weaponsList
+  squadWeaponsList
   curWeapon
   weaponSlotNames
 }

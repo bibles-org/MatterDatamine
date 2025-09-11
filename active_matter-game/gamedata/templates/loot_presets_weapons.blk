@@ -224,6 +224,22 @@ hk_mp5n_gun_loot_preset{
   }
 }
 
+hk_mp5n_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="hk_mp5n_gun"
+    }
+
+    "item:object"{
+      template_name:t="hk_mp5n_magazine"
+      number:ip2=5, 7
+    }
+  }
+}
+
 hk_ump_9_gun_loot_preset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=3, 3
@@ -262,6 +278,22 @@ hk_ump_45_gun_loot_preset{
   }
 }
 
+hk_ump_45_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="hk_ump_45_gun"
+    }
+
+    "item:object"{
+      template_name:t="hk_ump_45_magazine"
+      number:ip2=5, 7
+    }
+  }
+}
+
 scorpion_evo_3_gun_loot_preset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=3, 3
@@ -277,6 +309,22 @@ scorpion_evo_3_gun_loot_preset{
 
     "item:object"{
       template_name:t="scorpion_evo_3_magazine"
+    }
+  }
+}
+
+scorpion_evo_3_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="scorpion_evo_3_gun"
+    }
+
+    "item:object"{
+      template_name:t="scorpion_evo_3_magazine"
+      number:ip2=5, 7
     }
   }
 }
@@ -384,6 +432,22 @@ ak_74_gun_loot_preset{
   }
 }
 
+ak_74_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="ak_74_gun"
+    }
+
+    "item:object"{
+      template_name:t="ak_74_magazine"
+      number:ip2=5, 7
+    }
+  }
+}
+
 aks_74u_gun_loot_preset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=3, 3
@@ -460,6 +524,22 @@ fn_scar_gun_loot_preset{
   }
 }
 
+fn_scar_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="fn_scar_gun"
+    }
+
+    "item:object"{
+      template_name:t="fn_scar_magazine"
+      number:ip2=5, 7
+    }
+  }
+}
+
 m4a1_gun_loot_preset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=3, 3
@@ -475,6 +555,22 @@ m4a1_gun_loot_preset{
 
     "item:object"{
       template_name:t="m4a1_magazine"
+    }
+  }
+}
+
+m4a1_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="m4a1_gun"
+    }
+
+    "item:object"{
+      template_name:t="m4a1_magazine"
+      number:ip2=5, 7
     }
   }
 }
@@ -551,6 +647,57 @@ m16a4_gun_loot_preset{
 
     "item:object"{
       template_name:t="m4a1_magazine"
+    }
+  }
+}
+
+m16a4_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="m16a4_gun"
+    }
+
+    "item:object"{
+      template_name:t="m4a1_magazine"
+      number:ip2=5, 7
+    }
+  }
+}
+
+hk416a5_gun_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=3, 3
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="hk416a5_gun"
+    }
+
+    "item:object"{
+      template_name:t="m4a1_magazine"
+    }
+
+    "item:object"{
+      template_name:t="m4a1_magazine"
+    }
+  }
+}
+
+hk416a5_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="hk416a5_gun"
+    }
+
+    "item:object"{
+      template_name:t="m4a1_magazine"
+      number:ip2=5, 7
     }
   }
 }
@@ -681,6 +828,22 @@ hk_g3a4_gun_loot_preset{
 
     "item:object"{
       template_name:t="hk_g3a4_magazine"
+    }
+  }
+}
+
+hk_g3a4_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="hk_g3a4_gun"
+    }
+
+    "item:object"{
+      template_name:t="hk_g3a4_magazine"
+      number:ip2=5, 7
     }
   }
 }
@@ -908,6 +1071,22 @@ mc_21_12_gun_loot_preset{
   }
 }
 
+mc_21_12_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="mc_21_12_gun"
+    }
+
+    "item:object"{
+      template_name:t="box_12_gauge_magazine"
+      number:ip2=5, 7
+    }
+  }
+}
+
 winchester_civil_gun_loot_preset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=2, 2
@@ -953,6 +1132,22 @@ ks_23_gun_loot_preset{
   }
 }
 
+ks_23_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="box_23x75_magazine"
+      number:ip2=5, 7
+    }
+
+    "item:object"{
+      template_name:t="ks_23_gun"
+    }
+  }
+}
+
 mossberg_590_gun_loot_preset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=3, 3
@@ -972,6 +1167,22 @@ mossberg_590_gun_loot_preset{
   }
 }
 
+mossberg_590_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="mossberg_590_gun"
+    }
+
+    "item:object"{
+      template_name:t="box_12_gauge_magazine"
+      number:ip2=5, 7
+    }
+  }
+}
+
 spas_12_gun_loot_preset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=3, 3
@@ -987,6 +1198,22 @@ spas_12_gun_loot_preset{
 
     "item:object"{
       template_name:t="box_12_gauge_magazine"
+    }
+  }
+}
+
+spas_12_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="spas_12_gun"
+    }
+
+    "item:object"{
+      template_name:t="box_12_gauge_magazine"
+      number:ip2=5, 7
     }
   }
 }
@@ -1014,6 +1241,22 @@ rpk_74_gun_loot_preset{
   }
 }
 
+rpk_74_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="rpk_74_gun"
+    }
+
+    "item:object"{
+      template_name:t="rpk_74_magazine"
+      number:ip2=4, 5
+    }
+  }
+}
+
 pk_gun_loot_preset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=3, 3
@@ -1029,6 +1272,38 @@ pk_gun_loot_preset{
 
     "item:object"{
       template_name:t="pk_magazine"
+    }
+  }
+}
+
+pk_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="pk_gun"
+    }
+
+    "item:object"{
+      template_name:t="pk_magazine"
+      number:ip2=2, 3
+    }
+  }
+}
+
+crossbow_gun_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="crossbow_gun"
+    }
+
+    "item:object"{
+      template_name:t="crossbow_bolt_item"
+      number:ip2=5, 10
     }
   }
 }
@@ -1692,12 +1967,12 @@ airdrop_minor_weapons_preset{
     }
 
     "item:object"{
-      sub_preset:t="steyr_aug_a1_gun_loot_preset"
+      sub_preset:t="ak_103_gun_loot_preset"
       weight:r=10
     }
 
     "item:object"{
-      sub_preset:t="ak_103_gun_loot_preset"
+      sub_preset:t="steyr_aug_a1_gun_loot_preset"
       weight:r=10
     }
   }
@@ -1736,27 +2011,196 @@ airdrop_major_weapons_preset{
       sub_preset:t="ak_12_gun_loot_preset"
       weight:r=10
     }
+
+    "item:object"{
+      sub_preset:t="m110a1_gun_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="hk416a5_gun_loot_preset"
+      weight:r=1
+    }
   }
 }
 
 airdrop_weapons_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=3, 3
-  loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="airdrop_minor_weapons_preset"
-      weight:r=1
-    }
-
-    "item:object"{
-      sub_preset:t="airdrop_minor_weapons_preset"
-      weight:r=1
+      weight:r=3
     }
 
     "item:object"{
       sub_preset:t="airdrop_major_weapons_preset"
+      weight:r=1
+    }
+  }
+}
+
+airdrop_pve_weapons_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="airdrop_minor_weapons_preset"
+      weight:r=10
+    }
+
+    "item:object"{
+      sub_preset:t="airdrop_major_weapons_preset"
+      weight:r=1
+    }
+  }
+}
+
+airdrop_magazines_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=5, 6
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="hk_mp5n_magazine"
+      number:i=3
+    }
+
+    "item:object"{
+      template_name:t="hk_ump_45_magazine"
+      number:i=3
+    }
+
+    "item:object"{
+      template_name:t="scorpion_evo_3_magazine"
+      number:i=3
+    }
+
+    "item:object"{
+      template_name:t="fn_scar_magazine"
+      number:i=3
+    }
+
+    "item:object"{
+      template_name:t="m4a1_magazine"
+      number:i=3
+    }
+
+    "item:object"{
+      template_name:t="steyr_aug_a1_magazine"
+      number:i=3
+    }
+
+    "item:object"{
+      template_name:t="hk_g3a4_magazine"
+      number:i=3
+    }
+
+    "item:object"{
+      template_name:t="box_12_gauge_magazine"
+      number:i=3
+    }
+  }
+}
+
+collapse_smg_weapons_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="hk_mp5n_gun_collapse_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="hk_ump_45_gun_collapse_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="scorpion_evo_3_gun_collapse_loot_preset"
+      weight:r=1
+    }
+  }
+}
+
+collapse_ar_weapons_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="ak_74_gun_collapse_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="fn_scar_gun_collapse_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="m4a1_gun_collapse_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="m16a4_gun_collapse_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="hk416a5_gun_collapse_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="hk_g3a4_gun_collapse_loot_preset"
+      weight:r=1
+    }
+  }
+}
+
+collapse_shotgun_weapons_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="mc_21_12_gun_collapse_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="ks_23_gun_collapse_loot_preset"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      sub_preset:t="mossberg_590_gun_collapse_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="spas_12_gun_collapse_loot_preset"
+      weight:r=1
+    }
+  }
+}
+
+collapse_lmg_weapons_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="rpk_74_gun_collapse_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="pk_gun_collapse_loot_preset"
       weight:r=1
     }
   }

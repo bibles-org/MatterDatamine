@@ -129,6 +129,8 @@ onboarding_phase_base_key_insertion_no_profile{
 
   "onboarding_phase_base_key_insertion:tag"{}
   "state_machine_state__createEntitiesWhenCurrent:list<t>"{
+    item:t="phase_temporary_entities"
+    item:t="onboarding_mark_contract_completed"
     item:t="onboarding_teleport_hero_to_base"
     item:t="onboarding_heal_hero"
     item:t="onboarding_note_contracts_processor"
@@ -139,6 +141,7 @@ onboarding_phase_base_key_insertion_no_profile{
     item:t="onboarding_contract_trigger"
     item:t="onboarding_monolith_access_trigger"
     item:t="onboarding_restore_pulse_and_stamina"
+    item:t="onboarding_enable_key_render_on_contract_completed"
   }
 }
 

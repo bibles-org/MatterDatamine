@@ -740,13 +740,19 @@ sequencer{
     blinkPeriod:p2=0.1, 0.7
   }
 
+  compareNode{
+    lhs:t="nphys_pushable__elevation"
+    operator:t="<="
+    rhs:r=0.01
+  }
+
   nPhysForceAnimState{
     animState:t="lie_down"
     duration:r=1.1
   }
 
   addTemplate{
-    name:t="sleeping_monster"
+    name:t="sleeping_changed_human"
   }
 }
 

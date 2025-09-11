@@ -86,8 +86,7 @@ stalker_statue_base_comp{
   _use:t="replicating"
   _use:t="animchar"
   _use:t="animchar_turn_dir"
-  _use:t="human_grid_obj"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="humans_dynamic_grid_object"
   animchar_render__enabled:b=yes
   collres__centerNode:t="Bip01 Pelvis"
   collision_physMatId:i=-1
@@ -96,7 +95,6 @@ stalker_statue_base_comp{
   isAlive:b=yes
   navmesh_phys__currentWalkVelocity:p3=0, 0, 0
 
-  "grid_obj__updateAlways:tag"{}
   "dm_parts__parts:object"{}
   phys_vars{}
   "collidableToVehicle:tag"{}
@@ -170,7 +168,6 @@ stalker_statue_hitpoints{
   hitpoints__shellDmgMult:r=8
   hitpoints__shellSplashDmgMult:r=4
   needsBlood:b=no
-  grid_obj__gridType:t="humans"
   material:t="stone"
   hitpoints__hp:r=2500
   hitpoints__maxHp:r=2500
@@ -180,7 +177,6 @@ stalker_statue_hitpoints{
   hit_verification__maxDistance:r=9
 
   "killer:eid"{}
-  grid_obj{}
   collres{}
   "kill_tracking__taggedPlayers:object"{}
 }
@@ -205,7 +201,6 @@ stalker_statue_sound{
   _group{
     _tags:t="sound"
     stalker_statue_sound__moveUntil:r=0
-    stalker_statue_sound__isOn:b=no
     stalker_statue_sound__movePath:t="enemy/walker/statue/move"
     stalker_statue_sound__preAttackPath:t="enemy/walker/statue/voice_fx/aggro"
     stalker_statue_sound__hitPath:t="enemy/walker/statue/melee/hands"
@@ -218,6 +213,7 @@ cairn_trap_a{
   _use:t="anomaly_trap"
   _use:t="rendinst"
   _use:t="entity_bound_area"
+  _use:t="traceable_spheres_static_grid_object"
   trigger_trap__triggered:b=no
   trigger_trap__triggerPoint:p3=0, 0.1, 0
   trigger_trap__radius:r=0.75
@@ -228,9 +224,7 @@ cairn_trap_a{
   entity_bound_area__radius:r=2
   material:t="stone"
   needsBlood:b=no
-  grid_obj__gridType:t="traceable_spheres"
   net__scopeDistanceSq:r=108900
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   loud_noise__radius:r=20
   loud_noise__noiseValue:r=60
   ri_extra__destroyed:b=no
@@ -242,7 +236,6 @@ cairn_trap_a{
     value:i=-1
   }
 
-  grid_obj{}
   "isRendinstDestr:tag"{
     _tags:t="render"
   }

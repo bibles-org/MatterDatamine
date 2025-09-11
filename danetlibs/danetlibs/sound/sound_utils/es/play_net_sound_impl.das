@@ -1,7 +1,7 @@
 require ecs
 require ecs.safe
 require ecs.common
-require app
+require app // get_sync_time
 require soundEvent
 require soundHash
 require soundSystem
@@ -27,6 +27,8 @@ def get_net_sound_desc(hash : uint; descs : Object) : Object const?
   return null
 
 def play_impl(hash : uint; var pos : float3; param : float; descs : Object; is_watched : bool; var sound_event_group : SoundEventGroup?)
+  if !sound_banks_is_master_preset_loaded()
+    return
   let objRef = get_net_sound_desc(hash, descs)
   if objRef != null
     assume obj = *objRef
@@ -37,7 +39,7 @@ def play_impl(hash : uint; var pos : float3; param : float; descs : Object; is_w
       let delayedAbandon = obj.delayedAbandon ?? false
       if obj.bringToListener ?? false // FMOD may treat event with snapshot as 3d;
         pos = get_listener_pos() // should bring any 2d event to listener to avoid ignoring it by distance when faraway from camera
-      var handle = soundEvent::play(name, "", pos, isFar)
+      var handle = isFar ? play_far(name, "", pos) : play(name, "", pos)
       if has(obj, "var")
         set_var(handle, obj["var"] ?? "", param)
       if has(obj, "groupId") && sound_event_group != null

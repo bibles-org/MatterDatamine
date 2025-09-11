@@ -1,59 +1,99 @@
+am_mimic_base{
+  _use:t="humans_dynamic_grid_object"
+  am_mimic__origin:p3=0, 0, 0
+  nphys_levitating__elevation:r=0.6
+  nphys_levitating__prefferedElevation:r=0.6
+  am_mimic__innerRadius:r=0.02
+  action__operateDoor:t=""
+  human_operate_door_action__alternativeAction:b=no
+
+  "am_mimic:tag"{}
+  "capsule_approximation__complexNodeNames:array"{}
+  "disable_capsule_ao:tag"{}
+  "human_anim__doorAnimEid:eid"{}
+}
+
 am_mimic{
-  _use:t="am_navmesh_creature_base"
-  _use:t="ai_target"
-  _use:t="base_dm_parts"
-  _use:t="navmesh_phys_jumplinks_jump"
-  _use:t="navmesh_phys_jumplinks"
-  _use:t="nphys_hit_tagging"
-  _use:t="nphys_pushable"
-  _use:t="movable_entity_bound_area"
-  _use:t="trigger_trap_activator"
-  _use:t="human_deformation_bbox_receiver"
-  _use:t="am_mimic_ai"
+  _use:t="am_mimic_base"
   _use:t="am_mimic_leg_anim"
+  _use:t="am_mimic_effects"
+  _use:t="am_mimic_sleep"
+  _use:t="am_mimic_ai"
+  _use:t="am_mimic_hitpoints"
   _use:t="am_mimic_sound"
+  _use:t="movable_entity_bound_area"
+  _use:t="human_deformation_bbox_receiver"
+  _use:t="trigger_trap_activator"
+  _use:t="nphys_pair_collision"
+  pair_collision__tag:t="collidableToHuman"
+  nphys_coll__capsuleRadius:r=0.45
   animchar__res:t="mimic_small_body_a_char"
   collres__res:t="mimic_small_body_a_collision"
-  ai_target_node__node:t="col"
-  grid_obj__gridType:t="humans"
-  kill_tracking_tag:t="am_mimic"
-  am_mimic__radius:r=0.6
-  am_mimic__innerRadius:r=0.02
-  hitpoints__hp:r=38
-  hitpoints__maxHp:r=38
-  needsBlood:b=no
-  material:t="changedFlesh"
   collres__centerNode:t="col"
-  human_operate_door_action__alternativeAction:b=no
   navmesh_phys__hitTagPower:r=0.3
   navmesh_phys__hitTagDuration:r=0.6
   navmesh_phys__walkSpeedModifier:r=0.5
-  navmesh_phys__rndWalkSpeed:p2=4.1, 5.5
-  navmesh_phys__maxWalkSpeed:r=4.3
-  irratic_walk__speedRange:p2=9, 14
+  navmesh_phys__rndWalkSpeed:p2=5.4, 6.3
+  navmesh_phys__maxWalkSpeed:r=5.3
+  irratic_walk__speedRange:p2=10, 13
   irratic_walk__speedSave:r=0
   irratic_walk__blockUntil:r=0
   irratic_walk__sprintUntil:r=0
-  irratic_walk__blockDuration:p2=2.5, 6.5
-  irratic_walk__sprintDuration:p2=0.8, 1.5
+  irratic_walk__blockDuration:p2=2, 3.5
+  irratic_walk__sprintDuration:p2=1, 1.8
   _replicated:t="irratic_walk__speedSave"
+  navmesh_phys__acceleration:r=10
+  navmesh_phys__friction:r=3
+  nphys_dyn_obstacles__count:i=0
+  surface_crawler__active:b=no
   nphys__mass:r=10
   nphys__ccdOffset:p3=0, 0, 0
-  hit_verification__maxDistance:r=9
-  dm__bsphereRad:r=9
-  am_mimic__serverDeathAt:r=0
-  am_mimic__serverDeathDelay:r=1
+  am_mimic__lowDiscrepancyMode:b=no
+  _replicated:t="am_mimic__lowDiscrepancyMode"
+  death_note__name:t="note_mimic"
 
+  pair_collision__gridHolders{}
+  "pair_collision__gridNames:list<t>"{
+    h:t="humans"
+    h:t="vehicles"
+  }
+
+  "collidableToHuman:tag"{}
   "capsule_approximation__nodeNames:array"{
     node:t="col"
   }
 
-  "capsule_approximation__complexNodeNames:array"{}
-  "am_mimic:tag"{}
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_1"
+      dropChance:r=0.33
+      dropHeight:r=1
+    }
+  }
+}
+
+am_mimic_hitpoints{
+  _use:t="base_dm_parts"
+  _use:t="ai_target"
+  hitpoints__hp:r=8
+  hitpoints__maxHp:r=8
+  am_mimic__serverDeathAt:r=0
+  am_mimic__serverDeathDelay:r=1
+  hit_verification__maxDistance:r=9
+  dm__bsphereRad:r=9
+  ai_target_node__node:t="col"
+  needsBlood:b=no
+  material:t="changedFlesh"
+  kill_tracking_tag:t="am_mimic"
+
+  projectile_impulse{
+    _tags:t="gameClient"
+  }
+
   "kill_tracking__taggedPlayers:object"{}
-  "grid_obj__updateAlways:tag"{}
-  "human_operate_door_action__noAnimation:tag"{}
-  "human_anim__doorAnimEid:eid"{}
+}
+
+am_mimic_effects{
   effect{
     _tags:t="render"
   }
@@ -62,22 +102,13 @@ am_mimic{
   "effects:object"{
     mimic_body_aura_distortion_fx:r=1
     mimic_body_aura_smoke_fx:r=1
-  }
-
-  projectile_impulse{
-    _tags:t="gameClient"
-  }
-
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_1"
-      dropChance:r=1
-      dropHeight:r=1
-    }
+    mimic_body_aura_flow_cmps_fx:r=1
   }
 }
 
 am_mimic_sound{
+  _use:t="offender_hits_human_sound"
+
   _group{
     _tags:t="sound"
     am_mimic_sound__appearPath:t="enemy/walker/spikder/voice_fx/appear"
@@ -88,9 +119,19 @@ am_mimic_sound{
     am_mimic_sound__missPath:t="enemy/walker/spikder/voice_fx/attack_fail"
     am_mimic_sound__damagedPath:t="enemy/walker/spikder/voice_fx/hit"
   }
+
+  _group{
+    _tags:t="sound"
+
+    "offender_hits_human_sound__path:shared:object"{
+      path:t="/walker/am_trooper_male/hit/melee_spear"
+    }
+  }
 }
 
 am_mimic_leg_anim{
+  am_mimic__legGrowNormRespectLen:i=0
+
   _group{
     _tags:t="gameClient"
     alt_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
@@ -101,17 +142,22 @@ am_mimic_leg_anim{
     projectile_impulse__maxOmega:r=3
     am_mimic__axis:p3=1, 0, 0
     am_mimic__up:p3=0, 1, 0
+    am_mimic__upLeanToMoveAxis:b=yes
+    am_mimic__flightDst:r=7
     am_mimic__lastMove:p3=0, 0, 0
     am_mimic__lastPos:p3=0, 0, 0
     am_mimic__currentSpeed:r=1
     am_mimic__lastSpeed:r=1
     am_mimic__lastLegStamp:r=0
     am_mimic__lastTraceStamp:r=0
-    am_mimic__traceMinInterval:r=0.025
+    am_mimic__traceMinInterval:r=0.015
+    am_mimic__traceDownKoefs:p3=0.7, 0.85, 1.1
     am_mimic__legMinInterval:r=0.15
-    am_mimic__expectedSupport:r=3
-    am_mimic__avgSupport:r=0
+    am_mimic__expectedSupport:r=2.9
     am_mimic__supportFrom:r=0
+    am_mimic__legsCount:ip2=22, 28
+    am_mimic__minLegsCount:i=0
+    am_mimic__growInterruptEnabled:b=yes
     am_mimic__visualPos:p3=0, 0, 0
     am_mimic__visualVel:p3=0, 0, 0
     am_mimic__supportOffset:p3=0, 0, 0
@@ -119,7 +165,9 @@ am_mimic_leg_anim{
     am_mimic__damping:p2=0, 0
     am_mimic__flyingSpringK:r=0
     am_mimic__flyingDamping:r=0
-    am_mimic__tentacleTemplate:t="spike_attack_tentacle"
+    am_mimic__orientFwd:p3=0, 0, 0
+    am_mimic__orientTau:r=0.8
+    am_mimic__tentacleTemplate:t="spike_attack_tentacle_emissive"
     am_mimic__deathTemplate:t="am_mimic_explosion_effect"
     am_mimic__clientDeathDelay:r=0.4
     am_mimic__clientDeathAt:r=0
@@ -127,6 +175,7 @@ am_mimic_leg_anim{
     am_mimic__locoUp:p3=0, 1, 0
     am_mimic__legTemplate:t="spike_leg"
     am_mimic__activeLegCount:i=0
+    am_mimic__stayLegCount:i=0
     am_mimic__hidden:b=yes
 
     "am_mimic__legs:list<eid>"{}
@@ -156,28 +205,61 @@ am_mimic_explosion_effect{
 am_mimic_tentacle_geometry{
   _use:t="spline_gen_geometry"
   spline_gen_geometry__lods_name:t="spike_tentacle"
-  spline_gen_geometry__radius:p3=0.035, 0.005, 0.002
   spline_gen_geometry__obj_size_mul:r=1
   spline_gen_geometry__meter_between_objs:r=0.25
   spline_gen_geometry__request_active:b=yes
   spline_gen_geometry__displacement_strength:r=0.75
   spline_gen_geometry__tiles_around:i=1
   spline_gen_geometry__tile_size_meters:r=0.25
+
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.035
+    p:p2=0.95, 0.005
+    p:p2=1, 0.002
+  }
+}
+
+spike_crawler_leg{
+  _use:t="spike_leg"
+  spike_leg__branchCount:i=1
+  spike_leg__pointsCount:i=6
+  spike_leg__branchTemplate:t="spike_crawler_leg_branch"
+  spike_leg__maxLen:r=1.5
+}
+
+spike_crawler_leg_branch{
+  _use:t="spike_leg_branch"
+
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.045
+    p:p2=0.95, 0.01
+    p:p2=1, 0.003
+  }
 }
 
 spike_leg{
   spike_leg__from:p3=0, 0, 0
   spike_leg__to:p3=0, 0, 0
   spike_leg__norm:p3=0, 0, 0
+  spike_leg__tangent:p3=0, 0, 0
   spike_leg__toIsLanding:b=no
   spike_leg__len:r=0
+  spike_leg__maxLen:r=3.5
+  spike_leg__breakLenMult:r=0.7
+  spike_leg__speed:r=10
   spike_leg__lastDst:r=0
   spike_leg__kneeFactor:r=0
+  spike_leg__kneeFactorTau:r=0.45
   spike_leg__stamp:r=0
   spike_leg__mode:i=0
   spike_leg__strainTime:r=0
   spike_leg__agility:r=1
   spike_leg__agilityRange:p2=0.4, 1
+  spike_leg__branchCount:i=3
+  spike_leg__pointsCount:i=7
+  spike_leg__noiseFactor:r=0.2
+  spike_leg__noiseSpeed:r=1
+  spike_leg__noiseAmplitude:p2=0.35, 0.2
   spike_leg__branchTemplate:t="spike_leg_branch"
 
   "spike_leg__branches:list<eid>"{}
@@ -199,14 +281,25 @@ spike_leg_branch{
 
 spike_attack_tentacle{
   _use:t="am_mimic_tentacle_geometry"
+  spline_gen_geometry__lods_name:t="spike_tentacle"
   am_mimic_tentacle__to:p3=0, 0, 0
   am_mimic_tentacle__dir:p3=0, 0, 0
+  am_mimic_tentacle__clientDir:p3=0, 0, 0
   am_mimic_tentacle__stamp:r=0
   am_mimic_tentacle__at:r=0
   am_mimic_tentacle__agility:r=0
   am_mimic_tentacle__base:p3=0, 0, 0
 
   "am_mimic_tentacle__attackEid:eid"{}
+}
+
+spike_attack_tentacle_emissive{
+  _use:t="spike_attack_tentacle"
+  spline_gen_geometry__lods_name:t="spike_em_tentacle"
+  spline_gen_geometry__emissive_color:p4=1, 0.1, 0.1, 1
+
+  "spline_gen_geometry__emissive_points:list<p3>"{}
+  "am_mimic_tentacle__emissive:tag"{}
 }
 
 am_mimic_jumping{
@@ -226,6 +319,11 @@ am_mimic_jumping{
 }
 
 am_mimic_ai{
+  _use:t="am_navmesh_creature_base"
+  _use:t="navmesh_phys_jumplinks_jump"
+  _use:t="navmesh_phys_jumplinks"
+  _use:t="nphys_pushable"
+  _use:t="nphys_hit_tagging"
   _use:t="beh_tree_regular_check"
   _use:t="base_navmesh_agent_comp"
   _use:t="corridor_walker"
@@ -238,20 +336,24 @@ am_mimic_ai{
   beh_tree__debug:b=no
   beh_tree__enabled:b=yes
   obstacle_avoider__avoidsDamageZones:b=no
-  obstacle_avoider__escapeOffset:r=0.4
+  obstacle_avoider__escapeOffset:r=0.3
   obstacle_avoider__horBuffer:r=4
   obstacle_avoider__vertBuffer:r=1
   obstacle_avoider__maxPathDst:r=10
+  navmesh_phys__obstaclePredictLimit:p2=1, 3
+  am_mimic__crawlJumpPos:p3=0, 0, 0
+  am_mimic__crawlJumpNormal:p3=0, 0, 0
+  _replicated:t="am_mimic__crawlJumpNormal"
+  walker_agent__maxJumpSpeed:r=12
+  am_mimic__serachTargetForJumpRadius:r=20
   mimic__agroOnAwakened:r=20
   mimic__agroOnDamaged:r=15
   mimic__keepInterestUntil:r=0
   beh_tree__node:t="am_mimic_jumper"
   team:i=1
   navmesh_phys__steeringAgentSineFactor:r=0.25
-  path_corridor_ai__slowDownCoef:r=400
+  path_corridor_ai__slowDownCoef:r=1400
   path_corridor__targetPos:p3=0, 0, 0
-  nphys_levitating__prefferedElevation:r=0
-  nphys_levitating__elevation:r=0
   nphys_levitating__elevationChangeSpeed:r=0.75
   beh_tree__interruptDisabled:b=no
   am_mimic__crawlTempl:t="am_mimic_crawler_mode"
@@ -281,24 +383,12 @@ sleeping_mimic{
   "behTreeDisabler:tag"{}
 }
 
-am_mimic_crawler_mode{
-  surface_crawler__norm:p3=0, 0, 0
-  surface_crawler__dir:p3=0, 0, 0
-  surface_crawler__head:p3=0, 0, 0
-  surface_crawler__active:b=yes
-  surface_crawler__frustration:i=0
-  surface_crawler__maxFrustration:i=10
-  surface_crawler__seed:i=0
-  surface_crawler__lookAhead:p2=0.45, 0.7
-  surface_crawler__lookDown:p3=0.5, 0.7, 0.9
-  surface_crawler__curvePerSecond:r=10
-  surface_crawler__curvePerSecondRnd:r=0.1
-  surface_crawler__rndInfluence:r=5
-  surface_crawler__speed:r=3
-  surface_crawler__matId:i=0
-  surface_crawler__template:t="am_mimic_crawler_mode"
-
-  "nphys__disabled:tag"{}
+am_mimic_sleep{
+  am_mimic__updateAt:r=0
+  am_mimic__updateInterval:r=4
+  am_mimic__sleepAfterNoTarget:r=30
+  am_mimic__sleepTemplate:t="sleeping_mimic"
+  am_mimic__lastValidTargetStamp:r=0
 }
 
 am_mimic_attack_instance{
@@ -312,6 +402,7 @@ am_mimic_attack_instance{
     _tags:t="server"
     am_mimic_attack__endAt:r=0
     am_mimic_attack__aimAt:r=0
+    am_mimic_attack__aimAt2:r=0
     am_mimic_attack__step:i=0
   }
 
@@ -326,24 +417,25 @@ am_mimic_attack{
   _use:t="door_obstacle_handler"
   _use:t="destructable_obstacle_handler"
   _use:t="flanking_ai"
-  am_mimic_attack__aimDuration:r=0.2
-  am_mimic_attack__chargeDuration:r=0.7
-  am_mimic_attack__totalDuration:r=0.75
-  am_mimic_attack__reach:r=3
+  am_mimic_attack__aimDuration:r=0.3
+  am_mimic_attack__aimDuration2:r=0.6
+  am_mimic_attack__chargeDuration:r=1.1
+  am_mimic_attack__totalDuration:r=1.15
+  am_mimic_attack__reach:r=3.8
   am_mimic_attack__lastTime:r=0
   am_mimic_attack__damage:r=5
+  am_mimic_attack__traceRadius:r=0
   am_mimic_attack__riDamage:r=25
   am_mimic_attack__pushStrength:r=1
-  am_mimic_attack__count:ip2=2, 5
-  am_mimic_attack__gap:p2=0.1, 0.3
+  am_mimic_attack__count:ip2=3, 6
+  am_mimic_attack__gap:p2=0.05, 0.2
   am_mimic_attack__template:t="am_mimic_attack_instance"
+  am_mimic_attack__guideDir:p3=0, 0, 0
+  am_mimic_attack__dashDir:p3=0, 0, 0
+  am_mimic_attack__futurePos:p3=0, 0, 0
+  am_mimic_attack__needToDash:r=0
+  am_mimic_attack__deviation:p2=0.575, 0.15
   am_mimic__pursueRadius:r=25
-  am_mimic__origin:p3=0, 0, 0
-  am_mimic__lastValidTargetStamp:r=0
-  am_mimic__sleepAfterNoTarget:r=30
-  am_mimic__sleepTemplate:t="sleeping_mimic"
-  am_mimic__updateAt:r=0
-  am_mimic__updateInterval:r=4
   beh_tree__blackboard__enemyRadius:r=30
   beh_tree__interruptDisabled:b=no
   agent_dangers__blindDistanceSq:r=4900
@@ -395,4 +487,127 @@ test_beh{
     p:p3=58.0655, 0.167888, 221.769
     p:p3=76.1455, 0.246904, 235.397
   }
+}
+
+am_mimic_crawl{
+  _use:t="am_mimic"
+  _use:t="am_mimic_hide_in_ri"
+  _use:t="am_mimic_crawler_mode"
+  animchar__res:t="mine_pollen_b_char"
+  collres__res:t="mine_pollen_b_collision"
+  collres__centerNode:t="body"
+  ai_target_node__node:t="body"
+  am_mimic__sleepAfterNoTarget:r=99999
+  am_mimic__sleepAfterNoThreat:r=20
+  beh_tree__node:t="am_mimic_crawl"
+  nphys_levitating__elevation:r=0.5
+  nphys_levitating__prefferedElevation:r=0.5
+  am_mimic__crawlJumpPos:p3=0, 0, 0
+  am_mimic__crawlJumpNormal:p3=0, 0, 0
+  _replicated:t="am_mimic__crawlJumpNormal"
+  walker_agent__maxJumpSpeed:r=12
+  am_mimic__serachTargetForJumpRadius:r=12
+  am_mimic__serachThreatsRadius:r=30
+  am_mimic__isInsideRi:b=no
+  hitpoints__hp:r=8
+  hitpoints__maxHp:r=8
+
+  "capsule_approximation__nodeNames:array"{
+    capsule_approximation__nodeNames:t="body"
+  }
+
+  _group{
+    _tags:t="gameClient"
+    am_mimic__traceMinInterval:r=0.01
+    am_mimic__legMinInterval:r=0.01
+    am_mimic__dampingTau:p2=0.12, 0.12
+    am_mimic__dampingDelta:p2=0.3, 0.3
+    am_mimic__legTemplate:t="spike_crawler_leg"
+    am_mimic__prepareForJumpMult:r=90
+  }
+}
+
+am_mimic_damaging_jump{
+  _use:t="agent_off_navmesh"
+  am_mimic__jumpDamageRadius:r=1
+  am_mimic__jumpDamageDealt:b=no
+  am_mimic__jumpDamage:r=5
+  am_mimic__jumpPush:r=2
+  walker_agent__prevClimbPos:p3=0, 0, 0
+}
+
+am_mimic_crawler_mode{
+  _use:t="crawler_mode_base"
+  surface_crawler__norm:p3=0, 0, 0
+  surface_crawler__dir:p3=0, 0, 0
+  surface_crawler__head:p3=0, 0, 0
+  surface_crawler__active:b=yes
+  surface_crawler__frustration:i=0
+  surface_crawler__maxFrustration:i=99999
+  surface_crawler__seed:i=0
+  surface_crawler__lookAhead:p2=0.45, 0.7
+  surface_crawler__lookDown:p3=0.45, 0.55, 0.7
+  surface_crawler__curvePerSecond:r=8
+  surface_crawler__curvePerSecondRnd:r=0.1
+  surface_crawler__rndInfluence:r=5
+  surface_crawler__speed:r=2.5
+  surface_crawler__matId:i=0
+  surface_crawler__height:r=0
+  surface_crawler__template:t="am_mimic_crawler_mode"
+  surface_crawler__freefallVelocity:p3=0, 0, 0
+  surface_crawler__target:p3=0, 0, 0
+  surface_crawler__targetInfluence:r=5
+  surface_crawler__history1:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  surface_crawler__history2:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  surface_crawler__historyRadiusSq:r=0.25
+
+  "nphys__disabled:tag"{}
+  "surface_crawler__targetRi:eid"{}
+  "surface_crawler__riVertices:list<p3>"{}
+}
+
+am_mimic_hide_in_ri{
+  am_mimic__riToHideSearchRadius:r=10
+  am_mimic__hideInRiSpeed:r=4
+  am_mimic__crawlerState:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  am_mimic__hideTemplate:t="hidden_mimic"
+  am_mimic__hideRiTemplate:t="hidden_mimic_inside"
+  am_mimic__detectorTemplate:t="hidden_mimic_detector"
+  kill_fall_through__floorY:r=-600
+  am_mimic__hideInRiStartedAt:r=0
+  am_mimic__maxHideInRiTime:r=12
+  am_mimic__maxHideInRiFailures:i=3
+
+  "am_mimic__failedRi:list<eid>"{}
+  "am_mimic__detectorEid:eid"{}
+}
+
+hidden_mimic_inside{
+  "hidden_mimic_inside__eid:eid"{}
+  effect{
+    _tags:t="render"
+  }
+
+  "attachedEffect:tag"{}
+  "effects:object"{
+    mimic_body_aura_distortion_fx:r=1
+  }
+}
+
+hidden_mimic{
+  _use:t="sleeping_mimic"
+  sleeping_monster__template:t="hidden_mimic"
+
+  "hidden_mimic:tag"{}
+  "acceptInvalidPos:tag"{}
+}
+
+hidden_mimic_detector{
+  _use:t="creatures_static_grid_object"
+  sleeping_trap__radiusLimit:r=3
+  sleeping_trap__disturbProbabilityMult:r=5
+
+  "hidden_mimic_inside__eid:eid"{}
+  "hidden_mimic_inside__riEid:eid"{}
+  "sleeping_trap:tag"{}
 }

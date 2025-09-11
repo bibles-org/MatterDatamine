@@ -1,13 +1,18 @@
+from "dasevents" import EventStateMachineStateChanged, EventOnboardingPhaseResult, CmdRequestOnboardingReportContract, CmdShowOnboardingBaseDebriefing
+from "%ui/profile/profileState.nut" import playerProfileCreditsCountUpdate, playerProfileMonolithTokensCountUpdate, playerBaseStateUpdate
+
+from "dagor.math" import Point2
+from "das.onboarding" import is_onboarding
+from "%ui/devInfo.nut" import addTabToDevInfo
+from "net" import get_sync_time
+from "json" import parse_json
+from "base64" import decodeString
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { Point2 } = require("dagor.math")
-let { is_onboarding } = require("das.onboarding")
-let { EventStateMachineStateChanged, EventOnboardingPhaseResult,
-      CmdRequestOnboardingReportContract } = require("dasevents")
-let { playerProfileCreditsCountUpdate, playerProfileMonolithTokensCountUpdate, playerProfileMonolithTokensCount,
-      playerProfileAMConvertionRate, playerBaseStateUpdate } = require("%ui/profile/profileState.nut")
-let {addTabToDevInfo} = require("%ui/devInfo.nut")
+let { playerProfileMonolithTokensCount, playerProfileAMConvertionRate, lastBattleResult } = require("%ui/profile/profileState.nut")
+let userInfo = require("%sqGlob/userInfo.nut")
 
 
 let onboardingStateMachineCurrentStateEid = Watched(ecs.INVALID_ENTITY_ID)
@@ -22,22 +27,24 @@ let isOnboarding = Watched(false)
 let isOnboardingMemory = Watched(false)
 let isOnboardingRaid = Watched(false)
 
+let isKeyInserted = Watched(false)
+
 
 let clearBaseStateForOnboarding = function() {
   playerBaseStateUpdate({
     stashVolumeSize = 0
-    stashAdditionalVolume = 0
+    stashesCount = {x=0, y=0}
   })
 }
 
-isOnboarding.subscribe(function(value) {
+isOnboarding.subscribe_with_nasty_disregard_of_frp_update(function(value) {
   if (value) {
     clearBaseStateForOnboarding()
   }
 })
 
 
-onboardingStateMachineCurrentStateEid.subscribe(
+onboardingStateMachineCurrentStateEid.subscribe_with_nasty_disregard_of_frp_update(
   function(state_eid) {
     isOnboarding.set(is_onboarding())
     isOnboardingRaid.set(
@@ -49,12 +56,45 @@ onboardingStateMachineCurrentStateEid.subscribe(
     }
   })
 
-onboardingStateMachineMonolithStateEid.subscribe(
+onboardingStateMachineMonolithStateEid.subscribe_with_nasty_disregard_of_frp_update(
   function(state_eid) {
     if (state_eid != ecs.INVALID_ENTITY_ID && state_eid == onboardingStateMachineCurrentStateEid.get()) {
       playerProfileMonolithTokensCountUpdate(0)
     }
   })
+
+ecs.register_es("onboarding_show_base_debriefing",
+{
+  [CmdShowOnboardingBaseDebriefing] = function(evt, _eid, comp) {
+    if (!comp.is_local) {
+      return
+    }
+    let data = parse_json(evt.data)
+
+    let encodedTrackPoints = data?.trackPointsV2 ?? ""
+    let trackPoints = encodedTrackPoints.len() > 0 ? parse_json(decodeString(encodedTrackPoints)) : []
+    data.trackPoints <- trackPoints
+
+    let encodedTeamInfo = data?.teamInfo ?? ""
+    data.teamInfo = encodedTeamInfo.len() > 0 ? parse_json(decodeString(data.teamInfo)) : []
+    if (data.teamInfo.len() > 0) {
+      data.teamInfo[0].id <- userInfo.get().userId
+    }
+    data.debriefingStatsV2 <- data.debriefingStats
+    data.id <- $"onboarding_miniraid_{get_sync_time()}"
+    data.chronotracesProgression <- []
+    data.battleStat <- {
+      isSuccessRaid = data.isSuccessRaid
+    }
+    data.needRewards <- false
+
+    lastBattleResult.set(data)
+  }
+},
+{
+  comps_rq = ["player"],
+  comps_ro = [["is_local", ecs.TYPE_BOOL]]
+})
 
 ecs.register_es("track_is_onboarding_memory_state",
   {
@@ -63,6 +103,18 @@ ecs.register_es("track_is_onboarding_memory_state",
   },
   {
     comps_rq = [["onboarding_state_machine_memory"]]
+  }
+)
+
+ecs.register_es("track_is_key_inserted",
+  {
+    [["onInit", "onChange"]] = function(_evt, _eid, comp) {
+      isKeyInserted.set(comp.animchar__visible)
+    }
+  },
+  {
+    comps_track = [[ "animchar__visible", ecs.TYPE_BOOL ]]
+    comps_rq = [["player_base_keycard"]]
   }
 )
 
@@ -139,19 +191,20 @@ ecs.register_es("onboarding_phase_finished_ui_es",
 let contractRewardMonolithTokens = 100
 let contractRewardCurrency = 10000
 let onboardingContractReported = Watched(false)
-let onboardingMonolithFirstLevelUnlocked = Watched(false)
-isOnboarding.subscribe(function(v){
-  if(v){
-    onboardingMonolithFirstLevelUnlocked.set(false)
-    onboardingContractReported.set(false)
+
+ecs.register_es("onboarding_contract_reported",
+  {
+    onInit = @(...) onboardingContractReported.set(true)
+    onDestroy = @(...) onboardingContractReported.set(false)
+  },
+  {
+    comps_rq = [["onboarding_contract_reported"]]
   }
-})
-onboardingMonolithFirstLevelUnlocked.subscribe(@(v) v ? onboardingContractReported.set(false) : null)
+)
 
 ecs.register_es("onboarding_fake_money_on_miniraid_completion",
   {
     [EventOnboardingPhaseResult] = function(evt, _eid, _comp) {
-      onboardingMonolithFirstLevelUnlocked.set(false)
       playerProfileCreditsCountUpdate(evt.amCount * playerProfileAMConvertionRate.get())
     }
   },
@@ -169,13 +222,10 @@ addTabToDevInfo("onboarding", Computed(@(){
   "console commands:\nonboarding.start -- start onboarding\nonboarding.set_phase [phase] -- set concrete onboarding phase. Hints on what phases are available will appear when onboarding is in progress\nonbaording.finish -- forcefully finish onboarding and return to the bunker\nonboarding.get_state -- print current onboarding phase\nonboarding.open_note [note] -- open a note"
 )
 
-let reportContract = @() onboardingContractReported.set(true)
-
 ecs.register_es("onboarding_contract_report",
   {
     [CmdRequestOnboardingReportContract] = function(_evt, _eid, _comp) {
       playerProfileMonolithTokensCountUpdate(contractRewardMonolithTokens)
-      reportContract()
       log($"Onboarding contract reported. New monolith tokens count: {playerProfileMonolithTokensCount.get()}")
     }
   },
@@ -186,14 +236,13 @@ let playerProfileOnboardingContracts = Computed(@() {
   [0] = {
     contractType = 0,
     raidName = "onboarding+onboarding",
-    isStoryContract = false,
     isReported = onboardingContractReported.get(),
     name = "contract_onboarding_raid",
     requireValue = 1,
     currentValue = onboardingStateMachineCurrentStateEid.get() == onboardingStateMachineBaseKeyInsertionStateEid.get() ? 1 : 0,
-    rewards = {
+    rewards = [{
       monolithTokens = Point2(contractRewardMonolithTokens, contractRewardMonolithTokens)
-    }
+    }]
     handledByGameTemplate = ""
     onReport = function() {
       log("Reporting onboarding contract")
@@ -244,6 +293,6 @@ return {
   isOnboardingMemory
   playerProfileOnboardingContracts
   onboardingContractReported
-  onboardingMonolithFirstLevelUnlocked
   contractRewardCurrency
+  isKeyInserted
 }

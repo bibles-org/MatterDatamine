@@ -70,6 +70,31 @@ human_hands_ik{
       effectorName:t="r.forearm"
       effectorWtmName:t="r.forearm.m"
     }
+
+    "obj:object"{
+      effectorName:t="l.foot"
+      effectorWtmName:t="l.foot.m"
+    }
+
+    "obj:object"{
+      effectorName:t="r.foot"
+      effectorWtmName:t="r.foot.m"
+    }
+
+    "obj:object"{
+      effectorName:t="weapon.attach"
+      effectorWtmName:t="weapon.attach.m"
+    }
+
+    "obj:object"{
+      effectorName:t="r.clavicle.attach"
+      effectorWtmName:t="r.clavicle.attach.m"
+    }
+
+    "obj:object"{
+      effectorName:t="l.clavicle.attach"
+      effectorWtmName:t="l.clavicle.attach.m"
+    }
   }
 
   "animchar_effectors__effectorsState:object"{}
@@ -268,6 +293,11 @@ human_weapon_input{
     _hide:b=yes
   }
 
+  "human_input__bipodToggle:i"{
+    value:i=0
+    _hide:b=yes
+  }
+
   "human_input__weapons:list<i>"{}
 }
 
@@ -362,7 +392,6 @@ base_human_hero_components{
     human_input__holdBreath:i=0
     human_input__aim1:i=0
     human_input__aim2:i=0
-    human_input__zoom:i=0
     human_input__sightNext:i=0
     human_input__sightPrev:i=0
     human_input__shoulder:i=0
@@ -408,6 +437,16 @@ base_human_hero_components{
     value:b=yes
     _hide:b=yes
     _track:b=yes
+  }
+
+  "net_phys__disableAuthorityStateApplication:b"{
+    value:b=no
+    _tags:t="gameClient"
+  }
+
+  "net_phys__smoothAuthorityApplication:b"{
+    _tags:t="gameClient"
+    value:b=yes
   }
 }
 
@@ -569,27 +608,6 @@ equipment_char_flags{
   _replicated:t="char_flags__hasBodyArmorOn"
 }
 
-visual_armor_hit{
-  "visual_armor_hit__fxEffects:shared:array"{
-    _tags:t="render"
-
-    "fx:object"{
-      armorAmount:r=0.2
-      fxName:t="sparks_armor_hit_c_fx"
-    }
-
-    "fx:object"{
-      armorAmount:r=0.1
-      fxName:t="sparks_armor_hit_b_fx"
-    }
-
-    "fx:object"{
-      armorAmount:r=0
-      fxName:t="sparks_armor_hit_a_fx"
-    }
-  }
-}
-
 client_hits{
   client_hits__shots:i=0
   client_hits__hits:i=0
@@ -605,6 +623,8 @@ state_counter{
   state_counter__lockMove:i=0
   state_counter__disableAmGather:i=0
   state_counter__disableUseContainers:i=0
+  state_counter__disableAuthorityStateApplication:i=0
+  state_counter__unsmoothAuthority:i=0
   _replicated:t="state_counter__disableUseContainers"
 
   "state_counter__disableUseItems:i"{
@@ -651,7 +671,7 @@ base_human{
   _use:t="human_ladder_interaction"
   _use:t="human_locomotion"
   _use:t="base_human_net_phys"
-  _use:t="human_grid_obj"
+  _use:t="humans_dynamic_grid_object"
   _use:t="base_human_anim"
   _use:t="human_vehicle_anim"
   _use:t="client_hits"
@@ -698,11 +718,8 @@ base_human{
   hitpoints__dmgMult:r=1
   hitpoints__shellSplashDmgMult:r=1
   hitpoints__downedTimer:r=15
-  hitpoints__invulnerableTimeTo:r=0
   hitpoints__bulletInvulnerableMinDist:r=80
   hitpoints__bulletInvulnerableStartDamage:r=1
-  hitpoints__bulletInvulnerableNextDamageMult:r=2
-  hitpoints__bulletInvulnerableCurDamageMult:r=1
   spawn_immunity__initialPos:p3=0, 0, 0
   spawn_immunity__immuneDistance:r=10
   spawn_immunity__timer:r=5
@@ -720,7 +737,6 @@ base_human{
   lastGunPropsIdDamagedWith:i=-1
   _replicated:t="lastDamagedNode"
   _replicated:t="lastGunPropsIdDamagedWith"
-  _replicated:t="hitpoints__invulnerableTimeTo"
   isSpectatable:b=yes
   downedMaxAngles:p2=40, 40
   phys__lowFreqTickrate:b=yes
@@ -741,7 +757,7 @@ base_human{
   agent_dangers__tag:t="human"
   underground_teleporter__timeToCheck:r=0.5
   underground_teleporter__timeBetweenChecks:r=0.5
-  bodyCleanupTime:r=120
+  body_cleanup_server_after_death__delay:r=120
   human_sec_anim__postFix:t=""
   _replicated:t="human_sec_anim__play"
   _replicated:t="human_sec_anim__playStartedAt"
@@ -778,15 +794,18 @@ base_human{
   human_hand_stamina__syncPeriod:i=20
   human_hand_stamina__HRMult:r=1
   human_hand_stamina__weaponMult:r=1
+  human_hand_stamina__bipodMult:r=-0.05
   human_hand_stamina__stateDrainMult:p3=1, 0.5, 0.15
-  human_hand_stamina__breathShakeRange:p2=0, 80
-  human_hand_stamina__breathShakeMult:p2=4, 1
+  human_hand_stamina__handShakeRange:p2=0, 30
+  human_hand_stamina__handShakeMagnitude:p2=0.02, 0
+  human_hand_stamina__shakeSpeedRange:p2=0, 80
+  human_hand_stamina__shakeShakeMult:p2=7, 1
+  human_hand_stamina__shakeSpeedMult:r=1
   _use:t="animchar_with_attaches"
   ragdoll__applyParams:b=no
   human__confusionScreenEffect:b=no
   _tracked:t="human__confusionScreenEffect"
 
-  "grid_obj__updateAlways:tag"{}
   "human:tag"{}
   "aliveCreature:tag"{}
   "possessedByPlr:eid"{}
@@ -982,6 +1001,8 @@ base_human_net_phys{
   human_phys__inAirTimeThreshold:r=0.3
   human_phys__afterJumpDelay:r=0.2
   _replicated:t="human_phys__jumpEndTime"
+  human_phys__grenadeThrowOffset:p3=0, 0.2, 0
+  human_phys__grenadeThrowDirMult:r=0.5
   havePairCollision:b=yes
   human_net_phys__autoHeightIgnoreChangeSize:r=0.1
   human_net_phys__prevAutoHeight:r=0
@@ -1019,26 +1040,6 @@ scaled_net_phys{
   scaled_net_phys__scale:r=1
 
   "loc_snapshots__scaledTransform:tag"{}
-}
-
-humans_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="humans"
-  grid_holder__typeHash:i=0
-  grid_holder__cellSize:i=32
-
-  grid_holder{}
-}
-
-human_grid_obj{
-  grid_obj__gridType:t="humans"
-  grid_obj__hidden:i=0
-  _replicated:t="grid_obj__hidden"
-  _tracked:t="grid_obj__hidden"
-
-  grid_obj{}
 }
 
 human_death_anim{
@@ -1186,20 +1187,92 @@ base_human_anim{
   human_anim__fromCrawlTransitionAnim:t="stand_transition"
   human_anim__fromCrawlTransitionAnimId:i=-1
   human_anim__fromCrawlTransitionVarId:i=-1
+  human_anim__gunPitchVarId:i=-1
+  human_anim__persCourseVarId:i=-1
+  human_anim__changeWeaponVarId:i=-1
+  human_anim__changeDirVarId:i=-1
+  human_anim__reloadVarId:i=-1
+  human_anim__headRollVarId:i=-1
+  human_anim__headPitchVarId:i=-1
+  human_anim__headYawVarId:i=-1
+  human_anim__leanVarId:i=-1
+  human_anim__standHeightVarId:i=-1
+  human_anim__climbProgressVarId:i=-1
+  human_anim__ladderProgressVarId:i=-1
+  human_anim__vehicleSelectedVarId:i=-1
+  human_anim__seatTypeVarId:i=-1
+  human_anim__healItemSelectedVarId:i=-1
+  human_anim__hitPartsSelectedVarId:i=-1
+  human_anim__weaponYawVarId:i=-1
+  human_anim__weaponPitchVarId:i=-1
+  human_anim__weaponRollVarId:i=-1
+  human_anim__weaponOffsFwdVarId:i=-1
+  human_anim__weaponOffsUpVarId:i=-1
+  human_anim__weaponOffsLeftVarId:i=-1
+  human_anim__vertSpeedVarId:i=-1
+  human_anim__walkTimerId:i=-1
   human_anim__selectedWeaponVarId:i=-1
+  human_anim__walkCycleLength:r=0.88
+  human_anim__crouchWalkCycleLength:r=1
+  human_anim__lowerStateStand:i=-1
+  human_anim__lowerStateStandStill:i=-1
+  human_anim__lowerStateRun:i=-1
+  human_anim__lowerStateWalk:i=-1
+  human_anim__lowerStateCrawlMove:i=-1
+  human_anim__lowerStateCrawlStill:i=-1
+  human_anim__lowerStateRotateLeft:i=-1
+  human_anim__lowerStateRotateRight:i=-1
+  human_anim__lowerStateCrouchRotateLeft:i=-1
+  human_anim__lowerStateCrouchRotateRight:i=-1
+  human_anim__lowerStateJumpStand:i=-1
+  human_anim__lowerStateJumpRun:i=-1
+  human_anim__lowerStateLowerSprint:i=-1
+  human_anim__upperStateAim:i=-1
+  human_anim__upperStateFireReady:i=-1
+  human_anim__upperStateChangeWeapon:i=-1
+  human_anim__upperStateReload:i=-1
+  human_anim__upperStateGunDown:i=-1
+  human_anim__upperStateThrowGrenade:i=-1
+  human_anim__upperStateFastThrow:i=-1
+  human_anim__upperStateAimCrouch:i=-1
+  human_anim__upperStateFireReadyCrouch:i=-1
+  human_anim__upperStateChangeWeaponCrouch:i=-1
+  human_anim__upperStateReloadCrouch:i=-1
+  human_anim__upperStateHeal:i=-1
+  human_anim__upperStateHealCrawl:i=-1
+  human_anim__upperStateSwimEatStill:i=-1
+  human_anim__upperStateUpperSprint:i=-1
+  human_anim__comboStateCrawlReload:i=-1
+  human_anim__comboStateCrawlMove:i=-1
+  human_anim__comboStateCrawlRotateLeft:i=-1
+  human_anim__comboStateCrawlRotateRight:i=-1
+  human_anim__comboStateHealInjured:i=-1
+  human_anim__comboStateInjuredCrawlStill:i=-1
+  human_anim__comboStateInjuredCrawlMove:i=-1
+  human_anim__comboStateCrawlAim:i=-1
+  human_anim__comboStateCrawlFireReady:i=-1
+  human_anim__comboStateCrawlChangeWeapons:i=-1
+  human_anim__comboStateAttackedState:i=-1
+  human_anim__comboStateSwimStill:i=-1
+  human_anim__comboStateSwimStillUnderwater:i=-1
+  human_anim__comboStateSwimOnWater:i=-1
+  human_anim__comboStateSwimUnderWater:i=-1
+  human_anim__comboStateClimbHigh:i=-1
+  human_anim__comboStateClimbLadder:i=-1
+  human_anim__comboStateUseMortar:i=-1
+  human_anim__comboStateClimbOverObstacle:i=-1
+  human_anim__comboStateFastClimb:i=-1
+  human_anim__comboStateDead:i=-1
   human_anim__headAimOffsets:p2=0, 0
   _replicated:t="human_anim__headAimOffsets"
-  human_anim__doorAnimIrqName:t="door_act"
   human_anim__climbOverAttachHandIrqName:t="climb_over_attach_hand"
   human_anim__climbOverDetachHandIrqName:t="climb_over_detach_hand"
   human_anim__localWalkDirVar:t="local_walk_dir"
   human_anim__rootRotateVar:t="root_rotate"
   human_anim__localWalkDirVarId:i=-1
   human_anim__rootRotateVarId:i=-1
-  human_anim__headRollVarId:i=-1
 
   "human_anim__vehicleSelected:eid"{}
-  human_anim{}
   "animchar__animState:object"{
     upper:i=-1
     lower:i=-1
@@ -1231,11 +1304,6 @@ base_human_anim{
   }
 
   "anim_irq__eventNames:object"{
-    "door_act:object"{
-      irqName:t="door_act"
-      irqId:i=-1
-    }
-
     "climb_over_attach_hand:object"{
       irqName:t="climb_over_attach_hand"
       irqId:i=-1
@@ -1308,6 +1376,13 @@ base_human_anim{
 
 human_anim_threephase_action{
   human_anim__threephaseActionProgressVarId:i=-1
+}
+
+human_anim_use_drone_action{
+  drone_use__progressVarName:t="equip_phone_progress"
+  drone_use__dirVarName:t="equip_phone_dir"
+  drone_use__progressVarId:i=-1
+  drone_use__dirVarId:i=-1
 }
 
 human_vehicle_anim{
@@ -1398,7 +1473,6 @@ human{
   _use:t="human_vehicle"
   _use:t="node_collapser"
   _use:t="phys_moved_rendinst_hero"
-  _use:t="human_polterheist_activation"
   _replicated:t="human_aim_punch__queuedEvents"
   _replicated:t="human_coll_damage__minDmgSpd"
   human_weight_influence__maxWeightAccelerationMult:r=0.9
@@ -1426,11 +1500,11 @@ human{
   human_inventory__dropLootOffset:p3=0.7, 0.6, -0.3
   human__canPickupItems:b=yes
   _tracked:t="human__canPickupItems"
-  _tracked:t="human_inventory__maxVolumeInt"
+  _tracked:t="human_inventory__maxVolume"
   _tracked:t="human_inventory__currentVolume"
   _tracked:t="human_inventory__currentWeight"
   _replicated:t="human__canPickupItems"
-  _replicated:t="human_inventory__maxVolumeInt"
+  _replicated:t="human_inventory__maxVolume"
   _replicated:t="human_inventory__currentVolume"
   _replicated:t="human_inventory__currentWeight"
   maintenance__hasTarget:b=no
@@ -1501,8 +1575,7 @@ human{
   footstep_fx__biome_snow_fx:t="hit_footstep_snow_cmps_fx"
   footprint_emitter__left_foot_node_name:t="Bip01 L Foot"
   footprint_emitter__right_foot_node_name:t="Bip01 R Foot"
-  human_inventory__maxVolume:r=4
-  human_inventory__maxVolumeInt:i=0
+  human_inventory__maxVolume:i=40
   human_inventory__lookNodeName:t="reye"
   human_inventory__lookNodeId:i=-1
   human_inventory__dropsLoot:b=no
@@ -1591,7 +1664,6 @@ human{
     type:t="fougasse"
   }
 
-  "human_inventory:tag"{}
   "human_inventory__selectConvex:list<p4>"{}
   "human_inventory__selectTpsConvex:list<p4>"{}
   "maintenance__target:eid"{}
@@ -1897,7 +1969,9 @@ _componentFilters{
   human_phys__jumpEndTime:t="filter_not_possessed"
   nexus_player_loadout__chosenIndex:t="filter_friendly_team"
   nexus_player_loadout__takenIndex:t="filter_friendly_team"
-  human_damage_model__parts:t="filter_possessed_and_spectated"
+  human_damage_model__partName:t="filter_possessed_and_spectated"
+  human_damage_model__partHp:t="filter_possessed_and_spectated"
+  human_damage_model__partInjured:t="filter_possessed_and_spectated"
 }
 
 hero_usable_objects{
@@ -1930,7 +2004,7 @@ base_human_weap{
   human_weap__gunMatId:i=-1
   human_weap__gunMaxBackoff:r=0.2
   human_weap__gunMinBackupDist:r=0.45
-  human_weap__gunBackupDistFactor:r=0.8
+  human_weap__gunBackupDistFactor:r=0.3
   human_weap__gunBackupLastTime:r=-1
   human_weap__recoil:r=0
   human_weap__recoilPunch:r=0
@@ -1949,6 +2023,16 @@ base_human_weap{
   human_weap__recoilRiseMult:r=50
   human_weap__recoilMoveMult:r=-2
   human_weap__gunOffsetLimit:p3=0.05, 0.05, 0.05
+  human_weap__gunVelocityBasedOffsetCurrent:p3=0, 0, 0
+  human_weap__gunVelocityBasedOffsetViscosity:r=0.1
+  human_weap__gunVelocityBasedOffsetLimit:p3=0.07, 0.1, 0.07
+  human_weap__gunVelocityBasedMult:p3=0.01, -0.02, 0.005
+  human_weap__gunWalkRotationCurrent:p3=0, 0, 0
+  human_weap__gunWalkRotationViscosity:r=0.3
+  human_weap__gunWalkRotationSneakMult:r=0.6
+  human_weap__gunWalkRotationMult:p3=30, 4, 4
+  human_weap__gunWalkRotationAimingMult:p3=0.5, 0.1, 0.1
+  human_weap__gunWalkRotationCrouchMult:r=0.5
   human_weap__gunRotationLimit:p3=5, 7, 7
   human_weap__recoilToImpulseMult:r=10
   human_weap__gunAngleSpeedToVelocityMult:p3=0, 0.05, 0.05
@@ -2005,11 +2089,6 @@ base_human_weap{
   human_weap__blockAimingFromEffect:b=no
   _replicated:t="human_weap__blockAimingFromEffect"
   _tracked:t="human_weap__blockAimingFromEffect"
-  _replicated:t="human_weap_anim__reloadAtTime"
-  _replicated:t="human_weap_anim__reloadStartTime"
-  _tracked:t="human_weap_anim__reloadStartTime"
-  _replicated:t="human_weap__isReloadRequested"
-  _replicated:t="human_weap__reloadGunEid"
   _tracked:t="human_weap__lastShotAtTime"
   _tracked:t="human_weap__currentGunSlot"
   _tracked:t="human_weap__gunEids"
@@ -2019,19 +2098,16 @@ base_human_weap{
   _tracked:t="human_weap__currentGunModEids"
   _replicated:t="human_weap__currentGunModEids"
   _tracked:t="human_weap__throwMode"
-  human_inventory__maxVolume:r=25
-  human_inventory__maxVolumeInt:i=0
+  human_inventory__maxVolume:i=250
   team:i=1
   beh_tree__enabled:b=no
-  human_weap__isReloadRequested:b=no
-  human_weap_anim__reloadAtTime:r=-1
-  human_weap__reloadPrevTime:r=-1
   human_weap_anim__reloadStartTime:r=-1
-  human_weap__reloadDelayTime:r=0
+  human_weap_anim__reloadAtTime:r=-1
   human_weap__currentGunSlot:i=-1
   human_weap__previousGunSlot:i=-1
   human_weap__throwMode:b=no
   human_weap__fastThrowExclusive:b=no
+  human_weap__readyToShoot:b=no
   human_weap__aimMode:i=0
   human_weap__defaultHolsterTime:r=0.5
   human_weap__defaultEquipTime:r=0.5
@@ -2074,7 +2150,6 @@ base_human_weap{
   "human_weap__remoteGunEids:list<eid>"{}
   "human_weap__traceIntersectedEid:eid"{}
   "human_weap__lastShotGunEid:eid"{}
-  "human_weap__reloadGunEid:eid"{}
   "human_weap__infiniteAmmoHolders:b"{
     _tags:t="server"
     value:b=no
@@ -2127,14 +2202,15 @@ human_lean{
 
 human_open_door{
   human_operate_door_action__alternativeAction:b=no
-  human_operate_door_action__actionIdx:i=-1
 
   "human_anim__doorAnimEid:eid"{}
 }
 
 human_input{
   human_input__flashlight:i=0
+  human_input__flashlightWeapon:i=0
   human_input__nightVisionDevice:i=0
+  human_input__useSignalGrenade:i=0
 }
 
 hitpoints_state{
@@ -2255,27 +2331,98 @@ action_on_delayed_frame{
   "action_on_delayed_frame__recipient:eid"{}
 }
 
-am_storage{
-  am_storage__value:i=0
-  am_storage__maxValue:i=0
-  _replicated:t="am_storage__value"
-  _tracked:t="am_storage__value"
-  _replicated:t="am_storage__maxValue"
-  _tracked:t="am_storage__maxValue"
-
-  "chargesWanderingCore:tag"{}
+dagdp_range_scale_set{
+  dagdp__range_scale_set:r=1
 }
 
-human_polterheist_activation{
-  polterheist_activation__radius:r=8
-  polterheist_activation__score:r=0
-  polterheist_activation__speed:r=1
-  polterheist_activation__targetScore:r=-1
-  polterheist_activation__targetScoreRange:p2=20, 50
-  polterheist_activation_client__score:r=0
-  polterheist_activation_client__speed:r=1
-  polterheist_activation_client__targetScore:r=-1
-  polterheist_activation_client__targetScoreRange:p2=20, 50
-  polterheist_activation__delay:r=1
-  polterheist_activation__rndSeed:i=0
+human_weapon_bipod{
+  _tracked:t="bipod__enabled"
+  _tracked:t="bipod__placeable"
+  _tracked:t="bipod__placeCrawl"
+  _tracked:t="bipod__haveBipodOnGun"
+  _tracked:t="bipod__delayAt"
+  _replicated:t="bipod__enabled"
+  _replicated:t="bipod__isCrawl"
+  _replicated:t="bipod__anchorPos"
+  _replicated:t="bipod__anchorHeight"
+  _replicated:t="bipod__anchorOffset"
+  _replicated:t="bipod__haveBipodOnGun"
+  bipod__enabled:b=no
+  bipod__deviationStaminaMult:r=0
+  bipod__maxDeviationStaminaMult:r=0.25
+  bipod__delayAt:r=-1
+  bipod__delayTimer:r=1.5
+  bipod__haveBipodOnGun:b=no
+  bipod__isCrawl:b=no
+  bipod__recoilMult:r=0
+  bipod__anchorPos:p3=0, 0, 0
+  bipod__anchorDir:p3=0, 0, 0
+  bipod__anchorHeight:r=0
+  bipod__anchorOffset:p3=0, 0, 0
+  bipod__anchorNormal:p3=0, 0, 0
+  bipod__anchorYawLimit:p2=0, 0
+  bipod__offsetMult:r=0
+  bipod__prevBodyDirYaw:r=0
+  bipod__prevBodyDirYawDelta:r=0
+  bipod__attachedToRi:i=-1
+  bipod__pitchLimit:p2=-10, 20
+  bipod__crawlLimit:p2=-7, 7
+  bipod__validateTimer:r=0
+  bipod__lastValidAngle:p2=0, 0
+  bipod__prevAngle:p2=0, 0
+  bipod__crawlGunOffset:p3=0, 0, 0
+  bipod__crawlGunAnimOffset:p3=0, 0, 0
+  bipod__animcharWasHidden:b=no
+
+  _group{
+    _tags:t="render"
+
+    "bipod__placeableMarker:eid"{}
+  }
+
+  _group{
+    _tags:t="gameClient"
+    bipod__checkPlacingInterval:r=0.025
+    bipod__nextCheckPlacingAtTime:r=0
+    bipod__placeable:b=no
+    bipod__placeCrawl:b=no
+    bipod__placePos:p3=0, 0, 0
+    bipod__placeHeight:r=0
+    bipod__placeOffset:p3=0, 0, 0
+    bipod__placeNormal:p3=0, 0, 0
+    bipod__placeYawLimit:r=0
+    bipod__placeRecoilMult:r=0
+    bipod__solveStep:i=0
+    bipod__solveFunc:i=0
+    bipod__solveIter:i=0
+    bipod__solveForPos:p3=0, 0, 0
+    bipod__solveForDir:p3=0, 0, 0
+    bipod__solveForCrawl:b=no
+    bipod__solveGunPosHigh:p3=0, 0, 0
+    bipod__solveGunPosLow:p3=0, 0, 0
+    bipod__solveHumanRadius:r=0
+    bipod__solveHumanHeight:r=0
+    bipod__solveLastPos:p3=0, 0, 0
+    bipod__solveTraceTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+    bipod__solveTracePt:p3=0, 0, 0
+    bipod__solveBestType:i=0
+    bipod__solveBestScore:i=0
+    bipod__solveBestPos:p3=0, 0, 0
+    bipod__solveBestHeight:r=0
+    bipod__solveBestOffset:p3=0, 0, 0
+    bipod__solveBestNormal:p3=0, 0, 0
+    bipod__solveBestRecoilMult:r=0
+    bipod__rClavicleGunRelTm:m=[[-0.764584, -0.0206014, -0.644195] [-0.601052, 0.383644, 0.701109] [-0.232698, -0.923251, 0.305711] [-0.321564, -0.00929809, 0.1185]]
+    bipod__lClavicleGunRelTm:m=[[0.64262, -0.240541, 0.727447] [-0.652131, 0.326683, 0.684109] [0.402201, 0.914013, -0.0530693] [-0.256833, 0.114808, 0.10546]]
+    bipod__animcharCutSphereRadius:r=0.75
+    bipod__cutSphereOffset:p3=0, 0.05, 0
+
+    "bipod__solveForGun:eid"{}
+  }
+}
+
+bipod_debug{
+  "bipodDebug:tag"{
+    _tags:t="render"
+  }
 }

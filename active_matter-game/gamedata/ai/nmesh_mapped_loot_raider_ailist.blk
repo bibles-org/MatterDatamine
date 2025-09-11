@@ -641,7 +641,7 @@ repeat{
 
           ifThen{
             not{
-              checkTargetVisibility{
+              amCheckTargetVisibility{
                 targetUnitParam:t="shootEnemy"
                 rayMat:t="aiRay"
               }
@@ -731,6 +731,11 @@ repeat{
             lookTime:r=0.5
           }
         }
+      }
+
+      amCheckTargetVisibility{
+        targetUnitParam:t="shootEnemy"
+        rayMat:t="aiRay"
       }
 
       chooseBestWeapon{
@@ -1216,7 +1221,7 @@ repeat{
             findLoot{
               traceDist:r=7
               lootTargetParam:t="lootEntity"
-              maxPickupVolume:r=5
+              maxPickupVolume:i=50
             }
 
             setPosFromEntity{

@@ -1,13 +1,14 @@
+from "dagor.math" import TMatrix, Point2, cvt
+from "math" import sqrt
+from "dagor.random" import rnd_float
+from "dagor.time" import get_time_msec
+from "%ui/helpers/common_queries.nut" import get_transform
+from "dasevents" import EventUpdateMonstrifyPosition
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
 let { watchedHeroEid } = require("%ui/hud/state/watched_hero.nut")
-let { TMatrix, Point2, cvt } = require("dagor.math")
-let { sqrt } = require("math")
-let { rnd_float } = require("dagor.random")
-let { get_time_msec } = require("dagor.time")
-let { get_transform } = require("%ui/helpers/common_queries.nut")
-let { EventUpdateMonstrifyPosition } = require("dasevents")
 
 let monstrifyTraps = Watched({})
 let monstrifyTrapEids = Watched([])

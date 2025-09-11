@@ -7,12 +7,7 @@ import{
 }
 
 entity{
-  _template:t="activity_helper_manager"
-  activity_helper_checks__noActivityMaxTime:r=60
-}
-
-entity{
-  _template:t="invisible_man_manager"
+  _template:t="monster_event_manager"
 }
 
 entity{
@@ -23,10 +18,6 @@ entity{
 
 entity{
   _template:t="zone_weather"
-}
-
-entity{
-  _template:t="civil_lootable_rendinst_manager"
 }
 
 entity{
@@ -116,6 +107,7 @@ entity{
   tiled_map__tilesPath:t="maps/dalniy_island_sparse"
   tiled_map__backgroundColor:c=35, 128, 97, 255
   fog_of_war__enabled:b=yes
+  fog_of_war__onlineSettingsPath:t="raid_dalniy_island_scrapyard"
 }
 
 import{
@@ -155,10 +147,6 @@ import{
 }
 
 import{
-  scene:t="gamedata/scenes/dalniy_island_scrapyard/_dalniy_island_scrapyard_encounters.blk"
-}
-
-import{
   scene:t="gamedata/scenes/dalniy_island_scrapyard/_dalniy_island_scrapyard_waypoints.blk"
 }
 
@@ -175,24 +163,7 @@ import{
 }
 
 import{
-  scene:t="gamedata/scenes/dalniy_island_scrapyard/_dalniy_island_scrapyard_loot_generators.blk"
-}
-
-entity{
-  _template:t="military_lootable_rendinst_manager_t1"
-}
-
-entity{
-  _template:t="unique_item_location_marker"
-  transform:m=[[42.5949, -3.03239e-06, -19.8227] [2.64029e-06, 48.9205, -1.22873e-06] [13.8148, 0, 61.1189] [681.175, 11.6947, -1051.88]]
-  unique_item_location_marker__location:t="spy_trailer"
-}
-
-entity{
-  _template:t="gravity_zone_sphere_rad+allow_inner_gravity_zones_visual_effects"
-  grav_zone__innerRadius:r=120
-  grav_zone__outerRadius:r=140
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1779.72, 123.5, -884.595]]
+  scene:t="gamedata/scenes/_dalniy_island_scrapyard_loot_regular.blk"
 }
 
 entity{
@@ -226,6 +197,36 @@ entity{
   "level__weatherChoice:object"{
     weather_dalniy_island_overcast:r=1
     weather_dalniy_island_cloudy:r=1
+    weather_dalniy_island_poor:r=1
+
+    "weather_dalniy_island_rain:object"{
+      weight:r=1
+
+      "entities:array"{
+        "entities:object"{
+          template:t="camera_rain_heavy_template"
+
+          "components:object"{
+            drop_splashes__volumetricSplashScale:r=0.5
+            drop_splashes__spriteSplashScale:r=7.25
+            drop_splashes__iterationTime:r=2
+            drop_splashes__distance:r=20
+            far_rain__speed:r=1
+            far_rain__wind:r=8
+            far_rain__density:r=10
+            far_rain__length:r=1
+            far_rain__alpha:r=1
+            far_rain__width:r=1
+            far_rain__alpha_fade_speed_begin:r=150
+            far_rain__alpha_fade_speed_end:r=400
+            puddles__growthLimit:r=1
+            puddles__growthRate:r=1
+            rain_ripples__size:r=0.04
+            wetness__strength:r=0.6
+          }
+        }
+      }
+    }
   }
 
   "level__timeVec:array"{

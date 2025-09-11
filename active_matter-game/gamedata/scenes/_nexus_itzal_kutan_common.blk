@@ -262,6 +262,59 @@ entity{
 }
 
 entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=2
+  transform:m=[[0.479102, -4.27662e-08, 0.0100862] [3.1506e-07, 3.60386, 3.15061e-07] [-0.0493967, -2.00809e-07, 2.34638] [10.6464, 41.749, 16.3435]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=2
+  transform:m=[[-0.428977, -2.83742e-10, 0.00324559] [2.53813e-15, -3.31916, -2.90173e-07] [0.0172824, -1.99698e-07, 2.28425] [12.9575, 45.7374, 13.4121]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=1
+  transform:m=[[-0.479102, -4.27662e-08, -0.0100863] [-3.1506e-07, 3.60386, -3.15061e-07] [0.0493969, -2.00809e-07, -2.34638] [-10.8771, 41.749, 16.3435]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=1
+  transform:m=[[0.428977, -2.83742e-10, -0.00324555] [-2.79174e-14, -3.31916, 2.90173e-07] [-0.0172822, -1.99698e-07, -2.28425] [-12.9125, 45.7374, 13.4121]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [11.0261, 42.5182, 16.3283]]
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [-0, -1, 8.74228e-08] [0, -8.74228e-08, -1] [12.8455, 44.3266, 13.286]]
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [-0, -1, 8.74228e-08] [0, -8.74228e-08, -1] [-13.0004, 44.3266, 13.1949]]
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-11.7423, 42.5182, 16.3283]]
+}
+
+entity{
+  _template:t="volfog_nbs"
+  volfog_nbs__rootGraph:t="fog_nexsus_ruin_level.json"
+}
+
+entity{
   _template:t="level+level_synced_environment"
   level__blk:t="levels/nexus_ancient_ruins.blk"
   level_synced_environment__timeOfDaySeed:i=1

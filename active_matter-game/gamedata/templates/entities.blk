@@ -11,8 +11,8 @@ import:t="am_occlusion_sounds.blk"
 import:t="am_shell_sounds.blk"
 import:t="am_human_sounds.blk"
 import:t="am_monster_sounds.blk"
+import:t="human_scan_points_of_interest.blk"
 import:t="gun_sounds.blk"
-import:t="environment_sounds.blk"
 import:t="hitpoints.blk"
 import:t="cameras.blk"
 import:t="replay.blk"
@@ -48,6 +48,7 @@ import:t="scripts_loader.blk"
 import:t="resources_gatherer.blk"
 import:t="ground_hole.blk"
 import:t="equipment_generators.blk"
+import:t="lens_flare.blk"
 
 ecs_no_debug{
   "noECSDebug:tag"{
@@ -75,9 +76,6 @@ explosion_blood_puddles_creator{
 
 bodies_cleanup{
   _singleton:b=yes
-  bodies_cleanup__prolongAt:r=-1
-  bodies_cleanup__prolongDelay:r=0.1
-  bodies_cleanup__prolongLootableMonstersTtlInRad:r=20
 
   bodies_cleanup{}
 }
@@ -244,16 +242,6 @@ shaderVars{
   "shader_vars__original_vars:object"{}
 }
 
-loot_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="loot"
-  grid_holder__typeHash:i=0
-
-  grid_holder{}
-}
-
 session_timer{
   session_timer__time_left:r=1200
   _singleton:b=yes
@@ -330,7 +318,7 @@ slot_attachable_no_slotname{
     _track:b=yes
     slot_attach__slotId:i=-1
 
-    "slot_attach__attachedTo:eid"{}
+    "animchar_attach__attachedTo:eid"{}
     "slot_attach__inAttachedList:eid"{}
   }
 
@@ -375,15 +363,23 @@ item_grid_spawner{
   grid_spawner__rowHeight:r=0
   grid_spawner__gridWidth:i=0
   grid_spawner__gap:p2=0.2, 0.2
+  grid_spawner__itemTemplt:t="item_grid_spawner_entity"
 
   "spawnItemList:array"{}
 }
 
-item_grid_spawner_entity{
+item_grid_spawner_entity_no_drop{
   grid_spawner__nextIdx:i=0
   grid_spawner__firstItem:b=no
+  grid_spawner__itemTemplt:t=""
 
   "grid_spawner__ownerEid:eid"{}
+}
+
+item_grid_spawner_entity{
+  _use:t="item_grid_spawner_entity_no_drop"
+
+  "transform__dropOnGroundOnAppear:tag"{}
 }
 
 camera_animator{
@@ -547,6 +543,14 @@ temperature_anomalies_manager{
   "temperature_anomalies_buffer:UniqueBufHolder"{}
 }
 
+am_manager{
+  _use:t="replicating"
+  _tags:t="render"
+  _singleton:b=yes
+
+  "active_matter_metaballs:ActiveMatterMetaballs"{}
+}
+
 temperature_anomaly{
   _use:t="replicating"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
@@ -556,9 +560,7 @@ temperature_anomaly{
 }
 
 dynmat_params_base{
-  "additional_data:list<p4>"{
-    _tags:t="render"
-  }
+  _use:t="animchar_additional_data"
 
   _group{
     _tags:t="render"
@@ -823,10 +825,10 @@ status_tip_drone_destroy{
   status_tip__text:t="drone/droneDestroy"
 }
 
-status_tip_no_inventory_space{
+status_tip_no_inventory_space_for_device{
   _use:t="client_game_effect_with_duration"
   game_effect__timeToDestroy:r=3
-  status_tip__text:t="drone/noSpaceInInventory"
+  status_tip__text:t="hint/noSpaceInInventory"
 }
 
 status_tip_drone_too_far{
@@ -839,6 +841,48 @@ status_tip_drone_has_been_captured{
   _use:t="client_game_effect_with_duration"
   game_effect__timeToDestroy:r=3
   status_tip__text:t="drone/captured"
+}
+
+status_tip_robodog_has_been_captured{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="robodog/captured"
+}
+
+status_tip_robodog_has_been_hacked{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="robodog/hacked"
+}
+
+status_tip_robodog_enable_following_mode{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="robodog/enableFollowingMode"
+}
+
+status_tip_robodog_disable_following_mode{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="robodog/disableFollowingMode"
+}
+
+status_tip_new_owner_for_robodog{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="robodog/newOwner"
+}
+
+status_tip_robodog_change_owner_to_teammate{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="robodog/newOwnerTeammate"
+}
+
+status_tip_airdrop_wont_be_triggered_at_base{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hud/airdrop_wont_be_triggered_at_base"
 }
 
 status_tip_drone_doesnt_have_grenade{
@@ -947,6 +991,12 @@ status_tip_use_external_inventory_access_denied_wrong_team{
   _use:t="client_game_effect_with_duration"
   game_effect__timeToDestroy:r=3
   status_tip__text:t="hint/use_external_inventory_access_denied_wrong_team"
+}
+
+status_tip_enter_vehicle_team_restriction{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/enter_vehicle_team_restriction"
 }
 
 status_tip_key_required{
@@ -1065,11 +1115,33 @@ status_tip_resurect_device_destroyed{
   status_tip__text:t="hint/resurect_device_destroyed"
 }
 
+status_tip_scan_points_of_interest_cooldown{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/status_tip_scan_points_of_interest_cooldown"
+}
+
+status_tip_scan_points_of_interest_not_found{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/status_tip_scan_points_of_interest_not_found"
+}
+
+status_tip_scan_points_of_interest_found{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="hint/status_tip_scan_points_of_interest_found"
+
+  "status_tip__data:object"{}
+}
+
 attachable_dynamic_char{
   _use:t="replicating"
   _use:t="animchar"
   _use:t="slot_attachable"
   animchar__res:t=""
+  animchar_render__enabled:b=yes
+  slot_attach__visible:b=yes
 
   "slot_attach__toSkeletonAttach:tag"{}
 }
@@ -1079,15 +1151,17 @@ ri_extra_loading{
 }
 
 showroom_item{
-  _use:t="item_in_world"
   showroom_item__rotationAngle:r=0
   showroom_item__screenPos:p2=0, 0
   showroom_item__camera_pos:p3=0, 0, 0
   showroom_item__item_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   showroom_item__base_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _tracked:t="transform"
   showroom_item__autoRotationEnabled:b=yes
+  _use:t="animchar_dynmodel_nodes_hider"
 
-  "showroom_item:eid"{}
+  "showroom_item:tag"{}
   "initial_weapon_mods__list:object"{
     _tags:t="server"
   }
@@ -1097,14 +1171,22 @@ showroom_item{
     upper:t=""
     lower:t=""
   }
+
+  "animchar_dynmodel_nodes_hider__translateToAttaches:tag"{}
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="glasses"
+    n:t="oakley_ballistic_glasses"
+    n:t="steampunk_glasses"
+    n:t="am_fireman_glasses"
+  }
 }
 
 showroom_light_1{
   _use:t="spot_light"
   light__max_radius:r=3
   light__brightness:r=1
-  light__radius_scale:r=4
-  light__color:c=100, 255, 250, 255
+  light__radius_scale:r=32
+  light__color:c=140, 255, 205, 255
   light__affect_volumes:b=no
 
   _group{
@@ -1123,9 +1205,9 @@ showroom_light_1{
 showroom_light_2{
   _use:t="spot_light"
   light__max_radius:r=3
-  light__brightness:r=0.6
-  light__radius_scale:r=4
-  light__color:c=255, 70, 40, 255
+  light__brightness:r=0.2
+  light__radius_scale:r=32
+  light__color:c=255, 30, 10, 255
   light__affect_volumes:b=no
 
   _group{
@@ -1143,16 +1225,17 @@ showroom_light_2{
 
 showroom_light_3{
   _use:t="spot_light"
-  light__max_radius:r=2
-  light__brightness:r=0.4
-  light__radius_scale:r=4
-  light__color:c=255, 230, 200, 255
+  light__max_radius:r=3
+  light__brightness:r=0.1
+  light__radius_scale:r=32
+  light__color:c=255, 240, 210, 255
   light__affect_volumes:b=no
 
   _group{
     _track:b=yes
     _replicate:b=yes
     spot_light__inner_attenuation:r=0.5
+    spot_light__cone_angle:r=70
   }
 
   _group{
@@ -1165,15 +1248,15 @@ showroom_light_3{
 showroom_light_4{
   _use:t="spot_light"
   light__max_radius:r=3
-  light__brightness:r=0.3
-  light__radius_scale:r=4
-  light__color:c=220, 240, 255, 255
+  light__brightness:r=0.05
+  light__radius_scale:r=32
+  light__color:c=60, 200, 255, 255
   light__affect_volumes:b=no
 
   _group{
     _track:b=yes
     _replicate:b=yes
-    spot_light__inner_attenuation:r=0.1
+    spot_light__inner_attenuation:r=0
   }
 
   _group{
@@ -1199,10 +1282,12 @@ showroom_item_place{
 
 dynamic_portal{
   _use:t="animchar"
+  _use:t="animchar_additional_data"
   animchar__res:t="am_portal_dynamic_spherical_hole_char"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   target_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   portal_range:r=200
+  is_bidirectional:b=no
   use_dense_fog:b=no
   fog_start_dist:r=10
   _tracked:t="transform"
@@ -1211,10 +1296,6 @@ dynamic_portal{
   _group{
     _tags:t="render"
     dynamic_portal__index:i=0
-  }
-
-  "additional_data:list<p4>"{
-    _tags:t="render"
   }
 }
 
@@ -1250,6 +1331,17 @@ entities_hierarchy{
   "hierarchy_transformation:list<eid>"{}
 }
 
+gravity_grid_render_manager{
+  _singleton:b=yes
+  _tags:t="render"
+  gravity_zones__render_distance_horizontal:r=500
+  gravity_zones__render_distance_vertical:r=100
+  gravity_zones__render_resolution:r=2.5
+  gravity_zones__y_min:r=10
+
+  "gravity_zones_grid__manager:GravityZonesGrid"{}
+}
+
 hierarchial_free_transform{
   hierarchy_parent_last_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 }
@@ -1259,4 +1351,44 @@ actions_resume_graph{
   "actions__resumeGraphNodeActionNames:list<t>"{}
   "actions__resumeGraphNodeNodeId:list<i>"{}
   "actions__resumeGraphNodeActionId:list<i>"{}
+}
+
+level_ri_recreator{
+  _singleton:b=yes
+  _tags:t="server"
+  level_ri_recreator__doorsSearchRadius:r=3
+  level_ri_recreator__doorsBlk:t=""
+  level_ri_recreator__recreationTemplateName:t="recreatable_rendinst"
+
+  "levelRiRecreator:tag"{}
+  "level_ri_recreator__name:list<t>"{}
+  "level_ri_recreator__tm:list<m>"{}
+  "level_ri_recreator__initHp:list<i>"{}
+  "level_ri_recreator__isDoor:list<b>"{}
+  "level_ri_recreator__lightTm:list<m>"{}
+  "level_ri_recreator__lightName:list<t>"{}
+}
+
+recreatable_rendinst{
+  _use:t="rendinst"
+  _use:t="replicating"
+  ri_shadow__prevBSphere:p4=0, 0, 0, 0
+  ri_extra__overrideHitPoints:i=0
+  _skipInitialReplication:t="ri_extra__handle"
+  recreatable_rendinst__clientInitTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  ri_extra__name:t=""
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  rendinstDestrHasNextRes:b=yes
+
+  "recreatableRendinst:tag"{}
+  "riShadowUpdateTag:tag"{}
+  "isRendinstDestr:tag"{
+    _tags:t="render"
+  }
+
+  "levelRiExtra:tag"{}
+  "neverStillObstacle:tag"{}
+  "ri_extra__handle:u64"{
+    value:i64=-1
+  }
 }

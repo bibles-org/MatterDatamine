@@ -1,10 +1,14 @@
+from "%ui/mainMenu/currencyIcons.nut" import activeMatterIcon
+from "%ui/components/commonComponents.nut" import mkText
+from "%ui/hud/menus/components/inventoryStyle.nut" import itemHeight
+from "%ui/components/cursors.nut" import setTooltip
+
 from "%ui/ui_library.nut" import *
 from "math" import max
-let { heroAmValue, heroAmMaxValue, isSyphoningAm } = require("%ui/hud/state/am_storage_state.nut")
-let { activeMatterIcon } = require("%ui/mainMenu/currencyIcons.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
-let { itemHeight } = require("%ui/hud/menus/components/inventoryStyle.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
+let { heroAmValue, heroAmMaxValue } = require("%ui/hud/state/am_storage_state.nut")
+let { isInBattleState } = require("%ui/state/appState.nut")
+
+#allow-auto-freeze
 
 let picProgress = Picture("ui/skin#round_border_2.svg:{0}:{0}:K".subst(itemHeight))
 let progressbarBackgroundColor = Color(70, 70, 70, 120)
@@ -16,13 +20,14 @@ let mkActiveMatterStorageWidget = @(value = null) function() {
   percent = percent * 0.83 + 0.09 
 
   return {
+    watch = [heroAmValue, heroAmMaxValue, isInBattleState]
     size = [itemHeight, itemHeight]
-    watch = [heroAmValue, heroAmMaxValue, isSyphoningAm]
     padding = hdpx(1)
+    skipDirPadNav = isInBattleState.get()
     behavior = Behaviors.Button
-    onHover = @(on) setTooltip(on ? "{0}{1}".subst(
-      loc("amStatus", {cur = storageAm, max = heroAmMaxValue.get()}),
-      isSyphoningAm.get() ? "\n{0}".subst(loc("amSyphoningInProgress")) : "") : null)
+    onHover = @(on) setTooltip(on ?
+      loc("amStatus", {cur = storageAm, max = heroAmMaxValue.get()})
+      : null)
     children = [
       {
         size = flex()

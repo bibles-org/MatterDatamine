@@ -51,6 +51,9 @@ thermal_vision_debug_preset{
 thermal_vision_renderer{
   _tags:t="render"
   _singleton:b=yes
+  thermal_vision__exitScopeExpositionSpeedValue:r=20
+  thermal_vision__speedUpAdaptationFrameCounter:i=-1
+  thermal_vision__speedUpAdaptationFrameTreshold:i=4
   thermal_vision__on:b=no
 
   "thermal_vision_renderer:tag"{}
@@ -79,4 +82,5 @@ thermal_vision_renderer{
   "thermal_spectre_debug_node:resource_slot::NodeHandleWithSlotsAccess"{}
   "thermal_scope_mask_node:dafg::NodeHandle"{}
   "thermal_vision_depth_for_fx_node:dafg::NodeHandle"{}
+  "thermal_vision_depth_for_early_fx_node:dafg::NodeHandle"{}
 }

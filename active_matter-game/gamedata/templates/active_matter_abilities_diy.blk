@@ -6,7 +6,6 @@ diy_ability{
       lockWhileSwimming:b=yes
       lockInVehicle:b=yes
       skipOnDeath:b=yes
-      manualSoulsWithdrawl:b=yes
 
       "stages:array"{
         "placement_stage:object"{
@@ -212,16 +211,6 @@ ri_preview_base{
   ri_preview__name:t=""
   preview_phys__blk:t=""
   preview__collHeightAdd:r=0.3
-}
-
-diy_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="diy"
-  grid_holder__typeHash:i=0
-
-  grid_holder{}
 }
 
 diy_owned_by_watched{

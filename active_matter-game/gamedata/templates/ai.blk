@@ -161,6 +161,43 @@ croucher_ai{
   beh_tree__enabled:b=yes
 }
 
+vehicle_ai{
+  beh_tree__enabled:b=yes
+  beh_tree__node:t=""
+  beh_tree__debug:b=no
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  _group{
+    _tags:t="server"
+    vehicle_ai__pathIndex:i=-1
+
+    "vehicle_ai__path:list<p3>"{}
+  }
+}
+
+vehicle_human_follower{
+  _use:t="vehicle_ai"
+  beh_tree__node:t="vehicle_follow_closest_human"
+}
+
+vehicle_waypoints{
+  _tags:t="server"
+  vehicle_waypoints__cyclic:b=yes
+  vehicle_waypoints__curIdx:i=0
+  vehicle_waypoints__debug:b=no
+
+  "vehicle_waypoints__waypoints:list<p3>"{}
+}
+
+vehicle_patroller{
+  _use:t="vehicle_ai"
+  _use:t="vehicle_waypoints"
+  beh_tree__node:t="vehicle_follow_waypoints"
+}
+
 mean_enemy_pos{
   mean_pos__pos:p3=0, 0, 0
   mean_pos__team:i=-1
@@ -221,30 +258,8 @@ still_obstacles{
   }
 }
 
-obstacles_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="obstacles"
-  grid_holder__typeHash:i=0
-  grid_holder__cellSize:i=32
-
-  grid_holder{}
-}
-
-obstacles_grid_obj{
-  grid_obj__gridType:t="obstacles"
-  grid_obj__hidden:i=0
-  grid_obj__fixedTmScale:r=-1
-  _replicated:t="grid_obj__hidden"
-  _tracked:t="grid_obj__hidden"
-
-  grid_obj{}
-}
-
 empty_box_obstacle{
-  _use:t="obstacles_grid_obj"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="obstacles_static_grid_object"
 
   "createObstacle:tag"{}
   "box_zone:tag"{}
@@ -313,6 +328,7 @@ flanking_ai{
   flanking_ai__attackFromSide:b=no
   flanking_ai__maxCount:i=4
   flanking_ai__minDistance:r=1
+  flanking_ai__isFlanking:b=no
 
   "flanking_ai__lastTarget:eid"{}
 }

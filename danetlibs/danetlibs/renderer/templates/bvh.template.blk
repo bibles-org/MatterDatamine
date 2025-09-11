@@ -3,6 +3,9 @@ bvh{
   bvh__initialized:b=no
   bvh_debug_dynmodels_console_command:i=0
   needs_water_heightmap:b=no
+  bvh__frame_counter:i=0
+  bvh__prev_pos:p3=0, 0, 0
+  bvh__accumulated_speed:r=0
 
   "resolved_rt_settings:ResolvedRTSettings"{}
   "bvh__heightProvider:BvhHeightProvider"{}
@@ -19,5 +22,6 @@ bvh{
   "bvh_debug_dynmodels_node:dafg::NodeHandle"{}
   "water_rt_late_node:dafg::NodeHandle"{}
   "bvh__rendinst_visibility:RiGenVisibilityECS"{}
+  "bvh__rendinst_oof_visibility:RiGenVisibilityECS"{}
   "rt_persistent_textures:RTPersistentTexturesECS"{}
 }

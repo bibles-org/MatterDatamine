@@ -1,22 +1,24 @@
+from "%dngscripts/globalState.nut" import nestWatched
+
+from "dasevents" import CmdReplayRewindSaveState, CmdReplayRewindLoadState
+
 import "%dngscripts/ecs.nut" as ecs
 
-let {CmdReplayRewindSaveState, CmdReplayRewindLoadState} = require("dasevents")
-let {nestWatched} = require("%dngscripts/globalState.nut")
 
 let replaySavedState = nestWatched("replaySavedState", {})
 
 ecs.register_es("replay_rewind_state_save_es", {
-  [[CmdReplayRewindSaveState]] = @(evt, _eid, _comp) replaySavedState(evt.state.getAll())
+  [[CmdReplayRewindSaveState]] = @(evt, _eid, _comp) replaySavedState.set(evt.state.getAll())
 }, {}, {tags="playingReplay"})
 
 ecs.register_es("replay_rewind_state_load_es", {
   [["onInit"]] = function(...) {
-    if (replaySavedState.value.len() == 0)
+    if (replaySavedState.get().len() == 0)
       return
     let state = ecs.CompObject()
-    foreach (key, val in replaySavedState.value)
+    foreach (key, val in replaySavedState.get())
       state[key] <- val
     ecs.g_entity_mgr.broadcastEvent(CmdReplayRewindLoadState({ state }))
-    replaySavedState({})
+    replaySavedState.set({})
   }
 }, { comps_rq=["replay__startAt"] }, { tags="playingReplay" })

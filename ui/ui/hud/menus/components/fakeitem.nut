@@ -1,10 +1,8 @@
+from "%ui/hud/state/item_info.nut" import mkItemType, mkAttachedChar, getSlotAvailableMods
+from "%ui/hud/menus/inventoryItemInSlots.nut" import getTemplateVisuals
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
-
-let { mkItemType, mkAttachedChar, getSlotAvailableMods } = require("%ui/hud/state/item_info.nut")
-let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
-let { getTemplateVisuals } = require("%ui/hud/menus/inventoryItemInSlots.nut")
-
 
 function getTemplateParams(itemTemplate) {
   if (!itemTemplate)
@@ -41,11 +39,12 @@ function getTemplateParams(itemTemplate) {
       allowed_items = getSlotAvailableMods(slotTemplateName)
     }
   }
-  let inventoryMaxVolumeFloat = template?.getCompValNullable("human_inventory__maxVolume") ?? 0
+  let inventoryMaxVolume = template?.getCompValNullable("human_inventory__maxVolume") ?? 0
 
   let fakeItem = {
+    
+    
     isQuestItem = template?.getCompValNullable("questItem") != null
-    isCorticalVault = template?.getCompValNullable("am_storage__maxValue") != null
     isWeapon
     validWeaponSlots
     weapType = template?.getCompValNullable("item__weapType")
@@ -61,11 +60,9 @@ function getTemplateParams(itemTemplate) {
     gunAmmo = template?.getCompValNullable("gun__ammo") ?? 0
     item__lootType = template?.getCompValNullable("item__lootType") ?? ""
     filterType = template?.getCompValNullable("item__filterType") ?? "loot"
-    item__currentBoxedItemCount = template?.getCompValNullable("item__currentBoxedItemCount")
     alwaysShowCount = template?.getCompValNullable("item__alwaysShowCount") ?? false
     isBoxedItem
     charges
-    owner = controlledHeroEid.get()
     ammoCount = template?.getCompValNullable("item__countPerStack") ?? (isAmmo ? 0 : null)
     maxCharges = template?.getCompValNullable("am_storage__maxValue") ??
       template?.getCompValNullable("item_holder__maxItemCount") ?? maxHp
@@ -73,10 +70,8 @@ function getTemplateParams(itemTemplate) {
     id = itemTemplate
     equipmentSlots = template?.getCompValNullable("item__equipmentSlots")?.getAll?() ?? []
     inventoryExtension = template?.getCompValNullable("item__inventoryExtension") ?? 0
-    inventoryMaxVolumeFloat
-    inventoryMaxVolume = inventoryMaxVolumeFloat
+    inventoryMaxVolume
     protectionMinHpKoef = template?.getCompValNullable("dm_part_armor__protectionMinHpKoef") ?? 0
-    valuableItem = template?.getCompValNullable("valuableItem")
     isDefaultStubItem = template?.getCompValNullable("default_stub_item") != null
     itemRarity = template?.getCompValNullable("item__rarity")
     iconName = template?.getCompValNullable("item__animcharInInventoryName") ?? template?.getCompValNullable("animchar__res")
@@ -88,6 +83,34 @@ function getTemplateParams(itemTemplate) {
     boxedItemTemplate = template?.getCompValNullable("item_holder__boxedItemTemplate")
     boxTemplate = template?.getCompValNullable("boxed_item__template")
     gunBoxedAmmoTemplate = template?.getCompValNullable("gun__boxedAmmoHolderTemplate")
+    ammoHolders = template?.getCompValNullable("gun__ammoHolders").getAll()
+    default_stub_item = template?.getCompValNullable("default_stub_item")
+
+    
+    
+    
+    
+    recognizeTimeLeft = 0
+    count = 1
+    inventoryEid = ecs.INVALID_ENTITY_ID
+    eid = ecs.INVALID_ENTITY_ID
+    isCorrupted = false
+    isDelayedMoveMod = false
+    stacks = true
+    eids = []
+    uniqueId = 0
+    uniqueIds = []
+    countPerItem = 0
+    modInSlots = {}
+    itemContainerItems = []
+    recognizeTime = 0
+    itemPropsId = 0
+    canDrop = false
+    countKnown = true
+
+    
+    item__nexusCost = template?.getCompValNullable("item__nexusCost") 
+    item__nexusIncreaseCostAfterCount = template?.getCompValNullable("item__nexusIncreaseCostAfterCount") 
   }
 
   let itemType = mkItemType(fakeItem)
@@ -95,29 +118,6 @@ function getTemplateParams(itemTemplate) {
   return fakeItem.__update({
     itemType
   })
-}
-
-
-let fakeDynamicFields = {
-  recognizeTimeLeft = 0
-  count = 1
-  eid = ecs.INVALID_ENTITY_ID
-  isCorrupted = false
-  isCorticalVault = false
-  isDelayedMoveMod = false
-  stacks = true
-  eids = []
-  uniqueId = 0
-  uniqueIds = []
-  countPerItem = 0
-  modInSlots = {}
-  itemContainerItems = []
-  recognizeTime = 0
-  boxId = null
-  itemPropsId = 0
-  canDrop = false
-  isAmStorage = false
-  countKnown = true
 }
 
 function mkFakeAttachments(attachments) {
@@ -140,7 +140,6 @@ function mkFakeItem(itemTemplate, additionalFields = {}, attachments=[]) {
     templateName = itemTemplate
   }
   return itemData.__update(
-    fakeDynamicFields,
     getTemplateVisuals(itemTemplate) ?? {},
     getTemplateParams(itemTemplate),
     additionalFields

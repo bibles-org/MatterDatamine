@@ -1,9 +1,6 @@
 base_chronogene{
   _use:t="equipment_mod_icon"
   _use:t="base_item"
-  item__id:i=0
-  _replicated:t="item__id"
-  item__ui_priority:i=0
   item__recreateOnGround:t="item_in_world"
   item__recreateInWorldPhys:t="item_in_world_phys"
   item__recreateInInventory:t="base_invis_item"
@@ -13,7 +10,7 @@ base_chronogene{
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/default.svg"
   chronogene__effect_type:t=""
   item__weight:r=0
-  item__volume:r=0
+  item__volume:i=0
   animchar__res:t="biomaterial_container_can_small_char"
   collres__res:t="biomaterial_container_can_small_collision"
   item__iconYaw:r=200
@@ -28,7 +25,7 @@ base_chronogene{
   "item__chronogene:tag"{}
   "item__cantBeCorrupted:tag"{}
   "item__cantBeReplica:tag"{}
-  "slot_attach__attachedTo:eid"{}
+  "animchar_attach__attachedTo:eid"{}
   "item__equipmentSlots:list<t>"{
     slot:t="chronogene_secondary_1"
     slot:t="chronogene_secondary_2"
@@ -46,7 +43,6 @@ speed_mult_chronogene_t1{
   _use:t="base_chronogene"
   item__proto:t="speed_mult_chronogene_t1"
   item__name:t="items/speed_mult_chronogene_t1"
-  item__userstats__pickupName:t="pickup_speed_mult_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/run_speed_1.svg"
   chronogene__effect_type:t="agility"
 
@@ -83,7 +79,6 @@ jump_mult_chronogene_t1{
   _use:t="base_chronogene"
   item__proto:t="jump_mult_chronogene_t1"
   item__name:t="items/jump_mult_chronogene_t1"
-  item__userstats__pickupName:t="pickup_jump_mult_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/jump_speed_1.svg"
   chronogene__effect_type:t="agility"
 
@@ -123,7 +118,6 @@ weight_penalty_reduction_chronogene_t1{
   _use:t="base_chronogene"
   item__proto:t="weight_penalty_reduction_chronogene_t1"
   item__name:t="items/weight_penalty_reduction_chronogene_t1"
-  item__userstats__pickupName:t="pickup_weight_penalty_reduction_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/loot_weight_1.svg"
   chronogene__effect_type:t="strength"
 
@@ -160,7 +154,6 @@ active_matter_gathering_mult_chronogene_t1{
   _use:t="base_chronogene"
   item__proto:t="active_matter_gathering_mult_chronogene_t1"
   item__name:t="items/active_matter_gathering_mult_chronogene_t1"
-  item__userstats__pickupName:t="pickup_active_matter_gathering_mult_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/am_gain_1.svg"
   chronogene__effect_type:t="active_matter"
 
@@ -197,7 +190,6 @@ item_usage_speed_chronogene_t1{
   _use:t="base_chronogene"
   item__proto:t="item_usage_speed_chronogene_t1"
   item__name:t="items/item_usage_speed_chronogene_t1"
-  item__userstats__pickupName:t="pickup_item_usage_speed_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/item_usage_1.svg"
   chronogene__effect_type:t="agility"
 
@@ -234,7 +226,6 @@ item_recognition_speed_chronogene_t1{
   _use:t="base_chronogene"
   item__proto:t="item_recognition_speed_chronogene_t1"
   item__name:t="items/item_recognition_speed_chronogene_t1"
-  item__userstats__pickupName:t="pickup_item_recognition_speed_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/item_recognition_1.svg"
   chronogene__effect_type:t="perception"
 
@@ -271,7 +262,6 @@ melee_strength_chronogene_t1{
   _use:t="base_chronogene"
   item__proto:t="melee_strength_chronogene_t1"
   item__name:t="items/melee_strength_chronogene_t1"
-  item__userstats__pickupName:t="pickup_melee_strength_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/melee_dmg_1.svg"
   chronogene__effect_type:t="strength"
 
@@ -308,7 +298,6 @@ bullet_proof_chronogene_t1{
   _use:t="base_chronogene"
   item__proto:t="bullet_proof_chronogene_t1"
   item__name:t="items/bullet_proof_chronogene_t1"
-  item__userstats__pickupName:t="pickup_bullet_proof_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/bullet_proof_1.svg"
   chronogene__effect_type:t="vitality"
 
@@ -345,7 +334,6 @@ melee_proof_chronogene_t1{
   _use:t="base_chronogene"
   item__proto:t="melee_proof_chronogene_t1"
   item__name:t="items/melee_proof_chronogene_t1"
-  item__userstats__pickupName:t="pickup_melee_proof_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/melee_proof_1.svg"
   chronogene__effect_type:t="vitality"
 
@@ -382,7 +370,6 @@ shock_reduction_chronogene_t1{
   _use:t="base_chronogene"
   item__proto:t="shock_reduction_chronogene_t1"
   item__name:t="items/shock_reduction_chronogene_t1"
-  item__userstats__pickupName:t="pickup_shock_reduction_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/downed_time_1.svg"
   chronogene__effect_type:t="vitality"
 
@@ -419,7 +406,6 @@ heal_improvement_chronogene_t1{
   _use:t="base_chronogene"
   item__proto:t="heal_improvement_chronogene_t1"
   item__name:t="items/heal_improvement_chronogene_t1"
-  item__userstats__pickupName:t="pickup_heal_improvement_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/heal_up_1.svg"
   chronogene__effect_type:t="vitality"
 
@@ -456,7 +442,6 @@ stamina_chronogene_t1{
   _use:t="base_chronogene"
   item__proto:t="stamina_chronogene_t1"
   item__name:t="items/stamina_chronogene_t1"
-  item__userstats__pickupName:t="pickup_stamina_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/stamina_pulse_1.svg"
   chronogene__effect_type:t="vitality"
 
@@ -499,7 +484,6 @@ stamina_regeneration_chronogene_t1{
   _use:t="base_chronogene"
   item__proto:t="stamina_regeneration_chronogene_t1"
   item__name:t="items/stamina_regeneration_chronogene_t1"
-  item__userstats__pickupName:t="pickup_stamina_regeneration_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/stamina_regen_1.svg"
   chronogene__effect_type:t="vitality"
 
@@ -552,7 +536,6 @@ observation_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="observation_chronogene_t1"
   item__name:t="items/observation_chronogene_t1"
-  item__userstats__pickupName:t="pickup_observation_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/observation.svg"
   chronogene__effect_type:t="perception"
 }
@@ -562,7 +545,6 @@ calming_effect_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="calming_effect_chronogene_t1"
   item__name:t="items/calming_effect_chronogene_t1"
-  item__userstats__pickupName:t="pickup_calming_effect_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/calming_effect.svg"
   chronogene__effect_type:t="vitality"
 }
@@ -572,7 +554,6 @@ parkour_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="parkour_chronogene_t1"
   item__name:t="items/parkour_chronogene_t1"
-  item__userstats__pickupName:t="pickup_parkour_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/parkour.svg"
   chronogene__effect_type:t="agility"
 }
@@ -582,7 +563,6 @@ soft_steps_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="soft_steps_chronogene_t1"
   item__name:t="items/soft_steps_chronogene_t1"
-  item__userstats__pickupName:t="pickup_soft_steps_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/soft_steps.svg"
   chronogene__effect_type:t="agility"
 }
@@ -592,7 +572,6 @@ limb_regeneration_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="limb_regeneration_chronogene_t1"
   item__name:t="items/limb_regeneration_chronogene_t1"
-  item__userstats__pickupName:t="pickup_limb_regeneration_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/limb_regeneration.svg"
   chronogene__effect_type:t="vitality"
 }
@@ -602,7 +581,6 @@ berserk_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="berserk_chronogene_t1"
   item__name:t="items/berserk_chronogene_t1"
-  item__userstats__pickupName:t="pickup_berserk_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/berserk.svg"
   chronogene__effect_type:t="strength"
 }
@@ -612,7 +590,6 @@ tenacious_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="tenacious_chronogene_t1"
   item__name:t="items/tenacious_chronogene_t1"
-  item__userstats__pickupName:t="pickup_tenacious_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/tenacious.svg"
   chronogene__effect_type:t="vitality"
 }
@@ -622,7 +599,6 @@ conduit_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="conduit_chronogene_t1"
   item__name:t="items/conduit_chronogene_t1"
-  item__userstats__pickupName:t="pickup_conduit_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/conduit.svg"
   chronogene__effect_type:t="active_matter"
 }
@@ -632,7 +608,6 @@ weapon_expert_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="weapon_expert_chronogene_t1"
   item__name:t="items/weapon_expert_chronogene_t1"
-  item__userstats__pickupName:t="pickup_weapon_expert_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/weapon_expert.svg"
   chronogene__effect_type:t="agility"
 }
@@ -642,7 +617,6 @@ gunslinger_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="gunslinger_chronogene_t1"
   item__name:t="items/gunslinger_chronogene_t1"
-  item__userstats__pickupName:t="pickup_gunslinger_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/gunslinger.svg"
   chronogene__effect_type:t="agility"
 }
@@ -652,7 +626,6 @@ night_owl_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="night_owl_chronogene_t1"
   item__name:t="items/night_owl_chronogene_t1"
-  item__userstats__pickupName:t="pickup_night_owl_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/night_owl.svg"
   chronogene__effect_type:t="perception"
 }
@@ -662,7 +635,6 @@ trap_sensing_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="trap_sensing_chronogene_t1"
   item__name:t="items/trap_sensing_chronogene_t1"
-  item__userstats__pickupName:t="pickup_trap_sensing_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/trap_sensing.svg"
   chronogene__effect_type:t="perception"
 }
@@ -672,7 +644,6 @@ knife_master_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="knife_master_chronogene_t1"
   item__name:t="items/knife_master_chronogene_t1"
-  item__userstats__pickupName:t="pickup_knife_master_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/knife_master.svg"
   chronogene__effect_type:t="strength"
 }
@@ -682,7 +653,6 @@ am_locator_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="am_locator_chronogene_t1"
   item__name:t="items/am_locator_chronogene_t1"
-  item__userstats__pickupName:t="pickup_am_locator_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/am_locator.svg"
   chronogene__effect_type:t="active_matter"
 }
@@ -692,7 +662,6 @@ monster_detector_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="monster_detector_chronogene_t1"
   item__name:t="items/monster_detector_chronogene_t1"
-  item__userstats__pickupName:t="pickup_monster_detector_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/monster_detector.svg"
   chronogene__effect_type:t="perception"
 }
@@ -702,7 +671,6 @@ motion_detector_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="motion_detector_chronogene_t1"
   item__name:t="items/motion_detector_chronogene_t1"
-  item__userstats__pickupName:t="pickup_motion_detector_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/motion_detector.svg"
   chronogene__effect_type:t="perception"
 }
@@ -712,7 +680,6 @@ sharp_memory_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="sharp_memory_chronogene_t1"
   item__name:t="items/sharp_memory_chronogene_t1"
-  item__userstats__pickupName:t="pickup_sharp_memory_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/sharp_memory.svg"
   chronogene__effect_type:t="perception"
 }
@@ -722,7 +689,6 @@ reanimator_chronogene_t1{
   _use:t="item_rarity_rare"
   item__proto:t="reanimator_chronogene_t1"
   item__name:t="items/reanimator_chronogene_t1"
-  item__userstats__pickupName:t="pickup_reanimator_chronogene_t1"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/reanimator.svg"
   chronogene__effect_type:t="perception"
 }
@@ -731,7 +697,6 @@ speed_mult_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="speed_mult_chronogene_passive"
   item__name:t="items/speed_mult_chronogene_passive"
-  item__userstats__pickupName:t="pickup_speed_mult_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/run_speed_1.svg"
   chronogene__effect_type:t="agility"
 
@@ -744,7 +709,6 @@ jump_mult_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="jump_mult_chronogene_passive"
   item__name:t="items/jump_mult_chronogene_passive"
-  item__userstats__pickupName:t="pickup_jump_mult_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/jump_speed_no_rank.svg"
   chronogene__effect_type:t="agility"
 
@@ -757,7 +721,6 @@ safe_fall_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="safe_fall_chronogene_passive"
   item__name:t="items/safe_fall_chronogene_passive"
-  item__userstats__pickupName:t="pickup_safe_fall_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/safe_fall_no_rank.svg"
   chronogene__effect_type:t="agility"
 
@@ -770,7 +733,6 @@ weight_penalty_reduction_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="weight_penalty_reduction_chronogene_passive"
   item__name:t="items/weight_penalty_reduction_chronogene_passive"
-  item__userstats__pickupName:t="pickup_weight_penalty_reduction_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/loot_weight_no_rank.svg"
   chronogene__effect_type:t="strength"
 
@@ -783,7 +745,6 @@ active_matter_gathering_mult_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="active_matter_gathering_mult_chronogene_passive"
   item__name:t="items/active_matter_gathering_mult_chronogene_passive"
-  item__userstats__pickupName:t="pickup_active_matter_gathering_mult_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/am_gain_no_rank.svg"
   chronogene__effect_type:t="active_matter"
 
@@ -796,7 +757,6 @@ item_usage_speed_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="item_usage_speed_chronogene_passive"
   item__name:t="items/item_usage_speed_chronogene_passive"
-  item__userstats__pickupName:t="pickup_item_usage_speed_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/item_usage_no_rank.svg"
   chronogene__effect_type:t="agility"
 
@@ -809,7 +769,6 @@ item_recognition_speed_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="item_recognition_speed_chronogene_passive"
   item__name:t="items/item_recognition_speed_chronogene_passive"
-  item__userstats__pickupName:t="pickup_item_recognition_speed_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/item_recognition_no_rank.svg"
   chronogene__effect_type:t="perception"
 
@@ -822,7 +781,6 @@ melee_strength_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="melee_strength_chronogene_passive"
   item__name:t="items/melee_strength_chronogene_passive"
-  item__userstats__pickupName:t="pickup_melee_strength_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/melee_dmg_no_rank.svg"
   chronogene__effect_type:t="strength"
 
@@ -835,7 +793,6 @@ bullet_proof_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="bullet_proof_chronogene_passive"
   item__name:t="items/bullet_proof_chronogene_passive"
-  item__userstats__pickupName:t="pickup_bullet_proof_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/bullet_proof_no_rank.svg"
   chronogene__effect_type:t="vitality"
 
@@ -848,7 +805,6 @@ melee_proof_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="melee_proof_chronogene_passive"
   item__name:t="items/melee_proof_chronogene_passive"
-  item__userstats__pickupName:t="pickup_melee_proof_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/melee_proof_no_rank.svg"
   chronogene__effect_type:t="vitality"
 
@@ -861,7 +817,6 @@ shock_reduction_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="shock_reduction_chronogene_passive"
   item__name:t="items/shock_reduction_chronogene_passive"
-  item__userstats__pickupName:t="pickup_shock_reduction_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/downed_time_no_rank.svg"
   chronogene__effect_type:t="vitality"
 
@@ -874,7 +829,6 @@ heal_improvement_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="heal_improvement_chronogene_passive"
   item__name:t="items/heal_improvement_chronogene_passive"
-  item__userstats__pickupName:t="pickup_heal_improvement_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/heal_up_no_rank.svg"
   chronogene__effect_type:t="vitality"
 
@@ -887,7 +841,6 @@ stamina_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="stamina_chronogene_passive"
   item__name:t="items/stamina_chronogene_passive"
-  item__userstats__pickupName:t="pickup_stamina_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/stamina_pulse_no_rank.svg"
   chronogene__effect_type:t="vitality"
 
@@ -902,7 +855,6 @@ stamina_regeneration_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="stamina_regeneration_chronogene_passive"
   item__name:t="items/stamina_regeneration_chronogene_passive"
-  item__userstats__pickupName:t="pickup_stamina_regeneration_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/stamina_regen_no_rank.svg"
   chronogene__effect_type:t="vitality"
 
@@ -917,7 +869,6 @@ low_recoil_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="low_recoil_chronogene_passive"
   item__name:t="items/low_recoil_chronogene_passive"
-  item__userstats__pickupName:t="pickup_low_recoil_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/range_recoil_no_rank.svg"
   chronogene__effect_type:t="vitality"
 
@@ -930,7 +881,6 @@ calm_breath_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="calm_breath_chronogene_passive"
   item__name:t="items/calm_breath_chronogene_passive"
-  item__userstats__pickupName:t="pickup_calm_breath_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/calm_breath_no_rank.svg"
   chronogene__effect_type:t="vitality"
 
@@ -943,7 +893,6 @@ silent_step_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="silent_step_chronogene_passive"
   item__name:t="items/silent_step_chronogene_passive"
-  item__userstats__pickupName:t="pickup_silent_step_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/silent_steps_no_rank.svg"
   chronogene__effect_type:t="vitality"
 
@@ -956,7 +905,6 @@ fast_pose_change_chronogene_passive{
   _use:t="base_chronogene"
   item__proto:t="fast_pose_change_chronogene_passive"
   item__name:t="items/fast_pose_change_chronogene_passive"
-  item__userstats__pickupName:t="pickup_fast_pose_change_chronogene"
   chronogene__effect_icon:t="!ui/uiskin/chronogenes/stance_change_no_rank.svg"
   chronogene__effect_type:t="vitality"
 

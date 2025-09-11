@@ -3,7 +3,7 @@ require DagorSystem
 require DaWeaponProps
 require NetPropsRegistry
 
-[es(on_appear)]
+[es(on_appear, before=gun_zeroing_es)]
 def shell_item_es(evt : Event;
                   item__shell : string;
                   var shell_props : ShellPropIds&)

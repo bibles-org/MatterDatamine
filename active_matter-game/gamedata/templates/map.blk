@@ -1,17 +1,6 @@
-am_map_user_point_main{
-  _use:t="map_user_point"
-  deleteAngle:r=0
-  pointGroup:i=0
-
-  "map_user_point_infinite:tag"{}
-  _group{
-    hud_marker__type:t="main_user_point"
-    _tags:t="ui"
-  }
-}
-
 map_mark_creator{
   map_mark_creator__lastMarkTime:r=-1
   map_mark_creator__markCreationCooldown:r=0.1
-  map_mark_creator__markTemplateName:t="am_map_user_point_main"
+  map_mark_creator__marksLimit:i=20
+  map_mark_creator__marksCount:i=0
 }

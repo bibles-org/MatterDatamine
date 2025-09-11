@@ -10,10 +10,10 @@ skeleton_attach_inited{
 skeleton_attached{
   skeleton_attach__attached:b=no
   _replicated:t="skeleton_attach__attached"
-  _replicated:t="skeleton_attach__attachedTo"
-  _tracked:t="skeleton_attach__attachedTo"
+  _replicated:t="animchar_attach__attachedTo"
+  _tracked:t="animchar_attach__attachedTo"
 
-  "skeleton_attach__attachedTo:eid"{}
+  "animchar_attach__attachedTo:eid"{}
 }
 
 saved_animchar{

@@ -18,7 +18,7 @@ point_of_interest_nav_data{
 }
 
 resurrect_after_death{
-  bodyCleanupTime:r=10
+  body_cleanup_server_after_death__delay:r=10
   resurrect_after_death__timeToResurrect:r=5
   resurrect_template:t=""
 }
@@ -116,6 +116,7 @@ navmesh_isle_marker{
   navmesh_isle_marker__radius:r=200
   navmesh_isle_marker__origin:p3=0, 0, 0
   navmesh_isle_marker__expectedNumTriangles:i=0
+  navmesh_isle_marker__expectPlayerSpawn:b=yes
 
   "navmesh_isle_marker:tag"{}
 }
@@ -190,11 +191,11 @@ benchmarked_agent{
   _use:t="door_obstacle_handler"
   _use:t="destructable_obstacle_handler"
   beh_tree__interruptDisabled:b=no
+  action__operateDoor:t=""
   human_operate_door_action__alternativeAction:b=no
   benchmarked_agent__idx:i=0
   benchmarked_agent__targetPos:p3=0, 0, 0
 
-  "human_operate_door_action__noAnimation:tag"{}
   "human_anim__doorAnimEid:eid"{}
   "benchmarked_agent__points:list<p3>"{}
 }
@@ -218,6 +219,9 @@ dev_draw{
   dev_draw__wanderingCore:b=no
   dev_draw__nest:b=no
   dev_draw__bees:b=no
+  dev_draw__hounds:b=no
+  dev_draw__mimics:b=no
+  dev_draw__poltergeist:b=no
   dev_draw__slots:b=no
   dev_draw__obstacles:b=no
   dev_draw__gravity_zone:b=no
@@ -225,7 +229,11 @@ dev_draw{
   dev_draw__navmesh_mapping_zones:b=no
   dev_draw__households:b=no
   dev_draw__quest_zones:b=no
+  dev_draw__quest_photos:b=no
   dev_draw__teleports:b=no
+  dev_draw__sleeping:b=no
+  dev_draw__target:b=no
+  dev_draw__stuckDetector:b=no
   dev_draw__notes:b=no
   dev_draw__secret_ri:b=no
   dev_draw__rendinsts:b=no
@@ -235,4 +243,5 @@ dev_draw{
   dev_draw__respbases:b=no
   dev_draw__extraction:b=no
   dev_draw__ladders:b=no
+  dev_draw__loot:b=no
 }

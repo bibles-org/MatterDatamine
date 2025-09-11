@@ -16,10 +16,10 @@ let yup_version = WatchedRo(file_exists(project_yup_name)
   : null)
 
 let circuitEnv = WatchedRo(get_circuit_conf()?.environment ?? "")
-let version = WatchedRo(yup_version.value ?? exe_version.value)
+let version = WatchedRo(yup_version.get() ?? exe_version.get())
 
-let isProductionCircuit = Computed(@() !(circuitEnv.value!="production"))
-let isInternalCircuit = Computed(@() circuitEnv.value=="test")
+let isProductionCircuit = Computed(@() !(circuitEnv.get()!="production"))
+let isInternalCircuit = Computed(@() circuitEnv.get()=="test")
 let isDebugBuild = DBGLEVEL > 0
 
 return {

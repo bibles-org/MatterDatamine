@@ -1,24 +1,31 @@
+from "eventbus" import eventbus_send
+from "videomode" import apply_video_settings
+from "%ui/mainMenu/menus/options/options_lib.nut" import isOption
+from "%ui/components/button.nut" import textButton
+import "%ui/mainMenu/menus/settingsMenu.nut" as settingsMenuCtor
+from "%ui/components/msgbox.nut" import showMsgbox
+from "settings" import save_changed_settings, get_setting_by_blk_path, set_setting_by_blk_path, save_settings, remove_setting_by_blk_path
+from "app" import reload_ui_scripts, reload_overlay_ui_scripts
+from "%ui/mainMenu/menus/options/camera_fov_option.nut" import cameraFovOption
+from "%ui/mainMenu/menus/options/flashlight_tip_option.nut" import flashlightTipOption
+from "%ui/mainMenu/menus/options/player_interaction_option.nut" import friendsInvitationOption, streamerModeOption
+from "%ui/mainMenu/menus/options/quality_preset_option.nut" import optGraphicsQualityPreset
+from "%ui/mainMenu/menus/options/miss_second_map_help.nut" import missSecondMapHelp, missSecondSarcasm
+from "%ui/mainMenu/menus/options/chocolate_matrix_option.nut" import chocolateRowOption, chocolateColOption
 from "%ui/ui_library.nut" import *
+from "modules" import on_module_unload
+from "%dngscripts/globalState.nut" import nestWatched
 
-let { eventbus_send } = require("eventbus")
-let {apply_video_settings} = require("videomode")
+let { showSettingsMenu } = require("%ui/mainMenu/menus/menuState.nut")
+let logMenu = require("%sqGlob/library_logs.nut").with_prefix("[SettingsMenu] ")
 let {apply_audio_settings=@(_fieilds) null} = require_optional("dngsound")
-let {isOption} = require("options/options_lib.nut")
-let logMenu = require("%sqstd/log.nut")().with_prefix("[SettingsMenu] ")
-let { textButton } = require("%ui/components/button.nut")
 let JB = require("%ui/control/gui_buttons.nut")
-let settingsMenuCtor = require("settingsMenu.nut")
-let {showMsgbox} = require("%ui/components/msgbox.nut")
-let { save_changed_settings, get_setting_by_blk_path, set_setting_by_blk_path, remove_setting_by_blk_path } = require("settings")
-let { renderOptions } = require("%ui/mainMenu/menus/options/render_options.nut")
+let { renderOptions, optLanguage } = require("%ui/mainMenu/menus/options/render_options.nut")
 let { soundOptions } = require("%ui/mainMenu/menus/options/sound_options.nut")
-let { cameraFovOption } = require("%ui/mainMenu/menus/options/camera_fov_option.nut")
-let { flashlightTipOption } = require("%ui/mainMenu/menus/options/flashlight_tip_option.nut")
 let { voiceChatOptions } = require("%ui/mainMenu/menus/options/voicechat_options.nut")
-let { optGraphicsQualityPreset } = require("%ui/mainMenu/menus/options/quality_preset_option.nut")
 let { onlineSettingUpdated } = require("%ui/options/onlineSettings.nut")
-let { missSecondMapHelp, missSecondSarcasm } = require("%ui/mainMenu/menus/options/miss_second_map_help.nut")
-let { chocolateRowOption, chocolateColOption } = require("%ui/mainMenu/menus/options/chocolate_matrix_option.nut")
+
+let settingsForRestart = mkWatched(persist, "settingsForRestart", {})
 
 let menuTabsOrder = freeze([
   {id = "Graphics", text=loc("options/graphicsParameters")},
@@ -28,35 +35,40 @@ let menuTabsOrder = freeze([
   {id = "Streaming", text = loc("options/streaming")}
 ])
 
-let getMenuOptions = @() [flashlightTipOption, cameraFovOption, optGraphicsQualityPreset, missSecondMapHelp,
-  missSecondSarcasm, chocolateRowOption, chocolateColOption].extend(renderOptions, soundOptions, voiceChatOptions)
+let getMenuOptions = @() [optLanguage, flashlightTipOption, cameraFovOption, optGraphicsQualityPreset, missSecondMapHelp,
+  missSecondSarcasm, chocolateRowOption, chocolateColOption, friendsInvitationOption, streamerModeOption
+].extend(renderOptions, soundOptions, voiceChatOptions)
 
-let showSettingsMenu = mkWatched(persist, "showSettingsMenu", false)
-let closeMenu = @() showSettingsMenu(false)
+let closeMenu = @() showSettingsMenu.set(false)
 
 
 let foundTabsByOptionsGen = Watched(0)
-let foundTabsByOptionsContainer = {value = []}
-let getFoundTabsByOptions = @(...) foundTabsByOptionsContainer.value
+let foundTabsByOptionsContainer = []
+let getFoundTabsByOptions = @(...) foundTabsByOptionsContainer
 function setFoundTabsByOptions(v){
-  foundTabsByOptionsContainer.value = v
-  foundTabsByOptionsGen(foundTabsByOptionsGen.value+1)
+  foundTabsByOptionsContainer.replace(v)
+  foundTabsByOptionsGen.modify(@(i) i+1)
 }
 
 let resultOptionsGen = Watched(0)
-let resultOptionsContainer = {value = []}
-let getResultOptions = @(...) resultOptionsContainer.value
+let resultOptionsContainer = []
+let getResultOptions = @(...) resultOptionsContainer
 function resultOptions(v){
-  resultOptionsContainer.value = v
-  resultOptionsGen(resultOptionsGen.value+1)
+  resultOptionsContainer.replace(v)
+  resultOptionsGen.modify(@(i) i+1)
 }
 
 function setResultOptions(...){
   local optionsValue = getMenuOptions()
   let tabsInOptions = {}
-  let isAvailableTriggers = optionsValue.filter(@(opt) opt?.isAvailableWatched!=null).map(@(opt) opt.isAvailableWatched)
-  optionsValue = optionsValue.filter(@(opt) isOption(opt) && ((opt?.isAvailable==null && opt?.isAvailableWatched==null) || opt?.isAvailable() || opt?.isAvailableWatched.value))
+  let isAvailableTriggers = optionsValue
+    .filter(@(opt) opt?.isAvailableWatched!=null)
+    .map(@(opt) opt.isAvailableWatched)
 
+  optionsValue = optionsValue.filter(@(opt) isOption(opt) && (
+    (opt?.isAvailable == null && opt?.isAvailableWatched == null)
+    || (opt?.isAvailableWatched.get() ?? opt?.isAvailable() ?? false)
+  ))
   let res = []
   local lastSeparator = null
   let optionsStack = []
@@ -93,7 +105,7 @@ function setResultOptions(...){
   resultOptions(res)
   setFoundTabsByOptions(tabsInOptions.keys())
   foreach(i in isAvailableTriggers)
-    i.subscribe(setResultOptions)
+    i.subscribe_with_nasty_disregard_of_frp_update(setResultOptions)
 }
 setResultOptions()
 
@@ -112,15 +124,15 @@ function getResultTabs(foundTabsByOptionsValue, tabsOrder){
   return ret
 }
 
-let curTab = mkWatched(persist, "curTab")
-let currentTab = mkWatched(persist, "currentTab", menuTabsOrder?[0].id)
+let curTab = nestWatched("curTab")
+let currentTab = nestWatched("currentTab", menuTabsOrder?[0].id)
 
 function checkAndApply(available, val, defVal, blkPath) {
   if (available == null)
     return val
 
   if (available instanceof Watched)
-    available = available.value
+    available = available.get()
   if (typeof available != "array")
     available = [available]
   if (available.contains(val))
@@ -136,14 +148,34 @@ function checkAndApply(available, val, defVal, blkPath) {
   return val
 }
 
+
+function backupRestartRequiredSettings() {
+  
+  remove_setting_by_blk_path("onReloadChanges")
+
+  if (settingsForRestart.get().len() != 0) {
+    
+    foreach (blkPath, val in settingsForRestart.get())
+      set_setting_by_blk_path($"onReloadChanges/{blkPath}", val)
+
+    settingsForRestart.set({})
+  }
+  save_settings()
+}
+
+
 let convertForBlkByType = {
   float = @(v) v.tofloat()
   integer = @(v) v.tointeger()
   string = @(v) v.tostring()
   bool = @(v) !!v
 }
-function applyGameSettingsChanges(optionsValue) { 
-  local needRestart = false
+function applyGameSettingsChanges(optionsValue, silentApply = false) {
+  let onCloseActions = {
+    needNotifyRestart = false
+    needReload = false
+  }
+
   let changedFields = []
   foreach (opt in optionsValue) {
     let { blkPath = null } = opt
@@ -151,7 +183,7 @@ function applyGameSettingsChanges(optionsValue) {
       let { defVal = null } = opt
       let isEq = opt.isEqual
       local hasChanges = false
-      local val = opt.var.value
+      local val = opt.var.get()
       if ("convertForBlk" in opt)
         val = opt.convertForBlk(val)
       else if ("typ" in opt && opt.typ in convertForBlkByType) {
@@ -171,12 +203,43 @@ function applyGameSettingsChanges(optionsValue) {
           changedFields.append(blkPath)
         }
       }
+
+      if (opt?.restart) {
+        let optSavedValue = get_setting_by_blk_path(blkPath) ?? defVal
+        if (!isEq(optSavedValue, val) && val != null) {
+          settingsForRestart.mutate(function(v) {
+            
+            v[blkPath] <- val
+
+            
+            foreach (moreSetting in opt?.getMoreBlkSettings(val) ?? [])
+              v[moreSetting.blkPath] <- moreSetting.val
+          })
+          logMenu($"{blkPath}, {val} marked as 'restart required'. Saved until restart game")
+        }
+        else if (blkPath in settingsForRestart.get()) {
+          settingsForRestart.mutate(function(v) {
+            
+            v.$rawdelete(blkPath)
+
+            
+            foreach (moreSetting in opt?.getMoreBlkSettings(val) ?? [])
+              v.$rawdelete(moreSetting.blkPath)
+          })
+
+          logMenu($"{blkPath} marked as 'restart required'. Restored last saved value. Remove from save queue.")
+        }
+        continue
+      }
+
       let blksettings = [{ blkPath, val, defVal }]
       if ("getMoreBlkSettings" in opt)
-        blksettings.extend(opt.getMoreBlkSettings(opt.var.value))
+        blksettings.extend(opt.getMoreBlkSettings(val))
+
       foreach (setting in blksettings) {
         logMenu(setting.blkPath, get_setting_by_blk_path(setting.blkPath), setting?.defVal, setting.val)
-        if (!isEq(get_setting_by_blk_path(setting.blkPath) ?? setting?.defVal, setting.val) && setting.val != null) {
+        let savedValue = get_setting_by_blk_path(setting.blkPath) ?? setting?.defVal
+        if (!isEq(savedValue, setting.val) && setting.val != null) {
           
           if (type(get_setting_by_blk_path(setting.blkPath)) != type(setting.val))
             remove_setting_by_blk_path(setting.blkPath)
@@ -185,31 +248,55 @@ function applyGameSettingsChanges(optionsValue) {
           hasChanges = true
         }
       }
-      if (hasChanges && opt?.restart)
-        needRestart = true
+
+      if (hasChanges && opt?.reload)
+        onCloseActions.needReload = true
     }
   }
+
+  if (!silentApply && settingsForRestart.get().len())
+    onCloseActions.needNotifyRestart = true
+
+  backupRestartRequiredSettings()
+
   if (changedFields.len() != 0) {
     logMenu("apply changes", changedFields)
     save_changed_settings(changedFields)
     apply_video_settings(changedFields)
     apply_audio_settings(changedFields)
   }
-  return needRestart
+  return onCloseActions
+}
+
+function doReload() {
+  defer(function() {
+    reload_overlay_ui_scripts()
+    reload_ui_scripts()
+  })
 }
 
 let saveAndApply = @(onMenuClose, options) function() {
-  let needRestart = applyGameSettingsChanges(options)
+  let onCloseActions = applyGameSettingsChanges(options)
   onMenuClose()
   eventbus_send("onlineSettings.sendToServer", null)
 
-  if (needRestart) {
-    showMsgbox({text=loc("settings/restart_needed")})
+  if (onCloseActions.needNotifyRestart) {
+    showMsgbox({
+      text = loc("settings/restart_needed")
+      buttons = [{ text = loc("Ok"), isCurrent = true
+          action = onCloseActions.needReload ? doReload : null }]
+    })
   }
+  else if (onCloseActions.needReload)
+    doReload()
 }
 
-onlineSettingUpdated.subscribe(@(val) val ? defer(@() applyGameSettingsChanges(getResultOptions())) : null)
-applyGameSettingsChanges(getResultOptions())
+if (onlineSettingUpdated) {
+  onlineSettingUpdated.subscribe(
+    @(val) val ? defer(@() applyGameSettingsChanges(resultOptionsContainer)) : null
+  )
+  applyGameSettingsChanges(getResultOptions())
+}
 
 function mkSettingsMenuUi(menu_params) {
   function close(){
@@ -222,23 +309,23 @@ function mkSettingsMenuUi(menu_params) {
     return {
       size = flex()
       key = "settings_menu_root"
-      onDetach = @() curTab(tabs?[0].id ?? "")
+      onDetach = @() curTab.set(tabs?[0].id ?? "")
       function onAttach(){
-        if ((curTab.value ?? "") == "")
-          curTab(tabs?[0].id ?? "")
+        if ((curTab.get() ?? "") == "")
+          curTab.set(tabs?[0].id ?? "")
       }
       watch = [resultOptionsGen, currentTab, foundTabsByOptionsGen]
       children = [
         {
           rendObj = ROBJ_WORLD_BLUR_PANEL
-          size = [sw(100), sh(100)]
+          size = static [sw(100), sh(100)]
           stopHotkeys = true
           stopMouse = true
           color = Color(130,130,130)
         }
         settingsMenuCtor({
           key = "settings_menu"
-          size = [sw(70), sh(80)]
+          size = static [sw(70), sh(80)]
           options = optionsValue
           sourceTabs = tabs
           currentTab = currentTab

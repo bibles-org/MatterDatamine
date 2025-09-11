@@ -1,23 +1,22 @@
-zones_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="zones"
-  grid_holder__typeHash:i=0
-  grid_holder__smallCellSize:i=32
-
-  grid_holder{}
-}
-
 am_triggerable_zone{
+  _use:t="zones_static_grid_object"
   zone__active:b=yes
   zone__lastTriggerTime:r=-1
   zone__nextCheckTime:r=-1
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  grid_obj__gridType:t="zones"
-  grid_obj__fixedTmScale:r=-1
+}
 
-  grid_obj{}
+zone_with_attached_effect{
+  zone__attachedEffectTemplate:t=""
+
+  "zone__perPlayerEffect:object"{}
+}
+
+zone_for_item_use{
+  _use:t="am_triggerable_zone"
+  _use:t="zone_with_attached_effect"
+  zone__attachedEffectTemplate:t="suggest_use_items_in_zone_effect"
+
+  "zone_for_item_use__itemProtos:list<t>"{}
 }
 
 base_encounter_gen{
@@ -43,19 +42,6 @@ spider_swarm_encounters_gen{
   indoor_encounter_gen__numToPregenerate:i=500
   encounter_gen__numToSpawn:i=300
   encounter_gen__templateToSpawn:t="spider_swarm"
-}
-
-additional_artifact_spawner_place{
-  _use:t="ecs_no_debug"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  additional_artifact__spawnPlaceActive:b=yes
-}
-
-minimap_dalnyi_island{
-  _use:t="minimap"
-  mapTex:t="dalniy_island_det_minimap*"
-  left_top:p2=-2048, 2048
-  right_bottom:p2=2048, -2048
 }
 
 loot_generator_monster_gen{

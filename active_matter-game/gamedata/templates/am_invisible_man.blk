@@ -255,6 +255,8 @@ invisible_man_another_dimension_visitor{
   "another_dimension_visitor__renderModeFromAnotherToAnotherAffectTemplates:list<t>"{
     item:t="invisible_man_visibility_render_in_another_dimension_affect"
   }
+
+  "another_dimension_visitor__returnOnDeath:tag"{}
 }
 
 invisible_man_ai{
@@ -281,6 +283,7 @@ invisible_man_ai{
   attract_point__checkPath:b=no
   visual_attract__maxDist:r=3
   obstacle_avoider__updateInterval:r=0.2
+  nphys_dyn_obstacles__count:i=0
   beh_tree__node:t="invisible_man"
   beh_tree__debug:b=no
   beh_tree__enabled:b=yes
@@ -630,18 +633,6 @@ invisible_man_hit_reactions{
 invisible_man_loot{
   "human_inventory__deathDrop:array"{
     "loot:object"{
-      itemTemplate:t="invisible_remains_item"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="invisible_remains_pristine_item"
-      dropChance:r=0.005
-      dropHeight:r=1
-    }
-
-    "loot:object"{
       itemTemplate:t="active_matter_pile+coin_item_count_3"
       dropChance:r=1
       dropHeight:r=1
@@ -672,7 +663,7 @@ invisible_man_damaged_affect{
 
 invisible_man{
   _use:t="am_navmesh_creature_base"
-  _use:t="net_ragdoll"
+  _use:t="lootable_net_ragdoll"
   _use:t="navmesh_phys_locomotion"
   _use:t="navmesh_phys_jumplinks"
   _use:t="invisible_man_climb"
@@ -697,7 +688,7 @@ invisible_man{
   _tracked:t="human__visible"
   isInVehicleHidden:b=no
   _replicated:t="isInVehicleHidden"
-  bodyCleanupTime:r=3
+  body_cleanup_server_after_death__delay:r=120
   hit_verification__maxDistance:r=9
   dm__bsphereRad:r=9
   needsBlood:b=no
@@ -723,11 +714,54 @@ invisible_man{
     }
   }
 
+  _group{
+    _tags:t="server"
+    net_ragdoll__physObjTemplate:t="invisible_ragdoll_physobj"
+  }
+
   anim_phys{}
   "phys_vars__skipVisibilityCheck:tag"{}
   "dmgzoneVulnerable:tag"{}
   "grid_obj__updateAlways:tag"{}
   "invisibleMan:tag"{}
+}
+
+invisible_ragdoll_physobj{
+  _use:t="lootable_ragdoll_phys_obj_with_loot_preset"
+  item__setCustomUsePrompt:t="monsterCorpse/search"
+  loot_drop_system__lootPreset:t="invisible_death_loot_preset"
+  human_inventory__maxVolume:i=100
+}
+
+invisible_death_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="invisible_remains_item"
+    }
+
+    "item:object"{
+      sub_preset:t="invisible_pristine_remains_preset"
+    }
+  }
+}
+
+invisible_pristine_remains_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="invisible_remains_pristine_item"
+      weight:r=0.005
+    }
+
+    "item:object"{
+      template_name:t="empty_loot_preset"
+      weight:r=0.995
+    }
+  }
 }
 
 invisible_man_guard{
@@ -736,41 +770,42 @@ invisible_man_guard{
   invisible_man__inRage:b=yes
 }
 
-invisible_man_manager{
-  invisible_man_manager__maxSpawnCount:i=1
-  invisible_man_manager__requiredMovementDistanceSq:r=25
-  invisible_man_manager__noMovementPenaltyTime:r=10
-  invisible_man_manager__noMovementPenaltyKoef:r=1
-  invisible_man_manager__noAttackPenaltyTime:r=180
-  invisible_man_manager__noAttackPenaltyKoef:r=0
-  invisible_man_manager__noDangerPenaltyTime:r=180
-  invisible_man_manager__noDangerPenaltyKoef:r=0
-  invisible_man_manager__shootProtectionTime:r=120
-  invisible_man_manager__initialSpawnTime:p2=600, 1200
-  invisible_man_manager__spawnTime:p2=600, 1200
-  invisible_man_manager__extraSpawnTimePerSpawnIndex:r=300
+monster_event_manager{
+  monster_event_manager__maxSpawnCount:i=1
+  monster_event_manager__requiredMovementDistanceSq:r=25
+  monster_event_manager__noMovementPenaltyTime:r=10
+  monster_event_manager__noMovementPenaltyKoef:r=1
+  monster_event_manager__noAttackPenaltyTime:r=180
+  monster_event_manager__noAttackPenaltyKoef:r=0
+  monster_event_manager__noDangerPenaltyTime:r=180
+  monster_event_manager__noDangerPenaltyKoef:r=0
+  monster_event_manager__shootProtectionTime:r=120
+  monster_event_manager__initialSpawnTime:p2=600, 1200
+  monster_event_manager__spawnTime:p2=600, 1200
+  monster_event_manager__extraSpawnTimePerSpawnIndex:r=300
 
-  "invisible_man_manager:tag"{}
-  "invisible_man_target_data__eid:list<eid>"{}
-  "invisible_man_target_data__spawnTime:list<r>"{}
-  "invisible_man_target_data__spawnIndex:list<i>"{}
-  "invisible_man_target_data__spawningCount:list<i>"{}
-  "invisible_man_target_data__lastSpawnTime:list<r>"{}
-  "invisible_man_target_data__inactivityCheckTime:list<r>"{}
-  "invisible_man_target_data__lastMovementStartPos:list<p3>"{}
-  "invisible_man_target_data__lastMovementTime:list<r>"{}
-  "invisible_man_target_data__lastDangerTime:list<r>"{}
-  "invisible_man_manager__spawnPatterns:array"{
+  "monster_event_manager:tag"{}
+  "monster_event_manager_target_data__eid:list<eid>"{}
+  "monster_event_manager_target_data__spawnTime:list<r>"{}
+  "monster_event_manager_target_data__spawnIndex:list<i>"{}
+  "monster_event_manager_target_data__spawningCount:list<i>"{}
+  "monster_event_manager_target_data__inactivityCheckTime:list<r>"{}
+  "monster_event_manager_target_data__lastMovementStartPos:list<p3>"{}
+  "monster_event_manager_target_data__lastMovementTime:list<r>"{}
+  "monster_event_manager_target_data__lastDangerTime:list<r>"{}
+  "monster_event_manager__spawnPatterns:array"{
     "invisible_man:object"{
       spawnTempl:t="invisible_man"
     }
   }
+
+  "monster_event_manager__individualSpawnPatterns:object"{}
 }
 
-monster_attack_event_manager{
-  _use:t="invisible_man_manager"
+xenohound_and_invisible_event_manager{
+  _use:t="monster_event_manager"
 
-  "invisible_man_manager__spawnPatterns:array"{
+  "monster_event_manager__spawnPatterns:array"{
     "invisible_man:object"{
       spawnTempl:t="invisible_man"
     }

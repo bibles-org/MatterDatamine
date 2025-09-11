@@ -7,7 +7,7 @@ require HumanPhys
 require DagorSystem
 
 
-[es(tag=sound, track=(human_net_phys__curMoveState, sleep_mode__isActivated), on_appear)]
+[es(tag=sound, on_appear, track=(human_net_phys__curMoveState, sleep_mode__isActivated))]
 def human_idle_sound_is_idle(evt : Event;
                              var human_idle_sound__isActive : bool&;
                              human_net_phys__curMoveState : int = int(HUMoveState.EMS_SPRINT);
@@ -16,7 +16,7 @@ def human_idle_sound_is_idle(evt : Event;
                                                            human_net_phys__curMoveState == int(HUMoveState.EMS_RUN))
 
 
-[es(tag=sound, REQUIRE=humanIdleSound, on_appear, track=(human_idle_sound__isActive, sound_control__state, isAlive))]
+[es(tag=sound, on_appear, track=(human_idle_sound__isActive, sound_control__state, isAlive), REQUIRE=humanIdleSound)]
 def human_idle_sound(evt : Event;
                      sound_control__state : int;
                      human_idle_sound__isActive : bool = false;
@@ -30,7 +30,6 @@ def human_idle_sound(evt : Event;
   if have_sound(sound_control__state) && isAlive
     let path = human_idle_sound__isActive ? "activeState" : "idleState"
     human_idle_sound__event |> reset(sound_player_common::play_path(path, human_idle_sound__paths, sound_tags, is_watched_sound, transform[3], false))
-
 
 
 [es(tag=sound, after=sound_begin_update_es, before=sound_end_update_es)]

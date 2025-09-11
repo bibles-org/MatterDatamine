@@ -1,17 +1,24 @@
+from "auth" import get_authenticated_url_sso, YU2_OK
+from "dagor.shell" import shell_execute
+from "string" import startswith, strip
+import "steam" as steam
+import "regexp2" as regexp2
+from "eventbus" import eventbus_subscribe_onehit
+from "settings" import get_setting_by_blk_path
+from "%ui/components/browserWidget.nut" import showBrowser
 from "%ui/ui_library.nut" import *
 
-let {shell_execute} = require("dagor.shell")
-let {startswith, strip} = require("string")
-let {get_authenticated_url_sso=null, YU2_OK} = require("auth")
-let steam = require("steam")
 let platform = require("%dngscripts/platform.nut")
-let regexp2 = require("regexp2")
-let { eventbus_subscribe_onehit } = require("eventbus")
-let { get_setting_by_blk_path } = require("settings")
-let { showBrowser } = require("browserWidget.nut")
-let logOU = require("%sqstd/log.nut")().with_prefix("[OPEN_URL] ")
-
+let logOU = require("%sqGlob/library_logs.nut").with_prefix("[OPEN_URL] ")
 let openLinksInEmbeddedBrowser = get_setting_by_blk_path("openLinksInEmbeddedBrowser") ?? false
+
+#allow-auto-freeze
+
+enum AuthenticationMode {
+  NOT_AUTHENTICATED = 0
+  AUTHENTICATED = 1
+  WEGAME_AUTH = 2
+}
 
 function open_url(url) {
   if (type(url)!="string" || (!startswith(url, "http://") && !startswith(url, "https://")))
@@ -150,4 +157,7 @@ function openUrl(baseUrl, isAlreadyAuthenticated = false, shouldExternalBrowser 
 
 console_register_command(open_url, "app.open_url")
 
-return openUrl
+return {
+  openUrl
+  AuthenticationMode
+}

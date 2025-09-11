@@ -1,5 +1,7 @@
 from "%ui/ui_library.nut" import *
 
+#allow-auto-freeze
+
 function mkAnimatedEllipsis(fontSize, color, totalnum=3, duration=3.0)  {
   let appearTime = min(duration/(totalnum+1)/5,0.3)
   function dot(num){
@@ -50,7 +52,7 @@ function mkParallaxBkg(imageToShow, parallaxK, height, width){
     keepAspect = KEEP_ASPECT_FILL
     vplace = ALIGN_CENTER
     hplace = ALIGN_CENTER
-    image = imageToShow.value!=null ? PictureImmediate(imageToShow.value) : null
+    image = imageToShow.get()!=null ? PictureImmediate(imageToShow.get()) : null
     watch = [imageToShow]
     size = size
   }

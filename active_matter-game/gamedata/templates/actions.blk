@@ -1,0 +1,33 @@
+base_action{
+  action__timeLeft:r=-1
+  action__actionTime:r=1
+  action__animStateIdx:i=-1
+  action__animStateName:t=""
+  action__animVarIdx:i=-1
+  action__animVarName:t=""
+  action__triggerAt:r=0
+  action__triggered:b=no
+  action__animLayer:t="upper"
+
+  "game_effect__attachedTo:eid"{}
+}
+
+common_operate_door_action{
+  _use:t="base_action"
+  action__actionTime:r=0.6
+  action__triggerAt:r=0.3
+  action__animStateName:t="operate_door"
+  action__animVarName:t="action_progress"
+
+  "operate_door_action:tag"{}
+}
+
+common_pickup_action{
+  _use:t="base_action"
+  action__actionTime:r=0.6
+  action__triggerAt:r=0.3
+  action__animStateName:t="pickup_item"
+  action__animVarName:t="action_progress"
+
+  "pickup_action:tag"{}
+}

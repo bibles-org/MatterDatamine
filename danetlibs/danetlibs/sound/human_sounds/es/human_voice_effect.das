@@ -1,9 +1,10 @@
 require ecs
 require ecs.safe
 require ecs.common
-require app
+require app // get_sync_time
 require soundHash
 require soundEvent
+require soundSystem
 require sound_utils.modules.sound_player_common
 require sound_utils.modules.sound_control_common
 require human_sounds.modules.human_voice_effect_common
@@ -142,7 +143,6 @@ def human_voice_effect_update(evt : Event;
 def human_voice_effect_oneshot(evt : CmdHumanVoiceEffectOneshot;
 
                                sound_control__state : int = default_sound_control_state();
-                               sound_banks_state__isPresetLoaded : bool = true;
 
                                @shared_comp human_voice_sound__path : Object;
                                @shared_comp human_voice_sound__descs : Object;
@@ -154,7 +154,7 @@ def human_voice_effect_oneshot(evt : CmdHumanVoiceEffectOneshot;
                                transform : float3x4;
                                var sound_event_group : SoundEventGroup?)
 
-  if !human_speech__isSpeaking && (have_sound(sound_control__state) || evt.ignoreDisabledSoundControl) && is_hearable_sound_state(sound_control__state) && sound_banks_state__isPresetLoaded
+  if !human_speech__isSpeaking && (have_sound(sound_control__state) || evt.ignoreDisabledSoundControl) && is_hearable_sound_state(sound_control__state) && sound_banks_is_master_preset_loaded()
 
     if human_voice_effect__isActive && !empty(human_voice_effect__type)
       let desc = get_desc(human_voice_sound__descs, evt.phrase)

@@ -89,7 +89,7 @@ teaser_bot{
   teaser_bot__originTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   teaser_bot__originTemplate:t=""
   teaser_bot__originPose:i=0
-  bodyCleanupTime:r=999999
+  body_cleanup_server_after_death__delay:r=-1
   beh_tree__enabled:b=no
   _tracked:t="beh_tree__enabled"
   _replicated:t="beh_tree__enabled"
@@ -338,8 +338,7 @@ teaser_episode_entity{
   teaser_episode_entity__episodeIndex:i=-1
   teaser_episode_entity__initTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   teaser_episode_entity__initTemplate:t=""
-
-  "dontBodyCleanupOnDeath:tag"{}
+  body_cleanup_server_after_death__delay:r=-1
 }
 
 teaser_episode_bot{
@@ -398,7 +397,7 @@ teaser_outdoor_sleeper_changed_human{
 teaser_outdoor_sleeper_changed_human_cirlce{
   _use:t="spawn_circle"
   _use:t="teaser_episode_entity"
-  spawn_circle__template:t="teaser_outdoor_sleeper_changed_human+am_inside_body_3+sleeping_monster"
+  spawn_circle__template:t="teaser_outdoor_sleeper_changed_human+am_inside_body_3+sleeping_changed_human"
   spawn_circle__radius:r=3
   spawn_circle__count:ip2=12, 12
   spawn_circle__offsetRnd:p2=0.1, 0.7
@@ -425,7 +424,7 @@ teaser_outdoor_sleeper_changed_human_generator{
   transform:m=[[35, 0, 0] [0, 6, 0] [0, 0, 35] [653.631, 77.4756, -140.537]]
 
   "monster_gen__templates:list<t>"{
-    i:t="teaser_outdoor_sleeper_changed_human+sleeping_monster"
+    i:t="teaser_outdoor_sleeper_changed_human+sleeping_changed_human"
   }
 }
 
@@ -650,7 +649,6 @@ teaser_fn_scar_gun{
   gun__recoilAmount:r=0.01
   item__name:t="fn_scar_low_recoil_special_video_edition"
   item__proto:t="teaser_fn_scar_gun"
-  item__weapTemplate:t="teaser_fn_scar_gun"
 }
 
 teaser_hk_mp5n_gun{
@@ -658,7 +656,6 @@ teaser_hk_mp5n_gun{
   gun__recoilAmount:r=0.01
   item__name:t="mp5n_low_recoil_special_video_edition"
   item__proto:t="teaser_hk_mp5n_gun"
-  item__weapTemplate:t="teaser_hk_mp5n_gun"
 }
 
 teaser_ak_103_gun{
@@ -666,7 +663,6 @@ teaser_ak_103_gun{
   gun__recoilAmount:r=0.01
   item__name:t="ak_103_low_recoil_special_video_edition"
   item__proto:t="teaser_ak_103_gun"
-  item__weapTemplate:t="teaser_ak_103_gun"
 }
 
 teaser_fn_scar_gun_2{
@@ -679,7 +675,6 @@ teaser_fn_scar_gun_2{
   gun__deviationInFireReady:r=0.1
   item__name:t="fn_scar_mid_recoil_special_video_edition"
   item__proto:t="teaser_fn_scar_gun"
-  item__weapTemplate:t="teaser_fn_scar_gun"
 }
 
 teaser_hk_mp5n_gun_2{
@@ -692,7 +687,6 @@ teaser_hk_mp5n_gun_2{
   gun__deviationInFireReady:r=0.1
   item__name:t="mp5n_mid_recoil_special_video_edition"
   item__proto:t="teaser_hk_mp5n_gun"
-  item__weapTemplate:t="teaser_hk_mp5n_gun"
 }
 
 teaser_ak_103_gun_2{
@@ -705,7 +699,6 @@ teaser_ak_103_gun_2{
   gun__deviationInFireReady:r=0.1
   item__name:t="ak_103_mid_recoil_special_video_edition"
   item__proto:t="teaser_ak_103_gun"
-  item__weapTemplate:t="teaser_ak_103_gun"
 }
 
 teaser_fake_target{
@@ -816,9 +809,9 @@ teaser_invisible_man_guard{
   hitpoints__hp:r=700000
   hitpoints__maxHp:r=700000
   invisible_man__anotherDimensionAvailable:b=no
+  body_cleanup_server_after_death__delay:r=-1
 
   "human_inventory__deathDrop:array"{}
-  "dontBodyCleanupOnDeath:tag"{}
 }
 
 teaser_extraction_point{
@@ -898,7 +891,7 @@ teaser_car{
 teaser_spider{
   _use:t="spider_mother_shooter"
   beh_tree__enabled:b=no
-  bodyCleanupTime:r=999999
+  body_cleanup_server_after_death__delay:r=-1
   hitpoints__hp:r=700000
   hitpoints__maxHp:r=700000
   teaser_spider__episodeIndex:i=-1

@@ -1,14 +1,17 @@
+from "%ui/fonts_style.nut" import sub_txt, tiny_txt
+from "%ui/components/itemTypeIcon.nut" import mkItemTypeIco
+from "%ui/components/controlHudHint.nut" import controlHudHint, mkHasBinding
+from "das.inventory" import can_pickup_item, is_autoequip_cause_inventory_overflow
+from "%ui/components/colors.nut" import HUD_TIPS_HOTKEY_FG, HudTipFillColor, InfoTextValueColor
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { sub_txt, tiny_txt } = require("%ui/fonts_style.nut")
 let { watchedHeroEid } = require("%ui/hud/state/watched_hero.nut")
 let { carriedVolume, maxVolume } = require("%ui/hud/state/inventory_common_es.nut")
-let { mkItemTypeIco } = require("%ui/components/itemTypeIcon.nut")
-let { controlHudHint, mkHasBinding } = require("%ui/components/controlHudHint.nut")
-let { can_pickup_item, is_autoequip_cause_inventory_overflow } = require("das.inventory")
-let { HUD_TIPS_HOTKEY_FG, HudTipFillColor, InfoTextValueColor } = require("%ui/components/colors.nut")
 let { rarityColorTable } = require("%ui/hud/menus/components/inventoryItemRarity.nut")
+
+#allow-auto-freeze
 
 
 let itemUnpickableByVolumeFontColor = Color(186,68,98,255)
@@ -37,7 +40,7 @@ let mkIco = memoize(@(ico) ico!=null
 )
 
 let mkItemInfo = function(text, text_color, item_type, item_weap_type_height, count) {
-  let labelText = "{0}{1}".subst(text, (count ?? 0) > 1 ? $" x{count}" : "")
+  let labelText = "{0}{1}".subst(text, (count ?? 0) > 1 ? $" {loc("ui/multiply")}{count}" : "")
   let label = mkLabel(labelText, text_color)
   let ico = mkItemTypeIco(item_type, item_weap_type_height)
   return {
@@ -48,9 +51,9 @@ let mkItemInfo = function(text, text_color, item_type, item_weap_type_height, co
   }
 }
 
-let pickupTip = {
+let pickupTip = @(promt) {
   id = "Human.Use",
-  name = loc("hud/onlyPickup")
+  name = loc(promt != null && promt != "" ? promt : "hud/onlyPickup")
   text_params = tiny_txt
 }
 
@@ -73,18 +76,18 @@ function actionTip(params, textColor) {
     flow = FLOW_HORIZONTAL
     valign = ALIGN_CENTER
     gap = hdpx(5)
-    children = hasBinding.value ? [inputHint, name] : name
+    children = hasBinding.get() ? [inputHint, name] : name
   }
 }
 
 let item_ctor = function(eid, marker) {
-  local {maxDistance, volume, count, ammoCount, weapType, lootType, nickname, text, useAltActionPrompt, rarity} = marker
+  local {maxDistance, volume, count, ammoCount, weapType, lootType, nickname, text, useActionPrompt, useAltActionPrompt, rarity} = marker
   text = count > 0 || (nickname ?? "") != "" ? loc(text, {count = count, nickname = nickname}) : loc(text)
   let watchedCanCarry = volume > 0 ? Computed(function() {
-    return maxVolume.get() - carriedVolume.value >= volume }) : null
+    return maxVolume.get() - carriedVolume.get() >= volume }) : null
 
   return function() {
-    let heroEid = watchedHeroEid.value ?? ecs.INVALID_ENTITY_ID
+    let heroEid = watchedHeroEid.get() ?? ecs.INVALID_ENTITY_ID
     let badgeColor = rarityColorTable?[rarity] ?? textDefColor
     let can_pickup = can_pickup_item(eid, heroEid) && !is_autoequip_cause_inventory_overflow(eid)
     let textColor = can_pickup ? InfoTextValueColor : itemUnpickableByVolumeFontColor
@@ -119,18 +122,19 @@ let item_ctor = function(eid, marker) {
       halign = ALIGN_CENTER
       valign = ALIGN_CENTER
       transform = defTransform
-      pos = [0, -fsh(2)]
+      pos = static [0, -fsh(2)]
+      borderRadius = static [0, hdpx(4), hdpx(4), 0]
       key = eid
       watch = [watchedCanCarry, watchedHeroEid]
       children = [
         usefulMarker,
         {
           flow = FLOW_VERTICAL
-          padding = hdpx(5)
+          padding = static [hdpx(5), hdpx(10), hdpx(5), hdpx(5)]
           gap = hdpx(2)
           children = [
             itemBlock,
-            actionTip(pickupTip, textColor),
+            actionTip(pickupTip(useActionPrompt), textColor),
             useAltActionPrompt != null && useAltActionPrompt.len() > 0 ? actionTip(searchTip(useAltActionPrompt), textDefColor) : null
           ]
         }

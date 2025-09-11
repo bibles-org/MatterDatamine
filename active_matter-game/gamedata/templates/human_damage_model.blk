@@ -2,19 +2,24 @@ human_damage_model{
   _use:t="replicating"
   human_damage_model__protectionKoefForProtectionFx:r=0.3
   _tracked:t="human_damage_model__armorMods"
-  human_damage_model__selectedPartIdx:i=-1
-  human_damage_model__wishPartIdx:i=-1
+  human_damage_model__selectedPart:t=""
+  human_damage_model__sumMaxHpAllBodyParts:r=0
   human_damage_model__dmgMult:r=10
   human_damage_model__painDmgMult:r=0.003
-  _replicated:t="human_damage_model__parts"
-  _tracked:t="human_damage_model__parts"
 
   "customDamageModel:tag"{}
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+
+    "human_damage_model__partName:list<t>"{}
+    "human_damage_model__partHp:list<r>"{}
+    "human_damage_model__partInjured:list<b>"{}
+  }
+
   "human_damage_model__parts:object"{
     "head:object"{
-      maxHp:r=150
-      hp:r=150
-      isInjured:b=no
+      maxHp:r=90
       removeInjuryHp:r=10
       explosionImpact:b=yes
       collisionImpact:b=no
@@ -35,8 +40,6 @@ human_damage_model{
 
     "body:object"{
       maxHp:r=200
-      hp:r=200
-      isInjured:b=no
       removeInjuryHp:r=10
       explosionImpact:b=yes
       collisionImpact:b=no
@@ -56,14 +59,13 @@ human_damage_model{
 
     "right_hand:object"{
       maxHp:r=100
-      hp:r=100
-      isInjured:b=no
       removeInjuryHp:r=10
       distributionDamageMult:r=0.75
       explosionImpact:b=yes
       collisionImpact:b=no
       holdBreathImpact:b=no
       barbwireImpact:b=yes
+      isLimb:b=yes
       name:t="right_hand"
 
       "list:list<t>"{
@@ -81,14 +83,13 @@ human_damage_model{
 
     "left_hand:object"{
       maxHp:r=100
-      hp:r=100
-      isInjured:b=no
       removeInjuryHp:r=10
       distributionDamageMult:r=0.75
       explosionImpact:b=yes
       collisionImpact:b=no
       holdBreathImpact:b=no
       barbwireImpact:b=yes
+      isLimb:b=yes
       name:t="left_hand"
 
       "list:list<t>"{
@@ -105,15 +106,14 @@ human_damage_model{
     }
 
     "right_leg:object"{
-      maxHp:r=100
-      hp:r=100
-      isInjured:b=no
+      maxHp:r=150
       removeInjuryHp:r=10
       distributionDamageMult:r=1.25
       explosionImpact:b=yes
       collisionImpact:b=yes
       holdBreathImpact:b=no
       barbwireImpact:b=yes
+      isLimb:b=yes
       name:t="right_leg"
 
       "list:list<t>"{
@@ -129,15 +129,14 @@ human_damage_model{
     }
 
     "left_leg:object"{
-      maxHp:r=100
-      hp:r=100
-      isInjured:b=no
+      maxHp:r=150
       removeInjuryHp:r=10
       distributionDamageMult:r=1.25
       explosionImpact:b=yes
       collisionImpact:b=yes
       holdBreathImpact:b=no
       barbwireImpact:b=yes
+      isLimb:b=yes
       name:t="left_leg"
 
       "list:list<t>"{
@@ -431,7 +430,6 @@ human_damage_model{
     _replicate:b=yes
     _track:b=yes
     human_damage_model__sumHpAllBodyParts:r=0
-    human_damage_model__sumMaxHpAllBodyParts:r=0
   }
 }
 
@@ -475,49 +473,49 @@ militant_dm_parts{
 
   "dm_parts__parts:object"{
     "Bip01 Head:object"{
-      dmgMult:r=1.8
+      dmgMult:r=1
       armor:r=0
       type:t="head"
     }
 
     "Bip01 Neck:object"{
-      dmgMult:r=2
+      dmgMult:r=1
       armor:r=0
       type:t="head"
     }
 
     "Bip01 L Thigh:object"{
-      dmgMult:r=0.6
+      dmgMult:r=1
       armor:r=0
       type:t="l_leg"
     }
 
     "Bip01 R Thigh:object"{
-      dmgMult:r=0.6
+      dmgMult:r=1
       armor:r=0
       type:t="r_leg"
     }
 
     "Bip01 L Calf:object"{
-      dmgMult:r=0.6
+      dmgMult:r=1
       armor:r=0
       type:t="l_leg"
     }
 
     "Bip01 R Calf:object"{
-      dmgMult:r=0.6
+      dmgMult:r=1
       armor:r=0
       type:t="r_leg"
     }
 
     "Bip01 L Foot:object"{
-      dmgMult:r=0.6
+      dmgMult:r=1
       armor:r=0
       type:t="l_leg"
     }
 
     "Bip01 R Foot:object"{
-      dmgMult:r=0.6
+      dmgMult:r=1
       armor:r=0
       type:t="r_leg"
     }

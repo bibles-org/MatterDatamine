@@ -4,13 +4,15 @@ from "debug" import getstackinfos
 from "%ui/fonts_style.nut" import fontawesome
 import "%ui/components/fontawesome.map.nut" as fa
 
+#allow-auto-freeze
+
 let font = fontawesome.font
 let fontSize = fontawesome.fontSize
 let size = fontSize.tointeger()
 let getDefSizePicName = memoize(@(ico) $"!ui/skin#{ico}:{size}:{size}:K")
 let numerics = {integer=1, float=1}
 
-function faComp(symbol, params = null) {
+function [pure] faComp(symbol, params = null) {
   let symType = type(symbol)
   if (type(symType) != "string" || (symbol not in fa && !symbol.endswith(".svg"))) {
     log($"faComp, {symbol}", getstackinfos(2))
@@ -41,7 +43,9 @@ function faComp(symbol, params = null) {
     }
     else {
       let resSize = type(params?.fontSize) in numerics ? params.fontSize.tointeger() : size
-      return freeze({image = Picture($"!ui/skin#{symbol}:{resSize}:{resSize}:K"), rendObj = ROBJ_IMAGE, size=resSize, keepAspect=KEEP_ASPECT_FIT}.__update(params))
+      let needPreAlpha = params?.needPreAlpha ?? true
+      let prefix = needPreAlpha ? "!ui/skin" : "ui/skin"
+      return freeze({image = Picture($"{prefix}#{symbol}:{resSize}:{resSize}:K"), rendObj = ROBJ_IMAGE, size=resSize, keepAspect=KEEP_ASPECT_FIT}.__update(params))
     }
   }
   else {

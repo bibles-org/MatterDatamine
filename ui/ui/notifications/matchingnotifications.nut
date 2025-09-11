@@ -1,5 +1,6 @@
+from "eventbus" import eventbus_subscribe
+
 let {matching_listen_notify=null, matching_listen_rpc=null, matching_send_response=null} = require_optional("matching.api")
-let { eventbus_subscribe } = require("eventbus")
 
 let subscriptions = {}
 

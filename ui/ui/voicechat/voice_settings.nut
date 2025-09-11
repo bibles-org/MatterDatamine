@@ -1,16 +1,18 @@
+from "%dngscripts/globalState.nut" import nestWatched
+
+from "settings" import get_setting_by_blk_path
+
 from "%ui/ui_library.nut" import *
 
-let {get_setting_by_blk_path} = require("settings")
 let platform = require("%dngscripts/platform.nut")
-let {nestWatched} = require("%dngscripts/globalState.nut")
 
-let voice_modes = {
+let voice_modes = static {
   on = "on"
   off = "off"
   micOff = "micOff"
 }
 
-let voice_activation_modes = {
+let voice_activation_modes = static {
   toggle = "toggle"
   pushToTalk = "pushToTalk"
   always = "always"
@@ -26,6 +28,7 @@ let voiceRecordingEnable = nestWatched("voiceRecordingEnable", false)
 let voiceRecordingEnableUpdate = @(v) voiceRecordingEnable.set(v)
 let voiceRecordingEnabledGeneration = nestWatched("voiceRecordingEnabledGeneration", 0)
 let voiceRecordingEnabledGenerationUpdate = @(v) voiceRecordingEnabledGeneration.set(v)
+let proximityVoiceRecordingEnable = nestWatched("proximityVoiceRecordingEnable", false)
 let voiceChatMode = nestWatched("voiceChatMode",
   validateMode(get_setting_by_blk_path("voice/mode"), voice_modes, platform.is_nswitch ? voice_modes.off : voice_modes.on)
 )
@@ -38,10 +41,10 @@ let voiceActivationMode = nestWatched("voiceActivationMode",
 let voiceActivationModeUpdate = @(v) voiceActivationMode.set(v)
 function setRecordingEnabled(val) {
   voiceRecordingEnableUpdate(val)
-  voiceRecordingEnabledGenerationUpdate(voiceRecordingEnabledGeneration.value+1)
+  voiceRecordingEnabledGeneration.modify(@(v) v+1)
 }
 
-return {
+return freeze({
   voiceRecordVolume, voiceRecordVolumeUpdate,
   voicePlaybackVolume, voicePlaybackVolumeUpdate,
   voiceRecordingEnable, voiceRecordingEnableUpdate,
@@ -51,4 +54,7 @@ return {
   setRecordingEnabled
   voice_modes
   voice_activation_modes
-}
+  proximityVoiceRecordingEnable
+})
+
+

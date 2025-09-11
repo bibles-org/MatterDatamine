@@ -1,4 +1,5 @@
 require ecs
+require ecs.common
 require ecs.safe
 require soundSystem
 require DagorMath
@@ -19,40 +20,39 @@ let BIOME_WEIGHT_THERSHOLD = 0.05
 [es(tag=sound, on_appear)]
 def human_sound_landmesh_queries_appear(evt : Event;
                                         var human_sound_landmesh_queries__biomeQueryId : int&;
-                                        var human_sound_landmesh_queries__puddleQueryId : int&;
-                                        human_sound_landmesh_queries__biomes : Object;
-                                        var human_sound_landmesh_queries__biomeToMaterial : IPoint2List&)
+                                        var human_sound_landmesh_queries__puddleQueryId : int&)
+
   human_sound_landmesh_queries__biomeQueryId = INVALID_QUERY_ID
   human_sound_landmesh_queries__puddleQueryId = INVALID_QUERY_ID
 
-  human_sound_landmesh_queries__biomeToMaterial |> resize(max(0, get_num_biome_groups()))
-  for idx in iter_range(human_sound_landmesh_queries__biomeToMaterial)
-    human_sound_landmesh_queries__biomeToMaterial[idx].x = PHYSMAT_INVALID
-    let group = get_biome_group_name(idx)
-    let obj = human_sound_landmesh_queries__biomes[group] ?as Object
-    if obj != null
-      let physmat = obj?.physmat ?? ""
-      let pmid = get_material_id(physmat)
-      if pmid == PHYSMAT_INVALID
-        logerr("pmid for biome '{group}' is not valid: there is no physmat '{physmat}'")
-      human_sound_landmesh_queries__biomeToMaterial[idx].x = pmid
-      human_sound_landmesh_queries__biomeToMaterial[idx].y = (obj?.overrideWater ?? false) ? 1 : 0
-
 
 def apply(biome_index : int; biome_weight : float;
-          human_sound_landmesh_queries__biomeToMaterial : IPoint2List;
-          var human_sound_landmesh_queries__biomePhysMatId : int&;
-          var human_sound_landmesh_queries__biomeOverridesWater : bool&)
-  if biome_weight >= BIOME_WEIGHT_THERSHOLD && uint(biome_index) < uint(length(human_sound_landmesh_queries__biomeToMaterial))
-    let btm = human_sound_landmesh_queries__biomeToMaterial[biome_index]
-    if btm.x != PHYSMAT_INVALID
-      human_sound_landmesh_queries__biomePhysMatId = btm.x
-      human_sound_landmesh_queries__biomeOverridesWater = btm.y != 0
+          var human_sound_landmesh_queries__biomeId : int&)
+
+  if biome_weight >= BIOME_WEIGHT_THERSHOLD
+    human_sound_landmesh_queries__biomeId = biome_index
+  else
+    human_sound_landmesh_queries__biomeId = -1
+
+/*
+  var test = false
+  if human_sound_landmesh_queries__biomeId >= 0
+    query() <| $ [es(REQUIRE=soundStepSettings)] (landmesh_biomes_to_sound_material__biomeIdToSound : IPoint2List;
+                                                  sound_physmat__soundMaterials : StringList)
+      if human_sound_landmesh_queries__biomeId < length(landmesh_biomes_to_sound_material__biomeIdToSound)
+        let curBiomeSoundId = landmesh_biomes_to_sound_material__biomeIdToSound[human_sound_landmesh_queries__biomeId].x
+        if curBiomeSoundId >= 0 && curBiomeSoundId < length(sound_physmat__soundMaterials)
+          logerr("biome={get_biome_group_name(human_sound_landmesh_queries__biomeId)} -> {sound_physmat__soundMaterials[curBiomeSoundId]}")
+          test = true
+  if !test
+    logerr("biome={get_biome_group_name(human_sound_landmesh_queries__biomeId)}")
+*/
+
 
 
 [es(tag=sound, after=sound_begin_update_es, before=sound_end_update_es)]
 def human_sound_landmesh_queries_update(info : ParallelUpdateFrameDelayed;
-                                        is_watched_sound : bool;
+                                        is_watched_sound : bool = false;
                                         transform : float3x4;
 
                                         human_sound_landmesh_queries_vars__speedSq : float;
@@ -65,13 +65,11 @@ def human_sound_landmesh_queries_update(info : ParallelUpdateFrameDelayed;
                                         human_sound_landmesh_queries__enemySpeedToQueryInterval : float4;
                                         human_sound_landmesh_queries__heroEnemyInAirInterval : float2;
                                         human_sound_landmesh_queries__puddleQueryToDepth : float4;
-                                        human_sound_landmesh_queries__biomeToMaterial : IPoint2List;
 
                                         var human_sound_landmesh_queries__lastQueryTime : float&;
                                         var human_sound_landmesh_queries__biomeQueryId : int&;
                                         var human_sound_landmesh_queries__puddleQueryId : int&;
-                                        var human_sound_landmesh_queries__biomePhysMatId : int&;
-                                        var human_sound_landmesh_queries__biomeOverridesWater : bool&;
+                                        var human_sound_landmesh_queries__biomeId : int&;
                                         var human_sound_landmesh_queries__puddleDepth : float&)
 
   if human_sound_landmesh_queries__biomeQueryId != INVALID_QUERY_ID
@@ -80,13 +78,10 @@ def human_sound_landmesh_queries_update(info : ParallelUpdateFrameDelayed;
     let biomeState = biome_query_result(human_sound_landmesh_queries__biomeQueryId, biomeResult)
     if is_gpu_readback_query_successful(biomeState) || is_gpu_readback_query_failed(biomeState)
       human_sound_landmesh_queries__biomeQueryId = INVALID_QUERY_ID
-      human_sound_landmesh_queries__biomePhysMatId = PHYSMAT_INVALID
-      human_sound_landmesh_queries__biomeOverridesWater = false
+      human_sound_landmesh_queries__biomeId = -1
       if is_gpu_readback_query_successful(biomeState)
-        apply(biomeResult.secondMostFrequentBiomeGroupIndex, biomeResult.secondMostFrequentBiomeGroupWeight,
-            human_sound_landmesh_queries__biomeToMaterial, human_sound_landmesh_queries__biomePhysMatId, human_sound_landmesh_queries__biomeOverridesWater)
         apply(biomeResult.mostFrequentBiomeGroupIndex, biomeResult.mostFrequentBiomeGroupWeight,
-            human_sound_landmesh_queries__biomeToMaterial, human_sound_landmesh_queries__biomePhysMatId, human_sound_landmesh_queries__biomeOverridesWater)
+            human_sound_landmesh_queries__biomeId)
 
   elif human_sound_landmesh_queries__puddleQueryId != INVALID_QUERY_ID
 
@@ -112,7 +107,7 @@ def human_sound_landmesh_queries_update(info : ParallelUpdateFrameDelayed;
       interval = is_watched_sound ? human_sound_landmesh_queries__heroEnemyInAirInterval.x : human_sound_landmesh_queries__heroEnemyInAirInterval.y
 
     if interval >= 0. && info.curTime >= human_sound_landmesh_queries__lastQueryTime + interval
-      //logerr("{human_sound_landmesh_queries__biomePhysMatId}   {human_sound_landmesh_queries__puddleDepth}  {human_sound_landmesh_queries__lastQueryTime}")
+      //logerr("{human_sound_landmesh_queries__biomeId}   biome={get_biome_group_name(human_sound_landmesh_queries__biomeId)}     {human_sound_landmesh_queries__puddleDepth}  {human_sound_landmesh_queries__lastQueryTime}")
       human_sound_landmesh_queries__lastQueryTime = info.curTime
       let pos = transform[3]
       if is_watched_sound || length_sq(get_listener_pos() - pos) < square(human_sound_landmesh_queries__farawayThreshold)

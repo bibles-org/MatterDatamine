@@ -1,11 +1,16 @@
+from "%dngscripts/sound_system.nut" import sound_play
+import "%ui/components/gamepadImgByKey.nut" as gamepadImgByKey
+import "%ui/components/getGamepadHotkeys.nut" as getGamepadHotkeys
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/fonts_style.nut" import fontawesome
+from "%ui/components/sounds.nut" import stateChangeSounds
 from "%ui/ui_library.nut" import *
 from "%ui/components/colors.nut" import BtnBdNormal, BtnBdActive, BtnBdHover, BtnBgNormal, BtnBgHover
-let {setTooltip} = require("%ui/components/cursors.nut")
-let {fontawesome} = require("%ui/fonts_style.nut")
-let {stateChangeSounds} = require("%ui/components/sounds.nut")
-let fa = require("%ui/components/fontawesome.map.nut")
-let {sound_play} = require("%dngscripts/sound_system.nut")
-let {isGamepad} = require("%ui/control/active_controls.nut")
+import "%ui/components/fontawesome.map.nut" as fa
+
+let { isGamepad } = require("%ui/control/active_controls.nut")
+
+#allow-auto-freeze
 
 let calcColor = @(sf)
   (sf & S_ACTIVE) ? BtnBdActive
@@ -13,6 +18,15 @@ let calcColor = @(sf)
   : BtnBdNormal
 
 let boxHeight = hdpx(25)
+
+function getGamepadHotkeyIcon(hotkeys) {
+  if (hotkeys == null || !isGamepad.get())
+    return null
+  let gamepadHotkey = getGamepadHotkeys(hotkeys, true)
+  let hotkeyIcon = (gamepadHotkey == "") ? null : gamepadImgByKey.mkImageCompByDargKey(gamepadHotkey)
+  return hotkeyIcon
+}
+
 let mkCheckMark = @(stateFlags, state, group) @(){
   watch = [stateFlags, state]
   validateStaticText = false
@@ -61,7 +75,7 @@ function label(stateFlags, params, group, onClick, isInteractive) {
   }
   return @() {
     rendObj = ROBJ_TEXT
-    margin = [fsh(1), 0, fsh(1), 0]
+    margin = static [fsh(1), 0, fsh(1), 0]
     color = calcColor(stateFlags.get())
     watch = stateFlags
     group
@@ -88,9 +102,9 @@ let hotkeyLoc = loc("controls/check/toggleOrEnable/prefix", "Toggle")
 
 
 return function (state, label_text_params=null, params = {}) {
-  let { group = ElemGroup(), setValue = @(v) state(v), tooltip = null, isInteractive  = true } = params
+  let { group = ElemGroup(), setValue = @(v) state.set(v), tooltip = null,
+    isInteractive = true, hotkeys = null } = params
   let stateFlags = Watched(0)
-  let onHover = tooltip ? @(on) setTooltip(on ? tooltip : null) : null
   function onClick(){
     setValue(!state.get())
     sound_play(state.get() ? "ui_sounds/flag_set" : "ui_sounds/flag_unset")
@@ -103,10 +117,12 @@ return function (state, label_text_params=null, params = {}) {
     ]
   } : null
   return function(){
+    #forbid-auto-freeze
     let children = [
       switchbox(stateFlags, state, group),
       label(stateFlags, label_text_params, group, onClick, isInteractive),
-      (stateFlags.get() & S_HOVER) ? hotkeysElem : null
+      (stateFlags.get() & S_HOVER) ? hotkeysElem : null,
+      isGamepad.get() ? getGamepadHotkeyIcon(hotkeys) : null
     ]
     if (params?.textOnTheLeft)
       children.reverse()
@@ -119,9 +135,15 @@ return function (state, label_text_params=null, params = {}) {
       watch = [state, stateFlags, isGamepad]
       behavior = isInteractive ? Behaviors.Button : null
       size = SIZE_TO_CONTENT
-      onElemState = @(sf) stateFlags.set(sf)
+      onElemState = function(sf) {
+        stateFlags.set(sf)
+        if (((sf & S_HOVER) != 0) && tooltip != null)
+          setTooltip(tooltip)
+        else
+          setTooltip(null)
+      }
       onClick
-      onHover
+      hotkeys
       sound = stateChangeSounds
       xmbNode = params?.xmbNode
       children

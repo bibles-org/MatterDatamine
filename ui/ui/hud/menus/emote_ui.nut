@@ -1,9 +1,10 @@
+from "%ui/components/mkQuickMenu.nut" import mkQMenu
+from "dasevents" import CmdRequestUseEmote, sendNetEvent, CmdHideUiMenu, CmdShowUiMenu
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {mkQMenu} = require("%ui/components/mkQuickMenu.nut")
-let {get_controlled_hero} = require("%dngscripts/common_queries.nut")
-let {CmdRequestUseEmote, sendNetEvent, CmdHideUiMenu, CmdShowUiMenu} = require("dasevents")
+let { get_controlled_hero } = require("%dngscripts/common_queries.nut")
 
 let emoteConfig = Watched([])
 

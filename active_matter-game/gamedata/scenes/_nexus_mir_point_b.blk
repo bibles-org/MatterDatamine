@@ -1,5 +1,5 @@
 entity{
-  _template:t="nexus_round_mode_beacon"
+  _template:t="nexus_beacon"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [22.2206, 13.5147, -13.4498]]
   nexus_beacon__id:i=2
   nexus_beacon__name:t="Factory Yard"
@@ -8,14 +8,14 @@ entity{
 }
 
 entity{
-  _template:t="nexus_round_mode_beacon_capture_device"
+  _template:t="nexus_beacon_capture_device"
   transform:m=[[-1, 8.74228e-08, 0] [-8.74228e-08, -1, 0] [0, 0, 1] [22.2206, 16.83, -13.4498]]
   nexus_beacon_capture_device__parentId:i=2
   item__setCustomUsePrompt:t="nexus_portal/Factory Yard ceiling"
 }
 
 entity{
-  _template:t="nexus_round_mode_beacon_capture_device"
+  _template:t="nexus_beacon_capture_device"
   transform:m=[[-1, -8.74228e-08, 7.64274e-15] [-8.74228e-08, 1, -8.74228e-08] [0, -8.74228e-08, -1] [22.2206, 11.5207, -13.4498]]
   nexus_beacon_capture_device__parentId:i=2
   item__setCustomUsePrompt:t="nexus_portal/Factory Yard floor"

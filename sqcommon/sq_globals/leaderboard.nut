@@ -64,7 +64,7 @@ function updateLeaderboard() {
     projectid = "active_matter_pc"
     token = userInfo.get()?.token ?? (disableRemoteNetServices ? 1 : null)
     table = "season"
-    gameMode = "default"
+    gameMode = "future_makers"
     category = "timestamp"
     resolveNick = 1
     count = 10

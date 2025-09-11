@@ -1,10 +1,12 @@
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
+from "%ui/hud/state/human_damage_model_state.nut" import getMostDamagedPart
+from "%ui/hud/state/onboarding_state.nut" import isOnboarding
 from "%ui/ui_library.nut" import *
 
-let {tipCmp} = require("tipComponent.nut")
 let hasPainEffect = require("%ui/hud/state/pain_state.nut")
-let {isAlive, isDowned} = require("%ui/hud/state/health_state.nut")
-let {healingDesc} = require("%ui/hud/state/healing_state.nut")
-let {bodyPartsIsDamaged, getMostDamagedPart} = require("%ui/hud/state/human_damage_model_state.nut")
+let { isAlive, isDowned } = require("%ui/hud/state/health_state.nut")
+let { healingDesc } = require("%ui/hud/state/healing_state.nut")
+let { bodyPartsIsDamaged } = require("%ui/hud/state/human_damage_model_state.nut")
 
 
 let showHealingTipTime = 60 * 3
@@ -18,7 +20,7 @@ local hideHealingTipCallback
 function changeShowHealing(state){
   showHealingTip.set(state)
   if (state && !hasPainEffect.get()){
-    if (isDowned.get()){
+    if (isDowned.get() || isOnboarding.get()){
       
       
       gui_scene.resetTimeout(99999.0, hideHealingTipCallback)
@@ -41,7 +43,7 @@ hideHealingTipCallback = function(){
 
 showHealingTipCallback = @() changeShowHealing(true)
 
-hasPainEffect.subscribe(function(state){
+hasPainEffect.subscribe_with_nasty_disregard_of_frp_update(function(state){
   if (isDowned.get())
     return
   if (state && !bodyPartsIsDamaged.get())
@@ -50,7 +52,7 @@ hasPainEffect.subscribe(function(state){
   changeShowHealing(state)
 })
 
-bodyPartsIsDamaged.subscribe(function(state){
+bodyPartsIsDamaged.subscribe_with_nasty_disregard_of_frp_update(function(state){
   if (isDowned.get())
     return
   if (!state){
@@ -60,10 +62,16 @@ bodyPartsIsDamaged.subscribe(function(state){
   }
 })
 
-isDowned.subscribe(function(state){
+isDowned.subscribe_with_nasty_disregard_of_frp_update(function(state){
   gui_scene.clearTimer(hideHealingTipCallback)
   changeShowHealing(state)
 })
+
+healingDesc.subscribe_with_nasty_disregard_of_frp_update(function(desc) {
+  if (desc != null && isOnboarding.get() && bodyPartsIsDamaged.get())
+    changeShowHealing(true)
+})
+
 
 function mkHealingTip(){
   if (healingDesc.get() == null)

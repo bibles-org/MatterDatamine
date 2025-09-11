@@ -183,10 +183,6 @@ shooter_input{
   _use:t="human_grenade_input"
 }
 
-_replicatedComponentClientModifyBlacklist{
-  human_weap__reloadGunEid{}
-}
-
 offender_marks{
   offender_marks__enabled:b=no
   offender_marks__showOnlyLast:b=no
@@ -230,7 +226,7 @@ human_parachute_control_effect{
 }
 
 human_parachute_effect{
-  _use:t="human_parachute_sound"
+  _use:t="human_parachute_effect_sound"
   human_parachute_anim__deployedAtTime:r=0
   human_parachute_anim__closedAtTime:r=0
   human_parachute_anim__openDuration:r=1.7

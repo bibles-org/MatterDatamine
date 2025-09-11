@@ -1,19 +1,10 @@
-nexus_round_mode_points{
-  "nexus_round_mode_points:tag"{}
-}
-
-nexus_round_mode_beacon{
-  _use:t="nexus_beacon"
-  _use:t="nexus_round_mode"
-}
-
-nexus_round_mode_beacon_capture_device{
-  _use:t="nexus_beacon_capture_device"
-  _use:t="nexus_round_mode"
+nexus_round_mode{
+  "nexus_round_mode:tag"{}
 }
 
 nexus_round_mode_spawn_controller{
   _use:t="nexus_spawn_controller"
+  _use:t="nexus_round_mode"
 
   _group{
     _tags:t="server"
@@ -37,7 +28,6 @@ nexus_round_mode_game_controller{
   _use:t="replicating"
   _use:t="nexus_game_controller"
   _use:t="nexus_round_mode"
-  _use:t="nexus_round_mode_points_game_rules"
   _use:t="nexus_round_mode_lock_shooting_before_round_start"
   _use:t="nexus_round_mode_keep_protect_spheres_before_round_start"
   nexus_round_mode_game_controller__roundsToWin:i=3
@@ -45,7 +35,6 @@ nexus_round_mode_game_controller{
 
   _group{
     _tags:t="server"
-    nexus_round_mode_game_controller__defaultType:t="points_advantage"
     nexus_round_mode_game_controller__preparationTime:r=15
     nexus_round_mode_game_controller__delayAfterRoundFinish:r=5
     nexus_round_mode_game_controller__roundTime:r=240
@@ -67,86 +56,14 @@ nexus_round_mode_game_controller{
   }
 }
 
-nexus_round_mode_points_game_rules{
-  _use:t="nexus_round_mode_points_scaling_sqrt"
-  nexus_round_mode_game_controller__pointsToWin:r=100
-
-  _group{
-    _tags:t="server"
-    nexus_round_mode_game_controller__pointsByKill:r=5
-    nexus_round_mode_game_controller__pointsByTick:r=1
-    nexus_round_mode_game_controller__pointsTickTimeDefault:r=1
-    nexus_round_mode_game_controller__pointsTickTimeFast:r=0.1
-  }
-}
-
-nexus_round_mode_points_game_controller{
-  _tags:t="server"
-  _use:t="nexus_round_mode_points"
-  nexus_round_mode_game_controller__pointsTickTime:r=-1
-  nexus_round_mode_game_controller__pointsNextTickAt:r=-1
-  nexus_round_mode_game_controller__pointsDisplayTickTime:r=1
-  nexus_round_mode_game_controller__pointsDisplayNextTickAt:r=-1
-}
-
-nexus_round_mode_points_direct{
-  _tags:t="server"
-
-  "nexus_round_mode_points_direct:tag"{}
-}
-
-nexus_round_mode_points_advantage{
-  _tags:t="server"
-
-  "nexus_round_mode_points_advantage:tag"{}
-}
-
-nexus_round_mode_points_advantage_equality_scoring{
-  _tags:t="server"
-
-  "nexus_round_mode_points_advantage_equality_scoring:tag"{}
-}
-
-nexus_round_mode_points_advantage_by_beacons{
-  _tags:t="server"
-
-  "nexus_round_mode_points_advantage_by_beacons:tag"{}
-}
-
-nexus_round_mode_points_scaling_sqrt{
-  _tags:t="server"
-
-  "nexus_round_mode_points_scaling_sqrt:tag"{}
-}
-
 nexus_round_mode_team{
   _use:t="nexus_team"
+  _use:t="nexus_round_mode"
   team__unitTemplate:t="nexus_round_mode_militant+spawn_sequence_controller+allow_friendly_damage"
 
   _group{
     _replicate:b=yes
     nexus_round_mode_team__wonRounds:i=0
-  }
-
-  _group{
-    _tags:t="server"
-    _track:b=yes
-
-    "nexus_round_mode_team__capturedBeacons:list<eid>"{}
-  }
-}
-
-nexus_round_mode_points_team{
-  _use:t="nexus_round_mode_points"
-
-  _group{
-    _tags:t="server"
-    nexus_round_mode_team__points:r=0
-  }
-
-  _group{
-    _replicate:b=yes
-    nexus_round_mode_team__displayPoints:r=0
   }
 }
 
@@ -162,12 +79,6 @@ nexus_round_mode_militant{
 
     "nexus_round_mode_militant__followedBy:list<eid>"{}
   }
-}
-
-nexus_round_mode{
-  _use:t="replicating"
-
-  "nexus_round_mode:tag"{}
 }
 
 nexus_round_mode_player{
@@ -187,7 +98,7 @@ nexus_round_mode_player{
 nexus_round_mode_bot_player{
   _use:t="nexus_round_mode_player"
   _use:t="bot_player"
-  possessedTemplate:t="nexus_militant_round_mode_bot"
+  possessedTemplate:t="nexus_militant_round_mode_bot+spawn_sequence_controller"
 
   _group{
     _tags:t="server"
@@ -237,32 +148,6 @@ nexus_stats_round{
 
 nexus_stats_current_round{
   "nexus_stats_current_round:tag"{}
-}
-
-destroy_on_nexus_round_start{
-  "destroy_on_nexus_round_start:tag"{}
-}
-
-nexus_show_sphere_hint_processor{
-  _use:t="replicating"
-  _use:t="game_trigger_processor_show_screen_hint"
-  game_trigger_processor_show_hint__text:t="nexus/protect_sphere_hint"
-  game_trigger_processor_show_hint__showOnTrigger:t="nexus_wall_start_hint"
-  game_trigger_processor_show_hint__hideOnTrigger:t="nexus_wall_stop_hint"
-  game_trigger_processor_show_hint__requireTargetHero:b=yes
-
-  "nexus_show_sphere_hint_processor:tag"{}
-}
-
-nexus_protect_sphere_hint{
-  _use:t="game_trigger_sphere"
-  game_trigger_sphere__onEnterEventTrigger:t="nexus_wall_stop_hint"
-  game_trigger_sphere__onLeaveEventTrigger:t="nexus_wall_start_hint"
-
-  "nexus_protect_sphere_hint:tag"{}
-  "game_trigger__includeGrids:list<t>"{
-    item:t="humans"
-  }
 }
 
 nexus_round_mode_bot_player_delayed_spawn{

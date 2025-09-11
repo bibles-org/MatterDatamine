@@ -3,7 +3,7 @@ sprintStaminaDrain:r=0
 restStaminaRestore:r=30
 jumpStaminaDrain:r=0
 climbStaminaDrain:r=0
-jumpVertSpeed:r=3.75
+jumpVertSpeed:r=2.81
 sprintJumpHorzSpeed:r=1.5
 ladderQuickMoveUpSpeedMult:r=-1
 ladderQuickMoveDownSpeedMult:r=-1
@@ -35,11 +35,13 @@ forceDownReachVel:r=1
 maxStepOverHeight:r=0.1
 gunNode:t="neck"
 maxSprintAngle:r=30
+swimmingLevelBias:r=0.25
 aimingMoveSpeed:r=0.3
 aimSpeed:r=2
 zoomSpeed:r=1
 canCrawl:b=yes
 canCrouch:b=yes
+hasExternalHeight:b=no
 
 standState{
   walkSpeed:r=1

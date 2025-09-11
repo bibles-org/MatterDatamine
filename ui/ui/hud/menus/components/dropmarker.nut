@@ -1,8 +1,12 @@
+from "%ui/components/colors.nut" import DropBdActive, DropBdDisabled, DropBdNormal, DropBgDisabled,
+  DropBgNormal, RedWarningColor
+
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/components/commonComponents.nut" import mkTextArea
+
 from "%ui/ui_library.nut" import *
-let { body_txt } = require("%ui/fonts_style.nut")
-let { DropBdActive, DropBdDisabled, DropBdNormal, DropBgDisabled, DropBgNormal,
-  RedWarningColor } = require("%ui/components/colors.nut")
-let { mkTextArea } = require("%ui/components/commonComponents.nut")
+
+#allow-auto-freeze
 
 function dropMarker(stateFlags=0, overwhelmed = false, txt=null) {
   let textToDraw = txt ?? (overwhelmed ? loc("inventory/overwhelmed") : null)
@@ -18,7 +22,7 @@ function dropMarker(stateFlags=0, overwhelmed = false, txt=null) {
     ]
     children = textToDraw && textToDraw != "" ? {
       rendObj = ROBJ_SOLID
-      size = [ flex(), SIZE_TO_CONTENT ]
+      size = FLEX_H
       color = RedWarningColor
       hplace = ALIGN_CENTER
       vplace = ALIGN_CENTER

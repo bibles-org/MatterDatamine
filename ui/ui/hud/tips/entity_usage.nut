@@ -1,11 +1,12 @@
+from "%ui/hud/state/entity_use_state.nut" import calcItemUseProgress
+
+from "%ui/hud/tips/continuous_action_tip.nut" import mkContinuousActionTip
+
 from "%ui/ui_library.nut" import *
 
 let { curTime } = require("%ui/hud/state/time_state.nut")
-let { entityUseEnd, entityUseStart, calcItemUseProgress,
-     entityToUseTemplate, entityToUseOverrideLongUseHint
-} = require("%ui/hud/state/entity_use_state.nut")
+let { entityUseEnd, entityUseStart, entityToUseTemplate, entityToUseOverrideLongUseHint } = require("%ui/hud/state/entity_use_state.nut")
 let { isAlive } = require("%ui/hud/state/health_state.nut")
-let { mkContinuousActionTip } = require("%ui/hud/tips/continuous_action_tip.nut")
 
 let mkProgressLine = function() {
   let timeLeft = Computed(@() entityUseEnd.get() - curTime.get())
@@ -24,7 +25,7 @@ let showEntityUsage = Computed(function() {
 return function() {
   return {
     watch = showEntityUsage
-    margin = [0, 0, hdpx(30), 0]
+    margin = static [0, 0, hdpx(30), 0]
    children = showEntityUsage.get() ? mkProgressLine() : null
   }
 }

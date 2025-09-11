@@ -97,11 +97,6 @@ entity{
 }
 
 entity{
-  _template:t="activity_helper_manager"
-  activity_helper_checks__noActivityMaxTime:r=60
-}
-
-entity{
   _template:t="am_bot_spawner"
   bot_spawner__spawnInterval:r=20
   bot_spawner__botsPerGroupMinMax:ip2=1, 3
@@ -117,8 +112,8 @@ entity{
 
 entity{
   _template:t="navmesh_isle_marker"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  navmesh_isle_marker__expectedNumTriangles:i=392
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-42.493, 10.3055, -33.7716]]
+  navmesh_isle_marker__expectedNumTriangles:i=5775
 }
 
 entity{
@@ -201,7 +196,7 @@ entity{
   tiled_map__northAngle:r=0
   tiled_map__tilesPath:t="maps/dalniy_island_sparse"
   tiled_map__backgroundColor:c=35, 128, 97, 255
-  fog_of_war__enabled:b=yes
+  fog_of_war__enabled:b=no
 }
 
 import{
@@ -272,6 +267,11 @@ entity{
   _template:t="unique_item_location_marker"
   transform:m=[[42.5949, -3.03239e-06, -19.8227] [2.64029e-06, 48.9205, -1.22873e-06] [13.8148, 0, 61.1189] [681.175, 11.6947, -1051.88]]
   unique_item_location_marker__location:t="spy_trailer"
+}
+
+entity{
+  _template:t="volfog_nbs"
+  volfog_nbs__rootGraph:t="fog_dalniy_island_sparse.json"
 }
 
 entity{

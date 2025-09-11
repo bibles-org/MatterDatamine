@@ -1,37 +1,42 @@
-from "%ui/ui_library.nut" import *
+from "%dngscripts/platform.nut" import is_sony
 
-let { h2_txt } = require("%ui/fonts_style.nut")
-let { mkText, underlineComp } = require("%ui/components/commonComponents.nut")
+from "%ui/fonts_style.nut" import h2_txt, body_txt
+from "%ui/components/commonComponents.nut" import mkText, underlineComp
+from "%ui/components/colors.nut" import InfoTextDescColor, InfoTextValueColor
+from "%ui/helpers/remap_nick.nut" import remap_nick
+import "%ui/components/faComp.nut" as faComp
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "%ui/components/button.nut" import button
+from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryItemImage
+from "%ui/hud/menus/components/inventoryItem.nut" import inventoryItem
+from "%ui/mainMenu/menus/options/player_interaction_option.nut" import isStreamerMode, playerRandName
+from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import mkAlterIconParams
+
+from "%ui/ui_library.nut" import *
+import "%dngscripts/ecs.nut" as ecs
+
 let { debriefingStatsCalculated } = require("%ui/mainMenu/debriefing/debriefing_stats_state.nut")
-let { InfoTextDescColor, InfoTextValueColor } = require("%ui/components/colors.nut")
 let { monolithTokensTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
-let { remap_nick } = require("%ui/helpers/remap_nick.nut")
 let { INVITE_TO_PSN_FRIENDS, INVITE_TO_FRIENDS } = require("%ui/mainMenu/contacts/contactActions.nut")
-let faComp = require("%ui/components/faComp.nut")
-let { is_sony } = require("%dngscripts/platform.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
 let { userInfo } = require("%sqGlob/userInfoState.nut")
-let { button } = require("%ui/components/button.nut")
-let { inventoryItemImage } = require("%ui/hud/menus/components/inventoryItemImages.nut")
-let { inventoryItem } = require("%ui/hud/menus/components/inventoryItem.nut")
 
 let playerIconHeight = hdpxi(120)
 
 let mkStatsColumn = @(title, children) {
   flow = FLOW_VERTICAL
-  size = const [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   gap = hdpx(5)
   children = [
-    title == null ? null : mkText(loc(title), const {
+    title == null ? null : mkText(loc(title), static {
       behavior = Behaviors.Marquee
       clipChildren = true
-      size = [ flex(), SIZE_TO_CONTENT ]
+      size = FLEX_H
     }.__update(h2_txt))
     {
       gap = hdpx(2)
       flow = FLOW_VERTICAL
-      size = const [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       children
     }
   ]
@@ -40,12 +45,12 @@ let mkStatsColumn = @(title, children) {
 function mkStatString(statName, statValue, statUnit = "") {
   return {
     padding = hdpx(5)
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     gap = hdpx(10)
     children = [
       mkText(statName,{
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         color = InfoTextDescColor
         clipChildren = true
         behavior = Behaviors.Marquee
@@ -68,7 +73,7 @@ function debriefingStats() {
     return { watch }
   return {
     watch
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     gap = hdpx(20)
     children = [
@@ -99,14 +104,14 @@ let mkDailyRewardsStats = @(monolithCreditsCount) function() {
     return { watch }
   return {
     watch
-    size = const [flex(), SIZE_TO_CONTENT]
-    maxWidth = pw(60)
+    size = FLEX_H
+    maxWidth = pw(70)
     flow = FLOW_VERTICAL
     gap = hdpx(5)
     children = [
-      const mkText(loc("debriefing/dailyStatRewards"), h2_txt)
+      static mkText(loc("debriefing/dailyStatRewards"), h2_txt)
       {
-        size = const [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_HORIZONTAL
         gap = hdpx(10)
         valign = ALIGN_CENTER
@@ -129,10 +134,13 @@ let addIcon = faComp("user-plus", {
 })
 
 function mkPlayerData(data, iconHeight) {
-  let item = mkFakeItem(data.suitTemplate)
+  let suitTemplate = data.suitTemplate
+  let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(suitTemplate)
+  let { attachments, alterIconParams } = mkAlterIconParams(suitTemplate, template)
+  let item = mkFakeItem(suitTemplate, alterIconParams, attachments)
   let isAvailable = playerActions.mkIsVisible(data.userId.tostring())
   let name = mkText(data.name, {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     behavior = [Behaviors.Marquee,Behaviors.Button]
     halign = ALIGN_CENTER
     margin = hdpx(4)
@@ -142,19 +150,23 @@ function mkPlayerData(data, iconHeight) {
   return function() {
     let isLocalPlayer = data.userId == userInfo.get().userId.tostring()
     let canInvite = !isLocalPlayer && isAvailable.get()
+    let ad = iconHeight / 2 * 3
     return {
       watch = [userInfo, isAvailable]
       children = button({
         flow = FLOW_VERTICAL
         children = [
           {
+            size = [iconHeight, iconHeight]
+            clipChildren = true
             hplace = ALIGN_CENTER
+            halign = ALIGN_CENTER
             children = [
               inventoryItemImage(item, {
                 width = iconHeight
-                height = iconHeight
-                slotSize = [iconHeight, iconHeight]
-              })
+                height = ad
+                slotSize = [iconHeight, ad]
+              }, { vplace = ALIGN_TOP valign = ALIGN_TOP})
               canInvite ? addIcon : null
             ]
           }
@@ -170,27 +182,29 @@ function mkPlayerData(data, iconHeight) {
   }
 }
 
-function mkTeamBlock(battle, iconHeight = playerIconHeight) {
+let mkTeamBlock = @(battle, iconHeight = playerIconHeight, txt_style = h2_txt) function() {
   let team = []
   foreach (mate in battle?.teamInfo ?? {}) {
     if (team.findvalue(@(v) v.userId == mate?.id) == null)
       team.append({
-        name = remap_nick(mate?.name)
+        name = isStreamerMode.get() && remap_nick(mate?.name) == userInfo.get().name
+          ? playerRandName.get() : remap_nick(mate?.name)
         suitTemplate = (mate?.suitTemplate ?? "").split("+")[0]
         userId = mate?.id ?? 0
       })
   }
   if (team.len() <= 0)
-    return { size = [flex(), SIZE_TO_CONTENT] }
+    return static { size = FLEX_H }
 
   return {
-    size = [flex(), SIZE_TO_CONTENT]
+    watch = [isStreamerMode, userInfo, playerRandName]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     gap = hdpx(10)
     children = [
-      mkText(loc("baseDebriefing/team"), h2_txt)
+      mkText(loc("baseDebriefing/team"), txt_style)
       {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_HORIZONTAL
         gap = hdpx(20)
         children = team.map(@(data) mkPlayerData(data, iconHeight))

@@ -1,39 +1,40 @@
+from "%ui/voiceChat/voice_settings.nut" import setRecordingEnabled
+from "eventbus" import eventbus_subscribe
+from "%ui/voiceChat/voiceState.nut" import on_room_disconnect
 from "%ui/ui_library.nut" import *
 
-let { eventbus_subscribe } = require("eventbus")
 let voiceApi = require_optional("voiceApi")
-let {voiceChatRestricted} = require("%ui/voiceChat/voiceChatGlobalState.nut")
-let {on_room_disconnect} = require("voiceState.nut")
-let {soundRecordDevice} = require("%ui/sound_state.nut")
+let { voiceChatRestricted } = require("%ui/voiceChat/voiceChatGlobalState.nut")
+let { soundRecordDevice } = require("%ui/sound_state.nut")
 let platform = require("%dngscripts/platform.nut")
-let {voiceRecordingEnable, voiceRecordingEnabledGeneration,
-  voiceRecordVolume, voiceActivationMode, voicePlaybackVolume, voiceChatMode,
-  voice_modes, voice_activation_modes, setRecordingEnabled} = require("%ui/voiceChat/voice_settings.nut")
+let { voiceRecordingEnable, voiceRecordingEnabledGeneration, voiceRecordVolume, voiceActivationMode,
+  voicePlaybackVolume, voiceChatMode, voice_modes, voice_activation_modes,
+  proximityVoiceRecordingEnable } = require("%ui/voiceChat/voice_settings.nut")
 
 let speakingPlayers = Watched({})
 if (voiceApi == null)
   return {speakingPlayers}
 
-let {levelIsLoading, levelLoaded} = require("%ui/state/appState.nut")
-let tempDisableVoice = platform.is_sony ? Computed(@() levelIsLoading.value || !levelLoaded.value) : Watched(false)
+let { levelIsLoading, levelLoaded } = require("%ui/state/appState.nut")
+let tempDisableVoice = platform.is_sony ? Computed(@() levelIsLoading.get() || !levelLoaded.get()) : Watched(false)
 
 let order = { val = 0 }
 
 function onSpeakingStatus(who, is_speaking) {
   if (is_speaking) {
-    if (who in speakingPlayers.value)
+    if (who in speakingPlayers.get())
       return
     speakingPlayers.mutate(@(v) v[who] <- order.val++)
   }
   else {
-    if (!(who in speakingPlayers.value))
+    if (!(who in speakingPlayers.get()))
       return
     speakingPlayers.mutate(@(v) v.$rawdelete(who))
   }
 }
 
 function onVoiceChat(new_value) {
-  if (voiceChatRestricted.value) {
+  if (voiceChatRestricted.get()) {
     new_value = voice_modes.off
     log("Voice chat restriction is in effect")
   }
@@ -54,14 +55,14 @@ function onVoiceChat(new_value) {
   }
 }
 
-voiceChatRestricted.subscribe(@(_val) onVoiceChat(voiceChatMode.value))
+voiceChatRestricted.subscribe(@(_val) onVoiceChat(voiceChatMode.get()))
 
 tempDisableVoice.subscribe(function(val) {
   if (val) {
     onVoiceChat(voice_modes.off)
   }
   else {
-    onVoiceChat(voiceChatMode.value)
+    onVoiceChat(voiceChatMode.get())
   }
 })
 
@@ -69,31 +70,32 @@ let voiceSettingsDescr = {
   [voiceRecordVolume] = @(val) voiceApi.set_record_volume(val),
   [voicePlaybackVolume] = @(val) voiceApi.set_playback_volume(val),
   [voiceRecordingEnable] = @(val) voiceApi.set_recording(val),
-  [voiceChatMode] = onVoiceChat
+  [voiceChatMode] = onVoiceChat,
+  [proximityVoiceRecordingEnable] = @(val) voiceApi.enable_local_mic_for("danetvoice://proximity_chat", val),
 }
 
 foreach (watched, handler in voiceSettingsDescr)
-  handler(watched.value)
+  handler(watched.get())
 foreach (watched, handler in voiceSettingsDescr)
-  watched.subscribe(handler)
+  watched.subscribe_with_nasty_disregard_of_frp_update(handler)
 
 function recordDeviceHandler(...){
-  let dev = soundRecordDevice.value
+  let dev = soundRecordDevice.get()
   voiceApi.set_record_device(dev?.id ?? -1)
-  setRecordingEnabled(voiceRecordingEnable.value)
+  setRecordingEnabled(voiceRecordingEnable.get())
 }
-soundRecordDevice.subscribe(recordDeviceHandler)
+soundRecordDevice.subscribe_with_nasty_disregard_of_frp_update(recordDeviceHandler)
 recordDeviceHandler()
 
 
-voiceRecordingEnabledGeneration.subscribe(@(...) voiceApi.set_recording(voiceRecordingEnable.value) )
+voiceRecordingEnabledGeneration.subscribe(@(...) voiceApi.set_recording(voiceRecordingEnable.get()) )
 
 
 eventbus_subscribe("voice.on_peer_stop_speaking", @(data) onSpeakingStatus(data.name, false))
 eventbus_subscribe("voice.on_peer_start_speaking",
   function(data) {
-    if (voiceChatMode.value != voice_modes.off && !tempDisableVoice.value &&
-      !voiceChatRestricted.value) {
+    if (voiceChatMode.get() != voice_modes.off && !tempDisableVoice.get() &&
+      !voiceChatRestricted.get()) {
       onSpeakingStatus(data.name, true)
     }
   })
@@ -108,14 +110,14 @@ eventbus_subscribe("voice.on_room_connect",
   function(data) {
     if (!data.success)
       return
-    onVoiceChat(voiceChatMode.value)
-    if (voiceActivationMode.value == voice_activation_modes.always)
+    onVoiceChat(voiceChatMode.get())
+    if (voiceActivationMode.get() == voice_activation_modes.always)
       setRecordingEnabled(true)
     else
-      setRecordingEnabled(voiceRecordingEnable.value)
+      setRecordingEnabled(voiceRecordingEnable.get())
   })
 
-voiceActivationMode.subscribe(function(value) {
+voiceActivationMode.subscribe_with_nasty_disregard_of_frp_update(function(value) {
   if (value == voice_activation_modes.always)
     setRecordingEnabled(true)
 })
@@ -138,13 +140,22 @@ function unmute_player(player_name) {
   voiceApi.unmute_player_by_name(player_name)
 }
 
+function set_recording(val) {
+  voiceApi.set_recording(val)
+}
+
 console_register_command(voice_start_test, "voice.start_test")
 console_register_command(voice_stop_test, "voice.stop_test")
 console_register_command(mute_player, "voice.mute_player")
 console_register_command(unmute_player, "voice.unmute_player")
+console_register_command(set_recording, "voice.set_recording")
 
 
 
 
 
-return {speakingPlayers}
+return {
+  speakingPlayers
+  mute_player
+  unmute_player
+}

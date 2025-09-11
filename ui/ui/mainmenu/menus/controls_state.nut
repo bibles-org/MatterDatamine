@@ -1,10 +1,13 @@
+from "%dngscripts/platform.nut" import isPlatformRelevant
+
+import "dagor.fs" as dagor_fs
+import "dagor.system" as dagor_sys
+from "string" import startswith
+import "dainput2" as dainput
+
 from "%ui/ui_library.nut" import *
 
-let { isPlatformRelevant, platformId } = require("%dngscripts/platform.nut")
-let dagor_fs = require("dagor.fs")
-let dagor_sys = require("dagor.system")
-let {startswith} = require("string")
-let dainput = require("dainput2")
+let { platformId } = require("%dngscripts/platform.nut")
 let controlsList = {
   win32 = [
     "content/active_matter/config/active_matter.default"
@@ -14,7 +17,7 @@ let controlsList = {
 if (controlsList?[platformId] == null)
    controlsList[platformId] <- [dainput.get_default_preset_prefix()]
 let generation = Watched(0)
-let nextGeneration = @() generation(generation.value + 1)
+let nextGeneration = @() generation.set(generation.get() + 1)
 let haveChanges = mkWatched(persist, "haveChanges", false)
 
 function mkPresetNameFromPresetPath(path){
@@ -103,7 +106,7 @@ function getActionsList() {
 
 let importantGroups = Watched([ "Movement", "Weapon", "View", "Vehicle" ])
 
-return {
+return freeze({
   importantGroups
   generation
   nextGeneration
@@ -117,4 +120,4 @@ return {
   getActionTags
 
   mkSubTagsFind
-}
+})

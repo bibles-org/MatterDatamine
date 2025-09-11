@@ -31,6 +31,7 @@ onboarding_phase_monolith{
     item:t="monolith_extraction_effect_creator_b"
     item:t="monolith_light"
     item:t="onboarding_cleanup_items_in_world"
+    item:t="assistant_script_on_alter_selection"
     item:t="onboarding_island__onboarding_industrial__compound_ambient_sound"
     item:t="onboarding_island__onboarding_rocks__compound_ambient_sound"
     item:t="onboarding_island__onboarding_caves__compound_ambient_sound"
@@ -88,8 +89,7 @@ onboarding_phase_monolith_selection{
 
 monolith_extraction_effect{
   _use:t="onboarding_hero_game_effect"
-  _use:t="game_effect_with_duration"
-  game_effect__timeToDestroy:r=3
+  _use:t="onboarding_phase_temporary_entity"
   onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_monolith_extraction_sequence_affect"
 }
 
@@ -151,51 +151,19 @@ monolith_override_zone_border_max_radius{
 monolith_bullet_catcher{
   _use:t="editor_zone_preview"
   _use:t="traceable_sphere"
+  _use:t="traceable_spheres_static_grid_object"
   sphere_zone__radius:r=1.8
-  grid_obj__gridType:t="traceable_spheres"
 
   "monolith_bullet_catcher:tag"{}
-  grid_obj{}
 }
 
 monolith_bullet_catcher_huge{
   _use:t="editor_zone_preview"
   _use:t="traceable_sphere"
+  _use:t="traceable_spheres_static_grid_object"
   sphere_zone__radius:r=50
-  grid_obj__gridType:t="traceable_spheres"
 
   "monolith_bullet_catcher:tag"{}
-  grid_obj{}
-}
-
-onboarding_monolith_to_base_trigger_a{
-  _use:t="game_trigger_box"
-  _use:t="game_trigger_processor_self_destroy"
-  game_trigger_processor__onTrigger:t="onboarding_monolith_to_base_a"
-  game_trigger_box__onEnterEventTrigger:t="onboarding_monolith_to_base_a"
-
-  "game_trigger__includeGrids:list<t>"{
-    item:t="humans"
-  }
-
-  "game_trigger__requireComponents:list<t>"{
-    item:t="hero"
-  }
-}
-
-onboarding_monolith_to_base_trigger_b{
-  _use:t="game_trigger_box"
-  _use:t="game_trigger_processor_self_destroy"
-  game_trigger_processor__onTrigger:t="onboarding_monolith_to_base_b"
-  game_trigger_box__onEnterEventTrigger:t="onboarding_monolith_to_base_b"
-
-  "game_trigger__includeGrids:list<t>"{
-    item:t="humans"
-  }
-
-  "game_trigger__requireComponents:list<t>"{
-    item:t="hero"
-  }
 }
 
 onboarding_monolith_path_selection_rich{
@@ -246,7 +214,38 @@ onboarding_monolith_extraction_sequence_affect{
       affectTemplate:t="onboarding_monolith_fade_start_hero_effect+trans_portal_affect_start_sound"
       waitForDestruction:b=yes
     }
+
+    "stage:object"{
+      affectTemplate:t="forced_onboarding_alter_selection"
+      waitForDestruction:b=yes
+    }
+
+    "stage:object"{
+      affectTemplate:t="fade_after_alter_selection"
+      waitForDestruction:b=yes
+    }
   }
+}
+
+forced_onboarding_alter_selection{
+  _use:t="postfx_fadeout_affect"
+  postfx_fadeout_affect__time:r=2
+
+  "forced_onboarding_alter_selection:tag"{}
+}
+
+assistant_script_on_alter_selection{
+  _use:t="game_trigger_processor_play_assistant_script"
+  game_trigger_processor_play_assistant_script__name:t="note_onboarding_body_choosing"
+  game_trigger_processor__onTrigger:t="forced_onboarding_alter_selection_started"
+}
+
+fade_after_alter_selection{
+  _use:t="client_game_effect_with_duration"
+  _use:t="postfx_fadein_affect"
+  game_effect__timeToDestroy:r=0.3
+  postfx_fadein_affect__time:r=0.3
+  postfx_fadein_affect__color:c=255, 255, 255, 255
 }
 
 monolith_touch_distortion_a_fx{
@@ -323,7 +322,9 @@ monolith_door_red{
   _use:t="wooden_rotating_door_sound"
   _use:t="onboarding_phase_temporary_entity"
   _use:t="monolith_door_sound"
+  _use:t="game_trigger_on_door_open"
   ri_extra__name:t="am_monolyth_door_1300x2400_a_l"
+  door_trigger_on_open__sendTrigger:t="onboarding_monolith_to_base_b"
 
   "door_operations__localizations:object"{
     open_pull:t="monolith/door_pull/fame"
@@ -358,7 +359,9 @@ monolith_door_blue{
   _use:t="wooden_rotating_door_sound"
   _use:t="onboarding_phase_temporary_entity"
   _use:t="monolith_door_sound"
+  _use:t="game_trigger_on_door_open"
   ri_extra__name:t="am_monolyth_door_blue_1300x2400_a_r"
+  door_trigger_on_open__sendTrigger:t="onboarding_monolith_to_base_a"
 
   "door_operations__localizations:object"{
     open_pull:t="monolith/door_pull/rich"

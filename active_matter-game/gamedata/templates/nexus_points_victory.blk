@@ -1,0 +1,66 @@
+nexus_points_victory{
+  "nexus_points_victory:tag"{}
+}
+
+nexus_game_controller_points_victory{
+  _use:t="nexus_points_victory"
+  _use:t="nexus_points_victory_scaling_sqrt"
+  nexus_points_victory_game_controller__pointsToWin:r=100
+
+  _group{
+    _tags:t="server"
+    nexus_points_victory_game_controller__scaling:t="linear"
+    nexus_points_victory_game_controller__active:b=no
+    nexus_points_victory_game_controller__beaconTickTime:r=-1
+    nexus_points_victory_game_controller__beaconTickTimeDefault:r=1
+    nexus_points_victory_game_controller__beaconTickTimeFast:r=0.1
+    nexus_points_victory_game_controller__beaconDisplayTickTime:r=1
+    nexus_points_victory_game_controller__beaconNextTickAt:r=-1
+    nexus_points_victory_game_controller__beaconNextDisplayTickAt:r=-1
+    nexus_points_victory_game_controller__pointsByKill:r=5
+    nexus_points_victory_game_controller__pointsByBeaconTick:r=1
+  }
+}
+
+nexus_points_victory_direct{
+  _tags:t="server"
+
+  "nexus_points_victory_direct:tag"{}
+}
+
+nexus_points_victory_advantage{
+  _tags:t="server"
+
+  "nexus_points_victory_advantage:tag"{}
+}
+
+nexus_points_victory_advantage_equality_scoring{
+  _tags:t="server"
+
+  "nexus_points_victory_advantage_equality_scoring:tag"{}
+}
+
+nexus_points_victory_advantage_by_beacons{
+  _tags:t="server"
+
+  "nexus_points_victory_advantage_by_beacons:tag"{}
+}
+
+nexus_points_victory_scaling_sqrt{
+  _tags:t="server"
+  nexus_points_victory_game_controller__scaling:t="sqrt"
+}
+
+nexus_points_victory_team{
+  _use:t="nexus_points_victory"
+
+  _group{
+    _tags:t="server"
+    nexus_points_victory_team__points:r=0
+  }
+
+  _group{
+    _replicate:b=yes
+    nexus_points_victory_team__displayPoints:r=0
+  }
+}

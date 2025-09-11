@@ -1,12 +1,13 @@
+from "%ui/fonts_style.nut" import h2_txt, sub_txt, body_txt
+from "%ui/components/commonComponents.nut" import bluredPanel, mkText
+import "%ui/components/mkQrCode.nut" as mkQrCode
+from "%ui/components/openUrl.nut" import openUrl
+from "%ui/components/modalWindows.nut" import addModalWindow, removeModalWindow
+import "%ui/components/spinner.nut" as spinner
+
 from "%ui/ui_library.nut" import *
 
 let JB = require("%ui/control/gui_buttons.nut")
-let { h2_txt, sub_txt, body_txt } = require("%ui/fonts_style.nut")
-let { bluredPanel, mkText } = require("%ui/components/commonComponents.nut")
-let mkQrCode = require("%ui/components/mkQrCode.nut")
-let openUrl = require("%ui/components/openUrl.nut")
-let {addModalWindow, removeModalWindow} = require("%ui/components/modalWindows.nut")
-let spinner = require("%ui/components/spinner.nut")
 
 
 const WND_UID = "qr_window"
@@ -58,14 +59,14 @@ let qrWindow = kwarg(function (url, header = "", desc = "", needShowRealUrl = tr
         maxWidth = hdpx(600)
       }.__update(body_txt)
       needShowRealUrl ? { rendObj = ROBJ_TEXT, text = url }.__update(sub_txt) : null
-      realUrl.value ? mkQrCode({ data = realUrl.value }) : waitInfo
+      realUrl.get() ? mkQrCode({ data = realUrl.get() }) : waitInfo
     ]
   }
 })
 
 return @(params, onCloseCb = null) addModalWindow({
   key = WND_UID
-  size = [sw(100), sh(100)]
+  size = static [sw(100), sh(100)]
   onClick = @() close(onCloseCb)
   children = qrWindow(params)
   hotkeys = [[$"^{JB.B} | Esc", { action = @() close(onCloseCb), description = loc("Cancel") }]]

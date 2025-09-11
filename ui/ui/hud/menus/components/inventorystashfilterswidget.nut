@@ -1,6 +1,7 @@
+from "%ui/components/commonComponents.nut" import mkSelectPanelItem, VertSmallSelectPanelGap, BD_RIGHT
 from "%ui/ui_library.nut" import *
 
-let { mkSelectPanelItem, VertSmallSelectPanelGap, BD_RIGHT } = require("%ui/components/commonComponents.nut")
+#allow-auto-freeze
 
 let picSize = hdpxi(22)
 let allFilters = [
@@ -21,6 +22,7 @@ let resetPic = Picture("!ui/skin#itemFilter/all.svg:{0}:{0}:K".subst(picSize))
 let state = Watched((1 << allFilters.len()))
 
 let activeFilters = Computed(function() {
+  #forbid-auto-freeze
   let ret = []
   let st = state.get()
   for(local idx=0; idx < allFilters.len(); idx++){
@@ -41,13 +43,13 @@ let mkFilterButton = @(image, idx, cb=null, needToShow = Watched(true)) function
         rendObj = ROBJ_IMAGE
         image
         opacity = 0.9
-        size = const [picSize, picSize]
+        size = static [picSize, picSize]
       }
       idx
       multi = true
       state
-      tooltip_text = idx < allFilters.len() ? loc($"stashFilter/{allFilters[idx].key}") : const loc("stashFilter/all")
-      visual_params = const {
+      tooltip_text = idx < allFilters.len() ? loc($"stashFilter/{allFilters[idx].key}") : static loc("stashFilter/all")
+      visual_params = static {
         size = SIZE_TO_CONTENT
         padding = hdpx(5)
       }
@@ -76,11 +78,12 @@ function mkFilter(idx) {
 }
 
 function inventoryFiltersWidget() {
+  #forbid-auto-freeze
   let buttons = [ mkFilterButton(resetPic, allFilters.len(), @(_) resetFilters()) ]
   for (local idx=0; idx < allFilters.len(); idx++) {
     buttons.append(mkFilter(idx))
   }
-
+  #allow-auto-freeze
   return {
     onAttach = function() {
       state.set((1 << allFilters.len()))

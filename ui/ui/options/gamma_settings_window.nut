@@ -1,16 +1,17 @@
+from "%ui/fonts_style.nut" import body_txt, h1_txt
+from "%ui/components/modalWindows.nut" import addModalWindow, removeModalWindow
+from "%ui/components/button.nut" import textButton
+from "%ui/components/commonComponents.nut" import mkText, mkTextArea
+from "videomode" import change_gamma, is_hdr_enabled
+from "%ui/mainMenu/menus/options/options_lib.nut" import getOnlineSaveData, optionSlider
+from "%ui/mainMenu/currencyIcons.nut" import activeMatterIcon
+from "settings" import get_setting_by_blk_path, set_setting_by_blk_path_and_save
+from "%ui/components/colors.nut" import InfoTextValueColor
+from "dagor.system" import argv
+
 from "%ui/ui_library.nut" import *
 
-let { body_txt, h1_txt } = require("%ui/fonts_style.nut")
-let { addModalWindow, removeModalWindow } = require("%ui/components/modalWindows.nut")
-let { textButton } = require("%ui/components/button.nut")
-let { mkText, mkTextArea } = require("%ui/components/commonComponents.nut")
-let { change_gamma, is_hdr_enabled } = require("videomode")
-let { getOnlineSaveData, optionSlider } = require("%ui/mainMenu/menus/options/options_lib.nut")
-let { activeMatterIcon } = require("%ui/mainMenu/currencyIcons.nut")
-let { get_setting_by_blk_path, set_setting_by_blk_path_and_save } = require("settings")
 let { isLoggedIn } = require("%ui/login/login_state.nut")
-let { InfoTextValueColor } = require("%ui/components/colors.nut")
-let { argv } = require("dagor.system")
 
 let app_is_test_mode = @() argv.contains("-skip_modals_on_start")
 
@@ -27,7 +28,9 @@ let saveAndCloseBtn = textButton(loc("Ok"), function() {
 let logoSize = hdpxi(300)
 let logoColors = Watched([Color(5, 5, 5), Color(100, 100, 100), Color(200, 200, 200)])
 
-let gammaCorrectionSave = getOnlineSaveData("graphics/gamma_correction", @() 1.0, @(p) clamp(p, 0.5, 1.5))
+const minGamma = 0.7
+const maxGamma = 1.3
+let gammaCorrectionSave = getOnlineSaveData("graphics/gamma_correction", @() 1.0, @(p) clamp(p, minGamma, maxGamma))
 
 let logos = @() {
   watch = logoColors
@@ -48,7 +51,8 @@ let option = optionSlider({
       change_gamma(v)
     }
   defVal = 1.0
-  min = 0.5 max = 1.5 unit = 0.05 pageScroll = 0.05
+  min = minGamma max = maxGamma unit = 0.05 pageScroll = 0.05
+  ignoreWheel = false
   hint = loc("guiHints/gamma_correction")
 }, null, {})
 
@@ -58,7 +62,7 @@ let mkOptionValueText = @() {
 }
 
 let settingBlock = {
-  size = [hdpx(800), hdpx(130)]
+  size = static [hdpx(800), hdpx(130)]
   hplace = ALIGN_CENTER
   flow = FLOW_VERTICAL
   gap = { size = flex() }
@@ -104,7 +108,7 @@ function openGammaSettingWindow() {
 console_register_command(openGammaSettingWindow, "ui.openGammaSettingWnd")
 console_register_command(@(colorInt1, colorInt2, colorInt3) logoColors.set([colorInt1, colorInt2, colorInt3]), "ui.setGammaImageColors")
 
-isLoggedIn.subscribe(function(v) {
+isLoggedIn.subscribe_with_nasty_disregard_of_frp_update(function(v) {
   if (v && !app_is_test_mode() && !hasAlreadySetGamma())
     openGammaSettingWindow()
 })
@@ -112,4 +116,5 @@ isLoggedIn.subscribe(function(v) {
 return {
   hasAlreadySetGamma
   openGammaSettingWindow
+  app_is_test_mode
 }

@@ -1,8 +1,13 @@
 default_stub_item{
   _use:t="hammerspace_item"
-  _use:t="item_with_human_owner"
 
   "default_stub_item:tag"{}
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+
+    "item__humanOwnerEid:eid"{}
+  }
 }
 
 default_stub_melee{

@@ -5,7 +5,7 @@ let loginUiVersion = mkWatched(persist, "loginUiVersion", 0)
 
 let getCurrentLoginUi = @() currentLogin.comp
 function setCurrentLoginUi(comp) {
-  loginUiVersion(loginUiVersion.value+1)
+  loginUiVersion.modify(@(v) v+1)
   currentLogin.comp = comp
 }
 

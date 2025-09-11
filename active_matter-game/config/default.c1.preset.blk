@@ -47,10 +47,10 @@ Camera.ZoomOut{
   btn:i=8
 }
 
-HUD.GameMenu{
+HUD.SystemMenu{
   dev:i=3
   btn:i=4
-  type:i=5
+  type:i=1
 }
 
 HUD.BigMap{
@@ -178,10 +178,15 @@ Human.Aim2{
   type:i=0
 }
 
-Human.Zoom{
+Human.BipodToggle{
   dev:i=3
-  btn:i=16
-  type:i=0
+  btn:i=7
+  type:i=1
+
+  mod{
+    dev:i=3
+    btn:i=16
+  }
 }
 
 Human.Melee{

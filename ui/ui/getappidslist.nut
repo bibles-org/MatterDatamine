@@ -1,10 +1,11 @@
-let { get_app_id } = require("app")
-let {log} = require("%sqstd/log.nut")()
+from "app" import get_app_id
+
+let log = require("%sqGlob/library_logs.nut").with_prefix("[APP IDS] set list ")
 
 let appIdsList = [get_app_id()]
 
 let setAppIdsList = function(list) {
-  log("[APP IDS] set list ", list)
+  log(list)
   appIdsList.clear()
   appIdsList.extend(list)
 }

@@ -1,10 +1,12 @@
+from "%dngscripts/sound_system.nut" import sound_play
+from "%ui/components/colors.nut" import BtnBgFocused, BtnBdHover, BtnBgHover, BtnBdNormal, ControlBgOpaque
+from "%ui/components/sounds.nut" import buttonSound
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/cursorState.nut" import showCursor
 from "%ui/ui_library.nut" import *
 import "math" as math
 
-let {BtnBgFocused, BtnBdHover, BtnBgHover, BtnBdNormal, ControlBgOpaque} = require("%ui/components/colors.nut")
-let {buttonSound} = require("%ui/components/sounds.nut")
-let {sound_play} = require("%dngscripts/sound_system.nut")
-let {setTooltip} = require("%ui/components/cursors.nut")
+#allow-auto-freeze
 
 let calcFrameColor = @(sf) (sf & S_KB_FOCUS)
     ? BtnBgFocused
@@ -59,7 +61,7 @@ function slider(orient, var, options={}) {
     let sf = sliderStateFlags.get()
     return {
       rendObj = ROBJ_BOX
-      size  = [fsh(1), fsh(2)]
+      size  = static [fsh(1), fsh(2)]
       fillColor = calcKnobColor(sf)
       borderWidth = hdpx(1)
       borderColor = sf & S_HOVER ? BtnBgHover : BtnBdNormal
@@ -69,14 +71,14 @@ function slider(orient, var, options={}) {
     }
   }
 
-  let setValue = options?.setValue ?? @(v) var(v)
+  let setValue = options?.setValue ?? @(v) var.set(v)
   function onChange(factor){
     let value = orient == O_HORIZONTAL
       ? scaling.from(factor, minval, maxval)
       : scaling.from(factor, maxval, minval)
-    let oldValue = var.value
+    let oldValue = var.get()
     setValue(value)
-    if (oldValue != var.value)
+    if (oldValue != var.get())
       sound_play("ui_sounds/slider")
   }
 
@@ -85,22 +87,22 @@ function slider(orient, var, options={}) {
     hotkeys = [
       ["Left | J:D.Left", sliderLeftLoc, function() {
         let delta = maxval > minval ? -pageScroll : pageScroll
-        onChange(clamp(scaling.to(var.value + delta, minval, maxval), 0, 1))
+        onChange(clamp(scaling.to(var.get() + delta, minval, maxval), 0, 1))
       }],
       ["Right | J:D.Right", sliderRightLoc, function() {
         let delta = maxval > minval ? pageScroll : -pageScroll
-        onChange(clamp(scaling.to(var.value + delta, minval, maxval), 0, 1))
+        onChange(clamp(scaling.to(var.get() + delta, minval, maxval), 0, 1))
       }],
     ]
   }
-
+  #forbid-auto-freeze
   return function() {
-    let factor = clamp(scaling.to(var.value, minval, maxval), 0, 1)
+    let factor = clamp(scaling.to(var.get(), minval, maxval), 0, 1)
     return {
+      watch = [var, sliderStateFlags, showCursor]
       size = flex()
-      behavior = Behaviors.Slider
+      behavior = showCursor.get() ? Behaviors.Slider : null
       sound = buttonSound
-      watch = [var, sliderStateFlags]
       orientation = orient
 
       min = 0
@@ -157,8 +159,8 @@ function slider(orient, var, options={}) {
 }
 
 
-return {
+return freeze({
   Horiz = @(var, options={}) slider(O_HORIZONTAL, var, options)
   Vert  = @(var, options={}) slider(O_VERTICAL, var, options)
   scales
-}
+})

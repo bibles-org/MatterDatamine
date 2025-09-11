@@ -1,26 +1,26 @@
+from "%ui/hud/state/teammates_es.nut" import teammatesGetWatched, groupmatesGetWatched
+
+from "math" import ceil
+from "%ui/components/text.nut" import dtext
+from "das.inventory" import get_current_revive_price
+from "%ui/helpers/remap_nick.nut" import remap_nick
+from "%ui/fonts_style.nut" import sub_txt, tiny_txt
+from "%ui/components/colors.nut" import TextHighlight, TeammateColor, TEAM0_TEXT_COLOR, GreenSuccessColor, RedFailColor
+from "%ui/hud/state/cortical_vaults_es.nut" import corticalVaultsGetWatched
+from "%ui/mainMenu/contacts/contactBlock.nut" import mkTeammateColorLine
+from "%ui/hud/map/map_extraction_points.nut" import extractionIcon
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { ceil } = require("math")
 let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
-let { dtext } = require("%ui/components/text.nut")
-let { get_current_revive_price } = require("das.inventory")
 let { heroAmValue } = require("%ui/hud/state/am_storage_state.nut")
-let { remap_nick } = require("%ui/helpers/remap_nick.nut")
-let { sub_txt, tiny_txt } = require("%ui/fonts_style.nut")
-let { TextHighlight, TeammateColor, TEAM0_TEXT_COLOR } = require("%ui/components/colors.nut")
 let { orderedTeamNicks } = require("%ui/squad/squad_colors.nut")
-let { corticalVaultsSet, corticalVaultsGetWatched } = require("%ui/hud/state/cortical_vaults_es.nut")
-let { teammatesSet,
-      teammatesGetWatched,
-      groupmatesSet,
-      groupmatesGetWatched
-    } = require("%ui/hud/state/teammates_es.nut")
+let { corticalVaultsSet } = require("%ui/hud/state/cortical_vaults_es.nut")
+let { teammatesSet, groupmatesSet } = require("%ui/hud/state/teammates_es.nut")
 let { user_points } = require("%ui/hud/state/user_points.nut")
-let { mkTeammateColorLine } = require("%ui/mainMenu/contacts/contactBlock.nut")
 let { teammateRessurectDevices } = require("%ui/hud/state/resurrect_device_state.nut")
 
-let DEAD_TEXT_COLOR = Color(80,30,30,120)
 let DOWNED_COLOR = Color(240,100,50,255)
 let pointerSize = [hdpxi(14), hdpxi(18)]
 
@@ -29,15 +29,11 @@ let squad_medium_text = sub_txt
 
 let weaponStyle = {
   color = Color(70, 70, 70, 30)
-  fontFxColor = Color(0, 0, 0, 90)
+  fontFxColor = Color(0, 0, 0, 200)
   fontFxFactor = min(64, hdpx(64))
   fontFx = FFT_GLOW
   validateStaticText = true
 }.__update(squad_small_text)
-
-let unitDownedSz = [fsh(1.5), fsh(1.5)]
-let unitDowned = Picture("!ui/skin#distress.svg:{0}:{1}:K".subst(
-  ceil(unitDownedSz[0]), ceil(unitDownedSz[1])))
 
 let downedIconAnimations = [{
   prop = AnimProp.opacity, from = 0.5, to = 1,
@@ -46,11 +42,19 @@ let downedIconAnimations = [{
 
 let downedIcon = {
   rendObj = ROBJ_IMAGE
-  color = DOWNED_COLOR
-  image = unitDowned
-  size = unitDownedSz
+  image = Picture($"ui/skin#distress.svg:{hdpxi(18)}:{hdpxi(18)}:P")
+  size = hdpxi(18)
   vplace = ALIGN_BOTTOM
+  color = DOWNED_COLOR
   animations = downedIconAnimations
+}
+
+let skullIcon = {
+  rendObj = ROBJ_IMAGE
+  image = Picture($"ui/skin#skull.svg:{hdpxi(18)}:{hdpxi(18)}:P")
+  size = hdpxi(18)
+  vplace = ALIGN_BOTTOM
+  color = RedFailColor
 }
 
 function mkLoc(name){
@@ -64,8 +68,10 @@ function getPlayerNameColor(player, hero) {
     (player.get().possessed==ecs.INVALID_ENTITY_ID && player.get().scoring_player__firstSpawnTime < 0)
   if (invalidPlayer) {
     textColor = Color(100,100,100,100)
-  } else if (!hero?.get().isAlive) {
-    textColor = DEAD_TEXT_COLOR
+  } else if (player.get().scoring_player__isExtractedSuccess) {
+    textColor = GreenSuccessColor
+  } else if (player.get().player__isDead) {
+    textColor = RedFailColor
   }
   return textColor
 }
@@ -193,18 +199,20 @@ function mkGroupmateInfo(eid) {
 
     let firstRow = @() {
       watch = [hero, teammateRessurectDevices]
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       flow = FLOW_HORIZONTAL
       gap = hdpx(5)
       children = [
-        hero?.get().isDowned ? downedIcon : null
         pointer
         @() {
-          watch = player
+          watch = [hero, player]
           flow = FLOW_HORIZONTAL
           gap = hdpx(2)
           children = [
             mkTeammateColorLine(player.get().name)
+            player.get().scoring_player__isExtractedSuccess ? extractionIcon : null
+            hero?.get().isDowned && hero?.get().isAlive ? downedIcon : null
+            player.get().player__isDead ? skullIcon : null
             name
           ]
         }
@@ -213,7 +221,7 @@ function mkGroupmateInfo(eid) {
           image = Picture("!ui/skin#microchip.svg:{0}:{0}:K".subst(hdpxi(17)))
           vplace = ALIGN_CENTER
           color = TextHighlight
-          size = [hdpxi(17), hdpxi(17)]
+          size = hdpxi(17)
         }
         { size = flex() }
         mkCurWeapon(hero)
@@ -234,12 +242,12 @@ function mkGroupmateInfo(eid) {
 
 let groupmatesCompCtor = @(){
   watch = [groupmatesSet, corticalVaultsSet, teammatesSet]
-  size = [pw(40), SIZE_TO_CONTENT]
+  size = static [pw(40), SIZE_TO_CONTENT]
   flow = FLOW_VERTICAL
   hplace = ALIGN_LEFT
   vplace = ALIGN_CENTER
   gap = hdpx(1)
-  padding = [0,0,0,fsh(1)]
+  padding = static [0,0,0,fsh(1)]
   children = groupmatesSet.get()
     .keys()
     .filter(@(eid) eid != controlledHeroEid.get())

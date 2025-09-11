@@ -1,14 +1,15 @@
+from "%ui/fonts_style.nut" import sub_txt
+from "%ui/components/colors.nut" import TextHighlight
+from "%ui/helpers/time.nut" import secondsToStringLoc
+from "%ui/profile/profile_functions.nut" import getTemplateComponent
+
 from "%ui/ui_library.nut" import *
 
-let { sub_txt } = require("%ui/fonts_style.nut")
-let { TextHighlight } = require("%ui/components/colors.nut")
-let { secondsToStringLoc } = require("%ui/helpers/time.nut")
-let { getTemplateComponent } = require("%ui/profile/profile_functions.nut")
 
 let color_common = TextHighlight
 
 let idxMarkHeight = 1.11 * calc_str_box($"{1}", sub_txt)[1]
-let idxMarkDefaultSize = const [idxMarkHeight, idxMarkHeight]
+let idxMarkDefaultSize = static [idxMarkHeight, idxMarkHeight]
 
 let mkPic = memoize(@(hgt) Picture("ui/skin#round.svg:{0}:{0}:K".subst(hgt.tointeger())))
 
@@ -17,6 +18,7 @@ let mkObjectiveIdxMark = function(text, size, color, progress=1.0) {
   let canFitText = size[0] > 1.1 * textSize[0] && size[1] > 1.1 * textSize[1]
   let needProgress = (progress ?? 1.0) < 1.0 && progress > 0
   let fillColor = mul_color(color, 0.4)
+  let bgColor = mul_color(color, 0.25, 4)
   return {
     size
     valign = ALIGN_CENTER
@@ -24,7 +26,7 @@ let mkObjectiveIdxMark = function(text, size, color, progress=1.0) {
     color
     fillColor = !needProgress ? fillColor : 0
     rendObj = ROBJ_VECTOR_CANVAS
-    commands = const [
+    commands = static [
       [VECTOR_WIDTH, hdpxi(2)],
       [VECTOR_ELLIPSE, 50, 50, 50, 50]
     ]
@@ -33,8 +35,8 @@ let mkObjectiveIdxMark = function(text, size, color, progress=1.0) {
         rendObj = ROBJ_PROGRESS_CIRCULAR
         image = mkPic(size[1].tointeger())
         size = size[1]
-        fgColor = mul_color(color, 0.25, 4)
-        bgColor = fillColor
+        fgColor = fillColor
+        bgColor
         fValue = progress
       } : null,
       (text != "" && !canFitText) ? null : {
@@ -100,16 +102,20 @@ let contractsProgressionFunc = {
   ["objective_plant_item"] = itemsContractsProgression,
   ["objective_extract_item"] = itemsContractsProgression,
   ["objective_collect_item_with_tag"] = function(contract, progress=true) {
-    let itemTags = contract.params?["itemTag"] ?? []
-    if (itemTags.len() == 1 && type(itemTags[0]) == "string") {
-      let r = loc($"contract/{contract.name}/progress", {
-        itemType = loc(itemTags[0])
-      })
+
+    if (contract?.itemTags != null && contract.itemTags.len() > 0) {
+      
+      let r = loc($"contract/{contract.name}/progress", { itemType = loc(contract.itemTags) })
       if (!progress)
         return r
       return "".concat(r, $": {contract.currentValue}/{contract.requireValue}")
-    }
-    else {
+    } else if ((contract.params?.itemTag ?? []).len() == 1) {
+      
+      let r = loc($"contract/{contract.name}/progress", { itemType = loc(contract.params?.itemTag[0]) })
+      if (!progress)
+        return r
+      return "".concat(r, $": {contract.currentValue}/{contract.requireValue}")
+    } else {
       let r = loc($"contract/{contract.name}/progress/generic")
       if (!progress)
         return r

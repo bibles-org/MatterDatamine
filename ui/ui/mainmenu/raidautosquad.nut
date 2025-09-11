@@ -1,60 +1,68 @@
+from "%ui/mainMenu/raidAutoSquadState.nut" import getFormalLeaderUid
+from "%ui/fonts_style.nut" import sub_txt
+from "%ui/components/commonComponents.nut" import mkText
+from "%ui/matchingClient.nut" import matchingCall
+from "matching.errors" import error_string, OPERATION_COMPLETE
+from "eventbus" import eventbus_subscribe
+from "matching.api" import matching_listen_notify
+from "%ui/squad/squadManager.nut" import inviteToSquad
+from "dagor.debug" import logerr
+from "%ui/components/button.nut" import textButton
+from "%ui/helpers/timers.nut" import mkCountdownTimerPerSec
+from "net" import get_sync_time
+from "%ui/helpers/time.nut" import secondsToStringLoc
+from "%ui/components/cursors.nut" import setTooltip
 from "%ui/ui_library.nut" import *
-let { sub_txt } = require("%ui/fonts_style.nut")
+
 let { isInSquad } = require("%ui/squad/squadState.nut")
 let { selectedRaid } = require("%ui/gameModeState.nut")
 let { matchingQueuesMap } = require("%ui/matchingQueues.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
-let { matchingCall } = require("%ui/matchingClient.nut")
-let { error_string, OPERATION_COMPLETE } = require("matching.errors")
-let { eventbus_subscribe } = require("eventbus")
-let { matching_listen_notify } = require("matching.api")
-let { inviteToSquad } = require("%ui/squad/squadManager.nut")
-let { autoSquadGatheringState, autosquadPlayers, reservedSquad,
-      getFormalLeaderUid, waitingInvite } = require("%ui/mainMenu/raidAutoSquadState.nut")
-let { logerr } = require("dagor.debug")
-let { textButton } = require("%ui/components/button.nut")
+let { autoSquadGatheringState, autosquadPlayers, reservedSquad, waitingInvite, waitingInviteFromLeaderNumber } = require("%ui/mainMenu/raidAutoSquadState.nut")
 let { isInQueue } = require("%ui/quickMatchQueue.nut")
 let userInfo = require("%sqGlob/userInfo.nut")
-let { mkCountdownTimerPerSec } = require("%ui/helpers/timers.nut")
-let { get_sync_time } = require("net")
-let { secondsToStringLoc } = require("%ui/helpers/time.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
 
 local searchTime = -1
 let squadSize = 3
 let joinTimerTime = Watched(-1.0)
-let joinTimer = mkCountdownTimerPerSec(joinTimerTime)
+let joinTimer = mkCountdownTimerPerSec(joinTimerTime, "squadSearch")
 
 function setTimer(time) {
   joinTimerTime.set(get_sync_time() + time)
 }
 
 function makeSquad() {
-  let formalLeaderUid = getFormalLeaderUid(reservedSquad.get())
-  log("[Autosquad] Squad gathering")
+  let squad = reservedSquad.get()
+  let formalLeaderUid = getFormalLeaderUid(squad)
+  log($"[Autosquad] Squad gathering. Is leader: {formalLeaderUid == userInfo.get()?.userId}")
+  log($"[Autosquad] Squad arr:", squad)
   if (formalLeaderUid == userInfo.get()?.userId) {
-    foreach (member in autosquadPlayers.get()) {
-      if (member.userId != formalLeaderUid) {
-        log($"[Autosquad] Squad invite player {member.userId}")
-        inviteToSquad(member.userId)
+    gui_scene.resetTimeout(1, function() {
+      foreach (member in squad) {
+        if (member.userId != formalLeaderUid) {
+          log($"[Autosquad] Squad invite player {member.userId}")
+          inviteToSquad(member.userId)
+        }
       }
-    }
-    reservedSquad.set([])
+      reservedSquad.set([])
+      autoSquadGatheringState.set(false)
+    })
   }
   else {
     
     
     
     waitingInvite.set(true)
+    waitingInviteFromLeaderNumber.set(formalLeaderUid)
     let waitForInvite = 5
     gui_scene.resetTimeout(waitForInvite, function() {
       waitingInvite.set(false)
+      autoSquadGatheringState.set(false)
+      waitingInviteFromLeaderNumber.set(0)
     }, "resetAutoquadWaiting")
   }
-  autoSquadGatheringState.set(false)
 }
 
-joinTimer.subscribe(function(v) {
+joinTimer.subscribe_with_nasty_disregard_of_frp_update(function(v) {
   if (v == 0 && autoSquadGatheringState.get()) {
     makeSquad()
   }
@@ -87,14 +95,14 @@ function removePlayer(member) {
 
 foreach (name, cb in {
   ["mrooms.on_room_member_joined"] = function(v) {
-    if (autoSquadGatheringState.get() && v.userId != userInfo.value?.userId) {
+    if (autoSquadGatheringState.get() && v.userId != userInfo.get()?.userId) {
       addPlayer(v)
       if (searchTime > 0)
         setTimer(searchTime)
     }
   },
   ["mrooms.on_room_member_leaved"] = function(v) {
-    if (autoSquadGatheringState.get() && v != null && v.userId != userInfo.value?.userId)
+    if (autoSquadGatheringState.get() && v != null && v.userId != userInfo.get()?.userId)
       removePlayer(v)
   }
 }){
@@ -173,7 +181,7 @@ function listRoomsCb(response) {
   }
 }
 
-autoSquadGatheringState.subscribe(function(v) {
+autoSquadGatheringState.subscribe_with_nasty_disregard_of_frp_update(function(v) {
   if (v == false) {
     if (autosquadPlayers.get().len() <= 1)
       matchingCall("mrooms.destroy_room", @(_) null)
@@ -200,7 +208,7 @@ autoSquadGatheringState.subscribe(function(v) {
   matchingCall("mrooms.fetch_rooms_digest2", listRoomsCb, params)
 })
 
-isInQueue.subscribe(function(v) {
+isInQueue.subscribe_with_nasty_disregard_of_frp_update(function(v) {
   if (v)
     autoSquadGatheringState.set(false)
 })
@@ -217,7 +225,7 @@ function squadGatheringData() {
   let timerMaxSize = calc_comp_size(mkText(loc("autosquad/timeRemaining", { time = secondsToStringLoc(58) })))
   return {
     watch
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     gap = hdpx(5)
     halign = ALIGN_RIGHT
@@ -236,7 +244,7 @@ function squadGatheringData() {
 }
 
 let btnParams = @(searchState) {
-  size = [flex(), hdpx(30)],
+  size = static [flex(), hdpx(30)],
   halign = ALIGN_LEFT,
   margin = 0,
   textMargin = [0, 0, 0, fsh(1)],
@@ -260,7 +268,7 @@ function autosquadWidget() {
     btnParams(autoSquadGatheringState.get()))
   return {
     watch = [autoSquadGatheringState, selectedRaid, isInSquad, isInQueue]
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     children = [
       squadGatheringData

@@ -1,4 +1,9 @@
 phys_obj_init_impulse{
+  phys_obj_init_impulse__velocity:p3=0, 0, 0
+  phys_obj_init_impulse__omega:p3=0, 0, 0
+}
+
+phys_obj_init_impulse_random{
   phys_obj_init_impulse__velocityRng:p2=0, 0
   phys_obj_init_impulse__omegaRng:p2=0, 0
 }

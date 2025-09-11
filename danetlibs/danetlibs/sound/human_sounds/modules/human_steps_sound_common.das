@@ -19,6 +19,7 @@ require soundEvent
 require soundSystem
 require sound_utils.modules.sound_player_common
 require sound_utils.modules.sound_physmat_common
+//require landMesh
 
 
 let INVALID_IRQ_OBJ_IDX = -1
@@ -32,73 +33,87 @@ def read_state(state_flag : StateFlag; states : int) : bool
   return (states & int(state_flag)) != 0
 
 
-def private is_on_lmesh(pos : float3; stand_state : HUStandState)
-  let posXZ = pos.xz
-  let ground = traceht_lmesh(posXZ)
-  let threshold = stand_state == HUStandState.ESS_CRAWL ? 0.2 :  0.1
-  return pos.y < ground + threshold
-
-
-
 def trace_footstep(human_eid : EntityId;
-                   pos : float3;
-                   should_trace_enemy : bool;
-                   is_watched_sound : bool;
+                   pos, up : float3;
                    trace_offset_len : float2;
-                   biome_pmid : int;
-                   biome_overrides_water : bool;
+                   cur_biome_id : int;
                    puddle_depth : float;
-                   stand_state : HUStandState;
-                   var step_material_id : float&;
+                   var step_material_id : int&;
                    var step_water_depth : float&;
-                   var human_net_phys : HumanActor?)
+                   var human_net_phys : HumanActor? = null)
 
-  if human_net_phys == null
-    // TODO: trace without human_net_phys
-    step_water_depth = 0.
-    step_material_id = get_sound_step_material_id(get_material_id("default"))
-    return
+  let mayTraceDown = up.y > 0.9
+  let traceDir = mayTraceDown ? float3(0., -1., 0.) : -up
+  let flags = ETF_LMESH/* | ETF_HEIGHTMAP*/ | ETF_FRT | ETF_RI | ETF_STRUCTURES
+  let from = pos - traceDir * trace_offset_len.x
 
-  if !is_watched_sound && !should_trace_enemy
-    return
-
-  var pmid = PHYSMAT_INVALID
-  let from = float3(pos.x, pos.y + trace_offset_len.x, pos.z)
   var len = trace_offset_len.y
-  if !tracedown_normalized(from, len, pmid, ETF_DEFAULT, (*human_net_phys).phys |> human_phys_getTraceHandle())
-    len = trace_offset_len.y
-    pmid = PHYSMAT_INVALID
+  var pmid = PHYSMAT_INVALID
+  var norm : float3
 
-  trace_entities_in_grid(ecs_hash("vehicles"), from, float3(0., -1., 0.), len, human_eid, SortIntersections.NO) <| $(intersections : array<IntersectedEntity>#)
+  if mayTraceDown
+    if !tracedown_normalized(from, len, pmid, flags, human_net_phys != null ? ((*human_net_phys).phys |> human_phys_getTraceHandle()) : null)
+      len = trace_offset_len.y
+      pmid = PHYSMAT_INVALID
+  else
+    var riDesc = RendInstDesc()
+    if !traceray_normalized(from, traceDir, len, pmid, norm, flags, riDesc, -1)
+      len = trace_offset_len.y
+      pmid = PHYSMAT_INVALID
+
+  trace_entities_in_grid(ecs_hash("vehicles"), from, traceDir, len, human_eid, SortIntersections.NO) <| $(intersections : array<IntersectedEntity>#)
     for it in intersections
       if it.t < len + FLT_EPSILON
         len = it.t
         pmid = PHYSMAT_INVALID
         query(it.eid) <| $ [es] (material : string)
           pmid = get_material_id(material)
+        if pmid == PHYSMAT_INVALID
+          pmid = get_material_id("steel")
+
+  var onLandMesh = false
+  var curBiomeSoundId = -1
+  var curBiomeOverridesWater = false
 
   step_water_depth = 0.
-  var water = 0.
-  if traceht_water(from, water) && pos.y < water
-    let posXZ = pos.xz
-    let ground = traceht_lmesh(posXZ)
-    let floor = max(from.y - len, ground)
-    step_water_depth = max(0., water - floor)
 
-  let isOnLMesh = is_on_lmesh(pos, stand_state)
-  let waterDepth = isOnLMesh ? max(step_water_depth, puddle_depth) : step_water_depth
-  let isInWater = waterDepth > 0.
-  if isOnLMesh && biome_pmid != PHYSMAT_INVALID && (!isInWater || biome_overrides_water)
-    pmid = biome_pmid
+  if mayTraceDown
+    let pos2d = pos.xz
+    let intersection = from + traceDir * len
+    let landMesh2dLevel = traceht_lmesh(pos2d)
+
+    var waterLevel = 0.
+    if traceht_water(pos, waterLevel)
+      step_water_depth = max(0., waterLevel - pos.y)
+
+    onLandMesh = landMesh2dLevel + 0.01 > intersection.y
+    if onLandMesh
+      step_water_depth = max(step_water_depth, puddle_depth)
+
+    if onLandMesh && cur_biome_id >= 0
+      query() <| $ [es(REQUIRE=soundStepSettings)] (landmesh_biomes_to_sound_material__biomeIdToSound : IPoint2List)
+        if cur_biome_id < length(landmesh_biomes_to_sound_material__biomeIdToSound)
+          curBiomeSoundId = landmesh_biomes_to_sound_material__biomeIdToSound[cur_biome_id].x
+          curBiomeOverridesWater = landmesh_biomes_to_sound_material__biomeIdToSound[cur_biome_id].y != 0
+
+  let isInWater = step_water_depth > 0.
+  if curBiomeSoundId != -1 && (!isInWater || curBiomeOverridesWater)
+    step_material_id = curBiomeSoundId
   elif isInWater
-    pmid = get_material_id("water")
+    step_material_id = get_sound_step_material_id(get_material_id("water"))
+  else
+    step_material_id = get_sound_step_material_id(pmid)
+/*
+  if is_watched_sound
+    query() <| $ [es(REQUIRE=(soundStepSettings))] (sound_physmat__soundMaterials : StringList)
+      let pmidName = int(pmid) >= 1 ? string(get_material_name(get_material(pmid))) : "?"
+      let biomeSoundName = curBiomeSoundId >= 0 ? string(sound_physmat__soundMaterials[curBiomeSoundId]) : "?"
+      let stepName = step_material_id >= 0 ? string(sound_physmat__soundMaterials[step_material_id]) : "?"
+      logerr("is2d={mayTraceDown}    onLandMesh={onLandMesh}     water={step_water_depth}     physmat='{pmidName}'    biome={get_biome_group_name(cur_biome_id)}     biomeSound='{biomeSoundName}'     finalSound='{stepName}'")
+*/
 
-  step_material_id = get_sound_step_material_id(pmid)
-
-
-def private raise_pos_above_collision(pos : float3) // need pos above collision to make proper occlusion tests
-  // TODO: find better, correct offsets, e.g. from pelvis
-  return pos + float3(0., 0.5, 0.)
+def private raise_pos_above_collision(pos, up : float3) // need pos above collision to make proper occlusion tests
+  return pos + up * 0.5
 
 
 def play_footstep(desc : Object;
@@ -107,36 +122,38 @@ def play_footstep(desc : Object;
                   volume : float;
 
                   human_eid : EntityId;
-                  pos : float3;
+                  pos, up : float3;
                   should_trace_enemy : bool;
                   is_watched_sound : bool;
                   trace_offset_len : float2;
-                  biome_pmid : int;
-                  biome_overrides_water : bool;
+                  cur_biome_id : int;
                   puddle_depth : float;
-                  stand_state : HUStandState;
-                  var step_material_id : float&;
+                  var step_material_id : int&;
                   var step_water_depth : float&;
                   var human_net_phys : HumanActor?;
                   prefix : string = "")
 
-  trace_footstep(human_eid,
-                 pos,
-                 should_trace_enemy,
-                 is_watched_sound,
-                 trace_offset_len,
-                 biome_pmid,
-                 biome_overrides_water,
-                 puddle_depth,
-                 stand_state,
-                 step_material_id,
-                 step_water_depth,
-                 human_net_phys)
+  let normalizedUp = normalize(up)
 
-  if step_material_id >= 0.
+  if human_net_phys == null // may remove this
+    step_material_id = get_sound_step_material_id(get_material_id("default"))
+    step_water_depth = 0.
+
+  elif is_watched_sound || should_trace_enemy
+    trace_footstep(human_eid,
+                   pos,
+                   normalizedUp,
+                   trace_offset_len,
+                   cur_biome_id,
+                   puddle_depth,
+                   step_material_id,
+                   step_water_depth,
+                   human_net_phys)
+
+  if step_material_id >= 0
     var pathStr : string
     if sound_player_common::get_option_path(path, sound_tags, is_watched_sound, pathStr)
-      let offsetedPos = raise_pos_above_collision(pos)
+      let offsetedPos = raise_pos_above_collision(pos, normalizedUp)
       let soundPath = apply_watched_prefix(pathStr, is_watched_sound)
       var handle = sound_player_common::play_desc_path(desc, "{prefix}{soundPath}", is_watched_sound, offsetedPos, false)
       if step_water_depth > 0.
@@ -144,7 +161,7 @@ def play_footstep(desc : Object;
       if read_sound_tag("armored", sound_tags)
         set_var(handle, "armored", 1.)
       set_volume(handle, volume)
-      set_var(handle, "mat", step_material_id)
+      set_var(handle, "mat", float(step_material_id))
       abandon(handle)
 
 

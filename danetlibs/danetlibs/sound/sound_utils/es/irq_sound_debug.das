@@ -7,7 +7,6 @@ require DagorDebug3D
 require DagorConsole
 require math.color
 // require DngCamera
-require app
 
 [cpp_event(unicast)]
 struct CmdSoundDebugAnimParam

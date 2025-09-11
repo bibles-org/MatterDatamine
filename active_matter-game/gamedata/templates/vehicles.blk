@@ -1,15 +1,5 @@
 import:t="civil_vehicles.blk"
-
-vehicles_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="vehicles"
-  grid_holder__typeHash:i=0
-  grid_holder__cellSize:i=32
-
-  grid_holder{}
-}
+import:t="military_vehicles.blk"
 
 vehicle{
   _use:t="vehicle_no_ai"
@@ -116,9 +106,10 @@ vehicle_state_randomizer{
   vehicle_state_randomizer__otherPartsHpDeltaRng:p2=0, 0.3
 }
 
-civil_vehicle_templ{
+base_civil_fire_ready_vehicle{
   _use:t="vehicle"
   _use:t="vehicle_effects_4x4"
+  _use:t="human_trigger_trap_activator"
   zones_visitor__triggerTag:t="vehicleTriggerable"
   _replicated:t="killer"
   lastStatPos:p3=0, 0, 0
@@ -221,16 +212,14 @@ civil_vehicle_templ{
       }
     }
   }
-}
-
-base_civil_fire_ready_vehicle{
-  _use:t="civil_vehicle_templ"
-  _use:t="human_trigger_trap_activator"
 
   "vehicle_seats__seatTemplates:shared:object"{
     default:t="vehicle_seat_fire_ready"
     driver:t="vehicle_seat_driver"
+    main_gunner:t="vehicle_seat_main_gunner"
   }
+
+  "vehicle_seats__effectors:array"{}
 }
 
 vehicle_trunk_controller{

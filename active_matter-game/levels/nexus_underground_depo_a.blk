@@ -1,0 +1,107 @@
+levelBin:t="content/active_matter/levels/nexus_underground_depo_a.bin"
+water:b=no
+gameName:t="active_matter"
+
+clipmap{
+  texelSize:r=0.00390625
+}
+
+micro_details{
+  micro_detail:t="microdetail_stone_a_tex_n*"
+  micro_detail:t="microdetail_asphalt_a_tex_n*"
+  micro_detail:t="microdetail_gravel_a_tex_n*"
+  micro_detail:t="microdetail_sand_a_tex_n*"
+  micro_detail:t="microdetail_sand_c_tex_n*"
+  micro_detail:t="microdetail_soil_plants_a_tex_n*"
+  micro_detail:t="microdetail_soil_a_tex_n*"
+  micro_detail:t="microdetail_mud_a_tex_n*"
+  micro_detail:t="microdetail_generic_granules_a_tex_n*"
+  micro_detail:t="microdetail_wood_a_tex_n*"
+  micro_detail:t="microdetail_moss_a_tex_n*"
+  micro_detail:t="microdetail_grass_a_tex_n*"
+  micro_detail:t="microdetail_forest_floor_a_tex_n*"
+  micro_detail:t="microdetail_snow_a_tex_n*"
+  micro_detail:t="microdetail_snow_a_tex_n*"
+  micro_detail:t="microdetail_snow_a_tex_n*"
+  land_micro_details_uv_scale:r=0.875
+
+  "microdetail_stone_a_tex_n*"{
+    coloring:r=0.8
+    porosity:r=0.4
+  }
+
+  "microdetail_asphalt_a_tex_n*"{
+    coloring:r=0.8
+    porosity:r=0.4
+  }
+
+  "microdetail_gravel_a_tex_n*"{
+    coloring:r=0.3
+    porosity:r=0.6
+  }
+
+  "microdetail_sand_a_tex_n*"{
+    coloring:r=0.8
+    porosity:r=0.8
+  }
+
+  "microdetail_sand_c_tex_n*"{
+    coloring:r=0.9
+    porosity:r=0.8
+  }
+
+  "microdetail_soil_plants_a_tex_n*"{
+    coloring:r=0.9
+    porosity:r=0.8
+  }
+
+  "microdetail_soil_a_tex_n*"{
+    coloring:r=0.9
+    porosity:r=0.9
+  }
+
+  "microdetail_mud_a_tex_n*"{
+    coloring:r=0.1
+    porosity:r=0.8
+  }
+
+  "microdetail_wood_a_tex_n*"{
+    coloring:r=0.4
+    porosity:r=0.4
+  }
+
+  "microdetail_moss_a_tex_n*"{
+    coloring:r=1
+    porosity:r=0.6
+  }
+
+  "microdetail_grass_a_tex_n*"{
+    coloring:r=1
+    porosity:r=0.5
+  }
+
+  "microdetail_forest_floor_a_tex_n*"{
+    coloring:r=0.7
+    porosity:r=0.5
+  }
+
+  "microdetail_snow_a_tex_n*"{
+    coloring:r=0.1
+    porosity:r=0.1
+  }
+}
+
+unitedVdata.rendInst{
+  IB:i=131072
+  VB1:i=65536
+  VB2:i=65536
+  VB3:i=65536
+  VB4:i=65536
+  VB5:i=16384
+  VB6:i=65536
+  VB7:i=65536
+}
+
+graphics{
+  IndoorProbes:b=yes
+}

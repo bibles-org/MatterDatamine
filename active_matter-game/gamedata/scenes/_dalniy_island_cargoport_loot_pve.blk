@@ -1,0 +1,19 @@
+entity{
+  _template:t="civil_pve_lootable_rendinst_manager"
+}
+
+entity{
+  _template:t="military_lootable_rendinst_manager_t1"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_cargoport/_dalniy_island_cargoport_encounters_pve.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/dalniy_island_cargoport/_dalniy_island_cargoport_loot_generators_pve.blk"
+}
+
+entity{
+  _template:t="airdrop_pve_manager"
+}

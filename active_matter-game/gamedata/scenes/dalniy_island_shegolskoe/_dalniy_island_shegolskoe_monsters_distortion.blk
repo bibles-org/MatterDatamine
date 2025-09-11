@@ -8,7 +8,8 @@ entity{
   "monster_gen_gen__genTemplates:object"{
     household_distortion_changed_monster_generator:i=35
     household_mimic_monster_generator:i=35
-    anomaly_encounter_changed_indoor_small:i=30
+    anomaly_encounter_changed_indoor_small:i=10
+    poltergeist_possession:i=20
   }
 
   "monster_gen_gen__excludeBoxes:list<m>"{
@@ -26,7 +27,8 @@ entity{
   monster_gen_gen__useHouseholdsOnEuclid:b=yes
 
   "monster_gen_gen__genTemplates:object"{
-    household_distortion_changed_monster_generator:i=100
+    household_distortion_changed_monster_generator:i=70
+    poltergeist_possession:i=30
   }
 }
 

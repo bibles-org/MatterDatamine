@@ -1,51 +1,63 @@
+from "%dngscripts/sound_system.nut" import sound_play
+from "%sqstd/string.nut" import utf8ToUpper, startsWith
+from "%ui/components/colors.nut" import GreenSuccessColor, RedWarningColor, panelRowColor, TextDisabled,
+  TextNormal, BtnBgNormal, BtnBdSelected, OrangeHighlightColor, TextHighlight, InfoTextValueColor
+from "%ui/components/commonComponents.nut" import mkText, mkSelectPanelItem, mkSelectPanelTextCtor, BD_LEFT, BD_NONE,
+  mkTextArea, panelParams, mkTooltiped, mkDescTextarea, selectPanelTextFromCtor
+from "%ui/profile/profileState.nut" import playerProfileMonolithTokensCountUpdate
+from "%ui/fonts_style.nut" import h2_txt, body_txt, h1_txt, tiny_txt
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "%ui/components/button.nut" import button, buttonWithGamepadHotkey
+from "%ui/components/accentButton.style.nut" import AlertButtonStyle, accentButtonStyle
+import "%ui/components/faComp.nut" as faComp
+from "dagor.math" import Point2
+import "math" as math
+from "dagor.debug" import logerr
+from "eventbus" import eventbus_send, eventbus_subscribe
+from "dasevents" import CmdRequestOnboardingBuyMonolithAccess, CmdShowUiMenu
+from "%ui/components/scrollbar.nut" import makeVertScrollExt
+from "%ui/components/msgbox.nut" import showMsgbox, showMessageWithContent
+from "%ui/components/purchase_confirm_msgbox.nut" import showCurrencyPurchaseMsgBox, showNotEnoghPremiumMsgBox
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/mainMenu/market/inventoryToMarket.nut" import getLotFromItem, getBaseUpgradeFromItem
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import showItemInMarket
+from "%ui/hud/hud_menus_state.nut" import closeAllMenus, openMenu
+from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import mkChronogeneDoll, getChronogeneFullBodyPresentation,
+  mkMainChronogeneInfoStrings, mkAlterIconParams, ClonesMenuId, AlterSelectionSubMenuId
+from "%ui/components/modalWindows.nut" import addModalWindow, removeModalWindow
+from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryItemImage
+from "%ui/hud/menus/components/inventoryItemTooltip.nut" import buildInventoryItemTooltip
+from "%ui/hud/menus/components/inventoryItemRarity.nut" import mkRarityIconByItem
+from "%ui/mainMenu/notificationMark.nut" import mkNotificationCircle
+import "%ui/components/colorize.nut" as colorize
+from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPurchaseLogData, mkPlayerLog
+from "%ui/mainMenu/craftIcons.nut" import getRecipeIcon
+from "%ui/mainMenu/craft_common_pkg.nut" import getRecipeName
+from "%ui/hud/menus/components/inventoryItemsPresetPreview.nut" import fakeItemAsAttaches
+from "%ui/components/glareAnimation.nut" import glareAnimation, animChildren
+from "%ui/mainMenu/clonesMenu/mainChronogeneSelection.nut" import selectedPreviewAlter, hoveredAlter, alterToFocus, updateAlterTemplateInShowroom
+from "%ui/mainMenu/clonesMenu/itemGenes.nut" import allChronogenesInGame
+from "%ui/mainMenu/currencyIcons.nut" import monolithTokensTextIcon, creditsTextIcon, monolithTokensColor, creditsColor, premiumColor, premiumCreditsTextIcon
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { h2_txt, body_txt, h1_txt } = require("%ui/fonts_style.nut")
-let { GreenSuccessColor, RedWarningColor, panelRowColor, TextDisabled,
-  TextNormal, BtnBgNormal, BtnBgActive } = require("%ui/components/colors.nut")
-let { mkText, mkSelectPanelItem, mkSelectPanelTextCtor, BD_LEFT, mkTextArea, panelParams
-    } = require("%ui/components/commonComponents.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
-let { button } = require("%ui/components/button.nut")
-let { accentButtonStyle } = require("%ui/components/accentButton.style.nut")
-let { utf8ToUpper, startsWith, toIntegerSafe } = require("%sqstd/string.nut")
-let faComp = require("%ui/components/faComp.nut")
-let { marketItems, playerStats, playerProfileMonolithTokensCount, playerProfileAllResearchNodes,
-  allCraftRecipes, playerProfileMonolithTokensCountUpdate } = require("%ui/profile/profileState.nut")
-let { eventbus_send, eventbus_subscribe } = require("eventbus")
-let { CmdRequestOnboardingBuyMonolithAccess, CmdShowUiMenu } = require("dasevents")
-let { thinAndReservedPaddingStyle, makeVertScrollExt } = require("%ui/components/scrollbar.nut")
-let { showMsgbox, showMessageWithContent } = require("%ui/components/msgbox.nut")
-let { MT, monolithSelectedLevel, monolithLevelOffers, selectedMonolithUnlock, currentMonolithLevel } = require("monolith_common.nut")
-let { sound_play } = require("%dngscripts/sound_system.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { getLotFromItem, getBaseUpgradeFromItem } = require("%ui/mainMenu/market/inventoryToMarket.nut")
-let { showItemInMarket } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
-let { isOnboarding, onboardingMonolithFirstLevelUnlocked } = require("%ui/hud/state/onboarding_state.nut")
-let { creditsTextIcon, monolithTokensTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
-let { closeAllMenus } = require("%ui/hud/hud_menus_state.nut")
+let { marketItems, playerStats, playerProfileMonolithTokensCount, playerProfilePremiumCredits, playerProfileAllResearchNodes, allRecipes } = require("%ui/profile/profileState.nut")
+let { monolithSelectedLevel, monolithLevelOffers, selectedMonolithUnlock, currentMonolithLevel, permanentMonolithLevelOffers } = require("%ui/mainMenu/monolith/monolith_common.nut")
+let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 let { stashItems, backpackItems, inventoryItems, safepackItems } = require("%ui/hud/state/inventory_items_es.nut")
-let { mkChronogeneDoll, getChronogeneFullBodyPresentation, mkMainChronogeneInfoStrings } = require("%ui/mainMenu/clonesMenu/clonesMenuCommon.nut")
-let { addModalWindow, removeModalWindow } = require("%ui/components/modalWindows.nut")
-let { smallInventoryImageParams, inventoryItemImage, largeInventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
-let { buildInventoryItemTooltip } = require("%ui/hud/menus/components/inventoryItemTooltip.nut")
+let { smallInventoryImageParams, largeInventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
 let { hoverHotkeysWatchedList } = require("%ui/components/pcHoverHotkeyHitns.nut")
-let { mkRarityIconByItem } = require("%ui/hud/menus/components/inventoryItemRarity.nut")
-let { mkNotificationCircle } = require("%ui/mainMenu/notificationMark.nut")
-let colorize = require("%ui/components/colorize.nut")
 let JB = require("%ui/control/gui_buttons.nut")
-let { addPlayerLog, mkPurchaseLogData, mkPlayerLog, marketIconSize  } = require("%ui/popup/player_event_log.nut")
-let { getRecipeIcon } = require("%ui/mainMenu/craftIcons.nut")
+let { marketIconSize } = require("%ui/popup/player_event_log.nut")
 let { selectedPrototype, selectedCategory, scrollToRecipe } = require("%ui/mainMenu/craftSelection.nut")
-let { getRecipeName } = require("%ui/mainMenu/craft_common_pkg.nut")
 let { CRAFT_WND_ID } = require("%ui/mainMenu/researchAndCraft.nut")
-let { glareAnimation, animChildren } = require("%ui/components/glareAnimation.nut")
+let { isGamepad } = require("%ui/control/active_controls.nut")
+let { joyAHintOverrideText } = require("%ui/hotkeysPanelStateComps.nut")
 
 let btnHeight = hdpx(50)
 let checkIconHeight = hdpxi(20)
 let statusIconWidth = hdpxi(50)
-let suitRewardSize = [hdpxi(350), hdpxi(480)]
+let suitRewardSize = [hdpxi(350), hdpxi(597)]
 let iconParams = {
   width = hdpxi(60)
   height = hdpxi(35)
@@ -53,7 +65,21 @@ let iconParams = {
   animations = []
   slotSize = [hdpxi(70), hdpxi(50)]
 }
-let buttonSize = [hdpx(200), hdpx(50)]
+
+let suitIconParams = {
+  width = hdpxi(60)
+  height = hdpxi(70)
+  transform = {}
+  animations = []
+  slotSize = [hdpxi(70), hdpxi(50)]
+}
+
+let purchaseIconParams = {
+  width = hdpxi(300)
+  height = hdpxi(300)
+  shading = "full"
+  slotSize = [hdpxi(300), hdpxi(300)]
+}
 let smallRecipeIcon = [hdpx(25), hdpx(25)]
 
 let unlockedButtonColor = Color(20, 40, 30, 165)
@@ -61,9 +87,11 @@ let unlockedButtonStyle = {
   BtnBgNormal = unlockedButtonColor
 }
 
+let hoveredSlot = Watched(null)
+let purchaseInProgress = Watched(false)
+
 const MONOLITH_LEVEL_ID = "monolithLevelId"
 const MONOLITH_REWARD_WND = "monolithRewardWnd"
-const REWARD_SUIT_TPL = "suit_militant_light_b_prem_item" 
 const SHOW_MONOLITH_ACTIVATE_BUTTON_ON_LEVEL = 11
 
 let stashDevice = {
@@ -109,7 +137,7 @@ let mkStatusIcon = @(icon, color) faComp(icon, {
   color
 })
 
-let disabledStyle = {color = TextDisabled}.__update(body_txt)
+let disabledStyle = freeze({color = TextDisabled}.__update(body_txt))
 let gap = hdpx(4)
 
 function isRequirementsMet(data) {
@@ -157,11 +185,11 @@ function mkLevelRow(level, isUnlocked, accessGranted) {
   let text = mkSelectPanelTextCtor(loc("monolith/level", { level=loc(level.offerName) }),
     !isUnlocked && !accessGranted
       ? disabledStyle.__merge({ hplace = ALIGN_LEFT })
-      : body_txt.__merge({ hplace = ALIGN_LEFT }))
+      : static body_txt.__merge({ hplace = ALIGN_LEFT }))
 
   let levelCanBePurchased = (!isUnlocked && accessGranted) ?
     Computed(function() {
-      if (isOnboarding.get() && !onboardingMonolithFirstLevelUnlocked.get()) {
+      if (isOnboarding.get()) {
         return true
       }
 
@@ -183,25 +211,38 @@ function mkLevelRow(level, isUnlocked, accessGranted) {
 
   return @(params) @() {
     watch = levelCanBePurchased
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     valign = ALIGN_CENTER
     gap
     flow = FLOW_HORIZONTAL
     children = [
       {
         behavior = Behaviors.Marquee
-        size = [ flex(), SIZE_TO_CONTENT ]
+        size = FLEX_H
         children = text(params)
       }
       isUnlocked ? mkStatusIcon("check", GreenSuccessColor) :
         !accessGranted ? mkStatusIcon("lock", TextDisabled) :
         !levelCanBePurchased?.get() ? null : {
           margin = hdpx(5)
-          size = [ hdpx(12), hdpx(12) ]
+          size = hdpx(12)
           children = mkNotificationCircle()
         }
     ]
   }
+}
+
+let permanentLevelRowCtor = mkSelectPanelTextCtor(loc("monolith/permanentLevel"),
+  { hplace = ALIGN_LEFT, color = TextHighlight }.__merge(body_txt))
+let permanentLevelRow = @(params) {
+  size = FLEX_H
+  clipChildren = true
+  children = {
+    behavior = Behaviors.Marquee
+    size = FLEX_H
+    children = permanentLevelRowCtor(params)
+  }
+  valign = ALIGN_CENTER
 }
 
 function getUnlockLogData(monolithUnlockId, dataType, count) {
@@ -214,6 +255,8 @@ function getUnlockLogData(monolithUnlockId, dataType, count) {
   for (local i=1; i < (itemMarketOffer?.children.items.len() ?? 0); i++)
     att.append(itemMarketOffer.children.items[i].templateName)
   let logData = mkPurchaseLogData(templateName, att, null, count)
+  if (logData == null)
+    return null
   if (dataType == "item")
     logData.__update({
       titleFaIcon = "user"
@@ -240,7 +283,6 @@ function showSpecificLog(id, dataType = "unlock", count = -1) {
 eventbus_subscribe("profile_server.profile_finish_onboarding_phase.result", function(res) {
   let { unlocks = [] } = res?.result.player_stats
   if (unlocks.contains("onboarding_finished")) {
-    onboardingMonolithFirstLevelUnlocked.set(true)
     showSpecificLog(money.rewardTemplate, "item", money.children.currency)
     let playerLog = getUnlockLogData(shegolskoe.rewardTemplate, "unlock", 1)
       .__update({ bodyText = $"{loc("monolith/unlockAreaPrefix")} {loc(shegolskoe.children.raid_unlock[0])}"})
@@ -254,9 +296,10 @@ eventbus_subscribe("profile_server.profile_finish_onboarding_phase.result", func
 
 let unlockIdToBuy = Watched(null)
 eventbus_subscribe("profile_server.buyLots.result", function(_) {
+  purchaseInProgress.set(false)
   let monolithUnlock = marketItems.get()?[unlockIdToBuy.get()?.tostring()]
   if (monolithUnlock != null) {
-    let { items = [], unlocks = [], baseUpgrades = [], researchNodes = [] } = monolithUnlock.children
+    let { items = [], unlocks = [], baseUpgrades = [], researchNodes = [], craftRecipes = [] } = monolithUnlock.children
 
     foreach (item in items)
       showSpecificLog(item, "item")
@@ -272,11 +315,13 @@ eventbus_subscribe("profile_server.buyLots.result", function(_) {
             bodyText = $"{loc("monolith/unlocked")}: {loc(monolithUnlock.offerName)}"
           })
         })
-      else
-        showSpecificLog(unlock)
+      else {
+        let nameToUse = startsWith(unlock, "unlock") ? unlock : $"unlock_base_upgrade_{unlock.replace("+", "_")}"
+        showSpecificLog(nameToUse)
+      }
     }
     foreach (research in researchNodes) {
-      let recipe = allCraftRecipes.get()[research]
+      let recipe = allRecipes.get()[research]
       addPlayerLog({
         id = research
         content = mkPlayerLog({
@@ -292,81 +337,149 @@ eventbus_subscribe("profile_server.buyLots.result", function(_) {
         })
       })
     }
+    foreach (recipeId in craftRecipes) {
+      let recipe = allRecipes.get()[recipeId]
+      let recipeTemplate = $"fuse_result_{recipe.name}"
+      let fakedRecipeItem = mkFakeItem(recipeTemplate)
+
+      addPlayerLog({
+        id = recipeId
+        content = mkPlayerLog({
+          titleFaIcon = "unlock"
+          titleText = loc("monolith/itemUnlockedTooltip")
+          bodyIcon = {
+            size = iconParams.slotSize
+            halign = ALIGN_CENTER
+            vplace = ALIGN_CENTER
+            children = inventoryItemImage(fakedRecipeItem, iconParams)
+          }
+          bodyText = $"{loc("monolith/unlocked")}: {loc(fakedRecipeItem.name)}"
+        })
+      })
+    }
   }
   unlockIdToBuy.set(null)
 })
 
 let visual_params = {
-  size = [flex(), hdpx(55)]
+  size = static [flex(), hdpx(55)]
   valign = ALIGN_CENTER
+  xmbNode = XmbNode()
 }
 
-let levelsList = @(list){
-  size = [hdpx(377), flex()]
+let permanentVisualParams = static {
+  size = [flex(), hdpx(55)]
+  xmbNode = XmbNode()
+  style = {
+    SelBgNormal = AlertButtonStyle.style.BtnBgNormal
+  }
+}
+
+let mkLevelPanel = @(levelData, idx) function() {
+  let { isPermanent = false } = levelData
+  local isUnlocked = false
+  if (isOnboarding.get()) {
+    if (isPermanent) {
+      monolithSelectedLevel.set(1)
+      return { watch = isOnboarding }
+    }
+    isUnlocked = false
+  }
+  else
+    isUnlocked = playerStats.get()?.purchasedUniqueMarketOffers.findindex(@(offer) offer.tostring() == levelData.offerId) != null
+
+  let accessGranted = levelData.requirements.monolithAccessLevel <= currentMonolithLevel.get()
+  let level = idx
+
+  return {
+    watch = [currentMonolithLevel, playerStats, isOnboarding]
+    xmbNode = XmbContainer({
+      canFocus = false
+      wrap = false
+      scrollSpeed = 5.0
+    })
+    children = mkSelectPanelItem({
+      visual_params = isPermanent
+        ? permanentVisualParams
+        : visual_params.__merge(isUnlocked ? static { style=unlockedButtonStyle } : static {})
+      children = isPermanent ? permanentLevelRow : mkLevelRow(levelData, isUnlocked, accessGranted)
+      idx = level
+      state = monolithSelectedLevel
+      onSelect = @(lvl) monolithSelectedLevel.set(lvl)
+      border_align = isPermanent ? BD_NONE : BD_LEFT
+    })
+  }.__update(visual_params)
+}
+
+let levelsList = @(list, levelStartIdx) {
+  size = static [hdpx(377), flex()]
   children = makeVertScrollExt({
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     gap = hdpx(2)
-    children = list.map(@(v, idx) function() {
-      local isUnlocked = false
-      if (isOnboarding.get())
-        isUnlocked = onboardingMonolithFirstLevelUnlocked.get() && monolithSelectedLevel.get() == 0
-      else
-        isUnlocked = playerStats.get()?.purchasedUniqueMarketOffers.findindex(@(offer) offer.tostring() == v.offerId) != null
-
-      let accessGranted = v.requirements.monolithAccessLevel <= currentMonolithLevel.get()
-      let level = idx
-
-      return {
-        watch = currentMonolithLevel
-        children = mkSelectPanelItem({
-          visual_params = visual_params.__merge(isUnlocked ? const { style=unlockedButtonStyle } : const {})
-          children = mkLevelRow(v, isUnlocked, accessGranted)
-          idx = level
-          state = monolithSelectedLevel
-          onSelect = @(lvl) monolithSelectedLevel.set(lvl)
-          border_align = BD_LEFT
-        })
-      }.__update(visual_params)
-    })
+    children = list.map(@(v, idx) mkLevelPanel(v, idx + levelStartIdx))
   }, { size = flex() })
 }
 
-let mkUnlockItemName = @(name) mkText(loc(name), {
-  size = [ flex(), SIZE_TO_CONTENT ]
-  behavior = Behaviors.Marquee
-  scrollOnHover = false
-  speed = hdpx(50)
-  margin = [0, hdpx(4),0,0]
-}.__update(body_txt))
+let mkUnlockItemName = @(name, prefix = "") {
+  size = FLEX_H
+  flow = FLOW_HORIZONTAL
+  gap = hdpx(4)
+  valign = ALIGN_BOTTOM
+  children = [
+    mkText(loc(prefix), {
+      color = Color(180, 180, 220, 200)
+      pos = static [0, -hdpx(2)]
+    }.__merge(tiny_txt))
+    mkText(loc(name), {
+      size = FLEX_H
+      behavior = Behaviors.Marquee
+      scrollOnHover = false
+      speed = hdpx(50)
+      margin = static [0, hdpx(4),0,0]
+    }.__merge(body_txt))
+  ]
+}
 
 function mkRequirementText(cur, needed, locId) {
   let color = cur >= needed ? GreenSuccessColor : RedWarningColor
-  return mkText(loc(locId, { cur, needed }), { color })
+  return mkTooltiped(mkText(loc(locId, { cur, needed }), { color }), loc($"{locId}/desc"))
 }
 
 function goToCraft(id) {
   selectedCategory.set(null)
   selectedPrototype.set(id)
   scrollToRecipe.set(id)
-  ecs.g_entity_mgr.broadcastEvent(CmdShowUiMenu({menuName = CRAFT_WND_ID}))
+  openMenu(CRAFT_WND_ID)
 }
 
-function mkRecipeIcon(prototypeId) {
+function goToMainAlters(suit) {
+  let { itemTemplate } = suit
+  alterToFocus.set(suit)
+  updateAlterTemplateInShowroom(itemTemplate, Point2(0.6, 0.5))
+  selectedPreviewAlter.set(suit)
+  openMenu($"{ClonesMenuId}/{AlterSelectionSubMenuId}")
+}
+
+function mkRecipeIcon(prototypeId, isSmall = true) {
   let recipeId = playerProfileAllResearchNodes.get()[prototypeId].containsRecipe
-  let recipe = allCraftRecipes.get()[recipeId]
+  let recipe = allRecipes.get()[recipeId]
   return button(@() {
-    watch = [playerProfileAllResearchNodes, allCraftRecipes]
+    watch = [playerProfileAllResearchNodes, allRecipes]
     padding = hdpx(1)
-    children = getRecipeIcon(recipeId, smallRecipeIcon),
+    children = getRecipeIcon(recipeId, isSmall ? smallRecipeIcon : [purchaseIconParams.width, purchaseIconParams.height]),
   }, @() goToCraft(prototypeId),
   {
     onHover = @(on) setTooltip(on ? loc("research/craftRecipeResult", { name = loc(getRecipeName(recipe)) } ) : null)
     stopHover = true
     hplace = ALIGN_LEFT
-    pos = [-hdpx(7), hdpx(3)]
+    pos = static [-hdpx(7), -hdpx(3)]
+    skipDirPadNav = true
+    isEnabled = isSmall
   })
 }
+
+let mkPurchaseRecipeIcon = @(prototypeId) mkRecipeIcon(prototypeId, false)
 
 function mkUnlockRow(levelUnlocked, unlockOffer) {
   local itemMarketOffer = null
@@ -381,7 +494,35 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
   local recipeAdditionalIcon = null
   local key = null
 
-  if (unlockOffer?.children.unlocks.len()) {
+  if (unlockOffer?.children.items.len()) {
+    let templateName = unlockOffer?.children.items[0].templateName
+    local attachmentsToUse = []
+    local suitOverrideData = {}
+    if (unlockOffer?.itemType == "suits") {
+      let { attachments, alterIconParams } = mkAlterIconParams(templateName)
+      attachmentsToUse = attachments
+      suitOverrideData = alterIconParams.__merge({
+        iconScale = (alterIconParams?.iconScale ?? 1) * 0.7,
+        goToMainAlters
+      })
+    }
+    fake = mkUnlockFakeItem(templateName, attachmentsToUse, unlockOffer?.itemType == "suits" ? suitOverrideData : {})
+    itemNamePrefix = itemNamePrefix ?? loc("monolith/itemPrefix")
+    tooltipOnBuyButton = loc("monolith/butButtonTooltip/getItem")
+    key = unlockOffer?.itemType == "suits" ? templateName : unlockOffer.children.items[0]
+  }
+  else if (unlockOffer?.children.baseUpgrades.len()) {
+    let baseUpgradeName = unlockOffer.children.baseUpgrades[0].replace("+", "_")
+    let templateName = $"base_upgrade_{baseUpgradeName}"
+    fake = mkUnlockFakeItem(templateName)
+    let offerId = getBaseUpgradeFromItem({ itemTemplate = unlockOffer.children.baseUpgrades[0] })
+    itemMarketOffer = marketItems.get()?[offerId]
+    itemNamePrefix = itemNamePrefix ?? loc("monolith/baseUpgradePrefix")
+    tooltipOnBuyButton = loc("monolith/butButtonTooltip/upgradeBase")
+
+    key = unlockOffer.children.baseUpgrades[0]
+  }
+  else if (unlockOffer?.children.unlocks.len()) {
     let templateName = unlockOffer.children.unlocks[0].replace("unlock_", "")
     let offerId = getLotFromItem({ itemTemplate = templateName })
     itemMarketOffer = marketItems.get()?[offerId]
@@ -401,24 +542,6 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
     }
     key = unlockOffer.children.unlocks[0]
   }
-  else if (unlockOffer?.children.baseUpgrades.len()) {
-    let templateName = $"base_upgrade_{unlockOffer.children.baseUpgrades[0]}"
-    fake = mkUnlockFakeItem(templateName)
-    let offerId = getBaseUpgradeFromItem({ itemTemplate = unlockOffer.children.baseUpgrades[0] })
-    itemMarketOffer = marketItems.get()?[offerId]
-    itemNamePrefix = itemNamePrefix ?? loc("monolith/baseUpgradePrefix")
-    tooltipOnBuyButton = loc("monolith/butButtonTooltip/upgradeBase")
-
-    key = unlockOffer.children.baseUpgrades[0]
-  }
-  else if (unlockOffer?.children.items.len()){
-    let templateName = unlockOffer?.children.items[0].templateName
-    fake = mkUnlockFakeItem(templateName)
-    itemNamePrefix = itemNamePrefix ?? loc("monolith/itemPrefix")
-    tooltipOnBuyButton = loc("monolith/butButtonTooltip/getItem")
-
-    key = unlockOffer.children.items[0]
-  }
   else if (unlockOffer?.children.raid_unlock.len()) {
     let templateName = "contract_reward_unlock"
     fake = mkUnlockFakeItem(templateName, null, { itemName = unlockOffer.children.raid_unlock[0]})
@@ -433,14 +556,12 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
   else if ((unlockOffer?.children.researchNodes ?? []).len() > 0) {
     let prototypeId = unlockOffer.children.researchNodes[0]
     let recipeId = playerProfileAllResearchNodes.get()[prototypeId].containsRecipe
-    let recipe = allCraftRecipes.get()[recipeId]
-    let templateOrId = recipe.results.keys()[0]
-    let marketLotId = toIntegerSafe(templateOrId, 0, false)
-    let marketLot = marketItems.get()?[templateOrId].children.items
-    let templateName = marketLotId == 0 ? templateOrId : marketLot?[0].templateName ?? ""
-    itemMarketOffer = marketLotId
+    let recipe = allRecipes.get()[recipeId]
+    let templateName = recipe.results?[0].keys()[0]
+    itemMarketOffer = marketItems.get()?[unlockOffer.offerId]
+    tooltipOnBuyButton = loc("monolith/butButtonTooltip/getAccessToUnlock")
     fake = mkUnlockFakeItem(templateName).__update({
-      tooltip = loc("amCleaner/recipe", { name = getRecipeName(recipe) })
+      tooltip = loc("amCleaner/recipe", { name = loc(getRecipeName(recipe)) })
       goTo = goToCraft
       id = prototypeId
       iconToUse = {
@@ -454,6 +575,19 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
     itemName = loc(getRecipeName(recipe))
     key = prototypeId
   }
+  else if ((unlockOffer?.children.craftRecipes ?? []).len() > 0) {
+    let recipeId = unlockOffer.children.craftRecipes[0]
+    let recipe = allRecipes.get()[recipeId]
+    let recipeTemplate = $"fuse_result_{recipe.name}"
+    itemMarketOffer = marketItems.get()?[unlockOffer.offerId]
+    tooltipOnBuyButton = loc("monolith/butButtonTooltip/getAccessToUnlock")
+    fake = mkUnlockFakeItem(recipeTemplate).__update({
+      id = recipeId
+    })
+    itemNamePrefix = itemNamePrefix ?? loc("monolith/refinerRecipePrefix")
+    itemName = loc(fake.name)
+    key = recipeId
+  }
   else {
     itemNamePrefix = itemNamePrefix ?? ""
   }
@@ -461,6 +595,7 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
   
   local unlockText = ""
   let additionalRequirements = unlockOffer?.requirements.unlocks ?? []
+
   if (additionalRequirements.len() > 0) {
     foreach (unlock in additionalRequirements) {
       let hasUnlock = (playerStats.get()?.unlocks.findindex(@(v) unlock == v) != null)
@@ -469,8 +604,18 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
       }
     }
   }
+
+  let additionalLockStages = unlockOffer?.requirements.noUnlocks ?? []
+  if (additionalLockStages.len() > 0) {
+    foreach (stage in additionalLockStages) {
+      let hasAccess = (playerStats.get()?.unlocks.findindex(@(v) stage == v) != null)
+      if (hasAccess)
+        unlockText = $"{unlockText}\n{loc($"stats/{stage}")}"
+    }
+  }
+
   let canBePurchased = Computed(function() {
-    if (!additionalRequirements.len())
+    if (!additionalRequirements.len() && !additionalLockStages.len())
       return true
 
     let unlocks = playerStats.get()?.unlocks ?? []
@@ -479,11 +624,20 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
       if (!hasUnlock)
         return false
     }
+    foreach (stage in additionalLockStages) {
+      let hasAccess = (unlocks.findindex(@(v) stage == v) != null)
+      if (hasAccess)
+        return false
+    }
     return true
   })
 
   let itemIcon = fake?.iconToUse ? fake.iconToUse
-    : fake ? inventoryItemImage(fake, iconParams)
+    : fake ? inventoryItemImage(fake, unlockOffer?.itemType == "suits" ? suitIconParams : iconParams,
+        unlockOffer?.itemType != "suits" ? {} : {
+          clipChildren = true
+          padding = [hdpx(1), 0]
+        })
     : null
   if (!itemName)
     itemName = loc(fake?.itemName)
@@ -519,7 +673,9 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
   }
 
   function goToMarket() {
-    if (itemMarketOffer == null || (unlockOffer?.children.baseUpgrades.len() ?? 0) > 0) {
+    if (itemMarketOffer == null
+        || (unlockOffer?.children.baseUpgrades.len() ?? 0) > 0
+        || unlockOffer?.itemType == "refinerRecipe") {
       showMsgboxItemInfo()
       return
     }
@@ -536,10 +692,14 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
   }
 
   function buyItem() {
+    if (purchaseInProgress.get())
+      return
     if (unlockIdToBuy.get() != null)
       return
     if (offerBought.get()) {
-      if (fake?.goTo != null)
+      if (fake?.goToMainAlters != null)
+        goToMainAlters(fake)
+      else if (fake?.goTo != null)
         fake?.goTo(fake.id)
       else
         goToMarket()
@@ -562,8 +722,26 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
     else {
       anim_start($"currency_panel_{monolithTokensTextIcon}")
       sound_play("ui_sounds/mark_item_3d")
-      eventbus_send("profile_server.buyLots", [ { id = unlockOffer.offerId, count = 1 } ])
-      unlockIdToBuy.set(unlockOffer.offerId)
+      showCurrencyPurchaseMsgBox({
+        currency = "monolith"
+        price
+        cb = function() {
+          eventbus_send("profile_server.buyLots", [ { id = unlockOffer.offerId, count = 1, usePremium = false } ])
+          purchaseInProgress.set(true)
+          unlockIdToBuy.set(unlockOffer.offerId)
+        }
+        icon = {
+          flow = FLOW_HORIZONTAL
+          gap = static hdpx(10)
+          valign = ALIGN_CENTER
+          children = [
+            fake?.iconToUse ?? inventoryItemImage(fake, purchaseIconParams)
+            unlockOffer?.children.researchNodes[0] == null ? null
+              : mkPurchaseRecipeIcon(unlockOffer.children.researchNodes[0])
+          ]
+        }
+        name = $"{itemNamePrefix ?? ""} {itemName ?? loc(fake?.itemName)}"
+      })
     }
   }
 
@@ -572,13 +750,16 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
     size = flex()
     children = button(mkStatusIcon("info", TextNormal),
       function() {
-        if (fake?.goTo != null)
+        if (fake?.goToMainAlters != null)
+          goToMainAlters(fake)
+        else if (fake?.goTo != null)
           fake.goTo(fake.id)
         else
           goToMarket()
       }
       {
         size = flex()
+        skipDirPadNav = true
         style = offerBought.get() ? unlockedButtonStyle : null
         onHover = function(on) {
           setTooltip(on ? fake?.tooltip ?? buildInventoryItemTooltip(fake) : null)
@@ -598,90 +779,100 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
   function getTooltip(watch = [], buyPrice = 0) {
     let priceColor = buyPrice > 0 && playerProfileMonolithTokensCount.get() <= buyPrice
       ? RedWarningColor
-      : GreenSuccessColor
+      : TextNormal
+    let unlockTextColor = buyPrice > 0 && playerProfileMonolithTokensCount.get() <= buyPrice
+      ? RedWarningColor
+      :GreenSuccessColor
     let getUnlockText = @() offerBought.get() ? colorize(GreenSuccessColor, loc("monolith/itemUnlockedTooltip"))
       : !levelUnlocked ? colorize(RedWarningColor, loc("monolith/itemRequiresMonolithLevelTooltip"))
-      : canBePurchased.get() ? colorize(priceColor, loc($"{tooltipOnBuyButton} {MT}{price}"))
+      : canBePurchased.get() ? loc($"{colorize(unlockTextColor, tooltipOnBuyButton)} {colorize(monolithTokensColor, monolithTokensTextIcon)}{colorize(priceColor, price)}")
       : colorize(RedWarningColor, loc("monolith/unlockReq/hint", { unlock = unlockText }))
 
     return @(){
       watch
-      children = buildInventoryItemTooltip(fake.__merge({ additionalDesc = [ getUnlockText() ] }))
+      children = buildInventoryItemTooltip(fake.__merge({ additionalDescFunc = @(_) [ getUnlockText() ] }))
     }
   }
 
-  let buttonItemName = itemMarketOffer != null || unlockOffer?.itemType == "chronogene"
-    ? @() {
-        watch = [ showPrice, offerBought, canBePurchased ]
-        size = flex()
-        children = button ({
-          size = flex()
-          children = [
-            mkRarityIconByItem(fake)
-            {
-              size = flex()
-              valign = ALIGN_CENTER
-              flow = FLOW_HORIZONTAL
-              gap = hdpx(5)
-              padding = [ 0, hdpx(10) ]
-              children = [
-                {
-                  children = [
-                    recipeAdditionalIcon
-                    itemIcon
-                  ]
-                },
-                itemName == null ? null : mkUnlockItemName($"{itemNamePrefix} {itemName}"),
-                showPrice.get() ? mkText($"{MT} {price}", body_txt) : null,
-                (!canBePurchased.get() || !levelUnlocked) ? mkStatusIcon("lock", RedWarningColor) : null
-              ]
-            }
-          ]
-        },
-          buyItem,
-        {
-          style = offerBought.get() ? unlockedButtonStyle : null
-          size = flex()
-          onHover = function(on) {
-            setTooltip(on ? getTooltip([offerBought, playerProfileMonolithTokensCount], price) : null)
-            resetSelectedMonolithUnlock()
-
-            hoverHotkeysWatchedList.set(on ? [{
-              hotkeys = ["LMB"]
-              locId = offerBought.get() ? "inventory/toMarket" : "monolith/butButtonTooltip/getAccessToUnlock"
-              order = 0
-              showInTooltip = true
-            }] : null)
-          }
-        })
+  function gamepadHoverAction(on) {
+    if (isGamepad.get()) {
+      if (on) {
+        hoveredSlot.set(fake?.templateName)
+        joyAHintOverrideText.set(loc("btn/buy"))
       }
-    : @() {
-        watch = [ showPrice, offerBought, canBePurchased ]
-        rendObj = ROBJ_SOLID
+      else {
+        hoveredSlot.set(null)
+        joyAHintOverrideText.set(null)
+      }
+    }
+  }
+
+  function buttonItemName() {
+    let hasAlreadyBought = unlockOffer?.offerId != null &&
+      playerStats.get()?.purchasedUniqueMarketOffers.findindex(@(offer) offer.tostring() == unlockOffer.offerId) != null
+    return {
+      watch = [showPrice, offerBought, canBePurchased, hoveredSlot, playerStats]
+      size = flex()
+      children = button ({
         size = flex()
-        color = offerBought.get() ? unlockedButtonColor : BtnBgNormal
-        behavior = Behaviors.Button
-        onHover = function(on) {
-          setTooltip(on ? getTooltip() : null)
-          resetSelectedMonolithUnlock()
-        }
         children = [
           mkRarityIconByItem(fake)
           {
-            valign = ALIGN_CENTER
-            padding = [ 0, hdpx(10) ]
+            size = flex()
             flow = FLOW_HORIZONTAL
             gap = hdpx(5)
-            size = flex()
+            padding = static [ 0, hdpx(10) ]
+            valign = ALIGN_CENTER
             children = [
-              itemIcon,
-              itemName == null ? null : mkUnlockItemName($"{itemNamePrefix} {itemName}"),
-              showPrice.get() ? mkText($"{MT} {price}", body_txt) : null,
-              (!canBePurchased.get() || !levelUnlocked) ? mkStatusIcon("lock", RedWarningColor) : null
+              {
+                valign = ALIGN_BOTTOM
+                children = [
+                  recipeAdditionalIcon
+                  itemIcon
+                ]
+              },
+              itemName == null ? null : mkUnlockItemName(itemName, itemNamePrefix),
+              !showPrice.get() ? null
+                : mkTextArea($"{colorize(monolithTokensColor, monolithTokensTextIcon)}{price}",
+                  { size = SIZE_TO_CONTENT }.__merge(body_txt)),
+              (!hasAlreadyBought && (!canBePurchased.get() || !levelUnlocked))
+                ? mkStatusIcon("lock", RedWarningColor)
+                : null
             ]
           }
         ]
-      }
+      },
+      buyItem,
+      {
+        style = offerBought.get() ? unlockedButtonStyle : null
+        size = flex()
+        xmbNode = XmbNode()
+        hotkeys = hoveredSlot.get() == null || hoveredSlot.get() != fake?.templateName ? null
+          : [["J:X", { description = loc("show_info_btn"), action = function() {
+            if (hoveredSlot.get()?.goToMainAlters != null)
+              goToMainAlters(fake)
+            else if (hoveredSlot.get()?.goTo != null)
+              hoveredSlot.get().goTo(fake.id)
+            else
+              goToMarket()
+            }}
+          ]]
+        onHover = function(on) {
+          setTooltip(on ? getTooltip([offerBought, playerProfileMonolithTokensCount], price) : null)
+          resetSelectedMonolithUnlock()
+
+          hoverHotkeysWatchedList.set(on ? [{
+            hotkeys = ["LMB"]
+            locId = offerBought.get() ? "inventory/toMarket" : "monolith/butButtonTooltip/getAccessToUnlock"
+            order = 0
+            showInTooltip = true
+          }] : null)
+
+          gamepadHoverAction(on)
+        }
+      })
+    }
+  }
 
   return @() {
     watch = [ canBePurchased, offerBought ]
@@ -711,11 +902,11 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
           watch = selectedMonolithUnlock
           rendObj = ROBJ_BOX
           size = flex()
-          borderColor = BtnBgActive
+          borderColor = BtnBdSelected
           borderWidth = hdpx(2)
-          animations = [{ prop=AnimProp.opacity, from=0.2, to=1, duration=2, easing=CosineFull, play=true, loop=true }]
+          animations = [{ prop=AnimProp.borderColor, from=BtnBdSelected, to=TextNormal, duration=1.5, easing=CosineFull, play=true, loop=true }]
           clipChildren = true
-          children = animChildren(glareAnimation())
+          children = animChildren(glareAnimation({ duration = 4, from = [-hdpx(200), 0], to = [hdpx(2000), 0] }))
         }
       }
     ]
@@ -726,9 +917,12 @@ function fillUnlockBlock(isLevelUnlocked, list, title, appendTo) {
   if (!list?.len())
     return
 
-  appendTo.append(mkText(title, { margin = appendTo.len() > 0
-    ? [hdpx(14), 0, hdpx(10), 0]
-    : [0, 0, hdpx(10), 0] }.__update(h2_txt)))
+  appendTo.append(mkText(title, {
+    margin = appendTo.len() > 0
+      ? [hdpx(10), 0, hdpx(4), 0]
+      : [0, 0, hdpx(4), 0]
+    color = InfoTextValueColor
+    }))
 
   foreach (unl in list) {
     appendTo.append(mkUnlockRow(isLevelUnlocked, unl))
@@ -774,7 +968,8 @@ function getAdditionalPriceBlock(data, inventory) {
 
     let color = val.need <= val.has ? GreenSuccessColor : RedWarningColor
     childrens.append(
-      mkText($"{loc(itemLoc)} ({val.has}/{val.need})", { color })
+      mkTooltiped(mkText($"{loc(itemLoc)} ({val.has}/{val.need})", { color }),
+        loc("monolith/additionalPrice/desc", {items = colorize(OrangeHighlightColor, loc(itemLoc))}))
     )
   }
   return childrens
@@ -784,17 +979,17 @@ function mkRequirementsBlock(data) {
   let req = getRequirementsBlock(data)
 
   return {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     gap = hdpx(10)
     children = [
       {
         flow = FLOW_VERTICAL
-        size = [ flex(), SIZE_TO_CONTENT ]
+        size = FLEX_H
         children = [
           req.len() ? mkText(loc("monolith/requirements")) : null
           req.len() ? {
-            size = [flex(), SIZE_TO_CONTENT]
+            size = FLEX_H
             flow = FLOW_VERTICAL
             children = req
           } : null
@@ -808,11 +1003,11 @@ function mkRequirementsBlock(data) {
         return {
           watch
           flow = FLOW_VERTICAL
-          size = [ flex(), SIZE_TO_CONTENT ]
+          size = FLEX_H
           children = [
             mkText(loc("monolith/additionalPrice"))
             {
-              size = [ flex(), SIZE_TO_CONTENT ]
+              size = FLEX_H
               flow = FLOW_VERTICAL
               children = additionalPrice
             }
@@ -821,105 +1016,6 @@ function mkRequirementsBlock(data) {
       }
     ]
   }
-}
-
-let mkNextLevelButton = @(levelData) function() {
-  local lvlBought = false
-  if (isOnboarding.get()) {
-    lvlBought = onboardingMonolithFirstLevelUnlocked.get() && monolithSelectedLevel.get() == 0
-  }
-  else {
-    lvlBought = playerStats.get()?.purchasedUniqueMarketOffers.findindex(@(v) v.tostring() == levelData.offerId) != null
-  }
-  let requireAccessLevel = (levelData?.requirements.monolithAccessLevel ?? 0)
-  let lvlAvailable = requireAccessLevel <= currentMonolithLevel.get()
-  let price = levelData?.additionalPrice.monolithTokensCount ?? 0
-
-  let itemPrice = getPriceInItems(levelData, [].extend(stashItems.get(), inventoryItems.get(), backpackItems.get(), safepackItems.get()) )
-  let enoughItems = itemPrice.findvalue(@(v) v.has < v.need) == null
-
-  let notEnoughMoney = playerProfileMonolithTokensCount.get() < price || !enoughItems
-  let requirementsMet = isRequirementsMet(levelData)
-
-  let isAccentButton = !(lvlBought || notEnoughMoney || !lvlAvailable || !requirementsMet)
-
-  let priceStrings = $"{MT} {price}"
-
-  let notBoughtComp =  {
-    flow = FLOW_VERTICAL
-    gap = hdpx(4)
-    halign = ALIGN_CENTER
-    children = [
-      mkText(utf8ToUpper(loc("monolith/nextLevel")), {
-        fontFx = null
-      }.__update(h2_txt))
-      !lvlAvailable ? null
-        : mkText(priceStrings, {
-            fontFx = null
-          }.__update(h2_txt))
-    ]
-  }
-  let boughtComp = {
-    flow = FLOW_HORIZONTAL
-    gap = hdpx(4)
-    vplace = ALIGN_CENTER
-    hplace = ALIGN_CENTER
-    children = [
-      mkText(loc("monolith/unlocked"), { color = GreenSuccessColor }.__update(h2_txt))
-      mkStatusIcon("check", GreenSuccessColor)
-    ]
-  }
-  return {
-    watch = [playerStats, stashItems, backpackItems, inventoryItems, safepackItems, currentMonolithLevel]
-    size = [ flex(), hdpx(94) ]
-    children = button(
-      lvlBought ? boughtComp : notBoughtComp
-      function() {
-        if (lvlBought)
-          showMsgbox({text=loc("monolith/levelAlreadyUnlocked")})
-        else if (!requirementsMet)
-          showMsgbox({text=loc("monolith/requirementsNotMetMsgbox")})
-        else if (!enoughItems)
-          showMsgbox({text=loc("monolith/notEnoughItems")})
-        else if (notEnoughMoney)
-          showMsgbox({text=loc("monolith/notEnoughMonolithTokens")})
-        else {
-          if (unlockIdToBuy.get() != null)
-            return
-          sound_play("am/ui/base_activation_start")
-          if (isOnboarding.get()) {
-            playerProfileMonolithTokensCountUpdate((playerProfileMonolithTokensCount.get() ?? 0) - price)
-            ecs.g_entity_mgr.broadcastEvent(CmdRequestOnboardingBuyMonolithAccess())
-          }
-          else {
-            eventbus_send("profile_server.buyLots", [ { id = levelData.offerId, count = 1 } ])
-            unlockIdToBuy.set(levelData.offerId)
-          }
-        }
-      },
-      {
-        isEnabled = !lvlBought
-        size = [ flex(), hdpx(94) ]
-        borderWidth = lvlBought ? 0 : hdpx(1)
-        halign = ALIGN_CENTER
-        vplace = ALIGN_BOTTOM
-      }.__update( isAccentButton ? accentButtonStyle : {} )
-    )
-  }
-}
-
-
-let mkLevelInteractiveBlock = @(levelData) @() {
-  watch = [ playerStats, onboardingMonolithFirstLevelUnlocked, stashItems ]
-  size = [flex(), SIZE_TO_CONTENT]
-  flow = FLOW_VERTICAL
-  gap = hdpx(6)
-  vplace = ALIGN_BOTTOM
-  halign = ALIGN_RIGHT
-  children = [
-    mkRequirementsBlock(levelData)
-    mkNextLevelButton(levelData)
-  ]
 }
 
 let mkLevelImage = memoize(@(isLastLevel) {
@@ -933,6 +1029,180 @@ let mkLevelImage = memoize(@(isLastLevel) {
     : "ui/gate_portal_thumbnails/gate_to_monolith_activated.avif"
   )
 })
+
+let mkNextLevelButton = @(levelData) function() {
+  local lvlBought = false
+  if (isOnboarding.get()) {
+    lvlBought = false
+  }
+  else {
+    lvlBought = playerStats.get()?.purchasedUniqueMarketOffers.findindex(@(v) v.tostring() == levelData.offerId) != null
+  }
+  let requireAccessLevel = (levelData?.requirements.monolithAccessLevel ?? 0)
+  let lvlAvailable = requireAccessLevel <= currentMonolithLevel.get()
+  let price = levelData?.additionalPrice.monolithTokensCount ?? 0
+  let premiumPrice = levelData?.additionalPrice.premiumCreditsCount ?? 0
+
+  let itemPrice = getPriceInItems(levelData, [].extend(stashItems.get(), inventoryItems.get(), backpackItems.get(), safepackItems.get()) )
+  let enoughItems = itemPrice.findvalue(@(v) v.has < v.need) == null
+
+  let notEnoughMoney = playerProfileMonolithTokensCount.get() < price || !enoughItems
+  let notEnoughPremiumMoney = playerProfilePremiumCredits.get() < premiumPrice
+  let requirementsMet = isRequirementsMet(levelData)
+
+  let isAccentButton = !(lvlBought || notEnoughMoney || !lvlAvailable || !requirementsMet)
+  let isAccentPremiumButton = !(lvlBought || notEnoughPremiumMoney || !lvlAvailable || !requirementsMet)
+
+  let priceStrings = $"{colorize(monolithTokensColor, monolithTokensTextIcon)}{price}"
+  let premiumPriceStrings = $"{colorize(premiumColor, premiumCreditsTextIcon)}{premiumPrice}"
+
+  let monolithLvlButtonStyle = @(is_lvl_bought, need_accent = false, weight = 1.0) {
+    isEnabled = !is_lvl_bought
+    size = [ flex(weight), hdpx(94) ]
+    borderWidth = is_lvl_bought ? 0 : hdpx(1)
+    halign = ALIGN_CENTER
+    vplace = ALIGN_BOTTOM
+    hotkeys = is_lvl_bought ? null : [["J:Y", { description = { skip = true }}]]
+  }.__update( need_accent ? accentButtonStyle : {} )
+
+  let alreadyBoughtButton = buttonWithGamepadHotkey(
+    {
+      flow = FLOW_HORIZONTAL
+      gap = hdpx(4)
+      vplace = ALIGN_CENTER
+      hplace = ALIGN_CENTER
+      children = [
+        mkText(loc("monolith/unlocked"), { color = GreenSuccessColor }.__update(h2_txt))
+        mkStatusIcon("check", GreenSuccessColor)
+      ]
+    },
+    @() null,
+    monolithLvlButtonStyle(true)
+  )
+
+  let lockedAccessButton = buttonWithGamepadHotkey(
+    {
+      flow = FLOW_HORIZONTAL
+      gap = hdpx(4)
+      vplace = ALIGN_CENTER
+      hplace = ALIGN_CENTER
+      children = [
+        mkText(loc("monolith/locked"), { color = RedWarningColor }.__update(h2_txt))
+        mkStatusIcon("close", RedWarningColor)
+      ]
+    },
+    @() null,
+    monolithLvlButtonStyle(true)
+  )
+
+  let additionalPrice = premiumPrice <= 0 ? priceStrings
+    : loc("monolith/nextLevelPrice", { monolith = priceStrings, premium = premiumPriceStrings})
+
+  let monolythTokensBuyButton = buttonWithGamepadHotkey(
+    {
+      flow = FLOW_VERTICAL
+      gap = hdpx(4)
+      halign = ALIGN_CENTER
+      hplace = ALIGN_CENTER
+      children = [
+        mkText(utf8ToUpper(loc("monolith/nextLevel")), { fontFx = null }.__update(h2_txt))
+        mkTextArea(additionalPrice, { fontFx = null, halign = ALIGN_CENTER }.__update(h2_txt))
+      ]
+    },
+    function() {
+      if (purchaseInProgress.get())
+        return
+      if (!requirementsMet)
+        showMsgbox({text=loc("monolith/requirementsNotMetMsgbox")})
+      else if (!enoughItems)
+        showMsgbox({text=loc("monolith/notEnoughItems")})
+      else {
+        let buttons = [{
+          text = $"{loc("inventory/directPurchase")} {priceStrings}"
+          action = function() {
+            if (notEnoughMoney)
+              showMsgbox({text=loc("monolith/notEnoughMonolithTokens")})
+            else {
+              sound_play("am/ui/base_activation_start")
+              if (isOnboarding.get()) {
+                playerProfileMonolithTokensCountUpdate((playerProfileMonolithTokensCount.get() ?? 0) - price)
+                ecs.g_entity_mgr.broadcastEvent(CmdRequestOnboardingBuyMonolithAccess())
+              }
+              else {
+                eventbus_send("profile_server.buyLots", [ { id = levelData.offerId, count = 1, usePremium = false } ])
+                purchaseInProgress.set(true)
+                unlockIdToBuy.set(levelData.offerId)
+              }
+            }
+          }
+          customStyle = { textParams = { rendObj = ROBJ_TEXTAREA, behavior = Behaviors.TextArea } }
+            .__merge(isAccentButton ? accentButtonStyle : {})
+          isCurrent = true
+        },
+        {
+          text = loc("Cancel")
+          isCancel = true
+        }]
+        if (premiumPrice > 0) {
+          buttons.insert(1, {
+            text = $"{loc("inventory/directPurchase")} {premiumPriceStrings}"
+            action = function() {
+              if (notEnoughPremiumMoney)
+                showNotEnoghPremiumMsgBox()
+              else {
+                sound_play("am/ui/base_activation_start")
+                eventbus_send("profile_server.buyLots", [ { id = levelData.offerId, count = 1, usePremium = true } ])
+                purchaseInProgress.set(true)
+                unlockIdToBuy.set(levelData.offerId)
+              }
+            }
+            customStyle = { textParams = { rendObj = ROBJ_TEXTAREA, behavior = Behaviors.TextArea } }
+              .__merge(isAccentPremiumButton ? accentButtonStyle : {})
+            isCurrent = true
+          })
+        }
+        let priceBlock = premiumPrice <= 0 ? $"{loc("price")} {priceStrings}"
+          : loc("monolith/nextLevelPrice", { monolith = priceStrings, premium = premiumPriceStrings})
+        showCurrencyPurchaseMsgBox({
+          icon = {
+            size = static [hdpxi(300), hdpxi(300)]
+            children = mkLevelImage(monolithSelectedLevel.get() != null
+              && monolithSelectedLevel.get() == (monolithLevelOffers.get() ?? [])?.len())
+          }
+          name = loc("monolith/level", { level = loc(levelData.offerName) })
+          customPrice = mkTextArea(priceBlock, { fontFx = null, halign = ALIGN_CENTER }.__update(h2_txt))
+          buttons
+        })
+      }
+    },
+    monolithLvlButtonStyle(false, (isAccentButton || isAccentPremiumButton))
+  )
+
+  return {
+    watch = [playerStats, stashItems, backpackItems, inventoryItems, safepackItems, currentMonolithLevel]
+    size = static [ flex(), hdpx(94) ]
+    flow = FLOW_HORIZONTAL
+    gap = hdpx(6)
+    children =
+      lvlBought ? alreadyBoughtButton :
+      !lvlAvailable ? lockedAccessButton :
+      monolythTokensBuyButton
+  }
+}
+
+
+let mkLevelInteractiveBlock = @(levelData) @() {
+  watch = [ playerStats, stashItems ]
+  size = FLEX_H
+  flow = FLOW_VERTICAL
+  gap = hdpx(6)
+  vplace = ALIGN_BOTTOM
+  halign = ALIGN_RIGHT
+  children = [
+    mkRequirementsBlock(levelData)
+    mkNextLevelButton(levelData)
+  ]
+}
 
 function levelImage() {
   let level = monolithSelectedLevel.get()
@@ -948,16 +1218,16 @@ function levelImage() {
 let rightPanelSize = hdpx(600)
 
 function mkLevelBlock(level, levels) {
+  if (level == 0)
+    return { size = static [rightPanelSize, flex()] }
   let data = levels?[level]
-  
   return {
-    size = [rightPanelSize, flex()]
-    children = [
-      
-      mkLevelInteractiveBlock(data)
-    ]
+    size = static [rightPanelSize, flex()]
+    children = mkLevelInteractiveBlock(data)
   }
 }
+
+let permanentLevleDesc = mkTextArea(loc("monolith/permanentLevelDesc"), body_txt)
 
 let unlocksList = @(list, levels) function() {
   if ((list?.len() ?? 0) == 0)
@@ -965,51 +1235,63 @@ let unlocksList = @(list, levels) function() {
 
   let level = levels[monolithSelectedLevel.get()]
 
-  let isLevelUnlocked = isOnboarding.get() ?
-    (onboardingMonolithFirstLevelUnlocked.get() && monolithSelectedLevel.get() == 0) :
-    playerStats.get()?.purchasedUniqueMarketOffers.findindex(@(v) v.tostring() == level.offerId) != null
+  let isLevelUnlocked = !isOnboarding.get()&& (playerStats.get()?.purchasedUniqueMarketOffers
+    .findindex(@(v) v.tostring() == level.offerId) != null || level?.isPermanent)
 
   let currentList = list[monolithSelectedLevel.get()]
   let unlockOffers = []
   let itemOffers = []
   let baseUpgradeOffers = []
   let immidiateAccessAfterLevelUnlocking = []
+  let refinerRecipeOffers = []
+  let suitsOffers = []
   foreach (offer in currentList) {
     if (offer?.itemType == "baseUpgrades")
       baseUpgradeOffers.append(offer)
+    if (offer?.itemType == "suits")
+      suitsOffers.append(offer)
     else if (offer?.itemType == "unlock")
       unlockOffers.append(offer)
     else if (offer?.itemType == "chronogene")
       itemOffers.append(offer)
     else if (offer?.itemType == "immidiateAccessAfterLevelUnlocking")
       immidiateAccessAfterLevelUnlocking.append(offer)
+    else if (offer?.itemType == "refinerRecipe")
+      refinerRecipeOffers.append(offer)
   }
 
   let unlocksArr = []
   let sortOffers = @(a, b) ((a?.levelSorting ?? 0) <=> (b?.levelSorting ?? 0) || a.offerId <=> b.offerId)
   fillUnlockBlock(isLevelUnlocked, immidiateAccessAfterLevelUnlocking, loc("monolith/immidiateAccessAfterLevelUnlockingBlock"), unlocksArr)
+  fillUnlockBlock(isLevelUnlocked, suitsOffers, loc("monolith/suits"), unlocksArr)
   fillUnlockBlock(isLevelUnlocked, unlockOffers.sort(sortOffers), loc("monolith/unlockBlock"), unlocksArr)
   fillUnlockBlock(isLevelUnlocked, itemOffers.sort(sortOffers), loc("monolith/itemBlock"), unlocksArr)
   fillUnlockBlock(isLevelUnlocked, baseUpgradeOffers.sort(sortOffers), loc("monolith/baseUpgradeBlock"), unlocksArr)
-
+  fillUnlockBlock(isLevelUnlocked, refinerRecipeOffers.sort(sortOffers), loc("monolith/refinerRecipeBlock"), unlocksArr)
   let scrollHandler = ScrollHandler()
 
+  if (monolithSelectedLevel.get() == 0)
+    unlocksArr.insert(0, permanentLevleDesc)
   return {
-    watch = [ monolithSelectedLevel, onboardingMonolithFirstLevelUnlocked, currentMonolithLevel ]
+    watch = [monolithSelectedLevel, currentMonolithLevel, playerStats]
     size = flex()
     flow = FLOW_HORIZONTAL
     gap = hdpx(20)
     onAttach = @() scrollHandler.scrollToChildren(@(desc) desc?.key == selectedMonolithUnlock.get(), 2, false, true)
     children = [
       makeVertScrollExt({
-        size = [ flex(), SIZE_TO_CONTENT ]
+        size = FLEX_H
         flow = FLOW_VERTICAL
         gap = hdpx(4)
+        xmbNode = XmbContainer({
+          canFocus = false
+          wrap = false
+          scrollSpeed = 5.0
+        })
         children = unlocksArr
       }, {
         scrollHandler
         size = flex()
-        styling = thinAndReservedPaddingStyle
       })
       mkLevelBlock(monolithSelectedLevel.get(), levels)
     ]
@@ -1031,19 +1313,23 @@ function activateMonolith() {
   removeModalWindow(MONOLITH_REWARD_WND)
 }
 
+let mkTextForMonolith = @(text) mkText(text, static {fontFx = null }.__update(body_txt))
+let acceptMonoltyhText = mkTextForMonolith(loc("monolith/letsGoToTheMonolith/msgbox/ok"))
+let closeMonolythText = mkTextForMonolith(loc("monolith/letsGoToTheMonolith/msgbox/cancel"))
+
+let buttonSize = [math.max(hdpx(180), calc_str_box(acceptMonoltyhText)[0], calc_str_box(closeMonolythText)[0]) + hdpx(40), hdpx(50)]
+
 let acceptMonolithBtn = button(
-  mkText(loc("monolith/letsGoToTheMonolith/msgbox/ok"), {
-    fontFx = null
-  }.__update(body_txt)),
+  acceptMonoltyhText,
   activateMonolith,
-  {
+  static {
     size = buttonSize
     halign = ALIGN_CENTER
   }.__update(accentButtonStyle)
 )
 
 let mkCloseMonolithBtn = @(text) button(
-  mkText(text, { fontFx = null }.__update(body_txt)),
+  text,
   @() removeModalWindow(MONOLITH_REWARD_WND),
   {
     size = buttonSize
@@ -1051,157 +1337,190 @@ let mkCloseMonolithBtn = @(text) button(
     hotkeys = [[$"^{JB.B} | Esc", { description = loc("Cancel") }]]
   }
 )
+let closeMonolithBtn = mkCloseMonolithBtn(closeMonolythText)
+let cantOpenMonolithBtn = mkCloseMonolithBtn(mkTextForMonolith(loc("Ok")))
 
-function blueDoorBlock() {
-  let alterReward = mkFakeItem(REWARD_SUIT_TPL)
-  let { iconName, templateName } = alterReward
-  let isUnlocked = playerStats.get()?.unlocks.contains("unlock_monolith_gate")
-  return {
-    watch = playerStats
-    rendObj = ROBJ_WORLD_BLUR_PANEL
-    size = flex()
-    color = Color(200,200,200,200)
-    fillColor = Color(0,0,7,102)
-    halign = ALIGN_CENTER
-    padding = hdpx(20)
-    flow = FLOW_VERTICAL
-    children = [
-      {
-        size = flex()
-        flow = FLOW_HORIZONTAL
-        gap = hdpx(10)
-        children = [
-          {
-            size = suitRewardSize
-            flow = FLOW_VERTICAL
-            gap = hdpx(20)
-            halign = ALIGN_CENTER
-            children = [
-              mkChronogeneDoll(iconName, suitRewardSize,
-                getChronogeneFullBodyPresentation(templateName).__update({ iconScale = 1.1 }))
-              mkMainChronogeneInfoStrings(alterReward, { halign = ALIGN_CENTER }, true)
-            ]
-          }
-          mkTextArea(loc("monolith/blueDoorDesc"), {
-            halign = ALIGN_RIGHT
-            pos = [0, hdpx(20)]
-          }.__update(body_txt))
-        ]
-      }
-      mkTextArea(loc("monolith/fullResetWarning"),
+let blueDoorBlock = @() {
+  watch = playerStats
+  rendObj = ROBJ_WORLD_BLUR_PANEL
+  size = flex()
+  color = Color(200,200,200,200)
+  fillColor = Color(0,0,7,102)
+  halign = ALIGN_CENTER
+  padding = hdpx(20)
+  flow = FLOW_VERTICAL
+  children = [
+    {
+      size = flex()
+      flow = FLOW_HORIZONTAL
+      gap = hdpx(10)
+      children = [
         {
-          color = isUnlocked ? RedWarningColor : TextNormal
-          halign = ALIGN_CENTER
-        }.__update(h2_txt))
-    ]
-  }
-}
-
-let redDoorBlock = function() {
-  let isUnlocked = playerStats.get()?.unlocks.contains("unlock_monolith_gate")
-  return {
-    rendObj = ROBJ_WORLD_BLUR_PANEL
-    size = flex()
-    color = Color(200,200,200,200)
-    fillColor = Color(7,0,0,102)
-    halign = ALIGN_CENTER
-    padding = hdpx(20)
-    flow = FLOW_VERTICAL
-    gap = hdpx(20)
-    children = [
-      {
-        size = flex()
-        flow = FLOW_HORIZONTAL
-        gap = hdpx(10)
-        children = [
-          mkTextArea(loc("monolith/redDoorDesc"), {
-            pos = [0, hdpx(20)]
-          }.__update(body_txt))
-          {
-            rendObj = ROBJ_IMAGE
-            pos = [0, hdpx(28)]
-            size = suitRewardSize
-            image = Picture("ui/monolithLbReward.avif")
-          }
-        ]
-      }
-      mkTextArea(loc("monolith/leaderboardEnteringWarning"),
-      {
-        color = isUnlocked ? RedWarningColor : TextNormal
-        halign = ALIGN_CENTER
-      }.__update(h2_txt))
-    ]
-  }
-}
-
-function monolithActivationMessagebox() {
-  return addModalWindow({
-    rendObj = ROBJ_SOLID
-    size = flex()
-    key = MONOLITH_REWARD_WND
-    color = Color(20, 20, 20)
-    onClick = @() null
-    halign = ALIGN_CENTER
-    flow = FLOW_VERTICAL
-    padding = fsh(3)
-    gap = hdpx(40)
-    children = [
-      mkTextArea(loc("monolith/activationTitle"), { halign = ALIGN_CENTER }.__update(h1_txt))
-      mkTextArea(loc("monolith/activationDesc"), { halign = ALIGN_CENTER }.__update(h2_txt))
-      {
-        size = flex()
-        halign = ALIGN_CENTER
-        flow = FLOW_HORIZONTAL
-        gap = hdpx(30)
-        children = [
-          blueDoorBlock
-          redDoorBlock
-        ]
-      }
-      function() {
-        let isUnlocked = playerStats.get()?.unlocks.contains("unlock_monolith_gate")
-        return {
-          watch = playerStats
-          size = [flex(), SIZE_TO_CONTENT]
-          halign = ALIGN_CENTER
+          rendObj = ROBJ_IMAGE
+          pos = [0, hdpx(28)]
+          size = suitRewardSize
+          image = Picture("ui/monolith_door_icon_blue.avif:0:P")
+        }
+        {
+          size = flex()
           flow = FLOW_VERTICAL
-          gap = hdpx(30)
+          gap = hdpx(20)
+          halign = ALIGN_RIGHT
           children = [
-            {
-              flow = FLOW_HORIZONTAL
-              gap = hdpx(30)
-              children = !isUnlocked ? mkCloseMonolithBtn(loc("Ok")) : [
-                mkCloseMonolithBtn(loc("monolith/letsGoToTheMonolith/msgbox/cancel"))
-                acceptMonolithBtn
-              ]
-            }
+            mkDescTextarea(loc("monolith/blueDoorDesc"), {
+              halign = ALIGN_RIGHT
+              pos = [0, hdpx(20)]
+            }.__update(body_txt))
           ]
         }
-      }
-    ]
-  })
+      ]
+    }
+    mkDescTextarea(loc("monolith/blueDoorDesc/rewards"), {
+      halign = ALIGN_RIGHT
+      valign = ALIGN_BOTTOM
+      vplace = ALIGN_BOTTOM
+      pos = [0, hdpx(20)]
+    }.__update(body_txt))
+
+  ]
 }
+
+let redDoorBlock = @() {
+  rendObj = ROBJ_WORLD_BLUR_PANEL
+  size = flex()
+  color = Color(200,200,200,200)
+  fillColor = Color(7,0,0,102)
+  halign = ALIGN_CENTER
+  padding = hdpx(20)
+  flow = FLOW_VERTICAL
+  gap = hdpx(20)
+  children = [
+    {
+      size = flex()
+      flow = FLOW_HORIZONTAL
+      gap = hdpx(10)
+      children = [
+        {
+          size = flex()
+          flow = FLOW_VERTICAL
+          halign = ALIGN_RIGHT
+          gap = hdpx(20)
+          children = [
+            mkDescTextarea(loc("monolith/redDoorDesc"), {
+              pos = [0, hdpx(20)]
+            }.__update(body_txt))
+          ]
+        }
+        {
+          rendObj = ROBJ_IMAGE
+          pos = [0, hdpx(28)]
+          size = suitRewardSize
+          image = Picture("ui/monolith_door_icon_red.avif:0:P")
+        }
+      ]
+    }
+    mkDescTextarea(loc("monolith/redDoorDesc/rewards"), {
+      pos = [0, hdpx(20)]
+      valign = ALIGN_BOTTOM
+      vplace = ALIGN_BOTTOM
+    }.__update(body_txt))
+  ]
+}
+
+let resetProgressMessageBox = @() showMsgbox(
+  { text = loc("monolith/resetPlayerProgressDesc"),
+  buttons = [
+    {
+      text = loc("Yes")
+      action = @() eventbus_send("profile_server.wipe_player_progress")
+      isCurrent = true
+    },
+    {
+      text = loc("No")
+      isCancel = true
+    }
+  ]
+})
+
+let monolithActivationMessagebox = @() addModalWindow({
+  rendObj = ROBJ_SOLID
+  size = flex()
+  key = MONOLITH_REWARD_WND
+  color = Color(20, 20, 20)
+  onClick = @() null
+  halign = ALIGN_CENTER
+  flow = FLOW_VERTICAL
+  padding = fsh(3)
+  gap = hdpx(40)
+  children = [
+    mkTextArea(loc("monolith/activationTitle"), { halign = ALIGN_CENTER }.__update(h1_txt))
+    mkTextArea(loc("monolith/activationDesc"), { halign = ALIGN_CENTER }.__update(h2_txt))
+    {
+      size = flex()
+      maxWidth = hdpx(1920)
+      halign = ALIGN_CENTER
+      flow = FLOW_HORIZONTAL
+      gap = hdpx(30)
+      children = [
+        blueDoorBlock
+        redDoorBlock
+      ]
+    }
+    function() {
+      let isUnlocked = playerStats.get()?.unlocks.contains("unlock_monolith_gate")
+      return {
+        watch = playerStats
+        size = FLEX_H
+        halign = ALIGN_CENTER
+        flow = FLOW_VERTICAL
+        gap = hdpx(30)
+        children = [
+          {
+            flow = FLOW_HORIZONTAL
+            gap = hdpx(30)
+            children = !isUnlocked ? cantOpenMonolithBtn : [ closeMonolithBtn, acceptMonolithBtn ]
+          }
+        ]
+      }
+    }
+  ]
+})
 
 function letsGoToTheMonolithButton() {
   let accessLevel = currentMonolithLevel.get()
   let isUnlocked = playerStats.get()?.unlocks.contains("unlock_monolith_gate")
   let hasAlreadyOpenedMonolith = playerStats.get()?.unlocks.contains("unlock_monolith_path_choosed") ?? false
-  let watch = [ playerStats, currentMonolithLevel ]
-  if (hasAlreadyOpenedMonolith || (accessLevel < SHOW_MONOLITH_ACTIVATE_BUTTON_ON_LEVEL && !isUnlocked))
+  let watch = [playerStats, currentMonolithLevel]
+  if ((accessLevel < SHOW_MONOLITH_ACTIVATE_BUTTON_ON_LEVEL && !isUnlocked))
     return { watch }
   let buttonStyle = isUnlocked ? accentButtonStyle : {}
+  if (hasAlreadyOpenedMonolith)
+    return {
+      watch
+      size = FLEX_H
+      children = button({
+          hplace = ALIGN_CENTER
+          vplace = ALIGN_CENTER
+          children = mkText(loc("monolith/resetPlayerProgress"), { fontFx = null }.__update(h2_txt))
+          padding = static [ hdpx(20), hdpx(5) ]
+        },
+        resetProgressMessageBox, {
+          size = FLEX_H
+        }.__update(buttonStyle)
+      )
+    }
 
   return {
     watch
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     children = button({
         hplace = ALIGN_CENTER
         vplace = ALIGN_CENTER
         children = mkText(loc("monolith/letsGoToTheMonolithButton"), { fontFx = null }.__update(h2_txt))
-        padding = [ hdpx(20), hdpx(5) ]
+        padding = static [ hdpx(20), hdpx(5) ]
       },
       monolithActivationMessagebox, {
-        size = [ flex(), SIZE_TO_CONTENT ]
+        size = FLEX_H
       }.__update(buttonStyle)
     )
   }
@@ -1209,11 +1528,14 @@ function letsGoToTheMonolithButton() {
 
 function monolithGateUi() {
   let levelsArr = monolithLevelOffers.get()
+  let permanentLevelsArr = permanentMonolithLevelOffers.get()
 
   let monolithOffers = [].resize(levelsArr.len(), null).map(@(_) [])
+  let permanentOffers = [].resize(permanentLevelsArr.len(), null).map(@(_) [])
 
   foreach (k, v in marketItems.get()) {
-    let accessLevel = v?.requirements.monolithAccessLevel ?? 0
+    let { requirements = {}, isPermanent = false } = v
+    let accessLevel = requirements?.monolithAccessLevel ?? 0
     if (accessLevel <= 0)
       continue
 
@@ -1238,15 +1560,19 @@ function monolithGateUi() {
       }
       continue
     }
-
-    monolithOffers[accessLevel-1].append(v.__merge({offerId = k}))
+    if (isPermanent)
+      permanentOffers.append(v.__merge({
+        offerId = k
+        requirements = v?.requirements ?? {}
+      }))
+    else
+      monolithOffers[accessLevel-1].append(v.__merge({offerId = k}))
   }
 
   if (monolithOffers?[0])
     monolithOffers[0].append(money, shegolskoe, stashDevice)
-
   let offers =  @() {
-    watch = monolithLevelOffers
+    watch = [monolithLevelOffers, permanentMonolithLevelOffers]
     size = flex()
     flow = FLOW_VERTICAL
     gap = hdpx(20)
@@ -1263,23 +1589,43 @@ function monolithGateUi() {
         children = [
           {
             flow = FLOW_VERTICAL
-            size = [hdpx(377), flex()]
+            size = static [hdpx(377), flex()]
             gap = hdpx(20)
             children = [
-              levelsList(levelsArr)
+              levelsList(levelsArr, 1) 
               letsGoToTheMonolithButton
             ]
           }
-          unlocksList(monolithOffers, levelsArr)
+          unlocksList([permanentOffers].extend(monolithOffers), [].extend(permanentLevelsArr, levelsArr))
         ]
       }
     ]
   }
 
+  if (permanentLevelsArr.len() > 1) {
+    logerr("[Monolith menu] More than 1 permanent level found")
+  }
+  let permLevel = permanentLevelsArr?[0]
   return {
     size = flex()
     children = [
-      {hplace = ALIGN_RIGHT halign = ALIGN_CENTER size = [rightPanelSize, hdpx(670)] children = levelImage }
+      {
+        hplace = ALIGN_RIGHT
+        halign = ALIGN_CENTER
+        size = [rightPanelSize, hdpx(670)]
+        
+        gap = hdpx(8)
+        children = [
+          levelImage
+          {
+            padding = hdpx(20)
+            hplace = ALIGN_LEFT
+            size = static [ rightPanelSize, SIZE_TO_CONTENT ]
+            children = permLevel ? mkLevelPanel(permLevel, 0) : null
+          }
+        ]
+        
+      }
       offers
     ]
   }

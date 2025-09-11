@@ -37,8 +37,8 @@ throwing_stone_slot_attach{
 
 throwing_stone_phys{
   _use:t="shell_trap_activator"
-  _use:t="projectile_phys_grid_obj"
-  _use:t="phys_obj_init_impulse"
+  _use:t="projectile_phys_dynamic_grid_object"
+  _use:t="phys_obj_init_impulse_random"
   _use:t="throwing_stone_phys_sound"
   phys_obj_init_impulse__omegaRng:p2=-10, 10
   throwing_stone_phys__timeToFreeze:r=5

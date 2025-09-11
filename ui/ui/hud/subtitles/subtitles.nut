@@ -1,20 +1,26 @@
+import "utf8" as utf8
+from "%ui/components/colors.nut" import InfoTextValueColor
+from "%ui/components/commonComponents.nut" import mkTextArea, bluredPanel
+from "%ui/hud/subtitles/subtitles_common.nut" import clearTextTags
+from "%ui/fonts_style.nut" import sub_txt, tiny_txt, body_txt
+import "%ui/components/colorize.nut" as colorize
 from "%ui/ui_library.nut" import *
 
-let utf8 = require("utf8")
-let { InfoTextValueColor } = require("%ui/components/colors.nut")
-let { safeAreaHorPadding, safeAreaVerPadding} = require("%ui/options/safeArea.nut")
-let { mkTextArea, bluredPanel } = require("%ui/components/commonComponents.nut")
+let { safeAreaHorPadding, safeAreaVerPadding } = require("%ui/options/safeArea.nut")
 let { currentAssistantSpeak } = require("%ui/hud/subtitles/asistant_speak_state.nut")
-let { clearTextTags } = require("%ui/hud/subtitles/subtitles_common.nut")
-let { subtitlesNeeded, subtitlesBackgroundNeeded } = require("%ui/mainMenu/menus/options/sound_options.nut")
-let { sub_txt } = require("%ui/fonts_style.nut")
+let { subtitlesNeeded, subtitlesBackgroundNeeded, subtitlesFontSize, SubtitlesFontSizes } = require("%ui/mainMenu/menus/options/sound_options.nut")
 let { assistantSpeakingScript, predefinedNotes } = require("%ui/hud/state/notes.nut")
-let colorize = require("%ui/components/colorize.nut")
 
 let debugSubtitles = Watched(false)
 console_register_command(@() debugSubtitles.modify(@(v) !v), "subtitles.debug_mode")
 let testSubtitles = Watched("")
 console_register_command(@(v) testSubtitles.set(v), "subtitles.add_text")
+
+let subtitlesFontSizeMap = {
+  [SubtitlesFontSizes.tiny]  = tiny_txt,
+  [SubtitlesFontSizes.normal] = sub_txt,
+  [SubtitlesFontSizes.big] = body_txt
+}
 
 let subtitlesLang = Computed(function() {
   let speakSoundName = currentAssistantSpeak.get()?.currentScriptName
@@ -141,14 +147,14 @@ function subtitlesBlock() {
     margin = [safeAreaVerPadding.get()+sh(10), safeAreaHorPadding.get()+sw(5)]
     children = function() {
       return {
-        watch = [ subIndex, subtitlesNeeded, subtitlesBackgroundNeeded ]
+        watch = [ subIndex, subtitlesNeeded, subtitlesBackgroundNeeded, subtitlesFontSize ]
         padding = hdpx(6)
         children = subtitlesNeeded.get() ?
           mkTextArea("{0}{1}".subst(mSecond, getSubtitlePage()), {
             maxWidth = min(hdpx(1000), sw(60)),
             size = SIZE_TO_CONTENT,
             halign = ALIGN_CENTER
-          }.__update(sub_txt))
+          }.__update(subtitlesFontSizeMap?[subtitlesFontSize.get()] ?? sub_txt))
           : null
       }.__update(subtitlesBackgroundNeeded.get() ? bluredPanel : {})
     }

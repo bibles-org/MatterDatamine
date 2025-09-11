@@ -1,11 +1,13 @@
+from "%dngscripts/sound_system.nut" import sound_play
+
+from "%ui/fonts_style.nut" import sub_txt
+from "%ui/components/colors.nut" import Alert, Inactive
+from "%ui/components/button.nut" import squareIconButton
+import "%ui/mainMenu/mailboxBlock.nut" as mailboxWndOpen
+
 from "%ui/ui_library.nut" import *
 
-let { sub_txt } = require("%ui/fonts_style.nut")
-let {Alert,Inactive} = require("%ui/components/colors.nut")
-let { isMailboxVisible, unreadNum, hasUnread } = require("mailboxState.nut")
-let {sound_play} = require("%dngscripts/sound_system.nut")
-let { squareIconButton } = require("%ui/components/button.nut")
-let mailboxWndOpen = require("%ui/mainMenu/mailboxBlock.nut")
+let { isMailboxVisible, unreadNum, hasUnread } = require("%ui/mainMenu/mailboxState.nut")
 let { showCursor } = require("%ui/cursorState.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 let { isInPlayerSession } = require("%ui/hud/state/gametype_state.nut")
@@ -20,15 +22,15 @@ function readNumCounter(){
     text = num < 1 ? "" : num
     hplace = ALIGN_RIGHT
     vplace = ALIGN_TOP
-    pos = const  [hdpx(5), -hdpx(2)]
+    pos = static  [hdpx(5), -hdpx(2)]
     fontFx = FFT_GLOW
-    transform = const { pivot = [0.5,0.5] }
-    fontFxColor = const Color(0, 0, 0, 255)
-    animations = const [{prop = AnimProp.scale from =[3.0, 3.0] to = [1.0,1.0]  duration = 0.5 trigger="new_mail" easing = OutCubic}]
+    transform = static { pivot = [0.5,0.5] }
+    fontFxColor = static Color(0, 0, 0, 255)
+    animations = static [{prop = AnimProp.scale from =[3.0, 3.0] to = [1.0,1.0]  duration = 0.5 trigger="new_mail" easing = OutCubic}]
   }.__update(sub_txt)
 }
 
-local prevUnread = unreadNum.value
+local prevUnread = unreadNum.get()
 unreadNum.subscribe(function(v) {
   if (isInPlayerSession.get())
     return
@@ -46,17 +48,17 @@ return function() {
     children = !isOnboarding.get() ? [
       squareIconButton({
         onClick = mailboxWndOpen
-        tooltipText = const loc("tooltips/mailboxButton")
+        tooltipText = static loc("tooltips/mailboxButton")
         iconId = "envelope"
         key = hasUnread.get()
         seletect = isMailboxVisible
         animations = hasUnread.get()
-          ? const [{prop = AnimProp.scale, from =[1.0, 1.0], to = [1.1, 1.1], duration = 1.3, loop = true, play = true, easing = CosineFull }]
+          ? static [{prop = AnimProp.scale, from =[1.0, 1.0], to = [1.1, 1.1], duration = 1.3, loop = true, play = true, easing = CosineFull }]
           : null
         isEnable = showCursor
       }, {
         animations = hasUnread.get()
-          ? const [{prop = AnimProp.color, from = Inactive, to = Alert, duration = 1.3, loop = true, play = true, easing = CosineFull }]
+          ? static [{prop = AnimProp.color, from = Inactive, to = Alert, duration = 1.3, loop = true, play = true, easing = CosineFull }]
           : null
       })
       readNumCounter

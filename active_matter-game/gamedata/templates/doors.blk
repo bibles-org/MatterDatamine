@@ -1,15 +1,6 @@
-doors_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="doors"
-  grid_holder__typeHash:i=0
-  grid_holder__cellSize:i=16
-
-  grid_holder{}
-}
-
 rotating_rendinst{
+  _use:t="enable_dynamic_grid_logic"
+
   "rendinst_axis_rotation__enabled:tag"{}
 }
 
@@ -18,6 +9,7 @@ rotating_rendinst_simple_phys_disabled{
 }
 
 rotating_rendinst_simple_phys_processing{
+  _use:t="enable_dynamic_grid_logic"
   rotating_rendinst_simple_phys__timeAcc:r=0
   rotating_rendinst_simple_phys__physAngle:r=0
   rotating_rendinst_simple_phys__physAnglePrevUpdate:r=0
@@ -122,7 +114,6 @@ door_base_comps{
 
 dynamic_rotating_door{
   _use:t="door_base_comps"
-  _tracked:t="transform"
   _tracked:t="door_operations__serverTargetAngle"
   _tracked:t="rendinst_axis_rotation__targetAngle"
   _replicated:t="door_operations__serverTargetAngle"
@@ -133,13 +124,10 @@ dynamic_rotating_door{
   rendinst_axis_rotation__stopOnCollision:b=yes
   rendinst_axis_rotation__stopOnCollisionDelay:r=1
   initialTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   door_operations__serverTargetAngle:r=0
   door_operations__lastUseTime:r=0
   door_operations__useCooldown:r=1.5
   rendinst_axis_rotation__subTemplate:t="rotating_rendinst"
-  grid_obj__gridType:t="doors"
-  grid_obj__fixedTmScale:r=-1
   item__useActionHintType:i=1
   item_world_marker__offset:p3=0, 0, 0
   item_world_marker__riColliderPoint:p3=0.5, 0.6, 0.5
@@ -151,7 +139,6 @@ dynamic_rotating_door{
   "rendinst_axis_rotation__enabled:tag"{}
   "pair_door__eid:eid"{}
   ri_extra{}
-  grid_obj{}
   _group{
     _tags:t="server"
     obstacle__lastCheckTime:r=-1
@@ -169,13 +156,11 @@ static_rotating_door_no_grid{
   _use:t="rotating_door_simple_phys"
   _use:t="rotating_rendinst_decal_matrixes"
   _use:t="use_object_enabled"
-  _tracked:t="transform"
   _tracked:t="door_operations__serverTargetAngle"
   _tracked:t="rendinst_axis_rotation__targetAngle"
   _replicated:t="door_operations__serverTargetAngle"
   _replicated:t="ri_extra__handle"
   item__useActionAvailable:b=yes
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   initialTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   _skipInitialReplication:t="transform,initialTransform"
   doorEscapePos:p3=1.3, 0, 0
@@ -229,10 +214,7 @@ static_rotating_door_no_grid{
 
 static_rotating_door{
   _use:t="static_rotating_door_no_grid"
-  grid_obj__gridType:t="doors"
-  grid_obj__fixedTmScale:r=-1
-
-  grid_obj{}
+  _use:t="doors_static_grid_object"
 }
 
 ri_start_state_preset{
@@ -900,6 +882,7 @@ caponier_gate_braking_way{
 
 caponier_gate_left{
   _use:t="static_rotating_door_no_grid"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   _use:t="rotating_rendinst_simple_phys_disabled"
   _use:t="caponier_gate_braking_way"
   rendinst_axis_rotation__targetAngle:r=-90
@@ -918,6 +901,7 @@ caponier_gate_left{
 
 caponier_gate_right{
   _use:t="static_rotating_door_no_grid"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   _use:t="rotating_rendinst_simple_phys_disabled"
   _use:t="caponier_gate_braking_way"
   rendinst_axis_rotation__targetAngle:r=90

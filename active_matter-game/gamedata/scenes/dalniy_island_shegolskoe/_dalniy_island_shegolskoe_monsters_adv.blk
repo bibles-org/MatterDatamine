@@ -11,6 +11,7 @@ entity{
     household_traps_generator:i=20
     anomaly_encounter_changed_indoor_small:i=15
     anomaly_encounter_statues_cairns_indoor_small:i=20
+    poltergeist_possession:i=20
   }
 
   "monster_gen_gen__excludeBoxes:list<m>"{
@@ -29,23 +30,24 @@ entity{
 
   "monster_gen_gen__genTemplates:object"{
     household_euclid_changed_monster_generator:i=100
+    poltergeist_possession:i=50
   }
 }
 
 entity{
-  _template:t="outdoor_sleeper_changed_tm_generator"
+  _template:t="indoor_sleeper_changed_tm_generator"
   monster_gen__density:p2=0.0014, 0.0014
   transform:m=[[-23.2016, 0, -14.3866] [0, 12.6, 0] [9.90726, 0, -15.9777] [536.714, 15.4, -917.943]]
 }
 
 entity{
-  _template:t="outdoor_sleeper_changed_tm_generator"
+  _template:t="indoor_sleeper_changed_tm_generator"
   monster_gen__density:p2=0.0014, 0.0014
   transform:m=[[-26.6836, 0, -16.5457] [0, 12.6399, 0] [9.89198, 0, -15.953] [561.7, 15.4, -902.45]]
 }
 
 entity{
-  _template:t="outdoor_sleeper_changed_tm_generator"
+  _template:t="indoor_sleeper_changed_tm_generator"
   monster_gen__density:p2=0.0014, 0.0014
   transform:m=[[-23.1167, 0, -14.3339] [0, 12.6, 0] [9.90199, 0, -15.9692] [586.594, 15.4, -887.014]]
 }

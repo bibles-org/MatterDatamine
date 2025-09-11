@@ -37,6 +37,7 @@ drone_input{
   _use:t="helicopter_input"
   _tags:t="input"
   drone_input__leave:i=0
+  drone_input__dropGrenade:i=0
 
   "input__enabled:b"{
     _tags:t="gameClient"
@@ -118,6 +119,7 @@ drone_phys{
   _use:t="animchar"
   _use:t="heli_ccd"
   _use:t="helicopter_autopilot"
+  _use:t="vehicles_dynamic_grid_object"
   animchar__res:t="cuisine_diy_quadcopter_char"
   collres__res:t="cuisine_diy_quadcopter_dynmodel_collision"
   animchar_render__enabled:b=yes
@@ -127,20 +129,15 @@ drone_phys{
   drone__cameraPitchVarId:i=-1
   drone__timeSendToServer:r=-1
   drone__sendToServerPeriod:r=0.05
-  grid_obj__fixedTmScale:r=-1
-  grid_obj__gridType:t="vehicles"
   drone__maxSpeed:r=7
   drone__inputTemplate:t="drone_input"
   helicopter_net_phys__blk:t="gamedata/units/drone.blk"
   havePairCollision:b=yes
   pair_collision__tag:t="collidableToHelicopter"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  _tracked:t="transform"
 
   collres{}
   phys_vars{}
   anim_phys{}
-  grid_obj{}
   helicopter_net_phys{}
   base_net_phys_ptr{}
   "pair_collision__gridNames:list<t>"{
@@ -279,6 +276,7 @@ base_drone{
   _use:t="drone_visual"
   _use:t="drone_crash"
   _use:t="drone_flying_anim_template"
+  _use:t="foldable_device"
   drone__cameraReplicateTempl:t="drone_camera_replicate"
   _replicated:t="drone__cameraReplicateEid"
   helicopter_input__pitchFeedbackMult:r=0.05
@@ -291,19 +289,29 @@ base_drone{
   helicopter_input__vertLookAngle:r=85
   material:t="steel"
   needsBlood:b=no
-  _replicated:t="drone__owner"
+  _tracked:t="ownerEid"
+  _replicated:t="ownerEid"
   drone__camTemplate:t="drone_camera"
   drone__isUnderControl:b=no
+  _replicated:t="drone__isUnderControl"
   drone__isUnderControlAt:r=-1
+  _replicated:t="drone__isUnderControlAt"
   drone__preiodBeforeGrounding:r=5
   drone__immortalAt:r=0
   drone__immortalPeriodOnAppear:r=3
 
   "drone__cameraReplicateEid:eid"{}
   "isDrone:tag"{}
-  "drone__owner:eid"{}
+  "ownerEid:eid"{}
   "drone__attachedCam:eid"{}
   "drone__prevCam:eid"{}
+}
+
+foldable_device{
+  foldable_device__invetoryTemplate:t=""
+  foldable_device__canBeFoldByEnemy:b=yes
+
+  "foldable_device__gatherer:eid"{}
 }
 
 drone_planting_preview_phase{
@@ -338,24 +346,25 @@ item_foldable_drone{
   _use:t="slot_attachable"
   _use:t="item_rarity_uncommon"
   animchar__res:t="dji_mavic_2_char"
-  collres__res:t="cuisine_diy_quadcopter_dynmodel_collision"
+  collres__res:t="dji_mavic_2_collision"
   item__name:t="items/item_foldable_drone"
   item__desc:t="items/item_foldable_drone/desc"
   item__proto:t="item_foldable_drone"
   item__filterType:t="equipment"
   item__weight:r=0.9
-  item__volume:r=12
+  item__volume:i=120
   item__marketPrice:i=3500
   item__iconPitch:r=0
   item__iconRoll:r=25
   item__iconYaw:r=210
   item__iconOffset:p2=-0.05, -0.25
   item__iconScale:r=1.1
-  item__showroomOffset:p3=0, -0.2, 0
+  item__showroomOffset:p3=0, -0.13, 0
   device_item__startCooldownOnEquip:b=yes
   item__useTime:r=1
   showroom_item__customZoom:r=0.8
   showroom_item__customZoomBordersRng:p2=0.6, 1.2
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "item__isDirectlyUsable:tag"{}
   "item__closeInventoryOnUsage:tag"{}
@@ -366,13 +375,10 @@ item_foldable_drone{
   "item__blockUseOnPlayerBase:tag"{}
   "device_item__ability:object"{
     name:t="diy"
-    type:t="ultimate"
     activeMatterPrice:i=0
     cooldown:r=0
     lockWhileSwimming:b=yes
     lockInVehicle:b=yes
-    isNoWeaponMode:b=yes
-    manualSoulsWithdrawl:b=yes
 
     "stages:array"{
       "placement_stage:object"{
@@ -391,13 +397,14 @@ item_foldable_drone{
     }
   }
 
-  "item_foldable_drone:tag"{}
   "item__cantBeCorrupted:tag"{}
   "item__chronotracesProgressionInfo:object"{
     "repeatedly:object"{
       extract:i=100
     }
   }
+
+  "mintBannedItem:tag"{}
 }
 
 base_drone_item{
@@ -411,23 +418,13 @@ base_drone_item{
   drone__template:t=""
 }
 
-recon_drone_input{
-  _use:t="drone_input"
-  drone_input__marked:i=0
-  drone_input__dropGrenade:i=0
-}
-
 drone_console_attached_animchar{
   _use:t="replicating"
   _use:t="slot_attachable"
   _use:t="animchar"
-  _use:t="human_anim_threephase_action"
   _use:t="slot_attach_show_after_appear"
-  animchar__res:t="tactical_phone_charW"
+  animchar__res:t="tactical_phone_char"
   slot_attach__slotName:t="weapon"
-  slot_attach__visible:b=no
-  _tracked:t="slot_attach__visible"
-  _replicated:t="slot_attach__visible"
   animchar_render__enabled:b=no
 
   phys_vars{}
@@ -436,11 +433,23 @@ drone_console_attached_animchar{
   "attachmentUpdate:tag"{}
 }
 
-drone_use_game_effect{
+use_tactical_drone_phone_game_effect{
   _use:t="replicated_game_effect"
   game_effect__enableFlag:t="human_use_object__lockVehicleUse"
+  game_effect__forceAnimUpperState:t="use_tactical_phone"
+  game_effect__forceAnimUpperStateId:i=-1
+  drone_use__durationAnim:r=3
+  drone_use__animEndAt:r=-1
+  drone_use__animStartAt:r=-1
+  _tracked:t="drone_use__animStartAt"
+  _replicated:t="drone_use__animStartAt"
+  drone_use__dir:i=0
+  _tracked:t="drone_use__dir"
+  _replicated:t="drone_use__dir"
+  drone_use__changeFovTo:r=65
+  drone_use__fadeTime:r=1
+  drone_use__fadeTempl:t="drone_postfx_fade_affect"
 
-  "drone_use_game_effect:tag"{}
   "game_effect__activateUnarmed:tag"{}
   "game_effect__hiddenWeapon:tag"{}
   "locked_weapon__reload:tag"{}
@@ -464,6 +473,19 @@ drone_use_game_effect{
 
   "game_effect__disableShooting:tag"{}
   "game_effect__disableMelee:tag"{}
+  "state__disableAmGather:tag"{}
+  "use_tactical_drone_phone_game_effect:tag"{}
+  "drone_use__consoleAnimcharEid:eid"{}
+  "drone_use__droneEid:eid"{}
+}
+
+drone_postfx_fade_affect{
+  _use:t="base_postfx_fade_affect"
+  postfx_fade_affect__fadeInTime:r=0
+  postfx_fade_affect__fadeOutTime:r=0
+  postfx_fade_affect__fadeColor:c=5, 7, 5, 255
+  game_effect__timeToDestroy:r=-1
+  game_effect__destroyAt:r=-1
 }
 
 item_drone_remote_console{
@@ -480,15 +502,14 @@ item_drone_remote_console{
   item__proto:t="item_drone_remote_console"
   item__filterType:t="medicines"
   item__weight:r=0
-  item__volume:r=0
+  item__volume:i=0
   item__marketPrice:i=100
   device_item__startCooldownOnEquip:b=yes
   item__useTime:r=1
   showroom_item__customZoom:r=0.8
   showroom_item__customZoomBordersRng:p2=0.6, 1.2
-  drone_remote_console__useAffectTemplate:t="drone_use_game_effect"
+  drone_remote_console__useAffectTemplate:t="use_tactical_drone_phone_game_effect"
   drone_remote_console__attachedAnimcharTemplate:t="drone_console_attached_animchar"
-  am_storage__value:i=0
 
   "item__isDirectlyUsable:tag"{}
   "item__nonDroppable:tag"{}
@@ -499,13 +520,13 @@ item_drone_remote_console{
   "deviceItem:tag"{}
   "drone_remote_console__droneEid:eid"{}
   "drone_remote_console__useAffectEid:eid"{}
-  "drone_remote_console__attachedAnimcharEid:eid"{}
   "item_drone_remote_console:tag"{}
+  "item__dontMergeInventoryUi:tag"{}
 }
 
 recon_drone_foldable_drone{
   item__id:i=0
-  item__volume:r=12
+  item__volume:i=120
   drone__remoteConsoleTempl:t="item_drone_remote_console"
   item__useActionHintType:i=1
   item__setCustomUsePrompt:t="tips/getDrone"
@@ -537,7 +558,7 @@ recon_drone_drop_grenade{
   item__useActionHintType:i=1
   item__setCustomUseAltPrompt:t="hud/search"
   itemContainer__name:t="inventory/drone"
-  human_inventory__maxVolume:r=2
+  human_inventory__maxVolume:i=20
   drone__dropGrenadeTempl:t="drone_activated_grenade"
 
   "usable_backpack:tag"{}
@@ -547,10 +568,10 @@ recon_drone{
   _use:t="base_drone"
   _use:t="recon_drone_foldable_drone"
   _use:t="recon_drone_drop_grenade"
-  drone__inputTemplate:t="recon_drone_input"
-  drone__createInInvetoryTemplate:t="item_foldable_drone"
+  drone__inputTemplate:t="drone_input"
+  foldable_device__invetoryTemplate:t="item_foldable_drone"
   animchar__res:t="dji_mavic_2_char"
-  collres__res:t="cuisine_diy_quadcopter_dynmodel_collision"
+  collres__res:t="dji_mavic_2_collision"
   _replicated:t="playerOwnerEid"
   team:i=-1
   helicopter_net_phys__blk:t="gamedata/units/recon_drone.blk"
@@ -590,4 +611,70 @@ recon_drone_preview{
   _use:t="animchar_diy_preview_turn_dir"
   animchar__res:t="cuisine_diy_quadcopter_char"
   collres__res:t="cuisine_diy_quadcopter_collision"
+}
+
+item_foldable_drone_harpy{
+  _use:t="item_foldable_drone"
+  _use:t="item_rarity_epic"
+  animchar__res:t="dji_mavic_2_b_char"
+  collres__res:t="dji_mavic_2_b_collision"
+  item__name:t="items/item_foldable_drone_harpy"
+  item__desc:t="items/item_foldable_drone_harpy/desc"
+  item__proto:t="item_foldable_drone_harpy"
+
+  "device_item__ability:object"{
+    name:t="diy"
+    activeMatterPrice:i=0
+    cooldown:r=0
+    lockWhileSwimming:b=yes
+    lockInVehicle:b=yes
+
+    "stages:array"{
+      "placement_stage:object"{
+        affectTemplate:t="harpy_drone_planting_preview_phase"
+        duration:r=999999
+        activePhase:b=yes
+        interruptible:b=yes
+        skippable:b=yes
+      }
+
+      "out_stage:object"{
+        duration:r=0.25
+        interruptible:b=no
+        exit:b=yes
+      }
+    }
+  }
+
+  "item__chronotracesProgressionInfo:object"{}
+}
+
+herpy_recon_drone_preview_new{
+  _use:t="recon_drone_preview_new"
+  animchar__res:t="dji_mavic_2_b_char"
+  collres__res:t="dji_mavic_2_b_collision"
+}
+
+harpy_recon_drone{
+  _use:t="recon_drone"
+  foldable_device__invetoryTemplate:t="item_foldable_drone_harpy"
+  animchar__res:t="dji_mavic_2_b_char"
+  collres__res:t="dji_mavic_2_b_collision"
+}
+
+harpy_drone_planting_human{
+  _use:t="base_quest_device_planting_human"
+  diy__resultTempl:t="harpy_recon_drone"
+  diy__previewTempl:t="herpy_recon_drone_preview_new"
+}
+
+harpy_drone_planting_preview_phase{
+  _use:t="base_quest_device_planting_preview_phase"
+  game_effect__attachedTemplate:t="harpy_drone_planting_human"
+}
+
+drone_limitation{
+  drone__limitationHeight:r=50
+
+  "drone_limitation:tag"{}
 }

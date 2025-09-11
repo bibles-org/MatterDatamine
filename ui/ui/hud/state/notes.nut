@@ -1,23 +1,19 @@
+from "%sqstd/string.nut" import toIntegerSafe, isStringInteger
+from "dasevents" import EventUnlockAppear, CmdStartAssistantSpeak, sendNetEvent, CmdConnectToHost, CmdConnectToOfflineRaid
+from "string" import startswith
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
-
 import "%ui/components/msgbox.nut" as msgbox
 from "%dngscripts/sound_system.nut" import sound_play
 
 let { onlineSettingUpdated, settings } = require("%ui/options/onlineSettings.nut")
-let { toIntegerSafe, isStringInteger } = require("%sqstd/string.nut")
 let { dangers } = require("%ui/hud/menus/notes/articles/dangers.nut")
 let { newspaper } = require("%ui/hud/menus/notes/articles/newspaper.nut")
 let { onboarding } = require("%ui/hud/menus/notes/articles/onboarding.nut")
 let { shelter } = require("%ui/hud/menus/notes/articles/shelter.nut")
 let { world_records } = require("%ui/hud/menus/notes/articles/world_records.nut")
 let { isOnboardingMemory } = require("%ui/hud/state/onboarding_state.nut")
-let { startswith } = require("string")
 let { find_local_player } = require("%dngscripts/common_queries.nut")
-let { EventUnlockAppear,
-      CmdStartAssistantSpeak,
-      sendNetEvent,
-      CmdConnectToHost } = require("dasevents")
 
 const MAX_VISIBLE_TITLE_CHARS = 40
 const MAX_MESSAGE_CHARS = 1000
@@ -72,8 +68,8 @@ function loadUnreadNotes() {
   })
 }
 
-onlineSettingUpdated.subscribe(@(_) loadUnreadNotes())
-isOnboardingMemory.subscribe(@(v) v ? null : loadUnreadNotes())
+onlineSettingUpdated.subscribe_with_nasty_disregard_of_frp_update(@(_) loadUnreadNotes())
+isOnboardingMemory.subscribe_with_nasty_disregard_of_frp_update(@(v) v ? null : loadUnreadNotes())
 
 let emptyNote = {
   noteText = "",
@@ -250,7 +246,7 @@ ecs.register_es("track_assistant_speak",
 )
 
 ecs.register_es("notes_clear_on_host_connection", {
-  [CmdConnectToHost] = function(...) {
+  [[CmdConnectToHost, CmdConnectToOfflineRaid]] = function(...) {
     curNote.set(null)
     assistantSpeakingScript.set(null)
   }

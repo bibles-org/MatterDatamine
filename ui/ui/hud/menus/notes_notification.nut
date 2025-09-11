@@ -1,6 +1,10 @@
+from "%ui/fonts_style.nut" import sub_txt, body_txt, fontawesome
+import "utf8" as utf8
+from "dasevents" import CmdStopAssistantSpeak
+from "%ui/components/commonComponents.nut" import mkTextArea
+from "%ui/hud/subtitles/subtitles_common.nut" import clearTextSubtitlesTags
 import "%dngscripts/ecs.nut" as ecs
 import "%ui/components/fontawesome.map.nut" as fa
-
 from "%ui/ui_library.nut" import *
 from "%ui/hud/state/notes.nut" import predefinedNotes
 from "%ui/hud/tips/tipComponent.nut" import tipContents
@@ -8,13 +12,8 @@ from "%ui/components/colors.nut" import BtnBgHover
 from "%ui/hud/hud_menus_state.nut" import areHudMenusOpened, openMenu
 from "%ui/hud/menus/journal.nut" import JournalMenuId, journalCurrentTab
 
-let { sub_txt, body_txt, fontawesome } = require("%ui/fonts_style.nut")
-let utf8 = require("utf8")
 let { find_local_player } = require("%dngscripts/common_queries.nut")
-let { CmdStopAssistantSpeak } = require("dasevents")
 let { assistantSpeakingScript, shownTextNote } = require("%ui/hud/state/notes.nut")
-let { mkTextArea } = require("%ui/components/commonComponents.nut")
-let { clearTextSubtitlesTags } = require("%ui/hud/subtitles/subtitles_common.nut")
 
 const MSG_MAX_CHARS = 180
 
@@ -30,13 +29,13 @@ let msSecondAvatar = freeze({
 
 let tipIcon = freeze({
   rendObj = ROBJ_BOX
-  size = [SIZE_TO_CONTENT, flex()]
+  size = FLEX_V
   fillColor = BtnBgHover
   valign = ALIGN_CENTER
-  borderRadius = [ hdpx(5), 0, 0, 0 ]
+  borderRadius = static [ hdpx(5), 0, 0, 0 ]
   padding = hdpx(5)
   vplace = ALIGN_TOP
-  children = {
+  children = static {
     rendObj = ROBJ_TEXT
     font = fontawesome.font
     fontSize = fontawesome.fontSize
@@ -46,14 +45,14 @@ let tipIcon = freeze({
 
 let mkNoteTitle = @(title) {
   flow = FLOW_HORIZONTAL
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   clipChildren = true
   gap = hdpx(5)
-  padding = [0, hdpx(5),0,0]
+  padding = static [0, hdpx(5),0,0]
   valign = ALIGN_CENTER
    children = [
     tipIcon
-    mkTextArea(title, {color = Color(120,140,180,50)}.__update(body_txt))
+    mkTextArea(title, static {color = Color(120,140,180,50)}.__update(body_txt))
   ]
 }
 
@@ -106,7 +105,7 @@ let assistantVoiceStopTip = tipContents({
   inputId = "HUD.AssistantVoiceToggle"
   needBuiltinPadding = false
   animations = []
-  style = {
+  style = static {
     rendObj = ROBJ_BOX
     padding = 0
   }
@@ -123,11 +122,21 @@ let voiceTip = @() {
   children = assistantSpeakingScript.get() ? assistantVoiceStopTip : assistantVoiceStartTip
 }
 
-let mkAvatar = function(){
-  let hide = Watched(false)
+let showAvatar = Watched(true)
+let hideAvatar = @() showAvatar.set(false)
+
+let mkAvatar = function(noteId) {
+  showAvatar.set(true)
   return [
-    @() gui_scene.setTimeout(1.0, @() hide.set(true)),
-    @() {size = [flex(), 0] halign = ALIGN_RIGHT watch = hide children = hide.get() ? null : assistantComp vplace = ALIGN_BOTTOM valign = ALIGN_BOTTOM  pos = [0, -hdpx(5)]}
+    @() gui_scene.resetTimeout(1.0, hideAvatar, noteId),
+    @() {
+      watch = showAvatar
+      size = static [flex(), 0]
+      halign = ALIGN_RIGHT
+      vplace = ALIGN_BOTTOM valign = ALIGN_BOTTOM
+      pos = static [0, -hdpx(5)]
+      children = !showAvatar.get() ? null : assistantComp
+    }
   ]
 }
 
@@ -142,11 +151,11 @@ let tipMainBlock = function() {
     let nearestSpace = message.indexof(" ", MSG_MAX_CHARS) ?? textLength
     message = $"{message.slice(0, nearestSpace)} ..."
   }
-  let [onAttach, avatar] = mkAvatar()
+  let [onAttach, avatar] = mkAvatar(noteId)
   return {
     watch = [ predefinedNotes, newNote, assistantSpeakingScript ]
     rendObj = ROBJ_WORLD_BLUR_PANEL
-    size = [hdpx(300), SIZE_TO_CONTENT]
+    size = static [hdpx(300), SIZE_TO_CONTENT]
     flow = FLOW_VERTICAL
     borderRadius = hdpx(5)
     fillColor = Color(10, 10, 10, 130)
@@ -156,15 +165,15 @@ let tipMainBlock = function() {
       mkNoteTitle(noteTitle)
       {
         clipChildren = true
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_VERTICAL
-        padding = [hdpx(5), hdpx(10)]
+        padding = static [hdpx(5), hdpx(10)]
         gap = hdpx(5)
         children = [
           mkTextArea(message, sub_txt),
           {
             flow = FLOW_HORIZONTAL
-            size = [flex(), SIZE_TO_CONTENT]
+            size = FLEX_H
             gap = hdpx(10)
             children = [
               {
@@ -189,7 +198,7 @@ let operJournal = function() {
 }
 
 let journalOpenInterceptor = {
-  size = [0, 0]
+  size = 0
   zOrder = Layers.Upper
   eventHandlers = {
     ["HUD.Journal"] = function(_event) {

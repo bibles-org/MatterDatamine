@@ -156,7 +156,7 @@ binoculars_item{
   collres__res:t="digital_binoculars_collision"
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   binoculars_item__binocularsAffectTemplate:t="binoculars_watching_affect"
-  item__volume:r=3
+  item__volume:i=30
   item__weight:r=1
   item__marketPrice:i=600
   item__iconYaw:r=155
@@ -177,13 +177,13 @@ b7_binoculars_item{
   animchar__res:t="b7_binoculars_char"
   collres__res:t="b7_binoculars_collision"
   binoculars_item__binocularsAffectTemplate:t="b7_binoculars_watching_affect"
-  item__volume:r=4
+  item__volume:i=40
   item__weight:r=1.38
   item__marketPrice:i=460
   item__iconPitch:r=20
   item__iconRoll:r=50
   item__iconYaw:r=20
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "item__chronotracesProgressionInfo:object"{
     "repeatedly:object"{
@@ -205,11 +205,10 @@ modern_binoculars_item{
   animchar__res:t="item_binoculars_char"
   collres__res:t="item_binoculars_collision"
   binoculars_item__binocularsAffectTemplate:t="modern_binoculars_watching_affect"
-  item__volume:r=4
+  item__volume:i=40
   item__weight:r=1.2
   item__marketPrice:i=460
   item__iconPitch:r=20
   item__iconRoll:r=50
   item__iconYaw:r=20
-  profile_server_data__enrichmentResearchAddChance:r=1
 }

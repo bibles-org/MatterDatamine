@@ -7,8 +7,8 @@ entity{
   spline_gen_template__template_name:t="liana_tentacle_lod0"
   spline_gen_template__slices:i=31
   spline_gen_template__stripes:i=127
-  spline_gen_template__diffuse_name:t="vegetation_tile_liana_anomalous_trunk_b_tex_d"
-  spline_gen_template__normal_name:t="vegetation_tile_liana_anomalous_trunk_b_tex_n"
+  spline_gen_template__diffuse_name:t="vegetation_tile_liana_anomalous_trunk_bunch_a_tex_d"
+  spline_gen_template__normal_name:t="vegetation_tile_liana_anomalous_trunk_bunch_a_tex_n"
   spline_gen_template__asset_name:t="liana_flower_dynmodel"
   spline_gen_template__asset_lod:i=0
 }
@@ -18,8 +18,8 @@ entity{
   spline_gen_template__template_name:t="liana_tentacle_lod1"
   spline_gen_template__slices:i=15
   spline_gen_template__stripes:i=63
-  spline_gen_template__diffuse_name:t="vegetation_tile_liana_anomalous_trunk_b_tex_d"
-  spline_gen_template__normal_name:t="vegetation_tile_liana_anomalous_trunk_b_tex_n"
+  spline_gen_template__diffuse_name:t="vegetation_tile_liana_anomalous_trunk_bunch_a_tex_d"
+  spline_gen_template__normal_name:t="vegetation_tile_liana_anomalous_trunk_bunch_a_tex_n"
   spline_gen_template__asset_name:t="liana_flower_dynmodel"
   spline_gen_template__asset_lod:i=0
 }
@@ -29,8 +29,8 @@ entity{
   spline_gen_template__template_name:t="liana_tentacle_lod2"
   spline_gen_template__slices:i=7
   spline_gen_template__stripes:i=31
-  spline_gen_template__diffuse_name:t="vegetation_tile_liana_anomalous_trunk_b_tex_d"
-  spline_gen_template__normal_name:t="vegetation_tile_liana_anomalous_trunk_b_tex_n"
+  spline_gen_template__diffuse_name:t="vegetation_tile_liana_anomalous_trunk_bunch_a_tex_d"
+  spline_gen_template__normal_name:t="vegetation_tile_liana_anomalous_trunk_bunch_a_tex_n"
   spline_gen_template__asset_name:t=""
 }
 
@@ -82,6 +82,59 @@ entity{
 }
 
 entity{
+  _template:t="spline_gen_template"
+  spline_gen_template__template_name:t="spike_tentacle_em_lod0"
+  spline_gen_template__slices:i=16
+  spline_gen_template__stripes:i=31
+  spline_gen_template__shader_type:t="emissive"
+  spline_gen_template__diffuse_name:t="am_spike_surface_trim_a_tex_d"
+  spline_gen_template__normal_name:t="am_spike_surface_trim_a_tex_n"
+  spline_gen_template__emissive_mask_name:t="am_spike_surface_trim_a_tex_m"
+  spline_gen_template__asset_name:t=""
+}
+
+entity{
+  _template:t="spline_gen_template"
+  spline_gen_template__template_name:t="spike_tentacle_em_lod1"
+  spline_gen_template__slices:i=8
+  spline_gen_template__stripes:i=15
+  spline_gen_template__shader_type:t="emissive"
+  spline_gen_template__diffuse_name:t="am_spike_surface_trim_a_tex_d"
+  spline_gen_template__normal_name:t="am_spike_surface_trim_a_tex_n"
+  spline_gen_template__emissive_mask_name:t="am_spike_surface_trim_a_tex_m"
+  spline_gen_template__asset_name:t=""
+}
+
+entity{
+  _template:t="spline_gen_template"
+  spline_gen_template__template_name:t="spike_tentacle_em_lod2"
+  spline_gen_template__slices:i=4
+  spline_gen_template__stripes:i=7
+  spline_gen_template__shader_type:t="emissive"
+  spline_gen_template__diffuse_name:t="am_spike_surface_trim_a_tex_d"
+  spline_gen_template__normal_name:t="am_spike_surface_trim_a_tex_n"
+  spline_gen_template__emissive_mask_name:t="am_spike_surface_trim_a_tex_m"
+  spline_gen_template__asset_name:t=""
+}
+
+entity{
+  _template:t="spline_gen_lods"
+  spline_gen_lods__lods_name:t="spike_em_tentacle"
+
+  "spline_gen_lods__distances:list<r>"{
+    distance:r=5
+    distance:r=20
+    distance:r=100
+  }
+
+  "spline_gen_lods__template_names:list<t>"{
+    template_name:t="spike_tentacle_em_lod0"
+    template_name:t="spike_tentacle_em_lod1"
+    template_name:t="spike_tentacle_em_lod2"
+  }
+}
+
+entity{
   _template:t="spline_gen_lods"
   spline_gen_lods__lods_name:t="spike_tentacle"
 
@@ -95,5 +148,52 @@ entity{
     template_name:t="spike_tentacle_lod0"
     template_name:t="spike_tentacle_lod1"
     template_name:t="spike_tentacle_lod2"
+  }
+}
+
+entity{
+  _template:t="spline_gen_template"
+  spline_gen_template__template_name:t="am_mimic_boss_spike_tentacle_lod0"
+  spline_gen_template__slices:i=15
+  spline_gen_template__stripes:i=128
+  spline_gen_template__diffuse_name:t="am_spike_surface_trim_a_tex_d"
+  spline_gen_template__normal_name:t="am_spike_surface_trim_a_tex_n"
+  spline_gen_template__asset_name:t=""
+}
+
+entity{
+  _template:t="spline_gen_template"
+  spline_gen_template__template_name:t="am_mimic_boss_spike_tentacle_lod1"
+  spline_gen_template__slices:i=7
+  spline_gen_template__stripes:i=32
+  spline_gen_template__diffuse_name:t="am_spike_surface_trim_a_tex_d"
+  spline_gen_template__normal_name:t="am_spike_surface_trim_a_tex_n"
+  spline_gen_template__asset_name:t=""
+}
+
+entity{
+  _template:t="spline_gen_template"
+  spline_gen_template__template_name:t="am_mimic_boss_spike_tentacle_lod2"
+  spline_gen_template__slices:i=3
+  spline_gen_template__stripes:i=16
+  spline_gen_template__diffuse_name:t="am_spike_surface_trim_a_tex_d"
+  spline_gen_template__normal_name:t="am_spike_surface_trim_a_tex_n"
+  spline_gen_template__asset_name:t=""
+}
+
+entity{
+  _template:t="spline_gen_lods"
+  spline_gen_lods__lods_name:t="am_mimic_boss_spike_tentacle"
+
+  "spline_gen_lods__distances:list<r>"{
+    distance:r=50
+    distance:r=500
+    distance:r=1000
+  }
+
+  "spline_gen_lods__template_names:list<t>"{
+    template_name:t="am_mimic_boss_spike_tentacle_lod0"
+    template_name:t="am_mimic_boss_spike_tentacle_lod1"
+    template_name:t="am_mimic_boss_spike_tentacle_lod2"
   }
 }

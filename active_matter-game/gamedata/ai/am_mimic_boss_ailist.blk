@@ -1,0 +1,289 @@
+repeat{
+  name:t="am_mimic_boss"
+  selectStrategy:t="ordered"
+
+  reaction{
+    event:t="regularCheck"
+
+    orderedSelector{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=1
+      }
+
+      sequencer{
+        compareNode{
+          lhs:t="walker_agent__targetEid"
+          operator:t="!="
+          rhs:r=0
+        }
+
+        setTime{
+          to:t="agent_dangers__time"
+        }
+
+        orderedSelector{
+          not{
+            checkDistanceToTarget{
+              targetParam:t="walker_agent__targetEid"
+              radiusParam:t="am_mimic__pursueRadius"
+            }
+          }
+
+          not{
+            checkAlive{
+              targetParam:t="walker_agent__targetEid"
+            }
+          }
+        }
+
+        modifyNode{
+          target:t="walker_agent__targetEid"
+          operator:t="="
+          arg:r=0
+        }
+      }
+
+      sequencer{
+        compareNode{
+          lhs:t="walker_agent__targetEid"
+          operator:t="=="
+          rhs:r=0
+        }
+
+        findDanger{
+          paramName:t="enemy"
+          radiusParamName:t="enemyRadius"
+          minDanger:r=0
+        }
+
+        modifyNode{
+          target:t="walker_agent__targetEid"
+          operator:t="="
+          argIntParam:t="enemy"
+        }
+
+        selectNode{
+          name:t="attack"
+        }
+      }
+    }
+  }
+
+  reaction{
+    event:t="onHit"
+
+    sequencer{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=0
+      }
+
+      getReactionOffender{}
+      compareNode{
+        lhs:t="agent_dangers__lastReactionOffender"
+        operator:t="!="
+        rhs:r=0
+      }
+
+      modifyNode{
+        target:t="walker_agent__targetEid"
+        operator:t="="
+        arg:t="agent_dangers__lastReactionOffender"
+      }
+
+      selectNode{
+        name:t="attack"
+      }
+    }
+  }
+
+  reaction{
+    event:t="onBulletNearby"
+
+    sequencer{
+      compareNode{
+        lhs:t="beh_tree__interruptDisabled"
+        operator:t="=="
+        rhs:r=0
+      }
+    }
+  }
+
+  sequencer{
+    name:t="attack"
+
+    compareNode{
+      lhs:t="walker_agent__targetEid"
+      operator:t="!="
+      rhs:r=0
+    }
+
+    subTree{
+      treeName:t="sub.am_mimic_boss.go_to_target"
+    }
+
+    orderedSelector{
+      sequencer{
+        name:t="engage"
+
+        repeatUntilFail{
+          count:i=3
+
+          sequencer{
+            checkDistanceToTarget{
+              targetParam:t="walker_agent__targetEid"
+              radiusParam:t="am_mimic_attack__reach"
+            }
+
+            modifyNode{
+              target:t="beh_tree__interruptDisabled"
+              operator:t="="
+              arg:i=1
+            }
+
+            amMimicAttack{
+              target:t="walker_agent__targetEid"
+            }
+
+            modifyNode{
+              target:t="beh_tree__interruptDisabled"
+              operator:t="="
+              arg:i=0
+            }
+          }
+
+          orderedSelector{
+            sequencer{
+              modifyNode{
+                target:t="walker_agent__targetEid"
+                operator:t="="
+                arg:i=0
+              }
+
+              findDanger{
+                paramName:t="enemy"
+                radiusParamName:t="enemyRadius"
+                minDanger:r=0
+              }
+
+              modifyNode{
+                target:t="walker_agent__targetEid"
+                operator:t="="
+                argIntParam:t="enemy"
+              }
+            }
+          }
+        }
+      }
+
+      sequencer{
+        name:t="wait_turn"
+
+        checkTargetEcs{
+          targetParam:t="walker_agent__targetEid"
+        }
+
+        lnGridFindPointNearTarget{
+          posParam:t="walker_agent__targetPos"
+          dist:p2=8, 16
+          targetParam:t="walker_agent__targetEid"
+        }
+
+        subTree{
+          treeName:t="sub.am_mimic_boss.go_to_pos"
+        }
+      }
+    }
+  }
+
+  sequencer{
+    name:t="wander"
+
+    not{
+      findDanger{
+        paramName:t="enemy"
+        radiusParamName:t="enemyRadius"
+        minDanger:r=0
+      }
+    }
+
+    orderedSelector{
+      sequencer{
+        wait{
+          range:p2=0.4, 1
+          resetable:b=yes
+        }
+
+        lnGridFindRandomPointAroundPos{
+          posParam:t="walker_agent__targetPos"
+          tries:i=4
+          dist:p2=15, 75
+          aroundPos:t="am_mimic__origin"
+        }
+
+        subTree{
+          treeName:t="sub.am_mimic_boss.go_to_pos"
+        }
+      }
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.am_mimic_boss.go_to_pos"
+
+  parallel{
+    lnGridMoveToPos{
+      posParam:t="walker_agent__targetPos"
+      speedMult:r=0.5
+      stopDist:r=1.5
+    }
+
+    wait{
+      range:p2=22.25, 24.35
+      resetable:b=yes
+    }
+  }
+}
+
+sequencer{
+  name:t="sub.am_mimic_boss.go_to_target"
+
+  checkTargetEcs{
+    targetParam:t="walker_agent__targetEid"
+  }
+
+  orderedSelector{
+    checkDistanceToTarget{
+      targetParam:t="walker_agent__targetEid"
+      radiusParam:t="am_mimic_attack__reach"
+    }
+
+    sequencer{
+      parallel{
+        lnGridMoveToTarget{
+          targetParam:t="walker_agent__targetEid"
+          stopDistParam:t="am_mimic_attack__approachDst"
+          loseInvisibleTarget:b=no
+        }
+
+        wait{
+          range:p2=28.25, 30.35
+          resetable:b=yes
+        }
+      }
+
+      checkTargetEcs{
+        targetParam:t="walker_agent__targetEid"
+      }
+
+      checkDistanceToTarget{
+        targetParam:t="walker_agent__targetEid"
+        radiusParam:t="am_mimic_attack__reach"
+      }
+    }
+  }
+}

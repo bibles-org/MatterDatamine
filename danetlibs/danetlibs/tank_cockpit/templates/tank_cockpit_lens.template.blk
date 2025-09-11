@@ -1,0 +1,16 @@
+tank_cockpit_lens_renderer{
+  _tags:t="render"
+  tank_cockpit__lensRigidNo:i=-1
+  tank_cockpit__lensDistortionRadius:r=0.4
+  tank_cockpit__lensDistortionStrength:r=0.2
+  tank_cockpit__lensAberrationStrength:r=0.07
+  tank_cockpit__lensShadeRadius:r=0.95
+  tank_cockpit__lensShadeSmoothness:r=0.3
+  tank_cockpit__lensShadeShiftRate:r=2
+
+  "tank_cockpit__lensRelemIds:list<i>"{}
+  "tank_cockpit__copy_frame_fg_node:dafg::NodeHandle"{}
+  "tank_cockpit__render_lens_fg_node:dafg::NodeHandle"{}
+  "tank_lens_shading_params:ShaderVar"{}
+  "tank_lens_distortion_params:ShaderVar"{}
+}

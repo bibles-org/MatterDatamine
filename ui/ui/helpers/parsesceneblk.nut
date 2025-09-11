@@ -1,12 +1,14 @@
+from "%sqGlob/dasenums.nut" import ExtractionStatusForHero
+
+from "dagor.math" import Point2, Point3, TMatrix, E3DCOLOR
+from "das.loot_preset" import loot_preset_get_all_possible_items
+from "math" import rand
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 import "DataBlock" as DataBlock
 from "dagor.debug" import logerr
 
-let { Point2, Point3, TMatrix, E3DCOLOR } = require("dagor.math")
-let { loot_preset_get_all_possible_items } = require("das.loot_preset")
-let { rand } = require("math")
-let { ExtractionStatusForHero } = require("%sqGlob/dasenums.nut")
 
 let memoizedGetAllPresetItems = memoize(@(preset) loot_preset_get_all_possible_items(preset))
 
@@ -33,7 +35,8 @@ function extractLootFromPresetTemplates(all_preset_items, accumulator) {
 
 function parse_tiled_map_info_from_scene_entity(entityBlk){
   let fittingTemplates = [
-    "tiled_map"
+    "tiled_map",
+    "onboarding_tiled_map"
   ]
 
   let templateName = entityBlk.getStr("_template", "")
@@ -53,6 +56,7 @@ function parse_tiled_map_info_from_scene_entity(entityBlk){
     rightBottomBorder = template.getCompValNullable("tiled_map__rightBottomBorder") ?? Point2(0, 0)
     backgroundColor = template.getCompValNullable("tiled_map__backgroundColor") ?? E3DCOLOR(0, 0, 0, 140)
     fogOfWarEnabled = template.getCompValNullable("fog_of_war__enabled") ?? false
+    fogOfWarSavePath = template.getCompValNullable("fog_of_war__onlineSettingsPath") ?? ""
     fogOfWarResolution = template.getCompValNullable("fog_of_war__resolution") ?? 5.0
   }
 
@@ -78,6 +82,8 @@ function parse_tiled_map_info_from_scene_entity(entityBlk){
     result.backgroundColor <- entityBlk.getE3dcolor("tiled_map__backgroundColor", E3DCOLOR(0, 0, 0, 140))
   if (entityBlk.paramExists("fog_of_war__enabled"))
     result.fogOfWarEnabled <- entityBlk.getBool("fog_of_war__enabled", false)
+  if (entityBlk.paramExists("fog_of_war__onlineSettingsPath"))
+    result.fogOfWarSavePath <- entityBlk.getStr("fog_of_war__onlineSettingsPath", "")
   if (entityBlk.paramExists("fog_of_war__resolution"))
     result.fogOfWarResolution <- entityBlk.getReal("fog_of_war__resolution", 5.0)
 
@@ -246,8 +252,7 @@ function parse_extraction_from_scene(entityBlk){
 
 function parse_nexus_beacons(entityBlk){
   let fittingTemplates = [
-    "nexus_beacon",
-    "nexus_round_mode_beacon"
+    "nexus_beacon"
   ]
 
   let templateNames = entityBlk.getStr("_template", "").split("+")

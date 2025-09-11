@@ -1,6 +1,7 @@
+from "screencap" import take_screenshot_nogui, take_screenshot
+
 from "%ui/ui_library.nut" import *
 
-let {take_screenshot_nogui, take_screenshot} = require("screencap")
 let voiceHotkeys = require("%ui/voiceChat/voiceControl.nut")
 
 let eventHandlers = {

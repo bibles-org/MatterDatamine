@@ -1,0 +1,172 @@
+signal_grenade_char{
+  _use:t="base_animated_grenade"
+  animchar__res:t="grenade_an_m8_char"
+  collres__res:t="grenade_an_m8_collision"
+  grenade__selectedWeaponVar:t="an_m8"
+  gun_attach__slot:t="weapon"
+}
+
+signal_grenade_active_char{
+  animchar__res:t="grenade_an_m8_ready_char"
+  collres__res:t="grenade_an_m8_ready_collision"
+}
+
+signal_grenade_item{
+  _use:t="attack_grenade_item"
+  _use:t="signal_grenade_char"
+  _use:t="equipable_item"
+  _use:t="block_item_move_to_item_container"
+  _use:t="block_item_move_to_safepack"
+  _use:t="block_item_move_to_backpack"
+  _use:t="block_item_move_to_ground"
+  item__recreateInEquipment:t="item_in_equipment_hided"
+  item__proto:t="signal_grenade_item"
+  item__shell:t="gamedata/weapons/grenades/signal_grenade.blk"
+  item__name:t="items/signal_grenade_item"
+  item__weight:r=0.35
+  item__volume:i=20
+  item__grenadeType:t="smoke"
+
+  "item__equipmentSlots:list<t>"{
+    slot:t="signal_grenade"
+  }
+
+  "mintBannedItem:tag"{}
+}
+
+signal_grenade_fx{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="airdrop_signal_cmps_fx"
+
+    effect{}
+  }
+}
+
+signal_grenade{
+  _use:t="base_grenade"
+  _use:t="signal_grenade_char"
+  loud_noise__noisePerExplosion:r=120
+  loud_noise__radius:r=40
+}
+
+signal_grenade_phys{
+  _use:t="projectile_phys_with_shell"
+  _use:t="rdg1_shell"
+  _use:t="grenade_throw_sound"
+  _use:t="grenade_phys_collision_sound"
+  _use:t="smoke_grenade_phys_sound_effect"
+  _use:t="shell_trap_activator"
+  _use:t="zones_visitor"
+  _use:t="signal_grenade_active_char"
+  start_omega:p3=3, 0, -15
+  active:b=no
+  _tracked:t="active"
+  zones_visitor__triggerTag:t="throwingItemsTriggerable"
+  smokeFadeTime:r=10
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/robodog_signal_grenade.blk"
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_smoke_grenade_explosion"
+  signal_grenade__template:t="signal_grenade_fx"
+  signal_grenade__ordering:b=no
+  signal_grenade__airdroFallingAngles:p2=10, 20
+  signal_grenade__heightCreateAirdrop:r=600
+  signal_grenade__airdropMovingTime:r=5
+  signal_grenade__airdropTemlate:t="airdrop_with_robodog"
+  signal_grenade__airdropPhysTemlate:t="airdrop_phys"
+
+  "extinguishUnderwater:tag"{}
+  "grav_zones_affected:tag"{}
+  "teleport_once:tag"{}
+  _group{
+    _tags:t="render"
+    teleportation__fxNameIn:t="teleport_effect_in"
+    teleportation__fxNameOut:t="teleport_effect_out"
+  }
+
+  "signal_grenade_phys:tag"{}
+  "signal_grenade__fx:eid"{}
+}
+
+robodog_signal_grenade_item{
+  _use:t="signal_grenade_item"
+  _use:t="item_rarity_uncommon"
+  item__proto:t="robodog_signal_grenade_item"
+  item__shell:t="gamedata/weapons/grenades/robodog_signal_grenade.blk"
+  item__name:t="items/robodog_grenade"
+  animchar__res:t="robo_dog_a_char"
+  collres__res:t="robo_dog_a_collision"
+  item__marketPrice:i=9100
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+robodog_signal_grenade_phys{
+  _use:t="signal_grenade_phys"
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/robodog_signal_grenade.blk"
+  signal_grenade__airdropTemlate:t="airdrop_with_robodog"
+  signal_grenade__airdropPhysTemlate:t="airdrop_phys"
+}
+
+robodog_juan_signal_grenade_item{
+  _use:t="signal_grenade_item"
+  _use:t="item_rarity_epic"
+  item__proto:t="robodog_juan_signal_grenade_item"
+  item__shell:t="gamedata/weapons/grenades/robodog_juan_signal_grenade.blk"
+  item__name:t="items/robodog_juan_grenade"
+  animchar__res:t="robo_dog_c_char"
+  collres__res:t="robo_dog_c_collision"
+  item__marketPrice:i=9100
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+robodog_juan_signal_grenade_phys{
+  _use:t="signal_grenade_phys"
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/robodog_juan_signal_grenade.blk"
+  signal_grenade__airdropTemlate:t="airdrop_with_robodog_juan"
+  signal_grenade__airdropPhysTemlate:t="airdrop_phys"
+}
+
+quad_bike_signal_grenade_item{
+  _use:t="signal_grenade_item"
+  _use:t="item_rarity_rare"
+  item__proto:t="quad_bike_signal_grenade_item"
+  item__shell:t="gamedata/weapons/grenades/quad_bike_signal_grenade.blk"
+  item__name:t="items/quad_bike_grenade"
+  animchar__res:t="bombardier_outlander_800r_char"
+  collres__res:t="bombardier_outlander_800r_collision"
+  item__marketPrice:i=12700
+  item__iconScale:r=1.2
+  item__iconOffset:p2=0.05, 0
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+quad_bike_signal_grenade_phys{
+  _use:t="signal_grenade_phys"
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/quad_bike_signal_grenade.blk"
+  signal_grenade__airdropTemlate:t="airdrop_with_quad_bike"
+  signal_grenade__airdropPhysTemlate:t="airdrop_phys"
+}
+
+quad_bike_bonecrusher_signal_grenade_item{
+  _use:t="quad_bike_signal_grenade_item"
+  _use:t="item_rarity_epic"
+  item__proto:t="quad_bike_signal_grenade_item"
+  item__shell:t="gamedata/weapons/grenades/quad_bike_bonecrusher_signal_grenade.blk"
+  item__name:t="items/quad_bike_bonecruser_grenade"
+  animchar__res:t="bombardier_outlander_800r_a_char"
+  collres__res:t="bombardier_outlander_800r_a_collision"
+  item__marketPrice:i=12700
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+quad_bike_bonecrusher_signal_grenade_phys{
+  _use:t="signal_grenade_phys"
+  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/quad_bike_bonecrusher_signal_grenade.blk"
+  signal_grenade__airdropTemlate:t="airdrop_with_bombardier_quad_bike"
+  signal_grenade__airdropPhysTemlate:t="airdrop_phys"
+}

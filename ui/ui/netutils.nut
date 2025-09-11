@@ -1,7 +1,9 @@
+from "%sqGlob/netErrorConverter.nut" import error_response_converter
+
+from "%ui/matchingClient.nut" import matchingCall
+
 from "%ui/ui_library.nut" import *
 
-let { matchingCall } = require("matchingClient.nut")
-let {error_response_converter} = require("%sqGlob/netErrorConverter.nut")
 
 function request_nick_by_uid_batch(user_ids, cb) {
   matchingCall("mproxy.nick_server_request",

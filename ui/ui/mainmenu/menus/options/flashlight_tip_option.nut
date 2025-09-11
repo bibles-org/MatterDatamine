@@ -1,6 +1,7 @@
+from "%ui/mainMenu/menus/options/options_lib.nut" import getOnlineSaveData, optionCheckBox, optionCtor
+
 from "%ui/ui_library.nut" import *
 
-let { getOnlineSaveData, optionCheckBox, optionCtor } = require("options_lib.nut")
 
 const FLASHLIGHT_TIP_OPTION = "gameplay/flashlightTip"
 let flashlightTipSave = getOnlineSaveData(FLASHLIGHT_TIP_OPTION, @() true)

@@ -1,9 +1,9 @@
+from "%sqGlob/dasenums.nut" import EncounterWorkbenchMenuState
+from "dasevents" import CmdShowUiMenu, CmdHideUiMenu, EventEncounterWorkbenchItemsToRepairChanged
+from "%ui/hud/state/inventory_items_es.nut" import updateEidInventoryContainer
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { EncounterWorkbenchMenuState } = require("%sqGlob/dasenums.nut")
-let { CmdShowUiMenu, CmdHideUiMenu, EventEncounterWorkbenchItemsToRepairChanged } = require("dasevents")
-let { updateEidInventoryContainer } = require("%ui/hud/state/inventory_items_es.nut")
 
 let encounterWorkbenchCharges = Watched(0)
 let encounterWorkbenchMaxCharges = Watched(0)
@@ -26,7 +26,7 @@ ecs.register_es("encounter_workbench_menu_controller_ui",
       encounterWorkbenchEid.set(comp.encounter_workbench_menu_controller__workbenchEid)
 
       let items = comp.encounter_workbench_menu_controller__itemsToRepair.getAll()
-      updateEidInventoryContainer(0, encounterWorkbenchItemsToRepair, items)
+      updateEidInventoryContainer(encounterWorkbenchItemsToRepair, items)
     }
     onDestroy = function(_eid, _comp) {
       closeEncounterWorkbenchMenu()
@@ -64,7 +64,7 @@ function updateEncounterWorkbenchState(comp) {
 }
 
 
-encounterWorkbenchEid.subscribe(function(val){
+encounterWorkbenchEid.subscribe_with_nasty_disregard_of_frp_update(function(val){
   if (val == ecs.INVALID_ENTITY_ID)
     return
 

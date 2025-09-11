@@ -60,3 +60,20 @@ text_on_start{
   text_on_start_locId:t=""
   time_to_hide_text_after_animation:r=0
 }
+
+info_map_icon{
+  _use:t="map_component_marker"
+  _use:t="replicating"
+  map_object_marker__iconName:t="!ui/skin#rhombus.svg"
+  map_object_marker__tooltip:t=""
+  objective_static_target__tag:t=""
+
+  "map_object__show:b"{
+    value:b=yes
+    _track:b=yes
+  }
+}
+
+map_object_show_at{
+  map_object_show_at__atTime:r=0
+}

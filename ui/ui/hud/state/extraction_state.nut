@@ -1,8 +1,9 @@
+from "net" import get_sync_time
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {get_controlled_hero} = require("%dngscripts/common_queries.nut")
-let {get_sync_time} = require("net")
+let { get_controlled_hero } = require("%dngscripts/common_queries.nut")
 
 let isExtracting = Watched(false)
 let alreadyExtracted = Watched(false)
@@ -28,7 +29,7 @@ ecs.register_es("extraction_preparing_state_es", {
     let hero = get_controlled_hero()
     if (hero == comp.game_effect__attachedTo){
       isExtracting.set(false)
-      alreadyExtracted.set(timeEnd.value <= get_sync_time())
+      alreadyExtracted.set(timeEnd.get() <= get_sync_time())
       timeEnd.set(-1.0)
     }
   }

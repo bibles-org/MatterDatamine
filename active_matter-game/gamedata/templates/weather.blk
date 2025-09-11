@@ -116,6 +116,16 @@ clouds_hole_target{
   }
 }
 
+skies_settings_dalniy{
+  _use:t="skies_settings"
+  sky_atmosphere__mie_height:p2=0.8, 0.8
+  sky_atmosphere__mie_scale:p2=1, 1
+  sky_atmosphere__mie_absorption_scale:p2=8, 8
+  sky_atmosphere__multiple_scattering_factor:r=1.5
+  sky_atmosphere__ozone_scale:p2=2, 2
+  sky_atmosphere__rayleigh_alt_scale:p2=2, 2
+}
+
 weather_almost_clear{
   clouds_rendering__erosion_noise_size:r=45
   clouds_rendering__erosionWindSpeed:r=50
@@ -267,16 +277,10 @@ weather_clouds{
 }
 
 weather_dalniy_island_overcast{
-  _use:t="skies_settings"
+  _use:t="skies_settings_dalniy"
   strata_clouds__altitude:p2=10, 10
   strata_clouds__amount:p2=0.9, 0.9
-  sky_atmosphere__mie_height:p2=0.8, 0.8
-  sky_atmosphere__mie_scale:p2=8, 8
-  sky_atmosphere__mie_absorption_scale:p2=8, 8
-  sky_atmosphere__multiple_scattering_factor:r=2
-  sky_atmosphere__ozone_scale:p2=0.9, 0.9
-  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
-  clouds_form__extinction:p2=3, 3
+  clouds_form__extinction:p2=1, 1
   clouds_form__turbulenceStrength:p2=0.5, 0.5
   clouds_form__shapeNoiseScale:i=7
   clouds_form__turbulenceFreq:i=5
@@ -301,17 +305,17 @@ weather_dalniy_island_overcast{
 
   "clouds_form__layers:array"{
     "clouds_form__layers:object"{
-      density:p2=0.9, 0.9
+      density:p2=0.95, 0.95
       clouds_type_variance:p2=0.5, 0.5
-      startAt:p2=0.5, 0.5
+      startAt:p2=0.14, 0.14
       clouds_type:p2=0.9, 0.9
-      thickness:p2=4, 4
+      thickness:p2=3, 3
     }
 
     "clouds_form__layers:object"{
       density:p2=0.7, 0.7
       clouds_type_variance:p2=0.5, 0.5
-      startAt:p2=5, 5
+      startAt:p2=4, 4
       clouds_type:p2=0.25, 0.25
       thickness:p2=3, 3
     }
@@ -319,16 +323,10 @@ weather_dalniy_island_overcast{
 }
 
 weather_dalniy_island_clear{
-  _use:t="skies_settings"
+  _use:t="skies_settings_dalniy"
   strata_clouds__altitude:p2=10, 10
   strata_clouds__amount:p2=0.9, 0.9
-  sky_atmosphere__mie_height:p2=0.8, 0.8
-  sky_atmosphere__mie_scale:p2=8, 8
-  sky_atmosphere__mie_absorption_scale:p2=8, 8
-  sky_atmosphere__multiple_scattering_factor:r=2
-  sky_atmosphere__ozone_scale:p2=0.9, 0.9
-  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
-  clouds_form__extinction:p2=3, 3
+  clouds_form__extinction:p2=1, 1
   clouds_form__turbulenceStrength:p2=0.5, 0.5
   clouds_form__shapeNoiseScale:i=7
   clouds_form__turbulenceFreq:i=5
@@ -371,16 +369,10 @@ weather_dalniy_island_clear{
 }
 
 weather_dalniy_island_almost_clear{
-  _use:t="skies_settings"
+  _use:t="skies_settings_dalniy"
   strata_clouds__altitude:p2=10, 10
   strata_clouds__amount:p2=0.9, 0.9
-  sky_atmosphere__mie_height:p2=0.8, 0.8
-  sky_atmosphere__mie_scale:p2=8, 8
-  sky_atmosphere__mie_absorption_scale:p2=8, 8
-  sky_atmosphere__multiple_scattering_factor:r=2
-  sky_atmosphere__ozone_scale:p2=0.9, 0.9
-  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
-  clouds_form__extinction:p2=3, 3
+  clouds_form__extinction:p2=1, 1
   clouds_form__turbulenceStrength:p2=0.5, 0.5
   clouds_form__shapeNoiseScale:i=7
   clouds_form__turbulenceFreq:i=5
@@ -424,16 +416,10 @@ weather_dalniy_island_almost_clear{
 }
 
 weather_dalniy_island_cloudy{
-  _use:t="skies_settings"
+  _use:t="skies_settings_dalniy"
   strata_clouds__altitude:p2=10, 10
   strata_clouds__amount:p2=0.9, 0.9
-  sky_atmosphere__mie_height:p2=0.8, 0.8
-  sky_atmosphere__mie_scale:p2=8, 8
-  sky_atmosphere__mie_absorption_scale:p2=8, 8
-  sky_atmosphere__multiple_scattering_factor:r=2
-  sky_atmosphere__ozone_scale:p2=0.9, 0.9
-  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
-  clouds_form__extinction:p2=3, 3
+  clouds_form__extinction:p2=1, 1
   clouds_form__turbulenceStrength:p2=0.5, 0.5
   clouds_form__shapeNoiseScale:i=7
   clouds_form__turbulenceFreq:i=5
@@ -477,16 +463,10 @@ weather_dalniy_island_cloudy{
 }
 
 weather_dalniy_island_poor{
-  _use:t="skies_settings"
+  _use:t="skies_settings_dalniy"
   strata_clouds__altitude:p2=10, 10
   strata_clouds__amount:p2=0.9, 0.9
-  sky_atmosphere__mie_height:p2=0.8, 0.8
-  sky_atmosphere__mie_scale:p2=8, 8
-  sky_atmosphere__mie_absorption_scale:p2=8, 8
-  sky_atmosphere__multiple_scattering_factor:r=2
-  sky_atmosphere__ozone_scale:p2=0.9, 0.9
-  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
-  clouds_form__extinction:p2=4, 4
+  clouds_form__extinction:p2=1, 1
   clouds_form__turbulenceStrength:p2=0.5, 0.5
   clouds_form__shapeNoiseScale:i=7
   clouds_form__turbulenceFreq:i=5
@@ -515,15 +495,15 @@ weather_dalniy_island_poor{
     "clouds_form__layers:object"{
       density:p2=1, 1
       clouds_type_variance:p2=0.5, 0.5
-      startAt:p2=0.5, 0.5
+      startAt:p2=0.12, 0.12
       clouds_type:p2=0.9, 0.9
-      thickness:p2=5, 5
+      thickness:p2=4, 4
     }
 
     "clouds_form__layers:object"{
       density:p2=0.9, 0.9
       clouds_type_variance:p2=0.5, 0.5
-      startAt:p2=6, 6
+      startAt:p2=5, 5
       clouds_type:p2=0.9, 0.9
       thickness:p2=4, 4
     }
@@ -531,16 +511,10 @@ weather_dalniy_island_poor{
 }
 
 weather_dalniy_island_rain{
-  _use:t="skies_settings"
+  _use:t="skies_settings_dalniy"
   strata_clouds__altitude:p2=10, 10
-  strata_clouds__amount:p2=0.9, 0.9
-  sky_atmosphere__mie_height:p2=0.8, 0.8
-  sky_atmosphere__mie_scale:p2=14, 14
-  sky_atmosphere__mie_absorption_scale:p2=8, 8
-  sky_atmosphere__multiple_scattering_factor:r=2
-  sky_atmosphere__ozone_scale:p2=0.9, 0.9
-  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
-  clouds_form__extinction:p2=4, 4
+  strata_clouds__amount:p2=1, 1
+  clouds_form__extinction:p2=1, 1
   clouds_form__turbulenceStrength:p2=0.5, 0.5
   clouds_form__shapeNoiseScale:i=7
   clouds_form__turbulenceFreq:i=5
@@ -569,7 +543,7 @@ weather_dalniy_island_rain{
     "clouds_form__layers:object"{
       density:p2=1, 1
       clouds_type_variance:p2=0.5, 0.5
-      startAt:p2=0.5, 0.5
+      startAt:p2=0.12, 0.12
       clouds_type:p2=0.9, 0.9
       thickness:p2=5, 5
     }
@@ -585,7 +559,7 @@ weather_dalniy_island_rain{
 }
 
 weather_dalniy_island_map_gen{
-  _use:t="skies_settings"
+  _use:t="skies_settings_dalniy"
   clouds_form__extinction:p2=4, 4
   clouds_form__shapeNoiseScale:i=7
   clouds_form__turbulenceFreq:i=5
@@ -595,12 +569,6 @@ weather_dalniy_island_map_gen{
   clouds_weather_gen__cumulonimbusCoverage:p2=0, 0
   clouds_weather_gen__epicness:r=0
   skies_settings__weatherSeed:i=43
-  sky_atmosphere__mie_absorption_scale:p2=8, 8
-  sky_atmosphere__mie_height:p2=0.8, 0.8
-  sky_atmosphere__mie_scale:p2=8, 8
-  sky_atmosphere__multiple_scattering_factor:r=2
-  sky_atmosphere__ozone_scale:p2=0.9, 0.9
-  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
   strata_clouds__altitude:p2=10, 10
   strata_clouds__amount:p2=1, 1
   use_clouds_hole:b=no
@@ -641,15 +609,9 @@ weather_dalniy_island_map_gen{
 }
 
 weather_dalniy_island_night{
-  _use:t="skies_settings"
+  _use:t="skies_settings_dalniy"
   strata_clouds__altitude:p2=10, 10
   strata_clouds__amount:p2=0.9, 0.9
-  sky_atmosphere__mie_height:p2=0.6, 0.6
-  sky_atmosphere__mie_scale:p2=32, 32
-  sky_atmosphere__mie_absorption_scale:p2=32, 32
-  sky_atmosphere__multiple_scattering_factor:r=2
-  sky_atmosphere__ozone_scale:p2=0.7, 0.7
-  sky_atmosphere__rayleigh_alt_scale:p2=2, 2
   sky_atmosphere__moon_brightness:r=4
   sky_atmosphere__moon_color:p3=0.6, 0.8, 1
   clouds_form__extinction:p2=2, 2
@@ -697,13 +659,58 @@ weather_dalniy_island_overcast_teaser{
   skies_settings__weatherSeed:i=11328
 }
 
+weather_america_overcast{
+  _use:t="skies_settings_dalniy"
+  strata_clouds__altitude:p2=10, 10
+  strata_clouds__amount:p2=0.9, 0.9
+  clouds_form__extinction:p2=1, 1
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=5
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.3, 0.3
+  clouds_rendering__erosion_noise_size:r=47.31
+  skies_settings__locName:t="weather/overcast"
+  skies_settings__iconType:t="overcast"
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.8, 0.8
+      seed:p2=1, 1
+      freq:p2=1, 1
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1, 1
+      seed:p2=1, 1
+      freq:p2=1.7, 1.7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.95, 0.95
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=0.14, 0.14
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=3, 3
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.7, 0.7
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=4, 4
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 3
+    }
+  }
+}
+
 weather_monolyth_island_poor{
   _use:t="skies_settings"
   strata_clouds__altitude:p2=10, 10
   strata_clouds__amount:p2=0.9, 0.9
   sky_atmosphere__mie_height:p2=0.4, 0.4
   sky_atmosphere__mie_scale:p2=1, 1
-  sky_atmosphere__mie_absorption_scale:p2=32, 32
   sky_atmosphere__multiple_scattering_factor:r=2
   sky_atmosphere__ozone_scale:p2=0.7, 0.7
   sky_atmosphere__rayleigh_alt_scale:p2=2, 2
@@ -752,8 +759,7 @@ weather_monolyth_island_overcast{
   strata_clouds__altitude:p2=10, 10
   strata_clouds__amount:p2=0.9, 0.9
   sky_atmosphere__mie_height:p2=0.4, 0.4
-  sky_atmosphere__mie_scale:p2=32, 32
-  sky_atmosphere__mie_absorption_scale:p2=32, 32
+  sky_atmosphere__mie_scale:p2=1, 1
   sky_atmosphere__multiple_scattering_factor:r=2
   sky_atmosphere__ozone_scale:p2=0.7, 0.7
   sky_atmosphere__rayleigh_alt_scale:p2=2, 2
@@ -789,6 +795,57 @@ weather_monolyth_island_overcast{
 
     "clouds_form__layers:object"{
       density:p2=0.7, 0.7
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=4.5, 4.5
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 3
+    }
+  }
+}
+
+weather_monolyth_island_cloudy_sunrise{
+  _use:t="skies_settings"
+  strata_clouds__altitude:p2=10, 10
+  strata_clouds__amount:p2=0.9, 0.9
+  sky_atmosphere__atmosphere_scale:r=4
+  sky_atmosphere__mie_height:p2=0.4, 0.4
+  sky_atmosphere__mie_scale:p2=1, 1
+  sky_atmosphere__multiple_scattering_factor:r=2
+  sky_atmosphere__ozone_scale:p2=0.7, 0.7
+  sky_atmosphere__rayleigh_alt_scale:p2=2, 2
+  clouds_form__extinction:p2=2, 2
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=5
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.2, 0.2
+  clouds_weather_gen__epicness:r=0.2
+  clouds_rendering__erosion_noise_size:r=47.31
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.5, 0.5
+      seed:p2=1, 1
+      freq:p2=1, 1
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.7, 0.7
+      seed:p2=1, 1
+      freq:p2=1.7, 1.7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.5, 0.5
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=1, 1
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=4, 4
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.8, 0.8
       clouds_type_variance:p2=0.5, 0.5
       startAt:p2=4.5, 4.5
       clouds_type:p2=0.25, 0.25
@@ -1491,6 +1548,58 @@ nexus_vanilla_weather{
 
     "clouds_weather_gen__layers:object"{
       coverage:p2=0.3, 0.3
+      seed:p2=1, 1
+      freq:p2=1.7, 1.7
+    }
+  }
+
+  "clouds_form__layers:array"{
+    "clouds_form__layers:object"{
+      density:p2=0.9, 0.9
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=0.5, 0.5
+      clouds_type:p2=0.9, 0.9
+      thickness:p2=4, 4
+    }
+
+    "clouds_form__layers:object"{
+      density:p2=0.7, 0.7
+      clouds_type_variance:p2=0.5, 0.5
+      startAt:p2=5, 5
+      clouds_type:p2=0.25, 0.25
+      thickness:p2=3, 3
+    }
+  }
+}
+
+weather_underground_depo{
+  _use:t="skies_settings"
+  strata_clouds__altitude:p2=10, 10
+  strata_clouds__amount:p2=0.9, 0.9
+  sky_atmosphere__mie_height:p2=0.8, 0.8
+  sky_atmosphere__mie_scale:p2=8, 8
+  sky_atmosphere__mie_absorption_scale:p2=8, 8
+  sky_atmosphere__multiple_scattering_factor:r=2
+  sky_atmosphere__ozone_scale:p2=0.9, 0.9
+  sky_atmosphere__rayleigh_alt_scale:p2=1.5, 1.5
+  clouds_form__extinction:p2=3, 3
+  clouds_form__turbulenceStrength:p2=0.5, 0.5
+  clouds_form__shapeNoiseScale:i=7
+  clouds_form__turbulenceFreq:i=5
+  clouds_weather_gen__cumulonimbusCoverage:p2=0.3, 0.3
+  clouds_rendering__erosion_noise_size:r=47.31
+  skies_settings__locName:t="weather/overcast"
+  skies_settings__iconType:t="overcast"
+
+  "clouds_weather_gen__layers:array"{
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=0.8, 0.8
+      seed:p2=1, 1
+      freq:p2=1, 1
+    }
+
+    "clouds_weather_gen__layers:object"{
+      coverage:p2=1, 1
       seed:p2=1, 1
       freq:p2=1.7, 1.7
     }

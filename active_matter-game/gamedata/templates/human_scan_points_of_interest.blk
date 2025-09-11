@@ -1,0 +1,57 @@
+human_scan_point_of_interest_mark{
+  _use:t="replicating"
+  _use:t="map_component_zone"
+  _use:t="client_destroy_in_5_sec"
+  map_object__show:b=no
+  game_effect__timeToDestroy:r=60
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  human_scan_point_of_interest_mark__pointType:i=0
+  map_object_zone__radius:r=10
+
+  "human_scan_point_of_interest_mark:tag"{}
+  "human_scan_point_of_interest_mark__eid:eid"{}
+  "human_scan_point_of_interest_mark__objectiveEid:eid"{}
+}
+
+human_scan_points_of_interest_result_notification{
+  human_scan_points_of_interest_result_notification__showAt:r=0
+  human_scan_points_of_interest_result_notification__marksCount:i=0
+}
+
+human_scan_points_of_interest{
+  human_scan_points_of_interest__useTimer:r=-1
+  human_scan_points_of_interest__ready:b=yes
+  _tracked:t="human_scan_points_of_interest__ready"
+  human_scan_points_of_interest__enabled:b=yes
+  human_scan_points_of_interest__searchRange:p2=0.5, 65
+  human_scan_points_of_interest__lastUseTimestamp:r=0
+  human_scan_points_of_interest__autoScanInterval:r=120
+  human_scan_points_of_interest__markRadiusPerRelDist:p2=3, 10
+  human_scan_points_of_interest__markShowDelayPerRelDist:r=1
+  human_scan_points_of_interest__markOffsetMult:p2=0.2, 0.9
+  human_scan_points_of_interest__markTemplate:t="human_scan_point_of_interest_mark"
+  _tracked:t="human_scan_points_of_interest__showTip"
+
+  "human_scan_points_of_interest:tag"{}
+  "human_scan_points_of_interest__useCooldowns:list<r>"{
+    i:r=0
+    i:r=20
+  }
+
+  "human_scan_points_of_interest__maxMarks:list<i>"{
+    i:i=1
+    i:i=5
+  }
+
+  _group{
+    _tags:t="gameClient"
+    human_scan_points_of_interest__showTip:b=no
+  }
+}
+
+human_scan_points_of_interest_auto_scan_effect{
+  _use:t="game_effect_base"
+  human_scan_points_of_interest_auto_scan_effect__autoScanAt:r=0
+
+  "human_scan_points_of_interest_auto_scan_effect:tag"{}
+}

@@ -1,20 +1,8 @@
 import:t="am_wandering_core.blk"
 
-am_cores_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="am_cores"
-  grid_holder__typeHash:i=0
-  grid_holder__cellSize:i=128
-
-  grid_holder{}
-}
-
 am_core_hitpoints{
   _use:t="base_dm_parts"
   _use:t="base_hitpoints"
-  grid_obj__gridType:t="am_cores"
   hitpoints__hp:r=10
   hitpoints__maxHp:r=10
   hitpoints__regenPerSec:r=50
@@ -30,7 +18,6 @@ am_core_hitpoints{
   _replicated:t="isAlive"
   _replicated:t="hitpoints__hp"
 
-  grid_obj{}
   collres{}
   capsule_approximation{}
   "capsule_approximation__nodeNames:array"{}
@@ -41,10 +28,9 @@ am_core_hitpoints{
 am_core_companion{
   _use:t="replicating"
   _use:t="animchar"
-  _use:t="creatures_grid_obj"
+  _use:t="creatures_dynamic_grid_object"
   animchar__res:t="stone_shield_part_b_char"
   collres__res:t="stone_shield_part_b_collision"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   am_core_companion__yaw:r=0
   am_core_companion__pitch:r=0
   am_core_companion__yawSpeed:r=0
@@ -144,12 +130,12 @@ am_core_base{
   _use:t="am_core_sound"
   _use:t="loot_drop_system"
   _use:t="am_core_fake_collision"
+  _use:t="am_cores_dynamic_grid_object"
   animchar__res:t="am_crystal_i_char"
   collres__res:t="am_crystal_i_collision"
   material:t="activeMatterCore"
   am_core__aliveMaterial:t="activeMatterCore"
   am_core__deadMaterial:t="steel"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   am_core__effectTemplate:t="am_core_effect"
   am_core__decorCompanionTemplate:t="am_core_companion"
   am_core__decorCompanionsCountRng:ip2=15, 20
@@ -822,14 +808,13 @@ am_core_bulletproof_sphere{
   _use:t="am_core_protective_sphere"
   _use:t="traceable_sphere_hit_effect"
   _use:t="invulnerable"
+  _use:t="traceable_spheres_dynamic_grid_object"
   sphere_zone__radius:r=1
   material:t="steel"
   am_core_bulletproof_sphere__visualTemplate:t="am_core_bulletproof_sphere_visual"
   traceable_sphere_hit_effect__name:t="sparks_am_core_protective_sphere_hit_fx"
-  grid_obj__gridType:t="traceable_spheres"
 
   "am_core_bulletproof_sphere__visualEid:eid"{}
-  grid_obj{}
 }
 
 am_core_spawn_manager{

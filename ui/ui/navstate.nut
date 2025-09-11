@@ -1,8 +1,10 @@
+from "json" import parse_json, object_to_json_string
+
 from "modules" import on_module_unload
 from "%ui/ui_library.nut" import *
 from "dagor.debug" import logerr
+from "%ui/state/appState.nut" import levelIsLoading
 
-let {parse_json, object_to_json_string} = require("json")
 
 let navScenesList = persist("navScenesList", @() [])
 let navScenesListGen = Watched(0)
@@ -127,6 +129,8 @@ function getTopNavSceneId(){
 
   return sceneOrId
 }
+
+levelIsLoading.subscribe_with_nasty_disregard_of_frp_update(@(v) v ? clearAllNavScenes() : null)
 
 return {
   navScenesListGen,

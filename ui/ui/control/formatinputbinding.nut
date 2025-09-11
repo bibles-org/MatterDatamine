@@ -1,10 +1,13 @@
+from "%ui/components/gamepadImgByKey.nut" import sticksAliases, keysImagesMap
+
+from "%ui/components/text.nut" import dtext
+from "%ui/components/gamepadImgByKey.nut" import defHeight, mkImageComp
+import "dainput2" as dainput
+
 from "%ui/ui_library.nut" import *
 
-let {dtext} = require("%ui/components/text.nut")
-let {defHeight, sticksAliases,mkImageComp, keysImagesMap} = require("%ui/components/gamepadImgByKey.nut")
 let { controlsGeneration } = require("%ui/control/controls_generation.nut")
-let {isGamepad} = require("%ui/control/active_controls.nut")
-let dainput = require("dainput2")
+let { isGamepad } = require("%ui/control/active_controls.nut")
 let format_ctrl_name = dainput.format_ctrl_name
 
 function mkText(text, _params={}){
@@ -182,17 +185,17 @@ function buildElems(textlist, params = {imgFunc=null, textFunc=mkText, eventText
   }
   let elems = textlist.map(function(text){
     return function(){
-      if (keysImagesMap.value.values().indexof(text) != null)
+      if (keysImagesMap.get().values().indexof(text) != null)
         return makeImg(text,{watch=keysImagesMap})
 
       else if (text instanceof ButtonAnd && !eventTypesAsTxt)
-        return makeImg(keysImagesMap.value["__and__"], {height=defHeight/3, watch=keysImagesMap})
+        return makeImg(keysImagesMap.get()["__and__"], {height=defHeight/3, watch=keysImagesMap})
 
-      else if (text in keysImagesMap.value && eventTypeValues.indexof(text)==null && !(text in eventTypeMap))
-        return makeImg(keysImagesMap.value[text],{watch=keysImagesMap})
+      else if (text in keysImagesMap.get() && eventTypeValues.indexof(text)==null && !(text in eventTypeMap))
+        return makeImg(keysImagesMap.get()[text],{watch=keysImagesMap})
 
-      else if (compact && !eventTypesAsTxt && text in keysImagesMap.value)
-        return makeImg(keysImagesMap.value?[text], {height=defHeight/2, watch=keysImagesMap})
+      else if (compact && !eventTypesAsTxt && text in keysImagesMap.get())
+        return makeImg(keysImagesMap.get()?[text], {height=defHeight/2, watch=keysImagesMap})
 
       else if (eventTypeValues.indexof(text)!=null)
         return eventTextFunc?(inParents(loc(text)))
@@ -209,11 +212,11 @@ function buildElems(textlist, params = {imgFunc=null, textFunc=mkText, eventText
 function mkHasBinding(actionName){
   return Computed(function() {
     let _ = controlsGeneration.get() 
-    return dainput.is_action_binding_set(dainput.get_action_handle(actionName, 0xFFFF), isGamepad.value ? 1 : 0)
+    return dainput.is_action_binding_set(dainput.get_action_handle(actionName, 0xFFFF), isGamepad.get() ? 1 : 0)
   })
 }
 
-return {
+return freeze({
   isValidDevice
   buildModifiersList
   buildDigitalBindingText
@@ -226,4 +229,4 @@ return {
   getSticksText
   mkHasBinding
   keysImagesMap
-}
+})

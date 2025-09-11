@@ -1,56 +1,65 @@
+from "%dngscripts/sound_system.nut" import sound_play
+
+from "%sqstd/math.nut" import lerp, ceil, truncateToMultiple
+
+from "dasevents" import RequestLoadItemHolder, RequestUnloadItemHolder, RequestInterruptUseItemHolder, RqCheckAmmoItemHolder,
+  RqStopCheckAmmoItemHolder, sendNetEvent
+from "das.inventory" import get_weapon_slot_for_item, get_equipped_item_for_installing_mod, is_inventory_have_free_volume, get_equipment_slot_for_item,
+  get_slot_and_equipment_for_mod, unequip_weapon_from_slot, move_equipped_weapon_mod_to_inventory,
+  move_stack_to_inventory, move_equipped_item_to_inventory, move_equipped_item_to_ground, move_equipped_equipment_mod_to_inventory
+from "%ui/hud/menus/components/inventoryItemsListChecks.nut" import isHeroInventoryDropForbidden, isBackpackDropForbidder
+from "%ui/hud/menus/components/inventoryItemsListChecksCommon.nut" import MoveForbidReason, showInventoryOverflowOnUnequipToExMsgBox
+
+from "%ui/fonts_style.nut" import h2_txt
+from "net" import get_sync_time
+import "%ui/components/faComp.nut" as faComp
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/hud/state/inventory_item_relations.nut" import isItemForHolder
+from "%ui/components/colors.nut" import Alert, Inactive
+from "%ui/mainMenu/market/inventoryToMarket.nut" import getLotFromItem, isLotAvailable, getPriceFromLot
+from "eventbus" import eventbus_send, eventbus_subscribe_onehit
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "string" import startswith
+from "%ui/components/msgbox.nut" import showMsgbox, showMessageWithContent
+from "%ui/components/purchase_confirm_msgbox.nut" import showCurrencyPurchaseMsgBox, showNotEnoghPremiumMsgBox
+from "%ui/mainMenu/marketMenu.nut" import setSectionToReturn
+from "%ui/mainMenu/market/marketItems.nut" import weaponRelated
+from "dagor.debug" import logerr
+from "%ui/hud/state/item_info.nut" import get_item_info
+from "%ui/hud/state/inventory_eids_common.nut" import getInventoryEidByListType
+from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog
+from "%ui/mainMenu/stashSpaceMsgbox.nut" import showNoEnoughStashSpaceMsgbox
+from "%ui/components/itemIconComponent.nut" import itemIconNoBorder
+from "%ui/profile/profileState.nut" import playerProfilePremiumCredits, marketItems, repairRelativePrice,
+  playerProfileCreditsCount, playerStats
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { h2_txt } = require("%ui/fonts_style.nut")
-let {get_sync_time} = require("net")
-let faComp = require("%ui/components/faComp.nut")
-let {setTooltip} = require("%ui/components/cursors.nut")
-let {controlledHeroEid} = require("%ui/hud/state/controlled_hero.nut")
-let {entityToUse} = require("%ui/hud/state/entity_use_state.nut")
-let {isSpectator} = require("%ui/hud/state/spectator_state.nut")
-let { HERO_ITEM_CONTAINER, BACKPACK0, STASH, GROUND } = require("inventoryItemTypes.nut")
-let {RequestLoadItemHolder, RequestUnloadItemHolder, RequestInterruptUseItemHolder, RqCheckAmmoItemHolder, RqStopCheckAmmoItemHolder,
-  sendNetEvent} = require("dasevents")
-let {isItemForHolder} = require("%ui/hud/state/inventory_item_relations.nut")
-let {inventoryItems, stashItems, backpackItems} = require("%ui/hud/state/inventory_items_es.nut")
-let {inspectingAmmoCountAffectEid} = require("%ui/hud/state/ammo_count_knowledge_state.nut")
-let {Alert, Inactive} = require("%ui/components/colors.nut")
-let { getLotFromItem, isLotAvailable, getPriceFromLot } = require("%ui/mainMenu/market/inventoryToMarket.nut")
+let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
+let { entityToUse } = require("%ui/hud/state/entity_use_state.nut")
+let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
+let { HERO_ITEM_CONTAINER, BACKPACK0, STASH, GROUND } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
+let { inventoryItems, stashItems, backpackItems } = require("%ui/hud/state/inventory_items_es.nut")
+let { inspectingAmmoCountAffectEid } = require("%ui/hud/state/ammo_count_knowledge_state.nut")
 let { selectedItem, selectedItemsCategory } = require("%ui/mainMenu/market/marketState.nut")
-let { eventbus_send, eventbus_subscribe_onehit } = require("eventbus")
-let { lerp, ceil, truncateToMultiple } = require("%sqstd/math.nut")
 let { isOnPlayerBase, isInPlayerSession } = require("%ui/hud/state/gametype_state.nut")
 let { inShootingRange } = require("%ui/hud/state/shooting_range_state.nut")
-let { get_weapon_slot_for_item,  get_equipped_item_for_installing_mod, is_inventory_have_free_volume,
-  get_equipment_slot_for_item, get_slot_and_equipment_for_mod, ceil_volume, unequip_weapon_from_slot,
-  move_equipped_weapon_mod_to_inventory, move_stack_to_inventory, move_equipped_item_to_inventory,
-  move_equipped_item_to_ground,move_equipped_equipment_mod_to_inventory } = require("das.inventory")
-let { inventoryChecksByList, isHeroInventoryDropForbidden, isBackpackDropForbidder
-} = require("%ui/hud/menus/components/inventoryItemsListChecks.nut")
-let { MoveForbidReason, showInventoryOverflowOnUnequipToExMsgBox
-} = require("%ui/hud/menus/components/inventoryItemsListChecksCommon.nut")
+let { inventoryChecksByList } = require("%ui/hud/menus/components/inventoryItemsListChecks.nut")
 let { curWeapon } = require("%ui/hud/state/hero_weapons.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
-let { marketItems, repairRelativePrice, playerProfileCreditsCount, playerStats } = require("%ui/profile/profileState.nut")
-let { startswith } = require("string")
-let { showMsgbox, showMessageWithContent } = require("%ui/components/msgbox.nut")
-let { marketIsAvailable, setSectionToReturn } = require("%ui/mainMenu/marketMenu.nut")
-let { customFilter, weaponRelated } = require("%ui/mainMenu/market/marketItems.nut")
+let { marketIsAvailable } = require("%ui/mainMenu/marketMenu.nut")
+let { customFilter } = require("%ui/mainMenu/market/marketItems.nut")
 let { currentMenuId } = require("%ui/hud/hud_menus_state.nut")
-let { logerr } = require("dagor.debug")
-let { workbenchRepairInProgress, workbenchItemContainer,
-} = require("%ui/hud/menus/inventories/workbenchInventory.nut")
-let { get_item_info } = require("%ui/hud/state/item_info.nut")
-let { sound_play } = require("%dngscripts/sound_system.nut")
-let { backpackEid, safepackEid, backpackUniqueId, safepackUniqueId
-} = require("%ui/hud/state/hero_extra_inventories_state.nut")
+let { workbenchRepairInProgress, workbenchItemContainer } = require("%ui/hud/menus/inventories/workbenchInventory.nut")
+let { backpackEid, safepackEid, backpackUniqueId, safepackUniqueId } = require("%ui/hud/state/hero_extra_inventories_state.nut")
 let { stashEid, stashVolume, stashMaxVolume } = require("%ui/state/allItems.nut")
 let { canModifyInventory } = require("%ui/hud/state/inventory_common_es.nut")
-let { getInventoryEidByListType } = require("%ui/hud/state/inventory_eids_common.nut")
-let { inventoryMaxVolume, inventoryCurrentVolume } = require("%ui/hud/state/inventory_state.nut")
+let { inventoryMaxVolume, inventoryCurrentVolume, mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
 let { REFINER_KEY_ITEM } = require("%ui/hud/menus/components/slotTypes.nut")
-let { addPlayerLog, mkPlayerLog, playerLogsColors } = require("%ui/popup/player_event_log.nut")
-let { showNoEnoughStashSpaceMsgbox } = require("%ui/mainMenu/stashSpaceMsgbox.nut")
+let { playerLogsColors } = require("%ui/popup/player_event_log.nut")
+let { externalInventoryEid, externalInventoryContainerOwnerEid } = require("%ui/hud/state/hero_external_inventory_state.nut")
+let { equipMeleeChoronogeneItem } = require("%ui/mainMenu/clonesMenu/cloneMenuState.nut")
+let { isInBattleState } = require("%ui/state/appState.nut")
 
 let loadUnloadAmmoPic = @(img) Picture($"ui/skin#{img}:{0}:{0}:P".subst(hdpxi(15)))
 let BtnInactiveColor = Color(128, 128, 128)
@@ -58,36 +67,61 @@ let BtnActiveColor = Color(255, 255, 255)
 
 let currentKeyItem = Watched(null)
 
+function actionForbiddenDueToQueueState(item) {
+  if (!mutationForbidenDueToInQueueState.get()) {
+    return false
+  }
+  let itemInInventoryEid = item.inventoryEid
+
+  return (
+    itemInInventoryEid == safepackEid.get() ||
+    itemInInventoryEid == backpackEid.get() ||
+    itemInInventoryEid == controlledHeroEid.get() ||
+    (
+      itemInInventoryEid == externalInventoryEid.get() &&
+      (
+        externalInventoryContainerOwnerEid.get() == safepackEid.get() ||
+        externalInventoryContainerOwnerEid.get() == backpackEid.get() ||
+        externalInventoryContainerOwnerEid.get() == controlledHeroEid.get()
+      )
+    )
+  )
+}
+
 function stopLoadUnloadAmmoClick(){
-  sendNetEvent(controlledHeroEid.value, RequestInterruptUseItemHolder())
+  sendNetEvent(controlledHeroEid.get(), RequestInterruptUseItemHolder())
 }
 
 function unloadAmmoClick(item){
   
   if (curWeapon.get()?.isReloading)
     return
-  if ((item?.charges ?? 0) > 0)
-    sendNetEvent(controlledHeroEid.value, RequestUnloadItemHolder({targetItemEid=item.eid, containerEid=item.owner}))
+  if ((item?.charges ?? 0) > 0) {
+    let containerEid = item?.slotTemplateName == "pocket_slot" ? controlledHeroEid.get() : item.inventoryEid
+    sendNetEvent(controlledHeroEid.get(), RequestUnloadItemHolder({targetItemEid=item.eid, containerEid}))
+  }
   else
-    ecs.g_entity_mgr.sendEvent(controlledHeroEid.value, RqCheckAmmoItemHolder({targetItemEid=item.eid, containerEid=item.owner}))
+    ecs.g_entity_mgr.sendEvent(controlledHeroEid.get(), RqCheckAmmoItemHolder({targetItemEid=item.eid, containerEid=item.inventoryEid}))
 }
 
 function loadAmmoClick(item) {
   
   if (curWeapon.get()?.isReloading)
     return
-  if ((item?.charges ?? 0) < item.maxCharges)
-    sendNetEvent(controlledHeroEid.value, RequestLoadItemHolder({targetItemEid=item.eid, containerEid=item.owner, searchOtherContainers = true}))
+  if ((item?.charges ?? 0) < item.maxCharges) {
+    let containerEid = (item?.slotTemplateName == "pocket_slot" || item?.attachedItemModSlotName == "magazine") ? controlledHeroEid.get() : item.inventoryEid
+    sendNetEvent(controlledHeroEid.get(), RequestLoadItemHolder({targetItemEid=item.eid, containerEid, searchOtherContainers = true}))
+  }
   else
-  ecs.g_entity_mgr.sendEvent(controlledHeroEid.value, RqCheckAmmoItemHolder({targetItemEid=item.eid, containerEid=item.owner}))
+    ecs.g_entity_mgr.sendEvent(controlledHeroEid.get(), RqCheckAmmoItemHolder({targetItemEid=item.eid, containerEid=item.inventoryEid}))
 }
 
 function checkAmmoClick(item) {
-  ecs.g_entity_mgr.sendEvent(controlledHeroEid.value, RqCheckAmmoItemHolder({targetItemEid=item.eid, containerEid=item.owner}))
+  ecs.g_entity_mgr.sendEvent(controlledHeroEid.get(), RqCheckAmmoItemHolder({targetItemEid=item.eid, containerEid=item.inventoryEid}))
 }
 
 function stopCheckAmmoClick() {
-  ecs.g_entity_mgr.sendEvent(controlledHeroEid.value, RqStopCheckAmmoItemHolder())
+  ecs.g_entity_mgr.sendEvent(controlledHeroEid.get(), RqStopCheckAmmoItemHolder())
 }
 
 let inspectingAmmoCountAffectQuery = ecs.SqQuery("inspectingAmmoCountAffectQuery", {
@@ -130,8 +164,9 @@ function mkUnloadAmmoButton(item, listType, unloadTooltipKey, unloadAmmoIcon) {
     return {
       watch = [ unloadBtnStateFlags, entityToUse, inspectingAmmoCountAffectEid, curWeapon, isOnPlayerBase ]
       onClick = @() unloadAmmoClick(item)
+      skipDirPadNav = true
       behavior = Behaviors.Button
-      onElemState = @(s) unloadBtnStateFlags(s)
+      onElemState = @(s) unloadBtnStateFlags.set(s)
       onHover = @(on) setTooltip(on ? loc(unloadTooltipKey) : null)
       sound = {
         click  = "ui_sounds/button_click"
@@ -143,7 +178,7 @@ function mkUnloadAmmoButton(item, listType, unloadTooltipKey, unloadAmmoIcon) {
         children = entityToUse.get() == item.eid ? null : {
           rendObj = ROBJ_IMAGE
           image = loadUnloadAmmoPic(unloadAmmoIcon)
-          size = [ hdpx(15), hdpx(15) ]
+          size = hdpx(15)
           color = (unloadBtnStateFlags.get() & S_HOVER) ? BtnActiveColor : BtnInactiveColor
         }
       } : null
@@ -152,6 +187,9 @@ function mkUnloadAmmoButton(item, listType, unloadTooltipKey, unloadAmmoIcon) {
 }
 
 function canItemBeUnload(item) {
+  if (actionForbiddenDueToQueueState(item))
+    return false
+
   let { boxedItemTemplate = null, countKnown = false, isDelayedMoveMod = false,
     eid = ecs.INVALID_ENTITY_ID, charges = 0} = item
 
@@ -170,11 +208,10 @@ function unloadIsEnabled(item) {
   return (!canLoadOnlyOnBase || isOnPlayerBase.get())
 }
 
-function unloadItemAmmo(item) {
-  unloadAmmoClick(item)
-}
-
 function canItemBeLoad(item) {
+  if (actionForbiddenDueToQueueState(item))
+    return false
+
   let { boxedItemTemplate = null, countKnown = false, isDelayedMoveMod = false,
     eid = ecs.INVALID_ENTITY_ID, charges = 0, maxCharges = 0} = item
 
@@ -192,11 +229,6 @@ function loadIsEnabled(item) {
   let { canLoadOnlyOnBase = false } = item
   return (!canLoadOnlyOnBase || isOnPlayerBase.get())
 }
-
-function loadItemAmmo(item) {
-  loadAmmoClick(item)
-}
-
 
 function mkLoadAmmoButton(item, listType, loadTooltipKey, loadAmmoIcon) {
   let loadBtnStateFlags = Watched(0)
@@ -223,8 +255,9 @@ function mkLoadAmmoButton(item, listType, loadTooltipKey, loadAmmoIcon) {
     return {
       watch = [ loadBtnStateFlags, entityToUse, needHighlight, inspectingAmmoCountAffectEid, curWeapon ]
       onClick =  @() loadAmmoClick(item)
+      skipDirPadNav = true
       behavior = Behaviors.Button
-      onElemState = @(s) loadBtnStateFlags(s)
+      onElemState = @(s) loadBtnStateFlags.set(s)
       onHover = @(on) setTooltip(on ? loc(loadTooltipKey) : null)
       sound = {
         click  = "ui_sounds/button_click"
@@ -236,7 +269,7 @@ function mkLoadAmmoButton(item, listType, loadTooltipKey, loadAmmoIcon) {
         children = (entityToUse.get() == item.eid) || ((needHighlight == null)) ? null : {
           rendObj = ROBJ_IMAGE
           image = loadUnloadAmmoPic(loadAmmoIcon)
-          size = [ hdpx(15), hdpx(15) ]
+          size = hdpx(15)
           color = (loadBtnStateFlags.get() & S_HOVER) ? BtnActiveColor : BtnInactiveColor
           animations = needHighlight.get() ? [{prop = AnimProp.color, from = Inactive, to = Alert, duration = 1.3, loop = true, play=true, easing = CosineFull}] : null
           key = needHighlight.get()
@@ -249,23 +282,25 @@ function mkLoadAmmoButton(item, listType, loadTooltipKey, loadAmmoIcon) {
 
 function mkStopLoadUnloadAmmoButton(item, listType) {
   let stopBtnStateFlags = Watched(0)
-
-  let isMagazineTypeHolder = (item?.boxedItemTemplate ?? "") != ""
+  let { boxedItemTemplate = "", charges = 0, isDelayedMoveMod = false, eid = ecs.INVALID_ENTITY_ID } = item
+  let isMagazineTypeHolder = boxedItemTemplate != ""
 
   return function() {
     let inspectingAmmoCountItemEid = getInspectingAmmoCountInfo(inspectingAmmoCountAffectEid.get())[0]
     let showStopButton = isMagazineTypeHolder
                         && (listType == HERO_ITEM_CONTAINER || listType == BACKPACK0 || listType == STASH)
                         && !isSpectator.get()
-                        && (item?.charges ?? 0) > 0
-                        && !(item?.isDelayedMoveMod ?? false)
-                        && inspectingAmmoCountItemEid != item?.eid
+                        && charges > 0
+                        && !isDelayedMoveMod
+                        && inspectingAmmoCountItemEid != eid
+                        && entityToUse.get() == item.eid
 
     return {
       watch = [ stopBtnStateFlags, entityToUse, inspectingAmmoCountAffectEid ]
       onClick = @() stopLoadUnloadAmmoClick()
       behavior = Behaviors.Button
-      onElemState = @(s) stopBtnStateFlags(s)
+      skipDirPadNav = true
+      onElemState = @(s) stopBtnStateFlags.set(s)
       onHover = @(on) setTooltip(on ? loc("Inventory/stop_ammo_action") : null)
       sound = {
         click  = "ui_sounds/button_click"
@@ -273,12 +308,10 @@ function mkStopLoadUnloadAmmoButton(item, listType) {
       padding = hdpx(3)
       vplace = ALIGN_BOTTOM
       hplace = ALIGN_RIGHT
-      children = showStopButton ? {
-        children = entityToUse.get() == item.eid ? faComp("close", {
-          color = (stopBtnStateFlags.get() & S_HOVER) ? BtnActiveColor : BtnInactiveColor
-          fontSize = hdpx(15)
-        }) : null
-      } : null
+      children = !showStopButton ? null : faComp("close", {
+        color = (stopBtnStateFlags.get() & S_HOVER) ? BtnActiveColor : BtnInactiveColor
+        fontSize = hdpx(15)
+      })
     }
   }
 }
@@ -305,9 +338,10 @@ function mkCheckAmmoButton(item) {
     return {
       watch = [isSpectator, checkAmmoBtnStateFlags, inspectingAmmoCountAffectEid ]
       onClick =  @() checkAmmoClick(item)
+      skipDirPadNav = true
       behavior = Behaviors.Button
-      margin = [fsh(0.2), fsh(0.2), 0, 0]
-      onElemState = @(s) checkAmmoBtnStateFlags(s)
+      margin = static [fsh(0.2), fsh(0.2), 0, 0]
+      onElemState = @(s) checkAmmoBtnStateFlags.set(s)
       onHover = @(on) setTooltip(on ? loc(checkAmmoTooltipKey) : null)
       sound = {
         click  = "ui_sounds/button_click"
@@ -319,7 +353,7 @@ function mkCheckAmmoButton(item) {
         children = (item?.eid == null || entityToUse.get() == item.eid) ? null : {
           rendObj = ROBJ_IMAGE
           image = loadUnloadAmmoPic(checkAmmoIcon)
-          size = [ hdpx(15), hdpx(15) ]
+          size = hdpx(15)
           color = (checkAmmoBtnStateFlags.get() & S_HOVER) ? BtnActiveColor : BtnInactiveColor
         }
       } : null
@@ -339,8 +373,9 @@ function mkStopCheckAmmoButton(item) {
     return {
       watch = [ stopCheckAmmoBtnStateFlags, inspectingAmmoCountAffectEid]
       onClick =  @() stopCheckAmmoClick()
+      skipDirPadNav = true
       behavior = Behaviors.Button
-      onElemState = @(s) stopCheckAmmoBtnStateFlags(s)
+      onElemState = @(s) stopCheckAmmoBtnStateFlags.set(s)
       onHover = @(on) setTooltip(on ? loc("Inventory/stop_ammo_action") : null)
       sound = {
         click  = "ui_sounds/button_click"
@@ -365,7 +400,7 @@ function mkItemCheckAmmoProgress(item) {
     let progressValNeeded = item?.eid != ecs.INVALID_ENTITY_ID &&
       (inspectingAmmoCountItemEid == item?.eid || item?.eids?.indexof(inspectingAmmoCountItemEid) != null)
     return {
-      size = [flex(), pw(1)]
+      size = static [flex(), pw(1)]
       transform = {
         scale = [progressValNeeded ? getCheckAmmoProgress(get_sync_time(), inspectingAmmoCountItemStartTimestamp, inspectingAmmoCountItemFinishTimestamp) : 0.0, 1.0]
         pivot = [0, 0]
@@ -412,9 +447,11 @@ function resSlotsFromAllowedItems(allowed_items) {
     .reduce(@(acc, lot) acc.__update({ [lot] = true }), {})
 }
 
-let needShowMarketSlotLink = @(itemOrSlot) marketIsAvailable.get()
-  && isOnPlayerBase.get() && !inShootingRange.get()
-  && (getLotFromItem(itemOrSlot) != 0 || resSlotsFromAllowedItems(itemOrSlot?.allowed_items ?? []).len() > 0)
+let needShowMarketSlotLink = function(itemOrSlot) {
+  return marketIsAvailable.get()
+    && isOnPlayerBase.get() && !inShootingRange.get()
+    && (getLotFromItem(itemOrSlot) != 0 || resSlotsFromAllowedItems(itemOrSlot?.allowed_items ?? []).len() > 0)
+}
 
 function showItemInMarket(item) {
   let marketId = getLotFromItem(item)
@@ -422,7 +459,7 @@ function showItemInMarket(item) {
     selectedItemsCategory.set(null)  
     selectedItem.set(marketId)
     setSectionToReturn(currentMenuId.get())
-    eventbus_send("hud_menus.open", const { id = "Market" })
+    eventbus_send("hud_menus.open", static { id = "Market" })
   }
   toShopAction()
 }
@@ -440,21 +477,23 @@ let equipmentSlots = {
   safepack = "equipment_safepack"
   helmet = "equipment_helmet"
   flashlight = "equipment_flashlight"
+  signal_grenade = "equipment_signal_grenade"
 }
 
 function showItemsForSlotInMarket(itemOrSlot) {
-  let { allowed_items = [], itemTemplate = null, itemType = null, slotTooltip = null, itemName = null,
+  let { allowed_items = [], itemTemplate = null, template = null, itemType = null, slotTooltip = null, itemName = null,
     currentWeaponSlotName = null, filterType = null, weapModSlotName = null, parentWeaponName = null,
     slotName = "inventory", uniqueId = "0", weapUniqueId = null, mods = {}
   } = itemOrSlot
+  let templateToUse = itemTemplate ?? template
   let isEquipment = slotName in equipmentSlots
-  if (allowed_items.len() <= 0 && !itemTemplate)
+  if (allowed_items.len() <= 0 && !templateToUse)
     return
 
   local resLots = {}
   local itemToSelect = null
   if (itemType == "weapon") {
-    let item = { itemTemplate, itemType }
+    let item = { itemTemplate = templateToUse, itemType }
     let lot = getLotFromItem(item)
     if (currentWeaponSlotName != "melee") {
       if (lot == null || lot == ecs.INVALID_ENTITY_ID)
@@ -471,7 +510,7 @@ function showItemsForSlotInMarket(itemOrSlot) {
     resLots = resSlotsFromAllowedItems(allowed_items)
     if (resLots.len() <= 0)
       return
-    let lotToSelect = itemTemplate != null ? getLotFromItem({ itemTemplate }) : 0
+    let lotToSelect = templateToUse != null ? getLotFromItem({ itemTemplate }) : 0
     if (lotToSelect != 0)
       itemToSelect = lotToSelect
     else {
@@ -499,7 +538,7 @@ function showItemsForSlotInMarket(itemOrSlot) {
       slot = weapModSlotName ?? weaponSlots?[currentWeaponSlotName] ?? equipmentSlots?[slotName] ?? slotName
       parentId = isEquipment || (weaponSlots?[currentWeaponSlotName] != null && weapModSlotName == null) ? "0"
         : weapUniqueId ?? uniqueId
-      itemTemplate
+      itemTemplate = templateToUse
       mods
     }
   }))
@@ -511,6 +550,9 @@ function showItemsForSlotInMarket(itemOrSlot) {
 }
 
 function isFastEquipItemPossible(item) {
+  if (mutationForbidenDueToInQueueState.get() || (item?.isDelayedMoveMod ?? false))
+    return false
+
   if (item?.isWeapon) {
     let weap = get_weapon_slot_for_item(controlledHeroEid.get(), item.eid)
     if (weap == -1)
@@ -537,6 +579,10 @@ function isFastEquipItemPossible(item) {
 }
 
 function getInventoryToMove(item, inventories) {
+  if (actionForbiddenDueToQueueState(item) || (item?.isDelayedMoveMod ?? false)) {
+    return null
+  }
+
   local inventory = null
   foreach (inv in inventories) {
     if (inventoryChecksByList[inv.name](item) == MoveForbidReason.NONE) {
@@ -570,8 +616,6 @@ function backpackIdentical(bpA, bpB) {
 function isItemIdentical(itemA, itemB) {
   return itemA.id == itemB.id
     && itemA?.highlightedItem != true && itemB?.highlightedItem != true
-    && !itemA.isAmStorage && !itemB.isAmStorage
-    && itemA?.ownerNickname == null && itemB?.ownerNickname == null
     && itemA.countPerItem == itemB.countPerItem
     && (itemA.charges == itemB.charges || (itemA.isBoxedItem && itemB.isBoxedItem))
     && (itemA?.countKnown ?? true) == (itemB?.countKnown ?? true)
@@ -612,6 +656,9 @@ function mergeNonUniqueItems(items) {
     existItem.recognizeTime += item.recognizeTime
     existItem.recognizeTimeLeft += item.recognizeTimeLeft
     existItem.count = existItem.eids.len()
+    if (existItem?.nexusCost != null) {
+      existItem.nexusCost = existItem.nexusCost + item.nexusCost
+    }
 
     
     
@@ -664,105 +711,150 @@ function needShowQuickSlotPurchase(slot) {
   return itemsToShow.len() > 0
 }
 
+let hasEnoughVolume = @(volume) is_inventory_have_free_volume(stashEid.get(), volume)
 
-function purchaseItemsToSlot(slot, event) {
-  let { currentWeaponSlotName = null, allowed_items = [], slotName = "stash", uniqueId = "0",
-    weapUniqueId = null, weapModSlotName = null } = slot
-  let isEquipment = slotName in equipmentSlots
-  let itemInSlotVolume = slot?.volume ?? 0
-  let curStashEid = stashEid.get()
-  let curStashVolume = stashVolume.get()
-  let curStashMaxVolume = stashMaxVolume.get()
-  let playerStat = playerStats.get()
-  let itemsToShow = allowed_items
-    .filter(@(itemTemplate) !startswith(itemTemplate, "damage"))
-    .map(function(itemTemplate) {
-      let lot = getLotFromItem({ itemTemplate })
-      if (!lot)
-        return null
-      let marketItem = marketItems.get()?[lot]
-      if (!(isLotAvailable(marketItem, playerStat)))
-        return null
-      let fakeModes = marketItem?.children.items.slice(1)
-        .reduce(@(res, v) res.__update({ [v.insertIntoSlot] = mkFakeItem(v.templateName) }), {})
-      return mkFakeItem(itemTemplate, { fakeModes, marketPrice = getPriceFromLot(lot), lotId = lot })
-    })
-    .filter(@(item) item != null)
-    .sort(@(a, b) a.marketPrice <=> b.marketPrice)
+function handleOverflow(item, invDefVol, invCurVol, sendBuyFn) {
+  let ext = item?.inventoryExtension ?? 0
+  if (ext == 0)
+    return false
 
-  return {
-    event
-    itemsDataArr = itemsToShow,
-    onClick = function(item, creditsCount, isPurchaseInProgress, inventoryDefVolume, inventoryCurVolume) {
-      if (!item?.marketPrice) {
-        showMsgbox({ text = loc("shop/playerPreset/nothingToBuy") })
-        return
-      }
-      if (item.marketPrice > creditsCount) {
-        showMsgbox({ text = loc("responseStatus/Not enough money") })
-        return
-      }
-      if (itemInSlotVolume > 0 && !is_inventory_have_free_volume(curStashEid, itemInSlotVolume)) {
-        let needMore = truncateToMultiple(itemInSlotVolume - (curStashMaxVolume - curStashVolume), 0.1)
-        showNoEnoughStashSpaceMsgbox(needMore)
-        sound_play("ui_sounds/item_insufficient_funds")
-        return
-      }
-      if (!isPurchaseInProgress.get()) {
-        if (isEquipment) {
-          if ((item?.inventoryExtension ?? 0) != 0) {
-            let newMaxVolume = (item?.inventoryExtension ?? 0.0) + ((inventoryDefVolume ?? 100) / 10)
-            let isOverflow = inventoryCurVolume > newMaxVolume
-            if (isOverflow) {
-              showInventoryOverflowOnUnequipToExMsgBox(function() {
-                eventbus_send("profile_server.buyLotInSlot", [{
-                  id = item.lotId
-                  slot = weapModSlotName ?? weaponSlots?[currentWeaponSlotName] ?? equipmentSlots?[slotName] ?? slotName
-                  parentId = isEquipment || (weaponSlots?[currentWeaponSlotName] != null && weapModSlotName == null) ? "0"
-                    : weapUniqueId ?? uniqueId
-                }])
-                isPurchaseInProgress.set(true)
-              })
-              return
-            }
-          }
-        }
-        if (item?.isAmmo && item?.isBoxedItem) {
-          let volume = ceil_volume((item?.countPerStack ?? 0) > 0
-            ? max(item?.volumePerStack ?? 0, item?.volume ?? 0)
-            : item?.volume ?? 0)
-          let inventory = inventories.findvalue(@(inv) is_inventory_have_free_volume(inv.eid.get(), volume))
-          if (!inventory) {
-            showMsgbox({ text = loc("purchaseAndEquip/noSpace") })
-            return
-          }
-          eventbus_send("profile_server.buyLotInSlot", [{
-            id = item.lotId
-            slot = "inventory"
-            parentId = inventory.parentId.get()
-          }])
-          isPurchaseInProgress.set(true)
-          return
-        }
-        eventbus_send("profile_server.buyLotInSlot", [{
-          id = item.lotId
-          slot = weapModSlotName ?? weaponSlots?[currentWeaponSlotName] ?? equipmentSlots?[slotName] ?? slotName
-          parentId = isEquipment || (weaponSlots?[currentWeaponSlotName] != null && weapModSlotName == null) ? "0"
-            : weapUniqueId ?? uniqueId
-        }])
+  let newMax = ext + ((invDefVol ?? 100) / 10)
+  if (invCurVol <= newMax)
+    return false
+
+  showInventoryOverflowOnUnequipToExMsgBox(sendBuyFn)
+  return true
+}
+
+let findInventoryWithFreeVolume = @(volume) inventories
+  .filter(@(inv) inv.eid.get() != ecs.INVALID_ENTITY_ID)
+  .findvalue(@(inv) is_inventory_have_free_volume(inv.eid.get(), volume))
+
+function sendBuy(item, price, slot, parentId, isPremium, isPurchaseInProgress) {
+  if (isPurchaseInProgress.get())
+    return
+  if (isPremium) {
+    showCurrencyPurchaseMsgBox({
+      item
+      currency = "premium"
+      name = loc(item?.name ?? "")
+      price
+      cb = function() {
+        eventbus_send("profile_server.buyLotInSlot", [{ id = item.lotId, slot, parentId, usePremium = isPremium }])
         isPurchaseInProgress.set(true)
       }
-    }
+    })
+  }
+  else {
+    eventbus_send("profile_server.buyLotInSlot", [{ id = item.lotId, slot, parentId, usePremium = isPremium }])
+    isPurchaseInProgress.set(true)
   }
 }
 
-function itemRepairPrice(item) {
-  return item?.itemMarketPrice
+let handleClick = function(data) {
+  let { item, credits, premiumCredits, isPurchaseInProgress, invDefVol, invCurVol, slotName, currentWeaponSlotName,
+    weapModSlotName, uniqueId, weapUniqueId, isEquipment, itemInSlotVolume } = data
+
+  if ((item?.marketPrice ?? {}).len() <= 0) {
+    showMsgbox({ text = loc("shop/playerPreset/nothingToBuy") })
+    return
+  }
+
+  let { price, isPremium } = item.marketPrice
+  if (isPremium && price > premiumCredits) {
+    showNotEnoghPremiumMsgBox()
+    return
+  }
+
+  if (!isPremium && price > credits) {
+    showMsgbox({ text = loc("responseStatus/Not enough money") })
+    return
+  }
+
+  if (itemInSlotVolume > 0 && !hasEnoughVolume(itemInSlotVolume)) {  
+    let curVol = stashVolume.get()
+    let maxVol = stashMaxVolume.get()
+    let need = truncateToMultiple(itemInSlotVolume - (maxVol - curVol), 0.1)
+    showNoEnoughStashSpaceMsgbox(need)
+    sound_play("ui_sounds/item_insufficient_funds")
+    return
+  }
+
+  let finalSlot = weapModSlotName
+    ?? weaponSlots?[currentWeaponSlotName]
+    ?? equipmentSlots?[slotName]
+    ?? slotName
+
+  let parentId = (isEquipment || (weaponSlots?[currentWeaponSlotName] != null && weapModSlotName == null))
+    ? "0"
+    : weapUniqueId ?? uniqueId
+
+  let send = @() sendBuy(item, price, finalSlot, parentId, isPremium, isPurchaseInProgress)
+
+  if (isEquipment && handleOverflow(item, invDefVol, invCurVol, send))
+    return
+
+  if (item?.isAmmo && item?.isBoxedItem) {  
+    let volume = (item?.countPerStack ?? 0) > 0
+      ? max(item?.volumePerStack ?? 0, item?.volume ?? 0)
+      : item?.volume ?? 0
+    let inventory = findInventoryWithFreeVolume(volume)
+    if (!inventory) { 
+      showMsgbox({ text = loc("purchaseAndEquip/noSpace") })
+      return
+    }
+    sendBuy(item, price, "inventory", inventory.parentId.get(), isPremium, isPurchaseInProgress)
+    return
+  }
+  send()
+}
+
+let prepareItemsToShow = @(allowedItems) allowedItems
+  .filter(@(tpl) !startswith(tpl, "damage"))
+  .map(function(tpl) {
+    let lot = getLotFromItem({ itemTemplate = tpl })
+    if (lot == null)
+      return null
+
+    let marketItem = marketItems.get()?[lot]
+    if (!isLotAvailable(marketItem, playerStats.get()))
+      return null
+
+    let fakeModes = marketItem?.children.items.slice(1)
+      .reduce(@(res, v) res.__update({ [v.insertIntoSlot] = mkFakeItem(v.templateName) }), {})
+
+    return mkFakeItem(tpl, {
+      fakeModes,
+      marketPrice = getPriceFromLot(lot),
+      lotId = lot
+    })
+  })
+  .filter(@(x) x != null)
+  .sort(@(a, b) a.marketPrice.price <=> b.marketPrice.price)
+
+function purchaseItemsToSlot(slot, event) {
+  let { currentWeaponSlotName = null, allowed_items = [], slotName = "stash", uniqueId = "0",
+  weapUniqueId = null, weapModSlotName = null } = slot
+
+  let isEquipment = slotName in equipmentSlots
+  let itemInSlotVolume = slot?.volume ?? 0
+  let itemsDataArr = prepareItemsToShow(allowed_items)
+
+  return {
+    event
+    itemsDataArr
+    onClick = @(item, credits, premiumCredits, isPurchaseInProgress, invDefVol, invCurVol)
+      handleClick({
+        item, credits, premiumCredits, isPurchaseInProgress, invDefVol, invCurVol,
+        slotName, currentWeaponSlotName, weapModSlotName, uniqueId, weapUniqueId,
+        isEquipment, itemInSlotVolume
+      })
+  }
 }
 
 function repairCost(items) {
   return items.reduce(function(acc, val) {
-    let marketPrice = itemRepairPrice(val)
+    let marketPrice = val?.itemMarketPrice
     if (!marketPrice) {
       logerr($"BASE WORKBENCH: item {val?.itemTemplate} with null price")
       return acc
@@ -822,31 +914,43 @@ let noVolumeLog = {
 }
 
 function fastUnequipItem(item) {
+  if (mutationForbidenDueToInQueueState.get())
+    return false
+
   if (item?.slotName == REFINER_KEY_ITEM.name) {
     currentKeyItem.set(null)
     return
   }
   if (!canModifyInventory.get())
     return false
+
   local targetInventoryEid = ecs.INVALID_ENTITY_ID
-  if (!isHeroInventoryDropForbidden(item) && item?.slotName != "backpack")
-    targetInventoryEid = getInventoryEidByListType(HERO_ITEM_CONTAINER)
+  if (isOnPlayerBase.get())
+    targetInventoryEid = getInventoryEidByListType(STASH)
+  else if (!isHeroInventoryDropForbidden(item) && item?.slotName != "backpack"){
+    targetInventoryEid = getInventoryEidByListType(HERO_ITEM_CONTAINER)}
   else if (!isBackpackDropForbidder(item))
     targetInventoryEid = getInventoryEidByListType(BACKPACK0)
-  else if (isOnPlayerBase.get())
-    targetInventoryEid = getInventoryEidByListType(STASH)
+
   let itemInSlotVolume = item?.volume ?? 0
   if (itemInSlotVolume > 0 && !is_inventory_have_free_volume(targetInventoryEid, itemInSlotVolume)) {
     addPlayerLog(noVolumeLog)
     return
   }
-  if (item?.isWeapon)
+  if (item?.isWeapon && item.currentWeaponSlotName == "melee") {
+    if (item?.default_stub_item != null && !isInBattleState.get())
+      equipMeleeChoronogeneItem(null)
+    else
+      unequip_weapon_from_slot(item.currentWeaponSlotName, targetInventoryEid)
+    return
+  }
+  else if (item?.isWeapon)
     unequip_weapon_from_slot(item.currentWeaponSlotName, targetInventoryEid)
   else if (item?.isWeaponMod) {
     if (targetInventoryEid != ecs.INVALID_ENTITY_ID)
-      move_equipped_weapon_mod_to_inventory(item.currentWeaponSlotName, item.attachedItemModSlotName, targetInventoryEid)
+      move_equipped_weapon_mod_to_inventory(item.attachedTo, item.attachedItemModSlotName, targetInventoryEid)
     else
-      move_equipped_weapon_mod_to_inventory(item.currentWeaponSlotName, item.currentWeapModSlotName, ecs.INVALID_ENTITY_ID)
+      move_equipped_weapon_mod_to_inventory(item.attachedTo, item.currentWeapModSlotName, ecs.INVALID_ENTITY_ID)
   }
   else if (item?.isEquipment) {
     if ((item?.inventoryExtension ?? 0) != 0) {
@@ -889,11 +993,9 @@ inventoryVolume = stashVolume.get()
   foreach (item in items) {
     let { templateName } = item
     let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(templateName)
-    let volume = ceil_volume(
-      (template?.getCompValNullable("item__countPerStack") ?? 0) > 0
-        ? max(template?.getCompValNullable("item__volumePerStack") ?? 0, template?.getCompValNullable("item__volume") ?? 0)
-        : (template?.getCompValNullable("item__volume") ?? 0)
-    )
+    let volume = (template?.getCompValNullable("item__countPerStack") ?? 0) > 0
+      ? max(template?.getCompValNullable("item__volumePerStack") ?? 0, template?.getCompValNullable("item__volume") ?? 0)
+      : (template?.getCompValNullable("item__volume") ?? 0)
     if (!is_inventory_have_free_volume(inventoryEid, volume)) {
       let needMore = truncateToMultiple(volume - (inventoryMaxVol - inventoryVolume), 0.1)
       missingVolume += needMore
@@ -913,8 +1015,8 @@ return {
   canItemBeLoad
   unloadIsEnabled
   loadIsEnabled
-  unloadItemAmmo
-  loadItemAmmo
+  unloadAmmoClick
+  loadAmmoClick
   needShowMarketLink
   showItemInMarket
   showItemsForSlotInMarket
@@ -931,4 +1033,7 @@ return {
   needShowQuickSlotPurchase
   currentKeyItem
   checkInventoryVolume
+  actionForbiddenDueToQueueState
+  stopLoadUnloadAmmoClick
+  getInspectingAmmoCountInfo
 }

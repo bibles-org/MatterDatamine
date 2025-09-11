@@ -33,3 +33,12 @@ entity{
     item:t="hangar_35"
   }
 }
+
+entity{
+  _template:t="locked_door_marker"
+  transform:m=[[1.41162, 0, -0.272188] [0, 3.58731, 0] [0.504204, -0, 2.61491] [-400.3, 32.0597, -1095.33]]
+
+  "locked_door_marker__keyTags:list<t>"{
+    item:t="tunnel_lock"
+  }
+}

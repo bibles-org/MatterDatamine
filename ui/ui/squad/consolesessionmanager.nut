@@ -1,4 +1,5 @@
-let { is_sony } = require("%dngscripts/platform.nut")
+from "%dngscripts/platform.nut" import is_sony
+
 
 local isAvailableConsoleSession = true
 local updateData = @(_uid) null

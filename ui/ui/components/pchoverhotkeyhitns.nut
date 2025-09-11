@@ -1,11 +1,14 @@
+from "%ui/fonts_style.nut" import sub_txt
+import "%ui/hud/menus/components/mkMouseHint.nut" as mkMouseHint
+
 from "%ui/ui_library.nut" import *
 
-let { sub_txt } = require("%ui/fonts_style.nut")
 let { safeAreaVerPadding, safeAreaHorPadding } = require("%ui/options/safeArea.nut")
 let { cursorPresent } = gui_scene
 let { isGamepad } = require("%ui/control/active_controls.nut")
-let mkMouseHint = require("%ui/hud/menus/components/mkMouseHint.nut")
 let { previewPreset } = require("%ui/equipPresets/presetsState.nut")
+
+#allow-auto-freeze
 
 let hoverHotkeysWatchedList = Watched(null)
 
@@ -19,7 +22,7 @@ function getHotkeyHints(hotkeys, forTooltip = false) {
     return true
   })
   hotkeysToShow.sort(@(a, b) (a?.order ?? 0) <=> (b?.order ?? 0))
-  return hotkeysToShow.map(@(v) mkMouseHint(loc(v.locId), v.hotkeys, v?.faIcon))
+  return hotkeysToShow.map(@(v) mkMouseHint(loc(v.locId), v.hotkeys, v?.faIcon, v?.additionalText))
 }
 
 let watch = [hoverHotkeysWatchedList, cursorPresent, isGamepad, safeAreaVerPadding]

@@ -1,0 +1,127 @@
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-108.861, 34.9962, -1029.29]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_dogorsk_zone_1"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-234.831, 51.7804, -1115.83]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_dogorsk_zone_2"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-520.885, 46.6845, -1102.17]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_dogorsk_zone_3"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-243.777, 30.0196, -902.575]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_dogorsk_zone_4"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-569.291, 34.6944, -843.556]]
+  map_object_zone__radius:r=16
+  quest_target_geometry_sphere__radius:r=16
+  gather_samples_target__accesspointsCountRng:ip2=20, 20
+  objective_static_target__tag:t="gather_soil_dogorsk_zone_5"
+}
+
+entity{
+  _template:t="static_dead_body_container"
+  transform:m=[[0.884945, 0, -0.465696] [-0.0181496, 0.99924, -0.034489] [0.465342, 0.038973, 0.884273] [-344.223, 181.257, -1293.29]]
+  animchar__res:t="am_soldier_corrupted_male_b_char"
+  collres__res:t="am_soldier_corrupted_male_b_collision"
+  loot_drop_system__lootPreset:t="dogorsk_shotgun_soldier_loot_preset"
+
+  "animchar__forceVarValues:object"{
+    dead_body_pos_num:r=10
+  }
+}
+
+entity{
+  _template:t="static_dead_body_container"
+  transform:m=[[-0.937256, 0, -0.348642] [0, 1, 0] [0.348643, 0, -0.937256] [-163.652, 38, -1008.27]]
+  animchar__res:t="am_soldier_corrupted_male_a_char"
+  collres__res:t="am_soldier_corrupted_male_a_collision"
+  loot_drop_system__lootPreset:t="dogorsk_sniper_soldier_loot_preset"
+
+  "animchar__forceVarValues:object"{
+    dead_body_pos_num:r=9
+  }
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="device_safe"
+  loot_generator__allowVolumesOverflow:b=no
+  transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [-340, 0, -980]]
+  loot_generator__lootPreset:t="dogorsk_escape_device_safe_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="exit_key_safe"
+  transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [-340, 0, -980]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__lootPreset:t="dogorsk_escape_exit_keys_safe_loot_preset"
+}
+
+entity{
+  _template:t="info_map_icon"
+  map_object_marker__tooltip:t="map_info/dogorsk_tunnel"
+  map_object_marker__iconName:t="!ui/skin#map_tunnel.svg"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-413.736, 42.0378, -1013.08]]
+}
+
+entity{
+  _template:t="item_lore_platon_to_troitsky+item_in_world"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-377.499, 75.2947, -1086.44]]
+}
+
+entity{
+  _template:t="decor_mi_24p"
+  transform:m=[[0.0370993, 0.216965, 0.975474] [-0.00824565, 0.976179, -0.216808] [-0.999278, -9.31322e-10, 0.0380046] [-531.523, 87.1988, -866.72]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med"
+  transform:m=[[-0.798091, -0.533672, -0.279723] [-0.48457, 0.844397, -0.22844] [0.358109, -0.0467708, -0.932508] [-367.409, 81.3466, -805.495]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[0.727625, 0.534036, 0.430542] [-0.48457, 0.844397, -0.22844] [-0.485544, -0.0424092, 0.873183] [-362.173, 85.5644, -801.012]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[-0.379481, 0.0323762, 0.924633] [-0.48457, 0.844397, -0.22844] [-0.788154, -0.534738, -0.304744] [-364.026, 84.7372, -800.139]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[0.836806, 0.371381, -0.402284] [-0.48457, 0.844397, -0.22844] [0.254849, 0.386095, 0.886557] [-358.927, 83.4529, -815.703]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[-0.232641, -0.376143, -0.89688] [-0.48457, 0.844397, -0.22844] [0.84325, 0.381457, -0.378709] [-360.61, 82.3018, -816.388]]
+}

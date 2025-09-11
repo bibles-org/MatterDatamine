@@ -1,7 +1,8 @@
+from "%sqGlob/dasenums.nut" import EndgameControllerState
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { EndgameControllerState } = require("%sqGlob/dasenums.nut")
 
 let endgameControllerState = Watched(EndgameControllerState.NONE)
 let endgameControllerDebriefingReason = Watched(0)

@@ -1,9 +1,12 @@
+from "%ui/fonts_style.nut" import h2_txt
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
+
 from "%ui/ui_library.nut" import *
 
-let { h2_txt } = require("%ui/fonts_style.nut")
+#allow-auto-freeze
+
 let defTransform = {}
 let objectivePointsBhv = [DngBhv.DistToPriority, Behaviors.OverlayTransparency]
-let { tipCmp } = require("%ui/hud/tips/tipComponent.nut")
 
 let defaultColor = Color(220, 220, 220, 220)
 let pinggedColor = Color(255, 225, 50, 220)
@@ -30,7 +33,7 @@ function objectiveMarker(eid, children, data_params = {}, style={}) {
 
 let icon = @(iconName, params = {}) {
   rendObj = ROBJ_IMAGE
-  size = [sh(3), sh(3)]
+  size = sh(3)
   color = params?.color ?? Color(220,220,220,220)
   image = Picture($"!ui/skin#{iconName}")
   behavior = objectivePointsBhv
@@ -48,7 +51,7 @@ function objective_short(eid, marker) {
 function visible_interactable_ctor(eid, marker) {
   let children = {
     children = [
-      icon(marker.icon).__update({size = [sh(10), sh(10)], color=marker.pingged ? pinggedColor : defaultColor}),
+      icon(marker.icon).__update({size = sh(10), color=marker.pingged ? pinggedColor : defaultColor}),
       {
         rendObj = ROBJ_TEXT
         text = loc(marker.name)

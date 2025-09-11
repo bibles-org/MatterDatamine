@@ -7,14 +7,6 @@ shell_fly_sound{
   }
 }
 
-projectile_hit_entity_fx_sound{
-  _group{
-    _tags:t="sound"
-
-    "projectile_hit_entity_fx_sound__paths:shared:object"{}
-  }
-}
-
 projectile_sound{
   _group{
     _tags:t="sound"
@@ -115,10 +107,9 @@ grenade_phys_collision_sound{
     _tags:t="sound"
     phys_obj_collision_sound__path:t="player/weapon/throwable/grenade/drop"
     phys_obj_collision_sound__threshold:p2=10, 10
-    phys_obj_collision_sound__lifetime:r=0.5
-    phys_obj_collision_sound__time:r=-0.25
-    phys_obj_collision_sound__maxImpulse:r=0
+    phys_obj_collision_sound__interval:r=0.5
     phys_obj_collision_sound__omegaMul:r=0
+    phys_obj_collision_sound__numSounds:i=5
   }
 }
 
@@ -185,8 +176,9 @@ throwing_stone_phys_sound{
     _tags:t="sound"
     phys_obj_collision_sound__path:t="enemy/walker/am_trooper_male/items/screw/drop"
     phys_obj_collision_sound__threshold:p2=10, 10
-    phys_obj_collision_sound__lifetime:r=0.5
+    phys_obj_collision_sound__interval:r=0.5
     phys_obj_collision_sound__omegaMul:r=0
+    phys_obj_collision_sound__numSounds:i=5
   }
 
   _group{

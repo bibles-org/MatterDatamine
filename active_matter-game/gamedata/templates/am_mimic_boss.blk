@@ -1,0 +1,518 @@
+am_mimic_boss{
+  _use:t="loc_snapshots"
+  _use:t="animchar"
+  _use:t="am_mimic_base"
+  _use:t="am_mimic_boss_effects"
+  _use:t="am_mimic_boss_movement"
+  _use:t="am_mimic_boss_decor_tentacles"
+  _use:t="am_mimic_boss_ai"
+  _use:t="am_mimic_boss_hitpoints"
+  _use:t="am_mimic_boss_sound"
+  _use:t="creatures_dynamic_grid_object"
+  loc_snapshots__compensationSpeed:p2=4, 14
+  am_mimic_net_drop_on_ground_after_death__rayMat:t="walkRay"
+  am_mimic_net_drop_on_ground_after_death__rayMatId:i=-1
+  am_mimic_net_drop_on_ground_after_death__rayRadius:r=3.5
+  am_mimic_net_drop_on_ground_after_death__lerpKoef:r=0.5
+  am_mimic_net_drop_on_ground_after_death__noiseSpeed:r=1.8
+  am_mimic_net_drop_on_ground_after_death__noiseAmplitude:r=10
+  animchar__res:t="mimic_medium_body_a_char"
+  collres__res:t="mimic_medium_body_a_collision"
+  collres__centerNode:t="col"
+  nphys_levitating__elevation:r=6
+  nphys_levitating__prefferedElevation:r=6
+  am_mimic__innerRadius:r=0.5
+
+  "am_mimic_boss:tag"{}
+  collres{}
+  "capsule_approximation__nodeNames:array"{
+    node:t="col"
+  }
+}
+
+am_mimic_boss_death_sequence_phase_base{
+  _use:t="replicated_effect_with_duration"
+  game_effect__timeToDestroy:r=0
+  game_effect__destroyAt:r=0
+}
+
+am_mimic_boss_death_sequence_phase_attached_base{
+  _use:t="am_mimic_boss_death_sequence_phase_base"
+  _use:t="attached_replicated_effect_with_duration"
+  slot_attach__slotName:t="body"
+}
+
+am_mimic_boss_death_sequence_collapsing_effect{
+  _use:t="am_mimic_boss_death_sequence_phase_attached_base"
+  am_mimic_boss_death_sequence_collapsing_effect__scaleTo:r=1.35
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  "effects:object"{
+    mimic_boss_death_vortex_distortion_a_fx:r=1
+  }
+
+  "am_mimic_boss_death_sequence_collapsing_effect:tag"{}
+}
+
+am_mimic_boss_death_sequence_explosion_effect{
+  _use:t="am_mimic_boss_death_sequence_phase_base"
+  _use:t="add_camera_trauma_on_appear"
+  add_camera_trauma_on_appear__maxDistance:r=100
+  add_camera_trauma_on_appear__addTrauma:r=2.75
+  add_camera_trauma_on_appear__maxTrauma:r=2.5
+  create_entities_on_appear__sphereRadius:r=4
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  effect{
+    _tags:t="render"
+  }
+
+  "effects:object"{
+    mimic_boss_death_explosion_distortion_a_fx:r=1
+    mimic_boss_death_explosion_light_a_fx:r=1
+    mimic_boss_death_explosion_smoke_fx:r=1
+  }
+
+  "create_entities_on_appear__entities:array"{
+    "i:object"{
+      tmpl:t="active_matter_pile+coin_item_count_1+item_in_world+active_matter_pile_shell_free_fall"
+      chance:r=0.8
+      count:i=25
+    }
+
+    "i:object"{
+      tmpl:t="active_matter_pile+coin_item_count_2+item_in_world+active_matter_pile_shell_free_fall"
+      chance:r=0.8
+      count:i=10
+    }
+
+    "i:object"{
+      tmpl:t="active_matter_pile+coin_item_count_3+item_in_world+active_matter_pile_shell_free_fall"
+      chance:r=0.8
+      count:i=5
+    }
+
+    "i:object"{
+      tmpl:t="active_matter_pile+coin_item_count_5+item_in_world+active_matter_pile_shell_free_fall"
+      chance:r=0.8
+      count:i=3
+    }
+
+    "i:object"{
+      tmpl:t="active_matter_pile+coin_item_count_10+item_in_world+active_matter_pile_shell_free_fall"
+      chance:r=1
+      count:i=2
+    }
+
+    "i:object"{
+      tmpl:t="active_matter_pile+coin_item_count_15+item_in_world+active_matter_pile_shell_free_fall"
+      chance:r=1
+    }
+
+    "i:object"{
+      tmpl:t="active_matter_pile+coin_item_count_20+item_in_world+active_matter_pile_shell_free_fall"
+      chance:r=0.8
+    }
+
+    "i:object"{
+      tmpl:t="am_mimic"
+      chance:r=1
+      count:i=4
+    }
+
+    "i:object"{
+      tmpl:t="am_mimic"
+      chance:r=1
+    }
+
+    "i:object"{
+      tmpl:t="am_mimic"
+      chance:r=0.75
+    }
+
+    "i:object"{
+      tmpl:t="am_mimic"
+      chance:r=0.5
+      count:i=2
+    }
+  }
+}
+
+am_mimic_boss_death_sequence{
+  _use:t="death_sequence"
+
+  "game_effect_sequence__stages:array"{
+    "stage:object"{
+      affectTemplate:t="am_mimic_boss_death_sequence_collapsing_effect"
+      setupTransformPos:b=yes
+      setupTimeToDestroy:b=yes
+      duration:r=3.25
+    }
+
+    "stage:object"{
+      affectTemplate:t="am_mimic_boss_death_sequence_explosion_effect"
+      setupTransformPos:b=yes
+      duration:r=0.4
+    }
+  }
+}
+
+am_mimic_boss_hitpoints{
+  _use:t="simple_hitpoints_regeneration"
+  _use:t="am_mimic_hitpoints"
+  _use:t="death_sequence_controller"
+  death_sequence_controller__sequenceTemplate:t="am_mimic_boss_death_sequence"
+  hitpoints__hp:r=1550
+  hitpoints__maxHp:r=1550
+  hitpoints__shellSplashDmgMult:r=3
+  needsBlood:b=no
+  material:t="mimicBossFlesh"
+  lev_nav_grid_actor__projectileHitImpulse:r=0.025
+  am_mimic__legsDamageThreshold:r=0.3
+  am_mimic__serverDeathDelay:r=1e+07
+
+  _group{
+    _tags:t="server"
+    hitpoints_regeneration__timeFromLastDamage:r=85
+    hitpoints_regeneration__hp:r=25
+    hitpoints_regeneration__updateInterval:r=1
+  }
+}
+
+am_mimic_boss_effects{
+  _use:t="am_mimic_effects"
+
+  "effects:object"{
+    mimic_boss_body_aura_distortion_fx:r=1
+    mimic_boss_body_aura_smoke_fx:r=1
+    mimic_boss_body_aura_flow_cmps_fx:r=1
+  }
+}
+
+am_mimic_boss_movement{
+  _use:t="am_mimic_boss_legs"
+
+  _group{
+    _tags:t="server"
+    am_mimic_net__axis:p3=0, 0, 0
+    am_mimic_net__currentSpeed:r=0
+    am_mimic_net__lastSpeed:r=0
+    am_mimic_net__lastPos:p3=0, 0, 0
+    am_mimic_net__lastMove:p3=0, 0, 0
+    am_mimic_net__leanFwdAngle:r=0
+  }
+}
+
+am_mimic_boss_legs{
+  am_mimic_net__legGrowNormRespectLen:i=0
+  am_mimic_net__legTemplate:t="am_mimic_boss_spike_leg"
+  am_mimic_net__legsCount:ip2=18, 18
+
+  "am_mimic_net__legs:list<eid>"{}
+  _group{
+    _tags:t="server"
+    am_mimic_net__activeLegCount:i=0
+    am_mimic_net__stayLegCount:i=0
+    am_mimic_net__minLegsCount:i=6
+    am_mimic_net__recommendedLegsCount:i=10
+    am_mimic_net__traceLegDownKoefs:p3=6.2, 7, 7
+    am_mimic_net__traceLegFrontKoefs:p3=2.5, 1.8, 1.2
+    am_mimic_net__traceLegFrontMoveKoef:r=2
+    am_mimic_net__traceLegMinInterval:r=0.025
+    am_mimic_net__traceLegStamp:r=0
+    am_mimic_net__traceLegSuccessfulStamp:r=0
+  }
+
+  _group{
+    _tags:t="gameClient"
+    am_mimic__stepCameraShakeValue:r=0.65
+    am_mimic__stepDistSqCameraShake:r=512
+    am_mimic__stepFxDust:t="am_mimic_boss_spike_attack_tentacle_dust_fx"
+  }
+}
+
+am_mimic_attack_net{
+  _use:t="am_mimic_attack"
+  _use:t="replicating"
+
+  "am_mimic_attack_net:tag"{}
+}
+
+am_mimic_boss_attack_controlller{
+  _use:t="am_mimic_attack_net"
+  am_mimic_attack__approachDst:r=20
+  am_mimic_attack__reach:r=22
+  am_mimic_attack__aimDuration:r=0.8
+  am_mimic_attack__chargeDuration:r=2
+  am_mimic_attack__totalDuration:r=4
+  am_mimic_attack__traceRadius:r=1.75
+  am_mimic_attack__damage:r=10
+  am_mimic_attack__riDamage:r=50
+  am_mimic_attack__pushStrength:r=10
+  am_mimic_attack__count:ip2=4, 5
+  am_mimic_attack__gap:p2=0.1, 0.3
+  am_mimic__pushAroundAttackPointPitch:r=20
+  am_mimic__pushAroundAttackPointSpeed:r=3
+  am_mimic__pushAroundAttackPointRadius:r=5.5
+  am_mimic_attack__template:t="am_mimic_boss_attack_instance"
+  am_mimic_attack__guideDir:p3=0, 0, 0
+  mimic_boss__pushAffectTemplate:t="mimic_boss_push_affect"
+  am_mimic_net__tentacleTemplate:t="am_mimic_boss_spike_attack_tentacle"
+
+  "am_mimic_attack__instances:list<eid>"{}
+  "am_mimic_net__tentacles:list<eid>"{}
+}
+
+am_mimic_boss_decor_tentacles{
+  _group{
+    _tags:t="gameClient"
+    am_mimic_tentacle__decorTentacleMaxLen:p2=11, 13
+    am_mimic__decorTentaclesCount:ip2=20, 20
+    am_mimic__decorNoiseAmplitudeRng:p2=3, 5
+    am_mimic__decorTentacleTemplate:t="am_mimic_boss_decor_tentacle"
+
+    "am_mimic__decorTentacles:list<eid>"{}
+  }
+}
+
+am_mimic_boss_ai{
+  _use:t="lev_nav_grid_actor"
+  _use:t="beh_tree_regular_check"
+  _use:t="base_navmesh_agent_comp"
+  _use:t="am_mimic_boss_attack_controlller"
+  lev_nav_grid_actor__pathPointStopDist:r=3.25
+  lev_nav_grid_actor__velocityDamping:r=0.45
+  lev_nav_grid_actor__pathPointsVerticalDeviation:r=1
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+  beh_tree__blackboard__enemyRadius:r=20
+  mimic__agroOnAwakened:r=20
+  mimic__agroOnDamaged:r=15
+  mimic__keepInterestUntil:r=0
+  am_mimic__pursueRadius:r=130
+  beh_tree__node:t="am_mimic_boss"
+  team:i=1
+  am_mimic_net__minSpeed:r=0.5
+  lev_nav_grid_actor__maxWalkSpeed:r=5
+  beh_tree__interruptDisabled:b=no
+
+  "beh_tree:BehaviourTree"{
+    _tags:t="server"
+  }
+
+  "attract_point__eid:eid"{}
+}
+
+am_mimic_boss_sound{
+  _group{
+    _tags:t="sound"
+    am_mimic_sound__appearPath:t="enemy/walker/spikder_boss/voice_fx/appear"
+    am_mimic_sound__deathPath:t="enemy/walker/spikder_boss/voice_fx/death"
+    am_mimic_sound__stepPath:t="enemy/walker/spikder_boss/voice_fx/step"
+    am_mimic_sound__preparePath:t="enemy/walker/spikder_boss/voice_fx/attack_prepare"
+    am_mimic_sound__attackPath:t="enemy/walker/spikder_boss/voice_fx/attack"
+    am_mimic_sound__missPath:t="enemy/walker/spikder_boss/voice_fx/attack_fail"
+    am_mimic_sound__damagedPath:t="enemy/walker/spikder_boss/voice_fx/hit"
+  }
+}
+
+mimic_boss_push_affect{
+  _use:t="frog_trap_anim_affect"
+
+  "mimic_boss_push_affect:tag"{}
+}
+
+am_mimic_attack_instance_net{
+  _use:t="am_mimic_attack_instance"
+  _use:t="replicating"
+
+  "am_mimic_attack_instance_net:tag"{}
+}
+
+am_mimic_boss_attack_instance{
+  _use:t="am_mimic_attack_instance_net"
+  _use:t="am_mimic_boss_attack_hit_effect"
+}
+
+spike_leg_net{
+  _use:t="spike_leg"
+  _use:t="replicating"
+  spike_leg_net__attachmentPos:p3=0, 0, 0
+  spike_leg_net__attachmentDir:p3=0, 1, 0
+
+  "spike_leg_net:tag"{}
+  "spike_leg_net__attachedTo:eid"{}
+}
+
+am_mimic_boss_spike_leg{
+  _use:t="spike_leg_net"
+  _use:t="spike_leg_colliders_controller"
+  spike_leg__maxLen:r=18
+  spike_leg__maxLenGrowKoef:r=1.85
+  spike_leg__speed:r=20
+  spike_leg__branchCount:i=6
+  spike_leg__branchLenFactor:r=0.75
+  spike_leg__pointsCount:i=40
+  spike_leg__noiseFactor:r=0.2
+  spike_leg__noiseSpeed:r=0.3
+  spike_leg__noiseAmplitude:p2=7.5, 1.5
+  spike_leg__noiseAmplitudePow:r=2
+  spike_leg__noiseMult:p2=1, 0.3
+  spike_leg__noiseMultPow:r=2
+  spike_leg__sideFactor:r=22.5
+  spike_leg__kneeFactorTau:r=2.25
+  spike_leg__fingerShiftLen:r=1
+  spike_leg__smoothFingers:b=yes
+  spike_leg__dieSpeedMult:r=0.35
+  spike_leg__agilityRange:p2=0.8, 1
+  spike_leg__branchTemplate:t="am_mimic_boss_spike_leg_branch"
+  spike_leg__speedRndBaseKoef:r=0.8
+  spike_leg__speedRndKoefs:p2=0.4, 1.2
+  spike_leg__speedRndMults:p2=1, 0.75
+  material:t="changedFlesh"
+  material__id:i=-1
+
+  _group{
+    _tags:t="server"
+    spike_leg__pain:r=0
+    spike_leg__painToDie:r=15
+  }
+}
+
+am_mimic_boss_spike_leg_branch{
+  _use:t="spike_leg_branch"
+  _use:t="replicating"
+  spline_gen_geometry__lods_name:t="am_mimic_boss_spike_tentacle"
+  spline_gen_geometry__obj_size_mul:r=1
+  spline_gen_geometry__meter_between_objs:r=0.25
+  spline_gen_geometry__request_active:b=yes
+  spline_gen_geometry__displacement_strength:r=0.75
+  spline_gen_geometry__tiles_around:i=1
+  spline_gen_geometry__tile_size_meters:r=2
+
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.01
+    p:p2=0.05, 0.4
+    p:p2=0.2, 0.25
+    p:p2=0.95, 0.08
+    p:p2=1, 0.02
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="mimic_boss_leg_aura_distortion_fx"
+
+    effect{}
+  }
+}
+
+am_mimic_boss_spike_attack_tentacle_dust_fx{
+  _use:t="client_destroy_in_5_sec"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _tags:t="render"
+    effect__name:t="envir_dust_swirling_sand_cmps_fx"
+
+    effect{}
+  }
+}
+
+am_mimic_boss_attack_hit_effect{
+  _group{
+    _tags:t="gameClient"
+    am_mimic_attack__fxDust:t="am_mimic_boss_spike_attack_tentacle_dust_fx"
+    am_mimic_attack__soundEffect:t="impact/hammer"
+    am_mimic_attack__cameraShakeValue:r=0.9
+    am_mimic_attack__distSqCameraShake:r=12
+  }
+}
+
+spike_attack_tentacle_net{
+  _use:t="spike_attack_tentacle"
+  _use:t="replicating"
+
+  "spike_attack_tentacle_net:tag"{}
+}
+
+am_mimic_boss_spike_attack_tentacle{
+  _use:t="spike_attack_tentacle_net"
+  am_mimic_tentacle__retractTime:r=1.1
+  am_mimic_tentacle__freezeRelTime:r=0.6
+  am_mimic_tentacle__lungeRelTime:r=0.8
+  spline_gen_geometry__lods_name:t="am_mimic_boss_spike_tentacle"
+  spline_gen_geometry__tiles_around:i=1
+  spline_gen_geometry__tile_size_meters:r=3
+
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.01
+    p:p2=0.2, 0.25
+    p:p2=0.95, 0.05
+    p:p2=1, 0.02
+  }
+}
+
+am_mimic_boss_decor_tentacle{
+  _use:t="am_mimic_tentacle_geometry"
+  am_mimic_tentacle__lifeMult:r=1
+  am_mimic_tentacle__to:p3=0, 0, 0
+  am_mimic_tentacle__dir:p3=0, 0, 0
+  am_mimic_tentacle__clientDir:p3=0, 0, 0
+  am_mimic_tentacle__stamp:r=0
+  am_mimic_tentacle__at:r=0
+  am_mimic_tentacle__agility:r=0
+  am_mimic_tentacle__base:p3=0, 0, 0
+  am_mimic_tentacle__noiseSpeed:r=0.33
+  am_mimic_tentacle__noiseLenSpeed:r=0.06
+  am_mimic_tentacle__maxLen:r=0
+  am_mimic_tentacle__noiseAmplitude:r=0
+  am_mimic_tentacle__noisePhase:r=0
+  spline_gen_geometry__tiles_around:i=1
+  spline_gen_geometry__tile_size_meters:r=3
+
+  "spline_gen_geometry__radii:list<p2>"{
+    p:p2=0, 0.01
+    p:p2=0.2, 0.15
+    p:p2=0.95, 0.05
+    p:p2=1, 0.02
+  }
+}
+
+am_mimic_leg_collider{
+  _use:t="replicating"
+  editableObj:b=no
+  net__physId:i=-1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  phys_obj_net_phys__blk:t="gamedata/am/am_mimic_leg_collider.blk"
+  collision_physMatId:i=-1
+  pair_collision__tag:t="collidableToPhysObj"
+  collres__res:t="projectile_stone_a_collision"
+
+  "phys__locallyControlled:tag"{}
+  "phys__disableSnapshots:tag"{}
+  phys_obj_net_phys{}
+  base_net_phys_ptr{}
+  "phys__kinematicBody:tag"{}
+  pair_collision__gridHolders{}
+  "pair_collision__gridNames:list<t>"{
+    h:t="humans"
+    h:t="vehicles"
+  }
+
+  "collidableToPhysObj:tag"{}
+  collres{}
+}
+
+spike_leg_colliders_controller{
+  spike_leg_colliders_controller__colliderTemplate:t="am_mimic_leg_collider"
+  spike_leg_colliders_controller__collidersCount:i=11
+  spike_leg_colliders_controller__collidersDisabled:b=no
+  spike_leg_colliders_controller__updateAt:r=0
+  spike_leg_colliders_controller__updateInterval:r=0.2
+
+  "spike_leg_colliders_controller__colliders:list<eid>"{}
+}

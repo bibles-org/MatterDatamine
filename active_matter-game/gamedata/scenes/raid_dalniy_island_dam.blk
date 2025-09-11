@@ -7,10 +7,6 @@ import{
 }
 
 entity{
-  _template:t="activity_helper_manager"
-}
-
-entity{
   _template:t="am_bot_spawner"
   bot_spawner__spawnInterval:r=20
   bot_spawner__botsPerGroupMinMax:ip2=1, 3
@@ -235,6 +231,36 @@ entity{
   "level__weatherChoice:object"{
     weather_dalniy_island_overcast:r=1
     weather_dalniy_island_cloudy:r=1
+    weather_dalniy_island_poor:r=1
+
+    "weather_dalniy_island_rain:object"{
+      weight:r=1
+
+      "entities:array"{
+        "entities:object"{
+          template:t="camera_rain_heavy_template"
+
+          "components:object"{
+            drop_splashes__volumetricSplashScale:r=0.5
+            drop_splashes__spriteSplashScale:r=7.25
+            drop_splashes__iterationTime:r=2
+            drop_splashes__distance:r=20
+            far_rain__speed:r=1
+            far_rain__wind:r=8
+            far_rain__density:r=10
+            far_rain__length:r=1
+            far_rain__alpha:r=1
+            far_rain__width:r=1
+            far_rain__alpha_fade_speed_begin:r=150
+            far_rain__alpha_fade_speed_end:r=400
+            puddles__growthLimit:r=1
+            puddles__growthRate:r=1
+            rain_ripples__size:r=0.04
+            wetness__strength:r=0.6
+          }
+        }
+      }
+    }
   }
 
   "level__timeVec:array"{

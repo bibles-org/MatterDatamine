@@ -13,7 +13,7 @@ let logEntries = Computed(function() {
     return []
   }
 
-  let battleResult = lastBattleResult.get() ?? journalBattleResult.get()
+  let battleResult = journalBattleResult.get() ?? lastBattleResult.get()
   if (battleResult == null) {
     return []
   }

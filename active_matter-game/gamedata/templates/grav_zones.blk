@@ -1,37 +1,16 @@
-gravity_zones_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="gravity_zones"
-  grid_holder__typeHash:i=0
-  grid_holder__cellSize:i=32
-
-  grid_holder{}
-}
-
-gravity_zones_grid_obj{
-  grid_obj__gridType:t="gravity_zones"
-  grid_obj__hidden:i=0
-  grid_obj__fixedTmScale:r=-1
-  _replicated:t="grid_obj__hidden"
-  _tracked:t="grid_obj__hidden"
-
-  grid_obj{}
-  "grid_obj__scaledBoxBounding:tag"{}
-  "net__alwaysInScope:tag"{}
-}
-
 gravity_zone_base{
   _use:t="replicating"
-  _use:t="gravity_zones_grid_obj"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="gravity_zones_static_grid_object"
   grav_zone__itm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   grav_zone__precalcScale:p3=1, 1, 1
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   _tracked:t="transform"
   grav_zone__type:i=0
   grav_zone__isImportant:b=no
   grav_zone__level:i=1
   grav_zone__weight:r=1
+
+  "net__alwaysInScope:tag"{}
 }
 
 gravity_zone_sphere{
@@ -58,6 +37,7 @@ gravity_zone_cylinder{
 gravity_zone_sphere_rad{
   _use:t="gravity_zone_sphere"
   grav_zone__type:i=1
+  grid_obj__fixedTmScale:r=-1
 }
 
 gravity_zone_15m{
@@ -83,6 +63,8 @@ gravity_zone_box_gd_island{
   grav_zone__boxBorderX:p2=2, 2
   grav_zone__boxBorderY:p2=0, 0
   grav_zone__boxBorderZ:p2=2, 2
+
+  "grav_zone__Visual:tag"{}
 }
 
 antigrav_character{
@@ -275,6 +257,12 @@ allow_inner_gravity_zones_visual_effects{
 
 gravity_zone_gd_flat{
   _use:t="gravity_zone_box"
+
+  "grav_zone__Visual:tag"{}
+}
+
+gravity_zone_visual_tag{
+  "grav_zone__Visual:tag"{}
 }
 
 dafx_gravity_zone_buffer_gpu{
@@ -284,4 +272,5 @@ dafx_gravity_zone_buffer_gpu{
   dafg_gravity_zone__camera_pos_threshold:r=5
 
   "dafx_gravity_zone_buffer_gpu:UniqueBufHolder"{}
+  "dafx_gravity_zone_buffer_gpu_staging:UniqueBuf"{}
 }

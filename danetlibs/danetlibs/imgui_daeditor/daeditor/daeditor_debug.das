@@ -1,6 +1,6 @@
 options no_aot
 
-require app
+require app // set_timespeed, get_timespeed
 require ecs
 require math.base
 require strings

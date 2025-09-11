@@ -91,7 +91,7 @@ gun_delayed_shot_sound{
 base_gun_overheat_sound{
   _group{
     _tags:t="sound"
-    gun_overheat_sound__gunOverheatToVar:p2=0.4, 0.99
+    gun_overheat_sound__gunOverheatToVar:p2=0.01, 1
     gun_overheat_sound__path:t=""
 
     "gun_overheat_sound__event:SoundEvent"{}
@@ -161,7 +161,6 @@ gun_owner_sound_group_for_gun_sound{
 }
 
 gun_sound{
-  _use:t="sound_banks_state"
   _use:t="sound_irqs"
   _use:t="sound_tags"
   _use:t="pistol_gun_shot_dry_sound"
@@ -170,13 +169,13 @@ gun_sound{
   _group{
     gun_sound__forceOneshot:b=no
     gun_sound__forceOneshotEnemy:b=no
-    gun_sound__shotLoopTimeout:r=-1
+    gun_sound__shotLoopTimeout:r=0
+    gun_sound__occlusionPos:p3=0, 0, 0
     gun_sound__deltaTime:p4=1, 1, 1, 1
     gun_sound__playerTimeBetweenShotsMad:p2=2, 0
     gun_sound__netTimeBetweenShotsMad:p2=2, 0.1
     gun_sound__startLoopWithNOneshots:i=0
     gun_sound__numShotsInLoop:i=-1
-    gun_sound__isEnabled:b=yes
     _tags:t="sound"
 
     "gun_sound__event:SoundEvent"{}
@@ -279,4 +278,14 @@ rifle_gun_aim_sound{
       hero:t="player/walker/am_trooper_male/foley_mov/common/riffle/aim_off"
     }
   }
+}
+
+gunsound_base_mgun{
+  _use:t="tankgun_machinegun_overheat_sound"
+  _use:t="tankgun_machinegun_reload_sounds"
+}
+
+gunsound_base_cannon{
+  _use:t="tankgun_cannon_overheat_sound"
+  _use:t="tankgun_cannon_reload_sounds"
 }

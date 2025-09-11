@@ -1,5 +1,8 @@
+from "%sqstd/qrCode.nut" import generateQrBlocks
+
 from "%darg/ui_imports.nut" import *
-let { generateQrBlocks } = require("%sqstd/qrCode.nut")
+
+#allow-auto-freeze
 
 let mulArr = @(arr, mul) arr.map(@(v) v * mul)
 

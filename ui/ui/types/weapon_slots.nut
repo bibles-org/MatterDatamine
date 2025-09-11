@@ -9,7 +9,7 @@ enum WeaponSlots {
   EWS_NUM = 7
 }
 
-let weaponSlotsKeys = {
+let weaponSlotsKeys = static {
   [WeaponSlots.EWS_PRIMARY] = "primary",
   [WeaponSlots.EWS_SECONDARY] = "secondary",
   [WeaponSlots.EWS_TERTIARY] = "tertiary",
@@ -19,7 +19,7 @@ let weaponSlotsKeys = {
   [WeaponSlots.EWS_UNARMED] = "unarmed",
 }
 
-return {
+return freeze({
   EWS_PRIMARY = WeaponSlots.EWS_PRIMARY
   EWS_SECONDARY = WeaponSlots.EWS_SECONDARY
   EWS_TERTIARY = WeaponSlots.EWS_TERTIARY
@@ -28,4 +28,4 @@ return {
   EWS_UNARMED = WeaponSlots.EWS_UNARMED
   EWS_NUM = WeaponSlots.EWS_NUM
   weaponSlotsKeys
-}
+})

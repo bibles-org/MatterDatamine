@@ -1,0 +1,51 @@
+entity{
+  _template:t="raid_description"
+  raid_description__raidType:t="pvp_assault"
+  raid_description__difficulty:t="dif_hard"
+
+  "raid_description__enemies:list<t>"{
+    item:t="operative"
+  }
+
+  "raid_description__images:list<t>"{
+    item:t="ui/zone_thumbnails/nexus_vanilla_mall_assault_1"
+    item:t="ui/zone_thumbnails/nexus_vanilla_mall_assault_2"
+    item:t="ui/zone_thumbnails/nexus_vanilla_mall_assault_3"
+  }
+
+  "raid_description__mcImages:list<t>"{}
+}
+
+entity{
+  _template:t="static_cam"
+  camera__active:b=yes
+  transform:m=[[0.653097, 0.250108, -0.714782] [-0.46803, 0.875342, -0.121351] [0.595327, 0.413792, 0.688739] [-26.2321, 114.488, -35.2926]]
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_vanilla_mall_point_a_precaptured.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_vanilla_mall_point_c_precaptured.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_vanilla_mall_signs_assault.blk"
+}
+
+entity{
+  _template:t="spawnBase+nexus_first_team"
+  transform:m=[[-0.930598, 0, -0.366044] [0, 1, 0] [0.366044, 0, -0.930598] [24.8403, 104.27, 25.5405]]
+  spawnBase__spawnRadius:r=1.5
+}
+
+entity{
+  _template:t="spawnBase+nexus_second_team"
+  transform:m=[[0.832092, 0, 0.554638] [0, 1, -0] [-0.554638, 0, 0.832092] [-55.1627, 114.959, -32.2312]]
+  spawnBase__spawnRadius:r=1.5
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_vanilla_mall_common.blk"
+}

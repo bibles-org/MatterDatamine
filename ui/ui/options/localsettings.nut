@@ -1,6 +1,7 @@
+from "settings" import get_setting_by_blk_path, set_setting_by_blk_path_and_save
+
 from "%ui/ui_library.nut" import *
 
-let {get_setting_by_blk_path, set_setting_by_blk_path_and_save} = require("settings")
 return function(settingsPath, write = true) {
   
   return function(defVal, saveId) {

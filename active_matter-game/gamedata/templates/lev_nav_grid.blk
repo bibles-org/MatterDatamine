@@ -1,0 +1,50 @@
+lev_nav_grid_path_finder{
+  "lev_nav_grid_path_finder__grid_cell__flags:list<i>"{}
+  "lev_nav_grid_path_finder__grid_cell__parent:list<i>"{}
+  "lev_nav_grid_path_finder__grid_cell__costs:list<p3>"{}
+  "lev_nav_grid_path_finder__openList:list<i>"{}
+  "lev_nav_grid_path_finder__closedList:list<i>"{}
+}
+
+lev_nav_grid{
+  _use:t="lev_nav_grid_path_finder"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  lev_nav_grid__gridSize:ip3=3, 3, 3
+  lev_nav_grid__levitationHeight:p2=5, 12
+  lev_nav_grid__pathOriginCellIdx:ip3=0, 0, 0
+  lev_nav_grid__gridCellRadius:r=3
+
+  "lev_nav_grid__grid_cell__flags:list<i>"{}
+  "lev_nav_grid__grid_cell__neighborLinks:list<i>"{}
+}
+
+lev_nav_grid_actor{
+  lev_nav_grid_actor__customPhysUpdate:b=no
+  lev_nav_grid_actor__currentPathIdx:i=0
+  lev_nav_grid_actor__pathPointStopDist:r=1
+  lev_nav_grid_actor__upDir:p3=0, 1, 0
+  lev_nav_grid_actor__maxWalkSpeed:r=6
+  lev_nav_grid_actor__currentWalkVelocity:p3=0, 0, 0
+  lev_nav_grid_actor__acceleration:r=0.5
+  lev_nav_grid_actor__velocityDamping:r=0.25
+  lev_nav_grid_actor__updatePathAt:r=0
+  lev_nav_grid_actor__updatePathInterval:r=2
+
+  "lev_nav_grid_actor:tag"{}
+  "lev_nav_grid_actor__gridEid:eid"{}
+  "lev_nav_grid_actor__path:list<i>"{}
+  "lev_nav_grid_actor__pathPoints:list<p3>"{}
+}
+
+lev_nav_grid_path_finder_test_start{
+  _use:t="lev_nav_grid_actor"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "lev_nav_grid_path_finder_test_start:tag"{}
+}
+
+lev_nav_grid_path_finder_test_end{
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "lev_nav_grid_path_finder_test_end:tag"{}
+}

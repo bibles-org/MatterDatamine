@@ -1,9 +1,11 @@
+from "%sqGlob/offline_mode.nut" import disableRemoteNetServices
+
+import "steam" as steam
+import "%ui/login/login_cb.nut" as login_cb
+import "%ui/login/login_cb_steam.nut" as login_steam_cb
+
 from "%ui/ui_library.nut" import *
 
-let steam = require("steam")
-let { disableRemoteNetServices } = require("%sqGlob/offline_mode.nut")
-let login_cb = require("%ui/login/login_cb.nut")
-let login_steam_cb = require("%ui/login/login_cb_steam.nut")
 
 let auth_result = require("%ui/login/stages/auth_result.nut")
 let char_stage = require("%ui/login/stages/char.nut")
@@ -38,7 +40,7 @@ if (steam.is_running()) {
   }
 }
 
-return {
+return freeze({
   stages = [
     eula_before_login
     go_login
@@ -51,5 +53,4 @@ return {
   ]
   onSuccess = login_cb.onSuccess
   onInterrupt = login_cb.onInterrupt
-}
-
+})

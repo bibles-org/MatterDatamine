@@ -1,9 +1,11 @@
+from "%ui/fonts_style.nut" import tiny_txt
+from "%ui/components/colors.nut" import TextNormal
+
 from "%ui/ui_library.nut" import *
 
-let { tiny_txt } = require("%ui/fonts_style.nut")
-let { TextNormal } = require("%ui/components/colors.nut")
 let userPoints = require("%ui/hud/compass/compass_user_point.nut")
 
+#allow-auto-freeze
 
 let lookDirection = {
   data = {
@@ -14,7 +16,7 @@ let lookDirection = {
 
   
   rendObj = ROBJ_VECTOR_CANVAS
-  size = [hdpx(10), hdpx(7)]
+  size = static [hdpx(10), hdpx(7)]
   color = TextNormal
   commands = [
     [VECTOR_LINE, 0, 0, 50,  100],
@@ -55,7 +57,7 @@ function compassElem(text, angle, lineHeight=hdpx(5), textStyle=tiny_txt) {
 let compassFovSettings = {}
 
 let defaultsCompassObject = [
-  {watch = userPoints, childrenCtor = @() userPoints.value}
+  {watch = userPoints, childrenCtor = @() userPoints.get()}
 ]
 
 let compassCardinalDir = @(text, angle) compassElem(text, angle, hdpx(6))
@@ -74,6 +76,7 @@ local mkCompassStrip = kwarg(function mkCompassStripImlp(diameter=defaultRadius,
       }
     )
   return function(){
+    #forbid-auto-freeze
     let compassDirs = []
     let cardinalDirections = ["0", "45", "90", "135", "180", "225", "270", "315"]
     for (local angle = 0; angle < 360; angle += 5) {
@@ -82,6 +85,7 @@ local mkCompassStrip = kwarg(function mkCompassStripImlp(diameter=defaultRadius,
       compassDirs.append(isCardinal ? compassCardinalDir(cardinalDirections[cardinalDir], angle) :
                           compassNotchDir(angle))
     }
+    #allow-auto-freeze
     let animatedDirs = {
       size = [ diameter, diameter ]
       behavior = DngBhv.PlaceOnRoundCompassStrip

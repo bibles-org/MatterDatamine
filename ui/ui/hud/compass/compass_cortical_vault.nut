@@ -1,12 +1,16 @@
+from "%ui/hud/state/cortical_vaults_es.nut" import corticalVaultsGetWatched
+
 from "%ui/ui_library.nut" import *
 
-let { corticalVaultsSet, corticalVaultsGetWatched } = require("%ui/hud/state/cortical_vaults_es.nut")
+#allow-auto-freeze
+
+let { corticalVaultsSet } = require("%ui/hud/state/cortical_vaults_es.nut")
 let { isNexus } = require("%ui/hud/state/nexus_mode_state.nut")
 let img = @() {
   rendObj = ROBJ_IMAGE
   image = Picture($"ui/skin#microchip.svg:{hdpxi(16)}:{hdpxi(16)}:P")
   color = Color(255, 255, 255)
-  size = [hdpxi(16), hdpxi(16)]
+  size = hdpxi(16)
 }
 
 function mkCompassCorticalVault(eid) {
@@ -14,12 +18,12 @@ function mkCompassCorticalVault(eid) {
   return function() {
     return {
       watch = cvWatched
-      transform = {}
+      transform = static {}
       data = {
         worldPos = cvWatched.get().pos
       }
       children = img
-      size = [hdpxi(16), hdpxi(16)]
+      size = hdpxi(16)
     }
   }
 }

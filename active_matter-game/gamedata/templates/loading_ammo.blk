@@ -1,8 +1,5 @@
 loading_ammo_controller{
   _use:t="loading_ammo_controller_sound"
-  loading_ammo_controller__state:i=0
-  _tracked:t="loading_ammo_controller__state"
-  _replicated:t="loading_ammo_controller__state"
   human_anim__loadingAmmoProgressVarId:i=-1
   human_anim__loadingAmmoTypeVarId:i=-1
   _tracked:t="loading_ammo_controller__loadingAffectEid"
@@ -21,7 +18,7 @@ loading_ammo_controller{
 }
 
 base_loading_ammo_affect{
-  _use:t="replicated_game_effect"
+  _use:t="game_effect_base"
   loading_ammo_affect__totalAmmoToLoad:i=0
   loading_ammo_affect__wishToLoad:b=no
 

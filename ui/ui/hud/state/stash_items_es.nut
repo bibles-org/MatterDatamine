@@ -8,7 +8,7 @@ let stashItemsSortingEnabled = Watched(true)
 
 ecs.register_es("set_player_stash_inventory_state_ui",
   {
-    [["onInit", "onChange"]] = @(_eid, comp) stashEid(comp.player_on_base_components__stashEid)
+    [["onInit", "onChange"]] = @(_eid, comp) stashEid.set(comp.player_on_base_components__stashEid)
     onDestroy = function(_eid, _comp){
       stashEid.set(ecs.INVALID_ENTITY_ID)
     }
@@ -24,10 +24,10 @@ ecs.register_es("set_player_stash_inventory_state_ui",
 ecs.register_es("track_stash_content_ui_es",
   {
     [["onInit", "onChange"]] = function(_evt, eid, comp) {
-      if (eid != stashEid.value)
+      if (eid != stashEid.get())
         return
-      stashItemsMergeEnabled(comp.itemContainer__uiItemsMergeEnabled)
-      stashItemsSortingEnabled(comp.itemContainer__uiItemsSortingEnabled)
+      stashItemsMergeEnabled.set(comp.itemContainer__uiItemsMergeEnabled)
+      stashItemsSortingEnabled.set(comp.itemContainer__uiItemsSortingEnabled)
     }
 
   },

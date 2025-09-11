@@ -1,8 +1,9 @@
+from "settings" import get_setting_by_blk_path
+from "%ui/mainMenu/menus/options/options_lib.nut" import getOnlineSaveData, mkSliderWithText, optionCtor
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {get_setting_by_blk_path} = require("settings")
-let {getOnlineSaveData, mkSliderWithText, optionCtor} = require("options_lib.nut")
 
 let setCameraFovQuery = ecs.SqQuery("setCameraFovQuery", {
   comps_rw = [ ["fovSettings", ecs.TYPE_FLOAT] ],

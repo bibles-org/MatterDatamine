@@ -1,10 +1,13 @@
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/components/colors.nut" import TextNormal
+
 from "%ui/ui_library.nut" import *
 
-let { body_txt } = require("%ui/fonts_style.nut")
-let { TextNormal } = require("%ui/components/colors.nut")
 let userPoints = require("%ui/hud/compass/compass_user_point.nut")
 let { loudNoiseLevel } = require("%ui/hud/player_info/loud_noise_ui.nut")
 let { assistantSpeakingScript } = require("%ui/hud/state/notes.nut")
+
+#allow-auto-freeze
 
 let step = 5
 let defaultSize = [hdpx(600), hdpx(34)]
@@ -38,7 +41,7 @@ let lookDirection = {
   valign = ALIGN_TOP
 
   rendObj = ROBJ_VECTOR_CANVAS
-  size = [hdpx(8), hdpx(8)]
+  size = hdpx(8)
   lineWidth = 2.0
   pos = [0, -hdpx(4)]
   color = TextNormal
@@ -50,6 +53,7 @@ let lookDirection = {
 
 
 function compassElem(text, angle, scale, lineHeight=hdpx(10)) {
+  #forbid-auto-freeze
   let res = {
     data = {
       angle = angle 
@@ -94,11 +98,11 @@ let compassNotchDir = @(angle, scale) compassElem(null, angle, microCharScaleDef
 
 
 let defaultsCompassObject = [
-  {watch = userPoints, childrenCtor = @() userPoints.value}
+  {watch = userPoints, childrenCtor = @() userPoints.get()}
 ]
 
 function mkStraightCompassStrip(compassObjects=[], globalScale = 1.0) {
-  let children = (defaultsCompassObject.extend(compassObjects)).map(@(v) @(){
+  let children = ([].extend(defaultsCompassObject, compassObjects)).map(@(v) @(){
         size = flex()
         data = compassFovSettings
         behavior = DngBhv.PlaceOnCompassStrip
@@ -108,6 +112,7 @@ function mkStraightCompassStrip(compassObjects=[], globalScale = 1.0) {
       }
     )
   return function(){
+    #forbid-auto-freeze
     let dirChildren = [lookDirection]
     let cardinalDirections = ["0", "45", "90", "135", "180", "225", "270", "315"]
     let minStep = step
@@ -118,7 +123,7 @@ function mkStraightCompassStrip(compassObjects=[], globalScale = 1.0) {
         ? compassCardinalDir(cardinalDirections[cardinalDir], angle, globalScale)
         : compassNotchDir(angle, globalScale))
     }
-
+    #allow-auto-freeze
     return {
       size = defaultSize
       vplace = ALIGN_TOP

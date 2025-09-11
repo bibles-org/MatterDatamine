@@ -1,6 +1,7 @@
+from "jwt" import decode as decode_jwt
+from "dagor.debug" import logerr
+
 from "frp" import *
-let decode_jwt = require("jwt").decode
-let {logerr} = require("dagor.debug")
 
 let permissionsPublicKey = @"
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDq1fQVfvjjJaxYIGzYZ/SI89kY

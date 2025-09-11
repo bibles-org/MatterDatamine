@@ -1,16 +1,27 @@
-let {voiceActivationMode, voiceRecordingEnable, voice_activation_modes, setRecordingEnabled} = require("%ui/voiceChat/voice_settings.nut")
+from "%ui/voiceChat/voice_settings.nut" import voiceActivationMode, voiceRecordingEnable, voice_activation_modes,
+  proximityVoiceRecordingEnable, setRecordingEnabled
 
 return {
   eventHandlers = {
     ["VoiceChat.Record"] = function(_event) {
-      if (voiceActivationMode.value == voice_activation_modes.pushToTalk)
+      if (voiceActivationMode.get() == voice_activation_modes.pushToTalk)
         setRecordingEnabled(true)
-      else if (voiceActivationMode.value == voice_activation_modes.toggle)
-        setRecordingEnabled(!voiceRecordingEnable.value)
+      else if (voiceActivationMode.get() == voice_activation_modes.toggle)
+        setRecordingEnabled(!voiceRecordingEnable.get())
     },
     ["VoiceChat.Record:end"] = function(_event) {
-      if (voiceActivationMode.value == voice_activation_modes.pushToTalk)
+      if (voiceActivationMode.get() == voice_activation_modes.pushToTalk)
         setRecordingEnabled(false)
-    }
+    },
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   }
 }

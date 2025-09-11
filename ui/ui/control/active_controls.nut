@@ -1,10 +1,10 @@
+from "console" import register_command as console_register_command
+from "dainput2" import set_actions_binding_column_active
+from "eventbus" import eventbus_send, eventbus_subscribe
 from "%ui/ui_library.nut" import gui_scene, mkWatched, Computed, Watched, log
 
-let console_register_command = require("console").register_command
-let {set_actions_binding_column_active} = require("dainput2")
-let { eventbus_send, eventbus_subscribe } = require("eventbus")
 let platform = require("%dngscripts/platform.nut")
-let controlsTypes = require("controls_types.nut")
+let controlsTypes = require("%ui/control/controls_types.nut")
 let forcedControlsType = mkWatched(persist, "forcedControlsType")
 let defRaw = platform.is_pc ? 0 : 1
 let lastActiveControlsTypeRaw = mkWatched(persist, "lastActiveControlsTypeRaw", defRaw)
@@ -20,7 +20,7 @@ let lastActiveControlsType = mkWatched(persist, "lastActiveControlType", def)
 
 const EV_FORCE_CONTROLS_TYPE = "forced_controls_type"
 function setForcedControlsType(v){
-  forcedControlsType(v)
+  forcedControlsType.set(v)
 }
 
 enum ControlsTypes {
@@ -45,25 +45,25 @@ function update_input_types(new_val){
     ctype = controlsTypes.ds4gamepad
   else if (platform.is_nswitch)
     ctype = controlsTypes.nxJoycon
-  lastActiveControlsTypeRaw.update(new_val ?? defRaw)
-  lastActiveControlsType.update(ctype)
+  lastActiveControlsTypeRaw.set(new_val ?? defRaw)
+  lastActiveControlsType.set(ctype)
 }
 
-forcedControlsType.subscribe(function(val) {
+forcedControlsType.subscribe_with_nasty_disregard_of_frp_update(function(val) {
   if (val)
     update_input_types(val)
 })
 
 eventbus_subscribe(EV_INPUT_USED, function(msg) {
-  if ([null, 0].contains(forcedControlsType.value))
+  if ([null, 0].contains(forcedControlsType.get()))
     update_input_types(msg.val)
 })
 
-let isGamepad = Computed(@() forcedControlsType.value == ControlsTypes.GAMEPAD || [
+let isGamepad = Computed(@() forcedControlsType.get() == ControlsTypes.GAMEPAD || [
                                   controlsTypes.x1gamepad,
                                   controlsTypes.ds4gamepad,
                                   controlsTypes.nxJoycon
-                                ].contains(lastActiveControlsType.value)
+                                ].contains(lastActiveControlsType.get())
                             )
 keepref(isGamepad)
 
@@ -74,24 +74,24 @@ let wasGamepad = mkWatched(persist, "wasGamepad", function() {
   return wasGamepadV
 }())
 
-let enabledGamepadControls = Watched(!platform.is_pc || isGamepad.value)
+let enabledGamepadControls = Watched(!platform.is_pc || isGamepad.get())
 
 if (platform.is_pc){
-  wasGamepad.subscribe(@(v) enabledGamepadControls(v))
-  let setGamePadActive = @(v) set_actions_binding_column_active(GAMEPAD_COLUMN, v && forcedControlsType.value != ControlsTypes.KB_MOUSE)
-  enabledGamepadControls.subscribe(setGamePadActive)
-  forcedControlsType.subscribe(@(_v) setGamePadActive(enabledGamepadControls.value))
-  setGamePadActive(isGamepad.value)
+  wasGamepad.subscribe_with_nasty_disregard_of_frp_update(@(v) enabledGamepadControls.set(v))
+  let setGamePadActive = @(v) set_actions_binding_column_active(GAMEPAD_COLUMN, v && forcedControlsType.get() != ControlsTypes.KB_MOUSE)
+  enabledGamepadControls.subscribe_with_nasty_disregard_of_frp_update(setGamePadActive)
+  forcedControlsType.subscribe_with_nasty_disregard_of_frp_update(@(_v) setGamePadActive(enabledGamepadControls.get()))
+  setGamePadActive(isGamepad.get())
 }
 
-isGamepad.subscribe(function(v) {
-  wasGamepad(wasGamepad.value || v)
+isGamepad.subscribe_with_nasty_disregard_of_frp_update(function(v) {
+  wasGamepad.set(wasGamepad.get() || v)
   log($"isGamepad changed to = {v}")
   gui_scene.setConfigProps({gamepadCursorControl = v})
 })
 
 
-return {
+return freeze({
   controlsTypes
   lastActiveControlsType
   lastActiveControlsTypeRaw
@@ -101,4 +101,4 @@ return {
   forcedControlsType
   ControlsTypes
   setForcedControlsType
-}
+})

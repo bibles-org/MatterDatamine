@@ -1,20 +1,21 @@
+import "%ui/components/msgbox.nut" as msgbox
+
+from "eventbus" import eventbus_subscribe
 from "%ui/ui_library.nut" import *
 
 let platform = require("%dngscripts/platform.nut")
-let {isProductionCircuit} = require("%sqGlob/appInfo.nut")
-let msgbox = require("%ui/components/msgbox.nut")
-let { eventbus_subscribe } = require("eventbus")
+let { isProductionCircuit } = require("%sqGlob/appInfo.nut")
 
 let dbgMultiplayerPermissions = Watched(true)
 local checkMultiplayerPermissions = function checkMultiplayerPermissionsImpl() { 
-  if (dbgMultiplayerPermissions.value)
+  if (dbgMultiplayerPermissions.get())
     return true
   else
     msgbox.showMsgbox({text = loc("No multiplayer permissions")})
 }
 console_register_command(function() {
-  dbgMultiplayerPermissions(!dbgMultiplayerPermissions.value)
-  console_print($"mutliplayer permissions set to: {dbgMultiplayerPermissions.value}")
+  dbgMultiplayerPermissions.set(!dbgMultiplayerPermissions.get())
+  console_print($"mutliplayer permissions set to: {dbgMultiplayerPermissions.get()}")
 }, "feature.toggleMultiplayerPermissions")
 
 if (platform.is_ps5) {
@@ -23,7 +24,7 @@ if (platform.is_ps5) {
   let { suggest_psplus } = require("sony.store")
 
   function suggestAndAllowPsnPremiumFeatures() {
-    if (hasPremium() || isProductionCircuit.value) 
+    if (hasPremium() || isProductionCircuit.get()) 
       return true
 
     suggest_psplus("psPlusSuggested", {})

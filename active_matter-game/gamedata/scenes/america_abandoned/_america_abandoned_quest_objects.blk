@@ -1,0 +1,152 @@
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="primary_contract_device"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [-383.46, 16, 284.91]]
+  loot_generator__lootPreset:t="america_abandoned_xenos_primary_contract_device_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="primary_contract_key_body"
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [-383.46, 16, 284.91]]
+  loot_generator__lootPreset:t="america_abandoned_xenos_primary_contract_key_loot_preset"
+}
+
+entity{
+  _template:t="photographing_target"
+  transform:m=[[7.70376, 0, 0.5512] [0, 7.3093, -0] [-0.933804, 0, 13.0512] [-299.477, 41.7351, 359.679]]
+  objective_static_target__tag:t="photo_america_anomaly_3"
+  photographing_target__name:t="photo/photo_america_anomaly_3"
+  map_object_marker__iconName:t="!ui/skin#eye.svg"
+  map_object__show:b=no
+  photographing_target__alwaysVisible:b=no
+}
+
+entity{
+  _template:t="area_decor_spikes_dense"
+  transform:m=[[19.2621, 0, -19.241] [0, 26.2289, 0] [4.50203, -0, 4.50697] [-304.899, 24.4199, 352.188]]
+}
+
+entity{
+  _template:t="area_decor_distortion"
+  transform:m=[[19.2621, 0, -19.241] [0, 26.2289, 0] [4.50203, -0, 4.50697] [-304.899, 24.4199, 352.188]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="tower_crane_jib_a"
+  transform:m=[[0.385837, 0.899148, 0.206549] [-0.792709, 0.437645, -0.424359] [-0.471956, -1.49012e-08, 0.881622] [-313.764, 40.5054, 349.249]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="tower_crane_jib_a"
+  transform:m=[[0.385837, 0.899148, 0.206549] [-0.792709, 0.437645, -0.424359] [-0.471956, -1.49012e-08, 0.881622] [-310.937, 40.5054, 343.969]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="tower_crane_jib_a"
+  transform:m=[[0.385837, 0.899148, 0.206549] [-0.792709, 0.437645, -0.424359] [-0.471956, -1.49012e-08, 0.881622] [-308.118, 40.5054, 338.702]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="tower_crane_jib_a"
+  transform:m=[[0.357262, -0.585698, -0.727545] [-0.187458, 0.718138, -0.670177] [0.914999, 0.375813, 0.146769] [-300.959, 42.0504, 335.739]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="tower_crane_jib_a"
+  transform:m=[[0.357262, -0.585698, -0.727545] [-0.187458, 0.718138, -0.670177] [0.914999, 0.375813, 0.146769] [-295.464, 44.3071, 336.62]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="tower_crane_jib_a"
+  transform:m=[[0.92353, -0.34755, 0.162177] [0.372133, 0.709735, -0.598159] [0.0927871, 0.612769, 0.784796] [-314.017, 47.5655, 369.629]]
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-375.893, 5.28533, 190.315]]
+  map_object_zone__radius:r=8
+  quest_target_geometry_sphere__radius:r=8
+  gather_samples_target__accesspointsCountRng:ip2=15, 15
+  objective_static_target__tag:t="gather_soil_america_zone_1"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-450.42, 4.79308, 370.97]]
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=20
+  gather_samples_target__accesspointsCountRng:ip2=30, 30
+  objective_static_target__tag:t="gather_soil_america_zone_2"
+}
+
+entity{
+  _template:t="ground_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-249.088, 5.25229, 422.392]]
+  map_object_zone__radius:r=8
+  quest_target_geometry_sphere__radius:r=8
+  gather_samples_target__accesspointsCountRng:ip2=15, 15
+  objective_static_target__tag:t="gather_soil_america_zone_3"
+}
+
+entity{
+  _template:t="water_gather_samples_zone_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-395.595, 1.51932, 330.152]]
+  gather_samples_target__accesspointsCountRng:ip2=10, 10
+  objective_static_target__tag:t="gather_water_america_zone_1"
+  map_object_zone__radius:r=8
+  quest_target_geometry_sphere__radius:r=8
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="hummer_hmmwv_damaged_a"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-435.519, 7.30779, 197.253]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="hummer_hmmwv_damaged_b"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-440.841, 7.30779, 211.54]]
+}
+
+entity{
+  _template:t="quest_ri_decoration"
+  ri_extra__name:t="hummer_hmmwv_burned_b"
+  transform:m=[[0.715462, 0, -0.698652] [0, 1, 0] [0.698652, -0, 0.715462] [-441.163, 7.30779, 201.175]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med"
+  transform:m=[[-4.37114e-08, 0, -1] [0, 1, 0] [1, 0, -4.37114e-08] [-439.307, 7.30779, 193.673]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med"
+  transform:m=[[-4.37114e-08, 0, -1] [0, 1, 0] [1, 0, -4.37114e-08] [-439.307, 7.30779, 214.583]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[-0.743826, 0, -0.668374] [0, 1, 0] [0.668374, 0, -0.743826] [-444.316, 7.30779, 194.417]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med_round"
+  transform:m=[[0.668374, 0, -0.743825] [-0, 1, 0] [0.743825, 0, 0.668374] [-434.126, 7.30779, 194.214]]
+}
+
+entity{
+  _template:t="decor_sandbag_wall_med"
+  transform:m=[[1, 0, 0] [-0, 1, 0] [0, -0, 1] [-432.22, 7.30779, 202.807]]
+}

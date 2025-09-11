@@ -8,6 +8,7 @@ grass_render{
 
 fast_grass_settings{
   _singleton:b=yes
+  _use:t="replicating"
   _tags:t="render"
 
   _group{
@@ -145,11 +146,11 @@ fast_grass_settings{
   _group{
     _track:b=yes
 
-    "fast_grass__hmap_dim_bits:i"{
-      value:i=5
+    "fast_grass__hmap_range:r"{
+      value:r=500
 
       _info{
-        desc:t="Determines number of cells in grass shell heightmap LoD."
+        desc:t="Grass visible range."
       }
     }
 
@@ -162,12 +163,33 @@ fast_grass_settings{
     }
   }
 
+  _group{
+    _track:b=yes
+
+    "fast_grass__clipmap_resolution:i"{
+      value:i=256
+
+      _info{
+        desc:t="Resolution of clipmap cache texture."
+      }
+    }
+
+    "fast_grass__clipmap_cascades:i"{
+      value:i=4
+
+      _info{
+        desc:t="Number of clipmap cache cascades."
+      }
+    }
+  }
+
   _info{
     desc:t="Global settings for fast grass."
   }
 }
 
 fast_grass_type{
+  _use:t="replicating"
   dagdp__density:r=10
 
   "fast_grass_type:tag"{}

@@ -1,8 +1,3 @@
-use_object_base{
-  _use:t="interactable_grid_obj"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-}
-
 use_object_enabled{
   use_object__enabled:b=yes
   _replicated:t="use_object__enabled"
@@ -10,7 +5,7 @@ use_object_enabled{
 }
 
 usable_object_base{
-  _use:t="use_object_base"
+  _use:t="interactable_static_grid_object"
 
   "clientUsable:tag"{}
 }
@@ -53,13 +48,6 @@ interactable_immediate_single_action_use{
   "interactable__immediate_single_action_use:tag"{}
 }
 
-interactable_grid_obj{
-  grid_obj__gridType:t="interactable"
-  grid_obj__fixedTmScale:r=-1
-
-  grid_obj{}
-}
-
 active_interactable{
   "activeInteractable:tag"{}
 }
@@ -88,17 +76,6 @@ base_interactable_invoice_with_piemenu{
   _use:t="base_interactable_invoice"
 
   "interactable_invoice__pieMenu:tag"{}
-}
-
-interactable_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="interactable"
-  grid_holder__typeHash:i=0
-  grid_holder__smallCellSize:i=32
-
-  grid_holder{}
 }
 
 base_interactable_invoice_with_duration{

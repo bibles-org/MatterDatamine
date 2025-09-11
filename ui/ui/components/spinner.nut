@@ -1,6 +1,8 @@
+from "math" import ceil
+
 from "%ui/ui_library.nut" import *
 
-let { ceil } = require("math")
+#allow-auto-freeze
 
 let mkCommands = @(width) [
   [VECTOR_FILL_COLOR, 0],
@@ -11,8 +13,8 @@ let mkCommands = @(width) [
 
 let mkCircle = @(size, pos) {
   rendObj = ROBJ_VECTOR_CANVAS
-  size = [size, size]
-  commands = [
+  size
+  commands = static [
     [VECTOR_COLOR, Color(180, 180, 180)],
     [VECTOR_FILL_COLOR, Color(180, 180, 180)],
     [VECTOR_ELLIPSE, 50, 50, 50, 50]
@@ -24,12 +26,12 @@ return function mkSpinner(height = hdpx(80), delay = 0) {
   let circleHeight = height / 3.4
   return {
     rendObj = ROBJ_VECTOR_CANVAS
-    size = [height, height]
+    size = height
     halign = ALIGN_CENTER
     vplace = ALIGN_CENTER
     hplace = ALIGN_CENTER
     commands = mkCommands(ceil(height/15))
-    transform = { }
+    transform = static { }
     animations = [
       { prop = AnimProp.opacity, from = 0, to = 0, duration=delay, play = true }
       { prop = AnimProp.rotate, from = 45, to = 405, delay, duration = 1.5, play = true,

@@ -1,19 +1,21 @@
+from "%sqstd/string.nut" import toIntegerSafe
+
+from "%ui/components/itemIconComponent.nut" import itemIconNoBorder
+from "%ui/hud/state/item_info.nut" import mkAttachedChar
+from "%ui/components/colors.nut" import BtnBgActive, InfoTextValueColor, InfoTextDescColor
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "%ui/hud/menus/components/inventoryItemsList.nut" import inventoryItemSorting
+from "%ui/hud/menus/components/inventoryItem.nut" import chocolateInventoryItem
+from "%ui/helpers/time.nut" import secondsToStringLoc
+from "dagor.localize" import doesLocTextExist
+import "%ui/components/colorize.nut" as colorize
+from "%ui/hud/menus/components/inventoryItemTooltip.nut" import buildInventoryItemTooltip
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/hud/menus/components/inventoryItemRarity.nut" import mkRarityIconByItem
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
-let { toIntegerSafe } = require("%sqstd/string.nut")
-let { allCraftRecipes, marketItems } = require("%ui/profile/profileState.nut")
-let { itemIconNoBorder } = require("%ui/components/itemIconComponent.nut")
-let { mkAttachedChar } = require("%ui/hud/state/item_info.nut")
-let { BtnBgActive, InfoTextValueColor, InfoTextDescColor } = require("%ui/components/colors.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
-let { inventoryItemSorting } = require("%ui/hud/menus/components/inventoryItemsList.nut")
-let { chocolateInventoryItem } = require("%ui/hud/menus/components/inventoryItem.nut")
-let { secondsToStringLoc } = require("%ui/helpers/time.nut")
-let { doesLocTextExist } = require("dagor.localize")
-let colorize = require("%ui/components/colorize.nut")
-let { buildInventoryItemTooltip } = require("%ui/hud/menus/components/inventoryItemTooltip.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { mkRarityIconByItem } = require("%ui/hud/menus/components/inventoryItemRarity.nut")
+let { allRecipes } = require("%ui/profile/profileState.nut")
 
 let itemIconPadding = 0.8
 
@@ -50,25 +52,22 @@ let overridedIcons = {
   [-1] = "ui/skin#question.svg"
 }
 
-function findAttachmentsInList(marketLotId) {
-  local iconAttachments = []
-  let items = marketLotId == 0 ? [] : marketItems.get()?[marketLotId.tostring()]?.children.items ?? []
-  foreach (item in items) {
-    if (item?.insertIntoIdx == 0) {
-      let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(item.templateName)
-      let animchar = template.getCompValNullable("item__animcharInInventoryName") ?? template.getCompValNullable("animchar__res")
-      iconAttachments.append(mkAttachedChar(item.insertIntoSlot, animchar))
-    }
-  }
-  return iconAttachments
-}
+let addAttachmentsInList = @(scheme) scheme == null ? null
+  : scheme.reduce(function(result, slot, item_template) {
+      if (slot.len() != 0) {
+        let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(item_template)
+        let animchar = template.getCompValNullable("item__animcharInInventoryName") ?? template.getCompValNullable("animchar__res")
+        result.append(mkAttachedChar(slot, animchar))
+      }
+      return result
+    }, [])
 
-function getRecipeIcon(recipe_id, size, progress = 1.0, shading="silhouette") {
+function getRecipeIcon(recipe_id, size, progress = 1.0, shading="silhouette", bgSize = null) {
   if (recipe_id in overridedIcons) {
     return {
       hplace = ALIGN_CENTER
       vplace = ALIGN_CENTER
-      children =[
+      children = [
         blueprintBackground(size, progress)
         {
           rendObj = ROBJ_IMAGE
@@ -82,18 +81,18 @@ function getRecipeIcon(recipe_id, size, progress = 1.0, shading="silhouette") {
     }
   }
 
-  let recipe = allCraftRecipes.get()[recipe_id]
-  let results = recipe.results.keys()
-  let marketLotId = toIntegerSafe(results[0], 0, false)
+  let recipe = allRecipes.get()[recipe_id]
+  let fuseTemplateName = $"fuse_result_{recipe.name}"
+  let isFuseRecipe = recipe.name != ""
+  let templateName = isFuseRecipe ? fuseTemplateName : recipe.results?[0].reduce(@(a,v,k) v.len() == 0 ? k : a, "")
   return {
     hplace = ALIGN_CENTER
     vplace = ALIGN_CENTER
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
     children = [
-      blueprintBackground(size, progress)
-      itemIconNoBorder(
-        marketLotId == 0 ? results[0] : marketItems.get()?[marketLotId.tostring()]?.children.items[0]?.templateName ?? "",
+      blueprintBackground(bgSize ?? size, progress)
+      itemIconNoBorder(templateName,
         {
           width=(size[0] * itemIconPadding).tointeger(),
           height=(size[1] * itemIconPadding).tointeger(),
@@ -101,7 +100,7 @@ function getRecipeIcon(recipe_id, size, progress = 1.0, shading="silhouette") {
           keepAspect = true
           silhouetteHasShadow = true
           silhouetteMinShadow = 0.15
-        }, findAttachmentsInList(marketLotId)
+        }, addAttachmentsInList(recipe.results?[0])
       )
     ]
   }
@@ -123,12 +122,14 @@ let researchSelectedMarker = {
   borderWidth = hdpx(2)
 }
 
-function getCraftResultItems(result) {
-  return result.keys().map(function(k) {
-    let marketLotId = toIntegerSafe(k, 0, false)
-    let marketLot = marketItems.get()?[k].children.items
-    let itemTemplateName = marketLotId == 0 ? k : marketLot?[0].templateName ?? ""
-    let attachments = marketLot?.slice(1).map(@(v) v.templateName) ?? []
+function getCraftResultItems(results) {
+  return results.map(function(result) {
+    let itemTemplateName = result.reduce(@(a,v,k) v.len() == 0 ? k : a, "")
+    let attachments = result.reduce(function(acc, slot_name, item_name) {
+      if (slot_name.len() != 0)
+        acc.append(item_name)
+      return acc
+    }, [])
     let item = mkFakeItem(itemTemplateName, {}, attachments)
     return item.__update(item?.charges == 0 ? { charges = null } : {})
   }).sort(inventoryItemSorting)
@@ -174,38 +175,33 @@ function getNodeName(node, useShortLocs = true) {
   if (node.name != "")
     return node.name
 
-  let recipe = allCraftRecipes.get()?[node.containsRecipe]
+  let recipe = allRecipes.get()?[node.containsRecipe]
   if (recipe == null)
     return "Unknown"
 
-  let result = recipe.results.keys()[0]
-  local templateName = result
-
-  if (marketItems.get()?[result]) {
-    let market = marketItems.get()[result]
-    templateName = market.children.items[0].templateName
-  }
-
+  let templateName = recipe.results?[0].reduce(@(a,v,k) v.len() == 0 ? k : a, "")
   let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(templateName)
   let itemName = template.getCompValNullable("item__name")
   return useShortLocs && doesLocTextExist($"{itemName}/short") ? loc($"{itemName}/short") : itemName
 }
 
 function mkResearchTooltip(prototype_id, name, additionalData = []) {
-  let recipe = allCraftRecipes.get()?[prototype_id]
+  let recipe = allRecipes.get()?[prototype_id]
   if (recipe == null)
     return ""
   let recipeName = [$"{colorize(InfoTextDescColor, loc("research/craftRecipe"))} {colorize(InfoTextValueColor, name)}"]
   let craftTime = [$"{colorize(InfoTextDescColor, loc("research/craftTime"))} {colorize(InfoTextDescColor, secondsToStringLoc(recipe.craftTime))}"]
   let refinerTooltip = [loc("research/craftUse")]
+  let additionalText = "\n".join(additionalData,  @(v) v.len() > 0)
   return "\n\n".join([
     "\n".join(recipeName),
     "\n".join(craftTime),
-    "\n".join(refinerTooltip)
-  ].extend(additionalData), @(v) v.len() > 0)
+    "\n".join(refinerTooltip),
+    additionalText
+  ], @(v) v.len() > 0)
 }
 
-return {
+return freeze({
   getRecipeIcon
   researchOpenedMarker
   researchSelectedMarker
@@ -213,4 +209,4 @@ return {
   mkCraftResultsItems
   getNodeName
   mkResearchTooltip
-}
+})

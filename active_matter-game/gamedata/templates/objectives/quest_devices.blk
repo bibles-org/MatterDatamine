@@ -72,7 +72,7 @@ quest_info_collector_device{
   light__brightness:r=999
   light__offset:p3=0.12, 1.765, 0
 
-  "ai_target__alwaysVisible:tag"{}
+  "ai_target__alwaysDanger:tag"{}
   "quest_device__activated:b"{
     value:b=no
     _track:b=yes
@@ -129,6 +129,34 @@ euclid_car_locator_planting_human{
 euclid_car_locator_planting_preview_phase{
   _use:t="base_quest_device_planting_preview_phase"
   game_effect__attachedTemplate:t="euclid_car_locator_planting_human"
+}
+
+create_entity_on_placed_cargoport_guard_device{
+  create_entity_on_placed__template:t="pve_event_auto_cargoport_guard_device"
+  create_entity_on_placed__timesLeft:i=1
+}
+
+cargoport_guard_device{
+  _use:t="quest_info_collector_device"
+  _use:t="create_entity_on_placed_cargoport_guard_device"
+  _use:t="pve_event_target"
+  hitpoints__hp:r=150
+  hitpoints__maxHp:r=150
+  quest_device__timer:r=60
+  quest_device__monsterGenTemplate:t=""
+
+  "quest_device__questItemTemplates:list<t>"{}
+}
+
+cargoport_guard_device_planting_human{
+  _use:t="base_quest_device_planting_human"
+  diy__resultTempl:t="cargoport_guard_device"
+  diy__previewTempl:t="quest_info_collector_device_preview"
+}
+
+cargoport_guard_device_planting_preview_phase{
+  _use:t="base_quest_device_planting_preview_phase"
+  game_effect__attachedTemplate:t="cargoport_guard_device_planting_human"
 }
 
 quest_bomb_device{

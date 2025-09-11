@@ -1,13 +1,14 @@
+from "%ui/fonts_style.nut" import h2_txt, body_txt
+from "%ui/components/commonComponents.nut" import mkText, mkTextArea
+from "math" import ceil
+from "%ui/components/mkDotPaginatorList.nut" import mkHorizPaginatorList
+from "dagor.time" import format_unixtime
+from "%ui/components/colors.nut" import BtnBdFocused, BtnBdTransparent, BtnBgSelected
+from "%ui/leaderboard/lb_state_base.nut" import curMonolithLbData, curMonolithLbPlayersCount, curMonolithLbVotesCount
+
 from "%ui/ui_library.nut" import *
 
-let { h2_txt, body_txt } = require("%ui/fonts_style.nut")
-let { curLbData, curLbPlayersCount } = require("%ui/leaderboard/lb_state_base.nut")
-let { mkText, mkTextArea } = require("%ui/components/commonComponents.nut")
-let { ceil } = require("math")
-let { mkHorizPaginatorList } = require("%ui/components/mkDotPaginatorList.nut")
-let { format_unixtime } = require("dagor.time")
 let { playerBaseState } = require("%ui/profile/profileState.nut")
-let { BtnBdFocused, BtnBdTransparent, BtnBgSelected } = require("%ui/components/colors.nut")
 
 const MONOLITH_LB_ID = "monolithLbId"
 const LB_ROWS_PER_COL = 13
@@ -25,7 +26,7 @@ let lbCategories = [
     locId = "lb/index"
     width = flex(0.5)
     dataIdx = 0
-    valueToShow = @(idx) curLbPlayersCount.get() - idx
+    valueToShow = @(idx) curMonolithLbPlayersCount.get() - idx
   }
   {
     field = "name"
@@ -44,28 +45,38 @@ let lbCategories = [
     }
     valueToShow = @(timestamp) format_unixtime(TIME_FMT, timestamp)
   }
+  {
+    field = "path_selection_count"
+    locId = "lb/path_selection_count"
+    width = flex(0.7)
+    dataIdx = 4
+    override = {
+      halign = ALIGN_RIGHT
+    }
+    valueToShow = @(count) count
+  }
 ]
 
 function monolithProgress() {
   let { playersCountToRestartProgress = 0 } = playerBaseState.get()
-  if (playersCountToRestartProgress == 0 || curLbPlayersCount.get() == null)
-    return const { watch = [playerBaseState, curLbData]}
-  let percent = curLbPlayersCount.get() / playersCountToRestartProgress.tofloat() * 100
+  if (playersCountToRestartProgress == 0 || curMonolithLbVotesCount.get() == null)
+    return static { watch = [playerBaseState, curMonolithLbData, curMonolithLbVotesCount]}
+  let percent = curMonolithLbVotesCount.get() / playersCountToRestartProgress.tofloat() * 100
 
   return {
-    watch = const [playerBaseState, curLbData]
-    size = const [flex(), SIZE_TO_CONTENT]
+    watch = static [playerBaseState, curMonolithLbData, curMonolithLbVotesCount]
+    size = FLEX_H
     flow = FLOW_VERTICAL
-    gap = const hdpx(6)
+    gap = static hdpx(6)
     children = [
-      const mkText(loc("monolith/resetProgress"), body_txt)
+      static mkText(loc("monolith/resetProgress"), body_txt)
       {
         rendObj = ROBJ_BOX
-        size = const [flex(), hdpx(40)]
+        size = static [flex(), hdpx(40)]
         borderWidth = hdpx(2)
         borderColor = BtnBdTransparent
-        transform = const {}
-        animations = const [
+        transform = static {}
+        animations = static [
           {
             prop = AnimProp.borderColor, from = BtnBdTransparent, to = BtnBdFocused, easing = CosineFull,
             duration = 10, loop = true, play = true
@@ -75,10 +86,10 @@ function monolithProgress() {
           {
             rendObj = ROBJ_SOLID
             size = [pw(percent), flex()]
-            margin = const [hdpx(2), 0, hdpx(2), hdpx(2)]
+            margin = static [hdpx(2), 0, hdpx(2), hdpx(2)]
             color = BtnBgSelected
           }
-          mkText($"{curLbPlayersCount.get()}/{playersCountToRestartProgress}", const {
+          mkText($"{curMonolithLbVotesCount.get()}/{playersCountToRestartProgress}", static {
             vplace = ALIGN_CENTER
             hplace = ALIGN_CENTER
           }.__update(body_txt, { fontSize=hdpx(22)}))
@@ -88,34 +99,34 @@ function monolithProgress() {
   }
 }
 
-let mkLbTitle = @(locId, override = const {}) {
+let mkLbTitle = @(locId, override = static {}) {
   rendObj = ROBJ_SOLID
-  size = const [flex(), hdpx(rowHeight)]
+  size = static [flex(), hdpx(rowHeight)]
   color = 0xF01C1C1C
-  padding = const [0, hdpx(8)]
+  padding = static [0, hdpx(8)]
   valign = ALIGN_CENTER
-  children = mkText(loc(locId), const body_txt.__merge({ fontSize=hdpx(22) }))
+  children = mkText(loc(locId), static body_txt.__merge({ fontSize=hdpx(22) }))
 }.__update(override)
 
 let mkDataRow = @(data, ctor, idx, override) data == null ? null : {
   rendObj = ROBJ_SOLID
-  size = const [flex(), hdpx(rowHeight)]
+  size = static [flex(), hdpx(rowHeight)]
   color = idx == 0 || idx % 2 == 0 ?  0xDD0F0F0F : 0xDD1C1C1C
   valign = ALIGN_CENTER
-  padding = const [0, hdpx(8)]
-  children = mkText(ctor(data), const body_txt.__merge({ fontSize=hdpx(22) }))
+  padding = static [0, hdpx(8)]
+  children = mkText(ctor(data), static body_txt.__merge({ fontSize=hdpx(22) }))
 }.__update(override)
 
 function mkDataTable(dataToAdd) {
   let pageCols = lbCategories.map(function(category) {
-    let { locId, width, dataIdx, valueToShow, override = const {} } = category
+    let { locId, width, dataIdx, valueToShow, override = static {} } = category
     let title = mkLbTitle(locId, override)
     return {
-      size = const [width, SIZE_TO_CONTENT]
+      size = [width, SIZE_TO_CONTENT]
       flow = FLOW_VERTICAL
       children = [
         title
-      ].extend(dataToAdd.map(@(v, idx) mkDataRow(v?[dataIdx], valueToShow, idx, override)))
+      ].extend(dataToAdd.slice(1).map(@(v, idx) mkDataRow(v?[dataIdx], valueToShow, idx, override)))
     }
   })
   return pageCols
@@ -129,17 +140,17 @@ let emptyText = mkTextArea(loc("monolith/lbEmpty"), {
 let lbListTitle = mkText(loc("monolith/lbListTitle"), body_txt)
 
 function lbList() {
-  if (curLbData.get() == null || curLbData.get().len() == 0)
+  if (curMonolithLbData.get() == null || curMonolithLbData.get().len() == 0)
     return {
-      watch = curLbData
+      watch = curMonolithLbData
       size = flex()
       children = emptyText
     }
 
   let res = []
-  let totalRows = curLbData.get().len()
+  let totalRows = curMonolithLbData.get().len()
   let totalCols = ceil(totalRows.tofloat() / LB_ROWS_PER_COL)
-  let data = curLbData.get()
+  let data = curMonolithLbData.get()
 
   for (local table = 0; table < totalCols; table++) {
     let dataToAdd = data.slice(table * LB_ROWS_PER_COL, min(data.len(), (table + 1) * LB_ROWS_PER_COL))
@@ -148,25 +159,25 @@ function lbList() {
   }
 
   return {
-    watch = [curLbData, curLbPlayersCount]
+    watch = [curMonolithLbData, curMonolithLbPlayersCount]
     size = flex()
     flow = FLOW_HORIZONTAL
     gap = hdpx(10)
     children = mkHorizPaginatorList(
       res.map(@(v) {
-        size = [pw(33), hdpx(560)]
+        size = static [pw(33), hdpx(560)]
         flow = FLOW_HORIZONTAL
         children = v
       }), COLS_PER_PAGE, currentLbPage, {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_HORIZONTAL
         gap = hdpx(10)
       })
   }
 }
 
-let lbContent = {
-  size = [flex(), SIZE_TO_CONTENT]
+let lbContent = @() {
+  size = FLEX_H
   flow = FLOW_VERTICAL
   gap = hdpx(4)
   children = [
@@ -175,13 +186,13 @@ let lbContent = {
   ]
 }
 
-let tabTitle = {
+let tabTitle = freeze({
   size = [flex(), titleHeight]
   valign = ALIGN_CENTER
   children = mkText(loc("monolith/lbTitle"), h2_txt)
-}
+})
 
-let monolithLbUi = {
+let monolithLbUi = @() {
   size = flex()
   flow = FLOW_VERTICAL
   children = [
@@ -198,7 +209,7 @@ let monolithLbUi = {
   ]
 }
 
-return {
+return freeze({
   monolithLbUi
   MONOLITH_LB_ID
-}
+})

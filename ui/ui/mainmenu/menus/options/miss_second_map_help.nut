@@ -1,7 +1,10 @@
+import "%dngscripts/ecs.nut" as ecs
+from "%ui/mainMenu/menus/options/options_lib.nut" import loc_opt, getOnlineSaveData, optionCheckBox, optionCtor, optionPercentTextSliderCtor
+from "settings" import get_setting_by_blk_path
+from "dasevents" import EventMissSecondMapHelpOptionChanged
+
 from "%ui/ui_library.nut" import *
 
-let { loc_opt, getOnlineSaveData, optionCheckBox, optionCtor, optionPercentTextSliderCtor } = require("options_lib.nut")
-let { get_setting_by_blk_path } = require("settings")
 
 const MS_SECOND_MAP_HELP = "gameplay/msSecondMapHelp"
 let msSecondMapHelpSave = getOnlineSaveData(MS_SECOND_MAP_HELP, @() get_setting_by_blk_path(MS_SECOND_MAP_HELP) ?? true)
@@ -19,6 +22,10 @@ let missSecondMapHelp = optionCtor({
   tab = "options/miss_second"
   blkPath = MS_SECOND_MAP_HELP
   valToString = @(v) v == null ? loc("option/nothing") : (v ? loc("option/on") : loc("option/off"))
+})
+
+msSecondMapHelpSave.watch.subscribe(function(val) {
+  ecs.g_entity_mgr.broadcastEvent(EventMissSecondMapHelpOptionChanged({msSecondMapHelp = val}))
 })
 
 let missSecondSarcasm = optionCtor({

@@ -1,6 +1,8 @@
-let {loc} = require("%dngscripts/localizations.nut")
+from "%dngscripts/localizations.nut" import loc
+
+from "dagor.localize" import doesLocTextExist
+
 let { platformId } = require("%dngscripts/platform.nut")
-let { doesLocTextExist } = require("dagor.localize")
 
 function locByPlatform(locId, ...) {
   local params = null

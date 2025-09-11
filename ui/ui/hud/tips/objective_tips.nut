@@ -1,12 +1,13 @@
+from "%sqGlob/dasenums.nut" import BinocularsWatchingState
+
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { tipCmp } = require("%ui/hud/tips/tipComponent.nut")
 
-let { photographObjectiveTargetEid, photographObjectiveTraceRatio,
-    photographObjectiveDetectedTargetEid } = require("%ui/hud/state/hud_objective_photograph_state.nut")
+let { photographObjectiveTargetEid, photographObjectiveTraceRatio, photographObjectiveDetectedTargetEid } = require("%ui/hud/state/hud_objective_photograph_state.nut")
 let { binocularsWatchingState } = require("%ui/hud/state/binoculars_state.nut")
-let { BinocularsWatchingState } = require("%sqGlob/dasenums.nut")
 
 
 let tipColor = Color(100, 140, 200, 110)
@@ -50,7 +51,7 @@ return @() {
   size = SIZE_TO_CONTENT
   flow = FLOW_VERTICAL
   watch = [showUsePhotoCameraTip, showBetterCameraAngleTip, showCameraTargetObscuredTip]
-  children = (showUsePhotoCameraTip.value ? usePhotoCameraTip :
-              (showCameraTargetObscuredTip.value ? targetObscuredTip :
-              (showBetterCameraAngleTip.value ? findBetterAngleaTip : null)))
+  children = (showUsePhotoCameraTip.get() ? usePhotoCameraTip :
+              (showCameraTargetObscuredTip.get() ? targetObscuredTip :
+              (showBetterCameraAngleTip.get() ? findBetterAngleaTip : null)))
 }

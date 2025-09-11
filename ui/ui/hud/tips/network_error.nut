@@ -1,9 +1,9 @@
+from "%dngscripts/sound_system.nut" import sound_play
+from "%ui/fonts_style.nut" import h2_txt
+from "connectivity" import CONNECTIVITY_OK, CONNECTIVITY_NO_PACKETS
 from "%ui/ui_library.nut" import *
 
-let {h2_txt} = require("%ui/fonts_style.nut")
-let {connectivity} = require("%ui/hud/state/network.nut")
-let {sound_play} = require("%dngscripts/sound_system.nut")
-let {CONNECTIVITY_OK, CONNECTIVITY_NO_PACKETS} = require("connectivity")
+let { connectivity } = require("%ui/hud/state/network.nut")
 
 connectivity.subscribe(function(value) {
   if (value == CONNECTIVITY_NO_PACKETS)
@@ -36,7 +36,7 @@ function root() {
     key = "network-state"
     size = flex()
     watch = connectivity
-    children = connectivity.value != CONNECTIVITY_OK ? msgDisrupted : null
+    children = connectivity.get() != CONNECTIVITY_OK ? msgDisrupted : null
   }
 }
 

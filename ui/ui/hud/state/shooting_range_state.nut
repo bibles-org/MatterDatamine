@@ -1,9 +1,9 @@
+from "%ui/components/commonComponents.nut" import mkText
+from "%ui/fonts_style.nut" import body_txt, h1_txt
+from "%ui/components/colors.nut" import TextHighlight, WindowBg
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { mkText } = require("%ui/components/commonComponents.nut")
-let { body_txt, h1_txt } = require("%ui/fonts_style.nut")
-let { TextHighlight, WindowBg } = require("%ui/components/colors.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
 
 let inShootingRange = Watched(null)
@@ -25,7 +25,7 @@ enum ShootingRangeUi {
 }
 let warnToShow = Watched(ShootingRangeUi.None)
 
-inShootingRange.subscribe(function(value) {
+inShootingRange.subscribe_with_nasty_disregard_of_frp_update(function(value) {
   if (value == null || isInBattleState.get()) {
     warnToShow.set(ShootingRangeUi.None)
     return
@@ -50,7 +50,7 @@ let mkAnimText = @(txt, animations, override = {}) {
   }.__update(defTextStyle, override))
 }
 
-let wrapperAnimations = [
+let wrapperAnimations = static [
   { prop = AnimProp.opacity, from = 0, to = 1, duration = 0.3, play = true, easing = OutCubic }
   { prop = AnimProp.opacity, from = 1, to = 1, duration = ALERT_ANIM_DURATION, play = true }
   { prop = AnimProp.opacity, from = 1, to = 0, duration = SHORT_ANIM_DURATION,

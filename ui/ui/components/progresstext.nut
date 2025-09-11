@@ -1,6 +1,9 @@
+from "%ui/fonts_style.nut" import h2_txt
+
 from "%ui/ui_library.nut" import *
 
-let { h2_txt } = require("%ui/fonts_style.nut")
+#allow-auto-freeze
+
 function progressText(text) {
   return {
     rendObj = ROBJ_TEXT

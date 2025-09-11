@@ -1,15 +1,16 @@
+from "%ui/components/msgbox.nut" import removeAllMsgboxes
+import "app" as app
+from "gameevents" import EventUserLoggedIn, EventUserLoggedOut
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
 let loginState = require("%ui/login/login_state.nut")
 let userInfo = require("%sqGlob/userInfo.nut")
-let {removeAllMsgboxes} = require("%ui/components/msgbox.nut")
-let app = require("app")
-let {EventUserLoggedIn, EventUserLoggedOut} = require("gameevents")
 
-require("unlogingHandler.nut")
-require("state/customRooms.nut")
-require("registerConsoleCmds.nut")
+require("%ui/unlogingHandler.nut")
+require("%ui/state/customRooms.nut")
+require("%ui/registerConsoleCmds.nut")
 
 gui_scene.setShutdownHandler(function() {
   removeAllMsgboxes()
@@ -17,7 +18,7 @@ gui_scene.setShutdownHandler(function() {
 
 function on_login() {
   app.switch_scene("") 
-  ecs.g_entity_mgr.broadcastEvent(EventUserLoggedIn(userInfo.value.userId, userInfo.value.name))
+  ecs.g_entity_mgr.broadcastEvent(EventUserLoggedIn(userInfo.get().userId, userInfo.get().name))
 }
 
 function on_logout() {

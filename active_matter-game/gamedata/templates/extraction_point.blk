@@ -106,6 +106,7 @@ extraction_point{
   extraction__useHintOk:t="extraction/extraction_to_base"
   extraction__useHintWrongTime:t="extraction/wrongTimeToUse"
   extraction__useHintPrimaryContract:t="extraction/primaryContractNotComplete"
+  extraction__useHintWrongTeam:t="extraction/extractionForOtherTeam"
   item__useActionHintType:i=1
   use_object__offset:p3=0, 1.5, 0
   item_world_marker__offset:p3=0, 1.5, 0
@@ -132,7 +133,8 @@ extraction_point{
   extraction__locName:t=""
   extraction__nextUpdateAt:r=0
   extraction__updateInterval:r=0.1
-  extraction__extractionSequenceTemplate:t="extraction_sequence_affect"
+  loud_noise__radius:r=7
+  loud_noise__noise:r=250
 
   _group{
     _tags:t="gameClient"
@@ -143,6 +145,11 @@ extraction_point{
   "extraction__connectedSpawnGroups:list<i>"{}
   "extraction__timers:list<eid>"{}
   "extraction_point:tag"{}
+  _group{
+    _tags:t="server"
+    extraction_point__wakeupSleepyMonstersRadius:r=7
+    extraction_point__wakeupSleepyMonstersNumber:i=10
+  }
 }
 
 extraction_point_with_guards{
@@ -163,43 +170,16 @@ extraction_point_lightning_effect{
 }
 
 extraction_point_light{
-  _use:t="local_light"
-  light__box:m=[[0, 0, 0] [0, 0, 0] [0, 0, 0] [0, 0, 0]]
-  _tracked:t="light__box"
+  _use:t="omni_light"
   light__max_radius:r=4
   light__brightness:r=0.1
   light__radius_scale:r=4
   light__color:c=200, 250, 255, 255
 
-  _group{
-    _track:b=yes
-    _replicate:b=yes
-    light__contact_shadows:b=yes
-    light__use_box:b=no
-    light__automatic_box:b=no
-    light__direction:p3=0, -1, 0
-    light__texture_name:t=""
-  }
-
   "ai_target_omni_light:tag"{}
-  omni_light{
-    _tags:t="render"
-  }
-
-  _group{
-    _tags:t="render"
-    _track:b=yes
-    _replicate:b=yes
-    omni_light__shadows:b=no
-    omni_light__dynamic_obj_shadows:b=no
-    omni_light__shadow_shrink:i=0
-    omni_light__shadow_quality:i=2
-  }
 }
 
 extraction_point_trigger_visual{
-  _use:t="extraction_point_light"
-
   _group{
     _tags:t="render"
     extraction__extractedPlayerEffect:t="extraction_person_delayed_effect"
@@ -207,12 +187,14 @@ extraction_point_trigger_visual{
 
     "extraction__inactiveEntityTemplates:object"{
       extraction_inactive_portal_effect:p3=0, 1.5, 0
+      extraction_point_light:p3=0, 1.5, 0
       aurora_inside_active_effect:p3=0, 1.5, 0
       extraction_inactive_floor_effect:p3=0, 0.1, 0
     }
 
     "extraction__activatingEntityTemplates:object"{
       extraction_activating_portal_effect:p3=0, 1.5, 0
+      extraction_point_light:p3=0, 1.5, 0
       aurora_inside_active_effect:p3=0, 1.5, 0
       extraction_activating_floor_effect:p3=0, 0.1, 0
       extraction_activating_floor_effect2:p3=0, 0.1, 0
@@ -220,6 +202,7 @@ extraction_point_trigger_visual{
 
     "extraction__activeEntityTemplates:object"{
       extraction_active_portal_effect:p3=0, 1.5, 0
+      extraction_point_light:p3=0, 1.5, 0
       aurora_inside_active_effect:p3=0, 1.5, 0
       extraction_activating_floor_effect:p3=0, 0.1, 0
       extraction_active_light_portal:p3=0, 1.5, 0

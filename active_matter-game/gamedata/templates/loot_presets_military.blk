@@ -58,7 +58,7 @@ sks_big_weapon_box_loot_preset{
     }
 
     "item:object"{
-      template_name:t="sks_carbine_hunt_gun_loot_preset"
+      sub_preset:t="sks_carbine_hunt_gun_loot_preset"
       weight:r=3
     }
 
@@ -499,6 +499,33 @@ modern_armor_t2_subpreset{
   }
 }
 
+modern_armor_plates_collapse_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="armorplate_small_a"
+      weight:r=8
+    }
+
+    "item:object"{
+      template_name:t="armorplate_big_a"
+      weight:r=4
+    }
+
+    "item:object"{
+      template_name:t="armorplate_small_b"
+      weight:r=6
+    }
+
+    "item:object"{
+      template_name:t="armorplate_big_b"
+      weight:r=3
+    }
+  }
+}
+
 modern_armor_t3_subpreset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=2, 2
@@ -679,6 +706,53 @@ modern_equipment_t3_loot_preset{
   }
 }
 
+modern_america_ammo_t3_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 3
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="hk_mp5n_magazine"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="hk_ump_45_magazine"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="scorpion_evo_3_magazine"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="fn_scar_magazine"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="m4a1_magazine"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="steyr_aug_a1_magazine"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="hk_g3a4_magazine"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="box_12_gauge_magazine"
+      number:i=2
+    }
+  }
+}
+
 attic_weapons_subpreset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=3, 3
@@ -725,6 +799,294 @@ attic_chest_weapon_loot_preset{
 
     "item:object"{
       sub_preset:t="keys_armory_loot_subpreset"
+      weight:r=1
+    }
+  }
+}
+
+airdrop_bags_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="medium_backpack"
+      weight:i=10
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_carbon_skull"
+      weight:i=1
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_woodland_camo"
+      weight:i=2
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_camo_skull"
+      weight:i=1
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_flaming_skull"
+      weight:i=1
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_carbon_gold"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_carbon_gold_skull"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_green_skull"
+      weight:i=1
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_acupat_camo"
+      weight:i=2
+    }
+
+    "item:object"{
+      template_name:t="large_backpack"
+      weight:i=5
+    }
+
+    "item:object"{
+      template_name:t="large_backpack_carbon_skull"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="large_backpack_woodland_camo"
+      weight:i=1
+    }
+
+    "item:object"{
+      template_name:t="large_backpack_camo_skull"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="large_backpack_flaming_skull"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="large_backpack_carbon_gold"
+      weight:r=0.05
+    }
+
+    "item:object"{
+      template_name:t="large_backpack_carbon_gold_skull"
+      weight:r=0.05
+    }
+
+    "item:object"{
+      template_name:t="large_backpack_green_skull"
+      weight:r=0.5
+    }
+
+    "item:object"{
+      template_name:t="large_backpack_acupat_camo"
+      weight:i=1
+    }
+  }
+}
+
+airdrop_bags_pve_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="medium_backpack"
+      weight:i=10
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_carbon_skull"
+      weight:i=1
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_woodland_camo"
+      weight:i=2
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_camo_skull"
+      weight:i=1
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_flaming_skull"
+      weight:i=1
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_carbon_gold"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_carbon_gold_skull"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_green_skull"
+      weight:i=1
+    }
+
+    "item:object"{
+      template_name:t="medium_backpack_acupat_camo"
+      weight:i=2
+    }
+  }
+}
+
+airdrop_medicine_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_healing_ampoule"
+      weight:i=10
+      number:ip2=3, 7
+    }
+
+    "item:object"{
+      template_name:t="item_injector_streaming"
+      weight:i=5
+      number:ip2=1, 2
+    }
+
+    "item:object"{
+      template_name:t="item_injector_hot"
+      weight:i=5
+      number:ip2=1, 3
+    }
+
+    "item:object"{
+      template_name:t="item_healkit"
+      weight:i=5
+    }
+
+    "item:object"{
+      template_name:t="item_big_healkit"
+      weight:i=1
+    }
+  }
+}
+
+airdrop_mixed_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=3, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="airdrop_bags_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="airdrop_medicine_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="airdrop_weapons_preset"
+      weight:r=1
+    }
+  }
+}
+
+airdrop_mixed_pve_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=3, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="airdrop_bags_pve_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="airdrop_medicine_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="airdrop_pve_weapons_preset"
+      weight:r=1
+    }
+  }
+}
+
+collapse_grenade_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 4
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="f1_grenade_item"
+      number:ip2=3, 4
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="ussr_molotov_item"
+      number:ip2=3, 4
+      weight:r=1
+    }
+  }
+}
+
+collapse_armor_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=3, 3
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="modern_armor_t3_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="modern_armor_plates_collapse_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="modern_armor_plates_collapse_subpreset"
+      weight:r=1
+    }
+  }
+}
+
+collapse_grenades_armor_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="collapse_armor_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="collapse_grenade_loot_preset"
       weight:r=1
     }
   }

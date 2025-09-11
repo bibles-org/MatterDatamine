@@ -1,33 +1,93 @@
-nexus_wave_mode_game_draw{
-  _group{
-    _tags:t="server"
-    nexus_wave_mode_game_controller__timeBeforeDraw:r=1800
-    nexus_wave_mode_game_controller__drawAt:r=-1
-    nexus_wave_mode_game_controller__onDrawZoneCollapseTime:r=10
-    nexus_wave_mode_game_controller__activateDrawZoneAt:r=-1
-  }
-}
-
-nexus_wave_mode_additional_waves_spawn_controller{
-  _use:t="replicating"
-  team:i=-1
-  nexus_wave_mode_additional_waves_spawn_controller__numWaves:i=3
-
-  _group{
-    _tags:t="server"
-    nexus_spawn_controller__spawnSequenceDelay:r=0.35
-    nexus_wave_mode_additional_waves_spawn_controller__spawnDelay:r=15
-  }
-
-  _group{
-    _replicate:b=yes
-    nexus_wave_mode_additional_waves_spawn_controller__wavesSpawned:i=0
-    nexus_wave_mode_additional_waves_spawn_controller__spawnAt:r=-1
-  }
-}
-
 nexus_wave_mode{
-  _use:t="replicating"
-
   "nexus_wave_mode:tag"{}
+}
+
+nexus_wave_mode_spawn_controller{
+  _use:t="nexus_spawn_controller"
+  _use:t="nexus_wave_mode"
+
+  _group{
+    _tags:t="server"
+    player_template__override:t="nexus_wave_mode_player"
+  }
+}
+
+nexus_wave_mode_game_controller{
+  _use:t="replicating"
+  _use:t="nexus_game_controller"
+  _use:t="nexus_wave_mode"
+  nexus_game_controller__pointsToWin:r=1000
+
+  _group{
+    _tags:t="server"
+    nexus_wave_mode_game_controller__gameTime:r=1800
+  }
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    nexus_wave_mode_game_controller__timeOutAt:r=-1
+  }
+}
+
+nexus_wave_mode_team{
+  _use:t="nexus_team"
+  _use:t="nexus_wave_mode"
+  team__unitTemplate:t="nexus_wave_mode_militant+spawn_sequence_controller+allow_friendly_damage"
+}
+
+nexus_wave_mode_militant{
+  _use:t="nexus_militant"
+  _use:t="nexus_wave_mode"
+  _replicated:t="allowEnemiesToSpectate"
+  allowEnemiesToSpectate:b=no
+}
+
+nexus_wave_mode_player{
+  _use:t="nexus_player"
+  _use:t="nexus_wave_mode"
+
+  _group{
+    _tags:t="gameClient"
+    respawner__spectatorEnabled:b=yes
+  }
+
+  "spawn_rules__respawnPrices:shared:list<i>"{
+    i:i=10
+  }
+}
+
+nexus_wave_mode_bot_player{
+  _use:t="nexus_wave_mode_player"
+  _use:t="bot_player"
+  possessedTemplate:t="nexus_militant_wave_mode_bot+spawn_sequence_controller"
+
+  _group{
+    _tags:t="server"
+    player_ribbons__rndColors:b=no
+  }
+}
+
+nexus_militant_wave_mode_bot{
+  _use:t="nexus_wave_mode_militant"
+  _use:t="nexus_militant_wave_mode_bot_ai"
+  _use:t="bot_allies"
+
+  _group{
+    _tags:t="server"
+    bot_allies__updateInterval:r=3
+  }
+}
+
+nexus_militant_wave_mode_bot_ai{
+  _use:t="am_militant_bot_ai"
+  beh_tree__node:t="nexus_wave_mode_militant"
+  beh_tree__regularCheckRange:p2=0.4, 1
+
+  _group{
+    _tags:t="server"
+    nexus_militant_wave_mode_bot__maxDistanceToStartFollowing:r=10
+
+    "nexus_militant_wave_mode_bot__teammateToFollow:eid"{}
+  }
 }

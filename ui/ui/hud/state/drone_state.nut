@@ -42,7 +42,7 @@ ecs.register_es("connection_quality_drone_es", {
   [["onInit", "onChange"]] = function (_evt, eid, comp) {
     if (watchedHeroPlayerEid.get() == comp.playerOwnerEid) {
       heroDrones.mutate(@(drones) drones[eid] <- {
-        operator = comp.drone__owner
+        operator = comp.ownerEid
         connectionQuality = comp.drone__connectionQuality
         connectionQualityWarning = comp.drone__connectionQualityWarning
         distance = comp.drone__distanceToOperator
@@ -66,7 +66,7 @@ ecs.register_es("connection_quality_drone_es", {
   comps_track=[
     ["drone__connectionQuality", ecs.TYPE_INT],
     ["drone__distanceToOperator", ecs.TYPE_FLOAT],
-    ["drone__owner", ecs.TYPE_EID],
+    ["ownerEid", ecs.TYPE_EID],
   ]
 })
 
@@ -96,15 +96,15 @@ ecs.register_es("update_enable_use_drone", {
         getRemoteConsoleInfoQuery.perform(drone_comp.drone__remoteConsole, function(_eid, console_comp) {
           if (console_comp.item__humanOwnerEid != es_comp.possessed)
             return
-          droneEnableToUse(true)
-          quickUseDroneConsole(console_comp.item__proto)
+          droneEnableToUse.set(true)
+          quickUseDroneConsole.set(console_comp.item__proto)
           findEnableToUseDrone = true
         })
       }
     })
     if (!findEnableToUseDrone) {
-      droneEnableToUse(false)
-      quickUseDroneConsole(null)
+      droneEnableToUse.set(false)
+      quickUseDroneConsole.set(null)
     }
   }
 },

@@ -2,7 +2,7 @@ module managed_sound_control_common shared
 
 require ecs
 require ecs.common
-require app
+require app // get_sync_time
 require soundSystem
 require sound_utils.modules.sound_control_common
 require DagorSystem

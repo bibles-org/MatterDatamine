@@ -7,7 +7,7 @@ repair_kit_item{
   item__type:t="repair_kit"
   item__lootSoundType:t="healing"
   item__weight:r=2.5
-  item__volume:r=3.5
+  item__volume:i=35
   repair_kit__useCounter:i=0
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.03, 0]]
 
@@ -22,7 +22,7 @@ m30_luftwaffe_drilling_magazine{
   ammo_holder__templateName:t="m30_luftwaffe_drilling_magazine"
   item_holder__maxItemCount:i=2
   item__weight:r=0.2
-  item__volume:r=0.1
+  item__volume:i=1
   item__name:t="items/m30_luftwaffe_drilling_magazine"
   collres__res:t="browning_auto_5_ammo_collision"
 }
@@ -68,7 +68,7 @@ m6a1_bazooka_item{
   item__proto:t="m6a1_bazooka_item"
   item__shell:t="gamedata/weapons/shell/m6a1_bazooka.blk"
   item__weight:r=1.5
-  item__volume:r=0.5
+  item__volume:i=5
   item__name:t="items/m6a1_bazooka"
   item__grenadeType:t="shell"
   ammo_holder__id:i=-1
@@ -76,7 +76,7 @@ m6a1_bazooka_item{
   boxed_item__template:t="m6a1_bazooka_item"
   item__countPerStack:i=1
   item__weightPerStack:r=1.5
-  item__volumePerStack:r=0.5
+  item__volumePerStack:i=5
 }
 
 m1911_colt_magazine{
@@ -87,12 +87,13 @@ m1911_colt_magazine{
   item_holder__maxItemCount:i=7
   item_holder__boxedItemTemplate:t="box_45_acp_magazine"
   item__baseWeight:r=0.245
-  item__volume:r=2
+  item__volume:i=20
   item__name:t="items/m1911_colt_magazine"
   collres__res:t="m1911_colt_ammo_collision"
   item__marketPrice:i=165
   showroom_item__customZoom:r=0.8
   showroom_item__customZoomBordersRng:p2=0.6, 1.2
+  item__iconRoll:r=-15
 
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_m1911_colt"
@@ -106,7 +107,7 @@ mosin_magazine{
   ammo_holder__templateName:t="mosin_magazine"
   item_holder__maxItemCount:i=5
   item__weight:r=0.2
-  item__volume:r=0.1
+  item__volume:i=1
   item__name:t="items/mosin_magazine"
   collres__res:t="m1903_springfield_ammo_collision"
 }
@@ -118,7 +119,7 @@ winchester_model_1912_magazine{
   ammo_holder__templateName:t="winchester_model_1912_magazine"
   item_holder__maxItemCount:i=6
   item__weight:r=0.3
-  item__volume:r=0.15
+  item__volume:i=2
   item__name:t="items/winchester_model_1912_magazine"
   collres__res:t="browning_auto_5_ammo_collision"
 }

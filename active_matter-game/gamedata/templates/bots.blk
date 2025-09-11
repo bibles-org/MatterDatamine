@@ -16,35 +16,17 @@ bots_ai_spawner{
   "applyMeta:array"{}
 }
 
-attract_points_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="attract_point"
-  grid_holder__typeHash:i=0
-  grid_holder__smallCellSize:i=32
-
-  grid_holder{}
-}
-
 attract_point_base{
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="attract_point_static_grid_object"
   attract_point__magnitude:r=1
-  grid_obj__gridType:t="attract_point"
-  grid_obj__fixedTmScale:r=-1
 
   "attract_point__ownerEid:eid"{}
-  grid_obj{}
-}
-
-attract_point{
-  _use:t="attract_point_base"
-  game_effect__timeToDestroy:r=3
-  game_effect__destroyAt:r=0
 }
 
 shrinkable_attract_point{
-  _use:t="attract_point"
+  _use:t="attract_point_base"
+  game_effect__timeToDestroy:r=3
+  game_effect__destroyAt:r=0
   attract_point__minMagnitude:r=0.05
   attract_point__shrinkSpeed:r=1
 }

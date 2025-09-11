@@ -28,9 +28,6 @@ visible_item_in_equipment_mod{
 base_equipment_mod{
   _use:t="equipment_mod_icon"
   _use:t="base_item"
-  item__id:i=0
-  _replicated:t="item__id"
-  item__ui_priority:i=0
   item__recreateOnGround:t="item_in_world"
   item__recreateInWorldPhys:t="item_in_world_phys"
   item__recreateInInventory:t="base_invis_item"
@@ -39,11 +36,11 @@ base_equipment_mod{
   equipmentAttachable__slotName:t=""
   _tracked:t="equipmentAttachable__slotName"
   _replicated:t="equipmentAttachable__slotName"
-  _tracked:t="slot_attach__attachedTo"
-  _replicated:t="slot_attach__attachedTo"
+  _tracked:t="animchar_attach__attachedTo"
+  _replicated:t="animchar_attach__attachedTo"
 
   "equipment_mod_item:tag"{}
-  "slot_attach__attachedTo:eid"{}
+  "animchar_attach__attachedTo:eid"{}
 }
 
 base_equipment_mod_slot{
@@ -74,6 +71,9 @@ pocket_slot{
     i:t="binoculars_item"
     i:t="b7_binoculars_item"
     i:t="resurrect_device_item"
+    i:t="item_foldable_drone_harpy"
+    i:t="item_foldable_drone"
+    i:t="item_drone_remote_console"
   }
 }
 
@@ -128,13 +128,14 @@ armorplate_small_a{
   item__iconScale:r=0.8
   item__proto:t="armorplate_small_a"
   item__weight:r=1.5
-  item__volume:r=4
+  item__volume:i=40
   item__name:t="items/armorplate_small_a"
-  item__userstats__pickupName:t="pickup_armorplate_small_a"
   item__marketPrice:i=750
   item__hp:r=185
   item__maxHp:r=185
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  item__nexusCost:i=100
+  item__nexusIncreaseCostAfterCount:i=2
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0.35
@@ -156,13 +157,14 @@ armorplate_small_b{
   collres__res:t="am_armorplate_small_b_collision"
   item__proto:t="armorplate_small_b"
   item__weight:r=1.9
-  item__volume:r=4
+  item__volume:i=40
   item__name:t="items/armorplate_small_b"
-  item__userstats__pickupName:t="pickup_armorplate_small_b"
   item__marketPrice:i=900
   item__hp:r=175
   item__maxHp:r=175
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  item__nexusCost:i=135
+  item__nexusIncreaseCostAfterCount:i=2
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0.5
@@ -184,12 +186,14 @@ armorplate_small_c{
   collres__res:t="am_armorplate_small_c_collision"
   item__proto:t="armorplate_small_c"
   item__weight:r=0.8
-  item__volume:r=4
+  item__volume:i=40
   item__name:t="items/armorplate_small_c"
-  item__userstats__pickupName:t="pickup_armorplate_small_c"
   item__marketPrice:i=600
   item__hp:r=160
   item__maxHp:r=160
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  item__nexusCost:i=50
+  item__nexusIncreaseCostAfterCount:i=2
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0.25
@@ -198,7 +202,6 @@ armorplate_small_c{
   }
 
   "armorplate_small:tag"{}
-  "item__cantBeCorrupted:tag"{}
 }
 
 damaged_armorplate_small_c{
@@ -215,13 +218,14 @@ armorplate_big_a{
   item__iconScale:r=1
   item__proto:t="armorplate_big_a"
   item__weight:r=2.5
-  item__volume:r=7
+  item__volume:i=70
   item__name:t="items/armorplate_big_a"
-  item__userstats__pickupName:t="pickup_armorplate_big_a"
   item__marketPrice:i=1500
   item__hp:r=280
   item__maxHp:r=280
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  item__nexusCost:i=150
+  item__nexusIncreaseCostAfterCount:i=1
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0.4
@@ -243,13 +247,14 @@ armorplate_big_b{
   collres__res:t="am_armorplate_big_b_collision"
   item__proto:t="armorplate_big_b"
   item__weight:r=3.2
-  item__volume:r=7
+  item__volume:i=70
   item__name:t="items/armorplate_big_b"
-  item__userstats__pickupName:t="pickup_armorplate_big_b"
   item__marketPrice:i=1800
   item__hp:r=260
   item__maxHp:r=260
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  item__nexusCost:i=200
+  item__nexusIncreaseCostAfterCount:i=1
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0.6
@@ -271,12 +276,14 @@ armorplate_big_c{
   collres__res:t="am_armorplate_big_b_collision"
   item__proto:t="armorplate_big_c"
   item__weight:r=1.3
-  item__volume:r=7
+  item__volume:i=70
   item__name:t="items/armorplate_big_c"
-  item__userstats__pickupName:t="pickup_armorplate_big_c"
   item__marketPrice:i=1200
   item__hp:r=240
   item__maxHp:r=240
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  item__nexusCost:i=75
+  item__nexusIncreaseCostAfterCount:i=1
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0.3
@@ -285,7 +292,6 @@ armorplate_big_c{
   }
 
   "armorplate_big:tag"{}
-  "item__cantBeCorrupted:tag"{}
 }
 
 damaged_armorplate_big_c{

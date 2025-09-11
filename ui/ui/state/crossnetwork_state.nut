@@ -1,8 +1,10 @@
+from "%dngscripts/platform.nut" import is_xbox, is_sony
+from "%dngscripts/globalState.nut" import nestWatched
+
+from "settings" import get_setting_by_blk_path
+
 from "%sqstd/frp.nut" import Computed, Watched, WatchedRo
 
-let { is_xbox, is_sony } = require("%dngscripts/platform.nut")
-let { nestWatched } = require("%dngscripts/globalState.nut")
-let { get_setting_by_blk_path } = require("settings")
 
 let isCrossnetworkChatAvailable = true
 let isCrossnetworkChatOptionNeeded = !is_xbox 
@@ -49,14 +51,14 @@ let isCrossplayOptionNeeded = Watched(crossplayOptionNeededByProject || isDebugC
 
 let availableCrossplayOptions = Computed(function() {
   if (is_xbox) 
-    return !xboxCrossplayAvailable.value ? [ CrossplayState.OFF ]
-      : isCrossplayOptConsolesOnlyRequired.value ? [ CrossplayState.CONSOLES, CrossplayState.ALL ]
+    return !xboxCrossplayAvailable.get() ? [ CrossplayState.OFF ]
+      : isCrossplayOptConsolesOnlyRequired.get() ? [ CrossplayState.CONSOLES, CrossplayState.ALL ]
       : [ CrossplayState.ALL ]
 
-  if (!isCrossplayOptionNeeded.value) 
+  if (!isCrossplayOptionNeeded.get()) 
     return [ CrossplayState.ALL ]
 
-  if (!isCrossplayOptConsolesOnlyRequired.value) 
+  if (!isCrossplayOptConsolesOnlyRequired.get()) 
     return [ CrossplayState.OFF, CrossplayState.ALL ]
 
   return [ CrossplayState.OFF, CrossplayState.CONSOLES, CrossplayState.ALL ]
@@ -64,20 +66,20 @@ let availableCrossplayOptions = Computed(function() {
 
 let validateCsState = @(state, available) available.contains(state) ? state : available?.top() ?? CrossplayState.ALL
 
-let multiplayerAvailable = Computed(@() xboxMultiplayerAvailable.value)
+let multiplayerAvailable = Computed(@() xboxMultiplayerAvailable.get())
 local crossnetworkPlay = null
 local crossnetworkChat = null
 
 if (is_xbox) {
-  crossnetworkPlay = Computed(@() xboxCrossplayAvailable.value
-    ? validateCsState(savedCrossnetworkState.value, availableCrossplayOptions.value)
+  crossnetworkPlay = Computed(@() xboxCrossplayAvailable.get()
+    ? validateCsState(savedCrossnetworkState.get(), availableCrossplayOptions.get())
     : CrossplayState.OFF)
 
-  crossnetworkChat = Computed(@() xboxCrosschatAvailable.value)
+  crossnetworkChat = Computed(@() xboxCrosschatAvailable.get())
 }
 else if (is_sony || isDebugCrossplay) {
-  crossnetworkPlay = Computed(@() validateCsState(savedCrossnetworkState.value, availableCrossplayOptions.value))
-  crossnetworkChat = Computed(@() savedCrossnetworkChatState.value ?? false)
+  crossnetworkPlay = Computed(@() validateCsState(savedCrossnetworkState.get(), availableCrossplayOptions.get()))
+  crossnetworkChat = Computed(@() savedCrossnetworkChatState.get() ?? false)
 }
 else {
   crossnetworkPlay = WatchedRo(CrossplayState.ALL)
@@ -86,24 +88,24 @@ else {
 
 let isCrossnetworkIntercationAvailable = Computed(@()
   isCrossnetworkChatAvailable
-  && multiplayerAvailable.value
-  && crossnetworkChat.value)
+  && multiplayerAvailable.get()
+  && crossnetworkChat.get())
 
 let canCrossnetworkChatWithAll = Computed(@()
-  isCrossnetworkIntercationAvailable.value
-  && xboxCrossChatWithAllAllowed.value)
+  isCrossnetworkIntercationAvailable.get()
+  && xboxCrossChatWithAllAllowed.get())
 
 let canCrossnetworkChatWithFriends = Computed(@()
-  isCrossnetworkIntercationAvailable.value
-  && xboxCrossChatWithFriendsAllowed.value)
+  isCrossnetworkIntercationAvailable.get()
+  && xboxCrossChatWithFriendsAllowed.get())
 
 let canCrossnetworkVoiceWithAll = Computed(@()
-  isCrossnetworkIntercationAvailable.value
-  && xboxCrossVoiceWithAllAllowed.value)
+  isCrossnetworkIntercationAvailable.get()
+  && xboxCrossVoiceWithAllAllowed.get())
 
 let canCrossnetworkVoiceWithFriends = Computed(@()
-  isCrossnetworkIntercationAvailable.value
-  && xboxCrossVoiceWithFriendsAllowed.value)
+  isCrossnetworkIntercationAvailable.get()
+  && xboxCrossVoiceWithFriendsAllowed.get())
 
 return {
   savedCrossnetworkPlayId

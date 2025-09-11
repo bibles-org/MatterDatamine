@@ -1,10 +1,10 @@
+from "%ui/hud/player_info/style.nut" import barHeight, barWidth
+from "%ui/fonts_style.nut" import fontawesome
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
+import "%ui/components/fontawesome.map.nut" as fa
 
-let {barHeight, barWidth} = require("style.nut")
 let hideHud = require("%ui/hud/state/hide_hud.nut")
-let { fontawesome } = require("%ui/fonts_style.nut")
-let fa = require("%ui/components/fontawesome.map.nut")
 
 let noiseBarHeight = barHeight * 1
 let iconSize = barHeight * 4

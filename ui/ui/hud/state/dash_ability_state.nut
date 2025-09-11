@@ -1,8 +1,9 @@
+from "dasevents" import EventOnPlayerDash
+from "net" import get_sync_time
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { EventOnPlayerDash } = require("dasevents")
-let { get_sync_time } = require("net")
 
 const DASH_ABILITY_NAME = "dash"
 const SCREAM_ABILITY_NAME = "scream"
@@ -17,8 +18,8 @@ let screamMaxCount = Watched(null)
 
 ecs.register_es("dash_ability_state_timings_ui_es", {
   [["onChange", "onInit"]] = function(_eid,comp) {
-    dashAbilitySpawnTime.update(comp.hero_dash_ability__spawnTime)
-    dashAbilitylastFailedUseTime.update(comp.hero_dash_ability__lastFailedUseTime)
+    dashAbilitySpawnTime.set(comp.hero_dash_ability__spawnTime)
+    dashAbilitylastFailedUseTime.set(comp.hero_dash_ability__lastFailedUseTime)
   }
 
 }, {
@@ -48,7 +49,7 @@ ecs.register_es("dash_ability_state_cost_ui_es", {
 
 ecs.register_es("dash_ability_activate_time_ui_es", {
   [EventOnPlayerDash] = function(_eid,_comp) {
-    dashAbilityDashTime(get_sync_time())
+    dashAbilityDashTime.set(get_sync_time())
   }
 }, {
   comps_rq=["hero"]

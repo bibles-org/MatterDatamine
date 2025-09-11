@@ -254,7 +254,7 @@ three_seats_vehicle{
       seatComponent:t="isPassenger"
       nextSeat:t="passenger2"
       canPlaceManually:b=yes
-      seatEnum:t="right_seat"
+      seatEnum:t="stool_seat"
     }
 
     "seats:object"{
@@ -346,121 +346,6 @@ five_seats_vehicle{
   }
 }
 
-maxxpro_seats_vehicle{
-  "vehicle_seats__seats:shared:array"{
-    "seats:object"{
-      name:t="driver"
-      locName:t="vehicle_seats/car_driver"
-      seatOwnsEntityControl:b=yes
-      attachNode:t="char_driver_pivot"
-      entranceNode:t="char_driver_landing"
-      attachTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-      seatComponent:t="isDriver"
-      nextSeat:t="gunner"
-      canPlaceManually:b=yes
-      seatEnum:t="stool_seat"
-
-      "effectors:object"{
-        l.hand:t="ik_hand_left"
-        r.hand:t="ik_hand_right"
-      }
-    }
-
-    "seats:object"{
-      name:t="gunner"
-      locName:t="vehicle_seats/shooter"
-      seatOwnsEntityControl:b=no
-      attachNode:t="char_gunner_pivot"
-      entranceNode:t="char_gunner_landing"
-      attachTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-      seatComponent:t="isPassenger"
-      nextSeat:t="passenger1"
-      canPlaceManually:b=yes
-      seatEnum:t="stool_seat"
-      seatAnimUpper:t="drive_maxxpro_gunner"
-      seatAnimLower:t="drive_maxxpro_gunner"
-      copySkeletonNodesPostfix:t="_gunner"
-
-      "effectors:object"{
-        l.hand:t="ik_hand_left_gunner"
-        r.hand:t="ik_hand_right_gunner"
-        l.forearm:t="ik_forearm_left_gunner"
-        r.forearm:t="ik_forearm_right_gunner"
-      }
-
-      "copySkeletonNodesRecursive:array"{
-        node:t="Bip01 L Hand"
-        node:t="Bip01 R Hand"
-      }
-    }
-
-    "seats:object"{
-      name:t="passenger1"
-      locName:t="vehicle_seats/shooter"
-      seatOwnsEntityControl:b=no
-      attachNode:t="char_passenger_01_pivot"
-      entranceNode:t="char_passenger_01_landing"
-      attachTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-      seatComponent:t="isPassenger"
-      nextSeat:t="passenger2"
-      canPlaceManually:b=yes
-      seatEnum:t="stool_seat"
-    }
-
-    "seats:object"{
-      name:t="passenger2"
-      locName:t="vehicle_seats/shooter"
-      seatOwnsEntityControl:b=no
-      attachNode:t="char_passenger_02_pivot"
-      entranceNode:t="char_passenger_02_landing"
-      attachTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-      seatComponent:t="isPassenger"
-      nextSeat:t="passenger3"
-      canPlaceManually:b=yes
-      seatEnum:t="stool_seat"
-    }
-
-    "seats:object"{
-      name:t="passenger3"
-      locName:t="vehicle_seats/shooter"
-      seatOwnsEntityControl:b=no
-      attachNode:t="char_passenger_03_pivot"
-      entranceNode:t="char_passenger_03_landing"
-      attachTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-      seatComponent:t="isPassenger"
-      nextSeat:t="passenger4"
-      canPlaceManually:b=yes
-      seatEnum:t="stool_seat"
-    }
-
-    "seats:object"{
-      name:t="passenger4"
-      locName:t="vehicle_seats/shooter"
-      seatOwnsEntityControl:b=no
-      attachNode:t="char_passenger_04_pivot"
-      entranceNode:t="char_passenger_04_landing"
-      attachTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-      seatComponent:t="isPassenger"
-      nextSeat:t="passenger5"
-      canPlaceManually:b=yes
-      seatEnum:t="stool_seat"
-    }
-
-    "seats:object"{
-      name:t="passenger5"
-      locName:t="vehicle_seats/shooter"
-      seatOwnsEntityControl:b=no
-      attachNode:t="char_passenger_05_pivot"
-      entranceNode:t="char_passenger_05_landing"
-      attachTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-      seatComponent:t="isPassenger"
-      nextSeat:t="driver"
-      canPlaceManually:b=yes
-      seatEnum:t="stool_seat"
-    }
-  }
-}
-
 base_phys_modifications{
   physModificationsBlk:t=""
 }
@@ -488,7 +373,6 @@ base_vehicle{
 
   "lastOffender:eid"{}
   "vehicle:tag"{}
-  "useDamageModel:tag"{}
 }
 
 base_vehicle_seats{
@@ -516,6 +400,7 @@ base_vehicle_seats{
   "vehicle_seats__seatTemplates:shared:object"{
     default:t="vehicle_seat_default"
     driver:t="vehicle_seat_driver"
+    main_gunner:t="vehicle_seat_main_gunner"
   }
 }
 
@@ -588,6 +473,12 @@ vehicle_driver_skills{
   vehicle_net_phys__drivingSpeedThreshold:r=0.5
 }
 
+vehicle_seat_main_gunner{
+  _use:t="vehicle_seat_fire_ready"
+  seat_anim__upper:t="drive_passenger"
+  seat_anim__lower:t="drive_passenger"
+}
+
 vehicle_exhaust_fx{
   _tags:t="render"
   exhaust_fx__haveActiveEmitters:b=no
@@ -614,11 +505,12 @@ vehicle_no_ai{
   _use:t="vehicle_driver_skills"
   _use:t="vehicle_exhaust_fx"
   _use:t="water_ripple_generator"
+  _use:t="vehicles_dynamic_grid_object"
   zones_visitor__triggerTag:t="vehicleTriggerable"
-  drowningHeight:r=1
-  underWaterStartTime:r=-1
-  underWaterMaxTime:r=5
-  _replicated:t="underWaterStartTime"
+  vehicle__underWaterCheckHeight:r=1
+  vehicle__underWaterStartTime:r=-1
+  vehicle__underWaterMaxTime:r=1.5
+  _replicated:t="vehicle__underWaterStartTime"
   material:t="steel"
   needsBlood:b=no
   animchar_render__enabled:b=yes
@@ -630,7 +522,6 @@ vehicle_no_ai{
   camera__offset:p3=0, -1, -2
   squad:i=-1
   team:i=-1
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   vehicleCameraType:i=0
   isTpsView:b=no
   _tracked:t="vehicleCameraType"
@@ -649,23 +540,18 @@ vehicle_no_ai{
   vehicle_acceleration__accelVisc:r=0.3
   vehicle_acceleration__counterAccelVisc:r=0.5
   vehicle_acceleration__axisOffset:p3=0.5, 1, 0
-  spawnedInRegion:t=""
   _replicated:t="lastDamagedNode"
   _replicated:t="lastGunPropsIdDamagedWith"
   _replicated:t="isAlive"
   _tracked:t="isAlive"
-  grid_obj__gridType:t="vehicles"
-  grid_obj__fixedTmScale:r=-1
   deform_bbox__bmin:p3=0, 0, 0
   deform_bbox__bmax:p3=0, 0, 0
   transform_lastFrame:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   particle_phys__blk:t="gamedata/suspension/empty.blk"
   collision_physMatId:i=-1
-  _tracked:t="transform"
   pair_collision__tag:t="collidableToVehicle"
   _use:t="vehicle_damage_decals"
 
-  grid_obj{}
   _group{
     _track:b=yes
     vehicle_view__gear:i=0

@@ -1,47 +1,46 @@
+from "%dngscripts/globalState.nut" import nestWatched
+from "%dngscripts/sound_system.nut" import sound_play
+from "%sqstd/timers.nut" import debounce
+from "%ui/mainMenu/contacts/contact.nut" import getContactRealnick, getContact, validateNickNames, getContactNick, updateContact
+from "%ui/permissions/permissions.nut" import checkMultiplayerPermissions
+from "math" import fabs
+from "%ui/mainMenu/mailboxState.nut" import pushNotification, removeNotifyById, removeNotify, subscribeGroup
+from "%ui/mainMenu/contacts/contactPresence.nut" import isContactOnline, updateSquadPresences
+import "%ui/squad/squadAPI.nut" as MSquadAPI
+from "matching.api" import matching_listen_notify
+from "%ui/components/msgbox.nut" import showMsgbox
+from "%ui/voiceChat/voiceState.nut" import join_voice_chat, leave_voice_chat
+from "%ui/mainMenu/chat/chatApi.nut" import leaveChat, createChat, joinChat
+import "%ui/squad/consoleSessionManager.nut" as sessionManager
+from "eventbus" import eventbus_send, eventbus_subscribe
+from "%ui/helpers/platformUtils.nut" import canInterractCrossPlatformByCrossplay
+from "%ui/mainMenu/raidAutoSquadState.nut" import getFormalLeaderUid
+from "%ui/hud/state/in_battle_squad_notification_state.nut" import showSquadNotification
+from "app" import get_app_id
 from "%ui/ui_library.nut" import *
-
 from "%ui/mainMenu/raid_preparation_window_state.nut" import currentPrimaryContractIds
 from "%ui/profile/profileState.nut" import playerProfileCurrentContracts
 
-let {checkMultiplayerPermissions} = require("%ui/permissions/permissions.nut")
-let { debounce } = require("%sqstd/timers.nut")
-let {nestWatched} = require("%dngscripts/globalState.nut")
-let { fabs } = require("math")
-let { pushNotification, removeNotifyById, removeNotify, subscribeGroup } = require("%ui/mainMenu/mailboxState.nut")
+let logSq = require("%sqGlob/library_logs.nut").with_prefix("[SQUAD] ")
 let popupsState = require("%ui/popup/popupsState.nut")    
 let { blockedUids } = require("%ui/mainMenu/contacts/contactsWatchLists.nut")
 let userInfo = require("%sqGlob/userInfo.nut")
-let { getContactRealnick, getContact, validateNickNames,
-      getContactNick, updateContact, contacts } = require("%ui/mainMenu/contacts/contact.nut")
-let { onlineStatus, isContactOnline, updateSquadPresences } = require("%ui/mainMenu/contacts/contactPresence.nut")
-let MSquadAPI = require("squadAPI.nut")
-let {matching_listen_notify} = require("matching.api")
-let {showMsgbox} = require("%ui/components/msgbox.nut")
-let {join_voice_chat, leave_voice_chat} = require("%ui/voiceChat/voiceState.nut")
-let {leaveChat, createChat, joinChat} = require("%ui/mainMenu/chat/chatApi.nut")
+let { contacts } = require("%ui/mainMenu/contacts/contact.nut")
+let { onlineStatus } = require("%ui/mainMenu/contacts/contactPresence.nut")
 let squadState = require("%ui/squad/squadState.nut")
-let { squadId, isInSquad, isSquadLeader, isInvitedToSquad, selfUid,
-  squadSharedData, squadServerSharedData, squadMembers,
-  squadSelfMember, notifyMemberRemoved, notifyMemberAdded
+let { squadId, isInSquad, isSquadLeader, isInvitedToSquad, selfUid, squadSharedData,
+  squadServerSharedData, squadMembers, squadSelfMember, notifyMemberRemoved, notifyMemberAdded
 } = squadState
 
-let logSq = require("%sqGlob/library_logs.nut").with_prefix("[SQUAD] ")
-let sessionManager = require("%ui/squad/consoleSessionManager.nut")
-let { eventbus_send, eventbus_subscribe } = require("eventbus")
 let { uid2console } = require("%ui/mainMenu/contacts/consoleUidsRemap.nut")
 let { crossnetworkPlay, CrossPlayStateWeight, crossnetworkChat } = require("%ui/state/crossnetwork_state.nut")
-let { consoleCompare, canInterractCrossPlatformByCrossplay } = require("%ui/helpers/platformUtils.nut")
-let { queueInfo, curQueueParam, availableSquadMaxMembers, doesZoneFitRequirements
-} = require("%ui/state/queueState.nut")
-let { getFormalLeaderUid, reservedSquad, waitingInvite } = require("%ui/mainMenu/raidAutoSquadState.nut")
-let { sound_play } = require("%dngscripts/sound_system.nut")
-let { showSquadNotification } = require("%ui/hud/state/in_battle_squad_notification_state.nut")
+let { consoleCompare } = require("%ui/helpers/platformUtils.nut")
+let { queueInfo, curQueueParam, availableSquadMaxMembers } = require("%ui/state/queueState.nut")
+let { waitingInvite, waitingInviteFromLeaderNumber } = require("%ui/mainMenu/raidAutoSquadState.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
 let { maxVersionStr } = require("%ui/client_version.nut")
-let { get_app_id } = require("app")
-let { selectedRaid } = require("%ui/gameModeState.nut")
-let { playerStats } = require("%ui/profile/profileState.nut")
-let { matchingQueuesMap } = require("%ui/matchingQueues.nut")
+let { selectedRaid, leaderSelectedRaid } = require("%ui/gameModeState.nut")
+let { playersData } = require("%ui/squad/players_share_data.nut")
 
 const INVITE_ACTION_ID = "squad_invite_action"
 const SQUAD_OVERDRAFT = 0
@@ -52,7 +51,7 @@ let SquadMember = function(userId)  {
   let realnick = getContactRealnick(userId.tostring())
   return {
     userId
-    isLeader = squadId.value == userId
+    isLeader = squadId.get() == userId
     state = {}
     realnick
   }
@@ -92,8 +91,8 @@ let myDataLocal = Watched({})
 let voiceChatId          = @(s) $"squad-channel-{s}"
 let chatId = nestWatched("nestWatched", null)
 
-squadId.subscribe(function(_val) {
-  isSquadDataInited(false)
+squadId.subscribe_with_nasty_disregard_of_frp_update(function(_val) {
+  isSquadDataInited.set(false)
 })
 squadMembers.subscribe(@(list)
   validateNickNames(list.map(@(m) getContact(m.userId.tostring(), contacts.get()))))
@@ -113,13 +112,13 @@ function isFloatEqual(a, b, eps = 1e-6) {
 let isEqualWithFloat = @(v1, v2) isEqual(v1, v2, { float = isFloatEqual })
 
 let updateMyData = debounce(function() {
-  if (squadSelfMember.value == null)
+  if (squadSelfMember.get() == null)
     return 
 
-  let needSend = myDataLocal.value.findindex(@(value, key) !isEqualWithFloat(myDataRemote.value?[key], value)) != null
+  let needSend = myDataLocal.get().findindex(@(value, key) !isEqualWithFloat(myDataRemote.get()?[key], value)) != null
   if (needSend) {
-    logSq("update my data: ", myDataLocal.value)
-    MSquadAPI.setMemberData(myDataLocal.value)
+    logSq("update my data: ", myDataLocal.get())
+    MSquadAPI.setMemberData(myDataLocal.get())
   }
 }, 0.1)
 
@@ -127,34 +126,16 @@ foreach (w in [squadSelfMember, myDataLocal, myDataRemote])
   w.subscribe(@(_) updateMyData())
 
 function linkVarToMsquad(name, var) {
-  myDataLocal.mutate(@(v) v[name] <- var.value)
-  var.subscribe(@(_val) myDataLocal.mutate(@(v) v[name] <- var.value))
+  myDataLocal.mutate(@(v) v[name] <- var.get())
+  var.subscribe_with_nasty_disregard_of_frp_update(@(_val) myDataLocal.mutate(@(v) v[name] <- var.get()))
 }
 
-linkVarToMsquad("name", keepref(Computed(@() userInfo.value?.name))) 
+linkVarToMsquad("name", keepref(Computed(@() userInfo.get()?.name))) 
 
 let appId = Watched(get_app_id())
 let myExtData_ready = mkWatched(persist, "myExtData_ready", false)
 
-let unlockedQueues = keepref(Computed(function() {
-  let res = {}
-  foreach (queue in matchingQueuesMap.get()) {
-    if (queue.enabled && doesZoneFitRequirements(queue?.extraParams.requiresToSelect, playerStats.get()))
-      res[queue.queueId] <- true
-  }
-  return res
-}))
-
-let visibleQueues = keepref(Computed(function() {
-  let res = {}
-  foreach (queue in matchingQueuesMap.get()) {
-    if (doesZoneFitRequirements(queue?.extraParams.requiresToShow, playerStats.get()))
-      res[queue.queueId] <- true
-  }
-  return res
-}))
-
-let myExtSquadData = {
+let myExtSquadData = freeze({
   inBattle = isInBattleState
   crossnetworkPlay
   version = maxVersionStr
@@ -162,37 +143,40 @@ let myExtSquadData = {
   selectedRaid
   curQueueParam
   queueInfo
-  unlockedQueues
-  visibleQueues
   ready = myExtData_ready
-}
-let myExtDataRW = {ready = myExtData_ready}
+  leaderRaid = leaderSelectedRaid
+  playersData
+})
+
+let myExtDataRW = freeze({ready = myExtData_ready})
 
 foreach(name, var in myExtSquadData) {
   linkVarToMsquad(name, var)
 }
 
 function setSelfRemoteData(member_data) {
-  myDataRemote(clone member_data)
+  myDataRemote.set(clone member_data)
   foreach (k, v in member_data) {
     if (k in myExtDataRW) {
-      myExtDataRW[k].update(v)
+      myExtDataRW[k].set(v)
     }
   }
 }
 
-isInBattleState.subscribe(function(v) {
-  if (!v)
-    myExtSquadData.ready(false)
+isInBattleState.subscribe_with_nasty_disregard_of_frp_update(function(v) {
+  if (!v) {
+    myExtSquadData.ready.set(false)
+    myExtSquadData.leaderRaid.set(null)
+  }
 })
 
 function reset() {
-  squadId(null)
-  isInvitedToSquad({})
+  squadId.set(null)
+  isInvitedToSquad.set({})
 
-  if (squadSharedData.squadChat.value != null) {
-    squadChatJoined(false)
-    let chat_id = squadSharedData.squadChat.value?.chatId
+  if (squadSharedData.squadChat.get() != null) {
+    squadChatJoined.set(false)
+    let chat_id = squadSharedData.squadChat.get()?.chatId
     leaveChat(chat_id, null)
     chatId.set(null)
     if (chat_id)
@@ -200,40 +184,40 @@ function reset() {
   }
 
   foreach (w in squadSharedData)
-    w.update(null)
+    w.set(null)
   foreach (w in squadServerSharedData)
-    w.update(null)
+    w.set(null)
 
-  foreach (member in squadMembers.value) {
+  foreach (member in squadMembers.get()) {
     setOnlineBySquad(member.userId, null)
     sendEvent(notifyMemberRemoved, member.userId)
   }
-  squadMembers.update({})
-  delayedInvites(null)
-
-  myExtSquadData.ready(false)
-  myDataRemote({})
+  squadMembers.set({})
+  delayedInvites.set(null)
+  myExtSquadData.ready.set(false)
+  myExtSquadData.leaderRaid.set(null)
+  myDataRemote.set({})
 }
 
 function setSquadLeader(squadIdVal){
-  squadMembers.mutate(function(s){
+  squadMembers.mutate(function(s) {
     foreach (uid, member in s){
       s[uid].isLeader = member.userId == squadIdVal
     }
   })
 }
-squadId.subscribe(setSquadLeader)
-setSquadLeader(squadId.value)
+squadId.subscribe_with_nasty_disregard_of_frp_update(setSquadLeader)
+setSquadLeader(squadId.get())
 
 function removeInvitedSquadmate(user_id) {
-  if (!(user_id in isInvitedToSquad.value))
+  if (!(user_id in isInvitedToSquad.get()))
     return false
   isInvitedToSquad.mutate(@(value) value.$rawdelete(user_id))
   return true
 }
 
 function addInvited(user_id) {
-  if (user_id in isInvitedToSquad.value)
+  if (user_id in isInvitedToSquad.get())
     return false
   isInvitedToSquad.mutate(@(value) value[user_id] <- true)
   validateNickNames([getContact(user_id.tostring(), contacts.get())])
@@ -241,20 +225,20 @@ function addInvited(user_id) {
 }
 
 function applySharedData(dataTable) {
-  if (!isInSquad.value)
+  if (!isInSquad.get())
     return
 
   foreach (key, w in squadServerSharedData)
     if (key in dataTable)
-      w.update(dataTable[key])
+      w.set(dataTable[key])
 
-  if (!isSquadLeader.value)
+  if (!isSquadLeader.get())
     foreach (key, w in squadSharedData)
-      w.update(squadServerSharedData[key].value)
+      w.set(squadServerSharedData[key].get())
 }
 
 function checkDisbandEmptySquad() {
-  if (squadMembers.value.len() == 1 && !isInvitedToSquad.value.len())
+  if (squadMembers.get().len() == 1 && !isInvitedToSquad.get().len())
     MSquadAPI.disbandSquad()
 }
 
@@ -267,17 +251,17 @@ function revokeSquadInvite(user_id) {
 }
 
 function revokeAllSquadInvites() {
-  foreach (uid, _ in isInvitedToSquad.value)
+  foreach (uid, _ in isInvitedToSquad.get())
     revokeSquadInvite(uid)
 }
 
 function leaveSquadSilent(cb = null) {
-  if (!isInSquad.value) {
+  if (!isInSquad.get()) {
     cb?()
     return
   }
 
-  if (squadMembers.value.len() == 1)
+  if (squadMembers.get().len() == 1)
     revokeAllSquadInvites()
 
   sessionManager.leave()
@@ -291,10 +275,10 @@ let showSizePopup = @(text, isError = true)
     popupsState.addPopup({ id = "squadSizePopup", text = text, styleName = isError ? "error" : "" })
 
 
-let requestMemberData = @(uid, isMe,  isNewMember, cb = @(_res) null)
+let requestMemberData = @(uid, isMe, isNewMember, cb = @(_res) null)
   MSquadAPI.getMemberData(uid,
     { onSuccess = function(response) {
-        let member = squadMembers.value?[uid]
+        let member = squadMembers.get()?[uid]
         if (member) {
           let data = applyRemoteDataToSquadMember(member, response)
           if (isMe && data)
@@ -309,14 +293,14 @@ let requestMemberData = @(uid, isMe,  isNewMember, cb = @(_res) null)
     })
 
 function updateSquadInfo(squad_info) {
-  if (squadId.value != squad_info.id)
+  if (squadId.get() != squad_info.id)
     return
 
   foreach (uid in squad_info.members) {
     local isNewMember = false
-    let isMe = (uid == selfUid.value)
-    if (uid not in squadMembers.value) {
-      if (isMe && squad_info.members.len() > availableSquadMaxMembers.value) {
+    let isMe = (uid == selfUid.get())
+    if (uid not in squadMembers.get()) {
+      if (isMe && squad_info.members.len() > availableSquadMaxMembers.get()) {
         logSq("Leave from squad, right after join. Squad was already full.")
         leaveSquadSilent(@() showSizePopup(loc("squad/popup/squadFull")))
         continue
@@ -344,7 +328,7 @@ function updateSquadInfo(squad_info) {
   if (squad_info?.data)
     applySharedData(squad_info.data)
 
-  isSquadDataInited(true)
+  isSquadDataInited.set(true)
 }
 
 local fetchSquadInfo = null
@@ -356,7 +340,7 @@ function acceptInviteImpl(invSquadId) {
   }
   MSquadAPI.acceptInvite(invSquadId,
       { onSuccess = function(...) {
-          squadId.update(invSquadId)
+          squadId.set(invSquadId)
           fetchSquadInfo()
         }
         onFailure = function(resp) {
@@ -372,7 +356,7 @@ function acceptInviteImpl(invSquadId) {
 }
 
 function acceptSquadInvite(invSquadId) {
-  if (!isInSquad.value)
+  if (!isInSquad.get())
     acceptInviteImpl(invSquadId)
   else
     leaveSquadSilent(@() acceptInviteImpl(invSquadId))
@@ -380,7 +364,7 @@ function acceptSquadInvite(invSquadId) {
 
 function processSquadInvite(contact) {
   
-  if (isInSquad.value && squadId.value == contact.uid) {
+  if (isInSquad.get() && squadId.get() == contact.uid) {
     return
   }
 
@@ -395,24 +379,24 @@ function processSquadInvite(contact) {
 }
 
 function onInviteRevoked(inviterSquadId, invitedMemberId) {
-  if (inviterSquadId == squadId.value)
+  if (inviterSquadId == squadId.get())
     removeInvitedSquadmate(invitedMemberId)
   else
     removeNotifyById(getSquadInviteUid(inviterSquadId))
 }
 
 function addInviteByContact(inviter) {
-  if (inviter.uid == selfUid.value) 
+  if (inviter.uid == selfUid.get()) 
     return
 
-  if (inviter.userId in blockedUids.value) {
+  if (inviter.userId in blockedUids.get()) {
     logSq("got squad invite from blacklisted user", inviter)
     MSquadAPI.rejectInvite(inviter.uid)
     return
   }
 
-  if (!canInterractCrossPlatformByCrossplay(inviter.realnick, crossnetworkPlay.value)) {
-    logSq($"got squad invite from crossplatform user, is crosschat available: {crossnetworkChat.value}", inviter)
+  if (!canInterractCrossPlatformByCrossplay(inviter.realnick, crossnetworkPlay.get())) {
+    logSq($"got squad invite from crossplatform user, is crosschat available: {crossnetworkChat.get()}", inviter)
     MSquadAPI.rejectInvite(inviter.uid)
     return
   }
@@ -426,7 +410,12 @@ function addInviteByContact(inviter) {
 }
 
 function onInviteNotify(invite_info) {
-  let autoSquadFormalLeader = getFormalLeaderUid(reservedSquad.get())
+  let autoSquadFormalLeader = waitingInviteFromLeaderNumber.get()
+  log("[Autosquad] Check is autosquad inite:")
+  log($"[Autosquad] waitingInvite: {waitingInvite.get()}")
+  log($"[Autosquad] autoSquadFormalLeader: {autoSquadFormalLeader}")
+  log($"[Autosquad] selfUid: {selfUid.get()}")
+  log($"[Autosquad] invite_info.leader.id: {invite_info?.leader.id}")
   if (waitingInvite.get() &&
       autoSquadFormalLeader &&
       autoSquadFormalLeader != selfUid.get() &&
@@ -447,7 +436,7 @@ function onInviteNotify(invite_info) {
     let uid = invite_info?.leader.id
     let inviter = uid != null ? updateContact(invite_info.leader.id.tostring(), invite_info?.leader.name) : null
 
-    if (invite_info.invite.id == selfUid.value) {
+    if (invite_info.invite.id == selfUid.get()) {
       if (inviter!=null)
         addInviteByContact(inviter)
     }
@@ -455,7 +444,7 @@ function onInviteNotify(invite_info) {
       addInvited(invite_info.invite.id)
   }
   else if ("replaces" in invite_info) {
-    onInviteRevoked(invite_info.replaces, selfUid.value)
+    onInviteRevoked(invite_info.replaces, selfUid.get())
     let uid = invite_info?.leader.id.tostring()
     if (uid != null)
       addInviteByContact(getContact(uid, contacts.get()))
@@ -468,14 +457,14 @@ fetchSquadInfo = function(cb = null) {
     onAnyResult = function (result) {
       if (result.error != 0) {
         if (result?.error_id == "NOT_SQUAD_MEMBER")
-          squadId.update(null)
+          squadId.set(null)
         if (cb)
           cb(result)
         return
       }
 
       if ("squad" in result) {
-        squadId.update(result.squad.id)
+        squadId.set(result.squad.id)
         updateSquadInfo(result.squad)
         if (cb)
           cb(result)
@@ -492,12 +481,12 @@ fetchSquadInfo = function(cb = null) {
 }
 
 function onMemberDataChanged(user_id, request) {
-  let member = squadMembers.value?[user_id]
+  let member = squadMembers.get()?[user_id]
   if (member == null)
     return
 
   let data = applyRemoteDataToSquadMember(member, request)
-  let isMe = (user_id == selfUid.value)
+  let isMe = (user_id == selfUid.get())
   if (isMe && data)
     setSelfRemoteData(data)
   squadMembers.trigger()
@@ -516,7 +505,7 @@ function addMember(member) {
   squadMembers.mutate(@(val) val[userId] <- squadMember)
   sendEvent(notifyMemberAdded, userId)
 
-  if (squadMembers.value.len() == availableSquadMaxMembers.value && isInvitedToSquad.value.len() > 0 && isSquadLeader.value) {
+  if (squadMembers.get().len() == availableSquadMaxMembers.get() && isInvitedToSquad.get().len() > 0 && isSquadLeader.get()) {
     revokeAllSquadInvites()
     showSizePopup(loc("squad/squadIsReadyExtraInvitesRevoken"))
   }
@@ -525,7 +514,7 @@ function addMember(member) {
 function removeMember(member) {
   let userId = member.userId
 
-  if (userId == selfUid.value) {
+  if (userId == selfUid.get()) {
     if (isInBattleState.get()) {
       showSquadNotification(loc("squad/kickedMsgbox"))
     } else {
@@ -535,10 +524,10 @@ function removeMember(member) {
     }
     reset()
   }
-  else if (userId in squadMembers.value) {
-    let m = squadMembers.value[userId]
+  else if (userId in squadMembers.get()) {
+    let m = squadMembers.get()[userId]
     setOnlineBySquad(m.userId, null)
-    if (userId in squadMembers.value) 
+    if (userId in squadMembers.get()) 
       squadMembers.mutate(@(v) v.$rawdelete(userId))
     sendEvent(notifyMemberRemoved, userId)
     checkDisbandEmptySquad()
@@ -561,7 +550,7 @@ function leaveSquad(cb = null) {
 }
 
 function dismissSquadMember(user_id) {
-  let member = squadMembers.value?[user_id]
+  let member = squadMembers.get()?[user_id]
   if (!member)
     return
   showMsgbox({
@@ -575,46 +564,47 @@ function dismissSquadMember(user_id) {
 }
 
 function dismissAllOfflineSquadmates() {
-  if (!isSquadLeader.value)
+  if (!isSquadLeader.get())
     return
-  foreach (member in squadMembers.value){
-    if (!isContactOnline(member.userId.tostring(), onlineStatus.value))
+  foreach (member in squadMembers.get()){
+    if (!isContactOnline(member.userId.tostring(), onlineStatus.get()))
       MSquadAPI.dismissMember(member.userId)
   }
 }
 
 function transferSquad(user_id) {
-  let is_leader = isSquadLeader.value
+  let is_leader = isSquadLeader.get()
   MSquadAPI.transferSquad(user_id,
   {
     onSuccess = function(_) {
-      squadId.update(user_id)
+      squadId.set(user_id)
       if (is_leader) {
         sessionManager.updateData(user_id)
       }
+      myExtSquadData.leaderRaid.set(null)
     }
   })
 }
 
 function createSquadAndDo(afterFunc = null) {
-  if (isInSquad.value) {
+  if (isInSquad.get()) {
     logSq($"CreateSquadAndDo: don't create squad, do action")
     afterFunc?()
     return
   }
 
   if (afterFunc)
-    delayedInvites([afterFunc])
+    delayedInvites.set([afterFunc])
 
   let inviteDelayed = function() {
-    if (delayedInvites.value == null)
+    if (delayedInvites.get() == null)
       return
-    foreach (f in delayedInvites.value)
+    foreach (f in delayedInvites.get())
       f()
-    delayedInvites(null)
+    delayedInvites.set(null)
   }
 
-  let cleanupDelayed = @() delayedInvites(null)
+  let cleanupDelayed = @() delayedInvites.set(null)
 
   MSquadAPI.createSquad({
     onSuccess = @(_)
@@ -626,14 +616,14 @@ function createSquadAndDo(afterFunc = null) {
           }
 
           if (sessionManager.isAvailableConsoleSession)
-            sessionManager.create(squadId.value, inviteDelayed)
+            sessionManager.create(squadId.get(), inviteDelayed)
           else
             inviteDelayed()
 
           createChat(function(chat_resp) {
             if (chat_resp.error == 0) {
-              squadChatJoined(true)
-              squadSharedData.squadChat({
+              squadChatJoined.set(true)
+              squadSharedData.squadChat.set({
                 chatId = chat_resp.chatId
                 chatKey = chat_resp.chatKey
               })
@@ -651,18 +641,18 @@ function inviteToSquad(user_id, needConsoleInvite = true) {
     logSq("invite to squad is not allowed because of multiplayer permissions")
     return
   }
-  if (isInSquad.value) {
-    if (user_id in squadMembers.value) {
+  if (isInSquad.get()) {
+    if (user_id in squadMembers.get()) {
       logSq($"Invite: member {user_id}: already in squad")
       return
     }
 
-    if (squadMembers.value.len() >= availableSquadMaxMembers.value) {
+    if (squadMembers.get().len() >= availableSquadMaxMembers.get()) {
       logSq($"Invite: member {user_id}: squad already full")
       return showSizePopup(loc("squad/popup/squadFull"))
     }
 
-    if (squadMembers.value.len() + isInvitedToSquad.value.len() >= availableSquadMaxMembers.value + SQUAD_OVERDRAFT) {
+    if (squadMembers.get().len() + isInvitedToSquad.get().len() >= availableSquadMaxMembers.get() + SQUAD_OVERDRAFT) {
       logSq($"Invite: member {user_id}: too many invites")
       return showSizePopup(loc("squad/popup/tooManyInvited"))
     }
@@ -678,10 +668,10 @@ function inviteToSquad(user_id, needConsoleInvite = true) {
   }
 
   local doInvite = _doInvite
-  if (needConsoleInvite && sessionManager.isAvailableConsoleSession && uid2console.value?[user_id.tostring()] != null)
+  if (needConsoleInvite && sessionManager.isAvailableConsoleSession && uid2console.get()?[user_id.tostring()] != null)
     doInvite = @() sessionManager.invite(user_id, _doInvite)
 
-  if (delayedInvites.value != null) { 
+  if (delayedInvites.get() != null) { 
     delayedInvites.mutate(@(inv) inv.append(doInvite))
     logSq($"Invite: member {user_id}: saved to delayed. Postpone")
     return
@@ -694,17 +684,17 @@ local isSharedDataRequestInProgress = false
 function syncSharedDataImpl() {
   function isSharedDataDifferent() {
     foreach (key, w in squadSharedData)
-      if (w.value != squadServerSharedData[key].value)
+      if (w.get() != squadServerSharedData[key].get())
         return true
     return false
   }
 
-  if (isSharedDataRequestInProgress || !isSquadLeader.value || !isSharedDataDifferent())
+  if (isSharedDataRequestInProgress || !isSquadLeader.get() || !isSharedDataDifferent())
     return
 
   let thisFunc = callee()
   isSharedDataRequestInProgress = true
-  let requestData = squadSharedData.map(@(w) w.value)
+  let requestData = squadSharedData.map(@(w) w.get())
   MSquadAPI.setSquadData(requestData,
     { onSuccess = function(_res) {
         isSharedDataRequestInProgress = false
@@ -719,7 +709,7 @@ function syncSharedDataImpl() {
 
 local syncSharedDataTimer = null
 function syncSharedData(...) {
-  if (syncSharedDataTimer || !isSquadLeader.value)
+  if (syncSharedDataTimer || !isSquadLeader.get())
     return
   
   syncSharedDataTimer = function() {
@@ -758,7 +748,7 @@ subscribeGroup(INVITE_ACTION_ID, {
 function requestJoinSquad(userId) {
   MSquadAPI.requestJoin(userId, {
     onSuccess = function(...) {
-      squadId.update(userId)
+      squadId.set(userId)
       fetchSquadInfo()
     },
     onFailure = @(resp) logSq($"Failed to join squad {userId}", resp)
@@ -769,7 +759,7 @@ function onAcceptMembership(newContact) {
   let { realnick, uid } = newContact
   logSq($"Squad application notification from {uid}/{realnick}")
   if ((consoleCompare.xbox.isFromPlatform(realnick)
-      || consoleCompare.psn.isFromPlatform(realnick)) && isSquadLeader.value) {
+      || consoleCompare.psn.isFromPlatform(realnick)) && isSquadLeader.get()) {
     logSq($"Accepting squad membership from {uid}")
     MSquadAPI.acceptMembership(uid)
   } else {
@@ -793,14 +783,14 @@ function onApplicationNotify(params) {
 function onApplicationAccept(params) {
   let sid = params?.squad?.id
   logSq($"Squad membership application accepted for squad {sid}")
-  squadId.update(sid)
+  squadId.set(sid)
   fetchSquadInfo()
 }
 
 function onSquadCreated(params) {
   let sid = params?.requestBy?.userId
   logSq($"Squad created, requested by {sid}")
-  squadId.update(sid)
+  squadId.set(sid)
   fetchSquadInfo()
 }
 
@@ -811,7 +801,7 @@ let msubscribes = {
       onInviteRevoked(params.squad.id, params.invite.id)
   },
   ["msquad.notify_invite_rejected"] = function(params) {
-    if (isSquadLeader.value) {
+    if (isSquadLeader.get()) {
       let contact = getContact(params.invite.id.tostring(), contacts.get())
       removeInvitedSquadmate(contact.uid)
       pushNotification({ text = loc("squad/mail/reject", {playername = getContactNick(contact) })})
@@ -824,7 +814,7 @@ let msubscribes = {
   },
   ["msquad.notify_disbanded"] = function(_params) {
     sessionManager.leave()
-    if (!isSquadLeader.value) {
+    if (!isSquadLeader.get()) {
       if (isInBattleState.get()) {
         showSquadNotification(loc("squad/msgbox_disbanded"))
       } else {
@@ -837,13 +827,13 @@ let msubscribes = {
   ["msquad.notify_member_joined"] = addMember,
   ["msquad.notify_member_leaved"] = removeMember,
   ["msquad.notify_leader_changed"] = function(params) {
-    squadId.update(params.userId)
-    if (isSquadLeader.value) {
+    squadId.set(params.userId)
+    if (isSquadLeader.get()) {
       sessionManager.updateData(params.userId)
     }
   },
   ["msquad.notify_data_changed"] = function(_params){
-    if (isInSquad.value)
+    if (isInSquad.get())
       fetchSquadInfo()
   },
   ["msquad.notify_member_data_changed"] = function(params) {
@@ -852,7 +842,7 @@ let msubscribes = {
   },
   ["msquad.notify_member_logout"] = function(params) {
     let {userId} = params
-    if (userId not in squadMembers.value)
+    if (userId not in squadMembers.get())
       return
     setOnlineBySquad(userId, false)
     squadMembers.mutate(function(s){
@@ -860,7 +850,7 @@ let msubscribes = {
     })
   },
   ["msquad.notify_member_login"] = function(params) {
-    let member = squadMembers.value?[params.userId]
+    let member = squadMembers.get()?[params.userId]
     if (member){
       logSq("member", params.userId, "going to online")
       setOnlineBySquad(member.userId, true)
@@ -884,13 +874,13 @@ eventbus_subscribe("matching.logged_in", function(...) {
   fetchSquadInfo(@(val) logSq(val))
 })
 
-squadSharedData.squadChat.subscribe(function(value) {
+squadSharedData.squadChat.subscribe_with_nasty_disregard_of_frp_update(function(value) {
   if (value != null) {
-    if (!squadChatJoined.value) {
+    if (!squadChatJoined.get()) {
       joinChat(value?.chatId, value?.chatKey,
       function (resp) {
         if (resp.error == 0)
-          squadChatJoined(false)
+          squadChatJoined.set(false)
       })
       chatId.set(value?.chatId)
     }
@@ -899,15 +889,15 @@ squadSharedData.squadChat.subscribe(function(value) {
   }
 })
 
-let squadOnlineMembers = Computed(@() squadMembers.value.filter(@(m) isContactOnline(m.userId.tostring(), onlineStatus.value)))
+let squadOnlineMembers = Computed(@() squadMembers.get().filter(@(m) isContactOnline(m.userId.tostring(), onlineStatus.get())))
 
 let unsuitableCrossplayConditionMembers = Computed(function() {
-  let myCPState = crossnetworkPlay.value
+  let myCPState = crossnetworkPlay.get()
   let res = []
-  foreach (m in squadOnlineMembers.value) {
+  foreach (m in squadOnlineMembers.get()) {
     let curPlayerCPState = m.state?.crossnetworkPlay
     if (curPlayerCPState in CrossPlayStateWeight
-        && userInfo.value?.name != m.state?.realnick
+        && userInfo.get()?.name != m.state?.realnick
         && CrossPlayStateWeight[curPlayerCPState] != CrossPlayStateWeight[myCPState])
       res.append(m)
   }
@@ -920,7 +910,7 @@ squadOnlineMembers.subscribe(function(members) {
     revokeAllSquadInvites()
 })
 
-return squadState.__merge({
+return freeze(squadState.__merge({
   
   squadOnlineMembers
   unsuitableCrossplayConditionMembers
@@ -944,4 +934,4 @@ return squadState.__merge({
   
   subsMemberAddedEvent = @(func) notifyMemberAdded.append(func)
   subsMemberRemovedEvent = @(func) notifyMemberRemoved.append(func)
-})
+}))

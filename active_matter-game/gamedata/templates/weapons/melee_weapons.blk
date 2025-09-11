@@ -11,10 +11,9 @@ knife_prototype{
   animchar_render__enabled:b=yes
   gun__blk:t="gamedata/weapons/knife.blk"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="knife_weapon"
   item__weapType:t="melee"
   item__weight:r=0.45
-  melee_weapon__attackTime:r=0.51
+  melee_weapon__attackTime:r=0.6
   meleeSoundType:t="knife"
   meleeImpactSoundPath:t="impact/knife"
   gun__equipTime:r=0.2
@@ -29,8 +28,6 @@ knife_prototype{
   item__iconScale:r=0.9
   item__iconRoll:r=70
   item__iconPitch:r=60
-
-  "animchar__actOnDemand:tag"{}
 }
 
 knife_weapon{
@@ -40,11 +37,12 @@ knife_weapon{
   collres__res:t="sov_knife_nr_40_collision"
   item__proto:t="knife_weapon"
   item__name:t="items/knife"
-  item__volume:r=3
+  item__volume:i=30
   item__marketPrice:i=350
   melee_weapon__blk:t="gamedata/weapons/knife.blk"
   showroom_item__customZoom:r=1.4
   showroom_item__customZoomBordersRng:p2=1.1, 2
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -57,10 +55,10 @@ knife_weapon{
   "item__cantBeCorrupted:tag"{}
 }
 
-flashlight_weapon_controller{
+melee_weapon_flashlight_controller{
   _tracked:t="weapon_flashlight_controller__entityEid"
   _replicated:t="weapon_flashlight_controller__entityEid"
-  weapon_flashlight_controller__templateName:t="weapon_flashlight"
+  weapon_flashlight_controller__templateName:t="melee_weapon_flashlight_spot_light"
   weapon_flashlight_controller__nodeName:t="weaponRoot"
   weapon_flashlight_controller__nodeId:i=0
   weapon_flashlight_controller__offset:p3=0, 0, 0.2
@@ -70,7 +68,7 @@ flashlight_weapon_controller{
   "weapon_flashlight_controller__entityEid:eid"{}
 }
 
-flashlight_weapon_dynamic_material{
+melee_weapon_flashlight_dynamic_material{
   _use:t="dynmat_params_base"
 
   "dynamic_material_channels_arr:array"{
@@ -90,27 +88,28 @@ flashlight_weapon_dynamic_material{
   }
 }
 
-weapon_flashlight{
-  _use:t="attached_flashlight"
+melee_weapon_flashlight_spot_light{
+  _use:t="controlled_flashlight_spot_light"
   _use:t="melee_preset"
   light__radius_scale:r=3
   lightModTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0.2]]
-  attached_flashlight__type:i=1
   light__brightness:r=3
-  attached_flashlight__normalBrightness:r=3
-  attached_flashlight__lightScale:r=0.4
-  attached_flashlight__extraRotation:p3=-7, 0, 0
+  flashlight_spot_light__normalBrightness:r=3
+  flashlight_spot_light__lightScale:r=0.4
+  flashlight_spot_light__extraRotation:p3=-7, 0, 0
   light__color:c=255, 200, 200, 255
-  weapon_flashlight__noiseEndAt:r=0
-  weapon_flashlight__noisePeriod:r=1
-  weapon_flashlight__previousBrightness:r=0
-  weapon_flashlight__brightnessCoef:r=0.75
-  weapon_flashlight__powerRange:p2=-4, 4
-  weapon_flashlight__powerAdditionCoef:p2=-0.6, 0.3
-  weapon_flashlight__isTurningOnOffAt:r=0
-  weapon_flashlight__isTurningOn:b=no
-  weapon_flashlight__onPeriod:r=0.85
-  weapon_flashlight__offPeriod:r=0.36
+  melee_weapon_flashlight_spot_light__noiseEndAt:r=0
+  melee_weapon_flashlight_spot_light__noisePeriod:r=1
+  melee_weapon_flashlight_spot_light__previousBrightness:r=0
+  melee_weapon_flashlight_spot_light__brightnessCoef:r=0.75
+  melee_weapon_flashlight_spot_light__powerRange:p2=-4, 4
+  melee_weapon_flashlight_spot_light__powerAdditionCoef:p2=-0.6, 0.3
+  melee_weapon_flashlight_spot_light__isTurningOnOffAt:r=0
+  melee_weapon_flashlight_spot_light__isTurningOn:b=no
+  melee_weapon_flashlight_spot_light__onPeriod:r=0.85
+  melee_weapon_flashlight_spot_light__offPeriod:r=0.36
+
+  "melee_weapon_flashlight_spot_light:tag"{}
 }
 
 cooking_knife_weapon{
@@ -120,10 +119,11 @@ cooking_knife_weapon{
   collres__res:t="sovmod_cooking_knife_collision"
   item__proto:t="cooking_knife_weapon"
   item__name:t="items/cooking_knife"
-  item__volume:r=4
+  item__volume:i=40
   item__marketPrice:i=100
   meleeSoundType:t="knife_cooking"
   melee_weapon__blk:t="gamedata/weapons/cooking_knife.blk"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -143,12 +143,13 @@ pocket_knife_weapon{
   collres__res:t="am_pocket_knife_collision"
   item__proto:t="pocket_knife_weapon"
   item__name:t="items/pocket_knife"
-  item__volume:r=2
+  item__volume:i=20
   item__marketPrice:i=100
   gun__equipTime:r=1
   gun__holsterTime:r=1.2
   gun__minHolsterTime:r=0.9
   gun__holsterSwapSpeedMult:r=1
+  melee_weapon__attackTime:r=0.7
   meleeSoundType:t="knife_pocket"
   weapon__iconYaw:r=90
   weapon__iconRoll:r=90
@@ -168,22 +169,26 @@ pocket_knife_weapon{
 
 sovmod_diver_flashlight{
   _use:t="knife_prototype"
-  _use:t="flashlight_weapon_dynamic_material"
-  _use:t="flashlight_weapon_controller"
+  _use:t="melee_weapon_flashlight_dynamic_material"
+  _use:t="melee_weapon_flashlight_controller"
   _use:t="melee_preset"
+  attached_flashlight_controller__lightNormalBrightness:r=3
+  attached_flashlight_controller__lightMaxRadius:r=25
+  attached_flashlight_controller__lightConeAngle:r=-1
+  item_stat__luminosity:i=100
   item__animcharInInventoryName:t="sovmod_diver_flashlight_item_char"
   animchar__res:t="sovmod_diver_flashlight_char"
   collres__res:t="sovmod_diver_flashlight_collision"
   item__proto:t="sovmod_diver_flashlight"
   item__name:t="items/sovmod_diver_flashlight"
-  item__volume:r=6
+  item__volume:i=60
   item__marketPrice:i=100
   dropTm:m=[[0.255719, 0.964881, 0.0601066] [-0.966751, 0.255224, 0.015899] [0, -0.0621738, 0.998065] [0, 0.0380516, 0]]
   gun__equipTime:r=1.3
   gun__holsterTime:r=1
   gun__minHolsterTime:r=0.7
   gun__holsterSwapSpeedMult:r=1
-  melee_weapon__attackTime:r=0.6
+  melee_weapon__attackTime:r=0.8
   meleeSoundType:t="flashlight"
   meleeImpactSoundPath:t="impact/flashlight"
   melee_weapon__blk:t="gamedata/weapons/sovmod_diver_flashlight.blk"
@@ -191,7 +196,7 @@ sovmod_diver_flashlight{
   weapon__iconYaw:r=60
   weapon__iconPitch:r=60
   weapon__iconRoll:r=80
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -205,24 +210,29 @@ sovmod_diver_flashlight{
 sovmod_flashlight_device{
   _use:t="sovmod_diver_flashlight"
   _use:t="melee_preset"
+  attached_flashlight_controller__lightNormalBrightness:r=3
+  attached_flashlight_controller__lightMaxRadius:r=25
+  attached_flashlight_controller__lightConeAngle:r=-1
+  item_stat__luminosity:i=100
   item__animcharInInventoryName:t="sovmod_flashlight_a_item_char"
   animchar__res:t="sovmod_flashlight_a_char"
   collres__res:t="sovmod_flashlight_a_collision"
   item__proto:t="sovmod_flashlight_device"
   item__name:t="items/sovmod_flashlight_device"
   item__weight:r=0.3
-  item__volume:r=5
+  item__volume:i=50
   dropTm:m=[[-0.0125441, 0.999534, 0.0278368] [-0.911706, -1.86265e-09, -0.410843] [-0.410652, -0.0305326, 0.911281] [0, 0.08, 0]]
   gun__equipTime:r=0.8
   gun__holsterTime:r=0.8
   gun__minHolsterTime:r=0.7
   gun__holsterSwapSpeedMult:r=1
-  melee_weapon__attackTime:r=1
+  melee_weapon__attackTime:r=0.8
   melee_weapon__blk:t="gamedata/weapons/sovmod_flashlight.blk"
   gun__blk:t="gamedata/weapons/sovmod_flashlight.blk"
   item__iconScale:r=1.2
   item__iconOffset:p2=0.3, -0.1
   weapon__iconOffset:p2=-0.2, 0
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 }
 
 screwdriver_a_weapon{
@@ -232,10 +242,11 @@ screwdriver_a_weapon{
   collres__res:t="sovmod_screwdriver_a_collision"
   item__proto:t="screwdriver_a_weapon"
   item__name:t="items/screwdriver_a"
-  item__volume:r=2
+  item__volume:i=20
   item__marketPrice:i=100
   meleeSoundType:t="screwdriver"
   melee_weapon__blk:t="gamedata/weapons/pocket_knife.blk"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -256,10 +267,11 @@ screwdriver_b_weapon{
   collres__res:t="sovmod_screwdriver_b_collision"
   item__proto:t="screwdriver_b_weapon"
   item__name:t="items/screwdriver_b"
-  item__volume:r=2
+  item__volume:i=20
   item__marketPrice:i=100
   meleeSoundType:t="screwdriver"
   melee_weapon__blk:t="gamedata/weapons/pocket_knife.blk"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -280,10 +292,11 @@ chisel_a_weapon{
   collres__res:t="sovmod_chisel_a_collision"
   item__proto:t="chisel_a_weapon"
   item__name:t="items/chisel_a"
-  item__volume:r=3
+  item__volume:i=30
   item__marketPrice:i=100
   meleeSoundType:t="screwdriver"
   melee_weapon__blk:t="gamedata/weapons/pocket_knife.blk"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -304,10 +317,11 @@ chisel_b_weapon{
   collres__res:t="sovmod_chisel_b_collision"
   item__proto:t="chisel_b_weapon"
   item__name:t="items/chisel_b"
-  item__volume:r=3
+  item__volume:i=30
   item__marketPrice:i=100
   meleeSoundType:t="screwdriver"
   melee_weapon__blk:t="gamedata/weapons/pocket_knife.blk"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -346,10 +360,10 @@ sov_knife_nr_40_weapon{
   collres__res:t="sov_knife_nr_40_collision"
   item__proto:t="sov_knife_nr_40_weapon"
   item__name:t="items/sov_knife_nr_40"
-  item__volume:r=3
+  item__volume:i=30
   item__marketPrice:i=100
   melee_weapon__blk:t="gamedata/weapons/sov_knife_nr_40.blk"
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -368,10 +382,10 @@ ak_bayonet_weapon{
   item__proto:t="ak_bayonet_weapon"
   item__name:t="items/ak_bayonet"
   item__weight:r=0.3
-  item__volume:r=4
+  item__volume:i=40
   item__marketPrice:i=100
   melee_weapon__blk:t="gamedata/weapons/ak_bayonet.blk"
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -405,10 +419,10 @@ sovmod_dirk_white{
   item__proto:t="sovmod_dirk_white"
   item__name:t="items/sovmod_dirk_white"
   item__weight:r=0.3
-  item__volume:r=5
+  item__volume:i=50
   item__marketPrice:i=100
   melee_weapon__blk:t="gamedata/weapons/sovmod_dirk.blk"
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -436,10 +450,10 @@ sovmod_dirk_long{
   item__proto:t="sovmod_dirk_long"
   item__name:t="items/sovmod_dirk_long"
   item__weight:r=0.4
-  item__volume:r=6
+  item__volume:i=60
   item__marketPrice:i=100
   melee_weapon__blk:t="gamedata/weapons/sovmod_dirk_long.blk"
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -473,16 +487,15 @@ axe_weapon{
   melee_weapon__blk:t="gamedata/weapons/axe.blk"
   item__proto:t="axe_weapon"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="axe_weapon"
   item__name:t="items/axe"
   item__weapType:t="melee"
   item__weight:r=1.3
-  item__volume:r=10
+  item__volume:i=100
   item__marketPrice:i=100
   meleeSoundType:t="axe"
   meleeImpactSoundPath:t="impact/axe"
   melee_weapon__attackAt:r=0.4
-  melee_weapon__attackTime:r=1
+  melee_weapon__attackTime:r=1.1
   gun__length:r=0.2
   gun__melee:b=yes
   gun__reloadable:b=no
@@ -490,9 +503,9 @@ axe_weapon{
   dropTm:m=[[0, 1, 0] [0, 0, 1] [1, 0, 0] [0, 0.01, 0]]
   item__iconRoll:r=43
   item__iconPitch:r=83
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  item__nexusCost:i=150
 
-  "animchar__actOnDemand:tag"{}
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
     holsterSlots:t="slot_weapon_2"
@@ -514,12 +527,13 @@ mpl50_shovel{
   item__proto:t="mpl50_shovel"
   item__name:t="items/mpl50_shovel"
   item__weight:r=0.8
-  item__volume:r=10
+  item__volume:i=100
   item__marketPrice:i=100
   item__iconRoll:r=43
   item__iconPitch:r=83
   meleeSoundType:t="shovel"
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  item__nexusCost:i=150
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -537,10 +551,9 @@ rugbeater{
   item__name:t="items/rugbeater"
   item__desc:t="items/rugbeater/desc"
   item__weight:r=0.15
-  item__volume:r=5
+  item__volume:i=50
   item__marketPrice:i=90
   meleeSoundType:t="wrench"
-  profile_server_data__enrichmentResearchAddChance:r=1
   dropTm:m=[[0.703441, 0.188389, 0.685332] [0.697827, -7.45058e-09, -0.716266] [-0.134936, 0.982095, -0.131463] [0, 0.01, 0]]
   item__iconPitch:r=-40
   item__iconRoll:r=-5
@@ -551,12 +564,13 @@ rugbeater{
   weapon__iconYaw:r=-5
   weapon__iconScale:r=1.1
   weapon__iconOffset:p2=-0.2, 0
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
     holsterSlots:t="slot_weapon_2"
     holsterSlots:t="slot_weapon_3"
-    holsterSlots:t="slot_weapon_melee_1"
+    holsterSlots:t="slot_weapon_melee_2"
     holsterSlots:t="slot_weapon_5"
   }
 }
@@ -566,13 +580,14 @@ rugbeater_a_weapon{
   animchar__res:t="sovmod_rugbeater_a_char"
   collres__res:t="sovmod_rugbeater_a_collision"
   item__proto:t="rugbeater_a_weapon"
-  profile_server_data__enrichmentResearchAddChance:r=1
+  item__name:t="items/rugbeater_a"
+  item__desc:t="items/rugbeater/desc"
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
     holsterSlots:t="slot_weapon_2"
     holsterSlots:t="slot_weapon_3"
-    holsterSlots:t="slot_weapon_melee_1"
+    holsterSlots:t="slot_weapon_melee_2"
     holsterSlots:t="slot_weapon_5"
   }
 }
@@ -583,13 +598,14 @@ rugbeater_b_weapon{
   collres__res:t="sovmod_rugbeater_b_collision"
   item__proto:t="rugbeater_b_weapon"
   meleeSoundType:t="shovel"
-  profile_server_data__enrichmentResearchAddChance:r=1
+  item__name:t="items/rugbeater_b"
+  item__desc:t="items/rugbeater/desc"
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
     holsterSlots:t="slot_weapon_2"
     holsterSlots:t="slot_weapon_3"
-    holsterSlots:t="slot_weapon_melee_1"
+    holsterSlots:t="slot_weapon_melee_2"
     holsterSlots:t="slot_weapon_5"
   }
 }
@@ -600,13 +616,14 @@ rugbeater_c_weapon{
   collres__res:t="sovmod_rugbeater_c_collision"
   item__proto:t="rugbeater_c_weapon"
   meleeSoundType:t="shovel"
-  profile_server_data__enrichmentResearchAddChance:r=1
+  item__name:t="items/rugbeater_c"
+  item__desc:t="items/rugbeater/desc"
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
     holsterSlots:t="slot_weapon_2"
     holsterSlots:t="slot_weapon_3"
-    holsterSlots:t="slot_weapon_melee_1"
+    holsterSlots:t="slot_weapon_melee_2"
     holsterSlots:t="slot_weapon_5"
   }
 }
@@ -620,7 +637,7 @@ cooking_cleaver_weapon{
   item__proto:t="cooking_cleaver_weapon"
   item__name:t="items/cooking_cleaver"
   item__weight:r=0.7
-  item__volume:r=8
+  item__volume:i=80
   item__marketPrice:i=100
   item__iconPitch:r=40
   item__iconRoll:r=-20
@@ -628,13 +645,14 @@ cooking_cleaver_weapon{
   item__iconScale:r=1
   item__iconOffset:p2=0, -0.1
   meleeSoundType:t="axe"
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  item__nexusCost:i=150
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
     holsterSlots:t="slot_weapon_2"
     holsterSlots:t="slot_weapon_3"
-    holsterSlots:t="slot_weapon_melee_1"
+    holsterSlots:t="slot_weapon_melee_2"
     holsterSlots:t="slot_weapon_5"
   }
 }
@@ -657,11 +675,10 @@ wrench_weapon{
   melee_weapon__blk:t="gamedata/weapons/wrench.blk"
   item__proto:t="wrench_weapon"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="wrench_weapon"
   item__name:t="items/wrench"
   item__weapType:t="melee"
   item__weight:r=0.7
-  item__volume:r=8
+  item__volume:i=80
   item__showOffset:p3=0, 0.6, 0
   item__showRotation:p3=15, 0, -120
   item__showScale:r=1.5
@@ -669,15 +686,16 @@ wrench_weapon{
   meleeSoundType:t="wrench"
   meleeImpactSoundPath:t="impact/wrench"
   melee_weapon__attackAt:r=0.45
-  melee_weapon__attackTime:r=0.8
+  melee_weapon__attackTime:r=1.1
   gun__length:r=0.2
   gun__melee:b=yes
   gun__reloadable:b=no
   gun__statName:t="melee"
   dropTm:m=[[0, 1, 0] [0, 0, 1] [1, 0, 0] [0, 0.01, 0]]
   item__iconRoll:r=43
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  item__nexusCost:i=150
 
-  "animchar__actOnDemand:tag"{}
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
     holsterSlots:t="slot_weapon_2"
@@ -709,18 +727,17 @@ spear_weapon{
   melee_weapon__blk:t="gamedata/weapons/spear.blk"
   item__proto:t="spear_weapon"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="spear_weapon"
   item__name:t="items/spear"
   item__weapType:t="melee"
   item__weight:r=0.9
-  item__volume:r=18
+  item__volume:i=180
   item__showRotation:p3=25, 20, 70
   item__showScale:r=1.3
   item__marketPrice:i=1200
   meleeSoundType:t="spear"
   meleeImpactSoundPath:t="impact/spear"
   melee_weapon__attackAt:r=0.45
-  melee_weapon__attackTime:r=0.65
+  melee_weapon__attackTime:r=0.8
   gun__length:r=1.1
   gun__melee:b=yes
   gun__reloadable:b=no
@@ -729,8 +746,14 @@ spear_weapon{
   item__iconYaw:r=0
   item__iconPitch:r=110
   item__iconRoll:r=180
+  weapon__iconPitch:r=75
+  weapon__iconRoll:r=0
+  weapon__iconYaw:r=130
+  weapon__iconOffset:p2=-0.17, 0
+  weapon__iconScale:r=0.85
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  item__nexusCost:i=250
 
-  "animchar__actOnDemand:tag"{}
   "twoHandedMeleeWeapon:tag"{}
   "item__cantBeCorrupted:tag"{}
   "gun_attach__holsterSlots:array"{
@@ -761,18 +784,17 @@ hammer_weapon{
   melee_weapon__blk:t="gamedata/weapons/hammer.blk"
   item__proto:t="hammer_weapon"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="hammer_weapon"
   item__name:t="items/hammer"
   item__weapType:t="melee"
   item__weight:r=1.15
-  item__volume:r=20
+  item__volume:i=200
   item__showRotation:p3=25, 20, 70
   item__showScale:r=1.3
   item__marketPrice:i=1800
   meleeSoundType:t="hammer"
   meleeImpactSoundPath:t="impact/hammer"
   melee_weapon__attackAt:r=0.45
-  melee_weapon__attackTime:r=1.5
+  melee_weapon__attackTime:r=1.4
   gun__length:r=0.3
   gun__melee:b=yes
   gun__reloadable:b=no
@@ -782,8 +804,14 @@ hammer_weapon{
   item__iconYaw:r=90
   item__iconPitch:r=100
   item__iconRoll:r=185
+  weapon__iconPitch:r=70
+  weapon__iconRoll:r=0
+  weapon__iconYaw:r=130
+  weapon__iconOffset:p2=-0.19, 0
+  weapon__iconScale:r=1.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  item__nexusCost:i=250
 
-  "animchar__actOnDemand:tag"{}
   "twoHandedMeleeWeapon:tag"{}
   "item__cantBeCorrupted:tag"{}
   "gun_attach__holsterSlots:array"{
@@ -793,4 +821,166 @@ hammer_weapon{
     holsterSlots:t="slot_weapon_melee_3"
     holsterSlots:t="slot_weapon_5"
   }
+}
+
+stub_melee_chronogene{
+  _use:t="base_item"
+  item__recreateOnGround:t="item_in_world"
+  item__recreateInWorldPhys:t="item_in_world_phys"
+  item__recreateInInventory:t="base_invis_item"
+  item__recreateInEquipment:t="item_in_equipment_hided_on_doll"
+  uniqueId:t="-1"
+  item__filterType:t="stub_melee_weapon"
+  item__weight:r=0
+  item__volume:i=0
+  animchar__res:t="biomaterial_container_can_small_char"
+  collres__res:t="biomaterial_container_can_small_collision"
+  equipable_item__curSlot:t=""
+  _tracked:t="equipable_item__curSlot"
+  _replicated:t="equipable_item__curSlot"
+
+  "item__dontUnequipOnDeath:tag"{}
+  "item__permanentItem:tag"{}
+  "item__chronogene:tag"{}
+  "item__cantBeCorrupted:tag"{}
+  "item__cantBeReplica:tag"{}
+  "animchar_attach__attachedTo:eid"{}
+  "item__equipmentSlots:list<t>"{
+    slot:t="chronogene_melee_1"
+  }
+}
+
+stub_sov_knife_nr_40_chronogene{
+  _use:t="stub_melee_chronogene"
+  equipment__setDefaultStubMeleeTemplate:t="default_stub_sov_knife_nr_40_weapon"
+}
+
+brass_knuckles_knife_bouncer_weapon{
+  _use:t="knife_prototype"
+  _use:t="melee_preset"
+  _use:t="item_rarity_rare"
+  animchar__res:t="am_trench_knife_a_char"
+  collres__res:t="am_trench_knife_a_collision"
+  item__proto:t="brass_knuckles_knife_bouncer_weapon"
+  item__name:t="items/brass_knuckles_knife_bouncer_weapon"
+  item__volume:i=30
+  item__marketPrice:i=0
+  gun__blk:t="gamedata/weapons/brass_knuckles_knife_bouncer.blk"
+  melee_weapon__blk:t="gamedata/weapons/brass_knuckles_knife_bouncer.blk"
+  weapon__iconPitch:r=80
+  weapon__iconRoll:r=0
+  weapon__iconYaw:r=180
+  weapon__iconScale:r=0.8
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gun_attach__holsterSlots:array"{
+    holsterSlots:t="slot_weapon_1"
+    holsterSlots:t="slot_weapon_2"
+    holsterSlots:t="slot_weapon_3"
+    holsterSlots:t="slot_weapon_melee_2"
+    holsterSlots:t="slot_weapon_5"
+  }
+}
+
+default_stub_brass_knuckles_knife_bouncer_weapon{
+  _use:t="brass_knuckles_knife_bouncer_weapon"
+  _use:t="default_stub_melee"
+}
+
+stub_brass_knuckles_knife_bouncer_chronogene{
+  _use:t="stub_melee_chronogene"
+  _use:t="item_rarity_rare"
+  item__name:t="items/brass_knuckles_knife_bouncer_weapon"
+  item__proto:t="stub_brass_knuckles_knife_bouncer_chronogene"
+  animchar__res:t="am_trench_knife_a_char"
+  item__iconPitch:r=60
+  item__iconRoll:r=0
+  item__iconYaw:r=180
+  item__iconScale:r=1
+  equipment__setDefaultStubMeleeTemplate:t="default_stub_brass_knuckles_knife_bouncer_weapon"
+
+  "mintBannedItem:tag"{}
+}
+
+tomahawk_woodcutters_argument_weapon{
+  _use:t="axe_weapon"
+  _use:t="melee_preset"
+  _use:t="item_rarity_epic"
+  animchar__res:t="am_tomahawk_a_char"
+  collres__res:t="am_tomahawk_a_collision"
+  item__proto:t="tomahawk_woodcutters_argument_weapon"
+  item__name:t="items/tomahawk_woodcutters_argument_weapon"
+  item__volume:i=30
+  item__marketPrice:i=0
+  melee_weapon__blk:t="gamedata/weapons/axe.blk"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gun_attach__holsterSlots:array"{
+    holsterSlots:t="slot_weapon_1"
+    holsterSlots:t="slot_weapon_2"
+    holsterSlots:t="slot_weapon_3"
+    holsterSlots:t="slot_weapon_melee_1"
+    holsterSlots:t="slot_weapon_5"
+  }
+}
+
+default_stub_tomahawk_woodcutters_argument_weapon{
+  _use:t="tomahawk_woodcutters_argument_weapon"
+  _use:t="default_stub_melee"
+}
+
+stub_tomahawk_woodcutters_argument_chronogene{
+  _use:t="stub_melee_chronogene"
+  _use:t="item_rarity_epic"
+  item__name:t="items/tomahawk_woodcutters_argument_weapon"
+  item__proto:t="stub_tomahawk_woodcutters_argument_chronogene"
+  animchar__res:t="am_tomahawk_a_char"
+  item__iconScale:r=0.9
+  item__iconRoll:r=70
+  item__iconPitch:r=60
+  equipment__setDefaultStubMeleeTemplate:t="default_stub_tomahawk_woodcutters_argument_weapon"
+
+  "mintBannedItem:tag"{}
+}
+
+bugswatter_cbt_weapon{
+  _use:t="rugbeater"
+  _use:t="melee_preset"
+  animchar__res:t="am_bugswatter_a_char"
+  collres__res:t="am_bugswatter_a_collision"
+  item__proto:t="bugswatter_cbt_weapon"
+  item__name:t="items/bugswatter_cbt_weapon"
+  item__volume:i=30
+  item__marketPrice:i=0
+  meleeSoundType:t="shovel"
+  melee_weapon__blk:t="gamedata/weapons/rugbeater.blk"
+  weapon__iconScale:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gun_attach__holsterSlots:array"{
+    holsterSlots:t="slot_weapon_1"
+    holsterSlots:t="slot_weapon_2"
+    holsterSlots:t="slot_weapon_3"
+    holsterSlots:t="slot_weapon_melee_2"
+    holsterSlots:t="slot_weapon_5"
+  }
+}
+
+default_stub_bugswatter_cbt_weapon{
+  _use:t="bugswatter_cbt_weapon"
+  _use:t="default_stub_melee"
+}
+
+stub_bugswatter_cbt_chronogene{
+  _use:t="stub_melee_chronogene"
+  item__name:t="items/bugswatter_cbt_weapon"
+  item__proto:t="stub_bugswatter_cbt_chronogene"
+  animchar__res:t="am_bugswatter_a_char"
+  item__iconPitch:r=-40
+  item__iconRoll:r=-5
+  item__iconYaw:r=10
+  item__iconScale:r=1.1
+  equipment__setDefaultStubMeleeTemplate:t="default_stub_bugswatter_cbt_weapon"
+
+  "mintBannedItem:tag"{}
 }

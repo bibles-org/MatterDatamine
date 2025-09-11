@@ -1,7 +1,8 @@
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/components/colors.nut" import BtnTextHover, BtnTextNormal
+
 from "%ui/ui_library.nut" import *
 
-let {body_txt} = require("%ui/fonts_style.nut")
-let {BtnTextHover, BtnTextNormal} = require("%ui/components/colors.nut")
 
 
 function optionLabel(opt, group) {
@@ -11,7 +12,7 @@ function optionLabel(opt, group) {
     let color = (stateFlags.get() & S_HOVER) ? BtnTextHover : BtnTextNormal
     let text = opt?.restart ? $"{opt.name}*" : opt.name
     return {
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       group
       halign = ALIGN_LEFT
       

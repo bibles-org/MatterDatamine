@@ -1,6 +1,8 @@
+from "%ui/state/roomState.nut" import setMemberAttributes
+
 from "%ui/ui_library.nut" import *
 
-let { roomIsLobby, setMemberAttributes} = require("%ui/state/roomState.nut")
+let { roomIsLobby } = require("%ui/state/roomState.nut")
 
 let attribs = {}
 
@@ -11,10 +13,9 @@ function addAttrib(name, watched) {
 
 roomIsLobby.subscribe(function(val) {
   if (val && attribs.len() > 0)
-    setMemberAttributes({ public = attribs.map(@(v) v.value) })
+    setMemberAttributes({ public = attribs.map(@(v) v.get()) })
 })
 
 return {
   addAttrib
 }
-

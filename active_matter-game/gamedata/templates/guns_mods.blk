@@ -1,26 +1,23 @@
-mod_item_in_world{
-  _use:t="base_item"
-  _use:t="item_in_world"
-}
-
 base_gun_mod{
-  _use:t="gun_mod_icon"
   _use:t="base_item"
-  item__id:i=0
-  _replicated:t="item__id"
-  item__ui_priority:i=0
-  item__recreateOnGround:t="mod_item_in_world"
+  item__iconYaw:r=25
+  item__iconPitch:r=0
+  item__iconRoll:r=15
+  item__iconOffset:p2=0, 0
+  item__iconScale:r=1
+  item__recreateOnGround:t="item_in_world"
   item__recreateInWorldPhys:t="item_in_world_phys"
   item__recreateInInventory:t="base_invis_item"
   item__recreateInGunModSlot:t="weapon_mod"
-  uniqueId:t="-1"
   item__recreateOnDelayedMove:t="weapon_mod_move_with_blocking"
-  _tracked:t="slot_attach__attachedTo"
-  _replicated:t="slot_attach__attachedTo"
+  uniqueId:t="-1"
+  _tracked:t="animchar_attach__attachedTo"
+  _replicated:t="animchar_attach__attachedTo"
   profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "attachmentUpdate:tag"{}
-  "slot_attach__attachedTo:eid"{}
+  "gun_mod:tag"{}
+  "animchar_attach__attachedTo:eid"{}
   "item__chronotracesProgressionInfo:object"{
     "once:object"{}
     "repeatedly:object"{
@@ -46,11 +43,8 @@ gun_mod_with_effect{
   "gun_mod__effectEid:eid"{}
 }
 
-base_gun_mod_slot{
-  _use:t="base_mod_slot"
-}
-
 base_weapon_mod_move{
+  "no_item_sound_on_move:tag"{}
   "weapon_mod_move__weaponEid:eid"{}
   "weapon_mod_move__inventoryEid:eid"{}
   "weapon_mod_move__fakeModEid:eid"{}
@@ -64,7 +58,7 @@ weapon_mod_move_with_blocking{
 fake_weapon_mod{
   _use:t="base_nonreplicated_item"
   _use:t="block_item_all_actions"
-  item__volume:r=0
+  item__volume:i=0
 
   "fake_weapon_mod__realModEid:eid"{}
   "notExtractable:tag"{}
@@ -81,6 +75,7 @@ base_scope{
   gunmod__deviationMult:r=0.5
   gunmod__camShiftMin:r=0.11
   gunmod__camShiftMax:r=0.13
+  gunmod__camRealZoomShift:r=0.055
   gunmod__camFovMin:r=28
   gunmod__camFovMax:r=19
   gunmod__lensBrightness:r=1
@@ -89,17 +84,18 @@ base_scope{
   gunmod__focusPlaneShift:r=0.5
   gunmod__dofNearAmountPercent:r=50
   gunmod__dofFarAmountPercent:r=0.02
-  gunmod__disableToggleAim:b=yes
   gunmod__nightvisionTex_res:t=""
   item__filterType:t="weapon_mods"
   showroom_item__customZoom:r=2
   showroom_item__customZoomBordersRng:p2=1.6, 2.4
+  item__nexusCost:i=75
 
   "drop_tms:list<m>"{
     tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
     tm:m=[[0, 1, 0] [-1, 0, 0] [0, 0, 1] [0, 0, 0]]
   }
 
+  collres{}
   "gunmod__nightvisionTex:SharedTex"{
     _tags:t="render"
   }
@@ -108,13 +104,20 @@ base_scope{
   "gunScope:tag"{}
 }
 
+base_thermal_scope{
+  _use:t="base_scope"
+  _use:t="thermal_vision_preset"
+  gunmod__lensOnlyZoomDisabled:b=yes
+}
+
 base_collimator_scope{
   _use:t="base_scope"
-  gunmod__camShiftMin:r=0.09
-  gunmod__camShiftMax:r=0.11
-  gunmod__zoomFactor:r=2
+  gunmod__camShiftMin:r=0
+  gunmod__camShiftMax:r=0
+  gunmod__zoomFactor:r=1.2
   gunmod__sightingDistance:r=30
   gunmod__lensNode:t="collimator_glass"
+  item__nexusCost:i=50
 
   "isCameraAlwaysOnScope:tag"{}
 }
@@ -124,16 +127,16 @@ scope_3_5x{
   animchar__res:t="scope_pu_char"
   item__proto:t="scope_3_5x"
   item__weight:r=0.55
-  item__volume:r=3
+  item__volume:i=30
   item__name:t="items/scope_3_5x"
   item__marketPrice:i=1200
   gunAttachable__slotName:t="scope"
   collres__res:t="scope_pu_collision"
-  item__userstats__pickupName:t="pickup_scope_4x"
   gunmod__zoomFactor:r=3.5
+  gunmod__camRealZoomShift:r=0.034
   gunmod__lensBrightness:r=0.65
   gunmod__distortionParams:p3=0.85, 0.2, 0.27
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -146,13 +149,13 @@ scope_4x{
   animchar__res:t="scope_pu_char"
   item__proto:t="scope_4x"
   item__weight:r=0.55
-  item__volume:r=3
+  item__volume:i=30
   item__name:t="items/scope_4x"
   gunAttachable__slotName:t="scope"
   collres__res:t="scope_pso_collision"
-  item__userstats__pickupName:t="pickup_scope_4x"
   gunmod__zoomFactor:r=4
   gunmod__deviationMult:r=0.3
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -165,13 +168,13 @@ scope_6x{
   animchar__res:t="scope_pu_char"
   item__proto:t="scope_6x"
   item__weight:r=0.55
-  item__volume:r=3
+  item__volume:i=30
   item__name:t="items/scope_6x"
   gunAttachable__slotName:t="scope"
   collres__res:t="scope_m84_collision"
-  item__userstats__pickupName:t="pickup_scope_6x"
   gunmod__zoomFactor:r=6
   gunmod__deviationMult:r=0.3
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -184,21 +187,20 @@ scope_pso1{
   animchar__res:t="pso_1_1_char"
   item__proto:t="scope_pso1"
   item__weight:r=0.62
-  item__volume:r=4
+  item__volume:i=40
   item__name:t="items/scope_pso"
   item__marketPrice:i=1750
   gunAttachable__slotName:t="scope"
   collres__res:t="pso_1_1_collision"
-  item__userstats__pickupName:t="pickup_scope_pso1"
   gunmod__zoomFactor:r=4
+  gunmod__lensOnlyZoomDisabled:b=yes
   gunmod__camShiftMax:r=0.041
   gunmod__camShiftMin:r=0.041
   gunmod__lensBrightness:r=0.7
   gunmod__distortionParams:p3=0.11, 0.7, 0.15
-  gunmod__disableToggleAim:b=yes
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.4, 1.8
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -211,21 +213,20 @@ scope_pso1_high{
   animchar__res:t="pso_1_akm_char"
   item__proto:t="scope_pso1_high"
   item__weight:r=0.7
-  item__volume:r=4
+  item__volume:i=40
   item__name:t="items/scope_pso_high"
   item__marketPrice:i=1750
   gunAttachable__slotName:t="scope"
   collres__res:t="pso_1_akm_collision"
-  item__userstats__pickupName:t="pickup_scope_pso1_high"
   gunmod__zoomFactor:r=4
+  gunmod__camRealZoomShift:r=0.045
   gunmod__camShiftMax:r=0.15
   gunmod__camShiftMin:r=0.15
   gunmod__lensBrightness:r=0.7
   gunmod__distortionParams:p3=0.12, 0.7, 0.15
-  gunmod__disableToggleAim:b=yes
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.4, 1.8
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -235,20 +236,20 @@ scope_pso1_high{
 
 scope_1p63{
   _use:t="base_collimator_scope"
+  _use:t="scope_2moa_dot_reticle"
   animchar__res:t="1p63_char"
   item__proto:t="scope_1p63"
   item__weight:r=0.6
-  item__volume:r=3
+  item__volume:i=30
   item__name:t="items/scope_1p63"
   item__marketPrice:i=600
   gunAttachable__slotName:t="scope"
   collres__res:t="1p63_collision"
-  item__userstats__pickupName:t="pickup_scope_1p63"
   weap__focusPlaneShift:r=0.3
   weap__dofNearAmountPercent:r=2
   gunmod__camNode:t="collimator_view"
   gunmod__lensActive:b=no
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -285,15 +286,15 @@ cal_9_18_silencer{
   animchar__res:t="makarov_silencer_char"
   item__proto:t="cal_9_18_silencer"
   item__weight:r=0.29
-  item__volume:r=3
+  item__volume:i=30
   item__name:t="items/cal_9_18_silencer"
   item__filterType:t="weapon_mods"
   item__marketPrice:i=500
   gunAttachable__slotName:t="silencer"
   collres__res:t="makarov_silencer_collision"
-  item__userstats__pickupName:t="pickup_cal_9_18_silencer"
   gun_mod__effectTemplate:t="big_silencer_gun_effect"
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  item__nexusCost:i=50
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -308,17 +309,17 @@ pbs1_silencer{
   animchar__res:t="pbs1_silencer_char"
   item__proto:t="pbs1_silencer"
   item__weight:r=0.435
-  item__volume:r=3
+  item__volume:i=30
   item__name:t="items/pbs1_silencer"
   item__filterType:t="weapon_mods"
   item__marketPrice:i=1775
   gunAttachable__slotName:t="silencer"
   collres__res:t="pbs1_silencer_collision"
-  item__userstats__pickupName:t="pickup_pbs1_silencer"
   gun_mod__effectTemplate:t="big_silencer_gun_effect"
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.2, 2
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  item__nexusCost:i=50
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -328,21 +329,22 @@ pbs1_silencer{
 
 banish_45_suppressor{
   _use:t="base_gun_mod"
-  _use:t="rifle_silencer_muzzle_preset"
+  _use:t="pistol_silencer_muzzle_preset"
   _use:t="gun_mod_with_effect"
   animchar__res:t="banish_45_supressor_char"
   item__proto:t="banish_45_suppressor"
   item__weight:r=0.26
-  item__volume:r=3
+  item__volume:i=30
   item__name:t="items/banish_45_suppressor"
   item__filterType:t="weapon_mods"
   item__marketPrice:i=1100
   gunAttachable__slotName:t="silencer"
   collres__res:t="banish_45_supressor_collision"
-  item__userstats__pickupName:t="pickup_banish_45_suppressor"
   gun_mod__effectTemplate:t="big_silencer_gun_effect"
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.2, 2
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  item__nexusCost:i=50
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -354,21 +356,22 @@ banish_45_suppressor{
 
 banish_45_ext_suppressor{
   _use:t="base_gun_mod"
-  _use:t="rifle_silencer_muzzle_preset"
+  _use:t="pistol_silencer_muzzle_preset"
   _use:t="gun_mod_with_effect"
   animchar__res:t="banish_45_supressor_extended_char"
   item__proto:t="banish_45_ext_suppressor"
   item__weight:r=0.32
-  item__volume:r=3
+  item__volume:i=30
   item__name:t="items/banish_45_ext_suppressor"
   item__filterType:t="weapon_mods"
   item__marketPrice:i=1300
   gunAttachable__slotName:t="silencer"
   collres__res:t="banish_45_supressor_extended_collision"
-  item__userstats__pickupName:t="pickup_banish_45_ext_suppressor"
   gun_mod__effectTemplate:t="big_silencer_gun_effect"
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.2, 2
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  item__nexusCost:i=50
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -385,16 +388,17 @@ hexagon_silencer{
   animchar__res:t="hexagon_silencer_char"
   item__proto:t="hexagon_silencer"
   item__weight:r=0.58
-  item__volume:r=3
+  item__volume:i=30
   item__name:t="items/hexagon_silencer"
   item__filterType:t="weapon_mods"
   item__marketPrice:i=1500
   gunAttachable__slotName:t="silencer"
   collres__res:t="hexagon_silencer_collision"
-  item__userstats__pickupName:t="pickup_hexagon_silencer"
   gun_mod__effectTemplate:t="big_silencer_gun_effect"
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.2, 2
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  item__nexusCost:i=50
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -411,17 +415,18 @@ ash_12_suppressor{
   animchar__res:t="ash12_silencer_a_char"
   item__proto:t="ash_12_suppressor"
   item__weight:r=0.7
-  item__volume:r=3
+  item__volume:i=30
   item__name:t="items/ash_12_suppressor"
   item__filterType:t="weapon_mods"
   item__marketPrice:i=1800
   gunAttachable__slotName:t="silencer"
   collres__res:t="ash12_silencer_a_collision"
-  item__userstats__pickupName:t="pickup_ash_12_suppressor"
   gun_mod__effectTemplate:t="big_silencer_gun_effect"
   item__iconYaw:r=205
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.2, 2
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  item__nexusCost:i=50
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -438,17 +443,18 @@ vssk_vyhlop_suppressor{
   animchar__res:t="ash12_silencer_b_char"
   item__proto:t="vssk_vyhlop_suppressor"
   item__weight:r=1.5
-  item__volume:r=12
+  item__volume:i=120
   item__name:t="items/vssk_vyhlop_suppressor"
   item__filterType:t="weapon_mods"
   item__marketPrice:i=4900
   gunAttachable__slotName:t="silencer"
   collres__res:t="ash12_silencer_b_collision"
-  item__userstats__pickupName:t="pickup_vssk_vyhlop_suppressor"
   gun_mod__effectTemplate:t="big_silencer_gun_effect"
   item__iconYaw:r=205
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.2, 2
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  item__nexusCost:i=50
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{}
@@ -462,17 +468,17 @@ pp19_vityaz_silencer{
   animchar__res:t="pp_19_vityaz_silencer_char"
   item__proto:t="pp19_vityaz_silencer"
   item__weight:r=0.53
-  item__volume:r=3
+  item__volume:i=30
   item__name:t="items/pp19_vityaz_silencer"
   item__filterType:t="weapon_mods"
   item__marketPrice:i=800
   gunAttachable__slotName:t="silencer"
   collres__res:t="pp_19_vityaz_silencer_collision"
-  item__userstats__pickupName:t="pickup_pp19_vityaz_silencer"
   gun_mod__effectTemplate:t="big_silencer_gun_effect"
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.2, 2
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  item__nexusCost:i=50
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -487,16 +493,17 @@ oss_hxqd_762_suppressor{
   animchar__res:t="m110a1_silencer_char"
   item__proto:t="oss_hxqd_762_suppressor"
   item__weight:r=0.5
-  item__volume:r=3
+  item__volume:i=30
   item__name:t="items/oss_hxqd_762_suppressor"
   item__filterType:t="weapon_mods"
   item__marketPrice:i=3500
   gunAttachable__slotName:t="silencer"
   collres__res:t="m110a1_silencer_collision"
-  item__userstats__pickupName:t="pickup_oss_hxqd_762_suppressor"
   gun_mod__effectTemplate:t="big_silencer_gun_effect"
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.2, 2
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  item__nexusCost:i=50
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -513,16 +520,16 @@ pp_2000_silencer{
   animchar__res:t="pp_2000_silencer_char"
   item__proto:t="pp_2000_silencer"
   item__weight:r=0.4
-  item__volume:r=3
+  item__volume:i=30
   item__name:t="items/pp_2000_silencer"
   item__filterType:t="weapon_mods"
   item__marketPrice:i=1200
   gunAttachable__slotName:t="silencer"
   collres__res:t="pp_2000_silencer_collision"
-  item__userstats__pickupName:t="pickup_pp_2000_silencer"
   gun_mod__effectTemplate:t="big_silencer_gun_effect"
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.2, 2
+  item__nexusCost:i=50
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -539,16 +546,17 @@ socom556_suppressor{
   animchar__res:t="surefire_socom556_suppressor_char"
   item__proto:t="socom556_suppressor"
   item__weight:r=0.49
-  item__volume:r=3
+  item__volume:i=30
   item__name:t="items/socom556_suppressor"
   item__filterType:t="weapon_mods"
   item__marketPrice:i=2200
   gunAttachable__slotName:t="silencer"
   collres__res:t="surefire_socom556_suppressor_collision"
-  item__userstats__pickupName:t="pickup_socom556_suppressor"
   gun_mod__effectTemplate:t="small_silencer_gun_effect"
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.2, 2
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  item__nexusCost:i=50
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -558,14 +566,372 @@ socom556_suppressor{
   "item__cantBeCorrupted:tag"{}
 }
 
+light_stock_gun_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__recoilMult:r=0.95
+}
+
+stock_gun_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__recoilMult:r=0.9
+}
+
+sniper_stock_gun_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__recoilMult:r=0.85
+  gun_mod_effect__equipMult:r=1.3
+}
+
+base_stock{
+  _use:t="base_gun_mod"
+  _use:t="slot_attach_attached_hide_dynmodel_nodes"
+  _use:t="slot_attach_attached_show_dynmodel_nodes"
+  _use:t="gun_mod_with_effect"
+  item__lootType:t="stock"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__filterType:t="weapon_mods"
+  gunAttachable__slotName:t="stock"
+  item__iconOffset:p2=0, -0.3
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
+
+  "drop_tms:list<m>"{
+    tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+    tm:m=[[0, 1, 0] [-1, 0, 0] [0, 0, 1] [0, 0, 0]]
+  }
+
+  "gunAttachable:tag"{}
+}
+
+ak_15_stock{
+  _use:t="base_stock"
+  animchar__res:t="ak_15_stock_char"
+  collres__res:t="ak_15_stock_collision"
+  item__proto:t="ak_15_stock"
+  item__name:t="items/ak_15_stock"
+  gun_mod__effectTemplate:t="light_stock_gun_effect"
+  item__weight:r=0.4
+  item__volume:i=45
+  item__marketPrice:i=1050
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="ak_stock_slot"
+  }
+}
+
+dlg_tactical_stock{
+  _use:t="base_stock"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="dlg_tactical_stock_char"
+  collres__res:t="dlg_tactical_stock_collision"
+  item__proto:t="dlg_tactical_stock"
+  item__name:t="items/dlg_tactical_stock"
+  gun_mod__effectTemplate:t="stock_gun_effect"
+  item__weight:r=0.45
+  item__volume:i=55
+  item__marketPrice:i=5100
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="ak_stock_slot"
+  }
+}
+
+hydraulic_collapsible_stock{
+  _use:t="base_stock"
+  animchar__res:t="hydraulic_collapsible_stock_char"
+  collres__res:t="hydraulic_collapsible_stock_collision"
+  item__proto:t="hydraulic_collapsible_stock"
+  item__name:t="items/hydraulic_collapsible_stock"
+  item__weight:r=0.55
+  item__volume:i=55
+  item__marketPrice:i=1200
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="m249_stock_slot"
+  }
+}
+
+m249_fixed_stock{
+  _use:t="base_stock"
+  animchar__res:t="m249_fixed_stock_char"
+  collres__res:t="m249_fixed_stock_collision"
+  item__proto:t="m249_fixed_stock"
+  item__name:t="items/m249_fixed_stock"
+  item__weight:r=0.55
+  item__volume:i=65
+  item__marketPrice:i=1200
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="m249_stock_slot"
+  }
+}
+
+pt_1_telescopic_stock{
+  _use:t="base_stock"
+  animchar__res:t="pt_1_telescopic_stock_ak_char"
+  collres__res:t="pt_1_telescopic_stock_ak_collision"
+  item__proto:t="pt_1_telescopic_stock"
+  item__name:t="items/pt_1_telescopic_stock"
+  gun_mod__effectTemplate:t="light_stock_gun_effect"
+  item__weight:r=0.47
+  item__volume:i=50
+  item__marketPrice:i=1600
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="ak_stock_slot"
+  }
+}
+
+pt_2_telescopic_stock{
+  _use:t="base_stock"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="pt_2_telescopic_stock_char"
+  collres__res:t="pt_2_telescopic_stock_collision"
+  item__proto:t="pt_2_telescopic_stock"
+  item__name:t="items/pt_2_telescopic_stock"
+  gun_mod__effectTemplate:t="stock_gun_effect"
+  item__weight:r=0.65
+  item__volume:i=55
+  item__marketPrice:i=6900
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="pkm_stock_slot"
+  }
+}
+
+pt_3_telescopic_stock{
+  _use:t="base_stock"
+  animchar__res:t="pt_3_telescopic_stock_ak_char"
+  collres__res:t="pt_3_telescopic_stock_ak_collision"
+  item__proto:t="pt_3_telescopic_stock"
+  item__name:t="items/pt_3_telescopic_stock"
+  gun_mod__effectTemplate:t="light_stock_gun_effect"
+  item__weight:r=0.55
+  item__volume:i=50
+  item__marketPrice:i=1625
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="ak_stock_slot"
+  }
+}
+
+fab_defense_gl_core_stock{
+  _use:t="base_stock"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="fab_defense_gl_core_stock_noendplate_char"
+  collres__res:t="fab_defense_gl_core_stock_noendplate_collision"
+  item__proto:t="fab_defense_gl_core_stock"
+  item__name:t="items/fab_defense_gl_core_stock"
+  gun_mod__effectTemplate:t="stock_gun_effect"
+  item__weight:r=0.27
+  item__volume:i=55
+  item__marketPrice:i=6100
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="m_gun_stock_slot"
+  }
+}
+
+magpul_prs_stock{
+  _use:t="base_stock"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="magpul_prs_stock_noendplate_char"
+  collres__res:t="magpul_prs_stock_noendplate_collision"
+  item__proto:t="magpul_prs_stock"
+  item__name:t="items/magpul_prs_stock"
+  gun_mod__effectTemplate:t="sniper_stock_gun_effect"
+  item__weight:r=0.8
+  item__volume:i=65
+  item__marketPrice:i=3600
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="m_gun_stock_slot"
+  }
+}
+
+magpul_str_stock{
+  _use:t="base_stock"
+  animchar__res:t="magpul_str_stock_noendplate_char"
+  collres__res:t="magpul_str_stock_noendplate_collision"
+  item__proto:t="magpul_str_stock"
+  item__name:t="items/magpul_str_stock"
+  gun_mod__effectTemplate:t="stock_gun_effect"
+  item__weight:r=0.45
+  item__volume:i=55
+  item__marketPrice:i=1900
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="m_gun_stock_slot"
+  }
+}
+
+mft_battlelink_minimalist_stock{
+  _use:t="base_stock"
+  animchar__res:t="mft_battlelink_minimalist_stock_noendplate_char"
+  collres__res:t="mft_battlelink_minimalist_stock_noendplate_collision"
+  item__proto:t="mft_battlelink_minimalist_stock"
+  item__name:t="items/mft_battlelink_minimalist_stock"
+  gun_mod__effectTemplate:t="light_stock_gun_effect"
+  item__weight:r=0.3
+  item__volume:i=45
+  item__marketPrice:i=800
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="m_gun_stock_slot"
+  }
+}
+
+magpul_sl_k_scorpion_stock{
+  _use:t="base_stock"
+  animchar__res:t="magpul_sl_k_scorpion_stock_char"
+  collres__res:t="magpul_sl_k_scorpion_stock_collision"
+  item__proto:t="magpul_sl_k_scorpion_stock"
+  item__name:t="items/magpul_sl_k_scorpion_stock"
+  gun_mod__effectTemplate:t="stock_gun_effect"
+  item__weight:r=0.5
+  item__volume:i=50
+  item__marketPrice:i=1350
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="scorpion_evo_stock_slot"
+  }
+}
+
+ks23_wire_stock{
+  _use:t="base_stock"
+  animchar__res:t="ks_23_wire_stock_char"
+  collres__res:t="ks_23_wire_stock_collision"
+  item__proto:t="ks23_wire_stock"
+  item__name:t="items/ks23_wire_stock"
+  gun_mod__effectTemplate:t="light_stock_gun_effect"
+  item__weight:r=0.5
+  item__volume:i=50
+  item__marketPrice:i=1200
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="ks_23_stock_slot"
+  }
+}
+
+barrett_m82_cheekpad{
+  _use:t="base_stock"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="barrett_m82_cheekpad_char"
+  collres__res:t="barrett_m82_cheekpad_collision"
+  item__proto:t="barrett_m82_cheekpad"
+  item__name:t="items/barrett_m82_cheekpad"
+  gun_mod__effectTemplate:t="light_stock_gun_effect"
+  item__weight:r=0.5
+  item__volume:i=50
+  item__marketPrice:i=4950
+  item__iconOffset:p2=0, -0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="barrett_m82a1_stock_slot"
+  }
+}
+
+base_bipod{
+  _use:t="base_gun_mod"
+  _use:t="slot_attach_attached_hide_dynmodel_nodes"
+  _use:t="gun_mod_with_effect"
+  item__lootType:t="bipod"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__filterType:t="weapon_mods"
+  gunAttachable__slotName:t="bipod"
+  item__iconOffset:p2=0, -0.3
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
+
+  "drop_tms:list<m>"{
+    tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+    tm:m=[[0, 1, 0] [-1, 0, 0] [0, 0, 1] [0, 0, 0]]
+  }
+
+  "gunAttachable:tag"{}
+}
+
+rpk_16_bipod{
+  _use:t="base_bipod"
+  animchar__res:t="rpk_16_bipod_char"
+  collres__res:t="rpk_16_bipod_collision"
+  item__proto:t="rpk_16_bipod"
+  item__name:t="items/rpk_16_bipod"
+  item__weight:r=0.4
+  item__volume:i=45
+  item__marketPrice:i=1050
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunmod__slots:list<t>"{
+    i:t="m110a1_bipod_slot"
+  }
+}
+
+cosmonaut_picatinny_charm{
+  _use:t="base_gun_mod"
+  animchar__res:t="charm_piccatinny_cosmonaut_a_char"
+  collres__res:t="charm_piccatinny_cosmonaut_a_collision"
+  animchar_fast_phys__res:t="charm_piccatinny_cosmonaut_a_fastphys"
+  drop_item__horizontalAngleLimits:p2=0, 360
+  item__lootType:t="charm"
+  item__filterType:t="weapon_mods"
+  item__proto:t="cosmonaut_picatinny_charm"
+  item__name:t="items/cosmonaut_picatinny_charm"
+  item__weight:r=0.01
+  item__volume:i=1
+  item__marketPrice:i=500
+  gunAttachable__slotName:t="charm"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  animchar_fast_phys{
+    _tags:t="gameClient"
+  }
+
+  "drop_tms:list<m>"{
+    tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+    tm:m=[[0, 1, 0] [-1, 0, 0] [0, 0, 1] [0, 0, 0]]
+  }
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="picatinny_charm_slot"
+  }
+}
+
 base_magazine_slot{
-  _use:t="base_gun_mod_slot"
+  _use:t="base_mod_slot"
   mod_slot__icon:t="uiskin/submachine_gun.svg"
   mod_slot__tooltip:t="slots/magazine"
 }
 
+picatinny_charm_slot{
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/charm.svg"
+  mod_slot__tooltip:t="slots/picatinny_charm"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="cosmonaut_picatinny_charm"
+  }
+
+  "mod_slot__lockedInRaid:tag"{}
+}
+
 base_scope_slot{
-  _use:t="base_gun_mod_slot"
+  _use:t="base_mod_slot"
   mod_slot__icon:t="uiskin/scope.svg"
   mod_slot__tooltip:t="slots/scope"
 }
@@ -673,14 +1039,9 @@ scope_dovetail_high_slot{
   }
 }
 
-base_silencer_slot{
-  _use:t="base_gun_mod_slot"
-  mod_slot__icon:t="uiskin/silencer.svg"
-  mod_slot__tooltip:t="slots/silencer"
-}
-
 cal_9_18_silencer_slot{
-  _use:t="base_silencer_slot"
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/silencer.svg"
   mod_slot__tooltip:t="slots/silencer_9_18"
 
   "mod_slot__typeLocs:list<t>"{
@@ -693,7 +1054,8 @@ cal_9_18_silencer_slot{
 }
 
 vityaz_silencer_slot{
-  _use:t="base_silencer_slot"
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/silencer.svg"
   mod_slot__tooltip:t="slots/silencer_vityaz"
 
   "mod_slot__typeLocs:list<t>"{
@@ -706,7 +1068,8 @@ vityaz_silencer_slot{
 }
 
 m110a1_silencer_slot{
-  _use:t="base_silencer_slot"
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/silencer.svg"
   mod_slot__tooltip:t="slots/silencer_m110a1"
 
   "mod_slot__typeLocs:list<t>"{
@@ -719,7 +1082,8 @@ m110a1_silencer_slot{
 }
 
 pp_2000_silencer_slot{
-  _use:t="base_silencer_slot"
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/silencer.svg"
   mod_slot__tooltip:t="slots/silencer_pp_2000"
 
   "mod_slot__typeLocs:list<t>"{
@@ -732,7 +1096,8 @@ pp_2000_silencer_slot{
 }
 
 545_silencer_slot{
-  _use:t="base_silencer_slot"
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/silencer.svg"
   mod_slot__tooltip:t="slots/silencer_545"
 
   "mod_slot__typeLocs:list<t>"{
@@ -745,7 +1110,8 @@ pp_2000_silencer_slot{
 }
 
 silencer_pbs1_slot{
-  _use:t="base_silencer_slot"
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/silencer.svg"
   mod_slot__tooltip:t="slots/silencer_pbs"
 
   "mod_slot__typeLocs:list<t>"{
@@ -758,7 +1124,8 @@ silencer_pbs1_slot{
 }
 
 45_silencer_slot{
-  _use:t="base_silencer_slot"
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/silencer.svg"
   mod_slot__tooltip:t="slots/silencer_45"
 
   "mod_slot__typeLocs:list<t>"{
@@ -771,7 +1138,8 @@ silencer_pbs1_slot{
 }
 
 9_19_silencer_slot{
-  _use:t="base_silencer_slot"
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/silencer.svg"
   mod_slot__tooltip:t="slots/silencer_9_19"
 
   "mod_slot__typeLocs:list<t>"{
@@ -784,7 +1152,8 @@ silencer_pbs1_slot{
 }
 
 556_silencer_slot{
-  _use:t="base_silencer_slot"
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/silencer.svg"
   mod_slot__tooltip:t="slots/silencer_556"
 
   "mod_slot__typeLocs:list<t>"{
@@ -797,7 +1166,8 @@ silencer_pbs1_slot{
 }
 
 ash_12_silencer_slot{
-  _use:t="base_silencer_slot"
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/silencer.svg"
   mod_slot__tooltip:t="slots/silencer_ash_12"
 
   "mod_slot__typeLocs:list<t>"{
@@ -806,5 +1176,178 @@ ash_12_silencer_slot{
 
   "slot_holder__availableItems:list<t>"{
     i:t="ash_12_suppressor"
+  }
+}
+
+base_stock_slot{
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/stock_slot.svg"
+  mod_slot__tooltip:t="slots/stock"
+
+  "mod_slot__lockedInRaid:tag"{}
+}
+
+ak_stock_slot{
+  _use:t="base_stock_slot"
+  mod_slot__tooltip:t="slots/stock_ak"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="ak_15_stock"
+    i:t="dlg_tactical_stock"
+    i:t="pt_1_telescopic_stock"
+    i:t="pt_3_telescopic_stock"
+  }
+}
+
+m249_stock_slot{
+  _use:t="base_stock_slot"
+  mod_slot__tooltip:t="slots/stock_m249"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="hydraulic_collapsible_stock"
+    i:t="m249_fixed_stock"
+  }
+}
+
+pkm_stock_slot{
+  _use:t="base_stock_slot"
+  mod_slot__tooltip:t="slots/stock_pkm"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="pt_2_telescopic_stock"
+  }
+}
+
+m_gun_stock_slot{
+  _use:t="base_stock_slot"
+  mod_slot__tooltip:t="slots/stock_m_gun"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="fab_defense_gl_core_stock"
+    i:t="magpul_prs_stock"
+    i:t="magpul_str_stock"
+    i:t="mft_battlelink_minimalist_stock"
+  }
+}
+
+scorpion_evo_stock_slot{
+  _use:t="base_stock_slot"
+  mod_slot__tooltip:t="slots/stock_scorpion_evo"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="magpul_sl_k_scorpion_stock"
+  }
+}
+
+ks_23_stock_slot{
+  _use:t="base_stock_slot"
+  mod_slot__tooltip:t="slots/stock_ks_23"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="ks23_wire_stock"
+  }
+}
+
+barrett_m82a1_stock_slot{
+  _use:t="base_stock_slot"
+  mod_slot__tooltip:t="slots/stock_barrett_m82a1"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="barrett_m82_cheekpad"
+  }
+}
+
+underbarrel_picatinny_slot{
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/pika_ph_down.svg"
+  mod_slot__tooltip:t="slots/underbarrel_picatinny"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/underbarrel_type_picatinny"
+  }
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="gun_flashlight_klesh_2d"
+    i:t="gun_flashlight_surefire_m600_ultra_scout"
+  }
+}
+
+gun_flashlight_spot_light{
+  _use:t="controlled_flashlight_spot_light"
+
+  "gun_flashlight_spot_light:tag"{}
+}
+
+base_gun_flashlight_mod{
+  _use:t="base_gun_mod"
+  _use:t="attached_flashlight_controller"
+  _use:t="flashlight_device_dynamic_material"
+  attached_flashlight_controller__spotLightTemplate:t="gun_flashlight_spot_light"
+  attached_flashlight_controller__spotLightAttachNodeName:t="flashlight_fx"
+  attached_flashlight_controller__offset:p3=0, -0.02, 0
+  attached_flashlight_controller__lightConeAngle:r=30
+  attached_flashlight_controller__sphereCastParams:p3=0.025, 0.025, 0.075
+  flashlight_device__emissiveOnValue:r=10
+  flashlight_device__emissiveColor:p3=1, 1, 1
+}
+
+gun_flashlight_klesh_2d{
+  _use:t="base_gun_flashlight_mod"
+  animchar__res:t="klesh_2d_light_char"
+  item__proto:t="gun_flashlight_klesh_2d"
+  item__weight:r=0.29
+  item__volume:i=30
+  item__name:t="items/gun_flashlight_klesh_2d"
+  item__filterType:t="weapon_mods"
+  item__marketPrice:i=500
+  gunAttachable__slotName:t="underbarrel"
+  attached_flashlight_controller__lightNormalBrightness:r=5
+  attached_flashlight_controller__lightMaxRadius:r=100
+  item_stat__luminosity:i=370
+  collres__res:t="klesh_2d_light_collision"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  item__nexusCost:i=50
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="underbarrel_picatinny_slot"
+  }
+}
+
+gun_flashlight_surefire_m600_ultra_scout{
+  _use:t="base_gun_flashlight_mod"
+  animchar__res:t="surefire_m600_ultra_scout_light_char"
+  item__proto:t="gun_flashlight_surefire_m600_ultra_scout"
+  item__weight:r=0.29
+  item__volume:i=30
+  item__name:t="items/gun_flashlight_surefire_m600_ultra_scout"
+  item__filterType:t="weapon_mods"
+  item__marketPrice:i=1200
+  gunAttachable__slotName:t="underbarrel"
+  attached_flashlight_controller__lightNormalBrightness:r=15
+  attached_flashlight_controller__lightMaxRadius:r=200
+  item_stat__luminosity:i=1000
+  collres__res:t="surefire_m600_ultra_scout_light_collision"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  item__nexusCost:i=50
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="underbarrel_picatinny_slot"
+  }
+}
+
+base_bipod_slot{
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/bipod_slot.svg"
+  mod_slot__tooltip:t="slots/bipod"
+}
+
+m110a1_bipod_slot{
+  _use:t="base_bipod_slot"
+  mod_slot__tooltip:t="slots/m110a1_bipod_slot"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="rpk_16_bipod"
   }
 }

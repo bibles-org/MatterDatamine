@@ -1,8 +1,9 @@
+from "%ui/matchingClient.nut" import matchingCall
+
 from "%ui/ui_library.nut" import *
 import "math" as math
 import "matching.errors" as matching_errors
 
-let { matchingCall } = require("%ui/matchingClient.nut")
 
 let debugMode = mkWatched(persist, "debugMode", false)
 let roomsList = mkWatched(persist, "roomsList", [])
@@ -10,20 +11,20 @@ let isRequestInProgress = mkWatched(persist, "isRequestInProgress", false)
 let curError = Watched(null)
 
 function listRoomsCb(response) {
-  isRequestInProgress.update(false)
-  if (debugMode.value)
+  isRequestInProgress.set(false)
+  if (debugMode.get())
     return
   if (response.error) {
-    curError.update(matching_errors.error_string(response.error))
-    roomsList.update([])
+    curError.set(matching_errors.error_string(response.error))
+    roomsList.set([])
   } else {
-    curError.update(null)
-    roomsList.update(response.digest)
+    curError.set(null)
+    roomsList.set(response.digest)
   }
 }
 
 function updateListRooms(){
-  if (isRequestInProgress.value)
+  if (isRequestInProgress.get())
     return
 
   let params = {
@@ -34,7 +35,7 @@ function updateListRooms(){
     }
   }
 
-  isRequestInProgress(true)
+  isRequestInProgress.set(true)
   matchingCall("mrooms.fetch_rooms_digest2", listRoomsCb, params)
 }
 
@@ -46,14 +47,14 @@ function toggleRefresh(val){
   if (!wasRefreshEnabled && val)
     updateListRooms()
   if(val)
-    gui_scene.setInterval(refreshPeriod.value, updateListRooms)
+    gui_scene.setInterval(refreshPeriod.get(), updateListRooms)
   else
     gui_scene.clearTimer(updateListRooms)
   wasRefreshEnabled = val
 }
-refreshEnabled.subscribe(toggleRefresh)
-toggleRefresh(refreshEnabled.value)
-refreshPeriod.subscribe(@(_v) toggleRefresh(refreshEnabled.value))
+refreshEnabled.subscribe_with_nasty_disregard_of_frp_update(toggleRefresh)
+toggleRefresh(refreshEnabled.get())
+refreshPeriod.subscribe_with_nasty_disregard_of_frp_update(@(_v) toggleRefresh(refreshEnabled.get()))
 
 function switchDebugMode() {
   function debugRooms() {
@@ -66,15 +67,15 @@ function switchDebugMode() {
         }
       }
     )
-    roomsList.update(list)
+    roomsList.set(list)
   }
-  debugMode.update(!debugMode.value)
-  if (debugMode.value){
-    refreshEnabled.update(false)
+  debugMode.set(!debugMode.get())
+  if (debugMode.get()){
+    refreshEnabled.set(false)
     debugRooms()
   }
   else{
-    refreshEnabled.update(true)
+    refreshEnabled.set(true)
   }
 }
 

@@ -9,11 +9,6 @@ effectiveDistance:r=40
 relativeVelHitShift:p2=300, 1000
 relativeVelArmorShift:p2=200, 1000
 
-spawn{
-  minCount:i=12
-  maxCount:i=12
-}
-
 hitpower{
   HitPower10m:p2=1, 10
   HitPower40m:p2=0.5, 40
@@ -31,14 +26,4 @@ hitFx{
   defaultFx:t="hit_6_8mm_ap_sand_cmps_fx"
   jetFx:t="hit_6_8mm_ap_sand_cmps_fx"
   preset:t="bullet"
-}
-
-tracer{
-  ignitionTime:r=0.002
-  smokeColor:c=140, 130, 120, 5
-  smokeTime:r=2.5
-  smokeRadius:r=0.02
-  headColor:c=255, 170, 85, 255
-  luminosity:r=1
-  burnTime:r=0.5
 }

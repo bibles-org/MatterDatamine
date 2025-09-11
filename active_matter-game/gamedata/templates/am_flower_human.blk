@@ -57,6 +57,7 @@ flower_human_ai{
   attract_point__checkPath:b=no
   visual_attract__maxDist:r=3
   obstacle_avoider__updateInterval:r=0.2
+  nphys_dyn_obstacles__count:i=0
   beh_tree__debug:b=no
   beh_tree__enabled:b=yes
   navmesh_phys__maxWalkSpeed:r=6.5
@@ -107,20 +108,6 @@ flower_human_animchar{
 
   animchar_fast_phys{
     _tags:t="gameClient"
-  }
-}
-
-flower_human_loot{
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="flowerman_remains_item"
-      dropChance:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="flowerman_remains_pristine_item"
-      dropChance:r=0.005
-    }
   }
 }
 
@@ -415,9 +402,61 @@ flower_human_collision{
   collision_damage__threshold:r=2
 }
 
+flower_human_ragdoll_physobj{
+  _use:t="lootable_ragdoll_phys_obj_with_loot_preset"
+  item__setCustomUsePrompt:t="monsterCorpse/search"
+  loot_drop_system__lootPreset:t="flower_human_death_loot_preset"
+  human_inventory__maxVolume:i=100
+}
+
+flower_human_death_loot_preset{
+  _use:t="full_loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="flowerman_remains_preset"
+    }
+
+    "item:object"{
+      sub_preset:t="flowerman_junk_loot_preset"
+    }
+  }
+}
+
+flowerman_remains_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="flowerman_remains_item"
+      weight:r=0.95
+    }
+
+    "item:object"{
+      template_name:t="flowerman_remains_pristine_item"
+      weight:r=0.05
+    }
+  }
+}
+
+flowerman_junk_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=0, 2
+  loot_preset__allowRepeat:b=yes
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="home_small_junk_subpreset"
+    }
+  }
+}
+
 flower_human{
   _use:t="am_navmesh_creature_base"
-  _use:t="net_ragdoll"
+  _use:t="lootable_net_ragdoll"
   _use:t="navmesh_phys_jumplinks"
   _use:t="flower_human_jump"
   _use:t="nphys_homo_erectus"
@@ -429,13 +468,13 @@ flower_human{
   _use:t="flower_human_hitpoints"
   _use:t="flower_human_hit_reactions"
   _use:t="flower_human_sound"
-  _use:t="flower_human_loot"
   _use:t="entity_bound_area"
   _use:t="hit_wakeup_all_around"
   _use:t="nphys_pushable"
   _use:t="climbing_agent"
   _use:t="flower_human_aura"
   _use:t="human_deformation_bbox_receiver"
+  _use:t="navmesh_phys_drop_on_collision"
   beh_tree__node:t="flower_human"
   team:i=1
   kill_tracking_tag:t="flower_human"
@@ -461,6 +500,11 @@ flower_human{
   death_note__name:t="note_flowerman"
 
   "kill_tracking__taggedPlayers:object"{}
+  _group{
+    _tags:t="server"
+    net_ragdoll__physObjTemplate:t="flower_human_ragdoll_physobj"
+  }
+
   "grid_obj__updateAlways:tag"{}
   anim_phys{}
   "flower_human__fallingFlowers:tag"{}
@@ -928,7 +972,6 @@ flower_human_root{
   _use:t="decor_rendinst"
   _use:t="zone_child"
   ri_extra__name:t="flowerman_root_a"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 }
 
 flower_human_root_spawner{
@@ -1294,7 +1337,6 @@ flower_human_miniboss{
   collision_damage__velDeltaMult:r=0.5
   collision_damage__pushThreshold:r=1
   collision_damage__threshold:r=3
-  corpse_am__templateForCreation:t="active_matter_pile_attached_to_corpse+item_in_world+coin_item_count_25"
   sleep_mode__extraAwakeChance:r=0.5
   loud_noise__muffledMultiplier:r=1
   loud_noise__noisePercentPerAwake:r=1
@@ -1317,6 +1359,14 @@ flower_human_miniboss{
   beh_tree__node:t="flower_human_miniboss"
 
   "kill_tracking__taggedPlayers:object"{}
+  "human_inventory__deathDrop:array"{
+    "loot:object"{
+      itemTemplate:t="active_matter_pile+coin_item_count_25"
+      dropChance:r=1
+      dropHeight:r=1
+    }
+  }
+
   "anim_state__runStateName:list<t>"{
     i:t="lower_run"
   }
@@ -1579,7 +1629,7 @@ flower_human_bush{
   _use:t="flower_human_hitpoints"
   _use:t="flower_human_collision"
   _use:t="simple_hitpoints"
-  _use:t="human_grid_obj"
+  _use:t="humans_static_grid_object"
   nphys__mass:r=40
   collision_damage__pushVelDeltaMult:r=8
   collision_damage__velDeltaMult:r=2

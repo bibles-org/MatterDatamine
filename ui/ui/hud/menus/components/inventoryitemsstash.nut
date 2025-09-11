@@ -1,31 +1,33 @@
+from "%ui/hud/menus/components/inventoryItemsList.nut" import itemsPanelList, setupPanelsData, filterItems, inventoryItemSorting
+from "eventbus" import eventbus_send
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems
+from "%ui/hud/menus/components/inventoryCommon.nut" import mkInventoryHeader
+from "%ui/hud/menus/components/inventoryVolumeWidget.nut" import mkVolumeHdr
+from "%ui/hud/menus/components/inventoryItemsListChecks.nut" import isItemCanBeDroppedInStash
+from "%ui/components/cursors.nut" import setTooltip
+import "%ui/components/faComp.nut" as faComp
+from "%ui/components/msgbox.nut" import showMsgbox
+from "%ui/components/button.nut" import button
+from "%ui/components/colors.nut" import BtnTextNormal, TextNormal, GreenSuccessColor, BtnBgDisabled, BtnBdDisabled
+from "%ui/components/commonComponents.nut" import mkText
+from "%ui/hud/hud_menus_state.nut" import openMenu
+from "%sqstd/string.nut" import startsWith
+from "%ui/hud/menus/components/inventoryItemsListChecksCommon.nut" import MoveForbidReason
+from "%ui/hud/menus/inventories/refinerInventory.nut" import considerRefineItems
+
 from "%ui/ui_library.nut" import *
 
 
-let { eventbus_send } = require("eventbus")
-let {stashItems} = require("%ui/hud/state/inventory_items_es.nut")
-let { itemsPanelList, setupPanelsData, filterItems, inventoryItemSorting, considerTrashBinItems
-} = require("%ui/hud/menus/components/inventoryItemsList.nut")
-let { mergeNonUniqueItems } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
+let { stashItems } = require("%ui/hud/state/inventory_items_es.nut")
 let { STASH } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
-let { mkInventoryHeader } = require("%ui/hud/menus/components/inventoryCommon.nut")
 let { stashVolume, stashMaxVolume } = require("%ui/state/allItems.nut")
-let { mkVolumeHdr } = require("%ui/hud/menus/components/inventoryVolumeWidget.nut")
-let { trashBinItems } = require("%ui/hud/menus/components/trashBin.nut")
 let { activeFilters } = require("%ui/hud/menus/components/inventoryStashFiltersWidget.nut")
-let { isItemCanBeDroppedInStash } = require("%ui/hud/menus/components/inventoryItemsListChecks.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let faComp = require("%ui/components/faComp.nut")
-let { showMsgbox } = require("%ui/components/msgbox.nut")
-let { button } = require("%ui/components/button.nut")
-let { BtnTextNormal } = require("%ui/components/colors.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
-let { MonolithMenuId, monolithSelectedLevel, monolithSectionToReturn, selectedMonolithUnlock
+let { MonolithMenuId, monolithSelectedLevel, monolithSectionToReturn, selectedMonolithUnlock, currentTab
 } = require("%ui/mainMenu/monolith/monolith_common.nut")
-let { marketItems, playerStats } = require("%ui/profile/profileState.nut")
-let { openMenu } = require("%ui/hud/hud_menus_state.nut")
-let { MoveForbidReason } = require("%ui/hud/menus/components/inventoryItemsListChecksCommon.nut")
+let { marketItems, playerStats, playerBaseState } = require("%ui/profile/profileState.nut")
+let { itemsInRefiner } = require("%ui/hud/menus/inventories/refinerInventoryCommon.nut")
 
-let extendIconHeigh = hdpxi(30)
+let extendIconHeigh = static hdpxi(24)
 
 function patchItem(item) {
   return item == null ? null : item.__merge({canDrop = false, canTake = true})
@@ -33,74 +35,113 @@ function patchItem(item) {
 
 const itemsInRow = 3
 let processItems = function(items) {
+  items = considerRefineItems(items)
   items = items.filter(filterItems)
   items = mergeNonUniqueItems(items)
   items = items.map(patchItem)
-  items = considerTrashBinItems(items)
   items.sort(inventoryItemSorting)
   return items
 }
 
 let panelsData = setupPanelsData(stashItems,
                                  itemsInRow,
-                                 [stashItems, activeFilters, trashBinItems],
+                                 [stashItems, activeFilters, itemsInRefiner],
                                  processItems)
 
-let extendStashBtn = @() {
-  watch = [marketItems, playerStats]
-  size = [flex(), SIZE_TO_CONTENT]
-  children = button(
-    {
-      size = [flex(), SIZE_TO_CONTENT]
-      flow = FLOW_HORIZONTAL
-      gap = hdpx(8)
-      halign = ALIGN_CENTER
-      valign = ALIGN_CENTER
-      children = [
-        mkText(loc("inventory/extendStash"))
-        {
-          halign = ALIGN_CENTER
-          valign = ALIGN_CENTER
-          children = [
-            {
-              rendObj = ROBJ_IMAGE
-              size = [extendIconHeigh, extendIconHeigh]
-              color = BtnTextNormal
-              vplace = ALIGN_CENTER
-              image = Picture($"ui/skin#storage_slot_icon.svg:{extendIconHeigh}:{extendIconHeigh}:K")
-            }
-            faComp("plus", {
-              fontSize = hdpxi(20)
-              color = BtnTextNormal
-              pos = [extendIconHeigh - hdpx(4), 0]
-            })
-          ]
-        }
-      ]
-    },
-    function() {
-      let levelsToFocus = []
-      foreach (id, item in marketItems.get()) {
-        if (item?.offerName.contains("StashUpgrade")
-          && !playerStats.get().purchasedUniqueMarketOffers.contains(id.tointeger())
-        )
-          levelsToFocus.append(item)
-      }
-      if (levelsToFocus.len() > 0) {
-        let res = levelsToFocus.sort(@(a, b) a.requirements.monolithAccessLevel
-          <=> b.requirements.monolithAccessLevel)
-        monolithSelectedLevel.set(res[0].requirements.monolithAccessLevel - 1)
-        selectedMonolithUnlock.set(res[0].children.baseUpgrades[0])
-        monolithSectionToReturn.set("Inventory")
-        openMenu(MonolithMenuId)
-      }
-      else
-        showMsgbox({ text = loc("stash/extendUnavailable")})
-    },
-    {
-      size = [flex(), hdpx(40)]
-      onHover = @(on) setTooltip(on ? loc("inventory/extendStash") : null)
-    })
+function mkStashButton(isPurchased, onClick, isFeatured = false) {
+  let iconColor = isFeatured ? Color(170, 123, 0) : TextNormal
+
+  let statusIcon = faComp("check", {
+    fontSize = static hdpxi(16)
+    color = GreenSuccessColor
+    hplace = ALIGN_RIGHT
+    pos = static [hdpx(5), -hdpx(5)]
+  })
+
+  let icon = {
+    rendObj = ROBJ_IMAGE
+    size = [extendIconHeigh, extendIconHeigh]
+    color = isPurchased ? mul_color(iconColor, 0.5) : iconColor
+    vplace = ALIGN_CENTER
+    hplace = ALIGN_CENTER
+    image = Picture($"ui/skin#storage_slot_icon.svg:{extendIconHeigh}:{extendIconHeigh}:K")
+    children = isPurchased ? statusIcon : null
+  }
+
+  return button(icon, onClick, {
+    size = static [hdpx(40), hdpxi(40)]
+    style = !isPurchased ? {} : { BtnBgNormal = BtnBgDisabled }
+    tooltipText = isFeatured ?
+      loc("inventory/extendStashFeatured", {size = playerBaseState.get()?.stashVolumeUpgrade.y ?? 0}) :
+      loc("inventory/extendStash", {size = playerBaseState.get()?.stashVolumeUpgrade.x ?? 0})
+  })
+}
+
+function extendStashBlock() {
+  let { stashesCount = {}, maxStashesCount = {} } = playerBaseState.get()
+  let curCommonStashCount = stashesCount?.x ?? 0
+  let curFeaturedStashCount = stashesCount?.y ?? 0
+  let maxCommonStashCount = maxStashesCount?.x ?? 0
+  let maxFeaturedStashCount = maxStashesCount?.y ?? 0
+
+  if (maxCommonStashCount <= 0 && maxFeaturedStashCount <= 0)
+    return { watch = playerBaseState }
+
+  function commonStashAction() {
+    let levelsToFocus = []
+    foreach (id, item in marketItems.get()) {
+      if (item?.offerName.contains("StashUpgrade")
+        && !item?.isPermanent
+        && !playerStats.get().purchasedUniqueMarketOffers.contains(id.tointeger())
+      )
+        levelsToFocus.append(item)
+    }
+
+    if (levelsToFocus.len() > 0) {
+      let res = levelsToFocus.sort(@(a, b) a.requirements.monolithAccessLevel
+        <=> b.requirements.monolithAccessLevel)
+      monolithSelectedLevel.set(res[0].requirements.monolithAccessLevel)
+      selectedMonolithUnlock.set(res[0].children.baseUpgrades[0])
+      monolithSectionToReturn.set("Inventory")
+      currentTab.set("monolithLevelId")
+      openMenu(MonolithMenuId)
+    }
+    else
+      showMsgbox({ text = loc("inventory/extendUnavailable")})
+  }
+
+  function featuredStashAction() {
+    let levelsToFocus = []
+    foreach (id, item in marketItems.get()) {
+      if (item?.offerName.contains("PermanentStashUpgrade")
+        && !playerStats.get().purchasedUniqueMarketOffers.contains(id.tointeger())
+      )
+        levelsToFocus.append(item)
+    }
+    if (levelsToFocus.len() > 0) {
+      let res = levelsToFocus.sort(@(a, b) a.requirements.monolithAccessLevel
+        <=> b.requirements.monolithAccessLevel)
+      monolithSelectedLevel.set(res[0].requirements.monolithAccessLevel - 1)
+      selectedMonolithUnlock.set(res[0].children.baseUpgrades[0])
+      monolithSectionToReturn.set("Inventory")
+      currentTab.set("monolithLevelId")
+      openMenu(MonolithMenuId)
+    }
+    else
+      showMsgbox({ text = loc("inventory/featuredStashUnavailable")})
+  }
+
+  return {
+    watch = [marketItems, playerStats, playerBaseState]
+    size = FLEX_H
+    flow = FLOW_HORIZONTAL
+    gap = static { size = flex() }
+    padding = static [0, hdpx(2)]
+    children = array(maxCommonStashCount)
+      .map(@(_v, i) mkStashButton(i <= curCommonStashCount - 1, commonStashAction))
+      .extend(array(maxFeaturedStashCount)
+        .map(@(_v, i) mkStashButton(i <= curFeaturedStashCount - 1, featuredStashAction, true)))
+  }
 }
 
 function stash_item_dropped_forbid(reason){
@@ -109,7 +150,7 @@ function stash_item_dropped_forbid(reason){
       text = loc("hint/stashOverload")
       buttons = [
         { text = loc("Ok"), isCurrent = true, action = @() null }
-        { text = loc("console/press_to_recycler"), isCurrent = false, action = @() eventbus_send("hud_menus.open", const { id = "Am_clean" }) }
+        { text = loc("console/press_to_recycler"), isCurrent = false, action = @() eventbus_send("hud_menus.open", static { id = "Am_clean" }) }
       ]
     })
 }
@@ -134,7 +175,7 @@ function mkStashItemsList(on_item_dropped_to_list_cb, on_click_actions, params =
     })
 
     return {
-      size = const [ SIZE_TO_CONTENT, flex() ]
+      size = FLEX_V
       watch = [ panelsData.numberOfPanels ]
       children
       onAttach = panelsData.onAttach
@@ -146,5 +187,5 @@ function mkStashItemsList(on_item_dropped_to_list_cb, on_click_actions, params =
 return {
   isItemCanBeDroppedInStash,
   mkStashItemsList
-  extendStashBtn
+  extendStashBlock
 }

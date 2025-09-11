@@ -1,6 +1,7 @@
+from "das.level" import parse_level_weather_and_time_from_scene
+
 import "%dngscripts/ecs.nut" as ecs
 
-let { parse_level_weather_and_time_from_scene } = require("das.level")
 
 function patchMatchingQueuesWithLevelInfo(queues) {
   queues.each(function(queue){

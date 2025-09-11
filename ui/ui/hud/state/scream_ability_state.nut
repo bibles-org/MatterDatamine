@@ -6,8 +6,8 @@ let screamAbilitylastFailedUseTime = Watched(0)
 
 ecs.register_es("scream_ability_state_timings_ui_es", {
   [["onChange", "onInit"]] = function(_eid,comp) {
-    screamAbilitySpawnTime.update(comp.hero_scream_ability__spawnTime)
-    screamAbilitylastFailedUseTime.update(comp.hero_scream_ability__lastFailedUseTime)
+    screamAbilitySpawnTime.set(comp.hero_scream_ability__spawnTime)
+    screamAbilitylastFailedUseTime.set(comp.hero_scream_ability__lastFailedUseTime)
   }
 
 }, {

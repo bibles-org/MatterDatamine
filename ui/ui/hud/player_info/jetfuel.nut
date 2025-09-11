@@ -1,7 +1,8 @@
+import "%ui/components/faComp.nut" as faComp
+
 from "%ui/ui_library.nut" import *
 
 
-let faComp = require("%ui/components/faComp.nut")
 let heroJetfuel = require("%ui/hud/state/hero_jetpack_state_es.nut").jetfuel
 let heroJetfuelAlert = require("%ui/hud/state/hero_jetpack_state_es.nut").fuelAlert
 let heroLockJetpackUse = require("%ui/hud/state/hero_jetpack_state_es.nut").lockUse
@@ -14,16 +15,16 @@ let colorWarn = Color(200,200,40,180)
 
 
 let warningAnimations = [{ prop=AnimProp.color, from=colorFg, to=colorWarn, duration=1.0, play=true, loop=true, easing=CosineFull }]
-let size = [sw(7), fsh(0.4)]
-let showJetFuel = Computed(@() heroJetfuel.value != null && heroJetfuel.value >= 0 && showInBoosters.value)
-let showJetFuelAmount = Computed(@() heroJetfuel.value != null && heroJetfuel.value > 0 && heroJetfuel.value < 100)
+let size = static [sw(7), fsh(0.4)]
+let showJetFuel = Computed(@() heroJetfuel.get() != null && heroJetfuel.get() >= 0 && showInBoosters.get())
+let showJetFuelAmount = Computed(@() heroJetfuel.get() != null && heroJetfuel.get() > 0 && heroJetfuel.get() < 100)
 
 function jetfuelAmount(){
-  if (!showJetFuelAmount.value)
+  if (!showJetFuelAmount.get())
     return {watch = showJetFuelAmount}
 
-  let ratio = heroJetfuel.value / 100.0
-  let lowFuelWarning = heroJetfuelAlert.value ? {
+  let ratio = heroJetfuel.get() / 100.0
+  let lowFuelWarning = heroJetfuelAlert.get() ? {
     rendObj = ROBJ_SOLID
     color = colorFg
     size = [size[0] * ratio, size[1]]
@@ -40,7 +41,7 @@ function jetfuelAmount(){
     children = [
       {
         rendObj = ROBJ_SOLID
-        color = heroLockJetpackUse.value ? colorLocked : colorFg
+        color = heroLockJetpackUse.get() ? colorLocked : colorFg
         size = [size[0] * ratio, size[1]]
       }
       lowFuelWarning
@@ -51,17 +52,17 @@ function jetfuelAmount(){
 
 let icon = @() faComp("rocket", {
   watch = [heroLockJetpackUse,heroJetfuel]
-  color = heroLockJetpackUse.value || heroJetfuel.value == 0 ? colorLocked : colorFg
+  color = heroLockJetpackUse.get() || heroJetfuel.get() == 0 ? colorLocked : colorFg
   fontSize = hdpx(12)
 })
 
 function jetfuel() {
   let res = { watch = [heroJetfuel, heroJetfuelAlert, showJetFuel] }
-  if (!showJetFuel.value)
+  if (!showJetFuel.get())
     return res
   return res.__update({
     gap = hdpx(2)
-    margin = [0, 0, 0, fsh(1)]
+    margin = static [0, 0, 0, fsh(1)]
     halign = ALIGN_RIGHT
     valign = ALIGN_BOTTOM
     children = [

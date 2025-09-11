@@ -1,14 +1,17 @@
+from "%ui/components/button.nut" import textButtonSmallStyle
+
+from "%ui/mainMenu/mailboxState.nut" import clearAll, markReadAll, onNotifyRemove, onNotifyShow
+
+from "%ui/components/colors.nut" import ModalBgTint, TextHighlight, ControlBg, Inactive
+from "%ui/viewConst.nut" import bigGap, gap
+from "%ui/components/scrollbar.nut" import makeVertScrollExt
+from "%ui/components/button.nut" import fontIconButton, textButton
+from "%ui/components/modalPopupWnd.nut" import addModalPopup, removeModalPopup
+
 from "%ui/ui_library.nut" import *
 
-let { ModalBgTint, TextHighlight, ControlBg, Inactive } = require("%ui/components/colors.nut")
-let {bigGap, gap} = require("%ui/viewConst.nut")
-let { makeVertScrollExt } = require("%ui/components/scrollbar.nut")
-let { fontIconButton, textButton, textButtonSmallStyle} = require("%ui/components/button.nut")
-let { inbox, clearAll, markReadAll, hasUnread, isMailboxVisible, onNotifyRemove, onNotifyShow
-} = require("%ui/mainMenu/mailboxState.nut")
-let { addModalPopup, removeModalPopup } = require("%ui/components/modalPopupWnd.nut")
+let { inbox, hasUnread, isMailboxVisible, MAILBOX_MODAL_UID } = require("%ui/mainMenu/mailboxState.nut")
 
-let MAILBOX_MODAL_UID = "mailbox_modal_wnd"
 let wndWidth = hdpx(450)
 let maxListHeight = hdpx(300)
 let padding = gap
@@ -27,11 +30,11 @@ let mkRemoveBtn = @(notify) {
   children = fontIconButton("trash-o", @() onNotifyRemove(notify))
 }
 
-let btnParams = textButtonSmallStyle.__merge({ margin = 0, size = [flex(), hdpx(30)], halign = ALIGN_LEFT })
+let btnParams = textButtonSmallStyle.__merge({ margin = 0, size = static [flex(), hdpx(30)], halign = ALIGN_LEFT })
 let defaultStyle = btnParams
 
 let item = @(notify) {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   flow  = FLOW_HORIZONTAL
   gap = hdpx(2)
   children = [
@@ -41,7 +44,7 @@ let item = @(notify) {
 }
 
 let mailsPlaceHolder = {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   rendObj = ROBJ_SOLID
   padding
   color = ControlBg
@@ -53,7 +56,7 @@ let mailsPlaceHolder = {
 }
 
 let mkHeader = @(total) {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   flow = FLOW_HORIZONTAL
   valign = ALIGN_CENTER
 
@@ -64,10 +67,10 @@ let mkHeader = @(total) {
       color = Inactive
       margin = [0, 0, 0, gap]
     }
-    {size=[flex(),0]}
+    {size=static [flex(),0]}
     {
       vplace = ALIGN_CENTER
-     children = fontIconButton("icon_buttons/x_btn.svg", @() removeModalPopup(MAILBOX_MODAL_UID) )
+      children = fontIconButton("icon_buttons/x_btn.svg", @() removeModalPopup(MAILBOX_MODAL_UID) )
     }
   ]
 }
@@ -75,7 +78,7 @@ let mkHeader = @(total) {
 let clearAllBtn = fontIconButton("trash-o", clearAll, {hplace=ALIGN_RIGHT})
 
 function mailboxBlock() {
-  let elems = inbox.value.map(item)
+  let elems = inbox.get().map(item)
   if (elems.len() == 0)
     elems.append(mailsPlaceHolder)
   elems.reverse()
@@ -87,15 +90,15 @@ function mailboxBlock() {
     gap = bigGap
 
     children = [
-      mkHeader(inbox.value.len())
+      mkHeader(inbox.get().len())
       makeVertScrollExt({
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         gap = gap
         flow = FLOW_VERTICAL
         children = elems
       },
       {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         maxHeight = maxListHeight
         needReservePlace = false
       })
@@ -103,8 +106,6 @@ function mailboxBlock() {
     ]
   }
 }
-
-inbox.subscribe(function(v) { if (v.len() == 0) removeModalPopup(MAILBOX_MODAL_UID) })
 
 return @(event) addModalPopup(event.targetRect,
   {

@@ -22,12 +22,10 @@ invisibility_device_item{
 
   "device_item__ability:object"{
     name:t="invisibility"
-    type:t="ultimate"
     activeMatterPrice:i=0
     cooldown:r=180
     lockWhileSwimming:b=yes
     lockInVehicle:b=yes
-    isNoWeaponMode:b=yes
 
     "stages:array"{
       "in_stage:object"{
@@ -95,12 +93,10 @@ diy_device_item{
 
   "device_item__ability:object"{
     name:t="diy"
-    type:t="ultimate"
     cooldown:r=0.5
     lockWhileSwimming:b=yes
     lockInVehicle:b=yes
     skipOnDeath:b=yes
-    manualSoulsWithdrawl:b=yes
 
     "stages:array"{
       "placement_stage:object"{
@@ -132,13 +128,10 @@ bomb_planting_device_item{
 
   "device_item__ability:object"{
     name:t="diy"
-    type:t="ultimate"
     activeMatterPrice:i=0
     cooldown:r=180
     lockWhileSwimming:b=yes
     lockInVehicle:b=yes
-    isNoWeaponMode:b=yes
-    manualSoulsWithdrawl:b=yes
 
     "stages:array"{
       "placement_stage:object"{

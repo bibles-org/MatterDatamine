@@ -15,7 +15,7 @@ am_militant_bot_auto_suicide_effect{
 am_militant_bot_paused_no_cleanup_body{
   _use:t="am_militant_bot"
   beh_tree__enabled:b=no
-  bodyCleanupTime:r=500
+  body_cleanup_server_after_death__delay:r=-1
 
   "customBotSpawner:tag"{}
 }

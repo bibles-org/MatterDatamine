@@ -1,6 +1,7 @@
+from "%ui/devInfo.nut" import addTabToDevInfo
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
-let { addTabToDevInfo } = require("%ui/devInfo.nut")
 
 let allItems = Watched([])
 let loadoutItems = Watched([])
@@ -31,8 +32,8 @@ ecs.register_es("track_stash_volume",
   {
     [["onInit", "onChange"]] = function(_eid, comp) {
       if (comp.inventory__name == "stash") {
-        stashVolume.set(comp.human_inventory__currentVolume / 10.0)
-        stashMaxVolume.set(comp.human_inventory__maxVolumeInt / 10.0)
+        stashVolume.set(comp.human_inventory__currentVolume)
+        stashMaxVolume.set(comp.human_inventory__maxVolume)
         stashEid.set(comp.eid)
       }
     }
@@ -50,7 +51,7 @@ ecs.register_es("track_stash_volume",
       ["inventory__name", ecs.TYPE_STRING]
     ],
     comps_track = [
-      ["human_inventory__maxVolumeInt", ecs.TYPE_INT],
+      ["human_inventory__maxVolume", ecs.TYPE_INT],
       ["human_inventory__currentVolume", ecs.TYPE_INT]
     ]
   },

@@ -7,8 +7,8 @@ let isDownedState = Watched(false)
 
 ecs.register_es("health_state_ui_es", {
   [["onChange", "onInit"]] = function trackComponentsHero(_eid,comp) {
-    isAliveState.update(comp["isAlive"])
-    isDownedState.update(comp["isDowned"])
+    isAliveState.set(comp["isAlive"])
+    isDownedState.set(comp["isDowned"])
   }
 
 }, {

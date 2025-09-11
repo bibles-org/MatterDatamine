@@ -1,4 +1,5 @@
 log_lut:b=yes
+useWebVromfs:b=yes
 texStreamingFile:t="config/tex_streaming.settings.blk"
 onlineStorageLabel:t="active_matter"
 __allow_force_apply_all:b=no
@@ -12,9 +13,16 @@ scene:t="gamedata/scenes/player_onboarding_island.blk"
 parallel_logic_mode:b=yes
 allowEmptyScenes:b=yes
 nvidia_app_id:i=103400568
+authGameId:t="am"
 playerTemplateName:t="active_matter_player"
 pc_app_id:i=1182
 pc_circuit:t="am-production"
+xboxScarlett_app_id:i=1182
+xboxScarlett_circuit:t="am-production"
+xboxScarlett_submission_circuit:t="am-production"
+ps5_app_id:i=1182
+ps5_circuit:t="am-production"
+ps5_submission_circuit:t="am-production"
 metaItemsJWTMaxAge:i=604800
 jwtPubKey:t="MIIBKDANBgkqhkiG9w0BAQEFAAOCARUAMIIBEAKCAQcAy9WagPn8/uLbbPHebobAftDiwrGpi23Ed0fQsSCZfGYupBkYl3mZD3fgOMgmLSYsTqFHDe0CMTQKpHYGFfT3EuvTHKwwyo2ckpaLNI/flZysDXRuoWXvwd6FzGBx3l2/I1Yw+cAle/aWB9YZnQtXfy3j3k/fJfiv7+72Sm95h3Dg715XuBILC4vSYVqvCn+UlQyrJkAZrIahWR9Gzsm6ovxSaduvosn83Hx1ZixD+U5wcn1hoTT0niwnrqiPuEUV3wC887JIR4KzMXYpyzvFnEhlqTKoGN7oGS7vqN4tCH6/l3hAomxfVGT+5UHGugQEauNqccYq44Hfu3t3tY1rj+eTYc35NQIDAQAB"
 soundSettingsBlk:t="config/sound_settings.blk"
@@ -27,6 +35,8 @@ aiList:t="gamedata/ai/spider_minion_explosive_ailist.blk"
 aiList:t="gamedata/ai/invisible_man_ailist.blk"
 aiList:t="gamedata/ai/invisible_man_teaser_ailist.blk"
 aiList:t="gamedata/ai/flower_human_ailist.blk"
+aiList:t="gamedata/ai/base_shooting_range_ailist.blk"
+aiList:t="gamedata/ai/base_squadmates_ailist.blk"
 aiList:t="gamedata/ai/flower_human_minion_ailist.blk"
 aiList:t="gamedata/ai/flower_human_miniboss_ailist.blk"
 aiList:t="gamedata/ai/am_bees_swarm_ailist.blk"
@@ -41,11 +51,13 @@ aiList:t="gamedata/ai/kamikaze_ailist.blk"
 aiList:t="gamedata/ai/am_loot_raider_ailist.blk"
 aiList:t="gamedata/ai/tree_horde_ailist.blk"
 aiList:t="gamedata/ai/nexus_round_mode_ailist.blk"
+aiList:t="gamedata/ai/nexus_wave_mode_ailist.blk"
 aiList:t="gamedata/ai/am_mindcontrolled_ailist.blk"
 aiList:t="gamedata/ai/am_onboarding_enemy_ailist.blk"
 aiList:t="gamedata/ai/am_guard_ailist.blk"
 aiList:t="gamedata/ai/am_teaser_guard_ailist.blk"
 aiList:t="gamedata/ai/bighead_ailist.blk"
+aiList:t="gamedata/ai/vehicle_bot_ailist.blk"
 aiList:t="gamedata/ai/test_level_ailist.blk"
 aiList:t="gamedata/ai/nmesh_mapped_loot_raider_ailist.blk"
 aiList:t="gamedata/ai/am_protectron_ailist.blk"
@@ -54,6 +66,7 @@ aiList:t="gamedata/ai/corrupted_militant_ailist.blk"
 aiList:t="gamedata/ai/am_common_ailist.blk"
 aiList:t="gamedata/ai/am_changed_common_ailist.blk"
 aiList:t="gamedata/ai/benchmark_ailist.blk"
+aiList:t="gamedata/ai/poltergeist_ailist.blk"
 aiList:t="gamedata/ai/am_changed_tamed_common_ailist.blk"
 aiList:t="gamedata/ai/am_changed_wander_ailist.blk"
 aiList:t="gamedata/ai/am_changed_teaser_walker_ailist.blk"
@@ -72,6 +85,7 @@ aiList:t="gamedata/ai/stalker_statue_ailist.blk"
 aiList:t="gamedata/ai/debug_ailist.blk"
 aiList:t="gamedata/ai/am_benchmark_ailist.blk"
 aiList:t="gamedata/ai/am_mimic_ailist.blk"
+aiList:t="gamedata/ai/am_mimic_boss_ailist.blk"
 game_sq_script:t="%scripts/game/onGameScriptLoad.nut"
 game_das_gen_2_make_syntax:b=yes
 game_das_enable_serialization:b=yes
@@ -104,6 +118,7 @@ graphics{
   forceEnableMotionVectors:b=yes
   grass_eraser_sdf_height:r=1
   preset:t="ultra"
+  auto_preset:b=yes
   gamma_correction:r=1.05
   shadowsQuality:t="ultra"
   dynamicShadowsQuality:t="ultra"
@@ -123,8 +138,12 @@ graphics{
   groundDeformations:t="high"
   fxTarget:t="highres"
   scopeImageQuality:i=3
+  scopeFakeUpscaleAvailable:b=yes
+  realSnipingZoom:b=yes
+  scopeHasOutdoorReflections:b=yes
   rendinstDistMul:r=1
   riExtraMulScale:r=1
+  max_bindump_shadervars:i=4352
   dynamicShadowsMaxUpdatePerFrame:i=5
 
   foamFxTexDividers{
@@ -132,6 +151,10 @@ graphics{
     divider:i=2
     divider:i=1
   }
+}
+
+renderFeatures{
+  cameraInCamera:b=yes
 }
 
 pcGraphicalPresets{
@@ -166,6 +189,35 @@ pcGraphicalPresets{
   }
 }
 
+auto_preset_gpu_score_lower_bound{
+  lower_bounds{
+    forResolution:ip2=1920, 1080
+    minimum:i=0
+    low:i=4500
+    medium:i=6000
+    high:i=8500
+    ultra:i=10000
+  }
+
+  lower_bounds{
+    forResolution:ip2=2560, 1440
+    minimum:i=0
+    low:i=6000
+    medium:i=8500
+    high:i=10000
+    ultra:i=12000
+  }
+
+  lower_bounds{
+    forResolution:ip2=3840, 2160
+    minimum:i=0
+    low:i=10000
+    medium:i=12000
+    high:i=14000
+    ultra:i=16000
+  }
+}
+
 screenshots{
   dir:t="Screenshots"
   hdr_screenshot:t="no"
@@ -182,7 +234,6 @@ video{
   vsync:b=no
   max_genmip_tex_sz:i=0
   maxTexCount:i=65534
-  enableNonAutoDriver:b=no
 
   hdrSupport{
     "DirectX 11":b=no
@@ -192,8 +243,6 @@ video{
 directx{
   debug:b=no
   minimumFeatureLevel:t="11_0"
-  flushOnPresent:b=yes
-  maxPendingFrames:i=1
 }
 
 ps4{
@@ -268,6 +317,8 @@ folders{
   webcache:t="{downloads}/webcache"
   online_storage:t="{downloads}/online_storage"
   pubcfg:t="{downloads}/pubcfg"
+  videocache:t="{downloads}/videocache"
+  records:t="{downloads}/replays"
 }
 
 network{
@@ -342,7 +393,9 @@ __allowedConfigOverrides{
     driver:t=""
     frameSkip:i=0
     vsync_tearing_tolerance_percents:i=0
-    latency:i=0
+    nvidia_latency:i=0
+    amd_latency:i=0
+    intel_latency:i=0
     perfMetrics:i=1
     enableHdr:b=no
     paperWhiteNits:i=200
@@ -350,7 +403,6 @@ __allowedConfigOverrides{
     dlssQuality:i=0
     dlssFrameGenerationCount:i=0
     forbidTrueFullscreen:b=no
-    enableNonAutoDriver:b=no
   }
 
   graphics{
@@ -381,6 +433,9 @@ __allowedConfigOverrides{
       shader_reload_allowed:b=no
       staticShadowsInvalidationGroupingUs:i=0
       tsrQuality:i=1
+      scopeImageQuality:i=3
+      scopeFakeUpscaleAvailable:b=yes
+      scopeHasOutdoorReflections:b=yes
     }
 
     gi{
@@ -394,6 +449,8 @@ __allowedConfigOverrides{
   }
 
   renderFeatures{
+    cameraInCamera:b=yes
+
     android{
       SSAO:b=yes
       decals:b=yes
@@ -481,6 +538,10 @@ __allowedConfigOverrides{
       __allow_all_params:b=yes
     }
   }
+
+  onReloadChanges{
+    __allow_all_subfolder_params:b=yes
+  }
 }
 
 langAlias{
@@ -494,15 +555,15 @@ dx12{
   pso_app_key:t="active_matter"
   pso_cache_enabled:b=yes
 
-  gpuDriver{
-    vendor{
-      id:i=4318
+  gpuPreferences{
+    nvidia{
+      vendorId:i=4318
       minVersion:t="27.21.14.6140"
       blacklist:t="27.21.14.6172"
     }
 
-    vendor{
-      id:i=32902
+    intel{
+      vendorId:i=32902
       minVersion:t="26.20.0.0"
     }
   }
@@ -546,6 +607,16 @@ mountPoints{
     forVromfs:t="std"
   }
 
+  "%gdkLib"{
+    forSource:t="../../prog/scripts/gdkLib"
+    forVromfs:t="gdkLib"
+  }
+
+  "%sonyLib"{
+    forSource:t="../../prog/scripts/sonyLib"
+    forVromfs:t="sonyLib"
+  }
+
   "%daeditor"{
     forSource:t="../../prog/scripts/sq/daeditor"
     forVromfs:t="daeditor"
@@ -569,6 +640,11 @@ mountPoints{
   "%dasImgui"{
     forSource:t="../../prog/1stPartyLibs/daScript/modules/dasImgui/daslib"
     forVromfs:t="daslib"
+  }
+
+  "%gameLibs"{
+    forSource:t="../../prog/gameLibs"
+    forVromfs:t="gameLibs"
   }
 
   "%dasGameLibs"{
@@ -685,6 +761,18 @@ vulkan{
   tempBufferOverAllocWaitMs:i=20
 
   vendor{
+    Intel{
+      driverProps{
+        resourceHeaps{
+          entry{
+            data{
+              allowed:b=no
+            }
+          }
+        }
+      }
+    }
+
     default{
       driverProps{
         bufferSuballocation{
@@ -697,6 +785,23 @@ vulkan{
   allocators{
     ring{
       pageSizeMb:i=16
+    }
+  }
+
+  gpuPreferences{
+    intel{
+      vendorId:i=32902
+      preferredFamily:i=30
+      preferredFamily:i=31
+      preferredFamily:i=32
+      preferredFamily:i=33
+      preferredFamily:i=34
+      preferredFamily:i=35
+      preferredFamily:i=36
+      preferredFamily:i=37
+      preferredFamily:i=38
+      preferredFamily:i=39
+      preferredFamily:i=40
     }
   }
 }
@@ -746,6 +851,10 @@ shadersWarmup{
     dynamic_hair:b=yes
     billboard_glass_decals:b=yes
     heightmap:b=yes
+    billboard_hole_mask:b=yes
+    explosion_patch_3tex:b=yes
+    dafx_modfx_bboard_thermals:b=yes
+    dafx_modfx_ribbon_render:b=yes
   }
 
   compute{

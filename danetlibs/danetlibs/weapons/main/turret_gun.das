@@ -35,7 +35,11 @@ def turret_control_es(evt : EventOnGunCreated)
                                turret__emitterOwner : EntityId;
                                var gun : Gun)
     query(turret__emitterOwner) <| $ [es] (animchar : AnimcharBaseComponent)
-      gun |> gun_loadShootNode(gun__shootNodeName, *animchar.nodeTree)
+      let shootNodeIdx = *animchar.nodeTree |> geomtree_findNodeIndex(gun__shootNodeName)
+      if shootNodeIdx < 0
+        logerr("Gun {evt.gunEid} has no shoot node <{gun__shootNodeName}> in animchar {turret__emitterOwner} <{getEntityTemplateName(turret__emitterOwner)}>")
+        return
+      gun |> gun_loadShootNode(shootNodeIdx, *animchar.nodeTree)
 
   query(evt.gunEid) <| $  [es(REQUIRE_NOT=gun__isLauncher)] (eid : EntityId;
                                                              turret__owner : EntityId;

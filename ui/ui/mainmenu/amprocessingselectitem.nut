@@ -1,58 +1,71 @@
+from "%sqstd/math.nut" import truncateToMultiple, min
+from "%sqstd/string.nut" import toIntegerSafe
+from "%ui/hud/menus/inventories/refinerInventory.nut" import dropToRefiner, removeFromRefiner, considerRefine, getPriceOfNonCorruptedItem, getMinimalRefinerItem, additionalDescFunc
+from "%ui/fonts_style.nut" import h2_txt, body_txt, sub_txt, tiny_txt
+from "%ui/components/colors.nut" import BtnBgSelected, InfoTextValueColor, BtnPrimaryTextNormal, RedWarningColor, SelBgNormal, TextNormal, BtnPrimaryBgSelected, ConsoleHeaderFillColor, ConsoleFillColor
+from "%ui/components/commonComponents.nut" import mkText, bluredPanel, mkTextArea, mkTooltiped, mkSelectPanelItem, BD_LEFT
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "%ui/helpers/timers.nut" import mkCountdownTimerPerSec
+from "%ui/helpers/time.nut" import secondsToStringLoc
+from "%ui/components/msgbox.nut" import showMessageWithContent, showMsgbox
+from "%ui/components/profileAnswerMsgBox.nut" import showMsgBoxResult
+from "eventbus" import eventbus_subscribe_onehit, eventbus_send
+from "%ui/hud/menus/components/inventoryItemsList.nut" import itemsPanelList, setupPanelsData, inventoryItemSorting
+from "%ui/hud/menus/components/inventoryCommon.nut" import mkInventoryHeader
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems
+from "%ui/hud/menus/components/inventoryItemsListChecksCommon.nut" import MoveForbidReason
+from "%ui/components/accentButton.style.nut" import accentButtonStyle
+from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryItemImage
+from "%ui/components/scrollbar.nut" import makeVertScroll, makeVertScrollExt, thinAndReservedPaddingStyle
+import "%ui/hud/menus/components/dropMarker.nut" as dropMarker
+from "%ui/hud/menus/components/inventoryStashFiltersWidget.nut" import inventoryFiltersWidget
+from "%ui/components/button.nut" import textButton, button, buttonWithGamepadHotkey
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/hud/menus/components/inventoryFilter.nut" import filterItemByInventoryFilter
+from "%ui/hud/menus/components/inventoryItem.nut" import addStorageType
+from "%ui/hud/menus/components/inventoryStyle.nut" import itemHeight
+from "%ui/components/modalWindows.nut" import addModalWindow, removeModalWindow
+from "%ui/hud/menus/components/inventoryItemTooltip.nut" import buildInventoryItemTooltip
+from "%ui/hud/menus/components/inventoryVolumeWidget.nut" import mkVolumeHdr, volumeHdrHeight
+from "%ui/mainMenu/stdPanel.nut" import mkCloseStyleBtn, stdBtnSize
+from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog
+from "%ui/components/itemIconComponent.nut" import itemIconNoBorder
+from "%ui/context_hotkeys.nut" import contextHotkeys
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
+import "%ui/components/faComp.nut" as faComp
+import "%ui/components/colorize.nut" as colorize
+from "%ui/mainMenu/currencyIcons.nut" import creditsColor, creditsTextIcon, chronotraceTextIcon, chronotracesColor
+from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryImageParams
+from "%ui/mainMenu/craft_common_pkg.nut" import mkMonolithLinkIcon
+from "%ui/hud/hud_menus_state.nut" import openMenu
 
-let { h2_txt, body_txt } = require("%ui/fonts_style.nut")
-let { BtnBgSelected, InfoTextValueColor, panelRowColor, BtnPrimaryTextNormal, RedWarningColor } = require("%ui/components/colors.nut")
-let { mkText, bluredPanel, mkTextArea, mkTooltiped } = require("%ui/components/commonComponents.nut")
-let { truncateToMultiple } = require("%sqstd/math.nut")
-let { creditsTextIcon, chronotraceTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
-let { cleanableItems, playerProfileAMConvertionRate, marketItems,
-  refinedItemsList, refinerFusingRecipes, amProcessingTask, marketPriceSellMultiplier
-} = require("%ui/profile/profileState.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
-let { mkCountdownTimerPerSec } = require("%ui/helpers/timers.nut")
-let { secondsToStringLoc } = require("%ui/helpers/time.nut")
-let { showMessageWithContent, showMsgbox } = require("%ui/components/msgbox.nut")
-let { showMsgBoxResult } = require("%ui/components/profileAnswerMsgBox.nut")
-let { eventbus_subscribe_onehit, eventbus_send } = require("eventbus")
-let { itemsPanelList, setupPanelsData, inventoryItemSorting } = require("%ui/hud/menus/components/inventoryItemsList.nut")
-let { mkInventoryHeader } = require("%ui/hud/menus/components/inventoryCommon.nut")
-let { mergeNonUniqueItems, currentKeyItem } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
+let { cleanableItems, playerProfileAMConvertionRate, refinedItemsList, refinerFusingRecipes,
+      allRecipes, amProcessingTask, marketPriceSellMultiplier, marketItems } = require("%ui/profile/profileState.nut")
+let { currentKeyItem } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
 let { stashItems, backpackItems, inventoryItems, safepackItems } = require("%ui/hud/state/inventory_items_es.nut")
-let { MoveForbidReason } = require("%ui/hud/menus/components/inventoryItemsListChecksCommon.nut")
-let { shiftPressedMonitor, draggedData, isCtrlPressedMonitor } = require("%ui/hud/state/inventory_state.nut")
-let { accentButtonStyle } = require("%ui/components/accentButton.style.nut")
-let { inventoryImageParams, inventoryItemImage } = require("%ui/hud/menus/components/inventoryItemImages.nut")
-let { makeVertScroll, makeVertScrollExt, thinAndReservedPaddingStyle } = require("%ui/components/scrollbar.nut")
-let dropMarker = require("%ui/hud/menus/components/dropMarker.nut")
-let { REFINER_STASH, REFINER, STASH } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
-let { inventoryFiltersWidget, activeFilters } = require("%ui/hud/menus/components/inventoryStashFiltersWidget.nut")
-let { textButton, button } = require("%ui/components/button.nut")
-let colorize = require("%ui/components/colorize.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { inventoryItemClickActions } = require("%ui/hud/menus/inventoryActions.nut")
-let { itemsInRefiner, currentRefinerIsReadOnly, refineGettingInProgress, dropToRefiner, removeFromRefiner, getPriceOfNonCorruptedItem
-      getMinimalRefinerItem, refinerFillAmount, patchItemRefineData
-    } = require("%ui/hud/menus/inventories/refinerInventory.nut")
-let { filterItemByInventoryFilter } = require("%ui/hud/menus/components/inventoryFilter.nut")
-let { addStorageType, recognitionImagePattern } = require("%ui/hud/menus/components/inventoryItem.nut")
+let { draggedData, shiftPressedMonitor, isAltPressedMonitor, isCtrlPressedMonitor,
+  mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
+let { REFINER_STASH, REFINER_ON_PLAYER, REFINER, STASH } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
+let { activeFilters } = require("%ui/hud/menus/components/inventoryStashFiltersWidget.nut")
+let { inventoryItemClickActions, moveItemWithKeyboardMode } = require("%ui/hud/menus/inventoryActions.nut")
+let { currentRefinerIsReadOnly, refineGettingInProgress, refinerFillAmount } = require("%ui/hud/menus/inventories/refinerInventory.nut")
+let { recognitionImagePattern } = require("%ui/hud/menus/components/inventoryItem.nut")
 let { template2MarketOffer } = require("%ui/mainMenu/market/inventoryToMarket.nut")
-let { itemHeight } = require("%ui/hud/menus/components/inventoryStyle.nut")
-let { addModalWindow, removeModalWindow } = require("%ui/components/modalWindows.nut")
-let { buildInventoryItemTooltip } = require("%ui/hud/menus/components/inventoryItemTooltip.nut")
-let { mkCloseStyleBtn } = require("%ui/mainMenu/stdPanel.nut")
-let { toIntegerSafe } = require("%sqstd/string.nut")
-let { mkVolumeHdr } = require("%ui/hud/menus/components/inventoryVolumeWidget.nut")
 let { stashVolume, stashMaxVolume } = require("%ui/state/allItems.nut")
+let { itemsInRefiner } = require("%ui/hud/menus/inventories/refinerInventoryCommon.nut")
+let { shuffle } = require("%sqstd/rand.nut")
+let { currentMenuId } = require("%ui/hud/hud_menus_state.nut")
+let { MonolithMenuId, monolithSelectedLevel, monolithSectionToReturn, selectedMonolithUnlock, currentTab } = require("%ui/mainMenu/monolith/monolith_common.nut")
 
-const AmProcessingItemId = "Am_clean_select_item"
 let templatePrefix = "fuse_result_" 
 
-let buttonHeight = 45
+let buttonHeight = hdpx(45)
 let itemCountsToActivateKeyItemSlot = 2
 
 let refinesReady = Watched(0)
 let selectedRecipe = Watched(null)
+let autoFinishRefine = Watched(false)
 
 function corruptedItemsCount(items) {
   let curruptedCount = items.reduce(function(acc, v) {
@@ -76,17 +89,23 @@ function refineIsProcessing(task) {
 let selectAmItemName = loc("amClean/selectItem")
 
 function patchRefineData(items) {
+  let refinedItems = refinedItemsList.get()
+  let recipes = refinerFusingRecipes.get()
   foreach (item in items) {
-    
-    patchItemRefineData(item)
+    item.__update({ additionalDescFunc = @(v) additionalDescFunc(v, refinedItems, recipes) })
   }
 }
 
 let processStashRefineItems = function(items) {
-  items = items.filter(function(item) {
-    if (item.isBoxedItem || item.filterType == "alters" || item.filterType == "chronogene" || (currentKeyItem.get() && currentKeyItem.get()?.uniqueId == item.uniqueId))
-      return false
-    return itemsInRefiner.get().findindex(@(itemInContainer) itemInContainer.uniqueId == item.uniqueId) == null
+  items = items.map(function(item) {
+    if (item.filterType == "alters" || item.filterType == "chronogene" || item.filterType == "stub_melee_weapon" || item.filterType == "dogtag_chronogene")
+      throw null
+
+    let newItem = considerRefine(item)
+    if (newItem == null)
+      throw null
+
+    return newItem
   })
   if (activeFilters.get().len() != 0) {
     items = items.filter(@(item) filterItemByInventoryFilter(item))
@@ -119,19 +138,40 @@ function isRefinerReadyToStart(itemsIn, currentRecipe) {
   if (itemsIn.len() == 0)
     return false
 
-  if (currentRecipe != null && itemsIn.findindex(@(v) v.itemTemplate == currentRecipe?[1].relatedKey) == null)
-    return false
+  if (currentRecipe == null)
+    return true
 
-  if (currentRecipe && itemsIn.filter(@(v) v?.isCorrupted).len() < (itemCountsToActivateKeyItemSlot + 1))
-    return false
+  local isOk = true
+  foreach (component in currentRecipe[1].components) {
+    isOk = isOk && (itemsIn.findindex(@(v) v.itemTemplate == component) != null)
+  }
 
-  return true
+  return isOk
 }
 
-function finishRefine(refiner) {
+function cleanRefinerWithTask(task) {
+  if (!refineIsProcessing(task)) {
+    itemsInRefiner.set([])
+    currentKeyItem.set(null)
+    currentRefinerIsReadOnly.set(false)
+    refinesReady.set(0)
+  }
+}
+
+function finishRefine(refiner, quickRefine=false) {
   refineGettingInProgress.set(true)
   let taskId = refiner?.taskId
-  let inside = refiner.itemInsideTemplateNames.map(@(v) { templateName = v })
+
+  let itemsInside = refiner?.itemsInside ?? {}
+
+  let itemsToSell = itemsInside.sellItemTemplateNames ?? {}
+  let fuseItemTemplateNames = itemsInside?.fuseItemTemplateNames ?? {}
+  let itemsReplicaTemplates = itemsInside?.replicaItemTemplateNames ?? {}
+
+  let inside = []
+  foreach (templateName, _count in {}.__update(itemsToSell, fuseItemTemplateNames, itemsReplicaTemplates)) {
+    inside.append({ templateName })
+  }
 
   let oldFusingRecipes = clone(refinerFusingRecipes.get())
   eventbus_subscribe_onehit($"profile_server.complete_refine_task.result#{taskId}", function(result) {
@@ -146,13 +186,85 @@ function finishRefine(refiner) {
     result.__update({
       newFuseBox
     })
-    showMsgBoxResult(loc("craft/resultReceived"), result, { itemsAdd = inside })
+    if (!quickRefine || result.itemsAdd || result.chronotraces || result.newFuseBox.len() || result.researches.len()) {
+      showMsgBoxResult(loc("craft/resultReceived"), result, { itemsAdd = inside })
+    }
+    else if ((result?.currency ?? 0) > 0) {
+
+      addPlayerLog({
+        id = $"refiner_{taskId}"
+        content = mkPlayerLog({
+          titleFaIcon = "user"
+          bodyIcon = itemIconNoBorder("credit_coins_pile", { width = hdpx(64), height = hdpx(64) })
+          titleText = loc("item/received")
+          bodyText = $"{result.currency} {loc("credits")}"
+        })
+      })
+    }
     refineGettingInProgress.set(false)
+    cleanRefinerWithTask(amProcessingTask.get())
   })
-  itemsInRefiner.set([])
-  currentKeyItem.set(null)
-  refinesReady.set(0)
   eventbus_send("profile_server.complete_refine_task", taskId)
+}
+
+function uptadeRefinerWithTask(task) {
+  if (refineIsProcessing(task) && currentMenuId.get() == "Am_clean") {
+    let itemsInside = task?.itemsInside ?? {}
+
+    let itemsToSell = itemsInside.sellItemTemplateNames ?? {}
+    let fuseItemTemplateNames = itemsInside?.fuseItemTemplateNames ?? {}
+    let itemsReplicaTemplates = itemsInside?.replicaItemTemplateNames ?? {}
+
+    function fakeRefinerItem(templateName, override) {
+      let item = mkFakeItem(templateName, override)
+
+      if (item.isBoxedItem) {
+        item.__update({
+          ammoCount = item.count
+          count = 1
+        })
+      }
+      else {
+        item.__update({
+          countPerStack = 1 
+        })
+      }
+
+      return item
+    }
+
+    
+    let inside = fuseItemTemplateNames.map(function(count, templateName) {
+      return fakeRefinerItem(templateName, {
+        itemId = 0
+        count = count
+        isCorrupted = true
+        forceLockIcon = true
+      })
+    }).__update(
+      
+      itemsToSell.map(function(count, templateName) {
+        return fakeRefinerItem(templateName, {
+          itemId = 0
+          count = count
+          isCorrupted = false
+          forceLockIcon = true
+        })
+      }),
+      
+      itemsReplicaTemplates.map(function(count, templateName) {
+        return fakeRefinerItem(templateName, {
+          itemId = 0
+          count = count
+          isCorrupted = false
+          forceLockIcon = true
+          isReplica = true 
+        })
+      })
+    )
+    itemsInRefiner.set(inside)
+    currentRefinerIsReadOnly.set(true)
+  }
 }
 
 function startRefine() {
@@ -180,16 +292,43 @@ function startRefine() {
   refineGettingInProgress.set(true)
   eventbus_subscribe_onehit($"profile_server.add_refine_task.result", function(_) {
     refineGettingInProgress.set(false)
+    uptadeRefinerWithTask(amProcessingTask.get())
   })
+
+  let unique_item = itemsToRefine.filter(@(v) v?.sortAfterEid == null).reduce(function(acc, v) {
+    acc[v.uniqueId.tostring()] <- (v.isBoxedItem ? v.ammoCount : 1)
+    return acc
+  }, {})
+
   eventbus_send("profile_server.add_refine_task", {
-    unique_item_ids = itemsToRefine.filter(@(v) v?.sortAfterEid == null).reduce(@(acc, v) acc.append(v.uniqueId), [])
+    unique_item
+    fuse_recipe_id = selectedRecipe.get()?[0]
+  })
+}
+
+function startQuickRefine() {
+  let itemsToRefine = itemsInRefiner.get()
+
+  refineGettingInProgress.set(true)
+  autoFinishRefine.set(true)
+  eventbus_subscribe_onehit($"profile_server.add_refine_task.result", function(_) {
+    refineGettingInProgress.set(false)
+  })
+
+  let unique_item = itemsToRefine.filter(@(v) v?.sortAfterEid == null).reduce(function(acc, v) {
+    acc[v.uniqueId.tostring()] <- (v.isBoxedItem ? v.ammoCount : 1)
+    return acc
+  }, {})
+
+  eventbus_send("profile_server.add_refine_task", {
+    unique_item
     fuse_recipe_id = selectedRecipe.get()?[0]
   })
 }
 
 let mkProgressBarBg = @(timeLeftWatched) @() {
   watch = timeLeftWatched
-  size = flex()
+  size = [hdpx(425), flex()]
   rendObj = ROBJ_SOLID
   color = BtnBgSelected
   transform = {
@@ -201,11 +340,11 @@ let mkProgressBarBg = @(timeLeftWatched) @() {
 let mkRewardSubpanel = @(title, v) v.len() == 0 ? null : {
   flow = FLOW_VERTICAL
   children = [title].extend(v)
-  size = const [ flex(), SIZE_TO_CONTENT ]
+  size = FLEX_H
   padding = hdpx(5)
 }.__merge(bluredPanel)
 
-function mkExpectedRewardPanel(items, keyItem, currentRecipe) {
+function mkExpectedRewardInfo(items, keyItem, currentRecipe) {
   let cleanable = cleanableItems.get()
   local minAm = 0
   local maxAm = 0
@@ -229,8 +368,6 @@ function mkExpectedRewardPanel(items, keyItem, currentRecipe) {
         minChronotraces += chronotraces.x
         maxChronotraces += chronotraces.x
       }
-
-      
     }
   }
 
@@ -288,53 +425,66 @@ function mkExpectedRewardPanel(items, keyItem, currentRecipe) {
 
   local recipeResultString = null
   if (currentRecipe && isRefinerReadyToStart(items, currentRecipe)) {
-    let recipeTemplate = $"{templatePrefix}{currentRecipe[0]}"
+    let recipeTemplate = $"{templatePrefix}{currentRecipe[1].name}"
     let lootboxTemplate = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(recipeTemplate)
-    recipeResultString = colorize(InfoTextValueColor, loc(lootboxTemplate?.getCompValNullable("item__name")))
+    recipeResultString = colorize(InfoTextValueColor, loc(lootboxTemplate?.getCompValNullable("item__name") ?? "unknown"))
   }
-
+  let credits = colorize(creditsColor, creditsTextIcon)
   
   local amMoneyString = null
   if (minAm > 0 || maxAm > 0) {
     let conversation = playerProfileAMConvertionRate.get()
-    minAm /= 10.0
-    maxAm /= 10.0
-    amMoneyString = minAm == maxAm ?
-      loc("amClean/expectedMoneySingle", {minVal=colorize(InfoTextValueColor, $"{creditsTextIcon}{truncateToMultiple(minAm * conversation, 1)}")}) :
+    let minAmDevided = minAm / 10.0
+    let maxAmDevided = maxAm / 10.0
+    amMoneyString = minAmDevided == maxAmDevided ?
+      loc("amClean/expectedMoneySingle", {minVal=colorize(InfoTextValueColor, $"{credits}{truncateToMultiple(minAmDevided * conversation, 1)}")}) :
       loc("amClean/expectedMoney", {
-          minVal=colorize(InfoTextValueColor, $"{creditsTextIcon}{truncateToMultiple(minAm * conversation, 1)}"),
-          maxVal=colorize(InfoTextValueColor, truncateToMultiple(maxAm * conversation, 1))})
+          minVal=colorize(InfoTextValueColor, $"{credits}{truncateToMultiple(minAmDevided * conversation, 1)}"),
+          maxVal=colorize(InfoTextValueColor, truncateToMultiple(maxAmDevided * conversation, 1))})
   }
 
   local nonCorruptedPriceString = null
   if (nonCorruptedPrice > 0) {
-    nonCorruptedPriceString = loc("amClean/expectedMoneyFromNonCorruptedItems", { minVal = colorize(InfoTextValueColor, $"{creditsTextIcon}{nonCorruptedPrice}") })
+    nonCorruptedPriceString = loc("amClean/expectedMoneyFromNonCorruptedItems", { minVal = colorize(InfoTextValueColor, $"{credits}{nonCorruptedPrice}") })
   }
 
   local chronotracesString = null
+  let cronotraces = colorize(chronotracesColor, chronotraceTextIcon)
   if (minChronotraces > 0) {
     if (minChronotraces == maxChronotraces) {
-      chronotracesString = loc("amClean/expectedMoneyFromNonCorruptedItemsOnlyMin", { minVal = colorize(InfoTextValueColor, $"{chronotraceTextIcon}{minChronotraces}") })
+      chronotracesString = loc("amClean/expectedMoneyFromNonCorruptedItemsOnlyMin", { minVal = colorize(InfoTextValueColor, $"{cronotraces}{minChronotraces}") })
     }
     else {
       chronotracesString = loc("amClean/expectedMoneyFromNonCorruptedItemsMinMax", {
-        minVal = colorize(InfoTextValueColor, $"{chronotraceTextIcon}{minChronotraces}"),
+        minVal = colorize(InfoTextValueColor, $"{cronotraces}{minChronotraces}"),
         maxVal = colorize(InfoTextValueColor, $"{maxChronotraces}")
       })
     }
   }
 
-  return [
-    chronotracesString ? mkRewardSubpanel(null, [mkTextArea(chronotracesString)] ) : null
-    nonCorruptedPriceString ? mkRewardSubpanel(null, [mkTextArea(nonCorruptedPriceString)] ) : null
-    amMoneyString ? mkRewardSubpanel(null, [mkTextArea(amMoneyString)] ) : null
-    recipeResultString ? mkRewardSubpanel(null, [mkTextArea(recipeResultString)] ) : null
-  ]
+  local overallMoneyIncomeString = null
+  if (minAm > 0 || nonCorruptedPrice > 0) {
+    let conversation = playerProfileAMConvertionRate.get()
+    let overallMin = truncateToMultiple(minAm / 10.0 * conversation, 1) + nonCorruptedPrice
+    let overallMax = truncateToMultiple(maxAm / 10.0 * conversation, 1) + nonCorruptedPrice
+
+    overallMoneyIncomeString = overallMax == overallMin ?
+      colorize(InfoTextValueColor, $"{credits}{overallMin}") :
+      colorize(InfoTextValueColor, $"{credits}{overallMin}-{overallMax}")
+  }
+
+  return {
+    chronotraces = chronotracesString
+    nonCorruptedPrice = nonCorruptedPriceString
+    amMoney = amMoneyString
+    recipeResult = recipeResultString
+    overallMoneyIncome = overallMoneyIncomeString
+  }
 }
 
 let mkRefinerSlot = function(refiner) {
   let isProcessing = refineIsProcessing(refiner)
-  let countdown = isProcessing ? mkCountdownTimerPerSec(Watched(refiner.endTimeAt.tointeger())) : Watched(0)
+  let countdown = isProcessing ? mkCountdownTimerPerSec(Watched(refiner.endTimeAt.tointeger() + 1.0), "refiner_end_time_countdown") : Watched(0)
   let hasCountDown = Computed(@() isProcessing && countdown.get() != 0)
   let isRefinerReady = Computed(@() isRefinerReadyToStart(itemsInRefiner.get(), selectedRecipe.get()))
 
@@ -346,7 +496,6 @@ let mkRefinerSlot = function(refiner) {
     let refinerReadyForRefine = (isRefinerReady.get() && !currentKeyItem.get()) || (currentKeyItem.get())
     let isAccent = (isProcessing && !hasCountDown.get()) || (!isProcessing && refinerReadyForRefine)
     let textColor = isAccent ? BtnPrimaryTextNormal : null
-    let refinerHeader = loc("amClean/refinerHeader")
     let defTxtStyle = {
       color = textColor
       fontSize = hdpx(16)
@@ -355,53 +504,34 @@ let mkRefinerSlot = function(refiner) {
     return {
       watch = [ currentRefinerIsReadOnly, hasCountDown, isRefinerReady,
         refineGettingInProgress, currentKeyItem]
-      size = [flex(), SIZE_TO_CONTENT]
-      children = button(
+      size = FLEX_H
+      children = buttonWithGamepadHotkey(
         {
-          size = [flex(), hdpx(buttonHeight)]
+          size = FLEX_H
           halign = ALIGN_CENTER
           valign = ALIGN_CENTER
-          padding = hdpx(2)
           children = [
-            isProcessing && hasCountDown.get() ? mkProgressBarBg(countdown) : null
-            function() {
-              return {
-                watch = itemsInRefiner
-                size = [flex(), SIZE_TO_CONTENT]
-                flow = FLOW_HORIZONTAL
-                gap = hdpx(4)
-                halign = ALIGN_CENTER
-                children = [
-                  { size = [hdpx(35), 0] }
-                  {
-                    size = [flex(), SIZE_TO_CONTENT]
-                    flow = FLOW_VERTICAL
-                    gap = -hdpx(6)
-                    halign = ALIGN_CENTER
-                    children = [
-                      @() {
-                        watch = countdown
-                        size = [flex(), SIZE_TO_CONTENT]
-                        halign = ALIGN_CENTER
-                        children = [
-                          isProcessing ? null : const mkText(loc("amClean/start"), defTxtStyle)
-                          !isProcessing ? null : mkText(processingTimeToText(countdown?.get()), defTxtStyle)
-                        ]
-                      }
-                      mkText(refinerHeader, defTxtStyle)
-                    ]
-                  }
-                ]
-              }
+            {
+              size = FLEX_H
+              children = isProcessing && hasCountDown.get() ? mkProgressBarBg(countdown) : null
+            }
+            @() {
+              watch = [countdown, itemsInRefiner]
+              halign = ALIGN_CENTER
+              children = [
+                isProcessing ? null : mkText(loc("amClean/start"), defTxtStyle.__merge(body_txt))
+                !isProcessing ? null : mkText(processingTimeToText(countdown?.get()), defTxtStyle.__merge(body_txt))
+              ]
             }
           ]
         }
         action,
         {
-          size = [flex(), SIZE_TO_CONTENT]
+          size = static [flex(), buttonHeight]
           halign = ALIGN_CENTER
           valign = ALIGN_CENTER
           isEnabled = !refineGettingInProgress.get()
+          hotkeys = [["J:Y", { description = { skip = true } }]]
         }.__update(isAccent ? accentButtonStyle : {})
       )
     }
@@ -409,37 +539,28 @@ let mkRefinerSlot = function(refiner) {
 }
 
 let mkRefinerButtons = @() {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     gap = -1
     children =
       @() {
         watch = amProcessingTask
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         children = mkRefinerSlot(amProcessingTask.get())
       }
 }
 
-let mkInventory = function(panelData, list, watches) {
+let mkInventory = function(panelData, list, watches, headers = null) {
   panelData.resetScrollHandlerData()
-  let rmbAction = inventoryItemClickActions?[list.name].rmbAction
   return @() {
     watch = watches
-    size = const [ SIZE_TO_CONTENT, flex() ]
+    size = FLEX_V
     clipChildren = true
     children = itemsPanelList({
       outScrollHandlerInfo=panelData.scrollHandlerData,
       list_type=list,
       itemsPanelData=panelData.itemsPanelData,
-      headers = {
-        padding = hdpx(6)
-        size = const [ flex(), SIZE_TO_CONTENT ]
-        flow = FLOW_VERTICAL
-        children = [
-          const mkInventoryHeader(loc("inventory/refiner/items"), null)
-          mkVolumeHdr(stashVolume, stashMaxVolume, STASH.name)
-        ]
-      }
+      headers
       can_drop_dragged_cb=function(item) {
         if (currentKeyItem.get()?.uniqueId == item.uniqueId)
           return MoveForbidReason.NONE
@@ -449,19 +570,11 @@ let mkInventory = function(panelData, list, watches) {
 
         return MoveForbidReason.NONE
       },
-      on_item_dropped_to_list_cb = function(item, _list_type) {
-        if (item.uniqueId == currentKeyItem.get()?.uniqueId) {
-          currentKeyItem.set(null)
-          return
-        }
-        removeFromRefiner(item)
+      on_item_dropped_to_list_cb = function(item, list_type) {
+        moveItemWithKeyboardMode(item, list_type)
       },
-      item_actions = {
-        lmbAction = @(item) dropToRefiner(item, list)
-        lmbShiftAction = @(item) dropToRefiner(item, list)
-        rmbAction = @(item, event) rmbAction?(item, event)
-      },
-      xSize = 5
+      item_actions = inventoryItemClickActions[list.name],
+      xSize = 4
     })
   }.__update(bluredPanel)
 }
@@ -470,36 +583,169 @@ let inProgressPanel = @(color) {
   rendObj = ROBJ_WORLD_BLUR_PANEL
   size = flex()
   stopMouse = true
-  transform = {}
-  animations = [
+  transform = static {}
+  animations = static [
     { prop=AnimProp.opacity, from=0.3, to=0.8, duration=2, play=true, loop=true, easing=CosineFull }
   ]
   fillColor = color
 }
 
 let itemsCountPerRow = 10
-let keyItemColumnWidth = hdpx(100)
 let possibleItemsColumnWidth = (itemHeight * itemsCountPerRow) + (itemsCountPerRow - 1) * hdpx(4)
-function fuseResultInfoRow(keyVal) {
-  let fuseKey = keyVal[0]
-  let fuseVal = keyVal[1]
+
+const RuseResulsInfoId = "fuseResulsInfo"
+function onSelect(val){
+  selectedRecipe.set(val)
+  removeModalWindow(RuseResulsInfoId)
+}
+
+let visual_params_recipe_all_components = static {
+  padding = static [hdpx(2), hdpx(10)]
+  halign = ALIGN_CENTER
+  margin = 0
+  xmbNode = XmbNode()
+  size = SIZE_TO_CONTENT
+  style = { SelBdNormal = BtnPrimaryBgSelected }
+}
+
+let visual_params_recipe_no_components = static visual_params_recipe_all_components.__merge({style = {SelBdNormal = null}})
+
+let arrow = static faComp("arrow-right", static {
+  fontSize = hdpx(25)
+  size = FLEX_V
+  valign = ALIGN_CENTER
+  color = Color(60, 60, 60, 180)
+})
+
+let arrowLine = freeze({
+  gap = hdpx(4)
+  flow = FLOW_VERTICAL
+  size = FLEX_V
+  children = [
+    { size = calc_str_box(mkText("A", tiny_txt)) }
+    arrow
+  ]
+})
+
+let mkPossibleResults = @(children) {
+  flow = FLOW_VERTICAL
+  gap = hdpx(4)
+  children = [
+    static mkText(loc("amClean/possibleResults"), tiny_txt)
+    {
+      size = static [ possibleItemsColumnWidth, SIZE_TO_CONTENT ]
+      flow = FLOW_VERTICAL
+      gap = hdpx(4)
+      children
+    }
+  ]
+}
+let mkRequiredComp = @(children) {
+  rendObj = ROBJ_BOX
+  size = static [ SIZE_TO_CONTENT, itemHeight ]
+  borderRadius = hdpx(2)
+  fillColor = ConsoleFillColor
+  borderWidth = hdpx(1)
+  borderColor = Color(60, 60, 60, 120)
+  flow = FLOW_HORIZONTAL
+  children
+}
+
+let mkRequiredComponents = @(header, item) {
+  flow = FLOW_VERTICAL
+  valign = ALIGN_CENTER
+  gap = hdpx(4)
+  children = [
+    header
+    item
+  ]
+}
+let requiredText = static mkText(loc("amClean/requiredComponents"), tiny_txt)
+let requiredTextHgt = calc_str_box(requiredText)[1]
+
+let requiredItemsWidth = max(itemHeight*3.2, calc_str_box(requiredText)[0])
+
+let mkRecipeItemRow = @(headerComp, requiredComponentsCol, possibleResultsCol) {
+  gap = static hdpx(2)
+  flow = FLOW_VERTICAL
+  children = [
+    headerComp
+    {
+      flow = FLOW_HORIZONTAL
+      gap = static hdpx(40)
+      padding = static [0, hdpx(25)]
+      children = [
+        {
+          size = [requiredItemsWidth, SIZE_TO_CONTENT]
+          children = requiredComponentsCol
+          halign = ALIGN_CENTER
+        }
+        arrowLine
+        {size = [possibleItemsColumnWidth, SIZE_TO_CONTENT] children = possibleResultsCol}
+      ]
+    }
+  ]
+}
+
+function fuseResultInfoRow(keyVal, allPossibleItems, isOpened) {
+  let fuseKey = keyVal[1]?.name ?? ""
+
+  let componentTemplate = keyVal[1]?.components ?? []
+  let results = keyVal[1].results
+  let totalResults = keyVal[1]?.totalResults ?? 0
+
   let lootboxTemplatename = $"fuse_result_{fuseKey}"
 
-  function onClick() {
-    selectedRecipe.set(keyVal)
-    removeModalWindow("fuseResulsInfo")
+  let keyItemComp = []
+  let resultsComp = []
+  local hasAllComponents = true
+  if (componentTemplate.len() > 0) {
+    foreach (keyTemp in componentTemplate) {
+      let keyItemFaked = mkFakeItem(keyTemp)
+      let foundItem = allPossibleItems.findvalue(@(v) v.itemTemplate == keyTemp)
+      if (hasAllComponents && foundItem == null)
+        hasAllComponents = false
+      keyItemComp.append({
+        behavior = Behaviors.Button
+        children = inventoryItemImage(keyItemFaked, inventoryImageParams)
+        eventPassThrough = true
+        skipDirPadNav = true
+        onHover = @(on) setTooltip(on ? buildInventoryItemTooltip(keyItemFaked) : null)
+      })
+    }
   }
-  let keyItemFaked = mkFakeItem(fuseVal.relatedKey)
+  else {
+    let offer = marketItems.get().findvalue(@(of) of.children.craftRecipes.findindex(@(v) v == keyVal[0]) != null)
+    keyItemComp.append(
+      mkTooltiped({
+        size = [ itemHeight, itemHeight ]
+        children = [
+          recognitionImagePattern
+          {
+            padding = hdpx(4)
+            children = mkMonolithLinkIcon({ text = loc("amClean/unknownRecipeKeyItemTooltip") }, function() {
+              if (offer == null)
+                return
 
-  let results = []
+              monolithSelectedLevel.set(offer.requirements.monolithAccessLevel)
+              selectedMonolithUnlock.set(keyVal[0])
+              monolithSectionToReturn.set("Am_clean")
+              currentTab.set("monolithLevelId")
+              openMenu(MonolithMenuId)
+              removeModalWindow(RuseResulsInfoId)
+            })
+          }
+        ]
+      }, loc("amClean/unknownRecipeKeyItemTooltip"), static { size = itemHeight })
+    )
+  }
 
-  foreach (templateOrId in fuseVal.fuseResult) {
-    let marketLotId = toIntegerSafe(templateOrId, 0, false)
-    let marketLot = marketItems.get()?[templateOrId].children.items
-    let resultTemplate = marketLotId == 0 ? templateOrId : marketLot?[0].templateName ?? ""
+  foreach (resultScheme in results) {
+    let resultTemplate = resultScheme.reduce(@(a,v,k) v.len() == 0 ? k : a, "")
     let faked = mkFakeItem(resultTemplate)
-    results.append({
+    resultsComp.append({
       behavior = Behaviors.Button
+      skipDirPadNav = true
       onHover = function(on) {
         if (on)
           setTooltip(buildInventoryItemTooltip(faked))
@@ -509,9 +755,9 @@ function fuseResultInfoRow(keyVal) {
       children = inventoryItemImage(faked, inventoryImageParams)
     })
   }
-  for (local i=results.len(); i < fuseVal.totalResults; i++) {
-    results.append(
-      mkTooltiped(recognitionImagePattern, loc("amClean/unknownRecipeItemTooltip"), { size = [itemHeight, itemHeight] })
+  for (local i=results.len(); i < totalResults; i++) {
+    resultsComp.append(
+      mkTooltiped(recognitionImagePattern, loc("amClean/unknownRecipeItemTooltip"), { size = itemHeight })
     )
   }
 
@@ -523,257 +769,332 @@ function fuseResultInfoRow(keyVal) {
       children = itemInRow
     }
   }
-  for (local i=0; i < fuseVal.totalResults; i+=itemsCountPerRow) {
-    resultsLists.append(mkRows(results.slice(i, i + itemsCountPerRow)))
+  for (local i=0; i < totalResults; i+=itemsCountPerRow) {
+    resultsLists.append(mkRows(resultsComp.slice(i, i + itemsCountPerRow)))
   }
 
   let lootboxTemplate = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(lootboxTemplatename)
   let lootboxName = lootboxTemplate?.getCompValNullable("item__name")
 
-  return button({
-      gap = hdpx(10)
-      padding = hdpx(10)
-      flow = FLOW_VERTICAL
-      children = [
-        mkText(loc(lootboxName), { hplace = ALIGN_CENTER }.__update(body_txt))
-        {
-          flow = FLOW_HORIZONTAL
-          children = [
-            {
-              size = [ keyItemColumnWidth, flex() ]
-              children = {
-                vplace = ALIGN_CENTER
-                hplace = ALIGN_CENTER
-                size = [itemHeight, itemHeight]
-                children = {
-                  behavior = Behaviors.Button
-                  children = inventoryItemImage(keyItemFaked, inventoryImageParams)
-                  eventPassThrough = true
-                  onHover = function(on) {
-                    if (on)
-                      setTooltip(buildInventoryItemTooltip(keyItemFaked))
-                    else
-                      setTooltip(null)
-                  }
-                }
-              }
-            }
-            {
-              size = [ possibleItemsColumnWidth, SIZE_TO_CONTENT ]
-              flow = FLOW_VERTICAL
-              gap = hdpx(4)
-              children = resultsLists
-            }
-          ]
+  return mkSelectPanelItem({
+      idx = keyVal
+      state = selectedRecipe
+      border_align = BD_LEFT
+      visual_params = hasAllComponents && isOpened ? visual_params_recipe_all_components : visual_params_recipe_no_components
+      onSelect = function(val){
+        if (componentTemplate.len() > 0) {
+          onSelect(val)
         }
-      ]
-    },
-    onClick
-  )
-}
+        else {
+          let recipeId = keyVal[0]
+          let offer = marketItems.get().findvalue(function(of) {
+            return of.children.craftRecipes.findindex(@(v) v == recipeId) != null
+          })
 
-function clearRecipe() {
-  selectedRecipe.set(null)
-}
+          if (offer == null)
+            return
 
-function noRecipe() {
-  function onClick() {
-    clearRecipe()
-    removeModalWindow("fuseResulsInfo")
-  }
-
-  return button(
-    mkText(loc("amClean/selectNoRecipe"), { hplace = ALIGN_CENTER, vplace = ALIGN_CENTER }.__update(body_txt)),
-    onClick,
-    {
-      size = [ flex(), hdpx(120) ]
+          monolithSelectedLevel.set(offer.requirements.monolithAccessLevel)
+          selectedMonolithUnlock.set(recipeId)
+          monolithSectionToReturn.set("Am_clean")
+          currentTab.set("monolithLevelId")
+          openMenu(MonolithMenuId)
+          removeModalWindow(RuseResulsInfoId)
+        }
+      }
+      children = mkRecipeItemRow(
+        mkText(loc(lootboxName), static { color=InfoTextValueColor }.__update(sub_txt)),
+        mkRequiredComponents(requiredText, mkRequiredComp(keyItemComp))
+        mkPossibleResults(resultsLists)
+      )
     }
   )
 }
 
+let clearRecipe = @() selectedRecipe.set(null)
+
+let noRecipe = function() {
+  let creditsFaked = mkFakeItem("credit_coins_pile")
+  let chronotracesFaked = mkFakeItem("chronotrace_coins_pile")
+
+  let fakedResult = function(fakeItem) {
+    return {
+      rendObj = ROBJ_BOX
+      borderRadius = hdpx(2)
+      fillColor = ConsoleFillColor
+      borderWidth = hdpx(1)
+      borderColor = Color(60, 60, 60, 120)
+      behavior = Behaviors.Button
+      children = inventoryItemImage(fakeItem, inventoryImageParams)
+      eventPassThrough = true
+      skipDirPadNav = true
+      onHover = @(on) setTooltip(on ? buildInventoryItemTooltip(fakeItem) : null)
+    }
+  }
+
+  let credits = fakedResult(creditsFaked)
+  let chronotraces = fakedResult(chronotracesFaked)
+
+  return mkSelectPanelItem({
+    onSelect
+    idx = null
+    state = selectedRecipe
+    visual_params = static visual_params_recipe_all_components.__merge({xmbNode = XmbNode()})
+    border_align = BD_LEFT
+    children = mkRecipeItemRow(
+      null, 
+      mkRequiredComponents(
+        static {size = [0, requiredTextHgt]},
+        { size = static [SIZE_TO_CONTENT, itemHeight] halign = ALIGN_CENTER, valign = ALIGN_CENTER children = mkText(loc("amClean/anyItemComponent", "Any Item")) }
+      ),
+      mkPossibleResults({flow = FLOW_HORIZONTAL children = [credits, chronotraces], gap = hdpx(4)})
+    )
+  })
+}()
+
+let closeRefineBtn = mkCloseStyleBtn(@() removeModalWindow(RuseResulsInfoId))
+
+function filterMonolithOfferRecipes(offer) {
+  let { requirements = {}, itemType = null } = offer
+  let accessLevel = requirements?.monolithAccessLevel ?? 0
+
+  if (itemType == "refinerRecipe" && accessLevel > 0)
+    return true
+
+  return false
+}
+
 let fuseResulsInfo = {
   rendObj = ROBJ_WORLD_BLUR_PANEL
-  key = "fuseResulsInfo"
+  key = RuseResulsInfoId
   size = flex()
   halign = ALIGN_CENTER
   valign = ALIGN_CENTER
-  children = @() {
-    watch = refinerFusingRecipes
-    size = const [ flex(), sh(80) ]
-    halign = ALIGN_CENTER
-    valign = ALIGN_CENTER
-    children = {
-      flow = FLOW_VERTICAL
-      size = [ SIZE_TO_CONTENT, flex() ]
-      gap = hdpx(10)
-      children = [
-        noRecipe()
-        {
-          hplace = ALIGN_LEFT
-          flow = FLOW_HORIZONTAL
-          gap = hdpx(10)
-          rendObj = ROBJ_BOX
-          fillColor = panelRowColor
-          children = [
-            {
-              padding = hdpx(6)
-              halign = ALIGN_CENTER
-              size = [ keyItemColumnWidth, SIZE_TO_CONTENT ]
-              children = mkText(loc("amClean/keyItemResultTableColumn/keyItem"))
-            }
-            {
-              padding = hdpx(6)
-              halign = ALIGN_CENTER
-              size = [ possibleItemsColumnWidth, SIZE_TO_CONTENT ]
-              children = mkText(loc("amClean/keyItemResultTableColumn/possibleResults"))
-            }
-          ]
-        }
-        makeVertScrollExt({
-            hplace = ALIGN_CENTER
-            vplace = ALIGN_TOP
-            flow = FLOW_VERTICAL
-            gap = hdpx(20)
-            
-            children = refinerFusingRecipes.get().topairs().sort(@(a, b) b[0] == "default" ? -1 : (b[0] <=> a[0])).map(fuseResultInfoRow)
-          },
-          {
-            size = flex()
-            styling = thinAndReservedPaddingStyle
+  children = function() {
+    let allPossibleItems = [].extend(
+      inventoryItems.get()
+      backpackItems.get()
+      safepackItems.get()
+      stashItems.get()
+    )
+
+    let recipesInMonolith = {}
+    marketItems.get().filter(filterMonolithOfferRecipes).each(function(v) {
+      foreach (recipe in v?.children.craftRecipes ?? []) {
+        recipesInMonolith[recipe] <- true
+      }
+    })
+
+    let notOpenedRecipes = allRecipes.get().filter(@(_v, k) recipesInMonolith?[k] && refinerFusingRecipes.get()?[k] == null)
+    return {
+      watch = [inventoryItems, backpackItems, safepackItems, stashItems, refinerFusingRecipes, allRecipes]
+      size = static [ SIZE_TO_CONTENT, sh(85) ]
+      rendObj = ROBJ_WORLD_BLUR_PANEL
+      fillColor = mul_color(ConsoleHeaderFillColor, 0.5)
+
+      halign = ALIGN_CENTER
+      children = {
+        size = FLEX_V
+        flow = FLOW_VERTICAL
+        children = [
+          static {
+            size = FLEX_H
+            valign = ALIGN_CENTER
+            padding = [hdpx(4), 0, hdpx(4), hdpx(10)]
+            children = static [
+              mkText(loc("amClean/selectRecipe"), body_txt),
+              {
+                hplace = ALIGN_RIGHT
+                children = closeRefineBtn
+              }
+            ]
           }
-        )
-      ]
+          makeVertScrollExt(@() {
+            xmbNode = XmbContainer({
+              canFocus = false
+              wrap = false
+              scrollSpeed = 5.0
+            })
+              hplace = ALIGN_CENTER
+              vplace = ALIGN_TOP
+              flow = FLOW_VERTICAL
+              gap = hdpx(5)
+              
+              children = [noRecipe].extend(
+                  refinerFusingRecipes.get().topairs()
+                    .sort(@(a, b) b[0] <=> a[0])
+                    .map(@(v) fuseResultInfoRow(v, allPossibleItems, true)),
+                  [
+                    static {
+                      size = FLEX_H
+                      valign = ALIGN_CENTER
+                      padding = static [hdpx(2), 0, hdpx(2), hdpx(10)]
+                      children = static mkText(loc("amClean/unknownRecipesTitle"), body_txt),
+                    }
+                  ]
+                  notOpenedRecipes.topairs()
+                    .sort(@(a, b) b[0] <=> a[0])
+                    .map(@(v) fuseResultInfoRow(v, allPossibleItems, false)),
+                )
+            },
+            static {
+              size = FLEX_V
+              styling = thinAndReservedPaddingStyle
+            }
+          )
+        ]
+      }
     }
   }
 }
 
 function fillItemsForFuse(fuseRecipe) {
   if ((amProcessingTask.get()?.taskId ?? "") != "") {
-    showMsgbox({ text = loc("amClean/autofill/taskAlreadyRunned")})
+    showMsgbox(static { text = loc("amClean/autofill/taskAlreadyRunned")})
     return
   }
 
   if (fuseRecipe == null) {
-    showMsgbox({ text = loc("amClean/autofill/haveNoItems")})
+    showMsgbox(static { text = loc("amClean/autofill/haveNoItems")})
     return
   }
 
-  let allPossibleItems = [].extend(
+  let allPossibleItems = shuffle([].extend(
     inventoryItems.get()
     backpackItems.get()
     safepackItems.get()
     stashItems.get()
-  )
+  ))
 
-  local keyItem = null
-  let trashItemsCategory = []
-  let usefullItems = []
-  let otherKeyItems = []
-  foreach (item in allPossibleItems) {
-    if (!item.isCorrupted)
+  local hasAllComponents = true
+  let itemsToDrop = []
+  foreach (component in fuseRecipe.components) {
+    if (itemsInRefiner.get().findvalue(@(v) v.isCorrupted && v.itemTemplate == component))
       continue
 
-    if (keyItem == null && item.itemTemplate == fuseRecipe.relatedKey) {
-      keyItem = item
+    let foundItem = allPossibleItems.findvalue(@(v) v.isCorrupted && v.itemTemplate == component)
+    if (foundItem == null) {
+      hasAllComponents = false
       continue
     }
+    itemsToDrop.append(foundItem)
+  }
 
-    if (refinerFusingRecipes.get().findindex(@(v) v.relatedKey == item.itemTemplate) != null) {
-      if (otherKeyItems.len() <= itemCountsToActivateKeyItemSlot)
-        otherKeyItems.append(item)
+  if (hasAllComponents) {
+    foreach (item in itemsToDrop) {
+      dropToRefiner(item, REFINER_STASH, 1)
     }
-    else if (item?.filterType == "loot")
-      trashItemsCategory.append(item)
-    else if (usefullItems.len() < itemCountsToActivateKeyItemSlot)
-      usefullItems.append(item)
-
-    if (trashItemsCategory.len() >= itemCountsToActivateKeyItemSlot && keyItem != null)
-      break
   }
 
-  if (keyItem == null) {
-    showMsgbox({ text = loc("amClean/autofill/haveNoItems")})
+  if (!hasAllComponents) {
+    showMsgbox(static { text = loc("amClean/autofill/haveNoItems")})
     return
-  }
-
-  local ret = trashItemsCategory.slice(0, itemCountsToActivateKeyItemSlot - trashItemsCategory.len())
-  ret = ret.extend(usefullItems.slice(0, itemCountsToActivateKeyItemSlot - ret.len()))
-  ret = ret.extend(otherKeyItems.slice(0, itemCountsToActivateKeyItemSlot - ret.len()))
-
-  if (ret.len() < itemCountsToActivateKeyItemSlot) {
-    showMsgbox({ text = loc("amClean/autofill/haveNoItems")})
-    return
-  }
-
-  itemsInRefiner.set([])
-
-  dropToRefiner(keyItem, REFINER_STASH)
-  foreach (item in ret) {
-    dropToRefiner(item, REFINER_STASH)
   }
 }
 
+let openFuseWindow = @() addModalWindow(fuseResulsInfo)
+
 function refineRecipeSelection() {
-  let onClick = @() refinerFusingRecipes.get()?.len() ? addModalWindow(fuseResulsInfo) : showMsgbox({ text = loc("amClean/noRecipesKnown") })
+  let onClick = refinerFusingRecipes.get()?.len() ? openFuseWindow : @() showMsgbox(static { text = loc("amClean/noRecipesKnown") })
+
+  function mkComponentImage(componentTemplate) {
+    let fakedComponent = mkFakeItem(componentTemplate)
+    return {
+      behavior = Behaviors.Button
+      skipDirPadNav = true
+      children = [
+        {
+          rendObj = ROBJ_BOX
+          color = SelBgNormal
+          fillColor = ConsoleFillColor
+          size = flex()
+        }
+        inventoryItemImage(fakedComponent, inventoryImageParams)
+      ]
+      onClick
+      onHover = @(on) setTooltip(on ? buildInventoryItemTooltip(fakedComponent) : null)
+    }
+  }
 
   return function() {
-    local fakedKeyItem = null
     local fakedRecipeItem = null
 
     if (selectedRecipe.get()) {
-      let currentRecipeComponentTemplate = selectedRecipe.get() ? selectedRecipe.get()?[1].relatedKey : null
-      let currentRecipeTemplate = selectedRecipe.get() ? $"{templatePrefix}{selectedRecipe.get()?[0]}" : null
+      let currentRecipeTemplate = selectedRecipe.get() ? $"{templatePrefix}{selectedRecipe.get()?[1].name}" : null
 
-      fakedKeyItem = mkFakeItem(currentRecipeComponentTemplate)
       fakedRecipeItem = mkFakeItem(currentRecipeTemplate)
     }
     return {
       watch = selectedRecipe
-      size = [ flex(), SIZE_TO_CONTENT ]
+      size = FLEX_H
       flow = FLOW_VERTICAL
-      gap = hdpx(6)
+      gap = hdpx(4)
       children = [
-        button({
-            size = [ flex(), SIZE_TO_CONTENT ]
-            flow = FLOW_HORIZONTAL
+        buttonWithGamepadHotkey(
+          {
+            size = FLEX_H
+            flow = FLOW_VERTICAL
+            valign = ALIGN_CENTER
             children = [
-              mkTextArea(fakedRecipeItem?.itemName ? loc(fakedRecipeItem?.itemName) : loc("amClean/selectRecipe"), {
-                size = flex()
+              mkText(
+                fakedRecipeItem?.itemName ? loc(fakedRecipeItem?.itemName) : loc("amClean/selectRecipe"),
+                static {
+                  size = [ flex(), stdBtnSize[1] ]
+                  vplace = ALIGN_CENTER
+                  halign = ALIGN_CENTER
+                  valign = ALIGN_CENTER
+                }.__update(sub_txt)
+              )
+              selectedRecipe.get() ? {
                 hplace = ALIGN_CENTER
-                vplace = ALIGN_CENTER
-                halign = ALIGN_CENTER
-                valign = ALIGN_CENTER
-                minHeight = inventoryImageParams.slotSize[1] * 1.2
-              }.__update(body_txt))
-              fakedKeyItem ? {
-                padding = [ 0, hdpx(20), 0, 0 ]
-                behavior = Behaviors.Button
-                onClick
-                vplace = ALIGN_CENTER
-                onHover = function(on) {
-                  if (on)
-                    setTooltip(buildInventoryItemTooltip(fakedKeyItem))
-                  else
-                    setTooltip(null)
-                }
-                children = inventoryItemImage(fakedKeyItem, inventoryImageParams)
+                flow = FLOW_HORIZONTAL
+                gap = hdpx(10)
+                padding = hdpx(16)
+                children = [
+                  {
+                    rendObj = ROBJ_BOX
+                    borderRadius = hdpx(2)
+                    fillColor = 0
+                    borderWidth = hdpx(1)
+                    borderColor = Color(60, 60, 60, 120)
+                    flow = FLOW_HORIZONTAL
+                    gap = hdpx(5)
+                    children = (selectedRecipe.get()?[1].components ?? []).map(@(v) mkComponentImage(v))
+                  }
+                  arrow
+                  {
+                    rendObj = ROBJ_BOX
+                    borderRadius = hdpx(2)
+                    fillColor = ConsoleFillColor
+                    borderWidth = hdpx(1)
+                    borderColor = Color(60, 60, 60, 120)
+                    flow = FLOW_HORIZONTAL
+                    skipDirPadNav = true
+                    behavior = Behaviors.Button
+                    onClick
+                    onHover = @(on) setTooltip(on ? buildInventoryItemTooltip(fakedRecipeItem) : null)
+                    children = inventoryItemImage(fakedRecipeItem, inventoryImageParams)
+                  }
+                ]
               } : null
             ]
           },
           onClick,
-          {
-            size = [ flex(), SIZE_TO_CONTENT ]
+          static {
+            size = FLEX_H,
+            hotkeys = [["J:RS", { description = { skip = true } }]]
           }
         )
-        fakedKeyItem ? button(
-          mkText(loc("amClean/refillContainer"), body_txt),
-          @() fillItemsForFuse(selectedRecipe.get()?[1]),
-          {
-            size = [ flex(), SIZE_TO_CONTENT ]
+        fakedRecipeItem ? button(
+          static mkText(loc("amClean/refillContainer"), sub_txt),
+            @() fillItemsForFuse(selectedRecipe.get()?[1]),
+          static {
+            size = FLEX_H
             hplace = ALIGN_RIGHT
             vplace = ALIGN_CENTER
             valign = ALIGN_CENTER
             halign = ALIGN_CENTER
+            padding = static [hdpx(10), 0]
           }
         ) : null
       ]
@@ -783,7 +1104,7 @@ function refineRecipeSelection() {
 
 function keyItemPanel() {
   return {
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     gap = hdpx(4)
     padding = hdpx(8)
     halign = ALIGN_CENTER
@@ -793,7 +1114,7 @@ function keyItemPanel() {
         watch = selectedRecipe
         hplace = ALIGN_RIGHT
         vplace = ALIGN_TOP
-        children = selectedRecipe.get() ? mkCloseStyleBtn(clearRecipe, { stopHover = true }) : null
+        children = selectedRecipe.get() ? mkCloseStyleBtn(clearRecipe, { stopHover = true, onHover = @(on) setTooltip(on ? loc("amClean/selectNoRecipe") : null ) }) : null
       }
     ]
   }
@@ -832,12 +1153,12 @@ function warningNeedMoreItemsToFuze() {
   }.__merge(bluredPanel)
 }
 
-let keyItemPanelWithTitle = {
+let keyItemPanelWithTitle = @() {
   flow = FLOW_VERTICAL
-  size = [ flex(), SIZE_TO_CONTENT ]
+  size = FLEX_H
   children = [
     {
-      size = [ flex(), hdpx(45) ]
+      size = static [ flex(), hdpx(45) ]
       halign = ALIGN_CENTER
       valign = ALIGN_CENTER
       flow = FLOW_HORIZONTAL
@@ -849,80 +1170,38 @@ let keyItemPanelWithTitle = {
   ]
 }.__merge(bluredPanel)
 
+let itemsOnPlayer = Computed(function() {
+  return []
+    .extend(
+      inventoryItems.get()
+      backpackItems.get()
+      safepackItems.get()
+    )
+    .map(@(item) addStorageType(item, stashItems.get(), inventoryItems.get(), backpackItems.get(), safepackItems.get()))
+})
+
+let stashItemsToRefine = Computed(function() {
+  return stashItems.get().map(@(item) addStorageType(item, stashItems.get(), inventoryItems.get(), backpackItems.get(), safepackItems.get()))
+})
+
+let stashRefineItemsPanelData = setupPanelsData(stashItemsToRefine,
+                                  4,
+                                  [stashItemsToRefine, itemsInRefiner, activeFilters, currentKeyItem, refinedItemsList, refinerFusingRecipes],
+                                  processStashRefineItems)
+
+let playerRefineItemsPanelData = setupPanelsData(itemsOnPlayer,
+                                  4,
+                                  [itemsOnPlayer, itemsInRefiner, activeFilters, currentKeyItem, refinedItemsList, refinerFusingRecipes],
+                                  processStashRefineItems)
+
+let containerItemsPanelData = setupPanelsData(itemsInRefiner,
+                                  4,
+                                  [itemsInRefiner],
+                                  processContainerItems)
+
+uptadeRefinerWithTask(amProcessingTask.get())
+
 function mkAmProcessingItemPanel() {
-  function updateRefinerData(task) {
-    if (refineIsProcessing(task)) {
-      let itemsToSell = task.sellItemInsideTemplateNames
-      let itemsInsideTemplates = task.itemInsideTemplateNames
-      let itemsReplicaTemplates = task.replicaItemInsideTemplateNames
-      
-      let inside = itemsInsideTemplates.map(function(v, index) {
-        return mkFakeItem(v, {
-          itemId = 0
-          ammoCount = null
-          isCorrupted = true
-          forceLockIcon = true
-          ui_order = index
-          countPerStack = 1 
-        })
-      }).extend(
-        
-        itemsToSell.map(function(v, index) {
-          return mkFakeItem(v, {
-            itemId = 0
-            ammoCount = null
-            isCorrupted = false
-            forceLockIcon = true
-            ui_order = index
-            countPerStack = 1 
-          })
-        }),
-        
-        itemsReplicaTemplates.map(function(v, index) {
-          return mkFakeItem(v, {
-            itemId = 0
-            ammoCount = null
-            isCorrupted = false
-            forceLockIcon = true
-            ui_order = index
-            countPerStack = 1 
-            isReplica = true 
-          })
-        })
-      )
-
-      itemsInRefiner.set(inside)
-      currentRefinerIsReadOnly.set(true)
-    }
-    else {
-      itemsInRefiner.set([])
-      currentKeyItem.set(null)
-      currentRefinerIsReadOnly.set(false)
-    }
-  }
-  amProcessingTask.subscribe(updateRefinerData)
-  updateRefinerData(amProcessingTask.get())
-
-  let itemsOnPlayer = Computed(function() {
-    return []
-      .extend(
-        inventoryItems.get()
-        backpackItems.get()
-        safepackItems.get()
-        stashItems.get()
-      )
-      .map(@(item) addStorageType(item, stashItems.get(), inventoryItems.get(), backpackItems.get(), safepackItems.get()))
-  })
-
-  let stashRefineItemsPanelData = setupPanelsData(itemsOnPlayer,
-                                    3,
-                                    [itemsOnPlayer, itemsInRefiner, activeFilters, currentKeyItem, refinedItemsList, refinerFusingRecipes],
-                                    processStashRefineItems)
-
-  let containerItemsPanelData = setupPanelsData(itemsInRefiner,
-                                    3,
-                                    [itemsInRefiner],
-                                    processContainerItems)
 
   function incomePanel() {
     let watch = [ itemsInRefiner, currentKeyItem ]
@@ -944,13 +1223,26 @@ function mkAmProcessingItemPanel() {
           halign = ALIGN_CENTER
           valign = ALIGN_CENTER
           children = mkText(loc("amClean/expectedReward"))
-          size = [ flex(), hdpx(45) ]
+          size = static [ flex(), hdpx(45) ]
         }.__merge(bluredPanel)
         makeVertScroll({
-            flow = FLOW_VERTICAL
-            gap = hdpx(5)
-            size = [ flex(), SIZE_TO_CONTENT ]
-            children = mkExpectedRewardPanel(itemsInRefiner.get(), currentKeyItem.get(), selectedRecipe.get())
+            size = FLEX_H
+            children = function() {
+              let { chronotraces = null, nonCorruptedPrice = null, amMoney = null, recipeResult = null}
+                = mkExpectedRewardInfo(itemsInRefiner.get(), currentKeyItem.get(), selectedRecipe.get())
+              return {
+                watch = [ itemsInRefiner, currentKeyItem, selectedRecipe ]
+                flow = FLOW_VERTICAL
+                gap = hdpx(5)
+                size = FLEX_H
+                children = [
+                  chronotraces ? mkRewardSubpanel(null, [mkTextArea(chronotraces)] ) : null
+                  nonCorruptedPrice ? mkRewardSubpanel(null, [mkTextArea(nonCorruptedPrice)] ) : null
+                  amMoney ? mkRewardSubpanel(null, [mkTextArea(amMoney)] ) : null
+                  recipeResult ? mkRewardSubpanel(null, [mkTextArea(recipeResult)] ) : null
+                ]
+              }
+            }
           }
         )
       ]
@@ -966,23 +1258,26 @@ function mkAmProcessingItemPanel() {
           return MoveForbidReason.REFINER_IN_USE
         if (currentKeyItem.get()?.uniqueId == item.uniqueId)
           return MoveForbidReason.NONE
-        if (item.fromList.name == "containerItemsList")
+        if (item.fromList.name == REFINER.name)
           return MoveForbidReason.ITEM_ALREADY_IN
 
         return MoveForbidReason.NONE
       }
 
       let mkCompleteBtn = @(refiner) @() {
-        watch = [ refineGettingInProgress ]
-        children = textButton(loc("amClean/Done"), function() {
-          finishRefine(refiner)
-        },
-        {
-          isEnabled = !refineGettingInProgress.get()
-        }.__update(accentButtonStyle))
+        watch = refineGettingInProgress
+        size = FLEX_H
+        children = buttonWithGamepadHotkey(mkText(loc("amClean/Done"), { hplace = ALIGN_CENTER }.__merge(body_txt)),
+          @() finishRefine(refiner),
+          {
+            size = FLEX_H
+            isEnabled = !refineGettingInProgress.get()
+            hotkeys = [["J:Y", { description = { skip = true } }]]
+            padding = static [0, hdpx(6)]
+          }.__update(accentButtonStyle))
       }
       function mkInProgressBox(task) {
-        let countdown = mkCountdownTimerPerSec(Watched(task.endTimeAt.tointeger()))
+        let countdown = mkCountdownTimerPerSec(Watched(task.endTimeAt.tointeger() + 1.0), task.taskId)
         let hasCountDown = Computed(@() countdown.get() > 0)
         return function() {
           return {
@@ -991,7 +1286,7 @@ function mkAmProcessingItemPanel() {
             halign = ALIGN_CENTER
             valign = ALIGN_CENTER
             children = [
-              inProgressPanel(countdown.get() == 0 ? const Color(10, 30, 50, 0) : const Color(10,10,10,10))
+              inProgressPanel(countdown.get() == 0 ? static Color(10, 30, 50, 0) : static Color(10,10,10,10))
               !hasCountDown.get() ? mkCompleteBtn(task) : null
             ]
           }
@@ -1000,7 +1295,7 @@ function mkAmProcessingItemPanel() {
 
       let rmbAction = inventoryItemClickActions?[REFINER.name].rmbAction
       return {
-        size = [SIZE_TO_CONTENT, flex()]
+        size = FLEX_V
         watch = [ containerItemsPanelData.numberOfPanels ]
         hplace = ALIGN_RIGHT
         children = [
@@ -1010,22 +1305,17 @@ function mkAmProcessingItemPanel() {
             itemsPanelData=containerItemsPanelData.itemsPanelData,
             headers = {
               padding = hdpx(6)
-              size = [ flex(), SIZE_TO_CONTENT ]
-              children = const mkInventoryHeader(loc("amClean/itemsList"), null)
+              size = FLEX_H
+              children = static mkInventoryHeader(loc("amClean/itemsList"), null)
             }
             can_drop_dragged_cb,
             on_item_dropped_to_list_cb = function(item, _list_type) {
-              if (currentKeyItem.get()?.uniqueId == item.uniqueId) {
-                dropToRefiner(currentKeyItem.get(), item.fromList)
-                currentKeyItem.set(null)
-              }
-              else
-                dropToRefiner(item, item.fromList)
+              moveItemWithKeyboardMode(item, REFINER)
             },
             item_actions={
               rmbAction = rmbAction
-              lmbAction = removeFromRefiner
-              lmbShiftAction = removeFromRefiner
+              lmbAction = @(item) removeFromRefiner(item, item?.isBoxedItem ? item.countPerStack : 1)
+              lmbShiftAction = @(item) removeFromRefiner(item, item?.isBoxedItem ? item.ammoCount : item.eids.len())
             },
             dropMarkerConstructor = function(sf) {
               if (draggedData.get() == null)
@@ -1041,7 +1331,7 @@ function mkAmProcessingItemPanel() {
 
               return null
             }
-            itemIconParams = currentRefinerIsReadOnly.get() ? const inventoryImageParams.__merge( { opacity = 0.3 } ) : inventoryImageParams
+            itemIconParams = currentRefinerIsReadOnly.get() ? static inventoryImageParams.__merge( { opacity = 0.3 } ) : inventoryImageParams
             xSize = 5
           }).__update(bluredPanel),
           @() {
@@ -1054,7 +1344,7 @@ function mkAmProcessingItemPanel() {
     }
 
     return {
-      size = [SIZE_TO_CONTENT, flex()]
+      size = FLEX_V
       flow = FLOW_VERTICAL
       gap = hdpx(10)
       children = [
@@ -1066,20 +1356,75 @@ function mkAmProcessingItemPanel() {
     }
   }
 
+  let stashVolumeForRefiner = Computed(function() {
+    let refiner = itemsInRefiner.get()
+
+    local inRefinerVol = 0
+    foreach (item in refiner) {
+      if (item?.refiner__fromList.name == REFINER_STASH.name) {
+        inRefinerVol += item.volume
+      }
+    }
+    return stashVolume.get() - inRefinerVol
+  })
+
   let inventoryPanel = @() {
-    size = const [ SIZE_TO_CONTENT, flex() ]
+    size = FLEX_V
     gap = hdpx(5)
     flow = FLOW_HORIZONTAL
     watch = [ refinedItemsList, refinerFusingRecipes ]
     children = [
-      mkInventory(stashRefineItemsPanelData, REFINER_STASH, [ stashRefineItemsPanelData.numberOfPanels, refinedItemsList, refinerFusingRecipes ])
+      @() {
+        watch = mutationForbidenDueToInQueueState
+        size = FLEX_V
+        children = [
+          mkInventory(playerRefineItemsPanelData, REFINER_ON_PLAYER, [ playerRefineItemsPanelData.numberOfPanels, refinedItemsList, refinerFusingRecipes ], {
+            padding = hdpx(6)
+            size = FLEX_H
+            flow = FLOW_VERTICAL
+            children = [
+              static mkInventoryHeader(loc("inventory/refiner/items"), null)
+              static {size = [ 0, volumeHdrHeight ]}
+            ]
+          })
+          mutationForbidenDueToInQueueState.get() ? {
+            
+            behavior = Behaviors.Button
+            rendObj = ROBJ_WORLD_BLUR_PANEL
+            color = Color(255,255,255,220)
+            eventPassThrough = false
+            size = flex()
+            halign = ALIGN_CENTER
+            valign = ALIGN_CENTER
+            flow = FLOW_VERTICAL
+            gap = hdpx(10)
+            children = [
+              static faComp("lock", { fontSize = hdpxi(50) })
+              static mkTextArea(loc("amClean/itemsOnPlayerMutationForbidden") {
+                halign = ALIGN_CENTER
+                size = FLEX_H
+                margin = static [0, hdpx(10)]
+              })
+            ]
+          } : null
+        ]
+      }
+      mkInventory(stashRefineItemsPanelData, REFINER_STASH, [ stashRefineItemsPanelData.numberOfPanels, refinedItemsList, refinerFusingRecipes ], {
+        padding = hdpx(6)
+        size = FLEX_H
+        flow = FLOW_VERTICAL
+        children = [
+          static mkInventoryHeader(loc("inventory/itemsInStash"), null)
+          mkVolumeHdr(stashVolumeForRefiner, stashMaxVolume, STASH.name)
+        ]
+      })
       inventoryFiltersWidget
     ]
   }
 
   let infoPanel = @() {
     watch = [ refinerFillAmount, itemsInRefiner ]
-    size = const [SIZE_TO_CONTENT, flex()]
+    size = FLEX_V
     children = cleanInfoBlock
   }
 
@@ -1087,7 +1432,8 @@ function mkAmProcessingItemPanel() {
     onAttach = function() {
       containerItemsPanelData.onAttach()
       stashRefineItemsPanelData.onAttach()
-
+      playerRefineItemsPanelData.onAttach()
+      uptadeRefinerWithTask(amProcessingTask.get())
       if (amProcessingTask.get()?.keyItemTemplateName.len()) {
         let fake = mkFakeItem(amProcessingTask.get()?.keyItemTemplateName)
         currentKeyItem.set(fake)
@@ -1096,28 +1442,37 @@ function mkAmProcessingItemPanel() {
     onDetach = function() {
       containerItemsPanelData.onDetach()
       stashRefineItemsPanelData.onDetach()
+      playerRefineItemsPanelData.onDetach()
       itemsInRefiner.set([])
       currentKeyItem.set(null)
+      selectedRecipe.set(null)
     }
 
-    size = const [ SIZE_TO_CONTENT, flex() ]
+    size = FLEX_V
     halign = ALIGN_CENTER
     flow = FLOW_HORIZONTAL
     hplace = ALIGN_CENTER
-    gap = const hdpx(10)
+    gap = static hdpx(10)
     children = [
       infoPanel
       inventoryPanel
       isCtrlPressedMonitor
       shiftPressedMonitor
+      isAltPressedMonitor
+      contextHotkeys
     ]
   }
 }
 
 return {
   mkAmProcessingItemPanel
-  AmProcessingItemId
   selectAmItemName
   refineIsProcessing
   refinesReady
+  autoFinishRefine
+  finishRefine
+  startQuickRefine
+  mkExpectedRewardInfo
+  openFuseWindow
+  selectedRecipe
 }

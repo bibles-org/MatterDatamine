@@ -1,12 +1,11 @@
+from "%dngscripts/sound_system.nut" import sound_set_volume
+from "%dngscripts/platform.nut" import is_pc
+from "%ui/mainMenu/menus/options/options_lib.nut" import getOnlineSaveData, optionSpinner, optionCtor, optionPercentTextSliderCtor, loc_opt, optionCheckBox
+from "settings" import get_setting_by_blk_path, set_setting_by_blk_path_and_save
+from "%ui/sound_state.nut" import soundOutputDeviceUpdate
 from "%ui/ui_library.nut" import *
 
-let {get_setting_by_blk_path} = require("settings")
-let { sound_set_volume } = require("%dngscripts/sound_system.nut")
-let {is_pc} = require("%dngscripts/platform.nut")
-let {soundOutputDevicesList, soundOutputDevice, soundOutputDeviceUpdate} = require("%ui/sound_state.nut")
-let {
-  getOnlineSaveData, optionSpinner, optionCtor, optionPercentTextSliderCtor, loc_opt, optionCheckBox
-} = require("options_lib.nut")
+let { soundOutputDevicesList, soundOutputDevice } = require("%ui/sound_state.nut")
 
 function optionVolSliderCtor(opt, group, xmbNode) {
   let optSetValue = opt.setValue 
@@ -29,7 +28,10 @@ function soundOption(title, field) {
     tab = "Sound"
     widgetCtor = optionVolSliderCtor
     var = watch
-    setValue
+    setValue = function (v) {
+      setValue(v)
+      set_setting_by_blk_path_and_save(blkPath, v)
+    }
     defVal = 1.0
     blkPath
     busName = field
@@ -47,7 +49,7 @@ let optOutputDevice = optionCtor({
   tab = "Sound"
   widgetCtor = optionSpinner
   blkPath = "sound/output_device"
-  isAvailableWatched = Computed(@() is_pc && soundOutputDevicesList.value.len() > 0)
+  isAvailableWatched = Computed(@() is_pc && soundOutputDevicesList.get().len() > 0)
   changeVarOnListUpdate = false
   var = soundOutputDevice
   setValue = soundOutputDeviceUpdate
@@ -62,8 +64,17 @@ const SUBTITLES_BACKGROUND = "sound/subtitlesBackground"
 let subtitlesBackgroundOnlineSaveData = getOnlineSaveData(SUBTITLES_BACKGROUND,
   @() get_setting_by_blk_path(SUBTITLES_BACKGROUND) ?? false)
 
+const SUBTITLES_FONT_SIZE = "sound/subtitles_font_size"
+enum SubtitlesFontSizes {
+  tiny = "tiny",
+  normal = "medium",
+  big = "big"
+}
+
+let subtitlesFontSizeOnlineSaveData = getOnlineSaveData(SUBTITLES_FONT_SIZE, @() get_setting_by_blk_path(SUBTITLES_FONT_SIZE) ?? SubtitlesFontSizes.normal)
+
 let subtitles = optionCtor({
-  name = loc_opt("sound/subtitles")
+  name = loc("options/subtitles")
   setValue = subtitlesOnlineSaveData.setValue
   var = subtitlesOnlineSaveData.watch
   defVal = true
@@ -75,7 +86,7 @@ let subtitles = optionCtor({
 })
 
 let subtitlesBackground = optionCtor({
-  name = loc_opt("sound/subtitlesBackground")
+  name = loc("options/subtitlesBackground")
   setValue = subtitlesBackgroundOnlineSaveData.setValue
   var = subtitlesBackgroundOnlineSaveData.watch
   defVal = false
@@ -86,7 +97,20 @@ let subtitlesBackground = optionCtor({
   valToString = @(v) v ? loc("option/on") : loc("option/off")
 })
 
-return {
+let subtitlesFontSize = optionCtor({
+  name = loc("options/subtitlesFontSize")
+  setValue = @(v) subtitlesFontSizeOnlineSaveData.setValue(v in SubtitlesFontSizes ? v : SubtitlesFontSizes.normal)
+  available = [SubtitlesFontSizes.tiny, SubtitlesFontSizes.normal, SubtitlesFontSizes.big]
+  var = subtitlesFontSizeOnlineSaveData.watch
+  defVal = false
+  widgetCtor = optionSpinner
+  restart = false
+  tab = "Interface"
+  blkPath = SUBTITLES_FONT_SIZE
+  valToString = @(v) loc_opt($"font_{v}") ?? "???"
+})
+
+return freeze({
   optVolumeMaster
   optVolumeSfx
   optVolumeInterface
@@ -96,8 +120,10 @@ return {
     optOutputDevice,
     optVolumeMaster, optVolumeSfx,
     optVolumeInterface, optVolumeMusic, optVolumeDialogs,
-    subtitles, subtitlesBackground
+    subtitles, subtitlesBackground, subtitlesFontSize
   ]
   subtitlesNeeded = subtitlesOnlineSaveData.watch
   subtitlesBackgroundNeeded = subtitlesBackgroundOnlineSaveData.watch
-}
+  subtitlesFontSize = subtitlesFontSizeOnlineSaveData.watch
+  SubtitlesFontSizes
+})

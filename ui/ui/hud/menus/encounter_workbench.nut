@@ -1,16 +1,16 @@
+from "%sqGlob/dasenums.nut" import EncounterWorkbenchMenuState
+
+from "%ui/hud/state/interactive_state.nut" import addInteractiveElement, removeInteractiveElement
+from "dasevents" import CmdEncounterWorkbenchMenuRequest, RequestEncounterWorkbenchRepairItemAction, sendNetEvent
+from "%ui/fonts_style.nut" import h2_txt, body_txt
+from "%ui/components/button.nut" import fontIconButton
+from "%ui/hud/menus/components/inventoryItemsList.nut" import itemsPanelList, setupPanelsData
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { addInteractiveElement, removeInteractiveElement } = require("%ui/hud/state/interactive_state.nut")
-let { WorkBenchMenuId, encounterWorkbenchEid,
-  encounterWorkbenchCharges, encounterWorkbenchMaxCharges,
-  encounterWorkbenchItemsToRepair } = require("%ui/hud/state/encounter_workbench_state.nut")
-let { CmdEncounterWorkbenchMenuRequest, RequestEncounterWorkbenchRepairItemAction, sendNetEvent } = require("dasevents")
-let { EncounterWorkbenchMenuState } = require("%sqGlob/dasenums.nut")
-let { h2_txt, body_txt } = require("%ui/fonts_style.nut")
+let { WorkBenchMenuId, encounterWorkbenchEid, encounterWorkbenchCharges, encounterWorkbenchMaxCharges, encounterWorkbenchItemsToRepair } = require("%ui/hud/state/encounter_workbench_state.nut")
 let JB = require("%ui/control/gui_buttons.nut")
-let { fontIconButton } = require("%ui/components/button.nut")
-let { itemsPanelList, setupPanelsData } = require("%ui/hud/menus/components/inventoryItemsList.nut")
 let { get_controlled_hero } = require("%dngscripts/common_queries.nut")
 let { REPAIR } = require("%ui/hud/menus/components/slotTypes.nut")
 
@@ -25,7 +25,7 @@ let containerAnims = [
 ]
 
 let closebutton = fontIconButton("icon_buttons/x_btn.svg", close, {
-  size = [fsh(5), fsh(5)]
+  size = fsh(5)
   halign = ALIGN_RIGHT
   valign = ALIGN_TOP
   hplace = ALIGN_RIGHT
@@ -69,7 +69,7 @@ function encounterWorkbenchRepairMenu() {
     valign = ALIGN_CENTER
     flow = FLOW_VERTICAL
     gap = fsh(1)
-    size = [pw(95), sh(20.5)]
+    size = static [pw(95), sh(20.5)]
     pos = [0, sh(1.5)]
     watch = encounterWorkbenchItemsToRepair
 
@@ -95,7 +95,7 @@ function encounterWorkbenchRepairMenu() {
             item_actions
             visualParams={ animations = null },
             list_type = REPAIR
-            listVisualParams={ padding = [hdpx(10), hdpx(10)] },
+            listVisualParams={ padding = hdpx(10) },
             xSize=itemsInRow
           })
           numItems != 0 ? null : {
@@ -132,7 +132,7 @@ function workbenchMenu() {
       fillColor = Color(20, 20, 20, 55)
       halign = ALIGN_CENTER
       valign = ALIGN_CENTER
-      size = [sh(52), sh(27.5)]
+      size = static [sh(52), sh(27.5)]
       gap = fsh(1.5)
       children = [
         closebutton
@@ -142,7 +142,7 @@ function workbenchMenu() {
           rendObj = ROBJ_TEXT
           watch = encounterWorkbenchCharges
           pos = [sh(2), sh(2)]
-          size = [flex(), fsh(5)]
+          size = static [flex(), fsh(5)]
           text = loc("hud/workbench_charges_hint", {
             charges = encounterWorkbenchCharges.get(),
             maxCharges = encounterWorkbenchMaxCharges.get() })

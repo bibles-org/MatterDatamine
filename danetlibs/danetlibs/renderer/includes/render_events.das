@@ -63,7 +63,6 @@ struct AfterDeviceReset
 struct OnRenderDecals
   viewTm : float3x4
   viewItm : float3x4
-  projTm : float4x4
   cameraWorldPos : float3
   texCtx : TexStreamingContext
   rendinstMainVisibility : void?

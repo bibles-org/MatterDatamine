@@ -1,13 +1,14 @@
+from "%dngscripts/sound_system.nut" import sound_play
+
+from "dasevents" import EventObjectivePhotographShot
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
 let { watchedHeroEid } = require("%ui/hud/state/watched_hero.nut")
-let { sound_play } = require("%dngscripts/sound_system.nut")
-let { EventObjectivePhotographShot } = require("dasevents")
 
 let photographObjectiveActive = Watched(false)
 let photographObjectiveInPlace = Watched(false)
-let photographObjectiveClosestZoneEid = Watched(ecs.INVALID_ENTITY_ID)
 let photographObjectiveTargetEid = Watched(ecs.INVALID_ENTITY_ID)
 let photographObjectiveDetectedTargetEid = Watched(ecs.INVALID_ENTITY_ID)
 let photographObjectiveTargetInView = Watched(false)
@@ -22,7 +23,6 @@ ecs.register_es("quest_camera_watching_affect_es",
       if (comp.game_effect__attachedTo == watchedHeroEid.get()){
         photographObjectiveActive.set(true)
         photographObjectiveInPlace.set(comp.quest_camera_watching_affect__inPlace)
-        photographObjectiveClosestZoneEid.set(comp.quest_camera_watching_affect__closestZoneEid)
         photographObjectiveTargetEid.set(comp.quest_camera_watching_affect__targetEid)
         photographObjectiveDetectedTargetEid.set(comp.quest_camera_watching_affect__detectedTargetEid)
         photographObjectiveTargetInView.set(comp.quest_camera_watching_affect__targetInView)
@@ -33,7 +33,6 @@ ecs.register_es("quest_camera_watching_affect_es",
       if (comp.game_effect__attachedTo == watchedHeroEid.get()){
         photographObjectiveActive.set(false)
         photographObjectiveInPlace.set(false)
-        photographObjectiveClosestZoneEid.set(ecs.INVALID_ENTITY_ID)
         photographObjectiveTargetEid.set(ecs.INVALID_ENTITY_ID)
         photographObjectiveDetectedTargetEid.set(ecs.INVALID_ENTITY_ID)
         photographObjectiveTargetInView.set(false)
@@ -47,7 +46,6 @@ ecs.register_es("quest_camera_watching_affect_es",
     ]
     comps_track = [
       ["quest_camera_watching_affect__inPlace", ecs.TYPE_BOOL],
-      ["quest_camera_watching_affect__closestZoneEid", ecs.TYPE_EID],
       ["quest_camera_watching_affect__targetEid", ecs.TYPE_EID],
       ["quest_camera_watching_affect__detectedTargetEid", ecs.TYPE_EID],
       ["quest_camera_watching_affect__targetInView", ecs.TYPE_BOOL],
@@ -67,7 +65,7 @@ let photographObjectiveTargetQuery = ecs.SqQuery("photographObjectiveTargetQuery
 })
 
 
-photographObjectiveTargetEid.subscribe(
+photographObjectiveTargetEid.subscribe_with_nasty_disregard_of_frp_update(
   function(target_eid) {
     let comp = photographObjectiveTargetQuery.perform(target_eid, @(_eid, comp) comp)
     if (comp != null) {
@@ -97,7 +95,6 @@ ecs.register_es("quest_camera_shot_ui_es",
 return {
   photographObjectiveActive,
   photographObjectiveInPlace,
-  photographObjectiveClosestZoneEid,
   photographObjectiveTargetEid,
   photographObjectiveTargetInView,
   photographObjectiveDetectedTargetEid,

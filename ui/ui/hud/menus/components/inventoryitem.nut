@@ -1,59 +1,69 @@
+from "das.inventory" import is_item_use_blocked, is_can_move_item_to_item_container, is_item_inventory_move_blocked, move_stack_to_inventory,
+  is_equip_to_slot_cause_from_pocket_drop, is_equip_to_slot_cause_inventory_overflow, is_can_move_to_safepack_with_overflow, is_can_unfold_in_parent
+from "%ui/hud/state/inventory_state.nut" import isWeaponModsForItem
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mkUnloadAmmoButton, mkLoadAmmoButton, mkStopLoadUnloadAmmoButton, mkCheckAmmoButton,
+  mkStopCheckAmmoButton, mkItemCheckAmmoProgress
+from "%ui/hud/state/inventory_item_relations.nut" import isAmmoForWeapon, isItemForSlot, isItemForWeaponMod, isItemForHolder
+
+from "%ui/fonts_style.nut" import tiny_txt
+import "%ui/components/faComp.nut" as faComp
+from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryItemImage
+from "%ui/components/commonComponents.nut" import mkText
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/hud/state/entity_use_state.nut" import calcItemUseProgress
+from "%ui/helpers/timers.nut" import mkCountdownTimer
+from "dasevents" import RequestLoadItemHolder, RequestUnloadItemHolder, RqCheckAmmoItemHolder, sendNetEvent
+from "%ui/hud/menus/components/moveMarker.nut" import moveMarker, moveMarkerWithTrigger
+from "math" import fabs, ceil
+from "%ui/hud/menus/components/inventoryItemTooltip.nut" import buildInventoryItemTooltip
+from "%ui/hud/state/item_info.nut" import get_item_info
+from "%ui/mainMenu/currencyIcons.nut" import creditsIcon
+from "%ui/hud/menus/components/inventoryStyle.nut" import itemHeight
+from "%ui/hud/menus/components/inventoryItemsListChecksCommon.nut" import MoveForbidReason, checkVolume, showInventoryOverflowOnUnequipToExMsgBox
+from "%ui/hud/menus/components/dropMarkerConstructor.nut" import mkDropMarkerSmallArea
+from "%ui/hud/menus/components/inventoryItemRarity.nut" import mkRarityIconByItem
+from "%ui/mainMenu/market/inventoryToMarket.nut" import getItemPriceToShow, mkItemPrice, getLotFromItem, getPriceFromLot
+from "%ui/hud/menus/components/itemFromTemplate.nut" import getSlotFromTemplate
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "%dngscripts/sound_system.nut" import sound_play
+from "%ui/hud/menus/components/splitStackWindow.nut" import openSplitStacksWindow, canSplitStack
+from "%ui/hud/state/local_player.nut" import localPlayerTeam
+from "%ui/hud/menus/components/inventoryItemNexusPointPriceComp.nut" import nexusPointsCostComp
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 import "%ui/components/colors.nut" as colors
+import "%ui/hud/state/get_player_team.nut" as get_player_team
+import "%ui/hud/state/is_teams_friendly.nut" as is_teams_friendly
 
 let { BtnBgHover, BtnBdHover, BtnBdNormal, BtnBgDisabled, Inactive, noItemContainerBg,
   ContactOffline, corruptedItemColor } = colors
-let { tiny_txt } = require("%ui/fonts_style.nut")
-let faComp = require("%ui/components/faComp.nut")
-let { is_item_use_blocked, is_can_move_item_to_item_container, is_item_inventory_move_blocked,
-      move_stack_to_inventory, is_equip_to_slot_cause_from_pocket_drop,
-      is_equip_to_slot_cause_inventory_overflow, is_can_move_to_safepack_with_overflow } = require("das.inventory")
-let {inventoryItemImage, inventoryImageParams} = require("inventoryItemImages.nut")
-let { focusedData, draggedData, isWeaponModsForItem, contextHoveredData,
-      isShiftPressed, isAltPressed } = require("%ui/hud/state/inventory_state.nut")
-let {setTooltip} = require("%ui/components/cursors.nut")
-let {isSpectator} = require("%ui/hud/state/spectator_state.nut")
-let { maxVolume, carriedVolume, canPickupItems,
-      canModifyInventory, canLoadCharges } = require("%ui/hud/state/inventory_common_es.nut")
+let { inventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
+let { focusedData, draggedData, contextHoveredData, isShiftPressed, isAltPressed, mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
+let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
+let { maxVolume, carriedVolume, canPickupItems, canModifyInventory, canLoadCharges } = require("%ui/hud/state/inventory_common_es.nut")
 let { curTime } = require("%ui/hud/state/time_state.nut")
-let {entityToUse, calcItemUseProgress} = require("%ui/hud/state/entity_use_state.nut")
-let {syphoningItem, calcSyphoningProgress} = require("%ui/hud/state/am_storage_state.nut")
-let {controlledHeroEid} = require("%ui/hud/state/controlled_hero.nut")
-let { HERO_ITEM_CONTAINER, BACKPACK0, STASH, TRASH_BIN, DEBRIEFING_ITEM, GENES_MAIN
-} = require("inventoryItemTypes.nut")
-let {mkCountdownTimer} = require("%ui/helpers/timers.nut")
-let {RequestLoadItemHolder, RequestUnloadItemHolder, RqCheckAmmoItemHolder, sendNetEvent} = require("dasevents")
-let { moveMarker, moveMarkerWithTrigger} = require("%ui/hud/menus/components/moveMarker.nut")
-let { fabs, ceil } = require("math")
-let { buildInventoryItemTooltip } = require("%ui/hud/menus/components/inventoryItemTooltip.nut")
-let { get_item_info, itemCompExtraInfoQuery } = require("%ui/hud/state/item_info.nut")
-let { amTextIcon, creditsIcon } = require("%ui/mainMenu/currencyIcons.nut")
-let { itemHeight } = require("%ui/hud/menus/components/inventoryStyle.nut")
-let { isItemInTrashBin, trashBinItems } = require("%ui/hud/menus/components/trashBin.nut")
-let { mkUnloadAmmoButton, mkLoadAmmoButton, mkStopLoadUnloadAmmoButton,
-  mkCheckAmmoButton, mkStopCheckAmmoButton, mkItemCheckAmmoProgress
-} = require("%ui/hud/menus/components/inventoryItemUtils.nut")
+let { entityToUse } = require("%ui/hud/state/entity_use_state.nut")
+let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
+let { HERO_ITEM_CONTAINER, BACKPACK0, STASH, DEBRIEFING_ITEM, GENES_MAIN, SAFEPACK } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
+let { getInventoryEidByListType } = require("%ui/hud/state/inventory_eids_common.nut")
+let { itemCompExtraInfoQuery } = require("%ui/hud/state/item_info.nut")
 let { hoverHotkeysWatchedList } = require("%ui/components/pcHoverHotkeyHitns.nut")
 let { hoverPcHotkeysPresentation } = require("%ui/hud/menus/components/inventoryActionsHints.nut")
-let { MoveForbidReason, checkVolume, showInventoryOverflowOnUnequipToExMsgBox } = require("%ui/hud/menus/components/inventoryItemsListChecksCommon.nut")
-let { mkDropMarkerFunc } = require("%ui/hud/menus/components/dropMarkerConstructor.nut")
-let { mkRarityIconByItem } = require("%ui/hud/menus/components/inventoryItemRarity.nut")
-let { isPreparationOpened } = require("%ui/mainMenu/raid_preparation_window_state.nut")
-let { getItemPriceToShow, mkItemPrice } = require("%ui/mainMenu/market/inventoryToMarket.nut")
-let { getSlotFromTemplate } = require("%ui/hud/menus/components/itemFromTemplate.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
-let { openSplitStacksWindow, canSplitStack } = require("%ui/hud/menus/components/splitStackWindow.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
-let {
-  isAmmoForWeapon,
-  isItemForSlot,
-  isItemForWeaponMod,
-  isItemForHolder
-} = require("%ui/hud/state/inventory_item_relations.nut")
+let { isListMutableDueQueue } = require("%ui/hud/menus/components/inventoryItemsListChecks.nut")
+let { itemsInRefiner } = require("%ui/hud/menus/inventories/refinerInventoryCommon.nut")
+let { selfMemberState } = require("%ui/squad/squadState.nut")
+
+#allow-auto-freeze
+
+enum RecognitionStages {  
+  Queue
+  Started
+  Finished
+}
 
 let storageIconsData = {
-  backpack = {
+  backpack0 = {
     hintLocId = loc("item/itemInBackpack")
     icon = "ui/skin#backpack_slot_icon.svg:{0}:{0}:K"
   }
@@ -61,7 +71,7 @@ let storageIconsData = {
     hintLocId = loc("item/itemInStash")
     icon = "ui/skin#storage_slot_icon.svg:{0}:{0}:K"  
   }
-  pouches = {
+  inventory = {
     hintLocId = loc("item/itemInPouches")
     icon = "ui/skin#pouches_slot_icon.svg:{0}:{0}:K"
   }
@@ -101,19 +111,33 @@ let mkInventoryItemBlink = @(item){
   ]
 }
 
-let mkPriceBlock = @(item) function() {
-  let watch = isPreparationOpened
-  if (!isPreparationOpened.get())
-    return { watch }
-  let price = getItemPriceToShow(item) ?? 0
-  if (price <= 0)
-    return { watch }
+function mkPriceBlock(item) {
+  let priceData = getItemPriceToShow(item)
+  if ((priceData?.price ?? 0) <= 0)
+    return null
   return {
-    watch
     vplace = ALIGN_TOP
     hplace = ALIGN_RIGHT
     padding = hdpx(2)
-    children = mkItemPrice(price)
+    children = mkItemPrice(priceData)
+  }
+}
+
+let lockedIcon = faComp("lock", {
+  color = Color(200, 200, 200, 255)
+  fontSize = hdpx(42)
+  hplace = ALIGN_CENTER
+  vplace = ALIGN_CENTER
+})
+
+function lockedIconOnHover(stateFlags) {
+  return function() {
+    let sf = stateFlags.get()
+    return {
+      watch = [ stateFlags, mutationForbidenDueToInQueueState ]
+      size = flex()
+      children = ( mutationForbidenDueToInQueueState.get() && (sf & S_HOVER) ) ? lockedIcon : null
+    }
   }
 }
 
@@ -123,8 +147,12 @@ function isItemCanBeDroppedToContainerInInventory(item, container) {
   if (containerEid == item.eid)
     return MoveForbidReason.OTHER
 
+  if (container?.owner == getInventoryEidByListType(STASH))
+    return MoveForbidReason.OTHER
+
   if (item == null)
     return MoveForbidReason.OTHER
+
   if (
       !canModifyInventory.get() ||
       is_item_inventory_move_blocked(item?.eid ?? ecs.INVALID_ENTITY_ID)
@@ -134,13 +162,16 @@ function isItemCanBeDroppedToContainerInInventory(item, container) {
   if (!checkVolume(item, containerEid) && !is_can_move_to_safepack_with_overflow(containerEid, item.eid))
     return MoveForbidReason.VOLUME
 
-  if (!is_can_move_item_to_item_container(item?.eid ?? ecs.INVALID_ENTITY_ID))
+  if (item?.refiner__fromList != null || !is_can_move_item_to_item_container(item?.eid ?? ecs.INVALID_ENTITY_ID))
     return MoveForbidReason.OTHER
 
   return MoveForbidReason.NONE
 }
 
 function canDropItem(dragged_item, target_item, list_type) {
+  if (!is_can_unfold_in_parent(target_item.eid))
+    return MoveForbidReason.PARENT_VOLUME_OVERFLOW
+
   if (! (list_type == HERO_ITEM_CONTAINER || list_type == BACKPACK0 || list_type == STASH ) &&
         (dragged_item?.fromList == HERO_ITEM_CONTAINER || dragged_item?.fromList == BACKPACK0 || dragged_item?.fromList == STASH) &&
         !is_item_use_blocked(dragged_item?.eid ?? ecs.INVALID_ENTITY_ID) && !is_item_use_blocked(target_item?.eid ?? ecs.INVALID_ENTITY_ID) )
@@ -152,13 +183,37 @@ function canDropItem(dragged_item, target_item, list_type) {
         (isItemForHolder(dragged_item, target_item) && (target_item.maxCharges > target_item.charges || !(target_item?.countKnown ?? false))) ||
         (isItemForHolder(target_item, dragged_item) && ((dragged_item.count > 0 && notEmptyMagazine) || !(dragged_item?.countKnown ?? false)))
       )
-    )
-    return MoveForbidReason.NONE
+    ) {
+    if (mutationForbidenDueToInQueueState.get()) {
+      if (selfMemberState.get()?.ready)
+        return MoveForbidReason.FORBIDDEN_READY_STATUS
+      else
+        return MoveForbidReason.FORBIDDEN_QUEUE_STATUS
+    }
+    else
+      return MoveForbidReason.NONE
+  }
 
   if (target_item?.itemContainerItems == null)
     return MoveForbidReason.OTHER
 
-  return isItemCanBeDroppedToContainerInInventory(dragged_item, target_item)
+  let canDropToInventory = isItemCanBeDroppedToContainerInInventory(dragged_item, target_item)
+
+  if (canDropToInventory == MoveForbidReason.NONE && mutationForbidenDueToInQueueState.get()) {
+    if (
+        !isListMutableDueQueue(dragged_item?.fromList) || 
+        list_type?.name == HERO_ITEM_CONTAINER.name ||
+        list_type?.name == BACKPACK0.name ||
+        list_type?.name == SAFEPACK.name
+    ) {
+      if (selfMemberState.get()?.ready)
+        return MoveForbidReason.FORBIDDEN_READY_STATUS
+      else
+        return MoveForbidReason.FORBIDDEN_QUEUE_STATUS
+    }
+  }
+
+  return canDropToInventory
 }
 
 function chargesIndicator(charges, maxVal, countKnown = true, mark = "", missedCount = 0) {
@@ -189,11 +244,11 @@ function addStorageType(item, stash, inventory, backpack, safepack) {
 
   let isInBackpack = backpack.findvalue(@(v) v?.uniqueId == uniqueId) != null
   if (isInBackpack)
-    return item.__merge({ itemStorage = "backpack" })
+    return item.__merge({ itemStorage = "backpack0" })
 
   let isInInventory = inventory.findvalue(@(v) v?.uniqueId == uniqueId) != null
   if (isInInventory)
-    return item.__merge({ itemStorage = "pouches" })
+    return item.__merge({ itemStorage = "inventory" })
 
   let isInSafepack = safepack.findvalue(@(v) v?.uniqueId == uniqueId) != null
   if (isInSafepack)
@@ -206,19 +261,25 @@ function mkStorageIcon(itemStorage) {
   let { hintLocId = "", icon = null } = storageIconsData?[itemStorage] ?? {}
   if (icon == null)
     return null
-
-  return watchElemState(@(sf) {
-    rendObj = ROBJ_IMAGE
-    size = [hdpxi(20), hdpxi(20)]
-    color = sf & S_HOVER ? Color(200, 200, 200) : Color(150, 150, 150)
-    hplace = ALIGN_RIGHT
-    keepAspect = true
-    eventPassThrough = true
-    margin = hdpx(4)
-    behavior = Behaviors.Button
-    onHover = @(on) setTooltip(on && hintLocId != "" ? loc(hintLocId) : null)
-    image = Picture(icon.subst(hdpxi(20)))
-  })
+  let stateFlags = Watched(0)
+  return function() {
+    let sf = stateFlags.get()
+    return {
+      watch = stateFlags
+      onElemState = @(s) stateFlags.set(s)
+      rendObj = ROBJ_IMAGE
+      size = hdpxi(20)
+      color = sf & S_HOVER ? Color(200, 200, 200) : Color(150, 150, 150)
+      hplace = ALIGN_RIGHT
+      keepAspect = true
+      eventPassThrough = true
+      skipDirPadNav = true
+      margin = hdpx(4)
+      behavior = Behaviors.Button
+      onHover = @(on) setTooltip(on && hintLocId != "" ? loc(hintLocId) : null)
+      image = Picture(icon.subst(hdpxi(20)))
+    }
+  }
 }
 
 
@@ -241,6 +302,7 @@ function mkModBox(mod_type, mod, icon_size, getTooltip, children=null) {
     borderWidth = hdpx(1)
     size = [icon_size, icon_size]
     behavior = Behaviors.Button
+    skipDirPadNav = true
     children
     function onHover(on) {
       if (on)
@@ -252,16 +314,18 @@ function mkModBox(mod_type, mod, icon_size, getTooltip, children=null) {
 }
 
 function modsIndicator(item) {
+  #forbid-auto-freeze
   let modIconSize = hdpx(9)
   let firstRow = []
   let secondRow = []
   local additionalTooltip = {}
   local bulletIndicator = null
+  #allow-auto-freeze
   if (item?.mods.magazine != null && (item?.gunAmmo ?? 0) > 0 && (item?.gunBoxedAmmoTemplate ?? "") != "") {
     additionalTooltip.__update({ hasBulletInBarrel = true })
     bulletIndicator = {
       rendObj = ROBJ_BOX
-      size = [ pw(50), ph(50) ]
+      size = static [ pw(50), ph(50) ]
       hplace = ALIGN_CENTER
       vplace = ALIGN_CENTER
       fillColor = modTypeColors?["boxedAmmo"]
@@ -373,7 +437,7 @@ let magnifyingGlass = {
   vplace = ALIGN_CENTER
   hplace = ALIGN_CENTER
   rendObj = ROBJ_IMAGE
-  size = [ pw(50), pw(50) ]
+  size = pw(50)
   color = Color(190, 190, 190)
   image = Picture("!ui/skin#magnifying_glass.svg:{0}:{0}:K".subst(sh(5)))
 
@@ -402,17 +466,35 @@ let recognizingQueuedText = freeze({
   hplace = ALIGN_CENTER
 })
 
-
 let corruptedItemImageBackground = freeze({
   rendObj = ROBJ_IMAGE
-  size = [hdpxi(76), hdpxi(76)]
+  size = hdpxi(76)
   color = corruptedItemColor
   image = Picture("ui/skin#corruptedBorder.svg:{0}:{0}:K".subst(hdpxi(76)))
 })
-
+let corticalVaultItemImageBackground = freeze({
+  rendObj = ROBJ_IMAGE
+  size = hdpxi(76)
+  color = colors.OrangeHighlightColor
+  opacity = 0.6
+  transform = {}
+  image = Picture("ui/skin#round_grad.svg:{0}:{0}:K".subst(hdpxi(76)))
+  animations = [
+    { prop=AnimProp.scale, from=[1.0, 1.0], to=[0.9, 0.9], duration=0.5, easing=InOutSine, trigger="scale_pulse_0", onExit="scale_pulse_1", play=true }
+    { prop=AnimProp.scale, from=[0.9, 0.9], to=[1.0, 1.0], duration=0.5, easing=InOutSine, trigger="scale_pulse_1", onExit="scale_pulse_2" }
+    { prop=AnimProp.scale, from=[1.0, 1.0], to=[0.9, 0.9], duration=0.5, easing=InOutSine, trigger="scale_pulse_2", onExit="scale_pulse_3" }
+    { prop=AnimProp.scale, from=[0.9, 0.9], to=[1.0, 1.0], duration=0.5, easing=InOutSine, trigger="scale_pulse_3", onExit="scale_pulse_4" }
+    { prop=AnimProp.scale, from=[1.0, 1.0], to=[1.0, 1.0], duration=0.5, easing=InOutSine, trigger="scale_pulse_4", onExit="scale_pulse_0" }
+    { prop=AnimProp.opacity, from=0.6, to=0.2, duration=0.5, easing=InOutSine, trigger="opacity_pulse_0", onExit="opacity_pulse_1", play=true }
+    { prop=AnimProp.opacity, from=0.2, to=0.6, duration=0.5, easing=InOutSine, trigger="opacity_pulse_1", onExit="opacity_pulse_2" }
+    { prop=AnimProp.opacity, from=0.6, to=0.2, duration=0.5, easing=InOutSine, trigger="opacity_pulse_2", onExit="opacity_pulse_3" }
+    { prop=AnimProp.opacity, from=0.2, to=0.6, duration=0.5, easing=InOutSine, trigger="opacity_pulse_3", onExit="opacity_pulse_4" }
+    { prop=AnimProp.opacity, from=0.6, to=0.6, duration=0.5, easing=InOutSine, trigger="opacity_pulse_4", onExit="opacity_pulse_0" }
+  ]
+})
 let corruptedWeaponImageBackground = freeze({
   rendObj = ROBJ_IMAGE
-  size = [flex(), hdpxi(76)]
+  size = static [flex(), hdpxi(76)]
   color = corruptedItemColor
   image = Picture("ui/skin#corruptedWeaponBorder.svg:{0}:{1}:K".subst(hdpxi(320), hdpxi(76)))
 })
@@ -431,12 +513,13 @@ let zoneItemIcon = faComp("paw", {
   hplace = ALIGN_LEFT
   vplace = ALIGN_CENTER
   behavior = Behaviors.Button
+  skipDirPadNav = true
   onHover = @(on) setTooltip(on ? loc("items/item_created_by_zone") : null)
   eventPassThrough = true
 })
 
 let isHovered = @(sf) (sf & (S_HOVER | S_DRAG)) > 0
-let isItemDragged = @(item) draggedData.value?.eid == item.eid
+let isItemDragged = @(item) draggedData.get()?.eid == item.eid
 
 let mkCountLabel = @(watchToTrack, itemCount, item, triggerName = null) function() {
   let { noSuitableItemForPresetFoundCount = 0, isCorrupted = false } = item
@@ -451,7 +534,7 @@ let mkCountLabel = @(watchToTrack, itemCount, item, triggerName = null) function
     fillColor = isCorrupted ? corruptedItemColor : Color(67, 67, 67)
     borderRadius = [0, 0, hdpx(5), 0]
     children = mkText(text, {
-      padding = [ hdpx(3) ]
+      padding = hdpx(3)
       transform = {}
       animations = triggerName == null ? null
         : [{ prop = AnimProp.scale, from = [1.33, 1.33], to = [1.0, 1.0], duration = 0.2,
@@ -469,7 +552,7 @@ function itemComp(stateFlags, item, opacity, list_type=null, itemIconParams=inve
     if (item?.staticHoverViual == true || list_type?.name == DEBRIEFING_ITEM.name)
       return itemFillColorDef
     let focused_item = focusedData.get() ?? contextHoveredData.get()
-    if (isItemForSlot(item, focused_item?.slot ?? focused_item?.slotName, focused_item?.attachedToEquipment) || isItemForWeaponMod(item, focused_item?.weaponModItems, focused_item?.weaponModAmmo))
+    if (isItemForSlot(item, focused_item?.currentWeaponSlotName ?? focused_item?.slotName, focused_item?.attachedToEquipment) || isItemForWeaponMod(item, focused_item?.allowed_items, focused_item?.weaponModAmmo))
       return itemFillColorRelevant
     if (isWeaponModsForItem(item, focused_item?.mods) || isWeaponModsForItem(focused_item, item?.mods))
       return itemFillColorRelevant
@@ -490,34 +573,27 @@ function itemComp(stateFlags, item, opacity, list_type=null, itemIconParams=inve
       : isFocused ? itemFillColorHovered : itemFillColorDef
   })
 
-  let triggerName = item.isBoxedItem ? $"inventory_item_count_anim_{item.boxId}_ow_{item.owner}" : $"inventory_item_count_anim_{item.eid}"
+  let triggerName = item.isBoxedItem ?
+    $"inventory_item_count_anim_{item.boxTemplate}_ow_{item.inventoryEid}" :
+    $"inventory_item_count_anim_{item.eid}"
   local itemCountLabel = null
   if (itemCount != 1 || item.alwaysShowCount){
-    local wtch = null
-    if (item.isBoxedItem && list_type != TRASH_BIN) {
-      wtch = Computed(function() {
-        let charges = item?.charges
-        if (!charges)
-          return itemCount
-        let idx = isItemInTrashBin(item)
-        if (idx == null)
-          return charges
-
-        let trash = trashBinItems.get()
-        return charges - trash[idx].ammoCount
-      })
-    }
-    itemCountLabel = mkCountLabel(wtch, itemCount, item, triggerName)
+    itemCountLabel = mkCountLabel(null, itemCount, item, triggerName)
   }
+
+  let isFriendlyCorticalVault = item?.playerOwnerEid && item?.playerOwnerEid != ecs.INVALID_ENTITY_ID
+    && is_teams_friendly(localPlayerTeam.get(), get_player_team(item.playerOwnerEid))
+
   let borders = item?.highlightedItem ? highlightedItem :
-    item.isCorrupted ? corruptedItemImageBackground : null
+      item.isCorrupted ? corruptedItemImageBackground : null
+  let friendlyCorticalVaultGlow= isFriendlyCorticalVault ? corticalVaultItemImageBackground : null
 
   return {
     size = flex()
     opacity = opacity
     children = [
       @() {
-        watch = [stateFlags, carriedVolume, maxVolume, canPickupItems, entityToUse].append( item?.backgroundColor ? null : backgroundColor )
+        watch = [stateFlags, carriedVolume, maxVolume, canPickupItems, entityToUse, mutationForbidenDueToInQueueState].append( item?.backgroundColor ? null : backgroundColor )
         size = flex()
         rendObj = ROBJ_BOX
         valign = ALIGN_CENTER
@@ -528,8 +604,10 @@ function itemComp(stateFlags, item, opacity, list_type=null, itemIconParams=inve
           {
             size = flex()
             children = [
+              friendlyCorticalVaultGlow,
               inventoryItemImage(item, itemIconParams.__merge(item?.iconParamsOverride ?? {})),
               mkRarityIconByItem(item),
+              nexusPointsCostComp(item?.nexusCost),
               !item?.isItemToPurchase ? null : creditsIcon(hdpxi(40), {
                 hplace = ALIGN_RIGHT
                 pos = [-hdpx(2), -hdpx(25)]
@@ -541,22 +619,26 @@ function itemComp(stateFlags, item, opacity, list_type=null, itemIconParams=inve
                     item.isBoxedItem ? item.ammoCount : item.charges,
                     item.isBoxedItem ? 0 : item.maxCharges,
                     item?.countKnown ?? true,
-                    item.isCorticalVault ? amTextIcon : "",
+                    "",
                     item?.noSuitableItemForPresetFoundCount ?? 0
                   )
               },
               borders,
               (item.isBoxedItem && item.countPerStack != 1) || (entityToUse.get() == item.eid && itemCount == 0) ? null : itemCountLabel,
-              isActionForbided || !canLoadCharges.get() ? null : mkUnloadAmmoButton(item, list_type,
-                comps?.item_holder__customUiProps?.unloadAmmoTooltip ?? "Inventory/unload_ammo",
-                comps?.item_holder__customUiProps?.unloadAmmoIcon ?? "unload_magazine.svg"),
-              isActionForbided || !canLoadCharges.get() ? null : mkLoadAmmoButton(item, list_type,
-                comps?.item_holder__customUiProps?.loadAmmoTooltip ?? "Inventory/load_ammo",
-                comps?.item_holder__customUiProps?.loadAmmoIcon ?? "load_magazine.svg"),
-              isActionForbided || !canLoadCharges.get() ? null : mkStopLoadUnloadAmmoButton(item, list_type),
+              isActionForbided || !canLoadCharges.get() || (mutationForbidenDueToInQueueState.get() && !isListMutableDueQueue(list_type)) ? null :
+                mkUnloadAmmoButton(item, list_type,
+                  comps?.item_holder__customUiProps?.unloadAmmoTooltip ?? "Inventory/unload_ammo",
+                  comps?.item_holder__customUiProps?.unloadAmmoIcon ?? "unload_magazine.svg"),
+              isActionForbided || !canLoadCharges.get() || (mutationForbidenDueToInQueueState.get() && !isListMutableDueQueue(list_type)) ? null :
+                mkLoadAmmoButton(item, list_type,
+                  comps?.item_holder__customUiProps?.loadAmmoTooltip ?? "Inventory/load_ammo",
+                  comps?.item_holder__customUiProps?.loadAmmoIcon ?? "load_magazine.svg"),
+              isActionForbided || !canLoadCharges.get() || (mutationForbidenDueToInQueueState.get() && !isListMutableDueQueue(list_type)) ? null :
+                mkStopLoadUnloadAmmoButton(item, list_type),
               isActionForbided ? null : mkCheckAmmoButton(item),
               isActionForbided ? null : mkStopCheckAmmoButton(item),
-              item?.createdByZone ? zoneItemIcon : null
+              item?.createdByZone ? zoneItemIcon : null,
+              !isListMutableDueQueue(list_type) ? lockedIconOnHover(stateFlags) : null
             ]
           }
         ]
@@ -592,17 +674,22 @@ let unrecognizedItemQueued = @(item) {
   ]
 }
 
-let unrecognizedItemInProgress = @(item, timeLeft) {
+let unrecognizedItemInProgress = @(item, timeLeft, cb) {
   size = flex()
   children = [
-    item.recognizeTime > 0.0 ? @() {
-      watch = timeLeft
-      size = flex()
-      rendObj = ROBJ_SOLID
-      color = Color(105, 105, 105, 55)
-      transform = {
-        scale = [clamp(1.0 - (timeLeft?.get() ?? 0.0) / item.recognizeTime, 0.0, 1.0), 1.0]
-        pivot = [0, 0]
+    item.recognizeTime > 0.0 ? function() {
+      cb?(RecognitionStages.Started)
+      if (timeLeft.get() <= 0)
+        cb?(RecognitionStages.Finished)
+      return {
+        watch = timeLeft
+        rendObj = ROBJ_SOLID
+        size = flex()
+        color = Color(105, 105, 105, 55)
+        transform = {
+          scale = [clamp(1.0 - (timeLeft?.get() ?? 0.0) / item.recognizeTime, 0.0, 1.0), 1.0]
+          pivot = static [0, 0]
+        }
       }
     } : null,
     {
@@ -625,14 +712,13 @@ let unrecognizedItemInProgress = @(item, timeLeft) {
   ]
 }
 
-function itemRecognizingComp(item) {
+function itemRecognizingComp(item, cb = null) {
   return function() {
     let isRecognizingInProgress = fabs(item.recognizeTime - item.recognizeTimeLeft) > 1e-6
 
     let completeTimeLeft = isRecognizingInProgress ? Watched(item.syncTime + item.recognizeTimeLeft) : null
-    let timeLeft = completeTimeLeft != null ? mkCountdownTimer(completeTimeLeft) : null
-
-    return isRecognizingInProgress ? unrecognizedItemInProgress(item, timeLeft) : unrecognizedItemQueued(item)
+    let timeLeft = completeTimeLeft != null ? mkCountdownTimer(completeTimeLeft, item?.itemTemplate) : null
+    return isRecognizingInProgress ? unrecognizedItemInProgress(item, timeLeft, cb) : unrecognizedItemQueued(item)
   }
 }
 
@@ -655,9 +741,11 @@ function inventoryItem(item, list_type, custom_actions = {}, inventoryItemSize=[
   itemIconParams=inventoryImageParams, isActionForbided = false
 ) {
   function dragMode(on, it) {
-    draggedData.update(on ? it : null)
+    draggedData.set(on ? it : null)
+    if (on)
+      sound_play("ui_sounds/inventory_item_take")
   }
-
+  #forbid-auto-freeze
   
   let stateFlags = Watched(0)
   let group = ElemGroup()
@@ -688,25 +776,25 @@ function inventoryItem(item, list_type, custom_actions = {}, inventoryItemSize=[
   local descLoc = null
 
   let ItemWithActions = contextItem.__merge(custom_actions)
-
+  #forbid-auto-freeze
   function onHover(on, elemPose) {
     custom_actions?.onHover(on, item)
     if (on) {
       descLoc = buildInventoryItemTooltip(ItemWithActions)
-      focusedData.update(ItemWithActions)
+      focusedData.set(ItemWithActions)
       setTooltip(descLoc, elemPose)
       let pcHotkeysHints = isActionForbided ? null : hoverPcHotkeysPresentation?[list_type?.name](item)
       hoverHotkeysWatchedList.set(pcHotkeysHints)
     } else {
       setTooltip(null)
-      focusedData.update(null)
+      focusedData.set(null)
       hoverHotkeysWatchedList.set(null)
     }
   }
 
   let uniqueKey = "".concat((item?.eid ?? item?.id ?? item?.itemName), "x", (item?.count ?? 0), (item?.countPerItem ?? 0))
   function itemUseProgressComp(){
-    let showProgress = entityToUse.get() == item.eid || item.eids.indexof(entityToUse.get()) != null
+    let showProgress = (entityToUse.get() == item.eid || item.eids.indexof(entityToUse.get()) != null) && !(item?.isDelayedMoveMod ?? false)
     let progressVal = showProgress ? clamp(calcItemUseProgress(curTime.get()).tointeger(), 0, 100) : 0.0
     return {
       size = [pw(progressVal), pw(1) ]
@@ -714,17 +802,6 @@ function inventoryItem(item, list_type, custom_actions = {}, inventoryItemSize=[
       vplace = ALIGN_BOTTOM
       margin = fsh(0.1)
       watch = showProgress ? [curTime, entityToUse] : entityToUse
-    }
-  }
-  function itemSyphoningTickComp(){
-    let progressNeeded = syphoningItem.get() == item.eid || item.eids.indexof(syphoningItem.get()) != null
-    let itemSyphoningProgressVal = progressNeeded ? clamp(calcSyphoningProgress(curTime.get()).tointeger(), 0, 100) : 0.0
-    return {
-      size = [pw(itemSyphoningProgressVal), pw(1) ]
-      rendObj=ROBJ_SOLID color=Color(100,120,90,40)
-      vplace = ALIGN_BOTTOM
-      margin = fsh(0.1)
-      watch = !progressNeeded ? syphoningItem : [curTime, syphoningItem]
     }
   }
   let xmbNode = XmbNode()
@@ -744,8 +821,10 @@ function inventoryItem(item, list_type, custom_actions = {}, inventoryItemSize=[
       
       let isOverflow = (is_equip_to_slot_cause_inventory_overflow(ecs.INVALID_ENTITY_ID, data?.slotName, item.eid) ||
         is_equip_to_slot_cause_from_pocket_drop(ecs.INVALID_ENTITY_ID, data?.slotName, item.eid))
-      if (isOverflow)
+      if (isOverflow) {
+        sound_play("ui_sounds/button_click_inactive")
         showInventoryOverflowOnUnequipToExMsgBox(@() move_stack_to_inventory(data?.eids ?? [data.eid], item.eid, 1))
+      }
       else {
         local itemCount = 1
         if (isShiftPressed.get()) {
@@ -762,21 +841,21 @@ function inventoryItem(item, list_type, custom_actions = {}, inventoryItemSize=[
     }
     else if (isItemForHolder(data, item)) {
       if ((item?.charges ?? 0) < item.maxCharges)
-        sendNetEvent(controlledHeroEid.value, RequestLoadItemHolder({targetItemEid=item.eid, containerEid=data.owner, searchOtherContainers=false}))
+        sendNetEvent(controlledHeroEid.get(), RequestLoadItemHolder({targetItemEid=item.eid, containerEid=data.inventoryEid, searchOtherContainers=false}))
       else
-        ecs.g_entity_mgr.sendEvent(controlledHeroEid.value, RqCheckAmmoItemHolder({targetItemEid=item.eid, containerEid=item.owner}))
+        ecs.g_entity_mgr.sendEvent(controlledHeroEid.get(), RqCheckAmmoItemHolder({targetItemEid=item.eid, containerEid=item.inventoryEid}))
     }
     else if (isItemForHolder(item, data)) {
       if ((data?.charges ?? 0) > 0)
-        sendNetEvent(controlledHeroEid.value, RequestUnloadItemHolder({targetItemEid=data.eid, containerEid=item.owner}))
+        sendNetEvent(controlledHeroEid.get(), RequestUnloadItemHolder({targetItemEid=data.eid, containerEid=item.inventoryEid}))
     }
   }
   let itemOpacity = item?.noSuitableItemForPresetFoundCount != null ? 0.5 : null
   return function() {
     let needBlink = (item?.isDelayedMoveMod ?? false)
-    if (item?.owner == null)
+    if (item?.inventoryEid == null)
       log($"Item has no onwer {item}")
-    let isPickable = (item?.owner ?? ecs.INVALID_ENTITY_ID) != ecs.INVALID_ENTITY_ID || canPickupItems.get()
+    let isPickable = (item?.inventoryEid ?? ecs.INVALID_ENTITY_ID) != ecs.INVALID_ENTITY_ID || canPickupItems.get()
     let needDragAndDrop = (item?.isDragAndDropAvailable ?? true) && isPickable
     let isStubItem = item?.isStubItem ?? false
     let opacity = itemOpacity ?? (!(item?.inactiveItem ?? false) ? 1.0 : 0.3)
@@ -793,8 +872,8 @@ function inventoryItem(item, list_type, custom_actions = {}, inventoryItemSize=[
         : isSpectator.get() || !needDragAndDrop || isActionForbided ? Behaviors.Button
         : Behaviors.DragAndDrop
       group
-      sound = const {
-        click  = "ui_sounds/button_click_inactive"
+      sound = static {
+        click  = "ui_sounds/button_click"
         hover  = "ui_sounds/menu_highlight"
       }
       xmbNode = xmbNode
@@ -805,19 +884,18 @@ function inventoryItem(item, list_type, custom_actions = {}, inventoryItemSize=[
       onClick = onClickAction
       canDrop = @(v) canDrop(v) == MoveForbidReason.NONE,
       onDrop = onDrop,
-      transform = const {
+      transform = static {
         pivot = [0, 0.2]
       }
       children = [
         isRecognizingRequired ? itemRecognizingComp(item)
           : itemComp(stateFlags, item, opacity, list_type, itemIconParams, isActionForbided),
-        (!isPickable || item?.forceLockIcon) ? itemLockComp : null,
+        (!isPickable || item?.forceLockIcon) && !(item?.isDelayedMoveMod ?? false) ? itemLockComp : null,
         itemUseProgressComp,
         mkItemCheckAmmoProgress(item),
-        itemSyphoningTickComp,
         needBlink ? moveMarker(stateFlags.get(), opacity) : null,
         item.isBoxedItem ? moveMarkerWithTrigger(stateFlags.get(), 1.0, $"boxed_item_blink_{item.eid}") : null,
-        mkDropMarkerFunc(stateFlags, canDrop, draggedData, ""),
+        mkDropMarkerSmallArea(stateFlags, canDrop, draggedData),
         (item?.noSuitableItemForPresetFoundCount ?? 0) > 0 ? mkPriceBlock(item) : null
       ]
       animations = itemAnims
@@ -825,22 +903,25 @@ function inventoryItem(item, list_type, custom_actions = {}, inventoryItemSize=[
   }
 }
 
-function mkChocolatePriceBlock(item, price) {
-  let priceToShow = price > 0 ? price : getItemPriceToShow(item)
-  if (priceToShow <= 0)
+function mkChocolatePriceBlock(item) {
+  let lot = getLotFromItem(item)
+  if (lot == null)
+    return null
+  let priceData = getPriceFromLot(lot)
+  if ((priceData?.price ?? 0) <= 0)
     return null
   return {
     hplace = ALIGN_RIGHT
     vplace = ALIGN_TOP
     pos = [-hdpx(1), hdpx(1)]
-    children = mkItemPrice(priceToShow)
+    children = mkItemPrice(priceData)
   }
 }
 
 function chocolateItemComp(stateFlags, item) {
   let { isBoxedItem = false, ammoCount = 0, count = 0, alwaysShowCount = false, charges = null,
     iconParamsOverride = {}, isWeapon = false, isDelayedMoveMod = false, countPerStack = 0,
-    maxCharges = 0, countKnown = true, isCorticalVault = false, noSuitableItemForPresetFoundCount = 0,
+    maxCharges = 0, countKnown = true, noSuitableItemForPresetFoundCount = 0,
     eid = ecs.INVALID_ENTITY_ID, createdByZone = false, itemStorage = null, marketPrice = null,
     isCorrupted = false
   } = item
@@ -853,12 +934,12 @@ function chocolateItemComp(stateFlags, item) {
       watchedToTrack = Computed(function() {
         if (!charges)
           return itemCount
-        let idx = isItemInTrashBin(item)
+        let idx = itemsInRefiner.get().findindex(@(v) v.eid == item.eid)
         if (idx == null)
           return charges
 
-        let trash = trashBinItems.get()
-        return charges - trash[idx].ammoCount
+        let refiner = itemsInRefiner.get()
+        return charges - (refiner[idx].ammoCount ?? 0)
       })
     }
     itemCountLabel = mkCountLabel(watchedToTrack, itemCount, item)
@@ -884,7 +965,7 @@ function chocolateItemComp(stateFlags, item) {
             isBoxedItem ? ammoCount : charges,
             isBoxedItem ? 0 : maxCharges,
             countKnown ?? true,
-            isCorticalVault ? amTextIcon : "",
+            "",
             noSuitableItemForPresetFoundCount)
           @() {
             watch = entityToUse
@@ -893,15 +974,17 @@ function chocolateItemComp(stateFlags, item) {
               : itemCountLabel
           }
           createdByZone ? zoneItemIcon : null
+          nexusPointsCostComp(item?.nexusCost)
         ]
       }
       itemStorage == null ? null : mkStorageIcon(itemStorage)
-      marketPrice == null ? null : mkChocolatePriceBlock(item, marketPrice)
+      marketPrice == null ? null : mkChocolatePriceBlock(item)
     ]
   }
 }
 
 function chocolateInventoryItem(item) {
+  #forbid-auto-freeze
   let stateFlags = Watched(0)
   return {
     size = [itemHeight,itemHeight]
@@ -941,6 +1024,7 @@ return {
   itemRecognizingComp
   itemComp
   chocolateInventoryItem
+  RecognitionStages
 
   itemFillColorHovered
   itemFillColorDef

@@ -1,12 +1,13 @@
+from "%dngscripts/globalState.nut" import nestWatched
+
 from "%ui/ui_library.nut" import *
 
 let { isInSquad, isSquadLeader, squadSharedData } = require("%ui/squad/squadState.nut")
 let squadClusters = squadSharedData.clusters
 let { clusters } = require("%ui/clusterState.nut")
 let { matchingQueues } = require("%ui/matchingQueues.nut")
-let { nestWatched } = require("%dngscripts/globalState.nut")
 
-let STATUS = {
+let STATUS = static {
   NOT_IN_QUEUE = 0
   JOINING = 1
   IN_QUEUE = 2
@@ -18,30 +19,31 @@ let queueStatus = nestWatched("queueStatus", STATUS.NOT_IN_QUEUE)
 
 let debugShowQueue = Watched(false)
 
-let isInQueue = Computed(@() queueStatus.value != STATUS.NOT_IN_QUEUE || debugShowQueue.value)
+let isInQueue = Computed(@() queueStatus.get() != STATUS.NOT_IN_QUEUE || debugShowQueue.get())
 
 let timeInQueue = Watched(0)
 let queueClusters = Computed(@()
-  isInSquad.value && !isSquadLeader.value && squadClusters.value != null
-    ? clone squadClusters.value
-    : clone clusters.value) 
+  isInSquad.get() && !isSquadLeader.get() && squadClusters.get() != null
+    ? clone squadClusters.get()
+    : clone clusters.get()) 
 
 let queueInfo = Watched(null)
 let joiningQueueName = Watched(null)
-let canChangeQueueParams = Computed(@() !isInQueue.value && (!isInSquad.value || isSquadLeader.value))
+let canChangeQueueParams = Computed(@() !isInQueue.get() && (!isInSquad.get() || isSquadLeader.get()))
 
-let availableSquadMaxMembers = Computed(@() matchingQueues.value.reduce(@(res, gt) max(res, (gt?.maxGroupSize ?? 1)), 1))
+let availableSquadMaxMembers = Computed(@() matchingQueues.get().reduce(@(res, gt) max(res, (gt?.maxGroupSize ?? 1)), 1))
 
 function recalcSquadClusters(_) {
-  if (!isSquadLeader.value)
+  if (!isSquadLeader.get())
     return
-  squadClusters(clone clusters.value)
+  squadClusters.set(clone clusters.get())
 }
 
 foreach (w in [isSquadLeader, clusters])
-  w.subscribe(recalcSquadClusters)
+  w.subscribe_with_nasty_disregard_of_frp_update(recalcSquadClusters)
 
-console_register_command(@() debugShowQueue(!debugShowQueue.value), "ui.showQueueInfo")
+console_register_command(@() debugShowQueue.set(!debugShowQueue.get()), "ui.showQueueInfo")
+console_register_command(@(statusId) queueStatus.set(statusId), "ui.setQueueStatus")
 
 function getStatData(full_stat_name, op){
   let statNameValue = full_stat_name.split(op)
@@ -157,14 +159,17 @@ function isQueueHiddenBySchedule(queue, time) {
   return nearestHideTimeBefore != -1 && nearestHideTimeBefore > nearestEnableTimeBefore
 }
 
-function isZoneUnlocked(queue_params, player_stats, matchingUTCTime) {
+function isZoneUnlocked(queue_params, player_stats, matchingUTCTime, inSquadState, isLeader, leaderRaid) {
+  if (inSquadState && !isLeader)
+    return leaderRaid?.extraParams.raidName != null
+      && leaderRaid?.extraParams.raidName == queue_params?.extraParams.raidName
   return doesZoneFitRequirements(queue_params?.extraParams.requiresToSelect, player_stats)
     && queue_params?.enabled && !isQueueHiddenBySchedule(queue_params, matchingUTCTime.get())
 }
 
 
 
-return {
+return freeze({
   STATUS
   curQueueParam
   queueStatus
@@ -182,4 +187,4 @@ return {
   getNeededZoneRequirements
   isZoneUnlocked
   isQueueHiddenBySchedule
-}
+})

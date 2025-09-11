@@ -1,22 +1,24 @@
+from "%ui/hud/menus/components/inventoryItemsList.nut" import itemsPanelList, setupPanelsData, inventoryItemSorting
+
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems
+from "%ui/hud/menus/components/inventoryCommon.nut" import mkInventoryHeader
+from "%ui/hud/menus/components/inventoryVolumeWidget.nut" import mkVolumeHdr
+from "%ui/hud/menus/components/inventoryItemsListChecks.nut" import isHeroInventoryDropForbidden
+from "%ui/hud/menus/inventories/refinerInventory.nut" import considerRefineItems
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
 
-let {inventoryItems, inventoryItemsSortingEnabled} = require("%ui/hud/state/inventory_items_es.nut")
-let { itemsPanelList, setupPanelsData, inventoryItemSorting, considerTrashBinItems
-} = require("%ui/hud/menus/components/inventoryItemsList.nut")
-let { mergeNonUniqueItems } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
-let {mkInventoryHeader} = require("%ui/hud/menus/components/inventoryCommon.nut")
-let {HERO_ITEM_CONTAINER} = require("%ui/hud/menus/components/inventoryItemTypes.nut")
-let {carriedVolume, maxVolume} = require("%ui/hud/state/inventory_common_es.nut")
-let {mkVolumeHdr} = require("%ui/hud/menus/components/inventoryVolumeWidget.nut")
-let { trashBinItems } = require("%ui/hud/menus/components/trashBin.nut")
-let { isHeroInventoryDropForbidden } = require("%ui/hud/menus/components/inventoryItemsListChecks.nut")
+let { inventoryItems, inventoryItemsSortingEnabled } = require("%ui/hud/state/inventory_items_es.nut")
+let { HERO_ITEM_CONTAINER } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
+let { carriedVolume, maxVolume } = require("%ui/hud/state/inventory_common_es.nut")
+let { itemsInRefiner } = require("%ui/hud/menus/inventories/refinerInventoryCommon.nut")
 
 const itemsInRow = 3
 let processItems = function(items) {
+  items = considerRefineItems(items)
   items = mergeNonUniqueItems(items)
-  items = considerTrashBinItems(items)
   if (inventoryItemsSortingEnabled.get())
     items.sort(inventoryItemSorting)
   return items
@@ -24,7 +26,7 @@ let processItems = function(items) {
 
 let panelsData = setupPanelsData(inventoryItems,
                                  itemsInRow,
-                                 [inventoryItems, trashBinItems, inventoryItemsSortingEnabled],
+                                 [inventoryItems, itemsInRefiner, inventoryItemsSortingEnabled],
                                  processItems)
 
 
@@ -44,7 +46,7 @@ function mkHeroItemContainerItemsList(on_item_dropped_to_list_cb = null, on_clic
       item_actions=on_click_actions
     })
     return {
-      size = [ SIZE_TO_CONTENT, flex() ]
+      size = FLEX_V
       watch = panelsData.numberOfPanels
       children
       onAttach = panelsData.onAttach

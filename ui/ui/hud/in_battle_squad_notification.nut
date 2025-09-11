@@ -1,11 +1,11 @@
+from "%dngscripts/sound_system.nut" import sound_play
+from "%ui/fonts_style.nut" import body_txt, fontawesome
+from "%ui/components/colors.nut" import TextNormal, RedWarningColor
+from "%ui/components/commonComponents.nut" import sideNotificationStyle
 from "%ui/ui_library.nut" import *
-
 import "%ui/components/fontawesome.map.nut" as fa
-let { body_txt, fontawesome } = require("%ui/fonts_style.nut")
-let { TextNormal, RedWarningColor } = require("%ui/components/colors.nut")
+
 let { notificationText } = require("%ui/hud/state/in_battle_squad_notification_state.nut")
-let { sound_play } = require("%dngscripts/sound_system.nut")
-let { sideNotificationStyle } = require("%ui/components/commonComponents.nut")
 
 
 let icon = {

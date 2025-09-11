@@ -27,6 +27,16 @@ gravity_hook_zone{
   "gravity_hook_zone:tag"{}
   "gravity_hook_zone__ownerEid:eid"{}
   "gravity_hook_zone__effectEids:list<eid>"{}
+  "gravity_hook_zone__finalZoneEid:eid"{}
+}
+
+gravity_hook_final_zone{
+  _use:t="gravity_hook_zone_sound"
+  _use:t="gravity_zone_cylinder"
+  grav_zone__radius:r=3
+  grav_zone__type:i=4
+
+  "grav_zone__lateCreationAllowed:tag"{}
 }
 
 in_gravity_hook_zone{
@@ -46,11 +56,11 @@ gravity_hook_bullet_item{
   ammo_holder__templateName:t="gravity_hook_bullet_item"
   boxed_item__template:t="gravity_hook_bullet_item"
   item__weight:r=0.2
-  item__volume:r=0.5
+  item__volume:i=5
   item__name:t="items/gravity_hook_bullet"
   item__countPerStack:i=1
   item__weightPerStack:r=0.1
-  item__volumePerStack:r=0.1
+  item__volumePerStack:i=1
   item__marketPrice:i=100
 }
 
@@ -64,6 +74,7 @@ gravity_hook_bullet_phys{
   game_effect__timeToDestroy:r=5
   gravity_hook__maxDistance:r=250
   gravity_hook__zoneTemplate:t="gravity_hook_zone"
+  gravity_hook__finalZoneTemplate:t="gravity_hook_final_zone"
   gravity_hook__shootPos:p3=0, 0, 0
   gravity_hook__heightOffset:r=2
 
@@ -104,15 +115,13 @@ gravity_hook{
   item__proto:t="gravity_hook"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="gravity_hook"
   item__name:t="items/gravity_hook"
   item__baseWeight:r=3.1
-  item__volume:r=22
+  item__volume:i=220
   item__filterType:t="weapons"
   item__marketPrice:i=1900
   gun__adsSpeedMult:r=0.5
   gun__deviationInFireReady:r=2.5
-  gun__length:r=0.5
   gun__magnification:r=1
   gun__maxAmmo:i=1
   gun__prevHolsterGen:i=0
@@ -138,13 +147,13 @@ gravity_hook{
   _use:t="directly_use_boxed_ammo"
   _use:t="batch_reload"
   gun__boxedAmmoHolderTemplate:t="gravity_hook_bullet_item"
+  gun__projectileTemplate:t="bullet_projectile_gravity_hook"
   _use:t="gun_sound_with_animchar"
   _use:t="launcher_gun_shot_dry_sound"
   meleeSoundType:t="mgun"
   gun_flash_fx__enabled:b=yes
   gun_flash_fx__lightSourceNode:t="gunFx_main"
 
-  "animchar__actOnDemand:tag"{}
   "gun__ammoHolders:list<t>"{
     ammoHolders:t="gravity_hook_bullet_item"
   }

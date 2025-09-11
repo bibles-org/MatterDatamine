@@ -1,12 +1,13 @@
+from "json" import parse_json
+from "dagor.http" import httpRequest, HTTP_SUCCESS
+from "dng.sony" import get_auth_data_async
+from "dagor.debug" import logerr
+from "app" import get_circuit_conf
+import "statsd" as statsd
+from "eventbus" import eventbus_subscribe_onehit
+
 from "%ui/ui_library.nut" import *
 
-let { parse_json } = require("json")
-let { httpRequest, HTTP_SUCCESS } = require("dagor.http")
-let {get_auth_data_async} = require("dng.sony")
-let {logerr} = require("dagor.debug")
-let {get_circuit_conf} = require("app")
-let statsd = require("statsd")
-let { eventbus_subscribe_onehit } = require("eventbus")
 
 let AUTH_FRIENDS_URL = get_circuit_conf()?.psnFriendsUrl
 let AUTH_DATA_SUB_ID = "sony.auth_data_friends"

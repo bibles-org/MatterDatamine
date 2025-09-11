@@ -17,6 +17,7 @@ flower_human_sound{
   _use:t="base_human_sound"
   _use:t="flower_human_managed_sound"
   _use:t="am_monster_killed_ui_sound"
+  _use:t="offender_hits_human_sound"
 
   "human_voice_effect__allOrderedEffects:shared:list<t>"{
     _tags:t="sound"
@@ -61,7 +62,7 @@ flower_human_sound{
   "human_voice_sound__irqs:shared:object"{
     _tags:t="sound"
 
-    "changed_attack_sound:object"{
+    "attack_sound:object"{
       name:t="attack"
     }
   }
@@ -108,6 +109,11 @@ flower_human_sound{
   "am_monster_killed_ui_sound_path:shared:object"{
     _tags:t="sound"
     path:t="enemy/walker/flower_human/hit/ui/hitmark"
+  }
+
+  "offender_hits_human_sound__path:shared:object"{
+    _tags:t="sound"
+    path:t="/walker/am_trooper_male/hit/melee_hands"
   }
 }
 
@@ -353,8 +359,8 @@ changed_human_sound{
   "human_voice_sound__irqs:shared:object"{
     _tags:t="sound"
 
-    "changed_attack_sound:object"{
-      name:t="melee/hands"
+    "attack_sound:object"{
+      name:t="melee"
     }
   }
 
@@ -475,7 +481,7 @@ invisible_man_sound{
   "human_voice_sound__irqs:shared:object"{
     _tags:t="sound"
 
-    "zombie_attack_sound:object"{
+    "attack_sound:object"{
       name:t="attack"
     }
   }
@@ -531,11 +537,12 @@ skeleton_swarm_sound{
   }
 }
 
-am_bees_swarm_cluster_sound{
+am_bees_swarm_sound{
   _use:t="sound_control"
   _use:t="sound_event_group"
   _use:t="sound_player_components"
   _use:t="human_death_sound"
+  _use:t="offender_hits_human_sound"
 
   _group{
     _tags:t="sound"
@@ -545,7 +552,7 @@ am_bees_swarm_cluster_sound{
   "swarmDeathSound:tag"{}
   "swarmAttackSound:tag"{}
   "swarmMovementSound:tag"{}
-  "clusterSwarmSound:tag"{}
+  "beesSwarmSound:tag"{}
   "sound_paths:shared:object"{
     _tags:t="sound"
 
@@ -570,6 +577,50 @@ am_bees_swarm_cluster_sound{
       name:t="death"
     }
   }
+
+  "offender_hits_human_sound__path:shared:object"{
+    _tags:t="sound"
+    path:t="/walker/am_trooper_male/hit/melee_swarm_cluster"
+  }
+}
+
+swarm_eating_corpse_sound{
+  _group{
+    _tags:t="sound"
+    swarm_eating_corpse_sound__path:t="enemy/walker/swarm_over_body/eating"
+
+    "swarm_eating_corpse_sound__event:SoundEvent"{}
+  }
+}
+
+corpse_attached_swarm_sound{
+  _use:t="swarm_eating_corpse_sound"
+  _use:t="am_bees_swarm_sound"
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=50
+  }
+
+  "sound_paths:shared:object"{
+    _tags:t="sound"
+
+    "movement:object"{
+      enemy:t="enemy/walker/swarm_over_body/movement"
+    }
+
+    "attack:object"{
+      enemy:t="enemy/walker/swarm_over_body/attack"
+    }
+  }
+}
+
+am_bees_guards_sound{
+  _use:t="am_bees_swarm_sound"
+}
+
+am_bees_solo_sound{
+  _use:t="am_bees_swarm_sound"
 }
 
 xenohound_creature_sound{
@@ -809,5 +860,194 @@ firefly_sound{
   _group{
     _tags:t="sound"
     entity_hit_sound__path:t="impact/bullet_mine"
+  }
+}
+
+monster_aggro_voice{
+  monster_aggro_net_voice__isAggressive:b=no
+  _tracked:t="monster_aggro_net_voice__isAggressive"
+
+  _group{
+    _tags:t="sound"
+    monster_aggro_voice__soundTag:t="isAggressive"
+    monster_aggro_voice__phrase:t="seeDanger"
+  }
+
+  _group{
+    _tags:t="server"
+    monster_aggro_net_voice__nextUpdateAt:r=0
+    monster_aggro_net_voice__updateInterval:r=0.5
+  }
+}
+
+am_dendroid_encounter_guard_sound{
+  _use:t="am_militant_sound"
+  _use:t="monster_aggro_voice"
+
+  "human_voice_sound__path:shared:object"{
+    _tags:t="sound"
+
+    "options:array"{
+      "asphyxiation:object"{
+        headIsUnderwater:b=yes
+      }
+
+      "default:object"{
+        enemy:t="enemy/walker/dendroid/voice_fx"
+      }
+    }
+  }
+
+  "human_voice_sound__descs:shared:object"{
+    _tags:t="sound"
+
+    "disable:object"{}
+    "downed:object"{}
+    "underwater:object"{}
+    "holdBreath:object"{}
+    "death:object"{
+      name:t="death"
+    }
+
+    "seeDanger:object"{
+      name:t="seedanger"
+    }
+
+    "hitCry:object"{
+      name:t="hit"
+    }
+
+    "burn:object"{
+      name:t="burning"
+    }
+  }
+
+  "human_steps_sound__stepFx:shared:object"{
+    _tags:t="sound"
+
+    "run:object"{
+      isAggressive:b=yes
+      enemy:t="enemy/walker/dendroid/voice_fx/run_to_player"
+    }
+
+    "sprint:object"{
+      isAggressive:b=yes
+      enemy:t="enemy/walker/dendroid/voice_fx/run_to_player"
+    }
+  }
+}
+
+poltergeist_creature_sound{
+  _use:t="sound_event_group"
+  _use:t="sound_control"
+  _use:t="sound_tags"
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=50
+  }
+
+  "human_voice_sound__path:shared:object"{
+    _tags:t="sound"
+    enemy:t="enemy/walker/polterheist/voice_fx"
+  }
+
+  "human_voice_sound__descs:shared:object"{
+    _tags:t="sound"
+
+    "idle:object"{
+      name:t="idle"
+    }
+
+    "attack:object"{
+      name:t="aggro"
+    }
+
+    "death:object"{
+      name:t="death"
+    }
+  }
+
+  _group{
+    _tags:t="sound"
+    poltergeist_creature_sound__throwItem:t="enemy/walker/polterheist/throw"
+  }
+}
+
+poltergeist_item_sound{
+  _use:t="phys_obj_collision_sound"
+  _use:t="offender_hits_human_sound"
+
+  _group{
+    _tags:t="sound"
+    phys_obj_collision_sound__path:t="env_effects/object_drop/generic"
+    phys_obj_collision_sound__threshold:p2=5, 5
+    phys_obj_collision_sound__interval:r=1
+    phys_obj_collision_sound__omegaMul:r=0
+    phys_obj_collision_sound__enabled:b=no
+    phys_obj_collision_sound__offset:p3=0, 0.25, 0
+    phys_obj_collision_sound__numSounds:i=1
+  }
+
+  "offender_hits_human_sound__path:shared:object"{
+    _tags:t="sound"
+    path:t="/walker/am_trooper_male/hit/melee_hands"
+  }
+}
+
+robodog_sound{
+  _use:t="sound_control"
+  _use:t="human_sound_landmesh_queries"
+  _use:t="am_human_sound_landmesh_queries_setup"
+
+  _group{
+    _tags:t="sound"
+    sound_control__range:r=40
+  }
+
+  _group{
+    _tags:t="sound"
+    robodog_sound__localOffset:p3=0, 0.2, 0
+  }
+
+  _group{
+    _tags:t="sound"
+    robodog_idle_sound__path:t="enemy/walker/robodog/idle"
+
+    "robodog_idle_sound__event:SoundEvent"{}
+  }
+
+  _group{
+    _tags:t="sound"
+    robodog_move_sound__walkPath:t="enemy/walker/robodog/walk"
+    robodog_move_sound__sprintPath:t="enemy/walker/robodog/sprint"
+    robodog_move_sound__turnPath:t="enemy/walker/robodog/turn"
+    robodog_move_sound__lastQueryTime:r=-1
+    robodog_move_sound__stepMaterialId:i=-1
+    robodog_move_sound__stepWaterDepth:r=0
+    robodog_move_sound__traceStepOffsetLen:p2=0.5, 1
+
+    "robodog_move_sound__event:SoundEvent"{}
+  }
+
+  _group{
+    _tags:t="sound"
+    human_sound_landmesh_queries__enemySpeedToQueryInterval:p4=0, 5, 1, 0.25
+  }
+
+  _group{
+    _tags:t="sound"
+    robodog_lost_owner_sound__path:t="enemy/walker/robodog/owner_lost"
+  }
+
+  _group{
+    _tags:t="sound"
+    robodog_follow_owner_toggle_sound__offPath:t="enemy/walker/robodog/follow_owner_off"
+    robodog_follow_owner_toggle_sound__onPath:t="enemy/walker/robodog/follow_owner_on"
+  }
+
+  _group{
+    _tags:t="sound"
+    robodog_death_sound__path:t="enemy/walker/robodog/death"
   }
 }

@@ -1,11 +1,13 @@
+import "%ui/components/msgbox.nut" as msgbox
+
+from "%ui/matchingClient.nut" import matchingCall
+from "eventbus" import eventbus_send
+import "%ui/checkReconnect.nut" as checkReconnect
+from "matching.api" import matching_logout
+
 from "%ui/ui_library.nut" import *
 
-let { matchingCall } = require("matchingClient.nut")
-let { eventbus_send } = require("eventbus")
-let checkReconnect = require("checkReconnect.nut")
-let {inspectorToggle} = require("%darg/helpers/inspector.nut")
-let msgbox = require("%ui/components/msgbox.nut")
-let {matching_logout} = require("matching.api")
+let { inspectorToggle } = require("%darg/helpers/inspector.nut")
 
 
 console_register_command(@(locId) console_print($"String:{locId} is localized as:{loc(locId)}"), "ui.loc")

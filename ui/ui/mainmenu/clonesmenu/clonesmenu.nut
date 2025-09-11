@@ -1,90 +1,36 @@
+from "%ui/components/commonComponents.nut" import mkHelpConsoleScreen, mkText, mkTextArea, bluredPanelWindow
+from "dasevents" import EventShowItemInShowroom, EventCloseShowroom, EventUIMouseMoved, EventUIMouseWheelUsed, CmdHideUiMenu
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/mainMenu/stdPanel.nut" import mkHelpButton, mkBackBtn, mkCloseBtn
+from "%ui/components/colors.nut" import GreenSuccessColor, RedWarningColor, BtnBgDisabled
+from "string" import format
+from "dagor.math" import Point2
+from "%ui/components/scrollbar.nut" import makeVertScrollExt, thinStyle
 from "%ui/ui_library.nut" import *
+from "%ui/hud/hud_menus_state.nut" import openMenu, convertMenuId
+from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import mkChronogeneParamString, findItemInAllItems, getCurrentHeroEffectMod, ClonesMenuId,
+  AlterSelectionSubMenuId, getChronogeneItemByUniqueId
+from "%ui/mainMenu/clonesMenu/cloneTubesInitEs.nut" import selectedContainerHighlightIntence, hoveredContainerHighlightIntence
+from "%ui/mainMenu/clonesMenu/itemGenesSlots.nut" import mkEquippedMainChronogenes, equippedSecondaryChronogenes, mkMainChronogeneInfoStrings
+from "%ui/mainMenu/clonesMenu/mainChronogeneSelection.nut" import mainChronogenesCards, hoveredAlter, showAlterWidth,
+  updateAlterInShowroom, selectedPreviewAlter, selectAlterToEquip, alterToFocus
+from "%ui/components/button.nut" import buttonWithGamepadHotkey
+from "%ui/components/accentButton.style.nut" import accentButtonStyle
+
 import "%dngscripts/ecs.nut" as ecs
 
-let { body_txt } = require("%ui/fonts_style.nut")
-let { mkHelpButton, mkBackBtn, mkCloseBtn } = require("%ui/mainMenu/stdPanel.nut")
-let { mkHelpConsoleScreen, mkText, mkTextArea, bluredPanelWindow
-} = require("%ui/components/commonComponents.nut")
 let { stashItems } = require("%ui/hud/state/inventory_items_es.nut")
 let { equipment } = require("%ui/hud/state/equipment.nut")
-let { selectedMainChronogeneItem } = require("itemGenes.nut")
-let { equippedSecondaryChronogenes, mkEquippedMainChronogenes } = require("itemGenesSlots.nut")
+let { selectedMainChronogeneItem } = require("%ui/mainMenu/clonesMenu/itemGenes.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
-let { alterContainers, playerBaseState, currentAlter } = require("%ui/profile/profileState.nut")
-let { allItems } = require("%ui/state/allItems.nut")
-let { currentChronogenes } = require("cloneMenuState.nut")
-let { GreenSuccessColor, RedWarningColor } = require("%ui/components/colors.nut")
+let { playerBaseState } = require("%ui/profile/profileState.nut")
+let { currentChronogenes } = require("%ui/mainMenu/clonesMenu/cloneMenuState.nut")
 let { chronogeneStatCustom, chronogeneStatDefault } = require("%ui/hud/state/item_info.nut")
-let { calc_change_mult_attr, calc_diminishing_change_mult_attr, calc_change_add_attr, calc_diminishing_change_add_attr } = require("das.inventory")
-let { logerr } = require("dagor.debug")
-let { format } = require("string")
-let { addTabToDevInfo } = require("%ui/devInfo.nut")
-let { EventShowItemInShowroom, EventActivateShowroom, EventCloseShowroom, EventUIMouseMoved, EventUIMouseWheelUsed } = require("dasevents")
-let { Point2 } = require("dagor.math")
-let { selectedContainerHighlightIntence, hoveredContainerHighlightIntence } = require("cloneTubesInitEs.nut")
-let { clonesMenuScreenPadding, mkChronogeneParamString, findItemInAllItems, backTrackingMenu
-} = require("clonesMenuCommon.nut")
-let { makeVertScrollExt, thinStyle } = require("%ui/components/scrollbar.nut")
+let { clonesMenuScreenPadding, backTrackingMenu } = require("%ui/mainMenu/clonesMenu/clonesMenuCommon.nut")
+let { mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
+let { currentMenuId } = require("%ui/hud/hud_menus_state.nut")
 
-addTabToDevInfo("[ALTERS] alterContainers", alterContainers)
-addTabToDevInfo("[ALTERS] currentAlter", currentAlter)
-
-let alterScreenPos = Point2(0.45, 0.55)
-const ClonesMenuId = "CloneBody"
 let cloneMenuName = loc("clonesControlMenu/title", "Clones Body Research")
-let alterShowQuadSize = [ sh(150), sh(150) ]
-
-let help_data = {
-  content = "clonesControlMenu/helpContent"
-  footnotes = [
-    "clonesControlMenu/helpFootnote1",
-    "clonesControlMenu/helpFootnote2",
-    "clonesControlMenu/helpFootnote3",
-    "clonesControlMenu/helpFootnote4",
-    "clonesControlMenu/helpFootnote5",
-    "clonesControlMenu/helpFootnote6",
-    "clonesControlMenu/helpFootnote7",
-    "clonesControlMenu/helpFootnote8",
-    "clonesControlMenu/helpFootnote9",
-    "clonesControlMenu/helpFootnote10",
-    "clonesControlMenu/helpFootnote11",
-    "clonesControlMenu/helpFootnote12",
-    "clonesControlMenu/helpFootnote13",
-    "clonesControlMenu/helpFootnote14",
-    "clonesControlMenu/helpFootnote15",
-    "clonesControlMenu/helpFootnote16",
-    "clonesControlMenu/helpFootnote17",
-    "clonesControlMenu/helpFootnote18",
-    "clonesControlMenu/helpFootnote19",
-    "clonesControlMenu/helpFootnote20",
-    "clonesControlMenu/helpFootnote21",
-    "clonesControlMenu/helpFootnote22",
-    "clonesControlMenu/helpFootnote23",
-    "clonesControlMenu/helpFootnote24",
-    "clonesControlMenu/helpFootnote25",
-    "clonesControlMenu/helpFootnote26",
-    "clonesControlMenu/helpFootnote27",
-    "clonesControlMenu/helpFootnote28",
-    "clonesControlMenu/helpFootnote29",
-    "clonesControlMenu/helpFootnote30",
-    "clonesControlMenu/helpFootnote31",
-    "clonesControlMenu/helpFootnote32",
-    "clonesControlMenu/helpFootnote33",
-    "clonesControlMenu/helpFootnote34",
-    "clonesControlMenu/helpFootnote35",
-    "clonesControlMenu/helpFootnote36",
-    "clonesControlMenu/helpFootnote37",
-    "clonesControlMenu/helpFootnote38",
-    "clonesControlMenu/helpFootnote39",
-    "clonesControlMenu/helpFootnote40",
-    "clonesControlMenu/helpFootnote41",
-    "clonesControlMenu/helpFootnote42",
-    "clonesControlMenu/helpFootnote43",
-    "clonesControlMenu/helpFootnote44",
-    "clonesControlMenu/helpFootnote45",
-    "clonesControlMenu/helpFootnote46"
-  ]
-}
 
 function getItemTemplate(template_name){
   return template_name ? ecs.g_entity_mgr.getTemplateDB().getTemplateByName(template_name) : null
@@ -100,36 +46,45 @@ function getChronogeneName(chronogeneTemplateName) {
   return template?.getCompValNullable("item__name") ?? "unknown"
 }
 
-function placeAlterInItemShowroom(templateName) {
-  if (!templateName)
-    return
-
-  let data = ecs.CompObject()
-  data["__alter"] <- templateName
-  data["forceAnimState"] <- "presentation_idle"
-  data["floatingAmplitude"] <- 0.0
-
-  ecs.g_entity_mgr.broadcastEvent(EventShowItemInShowroom({ showroomKey=$"alterShowroom", data }))
-}
-
-function updateAlterInShowroom(alterContainer) {
-  if (alterContainer) {
-    ecs.g_entity_mgr.broadcastEvent(EventCloseShowroom())
-
-    let primary = alterContainer.primaryChronogenes[0]
-    let primaryItem = allItems.get().findvalue(@(v) v?.itemId.tostring() == primary?.tostring())
-    let primaryItemTemplate = primaryItem?.templateName ?? primaryItem?.itemTemplate
-
-    ecs.g_entity_mgr.broadcastEvent(EventActivateShowroom({
-      showroomKey=$"alterShowroom",
-      placeScreenPosition=Point2(alterScreenPos.x * sw(100), alterScreenPos.y * sh(100)),
-      placeScreenSize=Point2(alterShowQuadSize[0], alterShowQuadSize[1])
-    }))
-    placeAlterInItemShowroom(primaryItemTemplate)
-  }
-}
+let selectedAlter = keepref(Computed(function() {
+  let hovered = hoveredAlter.get()
+  if (hovered)
+    return hovered
+  let selected = selectedPreviewAlter.get()
+  if (selected)
+    return selected
+  let currentMain = currentChronogenes.get()?.primaryChronogenes[0]
+  return getChronogeneItemByUniqueId(currentMain)
+}))
 
 function mkClonesMenu() {
+  let initialMods = getCurrentHeroEffectMod([])
+  let effectModVal = Watched(initialMods.entity_mod_values)
+
+  function updateEffectModVal(additionalChronogenes=[]) {
+    effectModVal.set(getCurrentHeroEffectMod(additionalChronogenes).entity_mod_values)
+  }
+
+  selectedMainChronogeneItem.subscribe_with_nasty_disregard_of_frp_update(function(item) {
+    updateEffectModVal(item?.templateName ? [ item?.templateName ] : [])
+  })
+
+  
+  
+  equipment.subscribe_with_nasty_disregard_of_frp_update(@(_) updateEffectModVal([]))
+
+  let effectModStrings = Computed(function() {
+    let effectMod = effectModVal.get()
+    return {
+      anyValDeminished = false
+      chronogenesStats = effectMod.map(function(v, k) {
+        return v.__merge({
+          value = chronogeneStatCustom?[k].calc(v.value) ?? chronogeneStatDefault.calc(v.value)
+        })
+      })
+    }
+  })
+
   let alterSpecialStats = Computed(function() {
     if (!currentChronogenes.get()) {
       return null
@@ -161,69 +116,8 @@ function mkClonesMenu() {
     return specialMods
   })
 
-  function getStatsTable(chronogenes) {
-    let paramModifyRules = getItemTemplate("base_entity_mods")?.getCompValNullable("entity_mod_values").getAll() ?? {}
-
-    let valueMods = {}
-    foreach(v in chronogenes) {
-      if ( !v || v == "0")
-        continue
-      let itemTemplateName = v?.itemTemplate ?? findItemInAllItems(v)?.templateName
-      let params = getChronogeneParams(itemTemplateName)
-      foreach (modName, modValue in params) {
-        if (modName not in valueMods)
-          valueMods[modName] <- []
-
-        valueMods[modName].append(modValue)
-      }
-    }
-
-    local anyValDeminished = false
-    let calculatedValueMods = {}
-    foreach(key, value in valueMods) {
-      let modeNameInfo = key.split("+")
-      let modeName = modeNameInfo?[0] ?? ""
-      let calcType = modeNameInfo?[1] ?? "add"
-
-      if (!anyValDeminished && (calcType == "mult_diminishing" || calcType == "add_diminishing")) {
-        anyValDeminished = anyValDeminished || (value.len() > 1)
-      }
-
-      let obj = ecs.CompObject()
-      value.each(function(v, idx) {
-        obj[idx.tostring()] <- v
-      })
-      if (calcType == "mult_diminishing") {
-        calculatedValueMods[modeName] <- calc_diminishing_change_mult_attr(obj)
-      }
-      else if (calcType == "mult") {
-        calculatedValueMods[modeName] <- calc_change_mult_attr(obj)
-      }
-      else if (calcType == "add") {
-        calculatedValueMods[modeName] <- calc_change_add_attr(obj)
-      }
-      else if (calcType == "add_diminishing") {
-        calculatedValueMods[modeName] <- calc_diminishing_change_add_attr(obj)
-      }
-      else {
-        logerr($"Clone info: calculation type <{calcType}> not found")
-      }
-    }
-
-    return {
-      anyValDeminished
-      chronogenesStats = paramModifyRules.map(function(_v, k) {
-        return {
-          value = chronogeneStatCustom?[k]?.calc(calculatedValueMods?[k]) ?? chronogeneStatDefault.calc(calculatedValueMods?[k])
-          reversePositivity = paramModifyRules?[k]?.reversePositivity
-          hidden = paramModifyRules?[k]?.hidden ?? false
-        }
-      })
-    }
-  }
-
   let middleSection =  {
-    size = [ pw(50), flex() ]
+    size = static [ pw(50), flex() ]
     halign = ALIGN_CENTER
     hplace = ALIGN_CENTER
     children = [
@@ -244,15 +138,15 @@ function mkClonesMenu() {
 
     return {
       watch = alterSpecialStats
-      margin = [ 0, hdpx(30) ]
-      size = flex()
+      margin = static [ 0, hdpx(30) ]
+      size = FLEX_H
       flow = FLOW_VERTICAL
       gap = hdpx(5)
       children = specStats.len() > 0 ? [
         mkText(loc("clonesMenu/specialInfoTitle"), body_txt.__merge({ hplace = ALIGN_LEFT, color = GreenSuccessColor }))
         makeVertScrollExt(
           mkTextArea(text, {
-            size = [flex(), SIZE_TO_CONTENT]
+            size = FLEX_H
             hplace = ALIGN_LEFT
           }.__update(body_txt, { color = GreenSuccessColor })),
           {
@@ -264,15 +158,8 @@ function mkClonesMenu() {
     }
   }
 
-  let chronogenesToShowInStats = Computed(function() {
-    let primary = currentChronogenes.get()?.primaryChronogenes ?? []
-    let hoveredChronogene = selectedMainChronogeneItem.get()?.itemTemplate ? [ selectedMainChronogeneItem.get() ] : []
-    let secondary = hoveredChronogene.extend(currentChronogenes.get()?.secondaryChronogenes ?? [])
-    return [].extend(primary, secondary)
-  })
-
   function cloneChronogenesInfo() {
-    let alterStats = getStatsTable(chronogenesToShowInStats.get())
+    let alterStats = effectModStrings.get()
 
     let stats = alterStats.chronogenesStats.map(function(v, k) {
       if (v?.hidden ?? false)
@@ -302,24 +189,24 @@ function mkClonesMenu() {
     }).values()
 
     let alterStatsPanel = {
-      size = [ flex(), SIZE_TO_CONTENT ]
+      size = FLEX_H
       flow = FLOW_VERTICAL
-      margin = [ 0, hdpx(30) ]
+      margin = static [ 0, hdpx(30) ]
       gap = hdpx(10)
       children = [
         {
           halign = ALIGN_CENTER
-          size = [ flex(), SIZE_TO_CONTENT ]
+          size = FLEX_H
           children = mkText(loc("clonesMenu/boostsInfoTitle"), body_txt)
         }
         {
-          size = [ flex(), SIZE_TO_CONTENT ]
+          size = FLEX_H
           flow = FLOW_VERTICAL
           gap = hdpx(5)
           children = stats
         }
         {
-          size = [flex(), SIZE_TO_CONTENT]
+          size = FLEX_H
           children = alterStats.anyValDeminished ?
             mkTextArea(loc("clonesMenu/chronogenesRestriction"), {
               color = RedWarningColor
@@ -330,8 +217,8 @@ function mkClonesMenu() {
     }
 
     return {
-      watch = chronogenesToShowInStats
-      size = [ flex(), SIZE_TO_CONTENT ]
+      watch = effectModStrings
+      size = FLEX_H
 
       valign = ALIGN_TOP
       halign = ALIGN_LEFT
@@ -340,15 +227,14 @@ function mkClonesMenu() {
     }
   }
 
-  let cloneInfo = @(){
-    watch = currentChronogenes
-    size = [ pw(30), flex() ]
+  let cloneInfo = {
+    size = static [ pw(30), flex() ]
     hplace = ALIGN_RIGHT
     children = {
-      size = flex()
+      size = FLEX_H
       flow = FLOW_VERTICAL
       gap = hdpx(10)
-      padding = [hdpx(10), 0]
+      padding = static [hdpx(10), 0]
       children = [
         cloneChronogenesInfo
         cloneChronogeneSpecialInfo
@@ -358,7 +244,7 @@ function mkClonesMenu() {
 
   function mkCloneInfoScreen() {
     return @() {
-      watch = [ equipment, stashItems, currentChronogenes ]
+      watch = [ equipment, stashItems ]
       size = flex()
       gap = hdpx(5)
       children = [
@@ -368,7 +254,7 @@ function mkClonesMenu() {
           flow = FLOW_VERTICAL
           gap = hdpx(20)
           children = [
-            mkEquippedMainChronogenes
+            mkEquippedMainChronogenes()
             equippedSecondaryChronogenes
           ]
         }.__update(bluredPanelWindow)
@@ -377,61 +263,150 @@ function mkClonesMenu() {
     }
   }
 
-  let cloneMenu = @(){
+  let cloneMenu = {
     size = flex()
     flow = FLOW_HORIZONTAL
     gap = hdpx(5)
-    watch = currentChronogenes
     children = mkCloneInfoScreen()
   }
 
-  let helpConsole = mkHelpConsoleScreen(Picture("ui/build_icons/clone_body_device.avif:{0}:{0}:PF".subst(hdpx(600))), help_data)
-
-  let helpBtn = mkHelpButton(helpConsole, cloneMenuName)
   function buttons() {
     let closeBtn = backTrackingMenu.get() != null ? mkBackBtn(backTrackingMenu.get()) : mkCloseBtn(ClonesMenuId)
     return {
-      watch = [playerBaseState, currentChronogenes, backTrackingMenu]
+      watch = [playerBaseState, backTrackingMenu]
       gap = hdpx(2)
-      size = [ flex(), SIZE_TO_CONTENT ]
+      size = FLEX_H
       onDetach = @() backTrackingMenu.set(null)
       children = {
         hplace = ALIGN_RIGHT
         flow = FLOW_HORIZONTAL
-        children = (playerBaseState.get()?.openedAlterContainers ?? 0) <= 1 ? [closeBtn] : [helpBtn, closeBtn]
+        children = [closeBtn]
       }
     }
   }
 
 
-  let content = @(){
-    watch = playerBaseState
+  let content = {
     size = flex()
-    children = (playerBaseState.get().openedAlterContainers <= 1) ? helpConsole : cloneMenu
-    onAttach = function() {
-      if ((playerBaseState.get()?.openedAlterContainers ?? 0) > 1) {
-        updateAlterInShowroom(currentChronogenes.get())
-      }
-    }
-    onDetach = function() {
-      if ((playerBaseState.get()?.openedAlterContainers ?? 0) <= 1)
-        return
+    children = cloneMenu
+  }
 
-      ecs.g_entity_mgr.broadcastEvent(EventCloseShowroom())
+  
+  
+  
+  mutationForbidenDueToInQueueState.subscribe(function(state) {
+    if (!state)
+      return
+
+    ecs.g_entity_mgr.broadcastEvent(CmdHideUiMenu(static { menuName = ClonesMenuId }))
+  })
+
+  let cloneMenuScreen = @(){
+    watch = [ playerBaseState ]
+    padding = clonesMenuScreenPadding
+    gap = hdpx(5)
+    size = flex()
+    flow = FLOW_VERTICAL
+    onAttach = function() {
+      updateAlterInShowroom(currentChronogenes.get())
     }
+    children = [
+      buttons
+      content
+    ]
+  }
+
+  let alterSelectionScreen = @() {
+    size = flex()
+    padding = clonesMenuScreenPadding
+    onAttach = function() {
+      if (alterToFocus.get() == null)
+        updateAlterInShowroom(currentChronogenes.get(), Point2(0.6, 0.5))
+    }
+    children = [
+      {
+        size = static flex()
+        halign = ALIGN_RIGHT
+        hplace = ALIGN_RIGHT
+        children = [
+          {
+            size = flex()
+            behavior = [Behaviors.MoveResize, Behaviors.WheelScroll]
+            stopMouse = false
+            skipDirPadNav = true
+            onMoveResize = @(dx, dy, _dw, _dh) ecs.g_entity_mgr.broadcastEvent(EventUIMouseMoved({screenX = dx, screenY = dy}))
+            onWheelScroll = @(value) ecs.g_entity_mgr.broadcastEvent(EventUIMouseWheelUsed({value}))
+          }
+        ]
+      }
+      {
+        flow = FLOW_HORIZONTAL
+        size = flex()
+        gap = { size = flex() }
+        children = [
+          mainChronogenesCards()
+          function() {
+            let isAlterAvailable = selectedPreviewAlter.get()?.mainChronogeneAvailable ?? false
+            let textBlock = mkText(loc("clonesMenu/selectEquipAlter"), { hplace = ALIGN_CENTER }.__merge(body_txt))
+            let textWidth = calc_comp_size(textBlock)[0]
+            return {
+              watch = [selectedPreviewAlter, selectedAlter]
+              size = [min(sw(25), hdpx(425)), sh(80)]
+              flow = FLOW_VERTICAL
+              gap = { size = flex() }
+              halign = ALIGN_CENTER
+              vplace = ALIGN_BOTTOM
+              children = [
+                mkMainChronogeneInfoStrings(selectedAlter.get(),
+                  {
+                    size = FLEX_H
+                    margin = 0
+                  })
+                makeVertScrollExt(mkTextArea(loc($"{selectedAlter.get()?.itemTemplate}/desc"), {
+                    size = FLEX_H
+                    hplace = ALIGN_LEFT
+                  }),
+                  {
+                    size = [flex(), sh(30)]
+                    styling = thinStyle
+                  })
+                buttonWithGamepadHotkey(textBlock,
+                  function() {
+                    selectAlterToEquip(selectedPreviewAlter.get())
+                    if (isAlterAvailable)
+                      openMenu(ClonesMenuId)
+                  }, {
+                    style = isAlterAvailable ? {} : { BtnBgNormal = BtnBgDisabled }
+                    size = [textWidth + hdpx(80), static hdpx(50)]
+                    vplace = ALIGN_BOTTOM
+                    hotkeys = [["J:X", { description = { skip = true } }]]
+                  }.__merge(isAlterAvailable ? accentButtonStyle : {}) )
+              ]
+            }
+          }
+        ]
+      }
+      {
+        hplace = ALIGN_RIGHT
+        vplace = ALIGN_TOP
+        children = mkBackBtn(alterToFocus.get() == null ? ClonesMenuId : "monolithAccessWnd")
+      }
+    ]
   }
 
   return {
-    getContent = @() @() {
-      watch = [playerBaseState, currentChronogenes]
-      padding = clonesMenuScreenPadding
-      gap = hdpx(5)
-      size = flex()
-      flow = FLOW_VERTICAL
-      children = [
-        buttons
-        content
-      ]
+    getContent = @() function() {
+      let [_id, submenus] = convertMenuId(currentMenuId.get())
+      let submenu = submenus?[0]
+      let isAlterSelection = submenu == AlterSelectionSubMenuId
+
+      let menuContent = isAlterSelection ? alterSelectionScreen : cloneMenuScreen
+      return {
+        watch = currentMenuId
+        size = flex()
+        children = menuContent
+        onDetach = @() ecs.g_entity_mgr.broadcastEvent(EventCloseShowroom())
+      }
     }
     id = ClonesMenuId
     name = cloneMenuName

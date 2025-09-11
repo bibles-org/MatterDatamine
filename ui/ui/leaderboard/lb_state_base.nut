@@ -1,77 +1,144 @@
+from "%dngscripts/globalState.nut" import nestWatched
+
+from "dagor.time" import get_time_msec
+
 from "%ui/ui_library.nut" import *
 
-let { get_time_msec } = require("dagor.time")
 let { requestLeaderboard } = require("%sqGlob/leaderboard.nut")
 let userInfo = require("%sqGlob/userInfo.nut")
 let { isLoggedIn } = require("%ui/login/login_state.nut")
-let { nestWatched } = require("%dngscripts/globalState.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
 
 const LB_REQUEST_TIMEOUT = 45000
-const LB_UPDATE_INTERVAL = 5000
+const LB_MONOLITH_UPDATE_INTERVAL = 5000
+const LB_FACTION_UPDATE_INTERVAL = 1000
 const REFRESH_PERIOD = 120
 
-let curLbData = nestWatched("curLbData", [])
-let curLbSelfRow = nestWatched("curLbSelfRow", null)
-let lastLBRequestData = nestWatched("lastLBRequestData", null)
-let curLbPlayersCount = nestWatched("curLbPlayersCount", 0)
-let curLbErrName = Watched(null)
+let curMonolithLbData = nestWatched("curMonolithLbData", [])
+let curFactionLbData = nestWatched("curFactionLbData", [])
 
-local lastRequestTime = 0
-local lastUpdateTime = 0
+let lastMonolithLbRequestData = nestWatched("lastMonolithLbRequestData", null)
+let lastFactionLBRequestData = nestWatched("lastFactionLBRequestData", null)
 
-let isRequestInProgress = @() lastRequestTime > lastUpdateTime
-  && lastRequestTime + LB_REQUEST_TIMEOUT > get_time_msec()
+let curMonolithLbPlayersCount = nestWatched("curMonolithLbPlayersCount", 0)
+let curMonolithLbVotesCount = nestWatched("curMonolithLbVotesCount", 0)
+let curFactionLbPlayersCount = nestWatched("curFactionLbPlayersCount", 0)
 
-let canRefresh = @() !isRequestInProgress()
+let curMonolithLbErrName = Watched(null)
+let curFactionLbErrName = Watched(null)
+
+local lastMonolithRequestTime = 0
+local lastMonolithUpdateTime = 0
+
+local lastFactionRequestTime = 0
+local lastFactionUpdateTime = 0
+
+let isMonolithRequestInProgress = @() lastMonolithRequestTime > lastMonolithUpdateTime
+  && lastMonolithRequestTime + LB_REQUEST_TIMEOUT > get_time_msec()
+
+let canRefreshMonolithLb = @() !isMonolithRequestInProgress()
   && isLoggedIn.get()
-  && (!curLbData.get() || (lastUpdateTime + LB_UPDATE_INTERVAL < get_time_msec()))
+  && (!curMonolithLbData.get() || (lastMonolithUpdateTime + LB_MONOLITH_UPDATE_INTERVAL < get_time_msec()))
 
-function parseLbData(result) {
-  lastUpdateTime = get_time_msec()
-  curLbErrName(result?.result.error)
+function parseMonolithLbData(result) {
+  lastMonolithUpdateTime = get_time_msec()
+  curMonolithLbErrName.set(result?.result.error)
 
   let isSuccess = result?.result.success ?? true
   if (!isSuccess || result?.result.users_data == null)
     return
 
   let data = result.result.users_data
-  curLbSelfRow.set(data.findvalue(@(v) v?[2] == userInfo.get().name))
-  curLbData.set(data)
-  curLbPlayersCount.set(result?.result.info.total ?? 0)
+  curMonolithLbData.set(data)
+  curMonolithLbPlayersCount.set(result?.result.info.total ?? 0)
+  let aggregator = data?[0] 
+  curMonolithLbVotesCount.set((aggregator?[1] ?? 0) == 208876377 ? (aggregator?[4] ?? 0) : curMonolithLbPlayersCount.get())
 }
 
-function refreshLbData(requestData = null) {
-  if (!canRefresh())
+function refreshMonolithLbData(requestData = null) {
+  if (!canRefreshMonolithLb())
     return
 
   if (requestData == null) {
-    curLbData.set([])
-    curLbErrName.set(null)
+    curMonolithLbData.set([])
+    curMonolithLbErrName.set(null)
     return
   }
 
-  lastRequestTime = get_time_msec()
-  if (isEqual(requestData, lastLBRequestData.get())) {
-    lastLBRequestData.set(requestData)
+  lastMonolithRequestTime = get_time_msec()
+  if (isEqual(requestData, lastMonolithLbRequestData.get())) {
+    lastMonolithLbRequestData.set(requestData)
     return
   }
 
-  requestLeaderboard(requestData, parseLbData)
+  requestLeaderboard(requestData, parseMonolithLbData)
 }
 
 function refreshMonolithLb() {
   let request = {
     start = 0
-    count = max(curLbPlayersCount.get(), 45)
+    count = max(curMonolithLbPlayersCount.get(), 45)
     projectid = "active_matter_pc"
     token = userInfo.get()?.token
     table = "season"
-    gameMode = "default"
+    gameMode = "future_makers"
     category = "timestamp"
     resolveNick = 1
   }
-  refreshLbData(request)
+  refreshMonolithLbData(request)
+}
+
+function parseFactionLbData(result) {
+  lastFactionUpdateTime = get_time_msec()
+  curFactionLbErrName.set(result?.result.error)
+
+  let isSuccess = result?.result.success ?? true
+  if (!isSuccess || result?.result.users_data == null)
+    return
+
+  let data = result.result.users_data
+  curFactionLbData.modify(@(_v) data)
+  curFactionLbPlayersCount.set(result?.result.info.total ?? 0)
+}
+
+let isFactionRequestInProgress = @() lastFactionRequestTime > lastFactionUpdateTime
+  && lastFactionRequestTime + LB_REQUEST_TIMEOUT > get_time_msec()
+
+let canRefreshFactionLb = @() !isFactionRequestInProgress()
+  && isLoggedIn.get()
+  && (!curFactionLbData.get() || (lastFactionUpdateTime + LB_FACTION_UPDATE_INTERVAL < get_time_msec()))
+
+function refreshFactionLbData(requestData = null) {
+  if (!canRefreshFactionLb())
+    return
+
+  if (requestData == null) {
+    curFactionLbData.set([])
+    curFactionLbErrName.set(null)
+    return
+  }
+
+  lastFactionRequestTime = get_time_msec()
+  if (isEqual(requestData, lastFactionLBRequestData.get())) {
+    lastFactionLBRequestData.set(requestData)
+    return
+  }
+
+  requestLeaderboard(requestData, parseFactionLbData)
+}
+
+function refreshFactionLb(faction) {
+  let request = {
+    start = 0
+    count = max(curFactionLbPlayersCount.get(), 50)
+    projectid = "active_matter_pc"
+    token = userInfo.get()?.token
+    table = "nexus_season"
+    gameMode = "nexus"
+    category = $"faction_{faction}_scores_count"
+    resolveNick = 1
+  }
+  refreshFactionLbData(request)
 }
 
 foreach (v in [isLoggedIn, userInfo, isInBattleState])
@@ -79,19 +146,27 @@ foreach (v in [isLoggedIn, userInfo, isInBattleState])
     refreshMonolithLb()
   })
 
-function updateRefreshTimer(needUpdate) {
-  if (needUpdate) {
-    gui_scene.setInterval(REFRESH_PERIOD, refreshMonolithLb)
+function updateRefreshTimer(needUpdate, cb, timerId = null) {
+  if (timerId != null) {
+    if (needUpdate)
+      gui_scene.setInterval(REFRESH_PERIOD, cb, timerId)
+    else
+      gui_scene.clearTimer(timerId)
+    return
   }
+  if (needUpdate)
+    gui_scene.setInterval(REFRESH_PERIOD, cb)
   else
-    gui_scene.clearTimer(refreshMonolithLb)
+    gui_scene.clearTimer(cb)
 }
 
 return {
-  curLbData
-  curLbSelfRow
-  refreshLbData
-  curLbPlayersCount
+  curMonolithLbData
+  curMonolithLbPlayersCount
+  curMonolithLbVotesCount
   refreshMonolithLb
+  curFactionLbData
+  curFactionLbPlayersCount
+  refreshFactionLb
   updateRefreshTimer
 }

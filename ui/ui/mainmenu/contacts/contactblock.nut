@@ -1,59 +1,71 @@
+from "%ui/components/colors.nut" import ContactNotReady, ContactInBattle, ContactLeader, ContactReady,
+  ContactOffline, TeammateColor, UserNameColor, Inactive, Active, BtnBgHover, BtnTextVisualDisabled
+from "%ui/fonts_style.nut" import h1_txt, body_txt, h2_txt
+from "base64" import decodeString
+from "%ui/fonts_style.nut" import sub_txt, fontawesome
+from "%ui/components/sounds.nut" import buttonSound
+from "%ui/mainMenu/contacts/contact.nut" import getContactNick
+from "%ui/mainMenu/contacts/contactPresence.nut" import mkContactOnlineStatus
+from "%ui/mainMenu/contacts/contactContextMenu.nut" import open
+from "%ui/components/button.nut" import textButtonSmall, button
+import "%ui/helpers/locByPlatform.nut" as locByPlatform
+from "%ui/quickMatchQueue.nut" import leaveQueue
+from "%ui/components/accentButton.style.nut" import accentButtonStyle
+from "%ui/components/msgbox.nut" import showMsgbox
+from "%ui/mainMenu/consoleRaidMenu.nut" import GameMode
+from "%ui/hud/hud_menus_state.nut" import openMenu
+import "%ui/components/faComp.nut" as faComp
+from "%ui/components/commonComponents.nut" import mkText
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/mainMenu/menus/options/player_interaction_option.nut" import isStreamerMode, playerRandName
+import "%ui/components/tooltipBox.nut" as tooltipBox
+from "%ui/hud/menus/components/damageModel.nut" import mkHeroDoll, mkSuitPreview, mkIconAttachments
+from "das.ribbons_color" import get_color_as_array_by_index
+from "%ui/hud/menus/components/inventoryItemsHeroWeapons.nut" import mkEquipmentWeaponsSmall
+from "%ui/mainMenu/offline_raid_widget.nut" import mkOfflineRaidIcon
 from "%ui/ui_library.nut" import *
+import "%dngscripts/ecs.nut" as ecs
+import "%ui/components/fontawesome.map.nut" as fa
 
-let { sub_txt, fontawesome } = require("%ui/fonts_style.nut")
-let { ContactNotReady, ContactInBattle, ContactLeader, ContactReady, ContactOffline, TeammateColor,
-  UserNameColor, Inactive, Active, BtnBgHover, BtnTextVisualDisabled
-} = require("%ui/components/colors.nut")
-let {buttonSound} = require("%ui/components/sounds.nut")
-let fa = require("%ui/components/fontawesome.map.nut")
-let { squadMembers, isInvitedToSquad, enabledSquad } = require("%ui/squad/squadState.nut")
-let { getContactNick, contacts } = require("%ui/mainMenu/contacts/contact.nut")
+let { squadMembers, isInvitedToSquad, enabledSquad, squadLeaderState, allMembersState } = require("%ui/squad/squadState.nut")
+let { contacts } = require("%ui/mainMenu/contacts/contact.nut")
 let { friendsUids } = require("%ui/mainMenu/contacts/contactsWatchLists.nut")
-let { mkContactOnlineStatus } = require("%ui/mainMenu/contacts/contactPresence.nut")
-let { open } = require("%ui/mainMenu/contacts/contactContextMenu.nut")
-let {isGamepad} = require("%ui/control/active_controls.nut")
+let { isGamepad } = require("%ui/control/active_controls.nut")
 let userInfo = require("%sqGlob/userInfo.nut")
-let {textButtonSmall} = require("%ui/components/button.nut")
-let locByPlatform = require("%ui/helpers/locByPlatform.nut")
-let { mkCheckEquipmentStateHandler } = require("%ui/mainMenu/startButton.nut")
 let { isSquadLeader, myExtSquadData, isInSquad } = require("%ui/squad/squadManager.nut")
-let { isInQueue, leaveQueue } = require("%ui/quickMatchQueue.nut")
 let { showCursor } = require("%ui/cursorState.nut")
 let { orderedTeamNicks } = require("%ui/squad/squad_colors.nut")
-let { accentButtonStyle } = require("%ui/components/accentButton.style.nut")
+let { Missions_id, selectedPlayerGameModeOption, prevSelectedZonesPerGameMode } = require("%ui/mainMenu/consoleRaidMenu.nut")
+let { selectedRaid } = require("%ui/gameModeState.nut")
+let { hudIsInteractive } = require("%ui/hud/state/interactive_state.nut")
 
 let presenceIconHeight = hdpxi(8)
-let statusIconHeight = hdpxi(20)
+let statusIconHeight = hdpxi(15)
 let contactHeight = hdpx(56)
+let smallContactHeight = hdpx(30)
 
 
-function squadReadyButton() {
+function squadReadyStatus() {
   if (!isInSquad.get() || isSquadLeader.get())
     return { watch = [isSquadLeader, isInSquad] }
   let ready = myExtSquadData.ready
-  function updateReady() {
-    myExtSquadData.ready.set(!ready.get())
-    if (!ready.get() && isInQueue.get())
-      leaveQueue()
-  }
   return {
     watch = [showCursor, ready, isSquadLeader, isInSquad]
-    children = textButtonSmall(ready.get() ? loc("Set not ready") : loc("mainmenu/btnReady"),
-      ready.get() ? updateReady : mkCheckEquipmentStateHandler(updateReady),
-      {
-        behavior = showCursor.get() ? Behaviors.Button : null
-      }.__update(!ready.get() ? accentButtonStyle : {style = { TextNormal = BtnTextVisualDisabled }}))
-    }
+    vplace = ALIGN_CENTER
+    children = !ready.get() ? null : mkText(loc("mainmenu/btnReady"), { color = ContactReady })
+  }
 }
 
-let mkUserNickname = @(contact, status) @(){
-  watch = status
+let mkUserNickname = @(contact, status) @() {
+  watch = [status, userInfo, isStreamerMode, playerRandName]
   rendObj = ROBJ_TEXT
-  padding = [0, hdpx(4),0,0]
+  padding = static [0, hdpx(4),0,0]
   color = contact.uid == userInfo.get()?.userId
     ? UserNameColor
     : status.get() ? Active : Inactive
-  text = getContactNick(contact)
+  text = isStreamerMode.get() && contact.userId == userInfo.get().userId.tostring()
+    ? playerRandName.get()
+    : getContactNick(contact)
 }.__update(sub_txt)
 
 let mkPresenceIcon = memoize(@(status, fontSize=presenceIconHeight) @() {
@@ -76,7 +88,7 @@ function contactActionButton(action, userId, sf) {
   let isVisible = action.mkIsVisible(userId)
   return @() {
     watch = isVisible
-    margin = [0,0,hdpx(2), 0]
+    margin = static [0,0,hdpx(2), 0]
     skipDirPadNav = true
     children = (isVisible.get() && (sf & S_HOVER))
       ? textButtonSmall(locByPlatform(action.locId), @() action.action(userId), { key = userId, skipDirPadNav = true })
@@ -149,7 +161,7 @@ let mkCommonStatusBlock = @(contact, status) function() {
     }.__update(fontawesome, iconParams))
   if (textParams) {
     if (needReadyBtn)
-      children.append(squadReadyButton)
+      children.append(squadReadyStatus)
     else
       children.append({
         rendObj = ROBJ_TEXT
@@ -171,14 +183,14 @@ let mkTeammateColorLine = @(name, override = {}) function () {
   if (colorIdx == null)
     return {
       watch = orderedTeamNicks
-      size = [hdpx(4), flex()]
+      size = static [hdpx(4), flex()]
     }
   let color = TeammateColor[colorIdx]
   return {
     watch = orderedTeamNicks
     rendObj = ROBJ_SOLID
-    size = [hdpx(6), flex()]
-    margin = [hdpx(1), 0]
+    size = static [hdpx(6), flex()]
+    margin = static [hdpx(1), 0]
     color
   }.__update(override)
 }
@@ -218,7 +230,7 @@ function mkCommonContactBlock(contact, inContactActions, contextMenuActions) {
     gap = hdpx(4)
     sound = buttonSound
     children = [
-      mkTeammateColorLine(getContactNick(contact), { margin = 0, size = [hdpx(4), flex()]})
+      mkTeammateColorLine(getContactNick(contact), { margin = 0, size = static [hdpx(4), flex()]})
       {
         size = flex()
         children = [
@@ -232,10 +244,10 @@ function mkCommonContactBlock(contact, inContactActions, contextMenuActions) {
             }
             return {
               watch = isGamepad
-              size = [flex(), hdpx(29)]
+              size = static [flex(), hdpx(29)]
               vplace = ALIGN_BOTTOM
               valign = ALIGN_CENTER
-              padding = [0, hdpx(1),0,0]
+              padding = static [0, hdpx(1),0,0]
               children = [
                 mkCommonStatusBlock(contact, status)
                 !isGamepad.get() ? actionsButtons : null
@@ -264,7 +276,7 @@ let mkStatusBlock = @(contact, status) function() {
     }.__update(fontawesome, iconParams))
   if (textParams) {
     if (needReadyBtn)
-      children.append(squadReadyButton)
+      children.append(squadReadyStatus)
   }
 
   return {
@@ -274,6 +286,101 @@ let mkStatusBlock = @(contact, status) function() {
     gap = hdpx(4)
     children
   }
+}
+
+
+function mkRaidSelectionNotif() {
+  let selectedRaidBySquadLeader = Computed(@() squadLeaderState.get()?.leaderRaid)
+  return function() {
+    let { raidData = null, isOffline = false } = selectedRaidBySquadLeader.get()
+    if (!isInSquad.get())
+      return { watch = isInSquad }
+    let leaderRaid = raidData
+    if (leaderRaid == null)
+      return {
+        watch = [selectedRaidBySquadLeader, isSquadLeader, isInSquad, hudIsInteractive]
+        vplace = ALIGN_CENTER
+        children = textButtonSmall(isSquadLeader.get() ? loc("missions/selectLeaderRaidWidget") : loc("missions/waitingLeaderSelection"),
+          function() {
+            if (isSquadLeader.get()) {
+              showMsgbox({ text = loc("missions/leaderSelectionRequired") })
+              openMenu(Missions_id)
+            }
+            else
+              showMsgbox({ text = loc("missions/waitingLeaderSelectionDesc") })
+          },
+          { isInteractive = hudIsInteractive.get() })
+      }
+    return {
+      watch = [selectedRaidBySquadLeader, isSquadLeader, isInSquad, hudIsInteractive]
+      size = FLEX_V
+      vplace = ALIGN_CENTER
+      children = button({
+        flow = FLOW_HORIZONTAL
+        gap = static hdpx(4)
+        valign = ALIGN_CENTER
+        children = [
+          static faComp("star", {
+            color = ContactLeader
+            fontSize = statusIconHeight
+          })
+          mkText(loc(leaderRaid.locId))
+          isOffline ? mkOfflineRaidIcon({ fontSize = statusIconHeight, color = ContactLeader }) : null
+        ]
+      },
+        function() {
+          let isNexus = leaderRaid?.extraParams.nexus ?? false
+          selectedPlayerGameModeOption.set(isNexus ? GameMode.Nexus : GameMode.Raid)
+          selectedRaid.set(leaderRaid)
+          prevSelectedZonesPerGameMode[selectedPlayerGameModeOption.get()] <- leaderRaid
+          openMenu(Missions_id)
+        },
+        {
+          size = [SIZE_TO_CONTENT, smallContactHeight]
+          padding = static [0, hdpx(4)]
+          onHover = @(on) setTooltip(on ? loc("missions/squadLeaderRaid") : null)
+          isInteractive = hudIsInteractive.get()
+        }.__update(accentButtonStyle))
+    }
+  }
+}
+
+function makeTeammateHoverHint(data, contact) {
+  let { ribbons = null, mainAlter = null, level = 0, weaponsList = null, attachedEquipment = null } = data
+  if (!ribbons || !mainAlter || !weaponsList || !attachedEquipment)
+    return null
+
+  let suitType = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(mainAlter)?.getCompValNullable("suit__suitType") ?? 0
+  let animchar = suitType == 0 ? "am_trooper_empty_model_male_char" : "am_trooper_empty_model_female_char"
+  let ribbonColors = {
+    primaryColor = get_color_as_array_by_index(ribbons.primary)
+    secondaryColor = get_color_as_array_by_index(ribbons.secondary)
+  }
+  let content = tooltipBox({
+    flow = FLOW_HORIZONTAL
+    gap = static hdpx(10)
+    children = [
+      {
+        flow = FLOW_VERTICAL
+        halign = ALIGN_CENTER
+        children = [
+          function() {
+            let name = isStreamerMode.get() && contact.userId == userInfo.get().userId.tostring()
+              ? playerRandName.get()
+              : getContactNick(contact)
+            return {
+              watch = [isStreamerMode, playerRandName]
+              children = mkText(name, h2_txt)
+            }
+          }
+          mkText($"{loc("player_progression/currentLevel")} : {level + 1}", body_txt)
+          mkHeroDoll(animchar, mkIconAttachments(attachedEquipment, ribbonColors), static [hdpx(400), hdpx(596)], null, ribbonColors)
+        ]
+      }
+      mkEquipmentWeaponsSmall(weaponsList)
+    ]
+  })
+  return content
 }
 
 
@@ -305,18 +412,24 @@ function mkContactWidgetBlock(contact, contextMenuActions, isEnable) {
   return @() {
     watch = [stateFlags, isEnable, contacts, showCursor]
     rendObj = ROBJ_WORLD_BLUR_PANEL
-    size = [SIZE_TO_CONTENT, hdpx(30)]
+    size = static [SIZE_TO_CONTENT, smallContactHeight]
     fillColor = ((stateFlags.get() & S_HOVER) !=0) && showCursor.get()? mul_color(BtnBgHover, 0.3) : 0x01111111
     borderColor = BtnBgHover
     borderWidth = ((stateFlags.get() & S_HOVER) !=0 ) && showCursor.get() ? hdpx(1) : null
-    padding = [0, hdpx(4), 0, hdpx(1)]
+    padding = static [0, hdpx(4), 0, hdpx(1)]
     behavior = isEnable.get() ? Behaviors.Button : null,
     valign = ALIGN_CENTER
     onClick = onContactClick
     onElemState = @(sf) stateFlags.set(sf)
     sound = buttonSound
     flow = FLOW_HORIZONTAL
-    gap = hdpx(4)
+    gap = static hdpx(4)
+    onHover = function(on) {
+      let data = allMembersState.get()?[contact.uid].playersData
+      if (data == null)
+        return
+      setTooltip(!on ? null : makeTeammateHoverHint(data, contact))
+    }
     children = [
       mkTeammateColorLine(getContactNick(contact))
       mkStatusBlock(contact, status)
@@ -326,6 +439,7 @@ function mkContactWidgetBlock(contact, contextMenuActions, isEnable) {
 }
 
 return {
+  mkRaidSelectionNotif
   mkContactWidgetBlock
   mkCommonContactBlock
   mkTeammateColorLine

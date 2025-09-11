@@ -67,3 +67,13 @@ struct EventShellOnHumanCreateBlood
 struct AmbientBloodOnScreenRender
   source_pos : float3
   source_norm : float3
+
+[cpp_event(unicast)]
+struct EventOnHitBloodFx
+  pos : float3
+  norm : float3
+  hit_dir : float3
+  shell_id : int
+  coll_node : int
+  projectile_eid : EntityId
+  blood_splash : HitBloodType

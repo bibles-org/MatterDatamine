@@ -1,16 +1,16 @@
+from "%ui/hud/state/interactive_state.nut" import removeInteractiveElement, switchInteractiveElement
+from "%ui/fonts_style.nut" import sub_txt, body_txt
+from "%ui/components/colors.nut" import ConsoleFillColor, InfoTextDescColor, TextHighlight
+from "%ui/components/commonComponents.nut" import mkText, mkTextArea
+from "%ui/components/button.nut" import button
+from "%ui/components/uiHotkeysHint.nut" import mkHintRow
 from "math" import PI, sin, cos, min, tan, abs, sqrt
 from "%sqstd/underscore.nut" import partition
 from "%ui/ui_library.nut" import *
 
-let { h2_txt, body_txt } = require("%ui/fonts_style.nut")
-let { ConsoleFillColor } = require("%ui/components/colors.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
+let { showCursor } = require("%ui/cursorState.nut")
 let JB = require("%ui/control/gui_buttons.nut")
-let { button } = require("%ui/components/button.nut")
-let { removeInteractiveElement, hudIsInteractive,
-  switchInteractiveElement } = require("%ui/hud/state/interactive_state.nut")
 let { isGamepad } = require("%ui/control/active_controls.nut")
-let { mkHintRow } = require("%ui/components/uiHotkeysHint.nut")
 
 
 
@@ -19,6 +19,8 @@ let { mkHintRow } = require("%ui/components/uiHotkeysHint.nut")
 
 
 
+
+#allow-auto-freeze
 
 let hotkeyKbdMap = ["1","2","3","4","5","6","7","8","9","0","-","=",
   "L.Shift 1","L.Shift 2", "L.Shift 3", "L.Shift 4", "L.Shift 5", "L.Shift 6", "L.Shift 7", "L.Shift 8", "L.Shift 9", "L.Shift 0", "L.Shift -", "L.Shift =",
@@ -36,18 +38,18 @@ let cfgByAmount = {
 }
 
 const QuickMenuId = "QuickMenu"
-let vGap = hdpx(4)
+let vGap = hdpx(6)
 
 
-let itemTxtHgt = calc_str_box(mkText("A", body_txt))[1]
+
+#forbid-auto-freeze
 let usedPieMenus = {}
+#allow-auto-freeze
 
 function mkFramedHotkey(hotkey, handler=null) {
   return {
-    padding = [hdpx(1), hdpx(5)]
     hotkeys = handler!=null ? [[hotkey, {action=handler, description={skip=true}}]] : null
-    pos = [0, hdpx(2)]
-    children = mkHintRow(hotkey)
+    children = mkHintRow(hotkey, { fontSize = sub_txt.fontSize })
   }
 }
 
@@ -59,13 +61,30 @@ function mkHotkeyWithText(hotkey, text, handler=null) {
     valign = ALIGN_CENTER
     children = [
       hotkeyComp
-      mkText(text, body_txt)
+      mkText(text, { color = InfoTextDescColor })
     ]
   }
 }
 
+let mkEmptyBlock = @(emptyHint, header, hotkeysComp) emptyHint == null ? null : {
+  rendObj = ROBJ_WORLD_BLUR_PANEL
+  size = [hdpx(200), SIZE_TO_CONTENT]
+  fillColor = ConsoleFillColor
+  padding = hdpx(10)
+  margin = sh(10)
+  halign = ALIGN_CENTER
+  flow = FLOW_VERTICAL
+  gap = vGap
+  hplace = ALIGN_RIGHT
+  vplace = ALIGN_BOTTOM
+  children = [
+    header != null ? mkText(header, { color = TextHighlight }.__merge(body_txt)) : null
+    mkTextArea(emptyHint, { halign = ALIGN_CENTER })
+    hotkeysComp
+  ]
+}
 
-function mkQMenu(getPieMenuItems, close, id, header=null) {
+function mkQMenu(getPieMenuItems, close, id, header = null, emptyHint = null) {
   assert(id not in usedPieMenus, $"{id} already registered!")
   usedPieMenus[id] <- true
 
@@ -83,71 +102,77 @@ function mkQMenu(getPieMenuItems, close, id, header=null) {
     halign = ALIGN_CENTER
     children = [
       mkHotkeyWithText("Esc", loc("mainmenu/btnClose")),
-      id == "EmotesUI" ? null : mkHotkeyWithText("@HUD.Interactive", loc("controls/HUD.Interactive"))
+      id == "EmotesUI" || id == "grenadeSelectionWnd" ? null
+        : mkHotkeyWithText("@HUD.Interactive", loc("controls/HUD.Interactive"))
     ]
   }
 
   let mkMkItem = @(params=null) function(item, idx) {
-    let {action, text, hotkey_idx=null, icon=null, iconAspectRatio = null} = item
+    let {action, text, hotkey_idx = null, icon = null } = item
+    let stateFlags = Watched(0)
+    let group = ElemGroup()
     let total = getPieMenuItems().len()
     let hotkey = isGamepad.get() ? cfgByAmount?[total][hotkey_idx] ?? cfgByAmount[8]?[hotkey_idx]
       : hotkeyKbdMap?[hotkey_idx]
-    let btnText = mkText(text, body_txt)
+    let btnText = mkText(text, {
+      size = FLEX_H
+      behavior = Behaviors.Marquee
+      scrollOnHover = true
+      speed = hdpx(50)
+      group
+    })
+
     function onClick() {
       action()
       close()
     }
     let hotkeyComp = hotkey!= null ? mkFramedHotkey(hotkey, onClick) : null
-    let iconComp = icon==null ? null : {
-      rendObj = ROBJ_IMAGE
-      size = [iconAspectRatio==null ? itemTxtHgt : iconAspectRatio*itemTxtHgt, itemTxtHgt]
-      image = Picture(icon)
-    }
+
     return @() {
-      watch = hudIsInteractive
+      watch = showCursor
+      size = FLEX_H
       children = button(
         {
-          minWidth = sw(15)
+          size = FLEX_H
           flow = FLOW_HORIZONTAL
-          gap = hdpx(10)
+          gap = hdpx(4)
           valign = ALIGN_CENTER
-          padding = [hdpx(1), hdpx(4)]
-          children = [iconComp, btnText, hotkeyComp]
-        }.__update(params ?? {})
+          vplace = ALIGN_CENTER
+          children = [icon, btnText, hotkeyComp]
+        }.__update(params)
         onClick,
         {
-          padding = hdpx(4)
-          isInteractive = hudIsInteractive.get()
+          size = FLEX_H
+          padding = static [hdpx(2), hdpx(4)]
+          isInteractive = showCursor.get()
           key = idx
-        }
+          stateFlags
+        }, group
       )
     }
   }
-  let mkLeftItem = mkMkItem({hplace = ALIGN_RIGHT, halign = ALIGN_RIGHT})
+  let mkLeftItem = mkMkItem({hplace = ALIGN_RIGHT})
   let mkRightItem = mkMkItem({})
-  let mkTopItem = mkMkItem({halign = ALIGN_CENTER})
-  let mkBottomItem = mkMkItem({halign = ALIGN_CENTER})
 
   function mkColumn(items, left = false) {
     return {
+      size = static [hdpx(250), SIZE_TO_CONTENT]
       flow = FLOW_VERTICAL
       gap = vGap
       children = items.map(left ? mkLeftItem : mkRightItem)
     }.__update(left ? {halign = ALIGN_RIGHT} : {})
   }
 
-  let gapElem = {size = [0, hdpx(10)]}
-
   return function() {
     let pieMenuItems = getPieMenuItems().map(@(v, idx) v.__merge({hotkey_idx = idx}))
     let n = pieMenuItems.len()
-    if (n==0)
-      return null
+    if (n == 0)
+      return mkEmptyBlock(emptyHint, header, hotkeysComp)
     let bottomElem = n==4 || n==6 ? pieMenuItems[pieMenuItems.len()-1] : null
-    let topElem = (n%2==1 && n<14) || n==4 || n==6 ? pieMenuItems[0] : null
-    let itemsForCols = topElem || bottomElem ? pieMenuItems.slice(topElem ? 1 : 0, bottomElem ? n-1 : n) : pieMenuItems
+    let itemsForCols = bottomElem ? pieMenuItems.slice(0, bottomElem ? n-1 : n) : pieMenuItems
     let [leftItems, rightItems] = partition(itemsForCols, @(_, idx) idx%2==0)
     return {
+      watch = isGamepad
       size = flex()
       onDetach = @() removeInteractiveElement(QuickMenuId)
       behavior = DngBhv.ActivateActionSet
@@ -155,30 +180,25 @@ function mkQMenu(getPieMenuItems, close, id, header=null) {
       padding = sh(10)
       halign = ALIGN_RIGHT
       valign = ALIGN_BOTTOM
-      watch = isGamepad
       children = [
         {
           rendObj = ROBJ_WORLD_BLUR_PANEL
           fillColor = ConsoleFillColor
-          padding = hdpx(10)
+          padding = [hdpx(4), hdpx(10)]
           halign = ALIGN_CENTER
           flow = FLOW_VERTICAL
           gap = vGap
           children = [
-            header !=null ? mkText(header, h2_txt) : null
-            gapElem
-            topElem ? { children = mkTopItem(topElem, 0) hplace = ALIGN_CENTER} : null
+            header != null ? mkText(header, { color = TextHighlight }.__merge(body_txt)) : null
             {
               flow = FLOW_HORIZONTAL
-              gap = hdpx(20)
+              gap = hdpx(10)
               children = [mkColumn(leftItems, true), mkColumn(rightItems)]
             }
-            bottomElem ? { children = mkBottomItem(bottomElem, n-1) hplace = ALIGN_CENTER} : null
-            gapElem
             hotkeysComp
           ]
         },
-        {hotkeys = [[$"Esc | {JB.B}", {action = close, description=loc("mainmenu/btnClose")}]], eventHandlers}
+        {hotkeys = [[$"^Esc | {JB.B}", {action = close, description=loc("mainmenu/btnClose")}]], eventHandlers}
       ]
     }
   }

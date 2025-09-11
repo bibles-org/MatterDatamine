@@ -19,7 +19,7 @@ lootable_rendinst{
   ri_extra__bboxMin:p3=0, 0, 0
   ri_extra__bboxMax:p3=0, 0, 0
   loot_drop_system__lootPreset:t=""
-  loot_drop_system_delayed_loot_generation__generated:b=no
+  loot_drop_system__generated:b=no
   item__useActionHintType:i=1
   item_world_marker__offset:p3=0, 0, 0
   item_world_marker__riColliderPoint:p3=0.5, 0.6, 0.5
@@ -34,6 +34,8 @@ lootable_rendinst{
     value:i64=-1
   }
 
+  "loot_drop_system__generatedItems:list<eid>"{}
+  "loot_drop_system_delayed_loot_generation:tag"{}
   "net_sound__descs:shared:object"{
     "start_search:object"{
       path:t="player/walker/am_trooper_male/items/healing/pick"
@@ -62,6 +64,24 @@ infinite_lootable_rendinst{
   lootable_rendinst__infiniteLoot:b=yes
 }
 
+destructible_lootable_rendinst{
+  _use:t="lootable_rendinst"
+  loot_drop_system__dropPreset:t="drop_phys_in_collres_preset"
+  itemContainer__dropPreset:t="drop_phys_items_in_collres_preset"
+
+  "loot_drop_system__dropRequestOnRiDestruction:tag"{}
+  "destructible_lootable_rendinst:tag"{}
+}
+
+placeable_destructible_lootable_rendinst{
+  _use:t="rendinst"
+  _use:t="destructible_lootable_rendinst"
+
+  "isRendinstDestr:tag"{
+    _tags:t="render"
+  }
+}
+
 search_lootable_rendinst_invoice{
   _use:t="base_interactable_invoice"
   interactable_invoice__available:b=no
@@ -81,6 +101,7 @@ lootable_rendinst_manager{
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   lootable_rendinsts__allowSpawnInForbiddenZone:b=no
   lootable_rendinsts__restrictToBoundingBox:b=no
+  lootable_rendinsts__defaultZoneSphere:p4=0, 0, 0, 0
 
   "lootable_rendinsts__list:array"{}
 }
@@ -91,7 +112,7 @@ sample_box_lootable_rendinst{
   _replicated:t="transform"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   ri_extra__name:t="ammunition_box_g"
-  human_inventory__maxVolume:r=10
+  human_inventory__maxVolume:i=100
   loot_drop_system__lootPreset:t="civil_loot_preset"
   loot_drop_system__dropPreset:t="drop_in_owner_pos_preset"
 
@@ -104,7 +125,7 @@ sample_box2_lootable_rendinst{
   _replicated:t="transform"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   ri_extra__name:t="ammunition_box_e"
-  human_inventory__maxVolume:r=5
+  human_inventory__maxVolume:i=50
   loot_drop_system__lootPreset:t="soviet_equipment_t3_loot_preset"
   loot_drop_system__dropPreset:t="drop_in_owner_pos_preset"
 

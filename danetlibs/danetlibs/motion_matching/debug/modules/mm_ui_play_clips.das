@@ -5,6 +5,8 @@ require ecs
 require ECSGlobalTags
 require DagorTime
 require DagorConsole
+require DagorDataBlock
+require DagorSystem
 require MotionMatching
 require imgui
 require imgui/imgui_boost
@@ -74,6 +76,12 @@ def get_clip_id_by_name(data_base : AnimationDataBase const?; name : string)
       return i
   return -1
 
+def set_time_speed(time_speed : float)
+  // todo: we shouldn't be dependent on anim replay
+  dgs_get_settings() |> datablock_get_block("animReplay") <| $(blk)
+    let timeSpeedCommand = blk |> datablock_getStr("timeSpeedCommand", "app.timeSpeed")
+    console_command("{timeSpeedCommand} {time_speed}")
+
 def pause_on_transition(imgui_state_eid : EntityId; data_base : AnimationDataBase const?)
   static_let <|
     var lastHistoryIdx = -1
@@ -108,7 +116,7 @@ def pause_on_transition(imgui_state_eid : EntityId; data_base : AnimationDataBas
       imgui::SameLine()
       TextColored(float4(1., 0., 0., 1.), "Not found")
     if mm_clips__pausedOnTransition && imgui::Button("unpause")
-      console_command("app.timeSpeed 1")
+      set_time_speed(1f)
       mm_clips__pausedOnTransition = false
     let historyLen = length(mm_clips_history)
     if historyLen < 2 || mm_clips_historyIndex.y == lastHistoryIdx
@@ -121,7 +129,7 @@ def pause_on_transition(imgui_state_eid : EntityId; data_base : AnimationDataBas
     if ((mm_clips__pauseOnTransitionFromIdx == prevClipFrame.x && mm_clips__pauseOnTransitionToIdx == curClipFrame.x) ||
         (mm_clips__pauseOnTransitionFromIdx == prevClipFrame.x && mm_clips__pauseOnTransitionToIdx == -1) ||
         (mm_clips__pauseOnTransitionFromIdx == -1 && mm_clips__pauseOnTransitionToIdx == curClipFrame.x))
-      console_command("app.timeSpeed 0")
+      set_time_speed(0f)
       mm_clips__pausedOnTransition = true
       lastHistoryIdx = mm_clips_historyIndex.y
 
@@ -139,15 +147,22 @@ def available_animation_sliders(data_base : AnimationDataBase const?;
                                 var clip_frame_pair : int2&)
   static_let <|
     var animationPlaySpeed = 1f
+  static_let_finalize <|
+    var clipFilter = new ImGuiTextFilter
 
   if safe_slider("animation play speed", animationPlaySpeed, 0f, 2f) && animation_play_mode == int(AnimationPlayMode.CONTINUOUS)
     anim_play_speed = animationPlaySpeed
-    console_command("app.timeSpeed {animationPlaySpeed}")
+    set_time_speed(animationPlaySpeed)
+  imgui::Text("Filter:")
+  imgui::SameLine()
+  *clipFilter |> Draw("##clipFilter")
 
   imgui::BeginChild("animation_list", float2(0, 0), ImGuiChildFlags.None, ImGuiWindowFlags.None)
   resize(clip_progress, length(data_base.clips))
   let curClipIdx = controller |> hasActiveAnimation() ? controller |> getCurrentClip() : -1
   for clip, clipIdx in data_base.clips, iter_range(data_base.clips)
+    if !(*clipFilter |> PassFilter(string(clip.name)))
+      continue
     if animation_play_mode != int(AnimationPlayMode.DISABLED) && curClipIdx == clipIdx
       clip_progress[clipIdx] = controller |> getCurrentFrame()
       if !clip.looped && anim_play_speed > 0.0f && int(clip_progress[clipIdx]) == clip.tickDuration - 1
@@ -224,7 +239,7 @@ def play_clips(character_eid : EntityId; data_base_eid : EntityId; imgui_state_e
           motion_matching__controller |> clearAnimations()
           motion_matching__controller |> playAnimation(clipFramePair.x, clipFramePair.y, false)
           mm_clips_animationPlayMode = mm_clips_animationPlaySpeed > 0.0f ? int(AnimationPlayMode.CONTINUOUS) : int(AnimationPlayMode.ON_PAUSE)
-          console_command("app.timeSpeed {mm_clips_animationPlaySpeed}")
+          set_time_speed(mm_clips_animationPlaySpeed)
           if ecs_has_tag("tools") //console command for time doesn't work in tools, so just disable MM update at all
             query(data_base_eid) <| $ [es] (var main_database__perFrameLimit : int&)
               main_database__perFrameLimit = 0
@@ -242,7 +257,7 @@ def play_clips(character_eid : EntityId; data_base_eid : EntityId; imgui_state_e
         if savedGameState.valid
           restore_mm_game_state(savedGameState, motion_matching__controller, data_base_eid)
           savedGameState.valid = false
-        console_command("app.timeSpeed 1")
+        set_time_speed(1f)
         if ecs_has_tag("tools")
           query(data_base_eid) <| $ [es] (var main_database__perFrameLimit : int&)
             main_database__perFrameLimit = -1

@@ -1,18 +1,19 @@
+from "%ui/hud/tips/continuous_action_tip.nut" import mkContinuousActionTip
+from "%ui/helpers/timers.nut" import mkCountdownTimer
+
 from "%ui/ui_library.nut" import *
 
 let { hackingCorticalVaultFinishAt, hackingCorticalVaultTotalTime } = require("%ui/hud/state/hacking_cortical_vault_state.nut")
-let { mkContinuousActionTip } = require("%ui/hud/tips/continuous_action_tip.nut")
-let { mkCountdownTimer } = require("%ui/helpers/timers.nut")
 
 
-let hackingCorticalVaultTimer = mkCountdownTimer(hackingCorticalVaultFinishAt)
+let hackingCorticalVaultTimer = mkCountdownTimer(hackingCorticalVaultFinishAt, "hackingCorticalVault")
 let hackingCorticalVaultProgress = Computed(@() hackingCorticalVaultTotalTime.get() > 0 ? (1 - (hackingCorticalVaultTimer.get() / hackingCorticalVaultTotalTime.get())) : 0)
 
 let showHackingCorticalVaultProgress = Computed(@() hackingCorticalVaultFinishAt.get() > 0)
 
 let fakeItem = Watched("")
 let hintText = Watched(loc("hint/hacking_cortical_vault"))
-let progressLine = mkContinuousActionTip(hackingCorticalVaultProgress, hackingCorticalVaultTimer, fakeItem, hintText)
+let progressLine = mkContinuousActionTip(hackingCorticalVaultProgress, hackingCorticalVaultTimer, fakeItem, hintText, false)
 
 return function() {
   return {

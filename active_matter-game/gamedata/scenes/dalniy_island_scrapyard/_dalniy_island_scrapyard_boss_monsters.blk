@@ -1,0 +1,41 @@
+entity{
+  _template:t="lev_nav_grid"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [972.196, 74.5, -328.368]]
+  lev_nav_grid__gridSize:ip3=40, 3, 40
+  lev_nav_grid__gridCellRadius:r=3
+}
+
+entity{
+  _template:t="am_mimic_boss"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1009.04, 64.976, -333.695]]
+  beh_tree__debug:b=no
+  beh_tree__enabled:b=yes
+}
+
+entity{
+  _template:t="household_mimic_monster_generator"
+  monster_gen__density:p2=2e-05, 2e-05
+  monster_gen__respawnInterval:r=0.0001
+  monster_gen__spawnInterval:r=0.0001
+  transform:m=[[306.113, 0, 0] [0, 44.5335, 0] [0, 0, 234.626] [972.196, 66.2205, -334.971]]
+}
+
+entity{
+  _template:t="frog_trap_generator"
+  monster_gen__density:p2=0.0001, 0.0001
+  monster_gen__respawnInterval:r=1e-05
+  monster_gen__spawnInterval:r=1e-05
+  transform:m=[[306.113, 0, 0] [0, 44.5335, 0] [0, 0, 234.626] [972.196, 66.2205, -334.971]]
+}
+
+entity{
+  _template:t="am_pile_generator"
+  monster_gen__respawnInterval:r=5e-06
+  monster_gen__spawnInterval:r=5e-06
+  transform:m=[[306.113, 0, 0] [0, 44.5335, 0] [0, 0, 234.626] [972.196, 66.2205, -334.971]]
+
+  "monster_gen__templates:list<t>"{
+    i:t="active_matter_pile+coin_item_count_1+item_in_world"
+    i:t="active_matter_pile+coin_item_count_2+item_in_world"
+  }
+}

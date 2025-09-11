@@ -1,0 +1,1017 @@
+ordinary_equipment_mindcontrolled_land_generator{
+  "equipment_generator__data:object"{
+    "equipments:object"{
+      "suit_mindcontrolled_soldier_a2_item:object"{
+        chance:i=70
+
+        "equipment_backpack:object"{
+          EMPTY:i=50
+          small_sovmod_backpack:i=25
+          medium_sovmod_backpack:i=5
+        }
+
+        "equipment_helmet:object"{
+          EMPTY:i=50
+          helmet_ussr_ssh40_rust:i=20
+          helmet_ussr_ssh40:i=25
+          helmet_d:i=5
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=70
+          armorplate_big_a:i=20
+          armorplate_big_b:i=10
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=50
+          small_pouch:i=40
+          medium_pouch:i=10
+        }
+      }
+
+      "suit_mindcontrolled_soldier_b2_item:object"{
+        chance:i=70
+
+        "equipment_backpack:object"{
+          EMPTY:i=50
+          small_sovmod_backpack:i=25
+          medium_sovmod_backpack:i=5
+        }
+
+        "equipment_helmet:object"{
+          EMPTY:i=50
+          helmet_ussr_ssh40_rust:i=20
+          helmet_ussr_ssh40:i=25
+          helmet_d:i=5
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=70
+          armorplate_big_a:i=20
+          armorplate_big_b:i=10
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=50
+          small_pouch:i=40
+          medium_pouch:i=10
+        }
+      }
+
+      "suit_mindcontrolled_soldier_c_item:object"{
+        chance:i=70
+
+        "equipment_backpack:object"{
+          EMPTY:i=50
+          small_sovmod_backpack:i=25
+          medium_sovmod_backpack:i=5
+        }
+
+        "equipment_helmet:object"{
+          EMPTY:i=50
+          helmet_ussr_ssh40_rust:i=20
+          helmet_ussr_ssh40:i=25
+          helmet_d:i=5
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=70
+          armorplate_big_a:i=20
+          armorplate_big_b:i=10
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=50
+          small_pouch:i=40
+          medium_pouch:i=10
+        }
+      }
+    }
+
+    "main_weapons:array"{
+      "i:object"{
+        templateName:t="pm_63_rak_gun"
+        weight:i=100
+
+        "magazine:object"{
+          pm_63_rak_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          pm_63_rak_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_9mm_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="pp_91_kedr_gun"
+        weight:i=80
+
+        "magazine:object"{
+          pp_91_kedr_20_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          pp_91_kedr_20_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_9mm_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="aks_74u_gun"
+        weight:i=60
+
+        "magazine:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          ak_74_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="tkb_22_gun"
+        weight:i=5
+
+        "magazine:object"{
+          akm_47_bakelite_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          akm_47_bakelite_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="toz_b_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m44_gun"
+        weight:i=80
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m44_rust_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m91_gun"
+        weight:i=80
+
+        "scope:object"{
+          EMPTY:i=70
+          scope_3_5x:i=30
+        }
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m91_rust_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_gun"
+        weight:i=80
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_hunt_gun"
+        weight:i=80
+
+        "scope:object"{
+          EMPTY:i=90
+          scope_pso1:i=10
+        }
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_rust_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_gun"
+        weight:i=80
+
+        "magazine:object"{
+          akm_47_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=90
+          scope_pso1_high:i=10
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_rust_gun"
+        weight:i=100
+
+        "magazine:object"{
+          akm_47_rust_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          akm_47_rust_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="aks_74u_rust_gun"
+        weight:i=100
+
+        "magazine:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          ak_74_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="ak_74_gun"
+        weight:i=60
+
+        "magazine:object"{
+          ak_74_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=90
+          scope_pso1_high:i=10
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          ak_74_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="rpk_74_gun"
+        weight:i=40
+
+        "magazine:object"{
+          rpk_74_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="svd_gun"
+        weight:i=20
+
+        "magazine:object"{
+          svd_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=50
+          scope_pso1:i=50
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          svd_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          box_7_62x54_magazine:i=100
+        }
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="EMPTY"
+        weight:i=100
+      }
+
+      "i:object"{
+        templateName:t="makarov_gun"
+        weight:i=100
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=70
+          makarov_magazine:i=30
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="makarov_rust_gun"
+        weight:i=100
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=70
+          makarov_magazine:i=30
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m1911_colt_gun"
+        weight:i=10
+
+        "magazine:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=70
+          m1911_colt_magazine:i=30
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          box_45_acp_magazine:i=30
+        }
+      }
+    }
+
+    "melee_weapons:object"{
+      EMPTY:i=20
+      mpl50_shovel:i=20
+      sov_knife_nr_40_weapon:i=10
+      axe_weapon:i=20
+      wrench_weapon:i=10
+      screwdriver_a_weapon:i=1
+      screwdriver_b_weapon:i=1
+      chisel_a_weapon:i=1
+      chisel_a_weapon:i=1
+    }
+
+    "trash:array"{
+      "i:object"{
+        "POUCH1:object"{
+          EMPTY:i=50
+          item_civilian_artifact:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=40
+          item_broken_ammo:i=60
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=40
+          item_junk_chemicals_drugs_1:i=60
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=40
+          item_junk_home_small_bandage:i=60
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=20
+          sovmod_flashlight_device:i=60
+          sovmod_diver_flashlight:i=20
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=50
+          corrupted_wrench_item:i=50
+        }
+      }
+    }
+  }
+}
+
+ordinary_equipment_mindcontrolled_mixed_generator{
+  "equipment_generator__data:object"{
+    "equipments:object"{
+      "suit_mindcontrolled_soldier_a2_item:object"{
+        chance:i=70
+
+        "equipment_backpack:object"{
+          EMPTY:i=50
+          small_sovmod_backpack:i=25
+          medium_sovmod_backpack:i=5
+        }
+
+        "equipment_helmet:object"{
+          EMPTY:i=50
+          helmet_ussr_ssh40_rust:i=20
+          helmet_ussr_ssh40:i=25
+          helmet_d:i=5
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=70
+          armorplate_big_a:i=20
+          armorplate_big_b:i=10
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=50
+          small_pouch:i=40
+          medium_pouch:i=10
+        }
+      }
+
+      "suit_mindcontrolled_soldier_b2_item:object"{
+        chance:i=70
+
+        "equipment_backpack:object"{
+          EMPTY:i=50
+          small_sovmod_backpack:i=25
+          medium_sovmod_backpack:i=5
+        }
+
+        "equipment_helmet:object"{
+          EMPTY:i=50
+          helmet_ussr_ssh40_rust:i=20
+          helmet_ussr_ssh40:i=25
+          helmet_d:i=5
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=70
+          armorplate_big_a:i=20
+          armorplate_big_b:i=10
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=50
+          small_pouch:i=40
+          medium_pouch:i=10
+        }
+      }
+
+      "suit_mindcontrolled_soldier_c_item:object"{
+        chance:i=70
+
+        "equipment_backpack:object"{
+          EMPTY:i=50
+          small_sovmod_backpack:i=25
+          medium_sovmod_backpack:i=5
+        }
+
+        "equipment_helmet:object"{
+          EMPTY:i=50
+          helmet_ussr_ssh40_rust:i=20
+          helmet_ussr_ssh40:i=25
+          helmet_d:i=5
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=70
+          armorplate_big_a:i=20
+          armorplate_big_b:i=10
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=50
+          small_pouch:i=40
+          medium_pouch:i=10
+        }
+      }
+
+      "suit_mindcontrolled_snork_a_item:object"{
+        chance:i=70
+
+        "equipment_backpack:object"{
+          EMPTY:i=50
+          small_sovmod_backpack:i=25
+          medium_sovmod_backpack:i=5
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=70
+          armorplate_big_a:i=20
+          armorplate_big_b:i=10
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=50
+          small_pouch:i=40
+          medium_pouch:i=10
+        }
+      }
+
+      "suit_mindcontrolled_snork_a2_item:object"{
+        chance:i=70
+
+        "equipment_backpack:object"{
+          EMPTY:i=50
+          small_sovmod_backpack:i=25
+          medium_sovmod_backpack:i=5
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=70
+          armorplate_big_a:i=20
+          armorplate_big_b:i=10
+        }
+
+        "equipment_pouch:object"{
+          EMPTY:i=50
+          small_pouch:i=40
+          medium_pouch:i=10
+        }
+      }
+    }
+
+    "main_weapons:array"{
+      "i:object"{
+        templateName:t="pm_63_rak_gun"
+        weight:i=100
+
+        "magazine:object"{
+          pm_63_rak_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          pm_63_rak_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_9mm_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="pp_91_kedr_gun"
+        weight:i=80
+
+        "magazine:object"{
+          pp_91_kedr_20_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          pp_91_kedr_20_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_9mm_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="aks_74u_gun"
+        weight:i=60
+
+        "magazine:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          ak_74_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="tkb_22_gun"
+        weight:i=5
+
+        "magazine:object"{
+          akm_47_bakelite_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          akm_47_bakelite_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="toz_b_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m44_gun"
+        weight:i=80
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m44_rust_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m91_gun"
+        weight:i=80
+
+        "scope:object"{
+          EMPTY:i=70
+          scope_3_5x:i=30
+        }
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m91_rust_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_gun"
+        weight:i=80
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_hunt_gun"
+        weight:i=80
+
+        "scope:object"{
+          EMPTY:i=90
+          scope_pso1:i=10
+        }
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_rust_gun"
+        weight:i=100
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_gun"
+        weight:i=80
+
+        "magazine:object"{
+          akm_47_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=90
+          scope_pso1_high:i=10
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_rust_gun"
+        weight:i=100
+
+        "magazine:object"{
+          akm_47_rust_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          akm_47_rust_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="aks_74u_rust_gun"
+        weight:i=100
+
+        "magazine:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          ak_74_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="ak_74_gun"
+        weight:i=60
+
+        "magazine:object"{
+          ak_74_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=90
+          scope_pso1_high:i=10
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          ak_74_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="rpk_74_gun"
+        weight:i=40
+
+        "magazine:object"{
+          rpk_74_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+      }
+
+      "i:object"{
+        templateName:t="svd_gun"
+        weight:i=20
+
+        "magazine:object"{
+          svd_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=50
+          scope_pso1:i=50
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=50
+          svd_magazine:i=50
+        }
+
+        "POUCH2:object"{
+          box_7_62x54_magazine:i=100
+        }
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="EMPTY"
+        weight:i=100
+      }
+
+      "i:object"{
+        templateName:t="makarov_gun"
+        weight:i=100
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=70
+          makarov_magazine:i=30
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="makarov_rust_gun"
+        weight:i=100
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=70
+          makarov_magazine:i=30
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m1911_colt_gun"
+        weight:i=10
+
+        "magazine:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=70
+          m1911_colt_magazine:i=30
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          box_45_acp_magazine:i=30
+        }
+      }
+    }
+
+    "melee_weapons:object"{
+      EMPTY:i=20
+      mpl50_shovel:i=20
+      sov_knife_nr_40_weapon:i=10
+      axe_weapon:i=20
+      wrench_weapon:i=10
+      screwdriver_a_weapon:i=1
+      screwdriver_b_weapon:i=1
+      chisel_a_weapon:i=1
+      chisel_a_weapon:i=1
+    }
+
+    "trash:array"{
+      "i:object"{
+        "POUCH1:object"{
+          EMPTY:i=50
+          item_civilian_artifact:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=40
+          item_broken_ammo:i=60
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=40
+          item_junk_chemicals_drugs_1:i=60
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=40
+          item_junk_home_small_bandage:i=60
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=20
+          sovmod_flashlight_device:i=60
+          sovmod_diver_flashlight:i=20
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=50
+          corrupted_wrench_item:i=50
+        }
+      }
+    }
+  }
+}

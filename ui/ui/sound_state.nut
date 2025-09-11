@@ -1,4 +1,5 @@
-let {nestWatched} = require("%dngscripts/globalState.nut")
+from "%dngscripts/globalState.nut" import nestWatched
+
 
 let soundOutputDevicesList = nestWatched("soundOutputDevicesList", [])
 let soundOutputDevicesListUpdate = @(v) soundOutputDevicesList.set(v)

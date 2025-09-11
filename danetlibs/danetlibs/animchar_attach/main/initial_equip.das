@@ -12,8 +12,7 @@ require danetlibs.animchar_attach.main.attach_events
 def skeleton_attach_with_remap_parent_impl(eid : EntityId;
                                            skeleton_attach__remapParentSlots : StringList;
                                            human_equipment__slots : Object;
-                                           var slot_attach__attachedTo : EntityId&;
-                                           var skeleton_attach__attachedTo : EntityId&;
+                                           var animchar_attach__attachedTo : EntityId&;
                                            invalid_parent_eid = INVALID_ENTITY_ID)
   for slotName in skeleton_attach__remapParentSlots
     let possibleParent = human_equipment__slots[string(slotName)] ?as Object
@@ -24,16 +23,15 @@ def skeleton_attach_with_remap_parent_impl(eid : EntityId;
     if (!!possibleParentEid &&
         possibleParentEid != invalid_parent_eid &&
         has(possibleParentEid, "skeleton_attach__remapAffectSlots"))
-      if slot_attach__attachedTo != possibleParentEid
+      if animchar_attach__attachedTo != possibleParentEid
 
-        var list = getRW_ecs_EidList(slot_attach__attachedTo, "attaches_list")
+        var list = getRW_ecs_EidList(animchar_attach__attachedTo, "attaches_list")
         if list != null // remove eid from list for fix twitching attaches on change
           let idx = find_index(*list, eid)
           if idx >= 0
             erase(*list, idx)
 
-        slot_attach__attachedTo = possibleParentEid
-        skeleton_attach__attachedTo = possibleParentEid
+        animchar_attach__attachedTo = possibleParentEid
         sendEventImmediate(eid, CmdInitSkeletonAttach())
       return
 
@@ -47,21 +45,19 @@ def remap_parent_reinit_impl(parent_attached_to : EntityId;
       let affectSlot = human_equipment__slots[string(slotName)] ?as Object
       let affectEid = affectSlot?.item ?? INVALID_ENTITY_ID
       query(affectEid) <| $ [es(REQUIRE=skeletonAttachInited)] (skeleton_attach__remapParentSlots : StringList;
-                                                                var slot_attach__attachedTo aka child_slot_attach__attachedTo : EntityId&;
-                                                                var skeleton_attach__attachedTo : EntityId&)
+                                                                var animchar_attach__attachedTo aka child_animchar_attach__attachedTo : EntityId&)
         skeleton_attach_with_remap_parent_impl(affectEid,
                                                skeleton_attach__remapParentSlots,
                                                human_equipment__slots,
-                                               child_slot_attach__attachedTo,
-                                               skeleton_attach__attachedTo,
+                                               child_animchar_attach__attachedTo,
                                                invalid_parent_eid)
 
 
 [es(tag=server, REQUIRE=skeletonAttachInited, on_appear)]
 def skeleton_attach_with_remap_parent_reinit(evt : Event;
-                                             slot_attach__attachedTo : EntityId;
+                                             animchar_attach__attachedTo : EntityId;
                                              skeleton_attach__remapAffectSlots : StringList)
-  remap_parent_reinit_impl(slot_attach__attachedTo, skeleton_attach__remapAffectSlots)
+  remap_parent_reinit_impl(animchar_attach__attachedTo, skeleton_attach__remapAffectSlots)
 
 
 def remove_node_from_remap_list(nodeName : string;
@@ -103,23 +99,23 @@ def skeleton_attach_remove_remap_node_es(evt : Event;
 def skeleton_attach_with_remap_parent_reinit_remap_track(evt : Event;
                                                          eid : EntityId;
                                                          attaches_list : EidList;
-                                                         skeleton_attach__attachedTo : EntityId;
+                                                         animchar_attach__attachedTo : EntityId;
                                                          var animchar : AnimcharBaseComponent&;
                                                          var skeleton_attach__skeletonRecalcBranch : UInt8List;
                                                          var skeleton_attach__skeletonRemap : UInt16List)
-  query(skeleton_attach__attachedTo) <| $ [es(REQUIRE=animchar)] ()
+  query(animchar_attach__attachedTo) <| $ [es(REQUIRE=animchar)] ()
     sendEventImmediate(eid, CmdInitSkeletonAttach())
   skeleton_attach_with_remap_parent_remap_impl(attaches_list, animchar,
                                                skeleton_attach__skeletonRecalcBranch,
                                                skeleton_attach__skeletonRemap)
 
 
-[es(tag=gameClient, track=skeleton_attach__attachedTo, REQUIRE=(skeleton_attach__skeletonRemap, skeleton_attach__remapParentSlots))]
+[es(tag=gameClient, REQUIRE=skeleton_attach__attached, track=animchar_attach__attachedTo, REQUIRE=(skeleton_attach__skeletonRemap, skeleton_attach__remapParentSlots))]
 def skeleton_attach_with_remap_parent_reinit_attach_track(evt : Event;
                                                           eid : EntityId;
-                                                          skeleton_attach__attachedTo : EntityId)
+                                                          animchar_attach__attachedTo : EntityId)
   var parentFound = false
-  query(skeleton_attach__attachedTo) <| $ [es(REQUIRE=animchar)] ()
+  query(animchar_attach__attachedTo) <| $ [es(REQUIRE=animchar)] ()
     sendEventImmediate(eid, CmdInitSkeletonAttach())
     parentFound = true
   if !parentFound // for case we change parent when async added sub template
@@ -138,21 +134,19 @@ def skeleton_attach_with_remap_parent_reinit_remap_init(evt : Event;
 [es(tag=server, REQUIRE=skeletonAttachInited, on_disappear)]
 def skeleton_attach_with_remap_parent_disappear(evt : Event;
                                                 eid : EntityId;
-                                                slot_attach__attachedTo : EntityId;
+                                                animchar_attach__attachedTo : EntityId;
                                                 skeleton_attach__remapAffectSlots : StringList)
-  remap_parent_reinit_impl(slot_attach__attachedTo, skeleton_attach__remapAffectSlots, eid)
+  remap_parent_reinit_impl(animchar_attach__attachedTo, skeleton_attach__remapAffectSlots, eid)
 
 
-[es(tag=server, on_appear, REQUIRE=skeletonAttachInited, track=slot_attach__attachedTo)]
+[es(tag=server, on_appear, REQUIRE=skeletonAttachInited, track=animchar_attach__attachedTo)]
 def skeleton_attach_with_remap_parent(evt : Event;
                                       eid : EntityId;
                                       skeleton_attach__remapParentSlots : StringList;
-                                      var slot_attach__attachedTo : EntityId&;
-                                      var skeleton_attach__attachedTo : EntityId&)
-  let baseParentEid = find_base_attach_parent(slot_attach__attachedTo)
+                                      var animchar_attach__attachedTo : EntityId&)
+  let baseParentEid = find_base_attach_parent(animchar_attach__attachedTo)
   query(baseParentEid) <| $ [es] (human_equipment__slots : Object)
     skeleton_attach_with_remap_parent_impl(eid,
                                            skeleton_attach__remapParentSlots,
                                            human_equipment__slots,
-                                           slot_attach__attachedTo,
-                                           skeleton_attach__attachedTo)
+                                           animchar_attach__attachedTo)

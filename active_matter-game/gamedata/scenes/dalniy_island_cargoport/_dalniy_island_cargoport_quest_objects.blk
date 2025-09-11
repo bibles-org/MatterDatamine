@@ -9,16 +9,16 @@ entity{
 
 entity{
   _template:t="place_for_device_target"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1080.04, 5.76114, 1834.53]]
+  transform:m=[[72.5547, 0, 0] [0, 2.87794, 0] [0, 0, 72.5547] [1080.44, 4.98016, 1835.61]]
   objective_static_target__tag:t="device_cargoport_primary_2"
   map_object_zone__radius:r=40
-  quest_target_geometry_sphere__radius:r=40
+  quest_target_geometry_sphere__radius:r=0
   map_object__show:b=no
 }
 
 entity{
   _template:t="place_for_device_target"
-  transform:m=[[49.682, 0, 0] [0, 9.39544, 0] [0, 0, 68.7406] [1045.78, 6.18459, 1743.47]]
+  transform:m=[[49.682, 0, 0] [0, 5.82745, 0] [0, 0, 68.7406] [1045.78, 3.46182, 1743.47]]
   objective_static_target__tag:t="device_cargoport_primary_3"
   map_object_zone__radius:r=30
   quest_target_geometry_sphere__radius:r=0
@@ -27,19 +27,19 @@ entity{
 
 entity{
   _template:t="place_for_device_target"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [872.719, 5.00006, 1795.65]]
+  transform:m=[[32.1473, 0, 0] [0, 2.8847, 0] [0, 0, 32.1473] [891.445, 4.99577, 1794.78]]
   objective_static_target__tag:t="device_cargoport_primary_4"
-  map_object_zone__radius:r=35
-  quest_target_geometry_sphere__radius:r=35
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=0
   map_object__show:b=no
 }
 
 entity{
   _template:t="place_for_device_target"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1134.41, 5.00012, 1571.46]]
+  transform:m=[[38.6733, 0, 0] [0, 1.66796, 0] [0, 0, 38.6733] [1129.39, 5.0114, 1568.09]]
   objective_static_target__tag:t="device_cargoport_primary_5"
-  map_object_zone__radius:r=25
-  quest_target_geometry_sphere__radius:r=25
+  map_object_zone__radius:r=20
+  quest_target_geometry_sphere__radius:r=0
   map_object__show:b=no
 }
 
@@ -142,14 +142,7 @@ entity{
   objective_static_target__tag:t="cargoport_anomaly_portal_photo_target"
   photographing_target__name:t="photo/cargoport_anomaly_portal"
   map_object_marker__iconName:t="!ui/skin#eye.svg"
-  map_object__show:b=no
-}
-
-entity{
-  _template:t="photographing_stand_target"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [822.719, 49.7403, 2068.15]]
-  objective_static_target__tag:t="cargoport_anomaly_portal_photo_area"
-  map_object_zone__radius:r=20
+  photographing_target__alwaysVisible:b=no
   map_object__show:b=no
 }
 
@@ -219,12 +212,12 @@ entity{
 
 entity{
   _template:t="decor_port_container_door_l"
-  transform:m=[[0.9662, -0.218158, -0.137348] [0.249783, 0.660458, 0.708098] [-0.0637648, -0.718472, 0.692627] [906.815, 79.2532, 1986.81]]
+  transform:m=[[0.9662, -0.218158, -0.137348] [0.249783, 0.660458, 0.708098] [-0.0637648, -0.718472, 0.692627] [908.03, 78.7159, 1985.89]]
 }
 
 entity{
   _template:t="decor_port_container_door_l"
-  transform:m=[[-0.132512, -0.700349, -0.701393] [0.990688, -0.115907, -0.0714324] [-0.0312688, -0.704327, 0.709187] [905.102, 81.0213, 1988.46]]
+  transform:m=[[-0.132512, -0.700349, -0.701393] [0.990688, -0.115907, -0.0714324] [-0.0312688, -0.704327, 0.709187] [906.323, 80.5299, 1987.59]]
 }
 
 entity{
@@ -299,7 +292,7 @@ entity{
 
 entity{
   _template:t="quest_container+locker_openable_ri_sound"
-  transform:m=[[0.999965, 0, -0.00836204] [0, 1, 0] [0.00836204, -0, 0.999965] [1212.5, 17.4722, 1833.19]]
+  transform:m=[[0.999967, 0, 0.0081668] [0, 1, -0] [-0.0081668, 0, 0.999967] [1212.86, 18.0716, 1834.87]]
   ri_extra__name:t="sovindustrial_box_zip_b_type_b"
   openable_ri__closed:t="sovindustrial_box_zip_b_type_b"
   ri_preload__name:t="sovindustrial_box_zip_b_type_b"
@@ -501,4 +494,19 @@ entity{
 entity{
   _template:t="decor_cardboard_box_a_400_broken"
   transform:m=[[0.164529, 0, 0.986372] [0, 1, -0] [-0.986372, 0, 0.164529] [722.932, 7.333, 1677.94]]
+}
+
+entity{
+  _template:t="item_lore_Savushkina_letter1+item_in_world"
+  transform:m=[[-0.534667, 0, 0.845063] [0, 1, 0] [-0.845063, 0, -0.534667] [1183.79, 12.3307, 1630.59]]
+}
+
+entity{
+  _template:t="item_lore_Savushkina_letter2+item_in_world"
+  transform:m=[[0.544141, 0, -0.838994] [0, 1, 0] [0.838994, -0, 0.544141] [1183.38, 7.31961, 1631.53]]
+}
+
+entity{
+  _template:t="item_lore_revvol_to_sokolov+item_in_world"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [740.472, 27.2497, 1341.93]]
 }

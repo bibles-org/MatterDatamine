@@ -10,8 +10,8 @@ require ecs.common
 
 [es(tag=server, on_appear)]
 def skeleton_hide_node_attach_created_es(evt : Event;
-                                         slot_attach__attachedTo : EntityId)
-  let parentEid = find_base_attach_parent(slot_attach__attachedTo)
+                                         animchar_attach__attachedTo : EntityId)
+  let parentEid = find_base_attach_parent(animchar_attach__attachedTo)
   query(parentEid) <| $ [es(REQUIRE=human_equipment__slots)] ()
     sendEvent(parentEid, CmdInitScaleSkeletonAttach())
 

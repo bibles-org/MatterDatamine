@@ -1,6 +1,7 @@
+from "%ui/components/cursors.nut" import setTooltip
+
 from "%ui/ui_library.nut" import *
 
-let {setTooltip} = require("%ui/components/cursors.nut")
 let picSz = fsh(5)
 let { serverResponseError } = require("%ui/matchingClient.nut")
 
@@ -13,12 +14,12 @@ function pic(name) {
 let mkIcon = @(iconName, tipText, isVisibleWatch, color) @() {
     watch = [isVisibleWatch]
     key = iconName
-    children =  isVisibleWatch.value
+    children =  isVisibleWatch.get()
                 ? {
                     flow = FLOW_HORIZONTAL
                     rendObj = ROBJ_SOLID
                     color = Color(0,0,0,200)
-                    size = [picSz * 5, picSz * 1.5]
+                    size = static [picSz * 5, picSz * 1.5]
                     halign = ALIGN_RIGHT
                     valign = ALIGN_CENTER
                     margin = hdpx(5)
@@ -28,19 +29,19 @@ let mkIcon = @(iconName, tipText, isVisibleWatch, color) @() {
                       rendObj = ROBJ_TEXTAREA
                       behavior = Behaviors.TextArea
                       color = color
-                      size = [picSz * 3.2, picSz]
+                      size = static [picSz * 3.2, picSz]
                       halign = ALIGN_CENTER
                       valign = ALIGN_CENTER
                     }
                     {
-                      size = [picSz, picSz]
+                      size = picSz
                       behavior = Behaviors.Button
                       onHover = @(on) setTooltip(on ? loc(tipText, "") : null)
                       image = pic(iconName)
                       rendObj = ROBJ_IMAGE
                       color = color
                       margin = hdpx(15)
-                      animations = [{ prop = AnimProp.opacity, from = 0.5, to = 1.0,
+                      animations = static [{ prop = AnimProp.opacity, from = 0.5, to = 1.0,
                         duration = 1, play = true, loop = true, easing = Blink}]
                     }]
                   }

@@ -1,8 +1,10 @@
+from "dagor.debug" import logerr
+from "%ui/components/colors.nut" import RarityCommon, RarityUncommon, RarityRare, RarityEpic
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { logerr } = require("dagor.debug")
-let { RarityCommon, RarityUncommon, RarityRare, RarityEpic } = require("%ui/components/colors.nut")
+#allow-auto-freeze
 
 let rarityCornerSize = hdpx(20)
 let mkRarityCorner = @(color, override = {}) color == null ? null : {
@@ -16,7 +18,7 @@ let mkRarityCorner = @(color, override = {}) color == null ? null : {
   ]
 }.__update(override)
 
-let rarityColorTable = {
+let rarityColorTable = static {
   common = RarityCommon
   uncommon = RarityUncommon
   rare = RarityRare

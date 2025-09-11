@@ -1,0 +1,468 @@
+entity{
+  _template:t="dagdp_level_settings"
+  dagdp__max_objects:i=40000
+  dagdp__max_meshes:i=2048
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="auto_converted_group__clover_a"
+
+  "dagdp__params:object"{
+    scale:p2=0.7, 0.1
+    rot_y:p2=0, 360
+    orientation:t="world"
+    rot_x:p2=0, 10
+    rot_z:p2=0, 10
+  }
+
+  "dagdp__assets:object"{
+    "clover_a:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="auto_converted_placer__clover_a_0"
+  dagdp__density:r=11
+  dagdp__heightmap_use_decals:b=yes
+
+  "dagdp__object_groups:list<t>"{
+    item:t="auto_converted_group__clover_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=50
+    item:i=28
+    item:i=20
+    item:i=26
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="auto_converted_group__dandelion_a"
+
+  "dagdp__params:object"{
+    scale:p2=0.8, 0.2
+    rot_y:p2=0, 360
+    orientation:t="world"
+    rot_x:p2=0, 10
+    rot_z:p2=0, 10
+  }
+
+  "dagdp__assets:object"{
+    "dandelion_a:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="auto_converted_placer__dandelion_a_0"
+  dagdp__density:r=3
+  dagdp__heightmap_use_decals:b=yes
+
+  "dagdp__object_groups:list<t>"{
+    item:t="auto_converted_group__dandelion_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=50
+    item:i=28
+    item:i=22
+    item:i=26
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="auto_converted_group__ficus"
+
+  "dagdp__params:object"{
+    scale:p2=1, 0.5
+    rot_y:p2=0, 360
+    orientation:t="world"
+  }
+
+  "dagdp__assets:object"{
+    "ficus_a:object"{
+      weight:r=1
+    }
+
+    "ficus_b:object"{
+      weight:r=1
+    }
+
+    "ficus_c:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="auto_converted_placer__ficus_0"
+  dagdp__density:r=0.7
+
+  "dagdp__object_groups:list<t>"{
+    item:t="auto_converted_group__ficus"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=1
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="auto_converted_group__fiddle"
+
+  "dagdp__params:object"{
+    scale:p2=0.9, 0.4
+    rot_y:p2=0, 360
+    orientation:t="world"
+    rot_x:p2=0, 10
+    rot_z:p2=0, 10
+  }
+
+  "dagdp__assets:object"{
+    "fiddle_a:object"{
+      weight:r=0.5
+    }
+
+    "fiddle_b:object"{
+      weight:r=1
+    }
+
+    "fiddle_c:object"{
+      weight:r=1
+    }
+
+    "fiddle_small:object"{
+      weight:r=2
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="auto_converted_placer__fiddle_0"
+  dagdp__density:r=4
+
+  "dagdp__object_groups:list<t>"{
+    item:t="auto_converted_group__fiddle"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=1
+    item:i=2
+    item:i=31
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="auto_converted_group__water_lily_flower_a"
+
+  "dagdp__params:object"{
+    scale:p2=1, 0.3
+    rot_y:p2=0, 360
+    orientation:t="world"
+  }
+
+  "dagdp__assets:object"{
+    "water_lily_flower_a:object"{
+      weight:r=0.5
+    }
+
+    "water_lily_flower_b:object"{
+      weight:r=0.25
+    }
+
+    "water_lily_flower_c:object"{
+      weight:r=0.5
+    }
+
+    "water_lily_flower_d:object"{
+      weight:r=0.5
+    }
+
+    "water_lily_leaf_a:object"{
+      weight:r=1
+    }
+
+    "water_lily_leaf_b:object"{
+      weight:r=1
+    }
+
+    "water_lily_leaf_c:object"{
+      weight:r=1
+    }
+
+    "water_lily_leaf_d:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="auto_converted_placer__water_lily_flower_a_0"
+  dagdp__density:r=0.15
+
+  "dagdp__object_groups:list<t>"{
+    item:t="auto_converted_group__water_lily_flower_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=1
+    item:i=3
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="auto_converted_group__forest_lush_fern_a"
+
+  "dagdp__params:object"{
+    scale:p2=1.5, 0.3
+    rot_y:p2=0, 360
+    orientation:t="world"
+  }
+
+  "dagdp__assets:object"{
+    "forest_lush_fern_a:object"{
+      weight:r=1
+    }
+
+    "forest_lush_fern_b:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="auto_converted_placer__forest_lush_fern_a_0"
+  dagdp__density:r=0.2
+
+  "dagdp__object_groups:list<t>"{
+    item:t="auto_converted_group__forest_lush_fern_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=28
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="auto_converted_group__mushroom_cortinarius_red_a"
+
+  "dagdp__params:object"{
+    scale:p2=2, 0.5
+    rot_y:p2=0, 360
+    orientation:t="world"
+  }
+
+  "dagdp__assets:object"{
+    "mushroom_cortinarius_red_a:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_red_b:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_red_c:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_red_d:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_red_e:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_red_f:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_red_g:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_red_h:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_red_i:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_red_j:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_white_a:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_white_b:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_white_c:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_white_d:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_white_e:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_white_f:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_white_g:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_white_h:object"{
+      weight:r=1
+    }
+
+    "mushroom_cortinarius_white_i:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="auto_converted_placer__mushroom_cortinarius_red_a_0"
+  dagdp__density:r=2
+
+  "dagdp__object_groups:list<t>"{
+    item:t="auto_converted_group__mushroom_cortinarius_red_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=56
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="auto_converted_group__autumn_leaf_pile_a"
+
+  "dagdp__params:object"{
+    scale:p2=1, 0.1
+    rot_y:p2=0, 360
+    orientation:t="world"
+  }
+
+  "dagdp__assets:object"{
+    "autumn_leaf_pile_a:object"{
+      weight:r=1
+    }
+
+    "autumn_leaf_pile_b:object"{
+      weight:r=1
+    }
+
+    "autumn_leaf_pile_c:object"{
+      weight:r=1
+    }
+
+    "autumn_leaf_pile_d:object"{
+      weight:r=1
+    }
+
+    "autumn_leaf_pile_e:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="auto_converted_placer__autumn_leaf_pile_a_0"
+  dagdp__density:r=10
+
+  "dagdp__object_groups:list<t>"{
+    item:t="auto_converted_group__autumn_leaf_pile_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=17
+    item:i=19
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="auto_converted_group__tree_dry_branches_a"
+
+  "dagdp__params:object"{
+    scale:p2=0.8, 0.2
+    rot_y:p2=0, 360
+    orientation:t="world"
+  }
+
+  "dagdp__assets:object"{
+    "tree_dry_branches_a:object"{
+      weight:r=1
+    }
+
+    "tree_dry_branches_b:object"{
+      weight:r=1
+    }
+
+    "tree_dry_branches_c:object"{
+      weight:r=1
+    }
+
+    "tree_branches_small_a:object"{
+      weight:r=0.33
+    }
+
+    "tree_branches_small_b:object"{
+      weight:r=0.33
+    }
+
+    "tree_branches_small_c:object"{
+      weight:r=0.33
+    }
+
+    "tree_branches_small_d:object"{
+      weight:r=0.33
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_heightmap"
+  dagdp__name:t="auto_converted_placer__tree_dry_branches_a_0"
+  dagdp__density:r=0.25
+
+  "dagdp__object_groups:list<t>"{
+    item:t="auto_converted_group__tree_dry_branches_a"
+  }
+
+  "dagdp__biomes:list<i>"{
+    item:i=28
+    item:i=17
+    item:i=19
+  }
+}

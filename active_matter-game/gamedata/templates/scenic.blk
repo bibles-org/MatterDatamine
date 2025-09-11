@@ -13,6 +13,8 @@ grass_settings{
   grassMaskResolution:i=512
   grassifyMaskResolution:i=1024
   grassify:b=no
+  grassFarRange:r=-1
+  grassFarMaskResolution:i=512
 
   "grass_types:array"{}
   "decals:array"{}
@@ -50,7 +52,6 @@ level{
   level__loadNavMesh:b=yes
   level__useGroundHolesCollision:b=no
   level__renderFeaturesOverrideFromLevelBlk:b=no
-  level__raidName:t=""
 
   "level__loaded:b"{
     value:b=no
@@ -59,14 +60,6 @@ level{
 
   "net__alwaysInScope:tag"{}
   level{}
-  level__node_based_fog_shader_preload{
-    _tags:t="render"
-  }
-
-  level__node_based_envi_cover_shader_preload{
-    _tags:t="render"
-  }
-
   "level__timeVec:array"{}
   "level__weatherChoice:object"{
     weather_clear:r=0.5

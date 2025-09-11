@@ -26,14 +26,12 @@ hawk_type_97_1_gun{
   item__proto:t="hawk_type_97_1_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="hawk_type_97_1_gun"
   item__name:t="items/hawk_type_97_1"
   item__weapType:t="shotgun"
   item__baseWeight:r=3.5
-  item__volume:r=5
+  item__volume:i=50
   gun_shell_ejection__timeMult:r=0.35
   gun__chokeSpread:r=1
-  gun__length:r=0.65
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.2
   gun__recoilDir:r=0.15
@@ -52,6 +50,7 @@ hawk_type_97_1_gun{
   gun_boxed_ammo_reload__loadPrepareTime:r=0.7
   gun_boxed_ammo_reload__loadLoopTime:r=0.5
   gun_boxed_ammo_reload__loadPostTime:r=1.2
+  gun__projectileTemplate:t="bullet_projectile_12"
   _use:t="gun_sound_with_animchar"
   _use:t="rifle_gun_aim_sound"
   _use:t="rifle_gun_shot_dry_sound"
@@ -59,7 +58,6 @@ hawk_type_97_1_gun{
   gun_flash_fx__enabled:b=yes
   gun_flash_fx__lightSourceNode:t="gunFx_main"
 
-  "animchar__actOnDemand:tag"{}
   "gun__ammoHolders:list<t>"{
     ammoHolders:t="hawk_type_97_1_magazine"
     ammoHolders:t="box_12_gauge_magazine"
@@ -156,16 +154,13 @@ crossbow_gun{
   item__proto:t="crossbow_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="crossbow_gun"
   item__name:t="items/crossbow"
   item__weapType:t="crossbow"
   item__baseWeight:r=2.7
-  item__volume:r=34
+  item__volume:i=340
   item__marketPrice:i=3050
   gun__adsSpeedMult:r=0.4
   gun__deviationInFireReady:r=1
-  gun__disableToggleAim:b=yes
-  gun__length:r=0.4
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.01
   gun__recoilControlMult:r=0
@@ -210,8 +205,9 @@ crossbow_gun{
   gun__projectileTemplate:t="crossbow_bolt_projectile"
   showroom_item__customZoom:r=1.2
   showroom_item__customZoomBordersRng:p2=1, 1.5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  item__nexusCost:i=300
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     scope:t="scope_picatinny_long_slot"
   }
@@ -271,12 +267,12 @@ crossbow_gun{
 
   anim_phys{}
   "gun_aim_offset__gunOffsets:list<p3>"{
-    stand:p3=0.06, -0.1, 0.05
-    crouch:p3=0.06, -0.1, 0.05
-    crawl:p3=0.06, -0.1, 0.05
+    stand:p3=0.06, -0.09, 0.07
+    stand:p3=0.06, -0.09, 0.07
+    stand:p3=0.06, -0.09, 0.07
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.075, 0.319, 0]]
@@ -299,8 +295,6 @@ crossbow_gun{
       monster_kills:i=35
     }
   }
-
-  "item__cantBeCorrupted:tag"{}
 }
 
 flamethrower_magazine_slot{
@@ -339,14 +333,15 @@ flamethrower_corefan_gun{
   item__proto:t="flamethrower_corefan_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="flamethrower_corefan_gun"
   item__name:t="items/flamethrower_corefan"
   item__weapType:t="flamethrower"
   item__baseWeight:r=4.2
-  item__volume:r=32
+  item__volume:i=320
   item__marketPrice:i=7500
+  gun__ammoInspectionInOutDuration:p2=2.7, 3.5
+  gun__ammoInspectionIdleLoopDuration:r=8
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__crawlRecoilMult:r=0.3
-  gun__length:r=0.5
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.01
   gun__recoilControlMult:r=0.9
@@ -369,7 +364,7 @@ flamethrower_corefan_gun{
   flamethrower__maxFlameLength:r=16
   flamethrower__flameStreamRadius:r=0.03
   flamethrower__flameCloudRadius:r=0.5
-  flamethrower__streamDamagePerSecond:r=10
+  flamethrower__streamDamagePerSecond:r=75
   flamethrower__cloudDamagePerSecond:r=1
   flamethrower__friendlyStreamDamagePerSecond:r=0
   flamethrower__friendlyCloudDamagePerSecond:r=0
@@ -397,7 +392,7 @@ flamethrower_corefan_gun{
   combatFiringRange:p2=0, 10
   combatShootTime:p2=0.7, 0.9
   combatCooldownTime:p2=0.5, 0.9
-  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.07, 0]]
   weap__sprintLerpFactor:r=0.75
   weap__dofMult:r=0.85
   _use:t="gun_with_gun_mods"
@@ -410,8 +405,9 @@ flamethrower_corefan_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[3.57628e-07, 9.31323e-10, 1] [-0.00823221, 0.999966, 1.86264e-09] [-0.999966, -0.00823221, 3.57628e-07] [-0.45, 0.0095674, -0.0311584]]
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  item__nexusCost:i=400
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     magazine:t="flamethrower_magazine_slot"
   }
@@ -446,19 +442,47 @@ flamethrower_corefan_gun{
   "sound_irqs:shared:object"{
     _tags:t="sound"
 
-    "reload1:object"{
-      path:t="/weapon/misc/flamethrower/reload1/change_ammo"
+    "foley_start:object"{
+      path:t="/weapon/misc/flamethrower/reload_foley_start"
+    }
+
+    "mag_out_start:object"{
+      path:t="/weapon/misc/flamethrower/reload_mag_out_start"
+    }
+
+    "mag_out:object"{
+      path:t="/weapon/misc/flamethrower/reload_mag_out"
+    }
+
+    "mag_in_start:object"{
+      path:t="/weapon/misc/flamethrower/reload_mag_in_start"
+    }
+
+    "mag_in:object"{
+      path:t="/weapon/misc/flamethrower/reload_mag_in"
+    }
+
+    "inspection_in:object"{
+      path:t="/weapon/misc/flamethrower/reload_inspection_in"
+    }
+
+    "inspection_out:object"{
+      path:t="/weapon/misc/flamethrower/reload_inspection_out"
+    }
+
+    "foley_end:object"{
+      path:t="/weapon/misc/flamethrower/reload_foley_end"
     }
   }
 
   "gun_reload__unequipMagazineTime:list<r>"{
-    simple:r=3.2
-    alt:r=3.2
+    simple:r=3.3
+    alt:r=3.3
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
-    simple:r=3.3
-    alt:r=3.3
+    simple:r=2.7
+    alt:r=2.7
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
@@ -482,7 +506,7 @@ flamethrower_corefan_gun{
     crawl:p3=0.02, -0.1, 0
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.273682, -0.087018, 0]]

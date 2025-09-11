@@ -403,7 +403,6 @@ molotov_phys_base{
   _use:t="projectile_phys"
   _use:t="impact_shell"
   _use:t="hud_grenade_marker"
-  _use:t="molotov_throw_sound"
   start_omega:p3=3, 0, -15
   active:b=no
   phys_obj_net_phys__blk:t="gamedata/weapons/grenades/molotov_base.blk"
@@ -413,20 +412,10 @@ molotov_phys_base{
   on_exploded__create:t="molotov_fire+molotov_explode_sound"
   molotov_fire__minDistanceBetween:r=1
   ai_target_node__node:t="weaponRoot"
-  effect__recreateAfterTeleportIn:r=0.5
 
   "ai_target_node__nodeId:i"{
     value:i=-1
     _tags:t="server"
-  }
-
-  effect{
-    _tags:t="render"
-  }
-
-  _group{
-    _tags:t="render"
-    effect__name:t="molotov_throw_trail_cmps_fx"
   }
 
   "grav_zones_affected:tag"{}
@@ -443,8 +432,20 @@ ussr_molotov{
 ussr_molotov_phys{
   _use:t="molotov_phys_base"
   _use:t="shell_trap_activator"
-  _use:t="sovmod_molotov_char"
+  _use:t="molotov_throw_sound"
+  animchar__res:t="sovmod_molotov_a_char"
+  collres__res:t="sovmod_molotov_a_collision"
+  effect__recreateAfterTeleportIn:r=0.5
   phys_obj_net_phys__blk:t="gamedata/weapons/grenades/ussr_molotov.blk"
+
+  effect{
+    _tags:t="render"
+  }
+
+  _group{
+    _tags:t="render"
+    effect__name:t="molotov_throw_trail_cmps_fx"
+  }
 }
 
 molotov_fire{
@@ -472,35 +473,13 @@ long_fire_source{
   fire_source__maxFullForceTime:r=50
 }
 
-m14_incendiary_grenade_phys_base{
-  _use:t="molotov_base"
-  _use:t="molotov_spread"
-  _use:t="projectile_phys"
-  _use:t="impact_shell"
-  _use:t="hud_grenade_marker"
-  _use:t="fire_grenade_throw_sound"
-  start_omega:p3=3, 0, -15
-  active:b=no
-  phys_obj_net_phys__blk:t="gamedata/weapons/grenades/m14_incendiary_base.blk"
-  _tracked:t="active"
-  effect__scale:r=1
-  shell_explosion_fx__infoTemplate:t="hit_effect_group_molotov_explosion"
-  on_exploded__create:t="fast_fire_source+fire_grenade_explode_sound"
-  molotov_fire__minDistanceBetween:r=1
-  ai_target_node__node:t="weaponRoot"
-
-  "ai_target_node__nodeId:i"{
-    value:i=-1
-    _tags:t="server"
-  }
-
-  "grav_zones_affected:tag"{}
-}
-
 m14_incendiary_grenade_phys{
-  _use:t="m14_incendiary_grenade_phys_base"
+  _use:t="molotov_phys_base"
   _use:t="shell_trap_activator"
-  _use:t="m14_incendiary_grenade_char"
+  _use:t="fire_grenade_throw_sound"
+  _use:t="m14_incendiary_grenade_active_char"
+  on_exploded__create:t="molotov_fire+fire_grenade_explode_sound"
+  shell_explosion_fx__infoTemplate:t="hit_effect_group_grenade_explosion"
   phys_obj_net_phys__blk:t="gamedata/weapons/grenades/m14_incendiary.blk"
 }
 

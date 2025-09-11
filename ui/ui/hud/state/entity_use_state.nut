@@ -1,8 +1,10 @@
+from "%sqstd/math.nut" import lerp
+
+from "dasevents" import NotifyItemHolderLoadingStart
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {lerp} = require("%sqstd/math.nut")
-let { NotifyItemHolderLoadingStart } = require("dasevents")
 
 
 let customLongUseHintQuery = ecs.SqQuery("customLongUseHintQuery", {comps_ro = [["item__setCustomLongUseHint", ecs.TYPE_STRING]]})

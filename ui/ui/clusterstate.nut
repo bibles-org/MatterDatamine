@@ -1,13 +1,16 @@
+from "%dngscripts/globalState.nut" import nestWatched
+from "%ui/geo.nut" import getClusterByCode
+from "auth" import get_country_code
+from "matching.api" import matching_listen_notify
+from "%ui/matchingClient.nut" import matchingCall
+from "eventbus" import eventbus_subscribe
 from "%ui/ui_library.nut" import *
+from "math" import min
+from "%sqstd/string.nut" import utf8ToUpper
 
-let { getClusterByCode } = require("geo.nut")
-let { get_country_code } = require("auth")
-let { matching_listen_notify } = require("matching.api")
-let { matchingCall } = require("%ui/matchingClient.nut")
 let connectHolder = require("%ui/connectHolderR.nut")
 let { onlineSettingUpdated, settings } = require("%ui/options/onlineSettings.nut")
-let { nestWatched } = require("%dngscripts/globalState.nut")
-let { eventbus_subscribe } = require("eventbus")
+let { isInBattleState } = require("%ui/state/appState.nut")
 
 let logC = with_prefix("[CLUSTERS] ")
 
@@ -18,32 +21,43 @@ let debugClusters = []
 
 let clustersViewMap = { RU = "EEU" }
 let clusterLoc = @(cluster) loc(clustersViewMap?[cluster] ?? cluster)
-let countryLoc = @(country) loc($"country/{country}", country.toupper())
+let countryLoc = @(country) loc($"country/{country}", utf8ToUpper(country))
+
 
 
 let matchingClusters = nestWatched("matchingClusters", [])
+
+const INITIAL_DELAY = 5
+const MAX_DELAY = 180
+local currentDelay = INITIAL_DELAY
+
 function fetchClustersFromMatching() {
-  let self = callee()
+  if (isInBattleState.get())
+    return
   if (!connectHolder.is_logged_in()) {
+    currentDelay = INITIAL_DELAY
     return
   }
-
+  let self = callee()
   matchingCall("hmanager.fetch_clusters_list",
     function (response) {
       if (response.error != 0) {
-        gui_scene.resetTimeout(5, self) 
+        currentDelay = min(currentDelay*2, MAX_DELAY) 
+        gui_scene.resetTimeout(currentDelay, self)
       }
       else {
         logC("clusters from matching server", response.clusters)
-        matchingClusters(response.clusters)
+        currentDelay = INITIAL_DELAY
+        matchingClusters.set(response.clusters)
       }
     }
   )
 }
 
 matchingClusters.subscribe(function(v) {
-  if (v.len() == 0)
-    gui_scene.resetTimeout(5, fetchClustersFromMatching)
+  if (v.len() == 0) {
+    gui_scene.resetTimeout(currentDelay, fetchClustersFromMatching)
+  }
   logC("matchingClusters:", v)
 })
 
@@ -54,7 +68,7 @@ matching_listen_notify("hmanager.notify_clusters_changed")
 eventbus_subscribe("hmanager.notify_clusters_changed", function(...) { fetchClustersFromMatching() })
 
 let availableClusters = Computed(function() {
-  local available = matchingClusters.value.filter(@(v) v!="debug")
+  local available = matchingClusters.get().filter(@(v) v!="debug")
   if (available.len()==0)
     available = clone availableClustersDef
   return available.extend(debugClusters)
@@ -76,29 +90,29 @@ function validateClusters(clusters, available){
   return clusters
 }
 
-let clusters = nestWatched("clusters", validateClusters({}, availableClusters.value))
+let clusters = nestWatched("clusters", validateClusters({}, availableClusters.get()))
 
-onlineSettingUpdated.subscribe(function(v) {
+onlineSettingUpdated.subscribe_with_nasty_disregard_of_frp_update(function(v) {
   if (!v)
     return
-  console_print("online selectedClusters:", settings.value?[CLUSTERS_KEY])
-  clusters(validateClusters(settings.value?[CLUSTERS_KEY] ?? {}, availableClusters.value))
+  console_print("online selectedClusters:", settings.get()?[CLUSTERS_KEY])
+  clusters.set(validateClusters(settings.get()?[CLUSTERS_KEY] ?? {}, availableClusters.get()))
 })
-availableClusters.subscribe(function(available) {
-  clusters(validateClusters(clusters.value, available))
+availableClusters.subscribe_with_nasty_disregard_of_frp_update(function(available) {
+  clusters.set(validateClusters(clusters.get(), available))
 })
 
 let oneOfSelectedClusters = Computed(function() {
-  foreach(c, has in clusters.value)
+  foreach(c, has in clusters.get())
     if (has)
       return c
-  return matchingClusters.value?[0] ?? availableClustersDef[0]
+  return matchingClusters.get()?[0] ?? availableClustersDef[0]
 })
 
-clusters.subscribe(function(clustersVal) {
-  let needSave = isEqual(settings.value?[CLUSTERS_KEY], clustersVal)
-  log("onlineSettingsUpdated:", onlineSettingUpdated.value, "isEqual to current:", needSave, "toSave:", clustersVal)
-  if (!onlineSettingUpdated.value || needSave)
+clusters.subscribe_with_nasty_disregard_of_frp_update(function(clustersVal) {
+  let needSave = isEqual(settings.get()?[CLUSTERS_KEY], clustersVal)
+  log("onlineSettingsUpdated:", onlineSettingUpdated.get(), "isEqual to current:", needSave, "toSave:", clustersVal)
+  if (!onlineSettingUpdated.get() || needSave)
     return
   settings.mutate(@(s) s[CLUSTERS_KEY] <- clustersVal.filter(@(has) has))
 })

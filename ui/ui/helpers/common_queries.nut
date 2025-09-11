@@ -1,5 +1,6 @@
+from "dagor.math" import Point3
+
 from "%sqstd/ecs.nut" import *
-let { Point3 } = require("dagor.math")
 
 
 let get_transformQuery = SqQuery("get_transformQuery", {

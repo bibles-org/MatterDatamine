@@ -8,15 +8,15 @@ let vehicleFuelAlert = Watched(false)
 ecs.register_es("vehicle_fuel_ui_es",
   {
     function onInit (_evt, _eid, comp) {
-      vehicleFuel(comp.vehicle__fuel)
-      vehicleMaxFuel(comp.vehicle__maxFuel)
+      vehicleFuel.set(comp.vehicle__fuel)
+      vehicleMaxFuel.set(comp.vehicle__maxFuel)
     },
     function onChange (_evt, _eid, comp) {
-      vehicleFuel(comp.vehicle__fuel)
+      vehicleFuel.set(comp.vehicle__fuel)
     },
     function onDestroy(_evt, _eid, _comp){
-      vehicleFuel(0.0)
-      vehicleMaxFuel(0.0)
+      vehicleFuel.set(0.0)
+      vehicleMaxFuel.set(0.0)
     }
   },
   {
@@ -31,10 +31,10 @@ ecs.register_es("vehicle_fuel_ui_es",
 ecs.register_es("vehicle_fuel_alert_ui_es",
   {
     [["onInit", "onChange"]] = function(_evt, _eid, comp) {
-      vehicleFuelAlert(comp.vehicle__fuelAlert)
+      vehicleFuelAlert.set(comp.vehicle__fuelAlert)
     },
     function onDestroy(_evt, _eid, _comp){
-      vehicleFuelAlert(false)
+      vehicleFuelAlert.set(false)
     }
   },
   {

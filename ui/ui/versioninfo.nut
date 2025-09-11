@@ -1,12 +1,11 @@
+from "%ui/fonts_style.nut" import tiny_txt, basic_text_shadow
+from "dagor.time" import get_local_unixtime, unixtime_to_local_timetbl
+from "%ui/helpers/remap_nick.nut" import remap_nick
+
 from "%ui/ui_library.nut" import *
 
-let rand = require("%sqstd/rand.nut")()
-let { tiny_txt, basic_text_shadow } = require("%ui/fonts_style.nut")
-let {isProductionCircuit, circuit, version, build_number} = require("%sqGlob/appInfo.nut")
-let {get_local_unixtime, unixtime_to_local_timetbl} = require("dagor.time")
-let {remap_nick} = require("%ui/helpers/remap_nick.nut")
+let { isProductionCircuit, circuit, version, build_number } = require("%sqGlob/appInfo.nut")
 let userInfo = require("%sqGlob/userInfo.nut")
-let {sessionId} = require("service_info.nut")
 let txtStyle = basic_text_shadow.__merge({fontFxColor = Color(0,0,0,20)})
 
 let monthToStr = {
@@ -33,7 +32,7 @@ function version_info_text(){
   let buildNum = build_number.get() ?? ""
   let versionNum = version.get() ?? ""
   let userName = userInfo.get()?.name ? $", {remap_nick(userInfo.get()?.name)}" : ""
-  local versionInfo = $"Closed Beta version: {versionNum}, {mkTime()}{userName}"
+  local versionInfo = $"{versionNum}, {mkTime()}{userName}"
   if (!isProductionCircuit.get())
     versionInfo = $"{versionInfo}@{circuit.get()}, {buildNum}"
   return {
@@ -42,31 +41,11 @@ function version_info_text(){
     watch = [circuit, version, isProductionCircuit, userInfo]
     opacity = 0.3
     zOrder = Layers.MsgBox
-    padding = [hdpx(2), hdpx(18)]
+    padding = static [hdpx(2), hdpx(18)]
   }.__update(txtStyle, tiny_txt)
 }
 
-let mkRandPosWatermark = @() [sw(rand.rint(5, 40)), sh(rand.rint(55, 85))]
-let watermark = @() {
-    flow = FLOW_VERTICAL
-    halign = ALIGN_CENTER
-    children = [
-      @() { rendObj = ROBJ_TEXT text = "Closed Beta" color = Color(27,27,27,22) fontSize = hdpx(30) }.__update(txtStyle)
-      function(){
-        let userName = userInfo.get()?.name ? remap_nick(userInfo.get().name) : ""
-        return { rendObj = ROBJ_TEXT text = userName color = Color(18,18,18,15)  fontSize = hdpx(14) }.__update(txtStyle)
-      }
-    ]
-}
-function alphaWatermark() {
-  return {
-    size = flex()
-    watch = sessionId
-    children = {children = watermark pos = mkRandPosWatermark()}
-  }
-}
 return {
-  alphaWatermark
   versionInfo = @(){
     size = flex()
     children = [

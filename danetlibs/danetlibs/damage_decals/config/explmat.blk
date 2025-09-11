@@ -1,68 +1,92 @@
 explMats{
   shader:t="explosion_patch_color"
   needMaterialTex:b=no
+  parallaxStrength:r=0.07
+  parallaxZeroHeight:i=255
+  normalTextureSuffix:t="_tex_n*"
+  diffuseTextureSuffix:t="_tex_d*"
 
   steel{
     default{
-      normalMap:t="decal_bullethole_metal_a_tex_n*"
-      colorMap:t="decal_bullethole_metal_a_tex_d*"
       sizeScale:r=12
+
+      textures{
+        tex:t="decal_bullethole_metal_a"
+      }
     }
 
     kinetic_penetration{
-      normalMap:t="decal_bullethole_metal_pr_gen_tex_n*"
-      colorMap:t="decal_bullethole_metal_pr_gen_tex_d*"
       sizeScale:r=6.5
+
+      textures{
+        tex:t="decal_bullethole_metal_pr_gen"
+      }
     }
 
     kinetic_non_penetration{
-      normalMap:t="decal_bullethole_metal_st_gen_tex_n*"
-      colorMap:t="decal_bullethole_metal_st_gen_tex_d*"
       sizeScale:r=6.5
       stretchMax:r=1.5
+
+      textures{
+        tex:t="decal_bullethole_metal_st_gen"
+      }
     }
 
     kinetic_ricochet{
-      normalMap:t="decal_bullethole_metal_st_gen_tex_n*"
-      colorMap:t="decal_bullethole_metal_st_gen_tex_d*"
       sizeScale:r=6.5
       stretchMax:r=2
+
+      textures{
+        tex:t="decal_bullethole_metal_st_gen"
+      }
     }
 
     explosive_penetration{
-      normalMap:t="decal_bullethole_metal_pr_splash_tex_n*"
-      colorMap:t="decal_bullethole_metal_pr_splash_tex_d*"
       sizeScale:r=5
+
+      textures{
+        tex:t="decal_bullethole_metal_pr_splash"
+      }
     }
 
     explosive_non_penetration{
-      normalMap:t="decal_bullethole_metal_st_splash_tex_n*"
-      colorMap:t="decal_bullethole_metal_st_splash_tex_d*"
       sizeScale:r=6
+
+      textures{
+        tex:t="decal_bullethole_metal_st_splash"
+      }
     }
 
     kinetic_sabot_penetration{
-      normalMap:t="decal_bullethole_metal_pr_sub_tex_n*"
-      colorMap:t="decal_bullethole_metal_pr_sub_tex_d*"
       sizeScale:r=5
+
+      textures{
+        tex:t="decal_bullethole_metal_pr_sub"
+      }
     }
 
     kinetic_sabot_non_penetration{
-      normalMap:t="decal_bullethole_metal_st_sub_tex_n*"
-      colorMap:t="decal_bullethole_metal_st_sub_tex_d*"
       sizeScale:r=5
+
+      textures{
+        tex:t="decal_bullethole_metal_st_sub"
+      }
     }
 
     heat_penetration{
-      normalMap:t="decal_bullethole_metal_pr_jet_tex_n*"
-      colorMap:t="decal_bullethole_metal_pr_jet_tex_d*"
       sizeScale:r=6
+
+      textures{
+        tex:t="decal_bullethole_metal_pr_jet"
+      }
     }
 
     heat_non_penetration{
-      normalMap:t="decal_bullethole_metal_st_jet_tex_n*"
-      colorMap:t="decal_bullethole_metal_st_jet_tex_d*"
       sizeScale:r=5
+
+      textures{
+        tex:t="decal_bullethole_metal_st_jet"
+      }
     }
   }
 }

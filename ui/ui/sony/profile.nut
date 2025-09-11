@@ -1,10 +1,10 @@
+from "%sqstd/underscore.nut" import pluck
+from "math" import ceil
+import "statsd" as statsd
 from "%ui/ui_library.nut" import *
 
-let { send, fetch, profile } = require("%sonyLib/webApi.nut")
-let { pluck } = require("%sqstd/underscore.nut")
-let {ceil} = require("math")
-let statsd = require("statsd")
 let logPSN = require("%sqGlob/library_logs.nut").with_prefix("[PSN FRIENDS] ")
+let { send, fetch, profile } = require("%sonyLib/webApi.nut")
 
 let fields =  { BLOCKLIST = "blocks", FRIENDLIST = "friends" }
 
@@ -111,4 +111,3 @@ return {
   request_psn_friends
   request_blocked_users
 }
-

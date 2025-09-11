@@ -1,7 +1,8 @@
+from "dagor.math" import Point3
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { Point3 } = require("dagor.math")
 
 let regions = Watched([])
 

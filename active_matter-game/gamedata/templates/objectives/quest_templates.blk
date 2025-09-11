@@ -16,24 +16,13 @@ photographing_target{
   photographing_target__traceMinSuccesses:i=3
   photographing_target__traceDensity:r=4
   photographing_target__debugTraces:b=no
-
-  "photographingTarget:tag"{}
-  "showMapObjectOnQuestTargetAssignition:tag"{}
-}
-
-photographing_stand_target{
-  _use:t="replicating"
-  _use:t="map_component_zone"
-  map_object_zone__radius:r=10
-  quest_target_geometry_sphere__radius:r=10
-  objective_static_target__tag:t=""
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  quest_target_geometry_sphere__radius:r=15
   _use:t="guarded_zone"
   guarded_zone__maxGuardsCount:i=6
 
-  "showMapObjectOnQuestTargetAssignition:tag"{}
-  "photographing_stand_target:tag"{}
+  "photographingTarget:tag"{}
   "useObjectTarget:tag"{}
+  "showMapObjectOnQuestTargetAssignition:tag"{}
 }
 
 place_for_device_target{
@@ -122,6 +111,7 @@ base_gather_samples_accesspoint{
   _use:t="replicating"
   _use:t="external_inventory_accesspoint"
   _use:t="usable_object_base"
+  _use:t="interactable_static_grid_object"
   use_object__enabled:b=yes
   use_object__minDot:r=-1
   use_object__offset:p3=0, 0, 0
@@ -130,12 +120,10 @@ base_gather_samples_accesspoint{
   item_world_marker__riColliderPoint:p3=0.5, 0.5, 0.5
   item_world_marker__riColliderPointOffset:p3=0, 0, 0
   net__scopeDistanceSq:r=108900
-  grid_obj__gridType:t="interactable"
 
   "getherSamplesContainerAccesspoint:tag"{}
   "usableObject:tag"{}
   "item_world_marker__copyOffsetToUseObject:tag"{}
-  grid_obj{}
 }
 
 ground_gather_samples_accesspoint{
@@ -250,6 +238,10 @@ quest_container_secret{
   "container_target__discoveredItemTemplates:list<t>"{
     item:t=""
   }
+}
+
+quest_container_for_all{
+  "container_target__generatedItemsForAll:list<eid>"{}
 }
 
 quest_monster_generator{

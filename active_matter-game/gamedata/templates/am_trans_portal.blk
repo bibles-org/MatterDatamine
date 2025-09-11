@@ -202,14 +202,31 @@ teleportation_portal_spherical_dynmodel{
 teleportation_cooldown_effect{
   _use:t="game_effect_with_duration"
   _use:t="client_game_effect_with_duration"
-  game_effect__timeToDestroy:r=0.6
+  game_effect__timeToDestroy:r=0.55
 
   "teleportation_cooldown_effect__attachedTeleport:eid"{}
+  "state__disableAuthorityStateApplication:tag"{}
 }
 
-teleportation_long_cooldown_effect{
-  _use:t="teleportation_cooldown_effect"
-  game_effect__timeToDestroy:r=1.5
+unsmooth_authority_after_teleport{
+  _use:t="game_effect_with_duration"
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=0.9
+
+  "state__unsmoothAuthority:tag"{}
+  "game_effect__immediateVerticalAdjustmentClient:tag"{}
+}
+
+delayed_teleport{
+  delayed_teleport__atTick:i=0
+  delayed_teleport__needsVerification:b=no
+
+  "delayed_teleport__visitor:eid"{}
+  "delayed_teleport__portal:eid"{}
+}
+
+unteleportable{
+  "unteleportable:tag"{}
 }
 
 teleportation_portal{
@@ -217,9 +234,8 @@ teleportation_portal{
   _use:t="am_triggerable_zone"
   _use:t="editor_selected_box_preview"
   teleportation_portal__groupId:i=-1
-  teleportation_portal__onTeleportEffect:t="teleportation_cooldown_effect"
   teleportation_portal__safeLocalExitDir:p3=0, 0, 0
-  teleportation_portal__exitOffset:r=1.5
+  teleportation_portal__exitOffset:r=0.8
   teleportation_portal__isBidirectional:b=yes
   teleportation_portal__addTemplateOnLink:t="destroy_doors_in_tm"
   _use:t="sound_effect"
@@ -228,6 +244,11 @@ teleportation_portal{
   "humanTriggerable:tag"{}
   "throwingItemsTriggerable:tag"{}
   "teleportation_portal__teleportedEntities:list<eid>"{}
+  "teleportation_portal__onTeleportEffects:list<t>"{
+    item:t="teleportation_cooldown_effect"
+    item:t="unsmooth_authority_after_teleport"
+  }
+
   "teleportation_portal__linkedPortal:eid"{}
   _group{
     _tags:t="gameClient"
@@ -252,8 +273,13 @@ teleportation_portal{
 
 teleportation_spherical_portal{
   _use:t="teleportation_portal"
+  teleportation_portal__exitOffset:r=1
   teleportation_portal__isBidirectional:b=no
-  teleportation_portal__onTeleportEffect:t="teleportation_long_cooldown_effect"
+
+  "teleportation_portal__onTeleportEffects:list<t>"{
+    item:t="teleportation_cooldown_effect"
+    item:t="unsmooth_authority_after_teleport"
+  }
 
   _group{
     _tags:t="gameClient"

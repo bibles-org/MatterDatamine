@@ -72,6 +72,11 @@ game_trigger_disappear{
   game_trigger_disappear__emitEvent:t=""
 }
 
+game_trigger_on_door_open{
+  door_trigger_on_open__sendTrigger:t=""
+  door_trigger_on_open__previousReqValue:i=0
+}
+
 game_trigger_on_locked_changed{
   game_trigger_on_locked_changed__requiredState:b=no
   game_trigger_on_locked_changed__eventTrigger:t=""
@@ -204,6 +209,7 @@ game_trigger_processor_attach_game_effect{
   game_trigger_processor_attach_game_effect__attachOnTriggerHash:i=0
   game_trigger_processor_attach_game_effect__removeOnTrigger:t=""
   game_trigger_processor_attach_game_effect__removeOnTriggerHash:i=0
+  game_trigger_processor_attach_game_effect__toSelf:b=no
 
   "game_trigger_processor_attach_game_effect__eid:eid"{}
 }

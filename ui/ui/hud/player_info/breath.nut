@@ -1,14 +1,9 @@
+from "%ui/components/colors.nut" import PlayerInfoVeryLow, PlayerInfoLow, PlayerInfoMedium, PlayerInfoNormal
+from "%ui/hud/player_info/style.nut" import indicatorsFontStyle, indicatorsFontSize, indicatorsIcoSize, indicatorsGap
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { indicatorsFontStyle, indicatorsFontSize, indicatorsIcoSize, indicatorsGap } = require("style.nut")
-let { vitalParameterSize } = require("vital_info_common.nut")
-let {
-  PlayerInfoVeryLow,
-  PlayerInfoLow,
-  PlayerInfoMedium,
-  PlayerInfoNormal
-} = require("%ui/components/colors.nut")
+let { vitalParameterSize } = require("%ui/hud/player_info/vital_info_common.nut")
 
 let breath_shortness = Watched()
 let isHoldBreath = Watched(false)
@@ -20,20 +15,20 @@ ecs.register_es("hero_breath_ui_es",
     [["onChange", "onInit"]]= function trackComponentsBreath(_eid,comp){
       let isAlive = comp["isAlive"]
       if (!isAlive) {
-        breath_shortness(null)
-        isHoldBreath(false)
+        breath_shortness.set(null)
+        isHoldBreath.set(false)
         anim_request_stop(breath_low_anim_trigger)
         return
       }
-      isHoldBreath(comp["human_net_phys__isHoldBreath"])
+      isHoldBreath.set(comp["human_net_phys__isHoldBreath"])
       let timer = comp["human_breath__timer"]
       let max_hold_breath_time = comp["human_breath__maxHoldBreathTime"]
       let ratio = (timer>max_hold_breath_time || (max_hold_breath_time==0)) ? 0.0 : ((max_hold_breath_time - timer) / max_hold_breath_time)
 
       if (max_hold_breath_time == 0)
-        breath_shortness(null)
+        breath_shortness.set(null)
       else
-        breath_shortness(ratio)
+        breath_shortness.set(ratio)
 
       if (!(ratio > breath_low_threshold)) {
         anim_start(breath_low_anim_trigger)
@@ -117,7 +112,7 @@ let ico = @(size, color) @() {
   size = size
   vplace = ALIGN_CENTER
   hplace = ALIGN_LEFT
-  transform = const {}
+  transform = static {}
   animations = breathAnimations
 }
 
@@ -152,9 +147,9 @@ function mkBreathComp(customHdpxi = hdpxi, override = {}) {
 }
 
 
-let breathPanel = {
+let breathPanel = freeze({
   panel = mkBreathComp
   visibleWatched = breathVisibleWatched
-}
+})
 
-return { breathPanel, mkBreathUI = mkBreathComp, breathVisibleWatched, isHoldBreath}
+return freeze({ breathPanel, mkBreathUI = mkBreathComp, breathVisibleWatched, isHoldBreath})

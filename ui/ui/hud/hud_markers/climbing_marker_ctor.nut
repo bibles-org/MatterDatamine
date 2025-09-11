@@ -1,10 +1,13 @@
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
+
 from "%ui/ui_library.nut" import *
 
-let { tipCmp } = require("%ui/hud/tips/tipComponent.nut")
 let { isAiming } = require("%ui/hud/state/crosshair_state_es.nut")
 
+#allow-auto-freeze
+
 function climbing_markers_ctor(eid, info){
-  return tipCmp(@() isAiming.get() ? const {watch = isAiming} : {
+  return tipCmp(@() isAiming.get() ? static {watch = isAiming} : {
     watch = isAiming
     inputId = "Human.Jump"
     text = loc(info.text)
@@ -16,7 +19,7 @@ function climbing_markers_ctor(eid, info){
       worldPos = info.pos
     }
     markerFlags = DngBhv.MARKER_SHOW_ONLY_IN_VIEWPORT
-    transform = const {}
+    transform = static {}
   })
 }
 

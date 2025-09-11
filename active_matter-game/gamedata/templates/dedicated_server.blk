@@ -27,3 +27,21 @@ server_stats_controller{
     server_stats_controller__updateAt:r=0
   }
 }
+
+matching_data{
+  _singleton:b=yes
+  matching_data__jipEnableTime:r=-1
+  matching_data__reconnectTimeoutMs:r=180000
+  matching_data__maxPlayers:i=0
+  matching_data__botpop:i=0
+  matching_data__needBotSpawn:b=yes
+  matching_data__raidName:t=""
+
+  "matching_data__startTimestamp:u64"{
+    value:i64=0
+  }
+
+  "matching_data__teamName:list<t>"{}
+  "matching_data__teamMaxGroups:list<i>"{}
+  "matching_data__teamJipEnableTime:list<r>"{}
+}

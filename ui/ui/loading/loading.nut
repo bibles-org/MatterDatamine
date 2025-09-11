@@ -1,22 +1,25 @@
+from "%sqGlob/dasenums.nut" import ContractType
+from "%ui/fonts_style.nut" import h2_txt, body_txt
+from "%ui/loading/loadingComponents.nut" import mkAnimatedEllipsis
+from "%ui/hud/objectives/objective_components.nut" import getContractProgressionText
+from "%ui/components/commonComponents.nut" import mkText, mkTextArea, bluredPanel, mkDescTextarea
+from "%ui/panels/smartwatch_panel.nut" import mkSmartwatchUi
+from "dagor.localize" import doesLocTextExist
+
 from "%ui/ui_library.nut" import *
 
-let { h2_txt, body_txt } = require("%ui/fonts_style.nut")
-let {safeAreaVerPadding, safeAreaHorPadding} = require("%ui/options/safeArea.nut")
-let {levelIsLoading, dbgLoading} = require("%ui/state/appState.nut")
-let {mkAnimatedEllipsis} = require("loadingComponents.nut")
+let { safeAreaVerPadding, safeAreaHorPadding } = require("%ui/options/safeArea.nut")
+let { levelIsLoading, dbgLoading } = require("%ui/state/appState.nut")
 let { queueRaid } = require("%ui/gameModeState.nut")
-let { ContractType } = require("%sqGlob/dasenums.nut")
-let { getContractProgressionText } = require("%ui/hud/objectives/objective_components.nut")
-let { mkText, mkTextArea, bluredPanel, mkDescTextarea } = require("%ui/components/commonComponents.nut")
-let { mkSmartwatchUi } = require("%ui/panels/smartwatch_panel.nut")
-let { playerProfileCurrentContracts  } = require("%ui/profile/profileState.nut")
+let { playerProfileCurrentContracts } = require("%ui/profile/profileState.nut")
 let { isOnboarding, playerProfileOnboardingContracts } = require("%ui/hud/state/onboarding_state.nut")
 let { isInSquad, isSquadLeader, squadLeaderState } = require("%ui/squad/squadManager.nut")
 let { shuffle } = require("%sqstd/rand.nut")
-let { doesLocTextExist } = require("dagor.localize")
 let { amTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
 let { isNexusWaveMode } = require("%ui/hud/state/nexus_mode_state.nut")
 let { currentPrimaryContractIds } = require("%ui/mainMenu/raid_preparation_window_state.nut")
+
+#allow-auto-freeze
 
 const DEF_TIME_TO_SWITCH = 15
 const DEF_AUTO_TIME_SWITCH = 10
@@ -27,23 +30,20 @@ let screenPadding = [0, fsh(2)]
 let contentPadding = [hdpx(5), hdpx(10)]
 let animatedEllipsis = mkAnimatedEllipsis(fontSize, color)
 let curIdx = Watched(0)
-
-function nextTipAuto() {
-  curIdx(curIdx.value + 1)
-}
+let nextTipAuto = @() curIdx.modify(@(v) v+1)
 
 function nextTip() {
   gui_scene.clearTimer(nextTipAuto)
   gui_scene.clearTimer(callee())
   gui_scene.setTimeout(DEF_TIME_TO_SWITCH, callee())
-  curIdx(curIdx.value + 1)
+  nextTipAuto()
 }
 
 function prevTip() {
   gui_scene.clearTimer(nextTipAuto)
   gui_scene.clearTimer(nextTip)
   gui_scene.setTimeout(DEF_TIME_TO_SWITCH, nextTip)
-  curIdx(curIdx.value + 1)
+  nextTipAuto()
 }
 
 gui_scene.setInterval(DEF_AUTO_TIME_SWITCH, nextTipAuto)
@@ -67,7 +67,7 @@ let animations = [
 ]
 
 let activeTipText = @(text) {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   clipChildren = true
   valign = ALIGN_CENTER
   children = mkTextArea(loc(text), {
@@ -81,6 +81,7 @@ let activeTipText = @(text) {
 
 function mkTips() {
   let hintsList = Computed(function() {
+    #forbid-auto-freeze
     local hintsToChange = []
     let hintsKey = isNexusWaveMode.get() ? "nexus_loading_tip": "loading_tip"
     local lastAddedTipIdx = 0
@@ -95,7 +96,7 @@ function mkTips() {
   })
 
   let curHint = Computed(@() hintsList.get().len() > 0
-    ? hintsList.get()[curIdx.value % hintsList.get().len()]
+    ? hintsList.get()[curIdx.get() % hintsList.get().len()]
     : null)
 
   let watch = [hintsList, curHint]
@@ -103,7 +104,7 @@ function mkTips() {
     return @() { watch }
   return @() {
     watch
-    size = [sw(65), SIZE_TO_CONTENT]
+    size = static [sw(65), SIZE_TO_CONTENT]
     transform = {pivot = [0.5, 0.5]}
     vplace = ALIGN_CENTER
     minHeight = hdpx(80)
@@ -111,7 +112,7 @@ function mkTips() {
     valign = ALIGN_CENTER
     children = [
       {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_HORIZONTAL
         gap = hdpx(20)
         valign = ALIGN_CENTER
@@ -119,7 +120,7 @@ function mkTips() {
         children = [
           mkText(amTextIcon, { fontSize = hdpxi(50) })
           {
-            size = [flex(), SIZE_TO_CONTENT]
+            size = FLEX_H
             key = curHint.get()
             transform = {pivot = [0.5, 0.5]}
             flow = FLOW_VERTICAL
@@ -164,18 +165,18 @@ function mainObjective() {
     addition = null, requireExtraction = false } = selectedContract
   return {
     watch
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     valign = ALIGN_BOTTOM
     padding = screenPadding
     children = {
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       flow = FLOW_VERTICAL
       gap = hdpx(5)
       padding = contentPadding
       children = [
         mkTextArea(loc($"contract/{name}"), h2_txt)
         {
-          size = [flex(), SIZE_TO_CONTENT]
+          size = FLEX_H
           flow = FLOW_VERTICAL
           gap = hdpx(2)
           children = [
@@ -189,7 +190,7 @@ function mainObjective() {
   }.__update(bluredPanel)
 }
 
-let loadingText = {
+let loadingText = static {
   flow = FLOW_HORIZONTAL
   hplace = ALIGN_CENTER
   vplace = ALIGN_CENTER
@@ -198,16 +199,16 @@ let loadingText = {
       rendObj = ROBJ_TEXT
       text = loc("Loading")
       fontSize = fontSize
-      color = color
+      color
     }
-    {size=[hdpx(4),0]}
+    static {size=[hdpx(4),0]}
     animatedEllipsis
   ]
 }
 
-let loadingWatch = {
-  size = [ hdpx(180), hdpx(180) ]
-  pos = [-fsh(5),-fsh(3)]
+let loadingWatch = @() {
+  size = hdpx(180)
+  pos = static [-fsh(5),-fsh(3)]
   hplace = ALIGN_RIGHT
   vplace = ALIGN_BOTTOM
   children = [
@@ -222,7 +223,7 @@ let simpleLoading = @() {
   padding = [safeAreaVerPadding.get(), safeAreaHorPadding.get()]
   children = [
     {
-      size = [hdpx(453), flex()]
+      size = static [hdpx(453), flex()]
       flow = FLOW_VERTICAL
       children = [
         {
@@ -230,11 +231,11 @@ let simpleLoading = @() {
           valign = ALIGN_BOTTOM
           children = mainObjective
         }
-        { size = [flex(), flex(2)]}
+        static { size = [flex(), flex(2)]}
       ]
     }
     {
-      size = [sw(100), hdpx(180) + fsh(6)]
+      size = static [sw(100), hdpx(180) + fsh(6)]
       valign = ALIGN_CENTER
       vplace = ALIGN_BOTTOM
       children = [
@@ -248,17 +249,17 @@ let simpleLoading = @() {
 let loadingComp = {value = simpleLoading}
 let loadingUiGeneration = Watched(0)
 
-function setLoadingComp(v){
-  loadingComp.value = v
-  loadingUiGeneration(loadingUiGeneration.value+1)
+function setLoadingComp(val){
+  loadingComp.value = val
+  loadingUiGeneration.modify(@(v) v+1)
 }
 
-let showLoading = Computed(@() levelIsLoading.value || dbgLoading.value)
+let showLoading = Computed(@() levelIsLoading.get() || dbgLoading.get())
 
 let loadingUI = @() {
-  watch = [levelIsLoading, showLoading]
+  watch = static [levelIsLoading, showLoading]
   size = flex()
-  children = showLoading.value ? loadingComp.value : null
+  children = showLoading.get() ? loadingComp.value : null
 }
 
 return {loadingUI, setLoadingComp, showLoading, dbgLoading}

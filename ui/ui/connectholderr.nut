@@ -1,12 +1,13 @@
+from "%dngscripts/globalState.nut" import nestWatched
+from "matching.api" import matching_logout, matching_login, get_mgates_count
+from "matching.errors" import DisconnectReason, LoginResult
+from "eventbus" import eventbus_send, eventbus_subscribe
 from "%ui/ui_library.nut" import *
 
 
 
-let {matching_logout, matching_login} = require("matching.api")
-let {DisconnectReason, LoginResult} = require("matching.errors")
 let logM = require("%sqGlob/library_logs.nut").with_prefix("[MATCHING] ")
-let { eventbus_send, eventbus_subscribe } = require("eventbus")
-let {nestWatched} = require("%dngscripts/globalState.nut")
+
 
 let matchingConnectState = nestWatched("matchingConnectState", {
     connecting = false
@@ -18,16 +19,16 @@ let matchingConnectState = nestWatched("matchingConnectState", {
     lastLoginInfo = null
 })
 
-let getState = @() freeze(matchingConnectState.value)
+let getState = @() freeze(matchingConnectState.get())
 
 let setState = function(key, value) {
-  assert(key in matchingConnectState.value, @() $"unknown {key}")
+  assert(key in matchingConnectState.get(), @() $"unknown {key}")
   matchingConnectState.mutate(@(v) v[key] <- value)
 }
 
 let serverResponseError = mkWatched(persist, "serverResponseError", false)
 
-const max_relogin_retry_count = 3
+let max_relogin_retry_count = get_mgates_count()
 
 eventbus_subscribe("matching.logged_in",
   function(...) {
@@ -55,7 +56,7 @@ function is_retriable_login_error(loginerror) {
 
 function performConnect(login_info) {
   logM($"matching.performConnect", login_info != null, getState().loginFailCount)
-  serverResponseError(false)
+  serverResponseError.set(false)
   if (getState().connecting || login_info == null) {
     return
   }
@@ -66,7 +67,7 @@ function performConnect(login_info) {
 
 function onLoginFinished(result) {
   setState("connecting", false)
-  serverResponseError(result.status != 0)
+  serverResponseError.set(result.status != 0)
   if (result.status == 0) {
     logM("matching login successfull")
     eventbus_send("matching.logged_in", null)
@@ -79,7 +80,7 @@ function onLoginFinished(result) {
     }
     else {
       if (getState().reconnectAfterDisconnect) {
-        serverResponseError(false)
+        serverResponseError.set(false)
         eventbus_send("matching.logged_out", getState().disconnectReason)
       }
       else
@@ -147,9 +148,9 @@ eventbus_subscribe("matching.on_disconnect",
     }
   })
 
-return {
+return freeze({
   activate_matching_login = activate_matching_login
   deactivate_matching_login = deactivate_matching_login
   is_logged_in = @() getState().isLoggedIn
   server_response_error = serverResponseError
-}
+})

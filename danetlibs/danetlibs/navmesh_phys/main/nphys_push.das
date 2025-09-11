@@ -1,4 +1,4 @@
-require app
+require app // get_sync_time
 require ecs
 require math.base
 require DagorMath
@@ -15,18 +15,22 @@ require math.shooter_phys_common
 
 [es(tag=server)]
 def nphys_push_handler(evt : CmdPushPhys;
+                       path_corridor__isClimbing = false;
                        nphys_pushable__lockDuration : float;
+                       nphys_pushable__strengthMulti : float = 1.0;
                        navmesh_phys__currentPos : float3;
                        navmesh_phys__currentPoly : int64;
                        var obstacle_avoider__updateAt : float?;
                        var navmesh_phys__currentWalkVelocity : float3&;
                        var nphys_pushable__unlockMovementAt : float&)
+  if path_corridor__isClimbing
+    return //need to finish jl or else it all breaks
   nphys_pushable__unlockMovementAt = get_sync_time() + nphys_pushable__lockDuration
   if obstacle_avoider__updateAt != null
     *obstacle_avoider__updateAt = 0.0
 
-  let pushSpd = length(evt.vel)
-  var pushDir = evt.vel * safeinv(pushSpd)
+  let pushSpd = length(evt.vel) * nphys_pushable__strengthMulti
+  var pushDir = evt.vel * safeinv(pushSpd) * nphys_pushable__strengthMulti
   let walkNormal = get_surface_normal_by_pos(navmesh_phys__currentPos, dtPolyRef(navmesh_phys__currentPoly))
   let dirToNormalDot = dot(pushDir, walkNormal)
   if dirToNormalDot < 0.0

@@ -90,6 +90,14 @@ def register_downsample_nodes(var local_tone_mapping__downsample_nodes : NodeHan
 
       let source_tex_name = index == 0 ? (local_tone_mapping__hq_enabled ? "frame_for_postfx" : "downsampled_color") : "exposures_{index - 1:d}"
       registry |> read(source_tex_name) |> texture |> atStage(Stage.COMPUTE) |> bindToShaderVar("src_tex")
+      let defaultSampler = d3d_request_sampler() <| $(var smpInfo : SamplerInfo#)
+        smpInfo.address_mode_u = AddressMode.Clamp
+        smpInfo.address_mode_v = AddressMode.Clamp
+        smpInfo.address_mode_w = AddressMode.Clamp
+      if index == 0
+        registry |> create("local_tone_mapping_src_sampler", History.No) |> blob(defaultSampler) |> bindToShaderVar("src_tex_samplerstate")
+      else
+        registry |> read("local_tone_mapping_src_sampler") |> blob(type<SamplerHandle>) |> bindToShaderVar("src_tex_samplerstate")
 
       // one of the below is being bound to "dof_blend_depth_tex" but exactly which is decided dynamically
       registry |> read("depth_with_transparency") |> texture |> atStage(Stage.COMPUTE) |> useAs(Usage.SHADER_RESOURCE) |> optional()

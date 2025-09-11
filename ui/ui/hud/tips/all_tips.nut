@@ -1,25 +1,24 @@
+from "%ui/hud/tips/diving_mothman_tip.nut" import mothmanDivingGrabAbilityPotentialTargetTip, mothmanDivingGrabAbilityReleaseTip
+import "%ui/hud/tips/downed_tip.nut" as downed_tip
+import "%ui/hud/tips/extraction_tip.nut" as extraction_tip
+import "%ui/hud/tips/robodog_extraction_tip.nut" as robodog_extraction_tip
+import "%ui/hud/tips/flashlight_tip.nut" as flashlight_tip
+import "%ui/hud/tips/bipod_tip.nut" as bipod_tip
+import "%ui/hud/tips/gun_jam_tip.nut" as gun_jam_tip
+import "%ui/hud/tips/game_trigger_screen_tip.nut" as game_trigger_screen_tip
+import "%ui/hud/tips/burning_tip.nut" as burning_tip
+import "%ui/hud/tips/healing_tip.nut" as healing_tip
+import "%ui/hud/tips/status_tip.nut" as status_tip
+import "%ui/hud/tips/objective_tips.nut" as objective_tips
+import "%ui/hud/tips/binoculars_tip.nut" as binoculars_tip
+import "%ui/hud/tips/hold_breath_tip.nut" as hold_brief_tip
+import "%ui/hud/tips/dash_dash_ability_tip.nut" as dash_dash_ability_tip
+import "%ui/hud/tips/echolocation_ability_tip.nut" as echolocationTip
 from "%ui/ui_library.nut" import *
 
-let downed_tip              = require("%ui/hud/tips/downed_tip.nut")
-let extraction_tip          = require("%ui/hud/tips/extraction_tip.nut")
-let flashlight_tip          = require("%ui/hud/tips/flashlight_tip.nut")
-let gun_jam_tip          = require("%ui/hud/tips/gun_jam_tip.nut")
-let onboarding_custom_action_tip  = require("%ui/hud/tips/onboarding_custom_action_tip.nut")
-let game_trigger_screen_tip = require("%ui/hud/tips/game_trigger_screen_tip.nut")
-let burning_tip             = require("%ui/hud/tips/burning_tip.nut")
-let healing_tip             = require("%ui/hud/tips/healing_tip.nut")
-let status_tip             = require("%ui/hud/tips/status_tip.nut")
-let objective_tips          = require("%ui/hud/tips/objective_tips.nut")
-let binoculars_tip          = require("%ui/hud/tips/binoculars_tip.nut")
-let hold_brief_tip              = require("%ui/hud/tips/hold_breath_tip.nut")
-
-let { mothmanDivingGrabAbilityPotentialTargetTip,
-  mothmanDivingGrabAbilityReleaseTip } = require("%ui/hud/tips/diving_mothman_tip.nut")
 require("%ui/hud/tips/dash_ability_tip.nut")
-let dash_dash_ability_tip        = require("%ui/hud/tips/dash_dash_ability_tip.nut")
 require("%ui/hud/tips/scream_ability_tip.nut")
 let { showroomActive } = require("%ui/hud/state/showroom_state.nut")
-let echolocationTip = require("%ui/hud/tips/echolocation_ability_tip.nut")
 
 let commonTips = [
   {
@@ -29,6 +28,7 @@ let commonTips = [
       status_tip,
       burning_tip,
       flashlight_tip,
+      bipod_tip,
       gun_jam_tip,
       healing_tip,
       echolocationTip,
@@ -58,6 +58,7 @@ let commonTips = [
     pos = [sh(0), -sh(25)]
     children = [
       extraction_tip,
+      robodog_extraction_tip,
     ]
   }
   {
@@ -65,7 +66,6 @@ let commonTips = [
     gap = hdpx(2)
     children = [
       downed_tip,
-      onboarding_custom_action_tip,
       game_trigger_screen_tip,
     ]
   }

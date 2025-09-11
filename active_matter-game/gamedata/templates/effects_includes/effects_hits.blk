@@ -1410,6 +1410,18 @@ hit_blood_entry_black_effect{
   }
 }
 
+hit_blood_entry_black_huge_effect{
+  _use:t="hit_effect_base"
+  entity_binded_effect__collNodeId:i=-1
+  entity_binded_effect__localEmitter:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "entity_binded_effect__entity:eid"{}
+  _group{
+    _tags:t="render"
+    effect__name:t="hit_blood_entry_black_huge_cmps_fx"
+  }
+}
+
 hit_blood_entry_flower_effect{
   _use:t="hit_effect_base"
   entity_binded_effect__collNodeId:i=-1

@@ -1,6 +1,7 @@
+import "%ui/mainMenu/menus/options/camera_fov_option_common.nut" as mkCameraFovOption
+
 from "%ui/ui_library.nut" import *
 
-let mkCameraFovOption = require("%ui/mainMenu/menus/options/camera_fov_option_common.nut")
 
 let MIN_FOV = 50.0
 let MAX_FOV = 120.0

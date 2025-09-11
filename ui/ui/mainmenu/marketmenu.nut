@@ -1,63 +1,67 @@
+from "%dngscripts/sound_system.nut" import sound_play
+from "%dngscripts/globalState.nut" import nestWatched
+from "%sqstd/math.nut" import floor, truncateToMultiple
+from "%sqstd/string.nut" import utf8ToLower
+from "%ui/components/commonComponents.nut" import mkSelectPanelItem, mkSelectPanelTextWithFaIconCtor, mkSelectPanelTextCtor, mkPanel,
+  mkTitleString, fontIconButton, mkHelpConsoleScreen, mkText, VertSelectPanelGap, BD_LEFT, mkTextArea, textButton
+from "%ui/components/colors.nut" import ItemIconBlocked, TextNormal, InfoTextValueColor, InfoTextDescColor,
+  SelBgNormal, SelBdNormal, BtnBgNormal, BtnBgSelected, BtnTextNormal, RedWarningColor, GreenSuccessColor
+from "%ui/mainMenu/market/marketItems.nut" import weaponRelated, getItemTemplate, equipmentRelated, getTemplateType
+from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPurchaseLogData, mkPlayerLog, removePlayerLog
+from "%ui/fonts_style.nut" import h2_txt, fontawesome, body_txt, sub_txt, tiny_txt
+from "%ui/mainMenu/stdPanel.nut" import mkCloseBtn, mkHelpButton, mkBackBtn
+from "dasevents" import EventShowItemInShowroom, EventActivateShowroom, EventCloseShowroom, EventUIMouseMoved, EventUIMouseWheelUsed, CmdShowUiMenu
+from "dagor.math" import Point2
+from "%ui/components/scrollbar.nut" import makeVertScroll, makeVertScrollExt
+from "%ui/components/itemIconComponent.nut" import itemIconNoBorder
+from "%ui/components/itemDescription.nut" import itemDescriptionStrings
+from "%ui/components/cursors.nut" import setTooltip
+import "%ui/components/faComp.nut" as faComp
+from "eventbus" import eventbus_send, eventbus_subscribe
+from "%ui/mainMenu/stashSpaceMsgbox.nut" import showNoEnoughStashSpaceMsgbox
+from "%ui/hud/state/item_info.nut" import mkAttachedChar
+from "%ui/components/msgbox.nut" import showMessageWithContent, showMsgbox
+from "%ui/components/purchase_confirm_msgbox.nut" import showCurrencyPurchaseMsgBox
+from "%ui/components/textInput.nut" import textInput
+from "%ui/components/button.nut" import button, buttonWithGamepadHotkey
+import "%ui/components/tooltipBox.nut" as tooltipBox
+from "%ui/hud/menus/components/inventoryItemRarity.nut" import mkRarityCorner, getRarityColor
+import "%ui/components/checkbox.nut" as checkBox
+from "das.inventory" import is_inventory_have_free_volume
+from "%ui/components/glareAnimation.nut" import marketAnimChildren, marketGlareAnim, glareAnimation, animChildren
+from "%ui/components/accentButton.style.nut" import accentButtonStyle
+import "%ui/components/spinner.nut" as spinner
+from "%ui/mainMenu/market/inventoryToMarket.nut" import isLotAvailable
+from "%ui/mainMenu/currencyIcons.nut" import creditsTextIcon, premiumCreditsTextIcon, premiumColor, creditsColor,
+  monolithTokensTextIcon, monolithTokensColor
+import "%ui/components/colorize.nut" as colorize
+from "%ui/control/active_controls.nut" import isGamepad
+import "%ui/components/gamepadImgByKey.nut" as gamepadImgByKey
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
+import "%ui/components/fontawesome.map.nut" as fa
 
-let { h2_txt, fontawesome, body_txt, sub_txt, tiny_txt } = require("%ui/fonts_style.nut")
-let { mkSelectPanelItem, mkSelectPanelTextWithFaIconCtor, mkSelectPanelTextCtor, mkPanel, mkTitleString, fontIconButton,
-  mkHelpConsoleScreen, mkText, VertSelectPanelGap, BD_LEFT, mkTextArea, textButton
-} = require("%ui/components/commonComponents.nut")
-let { mkCloseBtn, mkHelpButton, mkBackBtn } = require("stdPanel.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
-let { EventShowItemInShowroom, EventActivateShowroom, EventCloseShowroom, EventUIMouseMoved, EventUIMouseWheelUsed, CmdShowUiMenu } = require("dasevents")
-let { Point2 } = require("dagor.math")
 let { safeAreaAmount } = require("%ui/options/safeArea.nut")
 let { selectedItem, selectedItemsCategory } = require("%ui/mainMenu/market/marketState.nut")
-let { makeVertScroll, makeVertScrollExt } = require("%ui/components/scrollbar.nut")
-let { marketItems, cleanableItems, playerStats, playerProfileCreditsCount,
-      playerProfileMonolithTokensCount } = require("%ui/profile/profileState.nut")
-let { itemIconNoBorder } = require("%ui/components/itemIconComponent.nut")
-let fa = require("%ui/components/fontawesome.map.nut")
-let { ItemIconBlocked, TextNormal, InfoTextValueColor, InfoTextDescColor, SelBgNormal, SelBdNormal
-  BtnBgNormal, BtnBgSelected, RedWarningColor, GreenSuccessColor } = require("%ui/components/colors.nut")
+let { marketItems, playerStats, playerProfileCreditsCount, playerProfileMonolithTokensCount,
+  playerProfilePremiumCredits } = require("%ui/profile/profileState.nut")
 let marketCategories = require("%ui/mainMenu/categories/marketCategories.nut")
-let { addTabToDevInfo } = require("%ui/devInfo.nut")
-let { creditsTextIcon, monolithTokensTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
-let { itemDescriptionStrings } = require("%ui/components/itemDescription.nut")
-let { sound_play } = require("%dngscripts/sound_system.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { onSoldierFacompIcon, inStashFacompIcon, inCartFacompIcon
-} = require("%ui/components/inventoryTypeIcons.nut")
-let faComp = require("%ui/components/faComp.nut")
-let { eventbus_send, eventbus_subscribe } = require("eventbus")
-let { showNoEnoughStashSpaceMsgbox } = require("%ui/mainMenu/stashSpaceMsgbox.nut")
-let { mkAttachedChar } = require("%ui/hud/state/item_info.nut")
-let { showMessageWithContent, showMsgbox } = require("%ui/components/msgbox.nut")
+let { onSoldierFacompIcon, inStashFacompIcon, inCartFacompIcon } = require("%ui/components/inventoryTypeIcons.nut")
 let { equipment } = require("%ui/hud/state/equipment.nut")
 let { weaponsList } = require("%ui/hud/state/hero_weapons.nut")
 let { inventoryItems, stashItems, backpackItems } = require("%ui/hud/state/inventory_items_es.nut")
-let { floor, truncateToMultiple } = require("%sqstd/math.nut")
 let { favoriteItems } = require("%ui/mainMenu/market/marketFavorites.nut")
-let { textInput } = require("%ui/components/textInput.nut")
-let { button } = require("%ui/components/button.nut")
-let { utf8ToLower } = require("%sqstd/string.nut")
-let tooltipBox = require("%ui/components/tooltipBox.nut")
-let { mkRarityCorner, getRarityColor } = require("%ui/hud/menus/components/inventoryItemRarity.nut")
-let { MonolithMenuId, monolithSelectedLevel, selectedMonolithUnlock, monolithLevelOffers, currentMonolithLevel } = require("%ui/mainMenu/monolith/monolith_common.nut")
-let checkBox = require("%ui/components/checkbox.nut")
-let { customFilter, weaponRelated, getItemTemplate,
-      equipmentRelated, getTemplateType } = require("%ui/mainMenu/market/marketItems.nut")
+let { MonolithMenuId, monolithSelectedLevel, selectedMonolithUnlock, monolithLevelOffers, currentMonolithLevel, currentTab
+} = require("%ui/mainMenu/monolith/monolith_common.nut")
+let { customFilter } = require("%ui/mainMenu/market/marketItems.nut")
 let { backpackEid, safepackEid, backpackUniqueId, safepackUniqueId } = require("%ui/hud/state/hero_extra_inventories_state.nut")
 let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
-let { is_inventory_have_free_volume, ceil_volume } = require("das.inventory")
 let { stashEid, stashVolume, stashMaxVolume } = require("%ui/state/allItems.nut")
-let { addPlayerLog, mkPurchaseLogData, mkPlayerLog, removePlayerLog, playerLogsColors
-} = require("%ui/popup/player_event_log.nut")
-let { marketAnimChildren, marketGlareAnim } = require("%ui/components/glareAnimation.nut")
-let { accentButtonStyle } = require("%ui/components/accentButton.style.nut")
-let spinner = require("%ui/components/spinner.nut")
-let { nestWatched } = require("%dngscripts/globalState.nut")
+let { playerLogsColors } = require("%ui/popup/player_event_log.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
 let { currencyPanel } = require("%ui/mainMenu/currencyPanel.nut")
-let { isLotAvailable } = require("%ui/mainMenu/market/inventoryToMarket.nut")
+let { inShootingRange } = require("%ui/hud/state/shooting_range_state.nut")
 
 function patchItemType(item, key) {
   if (item.itemType == "")
@@ -75,19 +79,19 @@ let shoppingCartItems = nestWatched("shoppingCartItems", {})
 let needToCleanCart = Watched(false)
 let priceAnimGen = Watched(0)
 let tblScrollHandler = ScrollHandler()
-let hiddenCategories = [ "chronogene" ]
+let hiddenCategories = [ "chronogene", "goods", "alters" ]
 let itemRowHeight = hdpxi(44)
-let iconSize = [hdpxi(80), hdpxi(40)]
+let iconSize = static [hdpxi(80), hdpxi(40)]
 let svgIconSize = hdpxi(20)
 let itemsGap = VertSelectPanelGap
-let vertHap = freeze({size=[hdpx(2), flex()], rendObj = ROBJ_SOLID color=BtnBgNormal opacity=0.8})
+let vertHap = freeze({size=static [hdpx(2), flex()], rendObj = ROBJ_SOLID color=BtnBgNormal opacity=0.8})
 let priceAnimData = []
 let getPriceAnimData = @() clone priceAnimData
 const PRICE_ANIM_DURATION = 0.8
 local animCounter = 0
 
 let mkItemKey = @(uid) $"mkBuyItemRow_{uid}"
-isInBattleState.subscribe(@(_v) shoppingCartItems.modify(@(_items) {}))
+isInBattleState.subscribe_with_nasty_disregard_of_frp_update(@(_v) shoppingCartItems.modify(@(_items) {}))
 
 let progressPurchaseLog = {
   idToIgnore = "purchaseProgress"
@@ -120,14 +124,6 @@ function setPurchaseNotInProgress() {
     needToCleanCart.set(false)
   }
 }
-
-addTabToDevInfo("marketItems", marketItems, @"console commands:
-    profile.unlock_all_shop -- unlock all items in shop until first 'profile.load'
-    profile.force_set_credits_count 1000000 -- set credits to shopping
-    profile.force_set_monolith_credits_count 1000000 -- set monolith credits to shopping
-")
-
-addTabToDevInfo("cleanableItems", cleanableItems)
 
 eventbus_subscribe("profile_server.buyLots.needMoreStashSpace", function(result) {
   if (result?.need_more_space) {
@@ -163,8 +159,8 @@ eventbus_subscribe("profile_server.buyLots.result", function(res) {
     }
   }
 
-  itemsData.each(@(v) addPlayerLog({
-    id = v.templateName
+  itemsData.each(@(v, k) addPlayerLog({
+    id = k
     content = mkPlayerLog(mkPurchaseLogData(v.templateName, v?.attachments ?? [], v?.slotName))
   }))
 })
@@ -185,7 +181,7 @@ function addPriceAnimation(config) {
       function() {
         gui_scene.clearTimer(callee())
         removePriceAnimation(config.id)
-      })
+      }, $"purchAnim_{priceAnimGen.get()}")
     })
 
   priceAnimData.append(config)
@@ -196,7 +192,8 @@ function priceAnimationBlock() {
   let children = []
   let anims = getPriceAnimData()
   foreach(idx, anim in anims) {
-    let { id, visibleIdx, price, targetRect } = anim
+    let { id, visibleIdx, price, targetRect, color, currency = creditsTextIcon } = anim
+    let currencyToUse = colorize(color, currency)
     let prevVisIdx = visibleIdx.get()
     let curVisIdx = anims.len() - idx
     if (prevVisIdx != curVisIdx) {
@@ -206,7 +203,7 @@ function priceAnimationBlock() {
     let { r, t } = targetRect
     children.append({
       key = $"amim_{id}"
-      size = [0, 0]
+      size = 0
       pos = [r + hdpx(24), t + hdpx(6)]
       transform = {}
       behavior = Behaviors.RecalcHandler
@@ -218,7 +215,7 @@ function priceAnimationBlock() {
         }
         { prop = AnimProp.opacity, from = 1, to = 0, duration = 0.8, play = true, easing = OutCubic }
       ]
-      children = mkText($"{creditsTextIcon}{price}")
+      children = mkTextArea($"{currencyToUse}{price}", { size = SIZE_TO_CONTENT })
     })
   }
 
@@ -261,6 +258,7 @@ let avaliableBuyCategories = Computed(function() {
   let merketItemsVal = marketItems.get()
   let categories = []
   categories.append("favoriteItems")
+  categories.append("premium")
   foreach (item in merketItemsVal) {
     if ((item.children?.items.len() ?? 0)== 0)
       continue
@@ -269,11 +267,10 @@ let avaliableBuyCategories = Computed(function() {
     if (!isAdmin && hiddenCategories.findindex(@(v) v == tp) != null) 
       continue
 
-    if ((item?.buyable ?? false) && categories.findindex(@(v) v==tp) == null)
-      categories.append(tp)
+    if ((item?.buyable ?? false) && categories.findindex(@(v) v==tp) == null){
+      categories.append(tp)}
   }
   categories.sort(@(a, b) (marketCategories?[a]?.idx ?? 1000) <=> (marketCategories?[b]?.idx ?? 1000))
-  categories.append("presets")
   if (customFilter.get().filterToUse == null)
     categories.append("cart")
   return categories
@@ -284,12 +281,18 @@ function getDefaultCategory() {
     return "weapons"
   if (favoriteItems.get().len() != 0)
     return "favoriteItems"
-  return "presets"
+  return "cart"
 }
 
 function marketSorting(a, b) {
-  return a.itemType <=> b.itemType ||
-    a.reqMoney <=> b.reqMoney
+  let isPremiumA = (a?.additionalPrice?.premiumCreditsCount ?? 0) > 0
+  let isPremiumB = (b?.additionalPrice?.premiumCreditsCount ?? 0) > 0
+  if (isPremiumA && isPremiumB)
+    return a.additionalPrice.premiumCreditsCount <=> b.additionalPrice.premiumCreditsCount
+      || a.itemType <=> b.itemType
+
+  return a.itemType <=> b.itemType
+    || a.reqMoney <=> b.reqMoney
 }
 
 let textFilter = Watched("")
@@ -312,21 +315,34 @@ let notFoundStub = @() {
       text = fa["search"]
       fontSize = itemRowHeight
     }
-    {
-      rendObj = ROBJ_TEXT
-      text = selectedItemsCategory.get() == "favoriteItems" ? loc("shop/favoritesEmpty")
+    mkTextArea(
+      selectedItemsCategory.get() == "favoriteItems" ? loc("shop/favoritesEmpty")
         : selectedItemsCategory.get() == "cart" ? loc("shop/cartEmpty")
-        : loc("shop/noItem")
-    }.__update(h2_txt)
+        : loc("shop/noItem"),
+      { halign = ALIGN_CENTER }.__update(h2_txt)
+    )
   ]
 }
 
+let premiumColorAnimation = static [{prop = AnimProp.color, from = premiumColor, to = mul_color(premiumColor, 1.3),
+  duration = 3, loop = true, play = true, easing = CosineFull }]
+
+let premiumTextParams = {
+  color = premiumColor
+  transform = {}
+  animations = premiumColorAnimation
+}.__merge(body_txt)
+
 let mkCategoryPanel = memoize(function(category, filtereditems) {
   let group = ElemGroup()
+  let iconToUse = marketCategories?[category].icon != null
+    ? $"itemFilter/{marketCategories[category].icon}.svg"
+    : marketCategories?[category].faIcon ?? "bug"
+  let textParams = category == "premium" ? premiumTextParams : body_txt
   let children = function(p) {
     let params = p.__merge({group})
     return @() {
-      size = [ flex(), SIZE_TO_CONTENT ]
+      size = FLEX_H
       halign = ALIGN_CENTER
       behavior = Behaviors.Marquee
       speed = [hdpx(90),0]
@@ -334,31 +350,31 @@ let mkCategoryPanel = memoize(function(category, filtereditems) {
       scrollOnHover = true
       group
       children = category != "cart"
-        ? mkSelectPanelTextWithFaIconCtor(marketCategories?[category].faIcon ?? "bug", loc($"marketCategory/{category}"))(params)
+        ? mkSelectPanelTextWithFaIconCtor(iconToUse, loc($"marketCategory/{category}"), textParams)(params)
         : function() {
             let count = shoppingCartItems.get().reduce(@(res, v) res += (v?.count ?? 1), 0)
             let title = loc($"marketCategory/{category}")
             return {
               watch = shoppingCartItems
-              children = mkSelectPanelTextWithFaIconCtor(marketCategories?[category].faIcon ?? "bug", $"{title} ({count})")(params)
+              children = mkSelectPanelTextWithFaIconCtor(iconToUse, $"{title} ({count})")(params)
             }
           }
-       }
+      }
   }
   return @() {
     watch = customFilter
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     children = mkSelectPanelItem({
       children,
       state = selectedItemsCategory,
       idx = category,
       group,
       disabled = customFilter.get().filterToUse != null
-      visual_params = const {
+      visual_params = static {
         padding = hdpx(8)
         halign = ALIGN_CENTER
         valign = ALIGN_CENTER
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         clipChildren = true
       }
       cb = function(_) {
@@ -379,13 +395,48 @@ let mkCategoryPanel = memoize(function(category, filtereditems) {
   }
 })
 
-let buyPanelHeader = @(filtereditems) @() {
-  watch = avaliableBuyCategories
-  size = [flex(), SIZE_TO_CONTENT]
-  flow = FLOW_HORIZONTAL
-  gap = vertHap
-  children = avaliableBuyCategories.get().map(@(v) mkCategoryPanel(v, filtereditems))
+function changeTab(delta, categories) {
+  let curIdx = categories.findindex(@(v) v == selectedItemsCategory.get())
+  if (curIdx == null)
+    return
+  let newIdx = curIdx + delta
+  if (categories?[newIdx] != null)
+    selectedItemsCategory.set(categories[newIdx])
 }
+
+function buyPanelHeader(filtereditems) {
+  function gamepadHotkeys() {
+    if (!isGamepad.get())
+      return { watch = isGamepad }
+    return {
+      watch = isGamepad
+      size = FLEX_H
+      vplace = ALIGN_CENTER
+      children = [
+        gamepadImgByKey.mkImageCompByDargKey("J:LT", static { pos = [-hdpx(10), 0]})
+        gamepadImgByKey.mkImageCompByDargKey("J:RT", static { hplace = ALIGN_RIGHT, pos = [hdpx(10), 0]})
+      ]
+    }
+  }
+  return @() {
+    watch = avaliableBuyCategories
+    size = FLEX_H
+    hotkeys = [
+      ["J:RT", { action = @() changeTab(1, avaliableBuyCategories.get())}],
+      ["J:LT", { action = @() changeTab(-1, avaliableBuyCategories.get())}]
+    ]
+    children = [
+      {
+        size = FLEX_H
+        flow = FLOW_HORIZONTAL
+        gap = vertHap
+        children = avaliableBuyCategories.get().map(@(v) mkCategoryPanel(v, filtereditems))
+      }
+      gamepadHotkeys
+    ]
+  }
+}
+
 
 function getItemLoc(item){
   let template = getItemTemplate(item?.templateName)
@@ -408,8 +459,8 @@ let itemTextStyle = {
 function mkItemNameCtor(item) {
   let textCtor = mkSelectPanelTextCtor(getItemName(item), itemTextStyle)
   return @(params) {
-    size = const flex()
-    margin = const [0, hdpx(4)]
+    size = static flex()
+    margin = static [0, hdpx(4)]
     children = textCtor(params)
   }
 }
@@ -426,10 +477,12 @@ function convertToShort(value) {
 }
 
 let favButtonStyle = freeze({
-  BtnBgNormal = SelBgNormal
+  style = { BtnBgNormal = SelBgNormal }
+  tooltipText = loc("market/addFavorites")
 })
 let favButtonStyleFav = freeze(favButtonStyle.__merge({
-  TextNormal = SelBdNormal
+  style = { TextNormal = SelBdNormal }
+  tooltipText = loc("market/removeFavorites")
 }))
 
 function mkFavoriteButton(lot) {
@@ -446,18 +499,20 @@ function mkFavoriteButton(lot) {
       favoriteItems.mutate(@(v) v.append(lot))
     }
   }
-  let defparams = const { fontSize = hdpxi(16) size = flex() borderWidth = 0}
+  let defparams = static { fontSize = hdpxi(20) size = flex() borderWidth = 0}
+  let filledIcon = "itemFilter/favorites.svg"
+  let emptyIcon = "itemFilter/favorites_off.svg"
   return @() {
     watch = isFavorite
-    size = const [ hdpx(20), flex() ]
+    size = static [ hdpx(20), flex() ]
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
 
     children = fontIconButton(
-      isFavorite.get() ? "star" : "star-o", onClick
+      isFavorite.get() ? filledIcon : emptyIcon, onClick
       isFavorite.get()
-        ? const defparams.__merge({style = favButtonStyleFav})
-        : const defparams.__merge({favButtonStyle})
+        ? static defparams.__merge(favButtonStyleFav)
+        : static defparams.__merge(favButtonStyle)
     )
   }
 }
@@ -518,8 +573,8 @@ function mkExistSection(item) {
   let cartItemCount = Computed(@() countItemsInCart(shoppingCartItems.get(), id))
 
   let existColor = InfoTextDescColor
-  let emptyColor = const Color(50, 50, 50)
-  let defP = const {fontSize = hdpx(15) halign = ALIGN_CENTER}
+  let emptyColor = static Color(50, 50, 50)
+  let defP = static {fontSize = hdpx(15) halign = ALIGN_CENTER}
   let mkRow = @(fac, txt, count) {
     behavior = Behaviors.Button
     onHover = @(on) setTooltip(on ? txt : null)
@@ -527,20 +582,21 @@ function mkExistSection(item) {
     color = SelBgNormal
     flow = FLOW_VERTICAL
     gap = itemsGap
-    size = const [ hdpx(35), flex() ]
+    size = static [ hdpx(35), flex() ]
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
     padding = hdpx(15)
+    skipDirPadNav = true
     children = [
       faComp(fac, count ? defP.__merge({color = existColor}) : defP.__merge({color=emptyColor}))
-      const { size = [ 0, flex() ] }
-      mkText($"{count ? count : "-"}", count ? const {color = existColor}.__update(tiny_txt) : const {color = emptyColor}.__update(tiny_txt))
+      static { size = static [ 0, flex() ] }
+      mkText($"{count ? count : "-"}", count ? static {color = existColor}.__update(tiny_txt) : static {color = emptyColor}.__update(tiny_txt))
     ]
   }
   let content = @(){
     watch = [stashCount, onMeItemCount, cartItemCount, selectedItemsCategory, customFilter]
     flow = FLOW_HORIZONTAL
-    size = const [ SIZE_TO_CONTENT, flex() ]
+    size = FLEX_V
     children = [
       mkRow(inStashFacompIcon, loc("market/tooltip/itemsInStash"), convertToShort(stashCount.get()))
       mkRow(onSoldierFacompIcon, loc("market/tooltip/itemsOnSoldier"), convertToShort(onMeItemCount.get()))
@@ -563,12 +619,25 @@ function findAttachmentsInList(items, idx = 0) {
   return iconAttachments
 }
 
+function mkPremiumPurchaseIcon(item) {
+  let { templateName = null } = item.children.items[0]
+  let itemIcon = freeze(itemIconNoBorder(templateName,
+    {
+      width = static hdpxi(300)
+      height = static hdpxi(300)
+      shading = "full"
+      vplace = ALIGN_CENTER
+    },
+    findAttachmentsInList(item.children.items)))
+  return itemIcon
+}
+
 function mkBuyItemRowNameCol(item){
   let { templateName = null } = item.children.items[0]
   let itemIcon = freeze(itemIconNoBorder(templateName,
     {
-      width=const iconSize[0]
-      height=const iconSize[1]
+      width=static iconSize[0]
+      height=static iconSize[1]
       silhouette = ItemIconBlocked
       shading = "full"
       vplace = ALIGN_CENTER
@@ -583,7 +652,7 @@ function mkBuyItemRowNameCol(item){
     rarityIcon = mkRarityCorner(rarityColor, {
       hplace = ALIGN_RIGHT
       vplace = ALIGN_BOTTOM
-      size = const [hdpx(12), hdpx(12)]
+      size = static [hdpx(12), hdpx(12)]
     })
   }
 
@@ -594,10 +663,10 @@ function mkBuyItemRowNameCol(item){
       clipChildren = true
       children = [
         {
-          size = const [flex(), SIZE_TO_CONTENT]
+          size = FLEX_H
           flow = FLOW_HORIZONTAL
-          gap = const hdpx(5)
-          padding = const [0, hdpx(10)]
+          gap = static hdpx(5)
+          padding = static [0, hdpx(10)]
           children = [
             itemIcon
             mkItemNameCtor(item)(params)
@@ -608,52 +677,64 @@ function mkBuyItemRowNameCol(item){
     },
     state=selectedItem,
     idx=item.id,
-    visual_params = const { padding = 0 },
+    visual_params = static { padding = 0 },
     border_align = BD_LEFT
   })
 }
 
-let mkBuyItemRowPriceCol = @(item, width=hdpx(100)) {
-  flow = FLOW_HORIZONTAL
-  size = const [width, flex()]
-  padding = 0
-  gap = vertHap
-  children = [
-    mkPanel(
-      (item?.reqMoney ?? 0) > 0
-        ? mkText($"{creditsTextIcon} {item?.reqMoney}", sub_txt)
-        : mkText("---", body_txt),
-      { size = flex(), padding = hdpx(10), valign = ALIGN_CENTER, halign = ALIGN_RIGHT fillColor = SelBgNormal}
-    )
-  ]
-}
-
-function tryStashPurchase(templateName) {
-  let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(templateName)
-  let volume = ceil_volume(
-    (template?.getCompValNullable("item__countPerStack") ?? 0) > 0
-      ? max(template?.getCompValNullable("item__volumePerStack") ?? 0, template?.getCompValNullable("item__volume") ?? 0)
-      : (template?.getCompValNullable("item__volume") ?? 0)
-  )
-  if (!is_inventory_have_free_volume(stashEid.get(), volume)) {
-    let needMore = truncateToMultiple(volume - (stashMaxVolume.get() - stashVolume.get()), 0.1)
-    setPurchaseNotInProgress()
-    showNoEnoughStashSpaceMsgbox(needMore)
-    sound_play("ui_sounds/item_insufficient_funds")
-    return false
+function mkBuyItemRowPriceCol(item, width = hdpx(100)) {
+  let { additionalPrice = {}, reqMoney = 0 } = item
+  let isPremium = (additionalPrice?.premiumCreditsCount ?? 0) > 0
+  let price = isPremium ? additionalPrice.premiumCreditsCount : reqMoney
+  let currencyTextIcon = isPremium ? premiumCreditsTextIcon : creditsTextIcon
+  let color = isPremium ? premiumColor : creditsColor
+  let currency = colorize(color, currencyTextIcon)
+  return {
+    flow = FLOW_HORIZONTAL
+    size = [width, flex()]
+    padding = 0
+    gap = vertHap
+    children = [
+      mkPanel(price > 0
+        ? mkTextArea($"{currency}{price}", { halign = ALIGN_RIGHT })
+        : mkTextArea("---", body_txt),
+        { size = flex(), padding = hdpx(10), valign = ALIGN_CENTER, halign = ALIGN_RIGHT fillColor = SelBgNormal}
+      )
+    ]
   }
-  return true
 }
 
-function shopButtonPress(item_id, templateName, can_buy, animId = null) {
+function getItemVolume(templateName) {
+  let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(templateName)
+  let volume = (template?.getCompValNullable("item__countPerStack") ?? 0) > 0
+    ? max(template?.getCompValNullable("item__volumePerStack") ?? 0, template?.getCompValNullable("item__volume") ?? 0)
+    : (template?.getCompValNullable("item__volume") ?? 0)
+  return volume
+}
+
+let hasStashFreeVolume = @(purchaseVolume) is_inventory_have_free_volume(stashEid.get(), purchaseVolume)
+function calculateNeededVolume(purchaseVolume) {
+  let needMore = truncateToMultiple(purchaseVolume - (stashMaxVolume.get() - stashVolume.get()), 0.1)
+  setPurchaseNotInProgress()
+  showNoEnoughStashSpaceMsgbox(needMore)
+  sound_play("ui_sounds/item_insufficient_funds")
+}
+
+function shopButtonPress(item_id, items, isPremium, can_buy, animId = null) {
   if (can_buy) {
-    let canPurchase = tryStashPurchase(templateName)
-    if (!canPurchase)
+    let purchaseVolume = items.reduce(function(res, v) {
+      let volume = getItemVolume(v.templateName)
+      return res + volume
+    }, 0)
+    if (!hasStashFreeVolume(purchaseVolume)) {
+      calculateNeededVolume(purchaseVolume)
       return
+    }
     anim_start($"currency_panel_{creditsTextIcon}")
-    eventbus_send("profile_server.buyLots", [ { id = item_id, count = 1 } ])
+    eventbus_send("profile_server.buyLots", [ { id = item_id, count = 1, usePremium = isPremium } ])
     anim_start(animId)
-    anim_start($"purchase_{templateName}descPanel")
+    currentAnimationId.set(animId)
+    anim_start($"purchase_{items[0].templateName}descPanel")
     sound_play("ui_sounds/button_buy")
     buyInProgress.set(true)
   }
@@ -670,7 +751,7 @@ function showNotAvailableMsgbox(strings) {
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
     flow = FLOW_VERTICAL
-    gap = const hdpx(20)
+    gap = static hdpx(20)
     children = [ mkText(loc("market/notAvailable"), h2_txt) ]
       .extend(strings)
   }
@@ -683,8 +764,9 @@ function showRequireMonolithUnlock(strings, unlocksAtMonolithLevel, monolithUnlo
     {
       text = loc("market/goToMonolith"),
       action = function() {
-        monolithSelectedLevel.set(unlocksAtMonolithLevel)
+        monolithSelectedLevel.set(unlocksAtMonolithLevel + 1)
         selectedMonolithUnlock.set(monolithUnlockToSend)
+        currentTab.set("monolithLevelId")
         ecs.g_entity_mgr.broadcastEvent(CmdShowUiMenu({menuName = MonolithMenuId}))
       }
     }
@@ -709,16 +791,20 @@ function showRequireMonolithUnlock(strings, unlocksAtMonolithLevel, monolithUnlo
     if (showUnlockButton) {
       let price = offerVal.additionalPrice?.monolithTokensCount ?? 0
       buttons.append({
-        text = $"{loc("market/monolithOffer/unlockNow")} {monolithTokensTextIcon}{price}"
+        text = $"{loc("market/monolithOffer/unlockNow")} {colorize(monolithTokensColor, monolithTokensTextIcon)}{price}"
         action = function() {
           if (price > playerProfileMonolithTokensCount.get()) {
             addPlayerLog(mkNoMonotithTokensLog(monolithUnlockToSend))
           }
           else {
             sound_play("ui_sounds/mark_item_3d")
-            eventbus_send("profile_server.buyLots", [ { id = offerId, count = 1 } ])
+            eventbus_send("profile_server.buyLots", [ { id = offerId, count = 1, usePremium = false } ])
           }
         }
+        customStyle = { textParams = {
+          rendObj = ROBJ_TEXTAREA
+          behavior = Behaviors.TextArea
+        }}
       })
     }
   }
@@ -726,7 +812,7 @@ function showRequireMonolithUnlock(strings, unlocksAtMonolithLevel, monolithUnlo
     showUnlockButton = false
 
   let content = {
-    size = [sw(70), flex()]
+    size = static [sw(70), flex()]
     children = [
       showUnlockButton ? {
         hplace = ALIGN_RIGHT
@@ -828,9 +914,9 @@ function mkLockedBuyButton(item) {
     valign = ALIGN_CENTER
     halign = ALIGN_CENTER
     color = SelBgNormal
-    padding = const [0, hdpx(4)]
+    padding = static [0, hdpx(4)]
     children = {
-      size = const [hdpx(78), buyButtonSize[1]]
+      size = static [hdpx(78), buyButtonSize[1]]
       children = fontIconButton(
         "lock",
         function() {
@@ -841,9 +927,9 @@ function mkLockedBuyButton(item) {
             showNotAvailableMsgbox(reqs.strings)
         }
         {
-          size = const [hdpx(78), flex()]
+          size = static [hdpx(78), flex()]
           sound = lockedSound
-          fontSize = const hdpxi(20),
+          fontSize = static hdpxi(20),
           textParams = lockedBtnTextParams
           onHover = function(on) {
             if (on) {
@@ -870,10 +956,24 @@ let buySound = memoize(@(inProgress) freeze({
   hover = "ui_sounds/button_highlight"
 }))
 
+let showPurchaseMsgbox = @(item, price, cb) showCurrencyPurchaseMsgBox({
+  item
+  icon = mkPremiumPurchaseIcon(item)
+  name = getItemName(item)
+  price
+  currency = "premium"
+  cb
+})
+
 function mkBuyButton(item) {
-  let haveEnoughMoney = Computed(@() playerProfileCreditsCount.get() >= item.reqMoney)
+  let isPremium = (item?.additionalPrice.premiumCreditsCount ?? 0) > 0
+  let price = isPremium ? item.additionalPrice.premiumCreditsCount : item.reqMoney
+  let currency = isPremium ? premiumCreditsTextIcon : creditsTextIcon
+  let color = isPremium ? premiumColor : creditsColor
+  let haveEnoughMoney = Computed(@() isPremium
+    ? playerProfilePremiumCredits.get() >= price
+    : playerProfileCreditsCount.get() >= price)
   let animId = mkId(item.id)
-  let color = haveEnoughMoney.get() ? TextNormal : notEnoughMoneyStyle.TextNormal
   return {
     rendObj = ROBJ_SOLID
     size = buyBtnSize
@@ -887,17 +987,27 @@ function mkBuyButton(item) {
       size = buyButtonSize
       children = button(
         mkPurchaseIcon("stash_purchase", {
-          color
+          color = haveEnoughMoney.get() ? TextNormal : notEnoughMoneyStyle.TextNormal
           transform = {}
           animations = buyBtnAnimations(animId.tostring())
         }),
         function(event) {
           if (!buyInProgress.get()) {
-            if (haveEnoughMoney.get())
-              addPriceAnimation({ targetRect = event.targetRect, price = item.reqMoney, id = animCounter })
-            animCounter++
-            currentAnimationId.set(animId)
-            shopButtonPress(item.id, item.children.items[0].templateName, haveEnoughMoney.get(), animId)
+            if (isPremium) {
+              if (!haveEnoughMoney.get())
+                showMsgbox({ text = loc("responseStatus/Not enough money") })
+              else
+                showPurchaseMsgbox(item, price,
+                  @() shopButtonPress(item.id, item.children.items, isPremium, haveEnoughMoney.get(), animId))
+              return
+            }
+            else {
+              if (haveEnoughMoney.get())
+                addPriceAnimation({ targetRect = event.targetRect, price, currency, color, id = animCounter })
+              animCounter++
+              currentAnimationId.set(animId)
+              shopButtonPress(item.id, item.children.items, isPremium, haveEnoughMoney.get(), animId)
+            }
           }
           else
             addPlayerLog(progressPurchaseLog)
@@ -919,8 +1029,9 @@ let inventories = [
   { eid = safepackEid, parentId = safepackUniqueId, i = 2 }
 ]
 
-let getInventoryToMove = @(volume)
-  inventories.findvalue(@(inv) is_inventory_have_free_volume(inv.eid.get(), volume))
+let getInventoryToMove = @(volume) inventories
+  .filter(@(inv) inv.eid.get() != ecs.INVALID_ENTITY_ID)
+  .findvalue(@(inv) is_inventory_have_free_volume(inv.eid.get(), volume))
 
 function purchaseToInventory(item, slotData, canBuy, event, animId = null) {
   if (!canBuy) {
@@ -931,11 +1042,16 @@ function purchaseToInventory(item, slotData, canBuy, event, animId = null) {
     return
   }
 
-  let { children, reqMoney } = item
+  let { children, reqMoney, additionalPrice = {} } = item
+  let isPremium = (additionalPrice?.premiumCreditsCount ?? 0) > 0
+  let price = isPremium ? additionalPrice.premiumCreditsCount : reqMoney
+  let currency = isPremium ? premiumCreditsTextIcon : creditsTextIcon
+  let color = isPremium ? premiumColor : creditsColor
   let templateName = children.items[0].templateName
   let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(templateName)
 
-  let { itemTemplate = null, mods = {} } = slotData
+  let { itemTemplate = null } = slotData
+  let mods = slotData?.mods ?? {}
   let modSlotToEquip = mods.findvalue(@(v) v?.allowed_items.contains(templateName))
   local slot = "inventory"
   local parentId = "0"
@@ -944,18 +1060,16 @@ function purchaseToInventory(item, slotData, canBuy, event, animId = null) {
     parentId = slotData.parentId
     customFilter.mutate(@(v) v.slotData.itemTemplate <- templateName)
   }
-  else if (slotData.mods.len() > 0 && modSlotToEquip?.itemTemplate == "") {
+  else if (mods.len() > 0 && modSlotToEquip?.itemTemplate == "") {
     let { weapModSlotName, weapUniqueId } = modSlotToEquip
     slot = weapModSlotName
     parentId = weapUniqueId
     customFilter.mutate(@(v) v.slotData.mods[weapModSlotName].itemTemplate <- templateName)
   }
   else {
-    let volume = ceil_volume(
-      (template?.getCompValNullable("item__countPerStack") ?? 0) > 0
-        ? max(template?.getCompValNullable("item__volumePerStack") ?? 0, template?.getCompValNullable("item__volume") ?? 0)
-        : (template?.getCompValNullable("item__volume") ?? 0)
-    )
+    let volume = (template?.getCompValNullable("item__countPerStack") ?? 0) > 0
+      ? max(template?.getCompValNullable("item__volumePerStack") ?? 0, template?.getCompValNullable("item__volume") ?? 0)
+      : (template?.getCompValNullable("item__volume") ?? 0)
     let inventory = getInventoryToMove(volume)
     if (!inventory) {
       showMsgbox({ text = loc("purchaseAndEquip/noSpace") })
@@ -965,18 +1079,22 @@ function purchaseToInventory(item, slotData, canBuy, event, animId = null) {
     parentId = inventory.parentId.get()
   }
 
-  addPriceAnimation({ targetRect = event.targetRect, price = reqMoney, id = animCounter })
+  addPriceAnimation({ targetRect = event.targetRect, price, currency, color, id = animCounter })
   animCounter++
   currentAnimationId.set(animId)
   anim_start(animId)
   anim_start($"currency_panel_{creditsTextIcon}")
-  eventbus_send("profile_server.buyLotInSlot", [{ id = item.id, slot, parentId }])
+  eventbus_send("profile_server.buyLotInSlot", [{ id = item.id, slot, parentId, usePremium = isPremium }])
   sound_play("ui_sounds/button_buy")
   buyInProgress.set(true)
 }
 
 function mkBuyToInventoryButton(item) {
-  let haveEnoughMoney = Computed(@() playerProfileCreditsCount.get() >= item.reqMoney)
+  let isPremium = (item?.additionalPrice.premiumCreditsCount ?? 0) > 0
+  let price = isPremium ? item.additionalPrice.premiumCreditsCount : item.reqMoney
+  let haveEnoughMoney = Computed(@() isPremium
+    ? playerProfilePremiumCredits.get() >= price
+    : playerProfileCreditsCount.get() >= price)
   let id = mkId(item, item.id)
   let color = haveEnoughMoney.get() ? TextNormal : notEnoughMoneyStyle.TextNormal
   return @() {
@@ -995,8 +1113,17 @@ function mkBuyToInventoryButton(item) {
           animations = buyBtnAnimations(id.tostring())
         }),
         function(event) {
-          if (!buyInProgress.get())
-            purchaseToInventory(item, customFilter.get().slotData, haveEnoughMoney.get(), event, id)
+          if (!buyInProgress.get()) {
+            if (isPremium) {
+              if (!haveEnoughMoney.get())
+                showMsgbox({ text = loc("responseStatus/Not enough money") })
+              else
+                showPurchaseMsgbox(item, price,
+                  @() purchaseToInventory(item, customFilter.get().slotData, haveEnoughMoney.get(), event, id))
+            }
+            else
+              purchaseToInventory(item, customFilter.get().slotData, haveEnoughMoney.get(), event, id)
+          }
           else
             addPlayerLog(progressPurchaseLog)
         }
@@ -1121,10 +1248,11 @@ let halfPaddingSize = itemsGap.__merge({ size = [itemsGap.size[0], itemsGap.size
 function mkBuyItemRow(item, isInCart = false) {
   let lotAvailable = Computed(@() isLotAvailable(item, playerStats.get()))
   let watch = [ showOnlyAvailableOffers, lotAvailable ]
-  let { id } = item
+  let { id, children = {} } = item
+  let { templateName = null } = children?.items[0]
 
   return function() {
-    if (showOnlyAvailableOffers.get() && !lotAvailable.get())
+    if ((showOnlyAvailableOffers.get() && !lotAvailable.get()) || templateName == null)
       return { watch }
     return {
       watch
@@ -1162,19 +1290,9 @@ function mkCartList(items) {
   return items 
 }
 
-tblScrollHandler.subscribe(function(_) {
-  let { elem = null } = tblScrollHandler
-  if (elem == null || itemToScroll.get() == null)
-    return
-
-  tblScrollHandler.scrollToChildren(@(desc)
-    ("key" in desc) && (desc.key == mkItemKey(itemToScroll.get())), 2, false, true)
-  itemToScroll.set(null)
-})
-
 let buyPanelItemsListList = @(filtereditems, isInCart) {
-  size = [flex(), SIZE_TO_CONTENT]
-  margin = [0, hdpx(5), 0, 0]
+  size = FLEX_H
+  margin = static [0, hdpx(5), 0, 0]
   flow = FLOW_VERTICAL
   
   children = filtereditems?.get().map(@(v) mkBuyItemRow(v, isInCart))
@@ -1184,6 +1302,15 @@ let buyPanelItemsList = @(filtereditems, isInCart) @() {
   watch = filtereditems
   rendObj = ROBJ_WORLD_BLUR
   size = flex()
+  onAttach = function() {
+    let { elem = null } = tblScrollHandler
+    if (elem == null || itemToScroll.get() == null)
+      return
+
+    tblScrollHandler.scrollToChildren(@(desc)
+      ("key" in desc) && (desc.key == mkItemKey(itemToScroll.get())), 2, false, true)
+    itemToScroll.set(null)
+  }
   children = filtereditems.get()?.len() != 0 ? makeVertScrollExt(buyPanelItemsListList(filtereditems, isInCart), {
     scrollHandler = tblScrollHandler
     size = flex()
@@ -1203,13 +1330,13 @@ function mkBuyPanelItemDescriptionBody(item) {
   }
   let plusItems = otherItems.len() ? {
     flow = FLOW_HORIZONTAL
-    size = [flex(), SIZE_TO_CONTENT]
-    gap = hdpx(10)
-    margin = [hdpx(10), 0, 0, 0]
+    size = FLEX_H
+    gap = static hdpx(10)
+    margin = static [hdpx(10), 0, 0, 0]
     children = [
       mkText(loc("desc/plusItems"), {color = InfoTextDescColor}).__update(sub_txt)
       {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_VERTICAL
         children = otherItems
       }
@@ -1218,27 +1345,27 @@ function mkBuyPanelItemDescriptionBody(item) {
 
   let textDesc = {
     halign = ALIGN_LEFT
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     gap = itemsGap
-    children = item.offerName != "" ?
-      item.children.items.map(@(v) getItemLoc(v)).reduce(function(acc, v) {
-        if (v in acc)
-          acc[v] += 1
-        else
-          acc[v] <- 1
-        return acc
-      }, {}).map(@(count, v) mkText($"{v} (x{count})").__update(sub_txt)).values() :
-      itemDescriptionStrings(mainItem.templateName, sub_txt).append(plusItems)
+    children = item.offerName != ""
+      ? item.children.items.map(@(v) getItemLoc(v)).reduce(function(acc, v) {
+          if (v in acc)
+            acc[v] += 1
+          else
+            acc[v] <- 1
+          return acc
+        }, {}).map(@(count, v) mkText($"{v} ({loc("ui/multiply")}{count})").__update(sub_txt)).values()
+      : itemDescriptionStrings(mainItem.templateName, sub_txt).append(plusItems)
   }
   let desc = {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     gap = hdpx(20)
     children = textDesc
   }
   return {
-    size = [ flex(), SIZE_TO_CONTENT ]
+    size = FLEX_H
     halign = ALIGN_LEFT
     children = desc
   }
@@ -1247,20 +1374,26 @@ function mkBuyPanelItemDescriptionBody(item) {
 let waitingSpinner = spinner(hdpx(34), 0.3)
 
 function mkAccentPurchaseButton(item, params = {}) {
-  let haveEnoughMoney = Computed(@() playerProfileCreditsCount.get() >= item.reqMoney)
+  let isPremium = (item?.additionalPrice.premiumCreditsCount ?? 0) > 0
+  let price = isPremium ? item.additionalPrice.premiumCreditsCount : item.reqMoney
+  let haveEnoughMoney = Computed(@() isPremium
+    ? playerProfilePremiumCredits.get() >= price
+    : playerProfileCreditsCount.get() >= price)
   let lotAvailable = Computed(@() isLotAvailable(item, playerStats.get()))
   let { buyable = false, isPurchaseAndEquip = false } = params
+  let currencyIcon = isPremium ? premiumCreditsTextIcon : creditsTextIcon
+  let color = isPremium ? premiumColor : creditsColor
+  let currency = colorize(color, currencyIcon)
   let btnText = isPurchaseAndEquip
-    ? $"{loc("market/purchaseToInventory")} {creditsTextIcon}{item.reqMoney}"
-    : $"{loc("market/purchaseToStash")} {creditsTextIcon}{item.reqMoney}"
+    ? $"{loc("market/purchaseToInventory")} {currency}{price}"
+    : $"{loc("market/purchaseToStash")} {currency}{price}"
   return function() {
     return {
       watch = [haveEnoughMoney, lotAvailable, buyInProgress]
-      size = [flex(), hdpx(50)]
+      size = FLEX_H
       halign = ALIGN_CENTER
       children = buyInProgress.get() ? waitingSpinner
-        : textButton(
-            btnText,
+        : buttonWithGamepadHotkey(mkTextArea(btnText, { halign = ALIGN_CENTER }.__update(body_txt)),
             function(event) {
               let reqs = getRequirements(item, marketItems.get(), playerStats.get(), monolithLevelOffers.get())
               let showMonolithMsgbox = reqs.unlocksAtMonolithLevel != null && playerStats.get().unlocks.findindex(@(v) reqs.monolithUnlockName == v) == null
@@ -1270,19 +1403,39 @@ function mkAccentPurchaseButton(item, params = {}) {
               else if (!buyable)
                 showNotAvailableMsgbox(reqs.strings)
               else if (!buyInProgress.get()) {
-                if (isPurchaseAndEquip)
-                  purchaseToInventory(item, customFilter.get().slotData, haveEnoughMoney.get(), event)
-                else
-                  shopButtonPress(item.id, item.children.items[0].templateName, haveEnoughMoney.get())
+                if (isPurchaseAndEquip) {
+                  if (isPremium) {
+                    if (!haveEnoughMoney.get())
+                      showMsgbox({ text = loc("responseStatus/Not enough money") })
+                    else
+                      showPurchaseMsgbox(item, price,
+                        @() purchaseToInventory(item, customFilter.get().slotData, haveEnoughMoney.get(), event))
+                  }
+                  else
+                    purchaseToInventory(item, customFilter.get().slotData, haveEnoughMoney.get(), event)
+                }
+                else {
+                  if (isPremium) {
+                    if (!haveEnoughMoney.get())
+                      showMsgbox({ text = loc("responseStatus/Not enough money") })
+                    else
+                      showPurchaseMsgbox(item, price,
+                        @() shopButtonPress(item.id, item.children.items, isPremium, haveEnoughMoney.get()))
+                    return
+                  }
+                  else
+                    shopButtonPress(item.id, item.children.items, isPremium, haveEnoughMoney.get())
+                }
               }
               else
                 addPlayerLog(progressPurchaseLog)
             },
             {
-              size = [flex(), SIZE_TO_CONTENT]
+              size = static [flex(0.33), hdpx(50)]
               sound = buySound(buyInProgress.get())
               halign = ALIGN_CENTER
               textMargin = fsh(1)
+              hotkeys = [["J:Y", { description = { skip = true }}]]
               transform = {}
               animations = [
                 { prop=AnimProp.opacity, from=1, to=1, duration=0.3, playFadeOut=true, easing=OutCubic }
@@ -1298,13 +1451,14 @@ let mkAddToCartButton = @(item) function() {
     return { watch = playerStats }
   return {
     watch = playerStats
-    size = [flex(), SIZE_TO_CONTENT]
-    children = textButton(loc("market/addToCart"),
+    size = static [flex(0.33), SIZE_TO_CONTENT]
+    children = buttonWithGamepadHotkey(mkText(loc("market/addToCart"), { hplace = ALIGN_CENTER }.__merge(body_txt)),
       @() addToCart(item)
       {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = static [flex(), hdpx(50)]
         sound = buySound(buyInProgress.get())
         halign = ALIGN_CENTER
+        hotkeys = [["J:X", { description = { skip = true }}]]
       }
     )
   }
@@ -1317,11 +1471,9 @@ function checkStashVolume(allItems) {
     foreach (item in data.children.items) {
       let { templateName } = item
       let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(templateName)
-      let volume = ceil_volume(
-        (template?.getCompValNullable("item__countPerStack") ?? 0) > 0
-          ? max(template?.getCompValNullable("item__volumePerStack") ?? 0, template?.getCompValNullable("item__volume") ?? 0)
-          : (template?.getCompValNullable("item__volume") ?? 0)
-      )
+      let volume = (template?.getCompValNullable("item__countPerStack") ?? 0) > 0
+        ? max(template?.getCompValNullable("item__volumePerStack") ?? 0, template?.getCompValNullable("item__volume") ?? 0)
+        : (template?.getCompValNullable("item__volume") ?? 0)
       neededVolume += volume * count
     }
   }
@@ -1337,14 +1489,35 @@ function checkStashVolume(allItems) {
 
 function purchaseAllCartButton() {
   let allCartItems = shoppingCartItems.get()
-  let price = allCartItems.reduce(@(res, v) res += v.reqMoney * (v?.count ?? 1), 0)
-  let haveEnoughMoney = playerProfileCreditsCount.get() >= price
-  if (price == 0)
-    return { watch = [shoppingCartItems, playerProfileCreditsCount] }
+  let price = allCartItems.reduce(function(res, v) {
+    let isPremium = (v?.additionalPrice.premiumCreditsCount ?? 0) > 0
+    if (isPremium)
+      res.premium += v.additionalPrice.premiumCreditsCount * (v?.count ?? 1)
+    else
+      res.credits += v.reqMoney * (v?.count ?? 1)
+    return res
+  }, {
+    credits = 0
+    premium = 0
+  })
+  let haveEnoughMoney = playerProfileCreditsCount.get() >= price.credits
+    && playerProfilePremiumCredits.get() >= price.premium
+  if (price.credits == 0 && price.premium == 0)
+    return { watch = [shoppingCartItems, playerProfileCreditsCount, playerProfilePremiumCredits] }
+  local priceText = loc("market/cartPurchase")
+  let premiumIcon = colorize(premiumColor, premiumCreditsTextIcon)
+  let creditsIcon = colorize(creditsColor, creditsTextIcon)
+  if (price.premium > 0)
+    priceText = $"{priceText} {premiumIcon}{price.premium}"
+  if (price.premium > 0 && price.credits > 0)
+    priceText = $"{priceText} &"
+  if (price.credits > 0)
+    priceText = $"{priceText} {creditsIcon}{price.credits}"
   return {
     watch = [shoppingCartItems, playerProfileCreditsCount]
-    size = [flex(), SIZE_TO_CONTENT]
-    children = textButton($"{loc("market/cartPurchase")} {creditsTextIcon}{price}",
+    size = FLEX_H
+    children = buttonWithGamepadHotkey(
+      mkTextArea(priceText, { halign = ALIGN_CENTER }.__merge(body_txt)),
       function() {
         if (!haveEnoughMoney) {
           showMsgbox({ text = loc("responseStatus/Not enough money") })
@@ -1353,29 +1526,24 @@ function purchaseAllCartButton() {
         else if (!buyInProgress.get()) {
           if (!checkStashVolume(allCartItems))
             return
-          
-          
-          
-          let itemsToPurchase = allCartItems.reduce(function(acc, v){
-            for (local i = 0; i < v.count; i++){
-              acc.append({id = v.id, count = 1})
-            }
-            return acc
-          }, [])
+          let itemsToPurchase = allCartItems.map(@(v) { id = v.id, count = v.count,
+            usePremium = (v?.additionalPrice.premiumCreditsCount ?? 0) > 0 })
           anim_start($"currency_panel_{creditsTextIcon}")
-          eventbus_send("profile_server.buyLots", itemsToPurchase)
+          eventbus_send("profile_server.buyLots", itemsToPurchase.values())
           sound_play("ui_sounds/button_buy")
           buyInProgress.set(true)
           needToCleanCart.set(true)
+          selectedItem.set(null)
         }
         else
           addPlayerLog(progressPurchaseLog)
       },
       {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = static [flex(), hdpx(50)]
         sound = buySound(buyInProgress.get())
         halign = ALIGN_CENTER
         onHover = @(on) setTooltip(on ? loc("btn/buy") : null)
+        hotkeys = [["J:RS", { description = { skip = true }}]]
         textParams = {
           transform = {}
         }
@@ -1391,11 +1559,11 @@ function mkClearCartButton() {
       return { watch }
     return {
       watch
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       children = textButton(loc("market/clearCart"),
         @() shoppingCartItems.modify(@(_items) {}),
         {
-          size = [flex(), SIZE_TO_CONTENT]
+          size = FLEX_H
           halign = ALIGN_CENTER
         })
       }
@@ -1408,7 +1576,7 @@ function mkBuyPanelItemDescriptionDetails(item) {
   let { templateName } = item.children.items[0]
   let purchaseAnim = marketAnimChildren(marketGlareAnim($"purchase_{templateName}descPanel", 0.8))
   return @() {
-    size = [flex(0.33), flex()]
+    size = static [flex(0.33), flex()]
     flow = FLOW_VERTICAL
     gap = itemsGap
     children = [
@@ -1426,15 +1594,35 @@ function mkBuyPanelItemDescriptionDetails(item) {
           }
         ]
       }
-      makeVertScroll(
-        mkPanel(mkBuyPanelItemDescriptionBody(item),
-        { size = [flex(), SIZE_TO_CONTENT] }
-      ))
+      makeVertScroll(mkPanel(mkBuyPanelItemDescriptionBody(item), { size = FLEX_H }))
     ]
   }
 }
 
-function mkBuyPanelItemDescriptionRelated(itemOffers, item, related, isInCart) {
+function mkButtonsBlock(item, isInCart) {
+  let { templateName = null } = item?.children.items[0]
+  if (templateName == null)
+    return null
+  let requirements = item?.requirements
+  let buyable = (item?.buyable ?? false)
+  return {
+    size = FLEX_H
+    flow = FLOW_HORIZONTAL
+    gap = hdpx(8)
+    children = [
+      @() {
+        watch = customFilter
+        size = FLEX_H
+        children = isInCart ? mkClearCartButton()
+          : customFilter.get().filterToUse == null ? mkAddToCartButton(item)
+          : mkAccentPurchaseButton(item, { buyable, requirements, isPurchaseAndEquip = true })
+      }
+      isInCart ? purchaseAllCartButton : mkAccentPurchaseButton(item, { buyable, requirements })
+    ]
+  }
+}
+
+function mkBuyPanelItemDescriptionRelated(itemOffers, item, related) {
   let { templateName = null } = item?.children.items[0]
   if (templateName == null)
     return null
@@ -1451,66 +1639,44 @@ function mkBuyPanelItemDescriptionRelated(itemOffers, item, related, isInCart) {
     relatedItems.append(relatedItem)
   }
   relatedItems = relatedItems.sort(marketSorting)
-
-  let requirements = item?.requirements
-  let buyable = (item?.buyable ?? false)
   return {
-    size = [flex(0.66), flex()]
+    size = static [flex(0.66), flex()]
+    vplace = ALIGN_TOP
+    hplace = ALIGN_RIGHT
     flow = FLOW_VERTICAL
-    gap = hdpx(8)
-    children = [
-      {
-        size = flex()
-        vplace = ALIGN_TOP
-        hplace = ALIGN_RIGHT
+    gap = itemsGap
+    children = relatedItems.len() == 0 ? null : [
+      mkSubTitle(loc("market/suitableItems"))
+      makeVertScroll({
+        size = FLEX_H
         flow = FLOW_VERTICAL
-        gap = itemsGap
-        children = relatedItems.len() == 0 ? null : [
-          mkSubTitle(loc("market/suitableItems"))
-          makeVertScroll({
-            size = [flex(), SIZE_TO_CONTENT]
-            flow = FLOW_VERTICAL
-            margin = [0, hdpx(5), 0, 0]
-            
-            rendObj = ROBJ_WORLD_BLUR_PANEL
-            children = relatedItems.map(@(v) mkBuyItemRow(v))
-          })
-        ]
-      }
-      {
-        flow = FLOW_HORIZONTAL
-        size = [flex(), SIZE_TO_CONTENT]
-        children = [
-          {
-            size = [flex(), SIZE_TO_CONTENT]
-            flow = FLOW_HORIZONTAL
-            gap = hdpx(8)
-            children = [
-              @() {
-                watch = customFilter
-                size = [flex(), SIZE_TO_CONTENT]
-                children = isInCart ? mkClearCartButton()
-                  : customFilter.get().filterToUse == null ? mkAddToCartButton(item)
-                  : mkAccentPurchaseButton(item, { buyable, requirements, isPurchaseAndEquip = true })
-              }
-              isInCart ? purchaseAllCartButton : mkAccentPurchaseButton(item, { buyable, requirements })
-            ]
-          }
-        ]
-      }
+        margin = static [0, hdpx(5), 0, 0]
+        
+        rendObj = ROBJ_WORLD_BLUR_PANEL
+        children = relatedItems.map(@(v) mkBuyItemRow(v))
+      })
     ]
   }
 }
 
-function buyPanelItemDescription(items, related, isInCart){
-  return @(){
+let buyPanelItemDescription = @(items, related, isInCart) function() {
+  let selItem = items.get()?[selectedItem.get()]
+  return {
     watch = [selectedItem, items, related]
-    size = [flex(), ph(45)]
-    flow = FLOW_HORIZONTAL
-    gap = hdpx(10)
+    size = static [flex(), ph(45)]
+    flow = FLOW_VERTICAL
+    gap = static hdpx(8)
     children = [
-      mkBuyPanelItemDescriptionDetails(items.get()?[selectedItem.get()])
-      mkBuyPanelItemDescriptionRelated(items.get(), items.get()?[selectedItem.get()], related, isInCart)
+      {
+        size = flex()
+        flow = FLOW_HORIZONTAL
+        gap = hdpx(10)
+        children = [
+          mkBuyPanelItemDescriptionDetails(selItem)
+          mkBuyPanelItemDescriptionRelated(items.get(), selItem, related)
+        ]
+      }
+      mkButtonsBlock(selItem, isInCart)
     ]
   }
 }
@@ -1531,7 +1697,7 @@ let mkDeleteInputTextBtn = @(textWatch, filterData) function() {
     watch
     hplace = ALIGN_RIGHT
     vplace = ALIGN_CENTER
-    margin = [0, hdpx(10),0,0]
+    margin = static [0, hdpx(10),0,0]
     children = fontIconButton("icon_buttons/x_btn.svg", function() {
         textWatch.set("")
         if (customFilter.get().filterToUse != null) {
@@ -1545,13 +1711,39 @@ let mkDeleteInputTextBtn = @(textWatch, filterData) function() {
 }
 
 function defaultFilter(item, selectedCategory, inputFilter) {
-  let { buyable = true, itemType = "", children = {} } = item
+  let { buyable = true, itemType = "", children = {}, additionalPrice = {} } = item
+  let isPremium = (additionalPrice?.premiumCreditsCount ?? 0) > 0
+  if (selectedCategory == "premium")
+    return buyable && isPremium
+      && (inputFilter.len() == 0 || children?.items.findindex(@(i) is_item_name_contain(i.templateName, inputFilter)) != null)
+
   return buyable
     && (inputFilter.len() == 0 || children?.items.findindex(@(i) is_item_name_contain(i.templateName, inputFilter)) != null)
     && itemType == selectedCategory
+    && !isPremium
 }
 
 let marketShowroomPreviewSize = { posX = 0, posY = 0, sizeX = 0, sizeY = 0 }
+
+selectedItem.subscribe_with_nasty_disregard_of_frp_update(function(v){
+  let data = ecs.CompObject()
+  let items = marketItems.get()?[v]?.children?.items ?? []
+  foreach(item in items)
+    data[item.insertIntoSlot.len() == 0 ? "__weapon" : item.insertIntoSlot] <- item.templateName
+
+  let item = marketItems.get()?[v]
+  let { buyable = false, itemType = "", id = -1, additionalPrice = {} } = item
+  let isPremium = (additionalPrice?.premiumCreditsCount ?? 0) > 0
+  itemToScroll.set(v)
+  if ((selectedItemsCategory.get() != "favoriteItems" || !favoriteItems.get().contains(id))
+      && selectedItemsCategory.get() != "cart"
+      && buyable)
+    selectedItemsCategory.set(isPremium ? "premium" : itemType)
+  oldCategory = selectedItemsCategory.get()
+  if (v != -1)
+    ecs.g_entity_mgr.broadcastEvent(EventShowItemInShowroom({ showroomKey="itemShowroom", data}))
+})
+
 function mkBuyMarketPanel() {
   
   
@@ -1574,41 +1766,27 @@ function mkBuyMarketPanel() {
     return listToUse.values().sort(marketSorting)
   })
 
-  selectedItem.subscribe(function(v){
-    let data = ecs.CompObject()
-    let items = marketItems.get()?[v]?.children?.items ?? []
-    foreach(item in items)
-      data[item.insertIntoSlot.len() == 0 ? "__weapon" : item.insertIntoSlot] <- item.templateName
-
-    let item = marketItems.get()?[v]
-    let { buyable = false, itemType = "", id = -1 } = item
-    itemToScroll.set(v)
-    if ((selectedItemsCategory.get() != "favoriteItems" || !favoriteItems.get().contains(id))
-        && selectedItemsCategory.get() != "cart"
-        && buyable)
-      selectedItemsCategory.set(itemType)
-    oldCategory = selectedItemsCategory.get()
-    if (v != -1)
-      ecs.g_entity_mgr.broadcastEvent(EventShowItemInShowroom({ showroomKey="itemShowroom", data}))
-  })
-
   let inputBlock = {
-    size = [hdpx(350), SIZE_TO_CONTENT]
+    size = static [hdpx(350), SIZE_TO_CONTENT]
     children = textInput(textFilter, {
       placeholder = loc("search by name")
       textmargin = hdpx(5)
       margin = 0
       onChange = @(value) textFilter.set(value)
-      onEscape = @() textFilter.set("")
+      onEscape = function() {
+        if (textFilter.get() == "")
+          set_kb_focus(null)
+        textFilter.set("")
+      }
     }.__update(body_txt))
   }
 
   let mkSelectedFilterBlock = @(data) {
     rendObj = ROBJ_SOLID
-    size = [SIZE_TO_CONTENT, hdpx(38)]
+    size = static [SIZE_TO_CONTENT, hdpx(38)]
     minWidth = hdpx(350)
     valign = ALIGN_CENTER
-    padding = [0, hdpx(10)]
+    padding = static [0, hdpx(10)]
     color = BtnBgSelected
     children = mkText(data.activeFilter, {
       color = TextNormal
@@ -1670,12 +1848,12 @@ function mkBuyMarketPanel() {
           gap = hdpx(15)
           children = [
             {
-              size = [flex(0.44), flex()]
+              size = static [flex(0.44), flex()]
               children = buyPanelItemsList(filtereditems, isShoppingCartOpened.get())
             }
             {
               flow = FLOW_VERTICAL
-              size = [flex(0.6), flex()]
+              size = static [flex(0.6), flex()]
               children = [
                 {
                   size = flex()
@@ -1721,7 +1899,7 @@ function mkBuyMarketPanel() {
     }
     children = [
       {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_HORIZONTAL
         gap = hdpx(10)
         valign = ALIGN_CENTER
@@ -1736,12 +1914,6 @@ function mkBuyMarketPanel() {
 }
 
 function mkMarketScreen() {
-
-  let marketScreen = {
-    size = flex()
-    hplace = ALIGN_CENTER
-    children = mkBuyMarketPanel()
-  }
 
   let mouseCatchPanel = {
     size = flex()
@@ -1760,11 +1932,11 @@ function mkMarketScreen() {
         size = flex()
         maxWidth = sw(97) * safeAreaAmount.get()
         maxHeight = sh(90) * safeAreaAmount.get()
-        padding = [hdpx(50), hdpx(50), 0, hdpx(50)]
+        padding = static [hdpx(50), hdpx(50), 0, hdpx(50)]
         hplace = ALIGN_CENTER
         vplace = ALIGN_CENTER
         flow = FLOW_VERTICAL
-        children = marketScreen
+        children = mkBuyMarketPanel()
       }
       priceAnimationBlock
     ]
@@ -1797,7 +1969,7 @@ return {
   mkMarketScreen
   Market_id
   marketScreenName
-  marketIsAvailable = Computed(@() !isOnboarding.get())
+  marketIsAvailable = Computed(@() !isOnboarding.get() && !inShootingRange.get())
   setSectionToReturn = function (v){
     sectionToReturn.set(v)
   }

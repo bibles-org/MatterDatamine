@@ -1,10 +1,12 @@
+from "%dngscripts/globalState.nut" import nestWatched
+
+from "dagor.time" import get_local_unixtime
+from "matching.api" import matching_listen_notify
+from "matching.errors" import INVALID_USER_ID
+from "eventbus" import eventbus_subscribe
+
 from "%ui/ui_library.nut" import *
 
-let { nestWatched } = require("%dngscripts/globalState.nut")
-let {get_local_unixtime} = require("dagor.time")
-let {matching_listen_notify} = require("matching.api")
-let { INVALID_USER_ID } = require("matching.errors")
-let { eventbus_subscribe } = require("eventbus")
 
 let chatLogs = nestWatched("chatLogs", {})
 

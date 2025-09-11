@@ -1,31 +1,45 @@
+from "%dngscripts/sound_system.nut" import sound_play
+
+from "%ui/fonts_style.nut" import h2_txt, body_txt
+from "%ui/components/colors.nut" import BtnTextNormal, RedWarningColor, GreenSuccessColor, NotificationBg,
+  TextHighlight, TextNormal, BtnBgFocused, ControlBgOpaque, BtnBgDisabled, InfoTextValueColor
+from "%ui/components/commonComponents.nut" import mkText, fontIconButton, mkTextArea
+from "%ui/components/msgbox.nut" import showMsgbox, showMessageWithContent
+from "dasevents" import CmdShowUiMenu
+from "%ui/mainMenu/currencyIcons.nut" import monolithTokensColor
+from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog
+from "%ui/components/itemIconComponent.nut" import itemIconNoBorder
+from "eventbus" import eventbus_send, eventbus_subscribe_onehit
+from "%ui/mainMenu/craftIcons.nut" import getRecipeIcon, mkCraftResultsItems, getCraftResultItems
+from "net" import get_sync_time
+from "%ui/mainMenu/craftScreenState.nut" import craftScreens
+from "dagor.debug" import logerr
+from "%ui/components/button.nut" import button, textButton
+from "%ui/components/modalWindows.nut" import addModalWindow, removeModalWindow
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/components/textInput.nut" import textInput
+from "%ui/mainMenu/currencyIcons.nut" import monolithTokensTextIcon, monolithTokensColor
+from "%ui/components/slider.nut" import Horiz
+from "%ui/mainMenu/stdPanel.nut" import mkCloseStyleBtn
+import "%ui/components/colorize.nut" as colorize
+import "%ui/components/faComp.nut" as faComp
+from "%ui/components/mkLightBox.nut" import mkLightBox
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { h2_txt, body_txt } = require("%ui/fonts_style.nut")
-let { BtnTextNormal, RedWarningColor, GreenSuccessColor, NotificationBg } = require("%ui/components/colors.nut")
-let { mkText, fontIconButton } = require("%ui/components/commonComponents.nut")
-let { playerProfileMonolithTokensCount, craftTasks, playerProfileOpenedRecipes, playerBaseState, allCraftRecipes,
-  marketItems } = require("%ui/profile/profileState.nut")
-let { showMsgbox, showMessageWithContent } = require("%ui/components/msgbox.nut")
-let { MonolithMenuId, monolithSelectedLevel, selectedMonolithUnlock, currentMonolithLevel
+let { playerProfileMonolithTokensCount, craftTasks, playerBaseState, allCraftRecipes, marketItems,
+  playerProfileOpenedNodes, playerProfileChronotracesCount, playerProfileAllResearchNodes
+} = require("%ui/profile/profileState.nut")
+let { MonolithMenuId, monolithSelectedLevel, selectedMonolithUnlock, currentMonolithLevel, currentTab
 } = require("%ui/mainMenu/monolith/monolith_common.nut")
-let { CmdShowUiMenu } = require("dasevents")
-let { monolithTokensTextIcon, monolithTokensColor } = require("%ui/mainMenu/currencyIcons.nut")
-let { addPlayerLog, mkPlayerLog, playerLogsColors } = require("%ui/popup/player_event_log.nut")
-let { itemIconNoBorder } = require("%ui/components/itemIconComponent.nut")
-let { sound_play } = require("%dngscripts/sound_system.nut")
-let { eventbus_send, eventbus_subscribe_onehit } = require("eventbus")
+let { playerLogsColors } = require("%ui/popup/player_event_log.nut")
 let { currencyPanel } = require("%ui/mainMenu/currencyPanel.nut")
-let { getRecipeIcon } = require("craftIcons.nut")
-let { get_sync_time } = require("net")
-let { craftScreens, craftScreenState } = require("%ui/mainMenu/craftScreenState.nut")
-let { logerr } = require("dagor.debug")
-let { button } = require("%ui/components/button.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { textInput } = require("%ui/components/textInput.nut")
-let faComp = require("%ui/components/faComp.nut")
+let { craftScreenState } = require("%ui/mainMenu/craftScreenState.nut")
 
 let selectedPrototype = Watched(null)
+let gamepadHoveredPrototype = Watched(null)
+let prototypeToReplicate = Computed(@() gamepadHoveredPrototype.get() ?? selectedPrototype.get())
 let selectedPrototypeMonolithData = Watched(null)
 let profileActionInProgress = Watched(false)
 let craftsReady = Watched(0)
@@ -34,9 +48,10 @@ let onlyOpenedBlueprintsFilter = Watched(false)
 let selectedCategory = Watched(null)
 let filterTextInput = Watched("")
 
-function closeCraftWindow() {
-  selectedPrototype.set(null)
-}
+const CHRONOTRACE_UID_WND = "chronotracesWnd"
+
+let largeRecipeIconHeight = hdpxi(193)
+let chronotracesWndSize = static [hdpx(400), hdpx(182)]
 
 function getRequirementsMonolithData(data, playerStats, monolithLevels, curMonolithLevel) {
   let { requirements = {} } = data
@@ -70,18 +85,187 @@ function getRequirementsMonolithData(data, playerStats, monolithLevels, curMonol
     ).filter(@(v) v != null)
   if (res.len() <= 0)
     return res
-  res.insert(0, mkText(loc("monolith/requirementsNotMetMsgbox"), body_txt))
+  res.insert(0, mkTextArea(loc("monolith/requirementsNotMetMsgbox"), {
+    halign = ALIGN_CENTER, size = SIZE_TO_CONTENT }.__merge(body_txt)))
   return res
+}
+
+function getRecipeName(recipe) {
+  if (recipe?.name == null)
+    return loc("unknown_item")
+
+  if (recipe.name != "")
+    return recipe.name
+
+  let templateName = recipe.results?[0].reduce(@(a,v,k) v.len() == 0 ? k : a, "")
+  let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(templateName)
+  let itemName = template.getCompValNullable("item__name")
+
+  return itemName
+}
+
+function openChronotracesWindow(event, node_id, needResearchPoints, currentResearchPoints, isDoubleClicked = false) {
+  let curChronotracesCount = playerProfileChronotracesCount.get()
+  if (curChronotracesCount <= 0) {
+    showMsgbox({ text = $"{loc("research/zeroChronotraces")}{loc("research/descMsgBox/closedNodeDesc")}" })
+    return
+  }
+  if (curChronotracesCount == 1) {
+    showMessageWithContent({
+      content = {
+        size = static [sw(80), SIZE_TO_CONTENT]
+        flow = FLOW_VERTICAL
+        gap = static hdpx(20)
+        halign = ALIGN_CENTER
+        children = [
+          mkTextArea(loc("research/addOnePoint", { blueprint = colorize(InfoTextValueColor, loc(getRecipeName(allCraftRecipes.get()[node_id])))}),
+            { halign = ALIGN_CENTER }.__merge(h2_txt))
+          getRecipeIcon(node_id, [largeRecipeIconHeight, largeRecipeIconHeight], 0.0, "silhouette")
+        ]
+      }
+      buttons = [
+        {
+          text = loc("Yes")
+          action = function() {
+            eventbus_send("profile.add_chronotraces_to_research_node", { node_id, chronotraces_count = 1 })
+            removeModalWindow(CHRONOTRACE_UID_WND)
+          }
+          isCurrent = true
+        },
+        {
+          text = loc("No")
+          isCancel = true
+        }
+      ]
+    })
+    return
+  }
+  let maxChronotracesToAdd = clamp(curChronotracesCount, 1, needResearchPoints - currentResearchPoints)
+  let sendCount = Watched(maxChronotracesToAdd)
+  let maxCountText = mkText(maxChronotracesToAdd)
+  let inputWidth = calc_comp_size(mkText(maxChronotracesToAdd, body_txt))[0]
+
+  let countInput = {
+    size = [inputWidth + hdpx(10), SIZE_TO_CONTENT]
+    children = textInput(sendCount, {
+      textmargin = hdpx(5)
+      margin = 0
+      onEscape = function() {
+        if (sendCount.get() == 1)
+          set_kb_focus(null)
+        sendCount.set(1)
+      }
+      onChange = function(value) {
+        let intVal = value == "" ? 1 : value.tointeger()
+        if (intVal <= 1)
+          sendCount.set(1)
+        else if (intVal >= maxChronotracesToAdd)
+          sendCount.set(maxChronotracesToAdd)
+        else
+          sendCount.set(intVal)
+      }
+      maxChars = maxChronotracesToAdd.tostring().len()
+      isValidResult = @(val) type(val) == "integer"
+      setValue = @(_v) null
+      inputType = "num"
+      fontSize = body_txt.fontSize
+    })
+  }
+
+  let addPointsPanel = {
+    size = FLEX_H
+    flow = FLOW_VERTICAL
+    gap = static hdpx(6)
+    children = [
+      {
+        size = static [flex() hdpx(20)]
+        children = Horiz(sendCount, {
+          min = 1
+          max = maxChronotracesToAdd
+          step = 1
+          setValue = @(v) sendCount.set(v.tointeger())
+          bgColor = BtnBgFocused
+        })
+      }
+      {
+        size = FLEX_H
+        flow = FLOW_HORIZONTAL
+        gap = static { size = flex() }
+        valign = ALIGN_CENTER
+        children = [
+          static mkText(1)
+          countInput
+          maxCountText
+        ]
+      }
+    ]
+  }
+
+  let { b, t, r, l } = event.targetRect
+  let yPos = sh(100) - b <= chronotracesWndSize[1] * 1.5
+    ? t - chronotracesWndSize[1] - hdpx(5)
+    : b + hdpx(5)
+  let wndPos = isDoubleClicked ? [(r + l) / 2 - chronotracesWndSize[0] / 2, yPos] : [l - hdpx(18), b + hdpx(14)]
+  return addModalWindow({
+    key = CHRONOTRACE_UID_WND
+    onClick = null
+    children = [
+      mkLightBox([{l, r, b, t}, [node_id]])
+      {
+        rendObj = ROBJ_BOX
+        size = chronotracesWndSize
+        fillColor = ControlBgOpaque
+        borderWidth = hdpx(1)
+        borderRadius = hdpx(1)
+        borderColor = BtnBgDisabled
+        pos = wndPos
+        flow = FLOW_VERTICAL
+        gap = static hdpx(10)
+        padding = static hdpx(10)
+        halign = ALIGN_CENTER
+        behavior = Behaviors.Button
+        onClick = null
+        children = [
+          {
+            size = FLEX_H
+            flow = FLOW_VERTICAL
+            halign = ALIGN_CENTER
+            valign = ALIGN_CENTER
+            gap = hdpx(10)
+            children = [
+              {
+                size = FLEX_H
+                valign = ALIGN_CENTER
+                halign = ALIGN_RIGHT
+                children = [
+                  mkText(loc(getRecipeName(allCraftRecipes.get()[node_id])), {
+                    hplace = ALIGN_CENTER
+                  }.__merge(body_txt))
+                  mkCloseStyleBtn(@() removeModalWindow(CHRONOTRACE_UID_WND))
+                ]
+              }
+              addPointsPanel
+            ]
+          }
+          textButton(loc("research/addPointsToResearch"),
+            function() {
+              eventbus_send("profile.add_chronotraces_to_research_node", { node_id, chronotraces_count=sendCount.get() })
+              removeModalWindow(CHRONOTRACE_UID_WND)
+            })
+        ]
+      }
+    ]
+  })
 }
 
 
 function getRecipeMonolithUnlock(prototypeId, name, marketOffers, monolithLevels, playerStats, curMonolithLevel) {
-  let marketItem = marketOffers.findvalue(@(v) v?.children.researchNodes[0] == prototypeId)
-  if (marketItem == null)
+  let marketId = marketOffers.findindex(@(v) v?.children.researchNodes[0] == prototypeId)
+  if (marketId == null)
     return null
-  let { buyable = false, additionalPrice = {}, id = null, requirements = {} } = marketItem
-  let isAlreadyBought = playerStats?.purchasedUniqueMarketOffers
-    .findindex(@(v) id != null && v.tostring() == id) != null
+  let marketItem = marketOffers[marketId]
+  let { buyable = false, additionalPrice = {}, requirements = {} } = marketItem
+  let isAlreadyBought = playerStats?.purchasedUniqueMarketOffers.findindex(@(v) v.tostring() == marketId) != null
   if (!buyable || (additionalPrice?.monolithTokensCount ?? 0) <= 0 || isAlreadyBought)
     return null
 
@@ -94,10 +278,10 @@ function getRecipeMonolithUnlock(prototypeId, name, marketOffers, monolithLevels
   return {
     unlocksAtMonolithLevel
     name
-    monolithUnlockToSend = marketItem.children.researchNodes[0]
+    monolithUnlockToSend = marketItem.children.unlocks[0]
     text = $"{loc("market/requreMonolithLevel")} {loc(monolithLevels?[unlocksAtMonolithLevel].offerName)}"
     price = additionalPrice.monolithTokensCount
-    offerId = id
+    offerId = marketId
     prototypeId
     monolithRequirements
   }
@@ -111,23 +295,30 @@ function showMonolithMsgBox(data) {
     {
       text = loc("market/goToMonolith"),
       action = function() {
-        monolithSelectedLevel.set(unlocksAtMonolithLevel)
+        monolithSelectedLevel.set(unlocksAtMonolithLevel + 1)
         selectedMonolithUnlock.set(monolithUnlockToSend)
+        currentTab.set("monolithLevelId")
         ecs.g_entity_mgr.broadcastEvent(CmdShowUiMenu({menuName = MonolithMenuId}))
       }
     }
   ]
 
-  let showUnlockButton = unlocksAtMonolithLevel != 0
+  let showUnlockButton = unlocksAtMonolithLevel >= 0
     && unlocksAtMonolithLevel < currentMonolithLevel.get()
     && monolithRequirements.len() <= 0
 
   if (showUnlockButton) {
     buttons.append({
-      text = $"{loc("market/monolithOffer/unlockNow")} {monolithTokensTextIcon}{price}"
-      customStyle = { style = {
-        TextNormal = price > playerProfileMonolithTokensCount.get() ? RedWarningColor : BtnTextNormal
-      }}
+      text = $"{loc("market/monolithOffer/unlockNow")} {colorize(monolithTokensColor, monolithTokensTextIcon)}{price}"
+      customStyle = {
+        style = {
+          TextNormal = price > playerProfileMonolithTokensCount.get() ? RedWarningColor : BtnTextNormal
+        }
+        textParams = {
+          rendObj = ROBJ_TEXTAREA
+          behavior = Behaviors.TextArea
+        }
+      }
       action = function() {
         if (price > playerProfileMonolithTokensCount.get()) {
           let mkNoMonotithTokensLog = {
@@ -143,14 +334,14 @@ function showMonolithMsgBox(data) {
         }
         else {
           sound_play("ui_sounds/mark_item_3d")
-          eventbus_send("profile_server.buyLots", [ { id = offerId, count = 1 } ])
+          eventbus_send("profile_server.buyLots", [ { id = offerId, count = 1, usePremium = false } ])
         }
       }
     })
   }
 
   let content = {
-    size = [sw(70), SIZE_TO_CONTENT]
+    size = static [sw(70), SIZE_TO_CONTENT]
     children = [
       !showUnlockButton ? null : {
         hplace = ALIGN_RIGHT
@@ -160,21 +351,21 @@ function showMonolithMsgBox(data) {
         children = currencyPanel
       }
       {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         halign = ALIGN_CENTER
         flow = FLOW_VERTICAL
         gap = hdpx(20)
         children = [
           mkText(text, h2_txt)
-          getRecipeIcon(prototypeId, [hdpxi(300), hdpxi(300)], 0.0, "silhouette")
+          getRecipeIcon(prototypeId, [largeRecipeIconHeight, largeRecipeIconHeight], 0.0, "silhouette")
           mkText(loc(name), h2_txt)
           monolithRequirements.len() <= 0 ? null : {
-            size = [flex(), SIZE_TO_CONTENT]
+            size = FLEX_H
             flow = FLOW_VERTICAL
             gap = hdpx(2)
             hplace = ALIGN_CENTER
             halign = ALIGN_CENTER
-            padding = [0,0, hdpx(10), 0]
+            padding = static [0,0, hdpx(10), 0]
             children = monolithRequirements
           }
         ]
@@ -222,8 +413,8 @@ let craftMsgbox = @(text) showMessageWithContent({
   }.__update(h2_txt)
 })
 
-function startReplication(idx = null) {
-  if (selectedPrototype.get() == null) {
+function startReplication(idx = null, event = null) {
+  if (prototypeToReplicate.get() == null) {
     showMsgbox({text=loc("craft/itemNotSelected")})
     return
   }
@@ -233,25 +424,90 @@ function startReplication(idx = null) {
     return
   }
 
-  let playerRecipe = playerProfileOpenedRecipes.get().findvalue(@(v) v.prototypeId == selectedPrototype.get())
-  if (playerRecipe == null) {
-    showMsgbox({text=loc("craft/startUnresearchedRecipe")})
+  if (!(allCraftRecipes.get()?[prototypeToReplicate.get()].isOpened)) {
+    let recipe = allCraftRecipes.get()[prototypeToReplicate.get()]
+    let playerResearch = playerProfileOpenedNodes.get().findvalue(@(v) v.prototypeId == prototypeToReplicate.get())
+    if (playerResearch == null) {
+      let craftResultItems = getCraftResultItems(recipe.results).slice(0, 1)
+      showMessageWithContent({
+        content = {
+          size = static [sw(80), SIZE_TO_CONTENT]
+          flow = FLOW_VERTICAL
+          gap = static hdpx(40)
+          halign = ALIGN_CENTER
+          vplace = ALIGN_CENTER
+          children = [
+            mkTextArea(loc("craft/startUnresearchedRecipe"), { halign = ALIGN_CENTER }.__merge(h2_txt))
+            {
+              children = [
+                mkCraftResultsItems(craftResultItems)
+                faComp("paw", {
+                  color = TextHighlight
+                  padding = static hdpx(4)
+                  fontSize = hdpx(20)
+                  behavior = Behaviors.Button
+                  skipDirPadNav = true
+                  transform = {}
+                  animations = [{prop = AnimProp.color, from = TextHighlight, to = TextNormal, duration = 1,
+                    play = true, loop = true, easing = CosineFull }]
+                  onHover = @(on) setTooltip(on ? loc("items/item_created_by_zone") : null)
+                })
+              ]
+            }
+          ]
+        }
+      })
+    }
+    else {
+      let node_id = playerProfileAllResearchNodes.get().findindex(@(v) v.containsRecipe == prototypeToReplicate.get())
+      let research = playerProfileAllResearchNodes.get()?[node_id]
+      let needResearchPoints = research?.requireResearchPointsToComplete ?? -1
+      let currentResearchPoints = playerResearch?.currentResearchPoints ?? 0
+      if (idx != null) {
+        showMsgbox({ text = loc("research/descMsgBox/openedNodeReq", { neededCount = needResearchPoints, neededCountDiff = needResearchPoints }) })
+        return
+      }
+      openChronotracesWindow(event, node_id, needResearchPoints, currentResearchPoints, true)
+    }
     return
   }
 
   local idxToSet = idx
-  if (idxToSet == null) {
-    for (local i = 0; i < (playerBaseState.get()?.openedReplicatorDevices ?? 0); i++) {
-      if (craftTasks.get()?[i] == null || craftTasks.get()[i].replicatorSlotIdx != i) {
+  let openedCount = playerBaseState.get()?.openedReplicatorDevices ?? 0
+  let queueCount = 1 + (playerBaseState.get()?.replicatorDeviceQueueSize.x ?? 0) + (playerBaseState.get()?.replicatorDeviceQueueSize.y ?? 0)
+  if (idxToSet == null && openedCount > 0) {
+    for (local i = 0; i < openedCount; i++) {
+      let busyReplicator = craftTasks.get().findvalue(@(v) v.replicatorSlotIdx == i)
+      if (busyReplicator == null) {
         idxToSet = i
         break
       }
     }
+    if (idxToSet == null) {
+      let modulesCraftTime = craftTasks.get().reduce(function(res, task) {
+        let { replicatorSlotIdx, craftCompleteAt } = task
+        if (replicatorSlotIdx not in res)
+          res[replicatorSlotIdx] <- craftCompleteAt
+        else
+          res[replicatorSlotIdx] += craftCompleteAt
+        return res
+      }, {})
+
+      let fastestTask = modulesCraftTime.reduce(function(res, time, module) {
+        if ("time" not in res || time < res.time)
+          return { time, fastestIndex = module }
+        return res
+      }, {})
+      idxToSet = fastestTask.fastestIndex
+    }
   }
-  if (idxToSet == null)
+  if (idxToSet == null) {
+    craftMsgbox(loc("craft/allReplicatorsIsFullButton"))
     return
-  if (craftTasks.get().findvalue(@(v) v?.replicatorSlotIdx == idxToSet) != null) {
-    craftMsgbox(loc("craft/extractionInProgressMsg", { number = idxToSet + 1 }))
+  }
+  let currentTaskCount = (craftTasks.get().filter(@(v) v?.replicatorSlotIdx == idxToSet)).len()
+  if (currentTaskCount >= queueCount) {
+    craftMsgbox(loc("craft/moduleAndQueueInProgress", { number = idxToSet + 1 }))
     return
   }
 
@@ -262,25 +518,26 @@ function startReplication(idx = null) {
 
   profileActionInProgress.set(true)
   eventbus_send("profile_server.add_craft_task", {
-    craft_recipe_id = selectedPrototype.get(),
+    craft_recipe_id = prototypeToReplicate.get(),
     replicatorSlotIdx = idxToSet
   })
   craftScreenState.set(craftScreens.craftProgress)
-  closeCraftWindow()
 }
 
 let mkMonolithLinkIcon = @(monolithUnlockData, action) button(
   mkText(monolithTokensTextIcon, {
     fontSize = hdpxi(17)
     color = monolithTokensColor
+    pos = [hdpx(1), 0]
   }),
   action,
   {
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
-    size = [hdpx(25), hdpx(25)]
+    size = hdpx(25)
     onHover = @(on) setTooltip(on ? loc(monolithUnlockData.text) : null)
     stopHover = true
+    skipDirPadNav = true
   })
 
 let mkSmallMonolithLinkIcon = @(monolithUnlockData, action) button(
@@ -292,10 +549,11 @@ let mkSmallMonolithLinkIcon = @(monolithUnlockData, action) button(
   {
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
-    size = [hdpx(19), hdpx(19)]
+    size = hdpx(19)
     margin = hdpx(2)
     onHover = @(on) setTooltip(on ? loc(monolithUnlockData.text) : null)
     stopHover = true
+    skipDirPadNav = true
   })
 
 let getItemTemplate = @(template_name) template_name
@@ -308,17 +566,8 @@ let prototypeTypes = Computed(function() {
   if (market.len() == 0)
     return []
   foreach(_proto_id, prototype in allCraftRecipes.get()) {
-    local protoKey = prototype.results.keys()[0]
-    local template = getItemTemplate(protoKey)
-    if (!template) {
-      let marketTemplate = market?[protoKey].children.items[0].templateName
-      if (!marketTemplate) {
-        logerr($"craftSelection: cant find the {protoKey} in either the templates or the marketItems")
-        continue
-      }
-      template = getItemTemplate(marketTemplate)
-    }
-
+    let protoKey = prototype.results?[0].reduce(@(a,v,k) v.len() == 0 ? k : a, "") ?? ""
+    let template = getItemTemplate(protoKey)
     if (!template) {
       continue
     }
@@ -333,8 +582,8 @@ let deleteInputTextBtn = fontIconButton("icon_buttons/x_btn.svg", @() filterText
   { padding = hdpx(2) })
 
 let inputBlock = {
-  size = [flex(), SIZE_TO_CONTENT]
-  margin = [0,0, hdpx(10),0]
+  size = FLEX_H
+  margin = static [0,0, hdpx(10),0]
   flow = FLOW_HORIZONTAL
   gap = hdpx(10)
   valign = ALIGN_CENTER
@@ -344,7 +593,11 @@ let inputBlock = {
       textmargin = hdpx(5)
       margin = 0
       onChange = @(value) filterTextInput.set(value)
-      onEscape = @() filterTextInput.set("")
+      onEscape = function() {
+        if (filterTextInput.get() == "")
+          set_kb_focus(null)
+        filterTextInput.set("")
+      }
     }.__update(body_txt))
     function() {
       if (filterTextInput.get() == "")
@@ -355,27 +608,6 @@ let inputBlock = {
       }
     }
   ]
-}
-
-function getRecipeName(recipe) {
-  if (recipe?.name == null)
-    return loc("unknown_item")
-
-  if (recipe.name != "")
-    return recipe.name
-
-  let result = recipe.results.keys()[0]
-  local templateName = result
-
-  if (marketItems.get()?[result]) {
-    let market = marketItems.get()[result]
-    templateName = market.children.items[0].templateName
-  }
-
-  let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(templateName)
-  let itemName = template.getCompValNullable("item__name")
-
-  return itemName
 }
 
 let mkNotifMarkWithExclamationSign = @(size) {
@@ -394,8 +626,20 @@ let mkNotifMarkWithExclamationSign = @(size) {
   })
 }
 
-return {
+function startRecipeReplication(event = null) {
+  if (profileActionInProgress.get())
+    return
+  if (selectedPrototypeMonolithData.get() != null) {
+    showMonolithMsgBox(selectedPrototypeMonolithData.get())
+    return
+  }
+  startReplication(null, event)
+}
+
+
+return freeze({
   selectedPrototype
+  gamepadHoveredPrototype
   startReplication
   getRecipeMonolithUnlock
   selectedPrototypeMonolithData
@@ -403,7 +647,6 @@ return {
   profileActionInProgress
   craftsReady
   craftMsgbox
-  closeCraftWindow
   setCraftsReadyCount
   mkMonolithLinkIcon
   mkSmallMonolithLinkIcon
@@ -415,4 +658,7 @@ return {
   prototypeTypes
   getRecipeName
   mkNotifMarkWithExclamationSign
-}
+  startRecipeReplication
+  largeRecipeIconHeight
+  openChronotracesWindow
+})

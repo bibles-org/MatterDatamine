@@ -1,13 +1,14 @@
+from "%ui/fonts_style.nut" import sub_txt
+from "%ui/components/textInput.nut" import textInput
+from "%ui/components/scrollbar.nut" import makeVertScrollExt
+from "%ui/components/button.nut" import textButton
+from "%ui/mainMenu/chat/chatApi.nut" import sendMessage
+from "dagor.time" import format_unixtime, get_local_unixtime
+from "%ui/helpers/remap_nick.nut" import remap_nick
+
 from "%ui/ui_library.nut" import *
 
-let { sub_txt } = require("%ui/fonts_style.nut")
-let {textInput} = require("%ui/components/textInput.nut")
-let {makeVertScrollExt} = require("%ui/components/scrollbar.nut")
-let { textButton } = require("%ui/components/button.nut")
-let {chatLogs} = require("chatState.nut")
-let {sendMessage} = require("chatApi.nut")
-let {format_unixtime, get_local_unixtime} = require("dagor.time")
-let { remap_nick } = require("%ui/helpers/remap_nick.nut")
+let { chatLogs } = require("%ui/mainMenu/chat/chatState.nut")
 
 let ColorInactive = Color(120,120,120)
 function messageInLog(entry) {
@@ -24,7 +25,7 @@ function messageInLog(entry) {
     )
     key = timestamp
     margin = fsh(0.5)
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
   }.__update(sub_txt)
 }
 
@@ -55,7 +56,7 @@ function chatRoom(chatId) {
       onReturn = doSendMessage
     }.__update(sub_txt)
     return {
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       children = textInput(chatMessage, options)
     }
   }
@@ -64,16 +65,16 @@ function chatRoom(chatId) {
   function chatInput() {
     return {
       flow = FLOW_HORIZONTAL
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       valign = ALIGN_BOTTOM
       gap = fsh(1)
-      padding = [fsh(1), 0, 0, 0]
+      padding = static [fsh(1), 0, 0, 0]
 
       children = [
         chatInputField
         {
           valign = ALIGN_BOTTOM
-          size = [SIZE_TO_CONTENT, flex()]
+          size = FLEX_V
           halign = ALIGN_RIGHT
           children = textButton(loc("chat/sendBtn"), doSendMessage, {margin=0}.__update(sub_txt))
         }
@@ -90,7 +91,7 @@ function chatRoom(chatId) {
     let scrollTo = chatLogWatch.get().len() ? chatLogWatch.get().top()?.timestamp : null
 
     return {
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       flow = FLOW_VERTICAL
       behavior = Behaviors.RecalcHandler
 
@@ -114,8 +115,8 @@ function chatRoom(chatId) {
 
       rendObj = ROBJ_FRAME
       color = ColorInactive
-      borderWidth = [2, 0]
-      padding = [2, 0]
+      borderWidth = static [2, 0]
+      padding = static [2, 0]
 
       children = makeVertScrollExt(logContent, {scrollHandler})
     }

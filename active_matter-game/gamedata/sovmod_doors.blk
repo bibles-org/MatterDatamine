@@ -1,6 +1,14 @@
 sovmod_checkpoint_b_door:t="random_state_r_door+wooden_rotating_door_sound"
 sovmod_army_base_checkpoint_hatch_a:t="base_hatch+hatch_rotating_door_sound"
 sovmod_park_chess_club_door_metal_a:t="random_state_l_door+wooden_rotating_door_sound"
+sovmod_bunker_a_door_a_l:t="bunker_closed_door_left+bunker_rotating_door_sound"
+sovmod_bunker_a_door_a_r:t="bunker_closed_door_right+bunker_rotating_door_sound"
+sovmod_bunker_a_door_b_l:t="bunker_closed_door_left+bunker_rotating_door_sound"
+sovmod_bunker_a_door_b_r:t="bunker_closed_door_right+bunker_rotating_door_sound"
+sovmod_bunker_a_door_c_l:t="bunker_closed_door_left+bunker_rotating_door_sound"
+sovmod_bunker_a_door_c_r:t="bunker_closed_door_right+bunker_rotating_door_sound"
+sovmod_bunker_a_entrance_door_l:t="bunker_closed_door_left+bunker_rotating_door_sound"
+sovmod_bunker_a_entrance_door_r:t="bunker_closed_door_right+bunker_rotating_door_sound"
 sovmod_bunker_door_a_l:t="bunker_closed_door_left+bunker_rotating_door_sound"
 sovmod_bunker_door_a_r:t="bunker_closed_door_right+bunker_rotating_door_sound"
 sovmod_bunker_door_b_l:t="bunker_closed_door_left+bunker_rotating_door_sound"
@@ -141,6 +149,8 @@ sovind_port_crane_cabin_door_a:t="random_state_l_door+metal_gate_rotating_door_s
 sovmod_frameless_hangar_door_a:t="random_state_l_door+metal_gate_rotating_door_sound"
 sovmod_frameless_hangar_door_b:t="random_state_l_door+metal_gate_rotating_door_sound"
 sovindustrial_hatch_a_door:t="base_hatch+hatch_rotating_door_sound"
+sovmod_mall_omsky_door_100x220_a_l:t="random_state_l_door+metal_rotating_door_sound"
+sovmod_mall_omsky_door_100x220_a_r:t="random_state_l_door+metal_rotating_door_sound"
 sovmod_industrial_refrigerator_2500_a_door_r:t="random_state_r_door+wooden_rotating_door_sound"
 sovmod_transformer_box_doors_a_2000_type_a_door_l:t="random_state_l_door+wooden_rotating_door_sound"
 sovmod_transformer_box_doors_a_2000_type_a_door_r:t="random_state_r_door_90+wooden_rotating_door_sound"
@@ -161,7 +171,7 @@ sovmod_door_int_a_1500_type_b_door_l:t="random_state_r_door+wooden_rotating_door
 sovmod_door_int_a_1500_type_b_door_r:t="random_state_l_door+wooden_rotating_door_sound"
 sovmod_serial_house_a_section_roof_entrance_a_door_group:t="random_state_l_door+wooden_rotating_door_sound"
 sovmod_serial_house_door_basement_a_rl:t="random_state_l_door+metal_fence_rotating_door_sound"
-sovmod_serial_house_door_metal_a_2200_r:t="random_state_r_door+metal_rotating_door_sound"
+sovmod_serial_house_door_metal_a_2200_r:t="random_state_l_door+metal_rotating_door_sound"
 sovmod_serial_house_a_hatch_a_door_r:t="base_hatch+hatch_rotating_door_sound"
 sovmod_serial_house_door_bath_a_l:t="random_state_l_door+wooden_rotating_door_sound"
 sovmod_serial_house_door_bath_a_r:t="random_state_r_door+wooden_rotating_door_sound"
@@ -546,6 +556,17 @@ sovmod_tropospheric_station_building_gate_a_door_l:t="random_state_gate_door_l+m
 sovmod_tropospheric_station_building_gate_a_door_r:t="random_state_gate_door_r+metal_gate_rotating_door_sound"
 sovmod_tropospheric_station_window_a_l:t="random_state_left_window+wooden_rotating_window_sound"
 sovmod_tropospheric_station_window_a_l_dmg:t="random_state_left_window+wooden_rotating_window_sound"
+sovmod_old_wooden_pier_house_c_door_l:t="random_state_r_door+wooden_rotating_door_sound"
+sovmod_old_wooden_pier_house_c_door_r:t="random_state_l_door+wooden_rotating_door_sound"
+sovmod_old_wooden_pier_house_b_door_a:t="random_state_l_door+wooden_rotating_door_sound"
+sovmod_old_wooden_pier_house_a_window_b_l:t="random_state_left_window+wooden_rotating_window_sound"
+sovmod_old_wooden_pier_house_a_window_b_l_dmg:t="random_state_left_window+wooden_rotating_window_sound"
+sovmod_old_wooden_pier_house_a_window_b_r:t="random_state_right_window+wooden_rotating_window_sound"
+sovmod_old_wooden_pier_house_a_window_b_r_dmg:t="random_state_right_window+wooden_rotating_window_sound"
+sovmod_old_wooden_pier_house_c_window_a:t="random_state_left_window+wooden_rotating_window_sound"
+sovmod_old_wooden_pier_house_c_window_a_dmg:t="random_state_left_window+wooden_rotating_window_sound"
+sovmod_old_wooden_pier_house_c_window_b:t="random_state_right_window+wooden_rotating_window_sound"
+sovmod_old_wooden_pier_house_c_window_b_dmg:t="random_state_right_window+wooden_rotating_window_sound"
 
 sovmod_checkpoint_b_door{
   rendinst__mass:r=25
@@ -557,6 +578,38 @@ sovmod_army_base_checkpoint_hatch_a{
 
 sovmod_park_chess_club_door_metal_a{
   rendinst__mass:r=0
+}
+
+sovmod_bunker_a_door_a_l{
+  rendinst__mass:r=80
+}
+
+sovmod_bunker_a_door_a_r{
+  rendinst__mass:r=80
+}
+
+sovmod_bunker_a_door_b_l{
+  rendinst__mass:r=80
+}
+
+sovmod_bunker_a_door_b_r{
+  rendinst__mass:r=80
+}
+
+sovmod_bunker_a_door_c_l{
+  rendinst__mass:r=80
+}
+
+sovmod_bunker_a_door_c_r{
+  rendinst__mass:r=80
+}
+
+sovmod_bunker_a_entrance_door_l{
+  rendinst__mass:r=80
+}
+
+sovmod_bunker_a_entrance_door_r{
+  rendinst__mass:r=80
 }
 
 sovmod_bunker_door_a_l{
@@ -1150,6 +1203,14 @@ sovmod_frameless_hangar_door_b{
 }
 
 sovindustrial_hatch_a_door{
+  rendinst__mass:r=0
+}
+
+sovmod_mall_omsky_door_100x220_a_l{
+  rendinst__mass:r=0
+}
+
+sovmod_mall_omsky_door_100x220_a_r{
   rendinst__mass:r=0
 }
 
@@ -2850,5 +2911,49 @@ sovmod_tropospheric_station_window_a_l{
 }
 
 sovmod_tropospheric_station_window_a_l_dmg{
+  rendinst__mass:r=0
+}
+
+sovmod_old_wooden_pier_house_c_door_l{
+  rendinst__mass:r=0
+}
+
+sovmod_old_wooden_pier_house_c_door_r{
+  rendinst__mass:r=0
+}
+
+sovmod_old_wooden_pier_house_b_door_a{
+  rendinst__mass:r=0
+}
+
+sovmod_old_wooden_pier_house_a_window_b_l{
+  rendinst__mass:r=0
+}
+
+sovmod_old_wooden_pier_house_a_window_b_l_dmg{
+  rendinst__mass:r=0
+}
+
+sovmod_old_wooden_pier_house_a_window_b_r{
+  rendinst__mass:r=0
+}
+
+sovmod_old_wooden_pier_house_a_window_b_r_dmg{
+  rendinst__mass:r=0
+}
+
+sovmod_old_wooden_pier_house_c_window_a{
+  rendinst__mass:r=0
+}
+
+sovmod_old_wooden_pier_house_c_window_a_dmg{
+  rendinst__mass:r=0
+}
+
+sovmod_old_wooden_pier_house_c_window_b{
+  rendinst__mass:r=0
+}
+
+sovmod_old_wooden_pier_house_c_window_b_dmg{
   rendinst__mass:r=0
 }

@@ -1,7 +1,8 @@
+from "%ui/mainMenu/menus/options/options_lib.nut" import loc_opt, getOnlineSaveData, optionSpinner, optionCtor
+from "settings" import get_setting_by_blk_path
+
 from "%ui/ui_library.nut" import *
 
-let { loc_opt, getOnlineSaveData, optionSpinner, optionCtor } = require("options_lib.nut")
-let { get_setting_by_blk_path } = require("settings")
 
 const CHOCOLATE_ROW_COUNT = "gameplay/chocolateRow"
 const CHOCOLATE_COL_COUNT = "gameplay/chocolateCount"

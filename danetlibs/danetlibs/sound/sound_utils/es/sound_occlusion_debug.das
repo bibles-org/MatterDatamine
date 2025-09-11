@@ -21,13 +21,13 @@ def get_cur_cam_entity()
     return camera__active
   return camEid
 
-def trace_ri(var intersection_out : float3&; var bestT : float&; var sel_ri_name : das_string&) : string
+def trace_ri(var intersection_out : float3&; var bestT : float&; var sel_ri_name : das_string&; debug_dist : float) : string
   let camItm = get_TMatrix(get_cur_cam_entity(), "transform")
   if camItm == null
     return ""
   let cameraPos = (*camItm)[3]
   let cameraDir = (*camItm)[2]
-  bestT = 1000.
+  bestT = debug_dist
   var riDesc = RendInstDesc()
   var norm : float3
   var matId = PHYSMAT_INVALID
@@ -61,13 +61,14 @@ def trace_ri(var intersection_out : float3&; var bestT : float&; var sel_ri_name
 [es(tag=(sound, dev), on_event=EventSoundDrawDebug)]
 def snd_draw_geometry_ruler(evt : Event;
                             sound_occlusion__debug : bool;
+                            sound_occlusion__debugDist : float;
                             var sel_ri_name : das_string&;
                             sound_occlusion__ri_name_to_occluder_type : Object&)
   if !sound_occlusion__debug
     return
   var intersection : float3
   var bestT : float
-  var text = trace_ri(intersection, bestT, sel_ri_name)
+  var text = trace_ri(intersection, bestT, sel_ri_name, sound_occlusion__debugDist)
   if !empty(text)
 
     if !empty(sel_ri_name)
@@ -138,6 +139,12 @@ def snd_debug_occluders__console_cmd()
     sound_occlusion__debug = !sound_occlusion__debug
 
 
+[console_cmd(name="snd.set_occluders_dist")]
+def snd_set_occluders_dist__console_cmd(dist : float)
+  query() <| $ [es] (var sound_occlusion__debugDist : float&)
+    sound_occlusion__debugDist = max(0., dist)
+
+
 [console_cmd(name="snd.delete_used_occluders")]
 def snd_delete_used_occluders__console_cmd()
   var wasCount = 0
@@ -190,7 +197,6 @@ def make_color_temp(t : float; alpha : uint) : E3DCOLOR
   return E3DCOLOR(r | g | b | a)
 
 
-let MAX_DIST = 1000.
 let SOLID_BOX_DIST = 100.
 
 let BOX_FACES = fixed_array(float3(-0.5, -0.5, -0.5), float3(-0.5, -0.5, 0.5), float3(0.5, -0.5, 0.5), float3(0.5, -0.5, 0.5), float3(0.5, -0.5, -0.5), float3(-0.5, -0.5, -0.5), float3(-0.5, 0.5, -0.5), float3(-0.5, 0.5, 0.5), float3(0.5, 0.5, 0.5), float3(0.5, 0.5, 0.5), float3(0.5, 0.5, -0.5), float3(-0.5, 0.5, -0.5), float3(-0.5, -0.5, -0.5), float3(-0.5, 0.5, -0.5), float3(0.5, 0.5, -0.5), float3(0.5, 0.5, -0.5), float3(0.5, -0.5, -0.5), float3(-0.5, -0.5, -0.5), float3(-0.5, -0.5, 0.5), float3(-0.5, 0.5, 0.5), float3(0.5, 0.5, 0.5), float3(0.5, 0.5, 0.5), float3(0.5, -0.5, 0.5), float3(-0.5, -0.5, 0.5), float3(-0.5, -0.5, -0.5), float3(-0.5, -0.5, 0.5), float3(-0.5, 0.5, 0.5), float3(-0.5, 0.5, 0.5), float3(-0.5, 0.5, -0.5), float3(-0.5, -0.5, -0.5), float3(0.5, -0.5, -0.5), float3(0.5, -0.5, 0.5), float3(0.5, 0.5, 0.5), float3(0.5, 0.5, 0.5), float3(0.5, 0.5, -0.5), float3(0.5, -0.5, -0.5))
@@ -199,7 +205,8 @@ let BOX_FACES = fixed_array(float3(-0.5, -0.5, -0.5), float3(-0.5, -0.5, 0.5), f
 def draw_occluders(name : string; value : float;
                    listener : float3;
                    var verts : array<float3>&;
-                   is_sel : bool)
+                   is_sel : bool;
+                   debug_dist : float)
   let resIdx = get_rigen_extra_res_idx(name)
   if resIdx != -1
     get_ri_gen_extra_instances(resIdx) <| $(handles : array<riex_handle_t>#)
@@ -211,7 +218,7 @@ def draw_occluders(name : string; value : float;
           let box = getRIGenBBox(desc)
           let maxBound = max(max(box.width.x, box.width.y), box.width.z)
 
-          if distance_sq(listener, tm[3]) > square(MAX_DIST + maxBound)
+          if distance_sq(listener, tm[3]) > square(debug_dist + maxBound)
             continue
 
           let numNodes = collres_get_nodesCount(*collres)
@@ -226,11 +233,17 @@ def draw_occluders(name : string; value : float;
               if is_sel
                 begin_draw_cached_debug_lines(false, false, false)
                 set_cached_debug_lines_wtm(nodeTm)
-                draw_cached_debug_box(nodeBox, make_color_temp(value, 150u))
+                draw_cached_debug_box(nodeBox, make_color_temp(value, 200u))
                 end_draw_cached_debug_lines()
 
-              if distance_sq(listener, nodeTm[3]) < square(SOLID_BOX_DIST + maxBound)
+              if distance_sq(listener, nodeTm[3]) > square(SOLID_BOX_DIST + maxBound)
 
+                begin_draw_cached_debug_lines(false, false, false)
+                set_cached_debug_lines_wtm(nodeTm)
+                draw_cached_debug_box(nodeBox, make_color_temp(value, 100u))
+                end_draw_cached_debug_lines()
+
+              else
                 let color = value >= 0. ? make_color_temp(value, is_sel ? 200u : 100u) : E3DCOLOR(0x40FFFFFF)
 
                 let addExtent = distance(listener, nodeTm[3]) * 0.005
@@ -298,7 +311,8 @@ def snd_draw_occluders_debug(evt : Event;
                              sound_occlusion__ri_name_to_occluder_type : Object&;
                              sound_occlusion__occluderTypes : Object&;
                              sel_ri_name : string;
-                             sound_occlusion__debug : bool)
+                             sound_occlusion__debug : bool;
+                             sound_occlusion__debugDist : float)
   if !sound_occlusion__debug
     return
   var verts : array<float3>
@@ -309,10 +323,10 @@ def snd_draw_occluders_debug(evt : Event;
     let typ = it.value as string ?? ""
     let value = sound_occlusion__occluderTypes[typ] ?? 1.
     if sel_ri_name != name
-      draw_occluders(name, value, listener, verts, false)
+      draw_occluders(name, value, listener, verts, false, sound_occlusion__debugDist)
     else
-      draw_occluders(name, value, listener, verts, true)
+      draw_occluders(name, value, listener, verts, true, sound_occlusion__debugDist)
       drawSel = false
 
   if !empty(sel_ri_name) && drawSel
-    draw_occluders(sel_ri_name, -1., listener, verts, true)
+    draw_occluders(sel_ri_name, -1., listener, verts, true, sound_occlusion__debugDist)

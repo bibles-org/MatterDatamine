@@ -4,7 +4,7 @@ caliber:r=0.0127
 speed:r=295
 maxDistance:r=2000
 bulletType:t="ball"
-hitPowerMult:r=23
+hitPowerMult:r=29
 effectiveDistance:r=400
 relativeVelHitShift:p2=300, 1000
 relativeVelArmorShift:p2=200, 1000
@@ -32,14 +32,4 @@ hitFx{
   defaultFx:t="hit_6_8mm_ap_sand_cmps_fx"
   jetFx:t="hit_6_8mm_ap_sand_cmps_fx"
   preset:t="bullet"
-}
-
-tracer{
-  ignitionTime:r=0.002
-  smokeColor:c=140, 130, 120, 5
-  smokeTime:r=2.5
-  smokeRadius:r=0.02
-  headColor:c=255, 170, 85, 255
-  luminosity:r=1
-  burnTime:r=0.5
 }

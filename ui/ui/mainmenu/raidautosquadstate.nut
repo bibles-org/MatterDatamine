@@ -1,11 +1,13 @@
+from "%dngscripts/globalState.nut" import nestWatched
+
 from "%ui/ui_library.nut" import *
 
-let { nestWatched } = require("%dngscripts/globalState.nut")
 
 let autoSquadGatheringState = nestWatched("autoSquadCheckboxState", false)
 let autosquadPlayers = nestWatched("autosquadPlayers", [])
 let reservedSquad = Watched([])
 let waitingInvite = Watched(false)
+let waitingInviteFromLeaderNumber = Watched(0)
 
 function getFormalLeaderUid(squad) {
   if (squad.len() == 0)
@@ -27,4 +29,5 @@ return {
   getFormalLeaderUid
   reservedSquad
   waitingInvite
+  waitingInviteFromLeaderNumber
 }

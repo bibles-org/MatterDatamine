@@ -1,7 +1,7 @@
 require ecs
 require ecs.common
 require math.base
-require app
+require app // get_sync_time
 require DngWalkerai
 require DagorMath
 require danetlibs.navmesh_phys.main.nphys_common
@@ -35,6 +35,7 @@ def navmesh_phys_avoid_obstacles(act : UpdateStageInfoAct;
                                  navmesh_phys__agentHeight : float = 2f;
                                  navmesh_phys__doorOpenerDist : float = 0f;
                                  navmesh_phys__currentWalkVelocity : float3;
+                                 navmesh_phys__obstaclePredictLimit : float2 = float2(2f, 5f);
                                  var navmesh_phys__immediateObstacleIdx : int?;
                                  var navmesh_phys__doorObstacleEid : EntityId?;
                                  var obstacle_avoider__penetration : float&;
@@ -45,7 +46,7 @@ def navmesh_phys_avoid_obstacles(act : UpdateStageInfoAct;
     //we're using transform but perhaps curPos is more relevant?
     navmesh_phys__wishWalkDir = navigate_around_obstacles(navmesh_phys__currentPos, navmesh_phys__wishWalkDir, navmesh_phys__agentHeight,
       navmesh_phys__doorOpenerDist, agent_obstacles, /*leading*/ 0.1,
-      clamp(length(navmesh_phys__currentWalkVelocity), 2f, 5f),
+      clamp(length(navmesh_phys__currentWalkVelocity), navmesh_phys__obstaclePredictLimit.x, navmesh_phys__obstaclePredictLimit.y),
       navmesh_phys__doorObstacleEid == null ? fakeEid : *navmesh_phys__doorObstacleEid, obstacle_avoider__penetration,
       navmesh_phys__immediateObstacleIdx == null ? fakeIdx : *navmesh_phys__immediateObstacleIdx)
 

@@ -1,0 +1,235 @@
+benchmark_flamethrower_bot_equipment{
+  "equipment_generator__data:object"{
+    "equipments:object"{
+      "suit_mindcontrolled_snork_a2_item:object"{
+        chance:i=100
+
+        "equipment_backpack:object"{
+          small_sovmod_backpack:i=25
+        }
+
+        "equipment_mod_body_0:object"{
+          EMPTY:i=70
+        }
+
+        "equipment_pouch:object"{
+          medium_pouch:i=100
+        }
+      }
+    }
+
+    "main_weapons:array"{
+      "i:object"{
+        templateName:t="flamethrower_corefan_gun"
+        weight:i=100
+
+        "magazine:object"{
+          flamethrower_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=90
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=100
+        }
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="makarov_gun"
+        weight:i=100
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=100
+        }
+      }
+    }
+
+    "melee_weapons:object"{
+      mpl50_shovel:i=100
+    }
+
+    "trash:array"{
+      "i:object"{
+        "POUCH1:object"{
+          EMPTY:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=50
+        }
+      }
+    }
+  }
+}
+
+benchmark_default_bot_equipment{
+  "equipment_generator__data:object"{
+    "equipments:object"{
+      "suit_mindcontrolled_soldier_a2_item:object"{
+        chance:i=100
+
+        "equipment_backpack:object"{
+          small_sovmod_backpack:i=100
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=100
+        }
+
+        "equipment_mod_body_0:object"{
+          armorplate_big_a:i=100
+        }
+
+        "equipment_pouch:object"{
+          small_pouch:i=100
+        }
+      }
+    }
+
+    "main_weapons:array"{
+      "i:object"{
+        templateName:t="akm_47_gun"
+        weight:i=100
+
+        "magazine:object"{
+          akm_47_magazine:i=100
+        }
+
+        "scope:object"{
+          scope_pso1_high:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+        }
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="makarov_gun"
+        weight:i=100
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=100
+        }
+      }
+    }
+
+    "melee_weapons:object"{
+      mpl50_shovel:i=100
+    }
+
+    "trash:array"{
+      "i:object"{
+        "POUCH1:object"{
+          EMPTY:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=50
+        }
+      }
+    }
+  }
+}
+
+benchmark_default_militant_bot_equipment{
+  "equipment_generator__data:object"{
+    "equipments:object"{
+      "suit_militant_light_a_item:object"{
+        chance:i=100
+
+        "equipment_backpack:object"{
+          small_sovmod_backpack:i=100
+        }
+
+        "equipment_helmet:object"{
+          helmet_ussr_ssh40_rust:i=100
+        }
+
+        "equipment_mod_body_0:object"{
+          armorplate_big_a:i=100
+        }
+
+        "equipment_pouch:object"{
+          small_pouch:i=100
+        }
+      }
+    }
+
+    "main_weapons:array"{
+      "i:object"{
+        templateName:t="akm_47_gun"
+        weight:i=100
+
+        "magazine:object"{
+          akm_47_magazine:i=100
+        }
+
+        "scope:object"{
+          scope_pso1_high:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+        }
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="makarov_gun"
+        weight:i=100
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          EMPTY:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=100
+        }
+      }
+    }
+
+    "melee_weapons:object"{
+      mpl50_shovel:i=100
+    }
+
+    "trash:array"{
+      "i:object"{
+        "POUCH1:object"{
+          EMPTY:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=50
+        }
+      }
+    }
+  }
+}

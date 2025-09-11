@@ -68,6 +68,7 @@ onboarding_miniraid_enemy{
   equipped_bot__equipmentGeneratorName:t="miniraid_enemy_equipment_generator"
   equipped_bot__equipmentGeneratorCorruptionChance:r=1
   refill_magazines__refillVolumeRng:p2=0.5, 0.8
+  kill_tracking_tag:t="turned_soldier"
 
   "cortical_hack_disabled:tag"{}
 }
@@ -105,11 +106,8 @@ onboarding_teleport_hero_to_miniraid{
 onboarding_teleport_to_miniraid{
   _use:t="game_effect_base"
   game_effect__teleportToEntityWithTag:t="onboarding_miniraid_spawn_location"
-}
 
-am_storage_miniraid{
-  _use:t="am_storage"
-  am_storage__maxValue:i=100
+  "game_effect__onboardingMiniraidClearDebriefingData:tag"{}
 }
 
 miniraid_death_effect{
@@ -127,24 +125,28 @@ onboarding_miniraid_hero_attached_death_effect{
   onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_miniraid_attached_death_effect"
 }
 
-onboarding_miniraid_hero_attached_storage{
-  _use:t="onboarding_hero_game_effect"
-  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_miniraid_attached_storage"
-}
-
 onboarding_miniraid_attached_death_effect{
   _use:t="game_effect_base"
   game_effect__attachedTemplate:t="miniraid_death_processor"
 }
 
-onboarding_miniraid_attached_storage{
+onboarding_miniraid_hero_portal_extraction_sequence_effect{
+  _use:t="onboarding_hero_game_effect"
+  onboarding_hero_game_effect__actualEffectTemplate:t="onboarding_miniraid_portal_extraction_sequence_effect"
+}
+
+onboarding_miniraid_portal_extraction_sequence_effect{
   _use:t="game_effect_base"
-  game_effect__attachedTemplate:t="am_storage_miniraid"
+  game_effect__attachedTemplate:t="miniraid_portal_extarct_sequence"
+}
+
+miniraid_portal_extarct_sequence{
+  extraction__extractionSequenceTemplate:t="onboarding_miniraid_extraction_sequence_affect"
 }
 
 miniraid_weather{
   _use:t="override_weather_preset"
-  override_weather_preset__newPreset:t="weather_monolyth_island_overcast"
+  override_weather_preset__newPreset:t="weather_monolyth_island_cloudy_sunrise"
   override_weather_preset__newSkiesTime:r=6.5
   override_weather_preset__newCloudHoleTargetDensity:r=0.3
 }
@@ -234,7 +236,7 @@ onboarding_phase_miniraid{
     item:t="onboarding_restore_pulse_and_stamina"
     item:t="onboarding_miniraid_extraction_point"
     item:t="onboarding_miniraid_hero_attached_death_effect"
-    item:t="onboarding_miniraid_hero_attached_storage"
+    item:t="onboarding_miniraid_hero_portal_extraction_sequence_effect"
     item:t="miniraid_weather"
     item:t="disable_player_profile"
     item:t="onboarding_empty_hero_loadout"
@@ -263,6 +265,10 @@ onboarding_phase_miniraid{
     item:t="onboarding_miniraid_disarm_traps_before_removal"
     item:t="zone_force_field"
     item:t="onboarding_miniraid_storm_zone"
+    item:t="onboarding_dmg_hero"
+    item:t="onboarding_tiled_map"
+    item:t="onboarding_show_debriefing_on_disappear"
+    item:t="onboarding_delayed_ensure_hero_has_cortical"
     item:t="onboarding_island__onboarding_industrial__compound_ambient_sound"
     item:t="onboarding_island__onboarding_rocks__compound_ambient_sound"
     item:t="onboarding_island__onboarding_caves__compound_ambient_sound"
@@ -271,6 +277,20 @@ onboarding_phase_miniraid{
     item:t="onboarding_island_net_sounds"
     item:t="onboarding_interactive_music"
   }
+}
+
+onboarding_delayed_ensure_hero_has_cortical{
+  _use:t="create_entity_on_appear_with_delay"
+  create_entity_on_appear_with_delay__template:t="onboarding_ensure_hero_has_cortical"
+  create_entity_on_appear_with_delay__delay:r=10
+}
+
+onboarding_ensure_hero_has_cortical{
+  "onboarding_ensure_hero_has_cortical:tag"{}
+}
+
+onboarding_show_debriefing_on_disappear{
+  "onboarding_show_debriefing_on_disappear:tag"{}
 }
 
 onboarding_cleanup_items_in_world{
@@ -375,7 +395,6 @@ onboarding_miniraid_extraction_sequence_affect{
 onboarding_miniraid_extraction_point{
   _use:t="extraction_point"
   extraction__extractionTime:r=10
-  extraction__extractionSequenceTemplate:t="onboarding_miniraid_extraction_sequence_affect"
   transform:m=[[-0.845369, 0, -0.534182] [0, 1, 0] [0.534182, 0, -0.845369] [197.273, 32.4, -5.58664]]
 
   "extraction_for_everyone:tag"{}
@@ -486,7 +505,7 @@ onboarding_armor_container{
   ri_extra__name:t="case_modern_a_closed"
   openable_ri__closed:t="case_modern_a_closed"
   ri_preload__name:t="case_modern_a_open"
-  human_inventory__maxVolume:r=60
+  human_inventory__maxVolume:i=600
   loot_drop_system__lootPreset:t="onboarding_armor_container_loot_preset"
   loot_drop_system__dropPreset:t="drop_in_places_big_weapon_box"
 

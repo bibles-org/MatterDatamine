@@ -76,7 +76,7 @@ def seaplane_anchor_phys_es(info : UpdatePhysEvent;
     velocity.z = 0.lf
 
   vect *= length(vect)
-  let wishForce = vect * plane_net_phys.phys.M.mass * 10.0f
+  let wishForce = vect * plane_net_phys.phys.M.state.mass * 10.0f
   assume externalForce = plane_net_phys.phys.currentState.externalForce
   externalForce.x = approach(externalForce.x, wishForce.x, info.dt, 0.2f)
   externalForce.z = approach(externalForce.z, wishForce.z, info.dt, 0.2f)

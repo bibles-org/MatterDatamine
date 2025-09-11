@@ -1,54 +1,91 @@
 entity{
-  _template:t="nexus_mode+nexus_endgame_controller"
+  _template:t="nexus_mode"
 }
 
 entity{
-  _template:t="nexus_first_team"
-}
-
-entity{
-  _template:t="nexus_second_team"
-}
-
-entity{
-  _template:t="nexus_team"
+  _template:t="nexus_wave_mode_team"
   team__id:i=2
-  nexus_team__colorIndices:ip2=9, 9
+  nexus_team__colorIndices:ip2=0, 3
 }
 
 entity{
-  _template:t="nexus_team"
+  _template:t="nexus_wave_mode_team"
   team__id:i=3
-  nexus_team__colorIndices:ip2=8, 8
+  nexus_team__colorIndices:ip2=10, 6
 }
 
 entity{
-  _template:t="nexus_battle_initial_loot+nexus_first_team"
+  _template:t="nexus_spawn_rules_individual+nexus_warm_up"
+  nexus_spawn_rules__team:i=2
 }
 
 entity{
-  _template:t="nexus_battle_initial_loot+nexus_second_team"
+  _template:t="nexus_spawn_rules_individual+nexus_warm_up"
+  nexus_spawn_rules__team:i=3
 }
 
 entity{
-  _template:t="nexus_wave_mode+nexus_wave_mode_game_draw+nexus_spawn_controller+nexus_game_controller+nexus_battle_initial_am"
+  _template:t="nexus_spawn_rules_group+nexus_spawn_rules_keep_corpses_on_respawn+nexus_spawn_rules_group_first_spawn_is_instant_and_individual"
+  nexus_spawn_rules__team:i=2
+  nexus_spawn_rules__delay:r=20
+}
+
+entity{
+  _template:t="nexus_spawn_rules_group+nexus_spawn_rules_keep_corpses_on_respawn+nexus_spawn_rules_group_first_spawn_is_instant_and_individual"
+  nexus_spawn_rules__team:i=3
+  nexus_spawn_rules__delay:r=20
+}
+
+entity{
+  _template:t="nexus_wave_mode_game_controller"
+}
+
+entity{
+  _template:t="nexus_players_controller"
+}
+
+entity{
+  _template:t="nexus_wave_mode_spawn_controller"
+}
+
+entity{
+  _template:t="nexus_battle_debug_bot_spawner"
+  bot_spawner__playerTemplate:t="nexus_wave_mode_bot_player+init_nexus_bot_loadouts"
+}
+
+entity{
+  _template:t="nexus_game_start+nexus_game_start_by_player_proportion"
+  nexus_game_start__additionalWaitTime:r=30
+  nexus_game_start__warmUpMaxTime:r=30
+}
+
+entity{
+  _template:t="nexus_game_end"
+}
+
+entity{
+  _template:t="nexus_warm_up_controller"
+}
+
+entity{
+  _template:t="nexus_endgame_controller"
+}
+
+entity{
+  _template:t="nexus_stats_scoresheet+nexus_stats_rules"
+}
+
+entity{
+  _template:t="nexus_auto_create_protect_spheres"
+}
+
+entity{
+  _template:t="nexus_battle_initial_am"
   nexus_battle_initial_am__value:i=0
 }
 
 entity{
-  _template:t="transparent_partition"
-}
-
-entity{
-  _template:t="postfx_color_grading_tonemap_death_alive"
-}
-
-entity{
-  _template:t="nexus_wave_mode_additional_waves_spawn_controller+nexus_first_team"
-}
-
-entity{
-  _template:t="nexus_wave_mode_additional_waves_spawn_controller+nexus_second_team"
+  _template:t="nexus_agency_loadouts"
 }
 
 entity{
@@ -56,5 +93,17 @@ entity{
 }
 
 entity{
-  _template:t="nexus_battle_debug_bot_spawner"
+  _template:t="postfx_color_grading_tonemap_death_alive"
+}
+
+entity{
+  _template:t="transparent_partition"
+}
+
+entity{
+  _template:t="killbox_processor"
+}
+
+entity{
+  _template:t="nexus_show_sphere_hint_processor"
 }

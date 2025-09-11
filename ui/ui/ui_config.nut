@@ -1,11 +1,12 @@
+from "settings" import get_setting_by_blk_path
+from "dagor.system" import DBGLEVEL
+from "%ui/fonts_style.nut" import sub_txt
+
 from "daRg" import gui_scene
 from "%ui/components/colors.nut" import TextNormal
 from "%ui/ui_library.nut" import *
 
-let {get_setting_by_blk_path} = require("settings")
-let {DBGLEVEL} = require("dagor.system")
 
-let {sub_txt} = require("%ui/fonts_style.nut")
 
 if (sub_txt!=null) {
   gui_scene.setConfigProps({

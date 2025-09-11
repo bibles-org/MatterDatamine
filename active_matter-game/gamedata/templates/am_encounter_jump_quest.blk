@@ -28,7 +28,7 @@ encounter_jump_quest_core_projectile{
   _use:t="encounter_jump_quest_core_projectile_fx_controller"
   _use:t="base_dm_parts"
   _use:t="base_hitpoints"
-  _use:t="creatures_grid_obj"
+  _use:t="creatures_dynamic_grid_object"
   animchar__res:t="stone_shield_part_b_char"
   material:t="steel"
   hitpoints__hp:r=1e+06
@@ -36,8 +36,6 @@ encounter_jump_quest_core_projectile{
   hitpoints__regenPerSec:r=50000
   hitpoints__shellDmgMult:r=1
   hitpoints__shellSplashDmgMult:r=1
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  _tracked:t="transform"
   encounter_jump_quest_core_projectile__dir:p3=0, 0, 1
   encounter_jump_quest_core_projectile__state:i=0
   _tracked:t="encounter_jump_quest_core_projectile__state"
@@ -105,6 +103,7 @@ encounter_jump_quest_core{
   _use:t="encounter_jump_quest_core_ai"
   _use:t="loot_drop_system"
   _use:t="am_core_fake_collision"
+  _use:t="am_cores_dynamic_grid_object"
   animchar__res:t="am_core_c_char"
   collres__res:t="am_core_c_collision"
   am_core__maxHpRng:p2=100, 100
@@ -113,7 +112,6 @@ encounter_jump_quest_core{
   hitpoints__regenPerSec:r=1
   hitpoints__shellDmgMult:r=1
   hitpoints__shellSplashDmgMult:r=1
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   material:t="activeMatterCore"
   am_core__aliveMaterial:t="activeMatterCore"
   am_core__deadMaterial:t="steel"
@@ -673,20 +671,10 @@ encounter_jump_quest_gravity_controller{
   "encounter_jump_quest_gravity_controller__gravitySphereEids:list<eid>"{}
 }
 
-jump_quest_rendinsts_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="jump_quest_rendinsts"
-  grid_holder__typeHash:i=0
-  grid_holder__cellSize:i=32
-
-  grid_holder{}
-}
-
 encounter_jump_quest_node_rendinst{
   _use:t="placeable_rendinst"
   _use:t="immortal_rendinst"
+  _use:t="jump_quest_rendinsts_dynamic_grid_object"
   ri_extra__hasCollision:b=yes
   encounter_jump_quest_node_rendinst__state:i=0
   _tracked:t="encounter_jump_quest_node_rendinst__state"
@@ -697,8 +685,6 @@ encounter_jump_quest_node_rendinst{
   encounter_jump_quest_node_rendinst__volume:r=0
   encounter_jump_quest_node_rendinst__punchNodeIndex:i=5
   encounter_jump_quest_node_rendinst__demolitionEffectTemplate:t="explosion_jump_quest_node_poof_fx"
-  grid_obj__gridType:t="jump_quest_rendinsts"
-  grid_obj__fixedTmScale:r=-1
   collres__res:t=""
   phys_obj_net_phys__blk:t=""
 
@@ -706,7 +692,6 @@ encounter_jump_quest_node_rendinst{
   "encounter_jump_quest_node_rendinst__jumpQuestEid:eid"{}
   "nphys_obstacle__merge:tag"{}
   "nphys_obstacle__useHull:tag"{}
-  grid_obj{}
 }
 
 encounter_jump_quest_node_rendinst_preparing_to_demolition{

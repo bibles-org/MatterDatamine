@@ -1,20 +1,20 @@
+from "%ui/mainMenu/audioModule/music_player.nut" import startPlayer, stopPlayer, LoopStatus, musicPlayerVolumeSet, musicPlayerSetVolume
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/components/colors.nut" import panelRowColor, BtnBgHover, BtnTextNormal
+from "%ui/components/commonComponents.nut" import mkTextArea, bluredPanel
+from "dasevents" import EventSpawnSequenceEnd
+from "%ui/options/mkOnlineSaveData.nut" import mkOnlineSaveData
+from "%ui/mainMenu/menus/options/miss_second_map_help.nut" import missSecondMapHelp
+import "%ui/mainMenu/menus/options/optionLabel.nut" as optionLabel
+from "%ui/mainMenu/menus/options/options_lib.nut" import optionCtor, optionCheckBox, optionPercentTextSliderCtor
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { body_txt } = require("%ui/fonts_style.nut")
-let { panelRowColor, BtnBgHover, BtnTextNormal } = require("%ui/components/colors.nut")
-let { mkTextArea, bluredPanel } = require("%ui/components/commonComponents.nut")
 let rand = require("%sqstd/rand.nut")()
-let { EventSpawnSequenceEnd } = require("dasevents")
-let { mkOnlineSaveData } = require("%ui/options/mkOnlineSaveData.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
-let { missSecondMapHelp } = require("%ui/mainMenu/menus/options/miss_second_map_help.nut")
-let { startPlayer, stopPlayer, playingSound, trackList, playerLoopState, loopOrder, LoopStatus,
-  musicPlayerVolumeWatch, musicPlayerVolumeSet, musicPlayerSetVolume } = require("music_player.nut")
-let optionLabel = require("%ui/mainMenu/menus/options/optionLabel.nut")
-let { optionCtor, optionCheckBox, optionPercentTextSliderCtor } = require("%ui/mainMenu/menus/options/options_lib.nut")
+let { playingSound, trackList, playerLoopState, loopOrder, musicPlayerVolumeWatch } = require("%ui/mainMenu/audioModule/music_player.nut")
 
 const SETTINGS_TAB_ID = "settingsAudio"
 const MUSIC_ON_BASE_SETTING = "isMusicOnBaseOn"
@@ -28,7 +28,8 @@ let playMusicInRaidsStorage = mkOnlineSaveData(MUSIC_IN_RAIDS_SETTING, @() false
 let playMusicInRaidsWatch = playMusicInRaidsStorage.watch
 let playMusicInRaidsSet = playMusicInRaidsStorage.setValue
 
-function playMusicOnBase(isPlayOnBase = playMusicOnBaseWatch.get()) {
+function playMusicOnBase(playOnBase = null) {
+  let isPlayOnBase = playOnBase ?? playMusicOnBaseWatch.get()
   let needToStop = ((isOnPlayerBase.get() && !isPlayOnBase) || isOnboarding.get())
     && playingSound.get() != null
 
@@ -41,6 +42,7 @@ function playMusicOnBase(isPlayOnBase = playMusicOnBaseWatch.get()) {
     && isPlayOnBase
     && !isOnboarding.get()
     && (trackList.get()?.len() ?? 0) > 0
+    && playingSound.get() == null
   if (!needToPlay)
     return
 
@@ -50,8 +52,8 @@ function playMusicOnBase(isPlayOnBase = playMusicOnBaseWatch.get()) {
   startPlayer(track)
 }
 
-foreach (watch in [isOnPlayerBase, isOnboarding, trackList]) {
-  watch.subscribe(function(_v) { playMusicOnBase() })
+foreach (watch in [isOnPlayerBase, isOnboarding, trackList, playMusicOnBaseWatch]) {
+  watch.subscribe_with_nasty_disregard_of_frp_update(function(_v) { playMusicOnBase() }) 
 }
 
 function playMusicInRaids(isPlayInRaids = playMusicInRaidsWatch.get()) {
@@ -111,15 +113,15 @@ function optionRowContainer(children) {
   let stateFlags = Watched(0)
   return @() {
     watch = stateFlags
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     valign = ALIGN_CENTER
     behavior = Behaviors.Button
-    onElemState = @(sf) stateFlags(sf)
+    onElemState = @(sf) stateFlags.set(sf)
     skipDirPadNav = true
     children
     rendObj = ROBJ_BOX
-    margin = [0, fsh(8)]
+    margin = static [0, fsh(8)]
     fillColor = stateFlags.get() & S_HOVER ? Color(60, 60, 70, 150) : panelRowColor
     borderWidth = stateFlags.get() & S_HOVER ? [hdpx(2), 0] : 0
     borderColor = BtnBgHover
@@ -140,7 +142,7 @@ function makeOptionRow(opt) {
   let label = optionLabel(opt, group)
 
   let row = {
-    padding = [0, hdpx(12)]
+    padding = static [0, hdpx(12)]
     size = [flex(), height]
     flow = FLOW_HORIZONTAL
     valign = ALIGN_CENTER
@@ -156,13 +158,13 @@ function makeOptionRow(opt) {
 
 let optionBlockSeparator = {
   rendObj = ROBJ_SOLID
-  size = [flex(), hdpx(2)]
-  margin = [hdpx(10),0,hdpx(2),0]
+  size = static [flex(), hdpx(2)]
+  margin = static [hdpx(10),0,hdpx(2),0]
   color = BtnTextNormal
 }
 
 let missSecondOptionsBlock = {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   flow = FLOW_VERTICAL
   gap  = optionBlockSeparator
   children = [
@@ -187,13 +189,13 @@ let playerMusicVolumeSetting = optionCtor({
 })
 
 let playerOptionsBlock = {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   flow = FLOW_VERTICAL
   gap = optionBlockSeparator
   children = [
     mkTextArea(loc("musicPlayer"), body_txt)
     {
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       flow = FLOW_VERTICAL
       gap = hdpx(4)
       children = [
@@ -206,7 +208,7 @@ let playerOptionsBlock = {
 }
 
 let settingsTabUi = {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   flow = FLOW_VERTICAL
   gap = hdpx(20)
   padding = hdpx(20)

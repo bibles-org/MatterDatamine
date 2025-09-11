@@ -1,5 +1,6 @@
+import "regexp2" as regexp2
+
 from "%ui/ui_library.nut" import *
-let regexp2 = require("regexp2")
 
 function clearValueTags(text, brackets) {
   local ret = text ?? ""

@@ -1,7 +1,8 @@
+from "dagor.math" import IPoint2
+
 import "%dngscripts/ecs.nut" as ecs
 from "math" import min
 
-let {IPoint2} = require("dagor.math")
 
 function getTemplateComponent(template_name, component_name){
   if (template_name == null || template_name.len() == 0)

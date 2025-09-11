@@ -260,7 +260,6 @@ am_wandering_core_ai{
 wandering_core_hitpoints{
   _use:t="base_dm_parts"
   _use:t="base_hitpoints"
-  grid_obj__gridType:t="am_cores"
   hitpoints__hp:r=250
   hitpoints__maxHp:r=250
   hitpoints__regenPerSec:r=50
@@ -272,7 +271,6 @@ wandering_core_hitpoints{
   _replicated:t="isAlive"
   _replicated:t="hitpoints__hp"
 
-  grid_obj{}
   collres{}
   capsule_approximation{}
   "capsule_approximation__nodeNames:array"{}

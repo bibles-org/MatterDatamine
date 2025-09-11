@@ -1,8 +1,8 @@
+from "%ui/helpers/remap_nick.nut" import remap_nick
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { remap_nick } = require("%ui/helpers/remap_nick.nut")
-let { ceil_volume } = require("das.inventory")
 
 let getNameQuery = ecs.SqQuery("getNameQuery", {comps_ro = [["name", ecs.TYPE_STRING]], comps_rq=["player"]})
 function getName(playereid) {
@@ -26,10 +26,11 @@ function updateItem(eid, comp) {
     nickname = comp["cortical_vault_inactive__ownerNickname"] ?? getName(playerItemOwner)
     lootType = comp["item__lootType"]
     weapType = comp["item__weapType"]
-    volume = ceil_volume(comp["item__volume"])
+    volume = comp["item__volume"]
     transform = comp.transform
     eid
     useAltActionPrompt = comp?.item__setCustomUseAltPrompt
+    useActionPrompt = comp?.item__setCustomUsePrompt
     rarity = comp.item__rarity
   })
 }
@@ -51,12 +52,13 @@ ecs.register_es("loot_markers_selected_ui_es",
       ["item__count", ecs.TYPE_INT, 0],
       ["item__lootType", ecs.TYPE_STRING, "item"],
       ["item__weapType", ecs.TYPE_STRING, null],
-      ["item__volume", ecs.TYPE_FLOAT, 0.0],
+      ["item__volume", ecs.TYPE_INT, 0],
       ["transform", ecs.TYPE_MATRIX, null],
       ["item__currentBoxedItemCount", ecs.TYPE_INT, null],
       ["boxedItem", ecs.TYPE_TAG, null],
       ["usable_backpack", ecs.TYPE_TAG, null],
       ["item__setCustomUseAltPrompt", ecs.TYPE_STRING, null],
+      ["item__setCustomUsePrompt", ecs.TYPE_STRING, null],
       ["cortical_vault_inactive__ownerNickname", ecs.TYPE_STRING, null],
       ["item__rarity", ecs.TYPE_STRING, null]
     ],

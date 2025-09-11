@@ -1,16 +1,19 @@
+from "%dngscripts/globalState.nut" import nestWatched
+from "%dngscripts/sound_system.nut" import sound_play
+
+from "%sqstd/string.nut" import hexStringToInt
+
+from "app" import exit_game
+from "eventbus" import eventbus_subscribe, eventbus_send
+from "%ui/notifications/matchingNotifications.nut" import subscribe
+from "%ui/state/matchingUtils.nut" import get_matching_utc_time
+from "%ui/components/msgbox.nut" import showMsgbox, removeMsgboxByUid
+from "%ui/hud/state/chat.nut" import pushSystemMsg
+from "%ui/components/colors.nut" import RedWarningColor
+import "%ui/components/colorize.nut" as colorize
+
 from "%ui/ui_library.nut" import *
 
-let { exit_game } = require("app")
-let { eventbus_subscribe, eventbus_send } = require("eventbus")
-let { hexStringToInt } = require("%sqstd/string.nut")
-let { nestWatched } = require("%dngscripts/globalState.nut")
-let { sound_play } = require("%dngscripts/sound_system.nut")
-let { subscribe } = require("%ui/notifications/matchingNotifications.nut")
-let { get_matching_utc_time } = require("%ui/state/matchingUtils.nut")
-let { showMsgbox, removeMsgboxByUid } = require("%ui/components/msgbox.nut")
-let { pushSystemMsg } = require("%ui/hud/state/chat.nut")
-let { RedWarningColor } = require("%ui/components/colors.nut")
-let colorize = require("%ui/components/colorize.nut")
 
 const DEF_LIFE_TIME = 300
 

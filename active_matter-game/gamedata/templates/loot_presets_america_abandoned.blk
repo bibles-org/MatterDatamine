@@ -1,0 +1,163 @@
+america_abandoned_xenos_primary_contract_device_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="america_xenos_device_lootable_rendinst"
+      number:i=1
+    }
+  }
+}
+
+america_abandoned_xenos_primary_contract_key_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="encounter_quest_america_xenos_key"
+      number:i=1
+    }
+  }
+}
+
+america_abandoned_xenos_military_post_weapons_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_america_long_range_weapons_t3_lootable_rendinst"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="military_america_long_range_weapons_t3_lootable_rendinst+create_on_accessed_america_military_post_container"
+      number:i=1
+    }
+  }
+}
+
+america_abandoned_xenos_military_post_ammo_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_america_ammo_t3_lootable_rendinst"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="military_america_ammo_t3_lootable_rendinst+create_on_accessed_america_military_post_container"
+      number:i=1
+    }
+  }
+}
+
+america_abandoned_xenos_military_post_medicine_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="military_america_medical_t3_lootable_rendinst"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="military_america_medical_t3_lootable_rendinst+create_on_accessed_america_military_post_container"
+      number:i=1
+    }
+  }
+}
+
+america_abandoned_xenos_threats_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="frog_trap_cluster"
+      number:i=8
+    }
+
+    "item:object"{
+      template_name:t="firefly_field_small"
+      number:i=6
+    }
+
+    "item:object"{
+      template_name:t="mimic_guarded_zone"
+      number:i=8
+    }
+  }
+}
+
+america_small_med_random_encounter_rare_loot_subpreset{
+  _use:t="full_loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="encounter_small_changed_guard_box_modern_rare_loot"
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_frog_trap_box_modern_rare_loot"
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_box_pile_modern_rare_loot"
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_minefield_box_modern_rare_loot"
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_frog_trap_box_modern_rare_loot"
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_trap_container_modern_rare_loot"
+    }
+  }
+}
+
+america_small_med_random_encounter_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="america_small_med_random_encounter_rare_loot_subpreset"
+      weight:r=1.33
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_changed_guard_box_modern"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_frog_trap_box_modern"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_small_box_pile_modern"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_minefield_box_modern"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_frog_trap_box_modern"
+      number:i=1
+    }
+
+    "item:object"{
+      template_name:t="encounter_medium_trap_container_modern"
+      number:i=1
+    }
+  }
+}

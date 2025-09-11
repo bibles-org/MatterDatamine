@@ -1,11 +1,7 @@
+from "videomode" import get_available_monitors, get_monitor_info
 from "%ui/ui_library.nut" import *
 
-
-let { get_available_monitors, get_monitor_info } = require("videomode")
-
-let availableMonitors = get_available_monitors()
-
-let monitorValue = Watched(availableMonitors.current)
+let monitorValue = Watched(get_available_monitors().current)
 
 let get_friendly_monitor_name = function(v) {
   let monitor_info = get_monitor_info(v)
@@ -19,7 +15,7 @@ let get_friendly_monitor_name = function(v) {
 }
 
 return {
-  availableMonitors
+  get_available_monitors
   monitorValue
   get_friendly_monitor_name
 }

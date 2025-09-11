@@ -1,19 +1,20 @@
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/hud/menus/components/inventoryItem.nut" import inventoryItem
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "%ui/components/commonComponents.nut" import mkText
+from "%ui/components/mkDotPaginatorList.nut" import mkHorizPaginatorList
+from "%ui/hud/menus/components/inventoryItemsList.nut" import inventoryItemSorting
+from "%ui/mainMenu/craftIcons.nut" import getRecipeIcon, mkResearchTooltip, getNodeName
+from "%ui/components/cursors.nut" import setTooltip
+import "%ui/components/tooltipBox.nut" as tooltipBox
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { body_txt } = require("%ui/fonts_style.nut")
-let { inventoryItem } = require("%ui/hud/menus/components/inventoryItem.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
-let { playerProfileAllResearchNodes, playerProfileOpenedNodes, playerProfileOpenedRecipes
+let { playerProfileAllResearchNodes, playerProfileOpenedNodes, allCraftRecipes
 } = require("%ui/profile/profileState.nut")
 let { DEBRIEFING_ITEM } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
-let { mkHorizPaginatorList } = require("%ui/components/mkDotPaginatorList.nut")
-let { inventoryItemSorting } = require("%ui/hud/menus/components/inventoryItemsList.nut")
-let { getRecipeIcon, mkResearchTooltip, getNodeName } = require("%ui/mainMenu/craftIcons.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let tooltipBox = require("%ui/components/tooltipBox.nut")
-let { mergeNonUniqueItems } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
 
 const MAX_RECEIVED_ITEMS = 6
 let cuItemsPage = Watched(0)
@@ -26,16 +27,16 @@ let paginatorListStyle = {
 
 let mkChronotraceProgress = @(data) (data?.v ?? {}).len() <= 0 ? null : {
   rendObj = ROBJ_BOX
-  fillColor = Color(67, 67, 67)
-  borderRadius = [0, 0, hdpx(5), 0]
+  fillColor = Color(67, 67, 67, 100)
+  borderRadius = static [0, 0, hdpx(5), 0]
   flow = FLOW_HORIZONTAL
   valign = ALIGN_CENTER
-  padding = const hdpx(3)
-  gap = const hdpx(2)
+  padding = hdpx(3)
+  gap = hdpx(2)
   behavior = Behaviors.Button
   onHover = function(on) {
     let tooltip = data.v.reduce(@(res, count, id) res.append({
-      size = const [hdpx(200), SIZE_TO_CONTENT]
+      size = static [hdpx(200), SIZE_TO_CONTENT]
       children = mkText(loc($"chronotraceIncome/{id}", { count }))
     }), [])
     setTooltip(on ? tooltipBox({
@@ -45,7 +46,7 @@ let mkChronotraceProgress = @(data) (data?.v ?? {}).len() <= 0 ? null : {
     }) : null)
   }
   children = [
-    mkText(loc("ui/multiply"))
+    static mkText("+")
     mkText(data.v.reduce(@(res, v) res + v, 0))
   ]
 }
@@ -60,16 +61,17 @@ function mkResearchToShow(id, chronotraceProgress, curChronoProgress = null) {
   if (progress?.v != null)
     progress.v.each(@(value, incomeId) additionalData.append(loc($"chronotraceIncome/{incomeId}", { count = value })))
   let tooltip = mkResearchTooltip(id, loc(getNodeName(node, false)), additionalData)
-  let isOpenedRecipe = playerProfileOpenedRecipes.get().findvalue(@(v) v.prototypeId == node.containsRecipe) != null
+  let isOpenedRecipe = allCraftRecipes.get()?[node.containsRecipe].isOpened ?? false
   let playerResearch = playerProfileOpenedNodes.get().findvalue(@(v) v.prototypeId == id)
   let needResearchPoints = node?.requireResearchPointsToComplete ?? -1
+  if (needResearchPoints == 0)
+    return null
   let currentResearchPoints = playerResearch?.currentResearchPoints ?? 0
-
   let icon = {
     behavior = Behaviors.Button
     onHover = @(on) setTooltip(on && tooltip != null && tooltip != "" ? tooltip : null)
     children = [
-      getRecipeIcon(node.containsRecipe, const [hdpxi(76), hdpxi(76)],
+      getRecipeIcon(node.containsRecipe, static [hdpxi(76), hdpxi(76)],
         needResearchPoints < 0 ? 0 : currentResearchPoints.tofloat() / needResearchPoints,
         isOpenedRecipe ? "full" : "silhouette")
         progress == null ? null : mkChronotraceProgress(progress)
@@ -82,11 +84,21 @@ function mkDebriefingItemsList(profileItems, maxCountPerPage = MAX_RECEIVED_ITEM
   let width = hdpx(76) * maxCountPerPage + maxCountPerPage * hdpx(4) - hdpx(4)
   let fakeItems = profileItems.reduce(function(res, item) {
     let { templateName, charges, eid = ecs.INVALID_ENTITY_ID, isDragAndDropAvailable = false,
-      isFoundInRaid = true, isCorrupted = false } = item
+      isFoundInRaid = true, isCorrupted = false, killerNickname = null, ownerNickname = null, deathReason = null, killedByWeapon = null } = item
     if (!isFoundInRaid)
       return res
-    let dataToSend = { charges, eid, isDragAndDropAvailable, isFoundInRaid, isCorrupted }
-      .__update(charges > 0 ? { charges } : { charges = null })
+    let dataToSend = {
+      charges
+      eid
+      isDragAndDropAvailable
+      isFoundInRaid
+      isCorrupted
+      cortical_vault_inactive__killerNickname = killerNickname
+      cortical_vault_inactive__killedByWeapon = killedByWeapon
+      cortical_vault_inactive__deathReason = deathReason
+      cortical_vault_inactive__ownerNickname = ownerNickname
+    }.__update(charges > 0 ? { charges } : { charges = null })
+
     let itemRes = mkFakeItem(templateName, dataToSend)
     let { filterType = "" } = itemRes
     if (filterType == "chronogene" || filterType == "alters")

@@ -119,7 +119,7 @@ def damage_model_hitcamera_es_event(evt : Event;
   createEntity("xray_request") <| $(var init)
     init |> set("xray_request__targetEid", eid)
 
-[es(on_appear, before=dm_phys_parts_es)]
+[es(on_appear, before=(dm_phys_parts_es, visual_damage_remap_init_es))]
 def damage_model_disable_parts_es(evt : Event;
                                   disableDMParts : StringList&;
                                   var damage_model : DamageModel&)

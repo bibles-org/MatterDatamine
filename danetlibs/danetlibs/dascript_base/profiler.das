@@ -1,7 +1,6 @@
 module profiler
 
 require ecs
-require app
 require daProfiler
 require debugapi
 

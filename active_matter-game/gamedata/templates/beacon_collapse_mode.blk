@@ -1,0 +1,665 @@
+beacon_collapse_mode_manager{
+  _use:t="replicating"
+
+  _group{
+    _tags:t="server"
+    beacon_collapse_mode__nextZoneMoveAt:r=-1
+    beacon_collapse_mode__arenaRad:r=30
+    beacon_collapse_mode__preparationTime:r=20
+    beacon_collapse_mode__zoneExpandShrinkTime:p2=10, 10
+    beacon_collapse_mode__finishTime:r=20
+    beacon_collapse_mode__overallZoneRad:r=220
+    beacon_collapse_mode__overallZonePos:p3=-383.46, 16, 284.91
+    beacon_collapse_mode__beaconTemplate:t="beacon_collapse_mode_beacon"
+
+    "beacon_collapse_mode__currentWaveEid:eid"{}
+    "beacon_collapse_mode__roundsLocations:list<p3>"{}
+    "beacon_collapse_mode__lootPresets:list<t>"{
+      i:t="beacon_collapse_loot_preset"
+    }
+  }
+
+  _group{
+    _tags:t="gameClient"
+    beacon_collapse_mode__tenSecLeftTold:b=no
+    beacon_collapse_mode__startTold:b=no
+  }
+
+  "beacon_collapse_mode__roundWaves:list<t>"{
+    i:t="beacon_collapse_wave_1"
+    i:t="beacon_collapse_wave_1"
+  }
+
+  _group{
+    _replicate:b=yes
+    beacon_collapse_mode__nextAttackStartFinishAt:p2=-1, -1
+
+    "beacon_collapse_mode__currentBeaconEid:eid"{}
+  }
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    beacon_collapse_mode__currentRound:i=0
+  }
+}
+
+beacon_collapse_mode_debug_route{
+  "beacon_collapse_mode_debug_route:tag"{}
+}
+
+beacon_america_collapse_mode_manager{
+  _use:t="beacon_collapse_mode_manager"
+
+  _group{
+    _tags:t="server"
+    beacon_collapse_mode__arenaRad:r=30
+    beacon_collapse_mode__preparationTime:r=30
+    beacon_collapse_mode__zoneExpandShrinkTime:p2=20, 90
+    beacon_collapse_mode__finishTime:r=300
+    beacon_collapse_mode__overallZoneRad:r=130
+    beacon_collapse_mode__overallZonePos:p3=-286.031, 5.2597, 236.293
+
+    "beacon_collapse_mode__lootPresets:list<t>"{
+      i:t="collapse_america_smg_weapons_loot_preset"
+      i:t="collapse_america_ar_weapons_loot_preset"
+      i:t="collapse_america_shotgun_weapons_loot_preset"
+      i:t="collapse_america_lmg_weapons_loot_preset"
+    }
+  }
+
+  "beacon_collapse_mode__roundWaves:list<t>"{
+    i:t="america_collapse_fight_1"
+    i:t="america_collapse_fight_2"
+    i:t="america_collapse_fight_3"
+    i:t="america_collapse_fight_4"
+    i:t="america_collapse_fight_5"
+  }
+}
+
+beacon_collapse_mode_beacon{
+  _use:t="placeable_rendinst"
+  _use:t="simple_ai_target"
+  _use:t="riextra_hp_to_hitpoints"
+  ri_extra__name:t="am_powerstake_research_device_a"
+  ri_preload__name:t="am_powerstake_research_device_a"
+  _use:t="pve_event_target"
+  flanking_ai_target__maxCount:i=12
+  flanking_ai_target__interval:r=1
+  flanking_ai_target__radius:r=14
+  team:i=2
+  hitpoints__hp:r=150
+  _tracked:t="hitpoints__hp"
+  hitpoints__maxHp:r=150
+  quest_device__timer:r=-1
+  quest_device__monsterGenTemplate:t=""
+  _use:t="openable_external_inventory_container_ri"
+  _use:t="iteractable_drop_on_ri_destroy"
+  human_inventory__maxVolume:i=10
+  use_object__offset:p3=0, 0, 0
+  use_object__obbMin:p3=0, 0, 0
+  use_object__obbMax:p3=0, 0, 0
+  use_object__selectedTemplate:t="selected_lootable_container"
+  item__useActionHintType:i=1
+  item_world_marker__offset:p3=0, 0, 0
+  item_world_marker__riColliderPoint:p3=0.5, 0.5, 0.5
+  item_world_marker__riColliderPointOffset:p3=0, 0, 0
+  loot_drop_system__lootPreset:t="beacon_america_loot_preset"
+  loot_drop_system__generated:b=no
+  itemContainer__name:t="container/collapse_beacon"
+  itemContainer__type:t="supplyCrate"
+  map_object__show:b=yes
+  map_object_marker__iconName:t="!ui/skin#antenna.svg"
+  map_object_marker__tooltip:t="container/collapse_beacon"
+  map_object_marker__isActive:b=no
+  _tracked:t="map_object_marker__isActive"
+  map_object_marker__activeColor:p3=135, 235, 135
+  map_object_marker__hoverColor:p3=175, 255, 175
+
+  "ai_target__alwaysDanger:tag"{}
+  "quest_device__questItemTemplates:list<t>"{}
+  "usableObject:tag"{}
+  "loot_drop_system_delayed_loot_generation:tag"{}
+  _group{
+    _tags:t="ui"
+    itemContainer__uiItemsMergeEnabled:b=no
+    itemContainer__uiItemsSortingEnabled:b=yes
+    itemContainer__uiItemsOverrideSortingPriority:b=yes
+  }
+
+  _group{
+    _tags:t="gameClient"
+    beacon_collapse_mode_beacon__50percentTold:b=no
+    beacon_collapse_mode_beacon__25percentTold:b=no
+  }
+}
+
+beacon_collapse_mode_beacon_lock{
+  _use:t="locked"
+  locked__statusTip:t="status_tip_access_denied"
+  map_object_marker__isActive:b=yes
+
+  "locked__keyTags:list<t>"{
+    i:t="beacon_safe_lock"
+  }
+}
+
+item_america_collapse_flashdrive{
+  _use:t="item"
+  _use:t="item_rarity_rare"
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  animchar__res:t="am_keycard_a_char"
+  collres__res:t="am_keycard_a_collision"
+  item__proto:t="item_america_collapse_flashdrive"
+  item__name:t="items/item_america_collapse_flashdrive"
+  item__weight:r=1
+  item__volume:i=2
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=100, 100
+  item__extractionTemplateOverride:t=""
+
+  "item__alwaysUseful:tag"{}
+  "item__cantBeReplica:tag"{}
+}
+
+beacon_america_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_america_collapse_flashdrive"
+      number:i=1
+    }
+  }
+}
+
+beacon_collapse_wave_1{
+  _use:t="pve_event_item_controlled"
+  pve_event__radiusRange:p2=15, 20
+  pve_event__gatherTargtesRadius:r=30
+
+  "pve_event__waves:array"{
+    "item:object"{
+      duration:p2=3, 3
+
+      "spawn:object"{
+        am_mimic:ip2=1, 1
+      }
+    }
+  }
+}
+
+america_collapse_fight_1{
+  _use:t="pve_event_auto"
+  pve_event__radiusRange:p2=15, 20
+  pve_event__gatherTargtesRadius:r=30
+
+  "pve_event__waves:array"{
+    "item:object"{
+      duration:p2=10, 10
+
+      "spawn:object"{
+        "changed_human+am_inside_body_3":ip2=1, 2
+        "outdoor_sleeper_changed_human_mini+am_inside_body_3":ip2=1, 1
+      }
+    }
+
+    "item:object"{
+      duration:p2=20, 20
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=10, 10
+
+      "spawn:object"{
+        "changed_human+am_inside_body_3":ip2=2, 2
+        "outdoor_sleeper_changed_human_mini+am_inside_body_3":ip2=1, 1
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=20, 20
+
+      "spawn:object"{
+        "changed_human+am_inside_body_3":ip2=3, 3
+        "outdoor_sleeper_changed_human_mini+am_inside_body_3":ip2=1, 1
+      }
+    }
+  }
+}
+
+america_collapse_fight_2{
+  _use:t="pve_event_auto"
+  pve_event__radiusRange:p2=15, 20
+  pve_event__gatherTargtesRadius:r=30
+
+  "pve_event__waves:array"{
+    "item:object"{
+      duration:p2=5, 5
+
+      "spawn:object"{
+        am_mimic:ip2=5, 5
+      }
+    }
+
+    "item:object"{
+      duration:p2=20, 20
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=8, 8
+
+      "spawn:object"{
+        am_mimic:ip2=8, 8
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=15, 15
+
+      "spawn:object"{
+        am_mimic:ip2=10, 10
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+  }
+}
+
+america_collapse_fight_3{
+  _use:t="pve_event_auto"
+  pve_event__radiusRange:p2=15, 20
+  pve_event__gatherTargtesRadius:r=30
+
+  "pve_event__waves:array"{
+    "item:object"{
+      duration:p2=5, 5
+
+      "spawn:object"{
+        am_modern_pmc_encounter_guard:ip2=2, 2
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=10, 10
+
+      "spawn:object"{
+        xenohound_creature:ip2=8, 10
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=10, 10
+
+      "spawn:object"{
+        xenohound_creature:ip2=8, 10
+        am_modern_pmc_encounter_guard:ip2=2, 2
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=10, 10
+
+      "spawn:object"{
+        xenohound_creature:ip2=5, 5
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+  }
+}
+
+america_collapse_fight_4{
+  _use:t="pve_event_auto"
+  pve_event__radiusRange:p2=15, 20
+  pve_event__gatherTargtesRadius:r=30
+
+  "pve_event__waves:array"{
+    "item:object"{
+      duration:p2=10, 10
+
+      "spawn:object"{
+        am_dendroid_encounter_guard:ip2=6, 6
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=10, 10
+
+      "spawn:object"{
+        am_dendroid_encounter_guard:ip2=8, 8
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=15, 15
+
+      "spawn:object"{
+        am_dendroid_encounter_guard:ip2=8, 8
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=15, 15
+
+      "spawn:object"{
+        am_dendroid_encounter_guard:ip2=10, 10
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+  }
+}
+
+america_collapse_fight_5{
+  _use:t="pve_event_auto"
+  pve_event__radiusRange:p2=15, 20
+  pve_event__gatherTargtesRadius:r=30
+
+  "pve_event__waves:array"{
+    "item:object"{
+      duration:p2=10, 10
+
+      "spawn:object"{
+        am_modern_pmc_encounter_guard:ip2=4, 4
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=10, 10
+
+      "spawn:object"{
+        am_dendroid_encounter_guard:ip2=8, 8
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=15, 15
+
+      "spawn:object"{
+        "changed_human+am_inside_body_3":ip2=4, 4
+        "outdoor_sleeper_changed_human_mini+am_inside_body_3":ip2=3, 3
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=15, 15
+
+      "spawn:object"{
+        am_modern_pmc_encounter_guard:ip2=4, 4
+        am_dendroid_encounter_guard:ip2=12, 12
+      }
+    }
+
+    "item:object"{
+      duration:p2=30, 30
+
+      "spawn:object"{}
+    }
+  }
+}
+
+beacon_collapse_loot_preset{
+  _use:t="base_encounter"
+
+  "interesting_encounter__blueprint:array"{
+    "i:object"{
+      templ:t="military_equipment_t1_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[-0.155272, -1.77636e-14, -0.987872] [4.85117e-14, 1, -2.56066e-14] [0.987872, -5.18993e-14, -0.155272] [-0.739471, 0.5, 0.424469]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="military_close_range_weapons_t1_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[-0.0803436, 2.79776e-14, -0.996767] [4.98154e-14, 1, 2.4053e-14] [0.996767, -4.77219e-14, -0.0803436] [0.106506, 0.5, -0.600037]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="military_close_range_weapons_t1_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[0.962232, 5.68434e-14, -0.27223] [-5.75187e-14, 1, 5.49914e-15] [0.27223, 1.03669e-14, 0.962232] [0.488022, 0.5, 0.0534973]]
+      dropOnNormal:b=yes
+    }
+  }
+}
+
+collapse_america_smg_weapons_loot_preset{
+  _use:t="base_encounter"
+
+  "interesting_encounter__blueprint:array"{
+    "i:object"{
+      templ:t="collapse_smg_weapons_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[0.797362, 0, -0.603502] [0, 1, 0] [0.603502, 0, 0.797362] [-0.892456, -4.76837e-07, -1.13898]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_smg_weapons_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[-0.997603, 0, -0.0691985] [0, 1, 0] [0.0691985, 0, -0.997603] [-0.195129, -4.76837e-07, 1.53729]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_smg_weapons_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[-0.190441, 0, -0.981699] [0, 1, 0] [0.981699, 0, -0.190441] [-1.78006, 0.000999451, 0.298401]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_armor_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[0.815849, 0, 0.578266] [0, 1, 0] [-0.578266, 0, 0.815849] [0.815277, -4.76837e-07, -1.28433]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_grenades_armor_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[0.391377, 0, 0.92023] [0, 1, 0] [-0.92023, 0, 0.391377] [1.43896, -4.76837e-07, -0.26712]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_medical_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[-0.734394, 0, 0.678723] [0, 1, 0] [-0.678723, 0, -0.734394] [1.30502, -4.76837e-07, 1.10022]]
+      dropOnNormal:b=yes
+    }
+  }
+}
+
+collapse_america_ar_weapons_loot_preset{
+  _use:t="base_encounter"
+
+  "interesting_encounter__blueprint:array"{
+    "i:object"{
+      templ:t="collapse_ar_weapons_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[0.797362, 0, -0.603502] [0, 1, 0] [0.603502, 0, 0.797362] [-0.892456, -4.76837e-07, -1.13898]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_ar_weapons_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[-0.997603, 0, -0.0691985] [0, 1, 0] [0.0691985, 0, -0.997603] [-0.195129, -4.76837e-07, 1.53729]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_ar_weapons_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[-0.190441, 0, -0.981699] [0, 1, 0] [0.981699, 0, -0.190441] [-1.78006, 0.000999451, 0.298401]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_armor_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[0.815849, 0, 0.578266] [0, 1, 0] [-0.578266, 0, 0.815849] [0.815277, -4.76837e-07, -1.28433]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_medical_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[-0.734394, 0, 0.678723] [0, 1, 0] [-0.678723, 0, -0.734394] [1.30502, -4.76837e-07, 1.10022]]
+      dropOnNormal:b=yes
+    }
+  }
+}
+
+collapse_america_shotgun_weapons_loot_preset{
+  _use:t="base_encounter"
+
+  "interesting_encounter__blueprint:array"{
+    "i:object"{
+      templ:t="collapse_shotgun_weapons_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[0.797362, 0, -0.603502] [0, 1, 0] [0.603502, 0, 0.797362] [-0.892456, -4.76837e-07, -1.13898]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_shotgun_weapons_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[-0.997603, 0, -0.0691985] [0, 1, 0] [0.0691985, 0, -0.997603] [-0.195129, -4.76837e-07, 1.53729]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_shotgun_weapons_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[-0.190441, 0, -0.981699] [0, 1, 0] [0.981699, 0, -0.190441] [-1.78006, 0.000999451, 0.298401]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_armor_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[0.815849, 0, 0.578266] [0, 1, 0] [-0.578266, 0, 0.815849] [0.815277, -4.76837e-07, -1.28433]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_grenades_armor_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[0.391377, 0, 0.92023] [0, 1, 0] [-0.92023, 0, 0.391377] [1.43896, -4.76837e-07, -0.26712]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_medical_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[-0.734394, 0, 0.678723] [0, 1, 0] [-0.678723, 0, -0.734394] [1.30502, -4.76837e-07, 1.10022]]
+      dropOnNormal:b=yes
+    }
+  }
+}
+
+collapse_america_lmg_weapons_loot_preset{
+  _use:t="base_encounter"
+
+  "interesting_encounter__blueprint:array"{
+    "i:object"{
+      templ:t="collapse_lmg_weapons_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[0.797362, 0, -0.603502] [0, 1, 0] [0.603502, 0, 0.797362] [-0.892456, -4.76837e-07, -1.13898]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_lmg_weapons_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[-0.997603, 0, -0.0691985] [0, 1, 0] [0.0691985, 0, -0.997603] [-0.195129, -4.76837e-07, 1.53729]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_lmg_weapons_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[-0.190441, 0, -0.981699] [0, 1, 0] [0.981699, 0, -0.190441] [-1.78006, 0.000999451, 0.298401]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_armor_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[0.815849, 0, 0.578266] [0, 1, 0] [-0.578266, 0, 0.815849] [0.815277, -4.76837e-07, -1.28433]]
+      dropOnNormal:b=yes
+    }
+
+    "i:object"{
+      templ:t="collapse_medical_lootable_rendinst+dont_create_nphys_obstacle"
+      transform:m=[[-0.734394, 0, 0.678723] [0, 1, 0] [-0.678723, 0, -0.734394] [1.30502, -4.76837e-07, 1.10022]]
+      dropOnNormal:b=yes
+    }
+  }
+}

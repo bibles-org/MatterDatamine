@@ -1,5 +1,8 @@
+from "%ui/components/colors.nut" import ItemDelayedMove
+
 from "%ui/ui_library.nut" import *
-let {ItemDelayedMove} = require("%ui/components/colors.nut")
+
+#allow-auto-freeze
 
 function moveMarker(stateFlags=0, opacity=1.0) {
   return {

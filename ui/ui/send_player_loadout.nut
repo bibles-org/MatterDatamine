@@ -1,19 +1,19 @@
+from "%sqGlob/profile_server.nut" import requestProfileServer
+
+from "%sqstd/json.nut" import loadJson, read_text_directly_from_fs_file, object_to_json_string, parse_json
+
+from "dasevents" import CmdSendPlayerProfile, sendNetEvent
+from "dagor.system" import dgs_get_settings
+from "settings" import get_setting_by_blk_path
+
 
 
 import "%dngscripts/ecs.nut" as ecs
 from "%sqGlob/library_logs.nut" import *
 
-let {
-  playerProfileLoadout,
-  teamColorIdxs
-} = require("%ui/profile/profileState.nut")
-let { CmdSendPlayerProfile, sendNetEvent, EventPlayerFinishedOfflineRaid } = require("dasevents")
-let { dgs_get_settings } = require("dagor.system")
-let { loadJson, read_text_directly_from_fs_file, object_to_json_string, parse_json } = require("%sqstd/json.nut")
+let { playerProfileLoadout, teamColorIdxs } = require("%ui/profile/profileState.nut")
 let defaultRaidProfile = require("%ui/profile/default_game_profile.nut")
-let { get_setting_by_blk_path } = require("settings")
 let { curQueueParam } = require("%ui/quickMatchQueue.nut")
-let { requestProfileServer } = require("%sqGlob/profile_server.nut")
 
 let profileFilename = get_setting_by_blk_path("debug/AMJsonPath") ?? "active_matter.profile2.json"
 
@@ -77,7 +77,7 @@ function sendingProfile(eid, comp) {
     if (!comp.is_local)
       return
 
-    local signedToken = playerProfileLoadout.value
+    local signedToken = playerProfileLoadout.get()
     local unsignedToken = {}
     if (dgs_get_settings()?.debug?.useLocalFileInRaid ?? false) {
       
@@ -88,7 +88,7 @@ function sendingProfile(eid, comp) {
     }
     else {
       unsignedToken["teamInfo"] <- {
-        team_color_idxs = [teamColorIdxs.value.primary, teamColorIdxs.value.secondary]
+        team_color_idxs = [teamColorIdxs.get().primary, teamColorIdxs.get().secondary]
       }
       if (curQueueParam.get()?.queueRaid != null && (curQueueParam.get().queueRaid?.extraParams.isNewby ?? false)) {
         unsignedToken["raidInfo"] <- curQueueParam.get().queueRaid
@@ -108,23 +108,5 @@ ecs.register_es("raid_profile_sending_state_for_local_player",{
   comps_track = [["is_local", ecs.TYPE_BOOL]]
 },
 {
-  tags = "gameClient", after="client_start_player_preparing"
-})
-
-ecs.register_es("raid_profile_offline_send_result",{
-  [[EventPlayerFinishedOfflineRaid]] = function(evt, _eid, comp) {
-    if (!comp.is_local) {
-      return
-    }
-
-    let data = parse_json(evt.data)
-    requestProfileServer("apply_battle_result_offline", data, {}, @(_) null)
-  }
-},
-{
-  comps_rq = ["player"],
-  comps_ro = [["is_local", ecs.TYPE_BOOL]]
-},
-{
-  tags = "gameClient"
+  tags = "gameClient", after="player_creation_prepared"
 })

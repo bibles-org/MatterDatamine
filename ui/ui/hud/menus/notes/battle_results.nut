@@ -1,60 +1,59 @@
+from "%sqGlob/dasenums.nut" import NexusMvpReason
+from "%ui/profile/battle_results.nut" import createBattleResultsComputed, maxSavedBattleResults, CURRENT_VERSION
+from "%ui/components/commonComponents.nut" import mkText, mkTextArea, mkSelectPanelItem, BD_LEFT, VertSelectPanelGap, mkTabs
+from "%ui/hud/menus/nexus_stats.nut" import mkPlayerStats, statsHeader, mkMvpPlayerBlock, getScoresTbl
+from "%ui/mainMenu/debriefing_common_components.nut" import mkEvacuatedItems, mkChronotracesList, mkDailyRewardsBlock
+from "%ui/fonts_style.nut" import h2_txt, body_txt, h1_txt, sub_txt
+from "dagor.time" import format_unixtime
+from "%ui/helpers/time.nut" import secondsToStringLoc
+import "%ui/components/faComp.nut" as faComp
+from "%ui/mainMenu/baseDebriefingMap.nut" import mkDebriefingMap, updateMapContext
+from "%ui/mainMenu/baseDebriefingTeamStats.nut" import debriefingStats, mkTeamBlock
+from "%ui/components/scrollbar.nut" import makeVertScrollExt, thinAndReservedPaddingStyle
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "%ui/mainMenu/debriefing/debriefing_quests_state.nut" import updateDebriefingContractsData
+from "%ui/hud/menus/components/inventoryItem.nut" import inventoryItem
+from "%ui/mainMenu/nexus_debriefing_map.nut" import mkMapContainer
+from "%ui/helpers/remap_nick.nut" import remap_nick
+import "%ui/components/colorize.nut" as colorize
+from "%ui/mainMenu/menus/options/player_interaction_option.nut" import isStreamerMode, playerRandName
 from "%ui/ui_library.nut" import *
-from "%ui/components/colors.nut" import BtnBgNormal, BtnBgSelected, RedFailColor, BtnBdNormal, ItemBgColor, InfoTextValueColor, ConsoleFillColor, RedWarningColor, TextNormal
+from "%ui/components/colors.nut" import BtnBgNormal, BtnBgSelected, RedFailColor, BtnBdNormal, BtnBdDisabled,
+  ItemBgColor, InfoTextValueColor, ConsoleFillColor, RedWarningColor, TextNormal
 
-let { h2_txt, body_txt, h1_txt, sub_txt } = require("%ui/fonts_style.nut")
-let { createBattleResultsComputed, maxSavedBattleResults, journalBattleResult, CURRENT_VERSION
-} = require("%ui/profile/battle_results.nut")
-let { mkText, mkTextArea, mkSelectPanelItem, BD_LEFT, VertSelectPanelGap, mkTabs
-} = require("%ui/components/commonComponents.nut")
-let { format_unixtime } = require("dagor.time")
-let { secondsToStringLoc } = require("%ui/helpers/time.nut")
-let faComp = require("%ui/components/faComp.nut")
-let { mkDebriefingMap, updateMapContext } = require("%ui/mainMenu/baseDebriefingMap.nut")
-let { debriefingStats, mkTeamBlock, mkDailyRewardsStats } = require("%ui/mainMenu/baseDebriefingTeamStats.nut")
+let { journalBattleResult } = require("%ui/profile/battle_results.nut")
 let { debriefingLog } = require("%ui/mainMenu/baseDebriefingLog.nut")
-let { mkDebriefingItemsList, mkDebriefingCronotracesList } = require("%ui/mainMenu/horisontalItemList.nut")
-let { makeVertScrollExt, thinAndReservedPaddingStyle } = require("%ui/components/scrollbar.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
-let { updateDebriefingContractsData } = require("%ui/mainMenu/debriefing/debriefing_quests_state.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
-let { inventoryItem } = require("%ui/hud/menus/components/inventoryItem.nut")
-let { mkActiveMatterStorageWidget } = require("%ui/hud/menus/components/amStorage.nut")
-let { mkMapContainer, debriefingScene } = require("%ui/mainMenu/nexus_debriefing_map.nut")
-let { mkPlayerStats, defStats, statsHeader, mkMvpPlayerBlock, getScoresTbl
-} = require("%ui/hud/menus/nexus_stats.nut")
+let { debriefingScene } = require("%ui/mainMenu/nexus_debriefing_map.nut")
+let { defStats } = require("%ui/hud/menus/nexus_stats.nut")
 let userInfo = require("%sqGlob/userInfo.nut")
-let { remap_nick } = require("%ui/helpers/remap_nick.nut")
-let { NexusMvpReason } = require("%sqGlob/dasenums.nut")
-let colorize = require("%ui/components/colorize.nut")
 
-const MAX_ITEM_TO_SHOW = 10
+#allow-auto-freeze
 
 let battleResultCardSize = [hdpx(300), hdpx(71)]
 let iconHeight = hdpxi(24)
 let smallIconHeight = hdpxi(14)
 let mapHeight = min(sh(50), hdpx(500))
-let nexusMapHeight = min(sh(64), hdpx(670))
-let allyTeamColor = const 0xFF18e7e6
+let allyTeamColor = 0xFF18e7e6
 
 let currentTab = Watched("battleHistory/history")
 
 let mapSize = [mapHeight, mapHeight]
-let nexusMapSize = [nexusMapHeight, nexusMapHeight]
 
 let dateFormatString = "%d %b %H:%M"
 
-let isBattleSuccessiful = @(battle) battle.battleStat?.isSuccessRaid ?? false
+let isBattleSuccessiful = @(battle) battle?.battleStat?.isSuccessRaid ?? false
 
 let successIcon = {
   rendObj = ROBJ_IMAGE
-  size = [iconHeight, iconHeight]
+  size = iconHeight
   color = Color(153, 240, 143)
   image = Picture("ui/skin#extraction_point.svg:{0}:{0}:K".subst(iconHeight))
 }
 
 let failIcon = {
   rendObj = ROBJ_IMAGE
-  size = [iconHeight, iconHeight]
+  size = iconHeight
   color = RedFailColor
   image = Picture("ui/skin#skull.svg:{0}:{0}:K".subst(iconHeight))
 }
@@ -65,15 +64,15 @@ let calendarIcon = faComp("calendar-o", {
 
 function mkRaidName(battle, params) {
   let raidNameLocId = (battle?.battleAreaInfo.raidName ?? "").split("+")
-  if ((raidNameLocId?[0] ?? "") == "")
-    return mkText(loc("raidInfo/unknown/short"), h2_txt)
-  let resLocId = "_".join(raidNameLocId.filter(@(v) v != "ordinary"))
+  if ((raidNameLocId?[1] ?? "") == "")
+    return mkText(loc("missionInfo/unknown/short"), body_txt)
+  let resLocId = "_".join(raidNameLocId.filter(@(v) v != "ordinary" && v!="raid"))
   return mkText(loc(resLocId), {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     behavior = Behaviors.Marquee
     group = params?.group
     scrollOnHover = true
-  }.__update(h2_txt))
+  }.__update(body_txt))
 }
 
 
@@ -120,12 +119,12 @@ function mkBattleCard(battle) {
       size = battleResultCardSize
       flow = FLOW_HORIZONTAL
       gap = hdpx(10)
-      padding = [hdpx(4), hdpx(12)]
+      padding = static [hdpx(4), hdpx(12)]
       valign = ALIGN_CENTER
       children = [
         isBattleSuccessiful(battle) ? successIcon : failIcon
         {
-          size = [flex(), SIZE_TO_CONTENT]
+          size = FLEX_H
           flow = FLOW_VERTICAL
           gap = hdpx(4)
           clipChildren = true
@@ -155,12 +154,12 @@ function mkNexusCard(battle) {
       size = battleResultCardSize
       flow = FLOW_HORIZONTAL
       gap = hdpx(10)
-      padding = [hdpx(4), hdpx(12)]
+      padding = static [hdpx(4), hdpx(12)]
       valign = ALIGN_CENTER
       children = [
         battle?.isWinner ? successIcon : failIcon
         {
-          size = [flex(), SIZE_TO_CONTENT]
+          size = FLEX_H
           flow = FLOW_VERTICAL
           gap = hdpx(4)
           children = [
@@ -179,7 +178,7 @@ let mkBattlesList = @(battleResults) battleResults.len() <= 0
     flow = FLOW_VERTICAL
     gap = VertSelectPanelGap
     children = battleResults.map(@(v) v?.isNexus ? mkNexusCard(v) : mkBattleCard(v)).reverse()
-  }, { size = [SIZE_TO_CONTENT, flex()] })
+  }, { size = FLEX_V })
 
 let historyContent = {
   size = flex()
@@ -193,78 +192,33 @@ let historyContent = {
         mkDebriefingMap(mapSize)
         @() {
           watch = journalBattleResult
-          size = [flex(), SIZE_TO_CONTENT]
-          children = mkTeamBlock(journalBattleResult.get(), hdpxi(86))
+          rendObj = ROBJ_BOX
+          size = FLEX_H
+          fillColor = ConsoleFillColor
+          borderWidth = static hdpx(1)
+          borderColor = BtnBdDisabled
+          padding = static hdpx(10)
+          children = mkTeamBlock(journalBattleResult.get(), hdpxi(90), body_txt)
         }
       ]
     }
     {
       size = flex()
       flow = FLOW_VERTICAL
-      gap = hdpx(20)
-      padding = [0,0, hdpx(10), 0]
+      gap = hdpx(10)
       children = [
         debriefingLog
-        debriefingStats
+        {
+          rendObj = ROBJ_BOX
+          size = FLEX_H
+          fillColor = ConsoleFillColor
+          borderWidth = static hdpx(1)
+          borderColor = BtnBdDisabled
+          padding = static hdpx(10)
+          children = debriefingStats
+        }
       ]
     }
-  ]
-}
-
-let mkEvacuatedItems = @(itemsToShow) itemsToShow.len() <= 0 ? null : {
-  size = [flex(), SIZE_TO_CONTENT]
-  flow = FLOW_VERTICAL
-  gap = hdpx(10)
-  children = [
-    mkText(loc("baseDebriefing/evacuated"), h2_txt)
-    mkDebriefingItemsList(itemsToShow, MAX_ITEM_TO_SHOW)
-  ]
-}
-
-let mkChronotracesList = @(openedReseachNodesV2, chronotracesProgression)
-  openedReseachNodesV2.len() <= 0 && chronotracesProgression.len() <= 0 ? null : {
-    size = [flex(), SIZE_TO_CONTENT]
-    flow = FLOW_VERTICAL
-    gap = hdpx(10)
-    children = [
-      mkText(loc("baseDebriefing/chronotraces"), h2_txt)
-      mkDebriefingCronotracesList(openedReseachNodesV2, chronotracesProgression, MAX_ITEM_TO_SHOW)
-    ]
-}
-
-let arrow = faComp("arrow-right", { fontSize = hdpx(25) })
-
-let mkAmExchangeBlock = @(AMResource) {
-  size = [flex(), ph(100)]
-  minHeight = hdpx(114)
-  flow = FLOW_VERTICAL
-  gap = hdpx(5)
-  children = [
-    mkText(loc("activeMatter"), h2_txt)
-    {
-      size = flex()
-      flow = FLOW_HORIZONTAL
-      gap = hdpx(10)
-      valign = ALIGN_CENTER
-      children = [
-        mkActiveMatterStorageWidget(AMResource)
-        arrow
-        inventoryItem(mkFakeItem("credit_coins_pile", { count = AMResource * 100 }), null)
-      ]
-    }
-  ]
-}
-
-let mkDailyRewardsBlock = @(monolithCreditsCount, AMResource) {
-  size = [flex(), SIZE_TO_CONTENT]
-  flow = FLOW_HORIZONTAL
-  gap = { size = [flex(0.2), SIZE_TO_CONTENT]}
-  children = [
-    monolithCreditsCount <= 0 ? null : {
-      size = [flex(1.6), SIZE_TO_CONTENT]
-      children = mkDailyRewardsStats(monolithCreditsCount)
-    }
-    AMResource <= 0 ? null : mkAmExchangeBlock(AMResource)
   ]
 }
 
@@ -288,14 +242,14 @@ function resourceAndItems() {
     return {
       watch = journalBattleResult
       size = [flex(), mapSize[1]]
-      children = mkText(loc("baseDebriefing/noData"), { hplace = ALIGN_CENTER, vplace =  ALIGN_CENTER }.__update(h2_txt))
+      children = mkText(loc("baseDebriefing/noData"), static { hplace = ALIGN_CENTER, vplace =  ALIGN_CENTER }.__update(h2_txt))
     }
 
   return {
     watch = journalBattleResult
     size = flex()
     flow = FLOW_VERTICAL
-    gap = hdpx(20)
+    gap = hdpx(39)
     children = [
       mkEvacuatedItems(loadout.filter(@(v) v?.isFoundInRaid))
       mkChronotracesList(openedReseachNodesV2, chronotracesProgression)
@@ -316,8 +270,13 @@ let rewardsContent =  {
         mkDebriefingMap(mapSize)
         @() {
           watch = journalBattleResult
-          size = const [flex(), SIZE_TO_CONTENT]
-          children = mkTeamBlock(journalBattleResult.get(), hdpxi(86))
+          rendObj = ROBJ_BOX
+          size = FLEX_H
+          fillColor = ConsoleFillColor
+          borderWidth = static hdpx(1)
+          borderColor = BtnBdDisabled
+          padding = static hdpx(10)
+          children = mkTeamBlock(journalBattleResult.get(), hdpxi(90), body_txt)
         }
       ]
     }
@@ -325,7 +284,7 @@ let rewardsContent =  {
       size = flex()
       flow = FLOW_VERTICAL
       gap = hdpx(20)
-      padding = const [0,0, hdpx(10), 0]
+      padding = static [0,0, hdpx(10), 0]
       children = resourceAndItems
     }
   ]
@@ -336,14 +295,19 @@ function mkNexusCreditsBlock(data) {
   if (credits <= 0)
     return null
   return {
-    size = [flex(), ph(100)]
+    rendObj = ROBJ_BOX
+    size = FLEX_H
+    fillColor = ConsoleFillColor
+    borderWidth = static hdpx(1)
+    borderColor = BtnBdDisabled
+    padding = static hdpx(10)
     minHeight = hdpx(114)
     flow = FLOW_VERTICAL
     gap = hdpx(5)
     children = [
       mkText(loc("credits"), h2_txt)
       {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         flow = FLOW_HORIZONTAL
         gap = hdpx(10)
         valign = ALIGN_CENTER
@@ -354,19 +318,38 @@ function mkNexusCreditsBlock(data) {
 }
 
 function nexusRewardsContent() {
-  let isEmpty = (journalBattleResult.get()?.credits ?? 0) <= 0
+  let { openedReseachNodesV2 = [], chronotracesProgression = [], credits = 0 } = journalBattleResult.get()
+  if (credits <= 0
+    && openedReseachNodesV2.len() <= 0
+    && chronotracesProgression.len() <= 0
+  )
+    return {
+      watch = journalBattleResult
+      size = static [flex(), mapSize[1]]
+      flow = FLOW_HORIZONTAL
+      gap = static hdpx(10)
+      children = [
+        mkMapContainer(mapSize)
+        mkText(loc("baseDebriefing/noData"), {
+          size = flex()
+          halign = ALIGN_CENTER
+          valign = ALIGN_CENTER
+        }.__update(h2_txt))
+      ]
+    }
   return {
     watch = journalBattleResult
     size = flex()
     flow = FLOW_HORIZONTAL
-    gap = hdpx(10)
+    gap = static hdpx(10)
     children = [
-      mkMapContainer(nexusMapSize)
+      mkMapContainer(mapSize)
       {
         size = flex()
+        flow = FLOW_VERTICAL
+        gap = static hdpx(10)
         children = [
-          !isEmpty ? null
-            : mkText(loc("baseDebriefing/noData"), { hplace = ALIGN_CENTER, vplace =  ALIGN_CENTER }.__update(h2_txt))
+          mkChronotracesList(openedReseachNodesV2, chronotracesProgression)
           mkNexusCreditsBlock(journalBattleResult.get())
         ]
       }
@@ -376,24 +359,25 @@ function nexusRewardsContent() {
 
 let statsBlockSeparator = {
   rendObj = ROBJ_SOLID
-  size = [hdpx(2), flex()]
+  size = static [hdpx(2), flex()]
   color = BtnBdNormal
-  margin = [0, hdpx(10)]
+  margin = static [0, hdpx(10)]
 }
 
 function statsBlock() {
   let { players, team } = journalBattleResult.get()
   if (players.len() == 0)
     return { watch = journalBattleResult }
-
+  #forbid-auto-freeze
   let playersByTeam = players.reduce(function(res, pData, pId) {
+    #forbid-auto-freeze
     let pTeam = pData.team
     if (pTeam not in res)
       res[pTeam] <- {}
     res[pTeam][pId] <- pData
     return res
   }, {})
-
+  #allow-auto-freeze
   let allyTeam = playersByTeam[team]
   let enemyTeam = playersByTeam.filter(@(_, k) k != team).values()?[0] ?? {}
   let sortByScore = @(a, b, teamData) teamData[b]?.stats.score <=> teamData[a]?.stats.score
@@ -401,40 +385,56 @@ function statsBlock() {
   let enemyTeamArr = enemyTeam.keys().sort(@(a, b) sortByScore(a, b, enemyTeam))
   return {
     watch = journalBattleResult
+    rendObj = ROBJ_BOX
     size = flex()
+    fillColor = ConsoleFillColor
+    borderWidth = static hdpx(1)
+    borderColor = BtnBdDisabled
+    padding = static [hdpx(10), hdpx(2)]
     flow = FLOW_HORIZONTAL
     gap = statsBlockSeparator
     children = [
       {
         size = flex()
         flow = FLOW_VERTICAL
-        gap = const hdpx(10)
+        gap = static hdpx(10)
         halign = ALIGN_CENTER
         children = [
-          mkText(const loc("nexus/playerTeam"), { color = allyTeamColor }.__update(h2_txt))
+          mkText(static loc("nexus/playerTeam"), { color = allyTeamColor }.__update(h2_txt))
           statsHeader
           makeVertScrollExt({
-            size = [flex(), SIZE_TO_CONTENT]
+            size = FLEX_H
             flow = FLOW_VERTICAL
+            behavior = Behaviors.Button
+            xmbNode = XmbContainer({
+              canFocus = false
+              wrap = false
+              scrollSpeed = 5.0
+            })
             children = allyTeamArr.map(@(eid, idx) @() {
               watch = userInfo
               rendObj = ROBJ_SOLID
-              size = const [flex(), SIZE_TO_CONTENT]
-              padding = const [hdpx(10), hdpx(8)]
+              size = FLEX_H
+              padding = static [hdpx(10), hdpx(8)]
               color = eid == userInfo.get().userId ? ItemBgColor
                 : mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
               flow = FLOW_HORIZONTAL
-              gap = const { size = flex() }
+              xmbNode = XmbNode()
+              behavior = Behaviors.Button
+              gap = static { size = flex() }
               children = [
-                {
+                @() {
+                  watch = [isStreamerMode, playerRandName, userInfo]
                   flow = FLOW_HORIZONTAL
-                  gap = const hdpx(10)
+                  gap = static hdpx(10)
                   children = [
                     mkText(idx + 1, {
-                      size = const [hdpx(40), SIZE_TO_CONTENT]
+                      size = static [hdpx(40), SIZE_TO_CONTENT]
                       halign = ALIGN_CENTER
                     }.__update(body_txt))
-                    mkText(remap_nick(allyTeam[eid].name), body_txt)
+                    mkText(isStreamerMode.get() && remap_nick(allyTeam[eid].name) == userInfo.get().name
+                      ? playerRandName.get()
+                      : remap_nick(allyTeam[eid].name), body_txt)
                   ]
                 }
                 mkPlayerStats(allyTeam?[eid].stats ?? defStats)
@@ -446,28 +446,35 @@ function statsBlock() {
       {
         flow = FLOW_VERTICAL
         size = flex()
-        gap = const hdpx(10)
+        gap = static hdpx(10)
         halign = ALIGN_CENTER
         children = [
-          const mkText(loc("nexus/enemyTeam"), { color = RedWarningColor }.__update(h2_txt))
+          static mkText(loc("nexus/enemyTeam"), { color = RedWarningColor }.__update(h2_txt))
           statsHeader(true)
           makeVertScrollExt({
-            size = [flex(), SIZE_TO_CONTENT]
+            size = FLEX_H
             flow = FLOW_VERTICAL
+            xmbNode = XmbContainer({
+              canFocus = false
+              wrap = false
+              scrollSpeed = 5.0
+            })
             children = enemyTeamArr.map(@(eid, idx) @() {
               rendObj = ROBJ_SOLID
-              size = const [flex(), SIZE_TO_CONTENT]
-              padding = const [hdpx(10), hdpx(8)]
+              size = FLEX_H
+              behavior = Behaviors.Button
+              xmbNode = XmbNode()
+              padding = static [hdpx(10), hdpx(8)]
               color = mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
               flow = FLOW_HORIZONTAL
-              gap = const { size = flex() }
+              gap = static { size = flex() }
               children = [
                 {
                   flow = FLOW_HORIZONTAL
-                  gap = const hdpx(10)
+                  gap = static hdpx(10)
                   children = [
                     mkText(idx + 1, {
-                      size = const [hdpx(40), SIZE_TO_CONTENT]
+                      size = static [hdpx(40), SIZE_TO_CONTENT]
                       halign = ALIGN_CENTER
                     }.__update(body_txt))
                     mkText(remap_nick(enemyTeam[eid].name), body_txt)
@@ -493,10 +500,10 @@ function gameResultTitle() {
   return {
     watch = journalBattleResult
     rendObj = ROBJ_SOLID
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     halign = ALIGN_CENTER
     color = ConsoleFillColor
-    padding = const [hdpx(8), 0]
+    padding = static [hdpx(8), 0]
     flow = FLOW_VERTICAL
     children = [
       mkText(text, { color }.__update(h1_txt))
@@ -522,7 +529,7 @@ function mkMvpBlock() {
   let scoresTbl = getScoresTbl()
   return {
     watch = journalBattleResult
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     gap = hdpx(50)
     halign = ALIGN_CENTER
@@ -542,11 +549,12 @@ function mkMvpBlock() {
         : mvpBlock == NexusMvpReason.MOST_BEACON_CAPTURES ? playerData.stats.beacon_capture
         : (playerData.stats.beacon_reset + playerData.stats.assist)
       let totalScore = playerData.stats.score
-      let hint = mvpBlock != NexusMvpReason.MOST_HELP ? null
+      let hint = mvpBlock == NexusMvpReason.MOST_KILLS ? loc("stats/mostKills")
+        : mvpBlock == NexusMvpReason.MOST_BEACON_CAPTURES ? loc("stats/mostCaptures")
         : loc("nexus/mvpAssistsHint", {
-          assist = colorize(InfoTextValueColor, $"{playerData.stats.assist * scoresTbl.assist }"),
-          portal = colorize(InfoTextValueColor, $"{playerData.stats.beacon_reset * scoresTbl.beacon_reset}")
-        })
+            assist = colorize(InfoTextValueColor, $"{playerData.stats.assist * scoresTbl.assist }"),
+            portal = colorize(InfoTextValueColor, $"{playerData.stats.beacon_reset * scoresTbl.beacon_reset}")
+          })
       let color = playerData.team == team ? allyTeamColor : RedWarningColor
       return mkMvpPlayerBlock(playerData.name, loc(titleLoc), loc(descLoc, { count, counts = count }),
         playerData.team, totalScore, hint, color)
@@ -557,7 +565,7 @@ function mkMvpBlock() {
 let statsContent = {
   size = flex()
   flow = FLOW_VERTICAL
-  gap = const hdpx(10)
+  gap = static hdpx(10)
   children = [
     gameResultTitle
     mkMvpBlock
@@ -565,7 +573,7 @@ let statsContent = {
   ]
 }
 
-let tabConstr = @(locId, params) mkText(loc(locId), params.__update( { fontFx = null }, body_txt))
+let tabConstr = @(locId, params) mkText(loc(locId), params.__merge( { fontFx = null }, body_txt))
 
 let mkTabsList = @(isNexus) [
   {
@@ -579,6 +587,8 @@ let mkTabsList = @(isNexus) [
     childrenConstr = @(params) tabConstr("baseDebriefing/rewards", params)
     content = nexusRewardsContent
     isNexus = true
+    isAvailable = Computed(@() journalBattleResult.get()?.needRewards ?? true)
+    unavailableHoverHint = loc("baseDebriefing/noData")
   }
   { id = "battleHistory/history"
     childrenConstr = @(params) tabConstr("baseDebriefing/history", params)
@@ -590,6 +600,8 @@ let mkTabsList = @(isNexus) [
     childrenConstr = @(params) tabConstr("baseDebriefing/rewards", params)
     content = rewardsContent
     isNexus = false
+    isAvailable = Computed(@() journalBattleResult.get()?.needRewards ?? true)
+    unavailableHoverHint = loc("baseDebriefing/noData")
   }
 ].filter(@(v) v.isNexus == isNexus)
 
@@ -602,6 +614,7 @@ function raidDetails() {
     tabs = tabsList
     currentTab = currentTab.get()
     onChange = @(tab) currentTab.set(tab.id)
+    override = { disableHotkeys = true }
   })
   let tabContent = getCurTabContent(currentTab.get(), tabsList)
   return {
@@ -639,7 +652,7 @@ function mkBattleResultTab() {
         }
       }
       children = [
-        mkText(loc("statisticsMenu/overwriteWarning", {maxSavedBattleResults}), const {color = mul_color(TextNormal, 0.5)}.__update(sub_txt) )
+        mkText(loc("statisticsMenu/overwriteWarning", {maxSavedBattleResults}), static {color = mul_color(TextNormal, 0.5)}.__update(sub_txt) )
         {
           size = flex()
           flow = FLOW_HORIZONTAL

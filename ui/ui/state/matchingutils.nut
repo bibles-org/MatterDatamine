@@ -1,11 +1,12 @@
+from "dagor.time" import get_local_unixtime
+from "%ui/matchingClient.nut" import matchingCall, netStateCall
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
-let { get_local_unixtime } = require("dagor.time")
-let { matchingCall, netStateCall } = require("%ui/matchingClient.nut")
+
 let logM = require("%sqGlob/library_logs.nut").with_prefix("[MATCHING UTILS] ")
 
-local matchingUTCTimestamp = Watched(0)
-local localUnixTimestamp = Watched(0)
+let matchingUTCTimestamp = Watched(0)
+let localUnixTimestamp = Watched(0)
 
 
 let matchingTimeQueue = ecs.SqQuery(

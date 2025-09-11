@@ -1,5 +1,7 @@
 from "%ui/ui_library.nut" import *
 
+#allow-auto-freeze
+
 let defTransform = {}
 
 let point = freeze({
@@ -7,7 +9,7 @@ let point = freeze({
   children = {
     rendObj = ROBJ_IMAGE
     opacity = 0.5
-    size = [fsh(40), fsh(40)]
+    size = fsh(40)
     picSaturate = 0.0
     image = Picture("ui/aura_vision_arrow_a.avif")
   }
@@ -19,7 +21,7 @@ let arrow = freeze({
   children = {
     rendObj = ROBJ_IMAGE
     opacity = 1
-    size = [fsh(40), fsh(40)]
+    size = fsh(40)
     picSaturate = 0.0
     image = Picture("ui/aura_vision_arrow_a.avif")
   }

@@ -1,47 +1,48 @@
+from "%ui/hud/state/inventory_state.nut" import isWeaponModsForItem
+from "%ui/components/colors.nut" import BtnBdHover, BtnBdSelected, BtnBdTransparent, BtnBgFocused,
+  BtnBgHover, BtnBgTransparent, TextHighlight, TextNormal,
+  noItemContainerBg, RedWarningColor, BtnTextHover
+from "%ui/hud/state/inventory_item_relations.nut" import isAmmoForWeapon, isItemForWeaponMod, isItemForHolder
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems, needShowQuickSlotPurchase, purchaseItemsToSlot
+
+from "%ui/fonts_style.nut" import sub_txt, body_txt
+from "das.human_weap" import unload_ammo_from_gun_to_inventory
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryItemImage, iconWeapon
+from "%ui/hud/menus/components/inventoryWeaponMod.nut" import mkWeaponModWidget, mkModsToggler
+from "%ui/hud/menus/components/inventoryItemTooltip.nut" import buildInventoryItemTooltip
+from "%ui/hud/state/inventory_eids_common.nut" import getInventoryEidByListType
+from "%ui/hud/menus/components/inventoryBulletInBarrel.nut" import bulletInBarrelIndicator, unloadableBulletInBarrelIndicator
+from "%ui/hud/menus/components/inventoryStyle.nut" import itemHeight
+from "%ui/components/chocolateWnd.nut" import openChocolateWnd
+from "%dngscripts/sound_system.nut" import sound_play
+from "%ui/hud/menus/components/inventoryItemsList.nut" import inventoryItemSorting
+from "%ui/hud/menus/components/inventoryItem.nut" import corruptedWeaponImageBackground, addStorageType
+from "%ui/components/commonComponents.nut" import mkText
+from "%ui/mainMenu/currencyIcons.nut" import creditsIcon
+from "%ui/mainMenu/raid_preparation_window_state.nut" import mkWarningSign
+from "%ui/mainMenu/market/inventoryToMarket.nut" import getItemPriceToShow, mkItemPrice
+from "%ui/hud/menus/components/inventoryItemNexusPointPriceComp.nut" import nexusPointsCostComp
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
-from "%ui/mainMenu/raid_preparation_window_state.nut" import getNexusStashItems
+from "%ui/mainMenu/raid_preparation_window_state.nut" import getNexusStashItemsForChocolateMenu
 
-let { sub_txt, body_txt } = require("%ui/fonts_style.nut")
-let { playerProfileOpenedRecipes, allCraftRecipes, marketItems, playerStats } = require("%ui/profile/profileState.nut")
-let { unload_ammo_from_gun_to_inventory } = require("das.human_weap")
-let { draggedData, isWeaponModsForItem, focusedData, requestData, requestItemData, unremovableSlots, isAltPressed
-} = require("%ui/hud/state/inventory_state.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { inventoryItemImage, iconWeapon, weaponModIconParams } = require("inventoryItemImages.nut")
-let { mkWeaponModWidget, mkModsToggler } = require("inventoryWeaponMod.nut")
-let { BtnBdHover, BtnBdSelected, BtnBdTransparent, BtnBgFocused, BtnBgHover, BtnBgTransparent,
-  TextHighlight, TextNormal, noItemContainerBg, RedWarningColor, BtnTextHover } = require("%ui/components/colors.nut")
+let { allCraftRecipes, marketItems, playerStats } = require("%ui/profile/profileState.nut")
+let { draggedData, focusedData, requestData, requestItemData, unremovableSlots, isAltPressed, mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
+let { weaponModIconParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
 let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
-let { buildInventoryItemTooltip } = require("%ui/hud/menus/components/inventoryItemTooltip.nut")
-let { getInventoryEidByListType } = require("%ui/hud/state/inventory_eids_common.nut")
-let { bulletInBarrelIndicator, unloadableBulletInBarrelIndicator } = require("inventoryBulletInBarrel.nut")
-let {
-  isAmmoForWeapon,
-  isItemForWeaponMod,
-  isItemForHolder
-} = require("%ui/hud/state/inventory_item_relations.nut")
 let { weaponSlotsKeys } = require("%ui/types/weapon_slots.nut")
-let { itemHeight } = require("%ui/hud/menus/components/inventoryStyle.nut")
 let { hoverHotkeysWatchedList } = require("%ui/components/pcHoverHotkeyHitns.nut")
 let { hoverPcHotkeysPresentation } = require("%ui/hud/menus/components/inventoryActionsHints.nut")
 let { WEAPON } = require("%ui/hud/menus/components/slotTypes.nut")
-let { openChocolateWnd } = require("%ui/components/chocolateWnd.nut")
-let { backpackItems, stashItems, inventoryItems, safepackItems
-} = require("%ui/hud/state/inventory_items_es.nut")
-let { inventoryItemSorting } = require("%ui/hud/menus/components/inventoryItemsList.nut")
-let { mergeNonUniqueItems, needShowQuickSlotPurchase, purchaseItemsToSlot
-} = require("%ui/hud/menus/components/inventoryItemUtils.nut")
-let { corruptedWeaponImageBackground, addStorageType } = require("%ui/hud/menus/components/inventoryItem.nut")
+let { backpackItems, stashItems, inventoryItems, safepackItems } = require("%ui/hud/state/inventory_items_es.nut")
 let { inventoryItemClickActions } = require("%ui/hud/menus/inventoryActions.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
-let { creditsIcon } = require("%ui/mainMenu/currencyIcons.nut")
-let { slotsWithWarning, mkWarningSign, isPreparationOpened, mintEditState
-} = require("%ui/mainMenu/raid_preparation_window_state.nut")
-let { getItemPriceToShow, mkItemPrice } = require("%ui/mainMenu/market/inventoryToMarket.nut")
-let { equipment } = require("%ui/hud/state/equipment.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
+let { slotsWithWarning, mintEditState } = require("%ui/mainMenu/raid_preparation_window_state.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
+let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
+let { watchedHeroDefaultStubMeleeWeapon } = require("%ui/hud/state/watched_hero.nut")
+let { isInBattleState } = require("%ui/state/appState.nut")
 
 let curBorderColor = BtnBdSelected
 let weaponTextCurColor = TextHighlight
@@ -59,7 +60,7 @@ let weaponSlotMarks = array(4, null).apply(@(_val, idx) @(color) {
   rendObj = ROBJ_IMAGE
   image = Picture("!ui/skin#weap_slot_mark_{0}.svg:{1}:{2}:K".subst(idx, slotMarkPxSize[0], slotMarkPxSize[1]))
   color = color
-  size = [ hdpx(20), hdpx(30) ]
+  size = static [ hdpx(20), hdpx(30) ]
 } )
 
 function teamRequest(weapon){
@@ -81,7 +82,7 @@ function mkBackground(weapon, isCurrent, sf) {
   let isRelevant = Computed(function() {
     let focused_item = focusedData.get()
     return ("id" in weapon)
-      && (isItemForWeaponMod(weapon, focused_item?.weaponModItems, focused_item?.weaponModAmmo)
+      && (isItemForWeaponMod(weapon, focused_item?.allowed_items, focused_item?.weaponModAmmo)
       || isWeaponModsForItem(focused_item, weapon?.mods)
       || isItemForHolder(focused_item, weapon)
       || isAmmoForWeapon(focused_item, weapon))
@@ -105,7 +106,7 @@ function mkBorder(weapon, isCurrent, sf) {
   let isRelevant = Computed(function() {
     let focused_item = focusedData.get()
     return ("id" in weapon)
-      && (isItemForWeaponMod(weapon, focused_item?.weaponModItems, focused_item?.weaponModAmmo)
+      && (isItemForWeaponMod(weapon, focused_item?.allowed_items, focused_item?.weaponModAmmo)
       || isWeaponModsForItem(focused_item, weapon?.mods)
       || isItemForHolder(focused_item, weapon)
       || isAmmoForWeapon(focused_item, weapon))
@@ -162,13 +163,17 @@ function getFittingAmmo(weapon, canDropAmmoToWeapon) {
 
 
 function mkBuiltInAmmo(weapon, can_drop_dragged_item_to_ammo_slot_cb, on_drop_item_in_ammo_slot_cb) {
+  let isFaked = weapon?.ammo.fakeAmmo
+
   function onDropInInventory(_data, list_type) {
+    if (isFaked)
+      return
     unload_ammo_from_gun_to_inventory(weapon.currentWeaponSlotName, getInventoryEidByListType(list_type))
   }
 
   let isCountKnown = weapon?.curAmmoCountKnown ?? true
 
-  let dropData = weapon?.ammo.__merge({
+  let dropData = mkFakeItem(weapon?.gunBoxedAmmoTemplate, {
     eid = ecs.INVALID_ENTITY_ID
     owner = weapon?.owner ?? ecs.INVALID_ENTITY_ID
     weaponEid = weapon?.eid ?? ecs.INVALID_ENTITY_ID
@@ -188,11 +193,11 @@ function mkBuiltInAmmo(weapon, can_drop_dragged_item_to_ammo_slot_cb, on_drop_it
 
   return mkWeaponModWidget({
     slotData = dropData
-    dropData = (weapon?.curAmmo ?? 0) > 0 ? dropData : null,
-    image = inventoryItemImage(weapon.ammo, weaponModIconParams),
+    dropData = (weapon?.curAmmo ?? 0) > 0 && !isFaked ? dropData : null,
+    image = inventoryItemImage(dropData, weaponModIconParams),
     canDropDragged = @(item) can_drop_dragged_item_to_ammo_slot_cb(item, weapon),
     onDrop = @(item) on_drop_item_in_ammo_slot_cb(item, weapon),
-    text = "{0}/{1}".subst(curAmmoText, weapon.usesBoxedAmmo ? weapon.maxAmmo : weapon.maxMagazineAmmo),
+    text = isFaked ? null : "{0}/{1}".subst(curAmmoText, weapon.usesBoxedAmmo ? weapon.maxAmmo : 0),
     getFittingMods = @() getFittingAmmo(weapon, can_drop_dragged_item_to_ammo_slot_cb)
     isUnloadable = (weapon.curAmmo > 0 || !weapon.usesBoxedAmmo) && weapon?.isUnloadable,
     weapon
@@ -249,6 +254,8 @@ function mkMods(weapon, isCurrent, can_drop_dragged_item_to_mod_slot_cb, on_drop
   foreach (modSlotName_, modSlot_ in weapon?.mods ?? {}) {
     let modSlotName = modSlotName_
     let modSlot = modSlot_
+    if ((modSlot?.lockedInRaid ?? false) && !isOnPlayerBase.get())
+      continue
     let dropData = isActionForbided || (modSlot.itemPropsId == 0) ? null : modSlot.__update({
       canDrop=true
       
@@ -266,13 +273,14 @@ function mkMods(weapon, isCurrent, can_drop_dragged_item_to_mod_slot_cb, on_drop
       image=inventoryItemImage(modSlot, weaponModIconParams),
       canDropDragged = @(item) can_drop_dragged_item_to_mod_slot_cb?(item, weapon, modSlotName, modSlot),
       onDrop = @(item) on_drop_item_in_mod_slot_cb?(item, weapon, modSlotName, modSlot),
-      isUnloadable = (modSlot.itemPropsId ?? 0) != 0
+      isUnloadable = (modSlot?.itemPropsId ?? 0) != 0
       getFittingMods = function() {
         local res = null
         if (!mintEditState.get())
           res = getFittingMods(weapon, modSlotName, modSlot, can_drop_dragged_item_to_mod_slot_cb)
         else {
-          res = getNexusStashItems(stashItems.get(), playerProfileOpenedRecipes.get(), allCraftRecipes.get(),
+          let openedRecipes = allCraftRecipes.get().filter(@(v) v?.isOpened)
+          res = getNexusStashItemsForChocolateMenu(dropData, stashItems.get(), openedRecipes, allCraftRecipes.get(),
             marketItems.get(), playerStats.get(), ["weapon_mods", "ammunition"])
               .filter(@(v) can_drop_dragged_item_to_mod_slot_cb?(v, weapon, modSlotName, modSlot))
               .sort(inventoryItemSorting)
@@ -331,24 +339,21 @@ function getFittingItems(weapon, canDropToWeaponSlot) {
   return fittingItems
 }
 
-let mkPriceBlock = @(weapon) function() {
-  let watch = isPreparationOpened
-  if (!isPreparationOpened.get())
-    return { watch }
-  let price = getItemPriceToShow(weapon) ?? 0
-  if (price <= 0)
-    return { watch }
+function mkPriceBlock(weapon) {
+  let priceData = getItemPriceToShow(weapon)
+  if ((priceData?.price ?? 0) <= 0)
+    return null
+
   return {
-    watch
     hplace = ALIGN_RIGHT
     padding = hdpx(1)
-    children = mkItemPrice(price, { padding = [hdpx(2), hdpx(4)] }.__update(body_txt) )
+    children = mkItemPrice(priceData, { padding = static [hdpx(2), hdpx(4)] }.__update(body_txt) )
   }
 }
 
 function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
   let isCurrent = (weapon?.isEquiping ?? false ) || ((weapon?.isCurrent ?? false) && !(weapon?.isHolstering ?? false))
-  let isRemovableWeapon = unremovableSlots?.value?.indexof(weapon.currentWeaponSlotName) == null && !weapon?.isDefaultStubItem
+  let isRemovableWeapon = unremovableSlots?.get()?.indexof(weapon.currentWeaponSlotName) == null && !weapon?.isDefaultStubItem
   let controllable = isRemovableWeapon
     && weapon?.isWeapon
     && !isSpectator.get()
@@ -360,15 +365,20 @@ function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
 
   let stateFlags = Watched(0)
   function onElemState(sf) {
-    stateFlags(sf)
+    stateFlags.set(sf)
   }
   function onHover(on){
-    requestData.update(on ? teamRequest(weapon) : "")
-    requestItemData.update(on ? weapon.name : "")
+    requestData.set(on ? teamRequest(weapon) : "")
+    requestItemData.set(on ? weapon.name : "")
     if (isRemovableWeapon && weapon?.isWeapon)
       focusedData.set(on ? weapon.__merge({canDrop=true}) : null)
     else
-      focusedData.set(on ? {slot = weapon.currentWeaponSlotName} : null)
+      focusedData.set(on ? {
+        currentWeaponSlotName = weapon.currentWeaponSlotName
+        allowed_items = weapon?.allowed_items
+        itemTemplate =  weapon?.itemTemplate
+        isDefaultStubItem = weapon?.isDefaultStubItem
+      } : null)
     setTooltip(on && weapon?.isWeapon ? buildInventoryItemTooltip(weapon) : null)
     let pcHotkeysHints = canDropToWeaponSlot == null && onDropToWeaponSlot == null ? null
       : hoverPcHotkeysPresentation?[WEAPON.name](weapon)
@@ -376,6 +386,10 @@ function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
   }
   let { rmbAction = null, lmbAltAction = null } = inventoryItemClickActions?[WEAPON.name]
   function onClick(event) {
+    if (mutationForbidenDueToInQueueState.get()) {
+      return
+    }
+
     if (canDropToWeaponSlot == null && onDropToWeaponSlot == null)
       return
     if (event.button == 1 && !isSpectator.get())
@@ -391,20 +405,18 @@ function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
         if (!mintEditState.get())
           fittingItems = getFittingItems(weapon, canDropToWeaponSlot)
         else {
-          fittingItems = getNexusStashItems(stashItems.get(), playerProfileOpenedRecipes.get(), allCraftRecipes.get(),
+          let openedRecipes = allCraftRecipes.get().filter(@(v) v?.isOpened)
+          fittingItems = getNexusStashItemsForChocolateMenu(weapon, stashItems.get(), openedRecipes, allCraftRecipes.get(),
             marketItems.get(), playerStats.get(), ["weapons"])
               .filter(@(v) canDropToWeaponSlot(v, weapon))
               .sort(inventoryItemSorting)
         }
         local defaultItem = null
-        if (weapon?.validWeaponSlots.contains("melee")) {
-          let suitTpl = equipment.get()?["chronogene_primary_1"].itemTemplate
-          if (suitTpl != null) {
-            let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(suitTpl)
-            let defWeapon = template?.getCompValNullable("equipment__setDefaultStubMeleeTemplate")
-            if (defWeapon != null)
-              defaultItem = mkFakeItem(defWeapon)
-          }
+        if (weapon?.currentWeaponSlotName == "melee" && !isInBattleState.get() && !mintEditState.get()) {
+          local defWeaponTemplateName = watchedHeroDefaultStubMeleeWeapon.get()
+
+          if (defWeaponTemplateName != null)
+            defaultItem = mkFakeItem(defWeaponTemplateName)
         }
         openChocolateWnd({
           event,
@@ -423,15 +435,21 @@ function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
   let slotName = "weaponSlotKey" in weapon ? loc($"weaponSlot/{weapon.weaponSlotKey}") : weapon.name
   let needShowPrice = (weapon?.noSuitableItemForPresetFoundCount ?? 0) > 0
 
-  return @(content) {
+  return @(content) @() {
+    watch = mutationForbidenDueToInQueueState
+
     size = [flex(), weaponSize[1]]
     key = weapon?.eid ?? ecs.INVALID_ENTITY_ID
 
     onElemState
     transform = {}
     behavior = controllable ? Behaviors.DragAndDrop : Behaviors.Button
-    dropData = controllable ? weapon.__merge({canDrop = true}) : null
-    onDragMode = controllable ? @(on, item) draggedData.update(on ? item : null) : null
+    dropData = controllable && !mutationForbidenDueToInQueueState.get() ? weapon.__merge({canDrop = true}) : null
+    onDragMode = !controllable ? null : function(on, item) {
+      draggedData.set(on ? item : null)
+      if (on)
+        sound_play("ui_sounds/inventory_item_take")
+    }
     onClick
     onHover
     children = [
@@ -440,8 +458,8 @@ function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
         hplace = ALIGN_RIGHT
         pos = [-hdpx(5), -hdpx(58)]
       })
-      weapon?.isCorrupted ? corruptedWeaponImageBackground.__merge(hasAmmo ? {margin = [0,0,0, hdpx(76)]} : {}) : null
-      iconWeapon(weapon).__update({
+      weapon?.isCorrupted ? corruptedWeaponImageBackground.__merge(hasAmmo ? {margin = static [0,0,0, hdpx(76)]} : {}) : null
+      iconWeapon(weapon).__merge({
         pos=[ -hdpx(10), hdpx(10) ]
         opacity = weapon?.noSuitableItemForPresetFoundCount != null ? 0.5 : 1
       })
@@ -454,7 +472,7 @@ function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
   }
 }
 
-function mkWeaponWidget(mainFrame, ammoWidgets, afterAmmoWidget, modsWidgets, modsData, additionalChildrens=null, weaponSlot = null) {
+function mkWeaponWidget(weapon, mainFrame, ammoWidgets, afterAmmoWidget, modsWidgets, modsData, additionalChildrens=null, weaponSlot = null) {
   let widgetRows = @(v) {
     minHeight = itemHeight
     flow = FLOW_HORIZONTAL
@@ -481,6 +499,7 @@ function mkWeaponWidget(mainFrame, ammoWidgets, afterAmmoWidget, modsWidgets, mo
   let content = {
     size = flex()
     children = [
+      nexusPointsCostComp(weapon?.nexusCost)
       mods
       additionalChildrens
     ]
@@ -509,7 +528,7 @@ function weaponWidget(weapon, canDropToWeaponSlot, onDropToWeaponSlot,
     children = mkBulletInBarrelButton(weapon)
   }
 
-  return mkWeaponWidget(mainFrame, ammo, bulletInBarrel, mods, modsData, firing, weapon?.currentWeaponSlotName)
+  return mkWeaponWidget(weapon, mainFrame, ammo, bulletInBarrel, mods, modsData, firing, weapon?.currentWeaponSlotName)
 }
 
 
@@ -527,10 +546,10 @@ let disabledWeaponWidget = @(slot, slotIdx) {
       hplace = ALIGN_RIGHT
       valign = ALIGN_CENTER
       children = [
-        weapNameWithIdx(slotIdx, slot)
+        weapNameWithIdx(slotIdx, $"weaponSlot/{slot}")
         {
           rendObj = ROBJ_SOLID
-          size = [flex(), hdpx(2)]
+          size = static [flex(), hdpx(2)]
           pos = [0, hdpx(1)]
           color = RedWarningColor
         }

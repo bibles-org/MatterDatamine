@@ -11,7 +11,7 @@ const BLK_MAX_LINES = 2048
 let tostringfuncTbl = [
   {
     compare = @(val) val instanceof Watched
-    tostring = @(val) "Watched: {0}".subst(tostring_r(val.value,{maxdeeplevel = 3, splitlines=false}))
+    tostring = @(val) "Watched: {0}".subst(tostring_r(val.get(),{maxdeeplevel = 3, splitlines=false}))
   }
   {
     compare = @(val) type(val)=="instance" && "formatAsString" in val

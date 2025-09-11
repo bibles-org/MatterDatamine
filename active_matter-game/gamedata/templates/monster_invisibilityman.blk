@@ -90,7 +90,6 @@ monster_invis_ability{
       cooldown:r=15
       lockWhileSwimming:b=yes
       lockInVehicle:b=yes
-      isNoWeaponMode:b=yes
 
       "stages:array"{
         "in_stage:object"{
@@ -206,7 +205,6 @@ monster_pushing_ability{
       cooldown:r=15
       lockWhileSwimming:b=yes
       lockInVehicle:b=yes
-      isNoWeaponMode:b=yes
 
       "stages:array"{
         "in_stage:object"{
@@ -275,14 +273,10 @@ monster_trapping_ability{
       actionHandleName:t="MonsterInvisibleman.Trap"
       show_in_ui:b=yes
       cooldown:r=0
-      lockWhileSwimming:b=yes
-      lockInVehicle:b=yes
-      isNoWeaponMode:b=yes
       activeMatterPrice:i=0
       icon:t="uiskin/ability/blink.svg"
       lockWhileSwimming:b=yes
       lockInVehicle:b=yes
-      isNoWeaponMode:b=no
 
       "stages:array"{
         "trapping:object"{
@@ -372,14 +366,10 @@ am_mindcontrolled_invisible_man_abilities{
       actionHandleName:t="MonsterInvisibleman.Invis"
       show_in_ui:b=yes
       cooldown:r=0
-      lockWhileSwimming:b=yes
-      lockInVehicle:b=yes
-      isNoWeaponMode:b=yes
       activeMatterPrice:i=0
       icon:t="uiskin/ability/blink.svg"
       lockWhileSwimming:b=yes
       lockInVehicle:b=yes
-      isNoWeaponMode:b=no
 
       "stages:array"{
         "in_stage:object"{
@@ -444,7 +434,6 @@ am_mindcontrolled_invisible_man_abilities{
       cooldown:r=1
       lockWhileSwimming:b=yes
       lockInVehicle:b=yes
-      isNoWeaponMode:b=yes
       icon:t="uiskin/ability/blink.svg"
 
       "stages:array"{
@@ -507,14 +496,10 @@ am_mindcontrolled_invisible_man_abilities{
       actionHandleName:t="MonsterInvisibleman.Trap"
       show_in_ui:b=yes
       cooldown:r=1
-      lockWhileSwimming:b=yes
-      lockInVehicle:b=yes
-      isNoWeaponMode:b=yes
       activeMatterPrice:i=0
       icon:t="uiskin/ability/blink.svg"
       lockWhileSwimming:b=yes
       lockInVehicle:b=yes
-      isNoWeaponMode:b=no
 
       "stages:array"{
         "monster_trap_planting:object"{
@@ -555,6 +540,7 @@ invisible_monster_effect{
 
   "game_effect__destroyAllItems:tag"{}
   "invisible_monster_effect:tag"{}
+  "monster_effect:tag"{}
   "game_effect__colorGrading:object"{
     colorGain:p4=1, 1, 1, 1
     colorGamma:p4=1, 1, 1, 1.1
@@ -593,6 +579,7 @@ monstrified_invisible_man{
   item__name:t="items/suit_militant_changed_item"
   suit__raidIcon:t="!ui/uiskin/raid_info/distorted.svg"
   item__desc:t="items/suit_militant_changed_item/desc"
+  teammate_revive__effectTemplateName:t="teammate_revive_effect_simple"
   human_inventory__canHeal:b=no
   human_inventory__canLoadCharges:b=no
   melee_attack_to_hands_aim_punch__strength:r=1.5
@@ -602,8 +589,6 @@ monstrified_invisible_man{
   melee_attack_to_head_confusion__speed:r=0.2
   melee_attack_to_head__extraDamage:r=0.2
   agent_dangers__tag:t="changed_human"
-  am_storage__value:i=0
-  am_storage__maxValue:i=300
   collres__res:t="distorted_player_collision"
   animchar__res:t="distorted_player_char"
   animchar__actWhenInvisible:b=yes
@@ -641,8 +626,8 @@ monstrified_invisible_man{
   "update_default_stub_melee_on_appear:tag"{}
   "ignore_initial_items:tag"{}
   "human_equipment__slots:object"{
-    "cortical_vault:eid"{}
     "chronogene_primary_1:eid"{}
+    "cortical_vault:eid"{}
   }
 
   "effect_enable_action_sets__actionSetList:list<t>"{
@@ -791,7 +776,7 @@ monster_invisibleman_artifact_item{
   item__useTime:r=1
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0

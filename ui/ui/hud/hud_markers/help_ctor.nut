@@ -2,6 +2,8 @@ from "%ui/ui_library.nut" import *
 
 let { watchedHeroEid } = require("%ui/hud/state/watched_hero.nut")
 
+#allow-auto-freeze
+
 
 
 let textDefColor = Color(255, 255, 255)
@@ -16,7 +18,7 @@ let make_help_text = @(text) {
   rendObj = ROBJ_TEXTAREA
   text = loc(text)
   color = textDefColor
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   behavior = Behaviors.TextArea
   halign = ALIGN_LEFT
   valign = ALIGN_CENTER
@@ -28,7 +30,7 @@ let make_help_title = @(text) {
   color = textDefColor
   halign = ALIGN_CENTER
   valign = ALIGN_CENTER
-  padding = [hdpx(4), hdpx(4)]
+  padding = hdpx(4)
 }
 
 let help_title_icon = {

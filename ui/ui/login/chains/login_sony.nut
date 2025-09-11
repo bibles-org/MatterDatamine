@@ -1,13 +1,14 @@
+import "%ui/login/login_cb.nut" as loginCb
+import "%ui/login/stages/auth_helpers.nut" as ah
+import "auth.psn" as auth
+import "sony.user" as psnUser
+from "eventbus" import eventbus_subscribe_onehit
+from "dng.sony" import get_auth_data_async, check_age_restrictions, check_parental_control, is_new_package_available
+
 from "%ui/ui_library.nut" import *
 
-let loginCb = require("%ui/login/login_cb.nut")
-let ah = require("%ui/login/stages/auth_helpers.nut")
-let auth = require("auth.psn")
-let psnUser = require("sony.user")
 let {sendPsPlusStatusToUserstatServer = null} = null 
-let {voiceChatEnabled} = require("%ui/voiceChat/voiceChatGlobalState.nut")
-let { eventbus_subscribe_onehit } = require("eventbus")
-let {get_auth_data_async, check_age_restrictions, check_parental_control, is_new_package_available} = require("dng.sony")
+let { voiceChatEnabled } = require("%ui/voiceChat/voiceChatGlobalState.nut")
 
 function login_psn(state, cb) {
   eventbus_subscribe_onehit("login_psn", ah.status_cb(cb))
@@ -47,7 +48,7 @@ function check_parental_control_stage(cb) {
   eventbus_subscribe_onehit("dng.sony.parental_control", function(restrictions) {
     if (restrictions.chat) {
       log("VoiceChat disabled due to parental control restrictions")
-      voiceChatEnabled(false)
+      voiceChatEnabled.set(false)
     }
     cb({})
   })
@@ -68,7 +69,7 @@ function onSuccess(state) {
   send_ps_plus_status(state)
 }
 
-return {
+return freeze({
   stages = [
     { id = "check_age", action = @(_state, cb) check_age_restrictions_stage(cb), actionOnReload = @(_state, _cb) null },
     { id = "parental_control", action = @(_state, cb) check_parental_control_stage(cb), actionOnReload = @(_state, _cb) null },
@@ -84,4 +85,4 @@ return {
   ]
   onSuccess = onSuccess
   onInterrupt = loginCb.onInterrupt
-}
+})

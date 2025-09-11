@@ -1,0 +1,137 @@
+entity{
+  _template:t="used_game_objects_registry"
+  used_game_objects__type:t="loot_box"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box_shop"
+  transform:m=[[-12.3823, 0, 14.5259] [0, 4.34253, 0] [-18.3411, 0, -15.6345] [-442.916, 52.174, -1093.63]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="dogorsk_shop_1_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box_shop"
+  transform:m=[[-18.5119, 0, 4.65131] [0, 4.34253, 0] [-5.87296, 0, -23.3739] [-718.194, 16.4444, -958.648]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="dogorsk_shop_2_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="military_container_loot_box"
+  transform:m=[[1.96729, 0, -11.8436] [0, 9.25744, 0] [46.8538, -0, 7.78269] [-544.069, 42.5573, -764.983]]
+  loot_generator__referenceGridCellsNum:i=-1
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="dogorsk_pve_hangar_29_loot_preset"
+}
+
+entity{
+  _template:t="box_loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="military_container_loot_box"
+  transform:m=[[11.8209, 0, -2.09965] [0, 9.25744, 0] [8.3063, -0, 46.7638] [-416.969, 88.2807, -1320.37]]
+  loot_generator__referenceGridCellsNum:i=-1
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="dogorsk_pve_hangar_35_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_box"
+  loot_generator__lootPreset:t="dogorsk_pve_overall_zone_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_indoor_shelves"
+  loot_generator__lootPreset:t="dogorsk_loot_indoor_shelves_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_indoor_table"
+  loot_generator__lootPreset:t="dogorsk_loot_indoor_table_loot_preset"
+}
+
+entity{
+  _template:t="loot_generator_by_loot_preset"
+  loot_generator__gameObjType:t="loot_indoor_floor"
+  loot_generator__lootPreset:t="dogorsk_loot_indoor_floor_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="cafe_heal"
+  transform:m=[[1000, 0, 0] [0, 1000, 0] [0, 0, 1000] [-340, 0, -980]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="dogorsk_cafe_heal_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="cinema_storage"
+  transform:m=[[-6.15676, 0, -7.14261] [0, 4.3223, 0] [12.8071, 0, -11.0394] [-173.026, 39.1496, -1004.14]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__lootPreset:t="dogorsk_cinema_storage_loot_preset"
+}
+
+entity{
+  _template:t="custom_game_objects_loot_generator_by_loot_preset"
+  loot_generator__customGameObjName:t="water_tower"
+  transform:m=[[68.5744, 0, -12.1804] [0, 48.4364, 0] [14.8867, -0, 83.8111] [-457.6, 109.272, -1225.52]]
+  loot_generator__allowVolumesOverflow:b=no
+  loot_generator__fixedTm:b=yes
+  loot_generator__lootPreset:t="dogorsk_water_tower_loot_preset"
+}
+
+entity{
+  _template:t="ks_23_gun+item_in_world"
+  transform:m=[[4.49006e-08, 0.999938, 0.0110932] [1, -4.4796e-08, -9.67705e-09] [-9.17952e-09, 0.0110932, -0.999938] [-344.782, 181.279, -1293.14]]
+}
+
+entity{
+  _template:t="b7_binoculars_item+item_in_world"
+  transform:m=[[0.460962, -0.0665911, -0.884918] [0.0750772, -0.990679, 0.113658] [-0.884238, -0.118829, -0.451666] [-343.801, 181.34, -1293.47]]
+}
+
+entity{
+  _template:t="svd_gun+item_in_world"
+  transform:m=[[-4.37114e-08, -1, 0] [0.595283, -2.60206e-08, -0.803516] [0.803516, -3.51228e-08, 0.595283] [-164.044, 38.0256, -1008.12]]
+}
+
+entity{
+  _template:t="military_long_range_weapons_t2_lootable_rendinst"
+  transform:m=[[-0.424738, 0.648223, 0.631985] [0.617215, 0.718034, -0.321671] [-0.662302, 0.253445, -0.705069] [-529.807, 86.5108, -863.364]]
+}
+
+entity{
+  _template:t="military_long_range_weapons_t2_lootable_rendinst"
+  transform:m=[[-0.276953, -0.259665, 0.925133] [0.721789, 0.579327, 0.378683] [-0.634285, 0.772628, 0.026977] [-529.826, 86.5879, -861.547]]
+}
+
+entity{
+  _template:t="military_long_range_weapons_t2_lootable_rendinst"
+  transform:m=[[-0.824991, 0.392896, 0.40623] [0.554251, 0.702948, 0.445724] [-0.110436, 0.592872, -0.797688] [-531.263, 84.8601, -858.522]]
+}
+
+entity{
+  _template:t="military_long_range_weapons_t2_lootable_rendinst"
+  transform:m=[[0.356358, -0.0479412, -0.933119] [-0.48457, 0.844397, -0.22844] [0.798875, 0.533568, 0.277677] [-362.415, 82.8022, -810.709]]
+}
+
+entity{
+  _template:t="military_long_range_weapons_t2_lootable_rendinst"
+  transform:m=[[0.357275, -0.0473285, -0.932799] [-0.48457, 0.844397, -0.22844] [0.798465, 0.533623, 0.278748] [-358.607, 85.6578, -808.047]]
+}
+
+entity{
+  _template:t="military_equipment_t2_lootable_rendinst"
+  transform:m=[[-0.845974, -0.385932, 0.367945] [-0.48457, 0.844397, -0.22844] [-0.222529, -0.37155, -0.90135] [-362.429, 84.5769, -803.936]]
+}
+
+entity{
+  _template:t="military_medical_t2_lootable_rendinst"
+  transform:m=[[0.360995, 0.430908, 0.827043] [-0.48457, 0.844397, -0.22844] [-0.79679, -0.318294, 0.513629] [-362.179, 81.8305, -814.618]]
+}

@@ -2,12 +2,28 @@ african_commercial_door_2000x2500_d_l:t="random_state_l_door_90+wooden_rotating_
 african_commercial_door_2000x2500_d_r:t="random_state_r_door_90+wooden_rotating_door_sound"
 african_commercial_door_2000x2500_e_l:t="random_state_l_door_90+wooden_rotating_door_sound"
 african_commercial_door_2000x2500_e_r:t="random_state_r_door_90+wooden_rotating_door_sound"
-afr_command_office_door_metal_a:t="random_state_l_door_90+wooden_rotating_door_sound"
-african_hotel_a_fire_exit_door:t="random_state_l_door_90+wooden_rotating_door_sound"
-african_watchtower_concrete_a_door_1100x1900_a:t="random_state_l_door_90+wooden_rotating_door_sound"
+afr_command_office_door_metal_a:t="random_state_l_door_90+bunker_rotating_door_sound"
+african_hotel_a_fire_exit_door:t="random_state_r_door_90+bunker_rotating_door_sound"
+african_watchtower_concrete_a_door_1100x1900_a:t="random_state_l_door_90+bunker_rotating_door_sound"
+dc_control_room_door_a:t="bunker_closed_door_left+bunker_rotating_door_sound"
+dc_bunker_door_d:t="bunker_closed_door_left+bunker_rotating_door_sound"
+dc_generator_room_door_a:t="bunker_closed_door_left+bunker_rotating_door_sound"
+dc_roof_door_b:t="bunker_closed_door_left+bunker_rotating_door_sound"
+dc_decor_lattice_d:t="bunker_closed_door_left+bunker_rotating_door_sound"
 afr_airport_hangar_a_gate_a_l:t="afr_bunker_closed_door_left+bunker_rotating_door_sound"
 afr_airport_hangar_a_gate_a_r:t="afr_bunker_closed_door_right+bunker_rotating_door_sound"
 afr_airport_hangar_a_door_1000:t="afr_bunker_closed_door_right+bunker_rotating_door_sound"
+afr_airport_hangar_door_a_r:t="afr_bunker_closed_door_right+bunker_rotating_door_sound"
+afr_airport_hangar_door_a_l:t="afr_bunker_closed_door_left+bunker_rotating_door_sound"
+african_cinema_b_door_left_basement:t="random_state_l_door_90+bunker_rotating_door_sound"
+african_cinema_b_door_right_basement:t="random_state_r_door_90+bunker_rotating_door_sound"
+african_cinema_b_door_type_a_left:t="random_state_l_door_90+wooden_rotating_door_sound"
+african_cinema_b_door_type_a_right:t="random_state_r_door_90+wooden_rotating_door_sound"
+african_cinema_b_door_type_b_left:t="random_state_l_door_90+wooden_rotating_door_sound"
+african_cinema_b_door_type_b_right:t="random_state_r_door_90+wooden_rotating_door_sound"
+african_cinema_b_door_type_c_left:t="random_state_l_door_90+wooden_rotating_door_sound"
+african_cinema_b_door_type_c_right:t="random_state_r_door_90+wooden_rotating_door_sound"
+african_cinema_b_door_type_d_right:t="random_state_r_door_90+wooden_rotating_door_sound"
 african_door_1400x2400_d:t="random_state_l_door_90+wooden_rotating_door_sound"
 african_door_1400x2400_f:t="random_state_l_door_90+wooden_rotating_door_sound"
 african_door_1400x2400_g:t="random_state_l_door_90+wooden_rotating_door_sound"
@@ -46,6 +62,8 @@ african_mud_hut_window_c_shutter_a_l:t="random_state_left_window+wooden_rotating
 african_mud_hut_window_c_shutter_a_r:t="random_state_right_window+wooden_rotating_window_sound"
 african_village_house_window_a_shutter_a_l:t="random_state_left_window+wooden_rotating_window_sound"
 african_village_house_window_a_shutter_a_r:t="random_state_right_window+wooden_rotating_window_sound"
+african_wooden_window_1000x1500_a_l:t="random_state_left_window+wooden_rotating_window_sound"
+african_wooden_window_1000x1500_a_r:t="random_state_right_window+wooden_rotating_window_sound"
 african_window_wood_1000x1500_a_l:t="random_state_left_window+wooden_rotating_window_sound"
 african_window_wood_1000x1500_b_l:t="random_state_left_window+wooden_rotating_window_sound"
 african_window_wood_1000x1500_c_l:t="random_state_left_window+wooden_rotating_window_sound"
@@ -99,13 +117,33 @@ afr_command_office_door_metal_a{
 }
 
 african_hotel_a_fire_exit_door{
-  rendinst__mass:r=140
+  rendinst__mass:r=60
   door_operations__ajarAngleKoef:r=0.425
 }
 
 african_watchtower_concrete_a_door_1100x1900_a{
   rendinst__mass:r=90
   door_operations__ajarAngleKoef:r=0.425
+}
+
+dc_control_room_door_a{
+  rendinst__mass:r=120
+}
+
+dc_bunker_door_d{
+  rendinst__mass:r=120
+}
+
+dc_generator_room_door_a{
+  rendinst__mass:r=120
+}
+
+dc_roof_door_b{
+  rendinst__mass:r=70
+}
+
+dc_decor_lattice_d{
+  rendinst__mass:r=20
 }
 
 afr_airport_hangar_a_gate_a_l{
@@ -118,6 +156,59 @@ afr_airport_hangar_a_gate_a_r{
 
 afr_airport_hangar_a_door_1000{
   rendinst__mass:r=50
+}
+
+afr_airport_hangar_door_a_r{
+  rendinst__mass:r=120
+}
+
+afr_airport_hangar_door_a_l{
+  rendinst__mass:r=120
+}
+
+african_cinema_b_door_left_basement{
+  rendinst__mass:r=50
+  door_operations__ajarAngleKoef:r=0.425
+}
+
+african_cinema_b_door_right_basement{
+  rendinst__mass:r=50
+  door_operations__ajarAngleKoef:r=0.425
+}
+
+african_cinema_b_door_type_a_left{
+  rendinst__mass:r=75
+  door_operations__ajarAngleKoef:r=0.425
+}
+
+african_cinema_b_door_type_a_right{
+  rendinst__mass:r=75
+  door_operations__ajarAngleKoef:r=0.425
+}
+
+african_cinema_b_door_type_b_left{
+  rendinst__mass:r=60
+  door_operations__ajarAngleKoef:r=0.425
+}
+
+african_cinema_b_door_type_b_right{
+  rendinst__mass:r=60
+  door_operations__ajarAngleKoef:r=0.425
+}
+
+african_cinema_b_door_type_c_left{
+  rendinst__mass:r=70
+  door_operations__ajarAngleKoef:r=0.425
+}
+
+african_cinema_b_door_type_c_right{
+  rendinst__mass:r=60
+  door_operations__ajarAngleKoef:r=0.425
+}
+
+african_cinema_b_door_type_d_right{
+  rendinst__mass:r=60
+  door_operations__ajarAngleKoef:r=0.425
 }
 
 african_door_1400x2400_d{
@@ -171,17 +262,17 @@ african_door_1400x2400_c{
 }
 
 african_hotel_door_wooden_a{
-  rendinst__mass:r=90
+  rendinst__mass:r=60
   door_operations__ajarAngleKoef:r=0.425
 }
 
 african_hotel_door_wooden_b{
-  rendinst__mass:r=90
+  rendinst__mass:r=60
   door_operations__ajarAngleKoef:r=0.425
 }
 
 african_hotel_door_wooden_c{
-  rendinst__mass:r=90
+  rendinst__mass:r=60
   door_operations__ajarAngleKoef:r=0.425
 }
 
@@ -301,6 +392,14 @@ african_village_house_window_a_shutter_a_l{
 }
 
 african_village_house_window_a_shutter_a_r{
+  rendinst__mass:r=0
+}
+
+african_wooden_window_1000x1500_a_l{
+  rendinst__mass:r=0
+}
+
+african_wooden_window_1000x1500_a_r{
   rendinst__mass:r=0
 }
 

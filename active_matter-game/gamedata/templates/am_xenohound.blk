@@ -18,6 +18,33 @@ xenohound_event{
   "xenohound_event__targetEid:eid"{}
 }
 
+xenohound_event_big{
+  _use:t="xenohound_event"
+  xenohound_event__spawnsPerPlayer:ip2=12, 16
+  xenohound_event__spawnsPerPortal:ip2=3, 5
+}
+
+xenohound_event_horde{
+  _use:t="xenohound_event"
+  xenohound_event__portalTemplate:t="xenohound_portal_horde"
+  xenohound_event__minDstBetweenPortalsSq:r=100
+  xenohound_event__radius:p2=25, 35
+  xenohound_event__interval:r=1
+  xenohound_event__spawnsPerPlayer:ip2=12, 15
+  xenohound_event__spawnsPerPortal:ip2=4, 5
+}
+
+xenohound_event_mimic_horde{
+  _use:t="xenohound_event"
+  xenohound_event__portalTemplate:t="xenohound_portal_mimic_horde"
+  xenohound_event__xenoTemplate:t="am_mimic"
+  xenohound_event__minDstBetweenPortalsSq:r=100
+  xenohound_event__radius:p2=15, 20
+  xenohound_event__interval:r=1
+  xenohound_event__spawnsPerPlayer:ip2=6, 8
+  xenohound_event__spawnsPerPortal:ip2=3, 4
+}
+
 xenohound_scale_on_appear{
   xenohound_scale_on_appear__scaleTime:r=1
   xenohound_scale_on_appear__finishAt:r=-1
@@ -51,7 +78,7 @@ xenohound_teleport_trap{
   loud_noise__noiseValue:r=30
 
   "trigger_trap__ignoreMaskItems:list<t>"{
-    i:t="HOUND"
+    i:t="MONSTER"
   }
 
   "trigger_trap__ignoreMask:u32"{
@@ -99,6 +126,16 @@ xenohound_portal{
   "xenohound_portal__spawnlings:list<eid>"{}
 }
 
+xenohound_portal_horde{
+  _use:t="xenohound_portal"
+  xenohound_portal__spawnCooldown:p2=0.2, 0.6
+}
+
+xenohound_portal_mimic_horde{
+  _use:t="xenohound_portal"
+  xenohound_portal__spawnCooldown:p2=0.2, 0.6
+}
+
 xenohound_creature{
   _use:t="am_navmesh_creature_base"
   _use:t="navmesh_aligned_phys_base"
@@ -113,7 +150,7 @@ xenohound_creature{
   _use:t="xenohound_anim_state"
   _use:t="xenohound_dm"
   _use:t="xenohound_actions"
-  _use:t="net_ragdoll"
+  _use:t="lootable_net_ragdoll"
   _use:t="nphys_pushable"
   _use:t="agent_switchable_collision"
   _use:t="movable_entity_bound_area"
@@ -136,6 +173,7 @@ xenohound_creature{
   material:t="changedFlesh"
   collres__centerNode:t="Bip01 Pelvis"
   agent_switchable_collision__collisionTemplate:t="xenohound_collision"
+  action__operateDoor:t=""
   navmesh_phys__hitTagPower:r=0.3
   navmesh_phys__hitTagDuration:r=0.6
   navmesh_phys__rndWalkSpeed:p2=4.5, 5.5
@@ -150,15 +188,20 @@ xenohound_creature{
     i:t="HOUND"
   }
 
+  _group{
+    _tags:t="server"
+    net_ragdoll__physObjTemplate:t="xenohound_ragdoll_physobj"
+  }
+
   animchar_fast_phys{
     _tags:t="gameClient"
   }
 
   anim_phys{}
   "xenohound:tag"{}
+  "limbs_biter:tag"{}
   "kill_tracking__taggedPlayers:object"{}
   "grid_obj__updateAlways:tag"{}
-  "human_operate_door_action__noAnimation:tag"{}
   "spawnling__parentEid:eid"{}
   projectile_impulse{
     _tags:t="gameClient"
@@ -171,20 +214,54 @@ xenohound_creature{
     projectile_impulse__maxOmega:r=3
     _tags:t="gameClient"
   }
+}
 
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="hellhound_remains_item"
-      dropChance:r=1
-      dropHeight:r=1
-    }
+xenohound_ragdoll_physobj{
+  _use:t="lootable_ragdoll_phys_obj_with_loot_preset"
+  item__setCustomUsePrompt:t="monsterCorpse/search"
+  loot_drop_system__lootPreset:t="hellhound_death_loot_preset"
+  human_inventory__maxVolume:i=100
+}
 
-    "loot:object"{
-      itemTemplate:t="hellhound_remains_pristine_item"
-      dropChance:r=0.005
-      dropHeight:r=1
+hellhound_death_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="hellhound_remains_preset"
     }
   }
+}
+
+hellhound_remains_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="hellhound_remains_item"
+      weight:r=0.975
+    }
+
+    "item:object"{
+      template_name:t="hellhound_remains_pristine_item"
+      weight:r=0.025
+    }
+  }
+}
+
+xenohound_event_creature{
+  _use:t="xenohound_creature"
+  xenohound_creature__abandonOnRecallRadius:r=7
+  xenohound_creature__recallAt:r=0
+  beh_tree__node:t="xenohound_hit_n_run"
+}
+
+am_banned_pos{
+  agent_dangers__bannedRadius:r=1.5
+  agent_dangers__bannedDuration:r=60
+
+  "agent_dangers__bannedPos:list<p4>"{}
 }
 
 xenohound_ai{
@@ -201,9 +278,13 @@ xenohound_ai{
   _use:t="stuck_detector"
   _use:t="nphys_position_mapping"
   _use:t="flanking_ai"
-  xenohound_creature__pursueRadius:r=40
-  xenohound_creature__abandonOnRecallRadius:r=7
-  xenohound_creature__recallAt:r=0
+  _use:t="am_xenohound_sleep"
+  _use:t="am_banned_pos"
+  xenohound__origin:p3=0, 0, 0
+  agent_dangers__pursueRadius:r=40
+  xenouhound__abandonAttackTimer:r=0
+  xenouhound__noAgroTimer:r=0
+  xenohound__safePos:p3=0, 0, 0
   beh_tree__blackboard__enemyRadius:r=30
   beh_tree__blackboard__enemyRadiusLarge:r=60
   beh_tree__interruptDisabled:b=no
@@ -228,6 +309,7 @@ xenohound_ai{
   agent_dangers__standShootDir:p3=0, 0, 0
   agent_dangers__tag:t="xenos"
   agent_dangers__time:r=0
+  agent_dangers__keepInterestUntil:r=0
   walker_agent__standShootLocalPos:p3=1, 0.6, 0
   obstacle_avoider__avoidsDamageZones:b=no
   obstacle_avoider__escapeOffset:r=0.4
@@ -238,12 +320,13 @@ xenohound_ai{
   flanking_ai__radius:r=1.8
   flanking_ai__attackFromSide:b=no
   flanking_ai__maxCount:i=24
-  beh_tree__node:t="xenohound_hit_n_run"
+  beh_tree__node:t="xenohound_wanderer"
   team:i=1
   navmesh_phys__maxWalkSpeed:r=1
   navmesh_phys__steeringAgentSineFactor:r=0.25
   path_corridor_ai__slowDownCoef:r=40
 
+  "walker_agent__lastTaregtEid:eid"{}
   "walker_agent__prevTargetEid:eid"{}
   "attract_point__eid:eid"{}
   "beh_tree:BehaviourTree"{
@@ -253,6 +336,36 @@ xenohound_ai{
   agent_dangers{
     _tags:t="server"
   }
+}
+
+sleeping_xenohound{
+  _use:t="ignored_ai_target"
+  _use:t="ai_danger_update_disabled"
+  _use:t="sleeping_animchar_update_toggle_by_distance"
+  net__scopeDistanceSq:r=160000
+  sleeping_trap__disturbProbabilityMult:r=99999
+  sleeping_monster__template:t="sleeping_xenohound"
+  sleeping_monster__templateAdd:t=""
+  sleeping_guard__checkForHumanEnemyRadius:r=100
+  sleeping_guard__checkForAIEnemyRadius:r=50
+  sleeping_guard__updateAt:r=0
+  sleeping_guard__updateInterval:r=5
+  sleeping_guard__awakeOnHitRadius:r=30
+
+  "sleeping_trap:tag"{}
+  "sleeping_monster:tag"{}
+  "sleeping_animchar_update_toggle:tag"{}
+  "nphys__disabled:tag"{}
+  "loc_snaphots__disabled:tag"{}
+  "behTreeDisabler:tag"{}
+}
+
+am_xenohound_sleep{
+  am_xenohound__updateAt:r=0
+  am_xenohound__updateInterval:r=4
+  am_xenohound__sleepAfterNoTarget:r=30
+  am_xenohound__sleepTemplate:t="sleeping_xenohound"
+  am_xenohound__lastValidTargetStamp:r=0
 }
 
 xenohound_anim_state{
@@ -446,10 +559,8 @@ xenohound_collision{
 
 xenohound_portal_visuals{
   _use:t="optimised_visual_effect_source"
+  _use:t="traceable_spheres_static_grid_object"
   optimised_effect_source__template:t="monstrify_trap_visual_fx_controller"
-  grid_obj__gridType:t="traceable_spheres"
-
-  grid_obj{}
 }
 
 xenohound_portal_distortion_opening{
@@ -460,9 +571,18 @@ xenohound_portal_distortion_opening{
   euler_sinusoidal_oscillation__frequency:p3=2, 2, 2
 }
 
+xenohound_portal_effect_sound{
+  _use:t="sound_effect"
+
+  _group{
+    _tags:t="sound"
+    sound_effect__path:t="env_effects/nexus_device"
+  }
+}
+
 xenohound_portal_effect{
   _use:t="replicating"
-  _use:t="nexus_beacon_capture_device_effect_sound"
+  _use:t="xenohound_portal_effect_sound"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 
   "net__alwaysInScope:tag"{}

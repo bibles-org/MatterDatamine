@@ -1,12 +1,18 @@
 floating_object{
   _use:t="euler_sinusoidal_oscillation"
-  _use:t="placeable_rendinst"
+  _use:t="replicating"
+  _use:t="rendinst"
+  net__scopeDistanceSq:r=108900
   ri_extra__hasCollision:b=no
   floating_object__ellipseHeight:r=0
   floating_object__ellipseWidth:r=0
   floating_object__currentEllipseParam:r=0
   floating_object__orbitAngle:r=0
   floating_object__speed:r=0
+
+  "isRendinstDestr:tag"{
+    _tags:t="render"
+  }
 
   "floating_object__owner:eid"{}
   "net__alwaysInScope:tag"{}
@@ -164,7 +170,7 @@ bighead_wandering{
 
 bighead{
   _use:t="replicating"
-  _use:t="creatures_grid_obj"
+  _use:t="creatures_dynamic_grid_object"
   _use:t="animchar_turn_dir"
   _use:t="bighead_ai"
   _use:t="floating_objects"
@@ -173,7 +179,6 @@ bighead{
   _use:t="bighead_wandering"
   animchar__res:t="bighead_char"
   collres__res:t="bighead_collision"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   bighead__previousPosition:p3=0, 0, 0
   bighead__previousSpeed:r=0
   bighead__speedAnimgraphMultiplier:r=50

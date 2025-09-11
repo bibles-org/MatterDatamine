@@ -1,0 +1,309 @@
+import{
+  scene:t="gamedata/scenes/_america_abandoned_sounds.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_raid_mode_base_config.blk"
+}
+
+entity{
+  _template:t="monster_event_manager"
+  monster_event_manager__maxSpawnCount:i=2
+  monster_event_manager__requiredMovementDistanceSq:r=400
+  monster_event_manager__noMovementPenaltyTime:r=30
+  monster_event_manager__noAttackPenaltyTime:r=10
+  monster_event_manager__noDangerPenaltyTime:r=10
+  monster_event_manager__shootProtectionTime:r=5
+  monster_event_manager__initialSpawnTime:p2=6, 12
+  monster_event_manager__spawnTime:p2=6, 12
+  monster_event_manager__extraSpawnTimePerSpawnIndex:r=3
+
+  "monster_event_manager__spawnPatterns:array"{
+    "xenohound_event:object"{
+      spawnTempl:t="xenohound_event_big"
+      scaleParam:t="xenohound_event__scaledDifficulty"
+      targetParam:t="xenohound_event__targetEid"
+    }
+  }
+}
+
+entity{
+  _template:t="zone_weather"
+}
+
+entity{
+  _template:t="static_cam"
+  camera__active:b=yes
+  transform:m=[[0, 0, -1] [0, 1, 0] [1, 0, 0] [0, 0, 0]]
+}
+
+entity{
+  _template:t="navmesh_isle_marker"
+  navmesh_isle_marker__radius:r=560
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-521.441, 5.42851, 175.896]]
+}
+
+entity{
+  _template:t="navmesh_battle_area"
+  transform:m=[[600, 0, 0] [0, 600, 0] [0, 0, 600] [-520, 16, 292]]
+}
+
+entity{
+  _template:t="water"
+  water__strength:r=1
+  water__level:r=1.5
+  water__flowmap:b=yes
+  water__flowmap_tex:t="dalniy_island_sparse_det_water_tex_f"
+  water__flowmap_area:p4=-2048, 2048, 2048, -2048
+  water__flowmap_foam_power:r=0.5
+  water__flowmap_foam_scale:r=0.5
+  water__flowmap_foam_threshold:r=1
+  water__flowmap_foam_smoothness:r=0
+  water__flowmap_prebaked_speed:r=6
+  water__flowmap_prebaked_foam_scale:r=1
+  water__flowmap_prebaked_foam_power:r=1
+  water__flowmap_prebaked_foamfx:r=1
+  water__flowmap_min_distance:r=0.5
+  water__flowmap_max_distance:r=1
+  water__flowmap_simulated_speed:r=1
+  water__flowmap_simulated_foam_scale:r=1
+  water__flowmap_speed_depth_scale:r=0.4
+  water__flowmap_foam_speed_scale:r=1
+  water__flowmap_speed_depth_max:r=0.2
+  water__flowmap_foam_depth_max:r=1
+  water__flowmap_slope:r=2
+  water__flowmap_fading:r=1.5
+  foamfx__tile_uv_scale:r=0.271
+  foamfx__distortion_scale:r=0.5
+  foamfx__normal_scale:r=0.04
+  foamfx__pattern_gamma:r=1
+  foamfx__mask_gamma:r=1
+  foamfx__gradient_gamma:r=0.5
+  foamfx__underfoam_threshold:r=0.2
+  foamfx__overfoam_threshold:r=0.5
+  foamfx__underfoam_weight:r=0.3
+  foamfx__overfoam_weight:r=1
+  foamfx__tile_tex:t="foam_generator_a_tile_tex_n"
+  foamfx__gradient_tex:t="foam_generator_a_gradient_tex_n"
+  foamfx__underfoam_color:p3=0.3, 0.8, 0.5
+  foamfx__overfoam_color:p3=1, 1, 1
+}
+
+entity{
+  _template:t="raid_description"
+  raid_description__raidType:t="hunt"
+  raid_description__difficulty:t="dif_hard"
+  raid_description__drawSpawnsAsPoints:b=no
+  raid_description__drawSpawnsAsPoly:b=yes
+  raid_description__drawSpawnsAlpha:r=190
+  raid_description__drawSpawnsRadius:r=50
+  raid_description__drawSpawnsClampParam:p2=20, 30
+
+  "raid_description__enemies:list<t>"{
+    item:t="distorted_hound"
+    item:t="invisible"
+    item:t="ball_lightning"
+    item:t="gravity_trap"
+  }
+
+  "raid_description__images:list<t>"{
+    item:t="ui/zone_thumbnails/sector_america_abandoned_a"
+    item:t="ui/zone_thumbnails/sector_america_abandoned_a"
+    item:t="ui/zone_thumbnails/sector_america_abandoned_a"
+  }
+
+  "raid_description__mcImages:list<t>"{
+    item:t="ui/zone_thumbnails/no_info"
+    item:t="ui/zone_thumbnails/no_info"
+    item:t="ui/zone_thumbnails/no_info"
+  }
+
+  "raid_description__possibleLoot:list<t>"{
+    item:t="pk_gun"
+    item:t="as_val_gun"
+    item:t="rpk_74_gun"
+    item:t="svd_gun"
+    item:t="hk_g3a4_gun"
+    item:t="spas_12_gun"
+    item:t="ks_23_gun"
+    item:t="m4a1_gun"
+    item:t="ak_103_gun"
+    item:t="hk_mp5n_gun"
+    item:t="hk_ump_45_gun"
+    item:t="beretta_m9_gun"
+    item:t="medium_backpack"
+  }
+}
+
+entity{
+  _template:t="shaderVars"
+
+  "shader_vars__vars:object"{
+    clouds_shadow_influence:r=1.1
+    river0:c=30, 81, 63, 0
+    river1:c=41, 104, 83, 0
+    ocean0:c=100, 110, 150, 0
+    ocean1:c=90, 100, 150, 0
+    river_density:r=2
+    ocean_density:r=1
+    water_color_noise_size:r=71
+    leaves_ss_profile:p4=0.95, 1, 0.42, 0
+    paint_details_tex:t="america_abandoned_wall_color_tex_palette*"
+    cliff_color_overlay_map_tex:t="dalniy_island_sparse_det_cliff_color_tex_d*"
+    cliff_color_overlay_map_left_top_right_bottom:p4=-2048, 2048, 2048, -2048
+    rendinst_landscape_area_left_top_right_bottom:p4=2048, -512, 3072, -1536
+  }
+}
+
+entity{
+  _template:t="wind"
+  wind__noiseScale:r=100
+  wind__noiseSpeed:r=4
+  wind__strength:r=2
+}
+
+entity{
+  _template:t="clouds_hole_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [-530.754, 16, 171.528]]
+}
+
+entity{
+  _template:t="storm_zone_with_forcefield"
+  sphere_zone__radius:r=375
+  moving_zone__manual_activation:b=no
+  moving_zone__sourcePos:p3=-530.754, 16, 171.528
+  moving_zone__sleepingTime:r=2700
+  moving_zone__movingVelocity:r=1.8
+}
+
+entity{
+  _template:t="am_bot_spawner"
+  bot_spawner__spawnInterval:r=20
+  bot_spawner__botsPerGroupMinMax:ip2=1, 2
+}
+
+entity{
+  _template:t="tiled_map"
+  tiled_map__leftTop:p2=-1100, -600
+  tiled_map__rightBottom:p2=100, 600
+  tiled_map__leftTopBorder:p2=-1100, -600
+  tiled_map__rightBottomBorder:p2=100, 600
+  tiled_map__visibleRange:p2=144, 4000
+  tiled_map__tileWidth:i=512
+  tiled_map__zlevels:i=5
+  tiled_map__northAngle:r=0
+  tiled_map__tilesPath:t="maps/america_abandoned"
+  tiled_map__backgroundColor:c=35, 128, 97, 255
+  fog_of_war__enabled:b=no
+}
+
+entity{
+  _template:t="door_mult_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_doors.blk"
+}
+
+entity{
+  _template:t="misc_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_misc.blk"
+}
+
+entity{
+  _template:t="postfx_color_grading_tonemap_death_alive"
+}
+
+import{
+  scene:t="gamedata/scenes/america_abandoned/_america_abandoned_regions.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/america_abandoned/_america_abandoned_minimap_regions.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/america_abandoned/_america_abandoned_custom_points.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/america_abandoned/_america_abandoned_spawn_points.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/america_abandoned/_america_abandoned_extraction_points.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/america_abandoned/_america_abandoned_monsters.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/america_abandoned/_america_abandoned_traps.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/america_abandoned/_america_abandoned_gravity_zones.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/america_abandoned/_america_abandoned_locked_doors.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/america_abandoned/_america_abandoned_encounters.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/america_abandoned/_america_abandoned_waypoints.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/america_abandoned/_america_abandoned_quest_objects.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/america_abandoned/_america_abandoned_portals.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/america_abandoned/_america_abandoned_hive_spawn_points.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_america_abandoned_gpu_objects.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_america_abandoned_envi_cover.blk"
+}
+
+entity{
+  _template:t="airdrop_manager"
+}
+
+entity{
+  _template:t="transparent_partition"
+}
+
+entity{
+  _template:t="volfog_nbs"
+  volfog_nbs__rootGraph:t="fog_america_abandoned.json"
+}
+
+entity{
+  _template:t="level+level_synced_environment"
+  level__blk:t="levels/america_abandoned.blk"
+  level__useGroundHolesCollision:b=yes
+  level_synced_environment__timeOfDaySeed:i=680897
+  level_synced_environment__weatherSeed:i=781267
+  level_synced_environment__timeOfDayChangeInterval:i=310
+  level_synced_environment__weatherChangeInterval:i=410
+
+  "level__weatherChoice:object"{
+    weather_dalniy_island_overcast:r=1
+  }
+
+  "level__timeVec:array"{
+    level_timeVec:r=6
+    level_timeVec:r=14
+    level_timeVec:r=18.7
+  }
+}

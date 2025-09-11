@@ -1975,7 +1975,7 @@ euclid_tower_sensor_3_loot_preset{
     }
 
     "item:object"{
-      template_name:t="akm_47_rust_magazine+mod_item_in_world"
+      template_name:t="akm_47_rust_magazine+item_in_world"
       number:i=1
     }
   }
@@ -2046,12 +2046,12 @@ euclid_armory_1_akm_mag_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="akm_47_rust_magazine+mod_item_in_world"
+      template_name:t="akm_47_rust_magazine+item_in_world"
       number:ip2=2, 3
     }
 
     "item:object"{
-      template_name:t="akm_47_magazine+mod_item_in_world"
+      template_name:t="akm_47_magazine+item_in_world"
       number:i=2
     }
   }
@@ -2062,7 +2062,7 @@ euclid_armory_1_val_mag_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="as_val_magazine+mod_item_in_world"
+      template_name:t="as_val_magazine+item_in_world"
       number:ip2=4, 6
     }
   }
@@ -2100,12 +2100,12 @@ euclid_armory_2_akm_mag_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="akm_47_rust_magazine+mod_item_in_world"
+      template_name:t="akm_47_rust_magazine+item_in_world"
       number:ip2=2, 3
     }
 
     "item:object"{
-      template_name:t="akm_47_magazine+mod_item_in_world"
+      template_name:t="akm_47_magazine+item_in_world"
       number:i=2
     }
   }
@@ -2116,7 +2116,7 @@ euclid_armory_2_val_mag_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="as_val_magazine+mod_item_in_world"
+      template_name:t="as_val_magazine+item_in_world"
       number:ip2=4, 6
     }
   }
@@ -2599,7 +2599,7 @@ euclid_tunnel_monster_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_monster+am_inside_body_3"
+      template_name:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_changed_human+am_inside_body_3"
       number:i=3
     }
   }
@@ -2632,7 +2632,7 @@ euclid_armory_key_guard_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_monster+am_inside_body_3"
+      template_name:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_changed_human+am_inside_body_3"
       number:i=9
     }
   }

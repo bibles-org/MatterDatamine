@@ -42,7 +42,7 @@ function makeMarkersLayout(stateAndCtors, padding){
   }
 
   return @(){
-    size = [sw(100), sh(100)]
+    size = static [sw(100), sh(100)]
     children = layers
     watch = safeAreaVerPadding
   }

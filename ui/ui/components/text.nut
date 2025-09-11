@@ -1,6 +1,8 @@
+from "%ui/fonts_style.nut" import body_txt
+
 from "%ui/ui_library.nut" import *
 
-let {body_txt} = require("%ui/fonts_style.nut")
+#allow-auto-freeze
 
 function dtext(val, params={}) {
   if (val == null)
@@ -20,7 +22,7 @@ function dtext(val, params={}) {
     txt = val
   }
   if (type(val) == "instance" && val instanceof Watched) {
-    txt = val.value
+    txt = val.get()
     watchedtext = true
   }
   let ret = {

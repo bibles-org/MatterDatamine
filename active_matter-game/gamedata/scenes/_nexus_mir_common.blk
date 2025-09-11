@@ -208,13 +208,97 @@ entity{
 }
 
 entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=1
+  transform:m=[[0.00381978, -1.6196e-08, -0.181441] [2.23094e-07, 2.55189, -2.23093e-07] [1.40521, -1.20262e-07, 0.0295831] [5.42441, 15.7924, -34.3511]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=1
+  transform:m=[[-0.181477, -1.20036e-10, 0.00137303] [1.82728e-15, -2.38957, -2.08905e-07] [0.0111654, -1.29016e-07, 1.47575] [13.4736, 18.8432, -31.5006]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=2
+  transform:m=[[-0.000910604, -3.00236e-25, 0.181479] [8.57925e-15, 2.41576, 4.3048e-17] [-1.40551, 4.9916e-15, -0.0070524] [37.0816, 12.0673, -12.6294]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=2
+  transform:m=[[-0.00381971, 3.33933e-10, -0.18144] [-2.10472e-07, -2.40752, -4.82351e-14] [-1.37577, 1.20273e-07, 0.028963] [38.7553, 16.7439, -21.591]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=3
+  transform:m=[[3.94961e-08, -0.181478, -7.82802e-09] [0.0112873, 1.1508e-07, -2.61098] [1.84604, 4.01419e-07, 0.00798046] [-27.8004, 13.2017, 35.6184]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=3
+  transform:m=[[0.000784538, -2.35965e-08, -0.181475] [-1.76054e-07, 2.01841, -2.63207e-07] [0.899759, 7.89876e-08, 0.00388976] [-30.3795, 11.7868, 33.6527]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=4
+  transform:m=[[-0.181476, -2.35967e-08, -0.000784536] [-3.17502e-07, 2.43478, 2.1237e-07] [0.00638426, 1.29644e-07, -1.47679] [-40.1898, 14.7457, 16.1047]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=4
+  transform:m=[[0.000784543, -2.35966e-08, -0.181476] [-2.19496e-07, 2.51647, -3.28156e-07] [1.41517, 1.24234e-07, 0.00611794] [48.8658, 6.17294, -47.0221]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=5
+  transform:m=[[-0.00078456, -1.59313e-08, 0.181476] [-3.3297e-07, 2.5534, 2.22717e-07] [-1.47256, -1.91471e-07, -0.0063662] [-21.086, 16.3554, 4.74292]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=5
+  transform:m=[[0.000784543, -2.35967e-08, -0.181476] [-2.16793e-07, 2.48548, -3.24115e-07] [1.36265, 1.19624e-07, 0.0058909] [-2.95533, 14.4716, -39.6489]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=6
+  transform:m=[[-0.000784548, -1.59313e-08, 0.181476] [-3.17239e-07, 2.43277, 2.12195e-07] [-1.34913, -1.75421e-07, -0.00583249] [-35.5458, 9.83166, 3.97743]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=6
+  transform:m=[[0.181476, -2.35966e-08, 0.00078455] [3.03122e-07, 2.3245, -2.02751e-07] [-0.0058325, 1.18436e-07, 1.34913] [6.8037, 11.8718, -17.7347]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
   _template:t="gravity_zone_box"
   transform:m=[[-5.37323, -4.69743e-07, 0] [2.99519e-07, -3.42611, 0] [0, 0, 18.6764] [32, 16.7407, -13.5741]]
 }
 
 entity{
   _template:t="gravity_zone_box"
-  transform:m=[[-6.55532, -5.73085e-07, 0] [3.44295e-07, -3.93826, 0] [0, 0, 19.8169] [37.9074, 17.0105, -14.2292]]
+  transform:m=[[-15.3271, -1.33994e-06, 0] [2.99519e-07, -3.42611, 0] [0, 0, 17.2562] [34.7028, 16.7407, -12.8147]]
 }
 
 entity{
@@ -240,75 +324,73 @@ entity{
 }
 
 entity{
-  _template:t="placeable_rendinst"
-  transform:m=[[-4.37114e-08, -1, -4.37114e-08] [0, -4.37114e-08, 1] [-1, 4.37114e-08, 1.91069e-15] [37.1381, 13.6129, -12.6697]]
-  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+  _template:t="gravity_zone_box"
+  transform:m=[[-4.43884, -3.88056e-07, 0] [2.99519e-07, -3.42611, 0] [0, 0, 2.33894] [39.1935, 16.7407, -21.6698]]
 }
 
 entity{
-  _template:t="placeable_rendinst"
-  transform:m=[[-4.37114e-08, -1, -4.37114e-08] [0, -4.37114e-08, 1] [-1, 4.37114e-08, 1.91069e-15] [38.7839, 18.2827, -21.5961]]
-  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [0, 0.182841, -0.983142] [-0, 0.983142, 0.182841] [36.9678, 12.4963, -12.9009]]
 }
 
 entity{
-  _template:t="placeable_rendinst"
-  transform:m=[[-4.37114e-08, -1, -4.37114e-08] [0, -4.37114e-08, 1] [-1, 4.37114e-08, 1.91069e-15] [48.9507, 7.80744, -46.9273]]
-  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[-1, -2.3423e-08, -8.42265e-08] [8.74228e-08, -0.267928, -0.963439] [-1.77636e-15, -0.963439, 0.267928] [38.7372, 16.2194, -21.8615]]
 }
 
 entity{
-  _template:t="placeable_rendinst"
-  transform:m=[[-4.37114e-08, -1, -4.37114e-08] [0, -4.37114e-08, 1] [-1, 4.37114e-08, 1.91069e-15] [5.38919, 17.2789, -34.2657]]
-  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [-0, 0.31123, 0.950335] [0, -0.950335, 0.31123] [48.9727, 6.58904, -46.7487]]
 }
 
 entity{
-  _template:t="placeable_rendinst"
-  transform:m=[[4.37114e-08, -1, -4.37114e-08] [-1, -4.37114e-08, -4.37114e-08] [4.37114e-08, 4.37114e-08, -1] [13.3435, 20.1908, -31.5671]]
-  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [5.37204, 16.9928, -33.0553]]
 }
 
 entity{
-  _template:t="placeable_rendinst"
-  transform:m=[[4.37114e-08, -1, -4.37114e-08] [-1, -4.37114e-08, -4.37114e-08] [4.37114e-08, 4.37114e-08, -1] [6.78289, 13.4338, -17.377]]
-  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[0.487129, -0.87333, 0] [0.87333, 0.487129, 0] [-0, 0, 1] [-2.92365, 14.9363, -40.1587]]
 }
 
 entity{
-  _template:t="placeable_rendinst"
-  transform:m=[[4.37114e-08, -1, 4.37114e-08] [8.74228e-08, -4.37114e-08, -1] [1, 4.37114e-08, 8.74228e-08] [-21.0588, 17.8529, 4.73798]]
-  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [0, 0.51935, -0.854562] [-0, 0.854562, 0.51935] [-21.1107, 16.7917, 4.13965]]
 }
 
 entity{
-  _template:t="placeable_rendinst"
-  transform:m=[[4.37114e-08, -1, 4.37114e-08] [8.74228e-08, -4.37114e-08, -1] [1, 4.37114e-08, 8.74228e-08] [-35.4394, 11.6042, 3.9497]]
-  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[0.254685, 0.967024, 0] [-0.967024, 0.254685, 0] [0, -0, 1] [-40.4716, 15.3754, 16.1805]]
 }
 
 entity{
-  _template:t="placeable_rendinst"
-  transform:m=[[-4.37114e-08, -1, 4.37114e-08] [1, -4.37114e-08, 1.31134e-07] [-1.31134e-07, 4.37114e-08, 1] [-40.2778, 16.2512, 16.1]]
-  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [-0, 0.428883, 0.90336] [0, -0.90336, 0.428883] [-30.356, 12.1176, 33.9841]]
 }
 
 entity{
-  _template:t="placeable_rendinst"
-  transform:m=[[-4.37114e-08, -1, -4.37114e-08] [-1.74846e-07, -4.37114e-08, 1] [-1, 4.37114e-08, -1.74846e-07] [-30.4735, 13.0912, 33.7066]]
-  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [0, -0.999959, -0.00909867] [0, 0.00909867, -0.999959] [-27.8373, 12.9678, 35.4648]]
 }
 
 entity{
-  _template:t="placeable_rendinst"
-  transform:m=[[-4.37114e-08, -1.42109e-14, 1] [-1.74846e-07, 1, 6.56811e-15] [-1, -1.74846e-07, -4.37114e-08] [-27.7473, 13.2849, 33.9477]]
-  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[0.354123, 0.935199, 0] [-0.935199, 0.354123, 0] [0, -0, 1] [6.72428, 12.2844, -17.571]]
 }
 
 entity{
-  _template:t="placeable_rendinst"
-  transform:m=[[-4.37114e-08, -1, -4.37114e-08] [-1.74846e-07, -4.37114e-08, 1] [-1, 4.37114e-08, -1.74846e-07] [-2.87926, 17.6135, -39.7162]]
-  ri_extra__name:t="sovmod_concrete_plate_5000_a"
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [-0, -1, 8.74228e-08] [0, -8.74228e-08, -1] [12.9863, 18.1907, -31.487]]
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[-1.11326e-08, 0.967024, -0.254685] [4.227e-08, 0.254685, 0.967024] [1, -8.88178e-16, -4.37114e-08] [-35.503, 10.2201, 4.32881]]
+}
+
+entity{
+  _template:t="volfog_nbs"
+  volfog_nbs__rootGraph:t="fog_factory_mir.json"
 }
 
 entity{

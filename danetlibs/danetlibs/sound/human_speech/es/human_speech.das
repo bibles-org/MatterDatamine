@@ -1,15 +1,14 @@
 require ecs
 require ecs.safe
-require app
+require app // get_sync_time
 require soundSystem
 require soundEvent
-require player
 require human_net_speech.modules.human_net_speech_events
 require sound_utils_net.modules.sound_desc_common
 require sound_utils.modules.sound_player_common
 require strings
 
-
+let private TEAM_UNASSIGNED = -1
 let SPEECH_WATCHED_VOLUME = 1.5
 let SPEECH_TEAM_VOLUME = 1.5
 let SPEECH_MAX_NET_DELAY = 4.
@@ -131,14 +130,20 @@ def human_speech_cmd_hero_speech(evt : CmdClientHumanSpeech;
     sound_debug("There is no human speech desc for phrase '{evt.phrase}'")
 
 
-[es(tag=sound, on_appear, track=human_voice_effect__isActive, REQUIRE_NOT=humanSpeechDisable)]
+[es(tag=sound, on_appear, track=(human_voice_effect__isActive, sound_preset__isLoaded), REQUIRE_NOT=humanSpeechDisable)]
 def human_speech_can_speak(evt : Event;
+                           sound_preset__isLoaded : bool;
                            human_voice_effect__isActive : bool = false;
+                           var human_speech__isSpeaking : bool&;
+                           var human_speech__queue : int2&;
                            var human_speech__canSpeak : bool&;
                            var human_speech__event : SoundEvent&)
-  human_speech__canSpeak = !human_voice_effect__isActive
+  human_speech__canSpeak = !human_voice_effect__isActive && sound_preset__isLoaded
   if !human_speech__canSpeak
     release(human_speech__event)
+  if !sound_preset__isLoaded
+    human_speech__isSpeaking = false
+    human_speech__queue = int2(-1, -1)
 
 
 [es(tag=sound, on_appear)]
@@ -154,12 +159,6 @@ def human_speech_on_appear(evt : Event;
   human_speech__voiceIdx = human_speech__voiceIdx % max(1, length(human_speech__enemyVoices))
   if human_speech__voiceIdx > 0
     raise_sound_tag("voice{human_speech__voiceIdx + 1}", sound_flags)
-
-
-[es(tag=sound, on_disappear, REQUIRE=human_speech__canSpeak)]
-def human_speech_disappear(evt : Event;
-                           var human_speech__event : SoundEvent&)
-  release(human_speech__event)
 
 
 [es(tag=sound, on_event=ParallelUpdateFrameDelayed, after=sound_begin_update_es, before=sound_end_update_es)]

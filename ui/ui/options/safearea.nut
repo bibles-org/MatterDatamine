@@ -1,21 +1,23 @@
+from "%dngscripts/globalState.nut" import nestWatched
+
+from "settings" import get_setting_by_blk_path
+from "math" import fabs
+from "%ui/options/mkOnlineSaveData.nut" import mkOnlineSaveData
+
 from "%ui/ui_library.nut" import Computed, sw, sh, console_print, vlog, console_register_command
 from "math" import max
 
-let {get_setting_by_blk_path} = require("settings")
-let {fabs} = require("math")
-let { mkOnlineSaveData } = require("%ui/options/mkOnlineSaveData.nut")
 let platform = require("%dngscripts/platform.nut")
-let { nestWatched } = require("%dngscripts/globalState.nut")
 let debugSafeAreaList = nestWatched("debugSafeAreaList", false)
 let debugSafeAreaAmount = nestWatched("debugSafeAreaAmount", null)
 
 let safeAreaShow = nestWatched("safeAreaShow", false)
 
 let blkPath = "video/safeArea"
-let safeAreaList = (platform.is_xbox) ? [0.9, 0.95, 1.0]
+let safeAreaList = (platform.is_xbox) ? static [0.9, 0.95, 1.0]
   : platform.is_sony ? [require("sony").getDisplaySafeArea()]
-  : debugSafeAreaList.value ? [0.9, 0.95, 1.0]
-  : [1.0]
+  : debugSafeAreaList.get() ? static [0.9, 0.95, 1.0]
+  : static [1.0]
 let canChangeInOptions = @() safeAreaList.len() > 1
 
 function validate(val) {
@@ -58,7 +60,7 @@ This range is according console requirements. (Resetting to use in options = '{0
   }, "ui.safeAreaSet"
 )
 
-return {
+return freeze({
   isWideScreen = sw(100).tofloat() / sh(100) > 1.5
   safeAreaCanChangeInOptions = canChangeInOptions
   safeAreaBlkPath = blkPath
@@ -68,4 +70,4 @@ return {
   safeAreaAmount
   safeAreaShow
   safeAreaList
-}
+})

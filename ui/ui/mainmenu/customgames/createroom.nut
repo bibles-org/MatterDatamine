@@ -1,29 +1,31 @@
+from "string" import startswith, strip
+from "%ui/fonts_style.nut" import h2_txt, body_txt, sub_txt
+from "%ui/permissions/permissions.nut" import checkMultiplayerPermissions
+from "%ui/state/roomState.nut" import createRoom
+from "%ui/components/button.nut" import textButton
+from "%ui/components/textInput.nut" import textInput
+import "%ui/components/checkbox.nut" as checkbox
+from "%ui/components/msgbox.nut" import showMsgbox
+import "%ui/components/combobox.nut" as comboBox
+from "%ui/gameLauncher.nut" import startGame
+from "app" import get_app_id
+from "%ui/components/selectWindow.nut" import mkSelectWindow, mkOpenSelectWindowBtn
+from "dasevents" import CmdHideAllUiMenus
+from "%ui/profile/profileState.nut" import playerProfileLoadoutUpdate
+import "%ui/profile/collectRaidProfile.nut" as collectRaidProfile
+from "json" import object_to_json_string
+from "%ui/helpers/parseSceneBlk.nut" import get_raid_description
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 from "%darg/laconic.nut" import *
 import "matching.errors" as matching_errors
 
-let { strip } = require("string")
-let {h2_txt, body_txt, sub_txt} = require("%ui/fonts_style.nut")
-let {checkMultiplayerPermissions} = require("%ui/permissions/permissions.nut")
-let {createRoom} = require("%ui/state/roomState.nut")
-let { textButton } = require("%ui/components/button.nut")
-let {textInput} = require("%ui/components/textInput.nut")
-let checkbox = require("%ui/components/checkbox.nut")
-let {showMsgbox} = require("%ui/components/msgbox.nut")
-let {showCreateRoom} = require("showCreateRoom.nut")
-let comboBox = require("%ui/components/combobox.nut")
-let {oneOfSelectedClusters} = require("%ui/clusterState.nut")
-let {groupSize, botsPopulation, botAutoSquad, scenes, scene, roomName, minPlayers, maxPlayers, startOffline, writeReplay} = require("roomSettings.nut")
-let {startGame} = require("%ui/gameLauncher.nut")
-let {get_app_id} = require("app")
+let { showCreateRoom } = require("%ui/mainMenu/customGames/showCreateRoom.nut")
+let { oneOfSelectedClusters } = require("%ui/clusterState.nut")
+let { groupSize, botsPopulation, botAutoSquad, scenes, scene, roomName, minPlayers, maxPlayers, startOffline, writeReplay } = require("%ui/mainMenu/customGames/roomSettings.nut")
 let JB = require("%ui/control/gui_buttons.nut")
-let {mkSelectWindow, mkOpenSelectWindowBtn} = require("%ui/components/selectWindow.nut")
-let { CmdHideAllUiMenus } = require("dasevents")
-let { alterMints, playerProfileLoadoutUpdate } = require("%ui/profile/profileState.nut")
-let collectRaidProfile = require("%ui/profile/collectRaidProfile.nut")
-let { object_to_json_string } = require("json")
-let {get_raid_description} = require("%ui/helpers/parseSceneBlk.nut")
+let { alterMints, loadoutsAgency } = require("%ui/profile/profileState.nut")
 
 let playersAmountList = [1, 2, 4, 8, 12, 16, 20, 24, 32, 40, 50, 64, 70, 80, 100, 128]
 let groupSizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -78,7 +80,7 @@ function doCreateRoom() {
     local scenePath = scene.get()?.id
     let raidDescription = get_raid_description(scenePath)
     let raidType = raidDescription?.raidType ?? ""
-    let nexus = raidType == "pvp"
+    let nexus = startswith(raidType, "pvp")
 
     let params = {
       public = {
@@ -113,6 +115,7 @@ function doCreateRoom() {
       local token = {
         loadoutItems = collectRaidProfile()
         mints = alterMints.get()
+        loadouts_agency = loadoutsAgency.get()
       }
       playerProfileLoadoutUpdate(object_to_json_string(token))
       startGame({scene = scenePath})
@@ -199,11 +202,11 @@ function getCreateRoomWnd() {
   })
 
   let selectSceneBtn = {
-    size = [flex(), sh(4)]
+    size = static [flex(), sh(4)]
     children = mkOpenSelectWindowBtn(scene, openScenesMenu, humanTitle, loc("Current scene"))
   }
   return @() {
-    size = [fsh(40), sh(60)]
+    size = static [fsh(40), sh(60)]
     hplace = ALIGN_CENTER
     vplace = ALIGN_CENTER
     halign = ALIGN_CENTER
@@ -213,7 +216,7 @@ function getCreateRoomWnd() {
     children = [
       {
         flow = FLOW_VERTICAL
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         children = [
           selectSceneBtn,
           formComboWithTitle(minPlayers, playersAmountList, loc("players to start")),

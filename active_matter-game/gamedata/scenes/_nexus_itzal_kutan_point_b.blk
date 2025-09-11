@@ -1,5 +1,5 @@
 entity{
-  _template:t="nexus_round_mode_beacon"
+  _template:t="nexus_beacon"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [2.68155, 52.2154, 2.02349]]
   nexus_beacon__id:i=2
   nexus_beacon__name:t="Altar"
@@ -7,7 +7,7 @@ entity{
 }
 
 entity{
-  _template:t="nexus_round_mode_beacon_capture_device"
+  _template:t="nexus_beacon_capture_device"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [2.68415, 51.4034, 2.02349]]
   nexus_beacon_capture_device__parentId:i=2
   item__setCustomUsePrompt:t="nexus_portal/Altar"

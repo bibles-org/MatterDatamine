@@ -1,14 +1,16 @@
+from "%sqstd/string.nut" import tostring_r, utf8ToLower
+
+from "%ui/navState.nut" import addNavScene, removeNavScene, registerNavSceneCtorById
+from "dagor.clipboard" import set_clipboard_text
+from "%ui/fonts_style.nut" import sub_txt
+from "string" import startswith, endswith
+from "%ui/components/scrollbar.nut" import makeVertScroll
+from "%ui/components/textInput.nut" import textInput
+
 from "%ui/ui_library.nut" import *
 
-let { addNavScene, removeNavScene, registerNavSceneCtorById } = require("%ui/navState.nut")
 
 let JB = require("%ui/control/gui_buttons.nut")
-let { set_clipboard_text } = require("dagor.clipboard")
-let { sub_txt } = require("%ui/fonts_style.nut")
-let { tostring_r, utf8ToLower } = require("%sqstd/string.nut")
-let { startswith, endswith } = require("string")
-let { makeVertScroll } = require("%ui/components/scrollbar.nut")
-let { textInput } = require("%ui/components/textInput.nut")
 
 let wndWidth = sw(80)
 
@@ -28,10 +30,10 @@ function tabButton(text, idx, curTab){
         color = isSelected ? Color(255,255,255) : defaultColor
       }.__update(sub_txt)
       behavior = Behaviors.Button
-      onClick = @() curTab(idx)
-      onElemState = @(s) stateFlags(s)
+      onClick = @() curTab.set(idx)
+      onElemState = @(s) stateFlags.set(s)
       watch = [stateFlags, curTab]
-      padding = [hdpx(5),hdpx(10)]
+      padding = static [hdpx(5),hdpx(10)]
       rendObj = ROBJ_BOX
       fillColor = sf & S_HOVER ? Color(200,200,200) : isSelected ? Color(0,0,0,0) : Color(0,0,0)
       borderColor = Color(200,200,200)
@@ -39,7 +41,7 @@ function tabButton(text, idx, curTab){
     }
   }
 }
-let hGap = freeze({rendObj = ROBJ_SOLID size = [hdpx(1), hdpx(10)] vplace = ALIGN_CENTER color = Color(40,40,40,40)})
+let hGap = freeze({rendObj = ROBJ_SOLID size = static [hdpx(1), hdpx(10)] vplace = ALIGN_CENTER color = Color(40,40,40,40)})
 let mkTabs = @(tabs, curTab) @() {
   watch = curTab
   children = wrap(
@@ -52,7 +54,7 @@ let mkTabs = @(tabs, curTab) @() {
 }
 
 let textArea = @(text) {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   color = defaultColor
   rendObj=ROBJ_TEXTAREA
   behavior = Behaviors.TextArea
@@ -95,11 +97,11 @@ function filterData(data, curLevel, filterLevel, rowFilter, countLeft) {
   foreach(key, rowData in data) {
     local curData = rowData
     if (filterLevel <= curLevel) {
-      let isVisible = countLeft.value >= 0 && rowFilter(rowData, key)
+      let isVisible = countLeft.get() >= 0 && rowFilter(rowData, key)
       if (!isVisible)
         continue
-      countLeft(countLeft.value - 1)
-      if (countLeft.value < 0)
+      countLeft.set(countLeft.get() - 1)
+      if (countLeft.get() < 0)
         break
     }
     else {
@@ -112,7 +114,7 @@ function filterData(data, curLevel, filterLevel, rowFilter, countLeft) {
       res.append(curData)
     else
       res[key] <- curData
-    if (countLeft.value < 0)
+    if (countLeft.get() < 0)
       break
     continue
   }
@@ -142,15 +144,15 @@ function mkInfoBlock(curTabIdx, tabs) {
   let textHelp = curTabV?.helpText
   let textWatch = Watched("")
   let recalcText = function() {
-    let filterArr = utf8ToLower(filterText.value).split("||").map(@(v) v.split("&&"))
+    let filterArr = utf8ToLower(filterText.get()).split("||").map(@(v) v.split("&&"))
     let rowFilterBase = curTabV?.rowFilter ?? defaultRowFilter
     let rowFilter = mkFilter(rowFilterBase, filterArr)
     let countLeft = Watched(curTabV?.maxItems ?? 100)
-    let resData = filterData(dataWatch?.value, 0, curTabV?.recursionLevel ?? 0, rowFilter, countLeft)
+    let resData = filterData(dataWatch?.get(), 0, curTabV?.recursionLevel ?? 0, rowFilter, countLeft)
     local resText = dataToText(resData)
-    if (countLeft.value < 0)
+    if (countLeft.get() < 0)
       resText = $"{resText}\n...... has more items ......"
-    textWatch(resText)
+    textWatch.set(resText)
   }
 
   function timerRestart(_) {
@@ -162,16 +164,16 @@ function mkInfoBlock(curTabIdx, tabs) {
   mkInfoBlockKey++
   function copytoCb() {
     log_for_user("copied to clipboard")
-    set_clipboard_text(textWatch.value)
+    set_clipboard_text(textWatch.get())
   }
   return @() {
     watch = [textWatch]
     key = mkInfoBlockKey
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     children = [
       textArea(textHelp)
-      textArea(textWatch.value)
+      textArea(textWatch.get())
     ]
     hotkeys = [["L.Ctrl C", {action = copytoCb}]]
     onAttach = recalcText
@@ -184,8 +186,8 @@ function mkInfoBlock(curTabIdx, tabs) {
 
 let mkCurInfo = @(curTab, tabs) @() {
   watch = curTab
-  size = [flex(), SIZE_TO_CONTENT]
-  children = mkInfoBlock(curTab.value, tabs)
+  size = FLEX_H
+  children = mkInfoBlock(curTab.get(), tabs)
 }
 
 let debugWnd = @(tabs, curTab) {
@@ -201,7 +203,7 @@ let debugWnd = @(tabs, curTab) {
 
   children = [
     {
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       flow = FLOW_HORIZONTAL
       valign = ALIGN_TOP
       children = [
@@ -226,7 +228,7 @@ function openDebugWnd() {
   let close = @() removeNavScene(DebugWndId)
 
   return {
-    size = [sw(100), sh(100)]
+    size = static [sw(100), sh(100)]
     rendObj = ROBJ_WORLD_BLUR_PANEL
     fillColor = Color(0,0,0,220)
     onClick = close

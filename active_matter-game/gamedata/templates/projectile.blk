@@ -15,12 +15,22 @@ bullet_projectile_debug{
   }
 }
 
-base_projectile{
+projectile_inactive{
+  projectile__timeToDestroy:r=1
+
+  "projectile__inactive:tag"{}
+}
+
+disable_ricochet{
+  projectile__sceneHitRicochetStability:r=1
+}
+
+bullet_projectile{
   _use:t="ecs_no_debug"
+  _use:t="projectile_sound"
   detonation__timer:r=-1
   projectile__lifeTime:r=0
   projectile__visualPos:p3=0, 0, 0
-  projectile__tracerIgnitionTime:r=0
   projectile__minLifeTime:r=0
   projectile__maxLifeTime:r=0
   projectile__stopped:b=no
@@ -49,6 +59,8 @@ base_projectile{
   scene_hit_place__norm:p3=0, 1, 0
   scene_hit_place__matId:i=-1
   projectile_hit_fx__fleshPresetIndex:i=-1
+  loud_noise__radius:r=15
+  loud_noise__noisePerHit:r=80
 
   "projectile_trace_info__riDescOffs:u32"{
     value:i=-1
@@ -64,31 +76,212 @@ base_projectile{
   "projectile__lastDamagedRiexHandle:u64"{
     value:i64=-1
   }
-}
 
-projectile_inactive{
-  _tags:t="server"
-  projectile__timeToDestroy:r=1
-
-  "projectile__inactive:tag"{}
-}
-
-disable_ricochet{
-  projectile__sceneHitRicochetStability:r=1
-}
-
-bullet_projectile{
-  _use:t="base_projectile"
-  _use:t="bullet_projectile_sound"
-  loud_noise__radius:r=7
-  loud_noise__noisePerHit:r=80
-
-  "projectileSmokeTracerId:i"{
+  _group{
     _tags:t="render"
-    value:i=-1
+    projectile_visual_tracer__id:i=-1
+    projectile_visual_tracer__ignitionTime:r=0.01
+    projectile_visual_tracer__burnTime:r=1.1
+    projectile_visual_tracer__smokeTime:r=1
+    projectile_visual_tracer__smokeRad:r=0.01
+    projectile_visual_tracer__luminosity:r=10
+    projectile_visual_tracer__smokeTim:r=1
+    projectile_visual_tracer__smokeColor:p4=1, 0.9, 0.7, 0.8
+    projectile_visual_tracer__headColor:p3=1, 0.666, 0.333
+    projectile_visual_tracer__startHeadColor:p3=1, 0.666, 0.333
   }
+}
 
-  projectile_tracer_props{
+bullet_projectile_5_45x39{
+  _use:t="bullet_projectile"
+
+  _group{
     _tags:t="render"
+    projectile_visual_tracer__ignitionTime:r=0.02
+    projectile_visual_tracer__smokeColor:p4=0.549, 0.51, 0.471, 0.0196
+    projectile_visual_tracer__smokeTime:r=2.5
+    projectile_visual_tracer__smokeRad:r=0.01
+    projectile_visual_tracer__luminosity:r=1
+    projectile_visual_tracer__burnTime:r=0.3
+  }
+}
+
+bullet_projectile_5_56x45{
+  _use:t="bullet_projectile"
+
+  _group{
+    _tags:t="render"
+    projectile_visual_tracer__ignitionTime:r=0.02
+    projectile_visual_tracer__smokeColor:p4=0.549, 0.51, 0.471, 0.0196
+    projectile_visual_tracer__smokeTime:r=2.5
+    projectile_visual_tracer__smokeRad:r=0.01
+    projectile_visual_tracer__luminosity:r=1
+    projectile_visual_tracer__burnTime:r=0.3
+  }
+}
+
+bullet_projectile_7_62x39{
+  _use:t="bullet_projectile"
+
+  _group{
+    _tags:t="render"
+    projectile_visual_tracer__ignitionTime:r=0.02
+    projectile_visual_tracer__smokeColor:p4=0.549, 0.51, 0.471, 0.0196
+    projectile_visual_tracer__smokeTime:r=2.5
+    projectile_visual_tracer__smokeRad:r=0.01
+    projectile_visual_tracer__luminosity:r=1
+    projectile_visual_tracer__burnTime:r=0.3
+  }
+}
+
+bullet_projectile_7_62x51{
+  _use:t="bullet_projectile"
+
+  _group{
+    _tags:t="render"
+    projectile_visual_tracer__ignitionTime:r=0.02
+    projectile_visual_tracer__smokeColor:p4=0.549, 0.51, 0.471, 0.0196
+    projectile_visual_tracer__smokeTime:r=2.5
+    projectile_visual_tracer__smokeRad:r=0.01
+    projectile_visual_tracer__luminosity:r=1
+    projectile_visual_tracer__burnTime:r=0.3
+  }
+}
+
+bullet_projectile_7_62x54{
+  _use:t="bullet_projectile"
+
+  _group{
+    _tags:t="render"
+    projectile_visual_tracer__ignitionTime:r=0.02
+    projectile_visual_tracer__smokeColor:p4=0.549, 0.51, 0.471, 0.0196
+    projectile_visual_tracer__smokeTime:r=2.5
+    projectile_visual_tracer__smokeRad:r=0.01
+    projectile_visual_tracer__luminosity:r=1
+    projectile_visual_tracer__burnTime:r=0.3
+  }
+}
+
+bullet_projectile_9x18{
+  _use:t="bullet_projectile"
+
+  _group{
+    _tags:t="render"
+    projectile_visual_tracer__ignitionTime:r=0.02
+    projectile_visual_tracer__smokeColor:p4=0.549, 0.51, 0.471, 0.0196
+    projectile_visual_tracer__smokeTime:r=2.5
+    projectile_visual_tracer__smokeRad:r=0.01
+    projectile_visual_tracer__luminosity:r=1
+    projectile_visual_tracer__burnTime:r=0.3
+  }
+}
+
+bullet_projectile_9x19{
+  _use:t="bullet_projectile"
+
+  _group{
+    _tags:t="render"
+    projectile_visual_tracer__ignitionTime:r=0.02
+    projectile_visual_tracer__smokeColor:p4=0.549, 0.51, 0.471, 0.0196
+    projectile_visual_tracer__smokeTime:r=2.5
+    projectile_visual_tracer__smokeRad:r=0.01
+    projectile_visual_tracer__luminosity:r=1
+    projectile_visual_tracer__burnTime:r=0.3
+  }
+}
+
+bullet_projectile_9x39{
+  _use:t="bullet_projectile"
+
+  _group{
+    _tags:t="render"
+    projectile_visual_tracer__ignitionTime:r=0.02
+    projectile_visual_tracer__smokeColor:p4=0.549, 0.51, 0.471, 0.0196
+    projectile_visual_tracer__smokeTime:r=2.5
+    projectile_visual_tracer__smokeRad:r=0.01
+    projectile_visual_tracer__luminosity:r=1
+    projectile_visual_tracer__burnTime:r=0.3
+  }
+}
+
+bullet_projectile_12_7x55{
+  _use:t="bullet_projectile"
+
+  _group{
+    _tags:t="render"
+    projectile_visual_tracer__ignitionTime:r=0.02
+    projectile_visual_tracer__smokeColor:p4=0.549, 0.51, 0.471, 0.0196
+    projectile_visual_tracer__smokeTime:r=2.5
+    projectile_visual_tracer__smokeRad:r=0.01
+    projectile_visual_tracer__luminosity:r=1
+    projectile_visual_tracer__burnTime:r=0.3
+  }
+}
+
+bullet_projectile_12{
+  _use:t="bullet_projectile"
+  projectile__minMaxCount:ip2=12, 12
+
+  _group{
+    _tags:t="render"
+    projectile_visual_tracer__ignitionTime:r=0.02
+    projectile_visual_tracer__smokeColor:p4=0.549, 0.51, 0.471, 0.0196
+    projectile_visual_tracer__smokeTime:r=2.5
+    projectile_visual_tracer__smokeRad:r=0.01
+    projectile_visual_tracer__luminosity:r=1
+    projectile_visual_tracer__burnTime:r=0.3
+  }
+}
+
+bullet_projectile_23x75{
+  _use:t="bullet_projectile"
+  projectile__minMaxCount:ip2=8, 8
+
+  _group{
+    _tags:t="render"
+    projectile_visual_tracer__ignitionTime:r=0.02
+    projectile_visual_tracer__smokeColor:p4=0.549, 0.51, 0.471, 0.0196
+    projectile_visual_tracer__smokeTime:r=2.5
+    projectile_visual_tracer__smokeRad:r=0.01
+    projectile_visual_tracer__luminosity:r=1
+    projectile_visual_tracer__burnTime:r=0.3
+  }
+}
+
+bullet_projectile_45_acp{
+  _use:t="bullet_projectile"
+
+  _group{
+    _tags:t="render"
+    projectile_visual_tracer__ignitionTime:r=0.02
+    projectile_visual_tracer__smokeColor:p4=0.549, 0.51, 0.471, 0.0196
+    projectile_visual_tracer__smokeTime:r=2.5
+    projectile_visual_tracer__smokeRad:r=0.01
+    projectile_visual_tracer__luminosity:r=1
+    projectile_visual_tracer__burnTime:r=0.3
+  }
+}
+
+bullet_projectile_50_bmg{
+  _use:t="bullet_projectile"
+
+  _group{
+    _tags:t="render"
+    projectile_visual_tracer__ignitionTime:r=0.02
+    projectile_visual_tracer__smokeColor:p4=0.549, 0.51, 0.471, 0.0196
+    projectile_visual_tracer__smokeTime:r=2.5
+    projectile_visual_tracer__smokeRad:r=0.01
+    projectile_visual_tracer__luminosity:r=1
+    projectile_visual_tracer__burnTime:r=0.3
+  }
+}
+
+bullet_projectile_gravity_hook{
+  _use:t="bullet_projectile"
+
+  _group{
+    _tags:t="render"
+    projectile_visual_tracer__smokeTime:r=0
+    projectile_visual_tracer__burnTime:r=0
   }
 }

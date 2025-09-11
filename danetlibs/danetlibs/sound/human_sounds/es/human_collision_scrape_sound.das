@@ -10,6 +10,7 @@ require PhysMat
 
 [es(tag=sound, on_event=ParallelUpdateFrameDelayed, after=sound_begin_update_es, before=sound_end_update_es)]
 def human_collision_scrape_sound_update(evt : Event;
+                                        sound_preset__isLoaded : bool;
                                         human_net_phys__velocity : float3;
                                         human_net_phys__curMoveState : int;
                                         human_net_phys__isInAir : bool;
@@ -21,7 +22,7 @@ def human_collision_scrape_sound_update(evt : Event;
                                         is_watched_sound : bool;
                                         transform : float3x4)
   var handle = get_sound(sound_event_group, sound_hash("collisionScrape"))
-  if !is_valid_handle_value(handle)
+  if !is_valid_handle_value(handle) && sound_preset__isLoaded
     let isMoving = human_net_phys__curMoveState > 0 || human_net_phys__isInAir
     if human_collision_scrape_sound__descIdx >= 0 && length_sq(human_net_phys__velocity) > square(human_collision_scrape_sound__speedToForce.x) && isMoving
       let desc = human_collision_scrape_sound__descs[human_collision_scrape_sound__descIdx] as Object

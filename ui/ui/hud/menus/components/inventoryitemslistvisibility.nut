@@ -1,5 +1,7 @@
-let { deep_clone, isEqual } = require("%sqstd/underscore.nut")
-let { floor, ceil, min, max } = require("math")
+from "%sqstd/underscore.nut" import deep_clone, isEqual
+
+from "math" import floor, ceil, min, max
+
 
 
 let scrollHandlerDataTemplate = {

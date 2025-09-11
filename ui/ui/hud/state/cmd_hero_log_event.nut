@@ -1,10 +1,12 @@
+from "%dngscripts/sound_system.nut" import sound_play
+
+from "%ui/hud/state/eventlog.nut" import pushPlayerEvent
+from "%ui/helpers/time.nut" import secondsToStringLoc
+from "dasevents" import CmdHeroLogExEvent, CmdHeroLogExEventLocal
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {pushPlayerEvent} = require("eventlog.nut")
-let {secondsToStringLoc} = require("%ui/helpers/time.nut")
-let {CmdHeroLogExEvent, CmdHeroLogExEventLocal} = require("dasevents")
-let {sound_play} = require("%dngscripts/sound_system.nut")
 
 ecs.register_es("cmd_hero_log_ex_event_es",
   { [[CmdHeroLogExEvent, CmdHeroLogExEventLocal]] = function onCmdHeroLogExEvent(evt, _eid, _comp) {

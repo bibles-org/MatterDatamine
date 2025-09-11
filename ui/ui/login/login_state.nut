@@ -1,20 +1,25 @@
+from "%sqGlob/userInfoState.nut" import userInfoUpdate
+from "%dngscripts/globalState.nut" import nestWatched
+
+from "eventbus" import eventbus_subscribe
+from "%ui/components/modalWindows.nut" import hideAllModalWindows
+import "steam" as steam
+from "auth" import token_renew_event, YU2_OK
+from "das.profile" import update_authorization_token
+
 from "%ui/ui_library.nut" import *
 
-let {eventbus_subscribe} = require("eventbus")
-let {userInfoUpdate, userInfo} = require("%sqGlob/userInfoState.nut")
-let {hideAllModalWindows} = require("%ui/components/modalWindows.nut")
-let steam = require("steam")
-let { token_renew_event, YU2_OK } = require("auth")
-let {nestWatched} = require("%dngscripts/globalState.nut")
+let { userInfo } = require("%sqGlob/userInfoState.nut")
 
 let isSteamRunning = nestWatched("isSteamRunning", steam.is_running())
-let isLoggedIn = keepref(Computed(@() userInfo.value != null))
+let isLoggedIn = keepref(Computed(@() userInfo.get() != null))
 let linkSteamAccount = nestWatched("linkSteamAccount", false)
 
 function logOut() {
   log("logout")
   hideAllModalWindows()
   userInfoUpdate(null)
+  update_authorization_token("")
 }
 
 console_register_command(logOut, "app.logout")
@@ -27,9 +32,9 @@ eventbus_subscribe(token_renew_event, function(res) {
   logOut()
 })
 
-return {
+return freeze({
   logOut
   isLoggedIn
   isSteamRunning
   linkSteamAccount
-}
+})

@@ -1,14 +1,12 @@
+from "math" import round
+
 from "%ui/ui_library.nut" import *
 
-let { round } = require("math")
-
-let thousandSeparator = @(textParams) {
-  rendObj = ROBJ_TEXT
-  text = ","
-}.__update(textParams)
+#allow-auto-freeze
 
 let calcWidth = memoize(@(text, font, fontSize) calc_str_box({rendObj = ROBJ_TEXT, text=text.tostring(), font, fontSize})[0])
 function animatedDigit(start, end, textParams, trigger, onFinish, height, digitAnimDuration) {
+  #forbid-auto-freeze
   let children = []
   let endAt = start >= end ? end + 10 : end
   let width = calcWidth(end, textParams.font, textParams.fontSize)
@@ -19,12 +17,12 @@ function animatedDigit(start, end, textParams, trigger, onFinish, height, digitA
       size = [width, height]
     }.__update(textParams))
   }
-
-  let startPos = const [0, 0]
+  #allow-auto-freeze
+  let startPos = static [0, 0]
   let endPos = [0, -(endAt - start) * height]
   let idleTrigger = $"{trigger}_stop"
   return {
-    size = const [SIZE_TO_CONTENT, flex()]
+    size = FLEX_V
     clipChildren = true
     key = endAt
     children = {
@@ -55,9 +53,8 @@ function animateNumbers(value, textParams, animParams = {}) {
 
   let metrics = get_font_metrics(font, fontSize)
   let { lowercaseHeight } = metrics
-
+  #forbid-auto-freeze
   let digits = []
-  local thousandsPositionCnt = 0
   while (value > 0) {
     let digit = value % 10
     let startDigit = startValue % 10
@@ -67,19 +64,15 @@ function animateNumbers(value, textParams, animParams = {}) {
         round(lowercaseHeight), digitAnimDuration))
     value = (value / 10).tointeger()
     startValue = (startValue / 10).tointeger()
-
-    thousandsPositionCnt += 1
-    if (value > 0 && (thousandsPositionCnt % 3 == 0))
-      digits.append(thousandSeparator(textParams))
   }
-
+  #allow-auto-freeze
   return {
-    size = const [SIZE_TO_CONTENT, lowercaseHeight]
-    transform = const {}
+    size = [SIZE_TO_CONTENT, lowercaseHeight]
+    transform = static {}
     flow = FLOW_HORIZONTAL
     animations = scaleDuration <= 0 ? null : [
       {
-        prop = AnimProp.scale, from = const [1, 1], to = bigScale, easing = CosineFull
+        prop = AnimProp.scale, from = static [1, 1], to = bigScale, easing = CosineFull
         duration = scaleDuration, trigger = triggerScale, onFinish
       }
     ]

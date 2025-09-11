@@ -1,6 +1,5 @@
 require ecs
 require ecs.common
-require app
 
 
 [es(tag=sound, on_appear, REQUIRE=vehicleWithWatched)]

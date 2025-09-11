@@ -14,3 +14,13 @@ entity{
   _template:t="envi_cover_template"
   envi_cover:b=yes
 }
+
+entity{
+  _template:t="volfog_nbs"
+  volfog_nbs__rootGraph:t="fog_dalniy_island_sparse.json"
+}
+
+entity{
+  _template:t="envi_cover_nbs"
+  envi_cover_nbs__rootGraph:t="envi_cover_dalniy_island_sparse.json"
+}

@@ -1,17 +1,21 @@
 mass:r=500
 objDestroyMass:r=10000
-momentOfInertia:p3=0, 0.3, 0
-centerOfMass:p3=0, 0.3, 0
+momentOfInertia:p3=0.4, 0.4, 0.4
+centerOfMass:p3=0, -0.2, 0
 physMat:t="walkRay"
 useFutureContacts:b=yes
 logCCD:b=no
 addToWorld:b=yes
 skipUpdateOnSleep:b=yes
 sleepUpdateFrequency:i=10
-boundingRadius:r=0.5
+boundingRadius:r=0.6
+omegaMovementDamping:r=0.99
+linearDamping:r=0.01
+explodeHitPower:r=200
+explodeRadius:p2=0.5, 9
 
 solver{
-  energyConservation:r=0.5
+  energyConservation:r=0.7
   erp:r=0
   linear_slop:r=0.01
   baumgarteBias:r=0.4
@@ -19,11 +23,9 @@ solver{
 }
 
 collisionResource{
-  props{
-    cls_sphere:t="convex_hull"
-  }
+  forceConvexHull:b=yes
 }
 
 ccdSpheres{
-  ccd:p4=0, 0.25, 0, 0.5
+  ccd:p4=0, 0, 0, 0.5
 }

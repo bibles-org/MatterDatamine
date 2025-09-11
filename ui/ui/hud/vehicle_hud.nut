@@ -1,13 +1,13 @@
+from "%ui/fonts_style.nut" import fontawesome, basic_text_shadow
+from "math" import fabs
+from "%ui/components/commonComponents.nut" import mkText
 from "%ui/ui_library.nut" import *
+import "%ui/components/fontawesome.map.nut" as fa
 
-let { fontawesome, basic_text_shadow } = require("%ui/fonts_style.nut")
-let {fabs} = require("math")
-let {isDriver, inShip, inPlane} = require("%ui/hud/state/vehicle_state.nut")
+let { isDriver, inShip, inPlane } = require("%ui/hud/state/vehicle_state.nut")
 let {gear, neutralGear, rpm, speed, isAutomaticTransmission,
   bodyHpRel, engineHpRel, transmissionHpRel} = require("%ui/hud/state/vehicle_view_state.nut")
-let {vehicleFuel, vehicleMaxFuel, vehicleFuelAlert }= require("%ui/hud/state/vehicle_fuel_state.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
-let fa = require("%ui/components/fontawesome.map.nut")
+let { vehicleFuel, vehicleMaxFuel, vehicleFuelAlert } = require("%ui/hud/state/vehicle_fuel_state.nut")
 
 
 let colorFg = Color(235, 120, 40)
@@ -34,7 +34,7 @@ let mkGear = @(g, neutral) g < neutral ? $"R{g == 0 ? "" : neutral-g}" : g == ne
 function mkProgressBar(value, maxValue, fgColor, bgColor) {
   return @(){
     size = pbSize
-    margin = [0,0,0, hdpx(2)]
+    margin = static [0,0,0, hdpx(2)]
     vplace = ALIGN_CENTER
     rendObj = ROBJ_SOLID
     color = bgColor
@@ -44,7 +44,7 @@ function mkProgressBar(value, maxValue, fgColor, bgColor) {
       rendObj = ROBJ_SOLID
       color = fgColor
       transform = {
-        scale = [maxValue.value > 0 ? (value.value / maxValue.value) : 0, 1.0]
+        scale = [maxValue.get() > 0 ? (value.get() / maxValue.get()) : 0, 1.0]
         pivot = [0.0, 0.5]
       }
     }
@@ -57,7 +57,7 @@ function fuelPb(){
     vplace = ALIGN_CENTER
     watch = [vehicleFuelAlert]
     children = [
-      vehicleFuelAlert.value ? {
+      vehicleFuelAlert.get() ? {
         rendObj = ROBJ_SOLID
         color = colorFg
         size = [pbSize[0] + hdpx(4), pbSize[1] + hdpx(4)]
@@ -87,7 +87,7 @@ function mkDamagedPartIcon(icon_name, hp_rel, icon_scale = 1.0){
   return @(){
     rendObj = ROBJ_IMAGE
     image = Picture("!ui/skin#{0}.svg:{1}:{1}:K".subst(icon_name, sh(3)))
-    size = [iconSize, iconSize]
+    size = iconSize
     vplace = ALIGN_CENTER
     hplace = ALIGN_CENTER
     color = getDamagedPartIconColor(hp_rel)
@@ -109,50 +109,50 @@ function mkDamagedPartIconFontAwesome(icon_name, hp_rel, icon_scale = 1.0){
 }
 let noHpColor = Color(255, 10, 10)
 return @() {
-  size = flex()
+  size = FLEX_H
   flow = FLOW_VERTICAL
   watch = [gear, rpm, speed, isAutomaticTransmission, isDriver, bodyHpRel, engineHpRel, transmissionHpRel]
-  children = !isDriver.value || inShip.value || inPlane.value ? null : [
+  children = !isDriver.get() || inShip.get() || inPlane.get() ? null : [
     mkRow([
       mkLabel(loc("hud/vehicle_gb_type", "Gearbox manager"))
-      isAutomaticTransmission.value
+      isAutomaticTransmission.get()
         ? mkText(loc("hud/vehicle_gb_at", "Game"))
         : mkText(loc("hud/vehicle_gb_manual", "Player"), { color = Color(64, 255, 64) })
     ])
     mkRow([
       mkLabel(loc("hud/vehicle_gear", "Gear"))
-      isAutomaticTransmission.value || gear.value != neutralGear.value
-        ? mkText(mkGear(gear.value, neutralGear.value))
-        : mkText(mkGear(gear.value, neutralGear.value), { color = Color(255, 64, 64) })
+      isAutomaticTransmission.get() || gear.get() != neutralGear.get()
+        ? mkText(mkGear(gear.get(), neutralGear.get()))
+        : mkText(mkGear(gear.get(), neutralGear.get()), { color = Color(255, 64, 64) })
     ])
     mkRow([
       mkLabel(loc("hud/vehicle_rpm", "RPM"))
-      mkText($"{rpm.value}")
+      mkText($"{rpm.get()}")
     ])
     mkRow([
       mkLabel(loc("hud/vehicle_speed", "SPD"))
-      mkText("{0} {1}".subst(fabs(speed.value ?? 0), loc("hud/vehicle_spd_dimension", "km/h")))
+      mkText("{0} {1}".subst(fabs(speed.get() ?? 0), loc("hud/vehicle_spd_dimension", "km/h")))
     ])
-    vehicleMaxFuel.value > 0 ?
+    vehicleMaxFuel.get() > 0 ?
       mkRow([
         mkLabel(loc("hud/vehicle_fuel", "Fuel"))
         fuelPb()
       ]) : null
     mkRow([
-      bodyHpRel.value<= damagePartWarningColorPecent ? mkDamagedPartIconFontAwesome("automobile", bodyHpRel.value) : null
-      engineHpRel.value <= damagePartWarningColorPecent ? mkDamagedPartIcon("engine", engineHpRel.value) : null
-      transmissionHpRel.value <= damagePartWarningColorPecent ? mkDamagedPartIconFontAwesome("gears", transmissionHpRel.value) : null
-      vehicleMaxFuel.value > 0 && vehicleFuel.value / vehicleMaxFuel.value <= damagePartWarningColorPecent ? mkDamagedPartIcon("gas-station", vehicleFuel.value / vehicleMaxFuel.value, 0.8) : null
+      bodyHpRel.get()<= damagePartWarningColorPecent ? mkDamagedPartIconFontAwesome("automobile", bodyHpRel.get()) : null
+      engineHpRel.get() <= damagePartWarningColorPecent ? mkDamagedPartIcon("engine", engineHpRel.get()) : null
+      transmissionHpRel.get() <= damagePartWarningColorPecent ? mkDamagedPartIconFontAwesome("gears", transmissionHpRel.get()) : null
+      vehicleMaxFuel.get() > 0 && vehicleFuel.get() / vehicleMaxFuel.get() <= damagePartWarningColorPecent ? mkDamagedPartIcon("gas-station", vehicleFuel.get() / vehicleMaxFuel.get(), 0.8) : null
       ], 5.0)
-    engineHpRel.value <= 0.0 ?
+    engineHpRel.get() <= 0.0 ?
       mkRow([
         mkText(loc("hud/vehicle_engine_broken", "Engine is broken"), { color = noHpColor })
       ]) : null
-    transmissionHpRel.value <= 0.0 ?
+    transmissionHpRel.get() <= 0.0 ?
       mkRow([
         mkText(loc("hud/vehicle_transmission_broken", "Transmission is broken"), { color = noHpColor })
       ]) : null
-    bodyHpRel.value <= 0.0 ?
+    bodyHpRel.get() <= 0.0 ?
       mkRow([
         mkText(loc("hud/vehicle_car_broken", "Car is broken"), { color = noHpColor })
       ]) : null

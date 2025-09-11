@@ -52,21 +52,19 @@ akm_47_gun{
   item__proto:t="akm_47_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="akm_47_gun"
   item__name:t="items/akm_47"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=3.1
-  item__volume:r=26
+  item__volume:i=260
   item__marketPrice:i=3400
   gun__altReloadTime:r=1.8
-  gun__ammoInspectionInOutDuration:p2=1.8, 1.4
-  gun__ammoInspectionIdleLoopDuration:r=9.6
+  gun__ammoInspectionInOutDuration:p2=1.4, 2.2
+  gun__ammoInspectionIdleLoopDuration:r=8.2
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__hitTagPower:r=0.8
-  gun__length:r=0.415
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.055
-  gun__recoilDirAmount:r=0.68
+  gun__recoilAmount:r=0.15
+  gun__recoilDirAmount:r=0.7
   gun__recoilDir:r=0.2
   gun__visualRecoilMult:r=1.6
   gun_boxed_ammo_reload__batchReloadTime:r=2.3
@@ -81,6 +79,7 @@ akm_47_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_7_62x39_magazine"
+  gun__projectileTemplate:t="bullet_projectile_7_62x39"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -90,9 +89,8 @@ akm_47_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[0.000815562, -0.032988, 0.999456] [-0.0111868, 0.999393, 0.0329952] [-0.999937, -0.0112075, 0.000446039] [-0.123653, 0.0580902, -0.0644531]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     scope:t="scope_dovetail_high_slot"
     magazine:t="akm_47_magazine_slot"
@@ -163,23 +161,23 @@ akm_47_gun{
   }
 
   "gun_reload__unequipMagazineTime:list<r>"{
-    simple:r=2.3
-    alt:r=2.3
+    simple:r=1.5
+    alt:r=1.5
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
-    simple:r=3
-    alt:r=2.5
+    simple:r=2.6
+    alt:r=1.9
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
-    simple:r=1
-    alt:r=1
+    simple:r=0.8
+    alt:r=0.8
   }
 
   "gun_reload__swapEquipMagazineTime:list<r>"{
-    simple:r=3
-    alt:r=2.5
+    simple:r=2.1
+    alt:r=1.4
   }
 
   gun_flash_fx{
@@ -188,12 +186,12 @@ akm_47_gun{
 
   anim_phys{}
   "gun_aim_offset__gunOffsets:list<p3>"{
-    stand:p3=0.07, -0.06, 0.03
-    crouch:p3=0.07, -0.06, 0.03
-    crawl:p3=0.07, -0.06, 0.03
+    stand:p3=0.06, -0.06, 0.01
+    crouch:p3=0.06, -0.06, 0.01
+    crawl:p3=0.06, -0.06, 0.01
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.176025, 0.0596466, 0]]
@@ -209,12 +207,13 @@ akm_47_gun{
 akm_47_rust_gun{
   _use:t="akm_47_gun"
   item__proto:t="akm_47_rust_gun"
-  item__weapTemplate:t="akm_47_rust_gun"
   item__name:t="items/akm_47_rust"
   item__marketPrice:i=100
-  gun_boxed_ammo_reload__batchReloadTime:r=3
+  gun__recoilAmount:r=0.165
+  gun__visualRecoilMult:r=1.7
+  gun_boxed_ammo_reload__batchReloadTime:r=2.8
   gun__shotFreq:r=9
-  gun__kineticDamageMult:r=0.8
+  gun__kineticDamageMult:r=0.9
   gun_spread__maxDeltaAngle:r=1.4
   gun_jamming__jamChance:r=0.075
   profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
@@ -262,6 +261,11 @@ akm_47_rust_gun{
     "fixJamming:object"{
       path:t="/weapon/mgun/ak_47_rusty/stovepipe"
     }
+
+    "shell_drop:object"{
+      path:t="player/weapon/_common/shell_drop"
+      type:t="matUnderFeet"
+    }
   }
 }
 
@@ -269,7 +273,6 @@ akm_47_civil_gun{
   _use:t="akm_47_gun"
   gun__blk:t="gamedata/weapons/akm_47_civil.blk"
   item__proto:t="akm_47_civil_gun"
-  item__weapTemplate:t="akm_47_civil_gun"
   item__name:t="items/akm_47_civil"
   item__weapType:t="semiauto"
   item__marketPrice:i=4850
@@ -285,8 +288,6 @@ akm_47_civil_gun{
   "gun__firingModeNames:array"{
     mode:t="semi_auto"
   }
-
-  "item__cantBeCorrupted:tag"{}
 }
 
 ak_103_magazine_slot{
@@ -332,24 +333,22 @@ ak_103_gun{
   item__proto:t="ak_103_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="ak_103_gun"
   item__name:t="items/ak_103"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=3.6
-  item__volume:r=26
+  item__volume:i=260
   item__marketPrice:i=5250
   gun__boltFreq:r=9
-  gun__ammoInspectionInOutDuration:p2=1.8, 1.4
+  gun__ammoInspectionInOutDuration:p2=3, 2.26
   gun__ammoInspectionIdleLoopDuration:r=8.3
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__hitTagPower:r=0.8
-  gun__length:r=0.415
-  _tracked:t="gun__length"
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.051
-  gun__recoilDirAmount:r=0.71
+  gun__recoilAmount:r=0.135
+  gun__recoilDirAmount:r=0.735
   gun__recoilDir:r=0.1
-  gun__visualRecoilMult:r=1
+  gun__recoilControlMult:r=0.35
+  gun__visualRecoilMult:r=1.45
   gun_boxed_ammo_reload__batchReloadTime:r=2.7
   gun__shotFreq:r=10
   gun__sightsDistance:r=0.3
@@ -362,6 +361,7 @@ ak_103_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_7_62x39_magazine"
+  gun__projectileTemplate:t="bullet_projectile_7_62x39"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -371,12 +371,14 @@ ak_103_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[3.57628e-07, 2.79397e-09, 1] [-8.88178e-16, 0.999999, -2.79397e-09] [-1, 0, 3.57628e-07] [-0.23, 0.0406791, -0.0696411]]
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  item__nexusCost:i=550
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     scope:t="scope_dovetail_high_slot"
     silencer:t="silencer_pbs1_slot"
     magazine:t="ak_103_magazine_slot"
+    stock:t="ak_stock_slot"
   }
 
   "gun__shells:array"{
@@ -448,24 +450,28 @@ ak_103_gun{
     n:t="ak103_762_mag"
   }
 
+  "gun__defaultStockNodes:list<t>"{
+    n:t="ak103_butt"
+  }
+
   "gun_reload__unequipMagazineTime:list<r>"{
-    simple:r=2.3
-    alt:r=2.3
+    simple:r=1.8
+    alt:r=1.6
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
-    simple:r=3.5
-    alt:r=2.8
+    simple:r=2.8
+    alt:r=1.9
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
-    simple:r=1.2
-    alt:r=1.2
+    simple:r=0.9
+    alt:r=1
   }
 
   "gun_reload__swapEquipMagazineTime:list<r>"{
-    simple:r=3.5
-    alt:r=2.8
+    simple:r=2.4
+    alt:r=1.5
   }
 
   gun_flash_fx{
@@ -479,7 +485,7 @@ ak_103_gun{
     crawl:p3=0.07, -0.06, -0.06
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.269203, 0.0503123, 0]]
@@ -524,11 +530,10 @@ sks_carbine_gun{
   item__proto:t="sks_carbine_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="sks_carbine_gun"
   item__name:t="items/sks_carbine"
   item__weapType:t="semiauto"
   item__baseWeight:r=3.75
-  item__volume:r=28
+  item__volume:i=280
   item__marketPrice:i=2100
   gun_shell_ejection__timeMult:r=0.35
   gun_shell_ejection__templateName:t="762_39_ejected_shell"
@@ -536,15 +541,16 @@ sks_carbine_gun{
   gun__boltFreq:r=6
   gun__hitTagDurationMult:r=3
   gun__hitTagPower:r=0.7
-  gun__length:r=0.52
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.11
-  gun__recoilDirAmount:r=0.74
+  gun__recoilAmount:r=0.145
+  gun__recoilDirAmount:r=0.71
+  gun__recoilDir:r=0
+  gun__recoilControlMult:r=0.35
+  gun__visualRecoilMult:r=1.6
   gun__shotFreq:r=3.333
   gun__sightsDistance:r=0.1
   gun__statName:t="semiauto"
   gun__useLocalPlayerTracer:b=no
-  gun__visualRecoilMult:r=1
   gun_spread__maxDeltaAngle:r=0.016
   weapon__aimNodeOffset:r=0.3
   dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
@@ -552,11 +558,12 @@ sks_carbine_gun{
   gun__maxAmmo:i=10
   gun__boxedAmmoHolderTemplate:t="box_7_62x39_magazine"
   gun_boxed_ammo_reload__loadPrepareTime:r=1.2
-  gun_boxed_ammo_reload__loadLoopTime:r=1.1
-  gun_boxed_ammo_reload__loadPostTime:r=1.4
+  gun_boxed_ammo_reload__loadLoopTime:r=0.86
+  gun_boxed_ammo_reload__loadPostTime:r=1.43
   gun_boxed_ammo_reload__unloadPrepareTime:r=0.73
   gun_boxed_ammo_reload__unloadLoopTime:r=0.6
   gun_boxed_ammo_reload__unloadPostTime:r=1.1
+  gun__projectileTemplate:t="bullet_projectile_7_62x39"
   _use:t="gun_sound_with_animchar"
   _use:t="rifle_gun_aim_sound"
   _use:t="rifle_gun_shot_dry_sound"
@@ -565,9 +572,8 @@ sks_carbine_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.25, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.254005, 0.0334778, -0.0665359]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
-  "animchar__actOnDemand:tag"{}
   "gun__ammoHolders:list<t>"{
     ammoHolders:t="mosin_magazine"
     ammoHolders:t="box_7_62x39_magazine"
@@ -612,6 +618,11 @@ sks_carbine_gun{
     "reload3:object"{
       path:t="/weapon/rifle/sks/reload3/change_ammo"
     }
+
+    "shell_drop:object"{
+      hero:t="player/weapon/_common/shell_out"
+      type:t="matUnderFeet"
+    }
   }
 
   gun_flash_fx{
@@ -625,7 +636,7 @@ sks_carbine_gun{
     crawl:p3=0.07, -0.04, -0.08
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.184769, 0.0295715, 0]]
@@ -643,9 +654,10 @@ sks_carbine_rust_gun{
   animchar__res:t="sks_rust_char"
   collres__res:t="sks_rust_collision"
   item__proto:t="sks_carbine_rust_gun"
-  item__weapTemplate:t="sks_carbine_rust_gun"
   item__name:t="items/sks_carbine_rust"
   item__marketPrice:i=100
+  gun__recoilAmount:r=0.16
+  gun__visualRecoilMult:r=1.7
   gun__shotFreq:r=3.7
   gun__kineticDamageMult:r=0.8
   gun_spread__maxDeltaAngle:r=1.2
@@ -675,6 +687,11 @@ sks_carbine_rust_gun{
     "reload3:object"{
       path:t="/weapon/rifle/sks_rust/reload3/change_ammo"
     }
+
+    "shell_drop:object"{
+      hero:t="player/weapon/_common/shell_out"
+      type:t="matUnderFeet"
+    }
   }
 }
 
@@ -685,10 +702,10 @@ sks_carbine_hunt_gun{
   animchar__res:t="op_sks_char"
   collres__res:t="op_sks_collision"
   item__proto:t="sks_carbine_hunt_gun"
-  item__weapTemplate:t="sks_carbine_hunt_gun"
   item__name:t="items/sks_carbine_hunt"
   item__marketPrice:i=100
   _use:t="gun_with_gun_mods"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "gun_mods__slots:shared:object"{
     scope:t="scope_dovetail_slot"
@@ -732,28 +749,26 @@ makarov_gun{
   item__proto:t="makarov_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="makarov_gun"
   item__name:t="items/makarov"
   item__weapType:t="pistol"
   item__baseWeight:r=0.73
-  item__volume:r=6
+  item__volume:i=60
   item__marketPrice:i=400
   gun_shell_ejection__templateName:t="9x18_ejected_shell"
   gun__adsSpeedMult:r=1.2
   gun__boltFreq:r=5
   gun__altReloadTime:r=1.6
-  gun__ammoInspectionInOutDuration:p2=1.176, 1.176
-  gun__ammoInspectionIdleLoopDuration:r=10
+  gun__ammoInspectionInOutDuration:p2=2.067, 1
+  gun__ammoInspectionIdleLoopDuration:r=10.76
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__deviationInFireReady:r=2.5
   gun__equipTime:r=0.25
   gun__holsterTime:r=0.35
   gun__minHolsterTime:r=0.3
-  gun__length:r=0.09
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.07
-  gun__recoilDirAmount:r=0.5
-  gun__recoilDir:r=0.4
+  gun__recoilAmount:r=0.1
+  gun__recoilDirAmount:r=0.6
+  gun__recoilDir:r=0.3
   gun__visualRecoilMult:r=1
   weapon__aimNodeOffset:r=0.2
   gun_boxed_ammo_reload__batchReloadTime:r=2
@@ -766,6 +781,7 @@ makarov_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_9mm_magazine"
+  gun__projectileTemplate:t="bullet_projectile_9x18"
   _use:t="gun_sound_with_animchar"
   _use:t="gun_shot_dry_sound"
   meleeSoundType:t="pistol"
@@ -774,9 +790,9 @@ makarov_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.25, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[-0.015613, -0.191174, 0.981432] [0.451507, 0.874431, 0.177514] [-0.892132, 0.445895, 0.0726639] [-0.0418701, 0.0178223, -0.0683594]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  item__nexusCost:i=125
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     silencer:t="cal_9_18_silencer_slot"
     magazine:t="makarov_magazine_slot"
@@ -874,7 +890,7 @@ makarov_gun{
     crawl:p3=0.09, -0.05, 0.1
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_c"
       tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [0.0164795, 0.0444336, 0]]
@@ -885,9 +901,9 @@ makarov_gun{
 makarov_rust_gun{
   _use:t="makarov_gun"
   item__proto:t="makarov_rust_gun"
-  item__weapTemplate:t="makarov_rust_gun"
   item__name:t="items/makarov_rust"
   item__marketPrice:i=100
+  gun__recoilAmount:r=0.11
   gun_boxed_ammo_reload__batchReloadTime:r=2.4
   gun__shotFreq:r=6.2
   gun__kineticDamageMult:r=0.9
@@ -948,6 +964,7 @@ makarov_toy_gun{
   _use:t="makarov_gun"
   item__proto:t="makarov_toy_gun"
   item__name:t="items/makarov_toy"
+  gun__projectileTemplate:t="bullet_projectile_9x18"
   gun_shell_ejection__templateName:t=""
   gun_flash_fx__enabled:b=no
   loud_noise__noisePerShot:r=30
@@ -1028,23 +1045,22 @@ pp_19_vityaz_gun{
   item__proto:t="pp_19_vityaz_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="pp_19_vityaz_gun"
   item__name:t="items/pp_19_vityaz"
   item__weapType:t="submachine_gun"
   item__baseWeight:r=2.9
-  item__volume:r=18
+  item__volume:i=180
   item__marketPrice:i=2500
   gun__altReloadTime:r=1.9
-  gun__ammoInspectionInOutDuration:p2=1.66, 1.83
-  gun__ammoInspectionIdleLoopDuration:r=10.33
+  gun__ammoInspectionInOutDuration:p2=1.6, 1.8
+  gun__ammoInspectionIdleLoopDuration:r=10.3
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__crawlRecoilMult:r=0.8
-  gun__length:r=0.24
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.023
-  gun__recoilDirAmount:r=0.74
-  gun__recoilDir:r=0.15
-  gun__visualRecoilMult:r=1.4
+  gun__recoilAmount:r=0.09
+  gun__recoilDirAmount:r=0.77
+  gun__recoilDir:r=0.1
+  gun__recoilControlMult:r=0.25
+  gun__visualRecoilMult:r=1
   gun_boxed_ammo_reload__batchReloadTime:r=2.4
   gun__shotFreq:r=11
   gun__sightsDistance:r=0.05
@@ -1056,6 +1072,7 @@ pp_19_vityaz_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_9x19_magazine"
+  gun__projectileTemplate:t="bullet_projectile_9x19"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="gun_shot_dry_sound"
@@ -1065,12 +1082,13 @@ pp_19_vityaz_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74844e-07, 7.52844e-10, 1] [-0.00430576, 0.999991, 0] [-0.999991, -0.00430576, 1.74846e-07] [-0.106674, 0.0249925, -0.0615234]]
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     silencer:t="vityaz_silencer_slot"
     scope:t="scope_picatinny_short_slot"
     magazine:t="pp_19_vityaz_magazine_slot"
+    stock:t="ak_stock_slot"
   }
 
   "gun__shells:array"{
@@ -1138,24 +1156,28 @@ pp_19_vityaz_gun{
     n:t="mag_1_mesh"
   }
 
+  "gun__defaultStockNodes:list<t>"{
+    n:t="stock_mesh"
+  }
+
   "gun_reload__unequipMagazineTime:list<r>"{
-    simple:r=1.49
-    alt:r=1.33
+    simple:r=1.5
+    alt:r=1.3
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
     simple:r=2.9
-    alt:r=1.86
+    alt:r=1.8
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
-    simple:r=0.76
+    simple:r=0.7
     alt:r=0.8
   }
 
   "gun_reload__swapEquipMagazineTime:list<r>"{
     simple:r=2.4
-    alt:r=1.26
+    alt:r=1.2
   }
 
   gun_flash_fx{
@@ -1169,7 +1191,7 @@ pp_19_vityaz_gun{
     crawl:p3=0.06, -0.08, -0.07
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.074585, 0.0700684, 0]]
@@ -1224,24 +1246,23 @@ ak_12_gun{
   item__proto:t="ak_12_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="ak_12_gun"
   item__name:t="items/ak_12"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=3.4
-  item__volume:r=26
+  item__volume:i=260
   item__marketPrice:i=6500
   gun__adsSpeedMult:r=0.7
   gun__altReloadTime:r=2.3
-  gun__ammoInspectionInOutDuration:p2=1.8, 1.4
+  gun__ammoInspectionInOutDuration:p2=2.433, 2
   gun__ammoInspectionIdleLoopDuration:r=11.4
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__inertialMass:r=5
-  gun__length:r=0.415
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.042
-  gun__recoilDirAmount:r=0.77
+  gun__recoilAmount:r=0.105
+  gun__recoilDirAmount:r=0.8
+  gun__recoilControlMult:r=0.35
   gun__recoilDir:r=0.15
-  gun__visualRecoilMult:r=1.5
+  gun__visualRecoilMult:r=1.2
   gun__rotationSpringMult:p3=0.7, 3, 3
   gun_boxed_ammo_reload__batchReloadTime:r=2.8
   gun__shotFreq:r=10.833
@@ -1255,6 +1276,7 @@ ak_12_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_5_45x39_magazine"
+  gun__projectileTemplate:t="bullet_projectile_5_45x39"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="gun_shot_dry_sound"
@@ -1264,12 +1286,15 @@ ak_12_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[3.57628e-07, 0, 1] [0, 1, 0] [-1, 0, 3.57628e-07] [-0.155884, 0.031, -0.0675659]]
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  item__nexusCost:i=550
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     silencer:t="545_silencer_slot"
     scope:t="scope_picatinny_long_slot"
     magazine:t="ak_12_magazine_slot"
+    stock:t="ak_stock_slot"
+    underbarrel:t="underbarrel_picatinny_slot"
   }
 
   "gun__shells:array"{
@@ -1358,24 +1383,29 @@ ak_12_gun{
     n:t="follower"
   }
 
+  "gun__defaultStockNodes:list<t>"{
+    n:t="ak12_stock"
+    n:t="ak12_stock_pad"
+  }
+
   "gun_reload__unequipMagazineTime:list<r>"{
-    simple:r=2.8
-    alt:r=2.8
+    simple:r=1.6
+    alt:r=1.6
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
-    simple:r=3.2
-    alt:r=3
+    simple:r=2.8
+    alt:r=2.2
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
-    simple:r=1.1
-    alt:r=1.1
+    simple:r=0.7
+    alt:r=0.8
   }
 
   "gun_reload__swapEquipMagazineTime:list<r>"{
-    simple:r=2.2
-    alt:r=2
+    simple:r=2.4
+    alt:r=1.8
   }
 
   gun_flash_fx{
@@ -1389,7 +1419,7 @@ ak_12_gun{
     crawl:p3=0.07, -0.06, -0.02
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.19809, 0.0625, 0.0020752]]
@@ -1424,7 +1454,7 @@ as_val_gun{
   _use:t="gun_aim_node"
   _use:t="frontside_gun_node"
   _use:t="gun_entity_mods"
-  _use:t="magazine_gun_anim"
+  _use:t="magazine_gun_anim_v2"
   _use:t="base_gun_ammo_inspection"
   _use:t="weapon_slot_indexed"
   _use:t="delayed_move_weapon_mods"
@@ -1436,6 +1466,7 @@ as_val_gun{
   _use:t="camera_shake_on_shot_high_freq"
   _use:t="gun_check_weapon_magazine"
   _use:t="item_rarity_rare"
+  _use:t="gun_jamming"
   animchar__res:t="as_val_char"
   collres__res:t="as_val_collision"
   gun__blk:t="gamedata/weapons/as_val.blk"
@@ -1443,22 +1474,20 @@ as_val_gun{
   item__proto:t="as_val_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="as_val_gun"
   item__name:t="items/as_val"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=2.5
-  item__volume:r=24
+  item__volume:i=240
   item__marketPrice:i=4100
-  gun__ammoInspectionInOutDuration:p2=2, 2
+  gun__ammoInspectionInOutDuration:p2=2.6, 2.3
   gun__ammoInspectionIdleLoopDuration:r=8.3
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.75
-  gun__length:r=0.2
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.036
-  gun__recoilDirAmount:r=0.71
+  gun__recoilAmount:r=0.09
+  gun__recoilDirAmount:r=0.83
   gun__recoilDir:r=0.2
-  gun__visualRecoilMult:r=1.2
-  gun__recoilControlMult:r=0.3
+  gun__recoilControlMult:r=0.25
+  gun__visualRecoilMult:r=1.1
   gun_boxed_ammo_reload__batchReloadTime:r=3
   gun__shotFreq:r=15
   gun__sightsDistance:r=0.25
@@ -1472,6 +1501,7 @@ as_val_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_9x39_magazine"
+  gun__projectileTemplate:t="bullet_projectile_9x39"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="gun_shot_dry_sound"
@@ -1480,10 +1510,10 @@ as_val_gun{
   gun_flash_fx__enabled:b=yes
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
-  racked_weapon__transform:m=[[2.38419e-07, -2.79397e-09, 1] [0.0168475, 0.999858, -2.79397e-09] [-0.999858, 0.0168475, 2.38419e-07] [-0.300841, 0.0565186, -0.0690002]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  racked_weapon__transform:m=[[2.38419e-07, -2.79397e-09, 1] [0.0168475, 0.999858, -2.79397e-09] [-0.999858, 0.0168475, 2.38419e-07] [-0.0437445, 0.05, -0.0690002]]
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
+  item__nexusCost:i=600
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     scope:t="scope_dovetail_slot"
     magazine:t="as_val_magazine_slot"
@@ -1550,23 +1580,23 @@ as_val_gun{
   }
 
   "gun_reload__unequipMagazineTime:list<r>"{
-    simple:r=2.5
-    alt:r=2.5
+    simple:r=1.6
+    alt:r=1.8
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
-    simple:r=3
-    alt:r=3
+    simple:r=2.9
+    alt:r=2.2
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
-    simple:r=1.5
-    alt:r=1.5
+    simple:r=1.1
+    alt:r=1.1
   }
 
   "gun_reload__swapEquipMagazineTime:list<r>"{
-    simple:r=2.5
-    alt:r=2
+    simple:r=2.2
+    alt:r=1.8
   }
 
   gun_flash_fx{
@@ -1575,15 +1605,15 @@ as_val_gun{
 
   anim_phys{}
   "gun_aim_offset__gunOffsets:list<p3>"{
-    stand:p3=0.07, -0.05, -0.19
-    crouch:p3=0.07, -0.05, -0.19
-    crawl:p3=0.07, -0.05, -0.1
+    stand:p3=0.07, -0.05, 0.09
+    crouch:p3=0.07, -0.05, 0.09
+    crawl:p3=0.07, -0.05, 0.1
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
-      tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.271353, 0.0347245, 0]]
+      tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.168614, 0.0716128, 0]]
     }
 
     "rack:object"{
@@ -1611,7 +1641,7 @@ toz_b_gun{
   _use:t="weapon_slot_indexed"
   _use:t="long_rifle_move_inertion"
   _use:t="camera_shake_on_shot_heavy"
-  _use:t="rifle_carbine_muzzle_preset"
+  _use:t="shotgun_muzzle_preset"
   _use:t="racked_weapon"
   _use:t="hit_effect_group_medium"
   _use:t="shotgun_preset"
@@ -1622,24 +1652,23 @@ toz_b_gun{
   item__proto:t="toz_b_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="toz_b_gun"
   item__name:t="items/toz_b"
   item__weapType:t="shotgun"
   item__baseWeight:r=3.25
-  item__volume:r=28
+  item__volume:i=280
   item__marketPrice:i=1200
   gun_shell_ejection__timeMult:r=0.35
   gun__adsSpeedMult:r=0.8
   gun__chokeSpread:r=1.8
   gun__deviationInFireReady:r=2
-  gun__length:r=0.72
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.3
-  gun__recoilDir:r=0.15
-  gun__recoilDirAmount:r=0.8
-  gun__visualRecoilMult:r=1.3
+  gun__recoilAmount:r=0.25
+  gun__recoilDirAmount:r=0.7
+  gun__recoilDir:r=0
+  gun__recoilControlMult:r=0.85
+  gun__visualRecoilMult:r=1.8
   gun__recoilOffsMult:r=0.2
-  gun_boxed_ammo_reload__batchReloadTime:r=3.87
+  gun_boxed_ammo_reload__batchReloadTime:r=5.6
   gun__shotFreq:r=4
   gun__sightsDistance:r=0.05
   gun__statName:t="shotgun"
@@ -1653,9 +1682,18 @@ toz_b_gun{
   _use:t="batch_reload_on_empty"
   gun__maxAmmo:i=2
   gun__boxedAmmoHolderTemplate:t="box_12_gauge_magazine"
-  gun_boxed_ammo_reload__bulletByBulletReloadPrepareTime:r=1
-  gun_boxed_ammo_reload__bulletByBulletReloadLoopTime:r=1
-  gun_boxed_ammo_reload__bulletByBulletReloadPostTime:r=1.3
+  gun_boxed_ammo_reload__bulletByBulletReloadPrepareTime:r=1.3
+  gun_boxed_ammo_reload__bulletByBulletReloadLoopTime:r=0
+  gun_boxed_ammo_reload__bulletByBulletReloadPostTime:r=2.9
+  gun_boxed_ammo_reload__loadPrepareTime:r=1.2
+  gun_boxed_ammo_reload__loadLoopTime:r=1.1
+  gun_boxed_ammo_reload__loadPostTime:r=1.4
+  gun_boxed_ammo_reload__unloadPrepareTime:r=4
+  gun_boxed_ammo_reload__unloadLoopTime:r=0
+  gun_boxed_ammo_reload__unloadPostTime:r=0
+  gun__ammoInspectionInOutDuration:p2=1.38, 1.84
+  gun__ammoInspectionIdleLoopDuration:r=4.14
+  gun__projectileTemplate:t="bullet_projectile_12"
   _use:t="gun_sound_with_animchar"
   _use:t="rifle_gun_aim_sound"
   _use:t="rifle_gun_shot_dry_sound"
@@ -1664,14 +1702,15 @@ toz_b_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.25, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74842e-07, -1.25237e-09, 1] [0.00716272, 0.999974, 0] [-0.999974, 0.00716272, 1.74846e-07] [-0.270752, 0.0670319, -0.0658722]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  item__nexusCost:i=300
 
-  "animchar__actOnDemand:tag"{}
   "gun__ammoHolders:list<t>"{
     ammoHolders:t="m30_luftwaffe_drilling_magazine"
     ammoHolders:t="box_12_gauge_magazine"
   }
 
+  "gun_boxed_ammo_reload__unloadEnabled:tag"{}
   "gun__shells:array"{
     shells:t="gamedata/weapons/bullets/12_gauge.blk"
   }
@@ -1717,6 +1756,11 @@ toz_b_gun{
     "boltAction:object"{
       path:t="/weapon/rifle/toz_b/bolt_action"
     }
+
+    "shell_drop:object"{
+      hero:t="player/weapon/_common/12_gauge_shell_out"
+      type:t="matUnderFeet"
+    }
   }
 
   gun_flash_fx{
@@ -1730,7 +1774,7 @@ toz_b_gun{
     crawl:p3=0.07, -0.05, -0.02
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.313988, 0.00709534, 0]]
@@ -1773,20 +1817,19 @@ mosin_m44_gun{
   item__proto:t="mosin_m44_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="mosin_m44_gun"
   item__name:t="items/mosin_m44"
   item__weapType:t="rifle"
   item__baseWeight:r=3.4
-  item__volume:r=28
+  item__volume:i=280
   item__marketPrice:i=1400
   gun_shell_ejection__templateName:t="762_54r_ejected_shell"
   gun__integratedBayonet:b=yes
-  gun__length:r=0.51
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.13
-  gun__recoilDirAmount:r=0.8
-  gun__recoilDir:r=0.4
-  gun__visualRecoilMult:r=1.3
+  gun__recoilAmount:r=0.15
+  gun__recoilDirAmount:r=0.6
+  gun__recoilDir:r=0.05
+  gun__recoilControlMult:r=0.3
+  gun__visualRecoilMult:r=1.6
   gun__shotFreq:r=0.6
   gun__boltFreq:r=0.6
   gun__sightsDistance:r=0.1
@@ -1804,6 +1847,7 @@ mosin_m44_gun{
   gun_boxed_ammo_reload__unloadPrepareTime:r=0.4
   gun_boxed_ammo_reload__unloadLoopTime:r=0.83
   gun_boxed_ammo_reload__unloadPostTime:r=0.63
+  gun__projectileTemplate:t="bullet_projectile_7_62x54"
   _use:t="gun_sound_with_animchar"
   _use:t="rifle_gun_aim_sound"
   _use:t="rifle_gun_shot_dry_sound"
@@ -1812,9 +1856,8 @@ mosin_m44_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.05, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[-5.96047e-08, 0, 1] [0, 1, 0] [-1, 0, -5.96047e-08] [-0.214798, 0.0365753, -0.066013]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
-  "animchar__actOnDemand:tag"{}
   "gun_shell_ejection__onShootRelease:tag"{}
   "gun__ammoHolders:list<t>"{
     ammoHolders:t="mosin_magazine"
@@ -1875,6 +1918,11 @@ mosin_m44_gun{
       hero:t="player/weapon/_common/clip_drop"
       type:t="matUnderFeet"
     }
+
+    "shell_drop:object"{
+      hero:t="player/weapon/_common/shell_out"
+      type:t="matUnderFeet"
+    }
   }
 
   gun_flash_fx{
@@ -1888,7 +1936,7 @@ mosin_m44_gun{
     crawl:p3=0.07, -0.05, -0.1
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.14825, 0.023216, 0]]
@@ -1904,9 +1952,10 @@ mosin_m44_gun{
 mosin_m44_rust_gun{
   _use:t="mosin_m44_gun"
   item__proto:t="mosin_m44_rust_gun"
-  item__weapTemplate:t="mosin_m44_rust_gun"
   item__name:t="items/mosin_m44_rust"
   item__marketPrice:i=100
+  gun__recoilAmount:r=0.165
+  gun__visualRecoilMult:r=1.7
   gun__shotFreq:r=0.55
   gun__kineticDamageMult:r=0.8
   gun_spread__maxDeltaAngle:r=1.2
@@ -1916,8 +1965,6 @@ mosin_m44_rust_gun{
   "animchar__objTexReplace:object"{
     "mosin_m_44_main_tex_d*":t="mosin_m44_main_rust_tex_d*"
     "mosin_m_44_main_tex_n*":t="mosin_m44_main_rust_tex_n*"
-    "scope_pu_tex_d*":t="scope_pu_rust_tex_d*"
-    "scope_pu_tex_n*":t="scope_pu_rust_tex_n*"
   }
 }
 
@@ -1927,17 +1974,21 @@ mosin_m91_gun{
   animchar__res:t="mosin_m91_char"
   collres__res:t="mosin_m91_collision"
   item__proto:t="mosin_m91_gun"
-  item__weapTemplate:t="mosin_m91_gun"
   item__name:t="items/mosin_m91"
   item__baseWeight:r=4
-  item__volume:r=30
+  item__volume:i=300
   item__marketPrice:i=100
-  gun__length:r=0.73
+  gun__recoilAmount:r=0.145
+  gun__recoilDirAmount:r=0.6
+  gun__recoilDir:r=0.05
+  gun__recoilControlMult:r=0.3
+  gun__visualRecoilMult:r=1.6
   gun_spread__maxDeltaAngle:r=0.02
-  gun__ammoInspectionInOutDuration:p2=1.3, 1.46
-  gun__ammoInspectionIdleLoopDuration:r=3.7
+  gun__ammoInspectionInOutDuration:p2=1.43, 1.46
+  gun__ammoInspectionIdleLoopDuration:r=3.56
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   _use:t="gun_with_gun_mods"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gun_mods__slots:shared:object"{
     scope:t="scope_kochetov_slot"
@@ -1966,15 +2017,21 @@ mosin_m91_gun{
       hero:t="player/weapon/_common/clip_drop"
       type:t="matUnderFeet"
     }
+
+    "shell_drop:object"{
+      hero:t="player/weapon/_common/shell_out"
+      type:t="matUnderFeet"
+    }
   }
 }
 
 mosin_m91_rust_gun{
   _use:t="mosin_m91_gun"
   item__proto:t="mosin_m91_rust_gun"
-  item__weapTemplate:t="mosin_m91_rust_gun"
   item__name:t="items/mosin_m91_rust"
   item__marketPrice:i=100
+  gun__recoilAmount:r=0.16
+  gun__visualRecoilMult:r=1.7
   gun__shotFreq:r=0.55
   gun__kineticDamageMult:r=0.8
   gun_spread__maxDeltaAngle:r=1.1
@@ -1984,8 +2041,6 @@ mosin_m91_rust_gun{
   "animchar__objTexReplace:object"{
     "mosin_m91_tex_d*":t="mosin_m91_rust_tex_d*"
     "mosin_m91_tex_n*":t="mosin_m91_rust_tex_n*"
-    "scope_pu_tex_d*":t="scope_pu_rust_tex_d*"
-    "scope_pu_tex_n*":t="scope_pu_rust_tex_n*"
   }
 
   "gun_mods__slots:shared:object"{}
@@ -2026,11 +2081,10 @@ stechkin_gun{
   item__proto:t="stechkin_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="stechkin_gun"
   item__name:t="items/stechkin"
   item__weapType:t="pistol"
   item__baseWeight:r=1.02
-  item__volume:r=7
+  item__volume:i=70
   item__marketPrice:i=500
   gun__adsSpeedMult:r=1.2
   gun__altReloadTime:r=1.6
@@ -2041,7 +2095,6 @@ stechkin_gun{
   gun__equipTime:r=0.25
   gun__holsterTime:r=0.35
   gun__minHolsterTime:r=0.3
-  gun__length:r=0.2
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.065
   gun__recoilControlMult:r=0.6
@@ -2077,6 +2130,7 @@ stechkin_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_9mm_magazine"
+  gun__projectileTemplate:t="bullet_projectile_9x18"
   _use:t="gun_sound_with_animchar"
   _use:t="gun_shot_dry_sound"
   meleeSoundType:t="pistol"
@@ -2085,12 +2139,11 @@ stechkin_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.25, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[-5.96047e-08, 0, 1] [0, 1, 0] [-1, 0, -5.96047e-08] [-0.330159, 0.0210619, -0.0666454]]
-  profile_server_data__enrichmentResearchAddChance:r=1
   item__iconPitch:r=0
   item__iconRoll:r=-10
   item__iconYaw:r=50
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     magazine:t="stechkin_magazine_slot"
   }
@@ -2180,7 +2233,7 @@ stechkin_gun{
     crawl:p3=0, 0, 0.2
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.260861, 0.00890745, 0]]
@@ -2228,11 +2281,10 @@ tt_gun{
   item__proto:t="tt_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="tt_gun"
   item__name:t="items/tt"
   item__weapType:t="pistol"
   item__baseWeight:r=0.85
-  item__volume:r=7
+  item__volume:i=70
   item__marketPrice:i=450
   gun__adsSpeedMult:r=1.2
   gun__boltFreq:r=5
@@ -2244,7 +2296,6 @@ tt_gun{
   gun__equipTime:r=0.25
   gun__holsterTime:r=0.35
   gun__minHolsterTime:r=0.3
-  gun__length:r=0.2
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.11
   gun__recoilDir:r=0.4
@@ -2279,17 +2330,17 @@ tt_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_7_62x25_magazine"
+  gun__projectileTemplate:t="bullet_projectile_9x18"
   _use:t="gun_sound_with_animchar"
   meleeSoundType:t="pistol"
   _use:t="animchar_dynmodel_nodes_hider"
   gun_flash_fx__enabled:b=yes
   gun_flash_fx__lightSourceNode:t="gunFx_main"
-  profile_server_data__enrichmentResearchAddChance:r=1
   item__iconPitch:r=0
   item__iconRoll:r=-10
   item__iconYaw:r=50
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     magazine:t="tt_magazine_slot"
   }
@@ -2392,11 +2443,10 @@ rsh_12_gun{
   item__proto:t="rsh_12_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="rsh_12_gun"
   item__name:t="items/rsh_12"
   item__weapType:t="pistol"
   item__baseWeight:r=2.2
-  item__volume:r=10
+  item__volume:i=100
   item__marketPrice:i=3800
   gun__adsSpeedMult:r=1.2
   gun__altReloadTime:r=1.6
@@ -2407,7 +2457,6 @@ rsh_12_gun{
   gun__equipTime:r=0.25
   gun__holsterTime:r=0.35
   gun__minHolsterTime:r=0.3
-  gun__length:r=0.2
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.068
   gun__recoilDir:r=0.42
@@ -2445,6 +2494,7 @@ rsh_12_gun{
   gun_boxed_ammo_reload__loadLoopTime:r=0.5
   gun_boxed_ammo_reload__loadPrepareTime:r=0.5
   gun_boxed_ammo_reload__loadPostTime:r=1.2
+  gun__projectileTemplate:t="bullet_projectile_9x18"
   _use:t="gun_sound_with_animchar"
   meleeSoundType:t="pistol"
   _use:t="animchar_dynmodel_nodes_hider"
@@ -2452,8 +2502,8 @@ rsh_12_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   showroom_item__customZoom:r=1.5
   showroom_item__customZoomBordersRng:p2=1.1, 2
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
 
-  "animchar__actOnDemand:tag"{}
   "gun__shells:array"{
     shells:t="gamedata/weapons/bullets/9x18.blk"
   }
@@ -2559,11 +2609,10 @@ mc3_record_gun{
   item__proto:t="mc3_record_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="mc3_record_gun"
   item__name:t="items/mc3_record"
   item__weapType:t="pistol"
   item__baseWeight:r=1.43
-  item__volume:r=12
+  item__volume:i=120
   item__marketPrice:i=1000
   gun__adsSpeedMult:r=1.2
   gun__boltFreq:r=5
@@ -2575,7 +2624,6 @@ mc3_record_gun{
   gun__equipTime:r=0.25
   gun__holsterTime:r=0.35
   gun__minHolsterTime:r=0.3
-  gun__length:r=0.2
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.04
   gun__recoilDir:r=0.4
@@ -2610,14 +2658,13 @@ mc3_record_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_22_LR_magazine"
+  gun__projectileTemplate:t="bullet_projectile_9x18"
   _use:t="gun_sound_with_animchar"
   meleeSoundType:t="pistol"
   _use:t="animchar_dynmodel_nodes_hider"
   gun_flash_fx__enabled:b=yes
   gun_flash_fx__lightSourceNode:t="gunFx_main"
-  profile_server_data__enrichmentResearchAddChance:r=1
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     magazine:t="mc3_record_slot"
   }
@@ -2744,11 +2791,10 @@ ppsh_41_gun{
   item__proto:t="ppsh_41_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="ppsh_41_gun"
   item__name:t="items/ppsh_41"
   item__weapType:t="submachine_gun"
   item__baseWeight:r=2.9
-  item__volume:r=18
+  item__volume:i=180
   item__marketPrice:i=2000
   gun__adsSpeedMult:r=0.75
   gun__altReloadTime:r=1.9
@@ -2757,7 +2803,6 @@ ppsh_41_gun{
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__crawlRecoilMult:r=0.8
   gun__deviationInFireReady:r=2
-  gun__length:r=0.45
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.031
   gun__recoilControlMult:r=0.4
@@ -2791,6 +2836,7 @@ ppsh_41_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_7_62x25_magazine"
+  gun__projectileTemplate:t="bullet_projectile_9x19"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -2798,9 +2844,8 @@ ppsh_41_gun{
   _use:t="animchar_dynmodel_nodes_hider"
   gun_flash_fx__enabled:b=yes
   gun_flash_fx__lightSourceNode:t="gunFx_main"
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     magazine:t="ppsh_41_magazine_slot"
   }
@@ -2922,24 +2967,23 @@ pp_91_kedr_gun{
   item__proto:t="pp_91_kedr_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="pp_91_kedr_gun"
   item__name:t="items/pp_91_kedr"
   item__weapType:t="submachine_gun"
   item__baseWeight:r=1.54
-  item__volume:r=14
+  item__volume:i=140
   item__marketPrice:i=2200
   gun__boltFreq:r=12
   gun__altReloadTime:r=1.9
-  gun__ammoInspectionInOutDuration:p2=1.2, 1.1
-  gun__ammoInspectionIdleLoopDuration:r=10
+  gun__ammoInspectionInOutDuration:p2=2.3, 2.4
+  gun__ammoInspectionIdleLoopDuration:r=8.3
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__crawlRecoilMult:r=0.8
-  gun__length:r=0.12
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.035
-  gun__recoilControlMult:r=0.3
-  gun__recoilDir:r=0.34
-  gun__recoilDirAmount:r=0.57
+  gun__recoilAmount:r=0.1
+  gun__recoilDirAmount:r=0.74
+  gun__recoilDir:r=0.35
+  gun__recoilControlMult:r=0.4
+  gun__visualRecoilMult:r=1.15
   gun_boxed_ammo_reload__batchReloadTime:r=2.4
   gun__rotationSpringMult:p3=1, 1, 1
   gun__rotInertia:p3=1, 1, 1
@@ -2947,7 +2991,6 @@ pp_91_kedr_gun{
   gun__sightsDistance:r=0.05
   gun__statName:t="submachine_gun"
   gun__useLocalPlayerTracer:b=no
-  gun__visualRecoilMult:r=1.4
   gun_spread__maxDeltaAngle:r=0.3
   weapon__aimNodeOffset:r=0.15
   gun_shell_ejection__templateName:t="9x18_ejected_shell"
@@ -2955,6 +2998,7 @@ pp_91_kedr_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_9mm_magazine"
+  gun__projectileTemplate:t="bullet_projectile_9x18"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -2962,11 +3006,11 @@ pp_91_kedr_gun{
   _use:t="animchar_dynmodel_nodes_hider"
   gun_flash_fx__enabled:b=yes
   gun_flash_fx__lightSourceNode:t="gunFx_main"
-  profile_server_data__enrichmentResearchAddChance:r=1
   racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.4, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.0106768, 0.0635912, -0.0634766]]
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  item__nexusCost:i=225
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     silencer:t="cal_9_18_silencer_slot"
     magazine:t="pp_91_kedr_magazine_slot"
@@ -3027,6 +3071,10 @@ pp_91_kedr_gun{
     "reload3:object"{
       path:t="/weapon/mgun/pp_kedr/reload3/change_ammo"
     }
+
+    "reload4:object"{
+      path:t="/weapon/mgun/pp_kedr/reload4/change_ammo"
+    }
   }
 
   "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
@@ -3037,22 +3085,22 @@ pp_91_kedr_gun{
 
   "gun_reload__unequipMagazineTime:list<r>"{
     simple:r=1.5
-    alt:r=2.2
+    alt:r=1.8
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
-    simple:r=3
-    alt:r=2.73
+    simple:r=2.6
+    alt:r=2.7
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
-    simple:r=1
-    alt:r=1.6
+    simple:r=0.9
+    alt:r=1.2
   }
 
   "gun_reload__swapEquipMagazineTime:list<r>"{
     simple:r=2
-    alt:r=2.13
+    alt:r=2.1
   }
 
   gun_flash_fx{
@@ -3066,7 +3114,7 @@ pp_91_kedr_gun{
     crawl:p3=0.07, -0.04, 0.17
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [0.00213115, 0.0656, 0]]
@@ -3110,23 +3158,22 @@ mc_21_12_gun{
   item__proto:t="mc_21_12_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="mc_21_12_gun"
   item__name:t="items/mc_21_12"
   item__weapType:t="shotgun"
   item__baseWeight:r=3.4
-  item__volume:r=28
+  item__volume:i=280
   item__marketPrice:i=100
-  gun__ammoInspectionInOutDuration:p2=1.5, 2.3
-  gun__ammoInspectionIdleLoopDuration:r=8.7
+  gun__ammoInspectionInOutDuration:p2=1.4, 2.2
+  gun__ammoInspectionIdleLoopDuration:r=4.9
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun_shell_ejection__timeMult:r=0.35
   gun__chokeSpread:r=1.2
-  gun__length:r=0.75
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.2
-  gun__recoilDirAmount:r=0.64
-  gun__recoilDir:r=0.15
-  gun__visualRecoilMult:r=1
+  gun__recoilDirAmount:r=0.8
+  gun__recoilDir:r=0
+  gun__recoilControlMult:r=0.85
+  gun__visualRecoilMult:r=1.6
   gun__recoilOffsMult:r=0.2
   gun__shotFreq:r=3
   gun__boltFreq:r=3.3
@@ -3139,13 +3186,14 @@ mc_21_12_gun{
   gun__maxAmmo:i=5
   gun__boxedAmmoHolderTemplate:t="box_12_gauge_magazine"
   gun_boxed_ammo_reload__firstBulletPrepareTime:r=0
-  gun_boxed_ammo_reload__firstBulletLoopTime:r=3.4
+  gun_boxed_ammo_reload__firstBulletLoopTime:r=2.6
   gun_boxed_ammo_reload__loadLoopTime:r=0.9
   gun_boxed_ammo_reload__loadPrepareTime:r=0.8
   gun_boxed_ammo_reload__loadPostTime:r=1.1
   gun_boxed_ammo_reload__unloadPrepareTime:r=0.7
   gun_boxed_ammo_reload__unloadLoopTime:r=0.5
   gun_boxed_ammo_reload__unloadPostTime:r=0.8
+  gun__projectileTemplate:t="bullet_projectile_12"
   _use:t="gun_sound_with_animchar"
   _use:t="rifle_gun_aim_sound"
   _use:t="rifle_gun_shot_dry_sound"
@@ -3154,9 +3202,8 @@ mc_21_12_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.5, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[-5.96047e-08, 0, 1] [0, 1, 0] [-1, 0, -5.96047e-08] [-0.22556, 0.0468751, -0.0666103]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
 
-  "animchar__actOnDemand:tag"{}
   "gun__ammoHolders:list<t>"{
     ammoHolders:t="box_12_gauge_magazine"
   }
@@ -3212,7 +3259,8 @@ mc_21_12_gun{
     }
 
     "shell_out:object"{
-      path:t="/weapon/rifle/mc_2112/reload_shell_out"
+      hero:t="/weapon/rifle/mc_2112/reload_shell_out"
+      type:t="matUnderFeet"
     }
 
     "foley_end:object"{
@@ -3231,7 +3279,7 @@ mc_21_12_gun{
     crawl:p3=0.07, -0.07, 0.08
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.269705, 0.063653, 0]]
@@ -3261,6 +3309,7 @@ ks_23_gun{
   _use:t="gun_anim"
   _use:t="base_gun_ammo_inspection"
   _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
   _use:t="assault_rifle_move_inertion"
   _use:t="shotgun_muzzle_preset"
   _use:t="racked_weapon"
@@ -3276,29 +3325,30 @@ ks_23_gun{
   item__proto:t="ks_23_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="ks_23_gun"
   item__name:t="items/ks_23"
   item__weapType:t="shotgun"
   item__baseWeight:r=3.85
-  item__volume:r=24
+  item__volume:i=240
   item__marketPrice:i=2000
   gun__ammoInspectionInOutDuration:p2=1, 0.66
   gun__ammoInspectionIdleLoopDuration:r=5.33
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun_shell_ejection__timeMult:r=0.35
   gun__chokeSpread:r=1.4
-  gun__length:r=0.51
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.32
-  gun__recoilDirAmount:r=0.62
-  gun__recoilDir:r=0.15
-  gun__visualRecoilMult:r=1.2
+  gun__recoilAmount:r=0.3
+  gun__recoilDirAmount:r=0.6
+  gun__recoilDir:r=0.3
+  gun__recoilControlMult:r=0.85
+  gun__visualRecoilMult:r=2
   gun__shotFreq:r=1
   gun__sightsDistance:r=0.05
   gun__statName:t="shotgun"
   gun__useLocalPlayerTracer:b=no
   gun_spread__maxDeltaAngle:r=0.05
+  weapon_sight__minDistFrom:r=0.2
   dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
   _use:t="directly_use_boxed_ammo"
   gun__maxAmmo:i=4
   gun__boxedAmmoHolderTemplate:t="box_23x75_magazine"
@@ -3310,6 +3360,7 @@ ks_23_gun{
   gun_boxed_ammo_reload__unloadPrepareTime:r=0.33
   gun_boxed_ammo_reload__unloadLoopTime:r=0.83
   gun_boxed_ammo_reload__unloadPostTime:r=0.33
+  gun__projectileTemplate:t="bullet_projectile_23x75"
   _use:t="gun_sound_with_animchar"
   _use:t="rifle_gun_aim_sound"
   _use:t="rifle_gun_shot_dry_sound"
@@ -3317,10 +3368,13 @@ ks_23_gun{
   gun_flash_fx__enabled:b=yes
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
-  racked_weapon__transform:m=[[4.76837e-07, 0, 1] [0, 1, 0] [-1, 0, 4.76837e-07] [-0.267681, 0.003, -0.065]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  racked_weapon__transform:m=[[4.76837e-07, 0, 1] [0, 1, 0] [-1, 0, 4.76837e-07] [-0.252346, 0.0749583, -0.065]]
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
 
-  "animchar__actOnDemand:tag"{}
+  "gun_mods__slots:shared:object"{
+    stock:t="ks_23_stock_slot"
+  }
+
   "gun__ammoHolders:list<t>"{
     ammoHolders:t="box_23x75_magazine"
   }
@@ -3378,6 +3432,11 @@ ks_23_gun{
     "foley_end:object"{
       path:t="/weapon/rifle/ks_23/foley"
     }
+
+    "shell_drop:object"{
+      hero:t="player/weapon/_common/12_gauge_shell_out"
+      type:t="matUnderFeet"
+    }
   }
 
   gun_flash_fx{
@@ -3386,12 +3445,12 @@ ks_23_gun{
 
   anim_phys{}
   "gun_aim_offset__gunOffsets:list<p3>"{
-    stand:p3=0.1, -0.08, -0.13
-    crouch:p3=0.1, -0.08, -0.13
-    crawl:p3=0.1, -0.08, -0.13
+    stand:p3=0.05, -0.02, -0.04
+    crouch:p3=0.05, -0.02, -0.04
+    crawl:p3=0.05, -0.02, -0.04
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.22, 0.02, 0]]
@@ -3427,11 +3486,10 @@ mc_18_gun{
   item__proto:t="mc_18_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="mc_18_gun"
   item__name:t="items/mc_18"
   item__weapType:t="semiauto"
   item__baseWeight:r=2.7
-  item__volume:r=30
+  item__volume:i=300
   item__marketPrice:i=1800
   gun_shell_ejection__templateName:t="ptrd_41_ejected_shell"
   gun__adsSpeedMult:r=0.4
@@ -3440,10 +3498,8 @@ mc_18_gun{
   gun__ammoInspectionIdleLoopDuration:r=10
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.85
   gun__deviationInFireReady:r=2
-  gun__disableToggleAim:b=yes
   gun__hitTagDurationMult:r=4
   gun__hitTagPower:r=0.5
-  gun__length:r=1.25
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.22
   gun__recoilDirAmount:r=0.8
@@ -3472,6 +3528,7 @@ mc_18_gun{
   gunmod__zoomFactor:r=10
   gunmod__camShiftMin:r=0.11
   gunmod__camShiftMax:r=0.23
+  gunmod__camRealZoomShift:r=0.055
   gunmod__camFovMin:r=28
   gunmod__camFovMax:r=19
   gunmod__focusPlaneShift:r=0.5
@@ -3486,6 +3543,7 @@ mc_18_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_22_LR_magazine"
+  gun__projectileTemplate:t="bullet_projectile_7_62x39"
   _use:t="gun_sound_with_animchar"
   _use:t="rifle_gun_aim_sound"
   _use:t="rifle_gun_shot_dry_sound"
@@ -3495,9 +3553,7 @@ mc_18_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.5, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[5.14692e-05, 3.70182e-07, 1] [-0.00714479, 0.999974, -2.32831e-09] [-0.999974, -0.00714479, 5.14705e-05] [-0.428045, -0.0552216, -0.0693359]]
-  profile_server_data__enrichmentResearchAddChance:r=1
 
-  "animchar__actOnDemand:tag"{}
   "isCameraAlwaysOnScope:tag"{}
   "gun_mods__slots:shared:object"{
     magazine:t="mc_18_magazine_slot"
@@ -3589,7 +3645,7 @@ mc_18_gun{
     crawl:p3=0.06, -0.17, -0.01
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.443771, -0.000926495, 0]]
@@ -3622,12 +3678,12 @@ svd_gun{
   _use:t="gun_aim_node"
   _use:t="frontside_gun_node"
   _use:t="gun_entity_mods"
-  _use:t="magazine_gun_anim"
+  _use:t="magazine_gun_anim_v2"
   _use:t="base_gun_ammo_inspection"
   _use:t="weapon_slot_indexed"
   _use:t="delayed_move_weapon_mods"
   _use:t="assault_rifle_move_inertion"
-  _use:t="assault_rifle_rapid_muzzle_preset"
+  _use:t="rifle_muzzle_preset"
   _use:t="racked_weapon"
   _use:t="hit_effect_group_big"
   _use:t="semi_auto_rifle_preset"
@@ -3640,36 +3696,35 @@ svd_gun{
   item__proto:t="svd_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="svd_gun"
   item__name:t="items/svd"
   item__weapType:t="semiauto"
   item__baseWeight:r=4.3
-  item__volume:r=30
+  item__volume:i=300
   item__marketPrice:i=2700
   gun_shell_ejection__templateName:t="762_54r_ejected_shell"
   gun__boltFreq:r=6
   gun__altReloadTime:r=1.8
-  gun__ammoInspectionInOutDuration:p2=1.8, 1.4
-  gun__ammoInspectionIdleLoopDuration:r=9.6
+  gun__ammoInspectionInOutDuration:p2=2.4, 2
+  gun__ammoInspectionIdleLoopDuration:r=11.3
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__hitTagPower:r=0.8
-  gun__length:r=0.62
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.112
-  gun__recoilDir:r=0.36
-  gun__recoilDirAmount:r=0.71
+  gun__recoilAmount:r=0.12
+  gun__recoilDirAmount:r=0.72
+  gun__recoilDir:r=0.1
+  gun__recoilControlMult:r=0.3
+  gun__visualRecoilMult:r=1.25
   gun_boxed_ammo_reload__batchReloadTime:r=2.3
   gun__shotFreq:r=10
   gun__sightsDistance:r=0.3
   gun__statName:t="rifle"
   gun__useLocalPlayerTracer:b=no
-  gun__visualRecoilMult:r=1.2
   gun_spread__maxDeltaAngle:r=0.015
-  gun__recoilControlMult:r=0.5
   dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_7_62x54_magazine"
+  gun__projectileTemplate:t="bullet_projectile_7_62x54"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -3679,9 +3734,9 @@ svd_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.25, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[2.38419e-07, -2.79397e-09, 1] [0.0168475, 0.999858, -2.79397e-09] [-0.999858, 0.0168475, 2.38419e-07] [-0.278939, -0.00792383, -0.067887]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  item__nexusCost:i=550
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     scope:t="scope_dovetail_slot"
     magazine:t="svd_magazine_slot"
@@ -3716,16 +3771,28 @@ svd_gun{
   "sound_irqs:shared:object"{
     _tags:t="sound"
 
-    "reload1:object"{
-      path:t="/weapon/rifle/svd/reload1/change_ammo"
+    "foley_start:object"{
+      path:t="/weapon/rifle/svd/reload_foley_start"
     }
 
-    "reload2:object"{
-      path:t="/weapon/rifle/svd/reload2/change_ammo"
+    "mag_out:object"{
+      path:t="/weapon/rifle/svd/reload_mag_out"
     }
 
-    "reload3:object"{
-      path:t="/weapon/rifle/svd/reload3/change_ammo"
+    "mag_in:object"{
+      path:t="/weapon/rifle/svd/reload_mag_in"
+    }
+
+    "shutter_in:object"{
+      path:t="/weapon/rifle/svd/reload_shutter_in"
+    }
+
+    "shutter_out:object"{
+      path:t="/weapon/rifle/svd/reload_shutter_out"
+    }
+
+    "foley_end:object"{
+      path:t="/weapon/rifle/svd/reload_foley_end"
     }
   }
 
@@ -3738,23 +3805,23 @@ svd_gun{
   }
 
   "gun_reload__unequipMagazineTime:list<r>"{
-    simple:r=2.3
-    alt:r=2.3
+    simple:r=1.6
+    alt:r=1.6
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
-    simple:r=3
-    alt:r=2.5
+    simple:r=2.8
+    alt:r=2.2
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
-    simple:r=1
-    alt:r=1
+    simple:r=0.7
+    alt:r=0.8
   }
 
   "gun_reload__swapEquipMagazineTime:list<r>"{
-    simple:r=3
-    alt:r=2.5
+    simple:r=2.4
+    alt:r=1.8
   }
 
   gun_flash_fx{
@@ -3768,7 +3835,7 @@ svd_gun{
     crawl:p3=0.09, -0.07, 0.09
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.276341, -0.01, 0]]
@@ -3782,18 +3849,183 @@ svd_gun{
 }
 
 vss_vintorez_gun{
-  _use:t="as_val_gun"
+  _use:t="ecs_no_debug"
+  _use:t="base_item"
+  _use:t="base_weapon"
+  _use:t="base_gun"
+  _use:t="main_weap_slots"
+  _use:t="ironsights_open_assault_rifle"
+  _use:t="big_gun_icon"
+  _use:t="ww2_mp_shell_ejection"
+  _use:t="gun_aim_node"
+  _use:t="frontside_gun_node"
+  _use:t="gun_entity_mods"
+  _use:t="magazine_gun_anim"
+  _use:t="base_gun_ammo_inspection"
+  _use:t="weapon_slot_indexed"
+  _use:t="delayed_move_weapon_mods"
+  _use:t="assault_rifle_move_inertion"
+  _use:t="smg_silenced_muzzle_preset"
+  _use:t="racked_weapon"
+  _use:t="hit_effect_group_medium"
+  _use:t="assault_rifle_preset"
+  _use:t="camera_shake_on_shot_high_freq"
+  _use:t="gun_check_weapon_magazine"
+  _use:t="item_rarity_rare"
+  _use:t="gun_jamming"
   animchar__res:t="vss_vintorez_char"
   collres__res:t="vss_vintorez_collision"
   gun__blk:t="gamedata/weapons/vss_vintorez.blk"
+  melee_weapon__blk:t="gamedata/actions/melee.blk"
   item__proto:t="vss_vintorez_gun"
-  item__weapTemplate:t="vss_vintorez_gun"
+  item__lootType:t="gun"
+  item__lootSoundType:t="weapon"
   item__name:t="items/vss_vintorez"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=2.6
-  item__volume:r=24
+  item__volume:i=240
   item__marketPrice:i=100
+  gun__ammoInspectionInOutDuration:p2=2.6, 2.3
+  gun__ammoInspectionIdleLoopDuration:r=8.3
+  gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.75
+  gun__prevHolsterGen:i=0
+  gun__recoilAmount:r=0.09
+  gun__recoilDirAmount:r=0.83
+  gun__recoilDir:r=0.2
+  gun__recoilControlMult:r=0.25
+  gun__visualRecoilMult:r=1.1
+  gun_boxed_ammo_reload__batchReloadTime:r=3
+  gun__shotFreq:r=15
+  gun__sightsDistance:r=0.25
+  gun__statName:t="assault_rifle"
+  gun__useLocalPlayerTracer:b=no
   gun_spread__maxDeltaAngle:r=0.02
+  weapon__aimNodeOffset:r=0.3
+  loud_noise__noisePerShot:r=80
+  gun_shell_ejection__templateName:t="762_39_ejected_shell"
+  dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
+  _use:t="gun_with_gun_mods"
+  _use:t="gun_with_fillable_ammo_magazines"
+  gun__boxedAmmoHolderTemplate:t="box_9x39_magazine"
+  gun__projectileTemplate:t="bullet_projectile_9x39"
+  _use:t="gun_sound_with_animchar"
+  _use:t="mgun_gun_aim_sound"
+  _use:t="gun_shot_dry_sound"
+  meleeSoundType:t="mgun"
+  _use:t="animchar_dynmodel_nodes_hider"
+  gun_flash_fx__enabled:b=yes
+  gun_flash_fx__lightSourceNode:t="gunFx_main"
+  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[2.38419e-07, -2.79397e-09, 1] [0.0168475, 0.999858, -2.79397e-09] [-0.999858, 0.0168475, 2.38419e-07] [-0.300841, 0.0565186, -0.0690002]]
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
+
+  "gun_mods__slots:shared:object"{
+    scope:t="scope_dovetail_slot"
+    magazine:t="as_val_magazine_slot"
+  }
+
+  "gun__shells:array"{
+    shells:t="gamedata/weapons/bullets/9x39.blk"
+  }
+
+  "gun__firingModes:array"{
+    "mode:object"{
+      modeType:t="automatic"
+    }
+
+    "mode:object"{
+      modeType:t="burst"
+      burstSize:i=1
+    }
+  }
+
+  "gun__firingModeNames:array"{
+    mode:t="full_auto"
+    mode:t="semi_auto"
+  }
+
+  _group{
+    _tags:t="sound"
+    gun_shot_dry_sound__path:t="player/weapon/mgun/as_val/shot_dry"
+    gun_sound__forceOneshot:b=yes
+    gun_switch_firing_mode_sound__path:t="player/weapon/mgun/as_val/change_mode"
+
+    "gun_sound__shotPath:shared:object"{
+      path:t="/weapon/mgun/as_val"
+    }
+  }
+
+  "sound_irqs:shared:object"{
+    _tags:t="sound"
+
+    "reload1:object"{
+      path:t="/weapon/mgun/as_val/reload1/change_ammo"
+    }
+
+    "reload2:object"{
+      path:t="/weapon/mgun/as_val/reload2/change_ammo"
+    }
+
+    "reload3:object"{
+      path:t="/weapon/mgun/as_val/reload3/change_ammo"
+    }
+
+    "reload4:object"{
+      path:t="/weapon/mgun/as_val/reload4/change_ammo"
+    }
+  }
+
+  "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
+    n:t="mesh_bullet_1"
+    n:t="mesh_bullet_2"
+    n:t="mesh_bullet_3"
+    n:t="mesh_bullet_4"
+    n:t="mesh_bullet_5"
+    n:t="asval_mag_standard"
+  }
+
+  "gun_reload__unequipMagazineTime:list<r>"{
+    simple:r=1.6
+    alt:r=1.8
+  }
+
+  "gun_reload__equipMagazineTime:list<r>"{
+    simple:r=2.9
+    alt:r=2.2
+  }
+
+  "gun_reload__swapUnequipMagazineTime:list<r>"{
+    simple:r=1.1
+    alt:r=1.1
+  }
+
+  "gun_reload__swapEquipMagazineTime:list<r>"{
+    simple:r=2.2
+    alt:r=1.8
+  }
+
+  gun_flash_fx{
+    _tags:t="render"
+  }
+
+  anim_phys{}
+  "gun_aim_offset__gunOffsets:list<p3>"{
+    stand:p3=0.08, -0.04, -0.06
+    crouch:p3=0.08, -0.04, -0.06
+    crawl:p3=0.08, -0.04, 0.03
+  }
+
+  "racked_weapon__rackRendinsts:shared:array"{
+    "rack:object"{
+      rendinst:t="gunrack_support_a"
+      tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.271353, 0.0347245, 0]]
+    }
+
+    "rack:object"{
+      rendinst:t="gunrack_support_b"
+      tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [0.1, 0.0750911, 0]]
+    }
+  }
 }
 
 mp_443_magazine_slot{
@@ -3830,29 +4062,29 @@ mp_443_gun{
   collres__res:t="mp_443_collision"
   gun__blk:t="gamedata/weapons/mp_443.blk"
   item__proto:t="mp_443_gun"
-  item__weapTemplate:t="mp_443_gun"
   item__name:t="items/mp_443"
   item__weapType:t="pistol"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
   item__baseWeight:r=0.95
-  item__volume:r=7
+  item__volume:i=70
   item__marketPrice:i=2665
   gun_shell_ejection__templateName:t="9x19_brass_ejected_shell"
   melee_weapon__blk:t="gamedata/actions/melee.blk"
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_9x19_magazine"
-  gun__ammoInspectionInOutDuration:p2=1.376, 1.376
+  gun__projectileTemplate:t="bullet_projectile_9x19"
+  gun__ammoInspectionInOutDuration:p2=2.33, 2.5
   gun__ammoInspectionIdleLoopDuration:r=9.3
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__shotFreq:r=6.6
   gun__deviationInFireReady:r=2.5
-  gun__length:r=0.11
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.1
-  gun__recoilDirAmount:r=0.63
-  gun__visualRecoilMult:r=1.4
+  gun__recoilAmount:r=0.12
+  gun__recoilDirAmount:r=0.7
+  gun__recoilDir:r=0.3
+  gun__visualRecoilMult:r=1.1
   gun_boxed_ammo_reload__batchReloadTime:r=2
   weapon__aimNodeOffset:r=0.1
   gun__useLocalPlayerTracer:b=no
@@ -3878,8 +4110,9 @@ mp_443_gun{
   item__iconYaw:r=50
   showroom_item__customZoom:r=2
   showroom_item__customZoomBordersRng:p2=1.6, 2.4
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  item__nexusCost:i=200
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     magazine:t="mp_443_magazine_slot"
   }
@@ -3931,6 +4164,10 @@ mp_443_gun{
     "reload5:object"{
       path:t="/weapon/pistol/mp_443/reload5/change_ammo"
     }
+
+    "reload6:object"{
+      path:t="/weapon/pistol/mp_443/reload6/change_ammo"
+    }
   }
 
   "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
@@ -3973,7 +4210,7 @@ mp_443_gun{
     crawl:p3=0.08, -0.05, 0.15
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_c"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.00947189, 0.0513916, 0]]
@@ -4012,6 +4249,7 @@ pp_2000_gun{
   _use:t="smg_muzzle_preset"
   _use:t="racked_weapon"
   _use:t="hit_effect_group_small"
+  _use:t="smg_preset"
   _use:t="item_rarity_uncommon"
   animchar__res:t="pp2000_char"
   collres__res:t="pp2000_collision"
@@ -4020,18 +4258,16 @@ pp_2000_gun{
   item__proto:t="pp_2000_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="pp_2000_gun"
   item__name:t="items/pp_2000"
   item__weapType:t="submachine_gun"
   item__baseWeight:r=3.08
-  item__volume:r=18
+  item__volume:i=180
   item__marketPrice:i=5700
   gun__adsSpeedMult:r=0.8
   gun__boltFreq:r=7
   gun__ammoInspectionInOutDuration:p2=2.8, 1.7
   gun__ammoInspectionIdleLoopDuration:r=10
   gun__deviationInFireReady:r=2
-  gun__length:r=0.44
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.039
   gun__recoilControlMult:r=0.25
@@ -4058,6 +4294,7 @@ pp_2000_gun{
   combatCooldownTime:p2=0.1, 0.3
   dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
   gun__boxedAmmoHolderTemplate:t="box_9x19_magazine"
+  gun__projectileTemplate:t="bullet_projectile_9x19"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -4067,8 +4304,8 @@ pp_2000_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.146932, 0.0308551, -0.023304]]
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
 
-  "animchar__actOnDemand:tag"{}
   "gun__shells:array"{
     shells:t="gamedata/weapons/bullets/9x19.blk"
   }
@@ -4155,7 +4392,7 @@ pp_2000_gun{
   }
 
   "item__cantBeCorrupted:tag"{}
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.059527, 0.0864219, 0]]
@@ -4199,6 +4436,8 @@ sv98_gun{
   _use:t="bolt_action_rifle_preset"
   _use:t="delayed_move_weapon_mods"
   _use:t="item_rarity_uncommon"
+  _use:t="gun_with_bipod"
+  gun__embeddedBipod:b=yes
   animchar__res:t="sv_98_char"
   collres__res:t="sv_98_collision"
   gun__blk:t="gamedata/weapons/sv98.blk"
@@ -4206,23 +4445,22 @@ sv98_gun{
   item__proto:t="sv98_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="sv98_gun"
   item__name:t="items/sv98"
   item__weapType:t="rifle"
   item__baseWeight:r=6.2
-  item__volume:r=30
+  item__volume:i=300
   item__marketPrice:i=8850
   item__iconRecalcAnimation:b=yes
   gun_shell_ejection__templateName:t="762_54r_ejected_shell"
   gun__integratedBayonet:b=yes
-  gun__ammoInspectionInOutDuration:p2=1.73, 2
+  gun__ammoInspectionInOutDuration:p2=1.7, 1.4
   gun__ammoInspectionIdleLoopDuration:r=4.5
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.85
-  gun__length:r=0.65
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.13
-  gun__recoilDirAmount:r=0.8
-  gun__recoilDir:r=0.1
+  gun__recoilAmount:r=0.11
+  gun__recoilDirAmount:r=0.85
+  gun__recoilDir:r=0
+  gun__recoilControlMult:r=0.2
   gun__visualRecoilMult:r=1.2
   gun_boxed_ammo_reload__batchReloadTime:r=2.2
   gun__shotFreq:r=0.7
@@ -4235,6 +4473,7 @@ sv98_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_7_62x51_magazine"
+  gun__projectileTemplate:t="bullet_projectile_7_62x51"
   _use:t="gun_sound_with_animchar"
   _use:t="rifle_gun_aim_sound"
   _use:t="rifle_gun_shot_dry_sound"
@@ -4244,8 +4483,19 @@ sv98_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.25, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[3.57628e-07, -2.79397e-09, 1] [9.99201e-16, 1, 2.79397e-09] [-1, 0, 3.57628e-07] [-0.278939, -0.0284754, -0.069704]]
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
-  "animchar__actOnDemand:tag"{}
+  "gun__mountPoints:shared:array"{
+    "point:object"{
+      type:t="bipod"
+      recoil:r=0.2
+      offset:p3=0.55, 0, 0
+      forceOffset:b=yes
+      angle:r=35
+      length:r=0.19
+    }
+  }
+
   "gun_mods__slots:shared:object"{
     magazine:t="sv98_magazine_slot"
     scope:t="scope_picatinny_long_slot"
@@ -4308,13 +4558,13 @@ sv98_gun{
   }
 
   "gun_reload__unequipMagazineTime:list<r>"{
-    simple:r=1.33
-    alt:r=1.46
+    simple:r=1.3
+    alt:r=1.4
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
-    simple:r=2.89
-    alt:r=2.56
+    simple:r=1.9
+    alt:r=2.5
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
@@ -4323,8 +4573,8 @@ sv98_gun{
   }
 
   "gun_reload__swapEquipMagazineTime:list<r>"{
-    simple:r=1.26
-    alt:r=2.03
+    simple:r=1.2
+    alt:r=2
   }
 
   gun_flash_fx{
@@ -4338,7 +4588,7 @@ sv98_gun{
     crawl:p3=0.09, -0.11, -0.01
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.290021, 0.0178872, 0]]
@@ -4374,11 +4624,10 @@ vssk_vyhlop_gun{
   item__proto:t="vssk_vyhlop_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="vssk_vyhlop_gun"
   item__name:t="items/vssk_vyhlop"
   item__weapType:t="semiauto"
   item__baseWeight:r=6.5
-  item__volume:r=34
+  item__volume:i=340
   item__marketPrice:i=29000
   gun_shell_ejection__templateName:t="127_55_ejected_shell"
   gun__adsSpeedMult:r=0.4
@@ -4387,10 +4636,8 @@ vssk_vyhlop_gun{
   gun__ammoInspectionIdleLoopDuration:r=10
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.85
   gun__deviationInFireReady:r=2
-  gun__disableToggleAim:b=yes
   gun__hitTagDurationMult:r=4
   gun__hitTagPower:r=0.5
-  gun__length:r=1.25
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.22
   gun__recoilDirAmount:r=0.8
@@ -4419,6 +4666,7 @@ vssk_vyhlop_gun{
   gunmod__zoomFactor:r=10
   gunmod__camShiftMin:r=0.11
   gunmod__camShiftMax:r=0.23
+  gunmod__camRealZoomShift:r=0.055
   gunmod__camFovMin:r=28
   gunmod__camFovMax:r=19
   gunmod__focusPlaneShift:r=0.5
@@ -4431,6 +4679,7 @@ vssk_vyhlop_gun{
   combatCooldownTime:p2=0.1, 0.3
   dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
   gun__boxedAmmoHolderTemplate:t="box_12_7x55_magazine"
+  gun__projectileTemplate:t="bullet_projectile_50_bmg"
   _use:t="gun_sound_with_animchar"
   _use:t="rifle_gun_aim_sound"
   _use:t="rifle_gun_shot_dry_sound"
@@ -4440,8 +4689,8 @@ vssk_vyhlop_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.5, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[5.14692e-05, 3.70182e-07, 1] [-0.00714479, 0.999974, -2.32831e-09] [-0.999974, -0.00714479, 5.14705e-05] [-0.428045, -0.0552216, -0.0693359]]
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
 
-  "animchar__actOnDemand:tag"{}
   "isCameraAlwaysOnScope:tag"{}
   "gun__shells:array"{
     shells:t="gamedata/weapons/bullets/50_bmg.blk"
@@ -4524,7 +4773,7 @@ vssk_vyhlop_gun{
     crawl:p3=0.06, -0.17, -0.01
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.443771, -0.000926495, 0]]
@@ -4561,7 +4810,7 @@ ak_74_gun{
   _use:t="gun_aim_node"
   _use:t="frontside_gun_node"
   _use:t="gun_entity_mods"
-  _use:t="magazine_gun_anim"
+  _use:t="magazine_gun_anim_v2"
   _use:t="base_gun_ammo_inspection"
   _use:t="weapon_slot_indexed"
   _use:t="delayed_move_weapon_mods"
@@ -4579,24 +4828,21 @@ ak_74_gun{
   item__proto:t="ak_74_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="ak_74_gun"
   item__name:t="items/ak_74"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=3.3
-  item__volume:r=26
+  item__volume:i=260
   item__marketPrice:i=3700
-  gun__ammoInspectionInOutDuration:p2=1.8, 1.4
+  gun__ammoInspectionInOutDuration:p2=2.4, 2
   gun__ammoInspectionIdleLoopDuration:r=11.3
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__hitTagPower:r=0.8
-  gun__length:r=0.415
-  _tracked:t="gun__length"
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.045
+  gun__recoilAmount:r=0.11
+  gun__recoilDirAmount:r=0.78
   gun__recoilControlMult:r=0.4
-  gun__recoilDirAmount:r=0.65
   gun__recoilDir:r=0.15
-  gun__visualRecoilMult:r=1.5
+  gun__visualRecoilMult:r=1.2
   gun_boxed_ammo_reload__batchReloadTime:r=2.7
   gun__shotFreq:r=10
   gun__sightsDistance:r=0.3
@@ -4609,6 +4855,7 @@ ak_74_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_5_45x39_magazine"
+  gun__projectileTemplate:t="bullet_projectile_5_45x39"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -4618,12 +4865,12 @@ ak_74_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.4, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[0, 0, 1] [0.00698126, 0.999976, 6.98492e-10] [-0.999976, 0.00698126, 0] [-0.13, 0.02, -0.078]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     scope:t="scope_dovetail_high_slot"
     magazine:t="ak_74_magazine_slot"
+    stock:t="ak_stock_slot"
   }
 
   "gun__shells:array"{
@@ -4689,24 +4936,28 @@ ak_74_gun{
     n:t="ak_74m_mag"
   }
 
+  "gun__defaultStockNodes:list<t>"{
+    n:t="ak_74m_stock"
+  }
+
   "gun_reload__unequipMagazineTime:list<r>"{
-    simple:r=2.3
-    alt:r=2.3
+    simple:r=1.4
+    alt:r=1.5
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
-    simple:r=3.5
-    alt:r=2.8
+    simple:r=2.5
+    alt:r=1.9
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
-    simple:r=1.2
-    alt:r=1.2
+    simple:r=0.7
+    alt:r=0.8
   }
 
   "gun_reload__swapEquipMagazineTime:list<r>"{
-    simple:r=3.5
-    alt:r=2.8
+    simple:r=2.1
+    alt:r=1.5
   }
 
   gun_flash_fx{
@@ -4720,7 +4971,7 @@ ak_74_gun{
     crawl:p3=0.07, -0.06, 0.03
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.18, 0.04, 0]]
@@ -4765,24 +5016,21 @@ aek_971_gun{
   item__proto:t="aek_971_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="aek_971_gun"
   item__name:t="items/aek_971"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=3.53
-  item__volume:r=26
+  item__volume:i=260
   item__marketPrice:i=100
-  gun__ammoInspectionInOutDuration:p2=1.8, 1.4
+  gun__ammoInspectionInOutDuration:p2=2.4, 2
   gun__ammoInspectionIdleLoopDuration:r=11.3
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__hitTagPower:r=0.8
-  gun__length:r=0.42
-  _tracked:t="gun__length"
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.045
-  gun__recoilControlMult:r=0.4
-  gun__recoilDirAmount:r=0.65
+  gun__recoilAmount:r=0.1
+  gun__recoilDirAmount:r=0.82
   gun__recoilDir:r=0.15
-  gun__visualRecoilMult:r=1.5
+  gun__recoilControlMult:r=0.25
+  gun__visualRecoilMult:r=1.1
   gun_boxed_ammo_reload__batchReloadTime:r=2.7
   gun__shotFreq:r=15
   gun__sightsDistance:r=0.3
@@ -4795,6 +5043,7 @@ aek_971_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_5_45x39_magazine"
+  gun__projectileTemplate:t="bullet_projectile_5_45x39"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -4804,9 +5053,9 @@ aek_971_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.4, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[0, 0, 1] [0.00698126, 0.999976, 6.98492e-10] [-0.999976, 0.00698126, 0] [-0.12, 0.02, -0.078]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  item__nexusCost:i=550
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     magazine:t="ak_74_magazine_slot"
   }
@@ -4881,23 +5130,23 @@ aek_971_gun{
   }
 
   "gun_reload__unequipMagazineTime:list<r>"{
-    simple:r=2.3
-    alt:r=2.3
+    simple:r=1.6
+    alt:r=1.6
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
-    simple:r=3.5
-    alt:r=2.8
+    simple:r=2.9
+    alt:r=2.2
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
-    simple:r=1.2
-    alt:r=1.2
+    simple:r=0.7
+    alt:r=0.8
   }
 
   "gun_reload__swapEquipMagazineTime:list<r>"{
-    simple:r=3.5
-    alt:r=2.8
+    simple:r=2.4
+    alt:r=1.8
   }
 
   gun_flash_fx{
@@ -4911,7 +5160,7 @@ aek_971_gun{
     crawl:p3=0.07, -0.06, 0.01
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.191396, 0.0490979, 0]]
@@ -4955,9 +5204,9 @@ aks_74u_gun{
   _use:t="racked_weapon"
   _use:t="hit_effect_group_medium"
   _use:t="gun_check_weapon_magazine"
+  _use:t="assault_rifle_preset"
   _use:t="item_rarity_uncommon"
   _use:t="gun_jamming"
-  item__filterType:t="weapons"
   animchar__res:t="aks_74u_char"
   collres__res:t="aks_74u_collision"
   gun__blk:t="gamedata/weapons/aks_74u.blk"
@@ -4965,31 +5214,28 @@ aks_74u_gun{
   item__proto:t="aks_74u_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="aks_74u_gun"
   item__name:t="items/aks_74u"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=2.7
-  item__volume:r=22
+  item__volume:i=220
   item__marketPrice:i=3500
   gun__adsSpeedMult:r=0.7
-  gun__ammoInspectionInOutDuration:p2=1.66, 1.83
-  gun__ammoInspectionIdleLoopDuration:r=10.33
+  gun__ammoInspectionInOutDuration:p2=1, 2
+  gun__ammoInspectionIdleLoopDuration:r=11.8
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__deviationInFireReady:r=2
   gun__hitTagPower:r=0.8
-  gun__length:r=0.206
-  _tracked:t="gun__length"
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.052
-  gun__recoilControlMult:r=0.45
-  gun__recoilDirAmount:r=0.67
-  gun__recoilDir:r=0.25
+  gun__recoilAmount:r=0.135
+  gun__recoilDirAmount:r=0.75
+  gun__recoilDir:r=0.2
+  gun__recoilControlMult:r=0.35
+  gun__visualRecoilMult:r=1.45
   gun_boxed_ammo_reload__batchReloadTime:r=2.7
   gun__shotFreq:r=10
   gun__sightsDistance:r=0.3
   gun__statName:t="assault_rifle"
   gun__useLocalPlayerTracer:b=no
-  gun__visualRecoilMult:r=1.4
   gun__zeroingAngle:r=-1
   gun__zeroingDistance:r=100
   gun_deviation__extraDeviationTau:r=0.2
@@ -5010,6 +5256,7 @@ aks_74u_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_5_45x39_magazine"
+  gun__projectileTemplate:t="bullet_projectile_5_45x39"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -5019,11 +5266,11 @@ aks_74u_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.8, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[-5.96046e-08, 0, 1] [0, 1, 0] [-1, 0, -5.96046e-08] [0.000797452, 0.0663334, -0.078]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     magazine:t="aks_74u_magazine_slot"
+    stock:t="ak_stock_slot"
   }
 
   "gun__shells:array"{
@@ -5070,27 +5317,27 @@ aks_74u_gun{
     _tags:t="sound"
 
     "foley_start:object"{
-      path:t="/weapon/mgun/aks_74u_rust/reload_foley_start"
+      path:t="/weapon/mgun/aksu/reload_foley_start"
     }
 
     "mag_out:object"{
-      path:t="/weapon/mgun/aks_74u_rust/reload_mag_out"
+      path:t="/weapon/mgun/aksu/reload_mag_out"
     }
 
     "mag_in:object"{
-      path:t="/weapon/mgun/aks_74u_rust/reload_mag_in"
+      path:t="/weapon/mgun/aksu/reload_mag_in"
     }
 
     "shutter_in:object"{
-      path:t="/weapon/mgun/aks_74u_rust/reload_shutter_in"
+      path:t="/weapon/mgun/aksu/reload_shutter_in"
     }
 
     "shutter_out:object"{
-      path:t="/weapon/mgun/aks_74u_rust/reload_shutter_out"
+      path:t="/weapon/mgun/aksu/reload_shutter_out"
     }
 
     "foley_end:object"{
-      path:t="/weapon/mgun/aks_74u_rust/reload_foley_end"
+      path:t="/weapon/mgun/aksu/reload_foley_end"
     }
   }
 
@@ -5098,24 +5345,28 @@ aks_74u_gun{
     n:t="ak_74m_mag"
   }
 
+  "gun__defaultStockNodes:list<t>"{
+    n:t="stock_mesh"
+  }
+
   "gun_reload__unequipMagazineTime:list<r>"{
-    simple:r=2.3
-    alt:r=2.3
+    simple:r=1.6
+    alt:r=1.6
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
-    simple:r=3.5
-    alt:r=2.8
+    simple:r=2.9
+    alt:r=2.2
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
-    simple:r=1.2
-    alt:r=1.2
+    simple:r=0.7
+    alt:r=0.8
   }
 
   "gun_reload__swapEquipMagazineTime:list<r>"{
-    simple:r=3.5
-    alt:r=2.8
+    simple:r=2.4
+    alt:r=1.8
   }
 
   gun_flash_fx{
@@ -5129,7 +5380,7 @@ aks_74u_gun{
     crawl:p3=0.07, -0.06, 0.08
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.09, 0.06, 0]]
@@ -5145,9 +5396,10 @@ aks_74u_gun{
 aks_74u_rust_gun{
   _use:t="aks_74u_gun"
   item__proto:t="aks_74u_rust_gun"
-  item__weapTemplate:t="aks_74u_rust_gun"
   item__name:t="items/aks_74u_rust"
   item__marketPrice:i=100
+  gun__recoilAmount:r=0.15
+  gun__visualRecoilMult:r=1.6
   gun_boxed_ammo_reload__batchReloadTime:r=3.3
   gun__shotFreq:r=9
   gun__kineticDamageMult:r=0.8
@@ -5206,7 +5458,12 @@ aks_74u_rust_gun{
     }
 
     "fixJamming:object"{
-      path:t="/weapon/mgun/ak_47_rusty/stovepipe"
+      path:t="/weapon/mgun/aks_74u_rust/reload_fixjamming"
+    }
+
+    "shell_drop:object"{
+      path:t="player/weapon/_common/shell_drop"
+      type:t="matUnderFeet"
     }
   }
 }
@@ -5243,7 +5500,7 @@ tkb_22_gun{
   _use:t="assault_rifle_rapid_muzzle_preset"
   _use:t="racked_weapon"
   _use:t="hit_effect_group_medium"
-  _use:t="smg_preset"
+  _use:t="assault_rifle_preset"
   _use:t="gun_check_weapon_magazine"
   _use:t="item_rarity_uncommon"
   _use:t="gun_jamming"
@@ -5254,27 +5511,27 @@ tkb_22_gun{
   item__proto:t="tkb_22_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="tkb_22_gun"
   item__name:t="items/tkb_22"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=2.5
   gun__adsSpeedMult:r=0.9
-  item__volume:r=24
+  item__volume:i=240
   item__marketPrice:i=4100
   gun__altReloadTime:r=1.8
-  gun__ammoInspectionInOutDuration:p2=2, 2
+  gun__ammoInspectionInOutDuration:p2=2.76, 2
   gun__ammoInspectionIdleLoopDuration:r=7.6
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__hitTagPower:r=0.8
-  gun__length:r=0.415
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.06
-  gun__recoilDirAmount:r=0.73
-  gun__recoilDir:r=0.2
-  gun__visualRecoilMult:r=1.7
+  gun__recoilAmount:r=0.18
+  gun__recoilDirAmount:r=0.67
+  gun__recoilDir:r=0.3
+  gun__recoilControlMult:r=0.35
+  gun__visualRecoilMult:r=1.8
   gun_boxed_ammo_reload__batchReloadTime:r=2.3
   gun__shotFreq:r=9.33
   gun__sightsDistance:r=0.3
+  gun__maxSightOffset:r=0.02
   gun__statName:t="assault_rifle"
   gun__useLocalPlayerTracer:b=no
   gun_spread__maxDeltaAngle:r=0.026
@@ -5284,6 +5541,7 @@ tkb_22_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_7_62x39_magazine"
+  gun__projectileTemplate:t="bullet_projectile_7_62x39"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -5293,9 +5551,8 @@ tkb_22_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[0.000815562, -0.032988, 0.999456] [-0.0111868, 0.999393, 0.0329952] [-0.999937, -0.0112075, 0.000446039] [-0.123653, 0.0580902, -0.0644531]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     magazine:t="tkb_22_magazine_slot"
   }
@@ -5390,7 +5647,7 @@ tkb_22_gun{
     crawl:p3=0.04, -0.08, 0.08
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.176025, 0.0596466, 0]]
@@ -5426,11 +5683,10 @@ tkb_0146_gun{
   item__proto:t="tkb_0146_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="tkb_0146_gun"
   item__name:t="items/tkb_0146"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=3.84
-  item__volume:r=26
+  item__volume:i=260
   item__marketPrice:i=4400
   gun__adsSpeedMult:r=0.7
   gun__boltFreq:r=9
@@ -5439,8 +5695,6 @@ tkb_0146_gun{
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__deviationInFireReady:r=2
   gun__hitTagPower:r=0.8
-  gun__length:r=0.42
-  _tracked:t="gun__length"
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.022
   gun__recoilDirAmount:r=0.8
@@ -5466,6 +5720,7 @@ tkb_0146_gun{
   combatCooldownTime:p2=0.1, 0.3
   dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
   gun__boxedAmmoHolderTemplate:t="box_5_45x39_magazine"
+  gun__projectileTemplate:t="bullet_projectile_5_45x39"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -5475,9 +5730,8 @@ tkb_0146_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[3.57628e-07, 2.79397e-09, 1] [-8.88178e-16, 0.999999, -2.79397e-09] [-1, 0, 3.57628e-07] [-0.23, 0.0406791, -0.0696411]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     scope:t="scope_dovetail_high_slot"
     silencer:t="silencer_pbs1_slot"
@@ -5569,7 +5823,7 @@ tkb_0146_gun{
     crawl:p3=0.07, -0.08, -0.08
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.269203, 0.0503123, 0]]
@@ -5611,6 +5865,7 @@ an94_abakan_gun{
   _use:t="racked_weapon"
   _use:t="hit_effect_group_medium"
   _use:t="gun_check_weapon_magazine"
+  _use:t="assault_rifle_preset"
   animchar__res:t="an_94_char"
   collres__res:t="an_94_collision"
   gun__blk:t="gamedata/weapons/ak_103.blk"
@@ -5618,11 +5873,10 @@ an94_abakan_gun{
   item__proto:t="an94_abakan_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="an94_abakan_gun"
   item__name:t="items/an94_abakan"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=3.85
-  item__volume:r=26
+  item__volume:i=260
   item__marketPrice:i=4800
   gun__adsSpeedMult:r=0.7
   gun__boltFreq:r=9
@@ -5631,18 +5885,17 @@ an94_abakan_gun{
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__deviationInFireReady:r=2
   gun__hitTagPower:r=0.8
-  gun__length:r=0.42
-  _tracked:t="gun__length"
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.036
-  gun__recoilControlMult:r=0.35
-  gun__recoilDirAmount:r=0.77
+  gun__recoilAmount:r=0.1
+  gun__recoilDirAmount:r=0.82
+  gun__recoilDir:r=0.05
+  gun__recoilControlMult:r=0.3
+  gun__visualRecoilMult:r=1.1
   gun_boxed_ammo_reload__batchReloadTime:r=2.7
   gun__shotFreq:r=10
   gun__sightsDistance:r=0.3
   gun__statName:t="assault_rifle"
   gun__useLocalPlayerTracer:b=no
-  gun__visualRecoilMult:r=0.1
   gun__zeroingAngle:r=-1
   gun__zeroingDistance:r=100
   gun_deviation__extraDeviationTau:r=0.2
@@ -5662,6 +5915,7 @@ an94_abakan_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_5_45x39_magazine"
+  gun__projectileTemplate:t="bullet_projectile_5_45x39"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -5671,9 +5925,8 @@ an94_abakan_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[3.57628e-07, 2.79397e-09, 1] [-8.88178e-16, 0.999999, -2.79397e-09] [-1, 0, 3.57628e-07] [-0.23, 0.0406791, -0.0696411]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     scope:t="scope_dovetail_high_slot"
     silencer:t="silencer_pbs1_slot"
@@ -5777,7 +6030,7 @@ an94_abakan_gun{
     crawl:p3=0.07, -0.08, -0.08
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-5.96046e-08, 0, -1] [0, 1, 0] [1, 0, -5.96046e-08] [-0.269203, 0.0503123, 0]]
@@ -5822,7 +6075,6 @@ ash_12_gun{
   _use:t="gun_check_weapon_magazine"
   _use:t="item_rarity_rare"
   _use:t="gun_jamming"
-  item__filterType:t="weapons"
   animchar__res:t="ash12_char"
   collres__res:t="ash12_collision"
   gun__blk:t="gamedata/weapons/ash_12.blk"
@@ -5830,24 +6082,22 @@ ash_12_gun{
   item__proto:t="ash_12_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="ash_12_gun"
   item__name:t="items/ash_12"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=5.1
-  item__volume:r=30
+  item__volume:i=300
   item__marketPrice:i=21000
   gun__altReloadTime:r=1.8
-  gun__ammoInspectionInOutDuration:p2=1.8, 1.4
-  gun__ammoInspectionIdleLoopDuration:r=9.6
+  gun__ammoInspectionInOutDuration:p2=1.5, 2
+  gun__ammoInspectionIdleLoopDuration:r=8.7
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__hitTagPower:r=0.8
-  gun__length:r=0.4
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.085
-  gun__recoilDirAmount:r=0.63
-  gun__recoilDir:r=0.2
-  gun__recoilControlMult:r=0.6
-  gun__visualRecoilMult:r=1.1
+  gun__recoilAmount:r=0.25
+  gun__recoilDirAmount:r=0.75
+  gun__recoilDir:r=0
+  gun__recoilControlMult:r=0.35
+  gun__visualRecoilMult:r=1.9
   gun_boxed_ammo_reload__batchReloadTime:r=2.3
   gun__shotFreq:r=10.83
   gun__sightsDistance:r=0.3
@@ -5862,6 +6112,7 @@ ash_12_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_12_7x55_magazine"
+  gun__projectileTemplate:t="bullet_projectile_12_7x55"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -5869,10 +6120,11 @@ ash_12_gun{
   _use:t="animchar_dynmodel_nodes_hider"
   gun_flash_fx__enabled:b=yes
   gun_flash_fx__lightSourceNode:t="gunFx_main"
-  racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
-  racked_weapon__transform:m=[[0.000815562, -0.032988, 0.999456] [-0.0111868, 0.999393, 0.0329952] [-0.999937, -0.0112075, 0.000446039] [-0.123653, 0.0580902, -0.0644531]]
+  racked_weapon__gunwallVolumeBox:m=[[0.8, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
+  racked_weapon__transform:m=[[-5.96047e-08, 0, 1] [0, 1, 0] [-1, 0, -5.96047e-08] [0.0370972, -0.0370635, -0.0651926]]
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
+  item__nexusCost:i=750
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     silencer:t="ash_12_silencer_slot"
     magazine:t="ash_12_magazine_slot"
@@ -5944,23 +6196,23 @@ ash_12_gun{
   }
 
   "gun_reload__unequipMagazineTime:list<r>"{
-    simple:r=1.86
-    alt:r=1.63
+    simple:r=1.8
+    alt:r=1.6
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
-    simple:r=2.96
-    alt:r=1.92
+    simple:r=2.9
+    alt:r=1.9
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
-    simple:r=1.06
+    simple:r=1
     alt:r=1
   }
 
   "gun_reload__swapEquipMagazineTime:list<r>"{
     simple:r=2.4
-    alt:r=1.36
+    alt:r=1.2
   }
 
   gun_flash_fx{
@@ -5974,15 +6226,15 @@ ash_12_gun{
     crawl:p3=0.07, -0.11, 0.1
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
-      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.176025, 0.0596466, 0]]
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.254526, -0.0380869, 0]]
     }
 
     "rack:object"{
       rendinst:t="gunrack_support_b"
-      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.165039, 0.0829163, 0]]
+      tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [0.239099, -0.00321753, 0]]
     }
   }
 
@@ -6012,11 +6264,10 @@ rpd_gun{
   item__proto:t="rpd_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="rpd_gun"
   item__name:t="items/rpd"
   item__weapType:t="machine_gun"
   item__baseWeight:r=5
-  item__volume:r=35
+  item__volume:i=350
   item__marketPrice:i=10000
   gun__adsSpeedMult:r=0.7
   gun__boltFreq:r=6
@@ -6026,7 +6277,6 @@ rpd_gun{
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__deviationInFireReady:r=2
   gun__hitTagPower:r=0.8
-  gun__length:r=0.42
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.041
   gun__recoilDirAmount:r=0.8
@@ -6054,6 +6304,7 @@ rpd_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_7_62x39_magazine"
+  gun__projectileTemplate:t="bullet_projectile_7_62x39"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -6063,9 +6314,8 @@ rpd_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[0.000815562, -0.032988, 0.999456] [-0.0111868, 0.999393, 0.0329952] [-0.999937, -0.0112075, 0.000446039] [-0.123653, 0.0580902, -0.0644531]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
-  "animchar__actOnDemand:tag"{}
   "gun_mods__slots:shared:object"{
     magazine:t="rpd_magazine_slot"
   }
@@ -6152,7 +6402,7 @@ rpd_gun{
     crawl:p3=0.07, -0.08, -0.03
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.176025, 0.0596466, 0]]
@@ -6187,17 +6437,19 @@ rpk_74_gun{
   _use:t="gun_aim_node"
   _use:t="frontside_gun_node"
   _use:t="gun_entity_mods"
-  _use:t="magazine_gun_anim"
+  _use:t="magazine_gun_anim_v2"
   _use:t="base_gun_ammo_inspection"
   _use:t="weapon_slot_indexed"
   _use:t="delayed_move_weapon_mods"
   _use:t="assault_rifle_move_inertion"
-  _use:t="assault_rifle_rapid_muzzle_preset"
+  _use:t="mg_rapid_muzzle_preset"
   _use:t="racked_weapon"
   _use:t="hit_effect_group_medium"
   _use:t="lmg_preset"
   _use:t="gun_check_weapon_magazine"
   _use:t="item_rarity_uncommon"
+  _use:t="gun_with_bipod"
+  gun__embeddedBipod:b=yes
   animchar__res:t="rpk_74m_char"
   collres__res:t="rpk_74m_collision"
   gun__blk:t="gamedata/weapons/rpk_74m.blk"
@@ -6205,25 +6457,23 @@ rpk_74_gun{
   item__proto:t="rpk_74_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="rpk_74_gun"
   item__name:t="items/rpk_74"
   item__weapType:t="machine_gun"
   item__baseWeight:r=5
-  item__volume:r=35
+  item__volume:i=350
   item__marketPrice:i=10000
   gun_shell_ejection__templateName:t="545_39_ejected_shell"
   gun__altReloadTime:r=1.8
-  gun__ammoInspectionInOutDuration:p2=1.8, 1.4
+  gun__ammoInspectionInOutDuration:p2=1.26, 1.76
   gun__ammoInspectionIdleLoopDuration:r=8.6
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__hitTagPower:r=0.8
-  gun__length:r=0.59
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.04
-  gun__recoilControlMult:r=0.4
-  gun__recoilDirAmount:r=0.58
+  gun__recoilAmount:r=0.1
+  gun__recoilDirAmount:r=0.78
   gun__recoilDir:r=0.15
-  gun__visualRecoilMult:r=1.5
+  gun__recoilControlMult:r=0.45
+  gun__visualRecoilMult:r=1.1
   gun_boxed_ammo_reload__batchReloadTime:r=2.3
   gun__shotFreq:r=10.5
   gun__sightsDistance:r=0.3
@@ -6235,6 +6485,7 @@ rpk_74_gun{
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
   gun__boxedAmmoHolderTemplate:t="box_5_45x39_magazine"
+  gun__projectileTemplate:t="bullet_projectile_5_45x39"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -6244,9 +6495,20 @@ rpk_74_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[0.000815562, -0.032988, 0.999456] [-0.0111868, 0.999393, 0.0329952] [-0.999937, -0.0112075, 0.000446039] [-0.123653, 0.0580902, -0.0644531]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  item__nexusCost:i=600
 
-  "animchar__actOnDemand:tag"{}
+  "gun__mountPoints:shared:array"{
+    "point:object"{
+      type:t="bipod"
+      recoil:r=0.2
+      offset:p3=0.75, 0, 0
+      forceOffset:b=yes
+      angle:r=35
+      length:r=0.33
+    }
+  }
+
   "gun_mods__slots:shared:object"{
     scope:t="scope_dovetail_high_slot"
     magazine:t="rpk_74_magazine_slot"
@@ -6312,23 +6574,23 @@ rpk_74_gun{
   }
 
   "gun_reload__unequipMagazineTime:list<r>"{
-    simple:r=2.3
-    alt:r=2.3
+    simple:r=1.9
+    alt:r=1.9
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
-    simple:r=3
-    alt:r=2.5
+    simple:r=2.5
+    alt:r=2.2
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
     simple:r=1
-    alt:r=1
+    alt:r=1.1
   }
 
   "gun_reload__swapEquipMagazineTime:list<r>"{
-    simple:r=3
-    alt:r=2.5
+    simple:r=2.2
+    alt:r=1.9
   }
 
   gun_flash_fx{
@@ -6342,7 +6604,7 @@ rpk_74_gun{
     crawl:p3=0.07, -0.06, 0.04
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.176025, 0.0596466, 0]]
@@ -6381,12 +6643,14 @@ pk_gun{
   _use:t="weapon_slot_indexed"
   _use:t="delayed_move_weapon_mods"
   _use:t="assault_rifle_move_inertion"
-  _use:t="assault_rifle_rapid_muzzle_preset"
+  _use:t="mg_rapid_muzzle_preset"
   _use:t="racked_weapon"
   _use:t="hit_effect_group_big"
   _use:t="camera_shake_on_shot_heavy"
   _use:t="lmg_preset"
   _use:t="item_rarity_rare"
+  _use:t="gun_with_bipod"
+  gun__embeddedBipod:b=yes
   animchar__res:t="pkm_char"
   collres__res:t="pkm_collision"
   gun__blk:t="gamedata/weapons/pkm.blk"
@@ -6394,30 +6658,29 @@ pk_gun{
   item__proto:t="pk_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="pk_gun"
   item__name:t="items/pk"
   item__weapType:t="machine_gun"
   item__baseWeight:r=7.5
-  item__volume:r=38
+  item__volume:i=380
   item__marketPrice:i=11000
   gun__adsSpeedMult:r=0.7
   gun__altReloadTime:r=1.8
-  gun__ammoInspectionInOutDuration:p2=1.8, 1.4
-  gun__ammoInspectionIdleLoopDuration:r=10
+  gun__ammoInspectionInOutDuration:p2=0.86, 1.06
+  gun__ammoInspectionIdleLoopDuration:r=4.3
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__deviationInFireReady:r=2
   gun__hitTagPower:r=0.8
-  gun__length:r=0.68
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.063
-  gun__recoilControlMult:r=0.6
-  gun__recoilDirAmount:r=0.57
+  gun__recoilAmount:r=0.135
+  gun__recoilDirAmount:r=0.65
+  gun__recoilDir:r=0.05
+  gun__recoilControlMult:r=0.45
+  gun__visualRecoilMult:r=1.45
   gun_boxed_ammo_reload__batchReloadTime:r=2.3
   gun__shotFreq:r=10.8
   gun__sightsDistance:r=0.3
   gun__statName:t="machine_gun"
   gun__useLocalPlayerTracer:b=no
-  gun__visualRecoilMult:r=1.1
   gun__zeroingAngle:r=-1
   gun__zeroingDistance:r=100
   gun_deviation__extraDeviationTau:r=0.2
@@ -6445,6 +6708,7 @@ pk_gun{
   gun_boxed_ammo_reload__unloadPrepareTime:r=2.5
   gun_boxed_ammo_reload__unloadLoopTime:r=2.5
   gun_boxed_ammo_reload__unloadPostTime:r=0
+  gun__projectileTemplate:t="bullet_projectile_7_62x54"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -6454,11 +6718,23 @@ pk_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.25, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[-5.96046e-08, 0, 1] [0, 1, 0] [-1, 0, -5.96046e-08] [-0.28, 0.011, -0.0615234]]
-  profile_server_data__enrichmentResearchAddChance:r=1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
+  item__nexusCost:i=800
 
-  "animchar__actOnDemand:tag"{}
+  "gun__mountPoints:shared:array"{
+    "point:object"{
+      type:t="bipod"
+      recoil:r=0.2
+      offset:p3=0.55, 0, 0
+      forceOffset:b=yes
+      angle:r=35
+      length:r=0.3
+    }
+  }
+
   "gun_mods__slots:shared:object"{
     magazine:t="pk_magazine_slot"
+    stock:t="pkm_stock_slot"
   }
 
   "gun_boxed_ammo_reload__unloadEnabled:tag"{}
@@ -6512,6 +6788,18 @@ pk_gun{
     "reload6:object"{
       path:t="/weapon/mgun/pkm/reload6/change_ammo"
     }
+
+    "shutter_in:object"{
+      path:t="/weapon/mgun/pkm/reload_shutter_in"
+    }
+
+    "shutter_out:object"{
+      path:t="/weapon/mgun/pkm/reload_shutter_out"
+    }
+
+    "mag_in:object"{
+      path:t="/weapon/mgun/pkm/reload_mag_in"
+    }
   }
 
   "animchar_dynmodel_nodes_hider__hiddenNodes:list<t>"{
@@ -6541,14 +6829,18 @@ pk_gun{
     n:t="ammocan_mesh"
   }
 
+  "gun__defaultStockNodes:list<t>"{
+    n:t="stock_mesh"
+  }
+
   "gun_reload__unequipMagazineTime:list<r>"{
-    simple:r=4.3
-    alt:r=4.4
+    simple:r=4.4
+    alt:r=4.5
   }
 
   "gun_reload__equipMagazineTime:list<r>"{
     simple:r=7
-    alt:r=5.3
+    alt:r=5.4
   }
 
   "gun_reload__swapUnequipMagazineTime:list<r>"{
@@ -6572,7 +6864,7 @@ pk_gun{
     crawl:p3=0.08, -0.1, -0.02
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.26, 0.04, -2.98023e-08]]
@@ -6606,11 +6898,10 @@ aek_999_gun{
   item__proto:t="aek_999_gun"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="aek_999_gun"
   item__name:t="items/aek_999"
   item__weapType:t="machine_gun"
   item__baseWeight:r=8.8
-  item__volume:r=38
+  item__volume:i=380
   item__marketPrice:i=32000
   gun__adsSpeedMult:r=0.7
   gun__boltFreq:r=6
@@ -6620,7 +6911,6 @@ aek_999_gun{
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   gun__deviationInFireReady:r=2
   gun__hitTagPower:r=0.8
-  gun__length:r=0.42
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.041
   gun__recoilDirAmount:r=0.8
@@ -6646,6 +6936,7 @@ aek_999_gun{
   combatCooldownTime:p2=0.1, 0.3
   dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
   gun__boxedAmmoHolderTemplate:t="box_7_62x54_magazine"
+  gun__projectileTemplate:t="bullet_projectile_7_62x54"
   _use:t="gun_sound_with_animchar"
   _use:t="mgun_gun_aim_sound"
   _use:t="mgun_gun_shot_dry_sound"
@@ -6655,8 +6946,8 @@ aek_999_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[0.000815562, -0.032988, 0.999456] [-0.0111868, 0.999393, 0.0329952] [-0.999937, -0.0112075, 0.000446039] [-0.123653, 0.0580902, -0.0644531]]
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
 
-  "animchar__actOnDemand:tag"{}
   "gun__shells:array"{
     shells:t="gamedata/weapons/bullets/7.62x54.blk"
   }
@@ -6734,7 +7025,7 @@ aek_999_gun{
     crawl:p3=0.07, -0.08, -0.03
   }
 
-  "racked_weapon__rackRendinsts:array"{
+  "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
       rendinst:t="gunrack_support_a"
       tm:m=[[-8.74228e-08, 0, -1] [0, 1, 0] [1, 0, -8.74228e-08] [-0.176025, 0.0596466, 0]]

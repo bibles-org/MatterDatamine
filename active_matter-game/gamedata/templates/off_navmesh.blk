@@ -1,0 +1,56 @@
+climbing_agent{
+  walker_agent__climbingFrom:p3=0, 0, 0
+  walker_agent__climbingTo:p3=0, 0, 0
+  walker_agent__landingDir:p3=0, 0, 0
+  walker_agent__jumpVelociy:p3=0, 0, 0
+  walker_agent__climbingStart:r=0
+  walker_agent__climbingReach:r=0
+  walker_agent__climbingFinish:r=0
+  walker_agent__climbingDuration:r=0.5
+  walker_agent__maxJumpSpeed:r=9
+  _replicated:t="walker_agent__climbingStart"
+  _replicated:t="walker_agent__climbingFinish"
+  _replicated:t="walker_agent__climbingTo"
+  _replicated:t="walker_agent__landingDir"
+}
+
+agent_in_climbing{
+  agent_in_climbing__template:t="agent_in_climbing"
+  agent_in_climbing__removeAt:r=0
+
+  "nphys__disabled:tag"{}
+  "agentInClimbing:tag"{}
+}
+
+agent_off_navmesh{
+  "nphys__disabled:tag"{}
+  "agent_off_navmesh:tag"{}
+}
+
+crawler_base{
+  surface_crawler__norm:p3=0, 0, 0
+  surface_crawler__dir:p3=0, 0, 0
+  surface_crawler__head:p3=0, 0, 0
+  surface_crawler__active:b=yes
+  surface_crawler__frustration:i=0
+  surface_crawler__maxFrustration:i=99999
+  surface_crawler__seed:i=0
+  surface_crawler__lookAhead:p2=0.45, 0.7
+  surface_crawler__lookDown:p3=0.45, 0.55, 0.7
+  surface_crawler__curvePerSecond:r=8
+  surface_crawler__curvePerSecondRnd:r=0.1
+  surface_crawler__rndInfluence:r=5
+  surface_crawler__speed:r=2.5
+  surface_crawler__matId:i=0
+  surface_crawler__height:r=0
+  surface_crawler__template:t="crawler_base"
+  surface_crawler__freefallVelocity:p3=0, 0, 0
+
+  "nphys__disabled:tag"{}
+}
+
+crawler_mode_base{
+  _use:t="crawler_base"
+  surface_crawler__template:t="crawler_base"
+  surface_crawler__freefallVelocity:p3=0, 0, 0
+}

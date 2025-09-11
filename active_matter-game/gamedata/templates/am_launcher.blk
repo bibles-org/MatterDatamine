@@ -21,10 +21,9 @@ am_launcher{
   item__proto:t="am_launcher"
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
-  item__weapTemplate:t="am_launcher"
   item__name:t="items/am_launcher"
   item__baseWeight:r=2.5
-  item__volume:r=6
+  item__volume:i=60
   am_launcher__gunTemplate:t=""
   gun__adsSpeedMult:r=0.5
   gun__deviationInFireReady:r=2.5
@@ -65,7 +64,6 @@ am_launcher{
   gun_flash_fx__enabled:b=yes
   gun_flash_fx__lightSourceNode:t="gunFx_main"
 
-  "animchar__actOnDemand:tag"{}
   "am_launcher:tag"{}
   "am_launcher__reloadAmmoEid:eid"{}
   "gun__ammoHolders:list<t>"{}

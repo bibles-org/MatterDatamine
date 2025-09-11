@@ -1,7 +1,7 @@
+from "%ui/helpers/ec_to_watched.nut" import mkWatchedSetAndStorage
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { mkWatchedSetAndStorage } = require("%ui/helpers/ec_to_watched.nut")
 let { localPlayerTeam,
       localPlayerGroupId,
       localPlayerTeamIsIncognito
@@ -63,8 +63,8 @@ function updateTeammatesStatus(eid, comp) {
   teammatesUpdateEid(eid, res)
 }
 
-localPlayerTeam.subscribe(@(_) teammatesQuery.perform(updateTeammatesStatus))
-localPlayerTeamIsIncognito.subscribe(@(_) teammatesQuery.perform(updateTeammatesStatus))
+localPlayerTeam.subscribe_with_nasty_disregard_of_frp_update(@(_) teammatesQuery.perform(updateTeammatesStatus))
+localPlayerTeamIsIncognito.subscribe_with_nasty_disregard_of_frp_update(@(_) teammatesQuery.perform(updateTeammatesStatus))
 
 ecs.register_es("teammates_status_ui_es",
   {
@@ -86,6 +86,8 @@ let groupmatesCompsTrack = [
   ["possessed", ecs.TYPE_EID],
   ["name", ecs.TYPE_STRING],
   ["scoring_player__firstSpawnTime", ecs.TYPE_FLOAT],
+  ["scoring_player__isExtractedSuccess", ecs.TYPE_BOOL],
+  ["player__isDead", ecs.TYPE_BOOL],
 ]
 
 let groupmatesQuery = ecs.SqQuery("groupmates_status_ui_query", {
@@ -108,9 +110,9 @@ function updateGroupmatesStatus(eid, comp) {
   groupmatesUpdateEid(eid, res)
 }
 
-localPlayerTeam.subscribe(@(_) groupmatesQuery.perform(updateGroupmatesStatus))
-localPlayerTeamIsIncognito.subscribe(@(_) groupmatesQuery.perform(updateGroupmatesStatus))
-localPlayerGroupId.subscribe(@(_) groupmatesQuery.perform(updateGroupmatesStatus))
+localPlayerTeam.subscribe_with_nasty_disregard_of_frp_update(@(_) groupmatesQuery.perform(updateGroupmatesStatus))
+localPlayerTeamIsIncognito.subscribe_with_nasty_disregard_of_frp_update(@(_) groupmatesQuery.perform(updateGroupmatesStatus))
+localPlayerGroupId.subscribe_with_nasty_disregard_of_frp_update(@(_) groupmatesQuery.perform(updateGroupmatesStatus))
 
 ecs.register_es("groupmates_status_ui_es",
   {
@@ -127,4 +129,3 @@ return {
   groupmatesSet,
   groupmatesGetWatched,
 }
-

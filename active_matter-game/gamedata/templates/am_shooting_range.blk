@@ -70,11 +70,14 @@ shooting_range_mannequin_position{
 shooting_range_mannequin{
   _use:t="resurrect_after_death"
   team:i=-256
-  bodyCleanupTime:r=0.5
+  body_cleanup_server_after_death__delay:r=0.5
+  body_cleanup_server__cleanupForbiddenHeroRadiusSq:r=0
+  body_cleanup_server__cleanupForbiddenLootHeroRadiusSq:r=0
   teaser_bot__originTransform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   teaser_bot__originTemplate:t=""
   teaser_bot__originPose:i=0
-  beh_tree__enabled:b=no
+  beh_tree__enabled:b=yes
+  beh_tree__node:t="shooting_range_mannequin_behaviour"
 
   "shooting_range_mannequin:tag"{}
 }
@@ -97,7 +100,7 @@ shooting_range_changed_bot{
 
 shooting_range_flowerhuman_bot{
   _use:t="flower_human"
-  _use:t="sleep_mode_wakeup_forbidden"
+  sleep_mode__isSleeping:b=no
   _use:t="shooting_range_mannequin"
 
   "human_inventory__deathDrop:array"{}

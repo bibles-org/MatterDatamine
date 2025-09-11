@@ -1,0 +1,130 @@
+import{
+  scene:t="gamedata/scenes/_nexus_underground_depot_sounds.blk"
+}
+
+entity{
+  _template:t="tiled_map"
+  tiled_map__leftTop:p2=-115, 115
+  tiled_map__rightBottom:p2=115, -115
+  tiled_map__visibleRange:p2=20, 110
+  tiled_map__tileWidth:i=2048
+  tiled_map__zlevels:i=0
+  tiled_map__northAngle:r=0
+  tiled_map__tilesPath:t="maps/nexus_underground_depo"
+}
+
+entity{
+  _template:t="navmesh_battle_area"
+  transform:m=[[4000, 0, 0] [0, 4000, 0] [0, 0, 4000] [0, 0, 0]]
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_round_mode_base_config.blk"
+}
+
+entity{
+  _template:t="volfog_nbs"
+  volfog_nbs__rootGraph:t="fog_dalniy_island_sparse.json"
+}
+
+entity{
+  _template:t="level+level_synced_environment"
+  level__blk:t="levels/nexus_underground_depo_a.blk"
+  level_synced_environment__timeOfDaySeed:i=1
+  level_synced_environment__weatherSeed:i=2
+
+  "level__timeVec:array"{
+    level__timeVec:r=6.5
+  }
+
+  "level__weatherChoice:object"{
+    weather_underground_depo:r=1
+  }
+}
+
+entity{
+  _template:t="shaderVars"
+
+  "shader_vars__vars:object"{
+    ocean1:c=90, 100, 150, 0
+    ocean0:c=100, 110, 150, 0
+    ocean_density:r=1
+    river1:c=41, 104, 83, 0
+    river0:c=30, 81, 63, 0
+    paint_details_tex:t="sovmod_building_colors_tex_palette*"
+    water_color_noise_size:r=71
+    river_density:r=2
+  }
+}
+
+entity{
+  _template:t="wind"
+  wind__noiseScale:r=100
+  wind__noiseSpeed:r=4
+  wind__strength:r=1
+}
+
+entity{
+  _template:t="clouds_hole_target"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+entity{
+  _template:t="door_mult_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_doors.blk"
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-50.7531, 4.43697e-06, 0] [-1.21262e-06, -13.8707, 0] [0, 0, 48.757] [77.8557, 27.9588, 35.0002]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-50.7531, 4.43697e-06, 0] [-1.21262e-06, -13.8707, 0] [0, 0, 48.757] [77.8557, 27.9588, -13.5743]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-50.7531, 4.43697e-06, 0] [-1.21262e-06, -13.8707, 0] [0, 0, 48.757] [77.8557, 27.9588, -61.9781]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-50.7531, 4.43697e-06, 0] [-1.21262e-06, -13.8707, 0] [0, 0, 48.757] [27.4683, 27.9588, -61.9781]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-50.7531, 4.43697e-06, 0] [-1.21262e-06, -13.8707, 0] [0, 0, 48.757] [27.4683, 27.9588, -13.5743]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-50.7531, 4.43697e-06, 0] [-1.21262e-06, -13.8707, 0] [0, 0, 48.757] [27.4683, 27.9588, 35.0002]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-50.7531, 4.43697e-06, 0] [-1.21262e-06, -13.8707, 0] [0, 0, 48.757] [-22.7158, 27.9588, -61.9781]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-50.7531, 4.43697e-06, 0] [-1.21262e-06, -13.8707, 0] [0, 0, 48.757] [-22.7158, 27.9588, -13.5743]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-50.7531, 4.43697e-06, 0] [-1.21262e-06, -13.8707, 0] [0, 0, 48.757] [-22.7158, 27.9588, 35.0002]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-50.7531, 4.43697e-06, 0] [-1.21262e-06, -13.8707, 0] [0, 0, 48.757] [-73.2306, 27.9588, -13.5743]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-50.7531, 4.43697e-06, 0] [-1.21262e-06, -13.8707, 0] [0, 0, 48.757] [-73.2306, 27.9588, -61.9781]]
+}

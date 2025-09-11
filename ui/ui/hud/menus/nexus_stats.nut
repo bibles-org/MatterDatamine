@@ -1,39 +1,39 @@
+from "%sqGlob/dasenums.nut" import NexusStatType
+from "%dngscripts/sound_system.nut" import sound_play
+from "%sqGlob/app_control.nut" import switch_to_menu_scene
+from "%sqstd/math.nut" import getRomanNumeral
+from "%sqstd/string.nut" import utf8ToUpper
+from "%ui/mainMenu/stdPanel.nut" import screenSize
+from "%ui/components/colors.nut" import BtnBgNormal, ItemBgColor, RedWarningColor, BtnBdNormal,
+  InfoTextValueColor, TextHighlight, ConsoleFillColor, TextNormal
+from "%ui/popup/player_event_log.nut" import addPlayerReward, mkPlayerRewardLog, addSpecialPlayerReward
+from "%ui/fonts_style.nut" import body_txt, h2_txt, h1_txt, giant_txt, sub_txt
+from "%ui/components/commonComponents.nut" import mkText, mkTabs, mkTextArea, mkTimeComp
+from "%ui/components/cursors.nut" import setTooltip
+import "%ui/components/tooltipBox.nut" as tooltipBox
+from "%ui/mainMenu/stdPanel.nut" import wrapInStdPanel
+from "%ui/helpers/remap_nick.nut" import remap_nick
+from "dasevents" import EventNexusSimpleStatChanged, EventNexusKillStatChanged, EventNexusKillGroupStatChanged, EventNexusAssistStatChanged
+from "dagor.time" import get_time_msec
+import "%ui/components/colorize.nut" as colorize
+import "%ui/components/faComp.nut" as faComp
+from "%ui/components/modalWindows.nut" import addModalWindow, removeModalWindow
+from "%ui/components/button.nut" import textButton, button
+from "%ui/helpers/timers.nut" import mkCountdownTimerPerSec
+from "%ui/components/scrollbar.nut" import makeVertScrollExt, thinAndReservedPaddingStyle
+from "%ui/mainMenu/menus/options/player_interaction_option.nut" import isStreamerMode, playerRandName
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { body_txt, h2_txt, h1_txt, giant_txt, sub_txt } = require("%ui/fonts_style.nut")
-let { BtnBgNormal, ItemBgColor, RedWarningColor, BtnBdNormal, InfoTextValueColor, TextHighlight,
-  ConsoleFillColor } = require("%ui/components/colors.nut")
-let { mkText, mkTabs, mkTextArea, mkMonospaceTimeComp } = require("%ui/components/commonComponents.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { localPlayerTeam, localPlayerEid } = require("%ui/hud/state/local_player.nut")
+let { localPlayerTeam, localPlayerEid, localPlayerName } = require("%ui/hud/state/local_player.nut")
 let { hudIsInteractive } = require("%ui/hud/state/interactive_state.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
-let tooltipBox = require("%ui/components/tooltipBox.nut")
-let { wrapInStdPanel, screenSize } = require("%ui/mainMenu/stdPanel.nut")
-let { nexusRoundModeRoundNumber, isNesusEndGameDebriefing, nexusRoundModeGameWinner, nexusRoundModeRoundsToWin,
-  nexusRoundModeGameEndTimer, nexusRoundModeAllyTeam, nexusRoundModeEnemyTeam
-} = require("%ui/hud/state/nexus_round_mode_state.nut")
-let { nexusModeTeamColors } = require("%ui/hud/state/nexus_mode_state.nut")
-let { remap_nick } = require("%ui/helpers/remap_nick.nut")
+let { nexusRoundModeRoundNumber, nexusRoundModeRoundsToWin, nexusRoundModeGameEndTimer } = require("%ui/hud/state/nexus_round_mode_state.nut")
+let { nexusModeTeamColors, isNexusEndGameDebriefing, nexusGameWinner, nexusAllyTeam,  allyTeam, enemyTeam,
+  nexusEnemyTeam } = require("%ui/hud/state/nexus_mode_state.nut")
 let { currentMenuId } = require("%ui/hud/hud_menus_state.nut")
-let { EventNexusSimpleStatChanged, EventNexusKillStatChanged, EventNexusKillGroupStatChanged, EventNexusAssistStatChanged } = require("dasevents")
-let { getRomanNumeral } = require("%sqstd/math.nut")
-let { NexusStatType } = require("%sqGlob/dasenums.nut")
-let { addPlayerReward, mkPlayerRewardLog, addSpecialPlayerReward, playerSpecialRewards
-} = require("%ui/popup/player_event_log.nut")
-let { utf8ToUpper } = require("%sqstd/string.nut")
-let { get_time_msec } = require("dagor.time")
-let colorize = require("%ui/components/colorize.nut")
-let { levelLoaded } = require("%ui/state/appState.nut")
-let faComp = require("%ui/components/faComp.nut")
-let { sound_play } = require("%dngscripts/sound_system.nut")
-let { addModalWindow, removeModalWindow } = require("%ui/components/modalWindows.nut")
-let { switch_to_menu_scene } = require("%sqGlob/app_control.nut")
-let { textButton } = require("%ui/components/button.nut")
-let { mkCountdownTimerPerSec } = require("%ui/helpers/timers.nut")
+let { playerSpecialRewards } = require("%ui/popup/player_event_log.nut")
 let { nexusRoundEndReasonMap } = require("%ui/hud/tips/nexus_round_mode_round_result.nut")
-let { makeVertScroll } = require("%ui/components/scrollbar.nut")
 let { creditsTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
 
 let statWidth = hdpx(30)
@@ -51,29 +51,12 @@ let playersStats = Watched({})
 let playersRoundStats = Watched({})
 let killRoundTypes = Watched({})
 let statsToShow = Watched(TOTAL_STATS_ID)
-let allyTeam = Watched({})
-let enemyTeam = Watched({})
-
-levelLoaded.subscribe(function(v) {
-  if (v) {
-    allyTeam.set({})
-    enemyTeam.set({})
-  }
-})
-
-let get_teammate_status_query = ecs.SqQuery("get_teammate_status_query", {
-  comps_ro = [
-    ["isAlive", ecs.TYPE_BOOL],
-    ["isDowned", ecs.TYPE_BOOL],
-  ]
-})
 
 function nexusPlayersEids(eid, comps, localTeam) {
-  let statusData = get_teammate_status_query.perform(comps.possessed, @(_eid, statusComps) statusComps) ?? {}
   let playerData = {
     eid
     name = comps?.name
-  }.__update(statusData)
+  }
   if (comps.team == localTeam)
     allyTeam.mutate(@(value) value[eid] <- playerData)
   else
@@ -99,7 +82,7 @@ let nexus_score_info_query = ecs.SqQuery("nexus_score_info",
 )
 
 function getScoresTbl() {
-  local res = null
+  local res = {}
   nexus_score_info_query.perform(function(_eid, comps) {
     res = comps.nexus_stats__scoresheet.getAll()
   })
@@ -192,10 +175,6 @@ let killTypesOrder = [
 
 let scoreHitnsOrder = [
   {
-    id = "death"
-    name = loc("stats/deaths")
-  }
-  {
     id = "kill"
     icon = "kill_icon"
     name = loc("stats/kills")
@@ -231,11 +210,11 @@ let scoreHitnsOrder = [
 ]
 
 let scoreGap = {
-  size = const [hdpx(15), flex()]
+  size = static [hdpx(15), flex()]
   halign = ALIGN_CENTER
   children = {
     rendObj = ROBJ_SOLID
-    size = const [hdpx(1), flex()]
+    size = static [hdpx(1), flex()]
     color = BtnBdNormal
   }
 }
@@ -259,34 +238,34 @@ function mkStatsHint(data, v, idx, scoreTbl) {
   }
   return {
     rendObj = ROBJ_BOX
-    size = const [hdpx(370), SIZE_TO_CONTENT]
+    size = static [hdpx(400), SIZE_TO_CONTENT]
     fillColor = mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
     minHeight = SIZE_TO_CONTENT
-    padding = const [hdpx(8), fsh(1)]
+    padding = static [hdpx(8), fsh(1)]
     flow = FLOW_HORIZONTAL
     gap = { size = flex() }
     children = [
       mkText(v?.name ?? loc(v.locId))
       {
-        size = const [hdpx(85), SIZE_TO_CONTENT]
+        size = static [hdpx(110), SIZE_TO_CONTENT]
         flow = FLOW_HORIZONTAL
         gap = scoreGap
         children = [
           mkText(count, {
-            size = const [hdpx(30), SIZE_TO_CONTENT]
+            size = static [hdpx(30), SIZE_TO_CONTENT]
             halign = ALIGN_CENTER
           })
           {
-            size = const [hdpx(40), SIZE_TO_CONTENT]
+            size = FLEX_H
             flow = FLOW_HORIZONTAL
             valign = ALIGN_CENTER
-            halign = ALIGN_CENTER
+            halign = ALIGN_RIGHT
             children = [
-              v.id == "death" ? null : mkText(points ?? (count * (scoreTbl?[v.id] ?? 0)), {
+              mkText(points ?? (count * (scoreTbl?[v.id] ?? 0)), {
                 halign = ALIGN_CENTER
-                size = const [hdpx(33), SIZE_TO_CONTENT]
+                size = FLEX_H
               })
-              v.id == "death" ? null : mkStatIcon("all_score", hdpxi(15))
+              mkStatIcon("all_score", hdpxi(15))
             ]
           }
         ]
@@ -309,6 +288,11 @@ let statsOrder = [
     }, { padding = 0 })
   }
   {
+    id = "death"
+    icon = "death_icon"
+    name = loc("stats/deaths")
+  }
+  {
     id = "assist"
     icon = "assist_icon"
     name = loc("stats/assists")
@@ -324,7 +308,7 @@ let statsOrder = [
     mkTooltip = @(data, scoreTbl) tooltipBox({
       flow = FLOW_VERTICAL
       children = scoreHitnsOrder.map(@(v, idx) mkStatsHint(data, v, idx, scoreTbl))
-    }, const { padding = 0 })
+    }, static { padding = 0 })
   }
 ]
 
@@ -509,12 +493,12 @@ function getRoundData(round, data) {
 }
 
 let mkPlayerStat = @(value, statData, fullData) value == null ? null : @() {
-  watch = [hudIsInteractive, hoveredStatLine, localPlayerTeam, currentMenuId, isNesusEndGameDebriefing, isOnPlayerBase]
+  watch = [hudIsInteractive, hoveredStatLine, localPlayerTeam, currentMenuId, isNexusEndGameDebriefing, isOnPlayerBase]
   size = [statData?.width ?? statWidth, statWidth]
   halign = ALIGN_CENTER
   valign = ALIGN_CENTER
   behavior = hudIsInteractive.get()
-    || isNesusEndGameDebriefing.get()
+    || isNexusEndGameDebriefing.get()
     || isOnPlayerBase.get()
     || currentMenuId.get() == NEXUS_STATS_ID ? Behaviors.Button : null
   skipDirPadNav=true
@@ -527,7 +511,7 @@ let mkPlayerStat = @(value, statData, fullData) value == null ? null : @() {
 
 let mkPlayerStats = @(stats) {
   flow = FLOW_HORIZONTAL
-  size = const [SIZE_TO_CONTENT, ph(100)]
+  size = static [SIZE_TO_CONTENT, ph(100)]
   gap = hdpx(4)
   children = statsOrder.map(@(v) mkPlayerStat(stats?[v.id], v, stats))
 }
@@ -544,6 +528,7 @@ function mkStatsHeader(statData, isEnemy) {
     behavior = hudIsInteractive.get()
       || currentMenuId.get() == NEXUS_STATS_ID
       || isOnPlayerBase.get() ? Behaviors.Button : null
+    skipDirPadNav = true
     onHover = function(on) {
       if (on) {
         setTooltip(name ?? loc(locId))
@@ -564,17 +549,40 @@ let statsHeader = @(isEnemy = false) {
   hplace = ALIGN_RIGHT
   vplace = ALIGN_BOTTOM
   valign = ALIGN_CENTER
-  padding = [0, hdpx(8),0,0]
+  padding = static [0, hdpx(8) + thinAndReservedPaddingStyle.BarNoScrollStyle._width,0,0]
   children = statsOrder.map(@(v) mkStatsHeader(v, isEnemy))
 }
 
-let mkPlayerStatusIcon = function(isAlive, isDowned, color) {
-  let size = const hdpx(21)
-  return isDowned && isAlive
-    ? faComp("distress.svg", { color, size })
-    : isAlive
-      ? faComp("heartbeat.svg", {color, size })
-      : const faComp("skull.svg", {color = Color(20,20,20,140), size})
+let mkPlayerStatRow = @(v, idx, statsData) @() {
+  watch = [localPlayerEid, statsToShow]
+  key = statsToShow.get()
+  rendObj = ROBJ_SOLID
+  size = FLEX_H
+  padding = static [hdpx(10), hdpx(8)]
+  color = v.eid == localPlayerEid.get() ? ItemBgColor
+    : mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
+  flow = FLOW_HORIZONTAL
+  gap = static { size = flex() }
+  children = [
+    {
+      flow = FLOW_HORIZONTAL
+      gap = static hdpx(10)
+      valign = ALIGN_CENTER
+      children = [
+        mkText(idx + 1, {
+          size = static [hdpx(40), SIZE_TO_CONTENT]
+          halign = ALIGN_CENTER
+        }.__update(body_txt))
+        @() {
+          watch = [isStreamerMode, playerRandName, localPlayerName]
+          children = isStreamerMode.get() && v.name == localPlayerName.get()
+            ? mkText(playerRandName.get(), body_txt)
+            : mkText(remap_nick(v.name), body_txt)
+        }
+      ]
+    }
+    mkPlayerStats(statsData?[v.eid] ?? defStats)
+  ]
 }
 
 function mkPlayerStatsBlock(data) {
@@ -589,51 +597,20 @@ function mkPlayerStatsBlock(data) {
     }
     return res
   })
+
   return @() {
     watch = playersStatsData
     size = flex()
-    children = makeVertScroll(@() {
+    children = makeVertScrollExt(@() {
       watch = statsToShow
       key = statsToShow.get()
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       flow = FLOW_VERTICAL
       children = data
         .sort(@(a, b) (playersStatsData.get()?[b.eid].score ?? 0) <=> (playersStatsData.get()?[a.eid].score ?? 0)
           || a.name <=> b.name)
-        .map(@(v, idx) @() {
-          watch = [localPlayerEid, statsToShow]
-          key = statsToShow.get()
-          rendObj = ROBJ_SOLID
-          size = const [flex(), SIZE_TO_CONTENT]
-          padding = const [hdpx(10), hdpx(8)]
-          color = v.eid == localPlayerEid.get() ? ItemBgColor
-            : mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
-          flow = FLOW_HORIZONTAL
-          gap = const { size = flex() }
-          children = [
-            {
-              flow = FLOW_HORIZONTAL
-              gap = const hdpx(10)
-              children = [
-                mkText(idx + 1, {
-                  size = const [hdpx(40), SIZE_TO_CONTENT]
-                  halign = ALIGN_CENTER
-                }.__update(body_txt))
-                @() {
-                  watch = const [localPlayerTeam, nexusModeTeamColors]
-                  vplace = ALIGN_CENTER
-                  children = v?.isDowned == null || v?.isAlive == null
-                    ? null
-                    : mkPlayerStatusIcon(v.isAlive, v.isDowned, playersStatsData.get()?[v.eid].team == localPlayerTeam.get()
-                      ? nexusModeTeamColors.get()[1] : RedWarningColor)
-                }
-                mkText(remap_nick(v.name), body_txt)
-              ]
-            }
-            mkPlayerStats(playersStatsData.get()?[v.eid] ?? defStats)
-          ]
-        })
-    })
+        .map(@(v, idx) mkPlayerStatRow(v, idx, playersStatsData.get()))
+    }, { styling = thinAndReservedPaddingStyle })
   }
 }
 
@@ -642,15 +619,15 @@ let dummyStatsBlock = mkTextArea(loc("stats/emptyList"), {
   vplace = ALIGN_CENTER
 }.__update(h2_txt))
 
-let teamStatsBlock = {
+let teamStatsBlock = freeze({
   size = flex()
   flow = FLOW_HORIZONTAL
-  gap = const {
+  gap = static {
     rendObj = ROBJ_SOLID
     color = BtnBdNormal
-    size = [hdpx(2), ph(94)]
+    size = static [hdpx(2), ph(94)]
     vplace = ALIGN_BOTTOM
-    margin = [0, hdpx(10)]
+    margin = static [0, hdpx(10)]
   }
   children = [
     @() {
@@ -659,11 +636,11 @@ let teamStatsBlock = {
       halign = ALIGN_CENTER
       flow = FLOW_VERTICAL
       children = allyTeam.get().len() <= 0 ? dummyStatsBlock : [
-        mkText(const loc("nexus/playerTeam"), { color = nexusModeTeamColors.get()[1] }.__update(h2_txt))
+        mkText(static loc("nexus/playerTeam"), { color = nexusModeTeamColors.get()[1] }.__update(h2_txt))
         {
           size = flex()
           flow = FLOW_VERTICAL
-          gap = const hdpx(10)
+          gap = static hdpx(10)
           children = [
             statsHeader
             mkPlayerStatsBlock(allyTeam.get().values())
@@ -677,11 +654,11 @@ let teamStatsBlock = {
       flow = FLOW_VERTICAL
       halign = ALIGN_CENTER
       children = enemyTeam.get().len() <= 0 ? dummyStatsBlock : [
-        const mkText(loc("nexus/enemyTeam"), { color = RedWarningColor }.__update(h2_txt))
+        static mkText(loc("nexus/enemyTeam"), { color = RedWarningColor }.__update(h2_txt))
         {
           size = flex()
           flow = FLOW_VERTICAL
-          gap = const hdpx(10)
+          gap = static hdpx(10)
           children = [
             statsHeader(true)
             mkPlayerStatsBlock(enemyTeam.get().values())
@@ -690,11 +667,12 @@ let teamStatsBlock = {
       ]
     }
   ]
-}
+})
 
 function statTabs() {
+  let roundsToExtend = nexusRoundModeRoundNumber.get() >= 0 ? array(nexusRoundModeRoundNumber.get()) : []
   let tabsList = [TOTAL_STATS_ID]
-    .extend(array(nexusRoundModeRoundNumber.get()))
+    .extend(roundsToExtend)
     .map(@(v, idx) {
       id = v ?? idx
       text = idx == 0 ? loc("stats/total") : loc("nexus/roundNumber", { number = getRomanNumeral(idx) })
@@ -721,7 +699,7 @@ function mkWinHistoryBlock() {
   let winHistoryData = Computed(function() {
     local res = null
     if (statsToShow.get() == TOTAL_STATS_ID
-      || (statsToShow.get() == nexusRoundModeRoundNumber.get() && !isNesusEndGameDebriefing.get())
+      || (statsToShow.get() == nexusRoundModeRoundNumber.get() && !isNexusEndGameDebriefing.get())
     )
       return res
     res = getWinHistoryData(statsToShow.get())
@@ -731,15 +709,15 @@ function mkWinHistoryBlock() {
     let { winnerTeam = null, winReason = null } = winHistoryData.get()
     if (winnerTeam == null || winReason == null)
       return { watch = winHistoryData }
-    let result = winnerTeam == nexusRoundModeAllyTeam.get() ? loc("nexus/victory")
-      : winnerTeam == nexusRoundModeEnemyTeam.get() ? loc("nexus/defeat")
+    let result = winnerTeam == nexusAllyTeam.get() ? loc("nexus/victory")
+      : winnerTeam == nexusEnemyTeam.get() ? loc("nexus/defeat")
       : loc("nexus/draw")
-    let color = winnerTeam == nexusRoundModeAllyTeam.get() ? nexusModeTeamColors.get()[1]
-      : winnerTeam == nexusRoundModeEnemyTeam.get() ? RedWarningColor
+    let color = winnerTeam == nexusAllyTeam.get() ? nexusModeTeamColors.get()[1]
+      : winnerTeam == nexusEnemyTeam.get() ? RedWarningColor
       : TextHighlight
     let reasonLocId = nexusRoundEndReasonMap?[winReason]
     return {
-      watch = [winHistoryData, nexusRoundModeAllyTeam, nexusRoundModeEnemyTeam, nexusModeTeamColors]
+      watch = [winHistoryData, nexusAllyTeam, nexusEnemyTeam, nexusModeTeamColors]
       hplace = ALIGN_CENTER
       flow = FLOW_VERTICAL
       halign = ALIGN_CENTER
@@ -754,9 +732,9 @@ function mkWinHistoryBlock() {
 function targetTitle() {
   if (statsToShow.get() != nexusRoundModeRoundNumber.get() && statsToShow.get() != TOTAL_STATS_ID)
     return { watch = [statsToShow, nexusRoundModeRoundNumber] }
-  let text = statsToShow.get() == TOTAL_STATS_ID
+  let text = statsToShow.get() == TOTAL_STATS_ID && nexusRoundModeRoundNumber.get() >= 0
     ? loc("nexus/roundModeWinContidion", { count  = colorize(InfoTextValueColor, nexusRoundModeRoundsToWin.get()) })
-    : loc("raidInfo/pvp")
+    : loc("missionInfo/pvp")
   return {
     watch = [statsToShow, nexusRoundModeRoundsToWin, nexusRoundModeRoundNumber]
     size = [flex(), infoTitleHeight]
@@ -766,20 +744,26 @@ function targetTitle() {
 }
 
 let mkMvpPlayerBlock = @(playerName, blockName, dataToShow, team, totalScore, hint = null, color = null) @() {
-  watch = const [localPlayerTeam, nexusModeTeamColors]
+  watch = static [localPlayerTeam, nexusModeTeamColors]
   rendObj = ROBJ_BOX
-  size = const [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   maxWidth = pw(33)
   borderColor = mul_color(color ?? (team == localPlayerTeam.get() ? nexusModeTeamColors.get()[1] : RedWarningColor), 0.6)
   borderWidth = hdpx(2)
   fillColor = ConsoleFillColor
-  padding = const hdpx(10)
+  padding = static hdpx(10)
   flow = FLOW_VERTICAL
   behavior = Behaviors.Button
+  skipDirPadNav = true
   onHover = @(on) hint == null ? null : setTooltip(on ? hint : null)
   halign = ALIGN_CENTER
   children = [
-    mkText(remap_nick(playerName), { color = InfoTextValueColor }.__update(h2_txt))
+    @() {
+      watch = [localPlayerName, isStreamerMode, playerRandName]
+      children = isStreamerMode.get() && localPlayerName.get() == remap_nick(playerName)
+        ? mkText(playerRandName.get(), { color = InfoTextValueColor }.__update(h2_txt))
+        : mkText(remap_nick(playerName), { color = InfoTextValueColor }.__update(h2_txt))
+    }
     mkText(blockName, body_txt)
     {
       flow = FLOW_HORIZONTAL
@@ -869,11 +853,11 @@ let mkMvpBlock = @(animDuration = null) function() {
     watch = [playersRoundStats, allyTeam, enemyTeam, playersStats, nexusRoundModeRoundNumber, localPlayerTeam, statsToShow]
     flow = FLOW_VERTICAL
     gap = hdpx(2)
-    transform = const {}
+    transform = static {}
     animations = animDuration == null ? null : [
-      { prop = AnimProp.translate, from = [-sw(100), 0], to = [-sw(100), 0], duration = animDuration, play = true }
+      { prop = AnimProp.translate, from = static [-sw(100), 0], to = static [-sw(100), 0], duration = animDuration, play = true }
       {
-        prop = AnimProp.translate, from = [-sw(100), 0], to = [0, 0],
+        prop = AnimProp.translate, from = static [-sw(100), 0], to = static [0, 0],
         duration = animDuration, play = true,
         delay = animDuration, easing = InOutCubic,
         onStart = @() sound_play("ui_sounds/interface_open")
@@ -893,8 +877,12 @@ function statsUi() {
     watch = localPlayerTeam
     size = flex()
     flow = FLOW_VERTICAL
-    padding = const hdpx(10)
-    gap = const hdpx(4)
+    padding = static hdpx(10)
+    gap = static hdpx(4)
+    onDetach = function() {
+      allyTeam.set({})
+      enemyTeam.set({})
+    }
     children = [
       statTabs
       {
@@ -914,16 +902,16 @@ function statsUi() {
 let nexusStatsUi = wrapInStdPanel(NEXUS_STATS_ID, statsUi, nexusStatsWndTitle)
 
 let mkGameResultTitle = @(localTeam) function() {
-  let isWinner = localTeam == nexusRoundModeGameWinner.get()
+  let isWinner = localTeam == nexusGameWinner.get()
   let text = isWinner ? loc("nexus/victory") : loc("nexus/defeat")
   let color = isWinner ? nexusModeTeamColors.get()[1] : RedWarningColor
   return {
-    watch = [nexusRoundModeGameWinner, nexusModeTeamColors]
+    watch = [nexusGameWinner, nexusModeTeamColors]
     rendObj = ROBJ_SOLID
-    size = [sw(100), SIZE_TO_CONTENT]
+    size = static [sw(100), SIZE_TO_CONTENT]
     halign = ALIGN_CENTER
     color = ConsoleFillColor
-    padding = [hdpx(8), 0]
+    padding = static [hdpx(8), 0]
     children = mkText(text, { color }.__update(giant_txt))
   }
 }
@@ -941,10 +929,10 @@ function mkCloseGameTimer() {
       halign = ALIGN_CENTER
       valign = ALIGN_CENTER
       flow = FLOW_HORIZONTAL
-      padding = const [0, hdpx(4)]
+      padding = static [0, hdpx(4)]
       children = [
-        mkText(text, const { color = TextHighlight })
-        mkMonospaceTimeComp(timer.get(), sub_txt, const mul_color(TextHighlight, Color(220,120,120)))
+        mkText(text, static { color = TextHighlight })
+        mkTimeComp(timer.get(), sub_txt, static mul_color(TextHighlight, Color(220,120,120)))
       ]
     }
   }
@@ -965,8 +953,8 @@ function endGameDebriefing() {
       {
         size = screenSize
         flow = FLOW_VERTICAL
-        padding = const hdpx(10)
-        gap = const hdpx(4)
+        padding = static hdpx(10)
+        gap = static hdpx(4)
         children = [
           statTabs
           {
@@ -982,7 +970,7 @@ function endGameDebriefing() {
             hplace = ALIGN_CENTER
             halign = ALIGN_CENTER
             flow = FLOW_VERTICAL
-            gap = const hdpx(4)
+            gap = static hdpx(4)
             children = [
               mkCloseGameTimer()
               closeGameBtn
@@ -994,7 +982,7 @@ function endGameDebriefing() {
   }
 }
 
-isNesusEndGameDebriefing.subscribe(@(v) v
+isNexusEndGameDebriefing.subscribe_with_nasty_disregard_of_frp_update(@(v) v
   ? addModalWindow({
       key = END_GAME_DEBRIEFING_ID
       size = flex()
@@ -1061,9 +1049,9 @@ let mkRewardMessage = @(credits, reason, count = 1) {
 
 let mkSkullIcon = @(count) {
   rendObj = ROBJ_IMAGE
-  size = const [killIconSize, killIconSize]
+  size = static [killIconSize, killIconSize]
   color = count < 3 ? RedWarningColor : InfoTextValueColor
-  padding = [hdpx(4), 0]
+  padding = static [hdpx(4), 0]
   image = Picture("ui/skin#skull.svg:{0}:{0}:K".subst(killIconSize))
 }
 
@@ -1134,7 +1122,7 @@ ecs.register_es("nexus_simple_reward_alert_es", {
   }
 }, {comps_rq = [ "nexus_player" ]}, { tags="gameClient" })
 
-return {
+return freeze({
   statsHeader
   NEXUS_STATS_ID
   nexusStatsUi
@@ -1148,4 +1136,4 @@ return {
   defStats
   mkMvpPlayerBlock
   getScoresTbl
-}
+})

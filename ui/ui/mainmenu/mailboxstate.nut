@@ -1,13 +1,16 @@
+from "%dngscripts/globalState.nut" import nestWatched
+
+from "dagor.debug" import logerr
+from "%ui/components/msgbox.nut" import showMsgbox
+from "%ui/popup/popupsState.nut" import addPopup, removePopup
+from "%ui/components/modalPopupWnd.nut" import removeModalPopup
+
 from "%ui/ui_library.nut" import *
 
-let { logerr } = require("dagor.debug")
-let {showMsgbox} = require("%ui/components/msgbox.nut")
-let { addPopup, removePopup } = require("%ui/popup/popupsState.nut")
-let { nestWatched } = require("%dngscripts/globalState.nut")
-
+let MAILBOX_MODAL_UID = "mailbox_modal_wnd"
 let isMailboxVisible  = nestWatched("isMailboxVisible", false)
 let inbox = nestWatched("inbox", [])
-let unreadNum = Computed(@() inbox.value.reduce(@(res, notify) notify.isRead ? res : res + 1, 0))
+let unreadNum = Computed(@() inbox.get().reduce(@(res, notify) notify.isRead ? res : res + 1, 0))
 let counter = persist("counter", @() { last = 0 })
 let hasUnread = Computed(@() unreadNum.get() > 0)
 
@@ -23,29 +26,31 @@ function subscribeGroup(actionsGroup, actions) {
 }
 
 function removeNotifyById(id) {
-  let idx = inbox.value.findindex(@(n) n.id == id)
+  let idx = inbox.get().findindex(@(n) n.id == id)
   if (idx != null) {
-    removePopup(getPopupId(inbox.value[idx]))
+    removePopup(getPopupId(inbox.get()[idx]))
     inbox.mutate(@(value) value.remove(idx))
   }
 }
 
 function removeNotify(notify) {
   removePopup(getPopupId(notify))
-  let idx = inbox.value.indexof(notify)
+  let idx = inbox.get().indexof(notify)
   if (idx != null)
     inbox.mutate(@(value) value.remove(idx))
+  if (inbox.get().len() == 0)
+    removeModalPopup(MAILBOX_MODAL_UID)
 }
 
 function onNotifyShow(notify) {
-  if (!inbox.value.contains(notify))
+  if (!inbox.get().contains(notify))
     return
   let onShow = subscriptions?[notify.actionsGroup].onShow ?? removeNotify
   onShow(notify)
 }
 
 function onNotifyRemove(notify) {
-  if (!inbox.value.contains(notify))
+  if (!inbox.get().contains(notify))
     return
 
   let onRemove = subscriptions?[notify.actionsGroup].onRemove
@@ -54,12 +59,12 @@ function onNotifyRemove(notify) {
 }
 
 function clearAll() {
-  let list = clone inbox.value
+  let list = clone inbox.get()
   foreach (notify in list) {
     let onRemove = subscriptions?[notify.actionsGroup].onRemove
     onRemove?(notify)
   }
-  inbox(inbox.value.filter(@(n) !list.contains(n)))
+  inbox.set(inbox.get().filter(@(n) !list.contains(n)))
 }
 
 let showPopup = @(notify)
@@ -87,7 +92,7 @@ function pushNotification(notify = NOTIFICATION_PARAMS) {
 }
 
 function markReadAll() {
-  if (hasUnread.value)
+  if (hasUnread.get())
     inbox.mutate(@(v) v.each(@(notify) notify.isRead = true))
 }
 
@@ -113,6 +118,7 @@ return {
   markReadAll
   clearAll
   isMailboxVisible
+  MAILBOX_MODAL_UID
 
   subscribeGroup
   onNotifyRemove

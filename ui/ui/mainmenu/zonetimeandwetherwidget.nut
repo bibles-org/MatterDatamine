@@ -1,9 +1,10 @@
+from "das.level" import generate_level_evnironment_index
+from "%ui/components/commonComponents.nut" import mkInfoTxt, mkText, mkMonospaceTimeComp
+from "%ui/components/colors.nut" import BtnBdSelected, InfoTextValueColor
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { generate_level_evnironment_index } = require("das.level")
-let { mkInfoTxt, mkText, mkMonospaceTimeComp } = require("%ui/components/commonComponents.nut")
-let { BtnBdSelected, InfoTextValueColor } = require("%ui/components/colors.nut")
 
 let nextEnvMinorColor = Color(70, 70, 70, 120)
 
@@ -81,13 +82,13 @@ function getZoneTimeOfDay(zone_info, zoneTime) {
   return "Unknown"
 }
 
-let mkIcon = @(icon, progress, customHdpx) {
-  size = [ customHdpx(40), customHdpx(40) ]
+let mkIcon = @(icon, progress) {
+  size = static [ hdpx(40), hdpx(40) ]
   halign = ALIGN_CENTER
   valign = ALIGN_CENTER
   children = [
     {
-      size = [ pw(50), ph(50) ]
+      size = static [ pw(50), ph(50) ]
       rendObj = ROBJ_IMAGE
       image = icon
     }
@@ -102,20 +103,20 @@ let mkIcon = @(icon, progress, customHdpx) {
   ]
 
 }
-let mkTextStyles = memoize(function(customHdpx) {
-  let textStyle = {fontSize = customHdpx(14) }
+let textStyles = function() {
+  let textStyle = {fontSize = hdpx(14) }
   return {
     textStyle
     textInfoStyle = textStyle.__merge({color = InfoTextValueColor})
     openBr = mkText("(", textStyle)
     closeBr = mkText(")", textStyle)
   }
-})
+}()
 
-function mkZoneWidgets(matchingUTCTime) {
+function mkZoneWidgets(matchingUTCTime, halign = ALIGN_LEFT) {
 
-  function zoneTimeWidget(zone_info, customHdpx=hdpx) {
-    let {textStyle, textInfoStyle, openBr, closeBr} = mkTextStyles(customHdpx)
+  function zoneTimeWidget(zone_info) {
+    let {textStyle, textInfoStyle, openBr, closeBr} = textStyles
     let changeInterval = zone_info?.envInfo?.level_synced_environment__timeOfDayChangeInterval ?? 1
     return function() {
       if (zone_info?.envInfo == null || matchingUTCTime.get() == 0) {
@@ -136,31 +137,33 @@ function mkZoneWidgets(matchingUTCTime) {
 
       let weatherLine = {
         flow = FLOW_HORIZONTAL
-        gap = customHdpx(5)
-        size = const [ flex(), SIZE_TO_CONTENT ]
+        gap = hdpx(5)
+        halign
         children = [
           mkText(timeLoc, textInfoStyle)
           { flow = FLOW_HORIZONTAL children = [
             openBr
-            mkMonospaceTimeComp(nextUpdateIn, textStyle, const Color(180,180,180))
+            mkMonospaceTimeComp(nextUpdateIn, textStyle, static Color(180,180,180))
             closeBr
           ]}
         ]
       }
-
+      let icon =  mkIcon(timePics[currenTimeOfDay], safe_div(nextUpdateIn.tofloat(), changeInterval.tofloat()))
       return {
         watch = matchingUTCTime
         flow = FLOW_HORIZONTAL
-        size = [ flex(), SIZE_TO_CONTENT ]
-        gap = customHdpx(5)
+        size = FLEX_H
+        halign
+        gap = hdpx(5)
         children = [
-          mkIcon(timePics[currenTimeOfDay], safe_div(nextUpdateIn.tofloat(), changeInterval.tofloat()), customHdpx)
+          icon
           {
             flow = FLOW_VERTICAL
-            size = [ flex(), SIZE_TO_CONTENT ]
+            
+            halign
             children = [
               weatherLine
-              mkInfoTxt(loc("zoneInfo/nextDayTime"), nextTimeLoc, textStyle).__update({gap = customHdpx(2)})
+              mkInfoTxt(loc("zoneInfo/nextDayTime"), nextTimeLoc, textStyle, static { gap = hdpx(2) })
             ]
           }
         ]
@@ -192,8 +195,8 @@ function mkZoneWidgets(matchingUTCTime) {
     return { iconType = "unknown", locName = "Unknown" }
   }
 
-  function zoneWeatherWidget(zoneInfo, customHdpx=hdpx) {
-    let {textStyle, textInfoStyle, openBr, closeBr} = mkTextStyles(customHdpx)
+  function zoneWeatherWidget(zoneInfo) {
+    let {textStyle, textInfoStyle, openBr, closeBr} = textStyles
     let changeInterval = zoneInfo?.envInfo?.level_synced_environment__weatherChangeInterval ?? 1
     return function() {
       if (matchingUTCTime.get() == 0 || zoneInfo?.envInfo == null) {
@@ -210,12 +213,12 @@ function mkZoneWidgets(matchingUTCTime) {
 
       let weatherLine = {
         flow = FLOW_HORIZONTAL
-        gap = customHdpx(5)
-        size = [ flex(), SIZE_TO_CONTENT ]
+        gap = hdpx(5)
+        halign
         children = [
           mkText(loc(currentWeather.locName), textInfoStyle)
           {flow = FLOW_HORIZONTAL children = [openBr,
-            mkMonospaceTimeComp(nextUpdateIn, textStyle, const Color(180,180,180)),
+            mkMonospaceTimeComp(nextUpdateIn, textStyle, static Color(180,180,180)),
             closeBr]
           }
         ]
@@ -227,16 +230,18 @@ function mkZoneWidgets(matchingUTCTime) {
       return {
         watch = matchingUTCTime
         flow = FLOW_HORIZONTAL
-        size = [ flex(), SIZE_TO_CONTENT ]
-        gap = customHdpx(5)
+        size = FLEX_H
+        gap = hdpx(5)
+        halign
         children = [
-          mkIcon(weatherIcon, safe_div(nextUpdateIn.tofloat(), changeInterval.tofloat()), customHdpx)
+          mkIcon(weatherIcon, safe_div(nextUpdateIn.tofloat(), changeInterval.tofloat()))
           {
             flow = FLOW_VERTICAL
-            size = [ flex(), SIZE_TO_CONTENT ]
+            
+            halign
             children = [
               weatherLine
-              mkInfoTxt(loc("zoneInfo/nextDayTime"), loc(nextWeather.locName), textStyle).__update({ gap = customHdpx(2) })
+              mkInfoTxt(loc("zoneInfo/nextDayTime"), loc(nextWeather.locName), textStyle).__update(static { gap = hdpx(2) })
             ]
           }
         ]

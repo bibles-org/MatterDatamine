@@ -1,31 +1,26 @@
+from "%sqGlob/profile_server.nut" import requestProfileServer
+
+from "%sqstd/json.nut" import saveJson, loadJson, read_text_directly_from_fs_file
+from "%sqstd/underscore.nut" import deep_clone
+
+from "%ui/profile/profile_server_handlers.nut" import updateProfileBlocks, updateProfileBlocksFullLoad, loadFullProfile
+from "dasevents" import EventOnboardingPhaseResult, EventUnlockAppear, CmdForceLoadProfile, EventGameTrigger
+
+import "console" as console
+from "eventbus" import eventbus_send, eventbus_subscribe
+from "settings" import get_setting_by_blk_path
+from "%ui/state/queueState.nut" import getNeededZoneRequirements
+from "jwt" import decode as decode_jwt
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { saveJson, loadJson, read_text_directly_from_fs_file } = require("%sqstd/json.nut")
-let { requestProfileServer } = require("%sqGlob/profile_server.nut")
-let console = require("console")
-let { eventbus_send, eventbus_subscribe } = require("eventbus")
-let { hero_clean_all_equipment_and_gun_slots, generate_loadout_by_seed } = require("das.equipment")
-let { playerProfileOpenedNodes,
-      playerProfileCreditsCount,
-      playerProfileMonolithTokensCount,
-      playerProfileChronotracesCount,
-      playerBaseState,
-      playerProfileLoadout,
-      playerStats,
-      playerProfileUnlocksData,
-      alterMints } = require("%ui/profile/profileState.nut")
-let { get_setting_by_blk_path } = require("settings")
-let { updateProfileBlocks,
-      updateProfileBlocksFullLoad } = require("%ui/profile/profile_server_handlers.nut")
-let { deep_clone } = require("%sqstd/underscore.nut")
+let { playerProfileOpenedNodes, playerProfileCreditsCount, playerProfileMonolithTokensCount, playerProfileChronotracesCount,
+      playerBaseState, playerProfileLoadout, playerStats, playerProfileUnlocksData, alterMints,
+      playerProfilePremiumCredits } = require("%ui/profile/profileState.nut")
 let { matchingQueuesMap } = require("%ui/matchingQueues.nut")
-let { getNeededZoneRequirements } = require("%ui/state/queueState.nut")
 let { stashItems } = require("%ui/hud/state/inventory_items_es.nut")
-let decode_jwt = require("jwt").decode
 let { profilePublicKey } = require("%ui/profile/profile_pubkey.nut")
-let { EventOnboardingPhaseResult, EventUnlockAppear, CmdForceLoadProfile,
-      EventGameTrigger } = require("dasevents")
 let { selectedRaid } = require("%ui/gameModeState.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
@@ -78,8 +73,8 @@ function playerBaseStateDiff(oldPlayerBaseState) {
                                      - (oldPlayerBaseState?.openedReplicatorDevices ?? 0))
   let openedAlterContainersDiff = ((playerBaseState.get()?.openedAlterContainers ?? 0)
                                      - (oldPlayerBaseState?.openedAlterContainers ?? 0))
-  let stashVolumeUpgradesDiff = ((playerBaseState.get()?.stashAdditionalVolume ?? 0)
-                                     - (oldPlayerBaseState?.stashAdditionalVolume ?? 0))
+  let stashVolumeUpgradesDiff = ((playerBaseState.get()?.stashesCount.x ?? 0)
+                                     - (oldPlayerBaseState?.stashesCount.x ?? 0))
 
   local diff = []
   if (openedReplicatorDevicesDiff != 0) {
@@ -123,25 +118,8 @@ function itemsDiff(oldItems, updatedItems) {
   })
 }
 
-let profile_loaded_query = ecs.SqQuery("profile_loaded_query", { comps_rw=[["player_profile__isLoaded", ecs.TYPE_BOOL]] })
-
-let reset_profile_loaded = function() {
-  local querySuccessful = false
-  profile_loaded_query.perform(function(_eid, comp) {
-    comp["player_profile__isLoaded"] = false
-    querySuccessful = true
-  })
-  return querySuccessful
-}
-
-function loadFullProfile(request_name = "load_profile") {
-  if (reset_profile_loaded()) {
-    hero_clean_all_equipment_and_gun_slots()
-    requestProfileServer(request_name, null, {}, updateProfileBlocksFullLoad)
-  }
-}
-
 eventbus_subscribe("profile.load", @(...) loadFullProfile())
+eventbus_subscribe("profile.reset", @(...) loadFullProfile("reset_profile"))
 
 console.register_command(@() loadFullProfile(),
   "profile.load")
@@ -164,11 +142,23 @@ console.register_command(@() requestProfileServer("force_uncomplete_contracts", 
 console.register_command(@() requestProfileServer("force_reset_contracts", null, {}, updateProfileBlocks),
   "profile.force_reset_contracts")
 
+console.register_command(@(num) requestProfileServer("set_offline_raid_tickets_num", {num}, {}, updateProfileBlocks),
+  "profile.set_offline_raid_tickets_num")
+
+console.register_command(@() requestProfileServer("cheat_reset_offline_raid_data", null, {}, updateProfileBlocks),
+  "profile.reset_offline_raid_data")
+
 console.register_command(@() requestProfileServer("clear_all_research_nodes", {}, {}, updateProfileBlocks),
   "profile.clear_all_research_nodes")
 
 console.register_command(@() requestProfileServer("clear_all_recipes", {}, {}, updateProfileBlocks),
   "profile.clear_all_recipes")
+
+console.register_command(@(craft_recipe_id) requestProfileServer("add_recipe", {craft_recipe_id}, {}, updateProfileBlocks),
+  "profile.add_recipe")
+
+console.register_command(@(craft_recipe_id) requestProfileServer("remove_recipe", {craft_recipe_id}, {}, updateProfileBlocks),
+  "profile.remove_recipe")
 
 console.register_command(@(count) requestProfileServer("force_set_credits_count", {count}, {}, updateProfileBlocks),
   "profile.force_set_credits_count")
@@ -368,14 +358,23 @@ console.register_command(@() requestProfileServer("unlock_equipment_cheat", {}, 
 console.register_command(@() requestProfileServer("force_set_refiners_count", {count = 1}, {}, updateProfileBlocks),
   "profile.force_open_refiner")
 
+console.register_command(@(count) requestProfileServer("set_replicator_queue_count", {count}, {}, updateProfileBlocks),
+  "profile.set_refiners_queue_count")
+
+console.register_command(@(count) requestProfileServer("set_replicator_queue_prestige_count", {count}, {}, updateProfileBlocks),
+  "profile.set_refiners_queue_prestige_count")
+
 console.register_command(@(count) requestProfileServer("force_set_alter_containers_count", {count}, {}, updateProfileBlocks),
   "profile.force_set_alter_containers_count")
 
 console.register_command(@(level) requestProfileServer("force_set_monolith_access_level", {level}, {}, updateProfileBlocks),
   "profile.force_set_monolith_access_level")
 
-console.register_command(@(count) requestProfileServer("force_set_stash_upgrades", {count}, {}, updateProfileBlocks),
-  "profile.force_set_stash_upgrades")
+console.register_command(@(count) requestProfileServer("set_stash_count", {count}, {}, updateProfileBlocks),
+  "profile.set_stash_count")
+
+console.register_command(@(count) requestProfileServer("set_stash_prestige_count", {count}, {}, updateProfileBlocks),
+  "profile.set_stash_prestige_count")
 
 console.register_command(@(level) requestProfileServer("give_monolith_full_access_level", {level}, {}, updateProfileBlocks),
   "profile.give_monolith_full_access_level")
@@ -385,6 +384,11 @@ console.register_command(@(count) requestProfileServer("force_set_replicators_co
 
 console.register_command(@(is_enrich) requestProfileServer("force_change_pouch_enrichment", {is_enrich}, {}, updateProfileBlocks),
   "profile.force_change_pouch_enrichment")
+
+console.register_command(@() eventbus_send("profile_server.requestFreeOfflineTickets"), "profile.requestFreeOfflineTickets")
+
+console.register_command(@(is_enrich) requestProfileServer("force_change_stash_enrichment", {is_enrich}, {}, updateProfileBlocks),
+  "profile.force_change_stash_enrichment")
 
 console.register_command(@(is_replica) requestProfileServer("force_change_pouch_replica", {is_replica}, {}, updateProfileBlocks),
   "profile.force_change_pouch_replica")
@@ -410,10 +414,18 @@ console.register_command(@() requestProfileServer("force_damage_armor_plates", {
 console.register_command(@(count) requestProfileServer("force_add_experience", {count}, {}, updateProfileBlocks),
   "profile.force_add_experience")
 
-console.register_command(function(session_id, zone_name, is_rented_equipment) {
+console.register_command(@(is_global) requestProfileServer("wipe", {is_global}, {}, updateProfileBlocks),
+  "profile.wipe")
+
+console.register_command(@(count) requestProfileServer("force_set_premium_credits_count", {count}, {}, updateProfileBlocks),
+  "profile.force_set_premium_credits_count")
+
+console.register_command(function(session_id, zone_name, queue_id, is_rented_equipment) {
   requestProfileServer("get_battle_loadout", {
       session_id,
       raid_name = zone_name,
+      queue_id,
+      is_offline = false,
       is_rented_equipment,
       primary_contract_ids = currentPrimaryContractIds.get()}, {}, function(response) {
 
@@ -428,11 +440,14 @@ console.register_command(function(session_id, zone_name, is_rented_equipment) {
 console.register_command(function(is_rented_equipment = false) {
   let queue = selectedRaid.get()
   let raidName = queue?.extraParams.raidName ?? "sector_unknown+zone_unknown"
+  let queue_id = queue?.queueId ?? ""
   let primary_contract_ids = currentPrimaryContractIds.get()
-  console_print($"Save raid profile for raidName <{raidName}> is_rented_equipment <{is_rented_equipment}> primary_contract_ids <{primary_contract_ids}>")
+  console_print($"Save raid profile for raidName <{raidName}> queueId=<{queue_id}> is_rented_equipment <{is_rented_equipment}> primary_contract_ids <{primary_contract_ids}>")
   requestProfileServer("get_battle_loadout", {
       session_id=$"{rand.rint(1, 10000000)}",
       raid_name = raidName,
+      queue_id,
+      is_offline = false,
       is_rented_equipment,
       primary_contract_ids}, {}, function(response) {
 
@@ -463,10 +478,12 @@ console.register_command(function() {
   })
 }, "profile.save_nexus_profile")
 
-console.register_command(function(session_id, raid_name, is_rented_equipment) {
+console.register_command(function(session_id, raid_name, queue_id, is_rented_equipment) {
   requestProfileServer("get_battle_loadout", {
       session_id,
       raid_name,
+      queue_id,
+      is_offline = false,
       is_rented_equipment,
       primary_contract_ids = currentPrimaryContractIds.get()}, {}, function(response) {
 
@@ -499,6 +516,15 @@ console.register_command(function(){
   if ((playerBaseState.get()?.openedAlterContainers ?? 0) < 2)
     requestProfileServer("force_set_alter_containers_count", {count = 2}, {}, updateProfileBlocks)
 }, "ui.unlock_all_consoles")
+
+console.register_command(@() requestProfileServer("get_nexus_state", {}, {}, updateProfileBlocks),
+  "profile.get_nexus_state")
+
+eventbus_subscribe("profile.get_nexus_state",
+  function(_) {
+    requestProfileServer("get_nexus_state", {}, {}, updateProfileBlocks)
+  }
+)
 
 eventbus_subscribe("profile.add_research_points_to_node",
   function(nodeInfo) {
@@ -540,10 +566,18 @@ eventbus_subscribe("profile_server.buyLotInSlot",
 eventbus_subscribe("profile_server.destroyItems",
   @(items) requestProfileServer("destroy_items", {items}, {}, updateProfileBlocks))
 
+eventbus_subscribe("profile_server.requestFreeOfflineTickets", @(...) requestProfileServer(
+  "request_free_offline_tickets",
+  {},
+  {},
+  updateProfileBlocks
+))
+
 eventbus_subscribe("profile_server.completeContracts",
   @(contractIds) requestProfileServer("complete_contracts", {contractIds}, {}, function(response) {
       let oldOpenedNodes = deep_clone(playerProfileOpenedNodes.get())
       let oldCurrency = clone playerProfileCreditsCount.get()
+      let oldPremiumCurrency = clone playerProfilePremiumCredits.get()
       let oldMonolithTokens = clone playerProfileMonolithTokensCount.get()
       let oldChronotraces = clone playerProfileChronotracesCount.get()
       let oldPlayerBaseState = deep_clone(playerBaseState.get())
@@ -555,20 +589,22 @@ eventbus_subscribe("profile_server.completeContracts",
 
       let researches = researchNodesDiff(oldOpenedNodes)
       let currency = currencyDiff(oldCurrency, playerProfileCreditsCount.get())
+      let premiumCurrency = currencyDiff(oldPremiumCurrency, playerProfilePremiumCredits.get())
       let monolithTokens = currencyDiff(oldMonolithTokens, playerProfileMonolithTokensCount.get())
       let chronotraces = currencyDiff(oldChronotraces, playerProfileChronotracesCount.get())
       let baseUpdates = playerBaseStateDiff(oldPlayerBaseState)
       let unlocks = unlocksDiff(oldUnlocks)
 
       if (response?.result?.need_more_stash_space) {
-        eventbus_send($"profile_server.completeContracts.result#{contractIds[0]}", response?.result?.need_more_stash_space)
+        eventbus_send($"profile_server.completeContracts.result", response?.result?.need_more_stash_space)
       }
       else if (response?.result) {
-        eventbus_send($"profile_server.completeContracts.result#{contractIds[0]}", {
+        eventbus_send($"profile_server.completeContracts.result", {
           itemsAdd = response.result?.inventory_diff?.add
           itemsUpdate = itemsDiff(oldItems, response.result?.inventory_diff?.update ?? [])
           researches
           currency
+          premiumCurrency
           monolithTokens
           chronotraces
           baseUpdates
@@ -580,11 +616,24 @@ eventbus_subscribe("profile_server.completeContracts",
 eventbus_subscribe("profile_server.update_daily_contracts",
   @(_) requestProfileServer("update_daily_contracts", {}, {}, updateProfileBlocks))
 
+eventbus_subscribe("profile_server.wipe_player_progress",
+  @(_) requestProfileServer("wipe_player_progress", {}, {}, function(_response) {
+    loadFullProfile()
+  }))
+
 eventbus_subscribe("profile_server.add_craft_task", function(data) {
   requestProfileServer("add_craft_task", data, {}, function(response) {
     updateProfileBlocks(response)
 
     eventbus_send($"profile_server.add_craft_task.result#{data.replicatorSlotIdx}")
+  })
+})
+
+eventbus_subscribe("profile_server.remove_craft_tasks", function(task_ids) {
+  requestProfileServer("remove_craft_tasks", {task_ids}, {}, function(response) {
+    updateProfileBlocks(response)
+
+    eventbus_send($"profile_server.remove_craft_tasks.result")
   })
 })
 
@@ -652,18 +701,11 @@ eventbus_subscribe("profile_server.complete_refine_task",
 eventbus_subscribe("profile_server.get_battle_loadout",
   @(data) requestProfileServer("get_battle_loadout", data, {}, function(response){
     updateProfileBlocks(response)
-    eventbus_send("profile_server.get_battle_loadout.recieved")
+    eventbus_send("profile_server.get_battle_loadout.recieved", response)
   }))
 
 eventbus_subscribe("profile_server.get_nexus_loadout",
   @(data) requestProfileServer("get_nexus_loadout", data, {}, updateProfileBlocks))
-
-ecs.register_es("load_state_from_profile_es", {
-  onInit = @(_eid, comp) !comp.player_profile__isLoaded ? loadFullProfile() : null
-  },
-  { comps_ro=[["player_profile__isLoaded", ecs.TYPE_BOOL]] },
-  { tags="gameClient" }
-)
 
 let transactions_in_progress_query = ecs.SqQuery("transactions_in_progress_query", { comps_rw=[["player_profile__applyTransactionsInProgress", ecs.TYPE_BOOL]] })
 
@@ -674,6 +716,8 @@ eventbus_subscribe("profile_server.make_alter_from_chronogenes",
       primary_chronogenes=genes.mainGenes,
       secondary_chronogenes=genes.secondaryGenes
       alter_name=genes.alterName
+      stub_melee_chronogenes=genes.stub_melee_chronogenes,
+      dogtag_chronogenes=genes.dogtag_chronogenes
     }, {}, function(response) {
       updateProfileBlocks(response)
       eventbus_send("profile_server.make_alter_from_chronogenes.result", {})
@@ -691,6 +735,12 @@ eventbus_subscribe("profile_server.possess_alter",
     requestProfileServer("possess_alter", container_id_int64, {}, updateProfileBlocks)
   }
 )
+
+eventbus_subscribe("profile_server.playedhours",
+  @(hours) requestProfileServer("playedhours",
+    { hours }, {}, function(response) {
+      updateProfileBlocks(response)
+    }))
 
 ecs.register_es("inventory_profile_send_transactions_es",
   {
@@ -799,18 +849,9 @@ ecs.register_es("profile_open_unlock_on_base",
 }, { tags="gameClient" })
 
 
-ecs.register_es("profile_force_load",
-{
-  [CmdForceLoadProfile] = function(_evt, _eid, _comp) {
-    loadFullProfile()
-  }
-},
-{
-  comps_rq = ["player"]
-})
+ecs.register_es("profile_force_load", { [CmdForceLoadProfile] = @(_, _) loadFullProfile() })
 
 
 return {
   loadFullProfile
-  generate_loadout_by_seed
 }

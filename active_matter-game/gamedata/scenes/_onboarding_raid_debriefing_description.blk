@@ -1,0 +1,59 @@
+entity{
+  _template:t="raid_description"
+  raid_description__raidType:t="unknown"
+  raid_description__difficulty:t="dif_easy"
+
+  "raid_description__enemies:list<t>"{
+    item:t="turned"
+  }
+
+  "raid_description__images:list<t>"{
+    item:t="ui/zone_thumbnails/no_info"
+    item:t="ui/zone_thumbnails/no_info"
+    item:t="ui/zone_thumbnails/no_info"
+  }
+
+  "raid_description__mcImages:list<t>"{}
+  "raid_description__possibleLoot:list<t>"{
+    item:t="akm_47_gun"
+    item:t="sks_carbine_rust_gun"
+    item:t="makarov_gun"
+    item:t="knife_weapon"
+    item:t="small_backpack"
+    item:t="small_pouch"
+    item:t="armorplate_big_a"
+    item:t="helmet_pasgt"
+    item:t="flashlight_device"
+    item:t="item_healkit"
+    item:t="item_healing_ampoule"
+    item:t="box_7_62x39_magazine"
+  }
+}
+
+entity{
+  _template:t="onboarding_tiled_map"
+  tiled_map__leftTop:p2=50, -220
+  tiled_map__rightBottom:p2=350, 80
+  tiled_map__visibleRange:p2=40, 1000
+  tiled_map__tileWidth:i=512
+  tiled_map__zlevels:i=2
+  tiled_map__northAngle:r=0
+  tiled_map__tilesPath:t="maps/am_monolyth_island"
+  tiled_map__genExposure:r=0.7
+  tiled_map__genHeightOffset:r=20
+  fog_of_war__enabled:b=yes
+  fog_of_war__onlineSettingsPath:t="onboarding_miniraid"
+  fog_of_war__resolution:r=2
+}
+
+entity{
+  _template:t="onboarding_miniraid_storm_zone"
+  sphere_zone__radius:r=120
+  shrinkZoneRadius:r=120
+  moving_zone__minZone:p2=-504, -445
+  moving_zone__maxZone:p2=396, 455
+  moving_zone__manual_activation:b=yes
+  moving_zone__sourcePos:p3=187, 48, -55
+  moving_zone__targetPos:p3=187, 48, -55
+  corruption_zone__doublingTime:r=1.2
+}

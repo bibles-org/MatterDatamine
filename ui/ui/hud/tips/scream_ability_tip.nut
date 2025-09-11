@@ -1,8 +1,8 @@
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {tipCmp} = require("%ui/hud/tips/tipComponent.nut")
-let {screamAbilitySpawnTime, screamAbilitylastFailedUseTime} = require("%ui/hud/state/scream_ability_state.nut")
+let { screamAbilitySpawnTime, screamAbilitylastFailedUseTime } = require("%ui/hud/state/scream_ability_state.nut")
 
 let showSpawnTip = Watched(false)
 let showFailedUseTip = Watched(false)
@@ -15,7 +15,7 @@ let onSpawnTimeEnd = function() {
   showSpawnTip.set(false)
 }
 
-screamAbilitySpawnTime.subscribe(function(value){
+screamAbilitySpawnTime.subscribe_with_nasty_disregard_of_frp_update(function(value){
   if (value != 0){
     showSpawnTip.set(true)
     gui_scene.resetTimeout(spawnTipDurationSeconds, onSpawnTimeEnd)
@@ -26,7 +26,7 @@ let onFailedUseTimeEnd = function() {
   showFailedUseTip.set(false)
 }
 
-screamAbilitylastFailedUseTime.subscribe(function(value){
+screamAbilitylastFailedUseTime.subscribe_with_nasty_disregard_of_frp_update(function(value){
   if (value != 0){
     showFailedUseTip.set(true)
     showSpawnTip.set(false)
@@ -46,5 +46,5 @@ let failedUseTip = @() tipCmp({
 return @() {
   watch = [showSpawnTip, showFailedUseTip]
   size = SIZE_TO_CONTENT
-  children = showFailedUseTip.value ? failedUseTip() : (showSpawnTip.value ? spawnTip() : null)
+  children = showFailedUseTip.get() ? failedUseTip() : (showSpawnTip.get() ? spawnTip() : null)
 }

@@ -69,3 +69,9 @@ entity{
     var:t="biome_city"
   }
 }
+
+entity{
+  _template:t="water_sound_field"
+  water_sound_field__worldAABB:p4=-2048, -2048, 2048, 2048
+  water_sound_field__cellSize:r=8
+}

@@ -4,7 +4,6 @@ am_base_objective{
   objective__id:t=""
   objective__blockExtractionWhenIncomplete:b=no
   objective__requireExtraction:b=no
-  objective__isStoryContract:b=no
   objective__requireFullCompleteInSession:b=no
   objective__isReported:b=no
   objective__templateName:t=""
@@ -81,6 +80,7 @@ objective_collect_item_with_tag{
   objective__itemTagNameInParams:t="itemTag"
   _replicated:t="objective__collectedItemsList"
 
+  "objective__itemTags:list<t>"{}
   "objective__collectedItemsList:list<eid>"{}
 }
 
@@ -220,6 +220,7 @@ base_objective_with_selection_target_by_tag{
 objective_photograph{
   _use:t="base_objective_with_quest_items"
   _use:t="base_objective_with_selection_target_by_tag"
+  objective_photograph__activateDistance:r=30
 
   "objective_photograph__completedTargets:list<eid>"{}
   "objectivePhotograph:tag"{}
@@ -401,7 +402,7 @@ sub_objective_spawn_item_on_spawn{
 }
 
 sub_objective_plant_item{
-  objective__containerMinVolume:r=30
+  objective__containerMinVolume:i=300
   objective__additionalContainerTemplate:t="designated_objective_container"
   objective__backupContainerTemplate:t="backup_objective_container"
   objective__outlineContainerColor:c=255, 123, 33, 73
@@ -468,7 +469,7 @@ monolith_apply_params{
 
   "entity_mod_effects:object"{
     "humanNoiseMult+mult_diminishing":r=1.5
-    "invisbleManSpawnFreqMult+mult_diminishing":r=1.2
+    "monsterEventSpawnFreqMult+mult_diminishing":r=1.2
     "corruptionZoneDamageMult+mult_diminishing":r=1.3
   }
 }

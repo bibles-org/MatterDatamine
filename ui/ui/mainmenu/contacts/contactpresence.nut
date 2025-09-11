@@ -1,6 +1,7 @@
+from "%dngscripts/globalState.nut" import nestWatched
+
 from "%ui/ui_library.nut" import *
 
-let { nestWatched } = require("%dngscripts/globalState.nut")
 
 const PRESENCES_ID = "presences"
 const SQUAD_STATUS_ID = "squad_status"

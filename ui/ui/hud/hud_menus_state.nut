@@ -1,14 +1,13 @@
+from "%dngscripts/globalState.nut" import nestWatched
+from "%dngscripts/sound_system.nut" import sound_play
+from "dasevents" import EventGameTrigger, broadcastNetEvent, CmdShowUiMenu, CmdToggleUiMenu,
+  CmdHideUiMenu, CmdHideAllUiMenus, EventEntityDied
+from "%ui/hud/state/interactive_state.nut" import removeInteractiveElement, addInteractiveElement, freeInteractiveState
+from "eventbus" import eventbus_subscribe
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { nestWatched } = require("%dngscripts/globalState.nut")
-let { EventGameTrigger, broadcastNetEvent,
-      CmdShowUiMenu, CmdToggleUiMenu,
-      CmdHideUiMenu, CmdHideAllUiMenus,
-      EventEntityDied } = require("dasevents")
-let { removeInteractiveElement, addInteractiveElement, freeInteractiveState } = require("%ui/hud/state/interactive_state.nut")
-let { sound_play } = require("%dngscripts/sound_system.nut")
-let { eventbus_subscribe } = require("eventbus")
+
 let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
 
 function convertMenuId(id){
@@ -21,7 +20,27 @@ function convertMenuId(id){
   return [id, submenus]
 }
 
+
 let currentMenuId = nestWatched("currentMenuId", null)
+function setCurrentMenuId(id) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  currentMenuId.set(id)
+}
+currentMenuId.whiteListMutatorClosure(setCurrentMenuId)
 let curentHudMenusIds = nestWatched("curentHudMenusIds", {}) 
 let curentHudMenus = {}
 
@@ -33,24 +52,19 @@ let areHudMenusOpened = Computed(function() {
 })
 
 local prev_id = null
-currentMenuId.subscribe(function(v) {
+currentMenuId.subscribe_with_nasty_disregard_of_frp_update(function(v) {
   if (v==null && prev_id!=null)
     freeInteractiveState()
   prev_id = v
 })
 
-function replaceCurrentHudMenus(menus) {
-  let newMenus = menus.map(@(_, key) key)
-  if (!isEqual(curentHudMenusIds.get(), newMenus))
-    curentHudMenusIds.set(newMenus) 
-  curentHudMenus.clear()
-  curentHudMenus.__update(menus)
-}
+let use = @(...) null
 
 let isCurrentMenuInteractive = Computed(function(){
   if (!areHudMenusOpened.get())
     return false
   let id = convertMenuId(currentMenuId.get())[0]
+  use(curentHudMenusIds.get())
   return curentHudMenus?[id]?.isInteractive ?? true
 
 })
@@ -64,7 +78,7 @@ function closeMenu(sid, sound=true){
     return
   let menu = curentHudMenus?[id]
   menu?.onClose()
-  currentMenuId.set(null)
+  setCurrentMenuId(null)
   if (sound)
     sound_play(menu?.openSound ?? "ui_sounds/interface_close")
 }
@@ -81,7 +95,7 @@ function openMenu(sid, sound=true, interactive=null){
   let menu = curentHudMenus?[id]
   log($"HudMenus: request open {id}")
   if (menu==null) {
-    currentMenuId.set(null)
+    setCurrentMenuId(null)
     log($"HudMenus: {id} not found")
     return
   }
@@ -93,11 +107,11 @@ function openMenu(sid, sound=true, interactive=null){
   if ((submenus.len() > 0) && ((menu?.onOpen.getfuncinfos()?.parameters.len() ?? 0) > 1)) {
     menu?.onOpen(submenus)
     let subid = $"{id}/{submenus[0]}"
-    currentMenuId.set(subid)
+    setCurrentMenuId(subid)
   }
   else{
     menu?.onOpen()
-    currentMenuId.set(id)
+    setCurrentMenuId(id)
   }
   if (interactive)
     addInteractiveElement(id)
@@ -151,8 +165,21 @@ ecs.register_es("close_menus_on_watched_death",
   {tags = "gameClient"}
 )
 
+function replaceCurrentHudMenus(menus) {
+  let newMenus = menus.map(@(_, key) key)
+  let menusUpdated = !isEqual(curentHudMenusIds.get(), newMenus)
+  curentHudMenus.clear()
+  curentHudMenus.__update(menus)
+  if (menusUpdated) {
+    curentHudMenusIds.set(newMenus) 
+  }
+  if (menusUpdated)
+    closeAllMenus(false)
+}
+
 return {
   currentMenuId
+  setCurrentMenuId
   curentHudMenusIds
   replaceCurrentHudMenus
   closeMenu

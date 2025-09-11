@@ -1,13 +1,14 @@
+from "%dngscripts/platform.nut" import is_pc
+from "%ui/fonts_style.nut" import fontawesome
+import "%ui/components/colors.nut" as colors
+from "%ui/components/modalPopupWnd.nut" import addModalPopup
+from "%ui/components/scrollbar.nut" import makeVertScroll
+import "dagor.debug" as dagorDebug
+import "dagor.system" as dagorSys
 from "%ui/ui_library.nut" import *
+import "%ui/components/fontawesome.map.nut" as fa
 
-let { fontawesome } = require("%ui/fonts_style.nut")
-let fa = require("%ui/components/fontawesome.map.nut")
-let colors = require("%ui/components/colors.nut")
-let { addModalPopup } = require("%ui/components/modalPopupWnd.nut")
-let {makeVertScroll} = require("%ui/components/scrollbar.nut")
-let dagorDebug = require("dagor.debug")
-let dagorSys = require("dagor.system")
-let { platformId, is_pc } = require("%dngscripts/platform.nut")
+let { platformId } = require("%dngscripts/platform.nut")
 
 
 let errors = mkWatched(persist, "errors", [])
@@ -16,13 +17,13 @@ let haveUnseenErrors = mkWatched(persist, "haveUnseenErrors", false)
 let maxErrorsToShow = 8
 
 function addError(tag, logstring, timestamp, text){
-  local curErrors = clone errors.value
+  local curErrors = clone errors.get()
 
   if (curErrors.len() >= maxErrorsToShow)
     curErrors = curErrors.slice(-(maxErrorsToShow-1))
   curErrors.append({timestamp = timestamp, logstring = logstring, tag=tag, text=text})
-  errors.update(curErrors)
-  haveUnseenErrors(true)
+  errors.set(curErrors)
+  haveUnseenErrors.set(true)
 }
 
 function mkSimpleCb(locid) {
@@ -50,7 +51,7 @@ if (dagorSys.DBGLEVEL <= 0) {
 local counter = 0
 function test_log_errors(){
   counter++
-  errors(clone errors.value)
+  errors.set(clone errors.get())
   dagorDebug.logerr($"web-vromfs: [network] {counter}")
 }
 console_register_command(@()gui_scene.setInterval(2.0, test_log_errors), "ui.test_logerrs")
@@ -60,8 +61,8 @@ function textarea(text, logstring) {
 
   if (dagorSys.DBGLEVEL > 0) {
     onClick = function onClickImpl() {
-      addModalPopup([sw(50),sh(0)], {
-        size = [sw(100), sh(100)]
+      addModalPopup( static [sw(50),sh(0)], {
+        size = static [sw(100), sh(100)]
         uid = "LOGGER_ERROR_DETAILS"
         padding = 0
         popupOffset = 0
@@ -69,34 +70,40 @@ function textarea(text, logstring) {
         children = {
           size = flex()
           rendObj = ROBJ_TEXTAREA
-          behavior = [Behaviors.TextArea]
+          behavior = Behaviors.TextArea
           text = logstring
           color = Color(220,220,220,220)
           textColor = Color(220,220,220,220)
         }
-        popupBg = { rendObj = ROBJ_WORLD_BLUR_PANEL, color = Color(220,220,220,220) fillColor = Color(0,0,0,180)}
+        popupBg = static { rendObj = ROBJ_WORLD_BLUR_PANEL, color = Color(220,220,220,220) fillColor = Color(0,0,0,180)}
       })
     }
   }
 
-  return watchElemState(@(sf) {
-    rendObj = ROBJ_TEXTAREA
-    behavior = [Behaviors.TextArea, Behaviors.Button]
-    text = loc(text,loc("unknown error"))
-    color = (sf & S_HOVER) ? Color(220,220,220) : Color(128,128,128)
-    size = [flex(), SIZE_TO_CONTENT]
-    onClick = onClick
-    skipDirPadNav = true
-  })
+  let stateFlags = Watched(0)
+  return function() {
+    let sf = stateFlags.get()
+    return {
+      watch = stateFlags
+      rendObj = ROBJ_TEXTAREA
+      behavior = static [Behaviors.TextArea, Behaviors.Button]
+      text = loc(text,loc("unknown error"))
+      color = (sf & S_HOVER) ? Color(220,220,220) : Color(128,128,128)
+      size = FLEX_H
+      onClick = onClick
+      skipDirPadNav = true
+      onElemState = @(s) stateFlags.set(s)
+    }
+  }
 }
 
 
 let header = @(text) {
   rendObj = ROBJ_SOLID
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   padding = hdpx(10)
   color = colors.WindowHeader
-  children = {rendObj = ROBJ_TEXT text = text color = Color(128,128,128) size = [flex(), SIZE_TO_CONTENT]}
+  children = {rendObj = ROBJ_TEXT text = text color = Color(128,128,128) size = FLEX_H}
 }
 
 
@@ -108,16 +115,16 @@ function errors_list(){
   return {
     watch = errors
     flow = FLOW_VERTICAL
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     padding = hdpx(20)
-    children = errors.value.map(@(v) textarea(v.text, v.logstring))
+    children = errors.get().map(@(v) textarea(v.text, v.logstring))
     gap = hdpx(20)
   }
 }
 function onClick(event){
   addModalPopup(event.targetRect,
   {
-    size = [sw(45), sh(40)]
+    size = static [sw(45), sh(40)]
     uid = "MODAL_LOGERR"
     padding = 0
     popupFlow = FLOW_VERTICAL
@@ -126,8 +133,8 @@ function onClick(event){
     flow= FLOW_VERTICAL
     popupOffset = 0
     margin = 0
-    onDetach = @() haveUnseenErrors(false)
-    onAttach = @() haveUnseenErrors(false)
+    onDetach = @() haveUnseenErrors.set(false)
+    onAttach = @() haveUnseenErrors.set(false)
     children = [
       header(loc("logerrWnd_hdr", "Warnings"))
       {
@@ -164,7 +171,7 @@ function errorBtn(){
   return {
     watch = [haveUnseenErrors,errors]
     size = SIZE_TO_CONTENT
-    children = haveUnseenErrors.value ? errBtn : null
+    children = haveUnseenErrors.get() ? errBtn : null
     padding = hdpx(5)
   }
 }

@@ -103,6 +103,7 @@ monstrified_changed_human{
   item__name:t="items/suit_militant_changed_item"
   suit__raidIcon:t="!ui/uiskin/raid_info/distorted.svg"
   item__desc:t="items/suit_militant_changed_item/desc"
+  teammate_revive__effectTemplateName:t="teammate_revive_effect_simple"
   human_inventory__canHeal:b=no
   human_inventory__canLoadCharges:b=no
   melee_attack_to_hands_aim_punch__strength:r=1.5
@@ -112,8 +113,6 @@ monstrified_changed_human{
   melee_attack_to_head_confusion__speed:r=0.2
   melee_attack_to_head__extraDamage:r=0.2
   agent_dangers__tag:t="changed_human"
-  am_storage__value:i=0
-  am_storage__maxValue:i=300
   animchar__res:t="distorted_player_char"
   collres__res:t="distorted_player_collision"
   heartrate__range:p2=30, 265
@@ -146,7 +145,7 @@ monstrified_changed_human{
   _skipInitialReplication:t="dm_parts__parts"
 
   "actions__resumeGraphNodeNodeNames:list<t>"{
-    list:t="knife_stand_attack"
+    list:t="distorted_hands_stand_attack"
   }
 
   "actions__resumeGraphNodeActionNames:list<t>"{
@@ -156,10 +155,10 @@ monstrified_changed_human{
   "ignoreDownState:tag"{}
   "update_default_stub_melee_on_appear:tag"{}
   "human_equipment__slots:object"{
-    "cortical_vault:eid"{}
     "chronogene_primary_1:eid"{}
     "pouch:eid"{}
     "backpack:eid"{}
+    "cortical_vault:eid"{}
   }
 
   "game_effect__initialAttachmentsServer:list<t>"{
@@ -335,6 +334,7 @@ changed_monster_effect{
   game_effect_sound__enemy:t="enemy/walker/changed/voice_fx/transmigration"
   game_effect_sound__hero:t="player/walker/changed/voice_fx/transmigration"
 
+  "monster_effect:tag"{}
   "effect_enable_action_sets__actionSetList:list<t>"{
     item:t="MonsterChanged"
   }
@@ -369,8 +369,6 @@ default_changed_claw{
   item__proto:t="default_changed_claw"
   item__isOnGround:b=no
   _replicated:t="item__isOnGround"
-  item__id:i=0
-  _replicated:t="item__id"
   _use:t="melee_weap_slots"
   _use:t="weapon_slot_indexed"
   melee_weapon__propsId:i=-1
@@ -556,7 +554,6 @@ active_matter_dash_ability{
       cooldown:r=0
       lockWhileSwimming:b=yes
       lockInVehicle:b=yes
-      isNoWeaponMode:b=no
 
       "stages:array"{
         "in_stage:object"{
@@ -635,7 +632,6 @@ active_matter_scream_ability{
       cooldown:r=60
       lockWhileSwimming:b=yes
       lockInVehicle:b=yes
-      isNoWeaponMode:b=no
 
       "stages:array"{
         "in_stage:object"{
@@ -754,7 +750,6 @@ active_matter_echolocation_ability{
       cooldown:r=2
       lockWhileSwimming:b=yes
       lockInVehicle:b=yes
-      isNoWeaponMode:b=no
       show_in_ui:b=no
 
       "stages:array"{
@@ -851,7 +846,6 @@ am_mindcontrolled_changed_abilities{
       cooldown:r=0
       lockWhileSwimming:b=no
       lockInVehicle:b=yes
-      isNoWeaponMode:b=no
       hide_ui_after_first_use:b=yes
 
       "stages:array"{
@@ -869,7 +863,6 @@ am_mindcontrolled_changed_abilities{
       cooldown:r=60
       lockWhileSwimming:b=yes
       lockInVehicle:b=yes
-      isNoWeaponMode:b=no
 
       "stages:array"{
         "in_stage:object"{
@@ -896,7 +889,6 @@ am_mindcontrolled_changed_abilities{
       cooldown:r=2
       lockWhileSwimming:b=yes
       lockInVehicle:b=yes
-      isNoWeaponMode:b=no
       hide_ui_after_first_use:b=yes
 
       "stages:array"{
@@ -924,7 +916,6 @@ am_mindcontrolled_changed_abilities{
       cooldown:r=1
       lockWhileSwimming:b=yes
       lockInVehicle:b=yes
-      isNoWeaponMode:b=no
 
       "stages:array"{
         "in_stage:object"{

@@ -1,0 +1,213 @@
+hacking_device_deployed{
+  _use:t="replicating"
+  _use:t="dont_create_nphys_obstacle"
+  _use:t="rendinst"
+  _use:t="simple_ai_target"
+  _use:t="targetable_ri_construction"
+  _use:t="riextra_hp_to_hitpoints"
+  _use:t="riextra_destroy_on_death"
+  _use:t="placeable_rendinst"
+  _use:t="attached_omni_light"
+  _use:t="iteractable_drop_on_ri_destroy"
+  _use:t="interactable_static_grid_object"
+  wakeup__radius:r=5
+  wakeup__nextUpdateSleepModeAdd:r=5
+  wakeup__awakeUnitsAround:i=4
+  hitpoints__hp:r=50
+  hitpoints__maxHp:r=50
+  ri_extra__name:t="am_powerstake_research_device_a"
+  ri_preload__name:t="am_powerstake_research_device_a"
+  light__color:c=10, 230, 230, 255
+  light__brightness:r=0.5
+  loud_noise__radius:r=10
+  loud_noise__noise:r=250
+
+  "ownerEid:eid"{}
+  "net__alwaysInScope:tag"{}
+  "playerOwnerEid:eid"{}
+  _group{
+    _tags:t="server"
+    hacking_device__duration:r=60
+  }
+
+  "destroyLastUsedOwnerDeviceOnAppear:tag"{}
+  "ai_target__alwaysDanger:tag"{}
+  "loud_noise__oneshotFromTm:tag"{}
+}
+
+hacking_device_light_flicker_effect{
+  _use:t="animate_float_component_by_function"
+  animate_float_component__restoreValueOnDestroy:b=yes
+  animate_float_component__function:t="sin"
+  animate_float_component__functionAnimationDuration:r=6.283
+  animate_float_component__timeMultiplier:r=3
+  animate_float_component__isRepeated:b=yes
+  animate_float_component__componentName:t="light__brightness"
+  animate_float_component__valueMin:r=0.05
+  animate_float_component__valueMax:r=0.5
+  game_effect__setColorComponentName:t="light__color"
+  game_effect__setColorValue:c=200, 200, 20, 255
+
+  "hacking_device_remove_client_effect_on_hacking_finished:tag"{}
+}
+
+hacking_device_set_success_lights_color{
+  _use:t="game_effect_base"
+  game_effect__setColorComponentName:t="light__color"
+  game_effect__setColorValue:c=10, 230, 230, 255
+}
+
+hacking_device_in_progress{
+  hacking_device__finishAt:r=-1
+
+  "hacking_device__target:eid"{}
+  _group{
+    _tags:t="gameClient"
+
+    "attach_game_effects_on_appear__effects:list<t>"{
+      i:t="hacking_device_light_flicker_effect"
+    }
+
+    "attach_game_effects_on_disappear__effects:list<t>"{
+      i:t="hacking_device_set_success_lights_color"
+    }
+  }
+}
+
+hacking_device_preview{
+  _use:t="rendinst_diy_preview"
+  preview__radius:r=1.85
+  preview__angleLimit:r=0.55
+  preview__allowedMinAngle:r=80
+  preview__blockPlacementOutOfItemUseZone:b=no
+  ri_preview__name:t="am_powerstake_research_device_a"
+
+  _group{
+    _tags:t="render"
+    semi_transparent__lod:i=1
+  }
+
+  "diyNormalizeGround:tag"{}
+}
+
+hacking_device_planting{
+  _use:t="base_quest_device_planting_human"
+  diy__resultTempl:t=""
+  diy__previewTempl:t=""
+  _tracked:t="diy__previewTempl"
+
+  "hacking_device_planting:tag"{}
+}
+
+hacking_device_planting_planting_preview_phase{
+  _use:t="base_quest_device_planting_preview_phase"
+  game_effect__attachedTemplate:t="hacking_device_planting"
+}
+
+hacking_device_item{
+  _use:t="item"
+  animchar__res:t="am_tripod_research_device_a_item_char"
+  collres__res:t="am_tripod_research_device_a_item_dynmodel_collision"
+  device_item__startCooldownOnEquip:b=yes
+  item__useTime:r=1
+  hacking_device_item__preview:t="hacking_device_preview"
+  hacking_device_item__deployed:t="hacking_device_deployed"
+  item__iconYaw:r=45
+  item__iconPitch:r=45
+  item__iconRoll:r=45
+  item__name:t="items/hacking_device"
+  item__proto:t="hacking_device_item"
+  item__volume:i=20
+
+  "item__notConsumedWhenUsed:tag"{}
+  "item__canBeQuickUsed:tag"{}
+  "item__interruptAbilityOnUse:tag"{}
+  "item_common_use:tag"{}
+  "deviceItem:tag"{}
+  "item__blockUseOnPlayerBase:tag"{}
+  "item__onlyUsableInUseZone:tag"{}
+  "device_item__ability:object"{
+    name:t="diy"
+    activeMatterPrice:i=0
+    cooldown:r=0
+    lockWhileSwimming:b=yes
+    lockInVehicle:b=yes
+
+    "stages:array"{
+      "placement_stage:object"{
+        affectTemplate:t="hacking_device_planting_planting_preview_phase"
+        duration:r=999999
+        activePhase:b=yes
+        interruptible:b=yes
+        skippable:b=yes
+      }
+
+      "out_stage:object"{
+        affectTemplate:t="quest_device_planting_finishing_phase"
+        label:t="out_stage"
+        duration:r=0.25
+        exit:b=yes
+      }
+    }
+  }
+}
+
+hacking_zone{
+  _use:t="zone_for_item_use"
+  sphere_zone__radius:r=4
+
+  "humanTriggerable:tag"{}
+  "zone_for_item_use__itemProtos:list<t>"{
+    item:t="hacking_device_item"
+  }
+}
+
+hacking_device_item_a{
+  _use:t="hacking_device_item"
+  item__proto:t="hacking_device_item_a"
+  item__name:t="items/hacking_device_a"
+}
+
+hacking_zone_a{
+  _use:t="hacking_zone"
+
+  "zone_for_item_use__itemProtos:list<t>"{
+    item:t="hacking_device_item_a"
+  }
+}
+
+hacking_device_deployed_armored{
+  _use:t="hacking_device_deployed"
+  hitpoints__hp:r=150
+  hitpoints__maxHp:r=150
+
+  _group{
+    _tags:t="server"
+    hacking_device__duration:r=80
+  }
+}
+
+hacking_device_item_b{
+  _use:t="hacking_device_item"
+  item__proto:t="hacking_device_item_b"
+  item__name:t="items/hacking_device_b"
+  hacking_device_item__deployed:t="hacking_device_deployed_armored"
+}
+
+hacking_zone_b{
+  _use:t="hacking_zone"
+  sphere_zone__radius:r=2
+
+  "zone_for_item_use__itemProtos:list<t>"{
+    item:t="hacking_device_item_b"
+  }
+}
+
+hacking_zone_a_and_b{
+  _use:t="hacking_zone"
+
+  "zone_for_item_use__itemProtos:list<t>"{
+    item:t="hacking_device_item_a"
+    item:t="hacking_device_item_b"
+  }
+}

@@ -16,7 +16,7 @@ function mkMoveablePanel(panel, customHdpxi, panelsVisibility, idx, override) {
 
     return {
       watch = panelsVisibility
-      size = [ 0, 0 ]
+      size = 0
       halign = ALIGN_LEFT
       children = panelsVisibility[idx].get() ? panel(customHdpxi, override) : null
 

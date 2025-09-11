@@ -122,31 +122,6 @@ entity{
 }
 
 entity{
-  _template:t="photographing_stand_target"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1414.38, 73.179, -672.199]]
-  objective_static_target__tag:t="photo_area_1"
-  map_object_zone__radius:r=10
-  map_object__show:b=no
-}
-
-entity{
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1437.72, 150.587, -410.687]]
-  objective_static_target__tag:t="photo_area_2"
-  map_object_zone__radius:r=20
-  quest_target_geometry_sphere__radius:r=20
-  map_object__show:b=no
-  _template:t="photographing_stand_target"
-}
-
-entity{
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1445.85, 61.2832, -1145.71]]
-  objective_static_target__tag:t="photo_area_3"
-  map_object_zone__radius:r=10
-  map_object__show:b=no
-  _template:t="photographing_stand_target"
-}
-
-entity{
   _template:t="place_for_device_target"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1001.53, 18.2391, -998.357]]
   objective_static_target__tag:t="place_device_quest_1"
@@ -371,30 +346,12 @@ entity{
 }
 
 entity{
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [559.222, 60.2586, -584.784]]
-  objective_static_target__tag:t="photo_daily_hospital_area"
-  map_object_zone__radius:r=20
-  quest_target_geometry_sphere__radius:r=20
-  map_object__show:b=no
-  _template:t="photographing_stand_target"
-}
-
-entity{
   transform:m=[[57.1887, 0, 2.30131] [0, 35.0357, -0] [-1.42992, 0, 35.5344] [558.871, 64.5654, -571.377]]
   objective_static_target__tag:t="photo_daily_hospital_target"
   photographing_target__name:t="photo/photo_daily_hospital_target_name"
   map_object_marker__iconName:t="!ui/skin#eye.svg"
   map_object__show:b=no
   _template:t="photographing_target"
-}
-
-entity{
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [768.838, 50.9418, -394.95]]
-  objective_static_target__tag:t="photo_daily_supermarket_area"
-  map_object_zone__radius:r=15
-  quest_target_geometry_sphere__radius:r=15
-  map_object__show:b=no
-  _template:t="photographing_stand_target"
 }
 
 entity{
@@ -426,15 +383,6 @@ entity{
   map_object_marker__iconName:t="!ui/skin#eye.svg"
   map_object__show:b=no
   _template:t="photographing_target"
-}
-
-entity{
-  transform:m=[[4.81096, 0, 1.69642] [0, 3.80114, -0] [-3.1457, 0, 8.9211] [493.965, 80.2192, -322.68]]
-  objective_static_target__tag:t="euclid_documents_photo_area_1"
-  map_object_zone__radius:r=10
-  quest_target_geometry_sphere__radius:r=0
-  map_object__show:b=no
-  _template:t="photographing_stand_target"
 }
 
 entity{
@@ -778,15 +726,6 @@ entity{
 entity{
   _template:t="secret_crashed_scientist_car_lootable_rendinst"
   transform:m=[[-0.504656, -0.160591, -0.848253] [-0.0792509, 0.987016, -0.139712] [0.859676, -0.00328191, -0.51083] [278.905, 49.5652, -806.832]]
-}
-
-entity{
-  _template:t="photographing_stand_target"
-  transform:m=[[7.91399, 0, 3.15926] [0, 4.1089, -0] [-3.51219, 0, 8.79805] [814.637, 81.736, 184.517]]
-  objective_static_target__tag:t="euclid_vehicle_development_photo_area_1"
-  quest_target_geometry_sphere__radius:r=0
-  map_object_zone__radius:r=10
-  map_object__show:b=no
 }
 
 entity{

@@ -1,66 +1,68 @@
+from "%dngscripts/sound_system.nut" import sound_play
+from "%sqstd/math.nut" import truncateToMultiple
+from "%ui/hud/menus/components/inventoryItemsHeroExtraInventories.nut" import mkHeroBackpackItemContainerItemsList, mkHeroSafepackItemContainerItemsList
+from "%ui/equipPresets/presetsButton.nut" import patchPresetItems, mkPreviewPresetsBlock, raidPresetsBlock
+from "%ui/mainMenu/raid_preparation_window_state.nut" import getPresetMissedItemsMarketIds, getPresetMissedBoxedItemsMarketIds, checkImportantSlotEmptiness, checkRaidAvailability
+from "%ui/fonts_style.nut" import body_txt, sub_txt
+from "%ui/hud/menus/components/damageModel.nut" import nonInteractiveBodypartsPanel, bodypartsPanel
+from "%ui/hud/player_info/affects_widget.nut" import inventoryAffectsWidget
+from "%ui/hud/menus/components/chronogenesWidget.nut" import chronogenesWidget
+from "%ui/components/commonComponents.nut" import bluredPanel, mkText, mkTextArea, mkTabs
+from "%ui/hud/menus/components/inventoryCommon.nut" import mkInventoryHeaderText
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/hud/menus/components/inventoryItemsHeroWeapons.nut" import mkEquipmentWeapons
+from "%ui/hud/menus/components/quickUsePanel.nut" import quickUsePanelEdit
+from "%ui/equipPresets/presetsState.nut" import equipPreset
+from "%ui/hud/menus/components/inventoryItemsPresetPreview.nut" import mkSafepackInventoryPresetPreview, mkHeroInventoryPresetPreview, mkBackpackInventoryPresetPreview
+from "%ui/hud/menus/components/inventoryItemsHeroItemContainer.nut" import mkHeroItemContainerItemsList
+from "%ui/mainMenu/startButton.nut" import startButton
+from "%ui/components/button.nut" import button, textButton, buttonWithGamepadHotkey
+from "eventbus" import eventbus_send, eventbus_subscribe_onehit
+from "%ui/components/msgbox.nut" import showMsgbox
+from "%ui/components/colors.nut" import RedWarningColor, TextHover
+from "%ui/components/accentButton.style.nut" import accentButtonStyle
+from "%ui/hud/menus/components/inventoryItemsStash.nut" import mkStashItemsList
+from "%ui/hud/menus/inventoryActions.nut" import moveItemWithKeyboardMode
+from "%ui/hud/menus/components/inventoryStashFiltersWidget.nut" import resetFilters
+from "%ui/hud/hud_menus_state.nut" import openMenu
+from "%ui/hud/menus/inventory.nut" import refillButton
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import checkInventoryVolume
+from "%ui/mainMenu/stashSpaceMsgbox.nut" import showNoEnoughStashSpaceMsgbox
+from "%ui/mainMenu/ribbons_colors_picker.nut" import colorPickerButton
+from "%ui/equipPresets/convert_loadout_to_preset.nut" import loadoutToPreset
+from "das.equipment" import generate_loadout_by_seed
+from "%ui/hud/menus/components/inventoryStashFiltersWidget.nut" import inventoryFiltersWidget
+from "%ui/context_hotkeys.nut" import contextHotkeys
+from "%ui/mainMenu/offline_raid_widget.nut" import mkOfflineRaidCheckBox
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { body_txt, sub_txt } = require("%ui/fonts_style.nut")
-let { nonInteractiveBodypartsPanel, bodypartsPanel } = require("%ui/hud/menus/components/damageModel.nut")
-let { inventoryAffectsWidget } = require("%ui/hud/player_info/affects_widget.nut")
-let { secondaryChronogenesWidget } = require("%ui/hud/menus/components/secondaryChronogenesWidget.nut")
-let { bluredPanel, mkText, mkTextArea, mkTabs } = require("%ui/components/commonComponents.nut")
 let { marketItems, playerProfileCreditsCount, playerStats, mindtransferSeed } = require("%ui/profile/profileState.nut")
-let { mkInventoryHeaderText } = require("%ui/hud/menus/components/inventoryCommon.nut")
-let { inventoryCurrentWeight, playerMovePenalty, shiftPressedMonitor, isAltPressedMonitor
-} = require("%ui/hud/state/inventory_state.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { truncateToMultiple } = require("%sqstd/math.nut")
-let { mkEquipmentWeapons } = require("%ui/hud/menus/components/inventoryItemsHeroWeapons.nut")
-let { quickUsePanelEdit } = require("%ui/hud/menus/components/quickUsePanel.nut")
+let { inventoryCurrentWeight, playerMovePenalty, shiftPressedMonitor, isAltPressedMonitor, mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
 let { backpackEid, safepackEid, safepackYVisualSize } = require("%ui/hud/state/hero_extra_inventories_state.nut")
-let { previewPreset, equipPreset, useAgencyPreset, AGENCY_PRESET_UID } = require("%ui/equipPresets/presetsState.nut")
-let { mkSafepackInventoryPresetPreview, mkHeroInventoryPresetPreview, mkBackpackInventoryPresetPreview } = require("%ui/hud/menus/components/inventoryItemsPresetPreview.nut")
-let { mkHeroItemContainerItemsList } = require("%ui/hud/menus/components/inventoryItemsHeroItemContainer.nut")
-let { mkHeroBackpackItemContainerItemsList,
-  mkHeroSafepackItemContainerItemsList } = require("%ui/hud/menus/components/inventoryItemsHeroExtraInventories.nut")
-let { startButton } = require("startButton.nut")
-let { button, textButton } = require("%ui/components/button.nut")
-let { patchPresetItems, selectedPreset, mkPreviewPresetsBlock,
-  shopPresetToPurchase, currentPreset, CURRENT_PRESET_UID, raidPresetsBlock,
-  presetBlockButton
-} = require("%ui/equipPresets/presetsButton.nut")
-let { eventbus_send, eventbus_subscribe_onehit } = require("eventbus")
-let { sound_play } = require("%dngscripts/sound_system.nut")
+let { previewPreset, useAgencyPreset, AGENCY_PRESET_UID } = require("%ui/equipPresets/presetsState.nut")
+let { selectedPreset, shopPresetToPurchase, currentPreset, CURRENT_PRESET_UID } = require("%ui/equipPresets/presetsButton.nut")
 let { creditsTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
-let { showMsgbox } = require("%ui/components/msgbox.nut")
-let { RedWarningColor, TextHover } = require("%ui/components/colors.nut")
-let { accentButtonStyle } = require("%ui/components/accentButton.style.nut")
-let { getPresetMissedItemsMarketIds, getPresetMissedBoxedItemsMarketIds, checkImportantSlotEmptiness,
-  slotsWithWarning } = require("%ui/mainMenu/raid_preparation_window_state.nut")
-let { mkStashItemsList } = require("%ui/hud/menus/components/inventoryItemsStash.nut")
-let { moveItemWithKeyboardMode, inventoryItemClickActions } = require("%ui/hud/menus/inventoryActions.nut")
+let { slotsWithWarning } = require("%ui/mainMenu/raid_preparation_window_state.nut")
+let { inventoryItemClickActions } = require("%ui/hud/menus/inventoryActions.nut")
 let { STASH, HERO_ITEM_CONTAINER, BACKPACK0, SAFEPACK } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
 let { loadoutItems } = require("%ui/state/allItems.nut")
-let { resetFilters } = require("%ui/hud/menus/components/inventoryStashFiltersWidget.nut")
 let JB = require("%ui/control/gui_buttons.nut")
 let currentTab = Watched("consoleRaid/presetTab")
 let { safeAreaAmount } = require("%ui/options/safeArea.nut")
-let { openMenu } = require("%ui/hud/hud_menus_state.nut")
-let { refillButton } = require("%ui/hud/menus/inventory.nut")
-let { checkInventoryVolume } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
-let { showNoEnoughStashSpaceMsgbox } = require("%ui/mainMenu/stashSpaceMsgbox.nut")
-let { colorPickerButton } = require("%ui/mainMenu/ribbons_colors_picker.nut")
-let { loadoutToPreset } = require("%ui/equipPresets/convert_loadout_to_preset.nut")
-let { generate_loadout_by_seed } = require("%ui/profile/server_game_profile.nut")
 let { selectedRaid } = require("%ui/gameModeState.nut")
+let { tagChronogeneSlot } = require("%ui/mainMenu/clonesMenu/clonesMenuCommon.nut")
 
 let weightBlock = @() {
   watch = [inventoryCurrentWeight, playerMovePenalty]
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   behavior = Behaviors.Button
   onHover = @(on) setTooltip(on ? loc("inventory/playerMovePenalty", { value = (playerMovePenalty.get() * 100.0).tointeger() }) : null)
   children = mkText(loc("inventory/weight", { value = truncateToMultiple(inventoryCurrentWeight.get(), 0.1) }))
 }
 
 let statusBlock = {
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   flow = FLOW_VERTICAL
   vplace = ALIGN_TOP
   cursorNavAnchor = [elemw(50), elemh(50)]
@@ -72,34 +74,38 @@ let statusBlock = {
 
 let bodyPartsPanel = @(){
   watch = useAgencyPreset
-  size = [SIZE_TO_CONTENT, flex()]
+  size = FLEX_V
   valign = ALIGN_CENTER
   padding = hdpx(10)
   children = [
     useAgencyPreset.get() ? nonInteractiveBodypartsPanel : bodypartsPanel
-    secondaryChronogenesWidget
+    chronogenesWidget
     {
       hplace = ALIGN_RIGHT
       vplace = ALIGN_BOTTOM
-      children = colorPickerButton
+      flow = FLOW_HORIZONTAL
+      gap = hdpx(4)
+      children = [
+        tagChronogeneSlot
+        colorPickerButton
+      ]
     }
     {
+      size = FLEX_H
       vplace = ALIGN_TOP
-      hplace = ALIGN_RIGHT
-      children = presetBlockButton
+      children = statusBlock
     }
-    statusBlock
   ]
 }.__update(bluredPanel)
 
 let weaponPanels = @() {
   watch = safeAreaAmount
-  size = [SIZE_TO_CONTENT, flex()]
+  size = FLEX_V
   padding = safeAreaAmount.get() == 1 ? hdpx(10) : 0
   children = [
     refillButton
     {
-      size = [SIZE_TO_CONTENT, flex()]
+      size = FLEX_V
       flow = FLOW_VERTICAL
       gap = safeAreaAmount.get() == 1 ? hdpx(6) : 0
       children = [
@@ -125,16 +131,16 @@ function heroInventories() {
 
   return {
     watch = [backpackEid, previewPreset]
-    size = [SIZE_TO_CONTENT, flex()]
+    size = FLEX_V
     flow = FLOW_VERTICAL
     gap = hdpx(10)
     children = [
       {
-        size = [SIZE_TO_CONTENT, flex()]
+        size = FLEX_V
         children = pouches
       }.__update(bluredPanel)
       backpack == null ? null : {
-        size = [SIZE_TO_CONTENT, flex()]
+        size = FLEX_V
         children = backpack
       }.__update(bluredPanel)
       function() {
@@ -156,13 +162,14 @@ function heroInventories() {
   }
 }
 
-let backButton = textButton(loc("mainmenu/btnBack"), @() openMenu("Raid") {
-  size = [flex(), SIZE_TO_CONTENT]
-  halign = ALIGN_CENTER
-  hotkeys = [[$"Esc | {JB.B}", { description = loc("mainmenu/btnBack") }]]
-})
+let backButton = buttonWithGamepadHotkey(mkText(loc("mainmenu/btnBack"), { hplace = ALIGN_CENTER }.__merge(body_txt)),
+  @() openMenu("Missions") {
+    size = FLEX_H
+    halign = ALIGN_CENTER
+    hotkeys = [[$"Esc | {JB.B}", { description = { skip = true } }]]
+  })
 
-let mkEquipPresetButton = @(preset) preset == null ? { size = [flex(), hdpx(50)] }
+let mkEquipPresetButton = @(preset) preset == null ? { size = static [flex(), hdpx(50)] }
   : textButton(loc("playerPreset/equip"),
       function() {
         if (preset == null) {
@@ -173,14 +180,13 @@ let mkEquipPresetButton = @(preset) preset == null ? { size = [flex(), hdpx(50)]
         previewPreset.set(null)
         selectedPreset.set(CURRENT_PRESET_UID)
       }, {
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       halign = ALIGN_CENTER
     }.__update(preset == null ? {} : accentButtonStyle))
 
 
 function buyOrEquipButton() {
   let playerStat = playerStats.get()
-
   let marketIdsToBuy = getPresetMissedItemsMarketIds(previewPreset.get(), playerStat)
     .extend(getPresetMissedBoxedItemsMarketIds(previewPreset.get(), playerStats.get()))
   let needMoney = shopPresetToPurchase.get() != null ? shopPresetToPurchase.get().reqMoney
@@ -193,7 +199,7 @@ function buyOrEquipButton() {
   let textColor = canPurchase ? TextHover : RedWarningColor
   return {
     watch = [previewPreset, playerProfileCreditsCount, shopPresetToPurchase, playerStats, selectedPreset]
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     children = button(
       mkTextArea($" {text} {creditsTextIcon}{needMoney}", {
         color = textColor
@@ -211,8 +217,11 @@ function buyOrEquipButton() {
         }
         if (shopPresetToPurchase.get() != null) {
           let missingVolume = checkInventoryVolume(shopPresetToPurchase.get().children.items)
-          showNoEnoughStashSpaceMsgbox(missingVolume)
-          eventbus_send("profile_server.buyLots", [shopPresetToPurchase.get().__merge({ count = 1 })])
+          if (missingVolume > 0) {
+            showNoEnoughStashSpaceMsgbox(missingVolume)
+            return
+          }
+          eventbus_send("profile_server.buyLots", [shopPresetToPurchase.get().__merge({ count = 1, usePremium = false })])
         }
         else
           eventbus_send("profile_server.buyLots", marketIdsToBuy )
@@ -230,7 +239,7 @@ function buyOrEquipButton() {
         })
       },
       {
-        size = [flex(), hdpx(56)]
+        size = static [flex(), hdpx(56)]
         minHeight = hdpx(56)
       }.__update(canPurchase ? accentButtonStyle : {}))
   }
@@ -241,12 +250,12 @@ function purchaseButton() {
     return { watch = [shopPresetToPurchase, selectedPreset] }
   return {
     watch = [previewPreset, shopPresetToPurchase, selectedPreset]
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     children = mkEquipPresetButton(previewPreset.get())
   }
 }
 
-let presetsBlock = {
+let presetsBlock = @() {
   size = flex()
   flow = FLOW_VERTICAL
   gap = hdpx(8)
@@ -263,17 +272,21 @@ let presetsBlock = {
   ]
 }.__update(bluredPanel)
 
-let stashContent = {
+let stashContent = @() {
   size = flex()
   halign = ALIGN_CENTER
-  children = mkStashItemsList(moveItemWithKeyboardMode, inventoryItemClickActions[STASH.name], { xSize = 4 })
+  flow = FLOW_HORIZONTAL
+  children = [
+    mkStashItemsList(moveItemWithKeyboardMode, inventoryItemClickActions[STASH.name], { xSize = 4 })
+    inventoryFiltersWidget
+  ]
 }.__update(bluredPanel)
 
 let tabConstr = @(locId, params) {
   size = [(hdpx(364) / 2) - fsh(4), SIZE_TO_CONTENT]
   padding = 0
   margin = 0
-  children = mkTextArea(loc(locId), params.__update({
+  children = mkTextArea(loc(locId), params.__merge({
     halign = ALIGN_CENTER
     fontFx = null
   }, body_txt))
@@ -288,23 +301,45 @@ let tabsList = [
     id = "consoleRaid/stashTab"
     childrenConstr = @(params) tabConstr("consoleRaid/stashTab", params)
     content = stashContent
-    isAvailable = Computed(@() previewPreset.get() == null)
+    isAvailable = Computed(@() previewPreset.get() == null && !mutationForbidenDueToInQueueState.get())
     unavailableHoverHint = loc("consoleRaid/unavailableStashTab")
   }
 ]
+#allow-auto-freeze
 
 let getCurTabContent = @(tabId) tabsList.findvalue(@(v) v.id == tabId)?.content
 
-function presetStashTabs() {
+let mkPresetStashTabs = @(rotationTimer) function() {
   let tabsUi = mkTabs({
     tabs = tabsList
     currentTab = currentTab.get()
     onChange = @(tab) currentTab.set(tab.id)
   })
   let tabContent = getCurTabContent(currentTab.get())
+
+  mutationForbidenDueToInQueueState.subscribe_with_nasty_disregard_of_frp_update(function(state) {
+    if (!state)
+      return
+
+    currentTab.set("consoleRaid/presetTab")
+
+    if (useAgencyPreset.get()) {
+      selectedPreset.set(AGENCY_PRESET_UID)
+
+      let seed = mindtransferSeed.get().tointeger() + ecs.calc_hash(selectedRaid.get()?.extraParams?.raidName ?? "")
+      let compArray = ecs.CompArray()
+      let generatorName = "ordinary_equipment_generator"
+      generate_loadout_by_seed(generatorName, seed, compArray)
+      previewPreset.set (loadoutToPreset({ items = compArray.getAll() }).__merge({ overrideMainChronogeneDoll = true }))
+    }
+    else {
+      selectedPreset.set(CURRENT_PRESET_UID)
+      previewPreset.set(null)
+    }
+  })
   return {
     watch = currentTab
-    size = [hdpx(364), flex()]
+    size = static [hdpx(364), flex()]
     flow = FLOW_VERTICAL
     gap = hdpx(10)
     children = [
@@ -312,11 +347,13 @@ function presetStashTabs() {
       tabContent
       @() {
         watch = selectedPreset
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
         vplace = ALIGN_BOTTOM
         flow = FLOW_VERTICAL
         gap = hdpx(4)
         children = [
+          mkOfflineRaidCheckBox(),
+          rotationTimer,
           backButton,
           [CURRENT_PRESET_UID, AGENCY_PRESET_UID].contains(selectedPreset.get()) ? null : buyOrEquipButton,
           [CURRENT_PRESET_UID, AGENCY_PRESET_UID].contains(selectedPreset.get()) ? null : purchaseButton,
@@ -327,14 +364,15 @@ function presetStashTabs() {
   }
 }
 
-let preparationWindow = @() {
+let mkPreparationWindow = @(rotationTimer) {
   size = flex()
   flow = FLOW_HORIZONTAL
   gap = hdpx(10)
   padding = hdpx(10)
   onAttach = function() {
+    gui_scene.setInterval(10, checkRaidAvailability)
     checkImportantSlotEmptiness(loadoutItems.get())
-    loadoutItems.subscribe(checkImportantSlotEmptiness)
+    loadoutItems.subscribe_with_nasty_disregard_of_frp_update(checkImportantSlotEmptiness)
     resetFilters()
     if (useAgencyPreset.get()){
       selectedPreset.set(AGENCY_PRESET_UID)
@@ -357,6 +395,7 @@ let preparationWindow = @() {
     currentPreset.set(null)
     loadoutItems.unsubscribe(checkImportantSlotEmptiness)
     slotsWithWarning.set({})
+    gui_scene.clearTimer(checkRaidAvailability)
   }
   children = [
     shiftPressedMonitor
@@ -364,10 +403,11 @@ let preparationWindow = @() {
     bodyPartsPanel
     weaponPanels
     heroInventories
-    presetStashTabs
+    mkPresetStashTabs(rotationTimer)
+    contextHotkeys
   ]
 }.__update(bluredPanel)
 
 return {
-  preparationWindow
+  mkPreparationWindow
 }

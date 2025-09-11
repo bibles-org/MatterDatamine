@@ -1,47 +1,24 @@
-item_with_owner{
-  _replicated:t="item__containerOwnerEid"
-  _tracked:t="item__containerOwnerEid"
-  _replicated:t="item__lastContainerOwnerEid"
-  _tracked:t="item__lastContainerOwnerEid"
-
-  "item__containerOwnerEid:eid"{}
-  "item__lastContainerOwnerEid:eid"{}
-}
-
-item_with_human_owner{
-  _replicated:t="item__humanOwnerEid"
-  _tracked:t="item__humanOwnerEid"
-
-  "item__humanOwnerEid:eid"{}
-}
-
-notify_hero_picked_up{
-  "notify_hero_picked_up:tag"{}
-}
-
-notify_hero_dropped{
-  "notify_hero_dropped:tag"{}
-  "notify_hero_dropped__inventoryEid:eid"{}
-}
-
 base_nonreplicated_item{
-  _use:t="item_with_owner"
-  _use:t="item_with_human_owner"
-  _use:t="recognizable_item"
   item__lootType:t="item"
-  item__alreadyLooted:b=no
   item__isOnGround:b=no
   item__visibleCheckHeight:r=0.5
   item__useActionHintType:i=1
   _tracked:t="item__isOnGround"
-  item__appearInItemContainer:b=no
   uniqueId:t="-1"
-  animchar_render__enabled:b=yes
   item__disablePickup:b=no
   item__id:i=0
   item__wantToBeCorrupted:b=yes
   item__wantToBeReplica:b=no
   server_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+
+    "item__containerOwnerEid:eid"{}
+    "item__lastContainerOwnerEid:eid"{}
+    "item__humanOwnerEid:eid"{}
+  }
 
   _group{
     _tags:t="server"
@@ -73,31 +50,16 @@ base_item{
   _use:t="base_nonreplicated_item"
   _use:t="replicating"
   _use:t="animchar"
+  _use:t="recognizable_item"
   _use:t="item_rarity_common"
+  animchar_render__enabled:b=yes
   item__isOnGround:b=no
   _replicated:t="item__isOnGround"
   item__id:i=0
-  _replicated:t="item__id"
-}
-
-base_item_with_ui{
-  _use:t="base_item"
-  item__id:i=0
-  _replicated:t="item__id"
-  item__iconYaw:r=45
-  item__iconPitch:r=0
-  item__iconRoll:r=0
-  item__iconOffset:p2=0, 0
-  item__iconScale:r=1
-  item__ui_priority:i=0
-}
-
-block_item_use{
-  "item__blockUse:tag"{}
-}
-
-block_item_inventory_move{
-  "item__blockInventoryMove:tag"{}
+  _skipInitialReplication:t="item__id"
+  item__volume:i=0
+  _replicated:t="item__volume"
+  _tracked:t="item__volume"
 }
 
 block_item_move_to_backpack{
@@ -122,12 +84,8 @@ ignore_block_item_move{
 }
 
 block_item_all_actions{
-  _use:t="block_item_use"
-  _use:t="block_item_inventory_move"
-}
-
-drop_item_cb{
-  drop_item_cb__lootCleanupTime:r=0
+  "item__blockUse:tag"{}
+  "item__blockInventoryMove:tag"{}
 }
 
 visibility_traceable_item{
@@ -148,31 +106,6 @@ ui_visible{
   }
 }
 
-nonreplicated_tm_item_in_world{
-  _use:t="animchar"
-  _use:t="visibility_traceable_item_cache"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  _tracked:t="transform"
-  item__isOnGround:b=yes
-  animchar__updatable:b=no
-  spawnedInRegion:t=""
-  net__scopeDistanceSq:r=2500
-  ui__visibility_distance_sq:r=100
-  grid_obj__gridType:t="loot"
-  grid_obj__fixedTmScale:r=-1
-
-  "disableDropOnRiDestroyd:tag"{}
-  "item__dropOnRiDestroy:tag"{}
-  grid_obj{}
-  collres{}
-  "item__isPickable:tag"{}
-  _group{
-    _tags:t="ui"
-    hud_marker__max_distance:r=10
-    hud_marker__showOnlyWhenSelected:b=yes
-  }
-}
-
 racked_weapon{
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   racked_weapon__transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
@@ -180,7 +113,7 @@ racked_weapon{
   racked_weapon__isWeaponOnRack:b=no
   racked_weapon__recreateOnRack:t="item_on_rack"
 
-  "racked_weapon__rackRendinsts:array"{}
+  "racked_weapon__rackRendinsts:shared:array"{}
   "racked_weapon__rackEids:list<eid>"{}
 }
 
@@ -190,12 +123,13 @@ displacement_compensation_origin{
   displacement_compensation__updateAt:r=0
 }
 
-item_in_world{
-  _use:t="nonreplicated_tm_item_in_world"
-  _use:t="disable_update"
+item_in_world_with_update{
+  _use:t="loot_dynamic_grid_object"
+  _use:t="visibility_traceable_item_cache"
   _use:t="deformation_bbox_receiver"
+  net__scopeDistanceSq:r=2500
+  ui__visibility_distance_sq:r=100
   server_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  _replicated:t="server_transform"
   displacement_compensation__queryId:i=-1
   displacement_compensation__queryPos:p3=0, 0, 0
   displacement_compensation__compensationTime:r=0
@@ -203,23 +137,38 @@ item_in_world{
   _replicated:t="item__isOnGround"
   _tracked:t="item__isOnGround"
 
+  "disableDropOnRiDestroyd:tag"{}
+  "item__dropOnRiDestroy:tag"{}
+  collres{}
+  "item__isPickable:tag"{}
+  _group{
+    _tags:t="ui"
+    hud_marker__max_distance:r=10
+    hud_marker__showOnlyWhenSelected:b=yes
+  }
+
   "item_in_world:tag"{}
+}
+
+item_in_world{
+  _use:t="item_in_world_with_update"
+  _use:t="disable_update"
 }
 
 item_in_world_inactive{
   _use:t="replicating"
   _use:t="animchar"
   _use:t="disable_update"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  _tracked:t="transform"
+  _use:t="loot_dynamic_grid_object"
   net__scopeDistanceSq:r=2500
-  grid_obj__gridType:t="loot"
-  grid_obj__fixedTmScale:r=-1
 
   "disableDropOnRiDestroyd:tag"{}
   "item__dropOnRiDestroy:tag"{}
-  grid_obj{}
   collres{}
+}
+
+interrupt_move_item_to_container{
+  "interrupt_move_item_to_container__itemEid:eid"{}
 }
 
 item_waiting_for_container_appear{
@@ -256,9 +205,7 @@ default_item_ui_info{
   item__iconRoll:r=0
   item__iconOffset:p2=0, 0
   item__iconScale:r=1
-  item__ui_priority:i=0
   item__lootType:t="item"
-  item__alreadyLooted:b=no
 }
 
 attached_to_parent{
@@ -278,19 +225,31 @@ item_in_equipment_hided_on_doll{
   "item_in_equipment_hided_on_doll:tag"{}
 }
 
+item_in_equipment_hided{
+  _use:t="base_invis_item"
+
+  "item_in_equipment:tag"{}
+  "item_in_equipment_hided_on_doll:tag"{}
+}
+
 equipable_item{
   _use:t="ecs_no_debug"
-  _use:t="base_item_with_ui"
+  _use:t="base_item"
   _use:t="default_item_ui_info"
   _use:t="replicating"
   item__recreateOnGround:t="item_in_world"
   item__recreateInWorldPhys:t="item_in_world_phys"
   item__recreateInInventory:t="base_invis_item"
   item__recreateInEquipment:t="item_in_equipment"
-  item__volume:r=1
+  item__volume:i=10
   equipable_item__curSlot:t=""
   _tracked:t="equipable_item__curSlot"
   _replicated:t="equipable_item__curSlot"
+  item__iconYaw:r=45
+  item__iconPitch:r=0
+  item__iconRoll:r=0
+  item__iconOffset:p2=0, 0
+  item__iconScale:r=1
 
   "net__notInInitialScope:tag"{}
   collres{}
@@ -309,17 +268,20 @@ hidden_equipped_item{
 }
 
 item_with_animchar_updatable{
-  _use:t="base_item_with_ui"
+  _use:t="base_item"
   item__recreateOnGround:t="item_in_world"
   item__recreateInWorldPhys:t="item_in_world_phys"
   item__recreateInInventory:t="base_invis_item"
+  item__iconYaw:r=45
+  item__iconPitch:r=0
+  item__iconRoll:r=0
+  item__iconOffset:p2=0, 0
+  item__iconScale:r=1
 }
 
 item{
   _use:t="ecs_no_debug"
   _use:t="item_with_animchar_updatable"
-
-  "animchar__actOnDemand:tag"{}
 }
 
 base_map_highlight{
@@ -338,14 +300,6 @@ scope_highlight{
   _use:t="base_map_highlight"
   map_highlight__type:t="scope"
   map_highlight__template:t="scope_map_icon"
-}
-
-gun_mod_icon{
-  item__iconYaw:r=25
-  item__iconPitch:r=0
-  item__iconRoll:r=15
-  item__iconOffset:p2=0, 0
-  item__iconScale:r=1
 }
 
 item_perk{
@@ -375,9 +329,16 @@ base_invis_item{
 }
 
 base_attached_invis_item{
-  _use:t="item_with_owner"
   _use:t="slot_attachable_no_slotname"
   _use:t="base_invis_item"
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+
+    "item__containerOwnerEid:eid"{}
+    "item__lastContainerOwnerEid:eid"{}
+  }
 }
 
 burnable_vis_item{
@@ -387,16 +348,19 @@ burnable_vis_item{
 
 base_local_vis_item{
   _use:t="animchar"
-  _use:t="item_with_owner"
   _use:t="slot_attachable_no_slotname"
   _use:t="burnable_vis_item"
+  _use:t="animchar_additional_data"
   slot_attach__visible:b=yes
   _replicated:t="slot_attach__visible"
   _tracked:t="slot_attach__visible"
   animchar_render__enabled:b=yes
 
-  "additional_data:list<p4>"{
-    _tags:t="render"
+  _group{
+    _track:b=yes
+
+    "item__containerOwnerEid:eid"{}
+    "item__lastContainerOwnerEid:eid"{}
   }
 }
 
@@ -477,7 +441,7 @@ gold_bar{
   item__proto:t="gold_bar"
   item__lootType:t="item"
   item__weight:r=1
-  item__volume:r=0.5
+  item__volume:i=5
   dropTm:m=[[-0.0271033, -0.0427872, -0.998717] [0.999488, 0.0158482, -0.0278032] [0.0170175, -0.998958, 0.0423357] [0, 0, 0]]
 
   "gold_bar:tag"{}
@@ -496,7 +460,7 @@ flowerman_eye_item{
   item__proto:t="flowerman_eye_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   dropTm:m=[[-0.0676222, 0.997711, 0] [-0.997711, -0.0676222, 0] [0, 0, 1] [0, 0, 0]]
 }
 
@@ -508,7 +472,7 @@ changed_ear_item{
   item__proto:t="changed_ear_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   dropTm:m=[[-0.0676222, 0.997711, 0] [-0.997711, -0.0676222, 0] [0, 0, 1] [0, 0, 0]]
 }
 
@@ -557,7 +521,7 @@ soviet_repair_kit_item{
   item__type:t="repair_kit"
   item__lootSoundType:t="healing"
   item__weight:r=1.2
-  item__volume:r=8
+  item__volume:i=80
   repair_kit__useCounter:i=0
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.03, 0]]
   item__iconPitch:r=160
@@ -585,7 +549,7 @@ distorted_remains_item{
   item__proto:t="distorted_remains_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -610,7 +574,7 @@ distorted_remains_pristine_item{
   item__proto:t="distorted_remains_pristine_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=3
+  item__volume:i=30
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 
   _group{
@@ -628,7 +592,7 @@ flowerman_remains_item{
   item__proto:t="flowerman_remains_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -706,7 +670,7 @@ monster_impostor_artifact_item{
   item__proto:t="monster_impostor_artifact_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -728,7 +692,7 @@ monster_hunter_artifact_item{
   item__proto:t="monster_hunter_artifact_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -748,7 +712,7 @@ monster_hunter_artifact_item_for_everyone{
   item__proto:t="monster_hunter_artifact_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -768,7 +732,7 @@ monster_mothman_artifact_item{
   item__proto:t="monster_mothman_artifact_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -794,7 +758,7 @@ monster_mothman_artifact_item_for_everyone{
   item__proto:t="monster_mothman_artifact_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -818,7 +782,7 @@ flowerman_remains_pristine_item{
   item__proto:t="flowerman_remains_pristine_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=3
+  item__volume:i=30
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 
   _group{
@@ -836,7 +800,7 @@ devourer_remains_item{
   item__proto:t="devourer_remains_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -861,7 +825,7 @@ devourer_remains_pristine_item{
   item__proto:t="devourer_remains_pristine_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=3
+  item__volume:i=30
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 
   _group{
@@ -879,7 +843,7 @@ invisible_remains_item{
   item__proto:t="invisible_remains_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -904,7 +868,7 @@ invisible_remains_pristine_item{
   item__proto:t="invisible_remains_pristine_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=3
+  item__volume:i=30
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 
   _group{
@@ -922,7 +886,7 @@ turned_soldier_remains_item{
   item__proto:t="turned_soldier_remains_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -947,7 +911,7 @@ turned_soldier_remains_pristine_item{
   item__proto:t="turned_soldier_remains_pristine_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=3
+  item__volume:i=30
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 
   _group{
@@ -965,7 +929,7 @@ dendroid_remains_item{
   item__proto:t="dendroid_remains_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -990,7 +954,7 @@ dendroid_remains_pristine_item{
   item__proto:t="dendroid_remains_pristine_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=3
+  item__volume:i=30
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 
   _group{
@@ -1008,7 +972,7 @@ hellhound_remains_item{
   item__proto:t="hellhound_remains_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -1033,7 +997,7 @@ hellhound_remains_pristine_item{
   item__proto:t="hellhound_remains_pristine_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=3
+  item__volume:i=30
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 
   _group{
@@ -1051,7 +1015,7 @@ altered_wax_item{
   item__proto:t="altered_wax_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=1
+  item__volume:i=10
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -1076,7 +1040,7 @@ altered_wax_pristine_item{
   item__proto:t="altered_wax_pristine_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=3
+  item__volume:i=30
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 
   _group{
@@ -1086,23 +1050,48 @@ altered_wax_pristine_item{
 }
 
 item_in_world_phys{
-  _use:t="nonreplicated_tm_item_in_world"
+  _use:t="loot_dynamic_grid_object"
+  _use:t="visibility_traceable_item_cache"
   _use:t="replicating"
+  item__isOnGround:b=yes
+  net__scopeDistanceSq:r=2500
+  ui__visibility_distance_sq:r=100
   item_in_world_phys__isAsleep:b=no
   net__physId:i=-1
   phys_obj_net_phys__blk:t="gamedata/am/item_in_world_phys.blk"
   collision_physMatId:i=-1
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   server_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  _replicated:t="server_transform"
+
+  "disableDropOnRiDestroyd:tag"{}
+  "item__dropOnRiDestroy:tag"{}
+  collres{}
+  "item__isPickable:tag"{}
+  _group{
+    _tags:t="ui"
+    hud_marker__max_distance:r=10
+    hud_marker__showOnlyWhenSelected:b=yes
+  }
 
   "item_in_world_phys:tag"{}
   "grid_obj__updateAlways:tag"{}
   "animchar__physSymDependence:tag"{}
-  collres{}
   phys_obj_net_phys{}
   base_net_phys_ptr{}
   phys_vars{}
+  "grav_zones_affected:tag"{}
+  "ignoreObjs__eids:list<eid>"{}
+}
+
+drop_item_phys_delayed{
+  drop_item_phys_delayed__applyDropTm:b=yes
+  drop_item_phys_delayed__initialImpulseVelocity:p3=0, 0, 0
+  drop_item_phys_delayed__initialImpulseOmega:p3=0, 0, 0
+  drop_item_phys_delayed__timestamp:r=0
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "drop_item_phys_delayed__itemEid:eid"{}
+  "drop_item_phys_delayed__ignoreObjEid:eid"{}
 }
 
 item_rarity_common{
@@ -1121,18 +1110,178 @@ item_rarity_epic{
   item__rarity:t="epic"
 }
 
-robodog_item{
-  _use:t="item"
-  _use:t="item_rarity_rare"
+item_replace_pick_up_with_use{
+  "item__replacePickupWithUse:tag"{}
+}
+
+robodog_hitpoints{
+  _use:t="base_hitpoints"
+  _use:t="base_dm_parts"
+  isAlive:b=yes
+  _tracked:t="isAlive"
+  _replicated:t="isAlive"
+  hitpoints__hp:r=150
+  _replicated:t="hitpoints__hp"
+  hitpoints__maxHp:r=150
+  hitpoints__regenPerSec:r=0
+  hitpoints__shellDmgMult:r=1
+  hitpoints__shellSplashDmgMult:r=1
+  needsBlood:b=no
+
+  "killer:eid"{}
+  "allow_friendly_damage:tag"{}
+}
+
+robodog_alive{
+  _use:t="robodog_sound"
+  item__useActionHintType:i=1
+  item__setCustomUsePrompt:t=""
+  item__setCustomUseAltPrompt:t=""
+  use_object__offset:p3=0, 0.15, 0
+  use_object__obbMin:p3=0, 0, 0
+  use_object__obbMax:p3=0, 0, 0
+  use_object__selectedTemplate:t="selected_lootable_container"
+  robodog__itemUseForOwnerAndTeammates:t="hud/search"
+  robodog__itemUseForOwnerAlt:t="hud/changeFollowMode"
+  robodog__itemUseForTeammateAlt:t="hud/adoptRobodog"
+  robodog__itemUseForEnemy:t="hud/hackRobodog"
+  robodog__itemUseForLongUseEnemy:t="hud/hackRobodog"
+  robodog__itemByOrder:t="robodog_signal_grenade_item"
+
+  _group{
+    _tags:t="gameClient"
+    item__setCustomLongUseHint:t=""
+  }
+
+  "usableObject:tag"{}
+  "clientUsable:tag"{}
+  "robodog__signalGrenadeEid:eid"{}
+}
+
+robodog{
+  _use:t="replicating"
+  _use:t="loc_snapshots"
+  _use:t="animchar"
+  _use:t="animchar_turn_dir"
+  _use:t="interactable_dynamic_grid_object"
+  _use:t="item_replace_pick_up_with_use"
+  _use:t="external_inventory_accesspoint"
+  _use:t="external_inventory_container"
+  _use:t="lootable_net_ragdoll"
+  _use:t="robodog_hitpoints"
+  material:t="metal"
+  external_inventory__needTipNoAccess:b=no
   animchar__res:t="robo_dog_a_char"
   collres__res:t="robo_dog_a_collision"
+  ragdoll__use_ccd:b=yes
+  ragdoll__applyParams:b=no
+  loc_snapshots__compensationSpeed:p2=1, 2
+  navmesh_phys__currentPoly:i64=0
+  follow_owner__active:b=yes
+  _tracked:t="follow_owner__active"
+  _replicated:t="follow_owner__active"
+  robodog__endRotate:r=0
+  robodog__currentSpeed:r=0
+  robodog__currentState:i=0
+  _tracked:t="robodog__currentState"
+  _replicated:t="robodog__currentState"
+  item__id:i=0
+  inventory__name:t="backpack"
+  item__lootType:t="bag"
+  item__volume:i=0
+  item__useTime:r=3
+  human_inventory__maxVolume:i=900
+  robodog__distToGround:r=0
+  robodog__forceDeactivateAt:r=-1
+  robodog__forceDeactivateTimer:r=10
+  robodog__distanceCheck:r=4
+  robodog__activateTimer:r=0.65
+  robodog__activateAt:r=0
+  robodog__templateBeforeDeath:t="robodog_alive"
+  item__proto:t="robodog"
   item__name:t="items/robodog_item"
-  item__proto:t="robodog_item"
-  item__lootType:t="item"
-  item__weight:r=29
-  item__volume:r=50
-  item__iconPitch:r=0
-  item__iconRoll:r=25
+  robodog__extractWithOwner:b=no
+  _tracked:t="robodog__extractWithOwner"
+  _replicated:t="robodog__extractWithOwner"
+  robodog__extractionEffect:t="extraction_sequence_affect_for_device"
+
+  collres{}
+  _group{
+    _tags:t="server"
+    net_ragdoll__physObjTemplate:t="robodog_ragdoll"
+  }
+
+  ragdoll{
+    _tags:t="render"
+  }
+
+  "ragdoll__isAllowed:b"{
+    _tags:t="render"
+    value:b=yes
+  }
+
+  "ragdoll__enabled:b"{
+    _tags:t="render"
+    value:b=no
+  }
+
+  "ragdoll__enabledAt:r"{
+    _tags:t="render"
+    value:r=0
+  }
+
+  projectile_impulse{
+    _tags:t="gameClient"
+  }
+
+  "animchar__physSymDependence:tag"{}
+  "animchar__animState:object"{
+    upper:i=-1
+    lower:i=-1
+  }
+
+  _group{
+    _tags:t="server"
+    follow_owner__wishDistanceToOwner:r=1.5
+    follow_owner__checkTime:r=2
+    follow_owner__distanceToStartFollow:r=3
+    follow_owner__nextCheckAt:r=-1
+    follow_owner__targetPathPoint:i=-1
+
+    "follow_owner__path:list<p3>"{}
+  }
+
+  _group{
+    _track:b=yes
+    _replicate:b=yes
+    team:i=-1
+
+    "ownerEid:eid"{}
+    "playerOwnerEid:eid"{}
+  }
+
+  "robodog__hacker:eid"{}
+  _group{
+    _tags:t="ui"
+    itemContainer__uiItemsMergeEnabled:b=yes
+    itemContainer__uiItemsSortingEnabled:b=yes
+    itemContainer__uiItemsOverrideSortingPriority:b=yes
+  }
+
+  _group{
+    robodog__damagePerSecondUnderWater:r=50
+    robodog__underwaterNodeName:t="bone_body"
+    robodog__underwaterNodeId:i=-1
+    _tags:t="server"
+  }
+}
+
+robodog_juan{
+  _use:t="robodog"
+  robodog__itemByOrder:t="robodog_juan_signal_grenade_item"
+  animchar__res:t="robo_dog_c_char"
+  collres__res:t="robo_dog_c_collision"
+  item__name:t="items/robodog_juan_item"
 }
 
 exoskeleton_item{
@@ -1144,7 +1293,7 @@ exoskeleton_item{
   item__proto:t="exoskeleton_item"
   item__lootType:t="item"
   item__weight:r=80
-  item__volume:r=70
+  item__volume:i=700
   item__iconPitch:r=0
   item__iconRoll:r=25
   item__iconYaw:r=210
@@ -1159,7 +1308,7 @@ jetpack_item{
   item__proto:t="jetpack_item"
   item__lootType:t="item"
   item__weight:r=90
-  item__volume:r=80
+  item__volume:i=800
   item__iconPitch:r=0
   item__iconRoll:r=25
   item__iconYaw:r=30
@@ -1175,7 +1324,7 @@ motion_tracker_item{
   item__proto:t="motion_tracker_item"
   item__lootType:t="item"
   item__weight:r=1.2
-  item__volume:r=8
+  item__volume:i=80
   item__iconPitch:r=0
   item__iconRoll:r=25
   item__iconYaw:r=210
@@ -1190,7 +1339,7 @@ combat_drone_item{
   item__proto:t="combat_drone_item"
   item__lootType:t="item"
   item__weight:r=1.8
-  item__volume:r=20
+  item__volume:i=200
   item__iconPitch:r=0
   item__iconRoll:r=25
   item__iconYaw:r=210
@@ -1205,7 +1354,7 @@ trip_mine{
   item__proto:t="trip_mine"
   item__lootType:t="item"
   item__weight:r=1.2
-  item__volume:r=8
+  item__volume:i=80
   item__iconPitch:r=-50
   item__iconRoll:r=-30
   item__iconYaw:r=0
@@ -1220,24 +1369,10 @@ anti_tank_mine{
   item__proto:t="anti_tank_mine"
   item__lootType:t="item"
   item__weight:r=9
-  item__volume:r=20
+  item__volume:i=200
   item__iconPitch:r=0
   item__iconRoll:r=25
   item__iconYaw:r=210
-}
-
-quadro_bike_bombardier_800r{
-  _use:t="item"
-  _use:t="item_rarity_rare"
-  animchar__res:t="bombardier_outlander_800r_char"
-  collres__res:t="bombardier_outlander_800r_collision"
-  item__name:t="items/quadro_bike_bombardier_800r"
-  item__proto:t="quadro_bike_bombardier_800r"
-  item__lootType:t="item"
-  item__weight:r=330
-  item__volume:r=12000
-  item__iconScale:r=1.3
-  item__iconOffset:p2=0.1, 0
 }
 
 buggy_vehicle{
@@ -1249,7 +1384,7 @@ buggy_vehicle{
   item__proto:t="buggy_vehicle"
   item__lootType:t="item"
   item__weight:r=720
-  item__volume:r=120000
+  item__volume:i=1200000
   item__iconPitch:r=0
   item__iconRoll:r=25
   item__iconYaw:r=210
@@ -1264,7 +1399,7 @@ t90_tank_vehicle{
   item__proto:t="t90_tank_vehicle"
   item__lootType:t="item"
   item__weight:r=46500
-  item__volume:r=720000
+  item__volume:i=7200000
   item__iconPitch:r=0
   item__iconRoll:r=25
   item__iconYaw:r=30
@@ -1281,7 +1416,7 @@ ka50_attack_heli_aircraft{
   item__proto:t="ka50_attack_heli_aircraft"
   item__lootType:t="item"
   item__weight:r=10100
-  item__volume:r=500000
+  item__volume:i=5000000
   _use:t="animchar_dynmodel_nodes_hider"
   item__iconPitch:r=0
   item__iconRoll:r=25
@@ -1304,9 +1439,17 @@ safepack_remains_item{
   item__proto:t="safepack_remains_item"
   item__lootType:t="item"
   item__weight:r=0.1
-  item__volume:r=4
+  item__volume:i=40
   dropTm:m=[[-0.0676222, 0.997711, 0] [-0.997711, -0.0676222, 0] [0, 0, 1] [0, 0, 0]]
   profile_server_data__enrichmentAMCount:ip2=30, 50
+}
+
+override_monster_spawn_on_pickup{
+  _tags:t="server"
+  override_monster_spawn_on_pickup__nextSpawnInTime:r=-1
+  override_monster_spawn_on_pickup__spawnIndex:i=-1
+
+  "override_monster_spawn_on_pickup__newPatterns:array"{}
 }
 
 stash_container_item{
@@ -1323,8 +1466,8 @@ stash_container_item{
   inventory__name:t="backpack"
   profile_server__slotName:t="inventory"
   item__filterType:t="container"
-  human_inventory__maxVolume:r=600
-  item__volume:r=300
+  human_inventory__maxVolume:i=6000
+  item__volume:i=3000
 
   "human_inventory__autoCalculateCapacities:tag"{}
   _group{
@@ -1335,29 +1478,52 @@ stash_container_item{
   }
 }
 
-polterheist_item{
-  polterheist_item__startAt:r=-1
-  polterheist_item__rndSeed:i=0
-  polterheist_item__stage:i=0
-  polterheist_item__progress:r=0
-  polterheist_item__riseTime:r=1.4
-  polterheist_item__riseVel:r=0.8
-  polterheist_item__riseRotationStep:p3=0, 0, 0
-  polterheist_item__rotationCounter:r=0
-  polterheist_item__rotationTime:r=1.8
-  polterheist_item__rotationSpeed:r=1.2
-  polterheist_item__throwPower:r=10
-  polterheist_item__throwOffsetY:p2=0.8, 5
-  polterheist_item__throwOffsetXZ:p2=-0.8, 0.8
-  polterheist_item__throwRotationMult:r=10
-  polterheist_item__throwToCameraChance:r=0.08
+poltergeist_item{
+  poltergeist_item__startAt:r=-1
+  poltergeist_item__rndSeed:i=0
+  poltergeist_item__stage:i=0
+  poltergeist_item__progress:r=0
+  poltergeist_item__riseTime:r=1.4
+  poltergeist_item__riseVel:r=0.8
+  poltergeist_item__riseRotationStep:p3=0, 0, 0
+  poltergeist_item__rotationCounter:r=0
+  poltergeist_item__rotationTime:r=1.2
+  poltergeist_item__rotationSpeed:r=1.2
+  poltergeist_item__throwPower:r=10
+  poltergeist_item__throwOffsetY:p2=0.8, 3
+  poltergeist_item__throwOffsetXZ:p2=-0.8, 0.8
+  poltergeist_item__throwRotationMult:r=10
+  poltergeist_item__throwToCameraChance:r=0.08
+  poltergeist_item__throwToCameraOffset:p3=0.15, 1.2, 0
+  poltergeist_item__isSleeping:b=no
+  _replicated:t="poltergeist_item__isSleeping"
+  _replicated:t="poltergeist_item__owner"
+  _replicated:t="poltergeist_item__stage"
 
   "potlerheistItem:tag"{}
+  _group{
+    _tags:t="server"
+    poltergeist_item__minMaxDamage:p2=1, 15
+    poltergeist_item__minMaxSpeedToDamage:p2=3, 15
+
+    "poltergeist_item__target:eid"{}
+    "poltergeist_item__damagedEntities:list<eid>"{}
+  }
+
+  "poltergeist_item__owner:eid"{}
 }
 
 synced_poltherheist_item{
-  polterheist_item__startAt:r=-1
-  polterheist_item__rndSeed:i=0
-  _replicated:t="polterheist_item__startAt"
-  _replicated:t="polterheist_item__rndSeed"
+  _group{
+    _replicate:b=yes
+    poltergeist_item__startAt:r=-1
+    poltergeist_item__rndSeed:i=0
+  }
+}
+
+create_on_picked_up{
+  create_on_picked_up__template:t=""
+  create_on_picked_up__timesLeft:i=1
+
+  "create_on_picked_up__lastCreatedEid:eid"{}
 }

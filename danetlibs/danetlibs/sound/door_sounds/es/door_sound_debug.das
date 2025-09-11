@@ -1,7 +1,6 @@
 options no_aot
 require ecs
 require ecs.ecs_template
-require app
 require RendInst
 require DagorDebug3D
 require DagorMath

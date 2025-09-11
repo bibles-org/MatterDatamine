@@ -1,8 +1,11 @@
+from "%dngscripts/sound_system.nut" import sound_play
+
+from "%sqstd/table.nut" import getValInTblPath as getByPath
+
+from "dagor.time" import get_time_msec
+
 from "%ui/ui_library.nut" import *
 
-let {sound_play} = require("%dngscripts/sound_system.nut")
-let getByPath = require("%sqstd/table.nut").getValInTblPath
-let {get_time_msec} = require("dagor.time")
 
 let equalIgnore = { ttl = true, key = true, num = true }
 let countNotIgnoreKeys = @(event) event.keys().reduce(@(res, key) equalIgnore?[key] ? res + 1 : res, 0)

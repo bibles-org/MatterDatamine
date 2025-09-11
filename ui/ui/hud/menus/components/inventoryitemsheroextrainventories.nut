@@ -1,18 +1,18 @@
+from "%ui/hud/menus/components/inventoryItemsList.nut" import itemsPanelList, setupPanelsData, inventoryItemSorting, inventoryItemOverridePrioritySorting
+
+from "%ui/hud/menus/components/inventoryCommon.nut" import mkInventoryHeader
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems
+from "%ui/hud/menus/components/inventoryVolumeWidget.nut" import mkVolumeHdr
+from "%ui/hud/menus/components/inventoryItemsListChecks.nut" import isBackpackDropForbidder, isSafepackDropForbidder
+from "%ui/hud/menus/inventories/refinerInventory.nut" import considerRefineItems
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {mkInventoryHeader} = require("%ui/hud/menus/components/inventoryCommon.nut")
-let { backpackItemsMergeEnabled, backpackCurrentVolume, backpackMaxVolume,
-    backpackItemsSortingEnabled, backpackItemsOverrideSortingPriority, safepackMaxVolume,
-    safepackCurrentVolume, safepackYVisualSize } = require("%ui/hud/state/hero_extra_inventories_state.nut")
-let {backpackItems, safepackItems} = require("%ui/hud/state/inventory_items_es.nut")
-let {itemsPanelList, setupPanelsData, inventoryItemSorting, considerTrashBinItems,
-  inventoryItemOverridePrioritySorting} = require("%ui/hud/menus/components/inventoryItemsList.nut")
-let { mergeNonUniqueItems } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
+let { backpackItemsMergeEnabled, backpackCurrentVolume, backpackMaxVolume, backpackItemsSortingEnabled, backpackItemsOverrideSortingPriority, safepackMaxVolume, safepackCurrentVolume, safepackYVisualSize } = require("%ui/hud/state/hero_extra_inventories_state.nut")
+let { backpackItems, safepackItems } = require("%ui/hud/state/inventory_items_es.nut")
 let { BACKPACK0, SAFEPACK } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
-let { mkVolumeHdr } = require("%ui/hud/menus/components/inventoryVolumeWidget.nut")
-let { trashBinItems } = require("%ui/hud/menus/components/trashBin.nut")
-let { isBackpackDropForbidder, isSafepackDropForbidder } = require("%ui/hud/menus/components/inventoryItemsListChecks.nut")
+let { itemsInRefiner } = require("%ui/hud/menus/inventories/refinerInventoryCommon.nut")
 
 
 function patchItem(item) {
@@ -21,11 +21,12 @@ function patchItem(item) {
 
 const itemsInRow = 3
 let processItems = function(items) {
+  items = considerRefineItems(items)
+
   if (backpackItemsMergeEnabled.get())
     items = mergeNonUniqueItems(items)
 
   items = items.map(patchItem)
-  items = considerTrashBinItems(items)
 
   if (backpackItemsSortingEnabled.get()) {
     if (backpackItemsOverrideSortingPriority.get())
@@ -38,12 +39,12 @@ let processItems = function(items) {
 
 let backpackPanelsData = setupPanelsData(backpackItems,
                                          itemsInRow,
-                                         [backpackItems, trashBinItems, backpackItemsMergeEnabled, backpackItemsSortingEnabled],
+                                         [backpackItems, itemsInRefiner, backpackItemsMergeEnabled, backpackItemsSortingEnabled],
                                          processItems)
 
 let safepackPanelsData = setupPanelsData(safepackItems,
                                          itemsInRow,
-                                         [safepackItems, trashBinItems, backpackItemsMergeEnabled, backpackItemsSortingEnabled],
+                                         [safepackItems, itemsInRefiner, backpackItemsMergeEnabled, backpackItemsSortingEnabled],
                                          processItems)
 
 function mkHeroBackpackItemContainerItemsList(on_item_dropped_to_list_cb = null, on_click_actions = {}) {
@@ -64,7 +65,7 @@ function mkHeroBackpackItemContainerItemsList(on_item_dropped_to_list_cb = null,
 
     return {
       key = $"backpack{backpackPanelsData.numberOfPanels.get()};{backpackPanelsData.isElementShown.get()}"
-      size = [ SIZE_TO_CONTENT, flex() ]
+      size = FLEX_V
       children
       watch = [backpackPanelsData.numberOfPanels]
       onAttach = backpackPanelsData.onAttach

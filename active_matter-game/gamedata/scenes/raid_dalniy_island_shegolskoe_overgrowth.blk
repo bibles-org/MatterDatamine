@@ -7,11 +7,7 @@ import{
 }
 
 entity{
-  _template:t="activity_helper_manager"
-}
-
-entity{
-  _template:t="invisible_man_manager"
+  _template:t="monster_event_manager"
 }
 
 entity{
@@ -22,14 +18,6 @@ entity{
 
 entity{
   _template:t="zone_weather"
-}
-
-entity{
-  _template:t="civil_lootable_rendinst_manager"
-}
-
-entity{
-  _template:t="military_lootable_rendinst_manager"
 }
 
 entity{
@@ -61,7 +49,7 @@ entity{
 entity{
   _template:t="raid_description"
   raid_description__raidType:t="collect"
-  raid_description__difficulty:t="dif_hard"
+  raid_description__difficulty:t="dif_norm"
   raid_description__overrideMoreLootNum:i=285
   raid_description__drawSpawnsAsPoints:b=no
   raid_description__drawSpawnsAsPoly:b=yes
@@ -134,6 +122,7 @@ entity{
   tiled_map__tilesPath:t="maps/dalniy_island_sparse"
   tiled_map__backgroundColor:c=35, 128, 97, 255
   fog_of_war__enabled:b=yes
+  fog_of_war__onlineSettingsPath:t="raid_dalniy_island_shegolskoe"
 }
 
 import{
@@ -177,10 +166,6 @@ import{
 }
 
 import{
-  scene:t="gamedata/scenes/dalniy_island_shegolskoe/_dalniy_island_shegolskoe_encounters_overgrowth.blk"
-}
-
-import{
   scene:t="gamedata/scenes/dalniy_island_shegolskoe/_dalniy_island_shegolskoe_waypoints.blk"
 }
 
@@ -196,16 +181,8 @@ import{
   scene:t="gamedata/scenes/dalniy_island_shegolskoe/_dalniy_island_shegolskoe_hive_spawn_points.blk"
 }
 
-import{
-  scene:t="gamedata/scenes/dalniy_island_shegolskoe/_dalniy_island_shegolskoe_loot_generators_adv.blk"
-}
-
 entity{
   _template:t="corpse_swarm_manager"
-}
-
-entity{
-  _template:t="airdrop_manager"
 }
 
 entity{

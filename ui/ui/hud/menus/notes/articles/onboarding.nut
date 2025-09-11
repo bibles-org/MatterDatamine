@@ -1,5 +1,6 @@
+from "%ui/hud/menus/notes/articles/articles_common.nut" import get_paragraph_loc
+
 from "%ui/ui_library.nut" import *
-let { get_paragraph_loc } = require("%ui/hud/menus/notes/articles/articles_common.nut")
 
 function mkNote(id) {
   let paragraphs = [
@@ -31,7 +32,7 @@ function mkNote(id) {
 }
 
 
-let onboarding = [
+let onboarding = freeze([
   mkNote("note_onboarding_bunker_first_visit").__update({rememberOnboardingButton = true}),
   mkNote("note_onboarding_miniraid_start"),
   mkNote("note_onboarding_miniraid_healing"),
@@ -43,7 +44,7 @@ let onboarding = [
   mkNote("note_onboarding_contracts"),
   mkNote("note_onboarding_monolith"),
   mkNote("note_onboarding_bunker_end")
-]
+])
 
 return {
   onboarding

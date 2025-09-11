@@ -1,23 +1,25 @@
+from "%sqstd/string.nut" import tostring_any
+
+from "dasevents" import CmdHideAllUiMenus
+from "%ui/fonts_style.nut" import sub_txt, h2_txt
+from "%ui/state/roomState.nut" import joinRoom
+from "%ui/components/button.nut" import textButton
+from "%ui/components/textInput.nut" import textInput, textInputUnderlined
+from "%ui/components/msgbox.nut" import showMsgbox
+from "math" import rand
+from "%ui/components/scrollbar.nut" import makeVertScrollExt
+from "%ui/mainMenu/customGames/createRoom.nut" import getCreateRoomWnd
+from "string" import strip
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 import "matching.errors" as matching_errors
 from "%ui/components/colors.nut" import Inactive, BtnBdHover, BtnBdHover
 
-let { CmdHideAllUiMenus } = require("dasevents")
 let { safeAreaHorPadding, safeAreaVerPadding } = require("%ui/options/safeArea.nut")
-let {sub_txt, h2_txt} = require("%ui/fonts_style.nut")
-let {showCreateRoom} = require("showCreateRoom.nut")
-let { roomsList, roomsListError, roomsListRefreshEnabled, isRoomsListRequestInProgress} = require("roomsListState.nut")
-let { joinRoom } = require("%ui/state/roomState.nut")
-let { textButton } = require("%ui/components/button.nut")
-let {textInput, textInputUnderlined} = require("%ui/components/textInput.nut")
-let {showMsgbox} = require("%ui/components/msgbox.nut")
-let {rand} = require("math")
-let {makeVertScrollExt} = require("%ui/components/scrollbar.nut")
-let {getCreateRoomWnd} = require("createRoom.nut")
-let {tostring_any} = require("%sqstd/string.nut")
-let {squadId} = require("%ui/squad/squadState.nut")
-let {strip} = require("string")
+let { showCreateRoom } = require("%ui/mainMenu/customGames/showCreateRoom.nut")
+let { roomsList, roomsListError, roomsListRefreshEnabled, isRoomsListRequestInProgress } = require("%ui/mainMenu/customGames/roomsListState.nut")
+let { squadId } = require("%ui/squad/squadState.nut")
 
 function centeredText(text, options={}) {
   return {
@@ -93,7 +95,7 @@ function joinCb(response) {
       text = loc("msgbox/failedJoinRoom", "Failed to join room: {error}", {error=matching_errors.error_string(response.error)})
     })
   } else {
-    selectedRoom.update(null)
+    selectedRoom.set(null)
   }
 }
 let findSomeMatch = mkFindSomeMatch(joinCb)
@@ -118,7 +120,7 @@ function doJoin() {
 
       return {
         key = "room-password"
-        size = [sw(20), SIZE_TO_CONTENT]
+        size = static [sw(20), SIZE_TO_CONTENT]
         children = input
       }
     }
@@ -166,7 +168,7 @@ function listItem(roomInfo) {
     return {
       rendObj = ROBJ_SOLID
       color = color
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
 
       behavior = Behaviors.Button
       onClick = @() selectedRoom.set(roomInfo)
@@ -196,11 +198,11 @@ function listItem(roomInfo) {
 function listHeader() {
   return {
     hplace = ALIGN_CENTER
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     pos = [0, sh(11)]
     children = {
-      size = [flex(), SIZE_TO_CONTENT]
-      margin = [0, fsh(1), 0, 0]
+      size = FLEX_H
+      margin = static [0, fsh(1), 0, 0]
       flow = FLOW_HORIZONTAL
       children = [
         itemText(loc("Name"), {pw=colWidths[0]})
@@ -218,22 +220,22 @@ let nameFilter = mkWatched(persist, "nameFilter", "")
 
 function roomFilter() {
   return {
-    size = [flex(), fsh(6)]
+    size = static [flex(), fsh(6)]
 
     vplace = ALIGN_BOTTOM
     halign = ALIGN_RIGHT
 
     flow = FLOW_HORIZONTAL
-    onDetach = @() nameFilter.update("")
-    onAttach = @() nameFilter.update("")
+    onDetach = @() nameFilter.set("")
+    onAttach = @() nameFilter.set("")
     children = [
       {
         size = [pw(colWidths[0] * 1.5), SIZE_TO_CONTENT]
-        margin = [0, hdpx(10), 0, 0]
+        margin = static [0, hdpx(10), 0, 0]
         children = textInputUnderlined(nameFilter,
           {
             placeholder=loc("search by name")
-            onEscape = @() nameFilter("")
+            onEscape = @() nameFilter.set("")
           }.__update(sub_txt))
       }
     ]
@@ -246,7 +248,7 @@ function actionButtons() {
     joinBtn = textButton(loc("Join"), doJoin, {hotkeys = [["^Enter"]]})
   }
   return {
-    size = [SIZE_TO_CONTENT, fsh(6.5)] 
+    size = static [SIZE_TO_CONTENT, fsh(6.5)] 
     watch = [selectedRoom]
     gap = hdpx(5)
     vplace = ALIGN_BOTTOM
@@ -277,7 +279,7 @@ function getRoomsListScreen() {
 
   function listContent() {
     return {
-      size = [flex(), SIZE_TO_CONTENT]
+      size = FLEX_H
       watch = filteredList
       flow = FLOW_VERTICAL
       children = filteredList.get().map(@(roomInfo) listItem(roomInfo))
@@ -287,13 +289,13 @@ function getRoomsListScreen() {
 
   function roomsListComp() {
     return {
-      size = [flex(), sh(60)]
+      size = static [flex(), sh(60)]
       hplace = ALIGN_CENTER
       pos = [0, sh(15)]
 
       rendObj = ROBJ_FRAME
       color = Inactive
-      borderWidth = [hdpx(2), 0]
+      borderWidth = static [hdpx(2), 0]
 
       key = "rooms-list"
 
@@ -303,7 +305,7 @@ function getRoomsListScreen() {
         scrollHandler
         rootBase = {
           size = flex()
-          margin = [2, 0]
+          margin = static [2, 0]
         }
       })
     }

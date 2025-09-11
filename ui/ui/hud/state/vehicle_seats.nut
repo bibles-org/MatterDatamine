@@ -1,8 +1,9 @@
+from "dasevents" import EventOnSeatOwnersChanged
+from "%ui/helpers/ec_to_watched.nut" import mkFrameIncrementObservable
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {EventOnSeatOwnersChanged} = require("dasevents")
-let { mkFrameIncrementObservable  } = require("%ui/helpers/ec_to_watched.nut")
 
 let mkDefaultSeats = @() {
   data = []

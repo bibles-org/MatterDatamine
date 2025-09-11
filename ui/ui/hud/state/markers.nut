@@ -1,11 +1,11 @@
+from "dagor.math" import Point3
+from "%ui/helpers/common_queries.nut" import get_pos
+from "dasevents" import EventMapObjectStateChanged
+from "net" import get_sync_time
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {Point3} = require("dagor.math")
-let { get_pos } = require("%ui/helpers/common_queries.nut")
-let { EventMapObjectStateChanged } = require("dasevents")
 let { watchedHeroEid } = require("%ui/hud/state/watched_hero.nut")
-let { get_sync_time } = require("net")
 
 let visible_interactables = Watched({})
 local nearby_interactables = []
@@ -18,7 +18,7 @@ let hunter_vision_targets = Watched({})
 let hunter_minions = Watched({})
 
 function deleteEid(eid, state){
-  if (eid in state.value)
+  if (eid in state.get())
     state.mutate(@(v) v.$rawdelete(eid))
 }
 

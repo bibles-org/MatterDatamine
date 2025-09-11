@@ -1,6 +1,7 @@
+from "%dngscripts/platform.nut" import is_sony, is_xbox
+
 from "%ui/ui_library.nut" import *
 
-let { is_sony, is_xbox } = require("%dngscripts/platform.nut")
 
 local uid2console = Watched(@() {})
 local console2uid = Watched(@() {})
@@ -9,7 +10,7 @@ local console2uid = Watched(@() {})
 local updateUids = @(...) null
 
 if (is_xbox) {
-  let { xbox2uid, uid2xbox, updateUidsMapping } = require("%gdkLib/userIds.nut")
+  let { xbox2uid, uid2xbox, updateUidsMapping } = require("%ui/gdk/userIds.nut")
   uid2console = uid2xbox
   console2uid = xbox2uid
   updateUids = updateUidsMapping
@@ -20,7 +21,7 @@ else if (is_sony) {
   console2uid = psn2uid
 
   updateUids = function(psn2UidNewList) {
-    let res = clone psnUids.value
+    let res = clone psnUids.get()
     res.psn2uid = res.psn2uid.__merge(psn2UidNewList)
     let newUid2psn = {}
     foreach (k,v in psn2UidNewList)

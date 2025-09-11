@@ -1,7 +1,9 @@
+import "%ui/components/msgbox.nut" as msgbox
+
+from "app" import exit_game
+
 from "%ui/ui_library.nut" import *
 
-let {exit_game} = require("app")
-let msgbox = require("%ui/components/msgbox.nut")
 let login = require("%ui/login/login_state.nut")
 
 function exitGameMsgBox () {

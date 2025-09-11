@@ -26,7 +26,7 @@ VehiclePhys{
     Fuel:r=128
     TakeOff:r=2578
     momentOfInertia:p3=0.61, 3.25, 3.054
-    CenterOfGravity:p3=0.18, 0.6, 0
+    CenterOfGravity:p3=0.4, 0.6, 0
     CenterOfGravityClampY:p2=0, 0.7
     AdvancedMass:b=no
     trackMass:r=8
@@ -77,7 +77,7 @@ VehiclePhys{
   }
 
   suspension{
-    suspensionOffsets:p3=-0.2, -0.15, 0.2
+    suspensionOffsets:p3=-0.2, -0.2, 0.2
     defaultGearRadius:r=0.425
     defaultDampeningForce:p2=4000, 4000
     hasSuspensionOnDriveGear:b=yes

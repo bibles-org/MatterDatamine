@@ -44,6 +44,21 @@ safepack_slot{
 
   "slot_holder__availableItems:list<t>"{
     i:t="small_safepack"
+    i:t="medium_safepack"
+    i:t="large_safepack"
+  }
+}
+
+signal_grenade_slot{
+  _use:t="base_slot_holder"
+  mod_slot__icon:t="uiskin/airdrop_icon.svg"
+  mod_slot__tooltip:t="slots/signal_grenade"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="robodog_signal_grenade_item"
+    i:t="robodog_juan_signal_grenade_item"
+    i:t="quad_bike_signal_grenade_item"
+    i:t="quad_bike_bonecrusher_signal_grenade_item"
   }
 }
 
@@ -147,16 +162,6 @@ passive_chronogenes_stash_slot{
   }
 }
 
-cortical_vault_slot{
-  _use:t="base_slot_holder"
-  mod_slot__icon:t="uiskin/chronogene.svg"
-  mod_slot__tooltip:t="Cortical vault slot"
-
-  "slot_holder__availableItems:list<t>"{
-    i:t="cortical_vault"
-  }
-}
-
 chronogene_secondary_slot{
   _use:t="base_slot_holder"
   mod_slot__icon:t="uiskin/chronogene.svg"
@@ -220,5 +225,29 @@ chronogene_secondary_slot{
     i:t="motion_detector_chronogene_t1"
     i:t="sharp_memory_chronogene_t1"
     i:t="reanimator_chronogene_t1"
+  }
+}
+
+chronogene_melee_slot{
+  _use:t="base_slot_holder"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="stub_sov_knife_nr_40_chronogene"
+  }
+}
+
+chronogene_dogtag_slot{
+  _use:t="base_slot_holder"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="dogtag_chronogene_a"
+  }
+}
+
+cortical_vault_slot{
+  _use:t="base_slot_holder"
+
+  "slot_holder__availableItems:list<t>"{
+    i:t="cortical_vault"
   }
 }

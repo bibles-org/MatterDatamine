@@ -1,9 +1,12 @@
+from "%ui/hud/state/item_info.nut" import get_item_info
+
 from "%ui/ui_library.nut" import *
 
 let { isShiftPressed } = require("%ui/hud/state/inventory_state.nut")
-let { get_item_info } = require("%ui/hud/state/item_info.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
+
+#allow-auto-freeze
 
 let workbenchItemContainer = Watched([])
 let workbenchRepairInProgress = Watched(false)

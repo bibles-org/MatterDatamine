@@ -590,25 +590,13 @@ gpu_object_placer{
   }
 }
 
-decor_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="decor"
-  grid_holder__typeHash:i=0
-  grid_holder__cellSize:i=128
-
-  grid_holder{}
-}
-
 gpu_object_placer_box{
   _use:t="gpu_object_placer"
   _use:t="replicating"
-  grid_obj__gridType:t="decor"
+  _use:t="decor_static_grid_object"
   net__scopeDistanceSq:r=108900
 
   "box_zone:tag"{}
-  grid_obj{}
   _group{
     _track:b=yes
     gpu_object_placer__boxBorderX:p2=0, 0
@@ -618,7 +606,7 @@ gpu_object_placer_box{
 }
 
 envi_cover_template{
-  _tags:t="render"
+  _use:t="replicating"
   _singleton:b=yes
   envi_cover:b=yes
   envi_cover_albedo:p4=0.8, 0.98, 1, 0
@@ -672,6 +660,27 @@ flamethrower_flame_stream_short_effect{
 volfog{
   _use:t="replicating"
   volfog:t=""
+}
+
+envi_cover_optional_graph{
+  _use:t="replicating"
+  envi_cover_optional_graph:t=""
+}
+
+volfog_nbs{
+  _use:t="replicating"
+  _singleton:b=yes
+  volfog_nbs__rootGraph:t=""
+  volfog_nbs__low_range:r=256
+  volfog_nbs__high_range:r=1024
+  volfog_nbs__low_height:r=8
+  volfog_nbs__high_height:r=200
+}
+
+envi_cover_nbs{
+  _use:t="replicating"
+  _singleton:b=yes
+  envi_cover_nbs__rootGraph:t=""
 }
 
 nbs_sphere{
@@ -980,7 +989,6 @@ recreate_entity_effect_in{
 }
 
 teleport_effect_in{
-  _use:t="replicating"
   _use:t="client_destroy_in_5_sec"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   effect__scale:r=0.3
@@ -1031,16 +1039,33 @@ client_human_cam_magnification_curve_affect{
   }
 }
 
-animate_float_component{
+animate_float_component_base{
   _use:t="game_effect_base"
   animate_float_component__componentName:t=""
   animate_float_component__createdAt:r=0
+  animate_float_component__finishAt:r=0
+  animate_float_component__isRepeated:b=no
 
   "animate_float_component__componentHash:u32"{
     value:i=0
   }
+}
+
+animate_float_component_by_curve{
+  _use:t="animate_float_component_base"
 
   "animate_float_component__curve:array"{}
+}
+
+animate_float_component_by_function{
+  _use:t="animate_float_component_base"
+  animate_float_component__function:t="sin"
+  animate_float_component__functionAnimationDuration:r=1
+  animate_float_component__timeMultiplier:r=6.283
+  animate_float_component__valueMin:r=0
+  animate_float_component__valueMax:r=1
+  animate_float_component__originalValue:r=0
+  animate_float_component__restoreValueOnDestroy:b=no
 }
 
 shooting_range_exit_haze{
@@ -1053,5 +1078,35 @@ shooting_range_exit_haze{
 
   "effects:object"{
     teleportation_portal_plane_distortion_a_fx:r=1
+  }
+}
+
+autodelete_effect_entity{
+  "autodeleteEffectEntity:tag"{}
+}
+
+turret_gun_flash_effect_base{
+  _use:t="ecs_no_debug"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+
+  "updateOnEffectLifeTime:tag"{}
+  _group{
+    _tags:t="render"
+    gun_fx__nodeId:i=-1
+    gun_fx__nodeMultTm:m=[[0, 1, 0] [1, 0, 0] [0, 0, -1] [0, 0, 0]]
+
+    effect{}
+    "gun_fx__ownerEid:eid"{}
+  }
+
+  "autodeleteEffectEntity:tag"{}
+}
+
+turret_fire_muzzle_high_caliber_rapid{
+  _use:t="turret_gun_flash_effect_base"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="fire_muzzle_high_caliber_rapid_cmps_fx"
   }
 }

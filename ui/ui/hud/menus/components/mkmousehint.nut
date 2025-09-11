@@ -1,11 +1,16 @@
+from "%ui/components/gamepadImgByKey.nut" import keysImagesMap
+
+from "%ui/fonts_style.nut" import sub_txt
+from "%ui/components/gamepadImgByKey.nut" import mkImageComp
+from "%ui/components/colors.nut" import HUD_TIPS_HOTKEY_FG
+from "%ui/components/commonComponents.nut" import mkText
+import "%ui/components/faComp.nut" as faComp
+
 from "%ui/ui_library.nut" import *
 
-let {sub_txt} = require("%ui/fonts_style.nut")
-let {isGamepad} = require("%ui/control/active_controls.nut")
-let { mkImageComp, keysImagesMap } = require("%ui/components/gamepadImgByKey.nut")
-let { HUD_TIPS_HOTKEY_FG } = require("%ui/components/colors.nut")
-let { mkText } = require("%ui/components/commonComponents.nut")
-let faComp = require("%ui/components/faComp.nut")
+let { isGamepad } = require("%ui/control/active_controls.nut")
+
+#allow-auto-freeze
 
 let iconHeight = hdpxi(20)
 let mouseBtn = @(btn) @() mkImageComp(keysImagesMap.get()?[btn], { watch = keysImagesMap, height = iconHeight, color = HUD_TIPS_HOTKEY_FG})
@@ -43,14 +48,15 @@ function buttonsHint(btns) {
   }
 }
 
-function mkMouseButtonHint(btext, btns, facompIcon = null){
+function mkMouseButtonHint(btext, btns, facompIcon = null, additionalText = null){
   let clickText = text($": {btext}")
   return @() {
     watch = isGamepad
     rendObj = ROBJ_WORLD_BLUR_PANEL
-    padding = [0, hdpx(2)]
+    padding = static [0, hdpx(2)]
     flow = FLOW_HORIZONTAL
-    children = (btext == null || isGamepad.value) ? null : [
+    children = (btext == null || isGamepad.get()) ? null : [
+      additionalText == null ? null : mkText(additionalText, { color = HUD_TIPS_HOTKEY_FG })
       buttonsHint(btns)
       facompIcon == null ? null : mkFaIcon(facompIcon)
       clickText

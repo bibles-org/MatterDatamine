@@ -1,20 +1,19 @@
 placeable_rendinst{
   _use:t="decor_rendinst"
 
-  "construction__save:tag"{}
   "isRendinstDestr:tag"{
     _tags:t="render"
   }
 }
 
 damageable_rendinst{
-  _use:t="placeable_rendinst"
-  ri_preload__name:t=""
-  ri_extra__isBeingReplaced:b=yes
+  _use:t="decor_rendinst"
+  ri_extra__isBeingReplaced:b=no
   ri_extra__riAfterDestructionTriggered:b=no
-  ri_extra__riAfterDestruction:t=""
+  ri_preload__name:t=""
 
   "ri_preload__preloadOnLevelLoaded:tag"{}
+  "riExtraCustomDestroy:tag"{}
 }
 
 immortal_rendinst{

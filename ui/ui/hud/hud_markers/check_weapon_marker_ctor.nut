@@ -1,6 +1,10 @@
+from "%ui/hud/tips/tipComponent.nut" import tipText
+
 from "%ui/ui_library.nut" import *
 
-let { tipBack, tipText } = require("%ui/hud/tips/tipComponent.nut")
+let { tipBack } = require("%ui/hud/tips/tipComponent.nut")
+
+#allow-auto-freeze
 
 function check_weapon_marker_ctors(eid, info){
   return tipBack.__merge({

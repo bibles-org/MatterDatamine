@@ -36,16 +36,17 @@ repeat{
   sequencer{
     name:t="repel_away"
 
+    flyingSwarmSetAttackState{
+      attackState:b=no
+    }
+
     isTimerInProgress{
       target:t="corpse_attached_swarm__detractUntil"
     }
 
     corpseAttachedSwarmChooseRepelPosition{}
     parallel{
-      flyingSwarmMoveToTargetSimple{
-        setAttackState:b=no
-      }
-
+      flyingSwarmMoveToTargetSimple{}
       wait{
         range:p2=20, 40
         resetable:b=yes
@@ -80,13 +81,14 @@ repeat{
     sequencer{
       name:t="fly_around"
 
+      flyingSwarmSetAttackState{
+        attackState:b=no
+      }
+
       flyingSwarmPatroller{}
       flyingSwarmSetWaypointTarget{}
       parallel{
-        flyingSwarmMoveToTargetSimple{
-          setAttackState:b=no
-        }
-
+        flyingSwarmMoveToTargetSimple{}
         sequencer{
           repeat{
             flyingSwarmRecoveryPopulation{}
@@ -133,6 +135,10 @@ repeat{
   sequencer{
     name:t="swarm_around_corpse"
 
+    flyingSwarmSetAttackState{
+      attackState:b=no
+    }
+
     subTree{
       treeName:t="sub.move_to_attached_corpse"
     }
@@ -175,6 +181,10 @@ repeat{
 sequencer{
   name:t="sub.move_to_attached_corpse"
 
+  flyingSwarmSetAttackState{
+    attackState:b=no
+  }
+
   corpseAttachedSwarmDoesCorpseExist{}
   modifyNode{
     target:t="swarm_cluster__target"
@@ -195,7 +205,6 @@ sequencer{
     sequencer{
       parallel{
         flyingSwarmMoveToTargetSimple{
-          setAttackState:b=no
           updateTargetPos:b=yes
           minHeight:r=50
           stopDistance:r=15
@@ -210,7 +219,7 @@ sequencer{
       }
 
       wait{
-        range:p2=90, 120
+        range:p2=60, 120
         resetable:b=yes
       }
     }
@@ -218,37 +227,49 @@ sequencer{
 
   corpseAttachedSwarmApproachCorpse{
     speedMultiplier:r=0.2
+    swirlRadius:r=15
+    swirlPeriod:r=10
   }
 }
 
-parallel{
+sequencer{
   name:t="sub.find_and_attack_enemies"
 
-  repeatUntilFail{
-    compareNode{
-      lhs:t="swarm_cluster__serverCount"
-      operator:t=">="
-      rhs:t="swarm_cluster__minHealthyCount"
-    }
+  flyingSwarmSetAttackState{
+    attackState:b=yes
+  }
 
-    flyingSwarmFindDanger{}
-    parallel{
-      flyingSwarmMoveToTarget{}
-      failed{
-        wait{
-          range:p2=20, 20
-          resetable:b=yes
+  parallel{
+    repeatUntilFail{
+      compareNode{
+        lhs:t="swarm_cluster__serverCount"
+        operator:t=">="
+        rhs:t="swarm_cluster__minHealthyCount"
+      }
+
+      flyingSwarmFindDanger{}
+      parallel{
+        flyingSwarmMoveToTarget{}
+        failed{
+          wait{
+            range:p2=20, 20
+            resetable:b=yes
+          }
         }
+
+        repeat{
+          flyingSwarmDamageInArea{}
+        }
+      }
+
+      wait{
+        range:p2=1, 1
+        resetable:b=yes
       }
     }
 
-    wait{
-      range:p2=1, 1
-      resetable:b=yes
+    repeat{
+      flyingSwarmDamageInArea{}
     }
-  }
-
-  repeat{
-    flyingSwarmDamageInArea{}
   }
 }

@@ -124,6 +124,16 @@ muzzle_rifle_assault_flash_effect{
   }
 }
 
+muzzle_rifle_assault_no_flash_effect{
+  _use:t="base_gun_flash_fx"
+
+  _group{
+    _tags:t="render"
+    effect__name:t="fire_muzzle_rifle_assault_no_flash_cmps_fx"
+    effect__distance_scale:r=1
+  }
+}
+
 smoke_gun_medium_effect{
   _use:t="base_gun_smoke_fx"
 

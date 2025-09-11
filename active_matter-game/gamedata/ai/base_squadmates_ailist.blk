@@ -1,0 +1,47 @@
+repeat{
+  name:t="squadmate_mannequin"
+
+  sequencer{
+    copyEcsValue{
+      ecsName:t="squadmate_mannequin__placer"
+      blackboardName:t="originEntity"
+    }
+
+    setPosFromEntity{
+      to:t="originPos"
+      from:t="originEntity"
+    }
+
+    not{
+      checkDistance{
+        posParam:t="originPos"
+        radius:r=3
+      }
+    }
+
+    gravityMoveToPos{
+      stopDist:r=0.1
+      posParam:t="originPos"
+      minStance:i=1
+      forceToWalk:b=yes
+    }
+  }
+
+  sequencer{
+    copyEcsValue{
+      ecsName:t="bot_allies__closest"
+      blackboardName:t="ally"
+    }
+
+    parallel{
+      wait{
+        range:p2=5, 5
+        resetable:b=yes
+      }
+
+      lookAtTarget{
+        targetUnitParam:t="ally"
+      }
+    }
+  }
+}

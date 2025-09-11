@@ -1,35 +1,34 @@
+from "%dngscripts/platform.nut" import is_sony
+from "%ui/mainMenu/contacts/contactsWatchLists.nut" import isInternalContactsAllowed
+from "dasevents" import CmdHideUiMenu
+from "%ui/fonts_style.nut" import body_txt, sub_txt
+from "%ui/components/colors.nut" import ModalBgTint, WindowHeader, Inactive, WindowBlur, WindowContacts
+from "%ui/viewConst.nut" import gap
+from "%ui/components/textInput.nut" import textInput
+from "%ui/components/scrollbar.nut" import makeVertScroll
+from "%ui/components/button.nut" import fontIconButton
+from "%ui/components/text.nut" import dtext as txt
+from "%ui/components/modalPopupWnd.nut" import addModalPopup, removeModalPopup
+from "%ui/mainMenu/contacts/contact.nut" import getContact, getContactNick
+from "%ui/mainMenu/contacts/contactsState.nut" import searchContacts
+import "%ui/mainMenu/contacts/buildCounter.nut" as buildCounter
+from "%ui/helpers/remap_nick.nut" import remap_nick
+import "%ui/helpers/locByPlatform.nut" as locByPlatform
+from "%ui/mainMenu/contacts/contactPresence.nut" import isContactOnline
+from "%ui/mainMenu/contacts/contactBlock.nut" import mkCommonContactBlock
+from "%ui/components/commonComponents.nut" import mkSelectPanelItem, mkSelectPanelTextWithFaIconCtor
+from "%ui/mainMenu/menus/options/player_interaction_option.nut" import isStreamerMode, playerRandName
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { CmdHideUiMenu } = require("dasevents")
-let { body_txt, sub_txt } = require("%ui/fonts_style.nut")
-let {ModalBgTint, WindowHeader, Inactive, WindowBlur, WindowContacts} = require("%ui/components/colors.nut")
-let { gap } = require("%ui/viewConst.nut")
-let { textInput} = require("%ui/components/textInput.nut")
-let { makeVertScroll} = require("%ui/components/scrollbar.nut")
-let { fontIconButton } = require("%ui/components/button.nut")
-let txt = require("%ui/components/text.nut").dtext
 let userInfo = require("%sqGlob/userInfo.nut")
-let { addModalPopup, removeModalPopup } = require("%ui/components/modalPopupWnd.nut")
-let { INVITE_TO_PSN_FRIENDS, CANCEL_INVITE, APPROVE_INVITE, ADD_TO_BLACKLIST, INVITE_TO_FRIENDS,
-  INVITE_TO_SQUAD, REMOVE_FROM_BLACKLIST, COMPARE_ACHIEVEMENTS, INVITE_TO_ROOM,
-  REVOKE_INVITE, REJECT_INVITE, REMOVE_FROM_SQUAD, REMOVE_FROM_FRIENDS,
-  PROMOTE_TO_LEADER, SHOW_USER_LIVE_PROFILE, REMOVE_FROM_BLACKLIST_PSN, REMOVE_FROM_BLACKLIST_XBOX
-} = require("%ui/mainMenu/contacts/contactActions.nut")
-let { contacts, getContact, getContactNick } = require("%ui/mainMenu/contacts/contact.nut")
-let { approvedUids, psnApprovedUids, xboxApprovedUids, friendsOnlineUids, requestsToMeUids, myRequestsUids,
-  rejectedByMeUids, blockedUids, isInternalContactsAllowed
-} = require("%ui/mainMenu/contacts/contactsWatchLists.nut")
-let { isContactsVisible, searchContacts, searchContactsResults } = require("contactsState.nut")
-let buildCounter = require("buildCounter.nut")
-let {safeAreaVerPadding} = require("%ui/options/safeArea.nut")
-let { remap_nick } = require("%ui/helpers/remap_nick.nut")
-let { is_sony } = require("%dngscripts/platform.nut")
-let locByPlatform = require("%ui/helpers/locByPlatform.nut")
-let { onlineStatus, isContactOnline } = require("contactPresence.nut")
+let { INVITE_TO_PSN_FRIENDS, CANCEL_INVITE, APPROVE_INVITE, ADD_TO_BLACKLIST, INVITE_TO_FRIENDS, INVITE_TO_SQUAD, REMOVE_FROM_BLACKLIST, COMPARE_ACHIEVEMENTS, INVITE_TO_ROOM, REVOKE_INVITE, REJECT_INVITE, REMOVE_FROM_SQUAD, REMOVE_FROM_FRIENDS, PROMOTE_TO_LEADER, SHOW_USER_LIVE_PROFILE, REMOVE_FROM_BLACKLIST_PSN, REMOVE_FROM_BLACKLIST_XBOX } = require("%ui/mainMenu/contacts/contactActions.nut")
+let { contacts } = require("%ui/mainMenu/contacts/contact.nut")
+let { approvedUids, psnApprovedUids, xboxApprovedUids, friendsOnlineUids, requestsToMeUids, myRequestsUids, rejectedByMeUids, blockedUids } = require("%ui/mainMenu/contacts/contactsWatchLists.nut")
+let { isContactsVisible, searchContactsResults } = require("%ui/mainMenu/contacts/contactsState.nut")
+let { safeAreaVerPadding } = require("%ui/options/safeArea.nut")
+let { onlineStatus } = require("%ui/mainMenu/contacts/contactPresence.nut")
 let JB = require("%ui/control/gui_buttons.nut")
-let { mkCommonContactBlock } = require("contactBlock.nut")
-let { mkSelectPanelItem, mkSelectPanelTextWithFaIconCtor } = require("%ui/components/commonComponents.nut")
 
 let windowPadding = fsh(2)
 let searchPlayer = Watched("")
@@ -40,11 +39,11 @@ let contactListWidth = hdpx(300)
 let display = Watched("approved")
 
 let hdrTxt = @(text,params={}) {
-  padding = [hdpx(2),fsh(1)]
-  size = [flex(),SIZE_TO_CONTENT]
+  padding = static [hdpx(2),fsh(1)]
+  size = FLEX_H
   children = txt(text,params.__merge({
     behavior = [Behaviors.Marquee,Behaviors.Button]
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     speed = hdpx(100)
     scrollOnHover = true
   }, sub_txt))
@@ -59,8 +58,8 @@ let closeWnd = @() removeModalPopup(CONTACTLIST_MODAL_UID)
 
 function resetSearch() {
   display.set("approved")
-  searchPlayer("")
-  searchContactsResults({})
+  searchPlayer.set("")
+  searchContactsResults.set({})
 }
 
 let closeButton = fontIconButton("icon_buttons/x_btn.svg", function() {
@@ -70,7 +69,7 @@ let closeButton = fontIconButton("icon_buttons/x_btn.svg", function() {
 
 
 let header = @(){
-  size = [flex(), fsh(4)]
+  size = static [flex(), fsh(4)]
   watch = userInfo
   flow = FLOW_HORIZONTAL
   valign = ALIGN_CENTER
@@ -79,22 +78,23 @@ let header = @(){
   padding = [hdpx(8),hdpx(8),hdpx(8),windowPadding]
   color = WindowHeader
   children = [
-    {
+    @() {
+      watch = [isStreamerMode, playerRandName]
       rendObj = ROBJ_TEXT
-      text = remap_nick(userInfo.value?.name)
-      size = [flex(), SIZE_TO_CONTENT]
+      text = isStreamerMode.get() ? playerRandName.get() : remap_nick(userInfo.get()?.name)
+      size = FLEX_H
       color = Inactive
       clipChildren = true
       behavior = [Behaviors.Marquee, Behaviors.Button]
       scrollOnHover=true
     }.__update(body_txt)
-    {size = [hdpx(8),0]}
+    {size = static [hdpx(8),0]}
     closeButton
   ]
 }
 
 function searchCallback() {
-  if (searchPlayer.value.len() > 0)
+  if (searchPlayer.get().len() > 0)
     display.set("search_results")
 }
 
@@ -105,23 +105,23 @@ function doSearch(nick) {
     searchContacts(nick, searchCallback)
 }
 
-display.subscribe(function(val){
+display.subscribe_with_nasty_disregard_of_frp_update(function(val){
   if (val == "search_results")
     return
-  searchPlayer("")
-  searchContactsResults({})
+  searchPlayer.set("")
+  searchContactsResults.set({})
 })
 
 let exitSearchButton = fontIconButton("icon_buttons/x_btn.svg", resetSearch, {
   hplace = ALIGN_RIGHT
   vplace = ALIGN_CENTER
-  margin = [hdpx(1), fsh(0.5)]
-  size=[hdpx(20), hdpx(20)]
+  margin = static [hdpx(1), fsh(0.5)]
+  size=hdpx(20)
   borderWidth=0
 })
 
 function clearOrExitWnd() {
-  if (searchPlayer.value == "")
+  if (searchPlayer.get() == "")
     closeWnd()
   else
     resetSearch()
@@ -129,17 +129,17 @@ function clearOrExitWnd() {
 
 let searchBlock = @() {
   watch = [display,searchPlayer]
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
   margin =[ hdpx(2), windowPadding]
   children = [
     textInput(searchPlayer, {
       placeholder = loc("Search for new friends...")
       textmargin = hdpx(5)
       onChange = doSearch
-      onReturn = @() doSearch(searchPlayer.value)
+      onReturn = @() doSearch(searchPlayer.get())
       onEscape = clearOrExitWnd
     }.__update(sub_txt))
-    display.get() != "search_results" || searchPlayer.value.len() == 0 ? null : exitSearchButton
+    display.get() != "search_results" || searchPlayer.get().len() == 0 ? null : exitSearchButton
   ]
 }
 
@@ -155,8 +155,7 @@ if (isInternalContactsAllowed) {
     inContactActions = [INVITE_TO_SQUAD],
     contextMenuActions = [
       INVITE_TO_PSN_FRIENDS, REMOVE_FROM_SQUAD, REVOKE_INVITE, INVITE_TO_ROOM,
-      INVITE_TO_SQUAD, PROMOTE_TO_LEADER,REMOVE_FROM_FRIENDS, COMPARE_ACHIEVEMENTS,
-      SHOW_USER_LIVE_PROFILE
+      INVITE_TO_SQUAD, PROMOTE_TO_LEADER, COMPARE_ACHIEVEMENTS, SHOW_USER_LIVE_PROFILE, REMOVE_FROM_FRIENDS
     ]
   })
 }
@@ -198,19 +197,19 @@ let sortContacts = @(contactsArr, onlineStatusVal) contactsArr.sort(@(a, b)
 let mkContactsGroupContent = @(groupKeys) function() {
   let children = []
   let watch = [onlineStatus, searchPlayer, contacts]
-  let searchPlayerVal = searchPlayer.value.tolower()
+  let searchPlayerVal = searchPlayer.get().tolower()
   foreach (v in groupKeys) {
     let { name, uidsWatch, inContactActions, contextMenuActions } = v
     let watchesList = typeof uidsWatch == "array" ? uidsWatch : [uidsWatch]
 
     local contactsArr = []
     foreach (w in watchesList)
-      contactsArr.extend(w.value.keys().map(@(userId) getContact(userId, contacts.get())))
+      contactsArr.extend(w.get().keys().map(@(userId) getContact(userId, contacts.get())))
 
     if (searchPlayerVal != "")
       contactsArr = contactsArr.filter(@(c) c.realnick.tolower().indexof(searchPlayerVal) != null)
 
-    contactsArr = sortContacts(contactsArr, onlineStatus.value)
+    contactsArr = sortContacts(contactsArr, onlineStatus.get())
       .map(@(contact) mkCommonContactBlock(contact, inContactActions, contextMenuActions))
 
     children.append(hdrTxt(locByPlatform($"contacts/{name}")))
@@ -224,7 +223,7 @@ let mkContactsGroupContent = @(groupKeys) function() {
 
   return {
     watch
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_VERTICAL
     children
   }
@@ -233,26 +232,26 @@ let mkContactsGroupContent = @(groupKeys) function() {
 function buildContactsButton(idx, symbol, mkCounter) {
   let ico = mkSelectPanelTextWithFaIconCtor(symbol)
   let children = @(params) {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     halign = ALIGN_CENTER
     children = [
-      { hplace = ALIGN_CENTER children = ico(params), pos = [hdpx(4), 0] padding = [hdpx(4), 0]},
+      { hplace = ALIGN_CENTER children = ico(params), pos = [hdpx(4), 0] padding = static [hdpx(4), 0]},
       { pos = [-hdpx(8), hdpx(8)], size = flex(), halign = ALIGN_RIGHT, children=buildCounter(mkCounter?()) }
     ]
   }
-  return mkSelectPanelItem({idx, state=display, children, visual_params={size=[flex(), SIZE_TO_CONTENT], margin=0, padding=0}})
+  return mkSelectPanelItem({idx, state=display, children, visual_params={size=FLEX_H, margin=0, padding=0}})
 }
 
 
 let modesList = [
-  { option = "approved", icon="users", mkCounter = @() Computed(@() counterText(friendsOnlineUids.value.len())) },
-  { option = "invites", icon ="user-plus", mkCounter = @() Computed(@() counterText(requestsToMeUids.value.len() + myRequestsUids.value.len() + rejectedByMeUids.value.len()))},
-  { option = "myBlacklist", icon = "user-times", mkCounter = @() Computed(@() counterText( blockedUids.value.len() ))}
+  { option = "approved", icon="users", mkCounter = @() Computed(@() counterText(friendsOnlineUids.get().len())) },
+  { option = "invites", icon ="user-plus", mkCounter = @() Computed(@() counterText(requestsToMeUids.get().len() + myRequestsUids.get().len() + rejectedByMeUids.get().len()))},
+  { option = "myBlacklist", icon = "user-times", mkCounter = @() Computed(@() counterText( blockedUids.get().len() ))}
 ]
 
 function modeSwitcher() {
   return {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     padding = hdpx(4)
     gap = hdpx(1)
     flow = FLOW_HORIZONTAL
@@ -266,9 +265,9 @@ let searchTbl = [{
   placeholder,
   inContactActions = [INVITE_TO_FRIENDS],
   contextMenuActions = [
-    INVITE_TO_FRIENDS, INVITE_TO_PSN_FRIENDS, REMOVE_FROM_FRIENDS, APPROVE_INVITE,
-    INVITE_TO_SQUAD, CANCEL_INVITE, REMOVE_FROM_BLACKLIST, REMOVE_FROM_BLACKLIST_PSN,
-    REMOVE_FROM_BLACKLIST_XBOX, ADD_TO_BLACKLIST, SHOW_USER_LIVE_PROFILE, COMPARE_ACHIEVEMENTS
+    INVITE_TO_FRIENDS, INVITE_TO_PSN_FRIENDS, APPROVE_INVITE, INVITE_TO_SQUAD, CANCEL_INVITE,
+    REMOVE_FROM_BLACKLIST, REMOVE_FROM_BLACKLIST_PSN, REMOVE_FROM_BLACKLIST_XBOX, ADD_TO_BLACKLIST,
+    SHOW_USER_LIVE_PROFILE, COMPARE_ACHIEVEMENTS, REMOVE_FROM_FRIENDS
   ]
 }]
 
@@ -317,7 +316,7 @@ let contactsBlock = @() {
         children = [
           modeSwitcher
           searchBlock
-          makeVertScroll(tabsContent?[display.value]())
+          makeVertScroll(tabsContent?[display.get()]())
         ]
       }
     ]
@@ -325,8 +324,8 @@ let contactsBlock = @() {
 }
 
 
-let getCurModeIdx = @() modesList.findindex(@(m) m.option == display.value) ?? -1
-let changeMode = @(delta) display(modesList[(getCurModeIdx() + delta + modesList.len()) % modesList.len()].option)
+let getCurModeIdx = @() modesList.findindex(@(m) m.option == display.get()) ?? -1
+let changeMode = @(delta) display.set(modesList[(getCurModeIdx() + delta + modesList.len()) % modesList.len()].option)
 
 let btnContactsNav = @() {
   size = SIZE_TO_CONTENT
@@ -373,7 +372,8 @@ function showContactsIfNeeded(v) {
   if (v)
     showContactsWnd()
 }
-isContactsVisible.subscribe(showContactsIfNeeded)
+
+isContactsVisible.subscribe_with_nasty_disregard_of_frp_update(showContactsIfNeeded)
 showContactsIfNeeded(isContactsVisible.get())
 
 return {

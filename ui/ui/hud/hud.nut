@@ -1,34 +1,48 @@
+import "%ui/hud/tips/all_tips.nut" as all_tips
+import "%ui/hud/hud_layout.nut" as hudLayout
+import "%ui/hud/tips/network_error.nut" as network_error
+from "%ui/hud/hud_menus.nut" import menusUi
+import "%ui/hud/hud_under.nut" as hud_under
+import "%ui/hud/hud_objectives.nut" as hudObjectives
+from "%ui/hud/tips/nexus_round_mode_alerts.nut" import alertsUi
+from "%ui/hud/state/shooting_range_state.nut" import shootingRangeWarn
+import "%ui/hud/vehicle_crosshair.nut" as vehicleCrosshair
+import "%ui/hud/turret_crosshair.nut" as turretCrosshair
+import "%ui/hud/commander_crosshair.nut" as commanderCrosshair
 from "%ui/ui_library.nut" import *
 
-let {inspectorRoot} = require("%darg/helpers/inspector.nut")
+let { inspectorRoot } = require("%darg/helpers/inspector.nut")
 
 require("%ui/hud/state/cmd_hero_log_event.nut")
 require("%ui/hud/state/gun_blocked_es.nut")
 
-let { showChatInput } =  require("%ui/hud/menus/chat.ui.nut")
+let { showChatInput } = require("%ui/hud/menus/chat.ui.nut")
 let { chatOutMessage } = require("%ui/hud/state/chat.nut")
-let all_tips = require("%ui/hud/tips/all_tips.nut")
-let hudLayout = require("%ui/hud/hud_layout.nut")
-let network_error = require("%ui/hud/tips/network_error.nut")
-let { menusUi } = require("%ui/hud/hud_menus.nut")
-let hud_under = require("%ui/hud/hud_under.nut")
-let hudObjectives = require("%ui/hud/hud_objectives.nut")
 let hudDroneOperatorMark = require("%ui/hud/hud_drone_operator_mark.nut")
 let JB = require("%ui/control/gui_buttons.nut")
-let {hit_marks} = require("%ui/hud/hit_marks.nut")
-let { alertsUi } = require("%ui/hud/tips/nexus_round_mode_alerts.nut")
-let { shootingRangeWarn } = require("%ui/hud/state/shooting_range_state.nut")
+let { hit_marks } = require("%ui/hud/hit_marks.nut")
+let { inTank, isGunner } = require("%ui/hud/state/vehicle_state.nut")
+let { isDroneMode } = require("%ui/hud/state/drone_state.nut")
+let { showroomActive } = require("%ui/hud/state/showroom_state.nut")
 
-let hud = {
+let groundVehicleCrosshair = @() {
+  watch = [inTank, isGunner, isDroneMode]
+  children = isDroneMode.get() ? null : ((!inTank.get() || isGunner.get()) ? turretCrosshair : commanderCrosshair)
+}
+
+let hud = @() {
   size = flex(),
+  watch = showroomActive
   children = [
-    hit_marks,
-    hud_under,
-    hudObjectives,
-    hudDroneOperatorMark,
-    all_tips,
-    hudLayout,
-    network_error
+    showroomActive.get() ? null : hit_marks,
+    showroomActive.get() ? null : hud_under,
+    showroomActive.get() ? null : hudObjectives,
+    showroomActive.get() ? null : hudDroneOperatorMark,
+    showroomActive.get() ? null : all_tips,
+    showroomActive.get() ? null : hudLayout,
+    network_error,
+    showroomActive.get() ? null : vehicleCrosshair,
+    showroomActive.get() ? null : groundVehicleCrosshair
   ]
 }
 

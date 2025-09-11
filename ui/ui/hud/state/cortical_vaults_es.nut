@@ -1,10 +1,10 @@
+import "%ui/hud/state/is_teams_friendly.nut" as is_teams_friendly
+import "%ui/hud/state/get_player_team.nut" as get_player_team
+from "%ui/helpers/ec_to_watched.nut" import mkWatchedSetAndStorage
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let is_teams_friendly = require("%ui/hud/state/is_teams_friendly.nut")
-let get_player_team = require("%ui/hud/state/get_player_team.nut")
 let { localPlayerTeam, localPlayerTeamIsIncognito } = require("%ui/hud/state/local_player.nut")
-let { mkWatchedSetAndStorage } = require("%ui/helpers/ec_to_watched.nut")
 let { watchedHeroPlayerEid } = require("%ui/hud/state/watched_hero.nut")
 let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
 
@@ -17,7 +17,8 @@ let {
 
 
 let corticalVaultsQuery = ecs.SqQuery("cortical_vaults_status_ui_query", {
-  comps_rq = ["cortical_vault"]
+  comps_no = ["item_in_equipment"],
+  comps_rq = ["cortical_vault"],
   comps_ro = [
     ["item__containerOwnerEid", ecs.TYPE_EID],
     ["playerItemOwner", ecs.TYPE_EID],
@@ -32,8 +33,8 @@ function updateCorticalVaultsStatus (eid, comp) {
   if (!isTeammate || 
         localPlayerTeamIsIncognito.get() || 
         (!comp?.transform && !comp?.cortical_vault_in_inventory__trackPos) || 
-        watchedHeroPlayerEid.value == comp.playerItemOwner || 
-        controlledHeroEid.value == comp.item__humanOwnerEid){ 
+        watchedHeroPlayerEid.get() == comp.playerItemOwner || 
+        controlledHeroEid.get() == comp.item__humanOwnerEid){ 
     corticalVaultsDestroyEid(eid)
     return
   }
@@ -45,9 +46,9 @@ function updateCorticalVaultsStatus (eid, comp) {
   corticalVaultsUpdateEid(eid, res)
 }
 
-localPlayerTeam.subscribe(@(_) corticalVaultsQuery.perform(updateCorticalVaultsStatus))
-localPlayerTeamIsIncognito.subscribe(@(_) corticalVaultsQuery.perform(updateCorticalVaultsStatus))
-watchedHeroPlayerEid.subscribe(@(_) corticalVaultsQuery.perform(updateCorticalVaultsStatus))
+localPlayerTeam.subscribe_with_nasty_disregard_of_frp_update(@(_) corticalVaultsQuery.perform(updateCorticalVaultsStatus))
+localPlayerTeamIsIncognito.subscribe_with_nasty_disregard_of_frp_update(@(_) corticalVaultsQuery.perform(updateCorticalVaultsStatus))
+watchedHeroPlayerEid.subscribe_with_nasty_disregard_of_frp_update(@(_) corticalVaultsQuery.perform(updateCorticalVaultsStatus))
 
 ecs.register_es("cortical_vaults_status_ui_es",
   {
@@ -55,7 +56,8 @@ ecs.register_es("cortical_vaults_status_ui_es",
     onDestroy = @(eid, _comp) corticalVaultsDestroyEid(eid)
   },
   {
-    comps_rq = ["cortical_vault"]
+    comps_no = ["item_in_equipment"],
+    comps_rq = ["cortical_vault"],
     comps_track = [
       ["item__containerOwnerEid", ecs.TYPE_EID],
       ["cortical_vault_in_inventory__trackPos", ecs.TYPE_POINT3, null]
@@ -72,4 +74,3 @@ return {
   corticalVaultsSet,
   corticalVaultsGetWatched,
 }
-

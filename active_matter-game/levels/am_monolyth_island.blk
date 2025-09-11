@@ -105,14 +105,6 @@ micro_details{
   }
 }
 
-volFog{
-  rootFogGraph:t="content/america_abandoned/shaders/fog_monolyth_island.json"
-}
-
-enviCover{
-  rootEnviCoverGraph:t="envi_cover_monolyth_island.json"
-}
-
 grass{
   grass_grid_size:r=0.0625
   grass_distance:r=50
@@ -412,4 +404,11 @@ grass{
     mask_distance:r=200
     world_space_position:ip2=-1781, 721
   }
+}
+
+graphics{
+  lightsShadowDynObjectsUpdateRange:r=8
+  dynamicShadow32bit:b=yes
+  spotShadowBias:p4=-6e-05, -0.8, 0.004, 0.002
+  highSpotShadowBias:p4=-6e-05, -0.8, 0.001, 0.001
 }

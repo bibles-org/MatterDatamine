@@ -2,12 +2,12 @@ rendinstExtraMaxCnt:i=524288
 rendinstPreloadDistance:r=2500
 rendinstMaxLod0Dist:r=1200
 rendinstExtraSortTransparentInstances:b=yes
+rendinstImmortalByDefault:b=yes
 maxRiGenPerCell:i=524288
 maxRiExPerCell:i=524288
 nodeBasedShadersFolder:t="active_matter"
 disableShadowImpostorForAllLod:b=yes
 hazeDivisor:i=1
-icon_render_panorama:t="icon_render_panorama_tex_d"
 physmatBlk:t="config/physmat.blk"
 attachmentSlotsInitBlk:t="gamedata/attachment_slots.blk"
 
@@ -62,7 +62,6 @@ commonScenes{
   scene:t="gamedata/scenes/_level_is_loading.blk"
   scene:t="gamedata/scenes/_liana_attach_node_scene.blk"
   scene:t="gamedata/scenes/_loose_grid_scene.blk"
-  scene:t="gamedata/scenes/_minimap.blk"
   scene:t="gamedata/scenes/_multiplayer_ui.blk"
   scene:t="gamedata/scenes/_ribbon_colors.blk"
   scene:t="gamedata/scenes/_server_no_players_timer.blk"
@@ -77,9 +76,11 @@ commonClientScenes{
   scene:t="gamedata/scenes/_animchar_infrequent_updater.blk"
   scene:t="gamedata/scenes/_hero_cockpit.blk"
   scene:t="gamedata/scenes/_menu_controllers.blk"
+  scene:t="gamedata/scenes/_perfstat_client_bq.blk"
   scene:t="gamedata/scenes/_screen_night_vision.blk"
   scene:t="gamedata/scenes/_swarm_renderer.blk"
   scene:t="gamedata/scenes/_temperature_anomalies_manager.blk"
+  scene:t="gamedata/scenes/_am_manager.blk"
   scene:t="gamedata/scenes/_visual_effects_optimiser.blk"
   scene:t="gamedata/scenes/_global_fx_client.blk"
   scene:t="gamedata/scenes/_dafx_gravity_zone.blk"
@@ -87,6 +88,7 @@ commonClientScenes{
   scene:t="gamedata/scenes/_common_thermal_vision.blk"
   scene:t="gamedata/scenes/_common_wounds.blk"
   scene:t="gamedata/scenes/_common_dev.blk"
+  scene:t="gamedata/scenes/common_lens_flare.blk"
 }
 
 bulletHoles{
@@ -157,7 +159,7 @@ riExtraTiledScenes{
 }
 
 unitedVdata.rendInst.def{
-  IB:i=80000
+  IB:i=160000
   VB1:i=65536
   VB2:i=65536
   VB3:i=65536

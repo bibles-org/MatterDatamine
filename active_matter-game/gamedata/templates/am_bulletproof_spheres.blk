@@ -3,14 +3,13 @@ bulletproof_sphere{
   _use:t="traceable_sphere"
   _use:t="traceable_sphere_hit_effect"
   _use:t="invulnerable"
+  _use:t="traceable_spheres_dynamic_grid_object"
   sphere_zone__radius:r=1
   _tracked:t="sphere_zone__radius"
   traceable_sphere_hit_effect__name:t="sparks_armor_hit_a_fx"
   material:t="steel"
-  grid_obj__gridType:t="traceable_spheres"
   bulletproof_sphere__effectTemplate:t=""
 
-  grid_obj{}
   "bulletproof_sphere__effectEid:eid"{}
 }
 

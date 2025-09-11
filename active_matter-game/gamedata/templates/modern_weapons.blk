@@ -97,6 +97,19 @@ crossbow_bolt_projectile{
     clay:r=2
     glass:r=2
     grid:r=2
+    poltergeistFlesh:r=2
+  }
+
+  _group{
+    _tags:t="render"
+    projectile_visual_tracer__ignitionTime:r=0.001
+    projectile_visual_tracer__smokeColor:p4=1, 0.902, 0.702, 0.8
+    projectile_visual_tracer__smokeTime:r=0
+    projectile_visual_tracer__smokeRad:r=0
+    projectile_visual_tracer__headColor:p3=0.039, 0.039, 0.039
+    projectile_visual_tracer__startHeadColor:p3=0.039, 0.039, 0.039
+    projectile_visual_tracer__luminosity:r=0
+    projectile_visual_tracer__burnTime:r=0.5
   }
 }
 

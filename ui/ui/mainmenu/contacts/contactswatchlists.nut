@@ -1,9 +1,11 @@
+from "%dngscripts/globalState.nut" import nestWatched
+
+from "%ui/mainMenu/contacts/contactPresence.nut" import isContactOnline
+
 from "%ui/ui_library.nut" import *
 
-let { nestWatched } = require("%dngscripts/globalState.nut")
-let { isContactOnline, onlineStatus } = require("contactPresence.nut")
-let { canCrossnetworkChatWithAll,
-  canCrossnetworkChatWithFriends } = require("%ui/state/crossnetwork_state.nut")
+let { onlineStatus } = require("%ui/mainMenu/contacts/contactPresence.nut")
+let { canCrossnetworkChatWithAll, canCrossnetworkChatWithFriends } = require("%ui/state/crossnetwork_state.nut")
 
 let isInternalContactsAllowed = true
 
@@ -29,25 +31,25 @@ let xboxBlockedUids = Watched({})
 let xboxMutedUids = Watched({})
 let meInBlacklistUids = contactsLists.meInBlacklist
 
-let friendsUids = Computed(@() {}.__update(approvedUids.value, psnApprovedUids.value, xboxApprovedUids.value))
-let blockedUids = Computed(@() {}.__update(myBlacklistUids.value, psnBlockedUids.value, xboxBlockedUids.value))
+let friendsUids = Computed(@() {}.__update(approvedUids.get(), psnApprovedUids.get(), xboxApprovedUids.get()))
+let blockedUids = Computed(@() {}.__update(myBlacklistUids.get(), psnBlockedUids.get(), xboxBlockedUids.get()))
 
 let friendsOnlineUids = Computed(@()
-  friendsUids.value.filter(@(_, userId) isContactOnline(userId, onlineStatus.value)).keys()
+  friendsUids.get().filter(@(_, userId) isContactOnline(userId, onlineStatus.get())).keys()
 )
 
 let getCrossnetworkChatEnabled = function(userId) {
   let uid = userId.tostring()
-  if (uid in friendsUids.value){
-    log($"user is friend, crosschat with friends {canCrossnetworkChatWithFriends.value}")
-    return canCrossnetworkChatWithFriends.value
+  if (uid in friendsUids.get()){
+    log($"user is friend, crosschat with friends {canCrossnetworkChatWithFriends.get()}")
+    return canCrossnetworkChatWithFriends.get()
   }
-  log($"canCrossnetworkChatWithAll {canCrossnetworkChatWithAll.value}")
-  return canCrossnetworkChatWithAll.value
+  log($"canCrossnetworkChatWithAll {canCrossnetworkChatWithAll.get()}")
+  return canCrossnetworkChatWithAll.get()
 }
 
 
-return {
+return freeze({
   contactsLists
   approvedUids
   psnApprovedUids
@@ -65,4 +67,4 @@ return {
   friendsOnlineUids
   getCrossnetworkChatEnabled
   isInternalContactsAllowed
-}
+})

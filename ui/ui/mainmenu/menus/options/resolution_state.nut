@@ -1,8 +1,9 @@
+from "videomode" import get_video_modes
+from "dagor.system" import get_primary_screen_info
+
 from "%ui/ui_library.nut" import *
 
-let { get_video_modes } = require("videomode")
-let { monitorValue } = require("monitor_state.nut")
-let { get_primary_screen_info } = require("dagor.system")
+let { monitorValue } = require("%ui/mainMenu/menus/options/monitor_state.nut")
 let platform = require("%dngscripts/platform.nut")
 
 function getResolutions(monitor) {
@@ -35,18 +36,19 @@ function getResolutions(monitor) {
 }
 
 
-local availableResolutions = getResolutions(monitorValue.value)
+local availableResolutions = getResolutions(monitorValue.get())
 
 let resolutionList = Watched(availableResolutions.list)
 let resolutionValue = Watched(availableResolutions.current)
 
-monitorValue.subscribe(function(_val){
-  availableResolutions = getResolutions(monitorValue.value)
-  resolutionList(availableResolutions.list)
-  resolutionValue("auto")
-})
+function overrideAvalilableResolutions(monitor) {
+  availableResolutions = getResolutions(monitor)
+}
 
 return {
   resolutionList
   resolutionValue
+  overrideAvalilableResolutions
+  availableResolutions
+  getResolutions
 }

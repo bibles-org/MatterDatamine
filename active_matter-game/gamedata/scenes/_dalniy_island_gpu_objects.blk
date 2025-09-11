@@ -599,7 +599,8 @@ entity{
     occlusion_range:r=3
     occlusion_start:r=0.3
     occlusion_end:r=0.1
-    heightmap_imitators:t="reject"
+    slope_start:r=60
+    slope_end:r=70
   }
 
   "dagdp__assets:object"{
@@ -622,6 +623,7 @@ entity{
   dagdp__name:t="placer_road_trash_a"
   dagdp__density:r=2
   dagdp__density_mask_channel_weights:p4=0.5, 0, 0, 0
+  dagdp__sample_range:r=0.5
 
   "dagdp__object_groups:list<t>"{
     item:t="group_manmade_trash_a"
@@ -636,6 +638,7 @@ entity{
   _template:t="dagdp_placer_heightmap"
   dagdp__name:t="placer_building_trash_a"
   dagdp__density:r=2
+  dagdp__sample_range:r=0.5
 
   "dagdp__object_groups:list<t>"{
     item:t="group_manmade_trash_a"
@@ -652,6 +655,7 @@ entity{
   _template:t="dagdp_placer_heightmap"
   dagdp__name:t="placer_city_trash_a"
   dagdp__density:r=2
+  dagdp__sample_range:r=0.5
 
   "dagdp__object_groups:list<t>"{
     item:t="group_manmade_trash_a"
@@ -743,8 +747,14 @@ entity{
   }
 
   "dagdp__resource_names:list<t>"{
+    item:t="gaz_24_a_body_a"
+    item:t="gaz_24"
     item:t="gaz_24_abandoned_a"
+    item:t="gaz_24_abandoned_a_body_a"
     item:t="gaz_24_abandoned_b"
+    item:t="gaz_24_abandoned_b_body_a"
+    item:t="gaz53_b_body"
+    item:t="gaz53_a_body"
     item:t="ikarus_280"
     item:t="ikarus_280_a"
     item:t="ikarus_280_b"
@@ -764,17 +774,26 @@ entity{
     item:t="uaz_452_abandoned_c"
     item:t="uaz_452_abandoned_c_open"
     item:t="vaz_2101_a"
+    item:t="vaz_2101_a_body_a"
     item:t="vaz_2101_b"
+    item:t="vaz_2101_b_body_a"
+    item:t="vaz_2101_b_a_body_a"
     item:t="vaz_2101_b_a"
     item:t="zaz_968"
+    item:t="zaz_968_body"
     item:t="zil_130"
     item:t="zil_pm130"
+    item:t="zil130_body_a"
+    item:t="zil130_body_b"
     item:t="firetruck_zil_vma30_a"
-    item:t="moskvich_408"
+    item:t="moskvich_408_body"
     item:t="uaz_452_abandoned_b"
     item:t="uaz_31514_abandoned_b"
     item:t="uaz_452"
-    item:t="kamaz_dmg_a_cmp"
+    item:t="uaz_452_a_body_a"
+    item:t="uaz_452_abandoned_a_body_a"
+    item:t="uaz_452_abandoned_b_body_a"
+    item:t="uaz_452_abandoned_c_body_a"
     item:t="liaz_677"
     item:t="zil_pm130"
     item:t="gzsa_3704"
@@ -783,4 +802,142 @@ entity{
     item:t="kamaz_dmg_a_cmp"
     item:t="firetruck_zil_vma30_b"
   }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_fallen_leaves_quercus_a"
+
+  "dagdp__params:object"{
+    scale:p2=1.5, 0.2
+    rot_y:p2=0, 360
+    orientation:t="normal"
+    rot_x:p2=0, 2
+    rot_z:p2=0, 2
+    slope_start:r=60
+    slope_end:r=80
+  }
+
+  "dagdp__assets:object"{
+    "ground_plant_leaves_oak_a:object"{
+      weight:r=1
+    }
+
+    "ground_plant_leaves_oak_b:object"{
+      weight:r=1
+    }
+
+    "ground_plant_leaves_oak_c:object"{
+      weight:r=1
+    }
+
+    "ground_plant_leaves_oak_d:object"{
+      weight:r=1
+    }
+
+    "ground_plant_leaves_oak_e:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_object_group_riex"
+  dagdp__name:t="group_fallen_leaves_castanea_a"
+
+  "dagdp__params:object"{
+    scale:p2=1.5, 0.2
+    rot_y:p2=0, 360
+    orientation:t="normal"
+    rot_x:p2=0, 2
+    rot_z:p2=0, 2
+    slope_start:r=60
+    slope_end:r=80
+  }
+
+  "dagdp__assets:object"{
+    "ground_plant_castanea_leaves_a:object"{
+      weight:r=1
+    }
+
+    "ground_plant_castanea_leaves_b:object"{
+      weight:r=1
+    }
+
+    "ground_plant_castanea_leaves_c:object"{
+      weight:r=1
+    }
+
+    "ground_plant_castanea_leaves_d:object"{
+      weight:r=1
+    }
+
+    "ground_plant_castanea_leaves_e:object"{
+      weight:r=1
+    }
+
+    "ground_plant_castanea_leaves_f:object"{
+      weight:r=1
+    }
+
+    "ground_plant_castanea_leaves_g:object"{
+      weight:r=1
+    }
+
+    "ground_plant_castanea_leaves_h:object"{
+      weight:r=1
+    }
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_around_ri"
+  dagdp__name:t="placer_around_tree_quercus_a"
+  dagdp__density:r=1
+  dagdp__target_mesh_lod:i=1
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_fallen_leaves_quercus_a"
+  }
+
+  "dagdp__resource_names:list<t>"{
+    item:t="tree_quercus_small_a"
+    item:t="tree_quercus_small_b"
+    item:t="tree_quercus_medium_a"
+    item:t="tree_quercus_medium_b"
+    item:t="tree_quercus_tall_a"
+    item:t="tree_quercus_tall_b"
+  }
+}
+
+entity{
+  _template:t="dagdp_placer_around_ri"
+  dagdp__name:t="placer_around_tree_castanea_a"
+  dagdp__density:r=1
+  dagdp__target_mesh_lod:i=1
+
+  "dagdp__object_groups:list<t>"{
+    item:t="group_fallen_leaves_castanea_a"
+  }
+
+  "dagdp__resource_names:list<t>"{
+    item:t="tree_castanea_aesculus_city_small_a"
+    item:t="tree_castanea_aesculus_city_small_b"
+    item:t="tree_castanea_aesculus_city_medium_a"
+    item:t="tree_castanea_aesculus_city_medium_b"
+    item:t="tree_castanea_aesculus_city_tall_a"
+    item:t="tree_castanea_aesculus_city_tall_b"
+  }
+}
+
+entity{
+  _template:t="dagdp_local_volume_sphere"
+  dagdp__volume_placer_name:t="placer_around_tree_quercus_a"
+  transform:m=[[12, 0, 0] [0, 16, 0] [0, 0, 12] [0, 3, 0]]
+}
+
+entity{
+  _template:t="dagdp_local_volume_sphere"
+  dagdp__volume_placer_name:t="placer_around_tree_castanea_a"
+  transform:m=[[12, 0, 0] [0, 16, 0] [0, 0, 12] [0, 3, 0]]
 }

@@ -1,25 +1,41 @@
 require ecs
-require app
 require DagorMath
 require math.base
 require soundEvent
 require soundSystem
 require danetlibs.renderer.includes.pufd_events
+require RendInst
 
 
-[es(tag=sound, on_appear, on_event=EventRendinstsLoaded, after=rendinst_axis_force_initial_rotation_es)]
-def rotating_door_sound_init(evt : Event; var rotating_door_sound__isInited : bool&)
+def get_sound_pos(ri_extra : RiExtraComponent;
+                  transform : float3x4)
+  if riex_isRiGenExtraValid(ri_extra.handle)
+    let bbox = getRIGenBBox(RendInstDesc(ri_extra.handle))
+    return transform * bbox.center
+
+  return transform[3]
+
+[es(tag=sound, on_appear, on_event=(EventOnMasterSoundPresetLoaded, EventRendinstsLoaded), after=(rendinst_axis_force_initial_rotation_es))]
+def rotating_door_appear(evt : Event;
+                         var rotating_door_sound__isInited : bool&;
+                         var rotating_door_sound__movingEvent : SoundEvent&)
   rotating_door_sound__isInited = false
+  rotating_door_sound__movingEvent.enabled = false
+  release(rotating_door_sound__movingEvent)
 
 
 [es(tag=sound, after=sound_begin_update_es, before=sound_end_update_es)]
 def rotating_door_sound(evt : ParallelUpdateFrameDelayed)
+
+  if !sound_banks_is_master_preset_loaded()
+    return
 
   let listener = get_listener_pos()
 
   query() <| $ [es] (rendinst_axis_rotation__curAngle : float;
                      door_operations__closedAngle : float;
                      transform : float3x4;
+                     ri_extra : RiExtraComponent;
                      rotating_door_sound__closedSpeedToVar : float2;
                      rotating_door_sound__movingSpeedToVar : float2;
                      rotating_door_sound__pushSpeedToVar : float2;
@@ -64,7 +80,7 @@ def rotating_door_sound(evt : ParallelUpdateFrameDelayed)
     if rotating_door_sound__movingEvent.enabled != isMoving
       if isMoving
         if evt.curTime >= rotating_door_sound__nextMovingAt
-          rotating_door_sound__movingEvent |> play(rotating_door_sound__movingPath, transform[3])
+          rotating_door_sound__movingEvent |> play(rotating_door_sound__movingPath, get_sound_pos(ri_extra, transform))
           rotating_door_sound__movingEvent.enabled = true
           rotating_door_sound__nextMovingAt = evt.curTime + rotating_door_sound__movingCooldown
       else
@@ -73,12 +89,13 @@ def rotating_door_sound(evt : ParallelUpdateFrameDelayed)
 
     if rotating_door_sound__movingEvent.enabled
       set_var_optional(rotating_door_sound__movingEvent, "velocity", cvt(speed, rotating_door_sound__movingSpeedToVar.x, rotating_door_sound__movingSpeedToVar.y, 0., 1.))
+      set_pos(rotating_door_sound__movingEvent, get_sound_pos(ri_extra, transform))
 
     let isClosed = is_equal_float(rendinst_axis_rotation__curAngle, door_operations__closedAngle)
     if rotating_door_sound__isClosed != isClosed
       rotating_door_sound__isClosed = isClosed
       rotating_door_sound__nextPushAt = evt.curTime + rotating_door_sound__pushCooldown
-      var handle = soundEvent::play("", rotating_door_sound__isClosed ? rotating_door_sound__closedPath : rotating_door_sound__openedPath, transform[3])
+      var handle = soundEvent::play("", rotating_door_sound__isClosed ? rotating_door_sound__closedPath : rotating_door_sound__openedPath, get_sound_pos(ri_extra, transform))
       set_var_optional(handle, "velocity", cvt(speed, rotating_door_sound__closedSpeedToVar.x, rotating_door_sound__closedSpeedToVar.y, 0., 1.))
       abandon(handle)
 
@@ -86,7 +103,7 @@ def rotating_door_sound(evt : ParallelUpdateFrameDelayed)
       let speedDiff = speed - rotating_door_sound__speed
       if speedDiff > rotating_door_sound__pushSpeedToVar.x
         rotating_door_sound__nextPushAt = evt.curTime + rotating_door_sound__pushCooldown
-        var handle = soundEvent::play("", rotating_door_sound__pushPath, transform[3])
+        var handle = soundEvent::play("", rotating_door_sound__pushPath, get_sound_pos(ri_extra, transform))
         set_var(handle, "velocity", cvt(speedDiff, rotating_door_sound__pushSpeedToVar.x, rotating_door_sound__pushSpeedToVar.y, 0., 1.))
         abandon(handle)
 
@@ -109,13 +126,14 @@ def legacy_door_sound_update(evt : Event;
                              var door_sound__isOpened : bool&;
                              door_sound__openPath : string;
                              door_sound__closePath : string;
-                             transform : float3x4)
+                             transform : float3x4;
+                             ri_extra : RiExtraComponent)
 
   if rendinst_axis_rotation__curAngle != door_operations__closedAngle
     if !door_sound__isOpened
       door_sound__isOpened = true
-      oneshot(door_sound__openPath, transform[3])
+      oneshot(door_sound__openPath, get_sound_pos(ri_extra, transform))
 
   elif door_sound__isOpened
     door_sound__isOpened = false
-    oneshot(door_sound__closePath, transform[3])
+    oneshot(door_sound__closePath, get_sound_pos(ri_extra, transform))

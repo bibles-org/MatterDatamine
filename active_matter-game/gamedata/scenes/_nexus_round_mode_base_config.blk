@@ -1,4 +1,8 @@
 entity{
+  _template:t="nexus_mode"
+}
+
+entity{
   _template:t="nexus_round_mode_team"
   team__id:i=2
   nexus_team__colorIndices:ip2=0, 3
@@ -11,9 +15,75 @@ entity{
 }
 
 entity{
-  _template:t="nexus_mode+nexus_endgame_controller+nexus_stats_scoresheet+nexus_stats_rules+nexus_game_start+nexus_game_start_by_player_proportion+nexus_game_end+nexus_loadout_controller+nexus_players_controller+nexus_battle_initial_am+nexus_battle_debug_bot_spawner+nexus_round_mode_spawn_controller+nexus_round_mode_game_controller+nexus_warm_up_controller+nexus_round_mode+nexus_auto_create_protect_spheres"
-  nexus_battle_initial_am__value:i=0
+  _template:t="nexus_spawn_rules_individual+nexus_warm_up"
+  nexus_spawn_rules__team:i=2
+}
+
+entity{
+  _template:t="nexus_spawn_rules_individual+nexus_warm_up"
+  nexus_spawn_rules__team:i=3
+}
+
+entity{
+  _template:t="nexus_spawn_rules_individual+nexus_spawn_rules_individual_count_restriction+nexus_spawn_rules_force_spawn_on_spawn_disable"
+  nexus_spawn_rules__team:i=2
+  nexus_spawn_rules_individual__spawnCountMax:i=1
+}
+
+entity{
+  _template:t="nexus_spawn_rules_individual+nexus_spawn_rules_individual_count_restriction+nexus_spawn_rules_force_spawn_on_spawn_disable"
+  nexus_spawn_rules__team:i=3
+  nexus_spawn_rules_individual__spawnCountMax:i=1
+}
+
+entity{
+  _template:t="level_ri_recreator"
+}
+
+entity{
+  _template:t="nexus_round_mode_game_controller"
+}
+
+entity{
+  _template:t="nexus_players_controller"
+}
+
+entity{
+  _template:t="nexus_round_mode_spawn_controller"
+}
+
+entity{
+  _template:t="nexus_game_start+nexus_game_start_by_player_proportion"
+}
+
+entity{
+  _template:t="nexus_game_end"
+}
+
+entity{
+  _template:t="nexus_warm_up_controller"
+}
+
+entity{
+  _template:t="nexus_endgame_controller"
+}
+
+entity{
+  _template:t="nexus_stats_scoresheet+nexus_stats_rules"
+}
+
+entity{
+  _template:t="nexus_battle_debug_bot_spawner"
   bot_spawner__playerTemplate:t="nexus_round_mode_bot_player+init_nexus_bot_loadouts"
+}
+
+entity{
+  _template:t="nexus_auto_create_protect_spheres"
+}
+
+entity{
+  _template:t="nexus_battle_initial_am"
+  nexus_battle_initial_am__value:i=0
 }
 
 entity{

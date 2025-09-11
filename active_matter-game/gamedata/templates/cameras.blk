@@ -22,6 +22,11 @@ observed{
   }
 
   "cockpitEntity:tag"{}
+  "activeCamIdxBeforeEnterVehicle:i"{
+    _tags:t="gameClient"
+    value:i=0
+    _hide:b=yes
+  }
 }
 
 observed_local{
@@ -175,6 +180,8 @@ benchmark_camera{
 
 camera_aim_data{
   aim_data__lensNodeId:i=-1
+  aim_data__lensCollisionNodeId:i=-1
+  aim_data__lensBoundingSphereRadius:r=1
   aim_data__crosshairNodeId:i=-1
   aim_data__isAiming:b=no
   aim_data__isAimingThroughScope:b=no
@@ -199,7 +206,6 @@ base_shooter_cam{
   camera__fovHybrid:b=yes
   camera__fovSettingsPath:t="camera_fov"
   fov:r=90
-  camera__scopeWeaponLensZoomFactor:r=0.75
   fovSettings:r=90
   fovLimits:p2=50, 120
   znear:r=0.01
@@ -358,6 +364,7 @@ replay_observed{
   "isReplayObserved:tag"{}
   "cockpitEntity:tag"{}
   "replay__prevHumanCam:eid"{}
+  "cameraShakerEnabled:tag"{}
 }
 
 base_replay_camera{
@@ -404,7 +411,6 @@ replay_camera_operator{
 }
 
 replay_camera{
-  _use:t="camera_shaker_perlin"
   _use:t="shooter_cam"
   _use:t="base_replay_camera"
   isHeroCockpitCam:b=yes
@@ -809,6 +815,8 @@ showroom_cam{
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 100, 0]]
   base_transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 100, 0]]
   _use:t="replicating"
+  cam__wk:r=0
+  cam__hk:r=0
   showroom_cam__targetPos:p3=0, 0, 0
   showroom_cam__defaultZoom:r=1
   showroom_cam__zoom:r=1
@@ -827,4 +835,10 @@ showroom_cam{
   "net__inInitialScope:tag"{}
   "showroom_cam__itemPlaceEid:eid"{}
   "showroom_cam__wishItemPlaceEid:eid"{}
+}
+
+add_camera_trauma_on_appear{
+  add_camera_trauma_on_appear__maxDistance:r=50
+  add_camera_trauma_on_appear__addTrauma:r=1
+  add_camera_trauma_on_appear__maxTrauma:r=1.5
 }

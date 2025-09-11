@@ -1,15 +1,15 @@
-let { console_register_command } = require("console")
+from "console" import console_register_command
+import "char" as lowLevelClient
+from "app" import get_app_id
 
-let userInfo = require("%sqGlob/userInfo.nut")
 let logC = require("%sqGlob/library_logs.nut").with_prefix("[CHAR CLIENT] ")
-let lowLevelClient = require("char")
+let userInfo = require("%sqGlob/userInfo.nut")
 
 
 
-let {get_app_id} = require("app")
 
 function char_request(action, data, callback, auth_token = null) {
-  auth_token = auth_token ?? userInfo.value?.token
+  auth_token = auth_token ?? userInfo.get()?.token
   assert(auth_token != null, "No auth token provided for char request")
   let request = {
     headers = {token = auth_token, appid = get_app_id()},
@@ -118,6 +118,29 @@ function perform_contacts_for_approver(action, requestorUid, group, params = {},
   perform_contact_action(action, request.__merge(requestAddon), params)
 }
 
+function contacts_can_add(id, addToFriends) {
+  let request = {
+    friend = {
+      remove = [id]
+    }
+  }
+
+  char_request("cln_get_allowed_to_be_added_to_contacts", request, function(result) {
+    addToFriends(id)
+    logC("cln_get_allowed_to_be_added_to_contacts result", result)
+  })
+}
+
+function contacts_can_add_setting(v, cb) {
+  let request = { ata = v }
+  char_request("cln_set_allowed_to_be_added_to_contacts ", request, function(result) {
+    let success = result?.result.success ?? false
+    if (success)
+      cb(!v)
+    logC("cln_set_allowed_to_be_added_to_contacts result", result)
+  })
+}
+
 let charClient = {
   low_level_client = lowLevelClient
   char_request = char_request
@@ -128,6 +151,8 @@ let charClient = {
   contacts_remove = contacts_remove
   perform_single_contact_action = perform_single_contact_action
   perform_contact_action = perform_contact_action
+  contacts_can_add
+  contacts_can_add_setting
 
   function contacts_request_for_contact(id, group, params = {}) {
     perform_contacts_for_requestor("cln_request_for_contact", id, group, params)

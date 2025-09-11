@@ -1,7 +1,8 @@
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { tipCmp } = require("%ui/hud/tips/tipComponent.nut")
 
 const HINT_DURATION = 5
 let showEcholocationTip = Watched(false)

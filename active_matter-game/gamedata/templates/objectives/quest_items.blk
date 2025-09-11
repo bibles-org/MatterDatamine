@@ -1,6 +1,6 @@
 base_quest_item{
   item__weight:r=0
-  item__volume:r=0
+  item__volume:i=0
   quest_item__disablePickupMessage:t="quest_item_for_other_player"
 
   "questItem:tag"{}
@@ -47,7 +47,7 @@ included_not_extractable_quest_item{
 discovered_quest_item{
   _use:t="base_quest_item"
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   item__extractionTemplateOverride:t=""
 
   "discoveredQuestItem:tag"{}
@@ -102,7 +102,6 @@ quest_camera_watching_affect{
     quest_camera_watching_affect__targetInView:b=no
     quest_camera_watching_affect__traceRatio:r=0
 
-    "quest_camera_watching_affect__closestZoneEid:eid"{}
     "quest_camera_watching_affect__targetEid:eid"{}
     "quest_camera_watching_affect__detectedTargetEid:eid"{}
   }
@@ -120,11 +119,10 @@ quest_camera_item{
   binoculars_item__binocularsAffectTemplate:t="quest_camera_watching_affect"
 
   "item__hideInInventory:tag"{}
+  "item__hasShootInput:tag"{}
   "item__notConsumedWhenUsed:tag"{}
   "item__canBeQuickUsed:tag"{}
-  "questCameraItem:tag"{}
   "singletonQuestItem:tag"{}
-  "binoculars_item__ignoreShootInputInterrupt:tag"{}
 }
 
 quest_sensor_device_item{
@@ -148,13 +146,10 @@ quest_sensor_device_item{
   "item__blockUseOnPlayerBase:tag"{}
   "device_item__ability:object"{
     name:t="diy"
-    type:t="ultimate"
     activeMatterPrice:i=0
     cooldown:r=0
     lockWhileSwimming:b=yes
     lockInVehicle:b=yes
-    isNoWeaponMode:b=yes
-    manualSoulsWithdrawl:b=yes
 
     "stages:array"{
       "placement_stage:object"{
@@ -205,13 +200,10 @@ daily_research_sensor_item{
   "item__blockUseOnPlayerBase:tag"{}
   "device_item__ability:object"{
     name:t="diy"
-    type:t="ultimate"
     activeMatterPrice:i=0
     cooldown:r=0
     lockWhileSwimming:b=yes
     lockInVehicle:b=yes
-    isNoWeaponMode:b=yes
-    manualSoulsWithdrawl:b=yes
 
     "stages:array"{
       "placement_stage:object"{
@@ -244,13 +236,10 @@ quest_chrongene_device_item{
 
   "device_item__ability:object"{
     name:t="diy"
-    type:t="ultimate"
     activeMatterPrice:i=0
     cooldown:r=0
     lockWhileSwimming:b=yes
     lockInVehicle:b=yes
-    isNoWeaponMode:b=yes
-    manualSoulsWithdrawl:b=yes
 
     "stages:array"{
       "placement_stage:object"{
@@ -278,7 +267,7 @@ quest_flask_with_ground_item{
   item__name:t="items/flask_with_ground"
   item__proto:t="quest_flask_with_ground_item"
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   animchar__res:t="sample_crystal_char"
   collres__res:t="sample_crystal_collision"
   item__extractionTemplateOverride:t="item_raid_samples"
@@ -291,7 +280,7 @@ quest_ozernoe_flask_with_ground_item{
   item__name:t="items/flask_with_ground_ozernoe"
   item__proto:t="quest_ozernoe_flask_with_ground_item"
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   animchar__res:t="sample_crystal_char"
   collres__res:t="sample_crystal_collision"
   item__extractionTemplateOverride:t="item_raid_samples"
@@ -304,7 +293,7 @@ quest_flask_with_water_item{
   item__name:t="items/flask_with_water"
   item__proto:t="quest_flask_with_water_item"
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   animchar__res:t="biomaterial_container_can_small_char"
   collres__res:t="biomaterial_container_can_small_collision"
   item__iconYaw:r=45
@@ -319,7 +308,7 @@ test_quest_item{
   item__name:t="items/test_quest_item"
   item__proto:t="test_quest_item"
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   animchar__res:t="biomaterial_container_can_medium_char"
   collres__res:t="biomaterial_container_can_medium_collision"
   item__extractionTemplateOverride:t="item_raid_biomaterials"
@@ -342,13 +331,10 @@ quest_info_collector_device_item{
   "item__blockUseOnPlayerBase:tag"{}
   "device_item__ability:object"{
     name:t="diy"
-    type:t="ultimate"
     activeMatterPrice:i=0
     cooldown:r=0
     lockWhileSwimming:b=yes
     lockInVehicle:b=yes
-    isNoWeaponMode:b=yes
-    manualSoulsWithdrawl:b=yes
 
     "stages:array"{
       "placement_stage:object"{
@@ -390,13 +376,10 @@ euclid_car_locator_item{
   "item__blockUseOnPlayerBase:tag"{}
   "device_item__ability:object"{
     name:t="diy"
-    type:t="ultimate"
     activeMatterPrice:i=0
     cooldown:r=0
     lockWhileSwimming:b=yes
     lockInVehicle:b=yes
-    isNoWeaponMode:b=yes
-    manualSoulsWithdrawl:b=yes
 
     "stages:array"{
       "placement_stage:object"{
@@ -439,6 +422,30 @@ cargoport_primary_locator_item{
   item__proto:t="cargoport_primary_locator_item"
 
   "item__hideInInventory:tag"{}
+  "device_item__ability:object"{
+    name:t="diy"
+    activeMatterPrice:i=0
+    cooldown:r=0
+    lockWhileSwimming:b=yes
+    lockInVehicle:b=yes
+
+    "stages:array"{
+      "placement_stage:object"{
+        affectTemplate:t="cargoport_guard_device_planting_preview_phase"
+        duration:r=999999
+        activePhase:b=yes
+        interruptible:b=yes
+        skippable:b=yes
+      }
+
+      "out_stage:object"{
+        affectTemplate:t="quest_device_planting_finishing_phase"
+        label:t="out_stage"
+        duration:r=0.25
+        exit:b=yes
+      }
+    }
+  }
 }
 
 africa_locator_item{
@@ -466,13 +473,10 @@ quest_bomb_device_item{
   "item__blockUseOnPlayerBase:tag"{}
   "device_item__ability:object"{
     name:t="diy"
-    type:t="ultimate"
     activeMatterPrice:i=0
     cooldown:r=0
     lockWhileSwimming:b=yes
     lockInVehicle:b=yes
-    isNoWeaponMode:b=yes
-    manualSoulsWithdrawl:b=yes
 
     "stages:array"{
       "placement_stage:object"{
@@ -510,13 +514,10 @@ quest_monster_trap_device_item{
   "item__blockUseOnPlayerBase:tag"{}
   "device_item__ability:object"{
     name:t="diy"
-    type:t="ultimate"
     activeMatterPrice:i=0
     cooldown:r=0
     lockWhileSwimming:b=yes
     lockInVehicle:b=yes
-    isNoWeaponMode:b=yes
-    manualSoulsWithdrawl:b=yes
 
     "stages:array"{
       "placement_stage:object"{
@@ -546,7 +547,7 @@ item_secret_working_tower_sensor{
   item__proto:t="item_secret_working_tower_sensor"
   item__name:t="items/item_secret_working_tower_sensor"
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   item__extractionTemplateOverride:t="item_raid_engines"
 }
 
@@ -562,7 +563,7 @@ item_secret_docs_stash_journal{
   item__iconPitch:r=45
   item__iconRoll:r=45
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   item__extractionTemplateOverride:t="item_raid_documents"
 }
 
@@ -578,7 +579,7 @@ item_secret_ship_journal_2{
   item__iconPitch:r=0
   item__iconRoll:r=75
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   item__extractionTemplateOverride:t="item_raid_documents"
 }
 
@@ -594,7 +595,7 @@ item_secret_coast_evacuation_plans{
   item__iconPitch:r=45
   item__iconRoll:r=45
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   item__extractionTemplateOverride:t="item_raid_documents"
 }
 
@@ -610,7 +611,7 @@ item_secret_medical_personnel_evacuation_order{
   item__iconPitch:r=45
   item__iconRoll:r=45
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   item__extractionTemplateOverride:t="item_raid_documents"
 }
 
@@ -626,7 +627,7 @@ item_secret_crashed_scientist_car_documents{
   item__iconPitch:r=0
   item__iconRoll:r=75
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   item__extractionTemplateOverride:t="item_raid_documents"
 }
 
@@ -642,7 +643,7 @@ item_secret_homemade_am_container_journal{
   item__iconPitch:r=0
   item__iconRoll:r=75
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   item__extractionTemplateOverride:t="item_raid_documents"
 }
 
@@ -658,7 +659,7 @@ item_secret_smuggler_map{
   item__iconPitch:r=45
   item__iconRoll:r=45
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   item__extractionTemplateOverride:t="item_raid_documents"
 }
 
@@ -674,7 +675,7 @@ item_secret_scientist_escort_order{
   item__iconPitch:r=0
   item__iconRoll:r=75
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   item__extractionTemplateOverride:t="item_raid_documents"
 }
 
@@ -688,7 +689,7 @@ item_africa_headquarters_flashdrive_2{
   item__name:t="items/item_africa_headquarters_flashdrive_2"
   item__desc:t="items/item_africa_headquarters_flashdrive/desc"
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   item__iconYaw:r=135
   item__iconPitch:r=0
   item__iconRoll:r=75
@@ -707,7 +708,7 @@ item_africa_headquarters_flashdrive_3{
   item__name:t="items/item_africa_headquarters_flashdrive_3"
   item__desc:t="items/item_africa_headquarters_flashdrive/desc"
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   item__iconYaw:r=135
   item__iconPitch:r=0
   item__iconRoll:r=75
@@ -726,7 +727,7 @@ item_africa_headquarters_flashdrive_4{
   item__name:t="items/item_africa_headquarters_flashdrive_4"
   item__desc:t="items/item_africa_headquarters_flashdrive/desc"
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   item__iconYaw:r=135
   item__iconPitch:r=0
   item__iconRoll:r=75
@@ -745,11 +746,16 @@ item_africa_headquarters_flashdrive_5{
   item__name:t="items/item_africa_headquarters_flashdrive_5"
   item__desc:t="items/item_africa_headquarters_flashdrive/desc"
   item__weight:r=1
-  item__volume:r=0.2
+  item__volume:i=2
   item__iconYaw:r=135
   item__iconPitch:r=0
   item__iconRoll:r=75
   item__extractionTemplateOverride:t="item_raid_documents"
 
   "item__cantBeCorrupted:tag"{}
+}
+
+create_entity_on_placed{
+  create_entity_on_placed__template:t="helmet_a+item_in_world"
+  create_entity_on_placed__timesLeft:i=1
 }

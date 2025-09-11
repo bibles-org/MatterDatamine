@@ -74,11 +74,14 @@ def turret_ground_wave_fx_init_es(evt : Event;
     *effectGroup |> set("fxs", fxs)
 
 
-[es(tag=render, on_appear)]
+[es(tag=render, on_appear, track=turret__resolved)]
 def turret_dust_fx_init_es(evt : Event;
                            turret_dust_fx__nodes : StringList;
                            turret__owner : EntityId;
+                           turret__resolved : bool;
                            var turret_dust_fx__nodeIds : IntList&)
+  if !turret__resolved
+    return
   query(turret__owner) <| $ [es] (animchar : AnimcharBaseComponent)
     for node in turret_dust_fx__nodes
       let nodeId = geomtree_findNodeIndex(*animchar.nodeTree, string(node))
@@ -240,6 +243,7 @@ def turret_gun_fx_inserter_es(info : Event;
 
 [soa_es, es(tag=render, on_appear)]
 def turret_gun_flash_fx_created_es(evt : Event;
+                                   eid : EntityId;
                                    animchar : AnimcharBaseComponent;
                                    @shared_comp turret_gun_flash_fx__flashFx : Array;
                                    @shared_comp turret_gun_flash_fx__flashNodes : Array;
@@ -259,9 +263,13 @@ def turret_gun_flash_fx_created_es(evt : Event;
       ))
       continue
 
+    let fxNodeId = geomtree_findNodeIndex(*animchar.nodeTree, node)
+    if fxNodeId < 0
+      logerr("turret gun flash fx node <{node}> is not found in animchar <{eid}>")
+
     push(turretGunFx, TurretGunFx(
       turret_gun_fx__fxTemplate = fx,
-      turret_gun_fx__nodeId = geomtree_findNodeIndex(*animchar.nodeTree, node)
+      turret_gun_fx__nodeId = fxNodeId
     ))
 
 [soa_def]
@@ -278,9 +286,6 @@ def get_tree_inside_radius(pos : float3; radius : float; var vegetationInfo : Ve
         vegetation_info__fxName = fxName,
         vegetation_info__rendinstPool = riDesc.pool
       ))
-    else
-      let riName = getRIGenResName(riDesc)
-      logerr("RendInts vegetation <{riName}> has empty destrFxTemplate")
 
 
   return length(vegetationInfo)

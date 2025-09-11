@@ -1,5 +1,7 @@
 from "%ui/ui_library.nut" import *
 
+#allow-auto-freeze
+
 let itemSvgsTable = {
   assault_rifle = "assault_rifle.svg"
   pistol = "pistol.svg"

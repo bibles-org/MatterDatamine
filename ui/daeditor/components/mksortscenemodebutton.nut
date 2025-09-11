@@ -7,7 +7,7 @@ const SORT_BY_ENTITIES  = " ENT# "
 
 function sortScenesByLoadType(scene1, scene2) {
   return scene1.loadType != scene2.loadType ?
-    scene1.loadType <=> scene2.loadType : scene1.index <=> scene2.index
+    scene2.loadType <=> scene1.loadType : scene1.index <=> scene2.index
 }
 
 function sortScenesByEntities(scene1, scene2) {
@@ -22,23 +22,25 @@ function sortScenesByPaths(scene1, scene2) {
   return path1 != null ? 1 : -1
 }
 
+let defaultScenesSortMode = {
+  mode = SORT_BY_LOADTYPE
+  func = sortScenesByLoadType
+}
+
 function toggleScenesSortMode(state) {
-  let sortMode = state.value?.mode ?? SORT_BY_LOADTYPE
+  let sortMode = state.get()?.mode ?? SORT_BY_LOADTYPE
   if (sortMode == SORT_BY_LOADTYPE)
-    state({
+    state.set({
       mode = SORT_BY_PATHS
       func = sortScenesByPaths
     })
   else if (sortMode == SORT_BY_PATHS)
-    state({
+    state.set({
       mode = SORT_BY_ENTITIES
       func = sortScenesByEntities
     })
   else
-    state({
-      mode = SORT_BY_LOADTYPE
-      func = sortScenesByLoadType
-    })
+    state.set(defaultScenesSortMode)
 }
 
 function mkSceneSortModeButton(state, style={}) {
@@ -48,21 +50,24 @@ function mkSceneSortModeButton(state, style={}) {
     rendObj = ROBJ_BOX
     size = SIZE_TO_CONTENT
     watch = [state, stateFlags]
-    fillColor = (stateFlags.value & S_TOP_HOVER) ? Color(255,255,255,255) : fillColor
+    fillColor = (stateFlags.get() & S_TOP_HOVER) ? Color(255,255,255,255) : fillColor
     borderRadius = hdpx(4)
     behavior = Behaviors.Button
 
     onClick = @() toggleScenesSortMode(state)
-    onElemState = @(sf) stateFlags.update(sf & S_TOP_HOVER)
+    onElemState = @(sf) stateFlags.set(sf & S_TOP_HOVER)
 
     children = {
       rendObj = ROBJ_TEXT
-      text = state.value?.mode ?? SORT_BY_LOADTYPE
-      color = (stateFlags.value & S_TOP_HOVER) ? Color(0,0,0) : Color(200,200,200)
+      text = state.get()?.mode ?? SORT_BY_LOADTYPE
+      color = (stateFlags.get() & S_TOP_HOVER) ? Color(0,0,0) : Color(200,200,200)
       margin = fsh(0.5)
     }
   }
 }
 
 
-return mkSceneSortModeButton
+return {
+  defaultScenesSortMode
+  mkSceneSortModeButton
+}

@@ -20,11 +20,9 @@ def copy_nodes_with_remap(var node_tree : GeomNodeTree&; att_node_tree : GeomNod
     else
       logerr("Failed to copy nodes {att_eid} {getEntityTemplateName(att_eid)} from parent {base_eid} {getEntityTemplateName(base_eid)}.
        ({nodeNo} < {nodeTreeCount} && {remappedNodeNo} < {attNodeTreeCount}")
-      query(att_eid) <| $ [es] (skeleton_attach__attachedTo : EntityId;
-                                slot_attach__attachedTo : EntityId;
+      query(att_eid) <| $ [es] (animchar_attach__attachedTo : EntityId;
                                 slot_attach__inAttachedList : EntityId)
-        logerr("Failed to copy nodes info {skeleton_attach__attachedTo} {getEntityTemplateName(skeleton_attach__attachedTo)}.
-         {slot_attach__attachedTo} {getEntityTemplateName(slot_attach__attachedTo)}
+        logerr("Failed to copy nodes info {animchar_attach__attachedTo} {getEntityTemplateName(animchar_attach__attachedTo)}.
          {slot_attach__inAttachedList} {getEntityTemplateName(slot_attach__inAttachedList)}")
       destroyEntity(att_eid)
 
@@ -51,21 +49,21 @@ def skeleton_attached_to(base_eid : EntityId;
     *base_animchar_attaches_bbox_precalculated = base_animchar_bbox
 
   for attachEid in base_attaches_list
-    query(attachEid) <| $ [es(trust_access, REQUIRE=slot_attach__attachedTo)] (skeleton_attach__attached : bool;
-                                                                               skeleton_attach__skeletonRemap : UInt16List;
-                                                                               skeleton_attach__skeletonRecalcBranch : UInt8List;
-                                                                               attaches_list : EidList const?;
-                                                                               animchar_bbox : bbox3f;
-                                                                               var animchar : AnimcharBaseComponent&;
-                                                                               animchar_render : AnimcharRendComponent;
-                                                                               var animchar__usePrecalculatedData : bool&;
-                                                                               var animchar_bsph_precalculated : vec4f&;
-                                                                               var animchar_bbox_precalculated : BBox3&;
-                                                                               var animchar_shadow_cull_bbox_precalculated : BBox3&;
-                                                                               var animchar_node_wtm : AnimcharNodesMat44;
-                                                                               var animchar_render__root_pos : vec4f&;
-                                                                               var animchar_attaches_bbox_precalculated : bbox3f?;
-                                                                               animchar_render__enabled : bool = true)
+    query(attachEid) <| $ [es(trust_access, REQUIRE=animchar_attach__attachedTo)] (skeleton_attach__attached : bool;
+                                                                                   skeleton_attach__skeletonRemap : UInt16List;
+                                                                                   skeleton_attach__skeletonRecalcBranch : UInt8List;
+                                                                                   attaches_list : EidList const?;
+                                                                                   animchar_bbox : bbox3f;
+                                                                                   var animchar : AnimcharBaseComponent&;
+                                                                                   animchar_render : AnimcharRendComponent;
+                                                                                   var animchar__usePrecalculatedData : bool&;
+                                                                                   var animchar_bsph_precalculated : vec4f&;
+                                                                                   var animchar_bbox_precalculated : BBox3&;
+                                                                                   var animchar_shadow_cull_bbox_precalculated : BBox3&;
+                                                                                   var animchar_node_wtm : AnimcharNodesMat44;
+                                                                                   var animchar_render__root_pos : vec4f&;
+                                                                                   var animchar_attaches_bbox_precalculated : bbox3f?;
+                                                                                   animchar_render__enabled : bool = true)
       if !animchar_render__enabled || !skeleton_attach__attached
         return
 
@@ -156,16 +154,16 @@ def init_skeleton_attachment_wtm_ofs(evt : Event;
                                      eid : EntityId;
                                      skeleton_attach__skeletonRemap : UInt16List;
                                      skeleton_attach__skeletonRecalcBranch : UInt8List;
-                                     skeleton_attach__attachedTo : EntityId;
+                                     animchar_attach__attachedTo : EntityId;
                                      var animchar aka attachment_animchar : AnimcharBaseComponent&)
-  query(skeleton_attach__attachedTo) <| $ [es] (animchar aka attached_to_animchar : AnimcharBaseComponent)
+  query(animchar_attach__attachedTo) <| $ [es] (animchar aka attached_to_animchar : AnimcharBaseComponent)
     assume attNodeTree = *attached_to_animchar.nodeTree
     assume nodeTree = *attachment_animchar.nodeTree
 
     let wtmOfs = geomtree_getWtmOfs(attNodeTree)
     geomtree_setWtmOfs(nodeTree, wtmOfs)
 
-    copy_nodes_with_remap(nodeTree, attNodeTree, skeleton_attach__skeletonRemap, skeleton_attach__attachedTo, eid)
+    copy_nodes_with_remap(nodeTree, attNodeTree, skeleton_attach__skeletonRemap, animchar_attach__attachedTo, eid)
     recalc_branches(nodeTree, skeleton_attach__skeletonRecalcBranch)
 
     attachment_animchar |> animchar_resetFastPhysWtmOfs(wtmOfs)

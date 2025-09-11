@@ -263,15 +263,6 @@ corruption_effect{
   "corruption_effect:tag"{}
 }
 
-hero_am_syphon{
-  am_syphon__updateAt:r=0
-  am_syphon__period:r=1
-  _replicated:t="am_syphon__extractionSource"
-  _tracked:t="am_syphon__extractionSource"
-
-  "am_syphon__extractionSource:eid"{}
-}
-
 climbing_hint{
   _singleton:b=yes
   climbing_hint__delay:r=1.5
@@ -305,6 +296,12 @@ am_militant_suit_controller{
   _use:t="attachable_suit_decorator"
   animchar__res:t="am_trooper_empty_model_male_char"
   collres__res:t="am_trooper_empty_model_male_collision"
+
+  _group{
+    _tags:t="dev"
+    custom_edit_box__min:p3=-0.5, 0, -0.5
+    custom_edit_box__max:p3=0.5, 1.7, 0.5
+  }
 
   "attachable_suit_controller__mainAnimcharConfig:array"{
     "male:object"{
@@ -356,11 +353,11 @@ militant_inventory{
   _use:t="inventories_owner"
   inventory__name:t="itemContainer"
   human_inventory__dropLootOffset:p3=0.7, 0.6, -0.3
-  human_inventory__maxVolume:r=10
+  human_inventory__maxVolume:i=100
   human_inventory__lookNodeName:t="reye"
   human_inventory__lookNodeId:i=-1
   human_inventory__dropsLoot:b=yes
-  human_inventory__dropVolumePerSec:r=10
+  human_inventory__dropVolumePerSec:i=100
   human_inventory__lastDropAt:r=-1
 
   _group{
@@ -402,21 +399,8 @@ militant_actions{
   actions__enabled:b=yes
 
   actions{}
-  "actions__actions:array"{
-    "action:object"{
-      name:t="pickup"
-      state:t="pickup_item"
-      actionTime:r=0.6
-      applyAt:r=0.3
-      props:t="gamedata/actions/pickup.blk"
-      irq:t="pickup_act"
-      varName:t="action_progress"
-    }
-  }
-
-  "actions__actions_enabled:array"{
-    enables:b=yes
-  }
+  "actions__actions:array"{}
+  "actions__actions_enabled:array"{}
 }
 
 militant_weap{
@@ -465,42 +449,24 @@ barbwire_damage{
   barbwire_damage__damagePerSecond:r=1
 }
 
-militant_drone{
-  drone_deploying__interactionRadius:r=2
-
-  _group{
-    _tags:t="gameClient"
-    human_input__droneDeploying:i=-1
-    human_input__cancelDroneDeploying:i=-1
-    human_input__startDroneDeploying:i=-1
-
-    "drone_deploying__previewEid:eid"{}
-  }
-
-  _group{
-    _replicate:b=yes
-    _track:b=yes
-    drone_deploying__deploying:b=no
-    drone_deploying__operating:b=no
-  }
-}
-
 am_militant_ribbons{
-  _tracked:t="shader_color__colors"
+  ribbon_colors__primaryColorVarId:i=-1
+  ribbon_colors__secondaryColorVarId:i=-1
+  ribbon_colors__curColors:ip2=-1, -1
+  _tracked:t="ribbon_colors__curColors"
 
-  "shader_color__shaderVarNames:list<t>"{
-    name:t="primary_color"
-    name:t="secondary_color"
-  }
-
-  "shader_color__colors:list<p4>"{
-    value:p4=1, 0, 0, 1
-    value:p4=0, 1, 0, 1
+  "ribbon_colors__texture:SharedTex"{
+    _tags:t="render"
   }
 }
 
 allow_friendly_damage{
   "allow_friendly_damage:tag"{}
+}
+
+death_cause_tracking{
+  death_cause_tracking__cause:t=""
+  _replicated:t="death_cause_tracking__cause"
 }
 
 am_militant_base{
@@ -515,6 +481,7 @@ am_militant_base{
   _use:t="human_loud_noise"
   _use:t="human_dodge"
   _use:t="human_stone_throw"
+  _use:t="human_scan_points_of_interest"
   _use:t="human_lean"
   _use:t="human_phys_trigger_trap_activator"
   _use:t="trap_logger"
@@ -529,6 +496,7 @@ am_militant_base{
   _use:t="human_item_use"
   _use:t="human_inventory_postponed_usage"
   _use:t="human_anim_threephase_action"
+  _use:t="human_anim_use_drone_action"
   _use:t="zones_visitor"
   _use:t="militant_coll_damage"
   _use:t="militant_inventory"
@@ -542,10 +510,13 @@ am_militant_base{
   _use:t="locked_human_state_soldier"
   _use:t="barbwire_damage"
   _use:t="uncontrollable_soldier"
-  _use:t="am_militant_sound"
   _use:t="militant_net_ragdoll"
   _use:t="cortical_vault_human_controller"
   _use:t="blood_footprint_emitter"
+  _use:t="inventory_action_actor"
+  _use:t="death_cause_tracking"
+  _use:t="am_militant_ribbons"
+  _use:t="human_weapon_bipod"
   team:i=1
   camera__relative_angle:p2=0, 0
   camera__isRotateInGlobal:b=yes
@@ -564,6 +535,8 @@ am_militant_base{
   _skipInitialReplication:t="human_equipment__slots"
   _tracked:t="human_equipment__slotsFlags"
   meleeHitThroughRi:b=yes
+  action__operateDoor:t="common_operate_door_action"
+  action__pickupItem:t="common_pickup_action"
   offender_marks__updateOffenderPos:b=no
   gun_aim_offset__reyeOffsetFwd0Id:i=-1
   gun_aim_offset__gunOffsetAlongId:i=-1
@@ -593,16 +566,19 @@ am_militant_base{
   "slots_holder__slotTemplates:shared:object"{
     backpack:t="backpack_slot"
     safepack:t="safepack_slot"
+    signal_grenade:t="signal_grenade_slot"
     flashlight:t="flashlight_slot"
     pouch:t="pouch_slot"
     helmet:t="helmet_slot"
     chronogene_primary_1:t="chronogene_primary_slot"
     passive_chronogenes_stash:t="passive_chronogenes_stash_slot"
-    cortical_vault:t="cortical_vault_slot"
     chronogene_secondary_1:t="chronogene_secondary_slot"
     chronogene_secondary_2:t="chronogene_secondary_slot"
     chronogene_secondary_3:t="chronogene_secondary_slot"
     chronogene_secondary_4:t="chronogene_secondary_slot"
+    chronogene_melee_1:t="chronogene_melee_slot"
+    chronogene_dogtag_1:t="chronogene_dogtag_slot"
+    cortical_vault:t="cortical_vault_slot"
     primary:t="primary_secondary_slot"
     secondary:t="primary_secondary_slot"
     tertiary:t="tertiary_slot"
@@ -613,23 +589,22 @@ am_militant_base{
   "human_equipment__slots:object"{
     "backpack:eid"{}
     "safepack:eid"{}
+    "signal_grenade:eid"{}
     "flashlight:eid"{}
     "pouch:eid"{}
     "helmet:eid"{}
     "chronogene_primary_1:eid"{}
     "passive_chronogenes_stash:eid"{}
-    "cortical_vault:eid"{}
     "chronogene_secondary_1:eid"{}
     "chronogene_secondary_2:eid"{}
     "chronogene_secondary_3:eid"{}
     "chronogene_secondary_4:eid"{}
+    "chronogene_melee_1:eid"{}
+    "chronogene_dogtag_1:eid"{}
+    "cortical_vault:eid"{}
   }
 
   "human_equipment__slotsFlags:object"{}
-  "human_equipment__ignoreSlotsOnExtraction:list<t>"{
-    i:t="cortical_vault"
-  }
-
   "actions__actions:array"{
     "action:object"{
       name:t="stand_melee"
@@ -652,36 +627,15 @@ am_militant_base{
       irq:t="melee"
       varName:t="action_progress"
     }
-
-    "action:object"{
-      name:t="pickup"
-      state:t="pickup_item"
-      actionTime:r=0.6
-      applyAt:r=0.3
-      props:t="gamedata/actions/pickup.blk"
-      irq:t="pickup_act"
-      varName:t="action_progress"
-    }
-
-    "action:object"{
-      name:t="operate_door"
-      state:t="operate_door"
-      actionTime:r=0.6
-      applyAt:r=0.3
-      props:t="gamedata/actions/open_door.blk"
-      irq:t="door_act"
-      varName:t="action_progress"
-    }
   }
 
   "actions__actions_enabled:array"{
     enabled:b=yes
     enabled:b=yes
-    enabled:b=yes
-    enabled:b=yes
   }
 
   "gun_aim_offset__gunOffsetAddWish:object"{}
+  "chargesWanderingCore:tag"{}
 }
 
 gun_aim_offset_debug{
@@ -748,6 +702,7 @@ am_militant_ai_target{
 
 am_militant_healthless{
   _use:t="am_militant_base"
+  _use:t="am_possessable_militant_sound"
   _use:t="am_storm_effect"
   _use:t="human_corruption"
   _use:t="antigrav_character"
@@ -777,7 +732,6 @@ am_militant_healthless{
   _use:t="loud_noise_meter"
   _use:t="am_heartrate"
   _use:t="militant_swarm_target"
-  _use:t="awake_changed_around"
   _use:t="ammo_count_knowledge_controller"
   _use:t="hero_extraction"
   _use:t="stalker_statue_target"
@@ -806,6 +760,8 @@ am_militant_healthless{
   hunter_vision_target__fxNodeId:i=-1
   hunter_vision_target__fxNodeName:t="Bip01 Spine1"
   hunter_vision_target__destroyTemplate:t="monster_vision_fx_destroy"
+  _tracked:t="night_light__lightMult"
+  _tracked:t="night_light__lightDistanceMult"
 
   "heroForPlayer:tag"{}
   "createObstacle:tag"{}
@@ -815,6 +771,7 @@ am_militant_healthless{
   _group{
     _tags:t="gameClient"
     item__setCustomLongUseHint:t="hud/reviving_teammate_hint"
+    hero_inventory_opened:b=no
   }
 
   _group{
@@ -831,6 +788,8 @@ am_militant_healthless{
     _tags:t="render"
     night_light__lightMult:r=0.004
     night_light__lightDistanceMult:r=0.4
+    night_light__originLightMult:r=0
+    night_light__originLightDistanceMult:r=0
     teleportation__fxNameIn:t="teleport_effect_in"
     teleportation__fxNameOut:t="teleport_effect_out"
     teleportation__fxOffset:p3=0, 1.2, 0
@@ -844,13 +803,12 @@ block_aim_in_air{
 am_militant{
   _use:t="am_militant_healthless"
   _use:t="human_damage_model"
-  _use:t="am_storage"
-  _use:t="hero_am_syphon"
   _use:t="quick_use_slots"
   _use:t="flowermen_random_awaker"
-  am_storage__maxValue:i=100
-  am_syphon__period:r=4
+  _use:t="loud_noise_on_death"
   truce_id:i=-1
+  teammate_revive__effectTemplateName:t="teammate_revive_effect"
+  extraction__extractionSequenceTemplate:t="extraction_sequence_affect"
 
   "victimDoesntBreakTruce:tag"{}
 }
@@ -858,28 +816,16 @@ am_militant{
 am_militant_with_attachable_suit{
   _use:t="am_militant"
   _use:t="am_militant_suit_controller"
-
-  "dontBodyCleanupOnDeath:tag"{}
-}
-
-am_militant_with_attachable_suit_fa{
-  _use:t="am_militant"
-  _use:t="am_militant_suit_controller"
-  human_weight_influence__maxWeightAccelerationMult:r=0.8
-  human_weight_influence__maxWeightJumpMult:r=0.65
-  human_weight_influence__maxWeightSpeedMult:r=0.65
-  human_weight_influence__maxWeight:r=100
-
-  "dontBodyCleanupOnDeath:tag"{}
+  body_cleanup_server_after_death__delay:r=-1
 }
 
 am_militant_with_builtin_suit{
   _use:t="am_militant"
   _use:t="am_militant_suit_base"
   _use:t="militant_node_collapser"
+  body_cleanup_server_after_death__delay:r=-1
   _tracked:t="animchar__objTexReplace"
 
-  "dontBodyCleanupOnDeath:tag"{}
   "animchar__objTexReplace:object"{}
 }
 
@@ -887,17 +833,17 @@ am_militant_mindcontrolled{
   _use:t="am_militant_healthless"
   _use:t="human_damage_model"
   _use:t="quick_use_slots"
+  body_cleanup_server_after_death__delay:r=-1
   kill_tracking_tag:t="turned_soldier"
 
-  "dontBodyCleanupOnDeath:tag"{}
   "human_equipment__slots:object"{
     "backpack:eid"{}
     "flashlight:eid"{}
     "pouch:eid"{}
     "chronogene_primary_1:eid"{}
+    "cortical_vault:eid"{}
   }
 
-  "human_equipment__ignoreSlotsOnExtraction:list<t>"{}
   "militantMindcontrolled:tag"{}
   "kill_tracking__taggedPlayers:object"{}
   "cortical_hack_disabled:tag"{}
@@ -915,9 +861,6 @@ gathering_am_anim{
   game_effect__forceAnimUpperState:t="pickup_am"
   game_effect__forceAnimUpperStateId:i=-1
 
-  "game_effect__disableShooting:tag"{}
-  "game_effect__disableMelee:tag"{}
-  "game_effect__activateUnarmed:tag"{}
   "state__disableStoneThrow:tag"{}
 }
 
@@ -940,14 +883,18 @@ agent_switchable_collision{
   agent_switchable_collision__collisionTemplate:t=""
 }
 
-human_animchar_attachable_part{
-  _use:t="replicating"
+nonreplicated_human_animchar_attachable_part{
   _use:t="animchar"
   _use:t="slot_attachable_no_slotname"
   _use:t="skeleton_attached"
   animchar__res:t=""
   animchar_render__enabled:b=yes
   slot_attach__visible:b=yes
+}
+
+human_animchar_attachable_part{
+  _use:t="replicating"
+  _use:t="nonreplicated_human_animchar_attachable_part"
 }
 
 human_animchar_parts{

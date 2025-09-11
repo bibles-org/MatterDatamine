@@ -1,0 +1,494 @@
+import{
+  scene:t="gamedata/scenes/_nexus_vanilla_mall_sounds.blk"
+}
+
+entity{
+  _template:t="tiled_map"
+  tiled_map__leftTop:p2=-74.334, 46.14
+  tiled_map__rightBottom:p2=50.946, -79.139
+  tiled_map__visibleRange:p2=20, 60
+  tiled_map__tileWidth:i=4096
+  tiled_map__zlevels:i=0
+  tiled_map__northAngle:r=0
+  tiled_map__tilesPath:t="maps/nexus_vanilla_mall"
+}
+
+entity{
+  _template:t="navmesh_battle_area"
+  transform:m=[[4000, 0, 0] [0, 4000, 0] [0, 0, 4000] [0, 0, 0]]
+}
+
+entity{
+  _template:t="shaderVars"
+
+  "shader_vars__vars:object"{
+    ocean1:c=90, 100, 150, 0
+    ocean0:c=100, 110, 150, 0
+    ocean_density:r=1
+    river1:c=41, 104, 83, 0
+    river0:c=30, 81, 63, 0
+    paint_details_tex:t="assets_color_global_tex_palette*"
+    water_color_noise_size:r=71
+    river_density:r=2
+  }
+}
+
+entity{
+  _template:t="wind"
+  wind__noiseScale:r=100
+  wind__noiseSpeed:r=4
+  wind__strength:r=1
+}
+
+entity{
+  _template:t="door_mult_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_doors.blk"
+}
+
+import{
+  scene:t="gamedata/scenes/_nexus_round_mode_base_config.blk"
+}
+
+entity{
+  _template:t="volfog_nbs"
+  volfog_nbs__rootGraph:t="fog_vanilla_mall.json"
+}
+
+entity{
+  _template:t="level+level_synced_environment"
+  level__blk:t="levels/nexus_vanilla_mall.blk"
+  level_synced_environment__timeOfDaySeed:i=1
+  level_synced_environment__weatherSeed:i=2
+
+  "level__weatherChoice:object"{
+    "nexus_vanilla_weather:object"{
+      weight:r=1
+    }
+  }
+
+  "level__timeVec:array"{
+    level__timeVec:r=16.1
+  }
+}
+
+entity{
+  _template:t="killbox"
+  transform:m=[[178.132, 0, 0] [0, -7.62218e-06, -174.375] [-0, 2.52284, -1.10277e-07] [0.543671, 164.037, -6.39457]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-64.836, -5.66814e-06, 0] [1.20009e-06, -13.7274, 0] [0, 0, 73.6992] [-28.2978, 124.272, -40.5201]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="killbox"
+  transform:m=[[178.132, 0, 0] [0, -7.62218e-06, -174.375] [-0, 2.52284, -1.10277e-07] [0.543701, 44.3774, -9.58966]]
+}
+
+entity{
+  _template:t="killbox"
+  transform:m=[[112.417, 0, 0] [0, -3.18422e-06, -72.8464] [-0, 9.23945, -4.03869e-07] [-6.07598, 89.4428, 29.1253]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-57.6961, -5.04395e-06, 0] [2.19733e-06, -25.1345, 0] [0, 0, 55.5474] [15.198, 121.275, 14.6546]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-14.1391, -1.23608e-06, 0] [2.23174e-06, -25.528, 0] [0, 0, 19.9876] [13.7942, 91.4469, -22.2381]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-14.1391, -1.23608e-06, 0] [2.23174e-06, -25.528, 0] [0, 0, 19.9876] [13.7942, 116.793, -22.2381]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-113.556, -9.92738e-06, 0] [5.74342e-06, -65.6969, 0] [0, 0, 73.6992] [-9.46206, 163.819, -40.5201]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-57.6961, -5.04395e-06, 0] [4.18444e-06, -47.8643, 0] [0, 0, 55.5474] [15.198, 157.334, 12.2373]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-2.57319, 9.8331e-15, 2.24955e-07] [2.99908e-07, 1.49954e-07, 3.43054] [0, 58.0653, -2.53812e-06] [22.0587, 100.398, -28.3326]]
+  grav_zone__weight:r=2
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-19.6227, -1.71546e-06, 0] [2.23174e-06, -25.528, 0] [0, 0, 10.0121] [13.944, 91.4469, -21.6588]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-19.6227, -1.71546e-06, 0] [2.23174e-06, -25.528, 0] [0, 0, 10.0121] [13.944, 116.793, -21.6588]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-20.2109, -1.76688e-06, 0] [3.5876e-07, -4.10371, 0] [0, 0, 10.0121] [14.1054, 77.472, -21.6588]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-14.1391, -1.23608e-06, 0] [3.5876e-07, -4.10371, 0] [0, 0, 19.9876] [13.7942, 77.472, -22.2381]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-33.517, -2.93015e-06, 0] [1.55705e-06, -17.8104, 0] [0, 0, 26.7722] [11.0796, 84.2309, 1.07654]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-16.1027, -1.40774e-06, 0] [1.55705e-06, -17.8104, 0] [0, 0, 32.7581] [-3.83344, 84.2309, -20.1241]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="killbox"
+  transform:m=[[31.6568, 0, 0] [0, -2.26587e-06, -51.837] [-0, 6.9756, -3.04913e-07] [-12.0983, 88.8473, -31.3961]]
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-5.96972, -5.2189e-07, 0] [1.93558e-06, -22.1404, 0] [0, 0, 4.91833] [5.23357, 122.766, -14.5139]]
+  grav_zone__weight:r=1
+  grav_zone__boxBorderY:p2=0, 3
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-4.45034, -3.89061e-07, 0] [1.45597e-06, -16.6544, 0] [0, 0, 4.08477] [21.8734, 131.022, -28.4548]]
+  grav_zone__weight:r=1
+  grav_zone__boxBorderY:p2=0, 3
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-2.57319, 9.8331e-15, 2.24955e-07] [2.99908e-07, 1.49954e-07, 3.43054] [0, 58.0653, -2.53812e-06] [5.46054, 83.1391, -28.3326]]
+  grav_zone__weight:r=2
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=4, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[2.57319, 9.8331e-15, 4.12115e-13] [5.60413e-13, 1.52953e-07, -3.49914] [-1.75172e-13, 45.8401, 2.00374e-06] [5.46054, 93.961, -14.7754]]
+  grav_zone__weight:r=2
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=0, 3
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[2.57319, 9.8331e-15, 4.12115e-13] [4.31492e-13, 1.17767e-07, -2.69418] [-2.96135e-14, 7.74945, 3.3874e-07] [5.44571, 74.0063, -16.9991]]
+  grav_zone__weight:r=2
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[2.57319, -2.84456e-13, 2.98362e-13] [4.31492e-13, 1.90507, -1.90507] [-1.03647e-14, 1.91788, 1.91788] [5.44571, 69.0496, -17.5881]]
+  grav_zone__weight:r=2
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=1.5, 0
+  grav_zone__boxBorderX:p2=0, 1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-16.1027, -1.40774e-06, 0] [1.55705e-06, -17.8104, 0] [0, 0, 60.0689] [31.6939, 129.749, -45.5924]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-21.8997, -1.91453e-06, 0] [1.55705e-06, -17.8104, 0] [0, 0, 41.4577] [12.9544, 128.299, -52.8068]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-3.07161e-07, 2.68527e-14, 7.027] [3.34569, 1.46246e-07, 1.46245e-07] [-8.0798e-07, 18.4843, -1.05953e-13] [-7.96216, 104.623, -23.7422]]
+  grav_zone__weight:r=2
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-3.07161e-07, -7.6143e-13, 7.027] [2.64635, 2.64635, 1.15676e-07] [-2.87743, 2.87743, -1.25776e-07] [-7.69412, 93.9816, -23.7422]]
+  grav_zone__weight:r=2
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=2.5, 0
+  grav_zone__boxBorderX:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-6.49546, -5.67851e-07, 0] [4.2085e-07, -4.81395, 0] [0, 0, 11.4474] [-7.4343, 117.828, -18.2468]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-6.49546, -5.67851e-07, 0] [4.2085e-07, -4.81395, 0] [0, 0, 11.4474] [-8.75582, 118.774, -18.2468]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-6.49546, -5.67851e-07, 0] [4.2085e-07, -4.81395, 0] [0, 0, 11.4474] [-3.16787, 116.561, -18.2468]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-6.6908, -5.84928e-07, 0] [8.25354e-07, -9.44092, 0] [0, 0, 11.4474] [0.775601, 115.201, -18.2468]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-6.49546, -5.67851e-07, 0] [4.2085e-07, -4.81395, 0] [0, 0, 11.4474] [-1.19909, 114.581, -18.2468]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-13.8164, -1.20786e-06, 0] [1.55705e-06, -17.8104, 0] [0, 0, 6.28609] [39.5693, 129.749, -13.4125]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-13.8164, -1.20786e-06, 0] [1.55705e-06, -17.8104, 0] [0, 0, 6.28609] [21.9588, 129.749, -13.4125]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[3.99293e-07, 1.33098e-07, 3.04491] [8.78982, -5.03839e-14, -1.15265e-06] [-1.50942e-19, 22.2751, -9.73678e-07] [28.4388, 117.823, -14.6337]]
+  grav_zone__weight:r=2
+  grav_zone__boxBorderY:p2=0, 0
+  grav_zone__boxBorderZ:p2=0, 0
+}
+
+entity{
+  _template:t="gravity_zone_box"
+  transform:m=[[-1.44419, -1.26255e-07, 0] [3.5876e-07, -4.10371, 0] [0, 0, 3.50158] [21.2796, 77.2484, -14.6276]]
+  grav_zone__weight:r=1
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [0, -0.530821, -0.847484] [0, 0.847484, -0.530821] [21.8717, 111.23, 5.25206]]
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [0, -4.37114e-08, -1] [-0, 1, -4.37114e-08] [21.9583, 105.052, 4.89708]]
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=0
+  transform:m=[[-6.76186e-09, 5.91141e-16, -0.217455] [-2.42135e-07, -2.7697, 6.74283e-22] [-1.9217, 1.68e-07, 5.97561e-08] [21.9992, 112.007, 5.13539]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=0
+  transform:m=[[-4.75263e-08, 0, 0.217455] [0, 2.7697, 0] [-1.9217, 0, -4.20001e-07] [21.9964, 105.046, 5.13392]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=1
+  transform:m=[[2.85158e-08, 0, -0.217455] [0, 2.51578, 0] [1.99911, -0, 2.62152e-07] [27.1544, 104.904, -13.2306]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [0, -4.37114e-08, -1] [-0, 1, -4.37114e-08] [27.1163, 105.415, -13.5884]]
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=1
+  transform:m=[[-0.217455, 0, -1.90105e-08] [0, 2.51578, 0] [1.74768e-07, 0, -1.99911] [23.8716, 69.9188, -8.69336]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[-4.37114e-08, 0, 1] [1, -4.37114e-08, 4.37114e-08] [4.37114e-08, 1, 1.91069e-15] [24.1085, 70.0863, -8.66527]]
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[-4.37114e-08, 0, 1] [1, -4.37114e-08, 4.37114e-08] [4.37114e-08, 1, 1.91069e-15] [21.3093, 64.9023, -14.5946]]
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=2
+  transform:m=[[-0.217455, 0, -5.70316e-08] [0, 2.51578, 0] [5.24302e-07, 0, -1.99911] [21.0143, 64.7543, -14.616]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=2
+  transform:m=[[-4.75263e-08, 0, 0.217455] [0, 2.51578, 0] [-2.179, 0, -4.76236e-07] [27.0893, 105.111, -15.7941]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[-4.37114e-08, 0, 1] [1, -4.37114e-08, 4.37114e-08] [4.37114e-08, 1, 1.91069e-15] [21.2151, 70.1291, -14.6543]]
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=3
+  transform:m=[[0.217455, 0, 3.80211e-08] [-0, 2.61598, 0] [-3.49535e-07, -0, 1.99911] [20.9201, 69.9811, -14.6758]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[-4.37114e-08, 8.74228e-08, -1] [1, 4.37114e-08, -4.37114e-08] [4.37114e-08, -1, -8.74228e-08] [21.1261, 76.8129, -14.6543]]
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=3
+  transform:m=[[-0.217455, 3.32391e-15, 1.90105e-08] [-2.40343e-14, -3.14472, 2.7492e-07] [1.74768e-07, 1.74767e-07, 1.99911] [20.9201, 76.9033, -14.6329]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [0, -4.37114e-08, 1] [0, -1, -4.37114e-08] [27.1163, 105.353, -15.3403]]
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=4
+  transform:m=[[-9.50528e-09, 0, 0.217455] [0, 2.51578, 0] [-1.99911, 0, -8.73839e-08] [1.77943, 69.9382, -27.7826]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [0, -4.37114e-08, -1] [0, 1, -4.37114e-08] [1.80088, 70.0863, -28.0194]]
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=4
+  transform:m=[[2.85158e-08, 0, -0.217455] [0, 2.51578, 0] [2.19396, -0, 2.87703e-07] [1.43538, 104.91, -15.7299]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [0, -4.37114e-08, -1] [0, 1, -4.37114e-08] [1.45683, 105.058, -15.9667]]
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[-1, 0, -8.74228e-08] [-8.74228e-08, -4.37114e-08, 1] [-3.82137e-15, 1, 4.37114e-08] [-4.86333, 115.577, -32.8881]]
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=5
+  transform:m=[[-9.50528e-09, 0, 0.217455] [0, 2.51578, 0] [-2.19396, 0, -9.59011e-08] [-4.88478, 115.429, -33.3387]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[-4.37114e-08, 0, -1] [-1, -4.37114e-08, 4.37114e-08] [-4.37114e-08, 1, 1.91069e-15] [4.15431, 70.0863, -34.4788]]
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=5
+  transform:m=[[0.217455, 0, 2.22045e-14] [0, 2.51578, -0] [-2.0413e-13, 0, 1.99911] [4.39115, 69.9382, -34.4574]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=6
+  transform:m=[[-4.75263e-08, 0, 0.217455] [0, 2.57923, 0] [-1.51992, 0, -3.32189e-07] [-25.2721, 115.441, -39.9048]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [0, -4.37114e-08, -1] [-0, 1, -4.37114e-08] [-25.3102, 115.564, -40.2895]]
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1, 0, 0] [0, -0.46732, -0.884088] [0, 0.884088, -0.46732] [-22.3325, 118.611, -42.2508]]
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=6
+  transform:m=[[-6.65368e-08, -5.81683e-15, -0.217455] [2.32272e-07, -2.65688, 0] [-1.51992, -1.32876e-07, 4.65065e-07] [-22.2944, 118.913, -42.0151]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[-4.37114e-08, 0, 1] [1, -4.37114e-08, 4.37114e-08] [4.37114e-08, 1, 1.91069e-15] [-5.73782, 111.994, -17.056]]
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=7
+  transform:m=[[-0.217455, 0, -5.70316e-08] [0, 2.29552, 0] [4.42482e-07, 0, -1.68713] [-6.23456, 111.812, -17.0867]]
+  teleportation_portal__safeLocalExitDir:p3=1, 0, 0
+}
+
+entity{
+  _template:t="teleportation_portal"
+  teleportation_portal__groupId:i=7
+  transform:m=[[-0.217455, 0, -9.50526e-08] [0, 2.67673, 0] [7.3747e-07, 0, -1.68713] [-0.187376, 104.986, 13.9909]]
+  teleportation_portal__safeLocalExitDir:p3=-1, 0, 0
+}
+
+entity{
+  _template:t="teleport_blue_light_flicker"
+  transform:m=[[1.31134e-07, 0, -1] [-1, -4.37114e-08, -1.31134e-07] [-4.37114e-08, 1, -5.73206e-15] [-0.684118, 105.199, 14.0145]]
+}

@@ -13,13 +13,14 @@ let watchedHeroMainAnimcharRes = Watched("")
 let watchedHeroPlayerEid = Watched(ecs.INVALID_ENTITY_ID)
 let watchedHeroAnimcharEid = Watched(ecs.INVALID_ENTITY_ID)
 let watchedHeroAnimcharRes = Watched("")
+let watchedHeroDefaultStubMeleeWeapon = Watched(null)
 
 wlog(watchedHeroEid, "watched:")
 
 ecs.register_es("watched_hero_player_eid_es", {
-  onInit = function(_eid,comp){ watchedHeroPlayerEid.update(comp["possessedByPlr"] ?? ecs.INVALID_ENTITY_ID); }
-  onChange = function(_eid,comp){ watchedHeroPlayerEid.update(comp["possessedByPlr"] ?? ecs.INVALID_ENTITY_ID);}
-  onDestroy = function(_eid,comp){ watchedHeroPlayerEid(comp["possessedByPlr"] == watchedHeroPlayerEid.value ? ecs.INVALID_ENTITY_ID : watchedHeroPlayerEid.value); }
+  onInit = function(_eid,comp){ watchedHeroPlayerEid.set(comp["possessedByPlr"] ?? ecs.INVALID_ENTITY_ID); }
+  onChange = function(_eid,comp){ watchedHeroPlayerEid.set(comp["possessedByPlr"] ?? ecs.INVALID_ENTITY_ID);}
+  onDestroy = function(_eid,comp){ watchedHeroPlayerEid.set(comp["possessedByPlr"] == watchedHeroPlayerEid.get() ? ecs.INVALID_ENTITY_ID : watchedHeroPlayerEid.get()); }
 }, {comps_track=[["possessedByPlr", ecs.TYPE_EID]],comps_rq=[["watchedByPlr", ecs.TYPE_EID]]})
 
 
@@ -27,17 +28,22 @@ ecs.register_es("watched_hero_eid_es", {
   onInit = function (eid, comp){
     watchedHeroEid.set(eid)
     watchedHeroMainAnimcharRes.set(comp.animchar__res)
+    watchedHeroDefaultStubMeleeWeapon.set(comp.default_stub_melee_controller__meleeTemplate)
   }
   onDestroy = function(eid, _comp){
     if (eid == watchedHeroEid.get()) {
       watchedHeroEid.set(ecs.INVALID_ENTITY_ID)
       watchedHeroMainAnimcharRes.set("")
+      watchedHeroDefaultStubMeleeWeapon.set(null)
     }
   }
 },
 {
   comps_rq=[["watchedByPlr", ecs.TYPE_EID]]
-  comps_ro=[["animchar__res", ecs.TYPE_STRING]]
+  comps_ro=[
+    ["animchar__res", ecs.TYPE_STRING],
+    ["default_stub_melee_controller__meleeTemplate", ecs.TYPE_STRING]
+  ]
 },
 {
   before="watched_hero_player_eid_es"
@@ -139,5 +145,6 @@ return {
   watchedHeroAnimcharRes,
   watchedHeroPos,
   watchedHeroSex,
-  watchedHeroSneaking
+  watchedHeroSneaking,
+  watchedHeroDefaultStubMeleeWeapon
 }

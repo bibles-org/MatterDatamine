@@ -126,13 +126,6 @@ entity{
 }
 
 entity{
-  _template:t="minimap"
-  mapTex:t=""
-  left_top:p2=-1024, 1024
-  right_bottom:p2=1024, -1024
-}
-
-entity{
   _template:t="omni_light_huge"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [40.3582, 15.2129, -31.1485]]
   light__color:c=255, 50, 2, 10
@@ -172,6 +165,11 @@ entity{
   spot_light__shadows:b=yes
   light__force_max_light_radius:b=yes
   spot_light__inner_attenuation:r=0.5
+}
+
+entity{
+  _template:t="volfog_nbs"
+  volfog_nbs__rootGraph:t="fog_base_bunker.json"
 }
 
 entity{

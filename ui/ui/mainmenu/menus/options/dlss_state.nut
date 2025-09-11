@@ -1,8 +1,9 @@
+from "settings" import get_setting_by_blk_path
+from "videomode" import get_dlss_state, is_dlss_quality_available_at_resolution, get_current_window_resolution, get_dlssg_support_state, get_dlssg_maximum_number_of_frames_generated
+
 from "%ui/ui_library.nut" import *
 
-let { get_setting_by_blk_path } = require("settings")
-let { resolutionValue } = require("resolution_state.nut")
-let { get_dlss_state, is_dlss_quality_available_at_resolution, get_current_window_resolution, get_dlssg_support_state, get_dlssg_maximum_number_of_frames_generated } = require("videomode")
+let { resolutionValue } = require("%ui/mainMenu/menus/options/resolution_state.nut")
 
 const DLSS_BLK_PATH = "video/dlssQuality"
 const DLSS_OFF = -1
@@ -26,7 +27,7 @@ const DISABLED = 7
 const SUPPORTED = 8
 const READY = 9
 
-let dlssToString = {
+let dlssToString = static {
   [DLSS_OFF] = "option/off",
   [DLSS_PERFORMANCE] = "option/performance",
   [DLSS_BALANCED] = "option/balanced",
@@ -36,7 +37,7 @@ let dlssToString = {
   [DLSS_DLAA] = "option/dlaa",
 }
 
-let dlssSupportLocId = {
+let dlssSupportLocId = static {
   
   
   [NOT_IMPLEMENTED] = "NOT_IMPLEMENTED",
@@ -66,7 +67,7 @@ const DLSSG_2X = 1
 const DLSSG_3X = 2
 const DLSSG_4X = 3
 
-let dlssGSupportLocId = {
+let dlssGSupportLocId = static {
   
   [DLSSG_NOT_SUPPORTED] = "NOT_SUPPORTED",
 
@@ -77,7 +78,7 @@ let dlssGSupportLocId = {
   [DLSSG_DISABLED_HWS] = "dlss/enableHWS",
 }
 
-let dlssgToString = {
+let dlssgToString = static {
   [DLSSG_OFF] = "option/off",
   [DLSSG_2X] = "option/2x",
   [DLSSG_3X] = "option/3x",
@@ -95,7 +96,7 @@ let dlssAvailable = Computed(function() {
   let dlssState = get_dlss_state()
   if (dlssState != SUPPORTED && dlssState != READY)
     return [DLSS_OFF] 
-  local res = resolutionValue.value
+  local res = resolutionValue.get()
   if (type(res) != "array")
     res = get_current_window_resolution()
   return dlssAllQualityModes.filter(@(q) is_dlss_quality_available_at_resolution(res[0], res[1], q))
@@ -107,22 +108,22 @@ let dlssgAvailable = WatchedRo(dlssgAllModes.filter(@(q) q <= get_dlssg_maximum_
 
 let dlssValueChosen = Watched(get_setting_by_blk_path(DLSS_BLK_PATH) ?? DLSS_QUALITY)
 
-let dlssSetValue = @(v) dlssValueChosen(v)
+let dlssSetValue = @(v) dlssValueChosen.set(v)
 
-let dlssValue = Computed(@() dlssNotAllowLocId.value != null ? DLSS_OFF
-  : dlssAvailable.value.indexof(dlssValueChosen.value) != null ? dlssValueChosen.value
+let dlssValue = Computed(@() dlssNotAllowLocId.get() != null ? DLSS_OFF
+  : dlssAvailable.get().indexof(dlssValueChosen.get()) != null ? dlssValueChosen.get()
   : DLSS_OFF)
 
 let dlssgValueChosen = Watched(get_setting_by_blk_path(DLSSG_BLK_PATH) ?? DLSSG_OFF)
 
-let dlssgSetValue = @(v) dlssgValueChosen(v)
+let dlssgSetValue = @(v) dlssgValueChosen.set(v)
 
-let dlssgValue = Computed(@() dlssgNotAllowLocId.value != null ? DLSSG_OFF
-  : dlssgAvailable.value.indexof(dlssgValueChosen.value) != null ? dlssgValueChosen.value
+let dlssgValue = Computed(@() dlssgNotAllowLocId.get() != null ? DLSSG_OFF
+  : dlssgAvailable.get().indexof(dlssgValueChosen.get()) != null ? dlssgValueChosen.get()
   : DLSSG_OFF)
 
 
-return {
+return freeze({
   DLSS_BLK_PATH
   DLSS_OFF
   dlssAvailable
@@ -137,4 +138,4 @@ return {
   dlssgNotAllowLocId
   dlssgToString
   DLSSG_OFF
-}
+})

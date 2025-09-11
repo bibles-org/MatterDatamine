@@ -8,14 +8,26 @@ navmesh_battle_area{
   "ecs_no_debug:tag"{}
 }
 
+navmesh_phys_drop_on_collision{
+  navmesh_phys__heightOffsetTraceSphereRadius:r=0.25
+  navmesh_phys__heightOffsetTraceOffset:r=0.5
+  navmesh_phys__heightOffsetMaxTraceDist:r=1.5
+  navmesh_phys__heightOffsetTraceInterval:p2=0.15, 0.2
+  navmesh_phys__heightOffsetApproachViscocity:r=0.1
+  navmesh_phys__visualHeightOffsetShown:r=0
+  navmesh_phys__visualHeightOffsetDesired:r=0
+  navmesh_phys__heightOffsetTraceAt:r=0
+}
+
 am_navmesh_creature_base{
   _use:t="navmesh_creature_base"
   _use:t="truce_zone_creature"
-  bodyCleanupTime:r=120
+  body_cleanup_server_after_death__delay:r=120
   collision_physMatId:i=-1
   collision_physMatName:t="walker"
   ragdoll__use_ccd:b=yes
   navmesh_phys__upDir:p3=0, 1, 0
+  nphys_pushable__strengthMulti:r=0.5
 
   "am_navmesh_creature__gravZones:list<eid>"{}
   "ragdoll__enabled:b"{

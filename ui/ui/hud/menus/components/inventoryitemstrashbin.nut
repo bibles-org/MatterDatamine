@@ -1,33 +1,38 @@
+from "%ui/hud/menus/components/inventoryItemsList.nut" import setupPanelsData, itemsPanelList, inventoryItemSorting
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems
+from "%ui/components/button.nut" import buttonWithGamepadHotkey
+from "%ui/fonts_style.nut" import h2_txt, body_txt
+from "math" import ceil
+from "eventbus" import eventbus_send
+import "%ui/components/faComp.nut" as faComp
+from "%ui/hud/menus/components/inventoryItemsListChecksCommon.nut" import MoveForbidReason
+from "%ui/components/cursors.nut" import setTooltip
+from "%ui/components/colors.nut" import BtnBdHover, BtnTextNormal
+from "%ui/hud/state/item_info.nut" import get_item_info
+from "%ui/components/commonComponents.nut" import mkTextArea, mkText
+from "%ui/components/accentButton.style.nut" import accentButtonStyle
+from "%ui/hud/menus/components/inventoryItemTypes.nut" import REFINER, EXTERNAL_ITEM_CONTAINER
+from "%ui/hud/menus/inventoryActions.nut" import inventoryItemClickActions, moveItemWithKeyboardMode
+from "%ui/mainMenu/amProcessingDeviceMenu.nut" import amProcessingIsAvailable
+from "%ui/mainMenu/amProcessingSelectItem.nut" import startQuickRefine, mkExpectedRewardInfo
+from "%ui/hud/menus/inventories/refinerInventoryCommon.nut" import itemsInRefiner
+from "%ui/profile/profileState.nut" import amProcessingTask
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { setupPanelsData, itemsPanelList, inventoryItemSorting } = require("%ui/hud/menus/components/inventoryItemsList.nut")
-let { mergeNonUniqueItems } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
-let { TRASH_BIN } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
-let { trashBinItems } = require("%ui/hud/menus/components/trashBin.nut")
-let { textButton } = require("%ui/components/button.nut")
-let { h2_txt } = require("%ui/fonts_style.nut")
-let { ceil } = require("math")
-let { eventbus_send } = require("eventbus")
-let { isShiftPressed } = require("%ui/hud/state/inventory_state.nut")
-let faComp = require("%ui/components/faComp.nut")
-let { MoveForbidReason } = require("%ui/hud/menus/components/inventoryItemsListChecksCommon.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { BtnBdHover } = require("%ui/components/colors.nut")
-let { inventoryItemClickActions } = require("%ui/hud/menus/inventoryActions.nut")
-let { get_item_info } = require("%ui/hud/state/item_info.nut")
-
-let trashBinHeaderTxt = {
+let trashBinHeaderTxt = @() {
+  watch = amProcessingIsAvailable
   rendObj = ROBJ_TEXT
-  text = loc("inventory/destroyItems")
-  color = Color(80,80,80)
+  text = amProcessingIsAvailable.get() ? loc("inventory/refineItemsTitle") : loc("inventory/destroyItems")
+  color = BtnTextNormal
 }
 
 let trashIcon = faComp("trash")
 
 let trashBinHeader = @() {
-  size = [ flex(), SIZE_TO_CONTENT ]
-  watch = trashBinItems
+  watch = itemsInRefiner
+  size = FLEX_H
   flow = FLOW_HORIZONTAL
   halign = ALIGN_CENTER
   valign = ALIGN_CENTER
@@ -35,124 +40,87 @@ let trashBinHeader = @() {
   padding = hdpx(8)
 
   children = [
-    trashBinItems.get().len() > 0 ? trashIcon : null
+    itemsInRefiner.get().len() > 0 ? trashIcon : null
     trashBinHeaderTxt
   ]
 }
 
-let trashBinItemContainerCursorAttractor = {
-  size = [flex(), hdpx(40)]
+let trashBinItemContainerCursorAttractor = freeze({
+  size = static [flex(), hdpx(40)]
   cursorNavAnchor = [elemw(50), elemh(50)]
   children = {
     rendObj = ROBJ_SOLID
   }
-}
+})
 
 function isItemCanBePuttedInTrashBinItemContainer(item) {
   if (item == null)
     return MoveForbidReason.OTHER
 
-  if (item?.fromList?.name == "trashBin"
+  if (item?.fromList == null)
+    return MoveForbidReason.FORBIDDEN
+
+  if (amProcessingIsAvailable.get() && amProcessingTask.get()?.taskId != "")
+    return MoveForbidReason.FORBIDDEN_REFINER_IN_PROGRESS
+
+  if (   item?.fromList.name == REFINER.name
+      || item?.fromList.name == EXTERNAL_ITEM_CONTAINER.name
       || item?.slotName
-      || item?.currentWeaponSlotName
-      || item?.fromList == null)
+      || item?.currentWeaponSlotName)
     return MoveForbidReason.OTHER
 
   return MoveForbidReason.NONE
 }
 
-function dropItemToTrashBin(item, _list_type) {
-  if (item?.fromList?.name == "trashBin"
-    || item?.slotName
-    || item?.currentWeaponSlotName)
-    return false
-  let isAmmo = (item?.ammoCount ?? 0) > 0 && (item?.countPerStack ?? 0) > 0
-
-  if (isAmmo) {
-    local idx = trashBinItems.get().findindex(@(trash) trash.eids.findindex(@(eid) eid==item.eid) != null)
-    let wishAdd = isShiftPressed.get() ? item.ammoCount : item.countPerStack
-    let add = min(wishAdd, item.ammoCount)
-
-    trashBinItems.mutate(function(v) {
-      if (idx == null) {
-        let additionalFields = {
-          ammoCount = add
-          trashBinItemOrigin = item.fromList
-        }
-        v.append(item?.itemOverridedWithProto ?
-          get_item_info(item.eids[0]).__update(additionalFields) :
-          item.__merge(additionalFields)
-        )
-      }
-      else {
-        v[idx].ammoCount += add
-      }
-    })
-  }
-  else {
-    let indexToProceed = isShiftPressed.get() ? item.count : 1
-    trashBinItems.mutate(function(tbItems) {
-      let uniqueIds = []
-      let eids = []
-      let trashBinIdx = tbItems.findindex(@(stackedItems) stackedItems.eids.findindex(@(v) v.tointeger()==item.eid.tointeger()) != null )
-      for(local i=0; i < indexToProceed; i++){
-        uniqueIds.append(item.uniqueIds[i])
-        eids.append(item.eids[i])
-      }
-      let additionalFields = {
-        uniqueId = item.uniqueIds[0]
-        uniqueIds
-        eid = item.eids[0]
-        eids
-        count = uniqueIds.len()
-        trashBinItemOrigin = item.fromList
-      }
-
-      if (trashBinIdx == null) {
-        tbItems.append(
-          item?.itemOverridedWithProto ?
-            get_item_info(item.eids[0]).__merge(additionalFields) :
-            item.__merge(additionalFields)
-        )
-      }
-      else {
-        let toChange = tbItems[trashBinIdx]
-        toChange.uniqueIds.extend(additionalFields.uniqueIds)
-        toChange.eids.extend(additionalFields.eids)
-        toChange.count += additionalFields.count
-      }
-    })
-  }
-}
-
-let destroyButton = textButton(loc("inventory/destroyItems"),
+let destroyButton = buttonWithGamepadHotkey(mkText(loc("inventory/destroyItems"), { hplace = ALIGN_CENTER }.__merge(body_txt)),
   function() {
     let eids2destroy = []
-    foreach(item in trashBinItems.get()) {
+    foreach(item in itemsInRefiner.get()) {
       let isAmmo = (item?.ammoCount ?? 0) > 0 && (item?.countPerStack ?? 0) > 0
       if (isAmmo) {
         let stackCount = ceil(item.ammoCount.tofloat() / item.countPerStack.tofloat())
-        let eids = [].resize(stackCount, item.uniqueIds[0])
+        let eids = [].resize(stackCount, item.uniqueId)
         eids2destroy.extend(eids)
       }
       else
         eids2destroy.extend(item.uniqueIds)
     }
     eventbus_send("profile_server.destroyItems", eids2destroy)
-    trashBinItems.set([])
+    itemsInRefiner.set([])
   },
   {
-    size = [flex(), hdpx(50)]
+    size = static [flex(), hdpx(50)]
     halign = ALIGN_CENTER
     margin = 0
     style = {
       BtnBgNormal = Color(180, 40, 40)
     }
+    hotkeys = [["J:Y", { description = { skip = true } }]]
     sound = {
       click = "ui_sounds/inventory_item_destroy"
       hover = "ui_sounds/button_highlight"
     }
-  }.__update(h2_txt)
+  }
+)
+
+let refineButton = buttonWithGamepadHotkey(mkText(loc("inventory/refineItems"), { hplace = ALIGN_CENTER }.__merge(body_txt)),
+  function() {
+    startQuickRefine()
+    itemsInRefiner.set([])
+  },
+  {
+    size = static [flex(), hdpx(50)]
+    halign = ALIGN_CENTER
+    margin = 0
+    style = {
+      BtnBgNormal = Color(40, 40, 180)
+    }
+    hotkeys = [["J:Y", { description = { skip = true } }]]
+    sound = {
+      click = "ui_sounds/inventory_item_destroy"
+      hover = "ui_sounds/button_highlight"
+    }
+  }.__update(accentButtonStyle)
 )
 
 const itemsInRow = 3
@@ -162,21 +130,22 @@ let processItems = function(items) {
   return items
 }
 
-let panelsData = setupPanelsData(trashBinItems,
+let panelsData = setupPanelsData(itemsInRefiner,
                                  itemsInRow,
-                                 [trashBinItems],
+                                 [itemsInRefiner],
                                  processItems)
 
 function trashBinItemContainerItemsList() {
-  let items = trashBinItems.get()
+  let items = itemsInRefiner.get()
   let isEmpty = items.len() == 0
   panelsData.resetScrollHandlerData()
+  let stateFlags = Watched(0)
   return {
-    watch = panelsData.numberOfPanels
+    watch = [itemsInRefiner, panelsData.numberOfPanels, amProcessingIsAvailable]
     size = isEmpty ? [ flex(), hdpx(40)] : [ flex(), hdpx(300) ]
     onAttach = panelsData.onAttach
     onDetach = function() {
-      trashBinItems.set([])
+      itemsInRefiner.set([])
       panelsData.onDetach()
     }
     children = [
@@ -186,37 +155,62 @@ function trashBinItemContainerItemsList() {
         children = [
           itemsPanelList({
             outScrollHandlerInfo=panelsData.scrollHandlerData,
-            list_type=TRASH_BIN,
+            list_type=REFINER,
             itemsPanelData=panelsData.itemsPanelData,
             headers=[
-              trashBinHeader
+              trashBinHeader,
+              function() {
+                let { overallMoneyIncome = null } = mkExpectedRewardInfo(itemsInRefiner.get(), null, null)
+                let watch = [ itemsInRefiner, amProcessingIsAvailable ]
+
+                if (!amProcessingIsAvailable.get())
+                  return { watch }
+
+                return {
+                  watch
+                  size = FLEX_H
+                  children = overallMoneyIncome ? mkTextArea(
+                    loc("amClean/expectedMoneyFromNonCorruptedItems", { minVal = overallMoneyIncome}),
+                    {
+                      halign = ALIGN_CENTER
+                    }) : null
+                }
+              }
             ],
             can_drop_dragged_cb=isItemCanBePuttedInTrashBinItemContainer,
-            on_item_dropped_to_list_cb=dropItemToTrashBin,
-            item_actions = inventoryItemClickActions[TRASH_BIN.name]
+            on_item_dropped_to_list_cb=moveItemWithKeyboardMode,
+            item_actions = inventoryItemClickActions[REFINER.name]
             visualParams={
               rendObj = ROBJ_SOLID
-              color = Color(20,0,0,150)
+              color = amProcessingIsAvailable.get() ? Color(5, 55, 60) : Color(20,0,0,150)
             },
             xSize = 4
           })
-          isEmpty ? null : destroyButton
+          isEmpty ? null : amProcessingIsAvailable.get() ? refineButton : destroyButton
         ]
       }
-      !isEmpty ? null : watchElemState(@(sf) {
-        rendObj = ROBJ_BOX
-        size = flex()
-        borderWidth = sf & S_HOVER ? hdpx(2) : 0
-        borderColor = BtnBdHover
-        behavior = Behaviors.Button
-        onHover= @(on) setTooltip(on ? loc("trashBin/dropToDelete") : null)
-      })
+      !isEmpty ? null : function() {
+        let sf = stateFlags.get()
+        return {
+          watch = stateFlags
+          onElemState = @(s) stateFlags.set(s)
+          rendObj = ROBJ_BOX
+          size = flex()
+          borderWidth = sf & S_HOVER ? hdpx(2) : 0
+          borderColor = BtnBdHover
+          behavior = Behaviors.Button
+          onHover= @(on) setTooltip(on ?
+            (
+              amProcessingIsAvailable.get() ? loc("trashBin/dropToRefine") : loc("trashBin/dropToDelete")
+            ) : null)
+        }
+      }
     ]
   }
 }
 
 
-return {
+return freeze({
   trashBinItemContainerCursorAttractor
   trashBinItemContainerItemsList
-}
+})

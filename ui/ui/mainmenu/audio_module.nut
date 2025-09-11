@@ -1,22 +1,24 @@
+from "%ui/components/commonComponents.nut" import mkTabs, mkConsoleScreen
+from "%ui/mainMenu/notificationMark.nut" import mkNotificationMark
+from "%ui/fonts_style.nut" import body_txt
+from "%sqstd/string.nut" import utf8ToUpper
+from "%ui/mainMenu/stdPanel.nut" import wrapInStdPanel
+
 from "%ui/ui_library.nut" import *
 
-let { musicPlayerTab, unseenTracksCount, MUSIC_PLAYER_ID } = require("audioModule/music_player.nut")
-let { settingsTabUi, SETTINGS_TAB_ID } = require("audioModule/audio_settings.nut")
-let { mkTabs, mkConsoleScreen } = require("%ui/components/commonComponents.nut")
-let { mkNotificationMark } = require("%ui/mainMenu/notificationMark.nut")
-let { body_txt } = require("%ui/fonts_style.nut")
+let { musicPlayerTab, unseenTracksCount, MUSIC_PLAYER_ID } = require("%ui/mainMenu/audioModule/music_player.nut")
+let { settingsTabUi, SETTINGS_TAB_ID } = require("%ui/mainMenu/audioModule/audio_settings.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
-let { wrapInStdPanel } = require("%ui/mainMenu/stdPanel.nut")
 
 const AudioModuleId = "audioModule"
 
 let audioModuleName = loc("audiomodule")
-let audioModuleTitle = loc("audiomodule/title")
+let audioModuleTitle = utf8ToUpper(loc("audiomodule/title"))
 
 let audioTabConstr = @(params) @() {
   watch = unseenTracksCount
   flow = FLOW_HORIZONTAL
-  margin = [fsh(1), fsh(2)]
+  margin = static [fsh(1), fsh(2)]
   children = [
     {
       rendObj = ROBJ_TEXT
@@ -65,10 +67,10 @@ let audioNotifications = Computed(function() {
   }
 })
 
-return {
+return freeze({
   AudioModuleId
   audioModuleUi
   audioModuleName
   audioNotifications
   audioModuleIsAvailable = Computed(@() !isOnboarding.get())
-}
+})

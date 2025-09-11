@@ -24,7 +24,7 @@ delayed_move_weapon_mods{
     _replicate:b=yes
     weapon_mods__delayedMoveFinishTime:r=-1
     weapon_mods__delayedMoveState:i=-1
-    weapon_mods__delayedMoveType:i=-1
+    weapon_mods__delayedMoveType:i=0
     weapon_mods__delayedMoveSlotName:t=""
 
     "weapon_mods__modDelayedEquipEid:eid"{}
@@ -72,7 +72,7 @@ base_gun{
   gun__shootNodeName:t="gunFx_main"
   gun__magnification:r=1.5
   gun__projectileTemplate:t="bullet_projectile"
-  gun__projectileDebugTemplate:t="bullet_projectile+bullet_projectile_debug"
+  gun__projectileDebugTemplate:t="bullet_projectile_debug"
   gun__projectileDebug:b=no
   gun__kineticDamageMult:r=1
   gun__aimRayMat:t="aimRay"
@@ -119,6 +119,7 @@ base_gun{
   gun_anim__reloadProgress:r=-1
   _skipInitialReplication:t="gun_anim__reloadProgress"
   loud_noise__noisePerShot:r=150
+  loud_noise__radius:r=35
   weapon_rearsight_node__nodeName:t="rearsight_aim"
   nearDofOverride:b=yes
   weapon_stat__dps:r=0
@@ -150,7 +151,6 @@ base_gun{
 
   _group{
     _replicate:b=yes
-    gun__reloadFinishTime:r=-1
     gun__ammoCountBeforeReload:i=0
     gun__aimRayMatId:i=-1
     gun__holsterGen:i=0
@@ -166,6 +166,11 @@ base_gun{
   "gun_deviation__chancePoints:array"{}
   gun_launch_events{}
   gun{}
+  "gun__curShellImpulse:r"{
+    value:r=0
+    _tags:t="gameClient"
+  }
+
   "gun__ammoHolderIds:list<i>"{}
   gun__shell_prop_ids{}
   "gun__shells:array"{}
@@ -206,12 +211,6 @@ visual_gun_with_animchar_updatable{
   animchar__updatable:b=yes
   nearDofOverride:b=yes
   force_animchar_act:b=no
-}
-
-visual_gun{
-  _use:t="visual_gun_with_animchar_updatable"
-
-  "animchar__actOnDemand:tag"{}
 }
 
 gun_shell_ejection{
@@ -354,6 +353,8 @@ base_gun_anim_v2{
   gun_anim_v2__isChamberedVarId:i=-1
   gun_anim_v2__isJammingVarId:i=-1
   gun_anim_v2__operationStateVarId:i=-1
+  gun_anim_v2__boltActionVarId:i=-1
+  gun_anim_v2__curNumAmmoVarId:i=-1
   gun_anim_v2__reloadTypeVarId:i=-1
   gun_anim_v2__currentOperationState:i=-1
   gun_anim_v2__ammoInspectionIdleProgressVarId:i=-1
@@ -447,10 +448,14 @@ gun_entity_mods{
     gun_entity_mods__loudNoisePerShotMult:r=1
     gun_entity_mods__damageMult:r=1
     gun_entity_mods__adsSpeedMult:r=1
+    gun_entity_mods__recoilMult:r=1
+    gun_entity_mods__equipMult:r=1
 
     "gun_entity_mods__loudNoisePerShotMods:object"{}
     "gun_entity_mods__damageMods:object"{}
     "gun_entity_mods__adsSpeedMods:object"{}
+    "gun_entity_mods__recoilMods:object"{}
+    "gun_entity_mods__equipMods:object"{}
   }
 }
 
@@ -498,24 +503,6 @@ client_side{
   "clientSide:tag"{}
 }
 
-projectile_phys_grid{
-  editableObj:b=no
-  _use:t="replicating"
-  _singleton:b=yes
-  grid_holder__type:t="projectile_phys"
-  grid_holder__typeHash:i=0
-  grid_holder__cellSize:i=128
-
-  grid_holder{}
-}
-
-projectile_phys_grid_obj{
-  grid_obj__gridType:t="projectile_phys"
-  grid_obj__fixedTmScale:r=-1
-
-  grid_obj{}
-}
-
 projectile_trail_fx{
   _tags:t="render"
   projectile_trail_fx__flightFxTemplate:t="trail_projectile_launch_smoke_effect"
@@ -527,12 +514,11 @@ projectile_phys{
   _use:t="phys_sleepable"
   _use:t="animchar_turn_dir"
   _use:t="slot_attachable"
-  _use:t="projectile_phys_grid_obj"
+  _use:t="projectile_phys_dynamic_grid_object"
   slot_attach__visible:b=yes
   animchar_render__enabled:b=yes
   net__physId:i=-1
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  _tracked:t="transform"
   shell__gun_props_id:i=-1
   shell__shell_id__shell_id:i=-1
   shell__shell_id__damage_id:i=-1
@@ -619,7 +605,6 @@ base_melee{
   gun_aim_offset__gunShootOffsetCustomAdd:p3=0, 0, 0
 
   "gun__disableAimInVehicle:tag"{}
-  "animchar__actOnDemand:tag"{}
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
     holsterSlots:t="slot_weapon_2"
@@ -675,7 +660,6 @@ gun_icon{
   weapon__iconRoll:r=0
   weapon__iconYaw:r=90
   weapon__iconScale:r=0.85
-  item__ui_priority:i=2
 }
 
 big_gun_icon{
@@ -724,7 +708,6 @@ melee_icon{
   weapon__iconRoll:r=0
   weapon__iconYaw:r=90
   weapon__iconScale:r=0.7
-  item__ui_priority:i=1
 }
 
 gun_aim_node{
@@ -838,4 +821,18 @@ gun_jamming{
     _track:b=yes
     gun_jamming__isJammedClient:b=no
   }
+}
+
+gun_with_bipod{
+  gun__bipodNode:t="bipod"
+  gun__bipodOffset:p3=0, 0, 0
+  gun__bipodRecoilMult:r=-1
+  gun__barrelTipNode:t="gunFx_main"
+  gun__barrelTipOffset:p3=1.5, 0, 0
+  gun__barrelRadius:r=0.04
+  gun__embeddedBipod:b=no
+  gun__bipodEnableVarName:t="bipod_enabled"
+  gun__bipodEnableVarId:i=-1
+
+  "gun__mountPoints:shared:array"{}
 }

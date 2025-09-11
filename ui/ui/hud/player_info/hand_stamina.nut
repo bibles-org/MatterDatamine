@@ -1,14 +1,11 @@
+from "%ui/components/colors.nut" import PlayerInfoVeryLow, PlayerInfoLow, PlayerInfoMedium, PlayerInfoNormal
+
+from "%ui/hud/player_info/style.nut" import indicatorsFontStyle, indicatorsFontSize, indicatorsIcoSize, indicatorsGap
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { indicatorsFontStyle, indicatorsFontSize, indicatorsIcoSize, indicatorsGap } = require("style.nut")
-let { vitalParameterSize } = require("vital_info_common.nut")
-let {
-  PlayerInfoVeryLow,
-  PlayerInfoLow,
-  PlayerInfoMedium,
-  PlayerInfoNormal
-} = require("%ui/components/colors.nut")
+let { vitalParameterSize } = require("%ui/hud/player_info/vital_info_common.nut")
 
 
 let handStamina = Watched(1)
@@ -68,9 +65,9 @@ function mkHandStaminaComp(customHdpxi = hdpxi, override = {}) {
   }.__update(override)
 }
 
-let handStaminaPanel = {
+let handStaminaPanel = freeze({
   panel = mkHandStaminaComp
   visibleWatched = visibleHandStamina
-}
+})
 
-return { handStaminaPanel, mkHandStaminaComp, visibleHandStamina }
+return freeze({ handStaminaPanel, mkHandStaminaComp, visibleHandStamina })

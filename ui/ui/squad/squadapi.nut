@@ -1,6 +1,7 @@
+from "%ui/matchingClient.nut" import matchingCall
+
 from "%ui/ui_library.nut" import *
 
-let { matchingCall } = require("%ui/matchingClient.nut")
 
 function reportError(resp, _silent=false) {
   if (resp?.error == 0)

@@ -22,10 +22,10 @@ let state = comps.reduce(function(a,b) {
 ecs.register_es("ui_vehicle_view_state",
   {
     [["onInit","onChange"]] = function(_, comp){
-      comps.each(@(v) state[v.sname](comp[v.comp]))
+      comps.each(@(v) state[v.sname].set(comp[v.comp]))
     }
     function onDestroy(_, __){
-      comps.each(@(v) state[v.sname](v.def))
+      comps.each(@(v) state[v.sname].set(v.def))
     }
   },
   {

@@ -1,68 +1,84 @@
+from "%sqstd/underscore.nut" import deep_clone
+
+from "das.inventory" import get_weapon_slot_for_item, move_weapon_from_inventory_to_slot, get_equipped_item_for_installing_mod, install_weapon_mod_to_slot,
+  get_equipment_slot_for_item, move_item_from_inventory_to_slot, get_slot_and_equipment_for_mod, install_equipment_mod_to_slot,
+  move_item_from_ground_to_slot, move_stack_to_inventory, is_equip_to_slot_cause_from_pocket_drop, is_equip_to_slot_cause_inventory_overflow,
+  check_item_can_be_used
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import unloadAmmoClick, canItemBeUnload, canItemBeLoad, loadAmmoClick,
+  needShowMarketLink, showItemInMarket, isFastEquipItemPossible, getInventoryToMove, getInspectingAmmoCountInfo,
+  canCheckAmmoInMagazine, checkAmmoClick, loadIsEnabled, unloadIsEnabled, stopLoadUnloadAmmoClick,
+  needShowMarketSlotLink, showItemsForSlotInMarket, repairCost, repairItems,
+  fastUnequipItem, checkInventoryVolume, actionForbiddenDueToQueueState
+
+from "%ui/fonts_style.nut" import sub_txt
+from "%ui/hud/state/inventory_eids_common.nut" import getInventoryEidByListType
+from "dasevents" import sendNetEvent, TryUseItem, CmdUseExternalInventoryAccesspointRequest, CmdDropAllItemsFromInventory, EventQuickUseItemUsed
+from "%ui/components/modalPopupWnd.nut" import addModalPopup, removeModalPopup
+from "%ui/components/button.nut" import button
+from "%ui/components/commonComponents.nut" import mkText, mkTextArea
+from "das.human_weap" import choose_weapon
+from "%ui/hud/menus/components/inventoryBulletInBarrel.nut" import unloadAmmoAction
+from "%ui/hud/menus/inventories/workbenchInventory.nut" import itemCanBeRepaired, removeFromWorkbench, dropToWorkbench
+from "%ui/hud/menus/inventories/refinerInventory.nut" import dropToRefiner, removeFromRefiner
+from "%ui/hud/menus/components/splitStackWindow.nut" import openSplitStacksWindow, canSplitStack
+from "%ui/hud/menus/components/inventoryItemsListChecksCommon.nut" import showInventoryOverflowOnUnequipToExMsgBox
+from "%ui/equipPresets/presetsButton.nut" import patchPresetItems
+from "%ui/mainMenu/market/inventoryToMarket.nut" import getLotFromItem, isLotAvailable, getWeaponModsPrice
+from "eventbus" import eventbus_send, eventbus_subscribe
+from "%ui/components/colors.nut" import RedWarningColor, TextNormal
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "%ui/mainMenu/currencyIcons.nut" import currencyMap
+from "%ui/mainMenu/stashSpaceMsgbox.nut" import showNoEnoughStashSpaceMsgbox
+from "%ui/state/appState.nut" import isInBattleState
+from "dasevents" import CmdShowUiMenu
+from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog, playerLogsColors
+from "%dngscripts/sound_system.nut" import sound_play
+from "%ui/components/msgbox.nut" import showMsgbox
+
+import "%ui/components/gamepadImgByKey.nut" as gamepadImgByKey
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 from "math" import min, ceil
 
 let { weaponSlotsKeys } = require("%ui/types/weapon_slots.nut")
 let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
-let { GROUND, STASH, EXTERNAL_ITEM_CONTAINER, BACKPACK0, REFINER, REFINER_STASH, HERO_ITEM_CONTAINER,
-  TRASH_BIN, SAFEPACK, WORKBENCH, WORKBENCH_STASH, WORKBENCH_ITEMS_ON_PLAYER
-} = require("%ui/hud/menus/components/inventoryItemTypes.nut")
+let { GROUND, STASH, EXTERNAL_ITEM_CONTAINER, BACKPACK0,
+      REFINER, REFINER_STASH, REFINER_ON_PLAYER,
+      HERO_ITEM_CONTAINER, SAFEPACK, WORKBENCH,
+      WORKBENCH_STASH, WORKBENCH_ITEMS_ON_PLAYER } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
 let { POCKETS, REPAIR, ON_BODY_SLOT, WEAPON, WEAPON_MOD } = require("%ui/hud/menus/components/slotTypes.nut")
-let { getInventoryEidByListType } = require("%ui/hud/state/inventory_eids_common.nut")
-let { isShiftPressed, isAltPressed, contextHoveredData } = require("%ui/hud/state/inventory_state.nut")
-let { get_weapon_slot_for_item, move_weapon_from_inventory_to_slot,
-      get_equipped_item_for_installing_mod, install_weapon_mod_to_slot,
-      get_equipment_slot_for_item, move_item_from_inventory_to_slot,
-      get_slot_and_equipment_for_mod, install_equipment_mod_to_slot,
-      move_item_from_ground_to_slot,
-      move_stack_to_inventory, is_equip_to_slot_cause_from_pocket_drop,
-      is_equip_to_slot_cause_inventory_overflow,
-      check_item_can_be_used } = require("das.inventory")
+let { isShiftPressed, isAltPressed, contextHoveredData, mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
 let { isOnPlayerBase, isInPlayerSession } = require("%ui/hud/state/gametype_state.nut")
-let { sendNetEvent, TryUseItem, CmdUseExternalInventoryAccesspointRequest, CmdDropAllItemsFromInventory, EventQuickUseItemUsed } = require("dasevents")
 let { itemCompExtraInfoQuery } = require("%ui/hud/state/item_info.nut")
-let { trashBinItems } = require("%ui/hud/menus/components/trashBin.nut")
-let { addModalPopup, removeModalPopup } = require("%ui/components/modalPopupWnd.nut")
-let { unloadItemAmmo, canItemBeUnload, canItemBeLoad, loadItemAmmo, needShowMarketLink,
-  showItemInMarket, isFastEquipItemPossible, getInventoryToMove, canCheckAmmoInMagazine,
-  checkAmmoClick, loadIsEnabled, unloadIsEnabled, needShowMarketSlotLink,
-  showItemsForSlotInMarket, repairCost, repairItems, fastUnequipItem, checkInventoryVolume
-} = require("%ui/hud/menus/components/inventoryItemUtils.nut")
-let { button } = require("%ui/components/button.nut")
-let { mkText, mkTextArea } = require("%ui/components/commonComponents.nut")
-let { choose_weapon } = require("das.human_weap")
-let { unloadAmmoAction } = require("%ui/hud/menus/components/inventoryBulletInBarrel.nut")
-let { itemCanBeRepaired, removeFromWorkbench, dropToWorkbench } = require("%ui/hud/menus/inventories/workbenchInventory.nut")
-let { dropToRefiner, removeFromRefiner } = require("%ui/hud/menus/inventories/refinerInventory.nut")
-let { openSplitStacksWindow, canSplitStack } = require("%ui/hud/menus/components/splitStackWindow.nut")
-let { showInventoryOverflowOnUnequipToExMsgBox } = require("%ui/hud/menus/components/inventoryItemsListChecksCommon.nut")
 let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
 let { canModifyInventory } = require("%ui/hud/state/inventory_common_es.nut")
 let { previewPreset } = require("%ui/equipPresets/presetsState.nut")
-let { shopPresetToPurchase, patchPresetItems } = require("%ui/equipPresets/presetsButton.nut")
-let { marketItems, playerProfileCreditsCount, playerStats } = require("%ui/profile/profileState.nut")
-let { getLotFromItem, isLotAvailable, getWeaponModsPrice } = require("%ui/mainMenu/market/inventoryToMarket.nut")
-let { eventbus_send, eventbus_subscribe } = require("eventbus")
-let { RedWarningColor, TextNormal } = require("%ui/components/colors.nut")
-let { deep_clone } = require("%sqstd/underscore.nut")
+let { shopPresetToPurchase } = require("%ui/equipPresets/presetsButton.nut")
+let { marketItems, playerProfileCreditsCount, playerStats, playerBaseState } = require("%ui/profile/profileState.nut")
 let { equipment } = require("%ui/hud/state/equipment.nut")
-let { mkFakeItem } = require("%ui/hud/menus/components/fakeItem.nut")
 let { stashEid } = require("%ui/state/allItems.nut")
-let { currencyMap } = require("%ui/mainMenu/currencyIcons.nut")
-let { showNoEnoughStashSpaceMsgbox } = require("%ui/mainMenu/stashSpaceMsgbox.nut")
+let { isGamepad } = require("%ui/control/active_controls.nut")
+let JB = require("%ui/control/gui_buttons.nut")
+let { inspectingAmmoCountAffectEid } = require("%ui/hud/state/ammo_count_knowledge_state.nut")
+let { entityToUse } = require("%ui/hud/state/entity_use_state.nut")
+let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
+let { WEAPON_SHOWROOM_MENU_ID, inventoryShowroomItem } = require("%ui/hud/menus/weaponShowroom/weaponShowroom.nut")
+let { inShootingRange } = require("%ui/hud/state/shooting_range_state.nut")
+let { selfMemberState } = require("%ui/squad/squadState.nut")
+let { isListMutableDueQueue } = require("%ui/hud/menus/components/inventoryItemsListChecks.nut")
 
 const CONTEXT_MENU_WND_UID = "itemContextMenu"
 let iconHeight = hdpxi(18)
 
 function fastEquipItem(item) {
-  if (!canModifyInventory.get())
+  if (!canModifyInventory.get() || mutationForbidenDueToInQueueState.get())
     return false
   if (item?.isWeapon) {
     let weap = get_weapon_slot_for_item(controlledHeroEid.get(), item.eid)
     if (weap == -1)
       return false
     let slotName = weaponSlotsKeys[weap]
-    move_weapon_from_inventory_to_slot(item.eid, item.owner, slotName)
+    move_weapon_from_inventory_to_slot(item.eid, item.inventoryEid, slotName)
   }
   else if (item?.isWeaponMod) {
     let weapId = get_equipped_item_for_installing_mod(controlledHeroEid.get(), item.eid)
@@ -90,54 +106,15 @@ function fastEquipItem(item) {
   return true
 }
 
-function removeFromTrashBin(item) {
-  let isAmmo = (item?.ammoCount ?? 0) > 0 && (item?.countPerStack ?? 0) > 0
-  local idx = -1
-  idx = trashBinItems.get().findindex(@(trash) trash.eids.findindex(@(eid) eid==item.eid) != null)
-
-  if(idx == null) {
-    return
-  }
-
-  if (isShiftPressed.get()) {
-    trashBinItems.mutate(function(v) {
-      v.remove(idx)
-    })
-    return
-  }
-
-  if (isAmmo) {
-    let ammo = trashBinItems.get()[idx].ammoCount - item.countPerStack
-    trashBinItems.mutate(function(v) {
-      if (ammo <= 0) {
-        v.remove(idx)
-      }
-      else {
-        v[idx].ammoCount -= item.countPerStack
-      }
-    })
-  }
-  else if (trashBinItems.get()[idx].eids.len() <= 1) {
-    trashBinItems.mutate(@(v) v.remove(idx))
-  }
-  else {
-    trashBinItems.mutate(function(v) {
-      
-      v[idx].eids.remove(0)
-      v[idx].eid = v[idx].eids[0]
-      v[idx].uniqueIds.remove(0)
-      v[idx].count--
-    })
-  }
-}
-
 function moveItemToInventory(data, wishList, wishCount = 1) {
-  if (data?.fromList?.name == "trashBin") {
-    removeFromTrashBin(data)
+  if (data?.refiner__fromList) {
+    removeFromRefiner(data, wishCount)
+    return
+  }
 
-    if(data.trashBinItemOrigin == wishList) {
-      return
-    }
+  if (wishList == REFINER) {
+    dropToRefiner(data, data?.fromList, wishCount)
+    return
   }
 
   let list = (wishList == GROUND && !isInPlayerSession.get()) ? STASH : wishList
@@ -179,8 +156,21 @@ function moveItemWithKeyboardMode(item, list_type) {
 
 function moveItemToOneOfInventories(item, inventories, count) {
   local inventory = getInventoryToMove(item, inventories)
-  if (inventory == null)
+  if (inventory == null) {
+
+    sound_play("ui_sounds/button_click_inactive")
+    addPlayerLog({
+      id = $"NoFreeVolumeLeft"
+      
+      content = mkPlayerLog({
+        titleText = loc("inventory/overwhelmed")
+        titleFaIcon = "close"
+        bodyText = loc(item?.itemName)
+        logColor = playerLogsColors.warningLog
+      })
+    })
     return
+  }
 
   moveItemToInventory(item, inventory, count)
 }
@@ -202,6 +192,20 @@ function getEquipOrInventoryOrBackpack(item) {
   return { locId = $"item/action/moveTo{inventory.name}", icon = "context_icons/move.svg" }
 }
 
+function moveAwayToStashOrGround(_item) {
+  local locId = "item/action/moveAway"
+  if (isOnPlayerBase.get())
+    locId = "item/action/moveToStashHint"
+  return { locId, icon = "context_icons/drag_out.svg" }
+}
+
+function moveAwayStackToStashOrGround(_item) {
+  local locId = "item/action/moveSomeAway"
+  if (isOnPlayerBase.get())
+    locId = "item/action/moveSomeToStash"
+  return { locId, icon = "context_icons/drag_out.svg" }
+}
+
 function getPickUpToEquipOrBackpack(item) {
   if (isFastEquipItemPossible(item))
     return null
@@ -220,8 +224,8 @@ function getPickUpToEquipOrHeroInventory(item) {
   return { locId = $"item/action/moveTo{inventory.name}", icon = "context_icons/move.svg" }
 }
 
-let stackCountOf = @(item) (item?.isBoxedItem ?? false) ? item.countPerStack : 1
-let totalCountOf = @(item) (item?.isBoxedItem ?? false) ? item.ammoCount : item.count
+let stackCountOf = @(item) (item?.isBoxedItem ?? false) ? (item?.countPerStack ?? 1) : 1
+let totalCountOf = @(item) (item?.isBoxedItem ?? false) ? (item?.ammoCount ?? 1) : (item?.count ?? 1)
 
 let pickUpToEquipOrInventoryOrBackpack = function(item, count = null) {
   if (item?.itemType == "other") {
@@ -241,13 +245,16 @@ let moveToStashOnBase = @(item) !isOnPlayerBase.get() || item?.itemTemplate == n
 function tryUse(item) {
   if (item?.isHealkit && item?.eid)
     ecs.g_entity_mgr.sendEvent(item.eid, EventQuickUseItemUsed({ userEid = controlledHeroEid.get() }))
-  else if (item?.isHealkit || (item?.isUsable ?? false) || item?.itemType == "grenade")
+  else if (item?.isHealkit || (item?.isUsable ?? false) || item?.itemType == "grenade" || item?.itemProto == "cortical_vault")
     ecs.g_entity_mgr.sendEvent(item.eid, TryUseItem({userEid = controlledHeroEid.get(), targetEid=controlledHeroEid.get()}))
 }
 
 function canUseItem(item) {
-  let { isHealkit = false, isUsable = false, itemType = "" } = item
-  return (isHealkit || isUsable || itemType == "grenade") && check_item_can_be_used(controlledHeroEid.get(), item.eid)
+  if (actionForbiddenDueToQueueState(item))
+    return false
+  let { isHealkit = false, isUsable = false, itemType = "", itemProto = "" } = item
+  return (isHealkit || isUsable || itemType == "grenade" || itemProto == "cortical_vault")
+    && check_item_can_be_used(controlledHeroEid.get(), item.eid)
 }
 
 function inspectItemsContainers(item, _event) {
@@ -264,8 +271,12 @@ function dropAllFromContainer(item) {
 }
 
 function canUnequipItem(item) {
-  if (!item?.itemTemplate || item.itemTemplate == "")
+  if (!item?.itemTemplate || item.itemTemplate == "" || item?.isDefaultStubItem)
     return false
+
+  if ((item?.slotName.contains("signal_grenade") || item?.slotName.contains("safepack")) && isInBattleState.get())
+    return false
+
   local defaultItem = null
   if (item?.validWeaponSlots.contains("melee")) {
     let suitTpl = equipment.get()?["chronogene_primary_1"].itemTemplate
@@ -314,21 +325,32 @@ let getRepairItemInfo = @(reqMoney) {
   color = reqMoney <= playerProfileCreditsCount.get() ? TextNormal : RedWarningColor
 }
 
+function getQuickRefineItemInfo(_item) {
+  let isRefinerEnabled = (playerBaseState.get()?.openedAMCleaningDevices ?? 0) > 0
+  let locId = isRefinerEnabled ? "inventory/refineItemsTitle" : "inventory/destroyItems"
+  let icon = isRefinerEnabled ? "context_icons/drop_out_2.svg" : "context_icons/trash.svg"
+  return { locId, icon }
+}
+
 let itemContainerItemsQuery = ecs.SqQuery("itemContainerItemsQuery", {
-  comps_ro = [["itemContainer", ecs.TYPE_EID_LIST, []]]
+  comps_ro = [["itemContainer", ecs.TYPE_EID_LIST, null]]
 })
 
 let canInspectItem = function(item) {
   if (item?.eid == null)
     return false
-  local itemsInside = []
+  local itemsInside = null
   itemContainerItemsQuery.perform(item.eid, function(_eid, comps) {
     itemsInside = comps.itemContainer
   })
-  return itemsInside.len() > 0
+  return itemsInside != null && itemsInside.getAll().len() > 0
 }
 
-let showChangeWeapon = @(item) item?.itemTemplate != null && !(item?.isCurrent ?? false)
+let canDropAllFromContainer = @(item) canInspectItem(item) && !actionForbiddenDueToQueueState(item)
+
+let showChangeWeapon = function(item) {
+  return item?.itemTemplate != null && !(item?.isCurrent ?? false)
+}
 let chooseWeaponAction = @(weapon) choose_weapon(weapon.currentWeaponSlotName)
 let unloadWeaponAmmoAction = @(weapon) unloadAmmoAction(weapon, weapon.currentWeaponSlotName)
 function showUnloadWeaponAction(weapon) {
@@ -338,12 +360,54 @@ function showUnloadWeaponAction(weapon) {
   return canUnload && magazine != null && curAmmo > 0 && gunBoxedAmmoTemplate != ""
 }
 
-let isStackSplitEquipToHeroPossible = @(item) canSplitStack(item) && getInventoryToMove(item, [HERO_ITEM_CONTAINER])!=null
-let isStackSplitEquipToBackpackPossible = @(item) canSplitStack(item) && getInventoryToMove(item, [BACKPACK0])!=null
+let isStackSplitEquipToHeroPossible = @(item) canSplitStack(item) && (getInventoryToMove(item, [HERO_ITEM_CONTAINER])!=null)
+let isStackSplitEquipToBackpackPossible = @(item) canSplitStack(item) && (getInventoryToMove(item, [BACKPACK0])!=null)
 
 let showSplitStackToHero = @(item) openSplitStacksWindow(item, @(count) moveItemToInventory(item, HERO_ITEM_CONTAINER, count))
 let showSplitStackToBackpack = @(item) openSplitStacksWindow(item, @(count) moveItemToInventory(item, BACKPACK0, count))
-let showSplitStackToGround = @(item) openSplitStacksWindow(item, @(count) moveItemToInventory(item, GROUND, count))
+
+let showSplitStackToGround = function(item) {
+  if (isOnPlayerBase.get())
+    openSplitStacksWindow(item, @(count) moveItemToInventory(item, STASH, count))
+  else
+    openSplitStacksWindow(item, @(count) moveItemToInventory(item, GROUND, count))
+}
+
+let dropItemAway = function(item) {
+  let count = item?.isBoxedItem ? item.countPerStack : 1
+  if (!isOnPlayerBase.get())
+    moveItemToInventory(item, GROUND, count)
+  else
+    moveItemToInventory(item, STASH, count)
+}
+
+let openItemShowroom = function(item) {
+  inventoryShowroomItem.set(item)
+  ecs.g_entity_mgr.broadcastEvent(CmdShowUiMenu({menuName = WEAPON_SHOWROOM_MENU_ID}))
+}
+
+let needOpenWeaponShowroomAction = function(item) {
+  return isOnPlayerBase.get() && item?.isWeapon && !inShootingRange.get()
+}
+
+let needOpenItemShowroomAction = function(item) {
+  if (needOpenWeaponShowroomAction(item))
+    return false
+  return isOnPlayerBase.get() && item?.itemTemplate
+}
+
+function needShowMagazineStopAction(item) {
+  let { boxedItemTemplate = "", charges = 0, isDelayedMoveMod = false, eid = ecs.INVALID_ENTITY_ID } = item
+  let isMagazineTypeHolder = boxedItemTemplate != ""
+
+  let inspectingAmmoCountItemEid = getInspectingAmmoCountInfo(inspectingAmmoCountAffectEid.get())[0]
+  return isMagazineTypeHolder
+    && !isSpectator.get()
+    && charges > 0
+    && !isDelayedMoveMod
+    && inspectingAmmoCountItemEid != eid
+    && entityToUse.get() == eid
+}
 
 let actionShowSplitStackBackpack = {
   needToShow = isStackSplitEquipToBackpackPossible
@@ -351,6 +415,7 @@ let actionShowSplitStackBackpack = {
   icon = "context_icons/move.svg"
   action = showSplitStackToBackpack
 }
+
 let actionShowSplitStackHero = {
   needToShow = isStackSplitEquipToHeroPossible
   locId = "item/action/moveSomeToHero"
@@ -360,10 +425,15 @@ let actionShowSplitStackHero = {
 
 let actionShowSplitStackGround  = {
   needToShow = canSplitStack
-  locId = "item/action/moveSomeAway"
-  icon = "context_icons/move.svg"
+  getCustomData = moveAwayStackToStashOrGround
   action = showSplitStackToGround
 }
+
+let actionDropItemOnGround  = {
+  getCustomData = moveAwayToStashOrGround
+  action = dropItemAway
+}
+
 let actionEquipOrInventoryOrBackpack = {
   getCustomData = getEquipOrInventoryOrBackpack
   action = pickUpToEquipOrInventoryOrBackpack
@@ -380,7 +450,7 @@ let actionInspectContaner = {
 let actionDropAllFromContaner = {
   locId = "item/action/dropFromContainer"
   action = dropAllFromContainer
-  needToShow = canInspectItem
+  needToShow = canDropAllFromContainer
   icon = "context_icons/drop_out_1.svg"
 }
 
@@ -411,10 +481,17 @@ let actionToMarketForSlot = {
   action = showItemsForSlotInMarket
 }
 
+let actionStopLoadUnloadAmmo = {
+  locId = "Inventory/stop_ammo_action"
+  needToShow = needShowMagazineStopAction
+  action = @(_item) stopLoadUnloadAmmoClick()
+  icon = "context_icons/stop.svg"
+}
+
 let actionLoadAmmo = {
   needToShow = canItemBeLoad
   getCustomData = getLoadItemInfo
-  action = loadItemAmmo
+  action = loadAmmoClick
   icon = "context_icons/ammo_yes.svg"
   getEnabled = loadIsEnabled
 }
@@ -422,7 +499,7 @@ let actionLoadAmmo = {
 let actionUnloadAmmo = {
   needToShow = canItemBeUnload
   getCustomData = getUnloadItemInfo
-  action = unloadItemAmmo
+  action = unloadAmmoClick
   icon = "context_icons/ammo_no.svg"
   getEnabled = unloadIsEnabled
 }
@@ -447,6 +524,39 @@ let repairItemAction = {
   needToShow = itemCanBeRepaired
 }
 
+let quickRefineGamepadAction = {
+  action = @(item) moveItemWithKeyboardMode(item, REFINER)
+  getCustomData = getQuickRefineItemInfo
+  needToShow = @(_item) isOnPlayerBase.get()
+    && isGamepad.get()
+    && !isOnboarding.get()
+}
+
+function tryUseSignalGrenade(item) {
+  if (item?.eid)
+    ecs.g_entity_mgr.sendEvent(item.eid, TryUseItem({userEid = controlledHeroEid.get(), targetEid=controlledHeroEid.get()}))
+}
+
+let useSignalGrenade = {
+  locId = "Inventory/useSignalGrenade"
+  action = tryUseSignalGrenade
+  needToShow = @(item) item?.slotName == "signal_grenade" && item?.itemTemplate
+}
+
+let actionOpenWeaponInShowroom = {
+  locId = "item/action/actionOpenWeaponInShowroom"
+  action = openItemShowroom
+  needToShow = needOpenWeaponShowroomAction
+  icon = "context_icons/weapon_showroom.svg"
+}
+
+let actionOpenItemInShowroom = {
+  locId = "item/action/inspect"
+  action = openItemShowroom
+  needToShow = needOpenItemShowroomAction
+  icon = "context_icons/look.svg"
+}
+
 let contextMenuActionsByListType = freeze({
   [GROUND.name] = [
     actionUse
@@ -465,6 +575,8 @@ let contextMenuActionsByListType = freeze({
     actionShowSplitStackBackpack
     actionInspectContaner
     actionDropAllFromContaner
+    actionOpenWeaponInShowroom
+    actionOpenItemInShowroom
   ],
   [STASH.name] = [
     actionUse
@@ -479,9 +591,13 @@ let contextMenuActionsByListType = freeze({
     actionUnloadAmmo
     actionToMarket
     repairItemAction
+    quickRefineGamepadAction
+    actionOpenWeaponInShowroom
+    actionOpenItemInShowroom
   ],
   [BACKPACK0.name] = [
     actionUse
+    actionStopLoadUnloadAmmo
     actionCheckMagazineAmmo
     actionFastEquip
     {
@@ -489,16 +605,21 @@ let contextMenuActionsByListType = freeze({
       action = pickUpToEquipOrHeroInventory
     }
     actionShowSplitStackHero
-    actionShowSplitStackGround
     actionInspectContaner
     actionDropAllFromContaner
     actionLoadAmmo
     actionUnloadAmmo
     actionToMarket
     repairItemAction
+    actionDropItemOnGround
+    actionShowSplitStackGround
+    quickRefineGamepadAction
+    actionOpenWeaponInShowroom
+    actionOpenItemInShowroom
   ],
   [HERO_ITEM_CONTAINER.name] = [
     actionUse
+    actionStopLoadUnloadAmmo
     actionCheckMagazineAmmo
     actionFastEquip
     {
@@ -506,16 +627,21 @@ let contextMenuActionsByListType = freeze({
       action = pickUpToEquipOrBackpack
     }
     actionShowSplitStackBackpack
-    actionShowSplitStackGround
     actionInspectContaner
     actionDropAllFromContaner
     actionLoadAmmo
     actionUnloadAmmo
     actionToMarket
     repairItemAction
+    actionDropItemOnGround
+    actionShowSplitStackGround
+    quickRefineGamepadAction
+    actionOpenWeaponInShowroom
+    actionOpenItemInShowroom
   ],
   [SAFEPACK.name] = [
     actionUse
+    actionStopLoadUnloadAmmo
     actionCheckMagazineAmmo
     actionFastEquip
     {
@@ -523,16 +649,22 @@ let contextMenuActionsByListType = freeze({
       action = pickUpToEquipOrBackpack
     }
     actionShowSplitStackBackpack
-    actionShowSplitStackGround
     actionInspectContaner
     actionLoadAmmo
     actionUnloadAmmo
     actionToMarket
     repairItemAction
+    actionDropItemOnGround
+    actionShowSplitStackGround
+    actionOpenWeaponInShowroom
+    actionOpenItemInShowroom
   ],
   [POCKETS.name] = [
     actionUse
     fastUnequipItemAction
+    actionStopLoadUnloadAmmo
+    actionLoadAmmo
+    actionUnloadAmmo
     repairItemAction
     actionToMarketForSlot
   ],
@@ -544,6 +676,7 @@ let contextMenuActionsByListType = freeze({
     actionDropAllFromContaner
     repairItemAction
     actionToMarketForSlot
+    useSignalGrenade
   ],
   [WEAPON.name] = [
     {
@@ -560,15 +693,17 @@ let contextMenuActionsByListType = freeze({
       icon = "context_icons/barrel.svg"
     }
     actionToMarketForSlot
+    actionOpenWeaponInShowroom
   ],
   [WEAPON_MOD.name] = [
     fastUnequipItemAction
     actionToMarketForSlot
+    actionLoadAmmo
   ],
   [REFINER.name] = [
     {
       locId = "inventory/removeFromRefiner"
-      action = removeFromRefiner
+      action = @(item) removeFromRefiner(item, item?.isBoxedItem ? item.countPerStack : 1)
       icon = "context_icons/drag_out.svg"
     }
     actionToMarket
@@ -576,7 +711,15 @@ let contextMenuActionsByListType = freeze({
   [REFINER_STASH.name] = [
     {
       locId = "inventory/dropToRefiner"
-      action = @(item) dropToRefiner(item, REFINER_STASH)
+      action = @(item) dropToRefiner(item, item?.fromList, item?.isBoxedItem ? item.countPerStack : 1)
+      icon = "context_icons/drag_in.svg"
+    }
+    actionToMarket
+  ],
+  [REFINER_ON_PLAYER.name] = [
+    {
+      locId = "inventory/dropToRefiner"
+      action = @(item) dropToRefiner(item, item?.fromList, item?.isBoxedItem ? item.countPerStack : 1)
       icon = "context_icons/drag_in.svg"
     }
     actionToMarket
@@ -606,13 +749,10 @@ let contextMenuActionsByListType = freeze({
       icon = "context_icons/drag_in.svg"
     }
     actionToMarket
-  ],
-  [TRASH_BIN.name] = [
-    actionInspectContaner
   ]
 })
 
-function mkContextMenuRow(rowData, item, event) {
+function mkContextMenuRow(rowData, item, event, idx) {
   let { action = null, icon = null, locId = "", getCustomData = null,
     needToShow = null, needOnclickEventData = false, getEnabled = null } = rowData
   if (action == null || (needToShow != null && !needToShow(item)))
@@ -625,19 +765,33 @@ function mkContextMenuRow(rowData, item, event) {
 
   if (locIdToUse == "" && iconToUse == null)
     return null
-
+  let activeBtn = gamepadImgByKey.mkImageCompByDargKey(JB.A,
+    { height = sub_txt.fontSize, hplace = ALIGN_RIGHT, vplace = ALIGN_CENTER})
+  let stateFlags = Watched(0)
   return button({
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
-    gap = hdpx(4)
+    gap = flex()
     valign = ALIGN_CENTER
     children = [
-      iconToUse == null ? { size = [iconHeight, iconHeight] } : {
-        rendObj = ROBJ_IMAGE
-        size = [iconHeight, iconHeight]
-        image = Picture($"ui/skin#{iconToUse}:{iconHeight}:{iconHeight}:P")
+      {
+        size = FLEX_H
+        flow = FLOW_HORIZONTAL
+        gap = static hdpx(4)
+        valign = ALIGN_CENTER
+        children = [
+          iconToUse == null ? { size = iconHeight } : {
+            rendObj = ROBJ_IMAGE
+            size = iconHeight
+            image = Picture($"ui/skin#{iconToUse}:{iconHeight}:{iconHeight}:P")
+          }
+          mkTextArea($"{loc(locIdToUse)}{additionalText}", { color = castomData?.color ?? TextNormal })
+        ]
       }
-      mkTextArea($"{loc(locIdToUse)}{additionalText}", { color = castomData?.color ?? TextNormal })
+      @() {
+        watch = [isGamepad, stateFlags]
+        children = isGamepad.get() && (stateFlags.get() & S_HOVER) ? activeBtn : null
+      }
     ]
   }, function() {
     removeModalPopup(CONTEXT_MENU_WND_UID)
@@ -647,11 +801,13 @@ function mkContextMenuRow(rowData, item, event) {
     else
       action(item)
   }, {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     halign = ALIGN_CENTER
-    padding = [hdpx(4), hdpx(6)]
+    padding = static [hdpx(4), hdpx(6)]
     borderWidth = 0
     isEnabled
+    stateFlags
+    key = $"context_menu_{idx}"
   })
 }
 
@@ -663,27 +819,27 @@ let noActionsRow = {
 function mkDummyContextMenuRow(rowData) {
   let { icon, locId } = rowData
   return button({
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     flow = FLOW_HORIZONTAL
     gap = hdpx(4)
     valign = ALIGN_CENTER
     children = [
       {
         rendObj = ROBJ_IMAGE
-        size = [iconHeight, iconHeight]
+        size = iconHeight
         image = Picture($"ui/skin#{icon}:{0}:{0}:P".subst(iconHeight))
       }
       mkText(loc(locId), {
-        size = [flex(), SIZE_TO_CONTENT]
+        size = FLEX_H
       })
     ]
   }, function() {
     removeModalPopup(CONTEXT_MENU_WND_UID)
     contextHoveredData.set(null)
-  }, {
-    size = [flex(), SIZE_TO_CONTENT]
+  }, static {
+    size = FLEX_H
     halign = ALIGN_CENTER
-    padding = [hdpx(4), hdpx(6)]
+    padding = static [hdpx(4), hdpx(6)]
     borderWidth = 0
   })
 }
@@ -713,7 +869,7 @@ function directPurchase(item, id, itemsToPurchase, canPurchase) {
       showNoEnoughStashSpaceMsgbox(missingVolume)
       return
     }
-    eventbus_send("profile_server.buyLots", [ { id, count = itemsToPurchase } ])
+    eventbus_send("profile_server.buyLots", [ { id, count = itemsToPurchase, usePremium = false } ])
     eventbus_subscribe("profile_server.buyLots.result", function(_) {
       let clonedPreset = deep_clone(previewPreset.get())
       patchPresetItems(clonedPreset)
@@ -752,12 +908,12 @@ function showItemContextMenu(item, listTypeName, event = null) {
       if (lot != null && reqMoney > 0)
         funcList.append(mkContextMenuRow(
           mkPurchaseItemActionData(lot, reqMoney * itemsToPurchase, itemsToPurchase, playerProfileCreditsCount.get() >= reqMoney),
-            item, event))
+            item, event, funcList.len()))
     }
   }
   else {
     foreach (data in contextMenuActionsByListType?[listTypeName] ?? []) {
-      let row = mkContextMenuRow(data, item, event)
+      let row = mkContextMenuRow(data, item, event, funcList.len())
       if (row != null)
         funcList.append(row)
     }
@@ -767,18 +923,35 @@ function showItemContextMenu(item, listTypeName, event = null) {
 
   let cursorPos = get_mouse_cursor_pos()
   addModalPopup([cursorPos.x, cursorPos.y + 1], {
-    size = [hdpx(300), SIZE_TO_CONTENT]
+    size = static [hdpx(320), SIZE_TO_CONTENT]
     uid = CONTEXT_MENU_WND_UID
     flow = FLOW_VERTICAL
     popupValign = ALIGN_TOP
     padding = 0
     moveDuraton = 0
     onDetach = @() contextHoveredData.set(null)
+    onAttach = @() isGamepad.get() ? move_mouse_cursor("context_menu_0", false) : null
     children = funcList
   })
 }
 
-let inventoryItemClickActions = {
+function checkIsAvaliableDuringRaidSearch(list, folowFunc) {
+  if (!isListMutableDueQueue(list)) {
+    if (mutationForbidenDueToInQueueState.get()) {
+      if (selfMemberState.get()?.ready)
+        showMsgbox({ text = loc("inventory/cannotPutToContainerDuringReady") })
+      else
+        showMsgbox({ text = loc("inventory/cannotPutToContainerDuringSearch") })
+      return
+    }
+  }
+  folowFunc()
+}
+
+
+
+
+let inventoryItemClickActions = freeze({
   [GROUND.name] = {
     lmbAction = @(item) pickUpToEquipOrInventoryOrBackpack(item, stackCountOf(item))
     lmbShiftAction = @(item) pickUpToEquipOrInventoryOrBackpack(item, totalCountOf(item))
@@ -795,15 +968,15 @@ let inventoryItemClickActions = {
     rmbAction = @(item, event) showItemContextMenu(item, STASH.name, event)
   },
   [BACKPACK0.name] = {   
-    lmbAction = @(item) pickUpToEquipOrHeroInventory(item, stackCountOf(item))
-    lmbShiftAction = @(item) pickUpToEquipOrHeroInventory(item, totalCountOf(item))
-    lmbAltAction = @(item) moveToStashOnBase(item)
+    lmbAction = @(item) checkIsAvaliableDuringRaidSearch(BACKPACK0, @() pickUpToEquipOrHeroInventory(item, stackCountOf(item)))
+    lmbShiftAction = @(item) checkIsAvaliableDuringRaidSearch(BACKPACK0, @() pickUpToEquipOrHeroInventory(item, totalCountOf(item)))
+    lmbAltAction = @(item) checkIsAvaliableDuringRaidSearch(BACKPACK0, @() moveToStashOnBase(item))
     rmbAction = @(item, event) showItemContextMenu(item, BACKPACK0.name, event)
   },
   [HERO_ITEM_CONTAINER.name] = {   
-    lmbAction = @(item) pickUpToEquipOrBackpack(item, stackCountOf(item))
-    lmbShiftAction = @(item) pickUpToEquipOrBackpack(item, totalCountOf(item))
-    lmbAltAction = @(item) moveToStashOnBase(item)
+    lmbAction = @(item) checkIsAvaliableDuringRaidSearch(HERO_ITEM_CONTAINER, @() pickUpToEquipOrBackpack(item, stackCountOf(item)))
+    lmbShiftAction = @(item) checkIsAvaliableDuringRaidSearch(HERO_ITEM_CONTAINER, @() pickUpToEquipOrBackpack(item, totalCountOf(item)))
+    lmbAltAction = @(item) checkIsAvaliableDuringRaidSearch(HERO_ITEM_CONTAINER, @() moveToStashOnBase(item))
     rmbAction = @(item, _event) showItemContextMenu(item, HERO_ITEM_CONTAINER.name)
   },
   [POCKETS.name] = {
@@ -825,23 +998,32 @@ let inventoryItemClickActions = {
   },
   [SAFEPACK.name] = {
     rmbAction = @(item, _event) showItemContextMenu(item, SAFEPACK.name)
-    lmbAltAction = @(item) moveToStashOnBase(item)
+    lmbAltAction = @(item) checkIsAvaliableDuringRaidSearch(HERO_ITEM_CONTAINER, @() moveToStashOnBase(item))
   },
-  [REFINER.name] = { rmbAction = @(item, _event) showItemContextMenu(item, REFINER.name) },
-  [REFINER_STASH.name] = { rmbAction = @(item, _event) showItemContextMenu(item, REFINER_STASH.name) },
+  [REFINER.name] = {
+    lmbAction = @(item) removeFromRefiner(item, item?.isBoxedItem ? item.countPerStack : 1)
+    lmbShiftAction = @(item) removeFromRefiner(item, item?.isBoxedItem ? item.ammoCount : item.eids.len())
+    rmbAction = @(item, event) showItemContextMenu(item, REFINER.name, event)
+  },
+  [REFINER_ON_PLAYER.name] = {
+    rmbAction = @(item, event) showItemContextMenu(item, REFINER_ON_PLAYER.name, event)
+    lmbAction = @(item) dropToRefiner(item, REFINER_ON_PLAYER, item?.isBoxedItem ? item.countPerStack : 1)
+    lmbShiftAction = @(item) dropToRefiner(item, REFINER_ON_PLAYER, item?.isBoxedItem ? item.ammoCount : item.eids.len())
+  },
+  [REFINER_STASH.name] = {
+    rmbAction = @(item, event) showItemContextMenu(item, REFINER_ON_PLAYER.name, event)
+    lmbAction = @(item) dropToRefiner(item, REFINER_STASH, item?.isBoxedItem ? item.countPerStack : 1)
+    lmbShiftAction = @(item) dropToRefiner(item, REFINER_STASH, item?.isBoxedItem ? item.ammoCount : item.eids.len())
+  },
   [WORKBENCH.name] = { rmbAction = @(item, _event) showItemContextMenu(item, WORKBENCH.name) },
   [WORKBENCH_STASH.name] = { rmbAction = @(item, _event) showItemContextMenu(item, WORKBENCH_STASH.name) },
-  [WORKBENCH_ITEMS_ON_PLAYER.name] = { rmbAction = @(item, _event) showItemContextMenu(item, WORKBENCH_ITEMS_ON_PLAYER.name) },
-  [TRASH_BIN.name] = {
-    lmbAction = @(item) removeFromTrashBin(item)
-    rmbAction = @(item, event) showItemContextMenu(item, TRASH_BIN.name, event)
-  }
-}
+  [WORKBENCH_ITEMS_ON_PLAYER.name] = { rmbAction = @(item, _event) showItemContextMenu(item, WORKBENCH_ITEMS_ON_PLAYER.name) }
+})
 
-return {
+return freeze({
   fastEquipItem
   moveItemToInventory
   moveItemWithKeyboardMode
   inventoryItemClickActions
   CONTEXT_MENU_WND_UID
-}
+})

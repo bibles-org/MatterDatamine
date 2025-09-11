@@ -1,21 +1,23 @@
+from "%ui/state/roomState.nut" import connectToHost, startSession, leaveRoom, destroyRoom,
+  startSessionWithLocalDedicated
+
+from "%ui/fonts_style.nut" import body_txt, sub_txt
+from "%ui/components/button.nut" import textButton
+from "%ui/components/msgbox.nut" import showMsgbox
+import "%ui/mainMenu/chat/chatRoom.nut" as chatRoom
+from "%ui/helpers/remap_nick.nut" import remap_nick
+from "dasevents" import CmdHideAllUiMenus
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 import "%ui/components/colors.nut" as colors
 import "matching.errors" as matching_errors
 
 let { safeAreaHorPadding, safeAreaVerPadding } = require("%ui/options/safeArea.nut")
-let { body_txt, sub_txt } = require("%ui/fonts_style.nut")
-let {connectToHost, lobbyStatus, startSession, leaveRoom, destroyRoom, roomMembers, room,
-  chatId, canOperateRoom, LobbyStatus, startSessionWithLocalDedicated, canStartWithLocalDedicated
-} = require("%ui/state/roomState.nut")
-let { textButton } = require("%ui/components/button.nut")
-let {showMsgbox} = require("%ui/components/msgbox.nut")
-let chatRoom = require("%ui/mainMenu/chat/chatRoom.nut")
-let roomSettings = require("roomSettings.nut")
+let { lobbyStatus, roomMembers, room, chatId, canOperateRoom, LobbyStatus, canStartWithLocalDedicated } = require("%ui/state/roomState.nut")
+let roomSettings = require("%ui/mainMenu/customGames/roomSettings.nut")
 let { speakingPlayers } = require("%ui/voiceChat/voiceStateHandlers.nut")
-let { remap_nick } = require("%ui/helpers/remap_nick.nut")
 let JB = require("%ui/control/gui_buttons.nut")
-let { CmdHideAllUiMenus } = require("dasevents")
 
 function startSessionCb(response) {
   function reportError(text) {
@@ -106,7 +108,7 @@ function listContent() {
     watch = [roomMembers]
     flow = FLOW_VERTICAL
     halign = ALIGN_CENTER
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     children = children
   }
 }
@@ -116,7 +118,7 @@ let header = {
   vplace = ALIGN_TOP
   rendObj = ROBJ_SOLID
   color = colors.WindowHeader
-  size = [flex(), fsh(4)]
+  size = static [flex(), fsh(4)]
   flow = FLOW_HORIZONTAL
   gap = hdpx(1)
   children = function() {
@@ -133,7 +135,7 @@ let header = {
     }
     return {
       watch = room
-      margin = [fsh(1), fsh(3)]
+      margin = static [fsh(1), fsh(3)]
       rendObj = ROBJ_TEXT
       text = room.get()?.roomId != null ?
         "{roomName}. {loccreator}{:} {creator}, {server}{:} {cluster}, {scene}".subst(room.get().public.__merge({
@@ -151,11 +153,11 @@ let header = {
 
 function membersListRoot() {
   return {
-    size = [flex(0.35), flex()]
+    size = static [flex(0.35), flex()]
     rendObj = ROBJ_FRAME
     color = colors.Inactive
-    borderWidth = [2, 0]
-    padding = [2, 0]
+    borderWidth = static [2, 0]
+    padding = static [2, 0]
 
     key = "members-list"
 
@@ -193,7 +195,7 @@ function statusText() {
     text = loc("Wait for dedicated start")
 
   return {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     halign = ALIGN_CENTER
     watch = [
       lobbyStatus
@@ -219,7 +221,7 @@ let startGameButton = textButton(loc("lobby/startGameBtn"), doStartSession,
 
 let actionButtons = @() {
   watch = [lobbyStatus, canOperateRoom]
-  size = [flex(), SIZE_TO_CONTENT]
+  size = FLEX_H
 
   halign = ALIGN_CENTER
   flow = FLOW_HORIZONTAL
@@ -241,7 +243,7 @@ let actionButtons = @() {
 
 function chatRoot() {
   return {
-    size = [flex(0.65), flex()]
+    size = static [flex(0.65), flex()]
     children = chatRoom(chatId.get())
     watch = chatId
   }
@@ -267,7 +269,7 @@ function getRoomScreen() {
       header
       statusText
       {
-        size = [flex(), flex(1)]
+        size = static [flex(), flex(1)]
         flow = FLOW_HORIZONTAL
         gap = hdpx(10)
         children = [membersListRoot, chatRoot]

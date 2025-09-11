@@ -1,9 +1,11 @@
+from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryItemImage
+from "%ui/hud/state/inventory_state.nut" import slotWithItemOpacity, slotEmptyOpacity
+
 
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
-let { inventoryItemImage, inventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
+let { inventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
 let { humanEquipmentSlots } = require("%ui/hud/state/equipment_slots_stubs.nut")
-let { slotWithItemOpacity, slotEmptyOpacity } = require("%ui/hud/state/inventory_state.nut")
 
 
 let brokenTemplateVisuals = {
@@ -61,7 +63,7 @@ function equipmentWidgetByTemplateName(templateName, slot=null, params={}, iconP
   }
 
   return {
-    size = [fsh(8),fsh(8)]
+    size = fsh(8)
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
     children = {

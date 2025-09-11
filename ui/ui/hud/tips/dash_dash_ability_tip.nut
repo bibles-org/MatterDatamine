@@ -1,8 +1,9 @@
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let {tipCmp} = require("%ui/hud/tips/tipComponent.nut")
-let {dashAbilityActivationTime, dashAbilityDashTime} = require("%ui/hud/state/dash_ability_state.nut")
+let { dashAbilityActivationTime, dashAbilityDashTime } = require("%ui/hud/state/dash_ability_state.nut")
 
 let showDashDashTip = Watched(false)
 
@@ -12,14 +13,14 @@ let onDashTimeEnd = function() {
   showDashDashTip.set(false)
 }
 
-dashAbilityActivationTime.subscribe(function(value){
+dashAbilityActivationTime.subscribe_with_nasty_disregard_of_frp_update(function(value){
   if (value != 0){
     showDashDashTip.set(true)
     gui_scene.resetTimeout(dashTipDurationSeconds, onDashTimeEnd)
   }
 })
 
-dashAbilityDashTime.subscribe(function(_){
+dashAbilityDashTime.subscribe_with_nasty_disregard_of_frp_update(function(_){
    showDashDashTip.set(false)
 })
 
@@ -31,5 +32,5 @@ let dashTip = @() tipCmp({
 return @() {
   watch = [showDashDashTip]
   size = SIZE_TO_CONTENT
-  children = showDashDashTip.value ? dashTip() : null
+  children = showDashDashTip.get() ? dashTip() : null
 }

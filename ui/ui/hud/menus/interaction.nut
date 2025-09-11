@@ -1,13 +1,14 @@
+from "%ui/hud/state/interactive_state.nut" import addInteractiveElement, removeInteractiveElement
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/components/colors.nut" import TextNormal
+from "%ui/components/controlHudHint.nut" import controlHudHint, mkHasBinding
+from "dasevents" import RequestInteractionMenuAction, sendNetEvent, CmdHideUiMenu
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
 let JB = require("%ui/control/gui_buttons.nut")
 let { selectedObjectEid, useActionKey } = require("%ui/hud/state/actions_state.nut")
-let { addInteractiveElement, removeInteractiveElement } = require("%ui/hud/state/interactive_state.nut")
-let { body_txt } = require("%ui/fonts_style.nut")
-let { TextNormal } = require("%ui/components/colors.nut")
-let { controlHudHint, mkHasBinding } = require("%ui/components/controlHudHint.nut")
-let { RequestInteractionMenuAction, sendNetEvent, CmdHideUiMenu } = require("dasevents")
 let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
 let { interactionMenuState } = require("%ui/hud/state/actions_markers.nut")
 
@@ -62,7 +63,7 @@ function closeInput(inputId) {
   return @() {
     watch = hasBinding
     flow = FLOW_HORIZONTAL
-    children = hasBinding.value ? inputHint : null
+    children = hasBinding.get() ? inputHint : null
   }
 }
 
@@ -75,22 +76,30 @@ let closeText = @(sf){
   fontSize = body_txt.fontSize
 }
 
-let closeTip = watchElemState(@(sf){
-  rendObj = ROBJ_WORLD_BLUR
-  behavior = Behaviors.Button
-  onClick = closeInteraction
-  padding = hdpx(2)
-  valign = ALIGN_CENTER
-  flow = FLOW_HORIZONTAL
-  color = actionBlurColor(sf)
-  children = [
-    closeInput(useActionKey.get()),
-    { size = [fsh(1), 0] },
-    closeText(sf)
-  ]
-})
+let mkCloseTip = function() {
+  let stateFlags = Watched(0)
+  return function() {
+    let sf = stateFlags.get()
+    return {
+      watch = stateFlags
+      onElemState = @(s) stateFlags.set(s)
+      rendObj = ROBJ_WORLD_BLUR
+      behavior = Behaviors.Button
+      onClick = closeInteraction
+      padding = hdpx(2)
+      valign = ALIGN_CENTER
+      flow = FLOW_HORIZONTAL
+      color = actionBlurColor(sf)
+      children = [
+        closeInput(useActionKey.get()),
+        { size = static [fsh(1), 0] },
+        closeText(sf)
+      ]
+    }
+  }
+}
 
-let closeTipSize = calc_comp_size(closeTip)
+let closeTipSize = calc_comp_size(mkCloseTip())
 
 
 function mkHeaderLine(data, idx, arr){
@@ -128,21 +137,27 @@ function mkActionLine(eid, data, idx, arr){
   }
   let l = arr.len() - 1
   let animations = mkAppearAnim(l-idx)
-  return watchElemState(@(sf) {
-    rendObj = ROBJ_WORLD_BLUR
-    behavior = Behaviors.Button
-    color = actionBlurColor(sf)
-    onClick = action
-    animations
-    padding = hdpx(2)
-    children = {
-      rendObj = ROBJ_TEXT
-      text
-      color = actionTextColor(sf)
-      fontSize = body_txt.fontSize
-      font = body_txt.font
+  let stateFlags = Watched(0)
+  return function() {
+    let sf = stateFlags.get()
+    return {
+      watch = stateFlags
+      onElemState = @(s) stateFlags.set(s)
+      rendObj = ROBJ_WORLD_BLUR
+      behavior = Behaviors.Button
+      color = actionBlurColor(sf)
+      onClick = action
+      animations
+      padding = hdpx(2)
+      children = {
+        rendObj = ROBJ_TEXT
+        text
+        color = actionTextColor(sf)
+        fontSize = body_txt.fontSize
+        font = body_txt.font
+      }
     }
-  })
+  }
 }
 
 
@@ -157,7 +172,7 @@ function interactionMenu() {
     children.extend(menu_header.map(@(data, idx, arr) mkHeaderLine(data, idx, arr)))
 
   children.extend(menu.map(@(data, idx, arr) mkActionLine(eid, data, idx, arr)))
-  children.append(closeTip)
+  children.append(mkCloseTip())
 
   let duration = children.len() * appearTime
   let animations = [

@@ -1,32 +1,32 @@
+from "%sqstd/math.nut" import truncateToMultiple
+from "%ui/helpers/timers.nut" import mkCountdownTimer
+from "%ui/components/colors.nut" import TextDisabled, GreenSuccessColor, RedWarningColor
+from "%ui/components/commonComponents.nut" import mkTooltiped, mkText
+from "dasevents" import EventStartThrowStone, EventHumanFall, EventEntityDied, CmdShowPoisonEffect, CmdShowHealOverTimeEffect
+from "net" import get_sync_time
+from "%ui/components/cursors.nut" import setTooltip
+import "%ui/components/tooltipBox.nut" as tooltipBox
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
-
 from "math" import PI, sin, cos, min, tan, abs, sqrt
 
-let { mkCountdownTimer } = require("%ui/helpers/timers.nut")
-let { TextDisabled, GreenSuccessColor, RedWarningColor } = require("%ui/components/colors.nut")
-let { mkTooltiped, mkText } = require("%ui/components/commonComponents.nut")
 let { get_controlled_hero } = require("%dngscripts/common_queries.nut")
-let { EventStartThrowStone, EventHumanFall, EventEntityDied, CmdShowPoisonEffect, CmdShowHealOverTimeEffect } = require("dasevents")
-let { get_sync_time } = require("net")
 let { playerMovePenalty, inventoryCurrentWeight } = require("%ui/hud/state/inventory_state.nut")
-let { setTooltip } = require("%ui/components/cursors.nut")
-let { levelLoaded } = require("%ui/state/appState.nut")
-let { truncateToMultiple } = require("%sqstd/math.nut")
+let { levelLoaded, isInBattleState } = require("%ui/state/appState.nut")
 let { watchedHeroSneaking } = require("%ui/hud/state/watched_hero.nut")
-let tooltipBox = require("%ui/components/tooltipBox.nut")
 let { hudIsInteractive } = require("%ui/hud/state/interactive_state.nut")
 
-let positiveStyle = {
+let positiveStyle = freeze({
   fgColor = mul_color(GreenSuccessColor, 0.7)
   bgColor = TextDisabled
-}
+})
 
-let negativeStyle = {
+let negativeStyle = freeze({
   fgColor = mul_color(RedWarningColor, 0.7)
   bgColor = TextDisabled
-}
+})
 
+let timeEffectsGen = Watched(0)
 
 let poison = Watched(null)
 let poisonProto  = freeze({
@@ -97,7 +97,7 @@ ecs.register_es("track_painkiller_effect",
         endTime = comp.game_effect__destroyAt
       }))
     }
-    onDestroy = @(...) painkillerEffect(null)
+    onDestroy = @(...) painkillerEffect.set(null)
   },
   {
     comps_ro = [
@@ -133,6 +133,7 @@ ecs.register_es("track_throw_stones_cooldown_effect",
   }
 )
 
+
 let abilitiesCooldown = Watched({})
 
 ecs.register_es("track_abilities_cooldown_effect",
@@ -146,6 +147,7 @@ ecs.register_es("track_abilities_cooldown_effect",
         let cooldown = comp.hero_ability__abilitiesCooldown?[abilityName] ?? 0.0
         let startTime = endTime - cooldown
         let icon = ability?.icon ? $"!ui/{ability?.icon}": ""
+        let name = ability?.name ?? "ability"
         abilitiesCooldown.mutate(@(v) v[abilityName] <- {
           icon
           tip = "effects/ability_cooldown"
@@ -153,6 +155,7 @@ ecs.register_es("track_abilities_cooldown_effect",
           duration = cooldown
           startTime
           endTime
+          name
         })
       }
     }
@@ -224,21 +227,22 @@ let iconBackground = {
 }
 
 function mkInventoryIcon(data, countdown){
-  if (data == null || (data?.duration ?? 0) <= 0)
+  let dur = data?.duration ?? 0
+  if (data == null || dur <= 0)
     return null
   return mkTooltiped({
-    size = [ statusWidth, statusWidth ]
-    margin = [hdpx(5), 0, hdpx(5), 0]
+    size = statusWidth
+    margin = static [hdpx(5), 0, hdpx(5), 0]
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
     children = [
       iconBackground
       {
-        size = [ iconWidth, iconWidth ]
+        size = iconWidth
         rendObj = ROBJ_IMAGE
         image = Picture($"{data.icon}:{iconWidth}:{iconWidth}:P")
       }
-      @() {
+     dur > 0 ? @() {
         size = flex()
         watch = countdown
         rendObj = ROBJ_PROGRESS_CIRCULAR
@@ -246,7 +250,7 @@ function mkInventoryIcon(data, countdown){
         fgColor = data.style.fgColor
         bgColor = data.style.bgColor
         fValue = countdown.get() / data.duration
-      }
+      } : null
     ]
   }, tooltipBox(@() {
     watch = countdown
@@ -254,7 +258,7 @@ function mkInventoryIcon(data, countdown){
   }))
 }
 
-function mkOverweightIndicator(weight, movePenalty, needTooltip, alwaysVisible) {
+function mkOverweightIndicator(weight, movePenalty, needTooltip, alwaysVisible, skipDirPadNav) {
   let noOverweight = 30
   let lightOverweight = 50
 
@@ -262,10 +266,11 @@ function mkOverweightIndicator(weight, movePenalty, needTooltip, alwaysVisible) 
     return null
 
   return {
-    size = [ statusWidth, statusWidth ]
+    size = [statusWidth, statusWidth]
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
-    margin = [hdpx(5), 0, hdpx(5), 0]
+    margin = static [hdpx(5), 0, hdpx(5), 0]
+    skipDirPadNav
     behavior = needTooltip ? Behaviors.Button : null
     onHover = @(on) setTooltip(on ? loc("inventory/weightPenalty", { value = (movePenalty * 100).tointeger() }) : null)
 
@@ -287,8 +292,9 @@ let overweight = @(needTooltip = false, alwaysVisible = false) function() {
   if (!levelLoaded.get())
     return { watch = levelLoaded }
   return {
-    watch = [levelLoaded, playerMovePenalty, inventoryCurrentWeight]
-    children = mkOverweightIndicator(inventoryCurrentWeight.get(), playerMovePenalty.get(), needTooltip, alwaysVisible)
+    watch = [levelLoaded, playerMovePenalty, inventoryCurrentWeight, isInBattleState]
+    children = mkOverweightIndicator(inventoryCurrentWeight.get(), playerMovePenalty.get(),
+      needTooltip, alwaysVisible, isInBattleState.get())
   }
 }
 
@@ -298,7 +304,7 @@ let sneakIndicator = @() {
     size = [ statusWidth, statusWidth ]
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
-    margin = [hdpx(5), 0, hdpx(5), 0]
+    margin = static [hdpx(5), 0, hdpx(5), 0]
     children = [
       iconBackground
       {
@@ -312,33 +318,54 @@ let sneakIndicator = @() {
   { behavior = hudIsInteractive.get() ? Behaviors.Button : null })
 }
 
-function inventoryAffectsWidget() {
-  let effectsWatched = [healOverTime, painkillerEffect, throwStonesCooldown, humanFallEffect, poison]
-
-  let activeEffects = effectsWatched
+let activeEffects = Computed(function() {
+  let effectsWatched = freeze([timeEffectsGen, healOverTime, painkillerEffect, throwStonesCooldown,
+    
+    humanFallEffect, poison])
+  let ctime = get_sync_time()
+  return effectsWatched
     .map(@(w) w.get())
     .extend(abilitiesCooldown.get().values())
-    .filter(@(w) (w?.endTime ?? 0) > get_sync_time())
+    .filter(@(w) (w?.endTime ?? 0) > ctime)
     .sort(@(a, b) (a?.startTime ?? 0) <=> (b?.startTime ?? 0))
+})
 
-  let effectsCountdowns = activeEffects.map(@(w) mkCountdownTimer(Watched(w?.endTime ?? 0)))
-  let effectsVisible = effectsCountdowns.map(@(c) Computed(@() c.get() > 0))
+let inventoryEffectsWithTimer = @() {
+  watch = activeEffects
+  flow = FLOW_HORIZONTAL
+  gap = static hdpx(5)
+  children = activeEffects.get().map(function(w) {
+    let { endTime, tip = "", name = null } = w
+    let countdown = mkCountdownTimer(Watched(endTime), $"inv_{name ?? tip}")
+    let needToShow = Computed(@() countdown.get() > 0)
+    return @() {
+      watch = needToShow
+      children = needToShow.get() ? mkInventoryIcon(w, countdown) : null
+    }
+  })
+}
 
-  let children = [overweight(true, true)].extend(activeEffects
-    .map(function(w, idx) {
-      let countdown = effectsCountdowns[idx]
-      return mkInventoryIcon(w, countdown)
-    }))
-    .append(watchedHeroSneaking.get() ? sneakIndicator : null)
+let additionalInventoryEffects = @() {
+  watch = [watchedHeroSneaking, inventoryCurrentWeight, isInBattleState, hudIsInteractive]
+  flow = FLOW_HORIZONTAL
+  gap = static hdpx(5)
+  children = [
+    overweight(hudIsInteractive.get(), true)
+    watchedHeroSneaking.get() ? sneakIndicator : null
+  ].filter(@(v) v != null)
+}
 
+function inventoryAffectsWidget() {
   return {
-    watch = [abilitiesCooldown, watchedHeroSneaking].extend(effectsWatched, effectsVisible)
     vplace = ALIGN_TOP
     hplace = ALIGN_LEFT
     pos = [0, hdpx(60)] 
     flow = FLOW_HORIZONTAL
     gap = hdpx(5)
-    children
+    children = [
+      additionalInventoryEffects
+      inventoryEffectsWithTimer
+    ]
   }
 }
 
@@ -359,7 +386,7 @@ function mkWatchfaceIcon(data, countdown){
     return null
   return {
     size = [ statusWidth, statusWidth ]
-    margin = [hdpx(5), 0, hdpx(5), 0]
+    margin = static [hdpx(5), 0, hdpx(5), 0]
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
     children = [
@@ -382,77 +409,61 @@ function mkWatchfaceIcon(data, countdown){
   }
 }
 
-let effectsWatched = freeze([healOverTime, painkillerEffect, throwStonesCooldown, humanFallEffect, poison])
-
-let mkWatchfaceAffectsWidget = @(radius) function() {
-
-  let ctime = get_sync_time()
-  let activeEffects = effectsWatched
-    .map(@(w) w.get())
-    .extend(abilitiesCooldown.get().values())
-    .filter(@(w) (w?.endTime ?? 0) > ctime)
-    .sort(@(a, b) (a?.startTime ?? 0) <=> (b?.startTime ?? 0))
-
-  let effectsCountdowns = activeEffects.map(@(w) mkCountdownTimer(Watched(w?.endTime ?? 0)))
-  let effectsVisible = effectsCountdowns.map(@(c) Computed(@() c.get() > 0))
-
-  let effectsWithTimer = activeEffects
-    .map(function(w, idx) {
-      let countdown = effectsCountdowns[idx]
-      return mkOffsetContainer(idx, radius+offset, mkWatchfaceIcon(w, countdown) )
-    })
-
-  let additionalEffects = [
-    mkOverweightIndicator(inventoryCurrentWeight.get(), playerMovePenalty.get(), false, false)
-    watchedHeroSneaking.get() ? sneakIndicator : null
-  ].filter(@(v) v != null).map(@(v, idx) mkOffsetContainer(effectsWithTimer.len() + idx, radius + offset, v))
-
-  let children = effectsWithTimer.extend(additionalEffects)
-
-  return {
-    size = [2 * radius + offset, 2 * radius + offset]
-    watch = [ watchedHeroSneaking, inventoryCurrentWeight, abilitiesCooldown ].extend(effectsWatched, effectsVisible)
-    vplace = ALIGN_CENTER
-    hplace = ALIGN_CENTER
-    valign = ALIGN_CENTER
-    halign = ALIGN_CENTER
-    children
+function mkEffectWithTimer(w, idx, radius=null) {
+  let { endTime, tip = "", name = null } = w
+  let countdown = mkCountdownTimer(Watched(endTime), name ?? tip)
+  let needToShow = Computed(@() countdown.get() > 0)
+  return function() {
+    if (!needToShow.get())
+      timeEffectsGen.modify(@(v) v + 1)
+    return {
+      watch = needToShow
+      children = !needToShow.get() ? null
+        : radius == null ? mkWatchfaceIcon(w, countdown)
+        : mkOffsetContainer(idx, radius + offset, mkWatchfaceIcon(w, countdown) )
+    }
   }
 }
 
-let affectsWidget = function() {
-  let ctime = get_sync_time()
-  let activeEffects = effectsWatched
-    .map(@(w) w.get())
-    .extend(abilitiesCooldown.get().values())
-    .filter(@(w) (w?.endTime ?? 0) > ctime)
-    .sort(@(a, b) (a?.startTime ?? 0) <=> (b?.startTime ?? 0))
+let mkEffectsWithTimer = @(radius = null) @() {
+  watch = activeEffects
+  children = activeEffects.get().map(@(w, idx) mkEffectWithTimer(w, idx, radius))
+}.__merge(radius != null ? {} : { flow = FLOW_VERTICAL })
 
-  let effectsCountdowns = activeEffects.map(@(w) mkCountdownTimer(Watched(w?.endTime ?? 0)))
-  let effectsVisible = effectsCountdowns.map(@(c) Computed(@() c.get() > 0))
-
-  let effectsWithTimer = activeEffects
-    .map(function(w, idx) {
-      let countdown = effectsCountdowns[idx]
-      return mkWatchfaceIcon(w, countdown)
-    })
-
-  let additionalEffects = [
-    mkOverweightIndicator(inventoryCurrentWeight.get(), playerMovePenalty.get(), false, false)
+let mkAdditionalEffects = @(radius = null) @() {
+  watch = [watchedHeroSneaking, inventoryCurrentWeight, isInBattleState, activeEffects, playerMovePenalty]
+  children = [
+    mkOverweightIndicator(inventoryCurrentWeight.get(), playerMovePenalty.get(), false, false, isInBattleState.get())
     watchedHeroSneaking.get() ? sneakIndicator : null
-  ].filter(@(v) v != null)
+  ]
+    .filter(@(v) v != null)
+    .map(@(v, idx) radius == null ? v : mkOffsetContainer(activeEffects.get().len() + idx, radius + offset, v))
+}.__merge(radius != null ? {} : { flow = FLOW_VERTICAL })
 
-  let children = effectsWithTimer.extend(additionalEffects)
-
+let mkWatchfaceAffectsWidget = @(radius) function() {
   return {
-    watch = [ watchedHeroSneaking, inventoryCurrentWeight, abilitiesCooldown ].extend(effectsWatched, effectsVisible)
-    flow = FLOW_VERTICAL
+    size = [2 * radius + offset, 2 * radius + offset]
     vplace = ALIGN_CENTER
     hplace = ALIGN_CENTER
     valign = ALIGN_CENTER
     halign = ALIGN_CENTER
-    children
+    children = [
+      mkEffectsWithTimer(radius)
+      mkAdditionalEffects(radius)
+    ]
   }
+}
+
+let affectsWidget = @() {
+  flow = FLOW_VERTICAL
+  vplace = ALIGN_CENTER
+  hplace = ALIGN_CENTER
+  valign = ALIGN_CENTER
+  halign = ALIGN_CENTER
+  children = [
+    mkEffectsWithTimer()
+    mkAdditionalEffects()
+  ]
 }
 
 
@@ -460,4 +471,7 @@ return {
   affectsWidget
   inventoryAffectsWidget
   mkWatchfaceAffectsWidget
+  mkEffectWithTimer
+  mkInventoryIcon
+  negativeStyle
 }

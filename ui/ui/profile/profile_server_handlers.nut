@@ -1,79 +1,51 @@
+from "%sqstd/json.nut" import parse_json
+from "%sqGlob/profile_server.nut" import requestProfileServer
+from "%sqGlob/dasenums.nut" import ContractType
+
+from "%ui/profile/profileState.nut" import playerProfileLoadoutUpdate, playerProfileCreditsCountUpdate, playerProfileMonolithTokensCountUpdate, playerProfileAMConvertionRateUpdate,
+  playerReserveEndAtUpdate, marketPriceSellMultiplierUpdate, playerProfileCurrentContractsUpdate, currentContractsUpdateTimeleftUpdate,
+  marketItemsUpdate, playerProfileOpenedNodesUpdate, allRecipes, nextOfflineSessionId, numOfflineRaidsAvailable, offlineFreeTicketAt,
+  freeTicketsPerDay, freeTicketsLimit,
+  playerProfileAllResearchNodesUpdate, craftTasksUpdate, cleanableItemsUpdate, playerStatsUpdate,
+  nextMindtransferTimeleftUpdate, mindtransferSeedUpdate, playerBaseStateUpdate, playerProfileUnlocksDataUpdate, completedStoryContractsUpdate,
+  nexusNodesStateUpdate, alwaysIsolatedQueues, neverIsolatedQueues
+
+from "net" import get_sync_time
+from "eventbus" import eventbus_send
+from "dasevents" import CmdUpdateActiveBuildings, CmdUpdateBasePower, EventProfileLoaded, EventEquipAlter, sendNetEvent
+from "%ui/profile/profile_functions.nut" import parseBaseBuildings, parseBasePower
+from "math" import FLT_MAX
+from "dagor.debug" import logerr
+from "jwt" import decode as decode_jwt
+
+from "base64" import decodeString
+from "%ui/mainMenu/debriefing/debriefing_quests_state.nut" import updateDebriefingContractsData
+from "das.equipment" import hero_clean_all_equipment_and_gun_slots
+from "dagor.random" import rnd_int
 import "%dngscripts/ecs.nut" as ecs
 import "%ui/components/msgbox.nut" as msgbox
 from "%ui/ui_library.nut" import *
 from "math" import min, max
 
-let {
-  playerProfileLoadoutUpdate,
-  playerProfileCreditsCountUpdate,
-  playerProfileChronotracesCount,
-  playerProfileMonolithTokensCountUpdate,
-  playerProfileAMConvertionRateUpdate,
-  playerProfileNexusLoadoutStorageCount,
-  playerReserveEndAtUpdate,
-  marketPriceSellMultiplierUpdate,
-  playerProfileCurrentContractsUpdate,
-  currentContractsUpdateTimeleftUpdate,
-  marketItemsUpdate,
-  allCraftRecipesUpdate,
-  playerProfileOpenedNodesUpdate,
-  playerProfileOpenedRecipesUpdate,
-  playerProfileAllResearchNodesUpdate,
-  craftTasksUpdate,
-  cleanableItemsUpdate,
-  playerStatsUpdate,
-  nextMindtransferTimeleftUpdate,
-  mindtransferSeedUpdate,
-  playerBaseStateUpdate,
-  currentAlter,
-  alterContainers,
-  lastBattleResult,
-  lastNexusResult,
-  repairRelativePrice,
-  playerProfileUnlocksData, playerProfileUnlocksDataUpdate,
-  refinerFusingRecipes,
-  refinedItemsList,
-  alterMints,
-  loadoutsAgency,
-  amProcessingTask,
-  playerProfileExperience,
-  playerExperienceToLevel,
-  allPassiveChronogenes
-} = require("%ui/profile/profileState.nut")
-let { get_sync_time } = require("net")
-let { eventbus_send } = require("eventbus")
-let { CmdUpdateActiveBuildings, CmdUpdateBasePower, EventProfileLoaded, EventEquipAlter, sendNetEvent } = require("dasevents")
-let { parseBaseBuildings, parseBasePower } = require("%ui/profile/profile_functions.nut")
-let {FLT_MAX} = require("math")
+let { playerProfileChronotracesCount, playerProfileNexusLoadoutStorageCount, playerStats, currentAlter, alterContainers, lastBattleResult,
+      lastNexusResult, repairRelativePrice, refinedItemsList, alterMints, loadoutsAgency,
+      amProcessingTask, playerProfileExperience, playerExperienceToLevel, allPassiveChronogenes,
+      playerProfilePremiumCredits } = require("%ui/profile/profileState.nut")
 
-let { logerr } = require("dagor.debug")
-let decode_jwt = require("jwt").decode
 let { profilePublicKey } = require("%ui/profile/profile_pubkey.nut")
 let { localPlayerEid } = require("%ui/hud/state/local_player.nut")
-let { logOut } = require("%ui/login/login_state.nut")
-let { parse_json } = require("%sqstd/json.nut")
-let { decodeString } = require("base64")
-let { updateDebriefingContractsData } = require("%ui/mainMenu/debriefing/debriefing_quests_state.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
-let { addTabToDevInfo } = require("%ui/devInfo.nut")
 
 local battle_reserve_update_timer = null
+let randomTimeGap = rnd_int(0, 300)
 
-function unpackResponse(answer, error_header, profileLoadOnError=true) {
+function unpackResponse(answer, error_header) {
   let err = answer?.error
   let res = answer?.result
   if (err != null || res == null) {
     let errMessage = (type(err) == "string") ? $"[curl] {err}" : $"[profile server] {err?.message ?? "Unspecified error"}"
     logerr($"{error_header}: {errMessage}")
-    if (profileLoadOnError)
-      eventbus_send("profile.load")
-    if (err == "Couldn't connect to server"){
-      logOut()
-      msgbox.showMsgbox({
-        text = $"[profile server] {loc("error/CLIENT_ERROR_CONNECTION_CLOSED")}",
-        buttons = [{ text = loc("Ok"), isCurrent = true, action = @() null }]
-      })
-    }
+    eventbus_send("profile.load")
 
     return null
   }
@@ -85,7 +57,8 @@ let loadStateComps = {
     ["player_profile__allBuilds", ecs.TYPE_ARRAY],
     ["player_profile__isLoaded", ecs.TYPE_BOOL],
     ["player_profile__allItems", ecs.TYPE_ARRAY],
-    ["player_profile__stashMaxVolume", ecs.TYPE_FLOAT],
+    ["player_profile__playerNexusPresets", ecs.TYPE_OBJECT],
+    ["player_profile__stashMaxVolume", ecs.TYPE_INT],
     ["player_profile__loadout", ecs.TYPE_ARRAY],
     ["player_profile__currentContracts", ecs.TYPE_ARRAY],
     ["player_profile__creditsCount", ecs.TYPE_INT],
@@ -104,8 +77,7 @@ let loadStateComps = {
     ["player_profile__itemUpdateQueue", ecs.TYPE_ARRAY],
     ["player_profile__replicatorDevicesCount", ecs.TYPE_INT],
     ["player_profile__amCleaningDevicesCount", ecs.TYPE_INT],
-    ["player_profile__alterIds", ecs.TYPE_STRING_LIST],
-    ["player_profile__alterIdsChanged", ecs.TYPE_BOOL]
+    ["player_profile__alterIds", ecs.TYPE_STRING_LIST]
   ]
 }
 
@@ -121,17 +93,14 @@ let marketHandler = function(market_block, comp) {
   cleanableItemsUpdate(market_block?.cleanable_items ?? [])
 }
 
-let craftHandler = function(craft_block, _comp) {
+let craftRecipesHandler = function(craft_recipes, _comp) {
   
-  allCraftRecipesUpdate((craft_block?.craft_recipes ?? []).map(@(v) [v.k, v.v]).totable())
+  let tableRecipes = (craft_recipes ?? []).map(@(v) [v.k, v.v]).totable()
+  allRecipes.set(tableRecipes)
 }
 
 let openedNodesHandler = function(opened_nodes, _comp) {
   playerProfileOpenedNodesUpdate(opened_nodes)
-}
-
-let openedCraftRecipesHandler = function(opened_recipes, _comp) {
-  playerProfileOpenedRecipesUpdate(opened_recipes)
 }
 
 let allResearchNodesHandler = function(all_research_nodes, _comp) {
@@ -198,27 +167,32 @@ let debugLoadoutHandler = function(debug_loadout_block, comp) {
   debugDiffItems(comp.player_profile__loadout.getAll(), debug_loadout_block, "debug_loadout_block")
 }
 
-let inventoryHandler = function(inventory_block, comp) {
-  log("inventory_block (old = client loadout | new = profile server loadout)", inventory_block)
-  debugDiffItems(comp.player_profile__allItems.getAll(), inventory_block, "inventory_block")
-  comp.player_profile__allItems = inventory_block.allItems
+let allItemsHandler = function(all_items, comp) {
+  log("all_items (old = client loadout | new = profile server loadout)", all_items)
+  debugDiffItems(comp.player_profile__allItems.getAll(), all_items, "all_items")
+  comp.player_profile__allItems = all_items
 }
 
 let contractsHandler = function(contracts_block, _comp) {
   
   let newAllContracts = (contracts_block?.currentContracts ?? [])
     .map(@(v) [v.k, v.v]).totable()
-    .map(@(contract) contract.__merge({params =
-      contract.params.reduce(function(res, param) {
+    .map(@(contract) contract.__merge({
+      params = contract.params.reduce(function(res, param) {
         if (param.name in res)
           res[param.name].append(param.value)
         else
           res[param.name] <- [param.value]
         return res
-      }, {})
+      }, {}),
+      contractType =
+        contract.uniqueContract ? ContractType.STORY :
+        contract.dailyRestoring ? ContractType.SECONDARY :
+        contract.params.findindex(@(v) v.name == "monsterTag") != null ? ContractType.MONSTER :
+        ContractType.PRIMARY
     }))
   playerProfileCurrentContractsUpdate(newAllContracts)
-  currentContractsUpdateTimeleftUpdate(get_sync_time() + (contracts_block?.currentContractsUpdateTimeleft ?? 60))
+  currentContractsUpdateTimeleftUpdate(get_sync_time() + (contracts_block?.currentContractsUpdateTimeleft ?? 60) + randomTimeGap)
 }
 
 let battleReserveHandler = function(battle_reserve_block, comp) {
@@ -255,6 +229,7 @@ let currencyHandler = function(currency, comp) {
   playerProfileMonolithTokensCountUpdate(currency.monolithTokensCount)
   playerProfileChronotracesCount.set(currency.chronotracesCount)
   playerProfileExperience.set(currency.experienceCount)
+  playerProfilePremiumCredits.set(currency.premiumCreditsCount)
 }
 
 let mindtransferInfoHandler = function(mindtransfer_info, _comp) {
@@ -329,11 +304,7 @@ let refineTasksHandler = function(refineTasks, _comp) {
   
   let curTime = get_sync_time()
   refineTasks.endTimeAt = refineTasks.endTimeAt.tointeger() + curTime
-  amProcessingTask(refineTasks)
-}
-
-let refinerFusingRecipesHandlers = function(fusingRecipes, _comp) {
-  refinerFusingRecipes.set(fusingRecipes)
+  amProcessingTask.set(refineTasks)
 }
 
 let craftTasksHandler = function(craftTasks, _comp) {
@@ -344,17 +315,87 @@ let craftTasksHandler = function(craftTasks, _comp) {
   craftTasksUpdate(craftTasks)
 }
 
-let playerStatsHandler = function(playerStats, comp) {
+let purchasedUniqueMarketOffersHandler = function(uniqueOffers, _comp) {
+  playerStats.mutate(@(stats) stats.purchasedUniqueMarketOffers = uniqueOffers )
+}
+
+let completedStoryContractsHandler = function(completed_story_contracts, _comp) {
+  completedStoryContractsUpdate(completed_story_contracts)
+}
+
+let requestFreeOfflineRaidTicketsFromProfile = @() eventbus_send("profile_server.requestFreeOfflineTickets", null)
+
+let offlineRaidDataHandler = function(offline_raid_data, _comp) {
+  nextOfflineSessionId.set(offline_raid_data?.nextSessionId ?? "0")
+  numOfflineRaidsAvailable.set(offline_raid_data?.numRaidsAvailable ?? 0)
+  if (offline_raid_data?.freeTicketIn != null) {
+    offlineFreeTicketAt.set(offline_raid_data.freeTicketIn + get_sync_time())
+    gui_scene.resetTimeout(offline_raid_data.freeTicketIn, requestFreeOfflineRaidTicketsFromProfile, "request_free_tickets_on_timer_expired")
+  }
+  freeTicketsPerDay.set(offline_raid_data?.freeTicketsPerDay ?? 0)
+  freeTicketsLimit.set(offline_raid_data?.freeTicketsLimit ?? 0)
+}
+
+let nexusStateHandler = function(nexus_state, _comp) {
+  nexusNodesStateUpdate(nexus_state)
+}
+
+let playerStatsHandler = function(player_stats, comp) {
   
-  playerStatsUpdate(playerStats)
-  comp.player_profile__unlocks = playerStats?.unlocks ?? []
+  playerStatsUpdate(player_stats)
+  comp.player_profile__unlocks = player_stats?.unlocks ?? []
+}
+
+let modify_stat = function(stats_table, mode, stat_name, stat_diff) {
+  let oldVal = stats_table?[mode]?[stat_name] ?? 0.0
+  if (stats_table?[mode] == null)
+    stats_table[mode] <- {}
+  stats_table[mode][stat_name] <- oldVal + stat_diff
+}
+
+let statsDiffHandler = function(stats_diff, _comp) {
+  
+  playerStats.mutate(function(stats){
+    if (!("statsCurrentSeason" in stats) || !("stats" in stats))
+      return
+    let statsSeason = stats.statsCurrentSeason
+    let statsAll = stats.stats
+    foreach (mode, modeStats in stats_diff) {
+      foreach (statName, statDiff in modeStats) {
+        modify_stat(statsSeason, mode, statName, statDiff)
+        modify_stat(statsAll, mode, statName, statDiff)
+      }
+    }
+  })
+}
+
+let unlocksDiffHandler = function(unlocks_diff, comp) {
+  
+  playerStats.mutate(function(stats){
+    if (!("unlocks" in stats))
+      return
+    foreach (unlockName, isAdded in unlocks_diff) {
+      if (isAdded) {
+        stats.unlocks.append(unlockName)
+      }
+      else {
+        let idx = stats.unlocks.indexof(unlockName)
+        if (idx != null) {
+          stats.unlocks.remove(idx)
+        }
+      }
+    }
+  })
+  comp.player_profile__unlocks = playerStats.get().unlocks
 }
 
 let playerBaseStateHandler = function(playerBaseState, comp) {
   
   comp.player_profile__amCleaningDevicesCount = playerBaseState?.openedAMCleaningDevices ?? 0
   comp.player_profile__replicatorDevicesCount = playerBaseState?.openedReplicatorDevices ?? 0
-  comp.player_profile__stashMaxVolume = (playerBaseState.stashVolumeSize + playerBaseState.stashAdditionalVolume * playerBaseState.stashVolumeUpgrade) / 10.0
+  let additionalBaseStashesCount = playerBaseState.stashesCount.x * playerBaseState.stashVolumeUpgrade.x
+  let additionalPrestigeStashesCount = playerBaseState.stashesCount.y * playerBaseState.stashVolumeUpgrade.y
+  comp.player_profile__stashMaxVolume = playerBaseState.stashVolumeSize + additionalBaseStashesCount + additionalPrestigeStashesCount
   
   playerBaseStateUpdate(playerBaseState)
 }
@@ -367,11 +408,7 @@ let allPassiveChronogenesHandler = function (all_passive_chronogenes, _comp) {
   allPassiveChronogenes.set(all_passive_chronogenes)
 }
 
-let alterHandler = function(alterContainerBlock, comp) {
-  
-  comp.player_profile__alterIds = alterContainerBlock?.currentContainers.map(@(c) c?.primaryChronogenes?[0]) ?? []
-  comp.player_profile__alterIdsChanged = true
-  
+let alterHandler = function(alterContainerBlock, _comp) {
   let newCurrentAlter = alterContainerBlock?.currentAlter
   currentAlter.set(newCurrentAlter)
   alterContainers.set(alterContainerBlock?.currentContainers ?? [])
@@ -380,12 +417,21 @@ let alterHandler = function(alterContainerBlock, comp) {
     let chronogenesList = ecs.CompObject()
     chronogenesList["primaryChronogenes"] <- alterToEquip?.primaryChronogenes ?? []
     chronogenesList["secondaryChronogenes"] <- alterToEquip?.secondaryChronogenes ?? []
+    chronogenesList["stubMeleeChronogenes"] <- alterToEquip?.stubMeleeChronogenes ?? []
+    chronogenesList["dogtagChronogenes"] <- alterToEquip?.dogtagChronogenes ?? []
     sendNetEvent(localPlayerEid.get(), EventEquipAlter({ chronogenesList }))
   }
 }
 
-let mintsHandler = function(mints, _comp) {
+let mintsHandler = function(mints, comp) {
   log("mints update", mints)
+
+  let obj = {}
+  foreach (idx, v in mints) {
+    obj[idx.tostring()] <- v
+  }
+
+  comp.player_profile__playerNexusPresets = obj
   alterMints.set(mints)
 }
 
@@ -440,6 +486,9 @@ let lastBattleResultHandler = function(last_battle_result, _comp) {
   let encodedTrackPoints = last_battle_result?.trackPointsV2 ?? ""
   let trackPoints = encodedTrackPoints.len() > 0 ? parse_json(decodeString(encodedTrackPoints)) : []
   last_battle_result.trackPoints <- trackPoints
+  if (encodedTrackPoints.len() > 0) {
+    last_battle_result.$rawdelete("trackPointsV2")
+  }
 
   let encodedTeamInfo = last_battle_result?.teamInfo ?? ""
   last_battle_result.teamInfo = encodedTeamInfo.len() > 0 ? parse_json(decodeString(last_battle_result.teamInfo)) : {}
@@ -473,18 +522,26 @@ let refinedItemsListHandler = function(refined_items, _comp) {
   refinedItemsList.set(refined_items)
 }
 
-addTabToDevInfo("[STATS] playerProfileUnlocks" ,playerProfileUnlocksData)
 let unlocksDataHandler = function(unlocks_data, _comp) {
   playerProfileUnlocksDataUpdate(unlocks_data)
 }
 
+let neverIsolatedQueuesHandler = function(data, _comp) {
+  neverIsolatedQueues.set(data)
+}
+
+let alwaysIsolatedQueuesHandler = function(data, _comp) {
+  alwaysIsolatedQueues.set(data)
+}
 
 let profileBlocksHandlerTable = {
   market_block = marketHandler
-  craft_block = craftHandler
+  craft_recipes = craftRecipesHandler
   all_research_nodes = allResearchNodesHandler
+  neverIsolatedQueues = neverIsolatedQueuesHandler
+  alwaysIsolatedQueues = alwaysIsolatedQueuesHandler
   opened_nodes = openedNodesHandler
-  inventory_block = inventoryHandler
+  all_items = allItemsHandler
   inventory_diff = inventoryDiffHandler
   contracts_block = contractsHandler
   battle_reserve_block = battleReserveHandler
@@ -494,10 +551,10 @@ let profileBlocksHandlerTable = {
   basePower = basePowerHandler
   deployedConstructions = deployedConstructionsHandler
   refineTask = refineTasksHandler
-  refiner_fusing_recipes = refinerFusingRecipesHandlers
-  opened_craft_recipes = openedCraftRecipesHandler
   craftTasks = craftTasksHandler
   player_stats = playerStatsHandler
+  stats_diff = statsDiffHandler
+  unlocks_diff = unlocksDiffHandler
   player_base_state = playerBaseStateHandler
   experience_to_level_rate = experienceToLevelRateHandler
   all_passive_chronogenes = allPassiveChronogenesHandler
@@ -513,20 +570,59 @@ let profileBlocksHandlerTable = {
   mints = mintsHandler
   loadouts_agency = loadoutsAgencyHandler
   refined_items = refinedItemsListHandler
+  purchased_unique_market_offers = purchasedUniqueMarketOffersHandler
+  completed_story_contracts = completedStoryContractsHandler
+  offline_raid_data = offlineRaidDataHandler
+  nexus_state = nexusStateHandler
 }
 
-let updateProfileBlocks = function(response, profileLoadOnError=true) {
+let updateProfileBlocks = function(response) {
   load_state_from_profile_query.perform(function(_eid, comp) {
-    unpackResponse(response, "Fail update profile blocks", profileLoadOnError)
+    unpackResponse(response, "Fail update profile blocks")
       ?.each(@(block, block_key) profileBlocksHandlerTable?[block_key]?(block, comp))
   })
 }
 
+
+local isLoading = false
+
 function updateProfileBlocksFullLoad(response) {
-  updateProfileBlocks(response, false)
-  load_state_from_profile_query.perform(function(_eid, comp){
-    comp.player_profile__isLoaded = true
-    ecs.g_entity_mgr.broadcastEvent(EventProfileLoaded())
+  load_state_from_profile_query.perform(function(_eid, comp) {
+    let unpackedResult = unpackResponse(response, "Fail update profile blocks")
+    if (unpackedResult != null) {
+      
+      isLoading = false
+
+      hero_clean_all_equipment_and_gun_slots()
+      unpackedResult.each(@(block, block_key) profileBlocksHandlerTable?[block_key]?(block, comp))
+      comp.player_profile__isLoaded = true
+      ecs.g_entity_mgr.broadcastEvent(EventProfileLoaded())
+    }
+    else { 
+      isLoading = false
+      eventbus_send("profile.load")
+      logerr($"Trying to restore profile data")
+      
+      
+      
+      
+      
+      
+      
+      
+    }
+  })
+}
+
+let profile_loaded_query = ecs.SqQuery("profile_loaded_query", { comps_rw=[["player_profile__isLoaded", ecs.TYPE_BOOL]] })
+
+function loadFullProfile(request_name = "load_profile") {
+  profile_loaded_query.perform(function(_eid, comp) {
+    comp.player_profile__isLoaded = false
+    if (!isLoading) {
+      isLoading = true
+      requestProfileServer(request_name, null, {}, updateProfileBlocksFullLoad)
+    }
   })
 }
 
@@ -534,4 +630,5 @@ return {
   unpackResponse
   updateProfileBlocks
   updateProfileBlocksFullLoad
+  loadFullProfile
 }

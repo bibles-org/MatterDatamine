@@ -1,18 +1,12 @@
 entity{
   _template:t="photographing_target"
-  transform:m=[[8.00452, 0, -12.4792] [0, 14.5335, 0] [18.7376, -0, 12.0188] [596.662, 13.9036, -1038.46]]
+  transform:m=[[8.00452, 0, -12.4792] [0, 2.64511, 0] [8.19014, -0, 5.25338] [594.028, 16.5524, -1040.15]]
   objective_static_target__tag:t="photo_quest_house"
   photographing_target__name:t="photo/photo_house_target_name"
   map_object_marker__iconName:t="!ui/skin#eye.svg"
-  map_object__show:b=no
-}
-
-entity{
-  _template:t="photographing_stand_target"
-  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [597.08, 10.9552, -1038.63]]
-  objective_static_target__tag:t="photo_area_house_1"
-  map_object_zone__radius:r=35
-  quest_target_geometry_sphere__radius:r=35
+  quest_target_geometry_sphere__radius:r=40
+  photographing_target__traceMinSuccesses:i=5
+  photographing_target__alwaysVisible:b=no
   map_object__show:b=no
 }
 
@@ -213,4 +207,39 @@ entity{
   _template:t="quest_ri_decoration"
   ri_extra__name:t="sovmod_clothes_d"
   transform:m=[[0.549742, 0.210781, -0.808304] [0.652603, -0.712394, 0.258076] [-0.521434, -0.669377, -0.52919] [615.854, 19.0374, -1005.4]]
+}
+
+entity{
+  _template:t="item_lore_search_report1+item_in_world"
+  transform:m=[[0.459926, 0.862875, 0.209561] [-0.403254, -0.00729448, 0.91506] [0.79111, -0.505365, 0.344602] [551.776, 12.6883, -1070.1]]
+}
+
+entity{
+  _template:t="item_lore_search_report2+item_in_world"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [549.89, 14.4146, -1069.49]]
+}
+
+entity{
+  _template:t="item_lore_quartermaster_letter+item_in_world"
+  transform:m=[[0.923061, 0.350782, 0.157826] [-0.376193, 0.737699, 0.560606] [0.0802223, -0.576847, 0.812903] [676.338, 26.4924, -1188.61]]
+}
+
+entity{
+  _template:t="item_lore_researcher_diary1+item_in_world"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [709.128, 9.21286, -967.284]]
+}
+
+entity{
+  _template:t="item_lore_researcher_diary1_2+item_in_world"
+  transform:m=[[0.996473, -0.083668, -0.00645757] [0.0669129, 0.745764, 0.662842] [-0.0506428, -0.660936, 0.748732] [703.749, 34.9405, -971.373]]
+}
+
+entity{
+  _template:t="item_lore_researcher_diary2+item_in_world"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [721.373, -1.23278, -1036.64]]
+}
+
+entity{
+  _template:t="item_lore_researcher_diary2_2+item_in_world"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [761.583, -1.19248, -1024.62]]
 }

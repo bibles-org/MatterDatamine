@@ -1,8 +1,9 @@
+from "%ui/hud/tips/tipComponent.nut" import tipCmp
+from "%ui/helpers/timers.nut" import mkCountdownTimerPerSec
+from "%ui/helpers/time.nut" import secondsToStringLoc
+
 from "%ui/ui_library.nut" import *
 
-let { tipCmp } = require("%ui/hud/tips/tipComponent.nut")
-let { mkCountdownTimerPerSec } = require("%ui/helpers/timers.nut")
-let { secondsToStringLoc } = require("%ui/helpers/time.nut")
 let { isExtracting, alreadyExtracted, timeEnd, extractionEnableTime } = require("%ui/hud/state/extraction_state.nut")
 let { isAlive } = require("%ui/hud/state/health_state.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
@@ -33,6 +34,6 @@ return function() {
   return {
     watch = [isExtracting, alreadyExtracted, extractionTimer, isAlive, extractionEnableTimer, isInBattleState]
     size = SIZE_TO_CONTENT
-    children = tip(isExtracting.value, alreadyExtracted.value, extractionTimer.value, isAlive.value, extractionEnableTimer.get())
+    children = tip(isExtracting.get(), alreadyExtracted.get(), extractionTimer.get(), isAlive.get(), extractionEnableTimer.get())
   }
 }

@@ -1,11 +1,11 @@
+from "das.ribbons_color" import get_color_by_index
+from "dagor.math" import IPoint2, Point4
+
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
+from "%ui/hud/state/gametype_state.nut" import isOnPlayerBase
 
-let { get_color_by_index } = require("das.ribbons_color")
 let { teamColorIdxs } = require("%ui/profile/profileState.nut")
-let { IPoint2, Point4 } = require("dagor.math")
-let { EventLocalPlayerRibbonsChanged } = require("dasevents")
-let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
 
 function indexToColor(index) {
   let scaled = get_color_by_index(index) * 255
@@ -21,37 +21,37 @@ function arrayToColor(colorArray) {
 }
 
 let setSelectedColorsQuery = ecs.SqQuery("ribbonsColorQuery", {
-  comps_rw = [["player_ribbons__curColors", ecs.TYPE_IPOINT2]],
-  comps_ro = [["is_local", ecs.TYPE_BOOL]]
+  comps_rw = [["ribbon_colors__curColors", ecs.TYPE_IPOINT2]],
+  comps_rq = ["watchedByPlr"]
 })
 
 teamColorIdxs.subscribe(@(v) setSelectedColorsQuery.perform(function(_eid, comp) {
-  if (comp.is_local)
-    comp.player_ribbons__curColors = IPoint2(v.primary, v.secondary)
+  comp.ribbon_colors__curColors = IPoint2(v.primary, v.secondary)
 }))
 
-ecs.register_es("set_selected_colors_on_local_hero",
+ecs.register_es("set_selected_colors_on_player_base",
   {
-    [["onInit", "onChange"]] = function(_eid, comp) {
+    onInit = function(_eid, comp) {
       if (!isOnPlayerBase.get())
         return
-
-      if (comp.is_local)
-        comp.player_ribbons__curColors = IPoint2(teamColorIdxs.get().primary, teamColorIdxs.get().secondary)
+      comp.player_ribbons__curColors = IPoint2(teamColorIdxs.get().primary, teamColorIdxs.get().secondary)
     }
   },
   {
     comps_rw = [["player_ribbons__curColors", ecs.TYPE_IPOINT2]],
-    comps_track = [["is_local", ecs.TYPE_BOOL]]
   }
 )
 
 let ribbonsChanged = Watched(0)
 ecs.register_es("ribbons_changed_es",
   {
-    [EventLocalPlayerRibbonsChanged] = function(_evt, _eid, _comps) {
+    [["onInit", "onChange"]] = function(_evt, _eid, _comps) {
       ribbonsChanged.set(ribbonsChanged.get() + 1)
     }
+  },
+  {
+    comps_rq = ["watchedByPlr"],
+    comps_track = [["ribbon_colors__curColors", ecs.TYPE_IPOINT2]]
   }
 )
 

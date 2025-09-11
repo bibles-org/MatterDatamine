@@ -1,6 +1,7 @@
+import "%ui/components/parseDargHotkeys.nut" as parseDargHotkeys
+
 from "%ui/ui_library.nut" import *
 
-let parseDargHotkeys = require("parseDargHotkeys.nut")
 
 function gamepadHotkeys(hotkeys, skipDescription = null){
   if (hotkeys == null || typeof(hotkeys) != "array" || hotkeys.len()==0)

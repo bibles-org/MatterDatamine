@@ -1,5 +1,6 @@
+from "%ui/hud/menus/notes/articles/articles_common.nut" import get_paragraph_loc
+
 from "%ui/ui_library.nut" import *
-let { get_paragraph_loc } = require("%ui/hud/menus/notes/articles/articles_common.nut")
 
 function mkNote(id) {
   let paragraphs = [
@@ -35,23 +36,25 @@ function mkNote(id) {
 }
 
 
-let dangers = [
+let dangers = freeze([
   mkNote("note_distorted"),
   mkNote("note_hellhound"),
   mkNote("note_invisible"),
   mkNote("note_dendroid"),
   mkNote("note_flowerman"),
+  mkNote("note_mimic"),
   mkNote("note_devourer"),
   mkNote("note_swarm"),
   mkNote("note_turned_soldier"),
   mkNote("note_turned_operative"),
   mkNote("note_statue"),
+  mkNote("note_poltergeist"),
   mkNote("note_thunderball"),
   mkNote("note_seeds"),
   mkNote("note_furnace"),
   mkNote("note_teleport"),
   mkNote("note_jump_pad")
-]
+])
 
 return {
   dangers

@@ -1,8 +1,8 @@
+from "%ui/fonts_style.nut" import body_txt
+from "%ui/components/colors.nut" import TextNormal
+import "%ui/components/slider.nut" as slider
 from "%ui/ui_library.nut" import *
 
-let {body_txt} = require("%ui/fonts_style.nut")
-let {TextNormal} = require("%ui/components/colors.nut")
-let slider = require("%ui/components/slider.nut")
 
 let slider_value_width = calc_str_box("200%", body_txt)[0]
 
@@ -21,7 +21,7 @@ return function(opt, _group, xmbNode, morphText = @(val) val) {
         size = [slider_value_width, SIZE_TO_CONTENT]
         rendObj = ROBJ_TEXT
         color = TextNormal
-        text = morphText(valWatch.value)
+        text = morphText(valWatch.get())
       }.__update(body_txt)
     ]
   }

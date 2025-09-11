@@ -1,0 +1,58 @@
+inventory_action_actor{
+  inventory_action_actor__idIncrement:i=0
+  _replicated:t="inventory_action_actor__idIncrement"
+
+  "inventory_action__actionEid:list<eid>"{}
+  "inventory_action__id:list<i>"{}
+  "inventory_action__atTime:list<r>"{}
+  "inventory_action__interruptable:list<b>"{}
+  "inventory_action_actor__currentActionEid:eid"{}
+}
+
+inventory_action_change_slot{
+  inventory_action_change_slot__wishSlot:i=0
+  inventory_action_change_slot__endInMiddle:b=no
+
+  "inventory_action__actorEid:eid"{}
+}
+
+inventory_action_equip_weapon_mod{
+  inventory_action_equip_weapon_mod__slotName:t=""
+  inventory_action_equip_weapon_mod__moveType:i=-1
+
+  "inventory_action__actorEid:eid"{}
+  "inventory_action_equip_weapon_mod__modEid:eid"{}
+  "inventory_action_equip_weapon_mod__weaponEid:eid"{}
+  "inventory_action_equip_weapon_mod__inventoryEid:eid"{}
+  "inventory_action_move_weapon_mod_revert:tag"{}
+}
+
+inventory_action_unequip_weapon_mod{
+  inventory_action_unequip_weapon_mod__slotName:t=""
+  inventory_action_unequip_weapon_mod__ignoreVolume:i=0
+  inventory_action_unequip_weapon_mod__moveType:i=-1
+
+  "inventory_action__actorEid:eid"{}
+  "inventory_action_unequip_weapon_mod__weaponEid:eid"{}
+  "inventory_action_unequip_weapon_mod__inventoryEid:eid"{}
+  "inventory_action_move_weapon_mod_revert:tag"{}
+}
+
+inventory_action_item_holder_loading{
+  inventory_action_item_holder_loading__loadItemCount:i=0
+  inventory_action_item_holder_loading__isLoad:b=no
+  inventory_action_item_holder_loading__searchOtherContainers:b=no
+  inventory_action_item_holder_loading__useTime:r=0
+
+  "inventory_action__actorEid:eid"{}
+  "inventory_action_item_holder_loading__holderEid:eid"{}
+  "inventory_action_item_holder_loading__inventoryEid:eid"{}
+}
+
+inventory_action_set_move_state{
+  inventory_action_set_move_state__moveState:i=0
+  inventory_action_set_move_state__serverOnly:b=no
+
+  "inventory_action__actorEid:eid"{}
+  "inventory_action_set_move_state__weaponEid:eid"{}
+}

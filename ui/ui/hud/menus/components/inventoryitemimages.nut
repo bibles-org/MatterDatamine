@@ -1,9 +1,11 @@
+from "%ui/hud/menus/components/inventoryStyle.nut" import itemHeight
+import "%ui/components/icon3d.nut" as iconWidget
+
 from "%ui/ui_library.nut" import *
-let { itemHeight } = require("%ui/hud/menus/components/inventoryStyle.nut")
-let iconWidget = require("%ui/components/icon3d.nut")
 
+#allow-auto-freeze
 
-let inventoryImageParams = {
+let inventoryImageParams = static {
   width=hdpx(62)
   height=hdpx(62)
   transform = {}
@@ -11,40 +13,40 @@ let inventoryImageParams = {
   slotSize = [ itemHeight, itemHeight ]
 }
 
-let weaponIconParams  = {
+let weaponIconParams = static {
   width=hdpx(320)
   height=hdpx(140)
   slotSize = [ hdpx(320), hdpx(140) ]
 }
-let weaponModIconParams = {
+let weaponModIconParams = static {
   animations=[]
   width=hdpx(62)
   height=hdpx(62)
   slotSize = [itemHeight, itemHeight ]
   outline=[64,64,64,12]
 }
-let smallInventoryImageParams = {
+let smallInventoryImageParams = static {
   width=hdpx(36)
   height=hdpx(36)
   transform = {}
   animations=[]
   slotSize = [ itemHeight / 1.5, itemHeight / 1.5 ]
 }
-let largeInventoryImageParams = {
+let largeInventoryImageParams = static {
   width=hdpx(240)
   height=hdpx(240)
   transform = {}
   animations=[]
   slotSize = [ hdpx(240), hdpx(240) ]
 }
-let highInventoryImageParams = {
+let highInventoryImageParams = static {
   width=hdpx(190)
   height=hdpx(320)
   transform = {}
   animations=[]
   slotSize = [ hdpx(190), hdpx(320) ]
 }
-let smallHighInventoryImageParams = {
+let smallHighInventoryImageParams = static {
   width=hdpx(45)
   height=hdpx(itemHeight)
   transform = {}
@@ -68,7 +70,7 @@ function itemIconImage(icon, imageSize, iconImageColor) {
 }
 
 return {
-  function inventoryItemImage(item, itemIconParams=inventoryImageParams) {
+  function inventoryItemImage(item, itemIconParams=inventoryImageParams, override = {}) {
     let empty = (item?.itemTemplate == "" || item?.itemTemplate == null) && item?.template == null
     local icon = null
     if (empty) {
@@ -88,17 +90,17 @@ return {
       valign = ALIGN_CENTER
       children = icon
       opacity = item?.opacity ?? 1.0
-    }
+    }.__merge(override)
   }
 
   function iconWeapon(weaponSlot) {
     return {
-        hplace = ALIGN_RIGHT
-        vplace = ALIGN_TOP
-        opacity = weaponSlot?.isDefaultStubItem ? 0.6 : 1.0
-        size = [SIZE_TO_CONTENT, SIZE_TO_CONTENT]
-        children = iconWidget(weaponSlot, weaponIconParams)
-      }
+      hplace = ALIGN_RIGHT
+      vplace = ALIGN_TOP
+      opacity = weaponSlot?.isDefaultStubItem ? 0.6 : 1.0
+      size = SIZE_TO_CONTENT
+      children = iconWidget(weaponSlot, weaponIconParams)
+    }
   }
 
   inventoryImageParams
@@ -108,4 +110,3 @@ return {
   highInventoryImageParams
   smallHighInventoryImageParams
 }
-

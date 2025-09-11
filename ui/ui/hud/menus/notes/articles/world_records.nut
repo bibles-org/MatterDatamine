@@ -1,5 +1,6 @@
+from "%ui/hud/menus/notes/articles/articles_common.nut" import get_paragraph_loc
+
 from "%ui/ui_library.nut" import *
-let { get_paragraph_loc } = require("%ui/hud/menus/notes/articles/articles_common.nut")
 
 function mkNote(id) {
   let paragraphs = [
@@ -33,12 +34,34 @@ function mkNote(id) {
 }
 
 
-let world_records = [
+let world_records = freeze([
   mkNote("note_remains_with_chronogenes"),
   mkNote("note_saturated_item_on_pickup"),
   mkNote("note_cargoport_investigation_report"),
   mkNote("firestation"),
-]
+  mkNote("note_tf_shopping_list"),
+  mkNote("note_lore_soldier_letter"),
+  mkNote("note_lore_prayer1"),
+  mkNote("note_lore_prayer2"),
+  mkNote("note_lore_denunciation"),
+  mkNote("note_lore_love_letter"),
+  mkNote("note_lore_search_report1"),
+  mkNote("note_lore_search_report2"),
+  mkNote("note_lore_quartermaster_letter"),
+  mkNote("note_lore_researcher_diary1"),
+  mkNote("note_lore_researcher_diary1_2"),
+  mkNote("note_lore_researcher_diary2"),
+  mkNote("note_lore_researcher_diary2_2"),
+  mkNote("note_lore_evacuation_drill"),
+  mkNote("note_lore_troitsky_to_platon"),
+  mkNote("note_lore_platon_to_troitsky"),
+  mkNote("note_lore_soldier_am_contact1"),
+  mkNote("note_lore_soldier_am_contact2"),
+  mkNote("note_lore_Savushkina_letter1"),
+  mkNote("note_lore_Savushkina_letter2"),
+  mkNote("note_lore_revvol_to_sokolov"),
+  mkNote("note_lore_sokolov_to_revvol"),
+])
 
 return {
   world_records

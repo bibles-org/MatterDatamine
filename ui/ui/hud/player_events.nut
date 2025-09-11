@@ -1,8 +1,9 @@
+from "%ui/fonts_style.nut" import h2_txt, basic_text_shadow
+from "%ui/components/colors.nut" import TextNormal
+
 from "%ui/ui_library.nut" import *
 
-let {playerEvents} = require("%ui/hud/state/eventlog.nut")
-let {h2_txt, basic_text_shadow} = require("%ui/fonts_style.nut")
-let {TextNormal} = require("%ui/components/colors.nut")
+let { playerEvents } = require("%ui/hud/state/eventlog.nut")
 
 let defTextAnims = freeze([
   { prop=AnimProp.scale, from=[1,0], to=[1,1], duration=0.33, play=true, easing=OutCubic }
@@ -13,7 +14,7 @@ function makeDefText(item) {
   let animations = item?.animations ?? defTextAnims
   let text = item?.text
   let children = {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     halign = ALIGN_CENTER
     rendObj = ROBJ_TEXTAREA
     valign = ALIGN_CENTER
@@ -23,7 +24,7 @@ function makeDefText(item) {
   }.__update(h2_txt, basic_text_shadow)
 
   return {
-    size = [flex(), SIZE_TO_CONTENT]
+    size = FLEX_H
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
     animations
@@ -45,7 +46,7 @@ function playerEventsRoot() {
     flow   = FLOW_VERTICAL
     halign = ALIGN_CENTER
     valign = ALIGN_BOTTOM
-    size   = [pw(80), SIZE_TO_CONTENT]
+    size   = static [pw(80), SIZE_TO_CONTENT]
     watch = playerEvents
     zOrder = Layers.MsgBox 
     children = playerEvents.get().map(makeItem)
