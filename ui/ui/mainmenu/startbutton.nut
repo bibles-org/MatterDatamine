@@ -79,7 +79,6 @@ function quickMatchFn() {
 
 let mkAbortText = @(mainText) @() {
   watch = [matchingQueuesMap, joiningQueueName]
-  size = flex()
   flow = FLOW_VERTICAL
   valign = ALIGN_CENTER
   halign = ALIGN_CENTER
@@ -98,7 +97,16 @@ let mkAbortText = @(mainText) @() {
 let leaveQuickMatchButton = button(mkAbortText(loc("startButton/leaveQueue")),
   @() leaveQueue(), leaveBtnParams)
 
-let setNotReadyButton = button(mkAbortText(loc("startButton/setNotReady")),
+let setNotReadyButton = @(additionalFields) button(
+  {
+    flow = FLOW_VERTICAL
+    hplace = ALIGN_CENTER
+    halign = ALIGN_CENTER
+    children = [
+      mkAbortText(loc("startButton/setNotReady"))
+      additionalFields
+    ]
+  },
   function() {
     myExtSquadData.ready.set(false)
     if (isInQueue.get())
@@ -209,8 +217,17 @@ let setCannotTakeSafepackMsg = @() showMsgbox({
 let setCannotTakeSafepackBtn = textButton(loc("startButton/cannotTakeSafepack"),
   setCannotTakeSafepackMsg, disabledQuickMatchBtnParams)
 
-let mkJoinQuickMatchButton = buttonWithGamepadHotkey(mkText(loc("missionStart"), { hplace = ALIGN_CENTER }.__merge(h2_txt)),
-  mkCheckEquipmentStateHandler(@() quickMatchFn()), quickMatchBtnParams)
+let mkJoinQuickMatchButton = @(additionalFields)
+  buttonWithGamepadHotkey({
+    flow = FLOW_VERTICAL
+    hplace = ALIGN_CENTER
+    halign = ALIGN_CENTER
+    children = [
+      mkText(loc("missionStart"), h2_txt)
+      additionalFields
+    ]
+  },
+    mkCheckEquipmentStateHandler(@() quickMatchFn()), quickMatchBtnParams)
 
 
 let nexusFittingQueues = Computed(function() {
@@ -251,7 +268,7 @@ function joinNexusFittingQueues() {
 let mkJoinNexusMatchButton = buttonWithGamepadHotkey(mkText(loc("missionStart"), { hplace = ALIGN_CENTER }.__merge(h2_txt)),
   joinNexusFittingQueues, quickMatchBtnParams)
 
-let quickMatchButton = @() {
+let quickMatchButton = @(additionalFields) @() {
   watch = [isInQueue, loadoutItems, stashVolume, stashMaxVolume]
   size = FLEX_H
   children = isInQueue.get()
@@ -260,11 +277,20 @@ let quickMatchButton = @() {
                 ? setCannotTakeSafepackBtn
                 : selectedPlayerGameModeOption.get() == GameMode.Nexus
                   ? mkJoinNexusMatchButton
-                  : mkJoinQuickMatchButton
+                  : mkJoinQuickMatchButton(additionalFields)
 }
 
-let pressWhenReadyBtn = buttonWithGamepadHotkey(
-  mkText(loc("startButton/pressWhenReady"), { hplace = ALIGN_CENTER }.__merge(h2_txt))
+let pressWhenReadyBtn = @(additionalFields) buttonWithGamepadHotkey(
+  {
+    flow = FLOW_VERTICAL
+    gap = hdpx(4)
+    halign = ALIGN_CENTER
+    hplace = ALIGN_CENTER
+    children = [
+      mkText(loc("startButton/pressWhenReady"), { hplace = ALIGN_CENTER }.__merge(h2_txt))
+      additionalFields
+    ]
+  }
   function() {
     if (isInSquad.get() && !isSquadLeader.get() && wantOfflineRaid.get() && numOfflineRaidsAvailable.get() <= 0) {
       showMsgbox({ text = loc("queue/offline_raids/noTickets") })
@@ -288,9 +314,9 @@ let setNotPossibleBtn = textButton(loc("startButton/raidIsNotAvailableInSquad"),
     }),
   disabledQuickMatchBtnParams)
 
-function squadQuickMatchButton() {
+let squadQuickMatchButton = @(additionalFields) function() {
   local myUid = selfUid.get()
-  local btn = quickMatchButton
+  local btn = quickMatchButton(additionalFields)
   if (!checkSafepack())
     btn = setCannotTakeSafepackBtn
   else if (isSquadLeader.get() && !isGroupAvailable())
@@ -300,7 +326,7 @@ function squadQuickMatchButton() {
   )
     btn = setNotAllReadyBtn
   else if (!isSquadLeader.get() && squadSelfMember.get() != null)
-    btn = myExtSquadData.ready.get() ? setNotReadyButton : pressWhenReadyBtn
+    btn = myExtSquadData.ready.get() ? setNotReadyButton(additionalFields) : pressWhenReadyBtn(additionalFields)
   return {
     watch = [isSquadLeader, squadSelfMember, myExtSquadData.ready, allMembersState, loadoutItems, stashVolume, stashMaxVolume]
     size = FLEX_H
@@ -308,13 +334,13 @@ function squadQuickMatchButton() {
   }
 }
 
-let startButton = @() {
+let startButton = @(additionalFields = null) @() {
   watch = isInSquad
   size = FLEX_H
-  children = isInSquad.get() ? squadQuickMatchButton : quickMatchButton
+  children = isInSquad.get() ? squadQuickMatchButton(additionalFields) : quickMatchButton(additionalFields)
 }
 
-function consoleRaidAdditionalButton() {
+let consoleRaidAdditionalButton = @(additionalFields = null) function() {
   if (!isInSquad.get() && !isInQueue.get() && checkSafepack())
     return { watch = [isInSquad, isInQueue, loadoutItems, stashVolume, stashMaxVolume] }
 
@@ -331,7 +357,7 @@ function consoleRaidAdditionalButton() {
   )
     btn = setNotAllReadyBtn
   else if (!isSquadLeader.get() && squadSelfMember.get() != null)
-    btn = myExtSquadData.ready.get() ? setNotReadyButton : null
+    btn = myExtSquadData.ready.get() ? setNotReadyButton(additionalFields) : null
   return {
     watch = [isInQueue, isSquadLeader, allMembersState, selfUid]
     size = FLEX_H

@@ -46,6 +46,11 @@ entity{
   spawnBase__spawnRadius:r=2.5
 }
 
+entity{
+  _template:t="raid_name_override"
+  raid_name_override:t="nexus+itzal_kutan+domination"
+}
+
 import{
   scene:t="gamedata/scenes/_nexus_itzal_kutan_common.blk"
 }

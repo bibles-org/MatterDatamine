@@ -542,9 +542,13 @@ fn_scar_gun_collapse_loot_preset{
 
 m4a1_gun_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=3, 3
+  loot_preset__numSamples:ip2=4, 4
 
   "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="box_5_56_magazine_loot_preset"
+    }
+
     "item:object"{
       template_name:t="m4a1_gun"
     }
@@ -634,9 +638,13 @@ m4_civil_gun_loot_preset{
 
 m16a4_gun_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=3, 3
+  loot_preset__numSamples:ip2=4, 4
 
   "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="box_5_56_magazine_loot_preset"
+    }
+
     "item:object"{
       template_name:t="m16a4_gun"
     }
@@ -669,9 +677,13 @@ m16a4_gun_collapse_loot_preset{
 
 hk416a5_gun_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=3, 3
+  loot_preset__numSamples:ip2=4, 4
 
   "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="box_5_56_magazine_loot_preset"
+    }
+
     "item:object"{
       template_name:t="hk416a5_gun"
     }
@@ -704,9 +716,13 @@ hk416a5_gun_collapse_loot_preset{
 
 ak_103_gun_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=5, 5
+  loot_preset__numSamples:ip2=6, 6
 
   "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="box_7_62x39_magazine_loot_preset"
+    }
+
     "item:object"{
       template_name:t="ak_103_gun"
     }
@@ -731,9 +747,13 @@ ak_103_gun_loot_preset{
 
 ak_12_gun_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=3, 3
+  loot_preset__numSamples:ip2=4, 4
 
   "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="box_5_45x39_magazine_loot_preset"
+    }
+
     "item:object"{
       template_name:t="ak_12_gun"
     }
@@ -750,9 +770,13 @@ ak_12_gun_loot_preset{
 
 steyr_aug_a1_gun_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=3, 3
+  loot_preset__numSamples:ip2=4, 4
 
   "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="box_5_56_magazine_loot_preset"
+    }
+
     "item:object"{
       template_name:t="steyr_aug_a1_gun"
     }
@@ -986,9 +1010,13 @@ svd_gun_loot_preset{
 
 sv98_gun_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=3, 3
+  loot_preset__numSamples:ip2=4, 4
 
   "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="box_7_62x51_magazine_loot_preset"
+    }
+
     "item:object"{
       template_name:t="sv98_gun"
     }
@@ -1758,12 +1786,12 @@ close_range_modern_weapons_t2_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="m1911_colt_gun_loot_preset"
-      weight:r=1
+      weight:r=0.5
     }
 
     "item:object"{
       sub_preset:t="beretta_m9_gun_loot_preset"
-      weight:r=2
+      weight:r=0.5
     }
 
     "item:object"{
@@ -1871,17 +1899,17 @@ long_range_modern_weapons_t2_loot_preset{
 
     "item:object"{
       sub_preset:t="m4_gun_loot_preset"
-      weight:r=1
+      weight:r=2
     }
 
     "item:object"{
       sub_preset:t="m4a1_gun_loot_preset"
-      weight:r=1
+      weight:r=2
     }
 
     "item:object"{
       sub_preset:t="ak_103_gun_loot_preset"
-      weight:r=1
+      weight:r=2
     }
 
     "item:object"{
@@ -1902,7 +1930,7 @@ long_range_modern_weapons_t3_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="m4a1_gun_loot_preset"
-      weight:r=2
+      weight:r=1
     }
 
     "item:object"{
@@ -1933,6 +1961,22 @@ long_range_modern_weapons_t3_loot_preset{
     "item:object"{
       sub_preset:t="hk_g3a4_gun_loot_preset"
       weight:r=2
+    }
+  }
+}
+
+military_car_modern_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="close_range_modern_weapons_t2_loot_preset"
+    }
+
+    "item:object"{
+      sub_preset:t="long_range_modern_weapons_t2_loot_preset"
     }
   }
 }

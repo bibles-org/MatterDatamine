@@ -29,7 +29,10 @@ let logarithmic_scale = {
 let scales = freeze({
   logarithmic = logarithmic_scale
   linear = {
-    to = @(value, minv, maxv) (value.tofloat() - minv) / (maxv - minv)
+    to = @(value, minv, maxv)
+      (maxv-minv != 0)
+        ? (value.tofloat() - minv) / (maxv - minv)
+        : value.tofloat() - minv
     from = @(factor, minv, maxv) factor.tofloat() * (maxv - minv) + minv
   }
   logarithmicWithZero = {
@@ -50,7 +53,7 @@ function slider(orient, var, options={}) {
   let step = options?.step
   let unit = options?.unit && options?.scaling!=scales.linear
     ? options?.unit
-    : step ? step/rangeval : 0.01
+    : step && rangeval!=0 ? step/rangeval : 0.01
   let pageScroll = options?.pageScroll ?? step ?? 0.05
   let ignoreWheel = options?.ignoreWheel ?? true
   let bgColor = options?.bgColor ?? ControlBgOpaque
@@ -134,7 +137,7 @@ function slider(orient, var, options={}) {
           children = {
             rendObj = ROBJ_FRAME
             color = calcFrameColor(sliderStateFlags.get())
-            borderWidth = orient == O_HORIZONTAL ? [hdpx(1),0,hdpx(1),hdpx(1)] : 0
+            borderWidth = orient == O_HORIZONTAL ? static [hdpx(1),0,hdpx(1),hdpx(1)] : 0
             size = flex()
           }
         }

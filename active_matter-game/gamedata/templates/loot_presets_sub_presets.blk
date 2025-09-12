@@ -141,3 +141,15 @@ akm_47_gun_template_sub_preset{
     }
   }
 }
+
+beretta_m9_gun_template_sub_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="beretta_m9_magazine+item_in_world"
+      number:ip2=1, 2
+    }
+  }
+}

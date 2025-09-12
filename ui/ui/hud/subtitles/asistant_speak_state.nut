@@ -7,16 +7,13 @@ import "%dngscripts/ecs.nut" as ecs
 let currentAssistantSpeak = Watched(null)
 
 let languageCutoff = {
-  Russian = "_ru"
+  Russian = "/ru/"
 }
 
 ecs.register_es("assistant_speaking_check", {
     [["onInit","onChange"]] = function(_evt,_eid,comp) {
-      let cutoff = languageCutoff?[gameLanguage]
-      local soundName = comp.assistant__currentSoundName
-      if (cutoff != null && soundName.endswith(cutoff)) {
-        soundName = soundName.slice(0, -cutoff.len())
-      }
+      let cutoff = languageCutoff?[gameLanguage] ?? "/en/"
+      let soundName = comp.assistant__currentSoundName.replace(cutoff, "/")
       currentAssistantSpeak.set({
         currentScriptSoundLenght = comp.assistant__currentSoundLenght
         currentScriptName = soundName

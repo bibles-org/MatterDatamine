@@ -18,7 +18,18 @@ function get_pos(eid) {
   return transform?[3] ?? Point3(0, 0, 0)
 }
 
+let get_animcharAttachAttachedToQuery = SqQuery("get_animcharAttachAttachedToQuery", {
+  comps_ro=[
+    ["animchar_attach__attachedTo", TYPE_EID]
+  ]
+})
+
+function get_animchar_attach__attachedTo(eid) {
+  return get_animcharAttachAttachedToQuery.perform(eid, @(_eid, comp) comp)?.animchar_attach__attachedTo
+}
+
 return {
   get_transform
   get_pos
+  get_animchar_attach__attachedTo
 }

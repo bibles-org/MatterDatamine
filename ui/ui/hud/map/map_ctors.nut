@@ -3,9 +3,7 @@ import "%ui/hud/map/map_monstrify_victim_zone.nut" as mkVictimZones
 import "%ui/hud/map/map_airdrop_zone.nut" as mkAirdropZones
 import "%ui/hud/map/map_object_markers.nut" as mkMapObjectMarkers
 import "%ui/hud/map/map_object_zone.nut" as mkMapObjectZones
-
 from "%ui/hud/map/map_assistant_points.nut" import assistantPoints
-
 from "%ui/hud/map/map_nexus_portals.nut" import nexusPortals
 from "%ui/hud/map/map_robodog.nut" import robodogMarks
 from "%ui/ui_library.nut" import *

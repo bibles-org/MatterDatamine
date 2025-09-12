@@ -15,7 +15,7 @@ from "net" import get_sync_time
 import "%ui/components/faComp.nut" as faComp
 from "%ui/components/cursors.nut" import setTooltip
 from "%ui/hud/state/inventory_item_relations.nut" import isItemForHolder
-from "%ui/components/colors.nut" import Alert, Inactive
+from "%ui/components/colors.nut" import Alert, Inactive, ItemIconBlocked
 from "%ui/mainMenu/market/inventoryToMarket.nut" import getLotFromItem, isLotAvailable, getPriceFromLot
 from "eventbus" import eventbus_send, eventbus_subscribe_onehit
 from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
@@ -27,7 +27,7 @@ from "%ui/mainMenu/market/marketItems.nut" import weaponRelated
 from "dagor.debug" import logerr
 from "%ui/hud/state/item_info.nut" import get_item_info
 from "%ui/hud/state/inventory_eids_common.nut" import getInventoryEidByListType
-from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog
+from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog, marketIconSize
 from "%ui/mainMenu/stashSpaceMsgbox.nut" import showNoEnoughStashSpaceMsgbox
 from "%ui/components/itemIconComponent.nut" import itemIconNoBorder
 from "%ui/profile/profileState.nut" import playerProfilePremiumCredits, marketItems, repairRelativePrice,
@@ -897,6 +897,29 @@ function repairItems(items, itemsCost = null) {
   eventbus_subscribe_onehit($"profile_server.repair_item.result", function(_) {
     workbenchRepairInProgress.set(false)
     workbenchItemContainer.set([])
+    items.each(function(v) {
+      let { itemTemplate = null, itemName = null, uniqueId = "" } = v
+      let image = itemTemplate == null ? null : itemIconNoBorder(itemTemplate,
+        {
+          width = marketIconSize[0]
+          height = marketIconSize[1]
+          silhouette = ItemIconBlocked
+          shading = "full"
+          vplace = ALIGN_CENTER
+          margin = static [hdpx(4), 0, hdpx(4), hdpx(8)]
+        })
+
+      let repairLog = {
+        id = $"repair_item_{uniqueId}"
+        content = mkPlayerLog({
+          titleText = loc("inventory/itemRepaires")
+          titleFaIcon = "wrench"
+          bodyText = itemName == null ? null : loc(itemName)
+          bodyIcon = image
+        })
+      }
+      addPlayerLog(repairLog)
+    })
     sound_play("ui_sounds/button_ok_reward")
   })
   eventbus_send("profile_server.repair_item", {
@@ -986,9 +1009,7 @@ function fastUnequipItem(item) {
   return true
 }
 
-function checkInventoryVolume(items, inventoryEid = stashEid.get(), inventoryMaxVol = stashMaxVolume.get(),
-inventoryVolume = stashVolume.get()
-) {
+function checkInventoryVolume(items, inventoryEid = stashEid.get(), inventoryMaxVol = stashMaxVolume.get(), inventoryVolume = stashVolume.get()) {
   local missingVolume = 0
   foreach (item in items) {
     let { templateName } = item

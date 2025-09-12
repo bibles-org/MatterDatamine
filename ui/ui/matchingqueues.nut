@@ -15,7 +15,7 @@ from "math" import min
 let { isInBattleState } = require("%ui/state/appState.nut")
 let connectHolder = require("%ui/connectHolderR.nut")
 
-let matchingTime = Watched(get_matching_utc_time())
+let matchingTime = nestWatched("matchingTime", get_matching_utc_time())
 let matchingQueuesRaw = nestWatched("matchingQueuesRaw", [])
 let matchingQueuesScheduleRaw = nestWatched("matchingQueuesScheduleRaw", [])
 

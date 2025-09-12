@@ -39,9 +39,9 @@ from "%ui/mainMenu/currencyIcons.nut" import creditsColor, creditsTextIcon, chro
 from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryImageParams
 from "%ui/mainMenu/craft_common_pkg.nut" import mkMonolithLinkIcon
 from "%ui/hud/hud_menus_state.nut" import openMenu
+from "%ui/profile/profileState.nut" import cleanableItems, playerProfileAMConvertionRate, refinedItemsList, refinerFusingRecipes,
+  allRecipes, amProcessingTask, marketPriceSellMultiplier, marketItems, playerProfileAMConvertionRate
 
-let { cleanableItems, playerProfileAMConvertionRate, refinedItemsList, refinerFusingRecipes,
-      allRecipes, amProcessingTask, marketPriceSellMultiplier, marketItems } = require("%ui/profile/profileState.nut")
 let { currentKeyItem } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
 let { stashItems, backpackItems, inventoryItems, safepackItems } = require("%ui/hud/state/inventory_items_es.nut")
 let { draggedData, shiftPressedMonitor, isAltPressedMonitor, isCtrlPressedMonitor,
@@ -89,10 +89,8 @@ function refineIsProcessing(task) {
 let selectAmItemName = loc("amClean/selectItem")
 
 function patchRefineData(items) {
-  let refinedItems = refinedItemsList.get()
-  let recipes = refinerFusingRecipes.get()
   foreach (item in items) {
-    item.__update({ additionalDescFunc = @(v) additionalDescFunc(v, refinedItems, recipes) })
+    item.__update({ additionalDescFunc = @(itemToDesc) additionalDescFunc(itemToDesc, playerProfileAMConvertionRate.get()) })
   }
 }
 

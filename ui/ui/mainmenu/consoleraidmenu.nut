@@ -60,12 +60,12 @@ from "%ui/components/modalWindows.nut" import addModalWindow, removeModalWindow
 from "%ui/mainMenu/contractWidget.nut" import  contractReportIsInProgress, isRightRaidName
 from "%ui/leaderboard/lb_state_base.nut" import curFactionLbData, curFactionLbPlayersCount, refreshFactionLb, updateRefreshTimer
 from "%ui/profile/profileState.nut" import playerBaseState, playerStats, playerProfileCurrentContracts,
-  nexusNodesState, currentContractsUpdateTimeleft
+  nexusNodesState, currentContractsUpdateTimeleft, numOfflineRaidsAvailable
 from "%ui/mainMenu/nexus_tutorial.nut" import checkShowNexusTutorial, mkNexusBriefingButton
 
 let { matchingQueuesMap, matchingQueues, matchingTime } = require("%ui/matchingQueues.nut")
 let { selectedSpawn, selectedRaid, raidToFocus, leaderSelectedRaid, selectedNexusFaction,
-  selectedNexusNode, showNexusFactions, selectedPlayerGameModeOption, GameMode } = require("%ui/gameModeState.nut")
+  selectedNexusNode, showNexusFactions, selectedPlayerGameModeOption, GameMode, setShowNexusFactions, allowRaidsSelectInNexus } = require("%ui/gameModeState.nut")
 let { squadLeaderState, isInSquad, isSquadLeader } = require("%ui/squad/squadState.nut")
 let { isOnboarding, playerProfileOnboardingContracts } = require("%ui/hud/state/onboarding_state.nut")
 let { tiledMapContext, tiledMapDefaultConfig } = require("%ui/hud/map/tiled_map_ctx.nut")
@@ -380,7 +380,7 @@ let factionLbCategories = [
   {
     field = "idx"
     locId = "lb/index"
-    width = flex()
+    width = hdpx(100)
     dataIdx = 0
     valueToShow = @(idx) idx + 1
   }
@@ -394,7 +394,7 @@ let factionLbCategories = [
   {
     field = "score"
     locId = "lb/nexusScore"
-    width = flex()
+    width = hdpx(150)
     dataIdx = 3
     override = {
       halign = ALIGN_RIGHT
@@ -409,7 +409,7 @@ let mkLbTitle = @(locId, override = static {}) {
   color = 0xF01C1C1C
   padding = static [0, hdpx(8)]
   valign = ALIGN_CENTER
-  children = mkText(loc(locId), static body_txt.__merge({ fontSize=hdpx(22) }))
+  children = mkText(loc(locId), static { color = colors.InfoTextValueColor }.__update(sub_txt))
 }.__update(override)
 
 let mkDataRow = @(data, ctor, idx, override) data == null ? null : {
@@ -418,18 +418,18 @@ let mkDataRow = @(data, ctor, idx, override) data == null ? null : {
   color = idx == 0 || idx % 2 == 0 ?  0xDD0F0F0F : 0xDD1C1C1C
   valign = ALIGN_CENTER
   padding = static [0, hdpx(8)]
-  children = mkText(ctor(data), static body_txt.__merge({ fontSize=hdpx(22) }))
+  children = mkText(ctor(data), sub_txt)
 }.__update(override)
 
-let lbSize = [hdpx(200), SIZE_TO_CONTENT]
+let lbSize = [hdpx(800), SIZE_TO_CONTENT]
 
 function mkDataTable(dataToAdd, factionNum) {
   let pageCols = factionLbCategories.map(function(category) {
-    let { locId, dataIdx, valueToShow, override = static {} } = category
+    let { locId, dataIdx, valueToShow, override = static {}, width } = category
     let title = mkLbTitle(locId, override)
     let mkData = @(data) dataIdx == 3 ? data?[factionNum.tointeger() + 4] : data?[dataIdx]
     return {
-      size = lbSize
+      size = [width, SIZE_TO_CONTENT]
       flow = FLOW_VERTICAL
       children = [
         title
@@ -474,12 +474,13 @@ let mkLbList = @(factionNum) function() {
     flow = FLOW_VERTICAL
     gap = hdpx(10)
     children = [
-      mkTextArea(loc("faction/lbTitle"), body_txt)
+      mkTextArea(loc("faction/lbTitle"), { size = lbSize, hplace = ALIGN_CENTER }.__update(body_txt))
       makeVertScroll({
         halign = ALIGN_CENTER
         size = FLEX_H
         gap = hdpx(10)
         children = res.map(@(v) {
+          size = lbSize
           flow = FLOW_HORIZONTAL
           children = v
         })
@@ -689,11 +690,12 @@ function getContent() {
   else
     selectedRaid.set(raidToFocus.get().raid)
 
-  let mkRaidDescFunc = @(raidW) function() {
-    let scene = raidW.get()?.scenes[0].fileName
+  let mkRaidDescFunc = @(sceneW) function() {
+    let scene = sceneW.get()
     return get_raid_description(scene)
   }
-  let raidDesc = Computed(mkRaidDescFunc(selectedRaid))
+  let selectedRaidScene = Computed(@() selectedRaid.get().scenes?[0].fileName)
+  let raidDesc = Computed(mkRaidDescFunc(selectedRaidScene))
 
   let spawns = Computed(function() {
     let q = selectedRaid.get()
@@ -1025,7 +1027,6 @@ function getContent() {
       }
     ]
   }
-
   function gameModeTabs() {
     let tabsList = GameMode.reduce(function(resList, pmode) {
       let isNexus = pmode == GameMode.Nexus
@@ -1437,7 +1438,7 @@ function getContent() {
     let nodeContestedWidget = {
       flow = FLOW_VERTICAL
       children = [
-          isActive.get() ? mkText(loc("Node contested:")) : null
+          isActive.get() ? mkText(loc("node/contested")) : null
       ].extend(factions.map(factionScore))
     }
 
@@ -1829,8 +1830,8 @@ function getContent() {
       flow = FLOW_VERTICAL
       gap = hdpx(8)
       children = [
-        selectedPlayerGameModeOption.get() == GameMode.Nexus
-          ? spinnerList({ curValue = showNexusFactions, allValues = [false, true], size = FLEX_H, valToString })
+        (selectedPlayerGameModeOption.get() == GameMode.Nexus && allowRaidsSelectInNexus)
+          ? spinnerList({ curValue = showNexusFactions, allValues = [false, true], size = FLEX_H, valToString, setValue=setShowNexusFactions })
           : null
         selectedPlayerGameModeOption.get() == GameMode.Nexus && showNexusFactions.get() ? null : nextRaidRotationTimer
         squadLeaderRaid
@@ -2073,7 +2074,7 @@ function getContent() {
     {
       size = static [flex(), hdpx(70)]
       halign = ALIGN_CENTER
-      textParams = h2_txt
+      textParams = body_txt
       textMargin = 0
     }
   )
@@ -2104,10 +2105,12 @@ function getContent() {
     let isNexus = selectedPlayerGameModeOption.get() == GameMode.Nexus
     let isOperative = selectedRaid.get() != null && !isNexus
     function buttons() {
-      let watch = [wantOfflineRaid, isOfflineRaidAvailable, isAvailable, selectedRaid, isInSquad, isSquadLeader,
-        selectedRaidBySquadLeader, selectedNexusNode, activeNodes]
+      let watch = [wantOfflineRaid, isOfflineRaidAvailable, isAvailable, selectedRaid, isInSquad, isSquadLeader, numOfflineRaidsAvailable,
+        selectedRaidBySquadLeader, selectedNexusNode, activeNodes, squadLeaderState]
       let { raidData = null } = selectedRaidBySquadLeader.get()
-      if (wantOfflineRaid.get() && !isOfflineRaidAvailable.get() && !isNexus) {
+      let isLeaderSetOffline = squadLeaderState.get()?.leaderRaid.isOffline
+      if ((wantOfflineRaid.get() && !isOfflineRaidAvailable.get() && !isNexus)
+        || (isLeaderSetOffline && raidData?.extraParams.raidName == selectedRaid.get()?.extraParams.raidName)) {
         return {
           watch
           size = FLEX_H
@@ -2148,7 +2151,7 @@ function getContent() {
           children = isSquadLeader.get() && (raidData?.extraParams.raidName == null
               || raidData.extraParams.raidName != selectedRaid.get()?.extraParams.raidName)
             ? selectLeaderRaidButton
-            : [consoleRaidAdditionalButton, mkPrepareButton(static $"{Missions_id}/{PREPARATION_NEXUS_SUBMENU_ID}")]
+            : [consoleRaidAdditionalButton(), mkPrepareButton(static $"{Missions_id}/{PREPARATION_NEXUS_SUBMENU_ID}")]
         }
       if (isOperative)
         return {
@@ -2159,7 +2162,7 @@ function getContent() {
           children = isSquadLeader.get() && (raidData?.extraParams.raidName == null
               || raidData.extraParams.raidName != selectedRaid.get()?.extraParams.raidName)
             ? selectLeaderRaidButton
-            : [consoleRaidAdditionalButton, mkPrepareButton(static $"{Missions_id}/{PREPARATION_SUBMENU_ID}")]
+            : [consoleRaidAdditionalButton(), mkPrepareButton(static $"{Missions_id}/{PREPARATION_SUBMENU_ID}")]
         }
       return {watch}
     }
@@ -2185,13 +2188,13 @@ function getContent() {
       .map(@(c) mkTiledMapLayer(c, mapSize))
   }
 
-  let mkMapContainer = @(mapSize, raidW = selectedRaid) function() {
-    let scene = raidW.get()?.scenes[0].fileName
+  let mkMapContainer = @(mapSize, sceneW = selectedRaidScene) function() {
+    let scene = sceneW.get()
     setupMapContext(scene, mapSize)
     let mapInfo = get_tiled_map_info(scene)
     return {
-      watch = raidW
-      key = raidW.get()
+      watch = sceneW
+      key = sceneW.get()
       rendObj = ROBJ_SOLID
       size = mapSize
       color = mapInfo?.tilesPath != null && mapInfo?.tilesPath != ""
@@ -2202,13 +2205,13 @@ function getContent() {
     }
   }
 
-  let mkNexusMapAndImages = @(raidW=selectedRaid, raidDescW=raidDesc, override={}) @() {
+  let mkNexusMapAndImages = @(sceneW = selectedRaidScene, raidDescW=raidDesc, override={}) @() {
     size = FLEX_H
     flow = FLOW_HORIZONTAL
     gap = hdpx(10)
     halign = ALIGN_LEFT
     children = [
-      mkMapContainer(static [hdpx(280), hdpx(280)], raidW)
+      mkMapContainer(static [hdpx(280), hdpx(280)], sceneW)
       mkMissionImages(static [hdpx(280), hdpx(280)], raidDescW, override)
     ]
   }
@@ -2261,35 +2264,51 @@ function getContent() {
 
     return qs.values().sort(@(a, b) (qs[a.id]?.extraParams?.uiOrder ?? 9999) <=> (qs[b.id]?.extraParams?.uiOrder ?? 9999) || a.id <=> b.id)
   })
-  let nexusMapsName = @(q) loc(q?.locId ?? "")
+
+  let nexusFittingScenes = Computed(function() {
+    let qs = nexusFittingQueues.get()
+    return qs.reduce(function(acc, v) {
+      foreach (s in v.scenes) {
+        if (!acc.contains(s.fileName))
+          acc.append(s.fileName)
+      }
+      return acc
+    }, [])
+  })
+
+  let nexusMapsName = function(s) {
+    let name = s.split("/")?.top()
+    let locId = name?.split(".")?[0] ?? ""
+    return loc(locId)
+  }
+
   let nexusMapAndImagesRaidView = mkNexusMapAndImages()
-  let curSelectedSpinnerRaid = Watched(selectedRaid.get())
-  let spinnerRaid = Computed(function() {
-    let cur = curSelectedSpinnerRaid.get()
-    if (nexusFittingQueues.get()?.contains(cur))
+  let curSelectedSpinnerScene = Watched(nexusFittingScenes.get()?[0])
+  let spinnerScene = Computed(function() {
+    let cur = curSelectedSpinnerScene.get()
+    if (nexusFittingScenes.get()?.contains(cur))
       return cur
     else
-      return nexusFittingQueues.get()?[0]
+      return nexusFittingScenes.get()?[0]
   })
-  local setNextSpinnerRaid
+  local setNextSpinnerScene
   let setSpinnerTimer = function() {
-    gui_scene.clearTimer(setNextSpinnerRaid)
-    gui_scene.setInterval(3, setNextSpinnerRaid, setNextSpinnerRaid)
+    gui_scene.clearTimer(setNextSpinnerScene)
+    gui_scene.setInterval(3, setNextSpinnerScene, setNextSpinnerScene)
   }
-  setNextSpinnerRaid = function() {
-    let cur = curSelectedSpinnerRaid.get()
-    let nfq = nexusFittingQueues.get()
-    let curidx = nfq.findindex(@(v) v==cur)
-    if (curidx==null || curidx == nfq.len()-1)
-      curSelectedSpinnerRaid.set(nfq?[0])
+  setNextSpinnerScene = function() {
+    let cur = curSelectedSpinnerScene.get()
+    let nfs = nexusFittingScenes.get()
+    let curidx = nfs.findindex(@(v) v == cur)
+    if (curidx==null || curidx == nfs.len()-1)
+      curSelectedSpinnerScene.set(nfs?[0])
     else {
-      curSelectedSpinnerRaid.set(nfq[curidx+1])
-      selectedRaid.set(nfq[curidx+1])
+      curSelectedSpinnerScene.set(nfs[curidx+1])
     }
     setSpinnerTimer()
   }
-  let spinnerRaidDesc = Computed(mkRaidDescFunc(spinnerRaid))
-  let nexusMapAndImagesFactionView = mkNexusMapAndImages(spinnerRaid, spinnerRaidDesc,
+  let spinnerRaidDesc = Computed(mkRaidDescFunc(spinnerScene))
+  let nexusMapAndImagesFactionView = mkNexusMapAndImages(spinnerScene, spinnerRaidDesc,
     static {animations = [
       { prop = AnimProp.opacity, from=0, to=1, duration=0.25, play=true, easing=InCubic }
       { prop = AnimProp.opacity, from=1, to=0, duration=0.2, playFadeOut=true, easing=OutCubic }
@@ -2311,15 +2330,15 @@ function getContent() {
     let show_nexus_factions = showNexusFactions.get()
     let nexusFactionRaidsView = show_nexus_factions && nexusFittingQueues.get().len() > 0
     return {
-      watch = [spinnerRaid, nexusFittingQueues, showNexusFactions]
+      watch = [spinnerScene, nexusFittingQueues, showNexusFactions]
       flow = FLOW_VERTICAL
       size = FLEX_H
       gap = hdpx(2)
       onAttach = setSpinnerTimer
-      onDetach = @() gui_scene.clearTimer(setNextSpinnerRaid)
+      onDetach = @() gui_scene.clearTimer(setNextSpinnerScene)
       children = nexusFactionRaidsView ? [
         mkTextArea(loc("nexus/factionsFittingRaids"))
-        @(){color = colors.InfoTextValueColor size = FLEX_H watch = spinnerRaid text = nexusMapsName(spinnerRaid.get()) rendObj = ROBJ_TEXT behavior = Behaviors.Button onClick = setNextSpinnerRaid skipDirPadNav=true}
+        @(){color = colors.InfoTextValueColor size = FLEX_H watch = spinnerScene text = nexusMapsName(spinnerScene.get()) rendObj = ROBJ_TEXT behavior = Behaviors.Button onClick = setNextSpinnerScene skipDirPadNav=true}
         nexusMapAndImagesFactionView
         selectedNodeInfo
         
@@ -2340,7 +2359,6 @@ function getContent() {
       children = [
         is_nexus ? nexusRaidPreview : null
         contractsPanel
-        is_nexus ? null : mkOfflineRaidCheckBox()
         raidButtonContractsLocked(!contractReportIsInProgress.get())
       ]
     }
@@ -2940,20 +2958,12 @@ function getContent() {
       header = @() {
         size = FLEX_H
         flow = FLOW_HORIZONTAL
-        gap = hdpx(20)
+        gap = hdpx(4)
         valign = ALIGN_CENTER
         children = [
-          {
-            flow = FLOW_HORIZONTAL
-            gap = hdpx(4)
-            valign = ALIGN_CENTER
-            children = [
-              mkTitleString(loc("missions/preparation")).__update(static { margin = 0 })
-              icon
-              mkText(loc(zoneName), h2_txt)
-            ]
-          }
-          isPreparation ? mkDifficultyBlock() : null
+          mkTitleString(loc("missions/preparation")).__update(static { margin = 0 })
+          icon
+          mkText(loc(zoneName), h2_txt)
         ]
       }
     }

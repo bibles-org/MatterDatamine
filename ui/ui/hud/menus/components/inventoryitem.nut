@@ -146,8 +146,10 @@ function isItemCanBeDroppedToContainerInInventory(item, container) {
   let containerEid = container.eid
   if (containerEid == item.eid)
     return MoveForbidReason.OTHER
-
-  if (container?.owner == getInventoryEidByListType(STASH))
+  if (container?.inventoryEid != null
+    && container?.inventoryEid != ecs.INVALID_ENTITY_ID
+    && container?.inventoryEid == getInventoryEidByListType(STASH)
+  )
     return MoveForbidReason.OTHER
 
   if (item == null)

@@ -9,7 +9,7 @@ box_45_acp_magazine_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="box_45_acp_magazine+box_45_acp_magazine_partial"
+      template_name:t="box_45_acp_magazine"
     }
   }
 }
@@ -20,11 +20,13 @@ box_9mm_magazine_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="box_9mm_magazine+box_9mm_magazine_partial"
+      template_name:t="box_9mm_magazine"
+      weight:r=1
     }
 
     "item:object"{
       template_name:t="item_broken_ammo"
+      weight:r=0.5
     }
   }
 }
@@ -36,10 +38,12 @@ box_9x19_magazine_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="box_9x19_magazine"
+      weight:r=1
     }
 
     "item:object"{
       template_name:t="item_broken_ammo"
+      weight:r=0.5
     }
   }
 }
@@ -61,12 +65,13 @@ box_5_45x39_magazine_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="box_5_45x39_magazine+box_5_45x39_magazine_partial"
+      template_name:t="box_5_45x39_magazine"
+      weight:r=1
     }
 
     "item:object"{
       template_name:t="item_broken_ammo"
-      weight:r=1.5
+      weight:r=0.5
     }
   }
 }
@@ -77,12 +82,13 @@ box_7_62x39_magazine_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="box_7_62x39_magazine+box_7_62x39_magazine_partial"
+      template_name:t="box_7_62x39_magazine"
+      weight:r=1
     }
 
     "item:object"{
       template_name:t="item_broken_ammo"
-      weight:r=1.5
+      weight:r=0.5
     }
   }
 }
@@ -93,7 +99,7 @@ box_9x39_magazine_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="box_9x39_magazine+box_9x39_magazine_partial"
+      template_name:t="box_9x39_magazine"
     }
   }
 }
@@ -104,7 +110,7 @@ box_7_62x54_magazine_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="box_7_62x54_magazine+box_7_62x54_magazine_partial"
+      template_name:t="box_7_62x54_magazine"
     }
   }
 }
@@ -115,7 +121,7 @@ box_7_62x51_magazine_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="box_7_62x51_magazine+box_7_62x51_magazine_partial"
+      template_name:t="box_7_62x51_magazine"
     }
   }
 }
@@ -126,18 +132,18 @@ box_12_gauge_magazine_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="box_12_gauge_magazine+box_12_gauge_magazine_partial"
+      template_name:t="box_12_gauge_magazine"
     }
   }
 }
 
 box_23x75_magazine_loot_preset{
   _use:t="base_ammo_loot_preset"
-  loot_preset__numSamples:ip2=1, 2
+  loot_preset__numSamples:ip2=1, 3
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="box_23x75_magazine+box_23x75_magazine_partial"
+      template_name:t="box_23x75_magazine"
     }
   }
 }
@@ -181,12 +187,9 @@ military_ammo_t1_loot_preset{
 
 military_ammo_t2_loot_preset{
   _use:t="loot_preset"
+  loot_preset__numSamples:ip2=3, 4
 
   "loot_preset__chances:array"{
-    "item:object"{
-      sub_preset:t="empty_loot_preset"
-    }
-
     "item:object"{
       sub_preset:t="box_45_acp_magazine_loot_preset"
     }
@@ -215,7 +218,7 @@ military_ammo_t2_loot_preset{
 
 modern_military_ammo_t1_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=1, 1
+  loot_preset__numSamples:ip2=2, 2
 
   "loot_preset__chances:array"{
     "item:object"{
@@ -238,6 +241,7 @@ modern_military_ammo_t1_loot_preset{
 
 modern_military_ammo_t2_loot_preset{
   _use:t="loot_preset"
+  loot_preset__numSamples:ip2=3, 4
 
   "loot_preset__chances:array"{
     "item:object"{

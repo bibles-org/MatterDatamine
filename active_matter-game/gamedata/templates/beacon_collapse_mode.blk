@@ -81,6 +81,7 @@ beacon_collapse_mode_beacon{
   _use:t="placeable_rendinst"
   _use:t="simple_ai_target"
   _use:t="riextra_hp_to_hitpoints"
+  _use:t="loot_drop_system_delayed_loot_generation"
   ri_extra__name:t="am_powerstake_research_device_a"
   ri_preload__name:t="am_powerstake_research_device_a"
   _use:t="pve_event_target"
@@ -105,7 +106,6 @@ beacon_collapse_mode_beacon{
   item_world_marker__riColliderPoint:p3=0.5, 0.5, 0.5
   item_world_marker__riColliderPointOffset:p3=0, 0, 0
   loot_drop_system__lootPreset:t="beacon_america_loot_preset"
-  loot_drop_system__generated:b=no
   itemContainer__name:t="container/collapse_beacon"
   itemContainer__type:t="supplyCrate"
   map_object__show:b=yes
@@ -119,7 +119,6 @@ beacon_collapse_mode_beacon{
   "ai_target__alwaysDanger:tag"{}
   "quest_device__questItemTemplates:list<t>"{}
   "usableObject:tag"{}
-  "loot_drop_system_delayed_loot_generation:tag"{}
   _group{
     _tags:t="ui"
     itemContainer__uiItemsMergeEnabled:b=no

@@ -1,5 +1,6 @@
 from "%ui/hud/state/item_info.nut" import get_item_info, getSlotAvailableMods
 from "%ui/hud/menus/components/itemFromTemplate.nut" import getSlotFromTemplate
+from "%ui/helpers/common_queries.nut" import get_animchar_attach__attachedTo
 from "gameevents" import EventHeroChanged
 
 import "%dngscripts/ecs.nut" as ecs
@@ -181,7 +182,9 @@ ecs.register_es("hero_equipment_hp_track_ui_es", {
     let heroEidV = watchedHeroEid.get()
 
     let attachedToEid = comp["animchar_attach__attachedTo"]
-    if (attachedToEid == heroEidV)
+    let parentAttachedTo = get_animchar_attach__attachedTo(attachedToEid)
+
+    if (attachedToEid == heroEidV || parentAttachedTo == heroEidV)
       get_heroslots_info_query.perform(heroEidV, updateEquipment)
   }
 },

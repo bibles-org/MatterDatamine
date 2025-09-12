@@ -42,7 +42,7 @@ knife_weapon{
   melee_weapon__blk:t="gamedata/weapons/knife.blk"
   showroom_item__customZoom:r=1.4
   showroom_item__customZoomBordersRng:p2=1.1, 2
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -51,8 +51,6 @@ knife_weapon{
     holsterSlots:t="slot_weapon_melee_2"
     holsterSlots:t="slot_weapon_5"
   }
-
-  "item__cantBeCorrupted:tag"{}
 }
 
 melee_weapon_flashlight_controller{

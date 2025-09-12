@@ -112,11 +112,18 @@ function extendStashBlock() {
 
   function featuredStashAction() {
     let levelsToFocus = []
-    foreach (id, item in marketItems.get()) {
-      if (item?.offerName.contains("PermanentStashUpgrade")
-        && !playerStats.get().purchasedUniqueMarketOffers.contains(id.tointeger())
-      )
+    local hasPurchasedAll = true
+    let featuredInventoryMarketOffers = marketItems.get()
+      .filter(@(item) item?.offerName.contains("PermanentStashUpgrade"))
+    foreach (id, item in featuredInventoryMarketOffers) {
+      if (!playerStats.get().purchasedUniqueMarketOffers.contains(id.tointeger())) {
+        hasPurchasedAll = false
         levelsToFocus.append(item)
+      }
+    }
+    if (hasPurchasedAll) {
+      showMsgbox({ text = loc("inventory/featuredStashPurchased")})
+      return
     }
     if (levelsToFocus.len() > 0) {
       let res = levelsToFocus.sort(@(a, b) a.requirements.monolithAccessLevel

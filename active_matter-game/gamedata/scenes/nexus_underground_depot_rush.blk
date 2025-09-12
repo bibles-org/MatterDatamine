@@ -34,6 +34,11 @@ entity{
   spawnBase__spawnRadius:r=2.5
 }
 
+entity{
+  _template:t="raid_name_override"
+  raid_name_override:t="nexus+underground_depot+rush"
+}
+
 import{
   scene:t="gamedata/scenes/_nexus_underground_depot_point_b.blk"
 }

@@ -1,5 +1,5 @@
 from "%dngscripts/globalState.nut" import nestWatched
-
+from "dagor.debug" import logerr
 from "%ui/ui_library.nut" import *
 
 enum GameMode {
@@ -18,7 +18,15 @@ let leaderSelectedRaid = nestWatched("squadLeaderSelectedRaid", {})
 let selectedNexusFaction = nestWatched("selectedNexusFaction", null)
 let selectedNexusNode = nestWatched("selectedNexusNode", null)
 let showNexusFactions = nestWatched("showNexusFactions", true)
+let allowRaidsSelectInNexus = false
 
+function setShowNexusFactions(v){
+  if (allowRaidsSelectInNexus)
+    showNexusFactions.set(v)
+  else
+    logerr("showNexusFactions is not allowed")
+}
+showNexusFactions.whiteListMutatorClosure(setShowNexusFactions)
 let isGroupAvailable = function() {
   return (selectedRaid.get()?.maxGroupSize ?? 1) > 1
 }
@@ -35,4 +43,6 @@ return {
   selectedNexusNode
   showNexusFactions
   raidToFocus
+  setShowNexusFactions
+  allowRaidsSelectInNexus
 }

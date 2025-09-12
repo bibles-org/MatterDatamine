@@ -976,7 +976,7 @@ let mintsList = function() {
 let mintManage = {
   vplace = ALIGN_BOTTOM
   size = FLEX_H
-  children = startButton
+  children = startButton()
 }
 
 let backButton = buttonWithGamepadHotkey(mkText(loc("mainmenu/btnBack"), { hplace = ALIGN_CENTER }.__merge(body_txt)),

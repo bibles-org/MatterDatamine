@@ -18,6 +18,7 @@ from "%ui/hud/menus/components/inventoryItemsHeroItemContainer.nut" import mkHer
 from "%ui/mainMenu/startButton.nut" import startButton
 from "%ui/components/button.nut" import button, textButton, buttonWithGamepadHotkey
 from "eventbus" import eventbus_send, eventbus_subscribe_onehit
+from "%ui/mainMenu/contractWidget.nut" import mkDifficultyBlock
 from "%ui/components/msgbox.nut" import showMsgbox
 from "%ui/components/colors.nut" import RedWarningColor, TextHover
 from "%ui/components/accentButton.style.nut" import accentButtonStyle
@@ -357,7 +358,7 @@ let mkPresetStashTabs = @(rotationTimer) function() {
           backButton,
           [CURRENT_PRESET_UID, AGENCY_PRESET_UID].contains(selectedPreset.get()) ? null : buyOrEquipButton,
           [CURRENT_PRESET_UID, AGENCY_PRESET_UID].contains(selectedPreset.get()) ? null : purchaseButton,
-          [CURRENT_PRESET_UID, AGENCY_PRESET_UID].contains(selectedPreset.get()) ? startButton : null
+          [CURRENT_PRESET_UID, AGENCY_PRESET_UID].contains(selectedPreset.get()) ? startButton(mkDifficultyBlock(false)) : null
         ]
       }
     ]

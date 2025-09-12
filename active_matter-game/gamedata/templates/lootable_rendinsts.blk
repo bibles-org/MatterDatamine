@@ -10,6 +10,7 @@ lootable_rendinst{
   _use:t="iteractable_drop_on_ri_destroy"
   _use:t="openable_ri_sound"
   _use:t="trigger_encounter_guards_on_looted"
+  _use:t="loot_drop_system_delayed_loot_generation"
   use_object__offset:p3=0, 0, 0
   use_object__obbMin:p3=0, 0, 0
   use_object__obbMax:p3=0, 0, 0
@@ -19,7 +20,6 @@ lootable_rendinst{
   ri_extra__bboxMin:p3=0, 0, 0
   ri_extra__bboxMax:p3=0, 0, 0
   loot_drop_system__lootPreset:t=""
-  loot_drop_system__generated:b=no
   item__useActionHintType:i=1
   item_world_marker__offset:p3=0, 0, 0
   item_world_marker__riColliderPoint:p3=0.5, 0.6, 0.5
@@ -35,7 +35,6 @@ lootable_rendinst{
   }
 
   "loot_drop_system__generatedItems:list<eid>"{}
-  "loot_drop_system_delayed_loot_generation:tag"{}
   "net_sound__descs:shared:object"{
     "start_search:object"{
       path:t="player/walker/am_trooper_male/items/healing/pick"

@@ -18,7 +18,12 @@ let objectMarkers = function(marks, transform, objectivesValue) {
 
     let iconColor = mark.active ? activeColor : inactiveColor
     let objectiveColor = colorblindPalette?[colorIdx] ?? color_common
-
+    let isComplete = mark?.complete
+    let iconName = (isComplete && (mark?.icon_complete ?? "")!="")
+      ? mark.icon_complete
+      : (!mark.active && (mark?.icon_inactive ?? "")!="")
+        ? mark.icon_inactive
+        : mark.icon
     let color = isObjective ? objectiveColor : iconColor
 
     let icon = @(sf) @(){
@@ -26,7 +31,7 @@ let objectMarkers = function(marks, transform, objectivesValue) {
       watch = sf
       color = sf.get() & S_HOVER ? hoverColor : color
       size = hdpxi(16)
-      image = Picture("{0}:{1}:{2}".subst(mark.icon, hdpxi(16), hdpxi(16)))
+      image = Picture("{0}:{1}:{2}".subst(iconName, hdpxi(16), hdpxi(16)))
       behavior = DngBhv.OpacityByComponent
       opacityComponentEntity = eid
       opacityComponentName = "map_object_marker__opacity"
@@ -43,7 +48,9 @@ let objectMarkers = function(marks, transform, objectivesValue) {
     let marker = mapHoverableMarker(
       {worldPos = mark.pos, clampToBorder = mark.clampToBorder},
       transform,
-      mark.text != "" || !isObjective ? loc(mark.text) : loc($"contract/{name}"),
+      mark.text != "" || !isObjective
+        ? (isComplete && mark.text_complete!="" ? loc(mark.text_complete): loc(mark.text))
+        : loc($"contract/{name}"),
       !isObjective ? icon : contractIcon
     )
     return marker

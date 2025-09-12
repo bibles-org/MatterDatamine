@@ -354,35 +354,143 @@ africa_pve_overall_zone_loot_preset{
   }
 }
 
+africa_loot_car_seat_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="beretta_m9_gun+item_in_world"
+      number:ip2=100, 100
+      template_sub_preset:t="beretta_m9_gun_template_sub_preset"
+    }
+
+    "item:object"{
+      template_name:t="civil_africa_lootable_rendinst_1"
+      number:ip2=80, 80
+    }
+
+    "item:object"{
+      template_name:t="modern_military_ammo_t1_lootable_rendinst"
+      number:ip2=80, 80
+    }
+
+    "item:object"{
+      template_name:t="small_sovmod_backpack_lootable+item_in_world"
+      number:ip2=80, 80
+    }
+  }
+}
+
+africa_pve_loot_car_seat_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="beretta_m9_gun+item_in_world"
+      number:ip2=50, 50
+      template_sub_preset:t="beretta_m9_gun_template_sub_preset"
+    }
+
+    "item:object"{
+      template_name:t="civil_africa_lootable_rendinst_1"
+      number:ip2=80, 80
+    }
+
+    "item:object"{
+      template_name:t="modern_military_ammo_t1_lootable_rendinst"
+      number:ip2=80, 80
+    }
+
+    "item:object"{
+      template_name:t="small_sovmod_backpack_lootable+item_in_world"
+      number:ip2=80, 80
+    }
+  }
+}
+
+africa_loot_car_trunk_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="akm_47_gun+item_in_world"
+      number:ip2=75, 75
+      template_sub_preset:t="akm_47_gun_template_sub_preset"
+    }
+
+    "item:object"{
+      template_name:t="civil_africa_lootable_rendinst_2"
+      number:ip2=80, 80
+    }
+
+    "item:object"{
+      template_name:t="modern_military_ammo_t1_lootable_rendinst"
+      number:ip2=80, 80
+    }
+
+    "item:object"{
+      template_name:t="small_sovmod_backpack_lootable+item_in_world"
+      number:ip2=80, 80
+    }
+  }
+}
+
+africa_pve_loot_car_trunk_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="akm_47_gun+item_in_world"
+      number:ip2=40, 40
+      template_sub_preset:t="akm_47_gun_template_sub_preset"
+    }
+
+    "item:object"{
+      template_name:t="civil_africa_lootable_rendinst_2"
+      number:ip2=80, 80
+    }
+
+    "item:object"{
+      template_name:t="modern_military_ammo_t1_lootable_rendinst"
+      number:ip2=80, 80
+    }
+
+    "item:object"{
+      template_name:t="small_sovmod_backpack_lootable+item_in_world"
+      number:ip2=80, 80
+    }
+  }
+}
+
 africa_loot_indoor_military_shelves_loot_preset{
   _use:t="full_loot_preset"
 
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="makarov_gun+item_in_world"
-      number:ip2=1, 2
+      number:ip2=10, 10
       template_sub_preset:t="makarov_gun_template_sub_preset"
     }
 
     "item:object"{
-      template_name:t="makarov_rust_gun+item_in_world"
-      number:ip2=1, 2
-      template_sub_preset:t="makarov_rust_gun_template_sub_preset"
+      template_name:t="beretta_m9_gun+item_in_world"
+      number:ip2=20, 20
+      template_sub_preset:t="beretta_m9_gun_template_sub_preset"
     }
 
     "item:object"{
       template_name:t="b7_binoculars_item+item_in_world"
-      number:ip2=1, 2
+      number:ip2=5, 5
     }
 
     "item:object"{
-      template_name:t="sov_knife_nr_40_weapon+item_in_world"
-      number:ip2=1, 2
+      template_name:t="f1_grenade_item+item_in_world"
+      number:ip2=10, 10
     }
 
     "item:object"{
-      template_name:t="ak_bayonet_weapon+item_in_world"
-      number:ip2=1, 2
+      template_name:t="box_12_gauge_magazine+item_in_world"
+      number:ip2=20, 20
     }
   }
 }
@@ -393,29 +501,29 @@ africa_pve_loot_indoor_military_shelves_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="makarov_gun+item_in_world"
-      number:ip2=1, 2
+      number:ip2=10, 10
       template_sub_preset:t="makarov_gun_template_sub_preset"
     }
 
     "item:object"{
-      template_name:t="makarov_rust_gun+item_in_world"
-      number:ip2=1, 2
-      template_sub_preset:t="makarov_rust_gun_template_sub_preset"
+      template_name:t="beretta_m9_gun+item_in_world"
+      number:ip2=10, 10
+      template_sub_preset:t="beretta_m9_gun_template_sub_preset"
     }
 
     "item:object"{
       template_name:t="b7_binoculars_item+item_in_world"
-      number:ip2=1, 2
+      number:ip2=5, 5
     }
 
     "item:object"{
-      template_name:t="sov_knife_nr_40_weapon+item_in_world"
-      number:ip2=1, 2
+      template_name:t="f1_grenade_item+item_in_world"
+      number:ip2=10, 10
     }
 
     "item:object"{
-      template_name:t="ak_bayonet_weapon+item_in_world"
-      number:ip2=1, 2
+      template_name:t="box_12_gauge_magazine+item_in_world"
+      number:ip2=20, 20
     }
   }
 }
@@ -425,18 +533,28 @@ africa_loot_indoor_military_floor_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="military_close_range_weapons_t2_lootable_rendinst"
-      number:ip2=1, 2
+      template_name:t="modern_military_close_range_weapons_t2_lootable_rendinst"
+      number:ip2=130, 130
     }
 
     "item:object"{
-      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
-      number:ip2=1, 2
+      template_name:t="modern_military_long_range_weapons_t2_lootable_rendinst"
+      number:ip2=120, 120
     }
 
     "item:object"{
-      template_name:t="military_equipment_t2_lootable_rendinst"
-      number:ip2=1, 2
+      template_name:t="modern_military_long_range_weapons_t3_lootable_rendinst"
+      number:ip2=20, 20
+    }
+
+    "item:object"{
+      template_name:t="modern_military_grenades_t1_lootable_rendinst"
+      number:ip2=80, 80
+    }
+
+    "item:object"{
+      template_name:t="modern_military_ammo_t2_lootable_rendinst"
+      number:ip2=80, 80
     }
   }
 }
@@ -446,18 +564,23 @@ africa_pve_loot_indoor_military_floor_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="military_close_range_weapons_t2_lootable_rendinst"
-      number:ip2=1, 1
+      template_name:t="modern_military_close_range_weapons_t2_lootable_rendinst"
+      number:ip2=100, 100
     }
 
     "item:object"{
-      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
-      number:ip2=0, 1
+      template_name:t="modern_military_long_range_weapons_t2_lootable_rendinst"
+      number:ip2=100, 100
     }
 
     "item:object"{
-      template_name:t="military_equipment_t2_lootable_rendinst"
-      number:ip2=1, 1
+      template_name:t="modern_military_grenades_t1_lootable_rendinst"
+      number:ip2=80, 80
+    }
+
+    "item:object"{
+      template_name:t="modern_military_ammo_t2_lootable_rendinst"
+      number:ip2=80, 80
     }
   }
 }
@@ -467,23 +590,15 @@ africa_loot_indoor_floor_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="military_ammo_t1_lootable_rendinst"
-      number:ip2=10, 20
+      template_name:t="modern_military_close_range_weapons_t2_lootable_rendinst"
+      number:ip2=80, 80
+      weight:r=2
     }
 
     "item:object"{
-      template_name:t="military_ammo_t2_lootable_rendinst"
-      number:ip2=10, 20
-    }
-
-    "item:object"{
-      template_name:t="military_medical_t2_lootable_rendinst"
-      number:ip2=20, 30
-    }
-
-    "item:object"{
-      template_name:t="soviet_repair_kit_item+item_in_world"
-      number:ip2=20, 40
+      template_name:t="modern_military_long_range_weapons_t2_lootable_rendinst"
+      number:ip2=30, 30
+      weight:r=2
     }
 
     "item:object"{
@@ -498,12 +613,12 @@ africa_loot_indoor_floor_loot_preset{
 
     "item:object"{
       template_name:t="tool_box_lootable_rendinst"
-      number:ip2=20, 40
+      number:ip2=20, 20
     }
 
     "item:object"{
       template_name:t="canister_gasoline_item+item_in_world"
-      number:ip2=30, 40
+      number:ip2=20, 20
     }
 
     "item:object"{
@@ -529,6 +644,7 @@ africa_loot_indoor_floor_loot_preset{
     "item:object"{
       template_name:t="medium_sovmod_backpack_lootable+item_in_world"
       number:ip2=30, 50
+      weight:r=2
     }
 
     "item:object"{
@@ -555,23 +671,26 @@ africa_pve_loot_indoor_floor_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="military_ammo_t1_lootable_rendinst"
-      number:ip2=5, 10
+      template_name:t="modern_military_close_range_weapons_t2_lootable_rendinst"
+      number:ip2=40, 40
+      weight:r=2
     }
 
     "item:object"{
-      template_name:t="military_ammo_t2_lootable_rendinst"
-      number:ip2=5, 10
+      template_name:t="modern_military_long_range_weapons_t2_lootable_rendinst"
+      number:ip2=20, 20
+      weight:r=2
     }
 
     "item:object"{
       template_name:t="military_medical_t2_lootable_rendinst"
       number:ip2=10, 20
+      weight:r=2
     }
 
     "item:object"{
       template_name:t="soviet_repair_kit_item+item_in_world"
-      number:ip2=20, 40
+      number:ip2=20, 20
     }
 
     "item:object"{
@@ -586,12 +705,12 @@ africa_pve_loot_indoor_floor_loot_preset{
 
     "item:object"{
       template_name:t="tool_box_lootable_rendinst"
-      number:ip2=20, 40
+      number:ip2=20, 20
     }
 
     "item:object"{
       template_name:t="canister_gasoline_item+item_in_world"
-      number:ip2=30, 40
+      number:ip2=20, 20
     }
 
     "item:object"{
@@ -617,6 +736,7 @@ africa_pve_loot_indoor_floor_loot_preset{
     "item:object"{
       template_name:t="medium_sovmod_backpack_lootable+item_in_world"
       number:ip2=20, 30
+      weight:r=2
     }
 
     "item:object"{
@@ -685,11 +805,13 @@ africa_loot_indoor_table_loot_preset{
     "item:object"{
       template_name:t="medium_sovmod_backpack_lootable+item_in_world"
       number:ip2=10, 20
+      weight:r=2
     }
 
     "item:object"{
       template_name:t="large_sovmod_backpack_lootable+item_in_world"
       number:ip2=5, 10
+      weight:r=2
     }
 
     "item:object"{
@@ -794,53 +916,101 @@ africa_loot_indoor_shelves_loot_preset{
     }
 
     "item:object"{
+      template_name:t="box_12_gauge_magazine+item_in_world"
+      number:ip2=30, 40
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="box_9x19_magazine+item_in_world"
+      number:ip2=30, 40
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="box_5_56_magazine+item_in_world"
+      number:ip2=30, 40
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="box_7_62x39_magazine+item_in_world"
+      number:ip2=30, 40
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="box_5_45x39_magazine+item_in_world"
+      number:ip2=30, 40
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_player_blue+item_in_world"
+      number:ip2=30, 30
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_player_red+item_in_world"
+      number:ip2=30, 30
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="item_legend404_tape_recorder_a+item_in_world"
+      number:ip2=40, 40
+      weight:r=2
+    }
+
+    "item:object"{
       template_name:t="soviet_repair_kit_item+item_in_world"
-      number:ip2=20, 30
+      number:ip2=10, 20
     }
 
     "item:object"{
       template_name:t="sovmod_flashlight_device+item_in_world"
-      number:ip2=30, 40
+      number:ip2=10, 20
     }
 
     "item:object"{
       template_name:t="sovmod_diver_flashlight+item_in_world"
-      number:ip2=30, 40
+      number:ip2=10, 10
     }
 
     "item:object"{
       template_name:t="axe_weapon+item_in_world"
-      number:ip2=40, 50
+      number:ip2=20, 20
     }
 
     "item:object"{
       template_name:t="cooking_knife_weapon+item_in_world"
-      number:ip2=40, 50
+      number:ip2=20, 20
     }
 
     "item:object"{
       template_name:t="wrench_weapon+item_in_world"
-      number:ip2=40, 50
+      number:ip2=20, 20
     }
 
     "item:object"{
       template_name:t="screwdriver_a_weapon+item_in_world"
-      number:ip2=40, 50
+      number:ip2=10, 10
     }
 
     "item:object"{
       template_name:t="screwdriver_b_weapon+item_in_world"
-      number:ip2=40, 50
+      number:ip2=10, 10
     }
 
     "item:object"{
       template_name:t="b7_binoculars_item+item_in_world"
-      number:ip2=20, 30
+      number:ip2=20, 20
     }
 
     "item:object"{
       template_name:t="encounter_battery_item+item_in_world"
-      number:ip2=40, 50
+      number:ip2=20, 20
     }
   }
 }
@@ -860,53 +1030,101 @@ africa_pve_loot_indoor_shelves_loot_preset{
     }
 
     "item:object"{
+      template_name:t="box_12_gauge_magazine+item_in_world"
+      number:ip2=30, 40
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="box_9x19_magazine+item_in_world"
+      number:ip2=30, 40
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="box_5_56_magazine+item_in_world"
+      number:ip2=30, 40
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="box_7_62x39_magazine+item_in_world"
+      number:ip2=30, 40
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="box_5_45x39_magazine+item_in_world"
+      number:ip2=30, 40
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_player_blue+item_in_world"
+      number:ip2=20, 25
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="item_amfiton_tape_recorder_a_player_red+item_in_world"
+      number:ip2=20, 25
+      weight:r=2
+    }
+
+    "item:object"{
+      template_name:t="item_legend404_tape_recorder_a+item_in_world"
+      number:ip2=20, 25
+      weight:r=2
+    }
+
+    "item:object"{
       template_name:t="soviet_repair_kit_item+item_in_world"
-      number:ip2=20, 30
+      number:ip2=20, 20
     }
 
     "item:object"{
       template_name:t="sovmod_flashlight_device+item_in_world"
-      number:ip2=30, 40
+      number:ip2=10, 20
     }
 
     "item:object"{
       template_name:t="sovmod_diver_flashlight+item_in_world"
-      number:ip2=30, 40
+      number:ip2=10, 10
     }
 
     "item:object"{
       template_name:t="axe_weapon+item_in_world"
-      number:ip2=40, 50
+      number:ip2=20, 20
     }
 
     "item:object"{
       template_name:t="cooking_knife_weapon+item_in_world"
-      number:ip2=40, 50
+      number:ip2=20, 20
     }
 
     "item:object"{
       template_name:t="wrench_weapon+item_in_world"
-      number:ip2=40, 50
+      number:ip2=20, 20
     }
 
     "item:object"{
       template_name:t="screwdriver_a_weapon+item_in_world"
-      number:ip2=40, 50
+      number:ip2=10, 10
     }
 
     "item:object"{
       template_name:t="screwdriver_b_weapon+item_in_world"
-      number:ip2=40, 50
+      number:ip2=10, 10
     }
 
     "item:object"{
       template_name:t="b7_binoculars_item+item_in_world"
-      number:ip2=20, 30
+      number:ip2=20, 20
     }
 
     "item:object"{
       template_name:t="encounter_battery_item+item_in_world"
-      number:ip2=40, 50
+      number:ip2=20, 20
     }
   }
 }
@@ -917,12 +1135,12 @@ africa_loot_indoor_medical_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="loot_item_healkit_magazine_small+item_in_world"
-      number:ip2=9, 9
+      number:ip2=50, 50
     }
 
     "item:object"{
       template_name:t="loot_item_healkit_magazine_avg+item_in_world"
-      number:ip2=9, 9
+      number:ip2=40, 40
     }
   }
 }
@@ -933,12 +1151,12 @@ africa_pve_loot_indoor_medical_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="loot_item_healkit_magazine_small+item_in_world"
-      number:ip2=9, 9
+      number:ip2=40, 40
     }
 
     "item:object"{
       template_name:t="loot_item_healkit_magazine_avg+item_in_world"
-      number:ip2=5, 5
+      number:ip2=30, 30
     }
   }
 }

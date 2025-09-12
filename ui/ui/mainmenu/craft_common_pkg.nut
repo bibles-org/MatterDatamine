@@ -1,5 +1,4 @@
 from "%dngscripts/sound_system.nut" import sound_play
-
 from "%ui/fonts_style.nut" import h2_txt, body_txt
 from "%ui/components/colors.nut" import BtnTextNormal, RedWarningColor, GreenSuccessColor, NotificationBg,
   TextHighlight, TextNormal, BtnBgFocused, ControlBgOpaque, BtnBgDisabled, InfoTextValueColor
@@ -24,7 +23,7 @@ from "%ui/mainMenu/stdPanel.nut" import mkCloseStyleBtn
 import "%ui/components/colorize.nut" as colorize
 import "%ui/components/faComp.nut" as faComp
 from "%ui/components/mkLightBox.nut" import mkLightBox
-
+from "%sqstd/string.nut" import toIntegerSafe
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
@@ -140,7 +139,8 @@ function openChronotracesWindow(event, node_id, needResearchPoints, currentResea
     })
     return
   }
-  let maxChronotracesToAdd = clamp(curChronotracesCount, 1, needResearchPoints - currentResearchPoints)
+  let needMore = needResearchPoints - currentResearchPoints
+  let maxChronotracesToAdd = needMore > 0 ? clamp(curChronotracesCount, 1, needMore) : 0
   let sendCount = Watched(maxChronotracesToAdd)
   let maxCountText = mkText(maxChronotracesToAdd)
   let inputWidth = calc_comp_size(mkText(maxChronotracesToAdd, body_txt))[0]
@@ -156,7 +156,7 @@ function openChronotracesWindow(event, node_id, needResearchPoints, currentResea
         sendCount.set(1)
       }
       onChange = function(value) {
-        let intVal = value == "" ? 1 : value.tointeger()
+        let intVal = value == "" ? 1 : toIntegerSafe(value, 1, false)
         if (intVal <= 1)
           sendCount.set(1)
         else if (intVal >= maxChronotracesToAdd)
@@ -180,10 +180,17 @@ function openChronotracesWindow(event, node_id, needResearchPoints, currentResea
       {
         size = static [flex() hdpx(20)]
         children = Horiz(sendCount, {
-          min = 1
+          min = maxChronotracesToAdd > 1 ? 1 : 0
           max = maxChronotracesToAdd
           step = 1
-          setValue = @(v) sendCount.set(v.tointeger())
+          setValue = function(v) {
+            local rv = v
+            if (type(v) == "string")
+              rv = toIntegerSafe(v,1,false)
+            else
+              rv = v.tointeger()
+            sendCount.set(rv > 0 ? rv : 1)
+          }
           bgColor = BtnBgFocused
         })
       }
@@ -193,7 +200,7 @@ function openChronotracesWindow(event, node_id, needResearchPoints, currentResea
         gap = static { size = flex() }
         valign = ALIGN_CENTER
         children = [
-          static mkText(1)
+          maxChronotracesToAdd > 1 ? static mkText(1) : static mkText(0)
           countInput
           maxCountText
         ]
@@ -467,7 +474,12 @@ function startReplication(idx = null, event = null) {
         showMsgbox({ text = loc("research/descMsgBox/openedNodeReq", { neededCount = needResearchPoints, neededCountDiff = needResearchPoints }) })
         return
       }
-      openChronotracesWindow(event, node_id, needResearchPoints, currentResearchPoints, true)
+      if (needResearchPoints <= currentResearchPoints) {
+        eventbus_send("profile_server.claim_craft_recipe", { node_id })
+      }
+      else {
+        openChronotracesWindow(event, node_id, needResearchPoints, currentResearchPoints, true)
+      }
     }
     return
   }

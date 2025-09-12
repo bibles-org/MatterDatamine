@@ -11,18 +11,12 @@ from "%ui/hud/menus/components/inventoryItem.nut" import addStorageType
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { cleanableItems, marketPriceSellMultiplier, playerProfileAMConvertionRate } = require("%ui/profile/profileState.nut")
+let { cleanableItems, marketPriceSellMultiplier } = require("%ui/profile/profileState.nut")
 let { template2MarketOffer } = require("%ui/mainMenu/market/inventoryToMarket.nut")
 let { creditsTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
 let { itemsInRefiner } = require("%ui/hud/menus/inventories/refinerInventoryCommon.nut")
 
 #allow-auto-freeze
-
-enum RefinedInfo {
-  UNKNOWN = 0
-  REGULAR_ITEM = 1
-  KEY_ITEM = 2
-}
 
 let currentRefinerIsReadOnly = Watched(false)
 let refineGettingInProgress = Watched(false)
@@ -104,15 +98,7 @@ function getPriceOfNonCorruptedItem(templateToMarket, priceMult, item) {
   return ceil((templateToMarket?[item.itemTemplate].reqMoney ?? 0) * priceMult)
 }
 
-function itemRefinedResult(item, refinedList, refinerRecipes) {
-  if (!refinedList.contains(item.itemTemplate))
-    return RefinedInfo.UNKNOWN
-
-  let isKeyItem = refinerRecipes.findindex(@(v) v.totalResults != 0 && v.relatedKey == item.itemTemplate) != null
-  return isKeyItem ? RefinedInfo.KEY_ITEM : RefinedInfo.REGULAR_ITEM
-}
-
-function additionalDescFunc(item, refinedItems, refinerRecipes) {
+function additionalDescFunc(item, playerProfileAMConvertionRate = null) {
   #forbid-auto-freeze
   let stringsFromAttachments = {}
   let stringsFromItemsInside = {}
@@ -193,9 +179,9 @@ function additionalDescFunc(item, refinedItems, refinerRecipes) {
   local nonCorruptedPrice = 0
 
   let cleanableItem = cleanableItems.get()?[item.itemTemplate]
-  if (item.isCorrupted && cleanableItem) {
-    minMoney = truncateToMultiple((cleanableItem.amContains.x) / 10.0 * playerProfileAMConvertionRate.get(), 1) 
-    maxMoney = truncateToMultiple((cleanableItem.amContains.y) / 10.0 * playerProfileAMConvertionRate.get(), 1)
+  if (item.isCorrupted && cleanableItem && playerProfileAMConvertionRate != null) {
+    minMoney = truncateToMultiple((cleanableItem.amContains.x) / 10.0 * playerProfileAMConvertionRate, 1) 
+    maxMoney = truncateToMultiple((cleanableItem.amContains.y) / 10.0 * playerProfileAMConvertionRate, 1)
   }
   else {
     nonCorruptedPrice = getPriceOfNonCorruptedItem(template2MarketOffer.get(), marketPriceSellMultiplier.get(), item)
@@ -249,17 +235,6 @@ function additionalDescFunc(item, refinedItems, refinerRecipes) {
     stringsToShow.append("")
     let moneyStr = loc("amClean/expectedMoneyFromNonCorruptedItems", {minVal=$"{creditsTextIcon}{nonCorruptedModPrice}"})
     stringsToShow.append(moneyStr)
-  }
-
-  let refined = item?.isCorrupted == true ? itemRefinedResult(item, refinedItems, refinerRecipes) : RefinedInfo.REGULAR_ITEM
-  if (refined == RefinedInfo.REGULAR_ITEM) {
-    stringsToShow.append(loc("amClean/regularItemTooltip"))
-  }
-  else if (refined == RefinedInfo.KEY_ITEM) {
-    stringsToShow.append(loc("amClean/keyItemTooltip"))
-  }
-  else {
-    stringsToShow.append(loc("amClean/unknownResultTooltip"))
   }
 
   return stringsToShow

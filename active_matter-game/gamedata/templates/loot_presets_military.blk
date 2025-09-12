@@ -1091,3 +1091,21 @@ collapse_grenades_armor_loot_preset{
     }
   }
 }
+
+modern_military_bag_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="modern_armor_t2_subpreset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="close_range_modern_weapons_t2_loot_preset"
+      weight:r=1
+    }
+  }
+}

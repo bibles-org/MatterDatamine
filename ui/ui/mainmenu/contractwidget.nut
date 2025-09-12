@@ -932,9 +932,10 @@ let mkContractsBlock = function() {
     if (firstPossibleIdx != null && isRaidAvailable.get() && !anyCurrentRaidContractAlreadyAccepted()) {
       currentPrimaryContractIds.mutate(@(v) v[contractsList[firstPossibleIdx][0]] <- true)
     }
-    if (contractToFocus.get() < 0)
+
+    if (contractToFocus.get() < 0 && contractsList?[selectedContract.get()] == null)
       selectedContract.set(firstPossibleIdx)
-    else
+    else if (contractToFocus.get() >= 0)
       selectedContract.set(contractToFocus.get())
 
     let primaryContracts = []
@@ -968,7 +969,7 @@ let mkContractsBlock = function() {
         contractToFocus.set(-1)
       }
       children = [
-        {
+        primaryContracts.len() <= 0 ? null : {
           size = FLEX_H
           flow = FLOW_VERTICAL
           gap = hdpx(2)
@@ -978,9 +979,9 @@ let mkContractsBlock = function() {
               flow = FLOW_HORIZONTAL
               gap = hdpx(4)
               padding = static [0, hdpx(4), 0,0]
-              margin = static [0, 0, hdpx(8), 0]
+              margin = static [hdpx(4), 0]
               children = [
-                mkTextArea(loc("contracts/primaryList"), body_txt)
+                mkTextArea(loc("contracts/primaryList"), { color = InfoTextValueColor })
                 questionSign
               ]
             }, selectedPlayerGameModeOption.get() == GameMode.Nexus ? loc("contracts/nexusPrimaryListDesc") : loc("contracts/primaryListDesc"),
@@ -1005,14 +1006,14 @@ let mkContractsBlock = function() {
               flow = FLOW_HORIZONTAL
               gap = hdpx(4)
               padding = static [0, hdpx(4), 0,0]
-              margin = static [hdpx(4), 0, hdpx(8), 0]
+              margin = static [hdpx(4), 0]
               children = [
-                mkTextArea(loc("contracts/secondaryList"), body_txt)
+                mkTextArea(loc("contracts/secondaryList"), { color = InfoTextValueColor })
                 questionSign
               ]
             }, selectedPlayerGameModeOption.get() == GameMode.Nexus ? loc("contracts/nexusSecondaryListDesc") : loc("contracts/secondaryListDesc"),
               { size = FLEX_H })
-          ].extend(secondaryContracts.map(@(v, i) mkContractBlock(i, v[1].__merge({id=v[0],
+          ].extend(secondaryContracts.map(@(v, i) mkContractBlock(i + primaryContracts.len(), v[1].__merge({id=v[0],
               premium = v[1].rewards.reduce(@(res, val) res || (val?.premiumCurrency.x ?? 0) > 0, false)
             }), isRaidAvailable, manyContractsPossible)))
         }
@@ -1021,12 +1022,12 @@ let mkContractsBlock = function() {
   }
 }
 
-let mkRaidInfoIcon = @(icon_name, icon_size, icon_color) mkTooltiped({
+let mkRaidInfoIcon = @(icon_name, icon_size, icon_color) {
   rendObj = ROBJ_IMAGE
   size = icon_size
   color = icon_color
   image = Picture("!ui/skin#raid_info/{0}.svg:{1}:{1}:K".subst(icon_name, icon_size))
-}, loc($"missionInfo/{icon_name}"))
+}
 
 let difficultyColors = static {
   dif_easy = Color(60, 200, 100, 160)
@@ -1034,11 +1035,12 @@ let difficultyColors = static {
   dif_hard = Color(200, 60, 60, 160)
 }
 
-let skullIcon = {
+let mkSkullIcon = @(needAnim) {
   rendObj = ROBJ_IMAGE
+  key = $"skull_dif_icon_{needAnim}"
   size = [hdpxi(20), hdpxi(20)]
   transform = {}
-  animations = [
+  animations = !needAnim ? null : [
     { prop = AnimProp.translate, from = [sw(40), 0], to = [0, 0], duration = 0.4, play = true, easing = OutCubic }
     {
       prop = AnimProp.opacity, from = 1, to = 0.5, duration = 2, delay = 0.4, play = true, easing = CosineFull
@@ -1048,14 +1050,9 @@ let skullIcon = {
   image = Picture($"ui/skin#skull.svg:{hdpxi(20)}:{hdpxi(20)}:P")
 }
 
-let contractsTitle = freeze({
-  vplace = ALIGN_CENTER
-  rendObj = ROBJ_TEXT
-  size = FLEX_H
-  text = loc("contracts/title")
-  fontFx = FFT_GLOW
-  fontFxColor = Color(0, 0, 0, 255)
-}.__update(body_txt))
+let contractsTitle = freeze(mkText(loc("contracts/title"), {
+  color = InfoTextValueColor
+}))
 
 function mkContractTimer() {
   let contractTimerUpdateTime = mkCountdownTimerPerSec(currentContractsUpdateTimeleft, "contractsTimer")
@@ -1085,39 +1082,51 @@ function mkDailyContractUpdate() {
   }
 }
 
-function mkDifficultyBlock() {
-  let primaryContractsCount = Computed(@() getContracts(selectedRaid.get(), playerProfileCurrentContracts.get(), marketItems.get())
+function mkDifficultyBlock(needAnim = true) {
+  let primaryContractsData = Computed(@() getContracts(selectedRaid.get(), playerProfileCurrentContracts.get(), marketItems.get())
     .reduce(function(res, data) {
       let contractId = data[0]
       if (contractId in currentPrimaryContractIds.get())
-        res++
+        res.append({ contractId = data[1].name })
       return res
-    }, 0))
+    }, []))
 
   return function() {
     if (selectedPlayerGameModeOption.get() == GameMode.Nexus || isOnboarding.get())
-      return { watch = [selectedPlayerGameModeOption, primaryContractsCount, isOnboarding] }
+      return { watch = [selectedPlayerGameModeOption, primaryContractsData, isOnboarding] }
     let scene = selectedRaid.get()?.scenes[0].fileName
     let raid_description = get_raid_description(scene)
     let difficulty = raid_description?.difficulty ?? "unknown"
     let difData = [
-      mkText(loc("contracts/difficulty"), body_txt)
       mkRaidInfoIcon(difficulty, hdpx(20), difficultyColors?[difficulty] ?? TextNormal)
     ]
-    if (primaryContractsCount.get() > 0) {
-      difData.append(mkText("+", body_txt))
-      for (local i = 0; i < primaryContractsCount.get(); i++)
-        difData.append(skullIcon)
+    if (primaryContractsData.get().len() > 1)
+      foreach (idx, _contractData in primaryContractsData.get()) {
+        if (idx == 0)
+          continue
+        difData.append(mkSkullIcon(needAnim))
+      }
+
+    let tipsArr = []
+    if (needAnim) {
+      tipsArr.append($"{loc($"missionInfo/{difficulty}")}")
+      if (primaryContractsData.get().len() > 0)
+        tipsArr.append(colorize(InfoTextValueColor, $"\n\n{loc("contracts/primaryList")}"))
+      primaryContractsData.get().each(@(data) tipsArr.append($"\n{loc($"contract/{data.values()[0]}")}"))
     }
 
+    let content = needAnim ? mkTooltiped(difData, "".join(tipsArr), {
+      flow = FLOW_HORIZONTAL
+      gap = hdpx(4)
+    }) : difData
+
     return {
-      watch = [difficultyStatus, selectedRaid, isOnboarding, primaryContractsCount, selectedPlayerGameModeOption]
-      size = FLEX_H
+      watch = [difficultyStatus, selectedRaid, isOnboarding, primaryContractsData, selectedPlayerGameModeOption]
       flow = FLOW_HORIZONTAL
       gap = hdpx(4)
       margin = static [hdpx(4), 0]
       valign = ALIGN_CENTER
-      children = difData
+      children = content
     }
   }
 }
@@ -1137,9 +1146,18 @@ let contractsPanel = @() {
       size = FLEX_H
       flow = FLOW_VERTICAL
       children = [
-        contractsTitle
+        {
+          size = FLEX_H
+          flow = FLOW_HORIZONTAL
+          gap = { size = flex() }
+          valign = ALIGN_CENTER
+          padding = static [0, hdpx(16), 0,0]
+          children = [
+            contractsTitle
+            mkDifficultyBlock()
+          ]
+        }
         mkDailyContractUpdate()
-        mkDifficultyBlock()
       ]
     }
     makeVertScrollExt(mkContractsBlock(), static {

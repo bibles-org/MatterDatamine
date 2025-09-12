@@ -98,6 +98,7 @@ inventory_chest_test{
   _use:t="openable_external_inventory_container_ri"
   _use:t="iteractable_drop_on_ri_destroy"
   _use:t="wooden_chest_openable_ri_sound"
+  _use:t="loot_drop_system_delayed_loot_generation"
   human_inventory__maxVolume:i=650
   ri_extra__name:t="ammunition_box_n"
   openable_ri__closed:t="ammunition_box_n"
@@ -111,12 +112,10 @@ inventory_chest_test{
   item_world_marker__riColliderPoint:p3=0.5, 0.5, 0.5
   item_world_marker__riColliderPointOffset:p3=0, 0, 0
   loot_drop_system__lootPreset:t="inventory_chest_test_loot_preset"
-  loot_drop_system__generated:b=no
   itemContainer__name:t="container/supplyCrate"
   itemContainer__type:t="supplyCrate"
 
   "usableObject:tag"{}
-  "loot_drop_system_delayed_loot_generation:tag"{}
   _group{
     _tags:t="ui"
     itemContainer__uiItemsMergeEnabled:b=no
@@ -208,16 +207,15 @@ closed_inventory_chest_test{
   _use:t="openable_external_inventory_container_ri"
   _use:t="iteractable_drop_on_ri_destroy"
   _use:t="wooden_chest_openable_ri_sound"
+  _use:t="loot_drop_system_delayed_loot_generation"
   human_inventory__maxVolume:i=750
   ri_extra__name:t="ammunition_box_n"
   openable_ri__closed:t="ammunition_box_n"
   ri_preload__name:t="ammunition_box_n_open"
   loot_drop_system__lootPreset:t="closed_inventory_chest_test_loot_preset"
-  loot_drop_system__generated:b=no
   itemContainer__name:t="container/supplyCrate"
   itemContainer__type:t="supplyCrate"
 
-  "loot_drop_system_delayed_loot_generation:tag"{}
   _group{
     _tags:t="ui"
     itemContainer__uiItemsMergeEnabled:b=no
@@ -255,6 +253,7 @@ static_dead_body_container{
   _use:t="external_inventory_accesspoint"
   _use:t="external_inventory_container"
   _use:t="simple_hitpoints"
+  _use:t="loot_drop_system_delayed_loot_generation"
   hitpoints__maxHp:r=1e+07
   needsBlood:b=yes
   item__useActionHintType:i=1
@@ -273,7 +272,6 @@ static_dead_body_container{
   animchar__forceAnimState:t="dead_pose"
   animchar__forceAnimStateId:i=-1
   loot_drop_system__lootPreset:t="small_sovmod_backpack_lootable_preset_test"
-  loot_drop_system__generated:b=no
   use_object__selectedTemplate:t="selected_lootable_container"
 
   "net_sound__descs:shared:object"{
@@ -306,8 +304,6 @@ static_dead_body_container{
   "animchar__forceVarValues:object"{
     dead_body_pos_num:r=0
   }
-
-  "loot_drop_system_delayed_loot_generation:tag"{}
 }
 
 static_dead_body_quest_container{

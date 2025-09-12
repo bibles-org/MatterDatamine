@@ -17,7 +17,7 @@ enum ResultModes {
 }
 
 let maxSavedBattleResults = 10
-const CURRENT_VERSION = 7
+const CURRENT_VERSION = 8
 
 function updateOnlineStorageBattleResults() {
   if ((lastBattleResultByModeQueue.get().len() == 0 && battleResultsSaveQueue.get().len() == 0)

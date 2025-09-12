@@ -135,8 +135,10 @@ function moveItemToInventory(data, wishList, wishCount = 1) {
       targetInventoryEid
     showInventoryOverflowOnUnequipToExMsgBox(@() move_stack_to_inventory([data.eid], dropToOnOverflowEid, wishCount))
   }
-  else
-    move_stack_to_inventory(data?.eids ?? [data.eid], targetInventoryEid, wishCount)
+  else {
+    let eidsList = data?.eids ?? []
+    move_stack_to_inventory(eidsList.len() > 0 ? eidsList : [data.eid], targetInventoryEid, wishCount)
+  }
 }
 
 function moveItemWithKeyboardMode(item, list_type) {
@@ -190,6 +192,12 @@ function getEquipOrInventoryOrBackpack(item) {
   if (inventory == null)
     return null
   return { locId = $"item/action/moveTo{inventory.name}", icon = "context_icons/move.svg" }
+}
+
+function queueStatusBlockedItem(item) {
+  if (!isOnPlayerBase.get())
+    return false
+  return actionForbiddenDueToQueueState(item)
 }
 
 function moveAwayToStashOrGround(_item) {
@@ -432,9 +440,11 @@ let actionShowSplitStackGround  = {
 let actionDropItemOnGround  = {
   getCustomData = moveAwayToStashOrGround
   action = dropItemAway
+  needToShow = @(item) !queueStatusBlockedItem(item)
 }
 
 let actionEquipOrInventoryOrBackpack = {
+  needToShow = @(item) !queueStatusBlockedItem(item)
   getCustomData = getEquipOrInventoryOrBackpack
   action = pickUpToEquipOrInventoryOrBackpack
 }

@@ -3512,7 +3512,18 @@ civil_africa_lootable_rendinst_manager{
       ri_name:t="hummer_hmmwv_damaged_a"
       ri_after_loot_name:t=""
       container_capacity:i=1000
-      loot_preset:t="civil_car_africa_loot_preset"
+      loot_preset:t="military_car_modern_loot_preset"
+      drop_preset:t="drop_in_places_civil_furniture_16"
+      container_name:t="container/car"
+      openable_ri_sound:t="car"
+      container_type:t="car"
+    }
+
+    "i:object"{
+      ri_name:t="hummer_hmmwv_damaged_b"
+      ri_after_loot_name:t=""
+      container_capacity:i=1000
+      loot_preset:t="military_car_modern_loot_preset"
       drop_preset:t="drop_in_places_civil_furniture_16"
       container_name:t="container/car"
       openable_ri_sound:t="car"
@@ -5415,7 +5426,18 @@ civil_africa_pve_lootable_rendinst_manager{
       ri_name:t="hummer_hmmwv_damaged_a"
       ri_after_loot_name:t=""
       container_capacity:i=1000
-      loot_preset:t="civil_car_africa_loot_preset"
+      loot_preset:t="military_car_modern_loot_preset"
+      drop_preset:t="drop_in_places_civil_furniture_16"
+      container_name:t="container/car"
+      openable_ri_sound:t="car"
+      container_type:t="car"
+    }
+
+    "i:object"{
+      ri_name:t="hummer_hmmwv_damaged_b"
+      ri_after_loot_name:t=""
+      container_capacity:i=1000
+      loot_preset:t="military_car_modern_loot_preset"
       drop_preset:t="drop_in_places_civil_furniture_16"
       container_name:t="container/car"
       openable_ri_sound:t="car"

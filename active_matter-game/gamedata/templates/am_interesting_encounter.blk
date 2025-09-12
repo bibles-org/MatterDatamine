@@ -24,9 +24,13 @@ base_encounter{
 base_interesting_encounter{
   _use:t="base_encounter"
   map_object_marker__iconName:t="!ui/skin#question.svg"
+  map_object_marker__iconCompleteName:t="!ui/skin#checkmark.svg"
   map_object_marker__tooltip:t="marker_tooltip/pointOfInterest"
+  map_object_marker__complete_tooltip:t="marker_tooltip/pointOfInterest/complete"
   map_object_marker__isActive:b=yes
+  map_object_marker__isComplete:b=no
   _tracked:t="map_object_marker__isActive"
+  _tracked:t="map_object_marker__isComplete"
   map_object__show:b=yes
   map_object_marker__clampToBorder:b=no
   _use:t="am_triggerable_zone"

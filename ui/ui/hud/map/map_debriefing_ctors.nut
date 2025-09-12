@@ -1,6 +1,4 @@
 from "%ui/ui_library.nut" import *
-
-
 from "dagor.debug" import logerr
 from "tiledMap.behaviors" import TiledMap
 import "%ui/hud/map/map_restr_zones_debriefing.nut" as restrictionZones
@@ -8,6 +6,7 @@ import "%ui/hud/map/map_debriefing_players_path.nut" as playersPath
 import "%ui/hud/map/map_debriefing_log_points.nut" as logPoints
 import "%ui/hud/map/map_object_zone.nut" as mkMapObjectZones
 import "%ui/hud/map/map_object_markers.nut" as mkMapObjectMarkers
+
 let { debriefingObjectives, debriefingObjectiveZones, debriefingObjectiveMarkers } = require("%ui/mainMenu/debriefing/debriefing_quests_state.nut")
 let { scalebar } = require("%ui/hud/map/map_scalebar.nut")
 let { tiledMapContext } = require("%ui/hud/map/tiled_map_ctx.nut")

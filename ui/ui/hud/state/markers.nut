@@ -201,7 +201,11 @@ ecs.register_es("map_object_markers_ui_es",
         pos = markerPos,
         icon = comp.map_object_marker__iconName
         text = comp.map_object_marker__tooltip
+        text_complete = comp.map_object_marker__complete_tooltip
         active = comp.map_object_marker__isActive
+        complete = comp.map_object_marker__isComplete
+        icon_complete = comp.map_object_marker__iconCompleteName
+        icon_inactive = comp.map_object_marker__iconInactiveName
         objectiveTag = comp.objective_static_target__tag ?? comp.map_object_marker__tag ?? ""
         activeColor = comp.map_object_marker__activeColor
         hoverColor = comp.map_object_marker__hoverColor
@@ -216,7 +220,10 @@ ecs.register_es("map_object_markers_ui_es",
   {
     comps_ro = [
       ["map_object_marker__iconName", ecs.TYPE_STRING],
+      ["map_object_marker__iconInactiveName", ecs.TYPE_STRING, ""],
+      ["map_object_marker__iconCompleteName", ecs.TYPE_STRING, ""],
       ["map_object_marker__tooltip", ecs.TYPE_STRING, ""],
+      ["map_object_marker__complete_tooltip", ecs.TYPE_STRING, ""],
       ["objective_static_target__tag", ecs.TYPE_STRING, null],
       ["map_object_marker__tag", ecs.TYPE_STRING, null],
       ["map_object_marker__activeColor", ecs.TYPE_POINT3, Point3(255, 255, 255)],
@@ -228,6 +235,7 @@ ecs.register_es("map_object_markers_ui_es",
     comps_track = [
       ["map_object__show", ecs.TYPE_BOOL],
       ["map_object_marker__isActive", ecs.TYPE_BOOL, true],
+      ["map_object_marker__isComplete", ecs.TYPE_BOOL, false],
       ["map_object__parentContainerEid", ecs.TYPE_EID, ecs.INVALID_ENTITY_ID]
     ]
   }

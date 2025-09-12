@@ -14,6 +14,8 @@ from "%ui/components/msgbox.nut" import showMsgbox, showMessageWithContent
 from "%ui/squad/squadState.nut" import isInSquad, isSquadLeader, squadLeaderState
 from "%ui/gameModeState.nut" import selectedRaid, leaderSelectedRaid
 from "%ui/state/queueState.nut" import isInQueue
+from "%ui/mainMenu/raid_preparation_window_state.nut" import isPreparationOpened, closePreparationsScreens
+from "%ui/squad/squadManager.nut" import myExtSquadData
 
 let wantOfflineRaid = Watched(false)
 let offlineRaidCachseList = Watched({})
@@ -104,9 +106,19 @@ function mkOfflineRaidCheckBox(override = {}, isDisabled = false) {
     )
       return squadLeaderState.get()?.leaderRaid.isOffline
   })
+
   return function() {
-    if (leaderRaidStatus.get() != null)
-      wantOfflineRaid.set(leaderRaidStatus.get())
+    if (leaderRaidStatus.get() != null) {
+      if (leaderRaidStatus.get() && numOfflineRaidsAvailable.get() <= 0) {
+        myExtSquadData.ready.set(false)
+        if (isPreparationOpened.get()) {
+          closePreparationsScreens()
+          showMsgbox({ text = $"{loc("queue/offline_raids/leaderSetIsolated")}\n\n{loc("queue/offline_raids/noTickets")}" })
+        }
+      }
+      else
+        wantOfflineRaid.set(leaderRaidStatus.get())
+    }
     else if (isQueueOfflineOnly.get())
       wantOfflineRaid.set(true)
     else if (!isOfflineRaidAvailable.get())
@@ -120,7 +132,7 @@ function mkOfflineRaidCheckBox(override = {}, isDisabled = false) {
       ? TextDisabled : InfoTextValueColor
     return {
       watch = [numOfflineRaidsAvailable, freeTicketsLimit, isOfflineRaidAvailableForQueue, isOfflineRaidAvailable,
-        isQueueOfflineOnly, selectedRaid, leaderRaidStatus]
+        isQueueOfflineOnly, selectedRaid, leaderRaidStatus, isPreparationOpened]
       size = FLEX_H
       halign = ALIGN_RIGHT
       valign = ALIGN_CENTER
