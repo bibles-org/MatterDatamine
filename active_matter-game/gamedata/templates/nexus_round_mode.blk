@@ -75,7 +75,7 @@ nexus_round_mode_militant{
 
   _group{
     _tags:t="server"
-    nexus_round_mode_militant__maxFollowers:i=2
+    nexus_round_mode_militant__maxFollowers:i=1
 
     "nexus_round_mode_militant__followedBy:list<eid>"{}
   }
@@ -113,7 +113,7 @@ nexus_militant_round_mode_bot_ai{
 
   _group{
     _tags:t="server"
-    nexus_militant_round_mode_bot__maxDistanceToStartFollowing:r=10
+    nexus_militant_round_mode_bot__maxDistanceToStartFollowing:r=6
 
     "nexus_militant_round_mode_bot__teammateToFollow:eid"{}
   }

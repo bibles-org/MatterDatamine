@@ -201,6 +201,11 @@ function markLastSeen() {
   markSeenVersion(v)
 }
 
+function markAllSeen() {
+  foreach (v in versions.get())
+    markSeenVersion(v)
+}
+
 let updateVersion = @() markSeenVersion(curPatchnote.get())
 
 const PatchnoteReceived = "PatchnoteReceived"
@@ -293,13 +298,16 @@ let mkChangePatchNote = @(delta=1) function() {
 let nextPatchNote = mkChangePatchNote()
 let prevPatchNote = mkChangePatchNote(-1)
 
-let patchnotesReady = Computed(@() isLoggedIn.get() && patchnotesReceived.get())
+let patchnotesReady = Computed(function() {
+  return isLoggedIn.get() && patchnotesReceived.get()
+})
+
 
 patchnotesReady.subscribe_with_nasty_disregard_of_frp_update(function(v){
   let stats = playerStats.get()?.stats["operative"]
   let totalStats = (stats?["raid_count"] ?? 0) + (stats?["nexus_count"] ?? 0)
   if (totalStats < 1) { 
-    markLastSeen()
+    markAllSeen()
     return
   }
   if (!v || !haveUnseenVersions.get() || curPatchnote.get() == null)

@@ -5,6 +5,7 @@ from "%ui/state/appState.nut" import isInBattleState
 from "%ui/changeLogState.nut" import changelogDisabled, haveUnseenVersions, requestPatchnotes, patchnotesReady, maxVersionInt
 from "dagor.time" import get_time_msec
 from "%ui/openChangelog.nut" import openChangelog
+let { playerStats } = require("%ui/profile/profileState.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 
 let patchnote = nestWatched("patchnote", {
@@ -30,11 +31,14 @@ checkVersionAndReqPatchnotes()
 gui_scene.setInterval(301, checkVersionAndReqPatchnotes) 
 isInBattleState.subscribe_with_nasty_disregard_of_frp_update(checkVersionAndReqPatchnotes) 
 
-let needShowPatchnote = Computed(@() patchnotesReady.get()
-  && !isOnboarding.get()
-  && haveUnseenVersions.get()
-  && patchnote.get().timeShown != patchnote.get().requestMadeTime
-)
+let needShowPatchnote = Computed(function() {
+  let stats = playerStats.get()?.stats["operative"]
+  let totalStats = (stats?["raid_count"] ?? 0) + (stats?["nexus_count"] ?? 0)
+  return totalStats > 0 && patchnotesReady.get()
+    && !isOnboarding.get()
+    && haveUnseenVersions.get()
+    && patchnote.get().timeShown != patchnote.get().requestMadeTime
+})
 
 if (!changelogDisabled)
   needShowPatchnote.subscribe_with_nasty_disregard_of_frp_update(function(v) {

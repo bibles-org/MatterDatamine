@@ -485,10 +485,10 @@ function mkNexusDebriefingMenu() {
       timeIcon
       mkText(secondsToStringLoc(seconds), body_txt)
     ]
-  }, loc("baseDebriefing/timeTooltip"), { hplace = ALIGN_RIGHT })
+  }, loc("baseDebriefing/timeTooltip"), static { hplace = ALIGN_RIGHT })
 
   function windowTitle() {
-    let { isWinner, gameDuration = 0, battleAreaInfo = {} } = lastNexusResult.get()
+    let { isWinner=false, gameDuration = 0, battleAreaInfo = {} } = lastNexusResult.get()
     let { raidName = "" } = battleAreaInfo
     let headerColor = isWinner ? GreenSuccessColor : RedWarningColor
     local text = isWinner ? loc("baseDebriefing/successfulRaid") : loc("baseDebriefing/unsuccessfulRaid")

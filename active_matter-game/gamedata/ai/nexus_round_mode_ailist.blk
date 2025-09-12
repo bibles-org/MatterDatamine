@@ -1000,7 +1000,7 @@ repeat{
   exitHandler{
     parallel{
       wait{
-        range:p2=60, 150
+        range:p2=20, 60
         resetable:b=yes
       }
 
@@ -1032,7 +1032,7 @@ repeat{
 
           findRandomNavmeshPoint{
             posParam:t="teammateToFollowAroundPosition"
-            dist:r=3
+            dist:r=5
             aroundPos:t="teammateToFollowPosition"
           }
 
@@ -1051,6 +1051,11 @@ repeat{
                 resetable:b=yes
               }
             }
+          }
+
+          wait{
+            range:p2=3, 5
+            resetable:b=yes
           }
         }
       }

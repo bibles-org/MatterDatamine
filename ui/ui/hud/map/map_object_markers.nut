@@ -19,9 +19,9 @@ let objectMarkers = function(marks, transform, objectivesValue) {
     let iconColor = mark.active ? activeColor : inactiveColor
     let objectiveColor = colorblindPalette?[colorIdx] ?? color_common
     let isComplete = mark?.complete
-    let iconName = (isComplete && (mark?.icon_complete ?? "")!="")
+    let iconName = (isComplete && (mark?.icon_complete ?? "") != "")
       ? mark.icon_complete
-      : (!mark.active && (mark?.icon_inactive ?? "")!="")
+      : (!mark.active && (mark?.icon_inactive ?? "") != "")
         ? mark.icon_inactive
         : mark.icon
     let color = isObjective ? objectiveColor : iconColor
@@ -49,7 +49,7 @@ let objectMarkers = function(marks, transform, objectivesValue) {
       {worldPos = mark.pos, clampToBorder = mark.clampToBorder},
       transform,
       mark.text != "" || !isObjective
-        ? (isComplete && mark.text_complete!="" ? loc(mark.text_complete): loc(mark.text))
+        ? (isComplete && (mark?.text_complete ?? "") != "" ? loc(mark.text_complete): loc(mark.text))
         : loc($"contract/{name}"),
       !isObjective ? icon : contractIcon
     )

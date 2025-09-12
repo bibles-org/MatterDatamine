@@ -500,7 +500,12 @@ function onClickMap(e) {
     markPos.set(worldPos)
     addModalWindow({
       key = USER_MARK_SELECTION
-      onClick = closeAndSetCurPoint
+      onClick = function(evt){
+        if (evt.button == 0)
+          closeAndSetCurPoint()
+        else
+          closeEditingPointer()
+      }
       children = [
         previewPoint,
         userMarkSelect(e)

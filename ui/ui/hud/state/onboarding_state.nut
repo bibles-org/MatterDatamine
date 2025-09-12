@@ -44,17 +44,18 @@ isOnboarding.subscribe_with_nasty_disregard_of_frp_update(function(value) {
 })
 
 
-onboardingStateMachineCurrentStateEid.subscribe_with_nasty_disregard_of_frp_update(
-  function(state_eid) {
-    isOnboarding.set(is_onboarding())
-    isOnboardingRaid.set(
-      state_eid == onboardingStateMachineMonolithStateEid.get() ||
-      state_eid == onboardingStateMachineMiniraidStateEid.get())
+function setOnboardingStateByStateMachineEid(state_eid){
+  isOnboarding.set(is_onboarding())
+  isOnboardingRaid.set(
+    state_eid == onboardingStateMachineMonolithStateEid.get() ||
+    state_eid == onboardingStateMachineMiniraidStateEid.get())
 
-    if (state_eid != ecs.INVALID_ENTITY_ID && state_eid == onboardingStateMachineMonolithStateEid.get()) {
-      playerProfileMonolithTokensCountUpdate(0)
-    }
-  })
+  if (state_eid != ecs.INVALID_ENTITY_ID && state_eid == onboardingStateMachineMonolithStateEid.get()) {
+    playerProfileMonolithTokensCountUpdate(0)
+  }
+}
+onboardingStateMachineCurrentStateEid.subscribe_with_nasty_disregard_of_frp_update(setOnboardingStateByStateMachineEid)
+setOnboardingStateByStateMachineEid(onboardingStateMachineCurrentStateEid.get())
 
 onboardingStateMachineMonolithStateEid.subscribe_with_nasty_disregard_of_frp_update(
   function(state_eid) {
@@ -121,6 +122,7 @@ ecs.register_es("track_is_key_inserted",
 ecs.register_es("onboarding_state_machine_ui_es",
   {
     [["onInit", EventStateMachineStateChanged]] = function(_evt, _eid, comp){
+      isOnboarding.set(is_onboarding())
       onboardingStateMachineCurrentStateEid.set(comp.state_machine__currentState)
     }
     onDestroy = function(_eid, _comp) {

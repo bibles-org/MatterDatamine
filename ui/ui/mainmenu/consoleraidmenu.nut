@@ -2110,7 +2110,7 @@ function getContent() {
       let { raidData = null } = selectedRaidBySquadLeader.get()
       let isLeaderSetOffline = squadLeaderState.get()?.leaderRaid.isOffline
       if ((wantOfflineRaid.get() && !isOfflineRaidAvailable.get() && !isNexus)
-        || (isLeaderSetOffline && raidData?.extraParams.raidName == selectedRaid.get()?.extraParams.raidName)) {
+        || (isLeaderSetOffline && (raidData?.extraParams.raidName == selectedRaid.get()?.extraParams.raidName) && !isOfflineRaidAvailable.get())) {
         return {
           watch
           size = FLEX_H
