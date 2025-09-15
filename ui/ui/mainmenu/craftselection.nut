@@ -184,12 +184,17 @@ function craftInfoBlock() {
   let infoText = @(text1, text2) underlineComp({
     flow = FLOW_HORIZONTAL
     size = FLEX_H
-    gap = static { size = FLEX_H }
-    children = [ text1, static {size = flex()}, text2 ]
+    gap = hdpx(4)
+    children = [ text1, text2 ]
   })
 
   let recipeName = infoText(mkText(loc("research/craftRecipe"), { color = InfoTextDescColor }),
-    mkText(loc(getRecipeName(recipe)), { color = InfoTextValueColor }))
+    mkText(loc(getRecipeName(recipe)), {
+      size = FLEX_H
+      behavior = Behaviors.Marquee
+      color = InfoTextValueColor
+      speed = hdpx(50)
+    }))
 
   let normalCraftTime = infoText(mkText(loc("research/craftTime"), {color = InfoTextDescColor}),
     mkText($"{secondsToStringLoc(recipe.craftTime)}", {color = InfoTextValueColor}))
@@ -220,6 +225,8 @@ function craftInfoBlock() {
       {
         size = FLEX_H
         flow = FLOW_VERTICAL
+        gap = hdpx(4)
+        clipChildren = true
         children = [
           recipeName
           normalCraftTime
@@ -321,11 +328,13 @@ function mkCraftSlot(slot, idx, countdown, isFeatured) {
               ]
             }
             {
-              size = flex()
+              size = [pw(75), flex()]
               flow = FLOW_VERTICAL
               halign = ALIGN_CENTER
+              hplace = ALIGN_CENTER
               valign = ALIGN_CENTER
               gap = static hdpx(-4)
+              clipChildren = true
               children = canClaimAll.get()
                 ? mkText(loc("craft/claimAll", { number = idx + 1 }))
                 : [
@@ -349,6 +358,7 @@ function mkCraftSlot(slot, idx, countdown, isFeatured) {
                       color = textColor
                       fontSize = hdpx(16)
                       halign = ALIGN_CENTER
+                      speed = hdpx(50)
                       fontFxColor = static Color(0,0,0,30)
                     }) : null
                   ]
@@ -768,14 +778,16 @@ function mkCraftSelection() {
     let unavailableRecipes = []
     let selectedCat = selectedCategory.get()
     let protoTypes = prototypeTypes.get()
-    let allRecipes = allCraftRecipes.get().filter(@(_v, k) k in playerProfileAllResearchNodes.get())
+    let allCraftRecipesV = allCraftRecipes.get()
+    let playerProfileAllResearchNodesV = playerProfileAllResearchNodes.get()
+    let allRecipes = allCraftRecipesV.filter(@(_v, k) k in playerProfileAllResearchNodesV)
     let data = selectedCat == null ? allRecipes : allRecipes.filter(@(prototype)
       prototype.results.findindex(function(v) {
         let rType = protoTypes?[v.keys()[0]]
         return selectedCat == rType
       }) != null)
 
-    let openedRecipes = allCraftRecipes.get().filter(@(v) v?.isOpened)
+    let openedRecipes = allCraftRecipesV.filter(@(v) v?.isOpened)
     let openedNodesData = playerProfileOpenedNodes.get()
     let earned = onlyEarnedRecipesFilter.get()
     let openedFilter = onlyOpenedBlueprintsFilter.get()
@@ -795,10 +807,33 @@ function mkCraftSelection() {
       else
         unavailableRecipes.append(proto_id)
     }
-    return earned && openedFilter ? recipes.extend(openedNodes)
-      : earned ? recipes
-      : openedFilter ? openedNodes
-      : recipes.extend(openedNodes, unavailableRecipes)
+
+    let fullyProgressedAndObtainedNodes = []
+    let fullyProgressedNodes = []
+    let justOpenedNodes = []
+    foreach (pid in openedNodes){
+      let recipe = allCraftRecipesV[pid]
+      let isRecipeObtained = recipe?.isOpened ?? false
+      let node_id = playerProfileAllResearchNodesV.findindex(@(v) v.containsRecipe == pid)
+      let presearch = openedNodesData.findvalue(@(v) v.prototypeId == node_id)
+      let progress = isRecipeObtained
+        ? 1.0
+        : getRecipeProgress(presearch?.currentResearchPoints, playerProfileAllResearchNodesV?[pid].requireResearchPointsToComplete)
+      if (progress == 1 && isRecipeObtained)
+        fullyProgressedAndObtainedNodes.append(pid)
+      else if (progress == 1 && !isRecipeObtained)
+        fullyProgressedNodes.append(pid)
+      else
+        justOpenedNodes.append(pid)
+    }
+
+    return earned && openedFilter
+      ? recipes.extend(openedNodes)
+      : earned
+        ? recipes
+        : openedFilter
+          ? openedNodes
+          : recipes.extend(fullyProgressedAndObtainedNodes, fullyProgressedNodes, justOpenedNodes, unavailableRecipes)
   })
 
   function getRecipes(recipes) {
@@ -812,7 +847,7 @@ function mkCraftSelection() {
 
       let children = []
       for (local i = it; i < it + itemsPerLine; i++) {
-        children.append(recipes?[i] ? mkRecipeButton(recipes[i]) : { size=flex() })
+        children.append(recipes?[i] ? mkRecipeButton(recipes[i]) : static { size=flex() })
       }
       it+=itemsPerLine
       return children

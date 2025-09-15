@@ -46,7 +46,7 @@ function isHeroInventoryDropForbidden(item) {
     return MoveForbidReason.VOLUME
 
   if (!is_can_move_item_to_item_container(item.eid))
-    return MoveForbidReason.OTHER
+    return MoveForbidReason.FORBIDDEN_FOR_CONTAINER
 
   return MoveForbidReason.NONE
 }
@@ -117,7 +117,7 @@ function isBackpackDropForbidder(item) {
     return MoveForbidReason.VOLUME
 
   if (!is_can_move_item_to_backpack(item.eid))
-    return MoveForbidReason.OTHER
+    return MoveForbidReason.FORBIDDEN_FOR_CONTAINER
 
   if (is_inventory_in_use(inventoryEid))
     return MoveForbidReason.OTHER
@@ -147,7 +147,7 @@ function isSafepackDropForbidder(item) {
     return MoveForbidReason.VOLUME
 
   if (!is_can_move_item_to_safepack(item.eid))
-    return MoveForbidReason.OTHER
+    return MoveForbidReason.FORBIDDEN_FOR_CONTAINER
 
   if (is_inventory_in_use(inventoryEid))
     return MoveForbidReason.OTHER

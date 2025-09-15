@@ -12,4 +12,4 @@ return @(content, override = {}) {
     padding = fsh(1)
     children = content
   }.__update(override)
-}
+}.__merge({ size = override?.size ?? SIZE_TO_CONTENT })

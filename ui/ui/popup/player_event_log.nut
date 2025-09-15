@@ -70,15 +70,15 @@ function addPlayerLog(config) {
 
   let playerLog = defLogParams.__merge(config)
   sound_play(LOG_DEFAULT_SOUND)
+  let genIndex = $"{id}_{playerLogsGen.get()}"
   playerLog.visibleIdx <- Watched(-1)
   playerLog.visibleIdx.subscribe(function(_newVal) {
     playerLog.visibleIdx.unsubscribe(callee())
-    gui_scene.setInterval(playerLog.showTime,
-      function() {
-        gui_scene.clearTimer(callee())
-        removePlayerLog(id)
-      }, $"{id}_{playerLogsGen.get()}")
-    })
+    gui_scene.setTimeout(playerLog.showTime, function() {
+      gui_scene.clearTimer(genIndex)
+      removePlayerLog(id)
+    }, genIndex)
+  })
 
   playerLogs.append(playerLog)
   playerLogsGen.modify(@(v) v + 1)
@@ -287,14 +287,15 @@ function addPlayerReward(config) {
 
   let playerReward = defLogParams.__merge(config)
   sound_play(LOG_DEFAULT_SOUND)
+  let genIndex = $"{id}_{playerLogsGen.get()}"
   playerReward.visibleIdx <- Watched(-1)
   playerReward.visibleIdx.subscribe(function(_newVal) {
     playerReward.visibleIdx.unsubscribe(callee())
-    gui_scene.setInterval(playerReward.showTime,
+    gui_scene.setTimeout(playerReward.showTime,
       function() {
-        gui_scene.clearTimer(callee())
+        gui_scene.clearTimer(genIndex)
         removePlayerReward(id)
-      }, $"{id}_{playerRewardsGen.get()}")
+      }, genIndex)
     })
 
   playerRewards.append(playerReward)

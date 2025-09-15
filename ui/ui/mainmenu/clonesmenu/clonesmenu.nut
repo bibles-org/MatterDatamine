@@ -1,4 +1,4 @@
-from "%ui/components/commonComponents.nut" import mkHelpConsoleScreen, mkText, mkTextArea, bluredPanelWindow
+from "%ui/components/commonComponents.nut" import mkHelpConsoleScreen, mkText, mkTextArea, bluredPanelWindow, mkTooltiped
 from "dasevents" import EventShowItemInShowroom, EventCloseShowroom, EventUIMouseMoved, EventUIMouseWheelUsed, CmdHideUiMenu
 from "%ui/fonts_style.nut" import body_txt
 from "%ui/mainMenu/stdPanel.nut" import mkHelpButton, mkBackBtn, mkCloseBtn
@@ -9,24 +9,23 @@ from "%ui/components/scrollbar.nut" import makeVertScrollExt, thinStyle
 from "%ui/ui_library.nut" import *
 from "%ui/hud/hud_menus_state.nut" import openMenu, convertMenuId
 from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import mkChronogeneParamString, findItemInAllItems, getCurrentHeroEffectMod, ClonesMenuId,
-  AlterSelectionSubMenuId, getChronogeneItemByUniqueId
+  AlterSelectionSubMenuId, getChronogeneItemByUniqueId, clonesMenuScreenPadding, backTrackingMenu, mkPassiveChronogeneSlot
 from "%ui/mainMenu/clonesMenu/cloneTubesInitEs.nut" import selectedContainerHighlightIntence, hoveredContainerHighlightIntence
 from "%ui/mainMenu/clonesMenu/itemGenesSlots.nut" import mkEquippedMainChronogenes, equippedSecondaryChronogenes, mkMainChronogeneInfoStrings
 from "%ui/mainMenu/clonesMenu/mainChronogeneSelection.nut" import mainChronogenesCards, hoveredAlter, showAlterWidth,
   updateAlterInShowroom, selectedPreviewAlter, selectAlterToEquip, alterToFocus
 from "%ui/components/button.nut" import buttonWithGamepadHotkey
 from "%ui/components/accentButton.style.nut" import accentButtonStyle
-
+from "%ui/profile/profileState.nut" import playerBaseState, allPassiveChronogenes
+from "%ui/state/allItems.nut" import allItems
 import "%dngscripts/ecs.nut" as ecs
 
 let { stashItems } = require("%ui/hud/state/inventory_items_es.nut")
 let { equipment } = require("%ui/hud/state/equipment.nut")
 let { selectedMainChronogeneItem } = require("%ui/mainMenu/clonesMenu/itemGenes.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
-let { playerBaseState } = require("%ui/profile/profileState.nut")
 let { currentChronogenes } = require("%ui/mainMenu/clonesMenu/cloneMenuState.nut")
 let { chronogeneStatCustom, chronogeneStatDefault } = require("%ui/hud/state/item_info.nut")
-let { clonesMenuScreenPadding, backTrackingMenu } = require("%ui/mainMenu/clonesMenu/clonesMenuCommon.nut")
 let { mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
 let { currentMenuId } = require("%ui/hud/hud_menus_state.nut")
 
@@ -242,6 +241,54 @@ function mkClonesMenu() {
     }.__update(bluredPanelWindow)
   }
 
+  let visualParams = static {
+    slotSize = [hdpxi(58), hdpxi(58)]
+    height = hdpxi(44)
+    width = hdpxi(44)
+  }
+
+  function passiveChronogenesList() {
+    let allPassiveChronogenesTemplates = allPassiveChronogenes.get().keys()
+    let allRewards = []
+
+    foreach (item in allItems.get())
+      if (allPassiveChronogenesTemplates.contains(item.templateName))
+        allRewards.append(mkPassiveChronogeneSlot(item, visualParams))
+
+    let rewardsLists = []
+    if (allRewards.len() <= 0)
+      rewardsLists.append(mkTextArea(loc("player_progression/rewardBlockExplain"), { margin = static [0, hdpx(4)]}))
+    else {
+      function mkColumn(itemInRow) {
+        return {
+          flow = FLOW_HORIZONTAL
+          gap = hdpx(4)
+          children = itemInRow
+        }
+      }
+      let itemsPerRow = 9
+      for (local i = 0; i < allRewards.len(); i += itemsPerRow)
+        rewardsLists.append(mkColumn(allRewards.slice(i, i + itemsPerRow)))
+    }
+    #allow-auto-freeze
+    return {
+      watch = [allItems, allPassiveChronogenes]
+      size = FLEX_H
+      flow = FLOW_VERTICAL
+      gap  = hdpx(6)
+      padding = static [0,0, hdpx(10), 0]
+      children = [
+        mkTooltiped(mkText(loc("clonesMenu/passiveChronogenes"), body_txt), loc("player_progression/rewardBlockExplain"))
+        {
+          size = FLEX_H
+          flow = FLOW_VERTICAL
+          gap = hdpx(4)
+          children = rewardsLists
+        }
+      ]
+    }
+  }
+
   function mkCloneInfoScreen() {
     return @() {
       watch = [ equipment, stashItems ]
@@ -256,6 +303,7 @@ function mkClonesMenu() {
           children = [
             mkEquippedMainChronogenes()
             equippedSecondaryChronogenes
+            passiveChronogenesList
           ]
         }.__update(bluredPanelWindow)
         cloneInfo
@@ -285,12 +333,6 @@ function mkClonesMenu() {
     }
   }
 
-
-  let content = {
-    size = flex()
-    children = cloneMenu
-  }
-
   
   
   
@@ -312,7 +354,7 @@ function mkClonesMenu() {
     }
     children = [
       buttons
-      content
+      cloneMenu
     ]
   }
 

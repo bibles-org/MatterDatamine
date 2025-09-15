@@ -24,6 +24,8 @@ function mkDropMarkerFunc(sf, can_drop_dragged_cb, draggedDataWatch, txt=null) {
       children.append(dropMarker(sf.get(), true, loc("inventory/parentVolumeOverflow")))
     else if (reason == MoveForbidReason.FORBIDDEN_REFINER_IN_PROGRESS)
       children.append(dropMarker(sf.get(), true, loc("inventory/refinerInProgress")))
+    else if (reason == MoveForbidReason.FORBIDDEN_FOR_CONTAINER)
+      children.append(dropMarker(sf.get(), true, loc("inventory/invalidContainer")))
 
     return {
       size = flex()

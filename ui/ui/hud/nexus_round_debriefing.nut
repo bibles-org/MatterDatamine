@@ -80,7 +80,7 @@ let roundDebriefing = {
 }
 
 function mkNextRoundTimer() {
-  let timer = mkCountdownTimerPerSec(nexusRoundModeDebriefingAt)
+  let timer = mkCountdownTimerPerSec(nexusRoundModeDebriefingAt, "nextRoundTimer")
   return function() {
     if (timer.get() <= 0)
       return { watch = [timer, nexusRoundModeDebriefingAt] }
@@ -104,8 +104,10 @@ function mkNextRoundTimer() {
 function roundDebriefingUi() {
   if (!isNexus.get())
     return { watch = isNexus }
-  if (!isNexusDebriefingState.get() || areHudMenusOpened.get())
+  if (!isNexusDebriefingState.get() || areHudMenusOpened.get()) {
+    gui_scene.clearTimer("nextRoundTimer")
     return { watch = [isNexusDebriefingState, isNexus, areHudMenusOpened] }
+  }
 
   return {
     watch = [isNexusDebriefingState, isNexus, areHudMenusOpened]

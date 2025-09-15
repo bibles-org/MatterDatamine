@@ -1,6 +1,7 @@
 from "%ui/components/colors.nut" import ConsoleFillColor, ConsoleBorderColor, BtnBgHover, BtnBgTransparent,
-  BtnBdHover, ItemBdColor
-from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import mkChronogeneSlot, mkAlterIconParams
+  BtnBdHover, ItemBdColor, GreenSuccessColor, RedWarningColor
+from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import mkChronogeneSlot, mkAlterIconParams, getCurrentHeroEffectMod,
+  mkChronogeneParamString
 from "%ui/hud/menus/components/inventoryItem.nut" import itemFillColorHovered, itemFillColorDef
 from "string" import startswith
 from "%ui/mainMenu/clonesMenu/itemGenesSlots.nut" import chronogeneListPanel
@@ -14,6 +15,9 @@ from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItem
 from "%ui/components/msgbox.nut" import showMsgbox
 from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryItemImage, inventoryImageParams
 from "%ui/hud/menus/components/inventoryStyle.nut" import itemHeight
+from "%ui/hud/state/item_info.nut" import chronogeneStatCustom, chronogeneStatDefault
+from "string" import format
+import "%ui/components/tooltipBox.nut" as tooltipBox
 
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
@@ -146,7 +150,45 @@ function chronogenesWidget() {
           let itemTemplate = mainChronogene.get()?.itemTemplate
           if (itemTemplate) {
             let fake = mkFakeItem(itemTemplate)
-            tooltip = buildInventoryItemTooltip(fake)
+            let effectMod = getCurrentHeroEffectMod([])?.entity_mod_values ?? {}
+            let chronogenesStats = effectMod.map(function(v, k) {
+              let chronoStat = v.__merge({
+                value = chronogeneStatCustom?[k].calc(v.value) ?? chronogeneStatDefault.calc(v.value)
+              })
+              if (chronoStat?.hidden ?? false)
+                throw null
+
+              let measurement = chronogeneStatCustom?[k]?.measurement ?? chronogeneStatDefault.measurement
+              let defVal = chronogeneStatCustom?[k]?.defVal ?? chronogeneStatDefault.defVal
+              let def = chronogeneStatCustom?[k]?.calc(defVal) ?? chronogeneStatDefault.calc(defVal)
+
+              let value = chronoStat.value
+              if (value == def)
+                throw null
+              let plusNeeded = value > def
+              let valueText = $"{plusNeeded ? "+" : ""}{format("%.1f", value - def)}{measurement}"
+              let isPositive = @(stat) (!stat.reversePositivity && value > def) ||  (stat.reversePositivity && value < def)
+              let chronogeneName = k.split("+")?[0] ?? ""
+              return mkChronogeneParamString(
+                loc($"clonesMenu/stats/{chronogeneName}"),
+                valueText,
+                loc($"clonesMenu/stats/tooltip/{chronogeneName}"),
+                isPositive(v) ? GreenSuccessColor : RedWarningColor
+              )
+            }).values()
+
+            tooltip = {
+              flow = FLOW_VERTICAL
+              children = [
+                buildInventoryItemTooltip(fake)
+                tooltipBox({
+                  size = FLEX_H
+                  flow = FLOW_VERTICAL
+                  gap = hdpx(2)
+                  children = chronogenesStats
+                }, { size = FLEX_H, borderWidth = static [0, hdpx(1), hdpx(1), hdpx(1)]})
+              ]
+            }
           }
           else {
             tooltip = loc(humanEquipmentSlots.chronogene_primary_1.slotTooltip)

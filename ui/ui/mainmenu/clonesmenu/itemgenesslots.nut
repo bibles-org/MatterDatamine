@@ -2,7 +2,6 @@ from "%ui/mainMenu/stdPanel.nut" import screenSize
 from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import findItemInAllItems, getChronogeneItemByUniqueId,
   mkMainChronogeneInfoStrings, mkChronogeneDoll, getChronogenePreviewPresentation, mkChronogeneImage,
   getChronogeneTooltip, ClonesMenuId, AlterSelectionSubMenuId
-from "%ui/hud/menus/components/inventorySuit.nut" import mkEquipmentSlot
 from "%ui/mainMenu/clonesMenu/cloneMenuState.nut" import sendRawChronogenes
 from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
 from "%ui/components/commonComponents.nut" import mkText, mkSelectPanelItem, mkSelectPanelTextCtor, BD_LEFT, fontIconButton

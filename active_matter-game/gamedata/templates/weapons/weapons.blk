@@ -13873,7 +13873,7 @@ screwdriver_a_weapon{
   item__volume:i=20
   item__marketPrice:i=100
   meleeSoundType:t="screwdriver"
-  melee_weapon__blk:t="gamedata/weapons/pocket_knife.blk"
+  melee_weapon__blk:t="gamedata/weapons/screwdriver.blk"
   profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "gun_attach__holsterSlots:array"{
@@ -13898,7 +13898,7 @@ screwdriver_b_weapon{
   item__volume:i=20
   item__marketPrice:i=100
   meleeSoundType:t="screwdriver"
-  melee_weapon__blk:t="gamedata/weapons/pocket_knife.blk"
+  melee_weapon__blk:t="gamedata/weapons/screwdriver.blk"
   profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "gun_attach__holsterSlots:array"{
@@ -13923,7 +13923,7 @@ chisel_a_weapon{
   item__volume:i=30
   item__marketPrice:i=100
   meleeSoundType:t="screwdriver"
-  melee_weapon__blk:t="gamedata/weapons/pocket_knife.blk"
+  melee_weapon__blk:t="gamedata/weapons/chisel.blk"
   profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "gun_attach__holsterSlots:array"{
@@ -13948,7 +13948,7 @@ chisel_b_weapon{
   item__volume:i=30
   item__marketPrice:i=100
   meleeSoundType:t="screwdriver"
-  melee_weapon__blk:t="gamedata/weapons/pocket_knife.blk"
+  melee_weapon__blk:t="gamedata/weapons/chisel.blk"
   profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "gun_attach__holsterSlots:array"{
@@ -14182,16 +14182,17 @@ rugbeater{
   item__volume:i=50
   item__marketPrice:i=90
   meleeSoundType:t="wrench"
-  dropTm:m=[[0.703441, 0.188389, 0.685332] [0.697827, -7.45058e-09, -0.716266] [-0.134936, 0.982095, -0.131463] [0, 0.01, 0]]
+  dropTm:m=[[0.996929, -0.00147923, 0.0782917] [0.0782603, -0.0151806, -0.996817] [0.00266304, 0.999884, -0.0150183] [0, 0.01, 0]]
   item__iconPitch:r=-40
   item__iconRoll:r=-5
   item__iconYaw:r=10
-  item__iconScale:r=1.1
+  item__iconScale:r=1
+  item__iconOffset:p2=0, 0
   weapon__iconPitch:r=65
   weapon__iconRoll:r=-10
   weapon__iconYaw:r=-5
-  weapon__iconScale:r=1.1
-  weapon__iconOffset:p2=-0.2, 0
+  weapon__iconScale:r=1
+  weapon__iconOffset:p2=-0.1, 0.1
   profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "gun_attach__holsterSlots:array"{
@@ -14225,7 +14226,6 @@ rugbeater_b_weapon{
   animchar__res:t="sovmod_rugbeater_b_char"
   collres__res:t="sovmod_rugbeater_b_collision"
   item__proto:t="rugbeater_b_weapon"
-  meleeSoundType:t="shovel"
   item__name:t="items/rugbeater_b"
   item__desc:t="items/rugbeater/desc"
 
@@ -14243,7 +14243,6 @@ rugbeater_c_weapon{
   animchar__res:t="sovmod_rugbeater_c_char"
   collres__res:t="sovmod_rugbeater_c_collision"
   item__proto:t="rugbeater_c_weapon"
-  meleeSoundType:t="shovel"
   item__name:t="items/rugbeater_c"
   item__desc:t="items/rugbeater/desc"
 
@@ -14582,7 +14581,7 @@ bugswatter_cbt_weapon{
   item__marketPrice:i=0
   meleeSoundType:t="shovel"
   melee_weapon__blk:t="gamedata/weapons/rugbeater.blk"
-  weapon__iconScale:r=1
+  weapon__iconScale:r=0.9
   profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gun_attach__holsterSlots:array"{
@@ -14607,7 +14606,7 @@ stub_bugswatter_cbt_chronogene{
   item__iconPitch:r=-40
   item__iconRoll:r=-5
   item__iconYaw:r=10
-  item__iconScale:r=1.1
+  item__iconScale:r=1
   equipment__setDefaultStubMeleeTemplate:t="default_stub_bugswatter_cbt_weapon"
 
   "mintBannedItem:tag"{}

@@ -4,7 +4,6 @@ from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import mkMainChronogeneInfoS
   clonesMenuScreenPadding, AlterSelectionSubMenuId
 from "%ui/fonts_style.nut" import h2_txt, body_txt
 from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
-from "%ui/hud/menus/components/inventorySuit.nut" import mkEquipmentSlot
 from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryItemImage, highInventoryImageParams
 from "%ui/components/button.nut" import button, getGamepadHotkeyIcon, buttonWithGamepadHotkey, defButtonStyle
 from "%ui/components/commonComponents.nut" import mkText, fontIconButton, bluredPanelWindow, mkTextArea, mkDescTextarea

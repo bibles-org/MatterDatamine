@@ -26,6 +26,8 @@ enum MoveForbidReason {
   FORBIDDEN_REFINER_IN_PROGRESS = 9
 
   PARENT_VOLUME_OVERFLOW = 10
+
+  FORBIDDEN_FOR_CONTAINER = 11
 }
 
 function isDropForbiddenCommon(item, list_type) {

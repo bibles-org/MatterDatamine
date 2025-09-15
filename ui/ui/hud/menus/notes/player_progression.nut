@@ -3,7 +3,8 @@ from "%sqstd/string.nut" import utf8ToUpper
 from "%ui/fonts_style.nut" import h1_txt, h2_txt, sub_txt, giant_txt
 from "%ui/components/colors.nut" import InfoTextValueColor, RedWarningColor
 from "%ui/components/commonComponents.nut" import mkText, mkTextArea, mkTooltiped
-from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import getChronogeneFullBodyPresentation, mkChronogeneDoll, mkChronogeneSlot
+from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import getChronogeneFullBodyPresentation, mkChronogeneDoll,
+  mkPassiveChronogeneSlot
 import "%ui/components/colorize.nut" as colorize
 from "%ui/helpers/remap_nick.nut" import remap_nick
 from "%ui/mainMenu/menus/options/player_interaction_option.nut" import isStreamerMode, playerRandName
@@ -169,7 +170,7 @@ function agencyRewards() {
 
   foreach (item in allItems.get()) {
     if (allPassiveChronogenesTemplates.contains(item.templateName)) {
-      allRewards.append(mkChronogeneSlot(item, visualParams))
+      allRewards.append(mkPassiveChronogeneSlot(item, visualParams))
     }
   }
   for (local i = allRewards.len(); i < allRewardsCount; i++) {

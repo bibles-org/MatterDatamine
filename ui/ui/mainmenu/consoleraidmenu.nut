@@ -62,6 +62,7 @@ from "%ui/leaderboard/lb_state_base.nut" import curFactionLbData, curFactionLbPl
 from "%ui/profile/profileState.nut" import playerBaseState, playerStats, playerProfileCurrentContracts,
   nexusNodesState, currentContractsUpdateTimeleft, numOfflineRaidsAvailable
 from "%ui/mainMenu/nexus_tutorial.nut" import checkShowNexusTutorial, mkNexusBriefingButton
+from "%sqGlob/userInfoState.nut" import userInfo
 
 let { matchingQueuesMap, matchingQueues, matchingTime } = require("%ui/matchingQueues.nut")
 let { selectedSpawn, selectedRaid, raidToFocus, leaderSelectedRaid, selectedNexusFaction,
@@ -412,14 +413,17 @@ let mkLbTitle = @(locId, override = static {}) {
   children = mkText(loc(locId), static { color = colors.InfoTextValueColor }.__update(sub_txt))
 }.__update(override)
 
-let mkDataRow = @(data, ctor, idx, override) data == null ? null : {
-  rendObj = ROBJ_SOLID
-  size = static [flex(), rowHeight]
-  color = idx == 0 || idx % 2 == 0 ?  0xDD0F0F0F : 0xDD1C1C1C
-  valign = ALIGN_CENTER
-  padding = static [0, hdpx(8)]
-  children = mkText(ctor(data), sub_txt)
-}.__update(override)
+let mkDataRow = @(data, ctor, idx, override, isLocalPlayer) data == null ? null : function() {
+  let textColor = isLocalPlayer ? colors.BtnBgActive : colors.TextNormal
+  return {
+    rendObj = ROBJ_SOLID
+    size = static [flex(), rowHeight]
+    color = idx == 0 || idx % 2 == 0 ? 0xDD0F0F0F : 0xDD1C1C1C
+    valign = ALIGN_CENTER
+    padding = static [0, hdpx(8)]
+    children = mkText(ctor(data), { color = textColor }.__update(sub_txt))
+  }.__update(override)
+}
 
 let lbSize = [hdpx(800), SIZE_TO_CONTENT]
 
@@ -428,12 +432,17 @@ function mkDataTable(dataToAdd, factionNum) {
     let { locId, dataIdx, valueToShow, override = static {}, width } = category
     let title = mkLbTitle(locId, override)
     let mkData = @(data) dataIdx == 3 ? data?[factionNum.tointeger() + 4] : data?[dataIdx]
-    return {
+    let userId = userInfo.get()
+    return @() {
+      watch = userInfo
       size = [width, SIZE_TO_CONTENT]
       flow = FLOW_VERTICAL
       children = [
         title
-      ].extend(dataToAdd.map(@(v, idx) mkDataRow(mkData(v), valueToShow, idx, override)))
+      ].extend(dataToAdd.map(function(v, idx) {
+        let isLocalPlayer = v[1] == userId
+        return mkDataRow(mkData(v), valueToShow, idx, override, isLocalPlayer)
+      }))
     }
   })
   return pageCols
@@ -694,7 +703,7 @@ function getContent() {
     let scene = sceneW.get()
     return get_raid_description(scene)
   }
-  let selectedRaidScene = Computed(@() selectedRaid.get().scenes?[0].fileName)
+  let selectedRaidScene = Computed(@() selectedRaid.get()?.scenes[0].fileName)
   let raidDesc = Computed(mkRaidDescFunc(selectedRaidScene))
 
   let spawns = Computed(function() {

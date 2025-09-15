@@ -116,11 +116,11 @@ eventbus_subscribe("profile_server.buyLots.result", function(...) {
 
 
 let hadrDefinedSlotPositions = {
-  magazine = [ sw(50), sh(80) ]
-  stock = [ sw(65), sh(70) ]
-  silencer = [ sw(10), sh(50) ]
-  underbarrel = [ sw(25), sh(70) ]
-  scope = [ sw(50), sh(20) ]
+  magazine = { pos = [sw(50), sh(80)], align = [ALIGN_CENTER, ALIGN_TOP] }
+  stock = { pos = [sw(65), sh(70)], align = [ALIGN_CENTER, ALIGN_TOP] }
+  silencer = { pos = [sw(10), sh(50)], align = [ALIGN_RIGHT, ALIGN_CENTER] }
+  underbarrel = { pos = [sw(25), sh(70)], align = [ALIGN_CENTER, ALIGN_TOP] }
+  scope = { pos = [sw(50), sh(20)], align = [ALIGN_CENTER, ALIGN_BOTTOM] }
 }
 
 
@@ -196,11 +196,11 @@ function weaponSlots() {
     }
 
     children.append({
-      pos = toSave[slotName]
+      pos = toSave[slotName].pos
       size = [1, 1] 
       children = {
-        hplace = ALIGN_CENTER
-        vplace = ALIGN_CENTER
+        hplace = toSave[slotName].align[0]
+        vplace = toSave[slotName].align[1]
         children = mkEquipmentSlot(itemObj, { onClick = onClickFunc })
       }
     })
@@ -223,12 +223,18 @@ function pointsOnWeapon() {
   let circleSize = 2.0
   let circleSizeNorm = [ circleSize / sw(100) * 100, circleSize / sh(100) * 100 ]
 
+  let screenWidth = sw(100)
+  let screenHeight = sh(100)
+
   foreach (slot, onWeaponTable in (onWeaponPoints.get() ?? {})) {
-    let pointOnCircle = pointsInUi.get()?[slot]
+    let pointOnCircle = pointsInUi.get()?[slot].pos
     if (pointOnCircle == null)
       continue
 
     let pointOnWeapon = onWeaponTable.screenPoint
+    let { x, y } = pointOnWeapon
+    if (x < 0 || y < 0 || x >= screenWidth || y >= screenHeight)
+      continue
 
     let pointOnCircleNorm = [ pointOnCircle[0].tofloat() / sw(100).tofloat() * 100, pointOnCircle[1].tofloat() / sh(100).tofloat() * 100 ]
     let pointOnWeaponNorm = [ pointOnWeapon.x.tofloat() / sw(100).tofloat() * 100, pointOnWeapon.y.tofloat() / sh(100).tofloat() * 100 ]

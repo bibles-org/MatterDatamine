@@ -90,7 +90,7 @@ function getChronogeneTooltip(chronogene) {
   return loc(slotTooltip)
 }
 
-function mkChronogeneSlot(chronogene, imageParams=inventoryImageParams, onClick=null) {
+function mkChronogeneSlot(chronogene, imageParams=inventoryImageParams, onClick=null, isPassive = false) {
   let itemTemplate = chronogene?.itemTemplate ?? chronogene?.templateName
 
   let {
@@ -127,7 +127,7 @@ function mkChronogeneSlot(chronogene, imageParams=inventoryImageParams, onClick=
         rendObj = ROBJ_BOX
         size = flex()
         color = isHovered.get() ? itemFillColorHovered : itemFillColorDef
-
+        borderRadius = isPassive ? imageParams.slotSize[0] : 0
         fillColor = isHovered.get() ? BtnBgHover : BtnBgTransparent
         borderColor = isHovered.get()? BtnBdHover : ItemBdColor
         borderWidth = hdpx(1)
@@ -136,6 +136,9 @@ function mkChronogeneSlot(chronogene, imageParams=inventoryImageParams, onClick=
     ]
   }
 }
+
+let mkPassiveChronogeneSlot = @(chronogene, imageParams=inventoryImageParams)
+  mkChronogeneSlot(chronogene, imageParams, null, true)
 
 function getChronogeneItemByUniqueId(id) {
   return stashItems.get().findvalue(function(v){
@@ -520,6 +523,7 @@ return freeze({
   getChronogenePreviewPresentation
   getChronogeneFullBodyPresentation
   mkChronogeneSlot
+  mkPassiveChronogeneSlot
   mkChronogeneImage
   getChronogeneTooltip
   backTrackingMenu

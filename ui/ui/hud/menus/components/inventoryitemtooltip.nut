@@ -576,10 +576,12 @@ function getInventoryItemTooltipLines(item, additionalHints={}) {
 
   
   if (item?.hp != null) {
-    local durabilityStr = ceil(item?.hp).tointeger().tostring()
-    if (item?.maxHp != null && (item?.maxHp ?? 0) > 0)
-      durabilityStr = "{0}/{1}".subst(durabilityStr, ceil(item.maxHp).tointeger().tostring())
-    statsTooltip.append(coloredStatText(loc("desc/durability"), durabilityStr))
+    if (item.hp >= 0) {
+      local durabilityStr = ceil(item?.hp).tointeger().tostring()
+      if (item?.maxHp != null && (item?.maxHp ?? 0) > 0)
+        durabilityStr = "{0}/{1}".subst(durabilityStr, ceil(item.maxHp).tointeger().tostring())
+      statsTooltip.append(coloredStatText(loc("desc/durability"), durabilityStr))
+    }
   }
   
   else if (item?.charges != null) {

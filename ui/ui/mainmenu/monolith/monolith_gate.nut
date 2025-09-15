@@ -981,7 +981,6 @@ function mkRequirementsBlock(data) {
   return {
     size = FLEX_H
     flow = FLOW_VERTICAL
-    gap = hdpx(10)
     children = [
       {
         flow = FLOW_VERTICAL
@@ -1001,6 +1000,7 @@ function mkRequirementsBlock(data) {
         if (additionalPrice.len() <= 0)
           return { watch }
         return {
+          rendObj = ROBJ_SOLID
           watch
           flow = FLOW_VERTICAL
           size = FLEX_H
@@ -1012,7 +1012,7 @@ function mkRequirementsBlock(data) {
               children = additionalPrice
             }
           ]
-        }.__merge(panelParams)
+        }.__merge(panelParams, { padding = static [hdpx(5), hdpx(15), hdpx(15), hdpx(15)]})
       }
     ]
   }
@@ -1612,7 +1612,7 @@ function monolithGateUi() {
       {
         hplace = ALIGN_RIGHT
         halign = ALIGN_CENTER
-        size = [rightPanelSize, hdpx(670)]
+        size = [rightPanelSize, hdpx(695)]
         
         gap = hdpx(8)
         children = [
