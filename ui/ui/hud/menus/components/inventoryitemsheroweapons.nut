@@ -22,7 +22,6 @@ let { canModifyInventory, canLoadCharges } = require("%ui/hud/state/inventory_co
 let { GROUND } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
 let { previewPreset, previewPresetCallbackOverride } = require("%ui/equipPresets/presetsState.nut")
 let { equipment } = require("%ui/hud/state/equipment.nut")
-let { equipMeleeChoronogeneItem } = require("%ui/mainMenu/clonesMenu/cloneMenuState.nut")
 
 #allow-auto-freeze
 
@@ -31,7 +30,7 @@ function canDropDraggedItemToWeaponSlotDefault(item, weapon) {
     return false
 
   if (weapon.weaponSlotKey == "melee" && item?.filterType == "stub_melee_weapon")
-    return true
+    return false
 
   let itemEquipped = "currentWeaponSlotName" in item
 
@@ -53,13 +52,7 @@ function canDropDraggedItemToWeaponSlotDefault(item, weapon) {
 }
 
 function onItemDroppedToWeaponSlotDefault(item, weapon) {
-
-  
-  if (item?.filterType == "stub_melee_weapon") {
-    if (weapon?.filterType != "stub_melee_weapon")
-      fastUnequipItem(weapon)
-
-    equipMeleeChoronogeneItem(item)
+  if (item?.filterType == "stub_melee_weapon" || weapon?.filterType == "stub_melee_weapon") {
     return
   }
 

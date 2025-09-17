@@ -9,7 +9,12 @@ from "%ui/components/commonComponents.nut" import mkText, bluredPanel
 from "%ui/components/slider.nut" import Horiz
 from "math" import ceil
 from "%ui/components/button.nut" import textButton
+from "%ui/hud/state/inventory_items_es.nut" import stashItems
+from "%ui/hud/state/gametype_state.nut" import isOnPlayerBase
+from "das.inventory" import is_inventory_have_free_volume
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import findInventoryWithFreeVolume
 
+import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
 let { inventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
@@ -24,7 +29,7 @@ let splitCount = Watched(0)
 
 let contentSize = [hdpx(500), hdpx(310)]
 let offset = hdpx(50)
-let countWidth = hdpx(30)
+let countWidth = hdpx(40)
 
 function canSplitStack(item) {
   let { itemTemplate = null, isBoxedItem = false, ammoCount = 0, count = 0, inventoryEid = 0 } = item
@@ -183,7 +188,33 @@ function openSplitStacksWindow(item, cb) {
   })
 }
 
+function canAddSplitStackToInventory(_item, _showSuitableAmmo = false, _inventories = null) {
+  return false
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
 return {
   openSplitStacksWindow
   canSplitStack
+  canAddSplitStackToInventory
 }

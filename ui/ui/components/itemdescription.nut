@@ -166,7 +166,7 @@ function getWeaponDesc(template, style=null) {
     mkFlexInfoTxt(v.title, v.val, style)))
   res.append(
     reloadTime.len() <= 0 ? null : mkFlexInfoTxt(reloadTime.title, reloadTime.val, style)
-    recoil ? mkFlexInfoTxt(loc("desc/recoil"), round_by_value(recoil, 0.01), style) : null
+    recoil ? mkFlexInfoTxt(loc("desc/recoil"), round_by_value(recoil, 0.01) * 100, style) : null
     deviation ? mkFlexInfoTxt(loc("desc/deviation"), round_by_value(deviation, 0.1), style) : null
     shootNoiseRes != null ? mkFlexInfoTxt(loc("desc/noise_per_shot"), shootNoiseRes, style) : null
   )

@@ -614,7 +614,7 @@ function mkDefPresetRow(presetIdx, presetData) {
         })
         {
           flow = FLOW_HORIZONTAL
-          children = presetIdx == LAST_USED_EQUIPMENT ? mkLoadPresetButton(presetData) : buttonsBlock
+          children = presetIdx == LAST_USED_EQUIPMENT ? [ mkLoadPresetButton(presetData), mkPurchaseMissedItemsBtn(presetData) ] : buttonsBlock
         }
       ]
     }

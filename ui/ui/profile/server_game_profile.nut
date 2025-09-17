@@ -198,6 +198,9 @@ console.register_command(@(mode, stat_name, diff_value = 1) requestProfileServer
 console.register_command(@(path_id) requestProfileServer("player_select_monolith_path", {path_id}, {}, updateProfileBlocks),
   "profile.test_select_monolith_path")
 
+console.register_command(@(itemdef, quantity) requestProfileServer("inventory_add_item", {itemdef, quantity}, {}, updateProfileBlocks),
+  "profile.inventory_add_item")
+
 function unlockAllRequirements (requirements) {
   if (requirements == null)
     return

@@ -1307,6 +1307,8 @@ makarov_gun{
   racked_weapon__transform:m=[[-0.015613, -0.191174, 0.981432] [0.451507, 0.874431, 0.177514] [-0.892132, 0.445895, 0.0726639] [-0.0418701, 0.0178223, -0.0683594]]
   profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
   item__nexusCost:i=125
+  showroom_item__customZoom:r=2
+  showroom_item__customZoomBordersRng:p2=1.6, 2
 
   "gun_mods__slots:shared:object"{
     silencer:t="cal_9_18_silencer_slot"
@@ -1433,6 +1435,20 @@ makarov_rust_gun{
 
   "gun_mods__slots:shared:object"{
     magazine:t="makarov_magazine_slot"
+  }
+}
+
+makarov_honorary_gun{
+  _use:t="makarov_gun"
+  item__proto:t="makarov_honorary_gun"
+  item__name:t="items/makarov_honorary"
+  item__marketPrice:i=100
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentResearchAlias:t="makarov_honorary_gun"
+
+  "animchar__objTexReplace:object"{
+    "makarov_pistol_tex_d*":t="makarov_engraved_tex_d*"
+    "makarov_pistol_tex_n*":t="makarov_engraved_tex_n*"
   }
 }
 
@@ -2252,24 +2268,32 @@ toz_b_gun{
   "sound_irqs:shared:object"{
     _tags:t="sound"
 
-    "reload1:object"{
-      path:t="/weapon/rifle/toz_b/reload1/change_ammo"
+    "foley_start:object"{
+      path:t="/weapon/rifle/toz_b/reload_foley_start"
     }
 
-    "reload2:object"{
-      path:t="/weapon/rifle/toz_b/reload2/change_ammo"
+    "mag_shutter_out:object"{
+      path:t="/weapon/rifle/toz_b/reload_mag_shutter_out"
     }
 
-    "reload3:object"{
-      path:t="/weapon/rifle/toz_b/reload3/change_ammo"
+    "shell_in:object"{
+      path:t="/weapon/rifle/toz_b/reload_shell_in"
     }
 
-    "reload4:object"{
-      path:t="/weapon/rifle/toz_b/reload4/change_ammo"
+    "shell_out:object"{
+      path:t="/weapon/rifle/toz_b/reload_shell_out"
     }
 
-    "boltAction:object"{
-      path:t="/weapon/rifle/toz_b/bolt_action"
+    "shutter_in:object"{
+      path:t="/weapon/rifle/toz_b/reload_shutter_in"
+    }
+
+    "shutter_out:object"{
+      path:t="/weapon/rifle/toz_b/reload_shutter_out"
+    }
+
+    "foley_end:object"{
+      path:t="/weapon/rifle/toz_b/reload_foley_end"
     }
 
     "shell_drop:object"{

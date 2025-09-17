@@ -220,6 +220,15 @@ let isRightRaidName = function(name1, name2){
 
 function getContracts(zone, contracts=null, mItems = {}) {
   contracts = contracts ?? (isOnboarding.get() ? playerProfileOnboardingContracts.get() : playerProfileCurrentContracts.get())
+  let unlocksTab = mItems.reduce(function(acc, v) {
+    foreach (unlock in v?.children.unlocks ?? []) {
+      if (acc?[unlock] == null) {
+        acc[unlock] <- v?.requirements.monolithAccessLevel ?? -1
+      }
+    }
+    return acc
+  }, {})
+
   return (contracts)
     .filter(function(v){
       let sameRaidName = isRightRaidName(zone?.extraParams.raidName, v?.raidName)
@@ -231,8 +240,8 @@ function getContracts(zone, contracts=null, mItems = {}) {
     .sort(function(a, b) {
       let reqA = a[1]?.requireParams.completeUnlocksRequire[0]
       let reqB = b[1]?.requireParams.completeUnlocksRequire[0]
-      let reqLvlA = ((mItems.findvalue(@(v) (v?.children.unlocks ?? []).contains(reqA)) ?? [])?.requirements.monolithAccessLevel ?? -1)
-      let reqLvlB = ((mItems.findvalue(@(v) (v?.children.unlocks ?? []).contains(reqB)) ?? [])?.requirements.monolithAccessLevel ?? -1)
+      let reqLvlA = unlocksTab?[reqA] ?? -1
+      let reqLvlB = unlocksTab?[reqB] ?? -1
       return (a[1].contractType) <=> (b[1].contractType)
         || reqLvlA <=> reqLvlB
         || a[1].difficulty <=> b[1].difficulty
@@ -242,6 +251,15 @@ function getContracts(zone, contracts=null, mItems = {}) {
 
 function getNexusContracts(contracts, mItems, nexusNode) {
   contracts = contracts ?? (isOnboarding.get() ? playerProfileOnboardingContracts.get() : playerProfileCurrentContracts.get())
+  let unlocksTab = mItems.reduce(function(acc, v) {
+    foreach (unlock in v?.children.unlocks ?? []) {
+      if (acc?[unlock] == null) {
+        acc[unlock] <- v?.requirements.monolithAccessLevel ?? -1
+      }
+    }
+    return acc
+  }, {})
+
   return (contracts)
     .filter(function(v) {
       let isMonsterType = v.contractType == ContractType.MONSTER
@@ -253,8 +271,8 @@ function getNexusContracts(contracts, mItems, nexusNode) {
     .sort(function(a, b) {
       let reqA = a[1]?.requireParams.completeUnlocksRequire[0]
       let reqB = b[1]?.requireParams.completeUnlocksRequire[0]
-      let reqLvlA = ((mItems.findvalue(@(v) (v?.children.unlocks ?? []).contains(reqA)) ?? [])?.requirements.monolithAccessLevel ?? -1)
-      let reqLvlB = ((mItems.findvalue(@(v) (v?.children.unlocks ?? []).contains(reqB)) ?? [])?.requirements.monolithAccessLevel ?? -1)
+      let reqLvlA = unlocksTab?[reqA] ?? -1
+      let reqLvlB = unlocksTab?[reqB] ?? -1
       return (a[1].contractType) <=> (b[1].contractType)
         || reqLvlA <=> reqLvlB
         || a[1].difficulty <=> b[1].difficulty

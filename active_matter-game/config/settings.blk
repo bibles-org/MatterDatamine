@@ -153,6 +153,10 @@ graphics{
   }
 }
 
+stcode{
+  useBytecodeForStblkcode:b=no
+}
+
 renderFeatures{
   cameraInCamera:b=yes
 }
@@ -802,6 +806,8 @@ vulkan{
       preferredFamily:i=38
       preferredFamily:i=39
       preferredFamily:i=40
+      skipIfOtherDiscrete:t="NVIDIA"
+      skipIfOtherDiscrete:t="AMD"
     }
   }
 }

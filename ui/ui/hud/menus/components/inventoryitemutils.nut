@@ -32,6 +32,7 @@ from "%ui/mainMenu/stashSpaceMsgbox.nut" import showNoEnoughStashSpaceMsgbox
 from "%ui/components/itemIconComponent.nut" import itemIconNoBorder
 from "%ui/profile/profileState.nut" import playerProfilePremiumCredits, marketItems, repairRelativePrice,
   playerProfileCreditsCount, playerStats
+from "%ui/hud/menus/components/inventoryItemTypes.nut" import HERO_ITEM_CONTAINER, BACKPACK0, STASH, GROUND, SAFEPACK
 
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
@@ -39,7 +40,6 @@ import "%dngscripts/ecs.nut" as ecs
 let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
 let { entityToUse } = require("%ui/hud/state/entity_use_state.nut")
 let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
-let { HERO_ITEM_CONTAINER, BACKPACK0, STASH, GROUND } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
 let { inventoryItems, stashItems, backpackItems } = require("%ui/hud/state/inventory_items_es.nut")
 let { inspectingAmmoCountAffectEid } = require("%ui/hud/state/ammo_count_knowledge_state.nut")
 let { selectedItem, selectedItemsCategory } = require("%ui/mainMenu/market/marketState.nut")
@@ -58,8 +58,6 @@ let { inventoryMaxVolume, inventoryCurrentVolume, mutationForbidenDueToInQueueSt
 let { REFINER_KEY_ITEM } = require("%ui/hud/menus/components/slotTypes.nut")
 let { playerLogsColors } = require("%ui/popup/player_event_log.nut")
 let { externalInventoryEid, externalInventoryContainerOwnerEid } = require("%ui/hud/state/hero_external_inventory_state.nut")
-let { equipMeleeChoronogeneItem } = require("%ui/mainMenu/clonesMenu/cloneMenuState.nut")
-let { isInBattleState } = require("%ui/state/appState.nut")
 
 let loadUnloadAmmoPic = @(img) Picture($"ui/skin#{img}:{0}:{0}:P".subst(hdpxi(15)))
 let BtnInactiveColor = Color(128, 128, 128)
@@ -680,9 +678,9 @@ function mergeNonUniqueItems(items) {
 }
 
 let inventories = [
-  { eid = controlledHeroEid, parentId = Watched("0"), i = 0 },
-  { eid = backpackEid, parentId = backpackUniqueId, i = 1 },
-  { eid = safepackEid, parentId = safepackUniqueId, i = 2 }
+  { eid = controlledHeroEid, parentId = Watched("0"), i = 0, data = HERO_ITEM_CONTAINER },
+  { eid = backpackEid, parentId = backpackUniqueId, i = 1, data = BACKPACK0 },
+  { eid = safepackEid, parentId = safepackUniqueId, i = 2, data = SAFEPACK }
 ]
 
 function needShowQuickSlotPurchase(slot) {
@@ -960,14 +958,7 @@ function fastUnequipItem(item) {
     addPlayerLog(noVolumeLog)
     return
   }
-  if (item?.isWeapon && item.currentWeaponSlotName == "melee") {
-    if (item?.default_stub_item != null && !isInBattleState.get())
-      equipMeleeChoronogeneItem(null)
-    else
-      unequip_weapon_from_slot(item.currentWeaponSlotName, targetInventoryEid)
-    return
-  }
-  else if (item?.isWeapon)
+  if (item?.isWeapon)
     unequip_weapon_from_slot(item.currentWeaponSlotName, targetInventoryEid)
   else if (item?.isWeaponMod) {
     if (targetInventoryEid != ecs.INVALID_ENTITY_ID)
@@ -1057,4 +1048,6 @@ return {
   actionForbiddenDueToQueueState
   stopLoadUnloadAmmoClick
   getInspectingAmmoCountInfo
+  findInventoryWithFreeVolume
+  inventories
 }

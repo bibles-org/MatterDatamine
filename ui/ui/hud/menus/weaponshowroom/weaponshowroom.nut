@@ -95,7 +95,7 @@ function getDefaultPointsInUi(posCount, center, slotWidth) {
   let points = []
   let startAt = -posCount / 2 * slotWidth
   for (local i = 0; i < posCount; i++) {
-    points.append([center[0] + startAt + i * slotWidth, center[1]])
+    points.append({ pos = [center[0] + startAt + i * slotWidth, center[1]], align = [ALIGN_CENTER, ALIGN_CENTER]})
   }
   return points
 }

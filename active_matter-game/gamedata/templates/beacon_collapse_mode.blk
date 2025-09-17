@@ -89,9 +89,9 @@ beacon_collapse_mode_beacon{
   flanking_ai_target__interval:r=1
   flanking_ai_target__radius:r=14
   team:i=2
-  hitpoints__hp:r=150
+  hitpoints__hp:r=1000
   _tracked:t="hitpoints__hp"
-  hitpoints__maxHp:r=150
+  hitpoints__maxHp:r=1000
   quest_device__timer:r=-1
   quest_device__monsterGenTemplate:t=""
   _use:t="openable_external_inventory_container_ri"
@@ -117,6 +117,7 @@ beacon_collapse_mode_beacon{
   map_object_marker__hoverColor:p3=175, 255, 175
 
   "ai_target__alwaysDanger:tag"{}
+  "riextra_destroy_on_death:tag"{}
   "quest_device__questItemTemplates:list<t>"{}
   "usableObject:tag"{}
   _group{

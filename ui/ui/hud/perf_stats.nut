@@ -2,11 +2,60 @@ from "%sqstd/math.nut" import round_by_value
 from "%ui/fonts_style.nut" import basic_text_shadow
 from "%ui/components/cursors.nut" import setTooltip
 from "%ui/ui_library.nut" import *
+from "dagor.math" import Point3
+import "%dngscripts/ecs.nut" as ecs
+from "%ui/ui_library.nut" import *
+from "net" import has_network
 
-let { warnings, serverStatsAvailable, serverFps, serverDtMinMaxAvg } = require("%ui/hud/state/perf_stats_es.nut")
 let { safeAreaHorPadding, safeAreaVerPadding } = require("%ui/options/safeArea.nut")
-let picSz = fsh(3.3)
 let { hudIsInteractive } = require("%ui/hud/state/interactive_state.nut")
+
+let warningsCompsTrack = [
+  ["ui_perf_stats__server_tick_warn", 0],
+  ["ui_perf_stats__low_fps_warn", 0],
+  ["ui_perf_stats__latency_warn", 0],
+  ["ui_perf_stats__latency_variation_warn", 0],
+  ["ui_perf_stats__packet_loss_warn", 0],
+  ["ui_perf_stats__low_tickrate_warn", 0],
+]
+
+let warnings = Watched(warningsCompsTrack.totable())
+let serverStatsAvailable = Watched(false)
+let serverFps = Watched(0.0)
+let serverDtMinMaxAvg = Watched(Point3())
+
+ecs.register_es("script_perf_stats_es",
+  {
+    [["onChange", "onInit"]] = function(_evt, _eid, comp) {
+      if (!has_network())
+        return
+      warnings.set(clone comp)
+    }
+    onDestroy = @(...) warnings.set(warningsCompsTrack.totable())
+  },
+  {comps_track=warningsCompsTrack.map(@(v) [v[0], ecs.TYPE_INT])}
+)
+
+ecs.register_es("server_stats_controller_ui_es",
+  {
+    [["onChange", "onInit"]] = function(_evt, _eid, comp){
+      serverStatsAvailable.set(true)
+      serverFps.set(comp.server_stats_controller__fps)
+      serverDtMinMaxAvg.set(comp.server_stats_controller__dtMinMaxAvg)
+    },
+    onDestroy = function(_evt, _eid, _comp){
+      serverStatsAvailable.set(false)
+    }
+  },
+  {
+    comps_track=[
+      ["server_stats_controller__fps", ecs.TYPE_FLOAT],
+      ["server_stats_controller__dtMinMaxAvg", ecs.TYPE_POINT3]
+    ]
+  }
+)
+
+let picSz = fsh(3.3)
 
 function pic(name) {
   return Picture("ui/skin#qos/{0}.svg:{1}:{1}:K".subst(name, picSz.tointeger()))
@@ -33,7 +82,7 @@ let cWarnings = Computed(function() {
   let idx = mkidx()
   return debugWarnings.get() ? icons.map(@(_v,_i) 1+(idx()%2)) : warnings.get()
 })
-console_register_command(@() debugWarnings.set(!debugWarnings.get()),"ui.debug_perf_stats")
+console_register_command(@() debugWarnings.modify(@(v) !v),"ui.debug_perf_stats")
 
 let style = static basic_text_shadow.__merge({
   font = Fonts.system

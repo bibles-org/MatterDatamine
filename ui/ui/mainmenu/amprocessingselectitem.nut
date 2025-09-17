@@ -39,6 +39,7 @@ from "%ui/mainMenu/currencyIcons.nut" import creditsColor, creditsTextIcon, chro
 from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryImageParams
 from "%ui/mainMenu/craft_common_pkg.nut" import mkMonolithLinkIcon
 from "%ui/hud/hud_menus_state.nut" import openMenu
+from "%ui/hud/menus/inventories/refinerInventoryCommon.nut" import itemsInRefiner, keepItemsInRefiner
 from "%ui/profile/profileState.nut" import cleanableItems, playerProfileAMConvertionRate, refinedItemsList, refinerFusingRecipes,
   allRecipes, amProcessingTask, marketPriceSellMultiplier, marketItems, playerProfileAMConvertionRate
 
@@ -53,7 +54,6 @@ let { currentRefinerIsReadOnly, refineGettingInProgress, refinerFillAmount } = r
 let { recognitionImagePattern } = require("%ui/hud/menus/components/inventoryItem.nut")
 let { template2MarketOffer } = require("%ui/mainMenu/market/inventoryToMarket.nut")
 let { stashVolume, stashMaxVolume } = require("%ui/state/allItems.nut")
-let { itemsInRefiner } = require("%ui/hud/menus/inventories/refinerInventoryCommon.nut")
 let { shuffle } = require("%sqstd/rand.nut")
 let { currentMenuId } = require("%ui/hud/hud_menus_state.nut")
 let { MonolithMenuId, monolithSelectedLevel, monolithSectionToReturn, selectedMonolithUnlock, currentTab } = require("%ui/mainMenu/monolith/monolith_common.nut")
@@ -342,7 +342,42 @@ let mkRewardSubpanel = @(title, v) v.len() == 0 ? null : {
   padding = hdpx(5)
 }.__merge(bluredPanel)
 
+function itemsForRecipe(items, recipe) {
+  let compList = {}
+  foreach (comp in recipe?[1].components ?? []) {
+    foreach (item in items) {
+      if (!item?.isCorrupted)
+        continue
+
+      if (item.itemTemplate == comp) {
+        if (compList?[comp] == null)
+          compList[comp] <- []
+
+        compList[comp].append(item.eid)
+      }
+    }
+  }
+
+  local minComps = -1
+  foreach (comp in compList) {
+    if (minComps < 0)
+      minComps = comp.len()
+    else
+      minComps = min(minComps, comp.len())
+  }
+
+  let ret = []
+  foreach (comp in compList) {
+    ret.extend(comp.resize(minComps))
+  }
+
+  return ret
+}
+
 function mkExpectedRewardInfo(items, keyItem, currentRecipe) {
+  let useInRecipe = itemsForRecipe(items, currentRecipe)
+  let isUsedInRecipe = @(item) useInRecipe.findindex(@(v) v == item.eid) != null
+
   let cleanable = cleanableItems.get()
   local minAm = 0
   local maxAm = 0
@@ -353,16 +388,16 @@ function mkExpectedRewardInfo(items, keyItem, currentRecipe) {
   function proceedMods(itemWithMods) {
     foreach (mod in (itemWithMods?.modInSlots ?? {})) {
       let modAm = cleanable?[mod.itemTemplate].amContains
-      if (mod.isCorrupted && modAm) {
+      if (mod.isCorrupted && modAm && !isUsedInRecipe(mod)) {
         minAm += modAm.x
         maxAm += modAm.y
       }
-      else {
+      else if (!isUsedInRecipe(mod)){
         nonCorruptedPrice += getPriceOfNonCorruptedItem(template2MarketOffer.get(), marketPriceSellMultiplier.get(), mod)
       }
 
       let chronotraces = cleanable?[mod.itemTemplate]?.refineChronotraces
-      if (chronotraces?.isCorrupted && chronotraces) {
+      if (chronotraces?.isCorrupted && chronotraces && !isUsedInRecipe(mod)) {
         minChronotraces += chronotraces.x
         maxChronotraces += chronotraces.x
       }
@@ -379,16 +414,16 @@ function mkExpectedRewardInfo(items, keyItem, currentRecipe) {
         proceedContainerItems(item.itemContainerItems)
 
       let foldedItemAm = cleanable?[item.itemTemplate].amContains
-      if (item.isCorrupted && foldedItemAm) {
+      if (item.isCorrupted && foldedItemAm && !isUsedInRecipe(item)) {
         minAm += foldedItemAm.x
         maxAm += foldedItemAm.y
       }
-      else {
+      else if (!isUsedInRecipe(item)) {
         nonCorruptedPrice += getPriceOfNonCorruptedItem(template2MarketOffer.get(), marketPriceSellMultiplier.get(), item)
       }
 
       let chronotraces = cleanable?[item.itemTemplate]?.refineChronotraces
-      if (item.isCorrupted && chronotraces) {
+      if (item.isCorrupted && chronotraces && !isUsedInRecipe(item)) {
         minChronotraces += chronotraces.x
         maxChronotraces += chronotraces.x
       }
@@ -400,16 +435,16 @@ function mkExpectedRewardInfo(items, keyItem, currentRecipe) {
   let itemsToProcess = (keyItem ? [keyItem].extend(items) : items).filter(@(v) v?.sortAfterEid == null)
   foreach ( item in itemsToProcess ) {
     let am = cleanable?[item.itemTemplate]?.amContains
-    if (item.isCorrupted && am) {
+    if (item.isCorrupted && am && !isUsedInRecipe(item)) {
       minAm += am.x
       maxAm += am.y
     }
-    else {
+    else if (!isUsedInRecipe(item)) {
       nonCorruptedPrice += getPriceOfNonCorruptedItem(template2MarketOffer.get(), marketPriceSellMultiplier.get(), item)
     }
 
     let chronotraces = cleanable?[item.itemTemplate]?.refineChronotraces
-    if (item.isCorrupted && chronotraces) {
+    if (item.isCorrupted && chronotraces && !isUsedInRecipe(item)) {
       minChronotraces += chronotraces.x
       maxChronotraces += chronotraces.x
     }
@@ -725,6 +760,7 @@ function fuseResultInfoRow(keyVal, allPossibleItems, isOpened) {
               if (offer == null)
                 return
 
+              keepItemsInRefiner.set(true)
               monolithSelectedLevel.set(offer.requirements.monolithAccessLevel)
               selectedMonolithUnlock.set(keyVal[0])
               monolithSectionToReturn.set("Am_clean")
@@ -966,11 +1002,9 @@ function fillItemsForFuse(fuseRecipe) {
 
   local hasAllComponents = true
   let itemsToDrop = []
+  let alreadyInRefiner = @(item) itemsInRefiner.get().findindex(@(v) v.eid == item.eid) != null
   foreach (component in fuseRecipe.components) {
-    if (itemsInRefiner.get().findvalue(@(v) v.isCorrupted && v.itemTemplate == component))
-      continue
-
-    let foundItem = allPossibleItems.findvalue(@(v) v.isCorrupted && v.itemTemplate == component)
+    let foundItem = allPossibleItems.findvalue(@(v) v.isCorrupted && v.itemTemplate == component && !alreadyInRefiner(v))
     if (foundItem == null) {
       hasAllComponents = false
       continue
@@ -1428,6 +1462,7 @@ function mkAmProcessingItemPanel() {
 
   return {
     onAttach = function() {
+      keepItemsInRefiner.set(false)
       containerItemsPanelData.onAttach()
       stashRefineItemsPanelData.onAttach()
       playerRefineItemsPanelData.onAttach()
@@ -1441,9 +1476,11 @@ function mkAmProcessingItemPanel() {
       containerItemsPanelData.onDetach()
       stashRefineItemsPanelData.onDetach()
       playerRefineItemsPanelData.onDetach()
-      itemsInRefiner.set([])
-      currentKeyItem.set(null)
-      selectedRecipe.set(null)
+      if (!keepItemsInRefiner.get()) {
+        itemsInRefiner.set([])
+        currentKeyItem.set(null)
+        selectedRecipe.set(null)
+      }
     }
 
     size = FLEX_V

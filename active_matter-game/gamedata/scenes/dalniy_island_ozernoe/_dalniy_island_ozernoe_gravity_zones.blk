@@ -12,6 +12,11 @@ entity{
 }
 
 entity{
+  _template:t="gravity_zone_crystals"
+  transform:m=[[1.12958, 0, 0] [0, 1, 0] [0, 0, 1.13418] [211.244, 89.4734, -505.434]]
+}
+
+entity{
   _template:t="gravity_path_box"
   transform:m=[[-0.0393739, 11.6192, -0.00106311] [2.19784, 0.00745322, 0.0593422] [0.0422923, -3.15852e-10, -1.56637] [172.227, 84.6819, -632.111]]
   grav_zone__boxBorderX:p2=3.5, 1
@@ -25,8 +30,13 @@ entity{
 }
 
 entity{
-  _template:t="gravity_path_box"
-  transform:m=[[-0.0274136, 11.1398, 0.0259722] [1.5965, 0.00745526, -1.51255] [-1.78351, -3.94315e-10, -1.8825] [6.22396, 84.3415, -720.638]]
+  _template:t="gravity_zone_crystals"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [171.236, 90.6212, -632.21]]
+}
+
+entity{
+  _template:t="gravity_path_box_sparse"
+  transform:m=[[-0.0274136, 11.1398, 0.0259722] [1.5965, 0.00745526, -1.51255] [-3.54169, -7.8303e-10, -3.73826] [6.53673, 84.3415, -720.308]]
   grav_zone__boxBorderX:p2=3.5, 1
   grav_zone__boxBorderY:p2=0, 1
   grav_zone__boxBorderZ:p2=0.2, 0.2
@@ -34,7 +44,12 @@ entity{
 
 entity{
   _template:t="gravity_path_box_invisible"
-  transform:m=[[-0.0107618, 4.37315, 0.0101959] [3.94956, 0.0184435, -3.74188] [-1.78351, -3.94315e-10, -1.8825] [7.40668, 87.66, -721.758]]
+  transform:m=[[-0.0107618, 4.37315, 0.0101959] [3.94956, 0.0184435, -3.74188] [-3.53907, -7.8245e-10, -3.7355] [7.71885, 87.66, -721.429]]
+}
+
+entity{
+  _template:t="gravity_zone_crystals"
+  transform:m=[[0.738743, 0, -0.673987] [0, 1, 0] [2.42277, -0, 2.65555] [5.3592, 89.5156, -719.251]]
 }
 
 entity{

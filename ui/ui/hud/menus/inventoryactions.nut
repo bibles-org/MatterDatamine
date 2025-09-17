@@ -4,11 +4,11 @@ from "das.inventory" import get_weapon_slot_for_item, move_weapon_from_inventory
   get_equipment_slot_for_item, move_item_from_inventory_to_slot, get_slot_and_equipment_for_mod, install_equipment_mod_to_slot,
   move_item_from_ground_to_slot, move_stack_to_inventory, is_equip_to_slot_cause_from_pocket_drop, is_equip_to_slot_cause_inventory_overflow,
   check_item_can_be_used
-from "%ui/hud/menus/components/inventoryItemUtils.nut" import unloadAmmoClick, canItemBeUnload, canItemBeLoad, loadAmmoClick,
-  needShowMarketLink, showItemInMarket, isFastEquipItemPossible, getInventoryToMove, getInspectingAmmoCountInfo,
-  canCheckAmmoInMagazine, checkAmmoClick, loadIsEnabled, unloadIsEnabled, stopLoadUnloadAmmoClick,
-  needShowMarketSlotLink, showItemsForSlotInMarket, repairCost, repairItems,
-  fastUnequipItem, checkInventoryVolume, actionForbiddenDueToQueueState
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import unloadAmmoClick, canItemBeUnload, canItemBeLoad,
+  loadAmmoClick, needShowMarketLink, showItemInMarket, isFastEquipItemPossible, getInventoryToMove,
+  getInspectingAmmoCountInfo, canCheckAmmoInMagazine, checkAmmoClick, loadIsEnabled, unloadIsEnabled,
+  stopLoadUnloadAmmoClick, needShowMarketSlotLink, showItemsForSlotInMarket, repairCost, repairItems, inventories,
+  findInventoryWithFreeVolume, fastUnequipItem, checkInventoryVolume, actionForbiddenDueToQueueState
 
 from "%ui/fonts_style.nut" import sub_txt
 from "%ui/hud/state/inventory_eids_common.nut" import getInventoryEidByListType
@@ -20,12 +20,12 @@ from "das.human_weap" import choose_weapon
 from "%ui/hud/menus/components/inventoryBulletInBarrel.nut" import unloadAmmoAction
 from "%ui/hud/menus/inventories/workbenchInventory.nut" import itemCanBeRepaired, removeFromWorkbench, dropToWorkbench
 from "%ui/hud/menus/inventories/refinerInventory.nut" import dropToRefiner, removeFromRefiner
-from "%ui/hud/menus/components/splitStackWindow.nut" import openSplitStacksWindow, canSplitStack
+from "%ui/hud/menus/components/splitStackWindow.nut" import openSplitStacksWindow, canSplitStack, canAddSplitStackToInventory
 from "%ui/hud/menus/components/inventoryItemsListChecksCommon.nut" import showInventoryOverflowOnUnequipToExMsgBox
 from "%ui/equipPresets/presetsButton.nut" import patchPresetItems
 from "%ui/mainMenu/market/inventoryToMarket.nut" import getLotFromItem, isLotAvailable, getWeaponModsPrice
 from "eventbus" import eventbus_send, eventbus_subscribe
-from "%ui/components/colors.nut" import RedWarningColor, TextNormal
+from "%ui/components/colors.nut" import RedWarningColor, TextNormal, InfoTextValueColor
 from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
 from "%ui/mainMenu/currencyIcons.nut" import currencyMap
 from "%ui/mainMenu/stashSpaceMsgbox.nut" import showNoEnoughStashSpaceMsgbox
@@ -34,6 +34,10 @@ from "dasevents" import CmdShowUiMenu
 from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog, playerLogsColors
 from "%dngscripts/sound_system.nut" import sound_play
 from "%ui/components/msgbox.nut" import showMsgbox
+from "%ui/hud/state/hero_extra_inventories_state.nut" import backpackEid, safepackEid
+from "%ui/hud/state/inventory_items_es.nut" import stashItems
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems
+import "%ui/components/colorize.nut" as colorize
 
 import "%ui/components/gamepadImgByKey.nut" as gamepadImgByKey
 import "%dngscripts/ecs.nut" as ecs
@@ -156,8 +160,8 @@ function moveItemWithKeyboardMode(item, list_type) {
   moveItemToInventory(item, list_type, itemCount)
 }
 
-function moveItemToOneOfInventories(item, inventories, count) {
-  local inventory = getInventoryToMove(item, inventories)
+function moveItemToOneOfInventories(item, inventoriesList, count) {
+  local inventory = getInventoryToMove(item, inventoriesList)
   if (inventory == null) {
 
     sound_play("ui_sounds/button_click_inactive")
@@ -177,12 +181,12 @@ function moveItemToOneOfInventories(item, inventories, count) {
   moveItemToInventory(item, inventory, count)
 }
 
-function equipOrPickUp(item, inventories, count) {
+function equipOrPickUp(item, inventoriesList, count) {
   if (isFastEquipItemPossible(item)) {
     fastEquipItem(item)
     return
   }
-  moveItemToOneOfInventories(item, inventories, count)
+  moveItemToOneOfInventories(item, inventoriesList, count)
 }
 
 function getEquipOrInventoryOrBackpack(item) {
@@ -212,6 +216,41 @@ function moveAwayStackToStashOrGround(_item) {
   if (isOnPlayerBase.get())
     locId = "item/action/moveSomeToStash"
   return { locId, icon = "context_icons/drag_out.svg" }
+}
+
+function showSplitStackOrJustMoveToInventory(item, showSuitableAmmo = false, inventoriesList = null) {
+  local locId = showSuitableAmmo ? "item/action/moveSomeAmmoInventory" : "item/action/moveSomeToInventory"
+  local additionalText = ""
+  let { itemTemplate = null, boxedItemTemplate = null, ammo = null } = item
+  let itemToSearch = showSuitableAmmo
+    ? ammo != null ? ammo?.template : boxedItemTemplate
+    : itemTemplate
+  let itemsInStash = stashItems.get()
+    .filter(@(v) v.itemTemplate == itemToSearch)
+    .reduce(function(res, v) {
+      if (res.len() <= 0)
+        return [v]
+      res[0].count += v.count
+      return res
+    }, [])
+  let itemInStash = mergeNonUniqueItems(itemsInStash)?[0]
+  if (itemInStash == null)
+    return { locId = "???", icon = "context_icons/drag_in.svg" }
+  let { isBoxedItem = false, ammoCount = -1, count = -1 } = itemInStash
+  if (inventoriesList != null) {
+    let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(itemInStash.itemTemplate)
+    let volume = template?.getCompValNullable("item__volume") ?? 0
+    let inventoryToMove = findInventoryWithFreeVolume(volume)?.data.name
+    let name = inventoryToMove == SAFEPACK.name ? loc("inventory/safepack")
+      : inventoryToMove == BACKPACK0.name ? loc("inventory/backpack")
+      : loc("inventory/myItems")
+    if (inventoryToMove != null)
+      additionalText = $" {loc("move/to", { inventory = colorize(InfoTextValueColor, name) })}"
+  }
+  let countToUse = isBoxedItem ? ammoCount : count
+  if (countToUse == 1 && !showSuitableAmmo)
+    locId = "item/action/moveOneItemToInventory"
+  return { locId, additionalText, icon = "context_icons/drag_in.svg" }
 }
 
 function getPickUpToEquipOrBackpack(item) {
@@ -374,11 +413,46 @@ let isStackSplitEquipToBackpackPossible = @(item) canSplitStack(item) && (getInv
 let showSplitStackToHero = @(item) openSplitStacksWindow(item, @(count) moveItemToInventory(item, HERO_ITEM_CONTAINER, count))
 let showSplitStackToBackpack = @(item) openSplitStacksWindow(item, @(count) moveItemToInventory(item, BACKPACK0, count))
 
-let showSplitStackToGround = function(item) {
+function showSplitStackToGround(item) {
   if (isOnPlayerBase.get())
     openSplitStacksWindow(item, @(count) moveItemToInventory(item, STASH, count))
   else
     openSplitStacksWindow(item, @(count) moveItemToInventory(item, GROUND, count))
+}
+
+function showSplitStackToInventory(item, showSuitableAmmo = false, inventoriesList = null) {
+  let { itemTemplate, inventoryEid = 0, boxedItemTemplate = null, ammo = null } = item
+  local inventoryToMove = inventoryEid == backpackEid.get() ? BACKPACK0
+    : inventoryEid == safepackEid.get() ? SAFEPACK
+    : HERO_ITEM_CONTAINER
+  let itemToSearch = showSuitableAmmo
+    ? ammo != null ? ammo?.template : boxedItemTemplate
+    : itemTemplate
+  let itemsInStash = stashItems.get()
+    .filter(@(v) v?.itemTemplate != null && v.itemTemplate == itemToSearch)
+  let itemInStash = mergeNonUniqueItems(itemsInStash)?[0].__merge({ count = itemsInStash.len() })
+  let { isBoxedItem = false, ammoCount = -1, count = -1 } = itemInStash
+  if (inventoriesList != null && itemInStash?.itemTemplate != null) {
+    let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(itemInStash.itemTemplate)
+    let volume = template?.getCompValNullable("item__volume") ?? 0
+    inventoryToMove = findInventoryWithFreeVolume(volume)?.data
+  }
+  if (inventoryToMove == null)
+    return null
+  let countToUse = isBoxedItem ? ammoCount : count
+  if (countToUse == 1 && itemsInStash.len() == 1)
+    moveItemToInventory(itemInStash, inventoryToMove, countToUse)
+  else
+    openSplitStacksWindow(itemInStash, function(countToMove) {
+      if (itemsInStash.len() == 1) {
+        moveItemToInventory(itemInStash, inventoryToMove, countToMove)
+        return
+      }
+      let list = itemsInStash.sort(@(a, b) (b?.charges ?? 0) <=> (a?.charges ?? 0))
+      for (local i = 0; i < list.len() ; i++) {
+        moveItemToInventory(list[i], inventoryToMove, 1)
+      }
+    })
 }
 
 let dropItemAway = function(item) {
@@ -435,6 +509,30 @@ let actionShowSplitStackGround  = {
   needToShow = canSplitStack
   getCustomData = moveAwayStackToStashOrGround
   action = showSplitStackToGround
+}
+
+let actionShowSplitStackToInventory  = {
+  needToShow = canAddSplitStackToInventory
+  getCustomData = showSplitStackOrJustMoveToInventory
+  action = showSplitStackToInventory
+}
+
+let actionShowSuitableAmmoToInvenory  = {
+  needToShow = @(item) canAddSplitStackToInventory(item, true)
+  getCustomData = @(item) showSplitStackOrJustMoveToInventory(item, true)
+  action = @(item) showSplitStackToInventory(item, true)
+}
+
+let actionShowSplitStackToSuitableInventory  = {
+  needToShow = @(item) canAddSplitStackToInventory(item, false, inventories)
+  getCustomData = @(item) showSplitStackOrJustMoveToInventory(item, false, inventories)
+  action = @(item) showSplitStackToInventory(item, false, inventories)
+}
+
+let actionShowSuitableAmmoToSuitableInvenory  = {
+  needToShow = @(item) canAddSplitStackToInventory(item, true, inventories)
+  getCustomData = @(item) showSplitStackOrJustMoveToInventory(item, true, inventories)
+  action = @(item) showSplitStackToInventory(item, true, inventories)
 }
 
 let actionDropItemOnGround  = {
@@ -621,6 +719,8 @@ let contextMenuActionsByListType = freeze({
     actionUnloadAmmo
     actionToMarket
     repairItemAction
+    actionShowSuitableAmmoToInvenory
+    actionShowSplitStackToInventory
     actionDropItemOnGround
     actionShowSplitStackGround
     quickRefineGamepadAction
@@ -643,6 +743,8 @@ let contextMenuActionsByListType = freeze({
     actionUnloadAmmo
     actionToMarket
     repairItemAction
+    actionShowSuitableAmmoToInvenory
+    actionShowSplitStackToInventory
     actionDropItemOnGround
     actionShowSplitStackGround
     quickRefineGamepadAction
@@ -664,6 +766,8 @@ let contextMenuActionsByListType = freeze({
     actionUnloadAmmo
     actionToMarket
     repairItemAction
+    actionShowSuitableAmmoToInvenory
+    actionShowSplitStackToInventory
     actionDropItemOnGround
     actionShowSplitStackGround
     actionOpenWeaponInShowroom
@@ -695,6 +799,7 @@ let contextMenuActionsByListType = freeze({
       action = chooseWeaponAction
       icon = "context_icons/equip.svg"
     }
+    actionShowSuitableAmmoToSuitableInvenory
     fastUnequipItemAction
     {
       locId = "Inventory/unload_bullet_from_barrel"
@@ -706,6 +811,8 @@ let contextMenuActionsByListType = freeze({
     actionOpenWeaponInShowroom
   ],
   [WEAPON_MOD.name] = [
+    actionShowSplitStackToSuitableInventory
+    actionShowSuitableAmmoToSuitableInvenory
     fastUnequipItemAction
     actionToMarketForSlot
     actionLoadAmmo

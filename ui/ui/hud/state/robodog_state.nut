@@ -1,40 +1,85 @@
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { get_controlled_hero } = require("%dngscripts/common_queries.nut")
+from "%sqGlob/dasenums.nut" import RobodogState
+from "%ui/components/colors.nut" import TeammateColor
+from "%ui/hud/state/watched_hero.nut" import watchedHeroEid, watchedHeroPlayerEid
+from "%ui/squad/squad_colors.nut" import orderedTeamNicks
 
-let haveRobodog = Watched(false)
-let herosRobodogs = Watched({})
-let robodogNear = Computed(@() herosRobodogs.get().filter(@(v) v == true).len())
 
+let robodogEids = Watched({})
+let haveRobodog = Computed(@() robodogEids.get().len() > 0)
+let robodogsExtractCount = Computed(@() robodogEids.get().filter(@(v) v.willExtract).len())
 
-ecs.register_es("change_owner_robodog", {
-  [["onInit", "onChange"]] = function(eid, comp) {
-    let herosRobodog = comp.ownerEid == get_controlled_hero()
-    if (herosRobodog && comp.isAlive)
-      herosRobodogs.mutate(@(v) v[eid] <- comp.signal_grenade_device__extractWithOwner)
-    else if (herosRobodogs.get()?[eid] != null)
-      herosRobodogs.mutate(@(v) v.$rawdelete(eid))
-    haveRobodog.set(herosRobodogs.get().len() != 0)
-  }
-  onDestroy = function(eid, comp) {
-    let herosRobodog = comp.ownerEid == get_controlled_hero()
-    if (herosRobodog && (herosRobodogs.get()?[eid] ?? false)){
-      herosRobodogs.mutate(@(v) v.$rawdelete(eid))
+let player_get_name_query = ecs.SqQuery("player_get_name_query", {
+  comps_ro = [["name", ecs.TYPE_STRING]]
+})
+
+let hero_get_team_query = ecs.SqQuery("hero_get_team_query", {
+  comps_ro = [["team", ecs.TYPE_INT]]
+})
+
+function onRobodogAppear(eid, comp) {
+  let localTeam = hero_get_team_query.perform(watchedHeroEid.get(), @(_eid, heroComp) heroComp.team)
+  if (localTeam == comp.team) {
+    let teammateName = player_get_name_query.perform(comp.playerOwnerEid, @(_eid, playerComp) playerComp.name)
+    let colorIdx = orderedTeamNicks.get().findindex(@(v)v == teammateName) ?? 0
+    local color = TeammateColor[colorIdx]
+    local status = "robodog/followsTeammate"
+    if (watchedHeroPlayerEid.get() == comp.playerOwnerEid)
+      status = "robodog/followsYou"
+    let ownerName = teammateName
+    if (!comp.isAlive) {
+      color = Color(228, 72, 68)
+      status = "robodog/broken"
     }
-    haveRobodog.set(herosRobodogs.get().len() != 0)
+    else if (comp.robodog__currentState == RobodogState.PRONE) {
+      color = Color(230, 230, 230)
+      status = "robodog/deactivateTeammate"
+      if (watchedHeroPlayerEid.get() == comp.playerOwnerEid)
+        status = "robodog/deactivate"
+    }
+    robodogEids.mutate(@(v) v[eid] <- {
+      color = color
+      status = status
+      ownerName = ownerName
+      willExtract = comp.signal_grenade_device__extractWithOwner
+    })
   }
-},
-{
-  comps_rq = [["robodog__hacker", ecs.TYPE_EID]],
-  comps_track = [
-    ["ownerEid", ecs.TYPE_EID],
-    ["signal_grenade_device__extractWithOwner", ecs.TYPE_BOOL],
-    ["isAlive", ecs.TYPE_BOOL]
-  ],
+  else
+    robodogEids.mutate(@(v) v.$rawdelete(eid))
+}
+
+ecs.register_es("map_robodog_es", {
+  [["onInit", "onChange"]] = onRobodogAppear
+  onDestroy = @(eid, _comp) robodogEids.mutate(@(v) v.$rawdelete(eid))
+}, {
+  comps_rq = [],
+  comps_track = [["robodog__currentState", ecs.TYPE_INT],
+                 ["isAlive", ecs.TYPE_BOOL],
+                 ["playerOwnerEid", ecs.TYPE_EID],
+                 ["ownerEid", ecs.TYPE_EID],
+                 ["team", ecs.TYPE_INT],
+                 ["signal_grenade_device__extractWithOwner", ecs.TYPE_BOOL]],
+})
+
+let robodogsQuery = ecs.SqQuery("map_robodog_ui_query", {
+  comps_ro = [["robodog__currentState", ecs.TYPE_INT],
+              ["isAlive", ecs.TYPE_BOOL],
+              ["playerOwnerEid", ecs.TYPE_EID],
+              ["ownerEid", ecs.TYPE_EID],
+              ["team", ecs.TYPE_INT],
+              ["signal_grenade_device__extractWithOwner", ecs.TYPE_BOOL]],
+
+})
+
+watchedHeroEid.subscribe_with_nasty_disregard_of_frp_update(function(_) {
+  robodogEids.set({})
+  robodogsQuery.perform(onRobodogAppear)
 })
 
 return {
+  robodogEids,
   haveRobodog,
-  robodogNear
+  robodogsExtractCount
 }

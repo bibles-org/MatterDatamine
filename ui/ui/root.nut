@@ -212,7 +212,7 @@ function inBattleCurScreen(){
 let inBattleUiChildren = freeze([
   versionInfo, roundDebriefingUi, hudComp, selectLoadout,
   playerRewardBlock, battleMenu, inBattleCurScreen, modalWindowsComponent, msgboxesUI, playerLogBlock, speakingList, infoIcons,
-  subtitlesBlock, perfStats, hoverHotkeyHints, hotkeysButtonsBar, dbgSafeArea, globInput
+  subtitlesBlock, hoverHotkeyHints, hotkeysButtonsBar, dbgSafeArea, globInput
 ])
 
 let replayHudChildren = freeze([

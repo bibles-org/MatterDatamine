@@ -201,14 +201,24 @@ let equipmentSlotsScore = {
 }
 
 let remains = [
-  "changed_ear_item",
+  "distorted_remains_pristine_item",
   "distorted_remains_item",
-  "flowerman_eye_item",
+  "flowerman_remains_pristine_item",
+  "flowerman_remains_item",
+  "devourer_remains_pristine_item",
   "devourer_remains_item",
+  "invisible_remains_pristine_item",
   "invisible_remains_item",
+  "turned_soldier_remains_pristine_item",
   "turned_soldier_remains_item",
+  "dendroid_remains_pristine_item",
+  "dendroid_remains_item",
+  "hellhound_remains_pristine_item",
+  "hellhound_remains_item",
+  "altered_wax_pristine_item",
   "altered_wax_item",
   "cortical_vault_inactive",
+  "safepack_remains_item",
 ]
 
 function weaponSort(weapA, weapB) {

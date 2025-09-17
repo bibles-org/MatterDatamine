@@ -27,6 +27,10 @@ from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 from "%ui/mainMenu/raid_preparation_window_state.nut" import getNexusStashItemsForChocolateMenu
+from "%ui/hud/menus/components/inventorySuit.nut" import mkSuitPartModsPanel, mkSuitSlots, mkEquipmentSlot
+from "%ui/hud/state/equipment.nut" import equipment
+from "%ui/mainMenu/clonesMenu/cloneMenuState.nut" import equipMeleeChoronogeneItem
+from "%ui/equipPresets/presetsState.nut" import previewPreset
 
 let { allCraftRecipes, marketItems, playerStats } = require("%ui/profile/profileState.nut")
 let { draggedData, focusedData, requestData, requestItemData, unremovableSlots, isAltPressed, mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
@@ -41,8 +45,6 @@ let { inventoryItemClickActions } = require("%ui/hud/menus/inventoryActions.nut"
 let { slotsWithWarning, mintEditState } = require("%ui/mainMenu/raid_preparation_window_state.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
-let { watchedHeroDefaultStubMeleeWeapon } = require("%ui/hud/state/watched_hero.nut")
-let { isInBattleState } = require("%ui/state/appState.nut")
 
 let curBorderColor = BtnBdSelected
 let weaponTextCurColor = TextHighlight
@@ -257,7 +259,7 @@ function mkMods(weapon, isCurrent, can_drop_dragged_item_to_mod_slot_cb, on_drop
     if ((modSlot?.lockedInRaid ?? false) && !isOnPlayerBase.get())
       continue
     #forbid-auto-freeze
-    let dropData = isActionForbided || (modSlot.itemPropsId == 0) ? null : modSlot.__update({
+    let dropData = isActionForbided || (modSlot.itemPropsId == 0 && (modSlot?.templateName ?? "") == "") ? null : modSlot.__update({
       canDrop=true
       
       currentWeaponSlotName=weapon.currentWeaponSlotName
@@ -352,6 +354,37 @@ function mkPriceBlock(weapon) {
   }
 }
 
+function meleeStubSlot() {
+  let defaultPocketKnifeTemplateName = "pocket_knife_weapon"
+  let defaultItem = mkFakeItem(defaultPocketKnifeTemplateName)
+  let slotItem = equipment.get()?.chronogene_melee_1.itemTemplate ? equipment.get()?.chronogene_melee_1 : defaultItem
+
+  let filteredStub = @() stashItems.get().filter(@(item) item?.filterType == "stub_melee_weapon")
+
+  let callbacks = {
+    onClick = @(event) openChocolateWnd({
+      event,
+      itemsDataArr = filteredStub()
+      onClick = function(item, _actions) {
+        if (item?.itemTemplate == "defaultPocketKnifeTemplateName")
+          equipMeleeChoronogeneItem(null)
+        else
+          equipMeleeChoronogeneItem(item)
+      }
+      itemInSlot = slotItem
+      forceOnClick = true
+      defaultItem
+    })
+  }
+
+  return {
+    watch = equipment
+    hplace = ALIGN_LEFT
+    vplace = ALIGN_BOTTOM
+    children = mkEquipmentSlot(slotItem, callbacks)
+  }
+}
+
 function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
   let isCurrent = (weapon?.isEquiping ?? false ) || ((weapon?.isCurrent ?? false) && !(weapon?.isHolstering ?? false))
   let isRemovableWeapon = unremovableSlots?.get()?.indexof(weapon.currentWeaponSlotName) == null && !weapon?.isDefaultStubItem
@@ -380,7 +413,7 @@ function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
         itemTemplate =  weapon?.itemTemplate
         isDefaultStubItem = weapon?.isDefaultStubItem
       } : null)
-    setTooltip(on && weapon?.isWeapon ? buildInventoryItemTooltip(weapon) : null)
+    setTooltip(on && weapon?.isWeapon && !weapon?.default_stub_item ? buildInventoryItemTooltip(weapon) : null)
     let pcHotkeysHints = canDropToWeaponSlot == null && onDropToWeaponSlot == null ? null
       : hoverPcHotkeysPresentation?[WEAPON.name](weapon)
     hoverHotkeysWatchedList.set(on ? pcHotkeysHints : [])
@@ -413,12 +446,6 @@ function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
               .sort(inventoryItemSorting)
         }
         local defaultItem = null
-        if (weapon?.currentWeaponSlotName == "melee" && !isInBattleState.get() && !mintEditState.get()) {
-          local defWeaponTemplateName = watchedHeroDefaultStubMeleeWeapon.get()
-
-          if (defWeaponTemplateName != null)
-            defaultItem = mkFakeItem(defWeaponTemplateName)
-        }
         openChocolateWnd({
           event,
           itemsDataArr = fittingItems
@@ -437,7 +464,7 @@ function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
   let needShowPrice = (weapon?.noSuitableItemForPresetFoundCount ?? 0) > 0
 
   return @(content) @() {
-    watch = mutationForbidenDueToInQueueState
+    watch = [ mutationForbidenDueToInQueueState, previewPreset, equipment ]
 
     size = [flex(), weaponSize[1]]
     key = weapon?.eid ?? ecs.INVALID_ENTITY_ID
@@ -454,21 +481,23 @@ function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
     onClick
     onHover
     children = [
-      mkBackground(weapon, isCurrent, stateFlags)
+      mkBackground(weapon, isCurrent, stateFlags),
       !weapon?.isItemToPurchase ? null : creditsIcon(hdpxi(60), {
         hplace = ALIGN_RIGHT
         pos = [-hdpx(5), -hdpx(58)]
-      })
-      weapon?.isCorrupted ? corruptedWeaponImageBackground.__merge(hasAmmo ? {margin = static [0,0,0, hdpx(76)]} : {}) : null
-      iconWeapon(weapon).__merge({
-        pos=[ -hdpx(10), hdpx(10) ]
-        opacity = weapon?.noSuitableItemForPresetFoundCount != null ? 0.5 : 1
-      })
-      weapNameWithIdx(slotIdx, slotName, isCurrent, stateFlags)
-      content
-      mkBorder(weapon, isCurrent, stateFlags)
-      mkSlotWarning(weapon?.currentWeaponSlotName)
-      needShowPrice ? mkPriceBlock(weapon) : null
+      }),
+      weapon?.isCorrupted ? corruptedWeaponImageBackground.__merge(hasAmmo ? {margin = static [0,0,0, hdpx(76)]} : {}) : null,
+      !weapon?.default_stub_item ?
+        iconWeapon(weapon).__merge({
+          pos=[ -hdpx(10), hdpx(10) ]
+          opacity = weapon?.noSuitableItemForPresetFoundCount != null ? 0.5 : 1
+        }) : null,
+      weapNameWithIdx(slotIdx, slotName, isCurrent, stateFlags),
+      content,
+      mkBorder(weapon, isCurrent, stateFlags),
+      mkSlotWarning(weapon?.currentWeaponSlotName),
+      needShowPrice ? mkPriceBlock(weapon) : null,
+      (weapon?.currentWeaponSlotName == "melee" && previewPreset.get() == null) ? meleeStubSlot : null
     ]
   }
 }

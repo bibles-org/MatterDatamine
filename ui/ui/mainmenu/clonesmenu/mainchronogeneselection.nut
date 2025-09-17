@@ -491,7 +491,15 @@ function splitCardsByRows(cards, cardsPerRow, overridedCb, needToRemoveTitle = f
 }
 
 let getUnavailableChronogenes = @() allChronogenesInGame.get()?.filter(@(i) i.type == "alters" && getPrimaryGenesList().findindex(@(v) v.itemTemplate == i.itemTemplate) == null)
-let getAvailableChronogenes = @() getPrimaryGenesList()
+let getAvailableChronogenes = function() {
+  let avTbl = {}
+  let available = getPrimaryGenesList()
+  foreach (item in available) {
+    avTbl[item.itemTemplate] <- item
+  }
+
+  return avTbl.values()
+}
 
 let mainChronogenesCards = @(overridedCb = null, availableCh = null, unavailbleCh = null, numCardsPerRow = null)
 function() {

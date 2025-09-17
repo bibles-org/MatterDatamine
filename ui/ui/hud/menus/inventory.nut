@@ -2,7 +2,7 @@ from "%sqstd/math.nut" import truncateToMultiple
 
 from "%ui/hud/menus/components/inventoryItemsHeroExtraInventories.nut" import mkHeroBackpackItemContainerItemsList, mkHeroSafepackItemContainerItemsList
 
-from "%ui/components/colors.nut" import RedWarningColor, ConsoleFillColor
+from "%ui/components/colors.nut" import RedWarningColor, ConsoleFillColor, TextNormal, BtnBgDisabled, BtnBgNormal
 from "%ui/fonts_style.nut" import body_txt
 from "%ui/hud/state/interactive_state.nut" import addInteractiveElement, removeInteractiveElement
 from "%ui/hud/menus/components/amStorage.nut" import mkActiveMatterStorageWidget
@@ -36,6 +36,10 @@ from "%ui/components/modalPopupWnd.nut" import removeModalPopup
 from "%ui/mainMenu/stdPanel.nut" import wrapInStdPanel
 from "%ui/components/msgbox.nut" import showMsgbox
 from "%ui/context_hotkeys.nut" import contextHotkeys, rmbGamepadHotkey
+from "%ui/hud/menus/inventories/workbenchInventory.nut" import itemCanBeRepaired
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import repairItems, repairCost
+from "%ui/hud/state/item_info.nut" import get_item_info
+from "%ui/hud/state/equipment.nut" import equipment
 
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
@@ -281,6 +285,51 @@ let weightBlock = @() {
   children = mkText(loc("inventory/weight", { value = truncateToMultiple(inventoryCurrentWeight.get(), 0.1) }))
 }
 
+function getItemsToRepair() {
+  let itms = []
+  foreach (_k, v in equipment.get()?.chronogene_primary_1.modInSlots ?? {}) {
+    let itemInfo = get_item_info(v?.eid ?? ecs.INVALID_ENTITY_ID)
+    if (itemCanBeRepaired(itemInfo)) {
+      itms.append(itemInfo)
+    }
+  }
+  if (itemCanBeRepaired(equipment.get()?.helmet)) {
+    itms.append(equipment.get().helmet)
+  }
+  return itms
+}
+
+function repairAll() {
+  let itms = getItemsToRepair()
+  repairItems(itms)
+}
+
+function getCostOfRepair() {
+  return repairCost(getItemsToRepair())
+}
+
+function repairAllButton() {
+  let hasItemsToRepair = getItemsToRepair()
+  return {
+    watch = equipment
+    children = button(
+      {
+        rendObj = ROBJ_IMAGE
+        size = [ hdpxi(16), hdpxi(16) ]
+        image = Picture("ui/uiskin/context_icons/repair.svg:{0}:{0}:K".subst(hdpxi(16)))
+        margin = hdpx(8)
+        color = TextNormal
+      }, repairAll,
+      {
+        style = { BtnBgNormal = hasItemsToRepair ? BtnBgNormal : BtnBgDisabled }
+        onHover = @(on) setTooltip(on
+          ? hasItemsToRepair ? loc("inventory/repairAll", { cost = getCostOfRepair() }) : loc("inventory/nothingTorepair")
+          : null)
+      }
+    )
+  }
+}
+
 let dollPanels = @() {
   watch = [ isInPlayerSession, isOnboarding ]
   size = FLEX_V
@@ -297,7 +346,11 @@ let dollPanels = @() {
     }
     mkBodyPartsPanel
     isInPlayerSession.get() || isOnboarding.get() || isNexus.get() ? null
-      : presetBlockButton
+      : {
+        size = FLEX_H
+        flow = FLOW_HORIZONTAL
+        children = [ repairAllButton, { size = flex() }, presetBlockButton ]
+      }
   ]
 }.__update(bluredPanel)
 
