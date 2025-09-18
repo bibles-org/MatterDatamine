@@ -188,29 +188,28 @@ function openSplitStacksWindow(item, cb) {
   })
 }
 
-function canAddSplitStackToInventory(_item, _showSuitableAmmo = false, _inventories = null) {
-  return false
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function canAddSplitStackToInventory(item, showSuitableAmmo = false, inventories = null) {
+  if (!isOnPlayerBase.get() || mutationForbidenDueToInQueueState.get() || !canModifyInventory.get())
+    return false
+  let { itemTemplate = null, inventoryEid = 0, boxedItemTemplate = null, ammo = null } = item
+  let tempToSearch = showSuitableAmmo
+    ? ammo != null ? ammo?.template : boxedItemTemplate
+    : itemTemplate
+  let itemInStash = stashItems.get().findvalue(@(v) v?.itemTemplate != null && v.itemTemplate == tempToSearch)
+  let { isBoxedItem = false, ammoCount = -1, count = -1 } = itemInStash
+  if (itemInStash == null || itemInStash?.itemTemplate == null)
+    return false
+  let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(itemInStash.itemTemplate)
+  let volume = template?.getCompValNullable("item__volume") ?? 0
+  let hasVolume = inventories != null
+    ? findInventoryWithFreeVolume(volume) != null
+    : is_inventory_have_free_volume(inventoryEid, volume)
+  if (!hasVolume)
+    return false
+  let countToUse = isBoxedItem ? ammoCount : count
+  if (countToUse < 0)
+    return false
+  return true
 }
 
 return {

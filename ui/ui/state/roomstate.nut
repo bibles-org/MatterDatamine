@@ -33,7 +33,7 @@ let { isInBattleState } = require("%ui/state/appState.nut")
 let { isInQueue, curQueueParam } = require("%ui/quickMatchQueue.nut")
 let loginChain = require("%ui/login/login_chain.nut")
 let { watchedHeroEid } = require("%ui/hud/state/watched_hero.nut")
-let { useAgencyPreset } = require("%ui/equipPresets/presetsState.nut")
+let { useAgencyPreset, previewPreset } = require("%ui/equipPresets/presetsState.nut")
 let { alterMints } = require("%ui/profile/profileState.nut")
 
 const INVITE_ACTION_ID = "room_invite_action"
@@ -364,6 +364,8 @@ function signBattleLoadout() {
       primary_contract_ids = currentPrimaryContractIds.get(),
       is_offline = false
     })
+
+  previewPreset.set(null)
 }
 
 function startConnectToHostSequence(...) {

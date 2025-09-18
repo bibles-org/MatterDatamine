@@ -13,6 +13,7 @@ m1911_colt_gun_loot_preset{
 
     "item:object"{
       template_name:t="m1911_colt_magazine"
+      number:ip2=2, 2
     }
   }
 }
@@ -32,6 +33,7 @@ m1911a1_colt_nickel_gun_loot_preset{
 
     "item:object"{
       template_name:t="m1911_colt_magazine"
+      number:ip2=2, 2
     }
   }
 }
@@ -51,6 +53,7 @@ makarov_gun_loot_preset{
 
     "item:object"{
       template_name:t="makarov_magazine"
+      number:ip2=2, 2
     }
 
     "item:object"{
@@ -74,6 +77,7 @@ makarov_rust_gun_loot_preset{
 
     "item:object"{
       template_name:t="makarov_magazine"
+      number:ip2=2, 2
     }
   }
 }
@@ -127,6 +131,7 @@ beretta_m9_gun_loot_preset{
 
     "item:object"{
       template_name:t="beretta_m9_magazine"
+      number:ip2=2, 2
     }
   }
 }
@@ -146,6 +151,7 @@ pm_63_rak_gun_loot_preset{
 
     "item:object"{
       template_name:t="pm_63_rak_magazine"
+      number:ip2=2, 2
     }
   }
 }
@@ -157,11 +163,13 @@ pp_91_kedr_magazine_loot_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="pp_91_kedr_20_magazine"
+      number:ip2=2, 2
       weight:r=5
     }
 
     "item:object"{
       template_name:t="pp_91_kedr_30_magazine"
+      number:ip2=2, 2
       weight:r=1
     }
   }
@@ -344,6 +352,7 @@ pp_19_vityaz_gun_loot_preset{
 
     "item:object"{
       template_name:t="pp_19_vityaz_magazine"
+      number:ip2=2, 2
     }
   }
 }
@@ -363,6 +372,7 @@ akm_47_gun_loot_preset{
 
     "item:object"{
       template_name:t="akm_47_magazine"
+      number:ip2=2, 2
     }
 
     "item:object"{
@@ -386,6 +396,7 @@ akm_47_rust_gun_loot_preset{
 
     "item:object"{
       template_name:t="akm_47_rust_magazine"
+      number:ip2=2, 2
     }
   }
 }
@@ -405,6 +416,7 @@ akm_47_civil_gun_loot_preset{
 
     "item:object"{
       template_name:t="vepr_10rd_magazine"
+      number:ip2=2, 2
     }
   }
 }
@@ -424,6 +436,7 @@ ak_74_gun_loot_preset{
 
     "item:object"{
       template_name:t="ak_74_magazine"
+      number:ip2=2, 2
     }
 
     "item:object"{
@@ -463,6 +476,7 @@ aks_74u_gun_loot_preset{
 
     "item:object"{
       template_name:t="ak_74_magazine"
+      number:ip2=2, 2
     }
   }
 }
@@ -482,6 +496,7 @@ aks_74u_rust_gun_loot_preset{
 
     "item:object"{
       template_name:t="ak_74_magazine"
+      number:ip2=2, 2
     }
   }
 }
@@ -501,6 +516,7 @@ tkb_22_gun_loot_preset{
 
     "item:object"{
       template_name:t="akm_47_bakelite_magazine"
+      number:ip2=2, 2
     }
   }
 }
@@ -806,6 +822,7 @@ as_val_gun_loot_preset{
 
     "item:object"{
       template_name:t="as_val_magazine"
+      number:ip2=2, 2
     }
 
     "item:object"{
@@ -829,6 +846,7 @@ vss_vintorez_gun_loot_preset{
 
     "item:object"{
       template_name:t="as_val_magazine"
+      number:ip2=2, 2
     }
 
     "item:object"{
@@ -996,6 +1014,7 @@ svd_gun_loot_preset{
 
     "item:object"{
       template_name:t="svd_magazine"
+      number:ip2=2, 2
     }
 
     "item:object"{
@@ -1261,6 +1280,7 @@ rpk_74_gun_loot_preset{
 
     "item:object"{
       template_name:t="rpk_74_magazine"
+      number:ip2=2, 2
     }
 
     "item:object"{
@@ -1395,7 +1415,7 @@ scope_pso1_loot_preset{
 
     "item:object"{
       template_name:t="scope_pso1"
-      weight:r=0.1
+      weight:r=0.3
     }
   }
 }
@@ -1472,28 +1492,8 @@ close_range_soviet_weapons_t2_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="sov_knife_nr_40_weapon"
-      weight:r=1
-    }
-
-    "item:object"{
-      template_name:t="ak_bayonet_weapon"
-      weight:r=1
-    }
-
-    "item:object"{
-      template_name:t="mpl50_shovel"
-      weight:r=1
-    }
-
-    "item:object"{
-      sub_preset:t="makarov_gun_loot_preset"
-      weight:r=2
-    }
-
-    "item:object"{
       sub_preset:t="m1911_colt_gun_loot_preset"
-      weight:r=6
+      weight:r=2
     }
 
     "item:object"{
@@ -1507,8 +1507,13 @@ close_range_soviet_weapons_t2_loot_preset{
     }
 
     "item:object"{
+      sub_preset:t="mc_21_12_gun_loot_preset"
+      weight:r=6
+    }
+
+    "item:object"{
       sub_preset:t="ks_23_gun_loot_preset"
-      weight:r=4
+      weight:r=3
     }
   }
 }
@@ -1565,12 +1570,12 @@ long_range_soviet_weapons_t2_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="mosin_m91_gun_loot_preset"
-      weight:r=6
+      weight:r=1
     }
 
     "item:object"{
       sub_preset:t="mosin_m91_rust_gun_loot_preset"
-      weight:r=2
+      weight:r=1
     }
 
     "item:object"{
@@ -1590,7 +1595,7 @@ long_range_soviet_weapons_t2_loot_preset{
 
     "item:object"{
       sub_preset:t="akm_47_rust_gun_loot_preset"
-      weight:r=2
+      weight:r=1
     }
 
     "item:object"{
@@ -1605,17 +1610,17 @@ long_range_soviet_weapons_t2_loot_preset{
 
     "item:object"{
       sub_preset:t="aks_74u_rust_gun_loot_preset"
-      weight:r=4
+      weight:r=1
     }
 
     "item:object"{
       sub_preset:t="tkb_22_gun_loot_preset"
-      weight:r=4
+      weight:r=8
     }
 
     "item:object"{
       sub_preset:t="rpk_74_gun_loot_preset"
-      weight:r=4
+      weight:r=6
     }
   }
 }
@@ -1626,12 +1631,12 @@ long_range_soviet_weapons_t3_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="sks_carbine_gun_loot_preset"
-      weight:r=2
+      weight:r=1
     }
 
     "item:object"{
       sub_preset:t="akm_47_gun_loot_preset"
-      weight:r=2
+      weight:r=1
     }
 
     "item:object"{
@@ -1661,12 +1666,12 @@ long_range_soviet_weapons_t3_loot_preset{
 
     "item:object"{
       sub_preset:t="rpk_74_gun_loot_preset"
-      weight:r=6
+      weight:r=10
     }
 
     "item:object"{
       sub_preset:t="pk_gun_loot_preset"
-      weight:r=4
+      weight:r=8
     }
   }
 }

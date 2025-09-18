@@ -10,7 +10,7 @@ from "%ui/components/commonComponents.nut" import mkText, fontIconButton, blured
 from "%ui/mainMenu/clonesMenu/cloneMenuState.nut" import sendRawChronogenes, currentChronogenes
 from "%ui/components/scrollbar.nut" import makeVertScrollExt, thinAndReservedPaddingStyle
 from "%ui/components/msgbox.nut" import showMsgbox, showMessageWithContent
-from "dasevents" import EventShowItemInShowroom, EventCloseShowroom, EventActivateShowroom
+from "dasevents" import EventShowItemInShowroom, EventCloseShowroom, EventActivateShowroom, CmdSetAlterToSelect
 from "dagor.math" import Point2
 from "%ui/components/colors.nut" import Inactive, ConsoleFillColor, BtnBdDisabled, BtnBgDisabled, BtnBdNormal,
   BtnBdFocused, TextHighlight, SelBdSelected, SelBdHover, GreenSuccessColor, InfoTextValueColor
@@ -66,6 +66,7 @@ let title = {
 
 let hoveredAlter = Watched(null)
 let alterToFocus = Watched(null)
+let overrideReturnMenu = Watched(null)
 let selectedPreviewAlter = Watched(null)
 let chronogeneSelectionWindowSize = static [sw(90), sh(90)]
 let alterSelectionWidth = static max(sw(50) - clonesMenuScreenPadding[1] * 2, hdpx(900))
@@ -550,6 +551,7 @@ function() {
         ecs.g_entity_mgr.broadcastEvent(EventShowItemInShowroom({ showroomKey=$"alterShowroom", data }))
       }
       alterToFocus.set(null)
+      overrideReturnMenu.set(null)
     }
     xmbNode = XmbContainer({
       canFocus = false
@@ -694,6 +696,20 @@ function openMainChronogeneSelection(onDropOverrided=null) {
 
 let closeMainChronogeneSelection = @() removeModalWindow(MAIN_CHRONOGENE_UID)
 
+
+ecs.register_es("open_main_chronogene_selection", {
+  [CmdSetAlterToSelect] = function(evt, _eid, _comp) {
+    local chosenAlter = allChronogenesInGame.get()?.filter(@(i) i.type == "alters").findvalue(@(v) v?.itemTemplate == evt.alterTemplate)
+    let existingAlter = allItems.get().findvalue(@(v) v?.templateName == evt.alterTemplate)
+    let isAvailable = existingAlter != null
+    if (isAvailable) {
+      chosenAlter = chosenAlter.__merge({uniqueId=existingAlter.itemId})
+    }
+    alterToFocus.set(chosenAlter.__merge({mainChronogeneAvailable=isAvailable}))
+  }
+})
+
+
 return {
   openMainChronogeneSelection
   closeMainChronogeneSelection
@@ -708,4 +724,5 @@ return {
   canPlaceOnScene
   mkAlterBackgroundTexture
   alterToFocus
+  overrideReturnMenu
 }

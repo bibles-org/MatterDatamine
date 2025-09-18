@@ -337,7 +337,7 @@ function showMonolithMsgBox(data) {
               logColor = playerLogsColors.warningLog
             })
           }
-          addPlayerLog(mkNoMonotithTokensLog(monolithUnlockToSend))
+          addPlayerLog(mkNoMonotithTokensLog)
         }
         else {
           sound_play("ui_sounds/mark_item_3d")

@@ -160,7 +160,6 @@ canister_gasoline_item{
   vehicle_fuel__amount:r=15
   drop_item__horizontalAngleLimits:p2=0, 360
 
-  "canBeUsedOutOfInventory:tag"{}
   "item_common_use:tag"{}
   "item__alwaysUseful:tag"{}
   "item__interruptNotInVehicle:tag"{}
@@ -4148,6 +4147,7 @@ item_tf_shopping_list{
   item__proto:t="item_tf_shopping_list"
   item__name:t="items/item_tf_shopping_list"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=50, 50
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4169,6 +4169,7 @@ item_lore_soldier_letter{
   item__proto:t="item_lore_soldier_letter"
   item__name:t="items/item_lore_soldier_letter"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=50, 50
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4190,6 +4191,7 @@ item_lore_prayer1{
   item__proto:t="item_lore_prayer1"
   item__name:t="items/item_lore_prayer1"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=50, 50
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4211,6 +4213,7 @@ item_lore_prayer2{
   item__proto:t="item_lore_prayer2"
   item__name:t="items/item_lore_prayer2"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=60, 60
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4232,6 +4235,7 @@ item_lore_denunciation{
   item__proto:t="item_lore_denunciation"
   item__name:t="items/item_lore_denunciation"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4253,6 +4257,7 @@ item_lore_love_letter{
   item__proto:t="item_lore_love_letter"
   item__name:t="items/item_lore_love_letter"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=60, 60
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4274,6 +4279,7 @@ item_lore_search_report1{
   item__proto:t="item_lore_search_report1"
   item__name:t="items/item_lore_search_report1"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=75, 75
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4295,6 +4301,7 @@ item_lore_search_report2{
   item__proto:t="item_lore_search_report2"
   item__name:t="items/item_lore_search_report2"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4316,6 +4323,7 @@ item_lore_quartermaster_letter{
   item__proto:t="item_lore_quartermaster_letter"
   item__name:t="items/item_lore_quartermaster_letter"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=50, 50
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4337,6 +4345,7 @@ item_lore_researcher_diary1{
   item__proto:t="item_lore_researcher_diary1"
   item__name:t="items/item_lore_researcher_diary1"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=50, 50
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4358,6 +4367,7 @@ item_lore_researcher_diary1_2{
   item__proto:t="item_lore_researcher_diary1_2"
   item__name:t="items/item_lore_researcher_diary1_2"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4379,6 +4389,7 @@ item_lore_researcher_diary2{
   item__proto:t="item_lore_researcher_diary2"
   item__name:t="items/item_lore_researcher_diary2"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4400,6 +4411,7 @@ item_lore_researcher_diary2_2{
   item__proto:t="item_lore_researcher_diary2_2"
   item__name:t="items/item_lore_researcher_diary2_2"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4413,6 +4425,94 @@ item_lore_researcher_diary2_2{
   }
 }
 
+item_lore_researcher_diary3{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_researcher_diary3"
+  item__name:t="items/item_lore_researcher_diary3"
+  item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=75, 75
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_researcher_diary3"
+  }
+}
+
+item_lore_researcher_diary3_2{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_researcher_diary3_2"
+  item__name:t="items/item_lore_researcher_diary3_2"
+  item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=75, 75
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_researcher_diary3_2"
+  }
+}
+
+item_lore_researcher_diary4{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_researcher_diary4"
+  item__name:t="items/item_lore_researcher_diary4"
+  item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_researcher_diary4"
+  }
+}
+
+item_lore_researcher_diary4_2{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_researcher_diary4_2"
+  item__name:t="items/item_lore_researcher_diary4_2"
+  item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_researcher_diary4_2"
+  }
+}
+
 item_lore_evacuation_drill{
   _use:t="item"
   _use:t="tiny_loot_item"
@@ -4421,6 +4521,7 @@ item_lore_evacuation_drill{
   item__proto:t="item_lore_evacuation_drill"
   item__name:t="items/item_lore_evacuation_drill"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4442,6 +4543,7 @@ item_lore_troitsky_to_platon{
   item__proto:t="item_lore_troitsky_to_platon"
   item__name:t="items/item_lore_troitsky_to_platon"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=75, 75
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4463,6 +4565,7 @@ item_lore_platon_to_troitsky{
   item__proto:t="item_lore_platon_to_troitsky"
   item__name:t="items/item_lore_platon_to_troitsky"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4484,6 +4587,7 @@ item_lore_soldier_am_contact1{
   item__proto:t="item_lore_soldier_am_contact1"
   item__name:t="items/item_lore_soldier_am_contact1"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4505,6 +4609,7 @@ item_lore_soldier_am_contact2{
   item__proto:t="item_lore_soldier_am_contact2"
   item__name:t="items/item_lore_soldier_am_contact2"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4526,6 +4631,7 @@ item_lore_Savushkina_letter1{
   item__proto:t="item_lore_Savushkina_letter1"
   item__name:t="items/item_lore_Savushkina_letter1"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=60, 60
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4547,6 +4653,7 @@ item_lore_Savushkina_letter2{
   item__proto:t="item_lore_Savushkina_letter2"
   item__name:t="items/item_lore_Savushkina_letter2"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=60, 60
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4568,6 +4675,7 @@ item_lore_revvol_to_sokolov{
   item__proto:t="item_lore_revvol_to_sokolov"
   item__name:t="items/item_lore_revvol_to_sokolov"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=60, 60
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4589,6 +4697,7 @@ item_lore_sokolov_to_revvol{
   item__proto:t="item_lore_sokolov_to_revvol"
   item__name:t="items/item_lore_sokolov_to_revvol"
   item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=60, 60
   dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   item__iconYaw:r=135
   item__iconPitch:r=0
@@ -4599,5 +4708,27 @@ item_lore_sokolov_to_revvol{
   _group{
     _tags:t="server"
     item__unlockNoteOnPickup:t="note_lore_sokolov_to_revvol"
+  }
+}
+
+item_lore_garage_warning{
+  _use:t="item"
+  _use:t="tiny_loot_item"
+  animchar__res:t="sovmod_folder_c_char"
+  collres__res:t="sovmod_folder_c_collision"
+  item__proto:t="item_lore_garage_warning"
+  item__name:t="items/item_lore_garage_warning"
+  item__weight:r=0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=50, 50
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  item__iconYaw:r=135
+  item__iconPitch:r=0
+  item__iconRoll:r=75
+
+  "item__alwaysUseful:tag"{}
+  "item_civil:tag"{}
+  _group{
+    _tags:t="server"
+    item__unlockNoteOnPickup:t="note_lore_garage_warning"
   }
 }

@@ -23,7 +23,6 @@ resources_gatherer_device{
   resources_gatherer_device__coneAngleCos:r=0
   resources_gatherer_device__pointBlankDist:r=0.35
   resources_gatherer_device__gatherRatePerTick:r=1
-  resources_gatherer_device__gatherMultiplier:r=1
   resources_gatherer_device__gatherMaxMultiplier:r=35
   resources_gatherer_device__gatherMultiplierIncVel:r=2.25
   resources_gatherer_device__affectTemplate:t="resources_gatherer_affect"
@@ -34,6 +33,7 @@ resources_gatherer_device{
     _replicate:b=yes
     _track:b=yes
     resources_gatherer_device__tickAt:r=0
+    resources_gatherer_device__gatherMultiplier:r=1
   }
 
   _group{

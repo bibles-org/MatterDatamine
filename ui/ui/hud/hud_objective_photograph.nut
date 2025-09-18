@@ -1,19 +1,19 @@
-from "%sqGlob/dasenums.nut" import BinocularsWatchingState
-
 from "%sqstd/math.nut" import round_by_value
 
 from "%ui/fonts_style.nut" import sub_txt, body_txt, h2_txt
-from "%ui/components/colors.nut" import Alert
+from "%ui/components/colors.nut" import Alert, TextNormal
 from "dagor.math" import Point3
 from "%ui/helpers/common_queries.nut" import get_pos
 
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { photographObjectiveActive, photographObjectiveInPlace, photographObjectiveTargetEid, photographObjectiveTargetInView, photographObjectiveTargetName, photographObjectiveDetectedTargetEid } = require("%ui/hud/state/hud_objective_photograph_state.nut")
-let { binocularsWatchingState } = require("%ui/hud/state/binoculars_state.nut")
+let { photographObjectiveInPlace, photographObjectiveTargetEid, photographObjectiveTargetInView,
+  photographObjectiveTargetName, photographObjectiveDetectedTargetEid, photographUIActive,
+  showCameraTargetObscuredTip } = require("%ui/hud/state/hud_objective_photograph_state.nut")
 let { curTime } = require("%ui/hud/state/time_state.nut")
 let { watchedHeroEid } = require("%ui/hud/state/watched_hero.nut")
+let { safeAreaVerPadding } = require("%ui/options/safeArea.nut")
 
 let lineWidth = 0.20
 let viewfinderLineLength = 33
@@ -21,14 +21,10 @@ let viewfinderLineColorDefault = Color(195, 195, 195, 155)
 let viewfinderLineColorInvalidPlace = Color(250, 5, 5, 255)
 let viewfinderLineColorTargetInView = Color(5, 255, 5, 255)
 
-let photographUIActive = Computed(@()
-  photographObjectiveActive.get() &&
-  (binocularsWatchingState.get() == BinocularsWatchingState.IDLE || binocularsWatchingState.get() == BinocularsWatchingState.IN_FADEOUT)
-)
-
 let targetCaptureColor = Color(85, 255, 255, 255)
 
-let detectedTargetCaptureColor = Color(75, 75, 75, 85)
+let detectedTargetCaptureWarnColor = Color(170, 170, 100, 110)
+let detectedTargetCaptureErrColor = Color(200, 140, 100, 110)
 
 let invalidPlaceTextColor1 = Alert
 let invalidPlaceTextColor2 = Color(255,30,30,220)
@@ -184,83 +180,102 @@ function mkPhotographObjectiveTarget() {
 }
 
 function mkPhotographObjectiveDetectedTarget() {
+  let colorW = Computed(@() showCameraTargetObscuredTip.get() ? detectedTargetCaptureErrColor : detectedTargetCaptureWarnColor)
   return {
-    size = ph(25)
-
     data = {
       eid = photographObjectiveDetectedTargetEid.get()
       minDistance = 0
       maxDistance = 10000
-      clampToBorder = false
+      clampToBorder = true
       worldPos = get_pos(photographObjectiveDetectedTargetEid.get())
     }
-    markerFlags = DngBhv.MARKER_SHOW_ONLY_IN_VIEWPORT
     transform = {}
 
     animations = [
       { prop=AnimProp.opacity, from=1.0, to=0.0, duration=0.05, playFadeOut=true, easing=InCubic }
     ]
-
+    halign = ALIGN_CENTER
+    valign = ALIGN_CENTER
     children = [
-      
-      {
-        rendObj = ROBJ_SOLID
-        size = [fsh(lineWidth), ph(viewfinderLineLength)]
-        color = detectedTargetCaptureColor
-        hplace = ALIGN_LEFT
-        vplace = ALIGN_BOTTOM
+      @() {
+        data = {
+          clampToBorder = true
+        }
+        clampBorderOffset = safeAreaVerPadding.get() + hdpxi(30)
+        markerFlags = DngBhv.MARKER_SHOW_ONLY_WHEN_CLAMPED
+        transform = {}
+
+        rendObj = ROBJ_IMAGE
+        image = Picture($"ui/skin#eye.svg:{hdpxi(40)}:{hdpxi(40)}:P")
+        color = TextNormal
+        size = hdpxi(40)
       }
-      {
-        rendObj = ROBJ_SOLID
-        size = [ph(viewfinderLineLength), fsh(lineWidth)]
-        color = detectedTargetCaptureColor
-        hplace = ALIGN_LEFT
-        vplace = ALIGN_BOTTOM
-      }
-      
-      {
-        rendObj = ROBJ_SOLID
-        size = [fsh(lineWidth), ph(viewfinderLineLength)]
-        color = detectedTargetCaptureColor
-        hplace = ALIGN_LEFT
-        vplace = ALIGN_TOP
-      }
-      {
-        rendObj = ROBJ_SOLID
-        size = [ph(viewfinderLineLength), fsh(lineWidth)]
-        color = detectedTargetCaptureColor
-        hplace = ALIGN_LEFT
-        vplace = ALIGN_TOP
-      }
-      
-      {
-        rendObj = ROBJ_SOLID
-        size = [fsh(lineWidth), ph(viewfinderLineLength)]
-        color = detectedTargetCaptureColor
-        hplace = ALIGN_RIGHT
-        vplace = ALIGN_BOTTOM
-      }
-      {
-        rendObj = ROBJ_SOLID
-        size = [ph(viewfinderLineLength), fsh(lineWidth)]
-        color = detectedTargetCaptureColor
-        hplace = ALIGN_RIGHT
-        vplace = ALIGN_BOTTOM
-      }
-      
-      {
-        rendObj = ROBJ_SOLID
-        size = [fsh(lineWidth), ph(viewfinderLineLength)]
-        color = detectedTargetCaptureColor
-        hplace = ALIGN_RIGHT
-        vplace = ALIGN_TOP
-      }
-      {
-        rendObj = ROBJ_SOLID
-        size = [ph(viewfinderLineLength), fsh(lineWidth)]
-        color = detectedTargetCaptureColor
-        hplace = ALIGN_RIGHT
-        vplace = ALIGN_TOP
+      @() {
+        watch = colorW
+        size = sh(25)
+        markerFlags = DngBhv.MARKER_SHOW_ONLY_IN_VIEWPORT
+        children = [
+          
+          {
+            rendObj = ROBJ_SOLID
+            size = [fsh(lineWidth), ph(viewfinderLineLength)]
+            color = colorW.get()
+            hplace = ALIGN_LEFT
+            vplace = ALIGN_BOTTOM
+          }
+          {
+            rendObj = ROBJ_SOLID
+            size = [ph(viewfinderLineLength), fsh(lineWidth)]
+            color = colorW.get()
+            hplace = ALIGN_LEFT
+            vplace = ALIGN_BOTTOM
+          }
+          
+          {
+            rendObj = ROBJ_SOLID
+            size = [fsh(lineWidth), ph(viewfinderLineLength)]
+            color = colorW.get()
+            hplace = ALIGN_LEFT
+            vplace = ALIGN_TOP
+          }
+          {
+            rendObj = ROBJ_SOLID
+            size = [ph(viewfinderLineLength), fsh(lineWidth)]
+            color = colorW.get()
+            hplace = ALIGN_LEFT
+            vplace = ALIGN_TOP
+          }
+          
+          {
+            rendObj = ROBJ_SOLID
+            size = [fsh(lineWidth), ph(viewfinderLineLength)]
+            color = colorW.get()
+            hplace = ALIGN_RIGHT
+            vplace = ALIGN_BOTTOM
+          }
+          {
+            rendObj = ROBJ_SOLID
+            size = [ph(viewfinderLineLength), fsh(lineWidth)]
+            color = colorW.get()
+            hplace = ALIGN_RIGHT
+            vplace = ALIGN_BOTTOM
+          }
+          
+          {
+            rendObj = ROBJ_SOLID
+            size = [fsh(lineWidth), ph(viewfinderLineLength)]
+            color = colorW.get()
+            hplace = ALIGN_RIGHT
+            vplace = ALIGN_TOP
+          }
+          {
+            rendObj = ROBJ_SOLID
+            size = [ph(viewfinderLineLength), fsh(lineWidth)]
+            color = colorW.get()
+            hplace = ALIGN_RIGHT
+            vplace = ALIGN_TOP
+          }
+        ]
       }
     ]
   }
@@ -271,9 +286,11 @@ function photographTargetMarks() {
     size = flex()
     behavior = DngBhv.Projection
     watch = [
+      safeAreaVerPadding,
       photographObjectiveTargetEid,
       photographObjectiveDetectedTargetEid,
-      photographObjectiveInPlace]
+      photographObjectiveInPlace
+    ]
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
 

@@ -11,7 +11,7 @@ from "%ui/hud/menus/components/inventoryItemUtils.nut" import mkUnloadAmmoButton
 from "%ui/hud/menus/components/itemFromTemplate.nut" import getSlotFromTemplate
 from "%ui/hud/menus/components/inventoryItemNexusPointPriceComp.nut" import nexusPointsCostComp
 from "%ui/hud/menus/weaponShowroom/weaponShowroom.nut" import inventoryShowroomItem
-
+from "%ui/hud/state/hud_objective_photograph_state.nut" import photographUIActive
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
@@ -259,8 +259,12 @@ function quickUseObjectiveItemSlot() {
   let questItemSize = hdpx(100)
   let empty = {
     size = [ questItemSize, questItemSize ]
-    watch = [ quickUseObjective, objectives ]
+    watch = [ quickUseObjective, objectives, photographUIActive ]
   }
+
+  if (photographUIActive.get())
+    return empty
+
   if (quickUseObjective.get() == "")
     return empty
 
@@ -271,7 +275,7 @@ function quickUseObjectiveItemSlot() {
   let fakeItem = mkFakeItem(questItemTemplate, { notInteractive=true })
 
   return {
-    watch = [ quickUseObjective, objectives ]
+    watch = [ quickUseObjective, objectives, photographUIActive ]
     halign = ALIGN_RIGHT
     valign = ALIGN_TOP
     size = [ questItemSize, questItemSize ]

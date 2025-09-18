@@ -20,12 +20,12 @@ from "%ui/components/button.nut" import button, textButton, buttonWithGamepadHot
 from "eventbus" import eventbus_send, eventbus_subscribe_onehit
 from "%ui/mainMenu/contractWidget.nut" import mkDifficultyBlock
 from "%ui/components/msgbox.nut" import showMsgbox
-from "%ui/components/colors.nut" import RedWarningColor, TextHover
+from "%ui/components/colors.nut" import RedWarningColor, TextHover, ContactLeader, BtnBdNormal
 from "%ui/components/accentButton.style.nut" import accentButtonStyle
 from "%ui/hud/menus/components/inventoryItemsStash.nut" import mkStashItemsList
 from "%ui/hud/menus/inventoryActions.nut" import moveItemWithKeyboardMode
 from "%ui/hud/menus/components/inventoryStashFiltersWidget.nut" import resetFilters
-from "%ui/hud/hud_menus_state.nut" import openMenu
+from "%ui/hud/hud_menus_state.nut" import openMenu, currentMenuId, convertMenuId
 from "%ui/hud/menus/inventory.nut" import refillButton
 from "%ui/hud/menus/components/inventoryItemUtils.nut" import checkInventoryVolume
 from "%ui/mainMenu/stashSpaceMsgbox.nut" import showNoEnoughStashSpaceMsgbox
@@ -34,7 +34,8 @@ from "%ui/equipPresets/convert_loadout_to_preset.nut" import loadoutToPreset
 from "das.equipment" import generate_loadout_by_seed
 from "%ui/hud/menus/components/inventoryStashFiltersWidget.nut" import inventoryFiltersWidget
 from "%ui/context_hotkeys.nut" import contextHotkeys
-from "%ui/mainMenu/offline_raid_widget.nut" import mkOfflineRaidCheckBox
+from "%ui/mainMenu/offline_raid_widget.nut" import mkOfflineRaidIcon, wantOfflineRaid
+
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
@@ -53,6 +54,7 @@ let currentTab = Watched("consoleRaid/presetTab")
 let { safeAreaAmount } = require("%ui/options/safeArea.nut")
 let { selectedRaid } = require("%ui/gameModeState.nut")
 let { tagChronogeneSlot } = require("%ui/mainMenu/clonesMenu/clonesMenuCommon.nut")
+let { PREPARATION_NEXUS_SUBMENU_ID } = require("%ui/hud/menus/mintMenu/mintState.nut")
 
 let weightBlock = @() {
   watch = [inventoryCurrentWeight, playerMovePenalty]
@@ -322,6 +324,13 @@ let mkPresetStashTabs = @(rotationTimer) function() {
     if (!state)
       return
 
+    let [_id, submenus] = convertMenuId(currentMenuId.get())
+    let submenu = submenus?[0]
+    let isNexusPreparation = submenu == PREPARATION_NEXUS_SUBMENU_ID
+
+    if (isNexusPreparation)
+      return
+
     currentTab.set("consoleRaid/presetTab")
 
     if (useAgencyPreset.get()) {
@@ -353,12 +362,26 @@ let mkPresetStashTabs = @(rotationTimer) function() {
         flow = FLOW_VERTICAL
         gap = hdpx(4)
         children = [
-          mkOfflineRaidCheckBox({}, true),
           rotationTimer,
           backButton,
           [CURRENT_PRESET_UID, AGENCY_PRESET_UID].contains(selectedPreset.get()) ? null : buyOrEquipButton,
           [CURRENT_PRESET_UID, AGENCY_PRESET_UID].contains(selectedPreset.get()) ? null : purchaseButton,
-          [CURRENT_PRESET_UID, AGENCY_PRESET_UID].contains(selectedPreset.get()) ? startButton(mkDifficultyBlock(false)) : null
+          [CURRENT_PRESET_UID, AGENCY_PRESET_UID].contains(selectedPreset.get())
+            ? startButton(@() {
+              watch = wantOfflineRaid
+              flow = FLOW_HORIZONTAL
+              valign = ALIGN_CENTER
+              gap = {
+                rendObj = ROBJ_SOLID
+                size = [hdpx(1), flex()]
+                margin = static [0, hdpx(4)]
+                color = ContactLeader
+              }
+              children = [
+                wantOfflineRaid.get() ? mkOfflineRaidIcon({ fontSize = hdpx(20), color = ContactLeader }) : null
+                mkDifficultyBlock(false)
+              ]
+            }) : null
         ]
       }
     ]

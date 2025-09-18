@@ -8,16 +8,20 @@ from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItem
 from "%ui/hud/menus/components/inventoryVolumeWidget.nut" import mkVolumeHdr
 from "%ui/hud/menus/components/inventoryItemsListChecks.nut" import isExternalInventoryDropForbidden
 from "%ui/components/button.nut" import button
-from "%ui/components/commonComponents.nut" import mkText
+from "%ui/components/commonComponents.nut" import mkText, mkMonospaceTimeComp
+from "%ui/components/colors.nut" import TextNormal, BtnBgDisabled, BtnBgNormal, BtnBgActive
 from "dasevents" import CmdCloseExternalInventoryRequest, sendNetEvent, CmdDropAllItemsFromInventory
 from "%ui/state/allItems.nut" import stashEid
+from "%ui/hud/state/entity_use_state.nut" import entityUseEnd, entityToUse, calcItemUseProgress
+from "%ui/hud/state/gametype_state.nut" import isOnPlayerBase
+from "%ui/hud/state/time_state.nut" import curTime
 
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
 let { externalInventoryName, externalInventoryQuestName, externalInventoryItems, externalInventoryItemsMergeEnabled,
       externalInventoryItemsSortingEnabled, externalInventoryItemsOverrideSortingPriority, externalInventoryCurrentVolume,
-      externalInventoryMaxVolume, externalInventoryEid, externalInventoryContainerOwnerEid } = require("%ui/hud/state/hero_external_inventory_state.nut")
+      externalInventoryMaxVolume, externalInventoryEid, externalInventoryContainerOwnerEid, externalInventoryIsEquipment } = require("%ui/hud/state/hero_external_inventory_state.nut")
 let { EXTERNAL_ITEM_CONTAINER } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
 let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")
 
@@ -54,32 +58,92 @@ let panelsData = setupPanelsData(externalInventoryItems,
                                  [externalInventoryItems, externalInventoryItemsMergeEnabled, externalInventoryItemsSortingEnabled, externalInventoryItemsOverrideSortingPriority],
                                  processItems)
 
+let dropIcon = {
+  size = [hdpxi(14), hdpxi(14)]
+  rendObj = ROBJ_IMAGE
+  color = TextNormal
+  hplace = ALIGN_CENTER
+  image = Picture("ui/skin#context_icons/drop_out_1.svg:{0}:{0}:P".subst(hdpxi(14)))
+}
+
 function mkDropAllButton() {
   let hasItems = Computed(@() externalInventoryItems.get().len() > 0)
+  let hasProgression = Computed(@() !isOnPlayerBase.get() && entityToUse.get() == externalInventoryEid.get())
+  function mkProgressLine(isInProgress) {
+    if (!isInProgress)
+      return null
+    let timeLeft = Computed(@() entityUseEnd.get() - curTime.get())
+    let progressProportion = Computed(@() calcItemUseProgress(curTime.get()))
+    return function() {
+      if (timeLeft.get() <= 0)
+        return { watch = timeLeft }
+      return {
+        watch = timeLeft
+        size = flex()
+        padding = hdpx(1)
+        children = [
+          @() {
+            watch = progressProportion
+            rendObj = ROBJ_SOLID
+            size = [pw(progressProportion.get()), flex()]
+            color = BtnBgActive
+          }
+          {
+            size = FLEX_H
+            padding = [0, hdpx(4)]
+            vplace = ALIGN_CENTER
+            halign = ALIGN_RIGHT
+            valign = ALIGN_CENTER
+            children = [
+              {
+                flow = FLOW_HORIZONTAL
+                gap = hdpx(4)
+                hplace = ALIGN_CENTER
+                valign = ALIGN_CENTER
+                children = [
+                  dropIcon
+                  mkText(loc("action/interrupt"), tiny_txt)
+                ]
+              }
+              mkMonospaceTimeComp(timeLeft.get(), tiny_txt)
+            ]
+          }
+        ]
+      }
+    }
+  }
+  let vertPadding = hdpx(4)
   return function() {
-    let iconSize = hdpxi(14)
+    let hintText = hasProgression.get() ? loc("action/interrupt")
+      : hasItems.get() ? loc("item/action/dropFromBackpack")
+      : loc("item/action/nothingDropFromBackpack")
+
+    if (!externalInventoryIsEquipment.get())
+      return { watch = externalInventoryIsEquipment }
+
     return {
-      watch = hasItems
+      watch = [hasItems, hasProgression, externalInventoryIsEquipment]
       size = FLEX_H
       children = button(
         {
-          size = FLEX_H
-          flow = FLOW_HORIZONTAL
-          gap = hdpx(4)
+          size = flex()
           valign = ALIGN_CENTER
-          halign = ALIGN_CENTER
           children = [
-            {
-              size = [iconSize, iconSize]
-              rendObj = ROBJ_IMAGE
-              color = TextNormal
-              hplace = ALIGN_CENTER
-              image = Picture("ui/skin#context_icons/drop_out_1.svg:{0}:{0}:P".subst(iconSize))
+            hasProgression.get() ? null : {
+              size = FLEX_H
+              flow = FLOW_HORIZONTAL
+              gap = hdpx(4)
+              valign = ALIGN_CENTER
+              halign = ALIGN_CENTER
+              padding = [vertPadding, hdpx(4)]
+              children = [
+                dropIcon
+                mkText(loc("item/action/dropFromContainer"), { color = TextNormal }.__merge(tiny_txt))
+              ]
             }
-            mkText(loc("item/action/dropFromContainer"), { color = TextNormal }.__merge(tiny_txt))
+            mkProgressLine(hasProgression.get())
           ]
-        }
-        ,
+        },
         function dropAllFromContainer() {
           if (!hasItems.get())
             return
@@ -87,10 +151,9 @@ function mkDropAllButton() {
             CmdDropAllItemsFromInventory({fromInventoryEid = externalInventoryEid.get(), toInventoryEid = stashEid.get()}))
         },
         {
-          size = FLEX_H
+          size = [flex(), hdpx(14) + vertPadding * 2]
           margin = static [0, 0, hdpx(5), 0]
-          padding = hdpx(4)
-          tooltipText = hasItems.get() ? loc("item/action/dropFromBackpack") : loc("item/action/nothingDropFromBackpack")
+          tooltipText = hintText
           style = { BtnBgNormal = hasItems.get() ? BtnBgNormal : BtnBgDisabled }
         })
     }

@@ -359,6 +359,10 @@ function meleeStubSlot() {
   let defaultItem = mkFakeItem(defaultPocketKnifeTemplateName)
   let slotItem = equipment.get()?.chronogene_melee_1.itemTemplate ? equipment.get()?.chronogene_melee_1 : defaultItem
 
+  let slot = {
+    isDragAndDropAvailable = false
+  }
+
   let filteredStub = @() stashItems.get().filter(@(item) item?.filterType == "stub_melee_weapon")
 
   let callbacks = {
@@ -381,7 +385,7 @@ function meleeStubSlot() {
     watch = equipment
     hplace = ALIGN_LEFT
     vplace = ALIGN_BOTTOM
-    children = mkEquipmentSlot(slotItem, callbacks)
+    children = mkEquipmentSlot(slot.__merge(slotItem), callbacks)
   }
 }
 
@@ -471,7 +475,7 @@ function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
 
     onElemState
     transform = {}
-    behavior = controllable ? Behaviors.DragAndDrop : Behaviors.Button
+    behavior = controllable && !mutationForbidenDueToInQueueState.get() ? Behaviors.DragAndDrop : Behaviors.Button
     dropData = controllable && !mutationForbidenDueToInQueueState.get() ? weapon.__merge({canDrop = true}) : null
     onDragMode = !controllable ? null : function(on, item) {
       draggedData.set(on ? item : null)

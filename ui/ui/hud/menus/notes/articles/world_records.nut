@@ -52,6 +52,10 @@ let world_records = freeze([
   mkNote("note_lore_researcher_diary1_2"),
   mkNote("note_lore_researcher_diary2"),
   mkNote("note_lore_researcher_diary2_2"),
+  mkNote("note_lore_researcher_diary3"),
+  mkNote("note_lore_researcher_diary3_2"),
+  mkNote("note_lore_researcher_diary4"),
+  mkNote("note_lore_researcher_diary4_2"),
   mkNote("note_lore_evacuation_drill"),
   mkNote("note_lore_troitsky_to_platon"),
   mkNote("note_lore_platon_to_troitsky"),
@@ -61,6 +65,7 @@ let world_records = freeze([
   mkNote("note_lore_Savushkina_letter2"),
   mkNote("note_lore_revvol_to_sokolov"),
   mkNote("note_lore_sokolov_to_revvol"),
+  mkNote("note_lore_garage_warning"),
 ])
 
 return {

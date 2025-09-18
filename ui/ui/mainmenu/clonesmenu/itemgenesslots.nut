@@ -6,7 +6,7 @@ from "%ui/mainMenu/clonesMenu/cloneMenuState.nut" import sendRawChronogenes
 from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
 from "%ui/components/commonComponents.nut" import mkText, mkSelectPanelItem, mkSelectPanelTextCtor, BD_LEFT, fontIconButton
 from "%ui/components/colors.nut" import BtnBgHover, panelRowColor, Inactive, ConsoleFillColor, BtnBdDisabled,
-  BtnBdHover, BtnBgSelected, SelBgNormal
+  BtnBdHover, BtnBgSelected, SelBgNormal, BtnBgDisabled, SelBdSelected, BtnBgNormal
 from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems
 from "%ui/components/button.nut" import button, textButton
 from "%ui/components/scrollbar.nut" import makeVertScrollExt, thinStyle
@@ -51,17 +51,27 @@ let lock = faComp("lock", {
   vplace = ALIGN_CENTER
 })
 
-let getStyle = memoize(@(isCurrent) freeze({
-    BtnBgNormal = isCurrent ? BtnBgSelected : SelBgNormal
-    BtnBdNormal = mul_color(BtnBdHover, 0.2, 10)
+let getStyle = memoize(@(isCurrent, isActive) freeze({
+    BtnBgNormal = isActive ? SelBgNormal : BtnBgDisabled
+    BtnBgHover = isActive ? SelBgNormal : BtnBgDisabled
+    BtnBdNormal = isCurrent ? SelBdSelected : mul_color(BtnBdHover, 0.2, 10)
   })
 )
+
+let chronogenesImageParams = static {
+  width=hdpx(40)
+  height=hdpx(40)
+  transform = {}
+  animations=[]
+  slotSize = [ hdpxi(50), hdpxi(50) ]
+}
+
 function mkChronogeneSelectPanel(chronogeneItem, isAvailable, currentChronogeneIdx, curUniqueId, onClickOverrideFunc=null) {
   let isCurrent = curUniqueId != null && curUniqueId != 0 && (
     curUniqueId == chronogeneItem?.uniqueId ||
     curUniqueId == chronogeneItem?.itemTemplate 
   )
-
+  local stateFlags = Watched(0)
   return {
     size = FLEX_H
     flow = FLOW_HORIZONTAL
@@ -70,23 +80,34 @@ function mkChronogeneSelectPanel(chronogeneItem, isAvailable, currentChronogeneI
       button({
           size = FLEX_H
           flow = FLOW_HORIZONTAL
-          gap = hdpx(4)
           children = [
-            mkChronogeneImage(chronogeneItem),
-            mkText(loc(chronogeneItem?.itemName) ?? loc("clonesMenu/emptySecondaryChronogeneSlot"), {
-              hplace = ALIGN_LEFT
-              vplace = ALIGN_CENTER
-              size = FLEX_H
-              padding = static [0,0,0,hdpx(10)]
-            }),
-            (chronogeneItem?.count ?? 0) <= 1 ? null : {
-              rendObj = ROBJ_WORLD_BLUR_PANEL
-              borderRadius = [0, 0, 0, hdpx(5)]
-              fillColor = Color(67, 67, 67)
-              padding = hdpx(3)
-              children = mkText($"{loc("ui/multiply")}{chronogeneItem.count}")
-            },
-            isAvailable ? null : lock
+            mkChronogeneImage(chronogeneItem, chronogenesImageParams, { size = [hdpx(13), hdpx(13)] }),
+            @() {
+              watch = stateFlags
+              rendObj = ROBJ_SOLID
+              size = flex()
+              padding = static [0,0,0, hdpx(4)]
+              color = stateFlags.get() & S_HOVER ? BtnBgHover
+                : isAvailable ? SelBgNormal
+                : BtnBdDisabled
+              children = [
+                mkText(loc(chronogeneItem?.itemName) ?? loc("clonesMenu/emptySecondaryChronogeneSlot"), {
+                  hplace = ALIGN_LEFT
+                  vplace = ALIGN_CENTER
+                  size = FLEX_H
+                  padding = static [0,0,0,hdpx(10)]
+                }),
+                (chronogeneItem?.count ?? 0) <= 1 ? null : {
+                  rendObj = ROBJ_WORLD_BLUR_PANEL
+                  borderRadius = [0, 0, 0, hdpx(5)]
+                  fillColor = Color(67, 67, 67)
+                  padding = hdpx(3)
+                  hplace = ALIGN_RIGHT
+                  children = mkText($"{loc("ui/multiply")}{chronogeneItem.count}")
+                },
+                isAvailable ? null : lock
+              ]
+            }
           ]
         }, function() {
           if (isAvailable) {
@@ -108,8 +129,10 @@ function mkChronogeneSelectPanel(chronogeneItem, isAvailable, currentChronogeneI
         size = FLEX_H
         halign = ALIGN_LEFT
         valign = ALIGN_CENTER
-        style = getStyle(isCurrent)
+        style = getStyle(isCurrent, isAvailable)
         xmbNode = XmbNode()
+        padding = hdpx(1)
+        stateFlags
         onHover = function(on) {
           if (on) {
             selectedMainChronogeneItem.set(chronogeneItem)
@@ -154,6 +177,11 @@ function chronogeneListPanel(currentChronogeneIdx, availableChronogenes, equippe
       .map(@(v) mkFakeItem(v.itemTemplate))
       .sort(@(a, b) loc(a.itemName) <=> loc(b.itemName))
 
+  let availableChronogenesList = mergeNonUniqueItems(chronogeneList)
+    .sort(@(a, b) (curUniqueId == b?.uniqueId || curUniqueId == b?.itemTemplate) <=> (curUniqueId == a?.uniqueId || curUniqueId == a?.itemTemplate)
+      || b?.itemTemplate.slice(-1) <=> a?.itemTemplate.slice(-1)
+      || loc(a?.itemName) <=> loc(b?.itemName)
+    )
   return {
     size = static [ hdpx(400), flex() ]
     flow = FLOW_VERTICAL
@@ -169,21 +197,19 @@ function chronogeneListPanel(currentChronogeneIdx, availableChronogenes, equippe
       makeVertScrollExt({
         size = FLEX_H
         flow = FLOW_VERTICAL
-        gap = -1
+        gap = hdpx(2)
         xmbNode = XmbContainer({ scrollSpeed = 10.0 })
         children = [].extend(
           
-          isCurrentSlotEmpty ? [] : [ mkChronogeneSelectPanel(humanEquipmentSlots.chronogene_secondary, true, currentChronogeneIdx, null, onClickOverrideFunc) ]
+          isCurrentSlotEmpty ? [] : [mkChronogeneSelectPanel(humanEquipmentSlots.chronogene_secondary, true, currentChronogeneIdx, null, onClickOverrideFunc) ]
 
           
-          mergeNonUniqueItems(chronogeneList).map(function(chronogene) {
-            return mkChronogeneSelectPanel(chronogene, true, currentChronogeneIdx, curUniqueId, onClickOverrideFunc)
-          })
+          availableChronogenesList.map(@(chronogene)
+            mkChronogeneSelectPanel(chronogene, true, currentChronogeneIdx, curUniqueId, onClickOverrideFunc))
 
           
-          notAvailableChronogenes.map(function(chronogene) {
-            return mkChronogeneSelectPanel(chronogene, false, currentChronogeneIdx, curUniqueId, onClickOverrideFunc)
-          })
+          notAvailableChronogenes.map(@(chronogene)
+            mkChronogeneSelectPanel(chronogene, false, currentChronogeneIdx, curUniqueId, onClickOverrideFunc))
 
         )
       }, {
@@ -227,9 +253,9 @@ function mkSelectableChronogeneItem(chronogeneItem, idx) {
           || equippedChronogenes[idx] == item?.uniqueId))
         .sort(@(a, b) loc(a.itemName) <=> loc(b.itemName))
 
-      addModalPopup( [ r + hdpx(10), hdpx(126)], {
+      addModalPopup( [ r + hdpx(10), hdpx(50)], {
         rendObj = ROBJ_WORLD_BLUR_PANEL
-        size = [SIZE_TO_CONTENT, screenSize[1] - safeAreaVerPadding.get() * 2]
+        size = [SIZE_TO_CONTENT, sh(90) - safeAreaVerPadding.get() * 2]
         uid = "secondaryChronogeneSelectionPopup"
         fillColor = ConsoleFillColor
         popupValign = ALIGN_CENTER

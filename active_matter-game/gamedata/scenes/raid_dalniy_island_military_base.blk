@@ -223,11 +223,11 @@ entity{
 entity{
   _template:t="dynamic_zone_controller"
   dynamic_zone_controller__shrinksToFinalExtractionRng:ip2=3, 3
-  dynamic_zone_controller__finalZoneRadius:r=50
+  dynamic_zone_controller__finalZoneRadius:r=15
   dynamic_zone_controller__finalZoneShrinkingTime:r=15
-  dynamic_zone_controller__finalZoneWaitingTime:r=240
+  dynamic_zone_controller__finalZoneWaitingTime:r=120
   dynamic_zone_controller__waitingForZoneShrinkingTime:r=180
-  dynamic_zone_controller__zoneShrinkingTime:r=50
+  dynamic_zone_controller__zoneShrinkingTime:r=60
   dynamic_zone_controller__waitingForZoneShrinkingTimePow:r=0.8
   dynamic_zone_controller__zoneShrinkingTimePow:r=0.9
 }

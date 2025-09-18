@@ -35,14 +35,14 @@ from "%ui/mainMenu/craftIcons.nut" import getRecipeIcon
 from "%ui/mainMenu/craft_common_pkg.nut" import getRecipeName
 from "%ui/hud/menus/components/inventoryItemsPresetPreview.nut" import fakeItemAsAttaches
 from "%ui/components/glareAnimation.nut" import glareAnimation, animChildren
-from "%ui/mainMenu/clonesMenu/mainChronogeneSelection.nut" import selectedPreviewAlter, hoveredAlter, alterToFocus, updateAlterTemplateInShowroom
+from "%ui/mainMenu/clonesMenu/mainChronogeneSelection.nut" import selectedPreviewAlter, hoveredAlter, alterToFocus, updateAlterTemplateInShowroom, overrideReturnMenu
 from "%ui/mainMenu/clonesMenu/itemGenes.nut" import allChronogenesInGame
 from "%ui/mainMenu/currencyIcons.nut" import monolithTokensTextIcon, creditsTextIcon, monolithTokensColor, creditsColor, premiumColor, premiumCreditsTextIcon
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
 let { marketItems, playerStats, playerProfileMonolithTokensCount, playerProfilePremiumCredits, playerProfileAllResearchNodes, allRecipes } = require("%ui/profile/profileState.nut")
-let { monolithSelectedLevel, monolithLevelOffers, selectedMonolithUnlock, currentMonolithLevel, permanentMonolithLevelOffers } = require("%ui/mainMenu/monolith/monolith_common.nut")
+let { monolithSelectedLevel, monolithLevelOffers, selectedMonolithUnlock, currentMonolithLevel, permanentMonolithLevelOffers, MonolithMenuId } = require("%ui/mainMenu/monolith/monolith_common.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 let { stashItems, backpackItems, inventoryItems, safepackItems } = require("%ui/hud/state/inventory_items_es.nut")
 let { smallInventoryImageParams, largeInventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
@@ -456,6 +456,7 @@ function goToCraft(id) {
 function goToMainAlters(suit) {
   let { itemTemplate } = suit
   alterToFocus.set(suit)
+  overrideReturnMenu.set(MonolithMenuId)
   updateAlterTemplateInShowroom(itemTemplate, Point2(0.6, 0.5))
   selectedPreviewAlter.set(suit)
   openMenu($"{ClonesMenuId}/{AlterSelectionSubMenuId}")

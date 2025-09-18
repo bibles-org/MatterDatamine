@@ -8,8 +8,8 @@ from "%ui/hud/menus/components/inventoryItemsListChecks.nut" import isBackpackDr
 from "%ui/hud/menus/inventories/refinerInventory.nut" import considerRefineItems
 from "%ui/components/button.nut" import button
 from "dasevents" import sendNetEvent, CmdDropAllItemsFromInventory
-from "%ui/components/commonComponents.nut" import mkText
-from "%ui/components/colors.nut" import TextNormal, BtnBgDisabled, BtnBgNormal
+from "%ui/components/commonComponents.nut" import mkText, mkMonospaceTimeComp
+from "%ui/components/colors.nut" import TextNormal, BtnBgDisabled, BtnBgNormal, BtnBgActive
 from "%ui/state/appState.nut" import isInBattleState
 from "%ui/state/allItems.nut" import stashEid
 from "%ui/hud/state/controlled_hero.nut" import controlledHeroEid
@@ -19,6 +19,9 @@ from "%ui/hud/state/hero_extra_inventories_state.nut" import backpackItemsMergeE
 from "%ui/hud/state/inventory_state.nut" import mutationForbidenDueToInQueueState
 from "%ui/squad/squadState.nut" import selfMemberState
 from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog, playerLogsColors
+from "%ui/hud/state/entity_use_state.nut" import entityUseEnd, entityToUse, calcItemUseProgress
+from "%ui/hud/state/gametype_state.nut" import isOnPlayerBase
+from "%ui/hud/state/time_state.nut" import curTime
 
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
@@ -59,35 +62,93 @@ let safepackPanelsData = setupPanelsData(safepackItems,
                                          [safepackItems, itemsInRefiner, backpackItemsMergeEnabled, backpackItemsSortingEnabled],
                                          processItems)
 
+let mkDropIcon = @(iconSize) {
+  size = [iconSize, iconSize]
+  rendObj = ROBJ_IMAGE
+  color = TextNormal
+  hplace = ALIGN_CENTER
+  image = Picture("ui/skin#context_icons/drop_out_1.svg:{0}:{0}:P".subst(iconSize))
+}
+
 function mkDropAllButton() {
   let hasItems = Computed(@() backpackItems.get().len() > 0)
+  let hasProgression = Computed(@() !isOnPlayerBase.get() && entityToUse.get() == backpackEid.get())
+  function mkProgressLine(isInProgress) {
+    if (!isInProgress)
+      return null
+    let timeLeft = Computed(@() entityUseEnd.get() - curTime.get())
+    let progressProportion = Computed(@() calcItemUseProgress(curTime.get()))
+    return function() {
+      if (entityToUse.get() != backpackEid.get())
+        return { watch = [entityToUse, backpackEid] }
+      if (timeLeft.get() <= 0)
+        return { watch = [entityToUse, backpackEid, timeLeft] }
+      return {
+        watch = [entityToUse, backpackEid, timeLeft]
+        size = flex()
+        padding = hdpx(1)
+        children = [
+          @() {
+            watch = progressProportion
+            rendObj = ROBJ_SOLID
+            size = [pw(progressProportion.get()), flex()]
+            color = BtnBgActive
+          }
+          {
+            size = FLEX_H
+            padding = [0, hdpx(4)]
+            vplace = ALIGN_CENTER
+            halign = ALIGN_RIGHT
+            valign = ALIGN_CENTER
+            children = [
+              {
+                flow = FLOW_HORIZONTAL
+                gap = hdpx(4)
+                hplace = ALIGN_CENTER
+                valign = ALIGN_CENTER
+                children = [
+                  mkDropIcon(hdpxi(14))
+                  mkText(loc("action/interrupt"), tiny_txt)
+                ]
+              }
+              mkMonospaceTimeComp(timeLeft.get(), tiny_txt)
+            ]
+          }
+        ]
+      }
+    }
+  }
+
   return function() {
     let iconSize = isInBattleState.get() ? hdpxi(14) : hdpxi(16)
     let textStyle = isInBattleState.get() ? tiny_txt : sub_txt
     let vertPadding = isInBattleState.get() ? hdpx(4) : hdpx(10)
-    let hintText = selfMemberState.get()?.ready ? loc("inventory/cannotPutToContainerDuringReady")
+    let hintText = hasProgression.get() ? loc("action/interrupt")
+      : selfMemberState.get()?.ready ? loc("inventory/cannotPutToContainerDuringReady")
       : mutationForbidenDueToInQueueState.get() ? loc("inventory/cannotPutToContainerDuringSearch")
       : hasItems.get() ? loc("item/action/dropFromBackpack")
       : loc("item/action/nothingDropFromBackpack")
     return {
-      watch = [hasItems, isInBattleState, mutationForbidenDueToInQueueState, selfMemberState]
+      watch = [hasItems, isInBattleState, mutationForbidenDueToInQueueState, selfMemberState, hasProgression]
       size = FLEX_H
       children = button(
         {
-          size = FLEX_H
-          flow = FLOW_HORIZONTAL
-          gap = hdpx(4)
+          size = flex()
           valign = ALIGN_CENTER
-          halign = ALIGN_CENTER
           children = [
-            {
-              size = [iconSize, iconSize]
-              rendObj = ROBJ_IMAGE
-              color = TextNormal
-              hplace = ALIGN_CENTER
-              image = Picture("ui/skin#context_icons/drop_out_1.svg:{0}:{0}:P".subst(iconSize))
+            hasProgression.get() ? null : {
+              size = FLEX_H
+              flow = FLOW_HORIZONTAL
+              gap = hdpx(4)
+              valign = ALIGN_CENTER
+              halign = ALIGN_CENTER
+              padding = [vertPadding, hdpx(4)]
+              children = [
+                mkDropIcon(iconSize)
+                mkText(loc("item/action/dropFromContainer"), { color = TextNormal }.__merge(textStyle))
+              ]
             }
-            mkText(loc("item/action/dropFromContainer"), { color = TextNormal }.__merge(textStyle))
+            mkProgressLine(hasProgression.get())
           ]
         },
         function dropAllFromContainer() {
@@ -107,9 +168,8 @@ function mkDropAllButton() {
           sendNetEvent(controlledHeroEid.get(), CmdDropAllItemsFromInventory({fromInventoryEid = backpackEid.get(), toInventoryEid = stashEid.get()}))
         },
         {
-          size = FLEX_H
+          size = [flex(), iconSize + vertPadding * 2]
           margin = static [0, 0, hdpx(5), 0]
-          padding = [vertPadding, hdpx(4)]
           tooltipText = hintText
           style = { BtnBgNormal = hasItems.get() && !mutationForbidenDueToInQueueState.get() && !selfMemberState.get()?.ready
             ? BtnBgNormal : BtnBgDisabled }

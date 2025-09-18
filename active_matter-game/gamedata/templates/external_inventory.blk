@@ -7,6 +7,13 @@ external_inventory_interactor{
 
   "external_inventory_interactor__accesspointEid:eid"{}
   "external_inventory_interactor__inventoryEid:eid"{}
+  _group{
+    _tags:t="gameClient"
+    _track:b=yes
+
+    "external_inventory_interactor__clientInventoryEid:eid"{}
+    "external_inventory_interactor__clientAccesspointEid:eid"{}
+  }
 }
 
 external_inventory_accesspoint{

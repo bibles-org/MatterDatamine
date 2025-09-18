@@ -20,6 +20,7 @@ from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import mkAlterIconParams
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryItemImage
+from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import mkChronogeneImage
 
 let { playerProfileAllResearchNodes } = require("%ui/profile/profileState.nut")
 let { researchOpenedMarker } = require("%ui/mainMenu/craftIcons.nut")
@@ -113,6 +114,15 @@ function getItems(result, isReceived = true) {
     local icon = null
     if (item?.filterType == "alters")
       icon = inventoryItemImage(item, mkSuitIconParams(isReceived ? iconSize : smallIconSize), { clipChildren = true })
+    else if(item?.filterType == "chronogene") {
+      let sz = isReceived ? iconSize : smallIconSize
+      icon = mkChronogeneImage(item, {
+        width = sz,
+        height = sz,
+        shading = "full"
+        slotSize = [sz, sz]
+      })
+    }
     else
       icon = itemIconNoBorder(item.templateName, {
         width = isReceived ? iconSize : smallIconSize,

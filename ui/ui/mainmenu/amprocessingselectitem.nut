@@ -42,6 +42,7 @@ from "%ui/hud/hud_menus_state.nut" import openMenu
 from "%ui/hud/menus/inventories/refinerInventoryCommon.nut" import itemsInRefiner, keepItemsInRefiner
 from "%ui/profile/profileState.nut" import cleanableItems, playerProfileAMConvertionRate, refinedItemsList, refinerFusingRecipes,
   allRecipes, amProcessingTask, marketPriceSellMultiplier, marketItems, playerProfileAMConvertionRate
+from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import mkChronogeneImage
 
 let { currentKeyItem } = require("%ui/hud/menus/components/inventoryItemUtils.nut")
 let { stashItems, backpackItems, inventoryItems, safepackItems } = require("%ui/hud/state/inventory_items_es.nut")
@@ -738,9 +739,10 @@ function fuseResultInfoRow(keyVal, allPossibleItems, isOpened) {
       let foundItem = allPossibleItems.findvalue(@(v) v.itemTemplate == keyTemp)
       if (hasAllComponents && foundItem == null)
         hasAllComponents = false
+
       keyItemComp.append({
         behavior = Behaviors.Button
-        children = inventoryItemImage(keyItemFaked, inventoryImageParams)
+        children = keyItemFaked?.filterType == "chronogene" ? mkChronogeneImage(keyItemFaked, inventoryImageParams) : inventoryItemImage(keyItemFaked, inventoryImageParams)
         eventPassThrough = true
         skipDirPadNav = true
         onHover = @(on) setTooltip(on ? buildInventoryItemTooltip(keyItemFaked) : null)
@@ -786,7 +788,7 @@ function fuseResultInfoRow(keyVal, allPossibleItems, isOpened) {
         else
           setTooltip(null)
       }
-      children = inventoryItemImage(faked, inventoryImageParams)
+      children = faked?.filterType == "chronogene" ? mkChronogeneImage(faked, inventoryImageParams) : inventoryItemImage(faked, inventoryImageParams)
     })
   }
   for (local i=results.len(); i < totalResults; i++) {

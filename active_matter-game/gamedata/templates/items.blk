@@ -423,7 +423,7 @@ teammate_raiser{
   item__useTime:r=5
 
   "teammate_raiser:tag"{}
-  "canBeUsedOutOfInventory:tag"{}
+  "item__notConsumedWhenUsed:tag"{}
 }
 
 encounter_transformable_item{
@@ -1190,9 +1190,9 @@ robodog{
   item__volume:i=0
   item__useTime:r=3
   human_inventory__maxVolume:i=900
-  robodog__distToGround:r=0
+  robodog__distToGround:r=-1
   robodog__forceDeactivateAt:r=-1
-  robodog__forceDeactivateTimer:r=10
+  robodog__forceDeactivateTimer:r=30
   robodog__distanceCheck:r=4
   robodog__activateTimer:r=0.65
   robodog__activateAt:r=0
@@ -1244,6 +1244,7 @@ robodog{
     follow_owner__wishDistanceToOwner:r=1.5
     follow_owner__checkTime:r=2
     follow_owner__distanceToStartFollow:r=3
+    follow_owner__lastCheckPosition:p3=0, 0, 0
     follow_owner__nextCheckAt:r=-1
     follow_owner__targetPathPoint:i=-1
 

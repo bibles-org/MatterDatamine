@@ -13,7 +13,7 @@ from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import mkChronogeneParamStri
 from "%ui/mainMenu/clonesMenu/cloneTubesInitEs.nut" import selectedContainerHighlightIntence, hoveredContainerHighlightIntence
 from "%ui/mainMenu/clonesMenu/itemGenesSlots.nut" import mkEquippedMainChronogenes, equippedSecondaryChronogenes, mkMainChronogeneInfoStrings
 from "%ui/mainMenu/clonesMenu/mainChronogeneSelection.nut" import mainChronogenesCards, hoveredAlter, showAlterWidth,
-  updateAlterInShowroom, selectedPreviewAlter, selectAlterToEquip, alterToFocus
+  updateAlterInShowroom, selectedPreviewAlter, selectAlterToEquip, alterToFocus, updateAlterTemplateInShowroom, overrideReturnMenu
 from "%ui/components/button.nut" import buttonWithGamepadHotkey
 from "%ui/components/accentButton.style.nut" import accentButtonStyle
 from "%ui/profile/profileState.nut" import playerBaseState, allPassiveChronogenes
@@ -364,6 +364,8 @@ function mkClonesMenu() {
     onAttach = function() {
       if (alterToFocus.get() == null)
         updateAlterInShowroom(currentChronogenes.get(), Point2(0.6, 0.5))
+      else
+        updateAlterTemplateInShowroom(alterToFocus.get()?.itemTemplate, Point2(0.6, 0.5))
     }
     children = [
       {
@@ -431,7 +433,7 @@ function mkClonesMenu() {
       {
         hplace = ALIGN_RIGHT
         vplace = ALIGN_TOP
-        children = mkBackBtn(alterToFocus.get() == null ? ClonesMenuId : "monolithAccessWnd")
+        children = mkBackBtn(overrideReturnMenu.get() == null ? ClonesMenuId : overrideReturnMenu.get())
       }
     ]
   }

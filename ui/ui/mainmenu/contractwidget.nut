@@ -288,7 +288,7 @@ function anyCurrentRaidContractAlreadyAccepted() {
   foreach (contract in currentRaidContracts)
     if (contract[0] in currentPrimaryContractIds.get() && primaryContractsCounter < 2)
       primaryContractsCounter++
-  return primaryContractsCounter > 1
+  return primaryContractsCounter >= 1
 }
 
 

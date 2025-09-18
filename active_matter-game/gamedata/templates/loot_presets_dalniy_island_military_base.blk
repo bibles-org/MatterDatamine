@@ -941,22 +941,22 @@ military_base_hangar_209_loot_preset{
 
     "item:object"{
       template_name:t="military_long_range_weapons_t2_lootable_rendinst"
-      number:i=4
+      number:i=8
     }
 
     "item:object"{
       template_name:t="military_long_range_weapons_t3_lootable_rendinst"
-      number:i=4
-    }
-
-    "item:object"{
-      template_name:t="military_equipment_t3_lootable_rendinst"
       number:i=5
     }
 
     "item:object"{
-      template_name:t="military_medical_t2_lootable_rendinst"
+      template_name:t="military_equipment_t2_lootable_rendinst"
       number:i=3
+    }
+
+    "item:object"{
+      template_name:t="military_medical_t2_lootable_rendinst"
+      number:i=5
     }
   }
 }
@@ -967,12 +967,17 @@ military_base_pve_hangar_209_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="military_close_range_weapons_t2_lootable_rendinst"
-      number:i=3
+      number:i=8
     }
 
     "item:object"{
       template_name:t="military_long_range_weapons_t2_lootable_rendinst"
-      number:i=3
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="military_long_range_weapons_t3_lootable_rendinst"
+      number:i=2
     }
 
     "item:object"{
@@ -982,7 +987,7 @@ military_base_pve_hangar_209_loot_preset{
 
     "item:object"{
       template_name:t="military_medical_t2_lootable_rendinst"
-      number:i=3
+      number:i=5
     }
   }
 }
@@ -998,22 +1003,22 @@ military_base_hangar_148_loot_preset{
 
     "item:object"{
       template_name:t="military_long_range_weapons_t2_lootable_rendinst"
-      number:i=4
+      number:i=8
     }
 
     "item:object"{
       template_name:t="military_long_range_weapons_t3_lootable_rendinst"
-      number:i=4
-    }
-
-    "item:object"{
-      template_name:t="military_equipment_t3_lootable_rendinst"
       number:i=5
     }
 
     "item:object"{
-      template_name:t="military_medical_t2_lootable_rendinst"
+      template_name:t="military_equipment_t2_lootable_rendinst"
       number:i=3
+    }
+
+    "item:object"{
+      template_name:t="military_medical_t2_lootable_rendinst"
+      number:i=5
     }
   }
 }
@@ -1024,12 +1029,17 @@ military_base_pve_hangar_148_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="military_close_range_weapons_t2_lootable_rendinst"
-      number:i=3
+      number:i=8
     }
 
     "item:object"{
       template_name:t="military_long_range_weapons_t2_lootable_rendinst"
-      number:i=3
+      number:i=5
+    }
+
+    "item:object"{
+      template_name:t="military_long_range_weapons_t3_lootable_rendinst"
+      number:i=2
     }
 
     "item:object"{
@@ -1039,7 +1049,7 @@ military_base_pve_hangar_148_loot_preset{
 
     "item:object"{
       template_name:t="military_medical_t2_lootable_rendinst"
-      number:i=3
+      number:i=5
     }
   }
 }
@@ -1248,7 +1258,7 @@ military_base_armory_1_akm_gun_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="akm_47_gun+item_in_world"
-      number:ip2=4, 5
+      number:ip2=3, 4
     }
   }
 }
@@ -1270,7 +1280,7 @@ military_base_armory_1_val_gun_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="as_val_gun+item_in_world"
-      number:ip2=4, 5
+      number:ip2=2, 4
     }
   }
 }
@@ -1346,7 +1356,7 @@ military_base_armory_2_akm_gun_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="akm_47_gun+item_in_world"
-      number:ip2=4, 5
+      number:ip2=3, 4
     }
   }
 }
@@ -1368,7 +1378,7 @@ military_base_armory_2_val_gun_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="as_val_gun+item_in_world"
-      number:ip2=4, 5
+      number:ip2=2, 4
     }
   }
 }

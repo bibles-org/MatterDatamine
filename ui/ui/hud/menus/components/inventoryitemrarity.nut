@@ -32,14 +32,14 @@ function getRarityColor(rarity, templateName=null) {
   return rarityColor
 }
 
-function mkRarityIconByColor(rarityColor) {
+function mkRarityIconByColor(rarityColor, override = {}) {
   if (rarityColor==null || rarityColor==RarityCommon)
     return null
   return {
     size = flex()
     halign = ALIGN_RIGHT
     valign = ALIGN_BOTTOM
-    children = mkRarityCorner(rarityColor)
+    children = mkRarityCorner(rarityColor, override)
   }
 }
 

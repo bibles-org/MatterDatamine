@@ -1903,7 +1903,7 @@ function getContent() {
               mkText(loc("missions/available_in"), body_txt)
               @() {
                 watch = nextRotation
-                children = mkMonospaceTimeComp(max(0, nextRotation.get()), body_txt)
+                children = mkMonospaceTimeComp(nextRotation.get() != null ? max(0, nextRotation.get()) : "???", body_txt)
               }
             ]
           }

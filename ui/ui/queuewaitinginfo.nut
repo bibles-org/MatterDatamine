@@ -32,7 +32,7 @@ let { areHudMenusOpened } = require("%ui/hud/hud_menus_state.nut")
 let { matchingQueuesMap } = require("%ui/matchingQueues.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 let { safeAreaVerPadding, safeAreaHorPadding } = require("%ui/options/safeArea.nut")
-let { useAgencyPreset } = require("%ui/equipPresets/presetsState.nut")
+let { useAgencyPreset, previewPreset } = require("%ui/equipPresets/presetsState.nut")
 let { currentPrimaryContractIds } = require("%ui/mainMenu/raid_preparation_window_state.nut")
 let { localPlayerUserId } = require("%ui/hud/state/local_player.nut")
 let { profilePublicKey } = require("%ui/profile/profile_pubkey.nut")
@@ -134,6 +134,7 @@ function finishStartingOfflineGame() {
     primary_contract_ids = currentPrimaryContractIds.get(),
     is_offline = true
   })
+  previewPreset.set(null)
 }
 
 ecs.register_es("finish_starting_offline_game", {

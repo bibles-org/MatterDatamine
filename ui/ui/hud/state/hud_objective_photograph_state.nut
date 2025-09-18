@@ -1,5 +1,6 @@
 from "%dngscripts/sound_system.nut" import sound_play
-
+from "%sqGlob/dasenums.nut" import BinocularsWatchingState
+from "%ui/hud/state/binoculars_state.nut" import binocularsWatchingState
 from "dasevents" import EventObjectivePhotographShot
 
 import "%dngscripts/ecs.nut" as ecs
@@ -15,6 +16,29 @@ let photographObjectiveTargetInView = Watched(false)
 let photographObjectiveTraceRatio = Watched(0.0)
 
 let photographObjectiveTargetName = Watched("")
+
+let photographUIActive = Computed(@()
+  photographObjectiveActive.get() &&
+  (binocularsWatchingState.get() == BinocularsWatchingState.IDLE || binocularsWatchingState.get() == BinocularsWatchingState.IN_FADEOUT)
+)
+
+let showUsePhotoCameraTip = Computed(@()
+  photographObjectiveTargetEid.get() != ecs.INVALID_ENTITY_ID &&
+  binocularsWatchingState.get() == BinocularsWatchingState.IDLE
+)
+
+let showBetterCameraAngleTip = Computed(@()
+  photographObjectiveDetectedTargetEid.get() != ecs.INVALID_ENTITY_ID &&
+  photographObjectiveTargetEid.get() == ecs.INVALID_ENTITY_ID &&
+  photographObjectiveTraceRatio.get() == 0
+)
+
+let showCameraTargetObscuredTip = Computed(@()
+  photographObjectiveDetectedTargetEid.get() != ecs.INVALID_ENTITY_ID &&
+  photographObjectiveTargetEid.get() == ecs.INVALID_ENTITY_ID &&
+  photographObjectiveTraceRatio.get() > 0
+)
+
 
 
 ecs.register_es("quest_camera_watching_affect_es",
@@ -100,4 +124,8 @@ return {
   photographObjectiveDetectedTargetEid,
   photographObjectiveTargetName,
   photographObjectiveTraceRatio
+  photographUIActive
+  showUsePhotoCameraTip
+  showBetterCameraAngleTip
+  showCameraTargetObscuredTip
 }

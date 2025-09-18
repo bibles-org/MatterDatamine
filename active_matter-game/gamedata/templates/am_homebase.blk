@@ -22,6 +22,7 @@ floating_sleeve{
   _use:t="static_sinusoidal_oscillation"
   static_sinusoidal_oscillation__amplitude:r=0.1
   static_sinusoidal_oscillation__frequency:r=0.25
+  item__disablePickup:b=yes
 
   "anim_state__animChannels:list<t>"{
     channel:t="upper"
@@ -37,6 +38,8 @@ floating_sleeve{
     value:b=yes
     _hide:b=yes
   }
+
+  "do_not_destroy_in_onboarding:tag"{}
 }
 
 alter_tube_light{
@@ -106,13 +109,51 @@ alter_tube_sound{
   }
 }
 
+alter_tube_accesspoint{
+  _use:t="open_console_menu_on_use"
+  open_console_menu_on_use__menuName:t="CloneBody/AlterSelection"
+  item__setCustomUsePrompt:t="clonesMenu/selectMainChronogene"
+
+  "alter_tube_accesspoint:tag"{}
+  "alter_tube_decorator__owner:eid"{}
+}
+
 alter_tube_place{
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
-  alter_tube_place__alterTemplate:t="floating_sleeve"
+  alter_tube_place__alterAdditionalTemplate:t="suit_attachable_item_in_world+floating_sleeve+am_militant_ribbons"
+  alter_tube_place__alterBaseTemplate:t=""
   alter_tube_place__alterOffset:p3=0, 0.9, 0
   alter_tube_place__number:i=0
 
-  "alter_tube_place__decorators:array"{
+  "alter_tube_place__decorators:array"{}
+  "alter_tube_place__lockedDecorators:array"{
+    "effect:object"{
+      name:t="alter_tube_flat_distortion"
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0.8, 0]]
+    }
+
+    "effect:object"{
+      name:t="alter_tube_distortion_1"
+      tm:m=[[0.9, 0, 0] [0, 1, 0] [0, 0, 0.9] [0, 2, 0]]
+    }
+
+    "effect:object"{
+      name:t="alter_tube_distortion_2"
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 2, 0]]
+    }
+
+    "sound:object"{
+      name:t="alter_tube_sound"
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 1, 0]]
+    }
+
+    "accesspoint:object"{
+      name:t="alter_tube_accesspoint"
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 1.4, -0.5]]
+    }
+  }
+
+  "alter_tube_place__unlockedDecorators:array"{
     "light:object"{
       name:t="alter_tube_passive_light"
       tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 2.8, 0]]
@@ -147,6 +188,11 @@ alter_tube_place{
       name:t="alter_tube_sound"
       tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 1, 0]]
     }
+
+    "accesspoint:object"{
+      name:t="alter_tube_accesspoint"
+      tm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 1.4, -0.5]]
+    }
   }
 
   "alter_tube_place__decoratorEids:list<eid>"{}
@@ -156,86 +202,103 @@ alter_tube_place{
 am_alter_tube_place_00_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=0
+  alter_tube_place__alterBaseTemplate:t="suit_militant_female_enforcer_item"
 }
 
 am_alter_tube_place_01_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=1
+  alter_tube_place__alterBaseTemplate:t="suit_militant_male_outlaw_item"
 }
 
 am_alter_tube_place_02_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=2
+  alter_tube_place__alterBaseTemplate:t="sm_liquidator_item"
 }
 
 am_alter_tube_place_03_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=3
+  alter_tube_place__alterBaseTemplate:t="suit_militant_female_pulse_item"
 }
 
 am_alter_tube_place_04_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=4
+  alter_tube_place__alterBaseTemplate:t="suit_militant_light_b_prem_item"
 }
 
 am_alter_tube_place_05_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=5
+  alter_tube_place__alterBaseTemplate:t="suit_militant_female_light_b_item"
 }
 
 am_alter_tube_place_06_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=6
+  alter_tube_place__alterBaseTemplate:t="sm_mirage_item"
 }
 
 am_alter_tube_place_07_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=7
+  alter_tube_place__alterBaseTemplate:t="sm_phantom_item"
 }
 
 am_alter_tube_place_08_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=8
+  alter_tube_place__alterBaseTemplate:t="suit_militant_light_c_item"
 }
 
 am_alter_tube_place_09_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=9
+  alter_tube_place__alterBaseTemplate:t="suit_militant_female_light_a_item"
 }
 
 am_alter_tube_place_10_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=10
+  alter_tube_place__alterBaseTemplate:t="sm_beast_item"
 }
 
 am_alter_tube_place_11_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=11
+  alter_tube_place__alterBaseTemplate:t="suit_militant_light_f_item"
 }
 
 am_alter_tube_place_12_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=12
+  alter_tube_place__alterBaseTemplate:t="sm_rebel_item"
 }
 
 am_alter_tube_place_13_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=13
+  alter_tube_place__alterBaseTemplate:t="sm_psychologist_item"
 }
 
 am_alter_tube_place_14_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=14
+  alter_tube_place__alterBaseTemplate:t="sm_reaper_item"
 }
 
 am_alter_tube_place_15_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=15
+  alter_tube_place__alterBaseTemplate:t="sm_master_item"
 }
 
 am_alter_tube_place_16_gameobj{
   _use:t="alter_tube_place"
   alter_tube_place__number:i=16
+  alter_tube_place__alterBaseTemplate:t="sm_hunter_item"
 }
 
 am_alter_tube_place_17_gameobj{

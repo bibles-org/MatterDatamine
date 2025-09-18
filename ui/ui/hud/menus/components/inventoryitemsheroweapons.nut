@@ -255,10 +255,9 @@ function makePreviewWeaponSlot(weapon, slotIndex, overridedCallbacks, primaryChr
   let fake = mkFakeItem(templateName, slotWithVisuals, weapon?.attachments.map(@(v) v?.itemTemplate))
 
   fake["ammo"] <- {
-    template = fake?.gunBoxedAmmoTemplate[0]
+    template = fake?.gunBoxedAmmoTemplate
     fakeAmmo = true
   }
-  
 
   return {
     children =

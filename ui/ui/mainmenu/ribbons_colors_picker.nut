@@ -104,11 +104,12 @@ function mkPatternChoice() {
   let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName("ribbon_colors")
   let patterns = template?.getCompValNullable("ribbon_colors__patterns").getAll() ?? []
   let countOfSimpleColors = template?.getCompValNullable("ribbon_colors__colors").getAll().len() ?? 0
+  let neededUnlocks = template?.getCompValNullable("ribbon_colors__patternUnlocks").getAll() ?? []
   function mkPictureOfPattern(patternTextureName, idx) {
     let stateFlags = Watched(0)
     return function(){
       let playerUnlocks = playerStats.get()?.unlocks ?? []
-      let hasPatterns = playerUnlocks.findindex(@(v) v == "unlock_extended_ribbons_color") != null
+      let hasPatterns = playerUnlocks.findindex(@(v) v == neededUnlocks[idx]) != null
       let pattern = {
         rendObj = ROBJ_IMAGE
         image = Picture($"!ui/uiskin/ribbon_patterns/{patternTextureName}.avif")
@@ -142,7 +143,12 @@ function mkPatternChoice() {
           : isSelected ? BtnBdSelected : BtnBdNormal
         onClick = function() {
           if (!hasPatterns) {
-            showMsgbox({ text = loc("ribbon/unavailablePattern") })
+            if (neededUnlocks[idx] == "unlock_extended_ribbons_color") {
+              showMsgbox({ text = loc("ribbon/unavailablePattern/premiumEdition") })
+            }
+            else {
+              showMsgbox({ text = loc("ribbon/unavailablePattern") })
+            }
             return
           }
           teamColorIdxsUpdate(teamColorIdxs.get().__merge({["primary"] = index}))
@@ -155,9 +161,20 @@ function mkPatternChoice() {
     }
   }
 
+  local children = []
+  let countPerRow = 4
+  for (local i = 0; i < patterns.len(); i+=countPerRow) {
+    children.append({
+      flow = FLOW_HORIZONTAL
+      gap = hdpx(10)
+      hplace = ALIGN_CENTER
+      children = patterns.slice(i, i+countPerRow).map(@(v, idx) mkPictureOfPattern(v, i + idx))
+    })
+  }
   return {
-    flow = FLOW_HORIZONTAL
-    children = patterns.map(mkPictureOfPattern)
+    flow = FLOW_VERTICAL
+    gap = hdpx(10)
+    children
   }
 }
 

@@ -5,6 +5,7 @@ from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItem
 from "das.inventory" import load_player_preset, get_preset_unequip_volume_int
 from "%ui/components/msgbox.nut" import showMsgbox
 from "%ui/ui_library.nut" import *
+from "%ui/state/appState.nut" import isInBattleState, levelIsLoading
 import "console" as console
 import "%dngscripts/ecs.nut" as ecs
 
@@ -16,7 +17,6 @@ let { maxVolume } = require("%ui/hud/state/inventory_common_es.nut")
 let { backpackMaxVolume, backpackEid, safepackMaxVolume, safepackEid } = require("%ui/hud/state/hero_extra_inventories_state.nut")
 let { get_controlled_hero } = require("%dngscripts/common_queries.nut")
 let { stashVolume, stashMaxVolume } = require("%ui/state/allItems.nut")
-let { levelIsLoading } = require("%ui/state/appState.nut")
 let { tostring_r } = require("%sqstd/string.nut")
 
 const PLAYER_PRESETS_IN_ONLINE_SETTINGS = "player_presets"
@@ -37,6 +37,7 @@ let previewPresetOverrideRibbons = Watched(null)
 let useAgencyPreset = Watched(false)
 
 levelIsLoading.subscribe_with_nasty_disregard_of_frp_update(@(v) v ? useAgencyPreset.set(false) : null)
+isInBattleState.subscribe_with_nasty_disregard_of_frp_update(@(v) v ? previewPreset.set(null) : null)
 
 function setPlayerPreset(presetIdx, data, needChangeName = false) {
   if (!onlineSettingUpdated.get()) {

@@ -39,7 +39,7 @@ from "das.inventory" import calc_stacked_item_volume
 from "%ui/components/scrollbar.nut" import makeVertScroll
 from "%ui/components/cursors.nut" import setTooltip
 from "%ui/hud/menus/components/inventoryItemNexusPointPriceComp.nut" import nexusPointsIcon, nexusPointsIconSize
-from "%ui/components/msgbox.nut" import showMsgbox
+from "%ui/components/msgbox.nut" import showMsgbox, showMessageWithContent
 from "%ui/mainMenu/clonesMenu/mainChronogeneSelection.nut" import MAIN_CHRONOGENE_UID
 import "%ui/components/faComp.nut" as faComp
 
@@ -431,6 +431,8 @@ function dropToInventory(item, inventoryName) {
       }
       else {
         let alreadyInItem = preview.inventories[inventoryName].items[idx]
+        if (alreadyInItem?.charges != null)
+          alreadyInItem.charges += item.countPerStack
         alreadyInItem.ammoCount += item.countPerStack
       }
     }
@@ -547,6 +549,63 @@ let nexusStashItems = Computed(function() {
     return itm.__merge({ nexusCost = nexusCost[itm.itemTemplate].cost })
   })
 })
+
+let nexusOpenedItemTemplates = Computed(function() {
+  let openedRecipes = allCraftRecipes.get().filter(@(v) v?.isOpened)
+  let items = getNexusStashItems(stashItems.get(), openedRecipes, allCraftRecipes.get(),
+    marketItems.get(), playerStats.get())
+
+  let ret = {}
+  foreach (item in items) {
+    ret[item.itemTemplate] <- true
+  }
+  return ret
+})
+
+function currentPresetMissedItems() {
+  let templates = nexusOpenedItemTemplates.get()
+  let pp = previewPreset.get()
+
+  let missed = {}
+
+  function checkTemplate(templateToCheck) {
+    if (templateToCheck == null)
+      return
+
+    if (!templates?[templateToCheck]) {
+      missed[templateToCheck] <- true
+    }
+  }
+
+  foreach (k, v in pp ?? {}) {
+    if (v?.itemTemplate && k != "chronogene_primary_1")
+      checkTemplate(v.itemTemplate)
+  }
+
+  foreach (_k, v in pp?.pouch.attachments ?? {})
+    checkTemplate(v.itemTemplate)
+
+  foreach (_k, v in pp?.helmet.attachments ?? {})
+    checkTemplate(v.itemTemplate)
+
+  foreach (_k, v in pp?.chronogene_primary_1 ?? {})
+    checkTemplate(v?.itemTemplate)
+
+  foreach (v in pp?.inventories.myItems.items ?? [])
+    checkTemplate(v.itemTemplate)
+
+  foreach (v in pp?.inventories.backpack.items ?? [])
+    checkTemplate(v.itemTemplate)
+
+  foreach (weap in pp?.weapons ?? []) {
+    checkTemplate(weap?.itemTemplate)
+    foreach (_k, v in weap?.attachments ?? {}) {
+      checkTemplate(v?.itemTemplate)
+    }
+  }
+
+  return missed
+}
 
 let stashItemsProceed = function(items) {
   return clone(items).filter(filterItemByInventoryFilter)
@@ -779,6 +838,25 @@ let stashContent = function() {
             ]
           },
           function() {
+              let curMissed = currentPresetMissedItems()
+              if (curMissed.len() > 0) {
+                showMessageWithContent({
+                  content = {
+                    size = [sw(80), SIZE_TO_CONTENT]
+                    flow = FLOW_VERTICAL
+                    halign = ALIGN_CENTER
+                    gap = hdpx(10)
+                    children = [
+                      mkText(loc("mint/unavailableItems"), h2_txt)
+                      {
+                        flow = FLOW_VERTICAL
+                        children = curMissed.keys().map(@(v) mkText(loc($"items/{v}"), body_txt.__merge({color = RedWarningColor})))
+                      }
+                    ]
+                  }
+                })
+                return
+              }
               let items = presetToLoadout(previewPreset.get())
               if (editingAlterId.get() == null) {
                 let alterTemplate = items.findvalue(@(v) v?.slotName == "equipment_chronogene_primary_1")?.templateName

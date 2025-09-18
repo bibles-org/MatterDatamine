@@ -514,7 +514,7 @@ item_injector_streaming{
   item_heal__animationEnd:r=0.66
   item_heal__healTick:r=0.1
   item_heal__healPerTick:r=2
-  item__maxAmount:i=200
+  item__maxAmount:i=300
   item__healTemplateName:t="healing_stream_effect"
   item__filterType:t="medicines"
   four_step_healing__effectTemplateName:t="injector_healing_effect"
@@ -544,7 +544,7 @@ item_injector_streaming{
   _group{
     _track:b=yes
     _replicate:b=yes
-    item__amount:i=200
+    item__amount:i=300
   }
 
   _group{

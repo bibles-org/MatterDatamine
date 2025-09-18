@@ -219,7 +219,9 @@ function moveAwayStackToStashOrGround(_item) {
 }
 
 function showSplitStackOrJustMoveToInventory(item, showSuitableAmmo = false, inventoriesList = null) {
-  local locId = showSuitableAmmo ? "item/action/moveSomeAmmoInventory" : "item/action/moveSomeToInventory"
+  local locId = showSuitableAmmo || item?.isBoxedItem
+    ? item?.isHealkit ? "item/action/moveSomeAmpoulesInventory" : "item/action/moveSomeAmmoInventory"
+    : "item/action/moveSomeToInventory"
   local additionalText = ""
   let { itemTemplate = null, boxedItemTemplate = null, ammo = null } = item
   let itemToSearch = showSuitableAmmo
@@ -241,15 +243,18 @@ function showSplitStackOrJustMoveToInventory(item, showSuitableAmmo = false, inv
     let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(itemInStash.itemTemplate)
     let volume = template?.getCompValNullable("item__volume") ?? 0
     let inventoryToMove = findInventoryWithFreeVolume(volume)?.data.name
-    let name = inventoryToMove == SAFEPACK.name ? loc("inventory/safepack")
+    let name = inventoryToMove == SAFEPACK.name ? loc("inventory/toSafepack")
       : inventoryToMove == BACKPACK0.name ? loc("inventory/backpack")
-      : loc("inventory/myItems")
-    if (inventoryToMove != null)
+      : loc("inventory/toMyItems")
+    if (inventoryToMove != null) {
       additionalText = $" {loc("move/to", { inventory = colorize(InfoTextValueColor, name) })}"
+      if (!showSuitableAmmo)
+        locId = "item/action/moveSomeToInventoryShort"
+    }
   }
   let countToUse = isBoxedItem ? ammoCount : count
   if (countToUse == 1 && !showSuitableAmmo)
-    locId = "item/action/moveOneItemToInventory"
+    locId = inventoriesList == null ? "item/action/moveOneItemToInventory" : "item/action/moveOneItemToInventoryShort"
   return { locId, additionalText, icon = "context_icons/drag_in.svg" }
 }
 
@@ -449,7 +454,7 @@ function showSplitStackToInventory(item, showSuitableAmmo = false, inventoriesLi
         return
       }
       let list = itemsInStash.sort(@(a, b) (b?.charges ?? 0) <=> (a?.charges ?? 0))
-      for (local i = 0; i < list.len() ; i++) {
+      for (local i = 0; i <= countToMove - 1; i++) {
         moveItemToInventory(list[i], inventoryToMove, 1)
       }
     })

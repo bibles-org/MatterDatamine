@@ -846,12 +846,12 @@ cargoport_anomaly_loot_preset{
 
     "item:object"{
       template_name:t="military_close_range_weapons_t2_lootable_rendinst"
-      number:i=10
+      number:i=3
     }
 
     "item:object"{
       template_name:t="military_long_range_weapons_t3_lootable_rendinst"
-      number:i=8
+      number:i=15
     }
 
     "item:object"{
@@ -877,12 +877,12 @@ cargoport_pve_anomaly_loot_preset{
 
     "item:object"{
       template_name:t="military_close_range_weapons_t2_lootable_rendinst"
-      number:i=8
+      number:i=10
     }
 
     "item:object"{
-      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
-      number:i=4
+      template_name:t="military_long_range_weapons_t3_lootable_rendinst"
+      number:i=8
     }
 
     "item:object"{
@@ -898,12 +898,7 @@ cargoport_anomaly_barge_7_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="military_long_range_weapons_t3_lootable_rendinst"
-      number:i=6
-    }
-
-    "item:object"{
-      template_name:t="military_equipment_t3_lootable_rendinst"
-      number:i=3
+      number:i=9
     }
 
     "item:object"{
@@ -918,13 +913,8 @@ cargoport_pve_anomaly_barge_7_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="military_long_range_weapons_t2_lootable_rendinst"
-      number:i=4
-    }
-
-    "item:object"{
-      template_name:t="military_equipment_t2_lootable_rendinst"
-      number:i=2
+      template_name:t="military_long_range_weapons_t3_lootable_rendinst"
+      number:i=6
     }
 
     "item:object"{

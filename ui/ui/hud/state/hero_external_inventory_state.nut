@@ -20,11 +20,12 @@ let externalInventoryItemsMergeEnabled = Watched(true)
 let externalInventoryItemsSortingEnabled = Watched(true)
 let externalInventoryItemsOverrideSortingPriority = Watched(false)
 let externalInventoryContainerOwnerEid = Watched(ecs.INVALID_ENTITY_ID)
+let externalInventoryIsEquipment = Watched(false)
 
 
 function updateExternalInventoryState(_eid, comp) {
   prevExternalInventoryEid.set(externalInventoryEid.get())
-  externalInventoryEid.set(comp.external_inventory_interactor__inventoryEid)
+  externalInventoryEid.set(comp.external_inventory_interactor__clientInventoryEid)
 }
 
 ecs.register_es("external_inventory_interactor_state_ui",
@@ -34,18 +35,10 @@ ecs.register_es("external_inventory_interactor_state_ui",
   {
     comps_rq=["watchedByPlr"]
     comps_track=[
-      ["external_inventory_interactor__inventoryEid", ecs.TYPE_EID]
+      ["external_inventory_interactor__clientInventoryEid", ecs.TYPE_EID]
     ]
   }
 )
-
-ecs.SqQuery("external_inventory_interactor_state_ui_init_Query", {
-  comps_rq=["watchedByPlr"]
-  comps_ro=[
-    ["external_inventory_interactor__inventoryEid", ecs.TYPE_EID]
-  ]
-}).perform(updateExternalInventoryState)
-
 
 let trackExternalInventoryQuery = ecs.SqQuery("external_inventory_items_ui_Query", {
   comps_ro=[
@@ -59,7 +52,8 @@ let trackExternalInventoryQuery = ecs.SqQuery("external_inventory_items_ui_Query
     ["itemContainer__uiItemsMergeEnabled", ecs.TYPE_BOOL, true],
     ["itemContainer__uiItemsSortingEnabled", ecs.TYPE_BOOL, true],
     ["itemContainer__uiItemsOverrideSortingPriority", ecs.TYPE_BOOL, false],
-    ["item__containerOwnerEid", ecs.TYPE_EID, ecs.INVALID_ENTITY_ID]
+    ["item__containerOwnerEid", ecs.TYPE_EID, ecs.INVALID_ENTITY_ID],
+    ["equipment_item", ecs.TYPE_TAG, null]
   ]
 })
 
@@ -79,6 +73,7 @@ function trackExternalInventory(eid, comp){
   externalInventoryItemsSortingEnabled.set(comp.itemContainer__uiItemsSortingEnabled)
   externalInventoryItemsOverrideSortingPriority.set(comp.itemContainer__uiItemsOverrideSortingPriority)
   externalInventoryContainerOwnerEid.set(comp?.item__containerOwnerEid)
+  externalInventoryIsEquipment.set(comp?.equipment_item)
 }
 
 externalInventoryEid.subscribe_with_nasty_disregard_of_frp_update(function(v){
@@ -161,4 +156,5 @@ return {
   externalInventoryItemsSortingEnabled
   externalInventoryItemsOverrideSortingPriority
   externalInventoryContainerOwnerEid
+  externalInventoryIsEquipment
 }

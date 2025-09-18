@@ -51,7 +51,7 @@ let chronogeneEffecTypeToColor = {
   "active_matter" : Color(171, 107, 205, 220)
 }
 
-function mkChronogeneImage(chronogene, imageParams=inventoryImageParams) {
+function mkChronogeneImage(chronogene, imageParams=inventoryImageParams, rarityOverride = {}) {
   let itemTemplate = chronogene?.itemTemplate ?? chronogene?.templateName
   let template = itemTemplate ? ecs.g_entity_mgr.getTemplateDB().getTemplateByName(itemTemplate) : null
   let {
@@ -74,7 +74,7 @@ function mkChronogeneImage(chronogene, imageParams=inventoryImageParams) {
         color = chronogeneEffecTypeToColor?[chronogeneEffectType] ?? chronogeneEffecTypeToColor["default"]
         image = Picture($"{icon}:{imageParams.width}:{imageParams.height}:K")
       }
-      mkRarityIconByColor(getRarityColor(itemRarity))
+      mkRarityIconByColor(getRarityColor(itemRarity), rarityOverride)
     ]
   }
 }
@@ -286,7 +286,7 @@ function mkMainChronogeneInfoStrings(chronogene, override = {}, isSmallVersion =
 
   
   let armors = {}
-  foreach (k, v in chronogene.mods) {
+  foreach (k, v in chronogene?.mods ?? []) {
     if (k.contains("pocket"))
       continue
     let words = k.split("_")
