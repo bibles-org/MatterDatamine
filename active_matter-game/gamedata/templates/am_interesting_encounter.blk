@@ -403,6 +403,18 @@ anomaly_encounter_am_indoor{
   }
 }
 
+anomaly_encounter_modern_weapon_crates_indoor{
+  _use:t="base_encounter"
+
+  "interesting_encounter__addFromBranches:array"{
+    "item:object"{
+      templ:t="anomaly_zone_modern_weapon_crates_indoor_branch"
+      radius:r=10
+      verticalRadius:r=1
+    }
+  }
+}
+
 anomaly_encounter_metal_heat{
   _use:t="base_encounter"
 

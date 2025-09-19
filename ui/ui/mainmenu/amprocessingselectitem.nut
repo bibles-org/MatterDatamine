@@ -53,7 +53,6 @@ let { activeFilters } = require("%ui/hud/menus/components/inventoryStashFiltersW
 let { inventoryItemClickActions, moveItemWithKeyboardMode } = require("%ui/hud/menus/inventoryActions.nut")
 let { currentRefinerIsReadOnly, refineGettingInProgress, refinerFillAmount } = require("%ui/hud/menus/inventories/refinerInventory.nut")
 let { recognitionImagePattern } = require("%ui/hud/menus/components/inventoryItem.nut")
-let { template2MarketOffer } = require("%ui/mainMenu/market/inventoryToMarket.nut")
 let { stashVolume, stashMaxVolume } = require("%ui/state/allItems.nut")
 let { shuffle } = require("%sqstd/rand.nut")
 let { currentMenuId } = require("%ui/hud/hud_menus_state.nut")
@@ -375,52 +374,79 @@ function itemsForRecipe(items, recipe) {
   return ret
 }
 
-function mkExpectedRewardInfo(items, keyItem, currentRecipe) {
+function mkExpectedRewardInfo(items, currentTask, keyItem, currentRecipe) {
   let useInRecipe = itemsForRecipe(items, currentRecipe)
   let isUsedInRecipe = @(item) useInRecipe.findindex(@(v) v == item.eid) != null
 
   let cleanable = cleanableItems.get()
-  local minAm = 0
-  local maxAm = 0
-  local nonCorruptedPrice = 0
-  local minChronotraces = 0
-  local maxChronotraces = 0
+  local minAm = currentTask?.resultAmRange.x ?? 0
+  local maxAm = currentTask?.resultAmRange.y ?? 0
+  local nonCorruptedPrice = currentTask?.resultCredits ?? 0
+  local minChronotraces = currentTask?.resultChronotraceRange.x ?? 0
+  local maxChronotraces = currentTask?.resultChronotraceRange.y ?? 0
+  local priceForAmmo = 0
 
-  function proceedMods(itemWithMods) {
-    foreach (mod in (itemWithMods?.modInSlots ?? {})) {
-      let modAm = cleanable?[mod.itemTemplate].amContains
-      if (mod.isCorrupted && modAm && !isUsedInRecipe(mod)) {
-        minAm += modAm.x
-        maxAm += modAm.y
-      }
-      else if (!isUsedInRecipe(mod)){
-        nonCorruptedPrice += getPriceOfNonCorruptedItem(template2MarketOffer.get(), marketPriceSellMultiplier.get(), mod)
-      }
+  if ((currentTask?.taskId ?? "") == "") {
+    function proceedMods(itemWithMods) {
+      foreach (mod in (itemWithMods?.modInSlots ?? {})) {
+        let modAm = cleanable?[mod.itemTemplate].amContains
+        if (mod.isCorrupted && modAm && !isUsedInRecipe(mod)) {
+          minAm += modAm.x
+          maxAm += modAm.y
+        }
+        else if (!isUsedInRecipe(mod)){
+          nonCorruptedPrice += getPriceOfNonCorruptedItem(marketPriceSellMultiplier.get(), mod)
+        }
 
-      let chronotraces = cleanable?[mod.itemTemplate]?.refineChronotraces
-      if (chronotraces?.isCorrupted && chronotraces && !isUsedInRecipe(mod)) {
-        minChronotraces += chronotraces.x
-        maxChronotraces += chronotraces.x
+        let chronotraces = cleanable?[mod.itemTemplate]?.refineChronotraces
+        if (chronotraces?.isCorrupted && chronotraces && !isUsedInRecipe(mod)) {
+          minChronotraces += chronotraces.x
+          maxChronotraces += chronotraces.x
+        }
       }
     }
-  }
 
-  function proceedContainerItems(itemsInContainer) {
-    foreach (itemEid in itemsInContainer) {
-      let item = getMinimalRefinerItem(itemEid)
-      if (item == null)
-        continue
+    function proceedContainerItems(itemsInContainer) {
+      foreach (itemEid in itemsInContainer) {
+        let item = getMinimalRefinerItem(itemEid)
+        if (item == null)
+          continue
 
-      if (item?.itemContainerItems.len())
-        proceedContainerItems(item.itemContainerItems)
+        if (item?.itemContainerItems.len())
+          proceedContainerItems(item.itemContainerItems)
 
-      let foldedItemAm = cleanable?[item.itemTemplate].amContains
-      if (item.isCorrupted && foldedItemAm && !isUsedInRecipe(item)) {
-        minAm += foldedItemAm.x
-        maxAm += foldedItemAm.y
+        let foldedItemAm = cleanable?[item.itemTemplate].amContains
+        if (item.isCorrupted && foldedItemAm && !isUsedInRecipe(item)) {
+          minAm += foldedItemAm.x
+          maxAm += foldedItemAm.y
+        }
+        else if (!isUsedInRecipe(item)) {
+          nonCorruptedPrice += getPriceOfNonCorruptedItem(marketPriceSellMultiplier.get(), item)
+        }
+
+        let chronotraces = cleanable?[item.itemTemplate]?.refineChronotraces
+        if (item.isCorrupted && chronotraces && !isUsedInRecipe(item)) {
+          minChronotraces += chronotraces.x
+          maxChronotraces += chronotraces.x
+        }
+
+        proceedMods(item)
+      }
+    }
+
+    let itemsToProcess = (keyItem ? [keyItem].extend(items) : items).filter(@(v) v?.sortAfterEid == null)
+    foreach ( item in itemsToProcess ) {
+      let ammoInside = item?.gunAmmo ?? item?.ammoCount
+      if (ammoInside) {
+        priceForAmmo += ammoInside
+      }
+      let am = cleanable?[item.itemTemplate]?.amContains
+      if (item.isCorrupted && am && !isUsedInRecipe(item)) {
+        minAm += am.x
+        maxAm += am.y
       }
       else if (!isUsedInRecipe(item)) {
-        nonCorruptedPrice += getPriceOfNonCorruptedItem(template2MarketOffer.get(), marketPriceSellMultiplier.get(), item)
+        nonCorruptedPrice += getPriceOfNonCorruptedItem(marketPriceSellMultiplier.get(), item)
       }
 
       let chronotraces = cleanable?[item.itemTemplate]?.refineChronotraces
@@ -429,32 +455,12 @@ function mkExpectedRewardInfo(items, keyItem, currentRecipe) {
         maxChronotraces += chronotraces.x
       }
 
+      
+      if (item?.itemContainerItems.len())
+        proceedContainerItems(item.itemContainerItems)
+
       proceedMods(item)
     }
-  }
-
-  let itemsToProcess = (keyItem ? [keyItem].extend(items) : items).filter(@(v) v?.sortAfterEid == null)
-  foreach ( item in itemsToProcess ) {
-    let am = cleanable?[item.itemTemplate]?.amContains
-    if (item.isCorrupted && am && !isUsedInRecipe(item)) {
-      minAm += am.x
-      maxAm += am.y
-    }
-    else if (!isUsedInRecipe(item)) {
-      nonCorruptedPrice += getPriceOfNonCorruptedItem(template2MarketOffer.get(), marketPriceSellMultiplier.get(), item)
-    }
-
-    let chronotraces = cleanable?[item.itemTemplate]?.refineChronotraces
-    if (item.isCorrupted && chronotraces && !isUsedInRecipe(item)) {
-      minChronotraces += chronotraces.x
-      maxChronotraces += chronotraces.x
-    }
-
-    proceedMods(item)
-
-    
-    if (item?.itemContainerItems.len())
-      proceedContainerItems(item.itemContainerItems)
   }
 
   local recipeResultString = null
@@ -478,6 +484,7 @@ function mkExpectedRewardInfo(items, keyItem, currentRecipe) {
   }
 
   local nonCorruptedPriceString = null
+  nonCorruptedPrice += priceForAmmo
   if (nonCorruptedPrice > 0) {
     nonCorruptedPriceString = loc("amClean/expectedMoneyFromNonCorruptedItems", { minVal = colorize(InfoTextValueColor, $"{credits}{nonCorruptedPrice}") })
   }
@@ -1263,9 +1270,9 @@ function mkAmProcessingItemPanel() {
             size = FLEX_H
             children = function() {
               let { chronotraces = null, nonCorruptedPrice = null, amMoney = null, recipeResult = null}
-                = mkExpectedRewardInfo(itemsInRefiner.get(), currentKeyItem.get(), selectedRecipe.get())
+                = mkExpectedRewardInfo(itemsInRefiner.get(), amProcessingTask.get(), currentKeyItem.get(), selectedRecipe.get())
               return {
-                watch = [ itemsInRefiner, currentKeyItem, selectedRecipe ]
+                watch = [ itemsInRefiner, currentKeyItem, selectedRecipe, amProcessingTask ]
                 flow = FLOW_VERTICAL
                 gap = hdpx(5)
                 size = FLEX_H

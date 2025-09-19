@@ -178,10 +178,7 @@ function chronogeneListPanel(currentChronogeneIdx, availableChronogenes, equippe
       .sort(@(a, b) loc(a.itemName) <=> loc(b.itemName))
 
   let availableChronogenesList = mergeNonUniqueItems(chronogeneList)
-    .sort(@(a, b) (curUniqueId == b?.uniqueId || curUniqueId == b?.itemTemplate) <=> (curUniqueId == a?.uniqueId || curUniqueId == a?.itemTemplate)
-      || b?.itemTemplate.slice(-1) <=> a?.itemTemplate.slice(-1)
-      || loc(a?.itemName) <=> loc(b?.itemName)
-    )
+
   return {
     size = static [ hdpx(400), flex() ]
     flow = FLOW_VERTICAL

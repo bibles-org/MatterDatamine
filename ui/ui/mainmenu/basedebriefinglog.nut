@@ -8,9 +8,13 @@ from "string" import endswith, format
 from "%ui/ui_library.nut" import *
 import "%ui/components/fontawesome.map.nut" as fa
 import "%dngscripts/ecs.nut" as ecs
+import "%ui/complaints/complainWnd.nut" as complain
+import "%ui/components/contextMenu.nut" as contextMenu
 
 let { logEntries, chosenLogElement, hoveredLogElement } = require("%ui/mainMenu/debriefing/debriefing_log_state.nut")
 let { locTable } = require("%ui/helpers/time.nut")
+
+let debriefingSessionId = Watched(null)
 
 let iconParams = {size = [fontawesome.fontSize, fontawesome.fontSize], halign = ALIGN_CENTER}
 
@@ -152,14 +156,26 @@ let chooseFillColor = function(index, sf) {
 }
 
 let mkLogEntry = function(point, index){
+  let { userId = null, name = "" } = point
   let stateFlags = Watched(0)
-  return @(){
+  return @() {
     size = FLEX_H
     watch = [chosenLogElement, hoveredLogElement, stateFlags]
     behavior = Behaviors.Button
     xmbNode = XmbNode()
     onHover = @(v) v ? hoveredLogElement.set(index) : hoveredLogElement.set(null)
-    onClick = @() chosenLogElement.modify(@(old_index) old_index == index ? null : index)
+    onClick = function(event) {
+      if (userId != null && name != "" && debriefingSessionId.get() != null)
+        contextMenu(event.screenX + 1, event.screenY + 1, fsh(30), [{
+          text = loc("btn/complain")
+          action = @() complain(
+            debriefingSessionId.get().tostring(),
+            userId,
+            endswith(name, " ") ? name.slice(0, -1) : name
+          )
+        }])
+      chosenLogElement.modify(@(old_index) old_index == index ? null : index)
+    }
     onElemState = @(v) stateFlags.set(v)
 
     rendObj = ROBJ_BOX
@@ -204,4 +220,5 @@ return {
   chooseLogPointIcon
   logIconParams = iconParams
   scrollToLogElement
+  debriefingSessionId
 }

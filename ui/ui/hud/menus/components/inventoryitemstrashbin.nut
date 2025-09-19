@@ -160,7 +160,7 @@ function trashBinItemContainerItemsList() {
             headers=[
               trashBinHeader,
               function() {
-                let { overallMoneyIncome = null } = mkExpectedRewardInfo(itemsInRefiner.get(), null, null)
+                let { overallMoneyIncome = null } = mkExpectedRewardInfo(itemsInRefiner.get(), null, null, null)
                 let watch = [ itemsInRefiner, amProcessingIsAvailable ]
 
                 if (!amProcessingIsAvailable.get())

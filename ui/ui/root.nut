@@ -111,6 +111,7 @@ require("%ui/equipPresets/presetPatching.nut")
 require("%ui/replay_finalize_session_es.nut")
 require("%ui/playTimeTracker.nut")
 require("%ui/checkPatchnotes.nut")
+require("%ui/complaints/complain.nut")
 
 function battleMenu(){
   local children = null

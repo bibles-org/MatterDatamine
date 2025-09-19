@@ -1,0 +1,54 @@
+entity{
+  _template:t="household_monster_generator_generator"
+  monster_gen_gen__type:t="house_monsters"
+  monster_gen_gen__householdCount:i=350
+  monster_gen_gen__minHouseholdVolume:r=200
+  monster_gen_gen__useHouseholdsOnEuclid:b=no
+
+  "monster_gen_gen__genTemplates:object"{
+    anomaly_encounter_am_indoor:i=20
+    household_traps_generator:i=40
+    anomaly_encounter_statues_cairns_indoor_small:i=20
+    poltergeist_possession:i=20
+  }
+
+  "monster_gen_gen__excludeBoxes:list<m>"{
+    t:m=[[30.7229, 0, -8.54356] [0, 31.8887, 0] [11.0506, -0, 39.7384] [381.343, 32.4736, -879.253]]
+    t:m=[[40.8483, 0, -16.4335] [0, 18.694, 0] [9.70899, -0, 24.1334] [580.831, 41.1968, -718.026]]
+  }
+}
+
+entity{
+  _template:t="household_traps_generator"
+  monster_gen__density:p2=0.00043, 0.00043
+  transform:m=[[30.7229, 0, -8.54356] [0, 31.8887, 0] [11.0506, -0, 39.7384] [381.343, 32.4736, -879.253]]
+}
+
+entity{
+  _template:t="household_traps_generator"
+  monster_gen__density:p2=0.00055, 0.00055
+  transform:m=[[40.8483, 0, -16.4335] [0, 18.694, 0] [9.70899, -0, 24.1334] [580.831, 41.1968, -718.026]]
+}
+
+entity{
+  _template:t="region_monster_generator_generator"
+
+  "monster_gen_gen__generators:array"{
+    "generator:object"{
+      template:t="field_trap_region_generator"
+      genType:t="field traps"
+      count:i=6
+    }
+  }
+
+  "monster_gen_gen__regions:list<t>"{
+    r:t="field_01"
+    r:t="field_02"
+    r:t="field_03"
+    r:t="field_04"
+    r:t="field_05"
+    r:t="field_06"
+    r:t="field_07"
+    r:t="field_08"
+  }
+}

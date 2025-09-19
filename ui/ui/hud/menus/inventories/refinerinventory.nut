@@ -1,7 +1,7 @@
 from "%sqstd/math.nut" import truncateToMultiple
 
 from "%ui/hud/state/item_info.nut" import get_item_info, getTemplateNameByEid
-from "math" import ceil
+from "math" import ceil, floor
 import "%ui/components/colorize.nut" as colorize
 from "%ui/components/colors.nut" import InfoTextValueColor
 from "%dngscripts/sound_system.nut" import sound_play
@@ -12,7 +12,6 @@ from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
 let { cleanableItems, marketPriceSellMultiplier } = require("%ui/profile/profileState.nut")
-let { template2MarketOffer } = require("%ui/mainMenu/market/inventoryToMarket.nut")
 let { creditsTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
 let { itemsInRefiner } = require("%ui/hud/menus/inventories/refinerInventoryCommon.nut")
 
@@ -73,6 +72,7 @@ let minimalRefinerItemComp = [
   ["itemContainer", ecs.TYPE_EID_LIST, null],
   ["gun_mods__curModInSlots", ecs.TYPE_OBJECT, null],
   ["equipment_mods__curModInSlots", ecs.TYPE_OBJECT, null],
+  ["item__currentBoxedItemCount", ecs.TYPE_INT, null]
 ]
 let get_item_minimal_refiler_data = ecs.SqQuery("get_item_minimal_refiler_data", {
   comps_ro = minimalRefinerItemComp
@@ -88,14 +88,30 @@ function getMinimalRefinerItem(eid) {
       isCorrupted = itemComp?.item_enriched != null
       itemContainerItems = itemComp?.itemContainer.getAll()
       modInSlots = modtable
+      ammoCount = itemComp?.item__currentBoxedItemCount
     }
   })
 }
 
-function getPriceOfNonCorruptedItem(templateToMarket, priceMult, item) {
+function getPriceOfNonCorruptedItem(priceMult, item) {
   if (item?.isReplica)
     return 1
-  return ceil((templateToMarket?[item.itemTemplate].reqMoney ?? 0) * priceMult)
+
+  let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(item.itemTemplate)
+  let marketPrice = template?.getCompValNullable("item__marketPrice") ?? 0
+  let ammoHolderTemplate = template?.getCompValNullable("item_holder__boxedItemTemplate")
+  let maxAmmoCount = template?.getCompValNullable("item_holder__maxItemCount") ?? 0
+  local ammoPrice = 0
+
+  if (ammoHolderTemplate) {
+    let ammoTemplate = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(ammoHolderTemplate)
+    let ammoMarketPrice = ammoTemplate?.getCompValNullable("item__marketPrice") ?? 0
+    let ammoPerStack = ammoTemplate?.getCompValNullable("item__countPerStack") ?? 1
+
+    ammoPrice = (ammoMarketPrice.tofloat() / ammoPerStack.tofloat()) * maxAmmoCount
+  }
+
+  return floor((marketPrice - ammoPrice) * priceMult)
 }
 
 function additionalDescFunc(item, playerProfileAMConvertionRate = null) {
@@ -126,7 +142,7 @@ function additionalDescFunc(item, playerProfileAMConvertionRate = null) {
         maxModAm += cleanableMod.amContains.y
       }
       else {
-        nonCorruptedModPrice += getPriceOfNonCorruptedItem(template2MarketOffer.get(), marketPriceSellMultiplier.get(), mod)
+        nonCorruptedModPrice += getPriceOfNonCorruptedItem(marketPriceSellMultiplier.get(), mod)
       }
     }
   }
@@ -165,7 +181,7 @@ function additionalDescFunc(item, playerProfileAMConvertionRate = null) {
         maxModAm += cleanData.amContains.y
       }
       else {
-        nonCorruptedModPrice += getPriceOfNonCorruptedItem(template2MarketOffer.get(), marketPriceSellMultiplier.get(), foldedItem)
+        nonCorruptedModPrice += getPriceOfNonCorruptedItem(marketPriceSellMultiplier.get(), foldedItem)
       }
     }
   }
@@ -184,7 +200,7 @@ function additionalDescFunc(item, playerProfileAMConvertionRate = null) {
     maxMoney = truncateToMultiple((cleanableItem.amContains.y) / 10.0 * playerProfileAMConvertionRate, 1)
   }
   else {
-    nonCorruptedPrice = getPriceOfNonCorruptedItem(template2MarketOffer.get(), marketPriceSellMultiplier.get(), item)
+    nonCorruptedPrice = getPriceOfNonCorruptedItem(marketPriceSellMultiplier.get(), item)
   }
   #forbid-auto-freeze
   let stringsToShow = []

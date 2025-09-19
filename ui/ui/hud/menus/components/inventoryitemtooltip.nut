@@ -900,11 +900,10 @@ function getInventoryItemTooltipLines(item, additionalHints={}) {
     physParamsTooltip.append(coloredText(itemTooltipStatColor, loc("desc/weight"), weightText))
   }
   if (volume > 0.0) {
-    let volumeRounded = truncateToMultiple(volume, 0.01)
     let volumeText =
       itemsCount > 1 && !item?.isBoxedItem ? $"{volume * itemsCount} ({volume} {loc("ui/multiply")} {itemsCount})" :
-      isFolded ? $"{volumeRounded} ({loc("desc/folded")})" :
-      $"{volumeRounded}"
+      isFolded ? $"{volume} ({loc("desc/folded")})" :
+      $"{volume}"
     physParamsTooltip.append(coloredText(itemTooltipStatColor, loc("desc/volume"), volumeText))
   }
 

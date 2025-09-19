@@ -22,7 +22,7 @@ function mkSelectBtn(name, opt, state, close=null, setValue=null) {
       state.set(sel)
     close?()
   }
-  let size = static [fsh(30), SIZE_TO_CONTENT]
+  let size = FLEX_H
 
   let group = ElemGroup()
   let stateFlags = Watched(0)
@@ -60,6 +60,7 @@ function mkSelectBtn(name, opt, state, close=null, setValue=null) {
 }
 
 let mkMkColumn = @(options, buttonCtor) {
+  size = FLEX_H
   flow = FLOW_VERTICAL
   children = options.map(buttonCtor)
 }
@@ -117,16 +118,18 @@ let mkSelectWindow = kwarg(function(
   )
 })
 
-function mkOpenSelectWindowBtn(state, openMenu, mkTxt = @(v) v, title = null, tooltipText = null, xmbNode = null){
+function mkOpenSelectWindowBtn(state, openMenu, mkTxt = @(v) v, title = null, tooltipText = null,
+  xmbNode = null, defBtnText = null
+) {
   return @() {
     watch = state
     flow = FLOW_HORIZONTAL
     size = flex()
     valign = ALIGN_CENTER
     children = [
-      title!=null ? dtext(title, {color = Color(180,180,180), padding=0, margin=0}) : null,
+      title!=null ? dtext(title, {color = Color(180,180,180), padding=0, margin=hdpx(20)}) : null,
       title!=null ? static {size = static [flex(), 0]} : null,
-      textButton(mkTxt(state.get()),
+      textButton(mkTxt(defBtnText ?? state.get()),
         openMenu,
         {
           size = flex()

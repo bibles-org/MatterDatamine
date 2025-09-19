@@ -133,6 +133,7 @@ function addInventoryItems(preset, itemsInInventory, inventoryName, capacity) {
       count = item.count
       isBoxedItem = item.isBoxedItem
       ammoCount = item.ammoCount
+      charges = item.ammoCount
       ammoId = item?.ammoId
       countPerStack = item.countPerStack
     })

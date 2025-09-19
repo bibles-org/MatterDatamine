@@ -9,6 +9,9 @@ from "%ui/ui_library.nut" import *
 const MS_SECOND_MAP_HELP = "gameplay/msSecondMapHelp"
 let msSecondMapHelpSave = getOnlineSaveData(MS_SECOND_MAP_HELP, @() get_setting_by_blk_path(MS_SECOND_MAP_HELP) ?? true)
 
+const MS_SECOND_MISC_NOTIFICATIONS = "gameplay/msSecondMiscNotifications"
+let msSecondMiscNotificationsSave = getOnlineSaveData(MS_SECOND_MISC_NOTIFICATIONS, @() get_setting_by_blk_path(MS_SECOND_MISC_NOTIFICATIONS) ?? true)
+
 const MS_SECOND_SARCASM = "gameplay/msSecondSarcasm"
 let msSecondSarcasmSave = getOnlineSaveData(MS_SECOND_SARCASM, @() get_setting_by_blk_path(MS_SECOND_SARCASM) ?? 70)
 
@@ -26,6 +29,18 @@ let missSecondMapHelp = optionCtor({
 
 msSecondMapHelpSave.watch.subscribe(function(val) {
   ecs.g_entity_mgr.broadcastEvent(EventMissSecondMapHelpOptionChanged({msSecondMapHelp = val}))
+})
+
+let missSecondMiscNotifications = optionCtor({
+  name = loc_opt("gameplay/miss_second_misc_notifications")
+  setValue = msSecondMiscNotificationsSave.setValue
+  var = msSecondMiscNotificationsSave.watch
+  defVal = true
+  widgetCtor = optionCheckBox
+  restart = false
+  tab = "options/miss_second"
+  blkPath = MS_SECOND_MISC_NOTIFICATIONS
+  valToString = @(v) (v ? loc("option/on") : loc("option/off"))
 })
 
 let missSecondSarcasm = optionCtor({
@@ -46,5 +61,6 @@ let missSecondSarcasm = optionCtor({
 return {
   msSecondMapHelpSave,
   missSecondMapHelp,
+  missSecondMiscNotifications
   missSecondSarcasm
 }

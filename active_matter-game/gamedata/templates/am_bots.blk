@@ -199,32 +199,17 @@ turned_soldier_ragdoll_physobj{
 }
 
 turned_soldier_death_loot_preset{
-  _use:t="full_loot_preset"
+  _use:t="loot_preset"
 
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="turned_soldier_remains_item"
+      weight:r=1
     }
 
-    "item:object"{
-      sub_preset:t="turned_soldier_pristine_remains_preset"
-    }
-  }
-}
-
-turned_soldier_pristine_remains_preset{
-  _use:t="loot_preset"
-  loot_preset__numSamples:ip2=1, 1
-
-  "loot_preset__chances:array"{
     "item:object"{
       template_name:t="turned_soldier_remains_pristine_item"
-      weight:r=0.005
-    }
-
-    "item:object"{
-      template_name:t="empty_loot_preset"
-      weight:r=0.995
+      weight:r=0.15
     }
   }
 }

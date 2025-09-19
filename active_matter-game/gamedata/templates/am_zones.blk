@@ -1688,6 +1688,75 @@ anomaly_zone_am_indoor_branch{
   }
 }
 
+anomaly_zone_modern_weapon_crates_indoor_branch{
+  _use:t="anomaly_zone_branch"
+  anomaly_zone__branchLength:ip2=8, 8
+
+  "anomaly_zone__spawnPresets:object"{
+    "lootbox_close_range_preset:array"{
+      "it:object"{
+        template:t="modern_military_close_range_weapons_t2_lootable_rendinst"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "lootbox_long_range_preset:array"{
+      "it:object"{
+        template:t="modern_military_long_range_weapons_t2_lootable_rendinst"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.4
+        spawnIndoor:b=yes
+      }
+    }
+
+    "lootbox_medical_preset:array"{
+      "it:object"{
+        template:t="modern_military_medical_t2_lootable_rendinst"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.2
+        spawnIndoor:b=yes
+      }
+    }
+
+    "lootbox_ammo_preset:array"{
+      "it:object"{
+        template:t="modern_military_ammo_t2_lootable_rendinst"
+        projectToNavmesh:b=yes
+        minDistanceToWall:r=0.2
+        spawnIndoor:b=yes
+      }
+    }
+  }
+
+  "anomaly_zone__spawnGroups:array"{
+    "group:object"{
+      spawnCount:ip2=1, 1
+      preset:t="lootbox_close_range_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=0, 1
+      preset:t="lootbox_long_range_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=0, 1
+      preset:t="lootbox_medical_preset"
+      cellChancePow:r=1
+    }
+
+    "group:object"{
+      spawnCount:ip2=1, 1
+      preset:t="lootbox_ammo_preset"
+      cellChancePow:r=1
+    }
+  }
+}
+
 anomaly_zone_statues_cairns_indoor_branch{
   _use:t="anomaly_zone_branch"
   anomaly_zone__branchLength:ip2=15, 15

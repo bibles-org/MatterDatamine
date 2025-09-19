@@ -14370,6 +14370,48 @@ africa_pve_loot_indoor_floor_loot_preset{
   }
 }
 
+africa_br_loot_indoor_floor_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="modern_military_close_range_weapons_t2_lootable_rendinst"
+      number:ip2=80, 80
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="modern_military_close_range_weapons_t3_lootable_rendinst"
+      number:ip2=60, 60
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="modern_military_long_range_weapons_t2_lootable_rendinst"
+      number:ip2=80, 80
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="modern_military_long_range_weapons_t3_lootable_rendinst"
+      number:ip2=60, 60
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="medium_sovmod_backpack_lootable+item_in_world"
+      number:ip2=30, 30
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="large_sovmod_backpack_lootable+item_in_world"
+      number:ip2=30, 30
+      weight:r=1
+    }
+  }
+}
+
 africa_loot_indoor_table_loot_preset{
   _use:t="full_loot_preset"
 
@@ -14509,6 +14551,32 @@ africa_pve_loot_indoor_table_loot_preset{
     "item:object"{
       template_name:t="b7_binoculars_item+item_in_world"
       number:ip2=5, 5
+    }
+  }
+}
+
+africa_br_loot_indoor_table_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_avg+item_in_world"
+      number:ip2=40, 40
+    }
+
+    "item:object"{
+      template_name:t="modern_military_medical_t2_lootable_rendinst"
+      number:ip2=40, 40
+    }
+
+    "item:object"{
+      template_name:t="modern_military_grenades_t1_lootable_rendinst"
+      number:ip2=50, 50
+    }
+
+    "item:object"{
+      template_name:t="modern_military_ammo_t2_lootable_rendinst"
+      number:ip2=60, 60
     }
   }
 }
@@ -14741,6 +14809,82 @@ africa_pve_loot_indoor_shelves_loot_preset{
   }
 }
 
+africa_br_loot_indoor_shelves_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_small+item_in_world"
+      number:ip2=30, 30
+    }
+
+    "item:object"{
+      template_name:t="loot_item_healkit_magazine_avg+item_in_world"
+      number:ip2=30, 30
+    }
+
+    "item:object"{
+      template_name:t="f1_grenade_item+item_in_world"
+      number:ip2=50, 50
+    }
+
+    "item:object"{
+      template_name:t="ussr_molotov_item"
+      number:ip2=50, 50
+    }
+
+    "item:object"{
+      template_name:t="box_12_gauge_magazine+item_in_world"
+      number:ip2=50, 50
+    }
+
+    "item:object"{
+      template_name:t="box_9x19_magazine+item_in_world"
+      number:ip2=50, 50
+    }
+
+    "item:object"{
+      template_name:t="box_5_56_magazine+item_in_world"
+      number:ip2=50, 50
+    }
+
+    "item:object"{
+      template_name:t="box_7_62x39_magazine+item_in_world"
+      number:ip2=50, 50
+    }
+
+    "item:object"{
+      template_name:t="box_5_45x39_magazine+item_in_world"
+      number:ip2=50, 50
+    }
+
+    "item:object"{
+      template_name:t="sovmod_flashlight_device+item_in_world"
+      number:ip2=40, 40
+    }
+
+    "item:object"{
+      template_name:t="axe_weapon+item_in_world"
+      number:ip2=20, 20
+    }
+
+    "item:object"{
+      template_name:t="cooking_knife_weapon+item_in_world"
+      number:ip2=20, 20
+    }
+
+    "item:object"{
+      template_name:t="wrench_weapon+item_in_world"
+      number:ip2=20, 20
+    }
+
+    "item:object"{
+      template_name:t="b7_binoculars_item+item_in_world"
+      number:ip2=30, 30
+    }
+  }
+}
+
 africa_loot_indoor_medical_loot_preset{
   _use:t="full_loot_preset"
 
@@ -14769,6 +14913,48 @@ africa_pve_loot_indoor_medical_loot_preset{
     "item:object"{
       template_name:t="loot_item_healkit_magazine_avg+item_in_world"
       number:ip2=30, 30
+    }
+  }
+}
+
+africa_br_indoor_floor_weapons_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="modern_military_close_range_weapons_t2_lootable_rendinst"
+      number:ip2=120, 120
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="modern_military_close_range_weapons_t3_lootable_rendinst"
+      number:ip2=60, 60
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="modern_military_long_range_weapons_t2_lootable_rendinst"
+      number:ip2=120, 120
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="modern_military_long_range_weapons_t3_lootable_rendinst"
+      number:ip2=60, 60
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="medium_sovmod_backpack_lootable+item_in_world"
+      number:ip2=30, 30
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="large_sovmod_backpack_lootable+item_in_world"
+      number:ip2=30, 30
+      weight:r=1
     }
   }
 }

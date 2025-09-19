@@ -1,7 +1,7 @@
 from "%ui/components/commonComponents.nut" import mkConsoleScreen, mkText, mkTitleString, mkTooltiped, mkTabs
 from "%ui/mainMenu/debriefing_common_components.nut" import mkEvacuatedItems, mkChronotracesList, mkDailyRewardsBlock, mkPlayerExpBlock,
   DEF_ANIM_DURATION, openRewardWidnow, showUnseenRewardsMessage
-from "%ui/fonts_style.nut" import body_txt, fontawesome, h2_txt
+from "%ui/fonts_style.nut" import body_txt, fontawesome, h2_txt, tiny_txt
 from "%ui/components/colors.nut" import TextNormal, GreenSuccessColor, RedWarningColor, ConsoleFillColor, BtnBdDisabled
 from "eventbus" import eventbus_send
 from "%dngscripts/sound_system.nut" import sound_play
@@ -18,10 +18,10 @@ import "%dngscripts/ecs.nut" as ecs
 from "%ui/mainMenu/baseDebriefingSample.nut" import loadBaseDebriefingSample
 import "%ui/control/gui_buttons.nut" as JB
 from "%ui/mainMenu/baseDebriefingMap.nut" import mapSize
+from "%ui/mainMenu/baseDebriefingLog.nut" import debriefingSessionId, debriefingLog
 
 let { lastBattleResult } = require("%ui/profile/profileState.nut")
 let { isInPlayerSession } = require("%ui/hud/state/gametype_state.nut")
-let { debriefingLog } = require("%ui/mainMenu/baseDebriefingLog.nut")
 let { curentHudMenusIds } = require("%ui/hud/hud_menus_state.nut")
 let { showRewardsAnimations, levelRewards, haveSeenRewards } = require("%ui/mainMenu/debriefing_common_components.nut")
 let { onlineSettingUpdated } = require("%ui/options/onlineSettings.nut")
@@ -355,9 +355,10 @@ function mkBaseDebriefingMenu() {
   }, loc("baseDebriefing/timeTooltip"), static { hplace = ALIGN_RIGHT })
 
   function windowTitle() {
-    let { battleStat = static {}, trackPoints = null, battleAreaInfo = static {} } = lastBattleResult.get()
+    let { battleStat = static {}, trackPoints = null, battleAreaInfo = static {}, sessionId = null } = lastBattleResult.get()
     let headerColor = battleStat?.isSuccessRaid ? GreenSuccessColor : RedWarningColor
     let { raidName = null } = battleAreaInfo
+    debriefingSessionId.set(sessionId)
     local text = battleStat?.isSuccessRaid ? loc("baseDebriefing/successfulRaid") : loc("baseDebriefing/unsuccessfulRaid")
     if (raidName != null) {
       let raidNameSplitet = raidName.split("+")
@@ -433,11 +434,26 @@ function mkBaseDebriefingMenu() {
       lastBattleResult.set(null)
       showHistoryAnimations.set(true)
       showRewardsAnimations.set(false)
+      debriefingSessionId.set(null)
       if (!haveSeenRewards.get())
         showUnseenRewardsMessage()
       haveSeenRewards.set(true)
     }
-    children = mkConsoleScreen(playerTrackWindow)
+    children = [
+      mkConsoleScreen(playerTrackWindow)
+      function() {
+        if (debriefingSessionId.get() == null)
+          return { watch = debriefingSessionId }
+        return {
+          watch = debriefingSessionId
+          hplace = ALIGN_LEFT
+          vplace = ALIGN_BOTTOM
+          pos = [hdpx(10), hdpx(3)]
+          children = mkText(debriefingSessionId.get(), { color = Color(30,30,30,2) }.__merge(tiny_txt))
+        }
+      }
+    ]
+
   }, "", null, windowTitle)
 
   return {

@@ -10,7 +10,7 @@ from "%ui/mainMenu/menus/options/camera_fov_option.nut" import cameraFovOption
 from "%ui/mainMenu/menus/options/flashlight_tip_option.nut" import flashlightTipOption
 from "%ui/mainMenu/menus/options/player_interaction_option.nut" import friendsInvitationOption, streamerModeOption
 from "%ui/mainMenu/menus/options/quality_preset_option.nut" import optGraphicsQualityPreset
-from "%ui/mainMenu/menus/options/miss_second_map_help.nut" import missSecondMapHelp, missSecondSarcasm
+from "%ui/mainMenu/menus/options/miss_second_map_help.nut" import missSecondMapHelp, missSecondMiscNotifications, missSecondSarcasm
 from "%ui/mainMenu/menus/options/chocolate_matrix_option.nut" import chocolateRowOption, chocolateColOption
 from "%ui/ui_library.nut" import *
 from "modules" import on_module_unload
@@ -36,7 +36,7 @@ let menuTabsOrder = freeze([
 ])
 
 let getMenuOptions = @() [optLanguage, flashlightTipOption, cameraFovOption, optGraphicsQualityPreset, missSecondMapHelp,
-  missSecondSarcasm, chocolateRowOption, chocolateColOption, friendsInvitationOption, streamerModeOption
+  missSecondMiscNotifications, missSecondSarcasm, chocolateRowOption, chocolateColOption, friendsInvitationOption, streamerModeOption
 ].extend(renderOptions, soundOptions, voiceChatOptions)
 
 let closeMenu = @() showSettingsMenu.set(false)
