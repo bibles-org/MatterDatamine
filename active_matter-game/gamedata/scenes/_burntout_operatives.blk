@@ -1,6 +1,6 @@
 entity{
   _template:t="am_bot_spawner+no_matching_bot_spawner"
-  bot_spawner__spawnInterval:r=30
+  bot_spawner__spawnInterval:r=45
 
   "bot_spawner__heroTemplates:list<t>"{
     i:t="burntout_operative+burntout_equipped_bot+spawn_sequence_controller+allow_friendly_damage"
@@ -15,11 +15,11 @@ entity{
   }
 
   "bot_spawner__teamMaxGroups:list<i>"{
-    i:i=1000
+    i:i=4
   }
 
   "bot_spawner__teamBotsPerGroupMinMax:list<ip2>"{
-    i:ip2=1, 3
+    i:ip2=1, 2
   }
 
   "bot_spawner__teamSpawnGroupId:list<i>"{

@@ -714,22 +714,6 @@ hk416a5_gun_loot_preset{
   }
 }
 
-hk416a5_gun_collapse_loot_preset{
-  _use:t="loot_preset"
-  loot_preset__numSamples:ip2=2, 2
-
-  "loot_preset__chances:array"{
-    "item:object"{
-      template_name:t="hk416a5_gun"
-    }
-
-    "item:object"{
-      template_name:t="m4a1_magazine"
-      number:ip2=5, 7
-    }
-  }
-}
-
 ak_103_gun_loot_preset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=6, 6
@@ -757,6 +741,22 @@ ak_103_gun_loot_preset{
 
     "item:object"{
       sub_preset:t="dovetail_high_scopes_loot_preset"
+    }
+  }
+}
+
+ak_103_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="ak_103_gun"
+    }
+
+    "item:object"{
+      template_name:t="ak_103_magazine"
+      number:ip2=5, 7
     }
   }
 }
@@ -1118,22 +1118,6 @@ mc_21_12_gun_loot_preset{
   }
 }
 
-mc_21_12_gun_collapse_loot_preset{
-  _use:t="loot_preset"
-  loot_preset__numSamples:ip2=2, 2
-
-  "loot_preset__chances:array"{
-    "item:object"{
-      template_name:t="mc_21_12_gun"
-    }
-
-    "item:object"{
-      template_name:t="box_12_gauge_magazine"
-      number:ip2=5, 7
-    }
-  }
-}
-
 winchester_civil_gun_loot_preset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=2, 2
@@ -1149,6 +1133,22 @@ winchester_civil_gun_loot_preset{
   }
 }
 
+winchester_civil_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="winchester_civil_gun"
+    }
+
+    "item:object"{
+      template_name:t="box_12_gauge_magazine"
+      number:ip2=5, 7
+    }
+  }
+}
+
 winchester_specops_gun_loot_preset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=2, 2
@@ -1160,6 +1160,22 @@ winchester_specops_gun_loot_preset{
 
     "item:object"{
       template_name:t="winchester_specops_gun"
+    }
+  }
+}
+
+winchester_specops_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="winchester_specops_gun"
+    }
+
+    "item:object"{
+      template_name:t="box_12_gauge_magazine"
+      number:ip2=5, 7
     }
   }
 }
@@ -2185,6 +2201,11 @@ collapse_ar_weapons_loot_preset{
     }
 
     "item:object"{
+      sub_preset:t="ak_103_gun_collapse_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
       sub_preset:t="fn_scar_gun_collapse_loot_preset"
       weight:r=1
     }
@@ -2196,11 +2217,6 @@ collapse_ar_weapons_loot_preset{
 
     "item:object"{
       sub_preset:t="m16a4_gun_collapse_loot_preset"
-      weight:r=1
-    }
-
-    "item:object"{
-      sub_preset:t="hk416a5_gun_collapse_loot_preset"
       weight:r=1
     }
 
@@ -2217,7 +2233,12 @@ collapse_shotgun_weapons_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      sub_preset:t="mc_21_12_gun_collapse_loot_preset"
+      sub_preset:t="winchester_civil_gun_collapse_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      sub_preset:t="winchester_specops_gun_collapse_loot_preset"
       weight:r=1
     }
 

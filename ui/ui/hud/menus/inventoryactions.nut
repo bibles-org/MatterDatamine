@@ -227,20 +227,18 @@ function showSplitStackOrJustMoveToInventory(item, showSuitableAmmo = false, inv
   let itemToSearch = showSuitableAmmo
     ? ammo != null ? ammo?.template : boxedItemTemplate
     : itemTemplate
-  let itemsInStash = stashItems.get()
-    .filter(@(v) v.itemTemplate == itemToSearch)
-    .reduce(function(res, v) {
-      if (res.len() <= 0)
-        return [v]
-      res[0].count += v.count
-      return res
-    }, [])
-  let itemInStash = mergeNonUniqueItems(itemsInStash)?[0]
-  if (itemInStash == null)
+  let resItems = []
+  foreach (stashItem in stashItems.get()) {
+    if (stashItem.itemTemplate == itemToSearch)
+      resItems.append(stashItem)
+    if (resItems.len() >= 2)
+      break
+  }
+  if (resItems.len() == 0)
     return { locId = "???", icon = "context_icons/drag_in.svg" }
-  let { isBoxedItem = false, ammoCount = -1, count = -1 } = itemInStash
+  let { isBoxedItem = false, ammoCount = -1, count = -1 } = resItems[0]
   if (inventoriesList != null) {
-    let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(itemInStash.itemTemplate)
+    let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(resItems[0].itemTemplate)
     let volume = template?.getCompValNullable("item__volume") ?? 0
     let inventoryToMove = findInventoryWithFreeVolume(volume)?.data.name
     let name = inventoryToMove == SAFEPACK.name ? loc("inventory/toSafepack")
@@ -252,7 +250,7 @@ function showSplitStackOrJustMoveToInventory(item, showSuitableAmmo = false, inv
         locId = "item/action/moveSomeToInventoryShort"
     }
   }
-  let countToUse = isBoxedItem ? ammoCount : count
+  let countToUse = isBoxedItem ? ammoCount : max(count, resItems.len())
   if (countToUse == 1 && !showSuitableAmmo)
     locId = inventoriesList == null ? "item/action/moveOneItemToInventory" : "item/action/moveOneItemToInventoryShort"
   return { locId, additionalText, icon = "context_icons/drag_in.svg" }

@@ -10,7 +10,7 @@ from "%ui/components/commonComponents.nut" import mkText, fontIconButton, blured
 from "%ui/mainMenu/clonesMenu/cloneMenuState.nut" import sendRawChronogenes, currentChronogenes
 from "%ui/components/scrollbar.nut" import makeVertScrollExt, thinAndReservedPaddingStyle
 from "%ui/components/msgbox.nut" import showMsgbox, showMessageWithContent
-from "dasevents" import EventShowItemInShowroom, EventCloseShowroom, EventActivateShowroom, CmdSetAlterToSelect
+from "dasevents" import EventShowItemInShowroom, EventCloseShowroom, EventActivateShowroom
 from "dagor.math" import Point2
 from "%ui/components/colors.nut" import Inactive, ConsoleFillColor, BtnBdDisabled, BtnBgDisabled, BtnBdNormal,
   BtnBdFocused, TextHighlight, SelBdSelected, SelBdHover, GreenSuccessColor, InfoTextValueColor
@@ -45,6 +45,8 @@ from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 import "%ui/control/gui_buttons.nut" as JB
 
+
+let {CmdSetAlterToSelect=null} = require("dasevents")
 
 const MAIN_CHRONOGENE_UID = "mainChronogeneWindow"
 let selectedAlterToEquip = Watched(null)
@@ -697,18 +699,19 @@ function openMainChronogeneSelection(onDropOverrided=null) {
 let closeMainChronogeneSelection = @() removeModalWindow(MAIN_CHRONOGENE_UID)
 
 
-ecs.register_es("open_main_chronogene_selection", {
-  [CmdSetAlterToSelect] = function(evt, _eid, _comp) {
-    local chosenAlter = allChronogenesInGame.get()?.filter(@(i) i.type == "alters").findvalue(@(v) v?.itemTemplate == evt.alterTemplate)
-    let existingAlter = allItems.get().findvalue(@(v) v?.templateName == evt.alterTemplate)
-    let isAvailable = existingAlter != null
-    if (isAvailable) {
-      chosenAlter = chosenAlter.__merge({uniqueId=existingAlter.itemId})
+if (CmdSetAlterToSelect!=null) {
+  ecs.register_es("open_main_chronogene_selection", {
+    [CmdSetAlterToSelect] = function(evt, _eid, _comp) {
+      local chosenAlter = allChronogenesInGame.get()?.filter(@(i) i.type == "alters").findvalue(@(v) v?.itemTemplate == evt.alterTemplate)
+      let existingAlter = allItems.get().findvalue(@(v) v?.templateName == evt.alterTemplate)
+      let isAvailable = existingAlter != null
+      if (isAvailable) {
+        chosenAlter = chosenAlter.__merge({uniqueId=existingAlter.itemId})
+      }
+      alterToFocus.set(chosenAlter.__merge({mainChronogeneAvailable=isAvailable}))
     }
-    alterToFocus.set(chosenAlter.__merge({mainChronogeneAvailable=isAvailable}))
-  }
-})
-
+  })
+}
 
 return {
   openMainChronogeneSelection

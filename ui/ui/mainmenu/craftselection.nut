@@ -384,7 +384,7 @@ function mkCraftSlot(slot, idx, countdown, isFeatured) {
               setCraftsReadyCount()
             })
           }
-          else if (isProcessing && tasksList.len() >= (
+          else if (isProcessing && tasksList.len() > (
               (playerBaseState.get()?.replicatorDeviceQueueSize.x ?? 0) + (playerBaseState.get()?.replicatorDeviceQueueSize.y ?? 0))) {
             craftMsgbox(loc("craft/moduleAndQueueInProgress", { number = idx + 1 }))
             return

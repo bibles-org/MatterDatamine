@@ -96,8 +96,10 @@ function doesZoneFitRequirements(zoneInfoRequirements, playerStatsVal) {
         if (playerStatsVal?.unlocks?.contains(reqs.slice(1)) ?? false)
           return false
       }
-      if (!(playerStatsVal?.unlocks?.contains(reqs) ?? false))
-        return false
+      else {
+        if (!(playerStatsVal?.unlocks?.contains(reqs) ?? false))
+          return false
+      }
     }
   }
   return true

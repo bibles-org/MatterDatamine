@@ -55,7 +55,7 @@ beacon_america_collapse_mode_manager{
     _tags:t="server"
     beacon_collapse_mode__arenaRad:r=30
     beacon_collapse_mode__preparationTime:r=30
-    beacon_collapse_mode__zoneExpandShrinkTime:p2=20, 90
+    beacon_collapse_mode__zoneExpandShrinkTime:p2=20, 45
     beacon_collapse_mode__finishTime:r=300
     beacon_collapse_mode__overallZoneRad:r=130
     beacon_collapse_mode__overallZonePos:p3=-286.031, 5.2597, 236.293
@@ -77,21 +77,39 @@ beacon_america_collapse_mode_manager{
   }
 }
 
+beacon_collapse_mode_beacon_destroyed{
+  _use:t="placeable_rendinst"
+  _use:t="fire_spot_1m_effect"
+  ri_extra__name:t="nexus_point_device_e_dmg"
+  ri_preload__name:t="nexus_point_device_e_dmg"
+}
+
+beacon_collapse_mode_beacon_effect{
+  _use:t="extraction_sequence_portal"
+  _use:t="extraction_activating_portal_effect_sound"
+  portal__scales:p2=0.001, 0.3
+  create_entity_on_disappear_with_delay__template:t="am_mimic_explosion_effect"
+  create_entity_on_disappear_with_delay__delay:r=0
+}
+
 beacon_collapse_mode_beacon{
   _use:t="placeable_rendinst"
   _use:t="simple_ai_target"
   _use:t="riextra_hp_to_hitpoints"
   _use:t="loot_drop_system_delayed_loot_generation"
-  ri_extra__name:t="am_powerstake_research_device_a"
-  ri_preload__name:t="am_powerstake_research_device_a"
+  ri_extra__name:t="nexus_point_device_e"
+  ri_preload__name:t="nexus_point_device_e"
   _use:t="pve_event_target"
   flanking_ai_target__maxCount:i=12
   flanking_ai_target__interval:r=1
   flanking_ai_target__radius:r=14
   team:i=2
-  hitpoints__hp:r=1000
+  hitpoints__hp:r=1750
   _tracked:t="hitpoints__hp"
-  hitpoints__maxHp:r=1000
+  _replicated:t="hitpoints__hp"
+  hitpoints__maxHp:r=1750
+  create_entity_on_disappear_with_delay__template:t="beacon_collapse_mode_beacon_destroyed"
+  create_entity_on_disappear_with_delay__delay:r=0
   quest_device__timer:r=-1
   quest_device__monsterGenTemplate:t=""
   _use:t="openable_external_inventory_container_ri"
@@ -115,6 +133,8 @@ beacon_collapse_mode_beacon{
   _tracked:t="map_object_marker__isActive"
   map_object_marker__activeColor:p3=135, 235, 135
   map_object_marker__hoverColor:p3=175, 255, 175
+  beacon_collapse_mode_beacon__effectTemplate:t="beacon_collapse_mode_beacon_effect"
+  beacon_collapse_mode_beacon__effectOffset:p3=0, 1, 0
 
   "ai_target__alwaysDanger:tag"{}
   "riextra_destroy_on_death:tag"{}
@@ -132,6 +152,8 @@ beacon_collapse_mode_beacon{
     beacon_collapse_mode_beacon__50percentTold:b=no
     beacon_collapse_mode_beacon__25percentTold:b=no
   }
+
+  "beacon_collapse_mode_beacon__effectEid:eid"{}
 }
 
 beacon_collapse_mode_beacon_lock{
@@ -208,7 +230,7 @@ america_collapse_fight_1{
     }
 
     "item:object"{
-      duration:p2=20, 20
+      duration:p2=10, 10
 
       "spawn:object"{}
     }
@@ -223,18 +245,24 @@ america_collapse_fight_1{
     }
 
     "item:object"{
-      duration:p2=30, 30
+      duration:p2=10, 10
 
       "spawn:object"{}
     }
 
     "item:object"{
-      duration:p2=20, 20
+      duration:p2=10, 10
 
       "spawn:object"{
         "changed_human+am_inside_body_3":ip2=3, 3
-        "outdoor_sleeper_changed_human_mini+am_inside_body_3":ip2=1, 1
+        "outdoor_sleeper_changed_human_mini+am_inside_body_3":ip2=1, 2
       }
+    }
+
+    "item:object"{
+      duration:p2=15, 15
+
+      "spawn:object"{}
     }
   }
 }
@@ -246,10 +274,25 @@ america_collapse_fight_2{
 
   "pve_event__waves:array"{
     "item:object"{
-      duration:p2=5, 5
+      duration:p2=10, 10
 
       "spawn:object"{
         am_mimic:ip2=5, 5
+      }
+    }
+
+    "item:object"{
+      duration:p2=15, 15
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=12, 12
+
+      "spawn:object"{
+        am_mimic:ip2=8, 8
+        invisible_man:ip2=1, 1
       }
     }
 
@@ -260,29 +303,16 @@ america_collapse_fight_2{
     }
 
     "item:object"{
-      duration:p2=8, 8
-
-      "spawn:object"{
-        am_mimic:ip2=8, 8
-      }
-    }
-
-    "item:object"{
-      duration:p2=30, 30
-
-      "spawn:object"{}
-    }
-
-    "item:object"{
-      duration:p2=15, 15
+      duration:p2=20, 20
 
       "spawn:object"{
         am_mimic:ip2=10, 10
+        invisible_man:ip2=1, 2
       }
     }
 
     "item:object"{
-      duration:p2=30, 30
+      duration:p2=20, 20
 
       "spawn:object"{}
     }
@@ -304,13 +334,13 @@ america_collapse_fight_3{
     }
 
     "item:object"{
-      duration:p2=30, 30
+      duration:p2=10, 10
 
       "spawn:object"{}
     }
 
     "item:object"{
-      duration:p2=10, 10
+      duration:p2=15, 15
 
       "spawn:object"{
         xenohound_creature:ip2=8, 10
@@ -318,7 +348,7 @@ america_collapse_fight_3{
     }
 
     "item:object"{
-      duration:p2=30, 30
+      duration:p2=15, 15
 
       "spawn:object"{}
     }
@@ -327,13 +357,13 @@ america_collapse_fight_3{
       duration:p2=10, 10
 
       "spawn:object"{
-        xenohound_creature:ip2=8, 10
+        xenohound_creature:ip2=6, 6
         am_modern_pmc_encounter_guard:ip2=2, 2
       }
     }
 
     "item:object"{
-      duration:p2=30, 30
+      duration:p2=20, 20
 
       "spawn:object"{}
     }
@@ -342,12 +372,12 @@ america_collapse_fight_3{
       duration:p2=10, 10
 
       "spawn:object"{
-        xenohound_creature:ip2=5, 5
+        xenohound_creature:ip2=6, 6
       }
     }
 
     "item:object"{
-      duration:p2=30, 30
+      duration:p2=10, 10
 
       "spawn:object"{}
     }
@@ -364,12 +394,54 @@ america_collapse_fight_4{
       duration:p2=10, 10
 
       "spawn:object"{
-        am_dendroid_encounter_guard:ip2=6, 6
+        am_dendroid_encounter_guard:ip2=3, 3
       }
     }
 
     "item:object"{
-      duration:p2=30, 30
+      duration:p2=15, 15
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=15, 15
+
+      "spawn:object"{
+        am_dendroid_encounter_guard:ip2=5, 5
+      }
+    }
+
+    "item:object"{
+      duration:p2=15, 15
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=15, 15
+
+      "spawn:object"{
+        am_dendroid_encounter_guard:ip2=5, 5
+      }
+    }
+
+    "item:object"{
+      duration:p2=20, 20
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=20, 20
+
+      "spawn:object"{
+        am_dendroid_encounter_guard:ip2=7, 7
+      }
+    }
+
+    "item:object"{
+      duration:p2=15, 15
 
       "spawn:object"{}
     }
@@ -378,40 +450,12 @@ america_collapse_fight_4{
       duration:p2=10, 10
 
       "spawn:object"{
-        am_dendroid_encounter_guard:ip2=8, 8
+        am_dendroid_encounter_guard:ip2=3, 3
       }
     }
 
     "item:object"{
-      duration:p2=30, 30
-
-      "spawn:object"{}
-    }
-
-    "item:object"{
-      duration:p2=15, 15
-
-      "spawn:object"{
-        am_dendroid_encounter_guard:ip2=8, 8
-      }
-    }
-
-    "item:object"{
-      duration:p2=30, 30
-
-      "spawn:object"{}
-    }
-
-    "item:object"{
-      duration:p2=15, 15
-
-      "spawn:object"{
-        am_dendroid_encounter_guard:ip2=10, 10
-      }
-    }
-
-    "item:object"{
-      duration:p2=30, 30
+      duration:p2=20, 20
 
       "spawn:object"{}
     }
@@ -428,26 +472,26 @@ america_collapse_fight_5{
       duration:p2=10, 10
 
       "spawn:object"{
-        am_modern_pmc_encounter_guard:ip2=4, 4
+        am_modern_pmc_encounter_guard:ip2=3, 3
       }
-    }
-
-    "item:object"{
-      duration:p2=30, 30
-
-      "spawn:object"{}
     }
 
     "item:object"{
       duration:p2=10, 10
 
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=20, 20
+
       "spawn:object"{
-        am_dendroid_encounter_guard:ip2=8, 8
+        am_dendroid_encounter_guard:ip2=7, 7
       }
     }
 
     "item:object"{
-      duration:p2=30, 30
+      duration:p2=15, 15
 
       "spawn:object"{}
     }
@@ -462,22 +506,36 @@ america_collapse_fight_5{
     }
 
     "item:object"{
-      duration:p2=30, 30
+      duration:p2=15, 15
 
       "spawn:object"{}
     }
 
     "item:object"{
-      duration:p2=15, 15
+      duration:p2=10, 10
 
       "spawn:object"{
-        am_modern_pmc_encounter_guard:ip2=4, 4
-        am_dendroid_encounter_guard:ip2=12, 12
+        am_modern_pmc_encounter_guard:ip2=2, 2
+        am_dendroid_encounter_guard:ip2=10, 10
       }
     }
 
     "item:object"{
-      duration:p2=30, 30
+      duration:p2=15, 15
+
+      "spawn:object"{}
+    }
+
+    "item:object"{
+      duration:p2=20, 20
+
+      "spawn:object"{
+        am_mimic:ip2=10, 10
+      }
+    }
+
+    "item:object"{
+      duration:p2=10, 10
 
       "spawn:object"{}
     }
