@@ -281,14 +281,14 @@ function getNexusContracts(contracts, mItems, nexusNode) {
 }
 
 
-function anyCurrentRaidContractAlreadyAccepted() {
+function currentPrimaryRaidContractCount() {
   let currentRaidContracts = getContracts(selectedRaid.get(), null, marketItems.get())
     .filter(@(contract) contract[1].contractType == ContractType.PRIMARY && contract[1].currentValue < contract[1].requireValue)
   local primaryContractsCounter = 0
   foreach (contract in currentRaidContracts)
     if (contract[0] in currentPrimaryContractIds.get() && primaryContractsCounter < 2)
       primaryContractsCounter++
-  return primaryContractsCounter >= 1
+  return primaryContractsCounter
 }
 
 
@@ -323,7 +323,7 @@ function mkGetPrimaryContractBtn(contract, currentPrimaries) {
   }
   else {
     return textButtonSmall(loc("contracts/declineMonolith"), function() {
-      if (!anyCurrentRaidContractAlreadyAccepted()) {
+      if (currentPrimaryRaidContractCount() <= 1) {
         showMsgbox({
           text = loc("contracts/cantDeclineLastContract")
         })
@@ -947,7 +947,7 @@ let mkContractsBlock = function() {
     let manyContractsPossible = contractsList.map(@(v) v[1]).filter(@(v) v.contractType==0).len()>1
 
     let firstPossibleIdx = contractsList.findindex(@(v) isContractAvailable(v))
-    if (firstPossibleIdx != null && isRaidAvailable.get() && !anyCurrentRaidContractAlreadyAccepted()) {
+    if (firstPossibleIdx != null && isRaidAvailable.get() && currentPrimaryRaidContractCount() <= 0) {
       currentPrimaryContractIds.mutate(@(v) v[contractsList[firstPossibleIdx][0]] <- true)
     }
 

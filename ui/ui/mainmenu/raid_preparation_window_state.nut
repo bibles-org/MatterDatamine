@@ -19,7 +19,7 @@ from "%ui/squad/squadState.nut" import squadLeaderState
 from "%sqGlob/dasenums.nut" import ContractType
 from "%ui/profile/profileState.nut" import playerProfileCurrentContracts
 
-let { marketItems } = require("%ui/profile/profileState.nut")
+let { marketItems, trialData } = require("%ui/profile/profileState.nut")
 let { weaponsList } = require("%ui/hud/state/hero_weapons.nut")
 let { previewPreset } = require("%ui/equipPresets/presetsState.nut")
 let { currentMenuId, setCurrentMenuId } = require("%ui/hud/hud_menus_state.nut")
@@ -66,7 +66,7 @@ function isItemCanBePurchased(marketId, playerStat) {
   if (marketItem == null) {
     return false
   }
-  return isLotAvailable(marketItem, playerStat)
+  return isLotAvailable(marketItem, playerStat, trialData.get())
 }
 
 function getPresetMissedItemsMarketIds(preset, playerStat) {
@@ -344,7 +344,7 @@ function getNexusStashItems(stashItems, openedRecipes, allRecipes, shopItems, pS
   }
 
   foreach (_marketItemKey, marketItemVal in shopItems) {
-    if (!isLotAvailable(marketItemVal, pStats))
+    if (!isLotAvailable(marketItemVal, pStats, trialData.get()))
       continue
 
     foreach (item in marketItemVal?.children.items ?? []) {

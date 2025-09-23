@@ -1,10 +1,14 @@
+from "%dngscripts/sound_system.nut" import sound_play
+from "eventbus" import eventbus_send
+from "%ui/components/colors.nut" import colorblindPalette
+import "%dngscripts/ecs.nut" as ecs
+from "%ui/ui_library.nut" import *
 from "%dngscripts/globalState.nut" import nestWatched
 from "%ui/components/colors.nut" import TextDisabled, TextNormal, InfoTextValueColor, GreenSuccessColor,
   RedWarningColor, OrangeHighlightColor, colorblindPalette, HudTipFillColor,
   ConsoleHeaderFillColor
 from "eventbus" import eventbus_subscribe
 from "dasevents" import EventSpawnSequenceEnd, EventRewardDailyContract
-from "%ui/hud/state/objectives_vars.nut" import dispatchColorsAndSort
 from "math" import rand
 from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog
 from "%ui/fonts_style.nut" import fontawesome, sub_txt, tiny_txt
@@ -17,11 +21,291 @@ from "%ui/ui_library.nut" import *
 import "%ui/components/faComp.nut" as faComp
 import "%ui/components/fontawesome.map.nut" as fa
 
-let { objectives, objectiveAdditions } = require("%ui/hud/state/objectives_vars.nut")
+let { localPlayerEid } = require("%ui/hud/state/local_player.nut")
+let { watchedHeroPlayerEid } = require("%ui/hud/state/watched_hero.nut")
 let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
 let { hudIsInteractive } = require("%ui/hud/state/interactive_state.nut")
 let { monolithTokensTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
-let { watchedHeroPlayerEid } = require("%ui/hud/state/watched_hero.nut")
+
+let objectives = Watched([])
+let quickUseObjective = Watched()
+let objectiveAdditions = Watched({})
+let objectiveStates = Watched({})
+let showDailyRewardObjectives = Watched(false)
+
+console_register_command(@(soundName) sound_play(soundName, 1.0), "play.sound")
+
+function setShowAllObjectives(value) {
+  showDailyRewardObjectives.set(value)
+  log($"show all objectives.set({value}): have {objectiveStates.get().len()} objective states")
+  objectiveStates.mutate(@(states) states.each(@(state) state.show = value))
+}
+
+
+function closeWnd() {
+  setShowAllObjectives(false)
+}
+
+let fadeoutTime = 2
+let closeObjectiveTime = fadeoutTime - 0.1
+
+function startFadeout() {
+  objectiveStates.get().each(@(_, id) anim_start(objectiveStates.get()[id].fadeout))
+  gui_scene.setTimeout(closeObjectiveTime, closeWnd)
+}
+
+function showObjectives(timeTillHide = 5) {
+  gui_scene.clearTimer(closeWnd)
+  gui_scene.clearTimer(startFadeout)
+  objectiveStates.get().each(function(_, id) {
+    gui_scene.clearTimer(objectiveStates.get()[id].hide)
+    anim_request_stop(objectiveStates.get()[id].fadeout)
+  })
+  setShowAllObjectives(true)
+  if(timeTillHide < 0)
+    return
+  gui_scene.setTimeout(timeTillHide, startFadeout)
+}
+
+function closeObjective(id) {
+  objectiveStates.mutate(function(states) {
+    let state = states?[id]
+    if (!state)
+      return
+    state.show = false
+  })
+}
+
+function startObjectiveFadeout(id) {
+  let objectiveState = objectiveStates.get()?[id]
+  if (!objectiveState)
+    return
+  anim_start(objectiveState.fadeout)
+  gui_scene.setTimeout(closeObjectiveTime, @() closeObjective(id), objectiveStates.get()[id].hide)
+}
+
+function playObjectiveSound(){
+  if (watchedHeroPlayerEid.get() != ecs.INVALID_ENTITY_ID)
+    sound_play("ui_sounds/interface_back", 1.0)
+}
+function showObjective(id, timeTillHide = 5) {
+  gui_scene.clearTimer(objectiveStates.get()[id].hide)
+  gui_scene.clearTimer(objectiveStates.get()[id].fadeout)
+  objectiveStates.mutate(@(states) states[id].show = true)
+  if (timeTillHide < 0)
+    return
+  gui_scene.setTimeout(timeTillHide, @() startObjectiveFadeout(id), objectiveStates.get()[id].fadeout)
+}
+
+function deleteObjectives(deletedObjectives){
+  if (deletedObjectives.len()>0)
+    objectiveStates.mutate(function(states) {
+      foreach(id in deletedObjectives)
+        states.$rawdelete(id)
+   })
+}
+
+function hiliteObjective(id) {
+  showObjective(id, 10)
+  playObjectiveSound()
+}
+
+function addnObjective(id) {
+  objectiveStates.mutate(function(states) {
+    states[id] <- {
+      show = false
+      fadeout = $"fadeoutObjective_{id}"
+      hide = $"hideObjective_{id}"
+    }
+  })
+  hiliteObjective(id)
+}
+
+let sortObjectives = @(a, b)
+      (b?.completed && b?.requireExtraction) <=> (a?.completed && a?.requireExtraction)
+      || a?.completed <=> b?.completed
+      || a?.failed <=> b?.failed
+      || a?.contractType <=> b?.contractType
+      || a.id <=> b.id
+
+function dispatchColorsAndSort(obj){
+  
+  obj.sort(@(a, b)
+    (b?.params.staticTargetTag != null) <=> (a?.params.staticTargetTag != null)
+    || (b?.params.dynamicTargetTag != null) <=> (a?.params.dynamicTargetTag != null)
+    || a?.contractType <=> b?.contractType
+    || a.id <=> b.id
+  )
+  obj.each(function(v, idx){
+    if (v?.params.staticTargetTag != null || v?.params.dynamicTargetTag != null)
+      v.colorIdx <- idx % colorblindPalette.len()
+    return v
+  })
+  obj.sort(sortObjectives)
+  return obj
+}
+
+function addObjective(eid, comp){
+  objectives.mutate(function(v){
+    v.append({
+      eid                   = eid
+      name                  = comp.objective__name,
+      handledByGameTemplate = comp.objective__templateName,
+      currentValue          = comp.objective__currentValue,
+      requireValue          = comp.objective__requireValue,
+      contractType          = comp.objective__contractType,
+      requireExtraction     = comp.objective__requireExtraction,
+      blockExtraction       = comp.objective__blockExtractionWhenIncomplete
+      params                = comp.objective__params.getAll()
+        .reduce(function(res, param) {
+          if (param.name in res)
+            res[param.name].append(param.value)
+          else
+            res[param.name] <- [param.value]
+          return res
+        }, {}),
+      id                    = comp.objective__id,
+      failed                = comp.objective__isFailed,
+      completed             = comp.objective__isCompleted,
+      isSecretObjective     = comp.secretObjective != null
+      itemTags              = "+".join(comp.objective__itemTags?.getAll() ?? [])
+    })
+
+    dispatchColorsAndSort(v)
+  })
+  addnObjective(comp.objective__id)
+}
+
+function deleteObjective(comp){
+  local idx = objectives.get().findindex(@(obj) obj.id == comp.objective__id)
+  if (idx == null)
+    return
+  objectives.mutate(function(v) {
+    v.remove(idx)
+  })
+  deleteObjectives([comp.objective__id])
+}
+
+function updateObjective(comp){
+  objectives.mutate(function(values){
+    foreach(v in values){
+      if (v.id != comp.objective__id)
+        continue
+      v.currentValue = comp.objective__currentValue
+      v.requireValue = comp.objective__requireValue
+      v.failed = comp.objective__isFailed
+      v.completed = comp.objective__isCompleted
+      v.name = comp.objective__name
+      break
+    }
+    values.sort(sortObjectives)
+  })
+  hiliteObjective(comp.objective__id)
+}
+
+ecs.register_es("objectives_state",
+  {
+    [["onInit","onChange"]] = function(eid, comp){
+      if (comp.objective__playerEid != localPlayerEid.get())
+        return
+
+      let doesObjectiveExist = objectives.get().findindex(@(obj) obj.id == comp.objective__id) != null
+      if (doesObjectiveExist){
+        if (!comp.objective__show){
+          deleteObjective(comp)
+          return
+        }
+        updateObjective(comp)
+        return
+      }
+
+      if (comp.objective__show)
+        addObjective(eid, comp)
+    }
+    onDestroy = function(_eid, comp){
+      deleteObjective(comp)
+    }
+  },
+  {
+    comps_track = [
+      ["objective__currentValue", ecs.TYPE_INT],
+      ["objective__requireValue", ecs.TYPE_INT],
+      ["objective__isFailed", ecs.TYPE_BOOL],
+      ["objective__isCompleted", ecs.TYPE_BOOL],
+      ["objective__show", ecs.TYPE_BOOL],
+      ["objective__params", ecs.TYPE_ARRAY],
+      ["objective__name", ecs.TYPE_STRING],
+    ],
+    comps_ro = [
+      ["objective__contractType", ecs.TYPE_INT],
+      ["objective__playerEid", ecs.TYPE_EID],
+      ["objective__id", ecs.TYPE_STRING],
+      ["objective__templateName", ecs.TYPE_STRING],
+      ["objective__requireExtraction", ecs.TYPE_BOOL],
+      ["objective__requireFullCompleteInSession", ecs.TYPE_BOOL],
+      ["objective__isReported", ecs.TYPE_BOOL],
+      ["secretObjective", ecs.TYPE_TAG, null],
+      ["objective__blockExtractionWhenIncomplete", ecs.TYPE_BOOL],
+      ["objective__itemTags", ecs.TYPE_STRING_LIST, null]
+    ]
+  }
+)
+
+let getPlayerObjectivesQuery = ecs.SqQuery("getPlayerObjectivesQuery", {
+  comps_ro = [
+    ["objective__currentValue", ecs.TYPE_INT],
+    ["objective__isFailed", ecs.TYPE_BOOL],
+    ["objective__isCompleted", ecs.TYPE_BOOL],
+    ["objective__show", ecs.TYPE_BOOL],
+    ["objective__requireValue", ecs.TYPE_INT],
+    ["objective__contractType", ecs.TYPE_INT],
+    ["objective__playerEid", ecs.TYPE_EID],
+    ["objective__params", ecs.TYPE_ARRAY],
+    ["objective__id", ecs.TYPE_STRING],
+    ["objective__name", ecs.TYPE_STRING],
+    ["objective__templateName", ecs.TYPE_STRING],
+    ["objective__requireExtraction", ecs.TYPE_BOOL],
+    ["objective__requireFullCompleteInSession", ecs.TYPE_BOOL],
+    ["objective__isReported", ecs.TYPE_BOOL],
+    ["secretObjective", ecs.TYPE_TAG, null],
+    ["objective__blockExtractionWhenIncomplete", ecs.TYPE_BOOL],
+    ["objective__itemTags", ecs.TYPE_STRING_LIST, null]
+  ]
+})
+
+
+let addAllPlayerObjectives = function(player_eid) {
+  getPlayerObjectivesQuery.perform(function(eid, comp){
+    if (comp.objective__playerEid == player_eid && comp.objective__show)
+      addObjective(eid, comp)
+  })
+}
+
+
+localPlayerEid.subscribe_with_nasty_disregard_of_frp_update(function(eid){
+  if (eid != ecs.INVALID_ENTITY_ID && objectives.get().len() == 0){
+    addAllPlayerObjectives(eid)
+    return
+  }
+
+  local idsForDelete = []
+  objectives.get().map(@(objective) idsForDelete.append(objective.id))
+  deleteObjectives(idsForDelete)
+  objectives.set([])
+  if (eid != ecs.INVALID_ENTITY_ID)
+    addAllPlayerObjectives(eid)
+})
+
+
+ecs.register_es("quick_use_objective_track_es",
+  {
+    [["onInit","onChange"]] = @(_eid, comp) quickUseObjective.set(comp.quick_use__objective)
+  },
+  {
+    comps_track=[["quick_use__objective", ecs.TYPE_STRING]]
+    comps_rq=["hero"]
+  }
+)
 
 let color_complete = Color(90,160,100)
 let color_complete_bright = mul_color(GreenSuccessColor, 0.8, 2)
@@ -184,13 +468,6 @@ let objectiveDescription = @(text){
   margin = static [0, 0, 0, idxMarkHeight + titleGap]
   text
 }.__update(sub_txt, descriptionStyle)
-
-
-let objectiveStates = Watched({})
-let showDailyRewardObjectives = Watched(false)
-
-let fadeoutTime = 2
-let closeObjectiveTime = fadeoutTime - 0.1
 
 
 
@@ -508,12 +785,6 @@ function mkAnimations(trigger) {
   ]
 }
 
-function setShowAllObjectives(value) {
-  showDailyRewardObjectives.set(value)
-  log($"show all objectives.set({value}): have {objectiveStates.get().len()} objective states")
-  objectiveStates.mutate(@(states) states.each(@(state) state.show = value))
-}
-
 
 let areTooManyContacts = @(contracts) contracts.len() > 10
 
@@ -687,54 +958,6 @@ function objectivesHud() {
   }
 }
 
-function closeWnd() {
-  setShowAllObjectives(false)
-}
-
-function startFadeout() {
-  objectiveStates.get().each(@(_, id) anim_start(objectiveStates.get()[id].fadeout))
-  gui_scene.setTimeout(closeObjectiveTime, closeWnd)
-}
-
-function showObjectives(timeTillHide = 5) {
-  gui_scene.clearTimer(closeWnd)
-  gui_scene.clearTimer(startFadeout)
-  objectiveStates.get().each(function(_, id) {
-    gui_scene.clearTimer(objectiveStates.get()[id].hide)
-    anim_request_stop(objectiveStates.get()[id].fadeout)
-  })
-  setShowAllObjectives(true)
-  if(timeTillHide < 0)
-    return
-  gui_scene.setTimeout(timeTillHide, startFadeout)
-}
-
-function closeObjective(id) {
-  objectiveStates.mutate(function(states) {
-    let state = states?[id]
-    if (!state)
-      return
-    state.show = false
-  })
-}
-
-function startObjectiveFadeout(id) {
-  let objectiveState = objectiveStates.get()?[id]
-  if (!objectiveState)
-    return
-  anim_start(objectiveState.fadeout)
-  gui_scene.setTimeout(closeObjectiveTime, @() closeObjective(id), objectiveStates.get()[id].hide)
-}
-
-function showObjective(id, timeTillHide = 5) {
-  gui_scene.clearTimer(objectiveStates.get()[id].hide)
-  gui_scene.clearTimer(objectiveStates.get()[id].fadeout)
-  objectiveStates.mutate(@(states) states[id].show = true)
-  if (timeTillHide < 0)
-    return
-  gui_scene.setTimeout(timeTillHide, @() startObjectiveFadeout(id), objectiveStates.get()[id].fadeout)
-}
-
 console_register_command(function(){
   let idx = rand() % objectives.get().len()
   showObjective(objectives.get()[idx].id)
@@ -745,16 +968,6 @@ ecs.register_es("show_objectives_on_spawn_es",
   {comps_rq = ["watchedByPlr"]}
 )
 
-eventbus_subscribe("objectives.update_state", function(changes) {
-  changes.deletedObjectives.each(@(id) objectiveStates.mutate(@(states) states.$rawdelete(id)))
-  objectiveStates.modify(@(states) states.__merge(changes.addedObjectives.map(@(id) [id, {
-    show = false
-    fadeout = $"fadeoutObjective_{id}"
-    hide = $"hideObjective_{id}"
-  }]).totable()))
-  changes.updatedObjectives.extend(changes.addedObjectives).each(@(id) showObjective(id, 10))
-})
-
 function stopAllObjectiveHudTimers() {
   gui_scene.clearTimer(closeWnd)
   gui_scene.clearTimer(startFadeout)
@@ -763,6 +976,10 @@ function stopAllObjectiveHudTimers() {
 }
 
 return {
+  objectives
+  quickUseObjective
+  dispatchColorsAndSort
+
   objectivesHud
   setShowAllObjectives
   stopAllObjectiveHudTimers

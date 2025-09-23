@@ -3,7 +3,7 @@ from "%ui/components/colors.nut" import TextNormal, GreenSuccessColor, RedWarnin
   BtnBgNormal, ItemBgColor, InfoTextValueColor, ConsoleFillColor, BtnBdDisabled
 from "%ui/hud/menus/nexus_stats.nut" import mkPlayerStats, statsHeader, mkMvpPlayerBlock, getScoresTbl
 from "%ui/mainMenu/debriefing_common_components.nut" import mkChronotracesList, mkPlayerExpBlock, DEF_ANIM_DURATION, openRewardWidnow, showUnseenRewardsMessage
-from "%ui/fonts_style.nut" import body_txt, fontawesome, h2_txt, h1_txt
+from "%ui/fonts_style.nut" import body_txt, fontawesome, h2_txt, h1_txt, tiny_txt
 from "eventbus" import eventbus_send
 from "%dngscripts/sound_system.nut" import sound_play
 from "%ui/components/commonComponents.nut" import mkConsoleScreen, mkText, mkTitleString, mkTooltiped, mkTabs
@@ -25,7 +25,11 @@ from "tiledMap.behaviors" import TiledMap
 from "%ui/mainMenu/baseDebriefingSample.nut" import loadNexusDebriefingSample
 import "%ui/components/fontawesome.map.nut" as fa
 import "%ui/control/gui_buttons.nut" as JB
+import "%ui/complaints/complainWnd.nut" as complain
+import "%ui/components/contextMenu.nut" as contextMenu
 from "%ui/mainMenu/baseDebriefingMap.nut" import mapSize
+from "%ui/mainMenu/baseDebriefingLog.nut" import debriefingSessionId
+from "%ui/components/cursors.nut" import setTooltip
 
 let { lastNexusResult } = require("%ui/profile/profileState.nut")
 let userInfo = require("%sqGlob/userInfo.nut")
@@ -235,6 +239,7 @@ function mkNexusDebriefingMenu() {
     let allyTeamArr = allyTeam.keys().sort(@(a, b) sortByScore(a, b, allyTeam))
     let enemyTeamArr = enemyTeam.keys().sort(@(a, b) sortByScore(a, b, enemyTeam))
     let delayIdx = mvps.len() <= 0 ? 4 : 5
+    let complaintAction = @(userId, name) complain(debriefingSessionId.get().tostring(), userId, name)
     return {
       watch = lastNexusResult
       rendObj = ROBJ_BOX
@@ -263,32 +268,52 @@ function mkNexusDebriefingMenu() {
             makeVertScrollExt({
               size = FLEX_H
               flow = FLOW_VERTICAL
-              children = allyTeamArr.map(@(eid, idx) @() {
-                watch = userInfo
-                rendObj = ROBJ_SOLID
-                size = FLEX_H
-                padding = static [hdpx(10), hdpx(8)]
-                color = eid == userInfo.get().userId ? ItemBgColor
-                  : mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
-                flow = FLOW_HORIZONTAL
-                gap = static { size = flex() }
-                children = [
-                  @() {
-                    watch = [userInfo, isStreamerMode, playerRandName]
+              children = allyTeamArr.map(function(eid, idx) {
+                let stateFlags = Watched(0)
+                return function() {
+                  let canCompaint = eid != userInfo.get().userId
+                    && eid != null
+                    && (allyTeam[eid]?.name ?? "") != ""
+                    && debriefingSessionId.get() != null
+                  return {
+                    watch = [userInfo, stateFlags, debriefingSessionId]
+                    rendObj = ROBJ_BOX
+                    size = FLEX_H
+                    padding = static [hdpx(10), hdpx(8)]
+                    fillColor = eid == userInfo.get().userId ? ItemBgColor
+                      : mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
+                    borderWidth = (stateFlags.get() & S_HOVER) && canCompaint ? hdpx(1) : 0
                     flow = FLOW_HORIZONTAL
-                    gap = static hdpx(10)
+                    gap = static { size = flex() }
+                    behavior = Behaviors.Button
+                    onElemState = @(sf) stateFlags.set(sf)
+                    onClick = function(event) {
+                      if (canCompaint)
+                        contextMenu(event.screenX + 1, event.screenY + 1, fsh(30), [{
+                          text = $"{loc("btn/complain")} {remap_nick(allyTeam[eid].name)}"
+                          action = @() complaintAction(eid, allyTeam[eid].name)
+                        }])
+                    }
+                    onHover = @(on) setTooltip(on && canCompaint ? $"{loc("btn/complain")} {remap_nick(allyTeam[eid].name)}" : null)
                     children = [
-                      mkText(idx + 1, {
-                        size = static [hdpx(40), SIZE_TO_CONTENT]
-                        halign = ALIGN_CENTER
-                      }.__update(body_txt))
-                      isStreamerMode.get() && userInfo.get().name == remap_nick(allyTeam[eid].name)
-                        ? mkText(playerRandName.get(), body_txt)
-                        : mkText(remap_nick(allyTeam[eid].name), body_txt)
+                      @() {
+                        watch = [userInfo, isStreamerMode, playerRandName]
+                        flow = FLOW_HORIZONTAL
+                        gap = static hdpx(10)
+                        children = [
+                          mkText(idx + 1, {
+                            size = static [hdpx(40), SIZE_TO_CONTENT]
+                            halign = ALIGN_CENTER
+                          }.__update(body_txt))
+                          isStreamerMode.get() && userInfo.get().name == remap_nick(allyTeam[eid].name)
+                            ? mkText(playerRandName.get(), body_txt)
+                            : mkText(remap_nick(allyTeam[eid].name), body_txt)
+                        ]
+                      }
+                      mkPlayerStats(allyTeam?[eid].stats ?? defStats)
                     ]
                   }
-                  mkPlayerStats(allyTeam?[eid].stats ?? defStats)
-                ]
+                }
               })
             }, { styling = thinAndReservedPaddingStyle })
           ]
@@ -304,27 +329,47 @@ function mkNexusDebriefingMenu() {
             makeVertScrollExt({
               size = FLEX_H
               flow = FLOW_VERTICAL
-              children = enemyTeamArr.map(@(eid, idx) @() {
-                rendObj = ROBJ_SOLID
-                size = FLEX_H
-                padding = static [hdpx(10), hdpx(8)]
-                color = mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
-                flow = FLOW_HORIZONTAL
-                gap = static { size = flex() }
-                children = [
-                  {
+              children = enemyTeamArr.map(function(eid, idx) {
+                let stateFlags = Watched(0)
+                return function() {
+                  let canCompaint = eid != null
+                    && (enemyTeam[eid]?.name ?? "") != ""
+                    && debriefingSessionId.get() != null
+                  return {
+                    watch = [stateFlags, debriefingSessionId]
+                    rendObj = ROBJ_BOX
+                    size = FLEX_H
+                    padding = static [hdpx(10), hdpx(8)]
+                    fillColor = mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
                     flow = FLOW_HORIZONTAL
-                    gap = static hdpx(10)
+                    gap = static { size = flex() }
+                    borderWidth = (stateFlags.get() & S_HOVER) && canCompaint ? hdpx(1) : 0
+                    behavior = Behaviors.Button
+                    onElemState = @(sf) stateFlags.set(sf)
+                    onClick = function(event) {
+                      if (canCompaint)
+                        contextMenu(event.screenX + 1, event.screenY + 1, fsh(30), [{
+                          text = $"{loc("btn/complain")} {remap_nick(enemyTeam[eid].name)}"
+                          action = @() complaintAction(eid, enemyTeam[eid].name)
+                        }])
+                    }
+                    onHover = @(on) setTooltip(on && canCompaint ? $"{loc("btn/complain")} {remap_nick(enemyTeam[eid].name)}" : null)
                     children = [
-                      mkText(idx + 1, {
-                        size = static [hdpx(40), SIZE_TO_CONTENT]
-                        halign = ALIGN_CENTER
-                      }.__update(body_txt))
-                      mkText(remap_nick(enemyTeam[eid].name), body_txt)
+                      {
+                        flow = FLOW_HORIZONTAL
+                        gap = static hdpx(10)
+                        children = [
+                          mkText(idx + 1, {
+                            size = static [hdpx(40), SIZE_TO_CONTENT]
+                            halign = ALIGN_CENTER
+                          }.__update(body_txt))
+                          mkText(remap_nick(enemyTeam[eid].name), body_txt)
+                        ]
+                      }
+                      mkPlayerStats(enemyTeam?[eid].stats ?? defStats)
                     ]
                   }
-                  mkPlayerStats(enemyTeam?[eid].stats ?? defStats)
-                ]
+                }
               })
             }, { styling = thinAndReservedPaddingStyle })
           ]
@@ -488,8 +533,9 @@ function mkNexusDebriefingMenu() {
   }, loc("baseDebriefing/timeTooltip"), static { hplace = ALIGN_RIGHT })
 
   function windowTitle() {
-    let { isWinner=false, gameDuration = 0, battleAreaInfo = {} } = lastNexusResult.get()
+    let { isWinner=false, gameDuration = 0, battleAreaInfo = {}, sessionId = null } = lastNexusResult.get()
     let { raidName = "" } = battleAreaInfo
+    debriefingSessionId.set(sessionId)
     let headerColor = isWinner ? GreenSuccessColor : RedWarningColor
     local text = isWinner ? loc("baseDebriefing/successfulRaid") : loc("baseDebriefing/unsuccessfulRaid")
     if (raidName != "") {
@@ -564,11 +610,25 @@ function mkNexusDebriefingMenu() {
       eventbus_send("profile_server.mark_base_debriefing_shown", {})
       showStatsAnimations.set(true)
       showRewardsAnimations.set(false)
+      debriefingSessionId.set(null)
       if (!haveSeenRewards.get())
         showUnseenRewardsMessage()
       haveSeenRewards.set(true)
     }
-    children = mkConsoleScreen(playerTrackWindow)
+    children = [
+      mkConsoleScreen(playerTrackWindow)
+      function() {
+        if (debriefingSessionId.get() == null)
+          return { watch = debriefingSessionId }
+        return {
+          watch = debriefingSessionId
+          hplace = ALIGN_LEFT
+          vplace = ALIGN_BOTTOM
+          pos = [hdpx(10), hdpx(3)]
+          children = mkText(debriefingSessionId.get(), { color = Color(30,30,30,2) }.__merge(tiny_txt))
+        }
+      }
+    ]
   }, "", null, windowTitle)
 
   return {

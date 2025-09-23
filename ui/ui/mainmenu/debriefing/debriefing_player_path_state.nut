@@ -13,7 +13,7 @@ let playerPath = Computed(function() {
   )
     return null
 
-  let trackPoints = lastBattleResult.get()?.trackPoints ?? journalBattleResult.get().trackPoints
+  let trackPoints = journalBattleResult.get()?.trackPoints ?? lastBattleResult.get()?.trackPoints ?? []
   if (trackPoints.len() < 2)
     return null
 

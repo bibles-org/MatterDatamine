@@ -41,7 +41,8 @@ from "%ui/mainMenu/currencyIcons.nut" import monolithTokensTextIcon, creditsText
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
-let { marketItems, playerStats, playerProfileMonolithTokensCount, playerProfilePremiumCredits, playerProfileAllResearchNodes, allRecipes } = require("%ui/profile/profileState.nut")
+let { marketItems, playerStats, trialData, playerProfileMonolithTokensCount,
+      playerProfilePremiumCredits, playerProfileAllResearchNodes, allRecipes } = require("%ui/profile/profileState.nut")
 let { monolithSelectedLevel, monolithLevelOffers, selectedMonolithUnlock, currentMonolithLevel, permanentMonolithLevelOffers, MonolithMenuId } = require("%ui/mainMenu/monolith/monolith_common.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 let { stashItems, backpackItems, inventoryItems, safepackItems } = require("%ui/hud/state/inventory_items_es.nut")
@@ -646,6 +647,7 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
   let buyOnLvlUnlock = unlockOffer?.itemType == "immidiateAccessAfterLevelUnlocking"
   let price = unlockOffer?.additionalPrice.monolithTokensCount ?? 0
 
+  let lvlBlockedByTrial = trialData.get()?.trialType && !unlockOffer?.trialAvaliable
   let offerBought = Computed(@()
     (playerStats.get()?.purchasedUniqueMarketOffers.findindex(@(v) unlockOffer?.offerId != null && v.tostring() == unlockOffer.offerId) != null) ||
     (buyOnLvlUnlock && levelUnlocked)
@@ -704,6 +706,10 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
         fake?.goTo(fake.id)
       else
         goToMarket()
+      return
+    }
+    if (lvlBlockedByTrial) {
+      showMsgbox({text=loc("market/diabledDueToTrialStatus")})
       return
     }
     if (!levelUnlocked || !canBePurchased.get()) {
@@ -807,7 +813,6 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
       }
     }
   }
-
   function buttonItemName() {
     let hasAlreadyBought = unlockOffer?.offerId != null &&
       playerStats.get()?.purchasedUniqueMarketOffers.findindex(@(offer) offer.tostring() == unlockOffer.offerId) != null
@@ -836,7 +841,7 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
               !showPrice.get() ? null
                 : mkTextArea($"{colorize(monolithTokensColor, monolithTokensTextIcon)}{price}",
                   { size = SIZE_TO_CONTENT }.__merge(body_txt)),
-              (!hasAlreadyBought && (!canBePurchased.get() || !levelUnlocked))
+              (!hasAlreadyBought && (!canBePurchased.get() || !levelUnlocked || lvlBlockedByTrial))
                 ? mkStatusIcon("lock", RedWarningColor)
                 : null
             ]
@@ -1040,7 +1045,8 @@ let mkNextLevelButton = @(levelData) function() {
     lvlBought = playerStats.get()?.purchasedUniqueMarketOffers.findindex(@(v) v.tostring() == levelData.offerId) != null
   }
   let requireAccessLevel = (levelData?.requirements.monolithAccessLevel ?? 0)
-  let lvlAvailable = requireAccessLevel <= currentMonolithLevel.get()
+  let lvlBlockedByTrial = trialData.get()?.trialType && !levelData?.trialAvaliable
+  let lvlAvailable = requireAccessLevel <= currentMonolithLevel.get() && !lvlBlockedByTrial
   let price = levelData?.additionalPrice.monolithTokensCount ?? 0
   let premiumPrice = levelData?.additionalPrice.premiumCreditsCount ?? 0
 
@@ -1051,8 +1057,8 @@ let mkNextLevelButton = @(levelData) function() {
   let notEnoughPremiumMoney = playerProfilePremiumCredits.get() < premiumPrice
   let requirementsMet = isRequirementsMet(levelData)
 
-  let isAccentButton = !(lvlBought || notEnoughMoney || !lvlAvailable || !requirementsMet)
-  let isAccentPremiumButton = !(lvlBought || notEnoughPremiumMoney || !lvlAvailable || !requirementsMet)
+  let isAccentButton = !(lvlBought || notEnoughMoney || !lvlAvailable || !requirementsMet || lvlBlockedByTrial)
+  let isAccentPremiumButton = !(lvlBought || notEnoughPremiumMoney || !lvlAvailable || !requirementsMet || lvlBlockedByTrial)
 
   let priceStrings = $"{colorize(monolithTokensColor, monolithTokensTextIcon)}{price}"
   let premiumPriceStrings = $"{colorize(premiumColor, premiumCreditsTextIcon)}{premiumPrice}"
@@ -1088,7 +1094,7 @@ let mkNextLevelButton = @(levelData) function() {
       vplace = ALIGN_CENTER
       hplace = ALIGN_CENTER
       children = [
-        mkText(loc("monolith/locked"), { color = RedWarningColor }.__update(h2_txt))
+        mkText( lvlBlockedByTrial ? loc("market/diabledDueToTrialStatus") : loc("monolith/locked"), { color = RedWarningColor }.__update(h2_txt))
         mkStatusIcon("close", RedWarningColor)
       ]
     },
@@ -1180,7 +1186,7 @@ let mkNextLevelButton = @(levelData) function() {
   )
 
   return {
-    watch = [playerStats, stashItems, backpackItems, inventoryItems, safepackItems, currentMonolithLevel]
+    watch = [playerStats, stashItems, backpackItems, inventoryItems, safepackItems, currentMonolithLevel, trialData]
     size = static [ flex(), hdpx(94) ]
     flow = FLOW_HORIZONTAL
     gap = hdpx(6)

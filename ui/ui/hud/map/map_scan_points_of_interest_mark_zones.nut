@@ -2,17 +2,15 @@ import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 from "dasevents" import EventScanPointsOfInterest
 from "math" import max, min
-
 import "%ui/hud/map/map_hover_hint.nut" as mapHoverableMarker
 from "%ui/hud/objectives/objective_components.nut" import mkObjectiveIdxMark
 from "%ui/components/colors.nut" import colorblindPalette
 from "%ui/hud/objectives/objective_components.nut" import color_common
 from "%ui/helpers/timers.nut" import mkCountdownTimer
 from "net" import get_sync_time
-
 from "%sqGlob/dasenums.nut" import HumanScanPointType
 
-let { objectives } = require("%ui/hud/state/objectives_vars.nut")
+let { objectives } = require("%ui/hud/objectives/objectives.nut")
 
 let { currentMapVisibleRadius } = require("%ui/hud/map/map_state.nut")
 

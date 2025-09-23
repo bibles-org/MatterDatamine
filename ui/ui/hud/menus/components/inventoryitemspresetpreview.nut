@@ -11,7 +11,6 @@ import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
 let { previewPreset, previewPresetCallbackOverride } = require("%ui/equipPresets/presetsState.nut")
-let { defaultVolume } = require("%ui/hud/state/inventory_common_es.nut")
 let { HERO_ITEM_CONTAINER, BACKPACK0, SAFEPACK } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
 
 
@@ -228,8 +227,10 @@ function mkInventoryPresetPreview(inventoryBlockName, list_type, actions = null,
 }
 
 function mkHeroInventoryPresetPreview(actions=null, visualYSize = null) {
+  let militant = ecs.g_entity_mgr.getTemplateDB().getTemplateByName("militant_inventory") 
+  let myItemsCapacity = militant?.getCompValNullable("human_inventory__maxVolume") ?? 0
   let capacity = Computed(function() {
-    local cap = defaultVolume.get()
+    local cap = myItemsCapacity
     let itemTemplate = previewPreset.get()?.pouch.itemTemplate
     if (itemTemplate) {
       let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(itemTemplate)

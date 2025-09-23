@@ -58,7 +58,7 @@ let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
 let { canModifyInventory } = require("%ui/hud/state/inventory_common_es.nut")
 let { previewPreset } = require("%ui/equipPresets/presetsState.nut")
 let { shopPresetToPurchase } = require("%ui/equipPresets/presetsButton.nut")
-let { marketItems, playerProfileCreditsCount, playerStats, playerBaseState } = require("%ui/profile/profileState.nut")
+let { marketItems, playerProfileCreditsCount, playerStats, playerBaseState, trialData } = require("%ui/profile/profileState.nut")
 let { equipment } = require("%ui/hud/state/equipment.nut")
 let { stashEid } = require("%ui/state/allItems.nut")
 let { isGamepad } = require("%ui/control/active_controls.nut")
@@ -964,7 +964,7 @@ function mkDummyContextMenuRow(rowData) {
   })
 }
 
-function getPurchaseItem(item, playerStat) {
+function getPurchaseItem(item, playerStat, trial) {
   let { noSuitableItemForPresetFoundCount = 0, attachments = {} } = item
   if (noSuitableItemForPresetFoundCount == 0)
     return null
@@ -975,10 +975,10 @@ function getPurchaseItem(item, playerStat) {
   local { reqMoney = -1 } = marketItem
   if (reqMoney <= 0)
     return null
-  if (!isLotAvailable(marketItem, playerStat))
+  if (!isLotAvailable(marketItem, playerStat, trial))
     return null
   if (attachments.len() > 0)
-    reqMoney += getWeaponModsPrice(marketItem, attachments, playerStat)
+    reqMoney += getWeaponModsPrice(marketItem, attachments, playerStat, trial)
   return { reqMoney, lot }
 }
 
@@ -1016,10 +1016,11 @@ function showItemContextMenu(item, listTypeName, event = null) {
     return
   contextHoveredData.set(item)
   let playerStat = playerStats.get()
+  let trial = trialData.get()
   
   let funcList = []
   if (previewPreset.get() != null) {
-    let { lot = null, reqMoney = 0 } = getPurchaseItem(item, playerStat)
+    let { lot = null, reqMoney = 0 } = getPurchaseItem(item, playerStat, trial)
     let { countPerStack = 1, noSuitableItemForPresetFoundCount = 0 } = item
     if (noSuitableItemForPresetFoundCount != null) {
       let itemsToPurchase = countPerStack > 1 ?

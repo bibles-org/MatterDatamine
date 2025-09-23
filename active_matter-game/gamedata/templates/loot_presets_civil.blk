@@ -142,7 +142,7 @@ kitchen_valuable_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="empty_loot_preset"
-      weight:r=5
+      weight:r=4
     }
 
     "item:object"{
@@ -174,7 +174,7 @@ kitchen_valuable_africa_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="empty_loot_preset"
-      weight:r=5
+      weight:r=4
     }
 
     "item:object"{
@@ -196,7 +196,7 @@ kitchen_valuable_africa_subpreset{
 
 kitchen_shelf_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=2, 3
+  loot_preset__numSamples:ip2=3, 4
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -229,7 +229,7 @@ kitchen_shelf_loot_preset{
 
 kitchen_shelf_pve_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=1, 2
+  loot_preset__numSamples:ip2=3, 4
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -262,7 +262,7 @@ kitchen_shelf_pve_loot_preset{
 
 kitchen_shelf_africa_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=2, 3
+  loot_preset__numSamples:ip2=3, 4
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -295,7 +295,7 @@ kitchen_shelf_africa_loot_preset{
 
 kitchen_shelf_africa_pve_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=1, 2
+  loot_preset__numSamples:ip2=3, 4
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -672,7 +672,7 @@ home_valuable_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="empty_loot_preset"
-      weight:r=5
+      weight:r=4
     }
 
     "item:object"{
@@ -722,7 +722,7 @@ home_valuable_subpreset{
 
     "item:object"{
       sub_preset:t="keys_loot_preset"
-      weight:r=0.5
+      weight:r=0.75
     }
   }
 }
@@ -1123,7 +1123,7 @@ home_valuable_africa_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="empty_loot_preset"
-      weight:r=5
+      weight:r=4
     }
 
     "item:object"{
@@ -1404,27 +1404,27 @@ industrial_valuable_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="empty_loot_preset"
-      weight:r=5
+      weight:r=4
     }
 
     "item:object"{
       sub_preset:t="calculator_filler_loot_subpreset"
-      weight:r=1
+      weight:r=5
     }
 
     "item:object"{
       sub_preset:t="camera_filler_loot_subpreset"
-      weight:r=1
+      weight:r=5
     }
 
     "item:object"{
       sub_preset:t="tape_player_filler_loot_subpreset"
-      weight:r=1
+      weight:r=5
     }
 
     "item:object"{
       sub_preset:t="airplane_clocks_filler_loot_subpreset"
-      weight:r=1
+      weight:r=5
     }
 
     "item:object"{
@@ -1464,7 +1464,7 @@ industrial_valuable_subpreset{
 
     "item:object"{
       sub_preset:t="keys_loot_preset"
-      weight:r=0.5
+      weight:r=0.75
     }
   }
 }
@@ -1476,22 +1476,22 @@ industrial_valuable_africa_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="empty_loot_preset"
-      weight:r=5
+      weight:r=4
     }
 
     "item:object"{
       sub_preset:t="calculator_filler_loot_subpreset"
-      weight:r=1
+      weight:r=5
     }
 
     "item:object"{
       sub_preset:t="camera_filler_loot_subpreset"
-      weight:r=1
+      weight:r=5
     }
 
     "item:object"{
       sub_preset:t="tape_player_filler_loot_subpreset"
-      weight:r=1
+      weight:r=5
     }
 
     "item:object"{
@@ -1716,7 +1716,7 @@ medicine_junk_subpreset{
 
 civil_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=2, 3
+  loot_preset__numSamples:ip2=3, 4
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -1738,11 +1738,6 @@ civil_loot_preset{
     "item:object"{
       sub_preset:t="home_small_junk_subpreset"
       weight:r=2
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_junk_subpreset"
-      weight:r=1
     }
 
     "item:object"{
@@ -1769,7 +1764,7 @@ civil_loot_preset{
 
 civil_pve_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=2, 3
+  loot_preset__numSamples:ip2=3, 4
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -1791,11 +1786,6 @@ civil_pve_loot_preset{
     "item:object"{
       sub_preset:t="home_small_junk_subpreset"
       weight:r=2
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_junk_subpreset"
-      weight:r=1
     }
 
     "item:object"{
@@ -1822,7 +1812,7 @@ civil_pve_loot_preset{
 
 civil_loot_preset_big{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=4, 5
+  loot_preset__numSamples:ip2=4, 6
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -1833,7 +1823,7 @@ civil_loot_preset_big{
 
     "item:object"{
       sub_preset:t="home_valuable_subpreset"
-      weight:r=0.25
+      weight:r=0.33
     }
 
     "item:object"{
@@ -1859,11 +1849,6 @@ civil_loot_preset_big{
     "item:object"{
       sub_preset:t="home_small_junk_subpreset"
       weight:r=2
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_junk_subpreset"
-      weight:r=1
     }
 
     "item:object"{
@@ -1900,13 +1885,13 @@ civil_loot_preset_big{
 
 civil_pve_loot_preset_big{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=3, 4
+  loot_preset__numSamples:ip2=4, 5
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="home_valuable_subpreset"
-      weight:r=0.5
+      weight:r=0.75
     }
 
     "item:object"{
@@ -1932,11 +1917,6 @@ civil_pve_loot_preset_big{
     "item:object"{
       sub_preset:t="home_small_junk_subpreset"
       weight:r=2
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_junk_subpreset"
-      weight:r=1
     }
 
     "item:object"{
@@ -1973,7 +1953,7 @@ civil_pve_loot_preset_big{
 
 civil_africa_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=2, 3
+  loot_preset__numSamples:ip2=3, 4
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -1995,11 +1975,6 @@ civil_africa_loot_preset{
     "item:object"{
       sub_preset:t="home_small_africa_subpreset"
       weight:r=2
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_africa_subpreset"
-      weight:r=1
     }
 
     "item:object"{
@@ -2026,13 +2001,13 @@ civil_africa_loot_preset{
 
 civil_africa_pve_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=2, 3
+  loot_preset__numSamples:ip2=3, 4
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="home_valuable_africa_subpreset"
-      weight:r=0.5
+      weight:r=0.75
     }
 
     "item:object"{
@@ -2048,11 +2023,6 @@ civil_africa_pve_loot_preset{
     "item:object"{
       sub_preset:t="home_small_africa_subpreset"
       weight:r=2
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_africa_subpreset"
-      weight:r=1
     }
 
     "item:object"{
@@ -2079,7 +2049,7 @@ civil_africa_pve_loot_preset{
 
 civil_africa_loot_preset_big{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=4, 5
+  loot_preset__numSamples:ip2=4, 6
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -2090,7 +2060,7 @@ civil_africa_loot_preset_big{
 
     "item:object"{
       sub_preset:t="home_valuable_africa_subpreset"
-      weight:r=0.25
+      weight:r=0.5
     }
 
     "item:object"{
@@ -2116,11 +2086,6 @@ civil_africa_loot_preset_big{
     "item:object"{
       sub_preset:t="home_small_africa_subpreset"
       weight:r=2
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_africa_subpreset"
-      weight:r=1
     }
 
     "item:object"{
@@ -2163,7 +2128,7 @@ civil_africa_pve_loot_preset_big{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="home_valuable_africa_subpreset"
-      weight:r=0.5
+      weight:r=0.75
     }
 
     "item:object"{
@@ -2189,11 +2154,6 @@ civil_africa_pve_loot_preset_big{
     "item:object"{
       sub_preset:t="home_small_africa_subpreset"
       weight:r=2
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_africa_subpreset"
-      weight:r=1
     }
 
     "item:object"{
@@ -2230,7 +2190,7 @@ civil_africa_pve_loot_preset_big{
 
 industrial_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=2, 3
+  loot_preset__numSamples:ip2=3, 4
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -2250,11 +2210,6 @@ industrial_loot_preset{
     }
 
     "item:object"{
-      sub_preset:t="industrial_small_junk_subpreset"
-      weight:r=1
-    }
-
-    "item:object"{
       sub_preset:t="electronics_junk_subpreset"
       weight:r=2
     }
@@ -2262,11 +2217,6 @@ industrial_loot_preset{
     "item:object"{
       sub_preset:t="electronics_junk_subpreset"
       weight:r=1
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_junk_subpreset"
-      weight:r=0.5
     }
 
     "item:object"{
@@ -2283,7 +2233,7 @@ industrial_loot_preset{
 
 industrial_pve_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=2, 3
+  loot_preset__numSamples:ip2=3, 4
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -2303,11 +2253,6 @@ industrial_pve_loot_preset{
     }
 
     "item:object"{
-      sub_preset:t="industrial_small_junk_subpreset"
-      weight:r=1
-    }
-
-    "item:object"{
       sub_preset:t="electronics_junk_subpreset"
       weight:r=2
     }
@@ -2315,11 +2260,6 @@ industrial_pve_loot_preset{
     "item:object"{
       sub_preset:t="electronics_junk_subpreset"
       weight:r=1
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_junk_subpreset"
-      weight:r=0.5
     }
 
     "item:object"{
@@ -2336,7 +2276,7 @@ industrial_pve_loot_preset{
 
 industrial_africa_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=2, 3
+  loot_preset__numSamples:ip2=3, 4
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -2356,11 +2296,6 @@ industrial_africa_loot_preset{
     }
 
     "item:object"{
-      sub_preset:t="industrial_small_junk_subpreset"
-      weight:r=1
-    }
-
-    "item:object"{
       sub_preset:t="electronics_junk_subpreset"
       weight:r=2
     }
@@ -2368,11 +2303,6 @@ industrial_africa_loot_preset{
     "item:object"{
       sub_preset:t="electronics_junk_subpreset"
       weight:r=1
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_junk_subpreset"
-      weight:r=0.5
     }
 
     "item:object"{
@@ -2389,7 +2319,7 @@ industrial_africa_loot_preset{
 
 industrial_africa_pve_loot_preset{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=1, 2
+  loot_preset__numSamples:ip2=3, 4
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -2409,11 +2339,6 @@ industrial_africa_pve_loot_preset{
     }
 
     "item:object"{
-      sub_preset:t="industrial_small_junk_subpreset"
-      weight:r=1
-    }
-
-    "item:object"{
       sub_preset:t="electronics_junk_subpreset"
       weight:r=2
     }
@@ -2421,11 +2346,6 @@ industrial_africa_pve_loot_preset{
     "item:object"{
       sub_preset:t="electronics_junk_subpreset"
       weight:r=1
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_junk_subpreset"
-      weight:r=0.5
     }
 
     "item:object"{
@@ -2442,7 +2362,7 @@ industrial_africa_pve_loot_preset{
 
 industrial_loot_preset_big{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=4, 5
+  loot_preset__numSamples:ip2=4, 6
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -2453,7 +2373,7 @@ industrial_loot_preset_big{
 
     "item:object"{
       sub_preset:t="industrial_valuable_subpreset"
-      weight:r=0.25
+      weight:r=0.5
     }
 
     "item:object"{
@@ -2469,11 +2389,6 @@ industrial_loot_preset_big{
     "item:object"{
       sub_preset:t="industrial_small_junk_subpreset"
       weight:r=2
-    }
-
-    "item:object"{
-      sub_preset:t="industrial_small_junk_subpreset"
-      weight:r=1
     }
 
     "item:object"{
@@ -2493,11 +2408,6 @@ industrial_loot_preset_big{
 
     "item:object"{
       sub_preset:t="electronics_junk_subpreset"
-      weight:r=1
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_junk_subpreset"
       weight:r=1
     }
 
@@ -2526,7 +2436,7 @@ industrial_pve_loot_preset_big{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="industrial_valuable_subpreset"
-      weight:r=0.5
+      weight:r=0.75
     }
 
     "item:object"{
@@ -2542,11 +2452,6 @@ industrial_pve_loot_preset_big{
     "item:object"{
       sub_preset:t="industrial_small_junk_subpreset"
       weight:r=2
-    }
-
-    "item:object"{
-      sub_preset:t="industrial_small_junk_subpreset"
-      weight:r=1
     }
 
     "item:object"{
@@ -2566,11 +2471,6 @@ industrial_pve_loot_preset_big{
 
     "item:object"{
       sub_preset:t="electronics_junk_subpreset"
-      weight:r=1
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_junk_subpreset"
       weight:r=1
     }
 
@@ -2593,7 +2493,7 @@ industrial_pve_loot_preset_big{
 
 industrial_africa_loot_preset_big{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=4, 5
+  loot_preset__numSamples:ip2=4, 6
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -2604,7 +2504,7 @@ industrial_africa_loot_preset_big{
 
     "item:object"{
       sub_preset:t="industrial_valuable_africa_subpreset"
-      weight:r=0.25
+      weight:r=0.5
     }
 
     "item:object"{
@@ -2620,11 +2520,6 @@ industrial_africa_loot_preset_big{
     "item:object"{
       sub_preset:t="industrial_small_junk_subpreset"
       weight:r=2
-    }
-
-    "item:object"{
-      sub_preset:t="industrial_small_junk_subpreset"
-      weight:r=1
     }
 
     "item:object"{
@@ -2644,11 +2539,6 @@ industrial_africa_loot_preset_big{
 
     "item:object"{
       sub_preset:t="electronics_junk_subpreset"
-      weight:r=1
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_junk_subpreset"
       weight:r=1
     }
 
@@ -2677,7 +2567,7 @@ industrial_africa_pve_loot_preset_big{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="industrial_valuable_africa_subpreset"
-      weight:r=0.5
+      weight:r=0.75
     }
 
     "item:object"{
@@ -2693,11 +2583,6 @@ industrial_africa_pve_loot_preset_big{
     "item:object"{
       sub_preset:t="industrial_small_junk_subpreset"
       weight:r=2
-    }
-
-    "item:object"{
-      sub_preset:t="industrial_small_junk_subpreset"
-      weight:r=1
     }
 
     "item:object"{
@@ -2717,11 +2602,6 @@ industrial_africa_pve_loot_preset_big{
 
     "item:object"{
       sub_preset:t="electronics_junk_subpreset"
-      weight:r=1
-    }
-
-    "item:object"{
-      sub_preset:t="home_small_junk_subpreset"
       weight:r=1
     }
 
@@ -2984,43 +2864,43 @@ keys_loot_preset{
 
     "item:object"{
       template_name:t="key_dogorsk_cinema_storage_item"
-      weight:r=1
+      weight:r=0.75
     }
 
     "item:object"{
       template_name:t="key_cargoport_anomaly_crane_item"
-      weight:r=2
+      weight:r=1
     }
 
     "item:object"{
       template_name:t="key_cargoport_anomaly_barge_small_item"
       number:i=2
-      weight:r=2
+      weight:r=1
     }
 
     "item:object"{
       template_name:t="key_cargoport_anomaly_barge_big_item"
-      weight:r=2
+      weight:r=1
     }
 
     "item:object"{
       template_name:t="key_shegolskoe_4_attic_item"
-      weight:r=1
+      weight:r=0.75
     }
 
     "item:object"{
       template_name:t="key_shegolskoe_8_attic_item"
-      weight:r=1
+      weight:r=0.75
     }
 
     "item:object"{
       template_name:t="key_shegolskoe_11_attic_item"
-      weight:r=1
+      weight:r=0.75
     }
 
     "item:object"{
       template_name:t="key_shegolskoe_15_attic_item"
-      weight:r=1
+      weight:r=0.75
     }
   }
 }
@@ -3396,7 +3276,7 @@ civil_loot_coat_preset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="empty_loot_preset"
-      weight:r=5
+      weight:r=1
     }
 
     "item:object"{
@@ -4462,7 +4342,7 @@ encyclopedia_saturated_filler_loot_subpreset{
   }
 }
 
-encyclopedia_filler_loot_subpreset{
+encyclopedia_normal_filler_loot_subpreset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=1, 1
   loot_preset__allowRepeat:b=no
@@ -4527,10 +4407,23 @@ encyclopedia_filler_loot_subpreset{
       template_name:t="item_encyclopedia_l"
       weight:r=1
     }
+  }
+}
+
+encyclopedia_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="encyclopedia_normal_filler_loot_subpreset"
+      weight:r=0.7
+    }
 
     "item:object"{
       sub_preset:t="encyclopedia_saturated_filler_loot_subpreset"
-      weight:r=0.01
+      weight:r=0.3
     }
   }
 }
@@ -4568,7 +4461,7 @@ tape_player_saturated_filler_loot_subpreset{
   }
 }
 
-tape_player_filler_loot_subpreset{
+tape_player_normal_filler_loot_subpreset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=1, 1
   loot_preset__allowRepeat:b=no
@@ -4598,10 +4491,23 @@ tape_player_filler_loot_subpreset{
       template_name:t="item_legend404_tape_recorder_a"
       weight:r=2
     }
+  }
+}
+
+tape_player_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="tape_player_normal_filler_loot_subpreset"
+      weight:r=0.7
+    }
 
     "item:object"{
       sub_preset:t="tape_player_saturated_filler_loot_subpreset"
-      weight:r=0.01
+      weight:r=0.3
     }
   }
 }
@@ -4624,7 +4530,7 @@ camera_saturated_filler_loot_subpreset{
   }
 }
 
-camera_filler_loot_subpreset{
+camera_normal_filler_loot_subpreset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=1, 1
   loot_preset__allowRepeat:b=no
@@ -4639,10 +4545,23 @@ camera_filler_loot_subpreset{
       template_name:t="item_zenit_cam_a"
       weight:r=1
     }
+  }
+}
+
+camera_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="camera_normal_filler_loot_subpreset"
+      weight:r=0.7
+    }
 
     "item:object"{
       sub_preset:t="camera_saturated_filler_loot_subpreset"
-      weight:r=0.01
+      weight:r=0.3
     }
   }
 }
@@ -4683,7 +4602,7 @@ modern_desired_filler_loot_subpreset{
 
     "item:object"{
       sub_preset:t="modern_desired_saturated_filler_loot_subpreset"
-      weight:r=0.01
+      weight:r=0.5
     }
   }
 }
@@ -4961,7 +4880,7 @@ collectible_albums_saturated_filler_loot_subpreset{
   }
 }
 
-collectible_albums_filler_loot_subpreset{
+collectible_albums_normal_filler_loot_subpreset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=1, 1
   loot_preset__allowRepeat:b=no
@@ -4996,10 +4915,23 @@ collectible_albums_filler_loot_subpreset{
       template_name:t="item_stamps_album_c"
       weight:r=0.5
     }
+  }
+}
+
+collectible_albums_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="collectible_albums_normal_filler_loot_subpreset"
+      weight:r=0.7
+    }
 
     "item:object"{
       sub_preset:t="collectible_albums_saturated_filler_loot_subpreset"
-      weight:r=0.01
+      weight:r=0.3
     }
   }
 }
@@ -5159,7 +5091,7 @@ vase_saturated_loot_subpreset{
   }
 }
 
-vase_loot_subpreset{
+vase_normal_loot_subpreset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=1, 1
   loot_preset__allowRepeat:b=no
@@ -5189,10 +5121,23 @@ vase_loot_subpreset{
       template_name:t="item_vase_e"
       weight:r=1
     }
+  }
+}
+
+vase_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="vase_normal_loot_subpreset"
+      weight:r=0.7
+    }
 
     "item:object"{
       sub_preset:t="vase_saturated_loot_subpreset"
-      weight:r=0.01
+      weight:r=0.3
     }
   }
 }
@@ -5215,7 +5160,7 @@ calculator_saturated_filler_loot_subpreset{
   }
 }
 
-calculator_filler_loot_subpreset{
+calculator_normal_filler_loot_subpreset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=1, 1
   loot_preset__allowRepeat:b=no
@@ -5230,10 +5175,23 @@ calculator_filler_loot_subpreset{
       template_name:t="item_mk59_calculator"
       weight:r=1
     }
+  }
+}
+
+calculator_filler_loot_subpreset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+  loot_preset__allowRepeat:b=no
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="calculator_normal_filler_loot_subpreset"
+      weight:r=0.7
+    }
 
     "item:object"{
       sub_preset:t="calculator_saturated_filler_loot_subpreset"
-      weight:r=0.01
+      weight:r=0.3
     }
   }
 }
@@ -5246,17 +5204,17 @@ desired_filler_loot_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="empty_loot_preset"
-      weight:r=1
+      weight:r=0.25
     }
 
     "item:object"{
       sub_preset:t="tape_player_filler_loot_subpreset"
-      weight:r=3
+      weight:r=2
     }
 
     "item:object"{
       sub_preset:t="camera_filler_loot_subpreset"
-      weight:r=3
+      weight:r=1
     }
 
     "item:object"{
@@ -5266,42 +5224,42 @@ desired_filler_loot_subpreset{
 
     "item:object"{
       sub_preset:t="toy_loot_subpreset"
-      weight:r=3
+      weight:r=2
     }
 
     "item:object"{
       sub_preset:t="vhs_filler_loot_subpreset"
-      weight:r=3
+      weight:r=1
     }
 
     "item:object"{
       sub_preset:t="vinyl_filler_loot_subpreset"
-      weight:r=3
+      weight:r=1
     }
 
     "item:object"{
       sub_preset:t="newyear_toys_filler_loot_subpreset"
-      weight:r=3
+      weight:r=1
     }
 
     "item:object"{
       sub_preset:t="collectible_albums_filler_loot_subpreset"
-      weight:r=3
+      weight:r=2
     }
 
     "item:object"{
       sub_preset:t="airplane_clocks_filler_loot_subpreset"
-      weight:r=3
+      weight:r=2
     }
 
     "item:object"{
       sub_preset:t="encyclopedia_filler_loot_subpreset"
-      weight:r=3
+      weight:r=2
     }
 
     "item:object"{
       sub_preset:t="vase_loot_subpreset"
-      weight:r=3
+      weight:r=2
     }
   }
 }
@@ -5314,17 +5272,17 @@ desired_filler_africa_loot_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="empty_loot_preset"
-      weight:r=1
+      weight:r=0.25
     }
 
     "item:object"{
       sub_preset:t="tape_player_filler_loot_subpreset"
-      weight:r=3
+      weight:r=2
     }
 
     "item:object"{
       sub_preset:t="camera_filler_loot_subpreset"
-      weight:r=3
+      weight:r=1
     }
 
     "item:object"{
@@ -5334,37 +5292,37 @@ desired_filler_africa_loot_subpreset{
 
     "item:object"{
       sub_preset:t="toy_loot_subpreset"
-      weight:r=3
+      weight:r=2
     }
 
     "item:object"{
       sub_preset:t="vhs_filler_loot_subpreset"
-      weight:r=3
+      weight:r=1
     }
 
     "item:object"{
       sub_preset:t="cd_filler_loot_subpreset"
-      weight:r=3
+      weight:r=1
     }
 
     "item:object"{
       sub_preset:t="collectible_albums_filler_loot_subpreset"
-      weight:r=3
+      weight:r=2
     }
 
     "item:object"{
       sub_preset:t="airplane_clocks_filler_loot_subpreset"
-      weight:r=3
+      weight:r=2
     }
 
     "item:object"{
       sub_preset:t="vase_loot_subpreset"
-      weight:r=3
+      weight:r=2
     }
 
     "item:object"{
       sub_preset:t="modern_desired_filler_loot_subpreset"
-      weight:r=3
+      weight:r=2
     }
   }
 }

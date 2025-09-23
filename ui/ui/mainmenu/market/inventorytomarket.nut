@@ -3,7 +3,7 @@ from "math" import ceil
 from "%ui/components/colors.nut" import RedWarningColor, BtnTextHighlight
 from "%ui/mainMenu/currencyIcons.nut" import creditsTextIcon, premiumCreditsTextIcon, premiumColor, creditsColor
 from "%ui/profile/profileState.nut" import playerProfileCreditsCount, playerProfilePremiumCredits,
-  marketItems, playerStats
+  marketItems, playerStats, trialData
 import "%ui/components/colorize.nut" as colorize
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
@@ -115,10 +115,12 @@ function getPriceFromLot(lot) {
   }
 }
 
-function isLotAvailable(item, playerStat) {
+function isLotAvailable(item, playerStat, trial) {
   let isAdmin = (playerStat?.unlocks ?? []).findindex(@(v) v == "__ADMIN__") != null
   if (isAdmin)
     return true
+  if (trial?.trialType && !item?.trialAvaliable)
+    return false
   let { reqMoney = 0, buyable = false, additionalPrice = {} } = item
   let isPremium = (additionalPrice?.premiumCreditsCount ?? 0) > 0
   let price = isPremium ? additionalPrice.premiumCreditsCount : reqMoney
@@ -166,7 +168,7 @@ function mkItemPrice(priceData, override = {}) {
   }
 }
 
-function getWeaponModsPrice(weaponMarketItem, attachments, playerStat) {
+function getWeaponModsPrice(weaponMarketItem, attachments, playerStat, trial) {
   local res = 0
 
   foreach (mod in attachments) {
@@ -180,7 +182,7 @@ function getWeaponModsPrice(weaponMarketItem, attachments, playerStat) {
     if (modMarketItem == null)
       continue
 
-    if (!isLotAvailable(weaponMarketItem, playerStat))
+    if (!isLotAvailable(weaponMarketItem, playerStat, trial))
       continue
     let modPrice = getPriceFromLot(modMarketId).price
     let modPriceToAdd = countPerStack > 1
@@ -197,7 +199,7 @@ function getItemPriceToShow(item) {
     return null
 
   let marketItem = marketItems.get()?[lot]
-  if (!isLotAvailable(marketItem, playerStats.get()))
+  if (!isLotAvailable(marketItem, playerStats.get(), trialData.get()))
     return null
 
   let { noSuitableItemForPresetFoundCount = 0, countPerStack = 1, needToShowPrice = false } = item

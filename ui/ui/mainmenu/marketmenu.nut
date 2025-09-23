@@ -45,7 +45,7 @@ let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 let { safeAreaAmount } = require("%ui/options/safeArea.nut")
 let { selectedItem, selectedItemsCategory } = require("%ui/mainMenu/market/marketState.nut")
 let { marketItems, playerStats, playerProfileCreditsCount, playerProfileMonolithTokensCount,
-  playerProfilePremiumCredits } = require("%ui/profile/profileState.nut")
+  playerProfilePremiumCredits, trialData } = require("%ui/profile/profileState.nut")
 let marketCategories = require("%ui/mainMenu/categories/marketCategories.nut")
 let { onSoldierFacompIcon, inStashFacompIcon, inCartFacompIcon } = require("%ui/components/inventoryTypeIcons.nut")
 let { equipment } = require("%ui/hud/state/equipment.nut")
@@ -921,7 +921,10 @@ function mkLockedBuyButton(item) {
         "lock",
         function() {
           let reqs = getRequirements(item, marketItems.get(), playerStats.get(), monolithLevelOffers.get())
-          if (reqs.monolithUnlockName != null)
+          if (trialData.get()?.trialType && !item?.trialAvaliable) {
+            showNotAvailableMsgbox([mkText(loc("market/diabledDueToTrialStatus"), body_txt)])
+          }
+          else if (reqs.monolithUnlockName != null)
             showRequireMonolithUnlock(reqs.strings, reqs.unlocksAtMonolithLevel, reqs.monolithUnlockName, playerStats.get())
           else
             showNotAvailableMsgbox(reqs.strings)
@@ -1246,7 +1249,7 @@ function mkPriceAndBuyCol(item, isInCart, lotAvailable) {
 
 let halfPaddingSize = itemsGap.__merge({ size = [itemsGap.size[0], itemsGap.size[1] / 2]})
 function mkBuyItemRow(item, isInCart = false) {
-  let lotAvailable = Computed(@() isLotAvailable(item, playerStats.get()))
+  let lotAvailable = Computed(@() isLotAvailable(item, playerStats.get(), trialData.get()))
   let watch = [ showOnlyAvailableOffers, lotAvailable ]
   let { id, children = {} } = item
   let { templateName = null } = children?.items[0]
@@ -1379,7 +1382,7 @@ function mkAccentPurchaseButton(item, params = {}) {
   let haveEnoughMoney = Computed(@() isPremium
     ? playerProfilePremiumCredits.get() >= price
     : playerProfileCreditsCount.get() >= price)
-  let lotAvailable = Computed(@() isLotAvailable(item, playerStats.get()))
+  let lotAvailable = Computed(@() isLotAvailable(item, playerStats.get(), trialData.get()))
   let { buyable = false, isPurchaseAndEquip = false } = params
   let currencyIcon = isPremium ? premiumCreditsTextIcon : creditsTextIcon
   let color = isPremium ? premiumColor : creditsColor
@@ -1398,10 +1401,14 @@ function mkAccentPurchaseButton(item, params = {}) {
               let reqs = getRequirements(item, marketItems.get(), playerStats.get(), monolithLevelOffers.get())
               let showMonolithMsgbox = reqs.unlocksAtMonolithLevel != null && playerStats.get().unlocks.findindex(@(v) reqs.monolithUnlockName == v) == null
 
-              if (showMonolithMsgbox)
+              if (trialData.get()?.trialType && !item?.trialAvaliable) {
+                showNotAvailableMsgbox([mkText(loc("market/diabledDueToTrialStatus"), body_txt)])
+              }
+              else if (showMonolithMsgbox)
                 showRequireMonolithUnlock(reqs.strings, reqs.unlocksAtMonolithLevel, reqs.monolithUnlockName, playerStats.get())
-              else if (!buyable)
+              else if (!buyable) {
                 showNotAvailableMsgbox(reqs.strings)
+              }
               else if (!buyInProgress.get()) {
                 if (isPurchaseAndEquip) {
                   if (isPremium) {
@@ -1446,7 +1453,7 @@ function mkAccentPurchaseButton(item, params = {}) {
 }
 
 let mkAddToCartButton = @(item) function() {
-  let isAvailable = isLotAvailable(item, playerStats.get())
+  let isAvailable = isLotAvailable(item, playerStats.get(), trialData.get())
   if (!isAvailable)
     return { watch = playerStats }
   return {

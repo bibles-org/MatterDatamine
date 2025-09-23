@@ -1,11 +1,14 @@
 from "%ui/components/commonComponents.nut" import mkText
-from "%ui/fonts_style.nut" import fontawesome
+from "%ui/fonts_style.nut" import fontawesome, sub_txt
 from "%ui/components/scrollbar.nut" import makeVertScrollExt
-from "%ui/components/colors.nut" import TextNormal, BtnBgSelected, BtnBgHover, BtnBgNormal, BtnBgActive
+from "%ui/components/colors.nut" import TextNormal, BtnBgSelected, BtnBgHover, BtnBgNormal, BtnBgActive, RedFailColor
 from "%ui/helpers/time.nut" import secondsToStringLoc, secondsToTime
 from "%ui/hud/map/map_extraction_points.nut" import extractionIcon
 from "string" import endswith, format
 from "%ui/ui_library.nut" import *
+import "%ui/components/faComp.nut" as faComp
+from "%ui/components/button.nut" import button
+import "%ui/components/colorize.nut" as colorize
 import "%ui/components/fontawesome.map.nut" as fa
 import "%dngscripts/ecs.nut" as ecs
 import "%ui/complaints/complainWnd.nut" as complain
@@ -158,29 +161,35 @@ let chooseFillColor = function(index, sf) {
 let mkLogEntry = function(point, index){
   let { userId = null, name = "" } = point
   let stateFlags = Watched(0)
+  let canCompaint = userId != null && name != "" && debriefingSessionId.get() != null
+  let complaintAction = @() complain(
+    debriefingSessionId.get().tostring(),
+    userId,
+    endswith(name, " ") ? name.slice(0, -1) : name
+  )
   return @() {
-    size = FLEX_H
     watch = [chosenLogElement, hoveredLogElement, stateFlags]
+    rendObj = ROBJ_BOX
+    size = FLEX_H
     behavior = Behaviors.Button
     xmbNode = XmbNode()
-    onHover = @(v) v ? hoveredLogElement.set(index) : hoveredLogElement.set(null)
+    onHover = function(v) {
+      if (v)
+        hoveredLogElement.set(index)
+      else
+        hoveredLogElement.set(null)
+    }
     onClick = function(event) {
-      if (userId != null && name != "" && debriefingSessionId.get() != null)
+      if (event.button == 1 && canCompaint)
         contextMenu(event.screenX + 1, event.screenY + 1, fsh(30), [{
-          text = loc("btn/complain")
-          action = @() complain(
-            debriefingSessionId.get().tostring(),
-            userId,
-            endswith(name, " ") ? name.slice(0, -1) : name
-          )
+          text = $"{loc("btn/complain")} {name}"
+          action = complaintAction
         }])
-      chosenLogElement.modify(@(old_index) old_index == index ? null : index)
+      if (event.button == 0)
+        chosenLogElement.modify(@(old_index) old_index == index ? null : index)
     }
     onElemState = @(v) stateFlags.set(v)
-
-    rendObj = ROBJ_BOX
     fillColor = chooseFillColor(index, stateFlags.get())
-    children = mkLogEntryContent(point)
     borderColor = index == chosenLogElement.get() ? Color(200, 200, 200) : Color(230, 200, 90, 255)
     borderWidth = static [0, 0, 0, hdpx(2)]
     data = { index }
@@ -189,6 +198,21 @@ let mkLogEntry = function(point, index){
       click = "ui_sounds/button_action"
       hover = "ui_sounds/button_highlight"
     }
+    flow = FLOW_HORIZONTAL
+    gap = { size = FLEX_H }
+    children = [
+      mkLogEntryContent(point)
+      !canCompaint ? null : button(
+        faComp("flag", {
+          fontSize = hdpx(14)
+        })
+        complaintAction
+        {
+          padding = hdpx(4)
+          tooltipText = $"{loc("btn/complain")} {name}"
+        }
+      )
+    ]
   }
 }
 

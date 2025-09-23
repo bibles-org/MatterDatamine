@@ -15,7 +15,7 @@ from "%ui/hud/state/hud_objective_photograph_state.nut" import photographUIActiv
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
-let { quickUseObjective, objectives } = require("%ui/hud/state/objectives_vars.nut")
+let { quickUseObjective, objectives } = require("%ui/hud/objectives/objectives.nut")
 let { inventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
 let { equipmentModSlots } = require("%ui/hud/state/equipment.nut")
 let { controlledHeroEid } = require("%ui/hud/state/controlled_hero.nut")

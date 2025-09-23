@@ -69,6 +69,7 @@ let freeTicketsLimit = nestWatched("freeTicketsLimit", 0)
 let nexusNodesStateUpdate = @(v) nexusNodesState.set(v)
 let alwaysIsolatedQueues = nestWatched("alwaysIsolatedQueues", {})
 let neverIsolatedQueues = nestWatched("neverIsolatedQueues", {})
+let trialData = nestWatched("trialData", null)
 
 
 addTabToDevInfo("Console commands", "", @"
@@ -146,5 +147,6 @@ return {
   freeTicketsPerDay,
   freeTicketsLimit,
   nexusNodesState, nexusNodesStateUpdate,
-  alwaysIsolatedQueues, neverIsolatedQueues
+  alwaysIsolatedQueues, neverIsolatedQueues,
+  trialData
 }

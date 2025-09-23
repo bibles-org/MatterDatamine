@@ -7,7 +7,10 @@ from "%ui/ui_library.nut" import *
 
 let objectMarkers = function(marks, transform, objectivesValue) {
   return marks.map(function(mark, eid){
-    let objective = objectivesValue.findvalue(@(objective) objective?.params?.staticTargetTag.indexof(mark.objectiveTag) != null)
+    let objective = objectivesValue.findvalue(
+      @(objective) objective?.params?.staticTargetTag.indexof(mark.objectiveTag) != null
+        || objective?.params?.dynamicTargetTag.indexof(mark.objectiveTag) != null
+    )
 
     let isObjective = objective != null
     let { colorIdx=null, name = "unknown" } = objective

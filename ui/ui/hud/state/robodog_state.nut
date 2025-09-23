@@ -8,8 +8,8 @@ from "%ui/squad/squad_colors.nut" import orderedTeamNicks
 
 
 let robodogEids = Watched({})
-let haveRobodog = Computed(@() robodogEids.get().len() > 0)
-let robodogsExtractCount = Computed(@() robodogEids.get().filter(@(v) v.willExtract).len())
+let haveRobodog = Computed(@() robodogEids.get().filter(@(v) v.ownerEid == watchedHeroEid.get()).len() > 0)
+let robodogsExtractCount = Computed(@() robodogEids.get().filter(@(v) v.willExtract && v.ownerEid == watchedHeroEid.get()).len())
 
 let player_get_name_query = ecs.SqQuery("player_get_name_query", {
   comps_ro = [["name", ecs.TYPE_STRING]]
@@ -42,6 +42,7 @@ function onRobodogAppear(eid, comp) {
     robodogEids.mutate(@(v) v[eid] <- {
       color = color
       status = status
+      ownerEid = comp.ownerEid
       ownerName = ownerName
       willExtract = comp.signal_grenade_device__extractWithOwner
     })
@@ -54,7 +55,6 @@ ecs.register_es("map_robodog_es", {
   [["onInit", "onChange"]] = onRobodogAppear
   onDestroy = @(eid, _comp) robodogEids.mutate(@(v) v.$rawdelete(eid))
 }, {
-  comps_rq = [],
   comps_track = [["robodog__currentState", ecs.TYPE_INT],
                  ["isAlive", ecs.TYPE_BOOL],
                  ["playerOwnerEid", ecs.TYPE_EID],

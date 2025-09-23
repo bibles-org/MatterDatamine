@@ -60,7 +60,6 @@ let { stashItems } = require("%ui/hud/state/inventory_items_es.nut")
 let { agencyLoadoutGenerators, nexusItemCost, updateNexusCostsOfPreviewPreset, getCostOfPreset } = require("%ui/hud/menus/mintMenu/mintState.nut")
 let { activeFilters } = require("%ui/hud/menus/components/inventoryStashFiltersWidget.nut")
 let { weaponSlotsKeys } = require("%ui/types/weapon_slots.nut")
-let { maxVolume } = require("%ui/hud/state/inventory_common_es.nut")
 let JB = require("%ui/control/gui_buttons.nut")
 
 let currentMint = Watched(null)
@@ -244,8 +243,6 @@ function setWeaponModInPreviewPreset(item, weaponIdx, modSlotName) {
 }
 
 function setEquipmentInPreviewPreset(item, slotName) {
-  if (previewPreset.get() == null)
-    previewPreset.set({})
   let prevItem = previewPreset.get()?[slotName].nexusCost
 
   previewPreset.mutate(function(preview) {
@@ -260,8 +257,9 @@ function setEquipmentInPreviewPreset(item, slotName) {
       preview[slotName] <- null
     }
 
-    if (preview?.inventories[slotName]) {
-      preview.inventories.rawdelete(slotName)
+    let inventoryToClear = slotName == "pouch" ? "myItems" : slotName
+    if (preview?.inventories[inventoryToClear]) {
+      preview.inventories.rawdelete(inventoryToClear)
     }
   })
 
@@ -705,7 +703,10 @@ let fastMoveItemFromStash = function(item) {
   foreach (inventoryItem in (preset?.inventories.myItems.items ?? [])) {
     currentMyItemsVolume += (getItemVolume(inventoryItem))
   }
-  local myItemsCapacity = maxVolume.get()
+
+  let militant = ecs.g_entity_mgr.getTemplateDB().getTemplateByName("militant_inventory") 
+  local myItemsCapacity = militant?.getCompValNullable("human_inventory__maxVolume") ?? 0
+
   let pouchTemplate = previewPreset.get()?.pouch.itemTemplate
   if (pouchTemplate) {
     let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(pouchTemplate)
@@ -850,7 +851,12 @@ let stashContent = function() {
                       mkText(loc("mint/unavailableItems"), h2_txt)
                       {
                         flow = FLOW_VERTICAL
-                        children = curMissed.keys().map(@(v) mkText(loc($"items/{v}"), body_txt.__merge({color = RedWarningColor})))
+                        children = curMissed.keys().map(function(v) {
+                          let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(v)
+                          if (template == null)
+                            throw null
+                          return mkText(loc(template.getCompValNullable("item__name")), body_txt.__merge({color = RedWarningColor}))
+                        })
                       }
                     ]
                   }

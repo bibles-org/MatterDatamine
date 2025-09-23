@@ -20,7 +20,7 @@ from "%ui/ui_library.nut" import *
 const WND_UID = "complain_window"
 const MIN_COMPLAIN_SYMBOLS = 10
 let headerHeight = hdpx(45)
-let complainTypes = ["CHEAT", "OTHER"]
+let complainTypes = ["CHEAT", "TEAMKILL", "OTHER"]
 let defaultType = complainTypes[0]
 
 let wndWidth = screenSize[0]

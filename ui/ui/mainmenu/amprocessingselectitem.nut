@@ -2,7 +2,9 @@ from "%sqstd/math.nut" import truncateToMultiple, min
 from "%sqstd/string.nut" import toIntegerSafe
 from "%ui/hud/menus/inventories/refinerInventory.nut" import dropToRefiner, removeFromRefiner, considerRefine, getPriceOfNonCorruptedItem, getMinimalRefinerItem, additionalDescFunc
 from "%ui/fonts_style.nut" import h2_txt, body_txt, sub_txt, tiny_txt
-from "%ui/components/colors.nut" import BtnBgSelected, InfoTextValueColor, BtnPrimaryTextNormal, RedWarningColor, SelBgNormal, TextNormal, BtnPrimaryBgSelected, ConsoleHeaderFillColor, ConsoleFillColor
+from "%ui/components/colors.nut" import BtnBgSelected, InfoTextValueColor, BtnPrimaryTextNormal, RedWarningColor,
+  SelBgNormal, TextNormal, BtnPrimaryBgSelected, ConsoleHeaderFillColor, ConsoleFillColor, BtnBgDisabled,
+  BtnBgNormal, RedWarningColor
 from "%ui/components/commonComponents.nut" import mkText, bluredPanel, mkTextArea, mkTooltiped, mkSelectPanelItem, BD_LEFT
 from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
 from "%ui/helpers/timers.nut" import mkCountdownTimerPerSec
@@ -28,7 +30,7 @@ from "%ui/components/modalWindows.nut" import addModalWindow, removeModalWindow
 from "%ui/hud/menus/components/inventoryItemTooltip.nut" import buildInventoryItemTooltip
 from "%ui/hud/menus/components/inventoryVolumeWidget.nut" import mkVolumeHdr, volumeHdrHeight
 from "%ui/mainMenu/stdPanel.nut" import mkCloseStyleBtn, stdBtnSize
-from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog
+from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog, playerLogsColors
 from "%ui/components/itemIconComponent.nut" import itemIconNoBorder
 from "%ui/context_hotkeys.nut" import contextHotkeys
 from "%ui/ui_library.nut" import *
@@ -749,7 +751,9 @@ function fuseResultInfoRow(keyVal, allPossibleItems, isOpened) {
 
       keyItemComp.append({
         behavior = Behaviors.Button
-        children = keyItemFaked?.filterType == "chronogene" ? mkChronogeneImage(keyItemFaked, inventoryImageParams) : inventoryItemImage(keyItemFaked, inventoryImageParams)
+        children = keyItemFaked?.filterType == "chronogene"
+          ? mkChronogeneImage(keyItemFaked, inventoryImageParams)
+          : inventoryItemImage(keyItemFaked, inventoryImageParams)
         eventPassThrough = true
         skipDirPadNav = true
         onHover = @(on) setTooltip(on ? buildInventoryItemTooltip(keyItemFaked) : null)
@@ -991,7 +995,7 @@ let fuseResulsInfo = {
   }
 }
 
-function fillItemsForFuse(fuseRecipe) {
+function fillItemsForFuse(fuseRecipe, itemsToDrop, hasAllComponents) {
   if ((amProcessingTask.get()?.taskId ?? "") != "") {
     showMsgbox(static { text = loc("amClean/autofill/taskAlreadyRunned")})
     return
@@ -1002,25 +1006,6 @@ function fillItemsForFuse(fuseRecipe) {
     return
   }
 
-  let allPossibleItems = shuffle([].extend(
-    inventoryItems.get()
-    backpackItems.get()
-    safepackItems.get()
-    stashItems.get()
-  ))
-
-  local hasAllComponents = true
-  let itemsToDrop = []
-  let alreadyInRefiner = @(item) itemsInRefiner.get().findindex(@(v) v.eid == item.eid) != null
-  foreach (component in fuseRecipe.components) {
-    let foundItem = allPossibleItems.findvalue(@(v) v.isCorrupted && v.itemTemplate == component && !alreadyInRefiner(v))
-    if (foundItem == null) {
-      hasAllComponents = false
-      continue
-    }
-    itemsToDrop.append(foundItem)
-  }
-
   if (hasAllComponents) {
     foreach (item in itemsToDrop) {
       dropToRefiner(item, REFINER_STASH, 1)
@@ -1028,7 +1013,16 @@ function fillItemsForFuse(fuseRecipe) {
   }
 
   if (!hasAllComponents) {
-    showMsgbox(static { text = loc("amClean/autofill/haveNoItems")})
+    addPlayerLog({
+      id = fuseRecipe
+      idToIgnore = fuseRecipe
+      content = mkPlayerLog({
+        titleFaIcon = "close"
+        titleText = loc("pieMenu/actionUnavailable")
+        bodyText = loc("amClean/autofill/haveNoItems")
+        logColor = playerLogsColors.warningLog
+      })
+    })
     return
   }
 }
@@ -1126,18 +1120,50 @@ function refineRecipeSelection() {
             hotkeys = [["J:RS", { description = { skip = true } }]]
           }
         )
-        fakedRecipeItem ? button(
-          static mkText(loc("amClean/refillContainer"), sub_txt),
-            @() fillItemsForFuse(selectedRecipe.get()?[1]),
-          static {
-            size = FLEX_H
-            hplace = ALIGN_RIGHT
-            vplace = ALIGN_CENTER
-            valign = ALIGN_CENTER
-            halign = ALIGN_CENTER
-            padding = static [hdpx(10), 0]
+        !fakedRecipeItem ? null : function() {
+          let allPossibleItems = shuffle([].extend(
+            inventoryItems.get()
+            backpackItems.get()
+            safepackItems.get()
+            stashItems.get()
+          ))
+
+          local hasAllComponents = true
+          let itemsToDrop = []
+          let alreadyInRefiner = @(item) itemsInRefiner.get().findindex(@(v) v.eid == item.eid) != null
+          foreach (component in (selectedRecipe.get()?[1].components ?? [])) {
+            let foundItem = allPossibleItems.findvalue(@(v) v.isCorrupted && v.itemTemplate == component && !alreadyInRefiner(v))
+            if (foundItem == null) {
+              hasAllComponents = false
+              continue
+            }
+            itemsToDrop.append(foundItem)
           }
-        ) : null
+
+          return {
+            watch = [inventoryItems, backpackItems, safepackItems, stashItems, selectedRecipe, itemsInRefiner]
+            size = FLEX_H
+            flow = FLOW_VERTICAL
+            gap = hdpx(2)
+            children = [
+              mkTextArea($"{loc("amClean/fusePossibleCount")} {loc("ui/multiply")}{itemsToDrop.len()}",
+                { halign = ALIGN_CENTER, color = itemsToDrop.len() <= 0 ? RedWarningColor : TextNormal }.__merge(tiny_txt))
+              button(
+                static mkText(loc("amClean/refillContainer"), sub_txt),
+                  @() fillItemsForFuse(selectedRecipe.get()?[1], itemsToDrop, hasAllComponents),
+                {
+                  size = FLEX_H
+                  hplace = ALIGN_RIGHT
+                  vplace = ALIGN_CENTER
+                  valign = ALIGN_CENTER
+                  halign = ALIGN_CENTER
+                  padding = static [hdpx(10), 0]
+                  style = { BtnBgNormal = hasAllComponents ? BtnBgNormal : BtnBgDisabled }
+                }
+              )
+            ]
+          }
+        }
       ]
     }
   }

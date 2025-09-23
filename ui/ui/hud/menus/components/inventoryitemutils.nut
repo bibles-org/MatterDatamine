@@ -31,7 +31,7 @@ from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog, marketIc
 from "%ui/mainMenu/stashSpaceMsgbox.nut" import showNoEnoughStashSpaceMsgbox
 from "%ui/components/itemIconComponent.nut" import itemIconNoBorder
 from "%ui/profile/profileState.nut" import playerProfilePremiumCredits, marketItems, repairRelativePrice,
-  playerProfileCreditsCount, playerStats
+  playerProfileCreditsCount, playerStats, trialData
 from "%ui/hud/menus/components/inventoryItemTypes.nut" import HERO_ITEM_CONTAINER, BACKPACK0, STASH, GROUND, SAFEPACK
 
 from "%ui/ui_library.nut" import *
@@ -244,8 +244,8 @@ function mkLoadAmmoButton(item, listType, loadTooltipKey, loadAmmoIcon) {
                       && !curWeapon.get()?.isReloading
                       && (!item.canLoadOnlyOnBase || isOnPlayerBase.get())
     let needWatched = showLoadButton && entityToUse.get() != item.eid
-    let isWeaponMod = item?.isWeaponMod ?? false
-    let needHighlight = !needWatched ? null : Computed(@() isWeaponMod &&
+    let { isWeaponMod = false, isHealkit = false } = item
+    let needHighlight = !needWatched ? null : Computed(@() (isWeaponMod || isHealkit) &&
                                   (inventoryItems.get().findindex(@(i) isItemForHolder(i, item)) != null ||
                                   backpackItems.get().findindex(@(i) isItemForHolder(i, item)) != null ||
                                   stashItems.get().findindex(@(i) isItemForHolder(i, item)) != null))
@@ -700,7 +700,7 @@ function needShowQuickSlotPurchase(slot) {
       let marketItem = marketItems.get()?[lot]
       let playerStat = playerStats.get()
 
-      if (!isLotAvailable(marketItem, playerStat))
+      if (!isLotAvailable(marketItem, playerStat, trialData.get()))
         return null
       return marketItem
     })
@@ -815,7 +815,7 @@ let prepareItemsToShow = @(allowedItems) allowedItems
       return null
 
     let marketItem = marketItems.get()?[lot]
-    if (!isLotAvailable(marketItem, playerStats.get()))
+    if (!isLotAvailable(marketItem, playerStats.get(), trialData.get()))
       return null
 
     let fakeModes = marketItem?.children.items.slice(1)

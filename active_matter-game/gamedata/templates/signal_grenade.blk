@@ -31,7 +31,23 @@ signal_grenade_item{
     slot:t="signal_grenade"
   }
 
+  "signal_grenade_item:tag"{}
   "mintBannedItem:tag"{}
+}
+
+signal_grenade_item_info_list{
+  signal_grenade__wantToBeReplica:b=no
+  signal_grenade__wantToBeCorrupted:b=no
+  signal_grenade__grenadeItemInfo:t="signal_grenade_item_info_list"
+
+  "signal_grenade__initialPlayerOwnerEid:eid"{}
+}
+
+signal_grenade_item_info{
+  _use:t="signal_grenade_item_info_list"
+
+  "signal_grenade_item_info:tag"{}
+  "signal_grenade_thrower__humanEid:eid"{}
 }
 
 signal_grenade_fx{
@@ -61,6 +77,7 @@ signal_grenade_phys{
   _use:t="shell_trap_activator"
   _use:t="zones_visitor"
   _use:t="signal_grenade_active_char"
+  _use:t="signal_grenade_item_info_list"
   start_omega:p3=3, 0, -15
   active:b=no
   _tracked:t="active"
@@ -91,6 +108,8 @@ signal_grenade_phys{
 
 signal_grenade_device_extraction{
   signal_grenade_device__extractWithOwner:b=no
+  _tracked:t="signal_grenade_device__extractWithOwner"
+  _replicated:t="signal_grenade_device__extractWithOwner"
   signal_grenade_device__createdByTemplate:t=""
   signal_grenade_device__extractionEffect:t="extraction_sequence_affect_for_device"
 

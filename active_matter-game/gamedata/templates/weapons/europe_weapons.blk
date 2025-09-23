@@ -167,6 +167,26 @@ fn_scar_gun{
     alt:r=1.5
   }
 
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=0.6
+    alt:r=0.2
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=0.8
+    alt:r=0.6
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=0.6
+    alt:r=0.3
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.2
+  }
+
   gun_flash_fx{
     _tags:t="render"
   }
@@ -369,6 +389,26 @@ m4_gun{
     alt:r=1.4
   }
 
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=0.5
+    alt:r=0.1
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=0.9
+    alt:r=0.5
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=0.6
+    alt:r=0.2
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.1
+  }
+
   gun_flash_fx{
     _tags:t="render"
   }
@@ -568,6 +608,26 @@ m4a1_gun{
   "gun_reload__swapEquipMagazineTime:list<r>"{
     simple:r=1.9
     alt:r=1.4
+  }
+
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=0.5
+    alt:r=0.1
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=0.9
+    alt:r=0.5
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=0.6
+    alt:r=0.2
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.1
   }
 
   gun_flash_fx{
@@ -876,6 +936,26 @@ m16a4_gun{
     alt:r=1.86
   }
 
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=0.6
+    alt:r=0.1
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=0.9
+    alt:r=0.6
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=0.6
+    alt:r=0.2
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.2
+  }
+
   gun_flash_fx{
     _tags:t="render"
   }
@@ -1062,6 +1142,26 @@ hk416a5_gun{
   "gun_reload__swapEquipMagazineTime:list<r>"{
     simple:r=1.9
     alt:r=1.4
+  }
+
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=0.5
+    alt:r=0.1
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=0.9
+    alt:r=0.5
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=0.6
+    alt:r=0.2
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.1
   }
 
   gun_flash_fx{
@@ -1260,6 +1360,26 @@ steyr_aug_a1_gun{
   "gun_reload__swapEquipMagazineTime:list<r>"{
     simple:r=2
     alt:r=1.3
+  }
+
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=0.6
+    alt:r=0.2
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=0.6
+    alt:r=0.9
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=0.6
+    alt:r=0.3
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.1
   }
 
   gun_flash_fx{
@@ -1612,6 +1732,26 @@ hk_mp5n_gun{
     alt:r=1.6
   }
 
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=1.3
+    alt:r=0.2
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=1.6
+    alt:r=0.6
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=1.7
+    alt:r=0.2
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.3
+    alt:r=0.1
+  }
+
   gun_flash_fx{
     _tags:t="render"
   }
@@ -1835,6 +1975,26 @@ hk_ump_45_gun{
     alt:r=1.7
   }
 
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=1.8
+    alt:r=0.2
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=1.7
+    alt:r=0.8
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=1.8
+    alt:r=0.3
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.3
+    alt:r=0.1
+  }
+
   gun_flash_fx{
     _tags:t="render"
   }
@@ -1917,7 +2077,7 @@ hk_g3a4_gun{
   gun__recoilAmount:r=0.17
   gun__recoilDirAmount:r=0.63
   gun__recoilDir:r=0.05
-  gun__recoilControlMult:r=0.35
+  gun__recoilControlMult:r=0.4
   gun__visualRecoilMult:r=1.7
   gun_boxed_ammo_reload__batchReloadTime:r=2.3
   gun__shotFreq:r=9.15
@@ -2043,6 +2203,26 @@ hk_g3a4_gun{
   "gun_reload__swapEquipMagazineTime:list<r>"{
     simple:r=2.2
     alt:r=1.6
+  }
+
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=1
+    alt:r=0.4
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=1.3
+    alt:r=0.8
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=1.1
+    alt:r=0.2
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.4
+    alt:r=0.3
   }
 
   gun_flash_fx{
@@ -2251,6 +2431,26 @@ barrett_m82a1_gun{
   "gun_reload__swapEquipMagazineTime:list<r>"{
     simple:r=3.33
     alt:r=2.93
+  }
+
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=0.8
+    alt:r=0.2
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=1
+    alt:r=1.1
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.4
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.3
   }
 
   gun_flash_fx{
@@ -2890,6 +3090,26 @@ scorpion_evo_3_gun{
     alt:r=1.6
   }
 
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=0.4
+    alt:r=0.3
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=1.2
+    alt:r=1.2
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=0.4
+    alt:r=0.1
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.6
+    alt:r=0.4
+  }
+
   gun_flash_fx{
     _tags:t="render"
   }
@@ -3076,6 +3296,26 @@ m1911_colt_gun{
   "gun_reload__swapEquipMagazineTime:list<r>"{
     simple:r=2
     alt:r=1.3
+  }
+
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.2
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=0.9
+    alt:r=0.7
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.3
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.4
   }
 
   gun_flash_fx{
@@ -3565,6 +3805,26 @@ beretta_m9_gun{
     alt:r=1.3
   }
 
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.2
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=0.9
+    alt:r=0.7
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.3
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.4
+  }
+
   gun_flash_fx{
     _tags:t="render"
   }
@@ -3872,6 +4132,26 @@ pm_63_rak_gun{
   "gun_reload__swapEquipMagazineTime:list<r>"{
     simple:r=2.46
     alt:r=1.6
+  }
+
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=0.7
+    alt:r=0.2
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=1.1
+    alt:r=0.6
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=0.4
+    alt:r=0.3
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.3
+    alt:r=0.2
   }
 
   gun_flash_fx{
@@ -4236,6 +4516,26 @@ kriss_vector_gun{
   "gun_reload__swapEquipMagazineTime:list<r>"{
     simple:r=1.9
     alt:r=1.3
+  }
+
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=0.3
+    alt:r=0.2
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=0.5
+    alt:r=0.2
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=0.4
+    alt:r=0.2
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.2
+    alt:r=0.1
   }
 
   gun_flash_fx{
@@ -4900,7 +5200,7 @@ m110a1_gun{
   gun__recoilAmount:r=0.11
   gun__recoilDirAmount:r=0.78
   gun__recoilDir:r=0
-  gun__recoilControlMult:r=0.3
+  gun__recoilControlMult:r=0.4
   gun__visualRecoilMult:r=1.2
   gun_boxed_ammo_reload__batchReloadTime:r=2.67
   gun__sightsDistance:r=0.3
@@ -5039,6 +5339,26 @@ m110a1_gun{
   "gun_reload__swapEquipMagazineTime:list<r>"{
     simple:r=1.9
     alt:r=1.4
+  }
+
+  "gun_reload__unequipFinishTime:list<r>"{
+    simple:r=0.5
+    alt:r=0.1
+  }
+
+  "gun_reload__equipFinishTime:list<r>"{
+    simple:r=0.9
+    alt:r=0.5
+  }
+
+  "gun_reload__swapUnequipFinishTime:list<r>"{
+    simple:r=0.5
+    alt:r=0.2
+  }
+
+  "gun_reload__swapEquipFinishTime:list<r>"{
+    simple:r=0.3
+    alt:r=0.1
   }
 
   gun_flash_fx{

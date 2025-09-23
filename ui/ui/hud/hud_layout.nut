@@ -1,6 +1,6 @@
 from "%ui/hud/menus/components/quickUsePanel.nut" import mkQuickUsePanel, quickUseObjectiveItemSlot, quickUseDroneConsoleItem
 
-from "%ui/hud/objectives/objectives_hud.nut" import objectivesHud
+from "%ui/hud/objectives/objectives.nut" import objectivesHud
 from "%ui/hud/menus/chat.ui.nut" import chatRoot
 import "%ui/hud/player.nut" as playerBlock
 import "%ui/hud/tips/spectatorMode_tip.nut" as spectatorMode_tip

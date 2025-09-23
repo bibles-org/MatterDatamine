@@ -156,7 +156,7 @@ box_12_gauge_magazine{
   collres__res:t="sovmod_ammo_12ga_collision"
   dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
   item__weightPerStack:r=0.4
-  item__volumePerStack:i=48
+  item__volumePerStack:i=36
   item__marketPrice:i=300
   showroom_item__customZoom:r=2
   showroom_item__customZoomBordersRng:p2=1.6, 2.2
@@ -178,7 +178,7 @@ box_23x75_magazine{
   collres__res:t="sovmod_ammo_12ga_collision"
   dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
   item__weightPerStack:r=1.1
-  item__volumePerStack:i=48
+  item__volumePerStack:i=36
   item__marketPrice:i=390
   showroom_item__customZoom:r=2
   showroom_item__customZoomBordersRng:p2=1.6, 2.2
@@ -200,7 +200,7 @@ box_7_62x54_magazine{
   collres__res:t="sovmod_ammo_762x54_collision"
   dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
   item__weightPerStack:r=0.75
-  item__volumePerStack:i=60
+  item__volumePerStack:i=30
   item__marketPrice:i=600
   showroom_item__customZoom:r=2
   showroom_item__customZoomBordersRng:p2=1.6, 2.2
@@ -222,7 +222,7 @@ box_7_62x51_magazine{
   collres__res:t="sovmod_ammo_762x51_collision"
   dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
   item__weightPerStack:r=0.75
-  item__volumePerStack:i=60
+  item__volumePerStack:i=30
   item__marketPrice:i=575
   showroom_item__customZoom:r=2
   showroom_item__customZoomBordersRng:p2=1.6, 2.2
@@ -244,7 +244,7 @@ box_12_7x55_magazine{
   collres__res:t="sovmod_ammo_127x55_collision"
   dropTm:m=[[0, -0.01, 1] [0, 1, 0.01] [-1, -0, 0] [0, 0, 0]]
   item__weightPerStack:r=0.55
-  item__volumePerStack:i=60
+  item__volumePerStack:i=40
   item__marketPrice:i=700
   showroom_item__customZoom:r=2
   showroom_item__customZoomBordersRng:p2=1.6, 2.2
@@ -1262,7 +1262,7 @@ ash_12_magazine{
   item_holder__maxItemCount:i=20
   item_holder__boxedItemTemplate:t="box_12_7x55_magazine"
   item__baseWeight:r=0.5
-  item__volume:i=30
+  item__volume:i=60
   item__name:t="items/ash_12_magazine"
   collres__res:t="ash12_ammo_20_collision"
   item__marketPrice:i=900

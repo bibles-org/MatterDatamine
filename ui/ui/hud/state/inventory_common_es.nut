@@ -2,11 +2,9 @@ import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
 let maxVolume = Watched(0.0)
-let defaultVolume = Watched(0.0)
 ecs.register_es("capacity_volume_es",{
   onInit = function(_eid, comp){
     maxVolume.set(comp["human_inventory__maxVolume"])
-    defaultVolume.set(comp["human_inventory__maxVolume"])
   }
   onChange = @(_eid, comp) maxVolume.set(comp["human_inventory__maxVolume"])
 },{comps_track = [["human_inventory__maxVolume", ecs.TYPE_INT, 0]], comps_rq = ["watchedByPlr"]})
@@ -75,7 +73,6 @@ let didItemDataChange = function(oldData, newData) {
 
 return {
   maxVolume
-  defaultVolume
   canPickupItems
   canUseItems
   canModifyInventory

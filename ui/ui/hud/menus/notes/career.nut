@@ -41,6 +41,8 @@ let killsStats = [
   "kills_monster_xenohound"
   "kills_monster_dendroid"
   "kills_monster_statue"
+  "kills_monster_poltergeist"
+  "kills_monster_hive"
 ]
 
 let raidStats = [

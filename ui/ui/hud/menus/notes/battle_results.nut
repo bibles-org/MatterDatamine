@@ -3,7 +3,7 @@ from "%ui/profile/battle_results.nut" import createBattleResultsComputed, maxSav
 from "%ui/components/commonComponents.nut" import mkText, mkTextArea, mkSelectPanelItem, BD_LEFT, VertSelectPanelGap, mkTabs
 from "%ui/hud/menus/nexus_stats.nut" import mkPlayerStats, statsHeader, mkMvpPlayerBlock, getScoresTbl
 from "%ui/mainMenu/debriefing_common_components.nut" import mkEvacuatedItems, mkChronotracesList, mkDailyRewardsBlock
-from "%ui/fonts_style.nut" import h2_txt, body_txt, h1_txt, sub_txt
+from "%ui/fonts_style.nut" import h2_txt, body_txt, h1_txt, sub_txt, tiny_txt
 from "dagor.time" import format_unixtime
 from "%ui/helpers/time.nut" import secondsToStringLoc
 import "%ui/components/faComp.nut" as faComp
@@ -20,9 +20,12 @@ from "%ui/mainMenu/menus/options/player_interaction_option.nut" import isStreame
 from "%ui/ui_library.nut" import *
 from "%ui/components/colors.nut" import BtnBgNormal, BtnBgSelected, RedFailColor, BtnBdNormal, BtnBdDisabled,
   ItemBgColor, InfoTextValueColor, ConsoleFillColor, RedWarningColor, TextNormal
+from "%ui/mainMenu/baseDebriefingLog.nut" import debriefingLog, debriefingSessionId
+import "%ui/complaints/complainWnd.nut" as complain
+import "%ui/components/contextMenu.nut" as contextMenu
+from "%ui/components/cursors.nut" import setTooltip
 
 let { journalBattleResult } = require("%ui/profile/battle_results.nut")
-let { debriefingLog } = require("%ui/mainMenu/baseDebriefingLog.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
 let { debriefingScene } = require("%ui/mainMenu/nexus_debriefing_map.nut")
 let { defStats } = require("%ui/hud/menus/nexus_stats.nut")
@@ -30,7 +33,7 @@ let userInfo = require("%sqGlob/userInfo.nut")
 
 #allow-auto-freeze
 
-let battleResultCardSize = [hdpx(300), hdpx(71)]
+let battleResultCardSize = [hdpx(300), hdpx(73)]
 let iconHeight = hdpxi(24)
 let smallIconHeight = hdpxi(14)
 let mapHeight = min(sh(50), hdpx(500))
@@ -111,6 +114,7 @@ function mkBattleCard(battle) {
     border_align = BD_LEFT
     onSelect = function(_) {
       journalBattleResult.set(battle)
+      debriefingSessionId.set(battle?.sessionId)
       currentTab.set("battleHistory/history")
       updateMapContext(battle?.battleAreaInfo.scene, mapSize)
       updateDebriefingContractsData(isOnPlayerBase.get(), battle)
@@ -147,6 +151,7 @@ function mkNexusCard(battle) {
     border_align = BD_LEFT
     onSelect = function(_) {
       journalBattleResult.set(battle)
+      debriefingSessionId.set(battle?.sessionId)
       currentTab.set("baseDebriefing/stats")
       debriefingScene.set(battle?.battleAreaInfo.scene)
     }
@@ -186,8 +191,7 @@ let historyContent = {
   gap = hdpx(10)
   children = [
     {
-      flow = FLOW_VERTICAL
-      gap = hdpx(10)
+      size = FLEX_V
       children = [
         mkDebriefingMap(mapSize)
         @() {
@@ -198,6 +202,7 @@ let historyContent = {
           borderWidth = static hdpx(1)
           borderColor = BtnBdDisabled
           padding = static hdpx(10)
+          vplace = ALIGN_BOTTOM
           children = mkTeamBlock(journalBattleResult.get(), hdpxi(90), body_txt)
         }
       ]
@@ -215,6 +220,7 @@ let historyContent = {
           borderWidth = static hdpx(1)
           borderColor = BtnBdDisabled
           padding = static hdpx(10)
+          vplace = ALIGN_BOTTOM
           children = debriefingStats
         }
       ]
@@ -383,6 +389,7 @@ function statsBlock() {
   let sortByScore = @(a, b, teamData) teamData[b]?.stats.score <=> teamData[a]?.stats.score
   let allyTeamArr = allyTeam.keys().sort(@(a, b) sortByScore(a, b, allyTeam))
   let enemyTeamArr = enemyTeam.keys().sort(@(a, b) sortByScore(a, b, enemyTeam))
+  let complaintAction = @(userId, name) complain(debriefingSessionId.get().tostring(), userId, name)
   return {
     watch = journalBattleResult
     rendObj = ROBJ_BOX
@@ -411,34 +418,53 @@ function statsBlock() {
               wrap = false
               scrollSpeed = 5.0
             })
-            children = allyTeamArr.map(@(eid, idx) @() {
-              watch = userInfo
-              rendObj = ROBJ_SOLID
-              size = FLEX_H
-              padding = static [hdpx(10), hdpx(8)]
-              color = eid == userInfo.get().userId ? ItemBgColor
-                : mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
-              flow = FLOW_HORIZONTAL
-              xmbNode = XmbNode()
-              behavior = Behaviors.Button
-              gap = static { size = flex() }
-              children = [
-                @() {
-                  watch = [isStreamerMode, playerRandName, userInfo]
+            children = allyTeamArr.map(function(eid, idx) {
+              let stateFlags = Watched(0)
+              return function() {
+                let canCompaint = eid != userInfo.get().userId
+                  && eid != null
+                  && (allyTeam[eid]?.name ?? "") != ""
+                  && debriefingSessionId.get() != null
+                return {
+                  watch = [userInfo, stateFlags, debriefingSessionId]
+                  rendObj = ROBJ_BOX
+                  size = FLEX_H
+                  padding = static [hdpx(10), hdpx(8)]
+                  fillColor = eid == userInfo.get().userId ? ItemBgColor
+                    : mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
                   flow = FLOW_HORIZONTAL
-                  gap = static hdpx(10)
+                  gap = static { size = flex() }
+                  borderWidth = (stateFlags.get() & S_HOVER) && canCompaint ? hdpx(1) : 0
+                  xmbNode = XmbNode()
+                  behavior = Behaviors.Button
+                  onElemState = @(sf) stateFlags.set(sf)
+                  onClick = function(event) {
+                    if (canCompaint)
+                      contextMenu(event.screenX + 1, event.screenY + 1, fsh(30), [{
+                        text = $"{loc("btn/complain")} {remap_nick(allyTeam[eid].name)}"
+                        action = @() complaintAction(eid, allyTeam[eid].name)
+                      }])
+                  }
+                  onHover = @(on) setTooltip(on && canCompaint ? $"{loc("btn/complain")} {remap_nick(allyTeam[eid].name)}" : null)
                   children = [
-                    mkText(idx + 1, {
-                      size = static [hdpx(40), SIZE_TO_CONTENT]
-                      halign = ALIGN_CENTER
-                    }.__update(body_txt))
-                    mkText(isStreamerMode.get() && remap_nick(allyTeam[eid].name) == userInfo.get().name
-                      ? playerRandName.get()
-                      : remap_nick(allyTeam[eid].name), body_txt)
+                    @() {
+                      watch = [isStreamerMode, playerRandName]
+                      flow = FLOW_HORIZONTAL
+                      gap = static hdpx(10)
+                      children = [
+                        mkText(idx + 1, {
+                          size = static [hdpx(40), SIZE_TO_CONTENT]
+                          halign = ALIGN_CENTER
+                        }.__update(body_txt))
+                        mkText(isStreamerMode.get() && remap_nick(allyTeam[eid].name) == userInfo.get().name
+                          ? playerRandName.get()
+                          : remap_nick(allyTeam[eid].name), body_txt)
+                      ]
+                    }
+                    mkPlayerStats(allyTeam?[eid].stats ?? defStats)
                   ]
                 }
-                mkPlayerStats(allyTeam?[eid].stats ?? defStats)
-              ]
+              }
             })
           }, { styling = thinAndReservedPaddingStyle })
         ]
@@ -459,29 +485,48 @@ function statsBlock() {
               wrap = false
               scrollSpeed = 5.0
             })
-            children = enemyTeamArr.map(@(eid, idx) @() {
-              rendObj = ROBJ_SOLID
-              size = FLEX_H
-              behavior = Behaviors.Button
-              xmbNode = XmbNode()
-              padding = static [hdpx(10), hdpx(8)]
-              color = mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
-              flow = FLOW_HORIZONTAL
-              gap = static { size = flex() }
-              children = [
-                {
+            children = enemyTeamArr.map(function(eid, idx) {
+              let stateFlags = Watched(0)
+              return function() {
+                let canCompaint = eid != null
+                  && (enemyTeam[eid]?.name ?? "") != ""
+                  && debriefingSessionId.get() != null
+                return {
+                  watch = [stateFlags, debriefingSessionId]
+                  rendObj = ROBJ_BOX
+                  size = FLEX_H
+                  behavior = Behaviors.Button
+                  xmbNode = XmbNode()
+                  padding = static [hdpx(10), hdpx(8)]
+                  fillColor = mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
                   flow = FLOW_HORIZONTAL
-                  gap = static hdpx(10)
+                  gap = static { size = flex() }
+                  borderWidth = (stateFlags.get() & S_HOVER) && canCompaint ? hdpx(1) : 0
+                  onElemState = @(sf) stateFlags.set(sf)
+                    onClick = function(event) {
+                      if (canCompaint)
+                        contextMenu(event.screenX + 1, event.screenY + 1, fsh(30), [{
+                          text = $"{loc("btn/complain")} {remap_nick(enemyTeam[eid].name)}"
+                          action = @() complaintAction(eid, enemyTeam[eid].name)
+                        }])
+                    }
+                    onHover = @(on) setTooltip(on && canCompaint ? $"{loc("btn/complain")} {remap_nick(enemyTeam[eid].name)}" : null)
                   children = [
-                    mkText(idx + 1, {
-                      size = static [hdpx(40), SIZE_TO_CONTENT]
-                      halign = ALIGN_CENTER
-                    }.__update(body_txt))
-                    mkText(remap_nick(enemyTeam[eid].name), body_txt)
+                    {
+                      flow = FLOW_HORIZONTAL
+                      gap = static hdpx(10)
+                      children = [
+                        mkText(idx + 1, {
+                          size = static [hdpx(40), SIZE_TO_CONTENT]
+                          halign = ALIGN_CENTER
+                        }.__update(body_txt))
+                        mkText(remap_nick(enemyTeam[eid].name), body_txt)
+                      ]
+                    }
+                    mkPlayerStats(enemyTeam?[eid].stats ?? defStats)
                   ]
                 }
-                mkPlayerStats(enemyTeam?[eid].stats ?? defStats)
-              ]
+              }
             })
           }, { styling = thinAndReservedPaddingStyle })
         ]
@@ -637,13 +682,15 @@ function mkBattleResultTab() {
     return {
       watch = battleResults
       size = flex()
-      flow = FLOW_VERTICAL
-      gap = hdpx(10)
-      onDetach = @() journalBattleResult.set(null)
+      onDetach = function() {
+        journalBattleResult.set(null)
+        debriefingSessionId.set(null)
+      }
       onAttach = function() {
         if (hasResults) {
           let battle = results[results.len() - 1]
           journalBattleResult.set(battle)
+          debriefingSessionId.set(battle?.sessionId)
           if (battle?.isNexus) {
             currentTab.set("baseDebriefing/stats")
             debriefingScene.set(battle?.battleAreaInfo.scene)
@@ -652,15 +699,32 @@ function mkBattleResultTab() {
         }
       }
       children = [
-        mkText(loc("statisticsMenu/overwriteWarning", {maxSavedBattleResults}), static {color = mul_color(TextNormal, 0.5)}.__update(sub_txt) )
         {
           size = flex()
-          flow = FLOW_HORIZONTAL
-          gap = hdpx(20)
+          flow = FLOW_VERTICAL
+          gap = hdpx(10)
           children = [
-            mkBattlesList(results)
-            hasResults ? raidDetails : null
+            mkText(loc("statisticsMenu/overwriteWarning", {maxSavedBattleResults}), static {color = mul_color(TextNormal, 0.5)}.__merge(sub_txt) )
+            {
+              size = flex()
+              flow = FLOW_HORIZONTAL
+              gap = hdpx(20)
+              children = [
+                mkBattlesList(results)
+                hasResults ? raidDetails : null
+              ]
+            }
           ]
+        }
+        function() {
+          if (debriefingSessionId.get() == null)
+            return { watch = debriefingSessionId }
+          return {
+            watch = debriefingSessionId
+            hplace = ALIGN_RIGHT
+            pos = [0, hdpx(70)]
+            children = mkText(debriefingSessionId.get(), { color = Color(30,30,30,2) }.__merge(tiny_txt))
+          }
         }
       ]
     }

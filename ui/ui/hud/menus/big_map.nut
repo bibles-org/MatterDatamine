@@ -12,7 +12,7 @@ from "%ui/helpers/timers.nut" import mkCountdownTimer
 from "%ui/hud/map/map_ctors.nut" import getMapLayers
 from "%ui/hud/map/map_extraction_points.nut" import extractionIcon
 from "%ui/hud/map/map_user_points.nut" import user_points_order, user_points_icons, generic_user_points_order
-from "%ui/hud/objectives/objectives_hud.nut" import setShowAllObjectives, stopAllObjectiveHudTimers
+from "%ui/hud/objectives/objectives.nut" import setShowAllObjectives, stopAllObjectiveHudTimers
 from "%ui/hud/state/interactive_state.nut" import removeInteractiveElement, switchInteractiveElement
 from "%ui/hud/state/local_player.nut" import localPlayerEid
 from "%ui/hud/state/user_points.nut" import teammatesPointsOpacity, playerPointsOpacity, user_points

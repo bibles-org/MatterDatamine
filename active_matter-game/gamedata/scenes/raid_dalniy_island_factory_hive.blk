@@ -23,7 +23,7 @@ entity{
 entity{
   _template:t="navmesh_isle_marker"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [1580, 0, -1380]]
-  navmesh_isle_marker__expectedNumTriangles:i=120698
+  navmesh_isle_marker__expectedNumTriangles:i=100698
 }
 
 entity{
@@ -43,7 +43,7 @@ entity{
 
 entity{
   _template:t="navmesh_battle_area"
-  transform:m=[[800, 0, 0] [0, 800, 0] [0, 0, 800] [1580, 0, -1380]]
+  transform:m=[[710, 0, 0] [0, 800, 0] [0, 0, 710] [1590, 0, -1410]]
 }
 
 entity{
@@ -53,9 +53,9 @@ entity{
   raid_description__overrideMoreLootNum:i=283
   raid_description__drawSpawnsAsPoints:b=no
   raid_description__drawSpawnsAsPoly:b=yes
-  raid_description__drawSpawnsAlpha:r=50
-  raid_description__drawSpawnsRadius:r=20
-  raid_description__drawSpawnsClampParam:p2=30, 30
+  raid_description__drawSpawnsAlpha:r=70
+  raid_description__drawSpawnsRadius:r=80
+  raid_description__drawSpawnsClampParam:p2=10, 30
 
   "raid_description__enemies:list<t>"{
     item:t="distorted"

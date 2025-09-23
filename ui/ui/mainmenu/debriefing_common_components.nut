@@ -1,4 +1,5 @@
-from "%ui/components/colors.nut" import BtnBgNormal, InfoTextValueColor, ConsoleFillColor, BtnBgHover, BtnBgDisabled, ModalBgTint, BtnBdDisabled
+from "%ui/components/colors.nut" import ItemBgColor, InfoTextValueColor, ConsoleFillColor, BtnBgHover, BtnBgDisabled,
+  ModalBgTint, BtnBdDisabled
 from "%ui/hud/menus/notes/player_progression.nut" import levelLineExpColor, levelLineExpBackgroundColor
 from "%ui/fonts_style.nut" import body_txt, h2_txt, h1_txt, giant_txt
 from "%ui/components/commonComponents.nut" import mkText, mkTextArea, underlineComp
@@ -25,7 +26,6 @@ import "%dngscripts/ecs.nut" as ecs
 let { playerExperienceToLevel } = require("%ui/profile/profileState.nut")
 let JB = require("%ui/control/gui_buttons.nut")
 let { currentPlayerLevelHasExp, currentPlayerLevelNeedExp, playerCurrentLevel } = require("%ui/hud/menus/notes/player_progression.nut")
-let { inventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
 let { marketIconSize } = require("%ui/popup/player_event_log.nut")
 
 const MAX_ITEM_TO_SHOW = 10
@@ -92,14 +92,16 @@ function selectedRewardCard(cardIdx) {
       return static { watch = [ levelRewards, selectedRewardIdxs ] }
     let rewardToOpen = levelRewards.get()?[selectedRewardIdxs.get().findindex(@(v) v == cardIdx)]
     let item = { itemTemplate = rewardToOpen }
-    let icon = mkChronogeneImage(item, { slotSize = rewardCardSize, width = inventoryImageParams.width,
-      height = inventoryImageParams.height })
+    let icon = mkChronogeneImage(item, { slotSize = rewardCardSize, width = hdpxi(100), height = hdpxi(100) })
     return {
       watch = [ levelRewards, selectedRewardIdxs ]
-      rendObj = ROBJ_SOLID
-      key = $"{rewardToOpen}"
-      color = BtnBgNormal
+      rendObj = ROBJ_BOX
       size = rewardCardSize
+      key = $"{rewardToOpen}"
+      fillColor = ItemBgColor
+      borderColor = BtnBdDisabled
+      borderRadius = rewardCardSize[0]
+      borderWidth = hdpx(1)
       halign = ALIGN_CENTER
       valign = ALIGN_CENTER
       behavior = Behaviors.Button
@@ -176,15 +178,23 @@ let claimRewardButton = @() {
       let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(templateName)
       let itemName = template?.getCompValNullable("item__name")
       let item = { itemTemplate = templateName }
-      let icon = mkChronogeneImage(item, { slotSize = marketIconSize, width = marketIconSize[0],
-        height = marketIconSize[1] })
+      let icon = mkChronogeneImage(item, { slotSize = marketIconSize, width = marketIconSize[0] - hdpxi(9),
+        height = marketIconSize[1] - hdpxi(9) })
       addPlayerLog({
         id = item
         content = mkPlayerLog({
           titleFaIcon = "user"
           bodyIcon = {
+            rendObj = ROBJ_BOX
+            size = [marketIconSize[1], marketIconSize[1]]
             hplace = ALIGN_CENTER
             vplace = ALIGN_CENTER
+            halign = ALIGN_CENTER
+            valign = ALIGN_CENTER
+            fillColor = ItemBgColor
+            borderColor = BtnBdDisabled
+            borderRadius = marketIconSize[0]
+            borderWidth = hdpx(1)
             children = icon
           }
           titleText = loc("item/received")
@@ -256,12 +266,14 @@ function showUnseenRewardsMessage() {
         children = levelRewards.get()
           .map(function(reward) {
             let item = { itemTemplate = reward }
-            let icon = mkChronogeneImage(item, { slotSize = rewardCardSize, width = inventoryImageParams.width,
-              height = inventoryImageParams.height })
+            let icon = mkChronogeneImage(item, { slotSize = rewardCardSize, width = hdpxi(100), height = hdpxi(100) })
             return {
-              rendObj = ROBJ_SOLID
-              color = BtnBgNormal
+              rendObj = ROBJ_BOX
               size = rewardCardSize
+              fillColor = ItemBgColor
+              borderColor = BtnBdDisabled
+              borderRadius = rewardCardSize[0]
+              borderWidth = hdpx(1)
               halign = ALIGN_CENTER
               valign = ALIGN_CENTER
               behavior = Behaviors.Button

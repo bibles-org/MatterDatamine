@@ -8,7 +8,7 @@ from "%ui/profile/profileState.nut" import playerProfileLoadoutUpdate, playerPro
   freeTicketsPerDay, freeTicketsLimit,
   playerProfileAllResearchNodesUpdate, craftTasksUpdate, cleanableItemsUpdate, playerStatsUpdate,
   nextMindtransferTimeleftUpdate, mindtransferSeedUpdate, playerBaseStateUpdate, playerProfileUnlocksDataUpdate, completedStoryContractsUpdate,
-  nexusNodesStateUpdate, alwaysIsolatedQueues, neverIsolatedQueues
+  nexusNodesStateUpdate, alwaysIsolatedQueues, neverIsolatedQueues, trialData
 
 from "net" import get_sync_time
 from "eventbus" import eventbus_send
@@ -536,6 +536,10 @@ let alwaysIsolatedQueuesHandler = function(data, _comp) {
   alwaysIsolatedQueues.set(data)
 }
 
+let trialDataHandler = function(data, _comp) {
+  trialData.set(data)
+}
+
 let profileBlocksHandlerTable = {
   market_block = marketHandler
   craft_recipes = craftRecipesHandler
@@ -576,6 +580,7 @@ let profileBlocksHandlerTable = {
   completed_story_contracts = completedStoryContractsHandler
   offline_raid_data = offlineRaidDataHandler
   nexus_state = nexusStateHandler
+  trial_data = trialDataHandler
 }
 
 let updateProfileBlocks = function(response) {

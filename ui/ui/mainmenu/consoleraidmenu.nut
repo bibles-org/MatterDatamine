@@ -60,7 +60,7 @@ from "%ui/components/modalWindows.nut" import addModalWindow, removeModalWindow
 from "%ui/mainMenu/contractWidget.nut" import  contractReportIsInProgress, isRightRaidName
 from "%ui/leaderboard/lb_state_base.nut" import curFactionLbData, curFactionLbPlayersCount, refreshFactionLb, updateRefreshTimer
 from "%ui/profile/profileState.nut" import playerBaseState, playerStats, playerProfileCurrentContracts,
-  nexusNodesState, currentContractsUpdateTimeleft, numOfflineRaidsAvailable
+  nexusNodesState, currentContractsUpdateTimeleft, numOfflineRaidsAvailable, trialData
 from "%ui/mainMenu/nexus_tutorial.nut" import checkShowNexusTutorial, mkNexusBriefingButton
 from "%sqGlob/userInfoState.nut" import userInfo
 
@@ -2043,6 +2043,19 @@ function getContent() {
     }
   )
 
+  let blockedByTrialButton = buttonWithGamepadHotkey(
+    mkText(utf8ToUpper(loc("nexus/select_node/button")), { hplace = ALIGN_CENTER }.__merge(h2_txt)),
+    @() showMsgbox({ text = loc("market/diabledDueToTrialStatus"), buttons = [
+        {text=loc("Ok"), customStyle={hotkeys=[["^Esc | Enter"]]}}
+      ]
+      }),
+    {
+      size = static [flex(), hdpx(70)]
+      halign = ALIGN_CENTER
+      hotkeys = [["J:Y", { description = { skip = true }}]]
+    }
+  )
+
   function mkPrepareButton(menuId) {
     return {
       size = FLEX_H
@@ -2115,7 +2128,7 @@ function getContent() {
     let isOperative = selectedRaid.get() != null && !isNexus
     function buttons() {
       let watch = [wantOfflineRaid, isOfflineRaidAvailable, isAvailable, selectedRaid, isInSquad, isSquadLeader, numOfflineRaidsAvailable,
-        selectedRaidBySquadLeader, selectedNexusNode, activeNodes, squadLeaderState]
+        selectedRaidBySquadLeader, selectedNexusNode, activeNodes, squadLeaderState, trialData]
       let { raidData = null } = selectedRaidBySquadLeader.get()
       let isLeaderSetOffline = squadLeaderState.get()?.leaderRaid.isOffline
       if ((wantOfflineRaid.get() && !isOfflineRaidAvailable.get() && !isNexus)
@@ -2145,6 +2158,13 @@ function getContent() {
           size = FLEX_H
           children = raidButtonZoneLocked
         }
+      if (isNexus && trialData.get()?.trialType) {
+        return {
+          watch
+          size = FLEX_H
+          children = blockedByTrialButton
+        }
+      }
       if (isNexus && (selectedNexusNode.get() == null || activeNodes.get()?[selectedNexusNode.get()] == null))
         return {
           watch

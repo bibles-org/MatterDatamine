@@ -1517,8 +1517,7 @@ Doch das Risiko ist gerechtfertigt – die erfolgreiche Durchführung dieses Auf
 "contract/contract_monolith_hack_corticals";"Fragments of Consciousness";"Фрагменты сознания";"Fragmente des Bewusstseins"
 "contract/contract_monolith_hack_corticals/desc";"{contract_monolith_danger}
 
-The Agency is gathering data on the consciousness of fallen operatives. To do this, you will need to hack several Mindvaults that contain their final thoughts. You may even <accented>have to eliminate some of them yourself</accented> to gain access to this data. This information will help us better understand what happens to an operative's mind at the moment of death.";"Синхронизация с Монолитом — задание не для слабых духом.
-{contract_monolith_danger}
+The Agency is gathering data on the consciousness of fallen operatives. To do this, you will need to hack several Mindvaults that contain their final thoughts. You may even <accented>have to eliminate some of them yourself</accented> to gain access to this data. This information will help us better understand what happens to an operative's mind at the moment of death.";"{contract_monolith_danger}
 
 Агентство собирает данные о сознании павших оперативников. Для этого потребуется взломать несколько Хранилищ разума, в которых запечатлены их последние мысли. Возможно, <accented>вам самим придется устранить некоторых из них</accented>, чтобы получить доступ к этим данным. Эта информация поможет нам лучше понять, что происходит с разумом оперативника в момент его гибели.";"{contract_monolith_danger}
 
@@ -2996,7 +2995,7 @@ Dies hindert dich jedoch nicht daran, an den Kämpfen teilzunehmen, und die Belo
 "NoUpdateInfo";"Oops... No information yet :(";"Ой... Пока что нет информации об обновлении :(";"Ups... Noch keine Informationen verfügbar :("
 "visitGameSite";"See game website for more details";"Больше информации на сайте игры";"Siehe die Spiel-Website für weitere Details"
 "complain/header";"Complain about {name}";"Пожаловаться на {name}";"Beschwere dich über {name}"
-"btn/complain";"Complain";"Пожаловаться";"Beschweren"
+"btn/complain";"Report player";"Пожаловаться на игрока";"Beschweren"
 "btn/send";"Send";"Отправить";"Absenden"
 "msgbox/dontShowAgain";"Don't show it again";"Больше не показывать";"Nicht wieder anzeigen"
 "msg/complain/needDetailedComment";"Write a more detailed comment";"Напишите более детальный комментарий";"Schreibe einen detaillierteren Kommentar"
@@ -3467,7 +3466,7 @@ Move speed: {value}%";"Чем больший вес ты переносишь �
 "inventory/cannotPutToContainerDuringReady";"Ready status is active";"Активен статус готов";"Bereitschaftsstatus aktiv"
 "inventory/parentVolumeOverflow";"Outer container is full";"Внешний контейнер полон";"Äußerer Behälter ist voll"
 "inventory/refinerInProgress";"Refiner in progress";"Переработчик занят";"Raffinierer läuft"
-"inventory/invalidContainer";"Refiner in progress";"Неподходящий контейнер";"Refiner in progress"
+"inventory/invalidContainer";"Invalid container";"Неподходящий контейнер";"Invalid container"
 "quickslot/shortcut";"Press to use:";"Нажми для активации:";"Drücke, um zu verwenden:"
 "inventory/refiner";"Items to refine";"Предметы на переработку";"Gegenstände zur Verfeinerung"
 "inventory/refiner/items";"My items";"Мои предметы";"Meine Gegenstände"
@@ -3943,6 +3942,7 @@ Unlock the recipe in the Monolith Access Terminal to discover the required items
 "amClean/possibleResults";"Possible results:";"Возможные результаты:";"Mögliche Ergebnisse:"
 "amClean/requiredComponents";"Required items:";"Необходимые предметы:";"Benötigte Gegenstände:"
 "amClean/anyItemComponent";"Any item";"Любой предмет";"Any item"
+"amClean/fusePossibleCount";"Required items count:";"Количество необходимых предметов:";"Required items count:"
 "workbench/repair";"Repair";"Починить";"Reparatur"
 "workbench/notEnoghMoney";"Not enough money";"Недостаточно денег";"Nicht genug Geld"
 "baseWorkbench";"Workbench";"Верстак";"Werkbank"
@@ -4681,6 +4681,8 @@ Schließe alle aufgeführten Anforderungen für diese Zugriffsebene ab, um sie f
 "monolith/kills_monster_corrupted_soldiers";"Kill Turned: {cur}/{needed}";"Убийств Обращённых: {cur}/{needed}";"Eliminiere Verwandelte: {cur}/{needed}"
 "monolith/kills_monster_dendroid";"Kill Dendroids: {cur}/{needed}";"Убийств Дендроидов: {cur}/{needed}";"Kill Dendroids: {cur}/{needed}"
 "monolith/kills_monster_statue";"Kill Statues: {cur}/{needed}";"Убийств Статуй: {cur}/{needed}";"Kill Statues: {cur}/{needed}"
+"monolith/kills_monster_poltergeist";"Kill Poltergeist: {cur}/{needed}";"Убийств Полтергейстов: {cur}/{needed}";"Kill Poltergeist: {cur}/{needed}"
+"monolith/kills_monster_beehive";"Kill Hive: {cur}/{needed}";"Убийств Ульев: {cur}/{needed}";"Kill Hive: {cur}/{needed}"
 "monolith/operative/kills_monster_changed";"Kill Distorted: {cur}/{needed}";"Убийств Искажённых: {cur}/{needed}";"Kill Distorted: {cur}/{needed}"
 "monolith/operative/kills_monster_changed/desc";"Find and eliminate Distorted in any raid.";"Найдите и уничтожьте Искажённых в любых рейдах.";"Find and eliminate Distorted in any raid."
 "monolith/operative/kills_monster_xenohound";"Kill Hell Hounds: {cur}/{needed}";"Убийств Адских Гончих: {cur}/{needed}";"Kill Hell Hounds: {cur}/{needed}"
@@ -4934,6 +4936,8 @@ außerhalb des Raids"
 "stats/kills_monster_statue";"Statues killed";"Убийств Статуй";"Statues killed"
 "stats/kills_monster_xenohound";"Hell Hounds killed";"Убийств Адских Гончих";"Höllenhund getötet"
 "stats/kills_monster_mimic";"Mimics killed";"Убийств Мимиков";"Mimik getötet"
+"stats/kills_monster_poltergeist";"Kill Poltergeist";"Убийств Полтергейстов";"Kill Poltergeist"
+"stats/kills_monster_hive";"Kill Hive";"Убийств Ульев";"Kill Hive"
 "stats/total";"Match stats";"Вся статистика";"Match-Statistiken"
 "stats/showFullStats";"Show full battle stats";"Показать статистиза за весь бой";"Gesamte Kampfstatistiken anzeigen"
 "stats/emptyList";"The list is currently empty";"На данный момент список пуст";"Die Liste ist derzeit leer"
