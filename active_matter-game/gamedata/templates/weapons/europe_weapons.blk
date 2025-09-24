@@ -81,6 +81,7 @@ fn_scar_gun{
     silencer:t="556_silencer_slot"
     scope:t="scope_picatinny_long_slot"
     magazine:t="m_gun_magazine_slot"
+    tactical_right:t="right_barrel_side_picatinny_slot"
   }
 
   "gun__shells:array"{
@@ -834,6 +835,7 @@ m16a4_gun{
     scope:t="scope_picatinny_long_slot"
     magazine:t="m_gun_magazine_slot"
     stock:t="m_gun_stock_slot"
+    tactical_right:t="right_barrel_side_picatinny_slot"
   }
 
   "gun__shells:array"{
@@ -1057,6 +1059,7 @@ hk416a5_gun{
     magazine:t="m_gun_magazine_slot"
     scope:t="scope_picatinny_long_slot"
     stock:t="m_gun_stock_slot"
+    tactical_right:t="right_barrel_side_picatinny_slot"
   }
 
   "gun__shells:array"{
@@ -1878,6 +1881,7 @@ hk_ump_45_gun{
     silencer:t="45_silencer_slot"
     scope:t="scope_picatinny_short_slot"
     magazine:t="hk_ump_45_magazine_slot"
+    tactical_right:t="right_barrel_side_picatinny_slot"
   }
 
   "gun__shells:array"{
@@ -3002,6 +3006,7 @@ scorpion_evo_3_gun{
     scope:t="scope_picatinny_short_slot"
     magazine:t="scorpion_evo_3_magazine_slot"
     stock:t="scorpion_evo_stock_slot"
+    tactical_right:t="right_barrel_side_picatinny_slot"
   }
 
   "gun__shells:array"{
@@ -4422,6 +4427,7 @@ kriss_vector_gun{
     scope:t="scope_picatinny_short_slot"
     magazine:t="kriss_vector_magazine_slot"
     stock:t="m_gun_stock_slot"
+    tactical_right:t="right_barrel_side_picatinny_slot"
   }
 
   "gun__shells:array"{
@@ -5189,7 +5195,7 @@ m110a1_gun{
   item__weapType:t="semiauto"
   item__baseWeight:r=4.15
   item__volume:i=300
-  item__marketPrice:i=16800
+  item__marketPrice:i=22920
   item__iconRecalcAnimation:b=yes
   gun_shell_ejection__templateName:t="762_51_nato_ejected_shell"
   gun__shotFreq:r=10

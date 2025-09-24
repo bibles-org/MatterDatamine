@@ -302,7 +302,7 @@ function bannedMintItem(itemTemplate) {
   return template?.getCompValNullable("mintBannedItem") ?? false
 }
 
-function getNexusStashItems(stashItems, openedRecipes, allRecipes, shopItems, pStats, allowedTypes = []) {
+function getNexusStashItems(allItms, openedRecipes, allRecipes, shopItems, pStats, allowedTypes = []) {
   let itemTbl = {}
 
   function isItemNotForNexusStash(item) {
@@ -323,12 +323,13 @@ function getNexusStashItems(stashItems, openedRecipes, allRecipes, shopItems, pS
     )
   }
 
-  foreach (item in stashItems) {
-    if ( isItemNotForNexusStash(item) ) {
+  foreach (item in allItms) {
+    let faked = mkFakeItem(item.templateName, { canDrop = false, canTake = true })
+    if ( isItemNotForNexusStash(faked) ) {
       continue
     }
 
-    itemTbl[item.itemTemplate] <- mkFakeItem(item.itemTemplate, { canDrop = false, canTake = true })
+    itemTbl[faked.templateName] <- faked
   }
 
   foreach (recipeKey, _ in openedRecipes) {
@@ -364,7 +365,7 @@ function getNexusStashItems(stashItems, openedRecipes, allRecipes, shopItems, pS
 }
 
 
-function getNexusStashItemsForChocolateMenu(curItem, stashItems, openedRecipes, allRecipes, shopItems, pStats, allowedTypes = []) {
+function getNexusStashItemsForChocolateMenu(curItem, allItms, openedRecipes, allRecipes, shopItems, pStats, allowedTypes = []) {
   let costs = nexusItemCost.get()
   function setNexusCost(itm) {
     if (curItem?.itemTemplate && curItem.itemTemplate  == itm.itemTemplate)
@@ -379,7 +380,7 @@ function getNexusStashItemsForChocolateMenu(curItem, stashItems, openedRecipes, 
     return itm.__update({ nexusCost = costs[itm.itemTemplate].cost })
   }
 
-  return getNexusStashItems(stashItems, openedRecipes, allRecipes, shopItems, pStats, allowedTypes).map(setNexusCost)
+  return getNexusStashItems(allItms, openedRecipes, allRecipes, shopItems, pStats, allowedTypes).map(setNexusCost)
 }
 
 

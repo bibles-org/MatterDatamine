@@ -1389,6 +1389,7 @@ ak_12_gun{
     magazine:t="ak_12_magazine_slot"
     stock:t="ak_stock_slot"
     underbarrel:t="underbarrel_picatinny_slot"
+    tactical_right:t="right_barrel_side_picatinny_slot"
   }
 
   "gun__shells:array"{
@@ -6451,6 +6452,8 @@ ash_12_gun{
   "gun_mods__slots:shared:object"{
     silencer:t="ash_12_silencer_slot"
     magazine:t="ash_12_magazine_slot"
+    tactical_right:t="right_barrel_side_picatinny_slot"
+    scope:t="scope_picatinny_long_slot"
   }
 
   "gun__shells:array"{

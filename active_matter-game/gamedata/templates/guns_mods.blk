@@ -496,7 +496,7 @@ oss_hxqd_762_suppressor{
   item__volume:i=30
   item__name:t="items/oss_hxqd_762_suppressor"
   item__filterType:t="weapon_mods"
-  item__marketPrice:i=3500
+  item__marketPrice:i=5750
   gunAttachable__slotName:t="silencer"
   collres__res:t="m110a1_silencer_collision"
   gun_mod__effectTemplate:t="big_silencer_gun_effect"
@@ -1266,6 +1266,30 @@ underbarrel_picatinny_slot{
     i:t="slots/underbarrel_type_picatinny"
   }
 
+  "slot_holder__availableItems:list<t>"{}
+}
+
+left_barrel_side_picatinny_slot{
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/pika_ph_side.svg"
+  mod_slot__tooltip:t="slots/left_barrel_picatinny"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/left_barrel_type_picatinny"
+  }
+
+  "slot_holder__availableItems:list<t>"{}
+}
+
+right_barrel_side_picatinny_slot{
+  _use:t="base_mod_slot"
+  mod_slot__icon:t="uiskin/pika_ph_side.svg"
+  mod_slot__tooltip:t="slots/right_barrel_picatinny"
+
+  "mod_slot__typeLocs:list<t>"{
+    i:t="slots/right_barrel_type_picatinny"
+  }
+
   "slot_holder__availableItems:list<t>"{
     i:t="gun_flashlight_klesh_2d"
     i:t="gun_flashlight_surefire_m600_ultra_scout"
@@ -1299,18 +1323,21 @@ gun_flashlight_klesh_2d{
   item__volume:i=30
   item__name:t="items/gun_flashlight_klesh_2d"
   item__filterType:t="weapon_mods"
-  item__marketPrice:i=500
-  gunAttachable__slotName:t="underbarrel"
+  item__marketPrice:i=950
+  gunAttachable__slotName:t="tactical_right"
   attached_flashlight_controller__lightNormalBrightness:r=5
   attached_flashlight_controller__lightMaxRadius:r=100
   item_stat__luminosity:i=370
   collres__res:t="klesh_2d_light_collision"
+  item__iconScale:r=0.9
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
   profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
   item__nexusCost:i=50
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
-    i:t="underbarrel_picatinny_slot"
+    i:t="right_barrel_side_picatinny_slot"
   }
 }
 
@@ -1322,18 +1349,20 @@ gun_flashlight_surefire_m600_ultra_scout{
   item__volume:i=30
   item__name:t="items/gun_flashlight_surefire_m600_ultra_scout"
   item__filterType:t="weapon_mods"
-  item__marketPrice:i=1200
-  gunAttachable__slotName:t="underbarrel"
+  item__marketPrice:i=1580
+  gunAttachable__slotName:t="tactical_right"
   attached_flashlight_controller__lightNormalBrightness:r=15
   attached_flashlight_controller__lightMaxRadius:r=200
   item_stat__luminosity:i=1000
   collres__res:t="surefire_m600_ultra_scout_light_collision"
+  showroom_item__customZoom:r=1.8
+  showroom_item__customZoomBordersRng:p2=1.4, 2.2
   profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
   item__nexusCost:i=50
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
-    i:t="underbarrel_picatinny_slot"
+    i:t="right_barrel_side_picatinny_slot"
   }
 }
 

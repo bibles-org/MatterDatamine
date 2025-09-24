@@ -14,6 +14,7 @@ raid_player_team{
   _use:t="base_team"
   team__capacity:i=1
   team__markSpawnBase:b=yes
+  team__markSpawnBaseDuration:r=30
   team__spawnGroupId:i=-1
   _replicated:t="team__spawnGroupId"
   team__firstKillConfirmed:b=no

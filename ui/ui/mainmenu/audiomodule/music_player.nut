@@ -1,6 +1,7 @@
 from "%dngscripts/globalState.nut" import nestWatched
 from "%ui/fonts_style.nut" import h2_txt, body_txt
-from "%ui/components/commonComponents.nut" import mkText, bluredPanel, mkTextArea, mkSelectPanelItem, mkSelectPanelTextCtor, BD_LEFT
+from "%ui/components/commonComponents.nut" import mkText, bluredPanel, mkTextArea, mkSelectPanelItem,
+  mkSelectPanelTextCtor, BD_LEFT
 from "%ui/components/scrollbar.nut" import makeVertScroll
 import "%ui/components/faComp.nut" as faComp
 from "%ui/components/button.nut" import button
@@ -14,7 +15,10 @@ from "%ui/options/mkOnlineSaveData.nut" import mkOnlineSaveData
 from "%ui/mainMenu/notificationMark.nut" import mkNotificationCircle
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
-from "%ui/components/colors.nut" import BtnBgNormal, BtnBgHover, BtnBgSelected, TextNormal, BtnBgFocused
+from "%ui/components/colors.nut" import BtnBgNormal, BtnBgSelected, TextNormal, BtnBgFocused, SelBgNormal,
+  BtnBgDisabled, InfoTextValueColor, RedWarningColor
+import "%ui/components/colorize.nut" as colorize
+from "%ui/mainMenu/menus/options/player_interaction_option.nut" import isStreamerMode
 
 let { playerStats } = require("%ui/profile/profileState.nut")
 
@@ -32,6 +36,11 @@ enum LoopStatus {
 
 const MUSIC_PLAYER_ID = "musicPlayerId"
 const MUSIC_PLAYER_VOLUME = "musicPlayerVolume"
+const MUSIC_STREAMING_FREE_ONLY_SETTING = "isFreeStreamingMusicOnly"
+
+let playOnlyFreeStreamingMusicStorage = mkOnlineSaveData(MUSIC_STREAMING_FREE_ONLY_SETTING, @() true)
+let playOnlyFreeStreamingMusicWatch = playOnlyFreeStreamingMusicStorage.watch
+let playOnlyFreeStreamingMusicSet = playOnlyFreeStreamingMusicStorage.setValue
 
 let playingSound = nestWatched("playingSound", null)
 let soundHandle = nestWatched("soundHandle", null)
@@ -41,6 +50,11 @@ let isPlaying = nestWatched("isMusicPlaying", false)
 let soundLength = nestWatched("soundLength", 0)
 let newUnlocksSongList = nestWatched("newUnlocksSongList", [])
 let lastPlayed = Watched(null)
+
+let loopBtnStateFlags = Watched(0)
+
+let buttonIconHeight = hdpxi(20)
+let playIconSize = hdpxi(55)
 
 let musicPlayerVolumeStorage = mkOnlineSaveData(MUSIC_PLAYER_VOLUME, @() 1)
 let musicPlayerVolumeWatch = musicPlayerVolumeStorage.watch
@@ -92,7 +106,7 @@ let musicPlayerGetCurPos = ecs.SqQuery("musicPlayerGetCurPos", { comps_ro = [["m
 let getCurTrackPos = @() musicPlayerGetCurPos.perform(@(_eid, comps) comps.music_player__pos) ?? 0
 
 function soundPlay(soundData) {
-  if (playingSound.get()?.soundTrack==soundData?.soundTrack)
+  if (playingSound.get()?.soundTrack==soundData?.soundTrack && playerLoopState.get().status != LoopStatus.ONE_TRACK_LOOP)
     return
   musicPlayerSetVolume(musicPlayerVolumeWatch.get())
   playingSound.set(soundData)
@@ -126,8 +140,18 @@ let getTrack = memoize(function(unlockName) {
     item__proto = template?.getCompValNullable("item__proto")
     author = template?.getCompValNullable("author")
     soundTrack
+    isStreamRestricted = (template?.getCompValNullable("stream_mode_restricted") ?? false)
   }
 })
+
+let playIcon = faComp("play", { vplace = ALIGN_CENTER pos = [hdpx(2), 0] fontSize = buttonIconHeight })
+let stopIcon = faComp("stop", { vplace = ALIGN_CENTER fontSize = buttonIconHeight})
+let startPlayer = function(soundData) { soundPlay(soundData) }
+let stopPlayer = function(soundData) {
+  if (soundData==null)
+    return
+  soundStop(soundData)
+}
 
 let trackList = Computed(function() {
   let list = [].extend(playerStats.get()?.unlocks ?? []).extend(newUnlocksSongList.get())
@@ -147,19 +171,38 @@ function playNextLoopTrack() {
   let sound = playingSound.get()
   let status = playerLoopState.get().status
   let list = trackList.get()
+  let curTrackIdx = list.findindex(@(v) v.soundTrack == sound.soundTrack) ?? 0
   if (status == LoopStatus.NO_LOOP) {
-    let curTrackIdx = list.findindex(@(v) v.soundTrack == sound.soundTrack) ?? 0
-    if (list?[curTrackIdx + 1] != null)
-      soundPlay(list[curTrackIdx + 1])
-    else
-      soundStop(sound)
+    for (local i = curTrackIdx; i < list.len(); i++) {
+      let newIdx = i + 1
+      if (trackList.get()?[newIdx] == null) {
+        soundStop(sound)
+        break
+      }
+      let restricted = list[newIdx].isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get())
+      if (!restricted) {
+        soundPlay(list[newIdx])
+        break
+      }
+    }
   }
-  else if (status == LoopStatus.ONE_TRACK_LOOP)
-    soundPlay(sound)
+  else if (status == LoopStatus.ONE_TRACK_LOOP) {
+    soundPlay(list[curTrackIdx])
+  }
   else {
-    let curSoundIdx = trackList.get().findindex(@(v) v?.soundTrack == sound?.soundTrack) ?? 0
-    let nextIdx = (curSoundIdx + 1) % trackList.get().len()
-    soundPlay(trackList.get()[nextIdx])
+    let len = list.len()
+    local hasFound = false
+    for (local i = 1; i < len; i++) {
+      let newIdx = (curTrackIdx + len + i) % len
+      let restricted = list[newIdx].isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get())
+      if (!restricted) {
+        soundPlay(list[newIdx])
+        hasFound = true
+        break
+      }
+    }
+    if (!hasFound)
+      showMsgbox({ text = loc("musicPlayer/streamerNoAvailableTracks") })
   }
 }
 
@@ -196,26 +239,12 @@ function changeLoopState() {
   playerLoopState.set(loopOrder[nexIdx])
 }
 
-let loopBtnStateFlags = Watched(0)
-
-let buttonIconHeight = hdpxi(20)
-let playIconSize = hdpxi(55)
-
 let mkNotesIcon = memoize(@(iconSize) {
   rendObj = ROBJ_IMAGE
   size = iconSize
   color = TextNormal
   image = Picture("!ui/skin#def_audio_icon.svg:{0}:{0}:K".subst(iconSize[0]))
 })
-
-let playIcon = faComp("play", { vplace = ALIGN_CENTER pos = [hdpx(2), 0] fontSize = buttonIconHeight })
-let stopIcon = faComp("stop", { vplace = ALIGN_CENTER fontSize = buttonIconHeight})
-let startPlayer = function(soundData) { soundPlay(soundData) }
-let stopPlayer = function(soundData) {
-  if (soundData==null)
-    return
-  soundStop(soundData)
-}
 
 let mkPlayButton = @(soundData) @() {
   watch = playingSound
@@ -272,8 +301,21 @@ let mkDeltaButton = @(delta) button({
     return
   }
   let curIdx = list.findindex(@(v) v.soundTrack == playingSound.get()?.soundTrack) ?? 0
-  let newIdx = (curIdx + delta + list.len()) % list.len()
-  startPlayer(list[newIdx])
+  let len = list.len()
+  local started = false
+  for (local i = 0; i < len; i++) {
+    let newIdx = (curIdx + delta + len + (delta > 0 ? i : -i)) % len
+    let restricted = list[newIdx].isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get())
+
+    if (!restricted) {
+      startPlayer(list[newIdx])
+      started = true
+      break
+    }
+  }
+
+  if (!started)
+    showMsgbox({ text = loc("musicPlayer/streamerNoAvailableTracks") })
 }, {
   onHover = @(on) setTooltip(on ? delta > 0 ? loc("musicPlayer/next") : loc("musicPlayer/prev")
     : null)
@@ -349,52 +391,78 @@ function mkSoundRow(soundData) {
   let curTrack = Computed(@() playingSound.get()?.soundTrack)
   let group = ElemGroup()
   let isUnseen = Computed(@() soundData?.pickup_unlock__name in unseenTracks.get())
-  let visual_params = {
-    group
-    onDoubleClick = @() startPlayer(playingSound.get())
-    size = FLEX_H
-    padding=0,
-    onHover = function(on) {
-      if (on && soundData?.pickup_unlock__name in unseenTracks.get()) {
-        unseenTracks.mutate(@(v) v?.$rawdelete(soundData?.pickup_unlock__name))
-        unseenTracksCount.modify(@(v) v - 1)
-      }
-    }
-    xmbNode = XmbNode()
-  }
+  let isRestricted = Computed(@() soundData?.isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get()))
   let textTrackCompCtor = mkSelectPanelTextCtor(loc(soundData.soundTrack), tracknameStyle)
   let textAuthorCompCtor = mkSelectPanelTextCtor(loc(soundData.author), authorStyle)
-  return mkSelectPanelItem({
-    children = @(params) @() {
-      watch = isUnseen
-      size = FLEX_H
-      flow = FLOW_HORIZONTAL
-      gap = hdpx(10)
-      valign = ALIGN_CENTER
-      padding = static [0, hdpx(4), 0, hdpx(5)]
-      children = [
-        mkSoundIcon(soundData, params.stateFlags, group)
-        {
-          behavior = Behaviors.Marquee
-          scrollOnHover = true
-          flow = FLOW_VERTICAL
-          group
-          speed = hdpx(50)
-          size = FLEX_H
-          children = [
-            textTrackCompCtor(params)
-            textAuthorCompCtor(params)
-          ]
+  return function() {
+    let visual_params = @(restricted) {
+      group
+      onDoubleClick = function() {
+        if (restricted) {
+          showMsgbox({ text = isStreamerMode.get()
+            ? loc("musicPlayer/streamerModeRestricted", { track = colorize(InfoTextValueColor, loc(soundData.soundTrack)) })
+            : loc("musicPlayer/freeRoyalRestricted", { track = colorize(InfoTextValueColor, loc(soundData.soundTrack)) })
+          })
+          return
         }
-        isUnseen.get() ? notificationIcon : null
-      ]
-    },
-    idx=soundTrack
-    state=curTrack
-    visual_params
-    onSelect = @(soundtrack) (playingSound.get()?.soundTrack == soundtrack ? stopPlayer : startPlayer)(soundData)
-    border_align = BD_LEFT
-  })
+        startPlayer(playingSound.get())
+      }
+      style = { SelBgNormal = restricted ? BtnBgDisabled : SelBgNormal }
+      size = FLEX_H
+      padding = 0,
+      onHover = function(on) {
+        if (on && soundData?.pickup_unlock__name in unseenTracks.get()) {
+          unseenTracks.mutate(@(v) v?.$rawdelete(soundData?.pickup_unlock__name))
+          unseenTracksCount.modify(@(v) v - 1)
+        }
+      }
+      xmbNode = XmbNode()
+    }
+    return {
+      watch = isRestricted
+      size = FLEX_H
+      children = mkSelectPanelItem({
+        children = @(params) @() {
+          watch = isUnseen
+          size = FLEX_H
+          flow = FLOW_HORIZONTAL
+          gap = hdpx(10)
+          valign = ALIGN_CENTER
+          padding = static [0, hdpx(4), 0, hdpx(5)]
+          children = [
+            mkSoundIcon(soundData, params.stateFlags, group)
+            {
+              behavior = Behaviors.Marquee
+              scrollOnHover = true
+              flow = FLOW_VERTICAL
+              group
+              speed = hdpx(50)
+              size = FLEX_H
+              children = [
+                textTrackCompCtor(params)
+                textAuthorCompCtor(params)
+              ]
+            }
+            isUnseen.get() ? notificationIcon : null
+          ]
+        },
+        idx=soundTrack
+        state=curTrack
+        visual_params = visual_params(isRestricted.get())
+        onSelect = function(soundtrack) {
+          if (isRestricted.get()) {
+            showMsgbox({ text = isStreamerMode.get()
+              ? loc("musicPlayer/streamerModeRestricted", { track = colorize(InfoTextValueColor, loc(soundData.soundTrack)) })
+              : loc("musicPlayer/freeRoyalRestricted", { track = colorize(InfoTextValueColor, loc(soundData.soundTrack)) })
+            })
+            return
+          }
+          (playingSound.get()?.soundTrack == soundtrack ? stopPlayer : startPlayer)(soundData)
+        }
+        border_align = BD_LEFT
+      })
+    }
+  }
 }
 
 let soundsListBlock = @() {
@@ -577,6 +645,37 @@ let playerBlock = freeze({
         musicVolumeBlock
       ]
     }.__update(bluredPanel)
+    function() {
+      if (!isStreamerMode.get() && !playOnlyFreeStreamingMusicWatch.get())
+        return { watch = [isStreamerMode, playOnlyFreeStreamingMusicWatch] }
+      return {
+        watch = [isStreamerMode, playOnlyFreeStreamingMusicWatch]
+        rendObj = ROBJ_BOX
+        size = static [hdpx(250), SIZE_TO_CONTENT]
+        borderWidth = hdpx(1)
+        hplace = ALIGN_RIGHT
+        padding = hdpx(1)
+        borderColor = RedWarningColor
+        children = {
+          size = FLEX_H
+          padding = hdpx(4)
+          behavior = Behaviors.Button
+          skipDirPadNav = true
+          onHover = function(on) {
+            let text = isStreamerMode.get() ? loc("musicPlayer/streamerModeRestrictedHint") : loc("musicPlayer/freeRoyalRestrictedHint")
+            setTooltip(on ? text : null)
+          }
+          children = mkTextArea(loc("musicPlayer/onlyFreeStreaming"))
+        }.__update(bluredPanel)
+      }
+    }
+    {
+      size = static [hdpx(250), SIZE_TO_CONTENT]
+      padding = hdpx(4)
+      hplace = ALIGN_RIGHT
+      vplace = ALIGN_BOTTOM
+      children = mkTextArea(loc("statisticsMenu/musicPlayer"))
+    }.__update(bluredPanel)
   ]
 })
 
@@ -617,4 +716,6 @@ return freeze({
   musicPlayerVolumeWatch
   musicPlayerVolumeSet
   musicPlayerSetVolume
+  playOnlyFreeStreamingMusicWatch
+  playOnlyFreeStreamingMusicSet
 })

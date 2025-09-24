@@ -1428,8 +1428,15 @@ function mkAmProcessingItemPanel() {
 
     local inRefinerVol = 0
     foreach (item in refiner) {
-      if (item?.refiner__fromList.name == REFINER_STASH.name) {
-        inRefinerVol += item.volume
+      if (item.isBoxedItem) {
+        if (item?.refiner__fromList.name == REFINER_STASH.name) {
+          inRefinerVol += (item.ammoCount * (item.volumePerStack.tofloat() / item.countPerStack.tofloat()))
+        }
+      }
+      else {
+        if (item?.refiner__fromList.name == REFINER_STASH.name) {
+          inRefinerVol += item.volume
+        }
       }
     }
     return stashVolume.get() - inRefinerVol

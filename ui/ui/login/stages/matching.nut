@@ -1,4 +1,4 @@
-from "%ui/matchingClient.nut" import startLogin
+from "%ui/matchingClient.nut" import matchingLogin
 from "eventbus" import eventbus_subscribe_onehit
 
 from "%ui/ui_library.nut" import *
@@ -15,7 +15,7 @@ return {
     }
     eventbus_subscribe_onehit("matching.logged_in", @(...) cb({}))
     eventbus_subscribe_onehit("matching.login_failed", cb)
-    startLogin(uinfo)
+    matchingLogin(uinfo)
   }
   function actionOnReload(_state, cb) {
     eventbus_subscribe_onehit("matching.logged_in", @(...) cb({}))

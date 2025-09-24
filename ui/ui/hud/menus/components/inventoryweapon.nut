@@ -45,6 +45,7 @@ let { inventoryItemClickActions } = require("%ui/hud/menus/inventoryActions.nut"
 let { slotsWithWarning, mintEditState } = require("%ui/mainMenu/raid_preparation_window_state.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
+let { allItems } = require("%ui/state/allItems.nut")
 
 let curBorderColor = BtnBdSelected
 let weaponTextCurColor = TextHighlight
@@ -283,7 +284,7 @@ function mkMods(weapon, isCurrent, can_drop_dragged_item_to_mod_slot_cb, on_drop
           res = getFittingMods(weapon, modSlotName, modSlot, can_drop_dragged_item_to_mod_slot_cb)
         else {
           let openedRecipes = allCraftRecipes.get().filter(@(v) v?.isOpened)
-          res = getNexusStashItemsForChocolateMenu(dropData, stashItems.get(), openedRecipes, allCraftRecipes.get(),
+          res = getNexusStashItemsForChocolateMenu(dropData, allItems.get(), openedRecipes, allCraftRecipes.get(),
             marketItems.get(), playerStats.get(), ["weapon_mods", "ammunition"])
               .filter(@(v) can_drop_dragged_item_to_mod_slot_cb?(v, weapon, modSlotName, modSlot))
               .sort(inventoryItemSorting)
@@ -444,7 +445,7 @@ function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
           fittingItems = getFittingItems(weapon, canDropToWeaponSlot)
         else {
           let openedRecipes = allCraftRecipes.get().filter(@(v) v?.isOpened)
-          fittingItems = getNexusStashItemsForChocolateMenu(weapon, stashItems.get(), openedRecipes, allCraftRecipes.get(),
+          fittingItems = getNexusStashItemsForChocolateMenu(weapon, allItems.get(), openedRecipes, allCraftRecipes.get(),
             marketItems.get(), playerStats.get(), ["weapons"])
               .filter(@(v) canDropToWeaponSlot(v, weapon))
               .sort(inventoryItemSorting)

@@ -1,156 +1,155 @@
-from "%dngscripts/globalState.nut" import nestWatched
+from "matching.errors" import LoginResult, DisconnectReason
 from "matching.api" import matching_logout, matching_login, get_mgates_count
-from "matching.errors" import DisconnectReason, LoginResult
-from "eventbus" import eventbus_send, eventbus_subscribe
+from "eventbus" import eventbus_subscribe, eventbus_send
+from "%dngscripts/globalState.nut" import nestWatched
 from "%ui/ui_library.nut" import *
 
 
 
-let logM = require("%sqGlob/library_logs.nut").with_prefix("[MATCHING] ")
+let logM = with_prefix("[MATCHING] ")
 
+const CONNECT_FN_ID = "matchingConnect"
 
-let matchingConnectState = nestWatched("matchingConnectState", {
-    connecting = false
-    stopped = false
-    isLoggedIn = false
-    loginFailCount = 0
-    reconnectAfterDisconnect = false
-    disconnectReason = null
-    lastLoginInfo = null
-})
-
-let getState = @() freeze(matchingConnectState.get())
-
-let setState = function(key, value) {
-  assert(key in matchingConnectState.get(), @() $"unknown {key}")
-  matchingConnectState.mutate(@(v) v[key] <- value)
+enum ConnectState {
+  NOT_CONNECTED = 0
+  CONNECTING = 1
+  CONNECTED = 2
+  STOPPED = 3
 }
 
-let serverResponseError = mkWatched(persist, "serverResponseError", false)
+let connState = nestWatched("matchingConnectState", ConnectState.NOT_CONNECTED)
+let setConnState = @(state) connState.set(state)
 
+let connData = nestWatched("matchingConnectData", {
+  lastLoginInfo = null
+  loginFailCount = 0
+  disconnectInfo = null
+})
+
+let getData = @() freeze(connData.get())
+let setData = @(tbl) connData.mutate(function(v) {
+  foreach (key, value in tbl)
+    v[key] <- value
+})
+
+let serverResponseError = mkWatched(persist, "serverResponseError", false)
 let max_relogin_retry_count = get_mgates_count()
 
 eventbus_subscribe("matching.logged_in",
   function(...) {
-    setState("isLoggedIn", true)
-    eventbus_send("matching.connectHolder.ready", null)
-    if (getState().stopped == true) {
+    if (connState.get() == ConnectState.STOPPED) {
       logM("matching connection was stopped during connect process")
       matching_logout()
+      setConnState(ConnectState.NOT_CONNECTED)
+      return
     }
+    eventbus_send("matching.connectHolder.ready", null)
   })
 
-eventbus_subscribe("matching.logged_out",
-  function(...) {
-    setState("isLoggedIn", false)
-  })
+let isRetriableLoginResult = @(e)
+  e == LoginResult.NameResolveFailed
+  || e == LoginResult.FailedToConnect
+  || e == LoginResult.ServerBusy
+  || e == LoginResult.PeersLimitReached
 
-function is_retriable_login_error(loginerror) {
-  if (loginerror == LoginResult.NameResolveFailed ||
-      loginerror == LoginResult.FailedToConnect ||
-      loginerror == LoginResult.ServerBusy ||
-      loginerror == LoginResult.PeersLimitReached)
-    return true
-  return false
-}
+let isUserDisconnectReason = @(e)
+  e == DisconnectReason.CalledByUser
+  || e == DisconnectReason.ForcedLogout
+  || e == DisconnectReason.SecondLogin
 
 function performConnect(login_info) {
-  logM($"matching.performConnect", login_info != null, getState().loginFailCount)
+  logM($"matching.performConnect", login_info != null, getData().loginFailCount)
   serverResponseError.set(false)
-  if (getState().connecting || login_info == null) {
+  if (login_info == null) {
     return
   }
-  setState("stopped", false)
-  setState("connecting", true)
   matching_login(login_info)
 }
 
 function onLoginFinished(result) {
-  setState("connecting", false)
-  serverResponseError.set(result.status != 0)
-  if (result.status == 0) {
+  let isSuccess = result.status == 0
+  serverResponseError.set(!isSuccess)
+  if (isSuccess) {
     logM("matching login successfull")
     eventbus_send("matching.logged_in", null)
+    setConnState(ConnectState.CONNECTED)
+    return
   }
-  else {
-    logM($"matching login failed: \"{result.status_str}\"")
-    if (getState().loginFailCount < max_relogin_retry_count && !getState().stopped && is_retriable_login_error(result.status)) {
-      setState("loginFailCount", getState().loginFailCount+1)
-      gui_scene.setTimeout(3, @() performConnect(getState().lastLoginInfo))
-    }
-    else {
-      if (getState().reconnectAfterDisconnect) {
-        serverResponseError.set(false)
-        eventbus_send("matching.logged_out", getState().disconnectReason)
-      }
-      else
-        eventbus_send("matching.login_failed", {error = result.status_str})
-    }
+
+  logM($"matching login failed: \"{result.status_str}\"")
+  if (connState.get() != ConnectState.STOPPED
+      && isRetriableLoginResult(result.status)
+      && getData().loginFailCount < max_relogin_retry_count) {
+    setData({ loginFailCount = getData().loginFailCount + 1 })
+    let loginInfo = getData().lastLoginInfo
+    gui_scene.resetTimeout(3, @() performConnect(loginInfo), CONNECT_FN_ID)
+    setConnState(ConnectState.CONNECTING)
+    return
   }
+
+  setConnState(ConnectState.NOT_CONNECTED)
+  let dcInfo = getData().disconnectInfo
+  if (dcInfo != null) {
+    serverResponseError.set(false)
+    eventbus_send("matching.logged_out", dcInfo)
+  }
+  else
+    eventbus_send("matching.login_failed", { error = result.status_str })
 }
 
 eventbus_subscribe("matching.login_finished", onLoginFinished)
 
 
 function deactivate_matching_login() {
-  setState("stopped", true)
-  if (!getState().connecting)
+  if (connState != ConnectState.CONNECTING)
     matching_logout()
-  setState("lastLoginInfo", null)
+  setConnState(ConnectState.STOPPED)
+  setData({ lastLoginInfo = null })
 }
 
 function activate_matching_login(loginInfo) {
   logM($"matching login using name {loginInfo.userName} and user_id {loginInfo.userId}")
-  setState("lastLoginInfo", loginInfo)
-  setState("loginFailCount", 0)
-  setState("reconnectAfterDisconnect", false)
-  setState("disconnectReason", null)
+  setData({
+    lastLoginInfo = loginInfo
+    loginFailCount = 0
+    disconnectInfo = null 
+  })
+  setConnState(ConnectState.CONNECTING)
   performConnect(loginInfo)
 }
 
-function restore_connection(_login_info, disconnect_reason) {
-  setState("loginFailCount", 0)
-  setState("reconnectAfterDisconnect", true)
-  setState("disconnectReason", disconnect_reason)
-  performConnect(getState().lastLoginInfo)
-}
-
 eventbus_subscribe("matching.on_disconnect",
-  function(disconnect_info) {
+  function(disconnectInfo) {
     logM("client had been disconnected from matching")
-    logM(disconnect_info)
+    logM(disconnectInfo)
 
-    if (getState().stopped) {
+    if (connState.get() == ConnectState.STOPPED) {
       logM("do logout")
       eventbus_send("matching.logged_out", null)
+      setConnState(ConnectState.NOT_CONNECTED)
       return
     }
 
-    local doLogout = false
-    if (disconnect_info.message.len() > 0)
-      doLogout = true
-    else if ([
-        DisconnectReason.CalledByUser, DisconnectReason.ForcedLogout,
-        DisconnectReason.SecondLogin].contains(disconnect_info.reason)){
-        doLogout = true
-      
-      
+    if (disconnectInfo.message.len() > 0 || isUserDisconnectReason(disconnectInfo.reason)) {
+      eventbus_send("matching.logged_out", disconnectInfo)
+      setConnState(ConnectState.NOT_CONNECTED)
+      return
     }
 
-    if (doLogout) {
-      eventbus_send("matching.logged_out", disconnect_info)
+    if (connState.get() == ConnectState.CONNECTED && getData().lastLoginInfo != null) {
+      setData({ loginFailCount = 0, disconnectInfo })
+      let loginInfo = getData().lastLoginInfo
+      gui_scene.resetTimeout(3, @() performConnect(loginInfo), CONNECT_FN_ID)
+      setConnState(ConnectState.CONNECTING)
+      return
     }
-    else {
-      
-      if (getState().isLoggedIn && getState().lastLoginInfo) {
-        gui_scene.setTimeout(3, @() restore_connection(getState().lastLoginInfo, disconnect_info))
-      }
-    }
+
+    logM("suspicious state. No action performed.", getData().state)
   })
 
-return freeze({
+return {
   activate_matching_login = activate_matching_login
   deactivate_matching_login = deactivate_matching_login
-  is_logged_in = @() getState().isLoggedIn
+  is_logged_in = @() connState.get() == ConnectState.CONNECTED
   server_response_error = serverResponseError
-})
+}

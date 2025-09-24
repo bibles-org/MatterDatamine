@@ -4,7 +4,7 @@ import "%ui/components/msgbox.nut" as msgbox
 
 from "dasevents" import MatchingRoomExtraParams, CmdStartMenuExtractionSequence, CmdConnectToHost, CmdHideAllUiMenus
 
-from "net" import DC_CONNECTION_CLOSED, EventOnNetworkDestroyed, EventOnConnectedToServer, EventOnDisconnectedFromServer
+from "net" import DC_CONNECTION_LOST, EventOnNetworkDestroyed, EventOnConnectedToServer, EventOnDisconnectedFromServer
 from "dagor.system" import DBGLEVEL
 from "dagor.debug" import logerr
 from "app" import get_circuit
@@ -74,7 +74,7 @@ let canStartWithLocalDedicated = DBGLEVEL > 0 && system != null
   ? Computed(@() roomIsLobby.get() && room.get()?.public != null)
   : WatchedRo(false)
 
-let lastRoomResult = mkWatched(persist, "lastRoomResult", null)
+let isLastMatchDisconnect = mkWatched(persist, "isLastMatchDisconnect", null)
 let lastSessionStartData = mkWatched(persist, "lastSessionStartData", null)
 let isWaitForDedicatedStart = Watched(false)
 let lobbyStatus = Computed(function() {
@@ -408,7 +408,7 @@ function finishConnectingToHost() {
     loginTime = loginChain.loginTime.get()
   })
   room.mutate(@(v) v.gameStarted <- true)
-  lastRoomResult.set(null)
+  isLastMatchDisconnect.set(false)
   ecs.g_entity_mgr.broadcastEvent(CmdHideAllUiMenus())
   startGame(launchParams)
 }
@@ -418,22 +418,19 @@ ecs.register_es("enlist_connect_to_host_es", {
 }, {comps_rq=["eid"]})
 
 function onDisconnectedFromServer(evt, _eid, _comp) {
-  if (!roomIsLobby.get())
+  let canReconnect = evt[0] == DC_CONNECTION_LOST 
+  if (!canReconnect && !roomIsLobby.get())
     forceLeaveRoom()
+
   if (lastSessionStartData.get() == null)
     return
 
-  local connLost = true
-  if (evt[0] == DC_CONNECTION_CLOSED) {
-    connLost = false
-  }
-
-  let { sessionId, loginTime } = lastSessionStartData.get()
+  let { loginTime } = lastSessionStartData.get()
   lastSessionStartData.set(null)
   let wasRelogin = loginTime != loginChain.loginTime.get()
-  if (!wasRelogin && !connLost && !roomIsLobby.get()) {
-    matchingCall("enlmm.remove_from_match", null, { sessionId })
-    lastRoomResult.set({ connLost, sessionId })
+  if (!wasRelogin && canReconnect && !roomIsLobby.get()) {
+    isLastMatchDisconnect.set(canReconnect)
+    cleanupRoomState() 
   }
 }
 
@@ -702,7 +699,7 @@ return {
   roomMembers
   roomIsLobby
   lobbyStatus
-  lastRoomResult
+  isLastMatchDisconnect
   chatId
 
   setMemberAttributes

@@ -1,4 +1,5 @@
-from "%ui/mainMenu/audioModule/music_player.nut" import startPlayer, stopPlayer, LoopStatus, musicPlayerVolumeSet, musicPlayerSetVolume
+from "%ui/mainMenu/audioModule/music_player.nut" import startPlayer, stopPlayer, LoopStatus, musicPlayerVolumeSet,
+  musicPlayerSetVolume, playOnlyFreeStreamingMusicWatch, playOnlyFreeStreamingMusicSet
 from "%ui/fonts_style.nut" import body_txt
 from "%ui/components/colors.nut" import panelRowColor, BtnBgHover, BtnTextNormal
 from "%ui/components/commonComponents.nut" import mkTextArea, bluredPanel
@@ -108,6 +109,14 @@ let playMusicOnBaseSetting = optionCtor({
   valToString = @(v) (v ? loc("option/on") : loc("option/off"))
 })
 
+let playFreeStreamingMusicSetting = optionCtor({
+  name = loc("musicPlayer/onlyFreeStreaming")
+  setValue = @(v) playOnlyFreeStreamingMusicSet(v)
+  var = playOnlyFreeStreamingMusicWatch
+  defVal = true
+  widgetCtor = optionCheckBox
+  valToString = @(v) (v ? loc("option/on") : loc("option/off"))
+})
 
 function optionRowContainer(children) {
   let stateFlags = Watched(0)
@@ -202,6 +211,7 @@ let playerOptionsBlock = {
         makeOptionRow(playerMusicVolumeSetting)
         makeOptionRow(playMusicOnBaseSetting)
         makeOptionRow(playMusicInRaidsSetting)
+        makeOptionRow(playFreeStreamingMusicSetting)
       ]
     }
   ]
@@ -222,4 +232,5 @@ let settingsTabUi = {
 return {
   settingsTabUi
   SETTINGS_TAB_ID
+  playOnlyFreeStreamingMusicWatch
 }

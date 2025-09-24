@@ -63,6 +63,7 @@ from "%ui/profile/profileState.nut" import playerBaseState, playerStats, playerP
   nexusNodesState, currentContractsUpdateTimeleft, numOfflineRaidsAvailable, trialData
 from "%ui/mainMenu/nexus_tutorial.nut" import checkShowNexusTutorial, mkNexusBriefingButton
 from "%sqGlob/userInfoState.nut" import userInfo
+from "%ui/mainMenu/currencyPanel.nut" import showNotEnoghPremiumMsgBox
 
 let { matchingQueuesMap, matchingQueues, matchingTime } = require("%ui/matchingQueues.nut")
 let { selectedSpawn, selectedRaid, raidToFocus, leaderSelectedRaid, selectedNexusFaction,
@@ -348,6 +349,7 @@ function checkLeaderRaidChange(data) {
   if (prevoisOfflineRaidStatus == null)
     prevoisOfflineRaidStatus = isOffline
   else if (prevoisOfflineRaidStatus != isOffline && !isSquadLeader.get()) {
+    myExtSquadData.ready.set(false)
     addPlayerLog({
       id = $"{leaderRaidName}_{isOffline}"
       content = mkPlayerLog({
@@ -1543,10 +1545,21 @@ function getContent() {
   }
 
   function mkActiveNexusNodeButton(contractId) {
+    let notification = Computed(function() {
+      let contract = playerProfileCurrentContracts.get()?[contractId]
+      return contract && contract.requireValue <= contract.currentValue && !contract.isReported ? 1 : 0
+    })
     let nodeId = playerProfileCurrentContracts.get()[contractId].params.nodeId[0]
     let group = ElemGroup()
     let selectItem = mkSelectPanelItem({
-      children = mkSelectPanelTextCtor(getNexusNodeName(patchedNodes.get()[nodeId]), { size = FLEX_H, padding = [0, 0, 0, hdpx(10)] }),
+      children = @(params) {
+        flow = FLOW_HORIZONTAL
+        size = FLEX_H
+        children = [
+          mkSelectPanelTextCtor(getNexusNodeName(patchedNodes.get()[nodeId]), { size = FLEX_H, padding = [0, 0, 0, hdpx(10)] })(params),
+          mkNotificationMark(notification)
+        ]
+      }
       state = selectedNexusNode
       onSelect = function(idx) {
         selectedNexusNode.set(idx)
@@ -1560,7 +1573,6 @@ function getContent() {
     let isSelected = Computed(@() selectedNexusNode.get() == nodeId)
     return @() {
       watch = isSelected
-      flow = FLOW_VERTICAL
       size = FLEX_H
       children = selectItem
     }
@@ -1570,6 +1582,13 @@ function getContent() {
     let factionKey = $"{FACTION_PREFIX}{factionNum}"
 
     let isSelected = Computed(@() selectedNexusFaction.get() == factionKey)
+    let notifications = Computed(function(){
+      let contracts = factionActiveContracts.get()?[factionKey] ?? []
+      return contracts.filter(function(contractId) {
+        let contract = playerProfileCurrentContracts.get()[contractId]
+        return contract.requireValue <= contract.currentValue && !contract.isReported
+      }).len()
+    })
     let sf = Watched(0)
 
     let header = function() {
@@ -1622,6 +1641,7 @@ function getContent() {
               !isActiveFaction ? { rendObj = ROBJ_SOLID, color=Color(255, 0, 0, 255), size=[flex(), hdpx(1)] } : null
             ]
           }
+          mkNotificationMark(notifications)
           mkInfoButton(factionKey)
         ]
       }
@@ -2083,6 +2103,45 @@ function getContent() {
     )
   }
 
+  let trialEndedButton = {
+    size = FLEX_H
+    children = textButton(loc("consoleRaid/trialExpiredButton"),
+      @() showNotEnoghPremiumMsgBox(mkText(loc("consoleRaid/trialExpiredButton/msg"), h2_txt))
+      {
+        size = static [flex(), hdpx(70)]
+        halign = ALIGN_CENTER
+        textParams = h2_txt
+        textMargin = 0
+      }
+    )
+  }
+
+  let trialNeedsOnlineRaid = {
+    size = FLEX_H
+    children = textButton(loc("market/diabledDueToTrialStatus"),
+      @() showNotEnoghPremiumMsgBox(mkText(loc("consoleRaid/trialNeedsOnlineRaid"), h2_txt))
+      {
+        size = static [flex(), hdpx(70)]
+        halign = ALIGN_CENTER
+        textParams = h2_txt
+        textMargin = 0
+      }
+    )
+  }
+
+  let trialNeedsOflineRaid = {
+    size = FLEX_H
+    children = textButton(loc("market/diabledDueToTrialStatus"),
+      @() showNotEnoghPremiumMsgBox(mkText(loc("consoleRaid/trialNeedsOfflineRaid"), h2_txt))
+      {
+        size = static [flex(), hdpx(70)]
+        halign = ALIGN_CENTER
+        textParams = h2_txt
+        textMargin = 0
+      }
+    )
+  }
+
   let noIsolatedTicketsButton = textButton(loc("queue/offline_raids/noTicketsShort"),
     @() showMsgbox({
       text = loc("queue/offline_raids/noTickets"),
@@ -2128,9 +2187,55 @@ function getContent() {
     let isOperative = selectedRaid.get() != null && !isNexus
     function buttons() {
       let watch = [wantOfflineRaid, isOfflineRaidAvailable, isAvailable, selectedRaid, isInSquad, isSquadLeader, numOfflineRaidsAvailable,
-        selectedRaidBySquadLeader, selectedNexusNode, activeNodes, squadLeaderState, trialData]
+        selectedRaidBySquadLeader, selectedNexusNode, activeNodes, squadLeaderState, trialData, playerStats]
       let { raidData = null } = selectedRaidBySquadLeader.get()
       let isLeaderSetOffline = squadLeaderState.get()?.leaderRaid.isOffline
+      let isNewbyRaid = selectedRaid.get()?.extraParams.isNewby
+      if (!isNewbyRaid && trialData.get()?.trialType) {
+        let curStat = playerStats.get()?.stats ?? {}
+        let maxStat = trialData.get()?.trialStatsLimit ?? {}
+
+        local isOk = true
+
+        foreach (tblKey, tblVal in maxStat) {
+          foreach (statKey, statVal in tblVal) {
+            let cur = curStat?[tblKey][statKey]
+            if (cur == null)
+              continue
+
+            if (cur > statVal) {
+              isOk = false
+              break
+            }
+          }
+        }
+
+        if (!isOk) {
+          return {
+            watch
+            size = FLEX_H
+            children = trialEndedButton
+          }
+        }
+
+        let trialType = trialData.get()?.trialType
+        const TRIAL_TYPE_OFFLINE_RAIDS = 1
+        const TRIAL_TYPE_ONLINE_RAIDS = 2
+        if (trialType == TRIAL_TYPE_OFFLINE_RAIDS && !wantOfflineRaid.get()) {
+          return {
+            watch
+            size = FLEX_H
+            children = trialNeedsOflineRaid
+          }
+        }
+        else if (trialType == TRIAL_TYPE_ONLINE_RAIDS && wantOfflineRaid.get()) {
+          return {
+            watch
+            size = FLEX_H
+            children = trialNeedsOnlineRaid
+          }
+        }
+      }
       if ((wantOfflineRaid.get() && !isOfflineRaidAvailable.get() && !isNexus)
         || (isLeaderSetOffline && (raidData?.extraParams.raidName == selectedRaid.get()?.extraParams.raidName) && !isOfflineRaidAvailable.get())) {
         return {

@@ -1408,22 +1408,7 @@ industrial_valuable_subpreset{
     }
 
     "item:object"{
-      sub_preset:t="calculator_filler_loot_subpreset"
-      weight:r=5
-    }
-
-    "item:object"{
-      sub_preset:t="camera_filler_loot_subpreset"
-      weight:r=5
-    }
-
-    "item:object"{
-      sub_preset:t="tape_player_filler_loot_subpreset"
-      weight:r=5
-    }
-
-    "item:object"{
-      sub_preset:t="airplane_clocks_filler_loot_subpreset"
+      sub_preset:t="desired_filler_loot_subpreset"
       weight:r=5
     }
 
@@ -1480,17 +1465,7 @@ industrial_valuable_africa_subpreset{
     }
 
     "item:object"{
-      sub_preset:t="calculator_filler_loot_subpreset"
-      weight:r=5
-    }
-
-    "item:object"{
-      sub_preset:t="camera_filler_loot_subpreset"
-      weight:r=5
-    }
-
-    "item:object"{
-      sub_preset:t="tape_player_filler_loot_subpreset"
+      sub_preset:t="desired_filler_africa_loot_subpreset"
       weight:r=5
     }
 
@@ -1959,7 +1934,7 @@ civil_africa_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="home_valuable_africa_subpreset"
-      weight:r=1
+      weight:r=0.5
     }
 
     "item:object"{
@@ -2007,7 +1982,7 @@ civil_africa_pve_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="home_valuable_africa_subpreset"
-      weight:r=0.75
+      weight:r=0.25
     }
 
     "item:object"{
@@ -2362,7 +2337,7 @@ industrial_africa_pve_loot_preset{
 
 industrial_loot_preset_big{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=4, 6
+  loot_preset__numSamples:ip2=4, 5
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -2493,7 +2468,7 @@ industrial_pve_loot_preset_big{
 
 industrial_africa_loot_preset_big{
   _use:t="loot_preset"
-  loot_preset__numSamples:ip2=4, 6
+  loot_preset__numSamples:ip2=4, 5
   loot_preset__allowRepeat:b=no
 
   "loot_preset__chances:array"{
@@ -4418,12 +4393,12 @@ encyclopedia_filler_loot_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="encyclopedia_normal_filler_loot_subpreset"
-      weight:r=0.7
+      weight:r=0.94
     }
 
     "item:object"{
       sub_preset:t="encyclopedia_saturated_filler_loot_subpreset"
-      weight:r=0.3
+      weight:r=0.06
     }
   }
 }
@@ -4502,12 +4477,12 @@ tape_player_filler_loot_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="tape_player_normal_filler_loot_subpreset"
-      weight:r=0.7
+      weight:r=0.94
     }
 
     "item:object"{
       sub_preset:t="tape_player_saturated_filler_loot_subpreset"
-      weight:r=0.3
+      weight:r=0.06
     }
   }
 }
@@ -4556,12 +4531,12 @@ camera_filler_loot_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="camera_normal_filler_loot_subpreset"
-      weight:r=0.7
+      weight:r=0.94
     }
 
     "item:object"{
       sub_preset:t="camera_saturated_filler_loot_subpreset"
-      weight:r=0.3
+      weight:r=0.06
     }
   }
 }
@@ -4602,7 +4577,7 @@ modern_desired_filler_loot_subpreset{
 
     "item:object"{
       sub_preset:t="modern_desired_saturated_filler_loot_subpreset"
-      weight:r=0.5
+      weight:r=0.1
     }
   }
 }
@@ -4926,12 +4901,12 @@ collectible_albums_filler_loot_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="collectible_albums_normal_filler_loot_subpreset"
-      weight:r=0.7
+      weight:r=0.94
     }
 
     "item:object"{
       sub_preset:t="collectible_albums_saturated_filler_loot_subpreset"
-      weight:r=0.3
+      weight:r=0.06
     }
   }
 }
@@ -5132,12 +5107,12 @@ vase_loot_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="vase_normal_loot_subpreset"
-      weight:r=0.7
+      weight:r=0.94
     }
 
     "item:object"{
       sub_preset:t="vase_saturated_loot_subpreset"
-      weight:r=0.3
+      weight:r=0.06
     }
   }
 }
@@ -5186,12 +5161,12 @@ calculator_filler_loot_subpreset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="calculator_normal_filler_loot_subpreset"
-      weight:r=0.7
+      weight:r=0.94
     }
 
     "item:object"{
       sub_preset:t="calculator_saturated_filler_loot_subpreset"
-      weight:r=0.3
+      weight:r=0.06
     }
   }
 }

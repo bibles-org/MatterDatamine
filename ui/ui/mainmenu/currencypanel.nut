@@ -190,7 +190,7 @@ function mkPremiumBox(grade) {
   }
 }
 
-function showNotEnoghPremiumMsgBox() {
+function showNotEnoghPremiumMsgBox(header = null) {
   let buttons = [{
     text = loc("mainmenu/btnClose")
     isCurrent = true
@@ -231,7 +231,7 @@ function showNotEnoghPremiumMsgBox() {
           gap = hdpx(50)
           halign = ALIGN_CENTER
           children = [
-            mkDescTextarea(loc("premium/notEnoughPremiumCredits"), { halign = ALIGN_CENTER }.__merge(h2_txt)),
+            header ?? mkDescTextarea(loc("premium/notEnoughPremiumCredits"), { halign = ALIGN_CENTER }.__merge(h2_txt)),
             {
               hplace = ALIGN_CENTER
               flow = FLOW_HORIZONTAL

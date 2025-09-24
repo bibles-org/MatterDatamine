@@ -138,7 +138,6 @@ ecs.register_es(
       })
       showMsgbox({
         text = msgText
-        onClose = switch_to_menu_scene
       })
     },
   }

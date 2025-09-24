@@ -6,6 +6,10 @@ entity{
   _template:t="zone_weather"
 }
 
+entity{
+  _template:t="monster_event_manager"
+}
+
 import{
   scene:t="gamedata/scenes/_africa_forsaken_sounds.blk"
 }
@@ -42,7 +46,7 @@ import{
 entity{
   _template:t="raid_description"
   raid_description__raidType:t="battleroyale"
-  raid_description__difficulty:t="dif_norm"
+  raid_description__difficulty:t="dif_hard"
   raid_description__drawSpawnsAsPoints:b=no
   raid_description__drawSpawnsAsPoly:b=yes
   raid_description__drawSpawnsAlpha:r=190
@@ -55,7 +59,6 @@ entity{
     item:t="invisible"
     item:t="flower"
     item:t="mosquito"
-    item:t="worms"
     item:t="statue"
     item:t="gravity_trap"
   }
@@ -143,9 +146,9 @@ entity{
   dynamic_zone_controller__finalZoneShrinkingTime:r=15
   dynamic_zone_controller__finalZoneWaitingTime:r=120
   dynamic_zone_controller__waitingForZoneShrinkingTime:r=180
-  dynamic_zone_controller__zoneShrinkingTime:r=60
+  dynamic_zone_controller__zoneShrinkingTime:r=90
   dynamic_zone_controller__waitingForZoneShrinkingTimePow:r=0.8
-  dynamic_zone_controller__zoneShrinkingTimePow:r=0.9
+  dynamic_zone_controller__zoneShrinkingTimePow:r=0.95
 }
 
 entity{

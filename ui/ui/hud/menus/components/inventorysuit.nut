@@ -47,6 +47,7 @@ let { hoverPcHotkeysPresentation } = require("%ui/hud/menus/components/inventory
 let { slotsWithWarning, mintEditState } = require("%ui/mainMenu/raid_preparation_window_state.nut")
 let { curTime } = require("%ui/hud/state/time_state.nut")
 let { entityToUse } = require("%ui/hud/state/entity_use_state.nut")
+let { allItems } = require("%ui/state/allItems.nut")
 
 let modFillDragColor = ItemBgColor
 let modBorderColor = ItemBdColor
@@ -294,7 +295,7 @@ function mkEquipmentSlot(itemOrSlot, callbacks={}, itemIconParams=inventoryImage
           fittingItems = itemsForSlot(itemOrSlot)
         else {
           let openedRecipes = allCraftRecipes.get().filter(@(v) v?.isOpened)
-          fittingItems = getNexusStashItemsForChocolateMenu(itemOrSlot, stashItems.get(), openedRecipes, allCraftRecipes.get(),
+          fittingItems = getNexusStashItemsForChocolateMenu(itemOrSlot, allItems.get(), openedRecipes, allCraftRecipes.get(),
             marketItems.get(), playerStats.get(), ["equipment", "medicines", "ammunition"])
               .filter(@(v) canDropItemToSlot(v, itemOrSlot))
               .sort(inventoryItemSorting)

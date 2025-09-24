@@ -9,6 +9,7 @@ bot_team{
   _use:t="base_team"
   team__capacity:i=0
   team__markSpawnBase:b=yes
+  team__markSpawnBaseDuration:r=5
 
   "net__notInInitialScope:tag"{}
   "team__unitTemplates:object"{
@@ -47,6 +48,7 @@ am_player_team_america{
   _use:t="raid_player_team"
   team__capacity:i=1
   team__markSpawnBase:b=yes
+  team__markSpawnBaseDuration:r=30
 
   "net__notInInitialScope:tag"{}
   "team__unitTemplates:object"{
@@ -101,6 +103,7 @@ am_player_on_base_team{
   _use:t="base_team"
   team__capacity:i=1
   team__markSpawnBase:b=yes
+  team__markSpawnBaseDuration:r=0
 
   "net__notInInitialScope:tag"{}
   "team__unitTemplates:object"{
@@ -114,6 +117,7 @@ am_player_raid_team{
   _use:t="base_team"
   team__capacity:i=3
   team__markSpawnBase:b=yes
+  team__markSpawnBaseDuration:r=30
   team__spawnGroupId:i=-1
   _replicated:t="team__spawnGroupId"
   team__firstKillConfirmed:b=no
@@ -131,6 +135,7 @@ encounter_team{
   _use:t="base_team"
   team__capacity:i=0
   team__markSpawnBase:b=no
+  team__markSpawnBaseDuration:r=0
   team__spawnGroupId:i=-1
   _replicated:t="team__spawnGroupId"
 
@@ -157,7 +162,7 @@ am_respawn_raid{
   team:i=-1
   spawnBase__spawnRadius:r=3
   respbase__skipSpawnPosValidation:b=no
-  respawn_raid__unmarkAfterSpawns:i=-1
+  respawn_raid__unmarkAt:r=-1
 }
 
 am_mindcontrolled_spawn{
@@ -274,12 +279,4 @@ ribbon_colors{
     i:t="unlock_extended_ribbons_color"
     i:t="unlock_extended_ribbons_color"
   }
-}
-
-squad{
-  "squad__squadId:u32"{
-    value:i=0
-  }
-
-  "squad__memberUserIds:list<u64>"{}
 }

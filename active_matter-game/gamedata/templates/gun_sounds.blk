@@ -3,7 +3,16 @@ gun_shot_dry_sound{
     _tags:t="sound"
     gun_shot_dry_sound__nextTime:r=0
     gun_shot_dry_sound__path:t="player/weapon/_common/shot_dry_rifle"
-    gun_shot_dry_sound__cooldown:r=0.1
+    gun_shot_dry_sound__cooldown:r=0.15
+  }
+}
+
+gun_jammed_sound{
+  _group{
+    _tags:t="sound"
+    gun_jammed_sound__nextTime:r=0
+    gun_jammed_sound__path:t="player/weapon/_common/jammed"
+    gun_jammed_sound__cooldown:r=1
   }
 }
 
@@ -165,6 +174,7 @@ gun_sound{
   _use:t="sound_tags"
   _use:t="pistol_gun_shot_dry_sound"
   _use:t="pistol_gun_aim_sound"
+  _use:t="gun_jammed_sound"
 
   _group{
     gun_sound__forceOneshot:b=no

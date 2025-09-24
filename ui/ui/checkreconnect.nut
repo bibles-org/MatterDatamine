@@ -1,13 +1,16 @@
 import "%ui/components/msgbox.nut" as msgbox
+import "%dngscripts/ecs.nut" as ecs
 
 from "%ui/permissions/permissions.nut" import checkMultiplayerPermissions
-from "%ui/matchingClient.nut" import matchingCall
+from "%ui/matchingClient.nut" import matchingCall, matchingLogin
 from "%ui/state/roomState.nut" import joinRoom
+from "%sqGlob/userInfoState.nut" import userInfo
+from "eventbus" import eventbus_subscribe_onehit
 from "app" import get_app_id
 
 from "%ui/ui_library.nut" import *
 
-let { allowReconnect, lastRoomResult } = require("%ui/state/roomState.nut")
+let { allowReconnect, isLastMatchDisconnect } = require("%ui/state/roomState.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
 let isReconnectChecking = mkWatched(persist, "isReconnectChecking", false)
 let loginState = require("%ui/login/login_state.nut")
@@ -48,10 +51,24 @@ function checkReconnect() {
     {appId = get_app_id()})
 }
 
-lastRoomResult.subscribe_with_nasty_disregard_of_frp_update(function(result) {
-  if (result?.isDisconnect ?? false)
-    defer(checkReconnect) 
-})
+ecs.register_es("check_reconnect_on_loaded_profile_es", {
+  [["onInit", "onChange"]] = function(_eid, comp){
+    if (comp.player_profile__isLoaded && (isLastMatchDisconnect.get() ?? false) && (userInfo.get() != null)) {
+      let { userId, name, chardToken, token } = userInfo.get()
+      let loginInfo = {
+        userId
+        name
+        chardToken
+        authJwt = token 
+      }
+      matchingLogin(loginInfo)
+      eventbus_subscribe_onehit("matching.logged_in", @(...) checkReconnect())
+    }
+  }
+},
+{ comps_track=[["player_profile__isLoaded", ecs.TYPE_BOOL]] },
+{ tags="gameClient", after="load_profile_server_data_es" }
+)
 
 loginState.isLoggedIn.subscribe_with_nasty_disregard_of_frp_update(function (state) {
   if (state)

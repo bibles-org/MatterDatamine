@@ -291,6 +291,7 @@ let modTypeColors = {
   scope = Color(120, 60, 120)
   boxedAmmo = Color(120, 120, 60)
   hasItemsInside = Color(120, 120, 120)
+  tactical_right = Color(125, 75, 50)
 }
 
 

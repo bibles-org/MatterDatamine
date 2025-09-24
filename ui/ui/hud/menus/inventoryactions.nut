@@ -219,6 +219,9 @@ function moveAwayStackToStashOrGround(_item) {
 }
 
 function showSplitStackOrJustMoveToInventory(item, showSuitableAmmo = false, inventoriesList = null) {
+  local icon = showSuitableAmmo || item?.isBoxedItem
+    ? item?.isHealkit ? "context_icons/ampoules_from_stash.svg" : "context_icons/ammo_from_stash.svg"
+    : "context_icons/same_from_stash.svg"
   local locId = showSuitableAmmo || item?.isBoxedItem
     ? item?.isHealkit ? "item/action/moveSomeAmpoulesInventory" : "item/action/moveSomeAmmoInventory"
     : "item/action/moveSomeToInventory"
@@ -253,7 +256,7 @@ function showSplitStackOrJustMoveToInventory(item, showSuitableAmmo = false, inv
   let countToUse = isBoxedItem ? ammoCount : max(count, resItems.len())
   if (countToUse == 1 && !showSuitableAmmo)
     locId = inventoriesList == null ? "item/action/moveOneItemToInventory" : "item/action/moveOneItemToInventoryShort"
-  return { locId, additionalText, icon = "context_icons/drag_in.svg" }
+  return { locId, additionalText, icon }
 }
 
 function getPickUpToEquipOrBackpack(item) {
@@ -658,7 +661,7 @@ let actionOpenWeaponInShowroom = {
   locId = "item/action/actionOpenWeaponInShowroom"
   action = openItemShowroom
   needToShow = needOpenWeaponShowroomAction
-  icon = "context_icons/weapon_showroom.svg"
+  icon = "context_icons/weapon_mod.svg"
 }
 
 let actionOpenItemInShowroom = {
@@ -903,7 +906,7 @@ function mkContextMenuRow(rowData, item, event, idx) {
           iconToUse == null ? { size = iconHeight } : {
             rendObj = ROBJ_IMAGE
             size = iconHeight
-            image = Picture($"ui/skin#{iconToUse}:{iconHeight}:{iconHeight}:P")
+            image = Picture($"!ui/skin#{iconToUse}:{iconHeight}:{iconHeight}:K")
           }
           mkTextArea($"{loc(locIdToUse)}{additionalText}", { color = castomData?.color ?? TextNormal })
         ]

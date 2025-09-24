@@ -78,7 +78,7 @@ eventbus_subscribe("matching.logged_in", function(_reason) {
     act()
 })
 
-function startLogin(userInfo) {
+function matchingLogin(userInfo) {
   let loginInfo = {
     userId = userInfo.userId
     userName = userInfo.name
@@ -102,6 +102,6 @@ return {
   serverResponseError = connectHolder.server_response_error
   matchingCall
   matchingNotify
-  startLogin
+  matchingLogin
   netStateCall
 }

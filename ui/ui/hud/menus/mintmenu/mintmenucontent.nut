@@ -41,6 +41,7 @@ from "%ui/components/cursors.nut" import setTooltip
 from "%ui/hud/menus/components/inventoryItemNexusPointPriceComp.nut" import nexusPointsIcon, nexusPointsIconSize
 from "%ui/components/msgbox.nut" import showMsgbox, showMessageWithContent
 from "%ui/mainMenu/clonesMenu/mainChronogeneSelection.nut" import MAIN_CHRONOGENE_UID
+from "string" import startswith
 import "%ui/components/faComp.nut" as faComp
 
 from "%ui/ui_library.nut" import *
@@ -56,10 +57,10 @@ let { previewPreset, previewPresetCallbackOverride } = require("%ui/equipPresets
 let { alterMints, loadoutsAgency, allCraftRecipes, marketItems, playerStats, playerProfileNexusLoadoutStorageCount
 } = require("%ui/profile/profileState.nut")
 let { mintEditState, slotsWithWarning } = require("%ui/mainMenu/raid_preparation_window_state.nut")
-let { stashItems } = require("%ui/hud/state/inventory_items_es.nut")
 let { agencyLoadoutGenerators, nexusItemCost, updateNexusCostsOfPreviewPreset, getCostOfPreset } = require("%ui/hud/menus/mintMenu/mintState.nut")
 let { activeFilters } = require("%ui/hud/menus/components/inventoryStashFiltersWidget.nut")
 let { weaponSlotsKeys } = require("%ui/types/weapon_slots.nut")
+let { allItems } = require("%ui/state/allItems.nut")
 let JB = require("%ui/control/gui_buttons.nut")
 
 let currentMint = Watched(null)
@@ -533,7 +534,7 @@ function showAlterContextMenu(point, alterIdx) {
 
 let nexusStashItems = Computed(function() {
   let openedRecipes = allCraftRecipes.get().filter(@(v) v?.isOpened)
-  let res = getNexusStashItems(stashItems.get(), openedRecipes, allCraftRecipes.get(),
+  let res = getNexusStashItems(allItems.get(), openedRecipes, allCraftRecipes.get(),
     marketItems.get(), playerStats.get())
 
   let nexusCost = nexusItemCost.get()
@@ -550,7 +551,7 @@ let nexusStashItems = Computed(function() {
 
 let nexusOpenedItemTemplates = Computed(function() {
   let openedRecipes = allCraftRecipes.get().filter(@(v) v?.isOpened)
-  let items = getNexusStashItems(stashItems.get(), openedRecipes, allCraftRecipes.get(),
+  let items = getNexusStashItems(allItems.get(), openedRecipes, allCraftRecipes.get(),
     marketItems.get(), playerStats.get())
 
   let ret = {}
@@ -576,7 +577,9 @@ function currentPresetMissedItems() {
   }
 
   foreach (k, v in pp ?? {}) {
-    if (v?.itemTemplate && k != "chronogene_primary_1")
+    if (startswith(k, "chronogene"))
+      continue
+    if (v?.itemTemplate)
       checkTemplate(v.itemTemplate)
   }
 
