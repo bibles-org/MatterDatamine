@@ -116,8 +116,10 @@ function startOfflineGame(scene, raid_name, queue_id) {
   if (!isInOfflineQueue.get())
     return
 
+  let isolatedVersion = matchingQueuesMap.get().findvalue(@(v) (v?.extraParams?.isolatedVersionOfQueue ?? "") == queue_id)
+  let queueId = isolatedVersion?.queueId ?? queue_id
   startOfflineGameInfo.set({
-    scene, raid_name, queue_id
+    scene, raid_name, queue_id=queueId
   })
 
   ecs.g_entity_mgr.sendEvent(watchedHeroEid.get(), CmdStartMenuExtractionSequence({isOffline=true}))
@@ -225,8 +227,7 @@ eventbus_subscribe("profile_server.get_battle_loadout.recieved", function(respon
   let needBotSpawn = isNewby
 
   let { queue_id } = startOfflineGameInfo.get()
-  let isolatedVersion = matchingQueuesMap.get().findvalue(@(v) (v?.extraParams?.isolatedVersionOfQueue ?? "") == queue_id)
-  let queueToParse = isolatedVersion ?? matchingQueuesMap.get().findvalue(@(v) (v?.queueId ?? "") == queue_id)
+  let queueToParse =  matchingQueuesMap.get().findvalue(@(v) (v?.queueId ?? "") == queue_id)
   let additionalImports = queueToParse?.imports
   let additionalImportsDbg = additionalImports != null ? ", ".join(additionalImports) : "null"
 

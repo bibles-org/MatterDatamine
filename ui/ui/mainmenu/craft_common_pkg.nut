@@ -35,6 +35,7 @@ let { MonolithMenuId, monolithSelectedLevel, selectedMonolithUnlock, currentMono
 let { playerLogsColors } = require("%ui/popup/player_event_log.nut")
 let { currencyPanel } = require("%ui/mainMenu/currencyPanel.nut")
 let { craftScreenState } = require("%ui/mainMenu/craftScreenState.nut")
+let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
 
 let selectedPrototype = Watched(null)
 let gamepadHoveredPrototype = Watched(null)
@@ -395,6 +396,7 @@ function setCraftsReadyCount() {
 
 function resetCraftTimer() {
   local timerNum = 0
+  setCraftsReadyCount()
   foreach (task in craftTasks.get()) {
     let waitTime = task.craftCompleteAt - get_sync_time() + 0.1
     if (waitTime > 0) {
@@ -402,7 +404,7 @@ function resetCraftTimer() {
       gui_scene.resetTimeout(waitTime, function() {
         let oldCount = craftsReady.get()
         let newCount = setCraftsReadyCount()
-        if (oldCount < newCount) {
+        if (oldCount < newCount && isOnPlayerBase.get()) {
           sound_play("ui_sounds/process_complete")
         }
       }, id)
@@ -410,6 +412,8 @@ function resetCraftTimer() {
     }
   }
 }
+
+craftTasks.subscribe_with_nasty_disregard_of_frp_update(@(_) resetCraftTimer())
 
 let craftMsgbox = @(text) showMessageWithContent({
   content = {

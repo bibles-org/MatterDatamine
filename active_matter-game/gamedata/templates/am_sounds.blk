@@ -1,6 +1,16 @@
 import:t="vehicle_sounds/am_ground_vehicle_sounds.blk"
 import:t="vehicle_sounds/am_ship_vehicle_sounds.blk"
 import:t="vehicle_sounds/am_plane_vehicle_sounds.blk"
+import:t="am_anomaly_sounds.blk"
+import:t="am_door_sounds.blk"
+import:t="am_container_sounds.blk"
+import:t="am_ambient_sounds.blk"
+import:t="am_occlusion_sounds.blk"
+import:t="am_gun_sounds.blk"
+import:t="am_projectile_sounds.blk"
+import:t="am_human_sounds.blk"
+import:t="am_character_sounds.blk"
+import:t="am_monster_sounds.blk"
 
 reverb_sound{
   _use:t="base_reverb_sound"
@@ -394,59 +404,6 @@ am_sound_step_settings{
       }
     }
   }
-}
-
-am_projectile_sound_physmat{
-  _use:t="projectile_sound_physmat"
-
-  _group{
-    _tags:t="sound"
-
-    "sound_physmat__soundMaterials:list<t>"{
-      mat:t="default"
-      mat:t="concrete"
-      mat:t="water"
-      mat:t="wood"
-      mat:t="metal"
-      mat:t="cactus"
-      mat:t="plastic"
-      mat:t="rubber"
-      mat:t="glass"
-    }
-
-    "sound_physmat__physmatToSoundmat:object"{
-      dirt:t="default"
-      concrete:t="concrete"
-      stone:t="concrete"
-      buildings:t="concrete"
-      rocks:t="concrete"
-      rocksSlippery:t="concrete"
-      gravel:t="concrete"
-      ceramic:t="concrete"
-      water:t="water"
-      water3d:t="water"
-      waterPuddle:t="water"
-      wood:t="wood"
-      wood_railway:t="wood"
-      wood_solid:t="wood"
-      window_wood:t="wood"
-      cactus:t="cactus"
-      softWoodDoor:t="wood"
-      metal:t="metal"
-      steel:t="metal"
-      train:t="metal"
-      softSteelDoor:t="metal"
-      plastic:t="plastic"
-      rubber:t="rubber"
-      glass:t="glass"
-    }
-  }
-}
-
-am_projectile_sound_settings{
-  _use:t="am_projectile_sound_physmat"
-  _use:t="wiz_sound_settings"
-  _use:t="shell_shatter_sound_settings"
 }
 
 am_traps_managed_sound{

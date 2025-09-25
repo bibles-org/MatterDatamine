@@ -1,7 +1,8 @@
 from "%ui/components/commonComponents.nut" import mkText
 from "%ui/fonts_style.nut" import fontawesome, sub_txt
 from "%ui/components/scrollbar.nut" import makeVertScrollExt
-from "%ui/components/colors.nut" import TextNormal, BtnBgSelected, BtnBgHover, BtnBgNormal, BtnBgActive, RedFailColor
+from "%ui/components/colors.nut" import TextNormal, BtnBgSelected, BtnBgHover, BtnBgNormal, BtnBgActive,
+  RedFailColor, BtnBgDisabled
 from "%ui/helpers/time.nut" import secondsToStringLoc, secondsToTime
 from "%ui/hud/map/map_extraction_points.nut" import extractionIcon
 from "string" import endswith, format
@@ -13,11 +14,14 @@ import "%ui/components/fontawesome.map.nut" as fa
 import "%dngscripts/ecs.nut" as ecs
 import "%ui/complaints/complainWnd.nut" as complain
 import "%ui/components/contextMenu.nut" as contextMenu
+from "%ui/mainMenu/debriefing/debriefing_log_state.nut" import historyComplaintList, logEntries, chosenLogElement,
+  hoveredLogElement
 
-let { logEntries, chosenLogElement, hoveredLogElement } = require("%ui/mainMenu/debriefing/debriefing_log_state.nut")
 let { locTable } = require("%ui/helpers/time.nut")
 
 let debriefingSessionId = Watched(null)
+let complaintList = Watched({})
+let fakeComplaintList = Watched({})
 
 let iconParams = {size = [fontawesome.fontSize, fontawesome.fontSize], halign = ALIGN_CENTER}
 
@@ -161,58 +165,82 @@ let chooseFillColor = function(index, sf) {
 let mkLogEntry = function(point, index){
   let { userId = null, name = "" } = point
   let stateFlags = Watched(0)
-  let canCompaint = userId != null && name != "" && debriefingSessionId.get() != null
   let complaintAction = @() complain(
     debriefingSessionId.get().tostring(),
     userId,
     endswith(name, " ") ? name.slice(0, -1) : name
-  )
-  return @() {
-    watch = [chosenLogElement, hoveredLogElement, stateFlags]
-    rendObj = ROBJ_BOX
-    size = FLEX_H
-    behavior = Behaviors.Button
-    xmbNode = XmbNode()
-    onHover = function(v) {
-      if (v)
-        hoveredLogElement.set(index)
+    function() {
+      if (userId == null || userId == $"{ecs.INVALID_ENTITY_ID}" || userId == ecs.INVALID_ENTITY_ID)
+        fakeComplaintList.mutate(@(v) v[name] <- true)
       else
-        hoveredLogElement.set(null)
+        complaintList.mutate(@(v) v[userId] <- true)
     }
-    onClick = function(event) {
-      if (event.button == 1 && canCompaint)
-        contextMenu(event.screenX + 1, event.screenY + 1, fsh(30), [{
-          text = $"{loc("btn/complain")} {name}"
-          action = complaintAction
-        }])
-      if (event.button == 0)
-        chosenLogElement.modify(@(old_index) old_index == index ? null : index)
+  )
+  return function() {
+    let canCompain = userId != null
+      && name != ""
+      && debriefingSessionId.get() != null
+      && userId not in complaintList.get()
+      && name not in fakeComplaintList.get()
+      && name not in historyComplaintList.get()
+      && userId not in historyComplaintList.get()
+    let hasComplained = userId in complaintList.get()
+      || name in fakeComplaintList.get()
+      || name in historyComplaintList.get()
+      || userId in historyComplaintList.get()
+    return {
+      watch = [chosenLogElement, hoveredLogElement, stateFlags, complaintList, fakeComplaintList, historyComplaintList]
+      rendObj = ROBJ_BOX
+      size = FLEX_H
+      behavior = Behaviors.Button
+      xmbNode = XmbNode()
+      onHover = function(v) {
+        if (v)
+          hoveredLogElement.set(index)
+        else
+          hoveredLogElement.set(null)
+      }
+      onClick = function(event) {
+        if (event.button == 1 && canCompain)
+          contextMenu(event.screenX + 1, event.screenY + 1, fsh(30), [{
+            text = $"{loc("btn/complain")} {name}"
+            action = complaintAction
+          }])
+        if (event.button == 0)
+          chosenLogElement.modify(@(old_index) old_index == index ? null : index)
+      }
+      onElemState = @(v) stateFlags.set(v)
+      fillColor = chooseFillColor(index, stateFlags.get())
+      borderColor = index == chosenLogElement.get() ? Color(200, 200, 200) : Color(230, 200, 90, 255)
+      borderWidth = static [0, 0, 0, hdpx(2)]
+      data = { index }
+      padding = hdpx(5)
+      sound = {
+        click = "ui_sounds/button_action"
+        hover = "ui_sounds/button_highlight"
+      }
+      flow = FLOW_HORIZONTAL
+      gap = { size = FLEX_H }
+      children = [
+        mkLogEntryContent(point)
+        !canCompain && !hasComplained ? null : button(
+          faComp("flag", {
+            fontSize = hdpx(14)
+            opacity = hasComplained ? 0.5 : 1
+          })
+          function() {
+            if (hasComplained)
+              return
+            complaintAction()
+          }
+          {
+            padding = hdpx(4)
+            tooltipText = hasComplained ? loc("msg/complain/complainSent") : $"{loc("btn/complain")} {name}"
+            style = { BtnBgNormal = hasComplained ? BtnBgDisabled : BtnBgNormal }
+          }
+        )
+      ]
     }
-    onElemState = @(v) stateFlags.set(v)
-    fillColor = chooseFillColor(index, stateFlags.get())
-    borderColor = index == chosenLogElement.get() ? Color(200, 200, 200) : Color(230, 200, 90, 255)
-    borderWidth = static [0, 0, 0, hdpx(2)]
-    data = { index }
-    padding = hdpx(5)
-    sound = {
-      click = "ui_sounds/button_action"
-      hover = "ui_sounds/button_highlight"
-    }
-    flow = FLOW_HORIZONTAL
-    gap = { size = FLEX_H }
-    children = [
-      mkLogEntryContent(point)
-      !canCompaint ? null : button(
-        faComp("flag", {
-          fontSize = hdpx(14)
-        })
-        complaintAction
-        {
-          padding = hdpx(4)
-          tooltipText = $"{loc("btn/complain")} {name}"
-        }
-      )
-    ]
   }
 }
 
@@ -245,4 +273,6 @@ return {
   logIconParams = iconParams
   scrollToLogElement
   debriefingSessionId
+  complaintList
+  fakeComplaintList
 }

@@ -40,8 +40,8 @@ loud_noise_receiver{
   loud_noise__accumulatedNoise:r=0
   loud_noise__prevAccumulatedNoise:r=0
   loud_noise__noiseVelocity:r=0
-  loud_noise__noiseVelocityFade:r=1
-  loud_noise__maxFadeVelocity:r=2
+  loud_noise__noiseVelocityFade:r=5
+  loud_noise__maxFadeVelocity:r=10
   _tracked:t="loud_noise__accumulatedNoise"
   loud_noise__appendOnNoise:t="loud_noise_reaction"
 }

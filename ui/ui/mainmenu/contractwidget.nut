@@ -14,7 +14,7 @@ from "%ui/mainMenu/craftIcons.nut" import getCraftResultItems, mkCraftResultsIte
 from "%ui/mainMenu/currencyIcons.nut" import monolithTokensColor, monolithTokensTextIcon, creditsColor,
   creditsTextIcon, premiumColor, premiumCreditsTextIcon, chronotracesColor, chronotraceTextIcon
 from "%ui/components/profileAnswerMsgBox.nut" import showMsgBoxResult
-from "%ui/components/msgbox.nut" import showMessageWithContent, showMsgbox
+from "%ui/components/msgbox.nut" import showMessageWithContent, showMsgbox, removeMsgboxByUid
 from "%ui/helpers/timers.nut" import mkCountdownTimerPerSec
 from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem, mkFakeAttachments
 from "%ui/hud/menus/components/inventoryItemTooltip.nut" import buildInventoryItemTooltip
@@ -340,7 +340,7 @@ function mkGetPrimaryContractBtn(contract, currentPrimaries) {
 }
 
 let disabledStyle = { style = { BtnBgNormal = BtnBgDisabled } }
-function mkGetContractBtn(contract, isReported, currentValue, requireValue, btnHeight, multyRewardIdx = 0) {
+function mkGetContractBtn(contract, isReported, currentValue, requireValue, btnHeight, multyRewardIdx = 0, msgboxUid = null) {
   if (isReported)
     return mkCheckIcon(btnHeight)
   else if (currentValue >= requireValue)
@@ -357,6 +357,7 @@ function mkGetContractBtn(contract, isReported, currentValue, requireValue, btnH
               return
             }
             reportContract({ [contract.id] = multyRewardIdx }, contractReportIsInProgress, contract.name)
+            removeMsgboxByUid(msgboxUid)
           }, {
             isEnabled = !contractReportIsInProgress.get()
             maxHeight = iconBtnStyle?.size[1]
@@ -525,7 +526,7 @@ function mkItemChildren(templateName, itemIconSize, attachments=null){
   return [mkItemIcon(templateName, itemIconSize, attachments), mkRarityIconByTemplateName(templateName)]
 }
 
-function mkRewardBlock(contract, num_in_row) {
+function mkRewardBlock(contract, num_in_row, msgboxUid = null) {
   let { isReported, currentValue, requireValue, contractType = null, premium = false } = contract
   let isPremium = premium && contractType != ContractType.STORY
   let iconSize = hdpx(76)
@@ -840,7 +841,7 @@ function mkRewardBlock(contract, num_in_row) {
       .append(!hasMultiRewards ? null : @() {
         watch = rewardIdx
         hplace = ALIGN_RIGHT
-        children = mkGetContractBtn(contract, isReported, currentValue, requireValue, contractBtnHeight, rewardIdx.get())
+        children = mkGetContractBtn(contract, isReported, currentValue, requireValue, contractBtnHeight, rewardIdx.get(), msgboxUid)
       })
   }
 }

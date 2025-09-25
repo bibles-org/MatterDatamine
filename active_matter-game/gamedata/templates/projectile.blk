@@ -27,7 +27,7 @@ disable_ricochet{
 
 bullet_projectile{
   _use:t="ecs_no_debug"
-  _use:t="projectile_sound"
+  _use:t="bullet_projectile_impact_sound"
   detonation__timer:r=-1
   projectile__lifeTime:r=0
   projectile__visualPos:p3=0, 0, 0

@@ -43,7 +43,7 @@ let header = @(name) {
   ]
 }
 
-let mkSubmitButton = @(cantSubmitReason, trySubmit, userId) @() {
+let mkSubmitButton = @(cantSubmitReason, trySubmit, userId, cb) @() {
   watch = cantSubmitReason
   size = FLEX_H
   flow = FLOW_VERTICAL
@@ -56,14 +56,16 @@ let mkSubmitButton = @(cantSubmitReason, trySubmit, userId) @() {
       if (userId == ecs.INVALID_ENTITY_ID || userId == null) {
         close()
         showMsgbox({ text = loc("msg/complain/complainSent") })
+        cb?()
         return
       }
       trySubmit()
+      cb?()
     }, { isEnabled = cantSubmitReason.get() == null})
   ]
 }
 
-function complainWnd(sessionId, userId, name) {
+function complainWnd(sessionId, userId, name, cb = null) {
   let curType = Watched(defaultType)
   let complainText = Watched("")
   let cantSubmitReason = Computed(@()
@@ -135,12 +137,12 @@ function complainWnd(sessionId, userId, name) {
           onEscape = close
         }.__update(body_txt))
       }
-      mkSubmitButton(cantSubmitReason, trySubmit, userId)
+      mkSubmitButton(cantSubmitReason, trySubmit, userId, cb)
     ]
   }
 }
 
-function open(sessionId, userId, name) {
+function open(sessionId, userId, name, cb = null) {
   lastOpenParams.sessionId <- sessionId
   lastOpenParams.userId <- userId
   lastOpenParams.name <- name
@@ -150,7 +152,7 @@ function open(sessionId, userId, name) {
     rendObj = ROBJ_WORLD_BLUR_PANEL
     fillColor = ControlBg
     onClick = close
-    children = complainWnd(sessionId, userId, name)
+    children = complainWnd(sessionId, userId, name, cb)
     hotkeys = [[$"^{JB.B} | Esc", { action = close, description = loc("Cancel") }]]
   })
 }

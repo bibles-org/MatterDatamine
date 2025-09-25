@@ -131,8 +131,9 @@ small_backpack{
   human_inventory__maxVolume:i=400
   item_weight_from_human_inventory_weight__baseWeight:r=1.1
   item__volume:i=410
-  foldable_container__foldedVolume:i=50
+  foldable_container__foldedVolume:i=80
   foldable_container__res:t="am_trooper_empty_backpack_small_a_char"
+  profile_server_data__enrichmentAMCount:ip2=24, 40
   profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "sex_based_subattach_controller__animcharTemplates:list<t>"{
@@ -251,9 +252,10 @@ medium_backpack{
   item_weight_from_human_inventory_weight__baseWeight:r=1.3
   item__volume:i=610
   item__marketPrice:i=2500
-  foldable_container__foldedVolume:i=100
+  foldable_container__foldedVolume:i=120
   foldable_container__res:t="am_trooper_empty_backpack_medium_a_char"
   item__iconScale:r=1.2
+  profile_server_data__enrichmentAMCount:ip2=36, 60
   profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "sex_based_subattach_controller__animcharTemplates:list<t>"{
@@ -372,7 +374,7 @@ large_backpack{
   item_weight_from_human_inventory_weight__baseWeight:r=1.5
   item__volume:i=910
   item__marketPrice:i=5100
-  foldable_container__foldedVolume:i=150
+  foldable_container__foldedVolume:i=180
   foldable_container__res:t="am_trooper_empty_backpack_big_a_char"
   profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
 
@@ -498,8 +500,9 @@ small_sovmod_backpack{
   item_weight_from_human_inventory_weight__baseWeight:r=0.8
   item__volume:i=360
   item__marketPrice:i=200
-  foldable_container__foldedVolume:i=60
+  foldable_container__foldedVolume:i=70
   foldable_container__res:t="am_trooper_empty_backpack_old_a_char"
+  profile_server_data__enrichmentAMCount:ip2=21, 35
   profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "sex_based_subattach_controller__animcharTemplates:list<t>"{
@@ -535,8 +538,9 @@ medium_sovmod_backpack{
   item_weight_from_human_inventory_weight__baseWeight:r=0.95
   item__volume:i=660
   item__marketPrice:i=200
-  foldable_container__foldedVolume:i=160
+  foldable_container__foldedVolume:i=130
   foldable_container__res:t="am_trooper_empty_backpack_old_b_char"
+  profile_server_data__enrichmentAMCount:ip2=39, 75
   profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "sex_based_subattach_controller__animcharTemplates:list<t>"{
@@ -572,8 +576,9 @@ large_sovmod_backpack{
   item_weight_from_human_inventory_weight__baseWeight:r=1.6
   item__volume:i=810
   item__marketPrice:i=200
-  foldable_container__foldedVolume:i=260
+  foldable_container__foldedVolume:i=160
   foldable_container__res:t="am_backpack_ermak_empty_char"
+  profile_server_data__enrichmentAMCount:ip2=48, 80
   profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
 
   "sex_based_subattach_controller__animcharTemplates:list<t>"{

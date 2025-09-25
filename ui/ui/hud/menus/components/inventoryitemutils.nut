@@ -865,6 +865,20 @@ function repairCost(items) {
 }
 
 function repairItems(items, itemsCost = null) {
+  if (items.len() <= 0) {
+    let nothTorepairLog = {
+      id = "nothTorepairLog"
+      idToIgnore = "nothTorepairLog"
+      content = mkPlayerLog({
+        logColor = playerLogsColors.warningLog
+        titleText = loc("pieMenu/actionUnavailable")
+        titleFaIcon = "close"
+        bodyText = loc("inventory/nothingTorepair")
+      })
+    }
+    addPlayerLog(nothTorepairLog)
+    return
+  }
   let cost = itemsCost ?? repairCost(items)
   if (cost > playerProfileCreditsCount.get()) {
     showMessageWithContent({

@@ -1971,30 +1971,83 @@ function getContent() {
 
   let raidButtonContractsLocked = @(is_enabled) function() {
     let { raidName = null } = (selectedRaid.get()?.extraParams ?? {})
-    let contractsToReport = playerProfileCurrentContracts.get().reduce(function(acc, v, k) {
-      if (isRightRaidName(raidName, v?.raidName))
-        if ((acc?.contractType ?? 9999) >= v.contractType && !v.isReported && v.currentValue >= v.requireValue)
-          return acc.append({ contractType = v.contractType, id = k, name = v.name})
+    let contractsWithoutSelection = playerProfileCurrentContracts.get().reduce(function(acc, v, k) {
+      if (isRightRaidName(raidName, v?.raidName)) {
+        if (!v.isReported && v.currentValue >= v.requireValue && v.rewards.len() == 1)
+          return acc.append({ contractType = v.contractType, id = k, name = v.name })
+      }
       return acc
     }, [])
+
+    let contractsWithSelection = playerProfileCurrentContracts.get().reduce(function(acc, v, k) {
+      if (isRightRaidName(raidName, v?.raidName)) {
+        if (!v.isReported && v.currentValue >= v.requireValue && v.rewards.len() > 1)
+          return acc.append({ contractType = v.contractType, id = k, name = v.name })
+      }
+      return acc
+    }, [])
+
+    local text = ""
+    if (contractsWithoutSelection.len() > 1)
+      text = utf8ToUpper(loc("contract/multiReport", { num = contractsWithoutSelection.len() }))
+    else if (contractsWithoutSelection.len() == 1)
+      text = utf8ToUpper(loc("contract/report"))
+    else if (contractsWithSelection)
+      text = utf8ToUpper(loc("contract/reportWithSelection"))
+
     return {
       watch = [playerProfileCurrentContracts, selectedRaid]
       size = FLEX_H
       children = buttonWithGamepadHotkey(
-        mkText(contractsToReport.len() > 1
-          ? utf8ToUpper(loc("contract/multiReport", { num = contractsToReport.len() }))
-          : utf8ToUpper(loc("contract/report")), { hplace = ALIGN_CENTER }.__merge(h2_txt))
+        mkText(text, { hplace = ALIGN_CENTER }.__merge(h2_txt))
         function() {
           if (contractReportIsInProgress.get())
-            return false
-          if (contractsToReport.len() > 0) {
-            let contractsToReportIds = contractsToReport.reduce(function(acc, v) {
+            return
+
+          if (contractsWithoutSelection.len() > 0) {
+            let contractsToReportIds = contractsWithoutSelection.reduce(function(acc, v) {
               if (v?.id != null)
                 acc[v.id] <- 0
               return acc
             }, {})
-            let contractName = contractsToReport.len() > 1 ? null : contractsToReport[0].name
+            let contractName = contractsWithoutSelection.len() > 1 ? null : contractsWithoutSelection[0].name
             reportContract(contractsToReportIds, contractReportIsInProgress, contractName)
+            return
+          }
+          if (contractsWithSelection.len() > 0) {
+            
+            let selectedNodeContract = activeNodes.get()?[selectedNexusNode.get()]
+            if (contractsWithSelection.findindex(@(v) v.id == selectedNodeContract) == null) {
+              selectedNexusNode.set(activeNodes.get().findindex(@(v) v == contractsWithSelection[0].id))
+            }
+
+            let newSelectedNodeContract = activeNodes.get()?[selectedNexusNode.get()]
+            let contractId = contractsWithSelection.findvalue(@(v) v.id == newSelectedNodeContract)?.id
+
+            if (contractId == null)
+              return
+
+            let nodeName = getNexusNodeName(patchedNodes.get()[selectedNexusNode.get()])
+            let contract = playerProfileCurrentContracts.get()[contractId].__merge({ id = contractId })
+            let uid = "consoleRaidMenu.nut/reportWithSelection/msgbox"
+            showMessageWithContent({
+              uid
+              content = {
+                size = sh(50)
+                flow = FLOW_VERTICAL
+                gap = hdpx(10)
+                children = [
+                  mkText(nodeName, h1_txt)
+                  makeVertScroll(mkRewardBlock(contract, 10, uid))
+                ]
+              }
+              buttons = [
+                static {
+                  text = loc("Cancel")
+                  isCancel = true
+                }
+              ]
+            })
           }
         },
         {

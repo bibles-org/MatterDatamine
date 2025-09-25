@@ -195,12 +195,17 @@ function additionalDescFunc(item, playerProfileAMConvertionRate = null) {
   local nonCorruptedPrice = 0
 
   let cleanableItem = cleanableItems.get()?[item.itemTemplate]
-  if (item.isCorrupted && cleanableItem && playerProfileAMConvertionRate != null) {
+  let ammoInside = (item?.gunAmmo ?? 0) > 0 ? item?.gunAmmo : item?.ammoCount
+  if (ammoInside) {
+    nonCorruptedPrice += ammoInside
+  }
+
+  if (!item?.isBoxedItem && item.isCorrupted && cleanableItem && playerProfileAMConvertionRate != null) {
     minMoney = truncateToMultiple((cleanableItem.amContains.x) / 10.0 * playerProfileAMConvertionRate, 1) 
     maxMoney = truncateToMultiple((cleanableItem.amContains.y) / 10.0 * playerProfileAMConvertionRate, 1)
   }
-  else {
-    nonCorruptedPrice = getPriceOfNonCorruptedItem(marketPriceSellMultiplier.get(), item)
+  else if (!item?.isBoxedItem){
+    nonCorruptedPrice += getPriceOfNonCorruptedItem(marketPriceSellMultiplier.get(), item)
   }
   #forbid-auto-freeze
   let stringsToShow = []

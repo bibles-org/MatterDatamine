@@ -355,7 +355,7 @@ let additionalInventoryEffects = @() {
   ].filter(@(v) v != null)
 }
 
-function inventoryAffectsWidget() {
+function inventoryAffectsWidget(override = {}) {
   return {
     vplace = ALIGN_TOP
     hplace = ALIGN_LEFT
@@ -366,7 +366,7 @@ function inventoryAffectsWidget() {
       additionalInventoryEffects
       inventoryEffectsWithTimer
     ]
-  }
+  }.__merge(override)
 }
 
 let phi0 = 5 * PI / 6

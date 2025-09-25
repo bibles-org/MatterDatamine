@@ -177,6 +177,11 @@ gun_sound{
   _use:t="gun_jammed_sound"
 
   _group{
+    _tags:t="sound"
+    animchar__alwaysVisibleInRadiusSq:r=100
+  }
+
+  _group{
     gun_sound__forceOneshot:b=no
     gun_sound__forceOneshotEnemy:b=no
     gun_sound__shotLoopTimeout:r=0

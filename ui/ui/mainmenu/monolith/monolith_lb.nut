@@ -126,7 +126,7 @@ function mkDataTable(dataToAdd) {
       flow = FLOW_VERTICAL
       children = [
         title
-      ].extend(dataToAdd.slice(1).map(@(v, idx) mkDataRow(v?[dataIdx], valueToShow, idx, override)))
+      ].extend(dataToAdd.map(@(v, idx) mkDataRow(v?[dataIdx], valueToShow, idx, override)))
     }
   })
   return pageCols
@@ -150,7 +150,7 @@ function lbList() {
   let res = []
   let totalRows = curMonolithLbData.get().len()
   let totalCols = ceil(totalRows.tofloat() / LB_ROWS_PER_COL)
-  let data = curMonolithLbData.get()
+  let data = curMonolithLbData.get().slice(1)
 
   for (local table = 0; table < totalCols; table++) {
     let dataToAdd = data.slice(table * LB_ROWS_PER_COL, min(data.len(), (table + 1) * LB_ROWS_PER_COL))

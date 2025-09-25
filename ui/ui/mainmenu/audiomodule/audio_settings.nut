@@ -92,6 +92,7 @@ let playMusicInRaidsSetting = optionCtor({
   }
   var = playMusicInRaidsWatch
   defVal = false
+  tab = "Sound"
   widgetCtor = optionCheckBox
   valToString = @(v) (v ? loc("option/on") : loc("option/off"))
 })
@@ -102,6 +103,7 @@ let playMusicOnBaseSetting = optionCtor({
     playMusicOnBaseSet(v)
     playMusicOnBase(v)
   }
+  tab = "Sound"
   var = playMusicOnBaseWatch
   defVal = true
   widgetCtor = optionCheckBox
@@ -114,6 +116,7 @@ let playFreeStreamingMusicSetting = optionCtor({
   setValue = @(v) playOnlyFreeStreamingMusicSet(v)
   var = playOnlyFreeStreamingMusicWatch
   defVal = true
+  tab = "Sound"
   widgetCtor = optionCheckBox
   valToString = @(v) (v ? loc("option/on") : loc("option/off"))
 })
@@ -191,6 +194,7 @@ let playerMusicVolumeSetting = optionCtor({
     musicPlayerVolumeSet(v)
     musicPlayerSetVolume(v)
   }
+  tab = "Sound"
   min = 0.0 max = 2.0 unit = 0.1 pageScroll = 0.1
   restart = false
   mult = 50
@@ -233,4 +237,8 @@ return {
   settingsTabUi
   SETTINGS_TAB_ID
   playOnlyFreeStreamingMusicWatch
+  playerMusicVolumeSetting
+  playMusicOnBaseSetting
+  playMusicInRaidsSetting
+  playFreeStreamingMusicSetting
 }

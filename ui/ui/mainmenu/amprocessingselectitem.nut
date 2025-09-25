@@ -438,16 +438,16 @@ function mkExpectedRewardInfo(items, currentTask, keyItem, currentRecipe) {
 
     let itemsToProcess = (keyItem ? [keyItem].extend(items) : items).filter(@(v) v?.sortAfterEid == null)
     foreach ( item in itemsToProcess ) {
-      let ammoInside = item?.gunAmmo ?? item?.ammoCount
+      let ammoInside = (item?.gunAmmo ?? 0) > 0 ? item?.gunAmmo : item?.ammoCount
       if (ammoInside) {
         priceForAmmo += ammoInside
       }
       let am = cleanable?[item.itemTemplate]?.amContains
-      if (item.isCorrupted && am && !isUsedInRecipe(item)) {
+      if (!item?.isBoxedItem && item.isCorrupted && am && !isUsedInRecipe(item)) {
         minAm += am.x
         maxAm += am.y
       }
-      else if (!isUsedInRecipe(item)) {
+      else if (!item?.isBoxedItem && !isUsedInRecipe(item)) {
         nonCorruptedPrice += getPriceOfNonCorruptedItem(marketPriceSellMultiplier.get(), item)
       }
 

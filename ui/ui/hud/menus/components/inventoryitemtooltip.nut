@@ -858,7 +858,7 @@ function getInventoryItemTooltipLines(item, additionalHints={}) {
 
     
     if (damageTypeStr != null && damageTypeStr != "") {
-      local dogtagDescr = $"{item?.itemName}/death_cause"
+      local dogtagDescr = $"items/dogtag/death_cause"
 
       
       if (damageTypeStr == "0" || damageTypeStr == "1" || damageTypeStr == "2" || damageTypeStr == "8" ||

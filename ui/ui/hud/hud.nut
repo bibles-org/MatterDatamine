@@ -10,13 +10,13 @@ import "%ui/hud/vehicle_crosshair.nut" as vehicleCrosshair
 import "%ui/hud/turret_crosshair.nut" as turretCrosshair
 import "%ui/hud/commander_crosshair.nut" as commanderCrosshair
 from "%ui/ui_library.nut" import *
+from "%ui/hud/menus/chat.ui.nut" import setInteractive, showChatInput
 
 let { inspectorRoot } = require("%darg/helpers/inspector.nut")
 
 require("%ui/hud/state/cmd_hero_log_event.nut")
 require("%ui/hud/state/gun_blocked_es.nut")
 
-let { showChatInput } = require("%ui/hud/menus/chat.ui.nut")
 let { chatOutMessage } = require("%ui/hud/state/chat.nut")
 let hudDroneOperatorMark = require("%ui/hud/hud_drone_operator_mark.nut")
 let JB = require("%ui/control/gui_buttons.nut")
@@ -56,6 +56,7 @@ let menuEventChild = @(){
       [$"Esc | {JB.B}", function() {
         chatOutMessage.set("")
         showChatInput.set(false)
+        setInteractive(showChatInput.get())
       }, "Close chat"]
     ]
   } : null

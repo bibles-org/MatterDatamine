@@ -119,6 +119,16 @@ function saveBattleResultToHistory(result) {
   })
 }
 
+function saveComplaintListToHistory(debriefingId, list) {
+  if (debriefingId == null || list.len() <= 0)
+    return
+
+  let historyToSave = (settings.get()?.battleResults ?? []).findvalue(@(v) v?.id == debriefingId)
+  if (historyToSave == null)
+    return
+  historyToSave.complaintList <- list
+}
+
 function saveNexusBattleResultToHistory(result) {
   if (result == null) {
     return
@@ -175,4 +185,5 @@ return {
   isBattleResultInHistory
   journalBattleResult
   CURRENT_VERSION
+  saveComplaintListToHistory
 }

@@ -182,9 +182,14 @@ base_entity_mods{
     "corruptionZoneDamageMult:object"{
       value:r=1
       defaultValue:r=1
-      calcType:t="mult_diminishing"
       reversePositivity:b=yes
       hidden:b=yes
+    }
+
+    "bodyTemperatureMult:object"{
+      value:r=1
+      defaultValue:r=1
+      reversePositivity:b=yes
     }
   }
 }

@@ -23,8 +23,20 @@ let logEntries = Computed(function() {
     .map(@(v, i) v.__merge({index = i}))
 })
 
+let historyComplaintList = Computed(function() {
+  if (!isOnPlayerBase.get())
+    return {}
+
+  let battleResult = journalBattleResult.get() ?? lastBattleResult.get()
+  if (battleResult == null)
+    return {}
+
+  return battleResult?.complaintList ?? {}
+})
+
 return {
   logEntries
+  historyComplaintList
   chosenLogElement
   hoveredLogElement
   highlightedLogElement

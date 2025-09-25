@@ -153,6 +153,7 @@ function inputBox() {
             }
             chatOutMessage.set("")
             showChatInput.set(false)
+            setInteractive(showChatInput.get())
           }
         }.__update(sub_txt)
       }
@@ -256,4 +257,5 @@ chatTotalLines.subscribe(@(_v) sound_play_oneshot("ui_sounds/new_log_message"))
 return {
   chatRoot
   showChatInput
+  setInteractive
 }

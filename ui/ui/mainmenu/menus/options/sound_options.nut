@@ -3,6 +3,9 @@ from "%dngscripts/platform.nut" import is_pc
 from "%ui/mainMenu/menus/options/options_lib.nut" import getOnlineSaveData, optionSpinner, optionCtor, optionPercentTextSliderCtor, loc_opt, optionCheckBox
 from "settings" import get_setting_by_blk_path, set_setting_by_blk_path_and_save
 from "%ui/sound_state.nut" import soundOutputDeviceUpdate
+from "%ui/mainMenu/audioModule/audio_settings.nut" import playerMusicVolumeSetting, playMusicOnBaseSetting,
+  playMusicInRaidsSetting, playFreeStreamingMusicSetting
+
 from "%ui/ui_library.nut" import *
 
 let { soundOutputDevicesList, soundOutputDevice } = require("%ui/sound_state.nut")
@@ -120,7 +123,10 @@ return freeze({
     optOutputDevice,
     optVolumeMaster, optVolumeSfx,
     optVolumeInterface, optVolumeMusic, optVolumeDialogs,
-    subtitles, subtitlesBackground, subtitlesFontSize
+    subtitles, subtitlesBackground, subtitlesFontSize,
+    {name = loc("musicPlayer") isSeparator=true tab="Sound"},
+    playerMusicVolumeSetting, playMusicOnBaseSetting,
+    playMusicInRaidsSetting, playFreeStreamingMusicSetting
   ]
   subtitlesNeeded = subtitlesOnlineSaveData.watch
   subtitlesBackgroundNeeded = subtitlesBackgroundOnlineSaveData.watch

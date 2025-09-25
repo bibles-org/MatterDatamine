@@ -40,23 +40,28 @@ crossbow_bolt_explosive{
   "shell__explodeOnContact:tag"{}
 }
 
-crossbow_bolt_projectile_sound{
-  "projectile_sound__paths:shared:object"{
+crossbow_bolt_projectile_impact_sound{
+  _use:t="projectile_impact_sound"
+
+  "projectile_impact_sound__paths:shared:object"{
     _tags:t="sound"
     hitBullet:t="impact/bolt"
     hitShell:t="impact/bolt"
   }
+}
 
+crossbow_bolt_projectile_wiz_sound{
   _group{
     _tags:t="sound"
-    projectile_sound__wizSound:t="impact/wiz_bolt"
+    projectile_wiz_sound__path:t="impact/wiz_bolt"
   }
 }
 
 crossbow_bolt_projectile{
   _use:t="bullet_projectile"
   _use:t="block_rethrow_shell"
-  _use:t="crossbow_bolt_projectile_sound"
+  _use:t="crossbow_bolt_projectile_impact_sound"
+  _use:t="crossbow_bolt_projectile_wiz_sound"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   crossbow_bolt__appendOnCreate:t="crossbow_bolt_shell"
   crossbow_bolt__unstuckedLifetime:r=60

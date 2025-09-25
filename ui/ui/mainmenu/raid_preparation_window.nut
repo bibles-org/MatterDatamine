@@ -20,13 +20,13 @@ from "%ui/components/button.nut" import button, textButton, buttonWithGamepadHot
 from "eventbus" import eventbus_send, eventbus_subscribe_onehit
 from "%ui/mainMenu/contractWidget.nut" import mkDifficultyBlock
 from "%ui/components/msgbox.nut" import showMsgbox
-from "%ui/components/colors.nut" import RedWarningColor, TextHover, ContactLeader, BtnBdNormal
+from "%ui/components/colors.nut" import RedWarningColor, TextHover, ContactLeader, BtnBdNormal, BtnBgDisabled
 from "%ui/components/accentButton.style.nut" import accentButtonStyle
 from "%ui/hud/menus/components/inventoryItemsStash.nut" import mkStashItemsList
 from "%ui/hud/menus/inventoryActions.nut" import moveItemWithKeyboardMode
 from "%ui/hud/menus/components/inventoryStashFiltersWidget.nut" import resetFilters
 from "%ui/hud/hud_menus_state.nut" import openMenu, currentMenuId, convertMenuId
-from "%ui/hud/menus/inventory.nut" import refillButton
+from "%ui/hud/menus/inventory.nut" import refillButton, repairAllButton
 from "%ui/hud/menus/components/inventoryItemUtils.nut" import checkInventoryVolume
 from "%ui/mainMenu/stashSpaceMsgbox.nut" import showNoEnoughStashSpaceMsgbox
 from "%ui/mainMenu/ribbons_colors_picker.nut" import colorPickerButton
@@ -58,7 +58,6 @@ let { PREPARATION_NEXUS_SUBMENU_ID } = require("%ui/hud/menus/mintMenu/mintState
 
 let weightBlock = @() {
   watch = [inventoryCurrentWeight, playerMovePenalty]
-  size = FLEX_H
   behavior = Behaviors.Button
   onHover = @(on) setTooltip(on ? loc("inventory/playerMovePenalty", { value = (playerMovePenalty.get() * 100.0).tointeger() }) : null)
   children = mkText(loc("inventory/weight", { value = truncateToMultiple(inventoryCurrentWeight.get(), 0.1) }))
@@ -66,13 +65,30 @@ let weightBlock = @() {
 
 let statusBlock = {
   size = FLEX_H
-  flow = FLOW_VERTICAL
   vplace = ALIGN_TOP
-  cursorNavAnchor = [elemw(50), elemh(50)]
+  flow = FLOW_HORIZONTAL
+  gap = {
+    rendObj = ROBJ_SOLID
+    size = [hdpx(1), flex()]
+    margin = [0, hdpx(10)]
+    color = BtnBgDisabled
+  }
+  valign = ALIGN_CENTER
   children = [
-    weightBlock
-    inventoryAffectsWidget
+    repairAllButton
+    {
+      size = FLEX_H
+      flow = FLOW_HORIZONTAL
+      gap = hdpx(10)
+      cursorNavAnchor = [elemw(50), elemh(50)]
+      valign = ALIGN_CENTER
+      children = [
+        weightBlock
+        inventoryAffectsWidget({ pos = [0, 0] })
+      ]
+    }
   ]
+
 }
 
 let bodyPartsPanel = @(){

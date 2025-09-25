@@ -47,45 +47,6 @@ projectile_sound_physmat{
   "projectileSoundPhysmat:tag"{}
 }
 
-wiz_sound_settings{
-  _group{
-    _tags:t="sound"
-    wiz_sound_settings__caliberToDist:p4=0.005, 0.1, 2, 20
-    wiz_sound_settings__dirThresholds:p2=0.75, 0.25
-    wiz_sound_settings__shellCaliberThreshold:r=0.02
-    wiz_sound_settings__largeCaliberThreshold:r=0.012
-    wiz_sound_settings__supersonicThreshold:r=340
-    wiz_sound_settings__shellPath:t="impact/wiz_shell"
-    wiz_sound_settings__largeCaliberPath:t="impact/wiz_large_caliber"
-    wiz_sound_settings__supersonicBulletPath:t="impact/wiz_supersonic_bullet"
-    wiz_sound_settings__subsonicBulletPath:t="impact/wiz_subsonic_bullet"
-  }
-}
-
-shell_shatter_sound_settings{
-  _group{
-    _tags:t="sound"
-    shell_shatter_sound__maxRadiusMul:r=1
-    shell_shatter_sound__countToSoundCount:p4=1, 128, 1, 5
-    shell_shatter_sound__relDistToCountMul:p4=0.5, 1, 1, 0
-    shell_shatter_sound__chance:i=75
-    shell_shatter_sound__nextTime:r=0
-    shell_shatter_sound__cooldown:r=4
-    shell_shatter_sound__radiusAroundListener:r=8
-    shell_shatter_sound__traceStart:r=0.5
-    shell_shatter_sound__hitSoundDistStart:r=2
-    shell_shatter_sound__wizPath:t="impact/wiz_fragment"
-    shell_shatter_sound__hitPath:t="impact/fragment"
-  }
-}
-
-projectile_sound_settings{
-  _use:t="projectile_sound_physmat"
-  _use:t="wiz_sound_settings"
-  _use:t="shell_shatter_sound_settings"
-  _singleton:b=yes
-}
-
 human_melee_impact_sound_physmat{
   _use:t="sound_physmat"
 

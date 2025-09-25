@@ -10,7 +10,7 @@ from "%ui/mainMenu/baseDebriefingTeamStats.nut" import debriefingStats, mkTeamBl
 from "%ui/mainMenu/baseDebriefingMap.nut" import mkDebriefingMap
 from "%ui/helpers/time.nut" import secondsToStringLoc
 from "%ui/mainMenu/stdPanel.nut" import wrapInStdPanel, mkCloseStyleBtn
-from "%ui/profile/battle_results.nut" import isBattleResultInHistory, saveBattleResultToHistory
+from "%ui/profile/battle_results.nut" import isBattleResultInHistory, saveBattleResultToHistory, saveComplaintListToHistory
 from "%ui/components/accentButton.style.nut" import accentButtonStyle
 import "%ui/components/fontawesome.map.nut" as fa
 from "%ui/ui_library.nut" import *
@@ -18,7 +18,7 @@ import "%dngscripts/ecs.nut" as ecs
 from "%ui/mainMenu/baseDebriefingSample.nut" import loadBaseDebriefingSample
 import "%ui/control/gui_buttons.nut" as JB
 from "%ui/mainMenu/baseDebriefingMap.nut" import mapSize
-from "%ui/mainMenu/baseDebriefingLog.nut" import debriefingSessionId, debriefingLog
+from "%ui/mainMenu/baseDebriefingLog.nut" import debriefingSessionId, debriefingLog, complaintList, fakeComplaintList
 
 let { lastBattleResult } = require("%ui/profile/profileState.nut")
 let { isInPlayerSession } = require("%ui/hud/state/gametype_state.nut")
@@ -44,8 +44,11 @@ function closeBaseDebriefing() {
     openRewardWidnow()
     haveSeenRewards.set(true)
   }
+  saveComplaintListToHistory(lastBattleResult.get().id, complaintList.get())
   eventbus_send("hud_menus.close", static { id = BaseDebriefingMenuId })
   lastBattleResult.set(null)
+  complaintList.set({})
+  fakeComplaintList.set({})
 }
 
 let closeXBtn = mkCloseStyleBtn(closeBaseDebriefing)
@@ -311,6 +314,7 @@ function mkBaseDebriefingMenu() {
       tabs
       currentTab = currentTab.get()
       onChange = function(tab) {
+        saveComplaintListToHistory(lastBattleResult.get().id, fakeComplaintList.get())
         currentTab.set(tab.id)
         if (tab.id == "baseDebriefing/history")
           showRewardsAnimations.set(false)
@@ -438,6 +442,12 @@ function mkBaseDebriefingMenu() {
       if (!haveSeenRewards.get())
         showUnseenRewardsMessage()
       haveSeenRewards.set(true)
+      if (lastBattleResult.get()?.id != null) {
+        saveComplaintListToHistory(lastBattleResult.get().id, complaintList.get())
+        saveComplaintListToHistory(lastBattleResult.get().id, fakeComplaintList.get())
+      }
+      complaintList.set({})
+      fakeComplaintList.set({})
     }
     children = [
       mkConsoleScreen(playerTrackWindow)

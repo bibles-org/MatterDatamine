@@ -1002,6 +1002,7 @@ Ermöglicht die Extraktion aktiver Materie aus korrumpierten Objekten."
 "contract/no_require_single_session";"Can be completed in several raids";"Может быть выполнен за несколько рейдов";"Kann in mehreren Raids abgeschlossen werden"
 "contract/report";"Report contract";"Завершить контракт";"Vertrag melden"
 "contract/multiReport";"Report all contracts ({num})";"Завершить все контракты ({num})";"Alle Verträge melden ({num})"
+"contract/reportWithSelection";"Report and select reward";"Завершить и выбрать награду";"Report and select reward"
 "contract/dailyKillReward";"Hunt";"Охота";"Jagd"
 "contract/selectReward";"Select reward";"Выбрать награду";"Belohnung auswählen"
 "missions/available_in";"Raids update in:";"Обновление списка:";"Überfälle aktualisieren sich in:"
@@ -4573,6 +4574,7 @@ Das Erlangen neuer Body Sleeves erfordert Zeit und Aufwand."
 "clonesMenu/stats/hrRiseSpeedMulti";"Pulse escalation (heart rate):";"Ускорение сердцебиения (пульс):";"Pulserhöhung (Herzfrequenz):"
 "clonesMenu/stats/hrStaminaDrainMulti";"Stamina drain (heart rate):";"Расход выносливости (пульс):";"Ausdauerschwund (Herzfrequenz):"
 "clonesMenu/stats/hrFatigueThresholdAdd";"Fatigue threshold (heart rate):";"Порог усталости (пульс):";"Müdigkeitsschwelle (Herzfrequenz):"
+"clonesMenu/stats/bodyTemperatureMult";"Body temperature reduce:";"Снижение температуры тела:";"Body temperature reduce:"
 "clonesMenu/stats/tooltip/walkNoiseMult";"Movement noise modifier.";"Модификатор шума, создаваемого при передвижении.";"Bewegungsgeräusch-Modifikator."
 "clonesMenu/stats/tooltip/fallDamageSpeedMult";"Damage modifier for falls from dangerous heights.";"Модификатор урона от падений с опасной высоты.";"Fallmodifikator für gefährliche Höhen."
 "clonesMenu/stats/tooltip/attractionMult";"Passive camouflage modifier.";"Модификатор пассивной маскировки.";"Passiver Tarnmodifikator."
@@ -4596,6 +4598,7 @@ Das Erlangen neuer Body Sleeves erfordert Zeit und Aufwand."
 "clonesMenu/stats/tooltip/hrRiseSpeedMulti";"Heart rate growth modifier.";"Модификатор скорости роста пульса.";"Modifikator für die Erhöhung der Herzfrequenz."
 "clonesMenu/stats/tooltip/hrStaminaDrainMulti";"Stamina loss rate modifier.";"Модификатор скорости потери выносливости.";"Modifikator für den Ausdauerverlust."
 "clonesMenu/stats/tooltip/hrFatigueThresholdAdd";"Fatigue threshold modifier.";"Модификатор порога усталости.";"Modifikator für die Müdigkeitsschwelle."
+"clonesMenu/stats/tooltip/bodyTemperatureMult";"Reduced visibility in thermal sights.";"Снижение видимости в тепловых прицелах.";"Reduced visibility in thermal sights."
 "clonesMenu/emptySecondaryChronogeneSlot";"Extract chronogen";"Извлечь хроноген";"Chronogen extrahieren"
 "clonesMenu/chronogenesRestriction";"When identical chronogens are used, their effectiveness decreases";"При использовании одинаковых хроногенов, их эффективность уменьшается";"Wenn identische Chronogene verwendet werden, verringert sich deren Wirksamkeit."
 "clonesMenu/specialInfoTitle";"Special ability";"Особые способности";"Sonderfähigkeit"
@@ -4635,18 +4638,18 @@ Das Erlangen neuer Body Sleeves erfordert Zeit und Aufwand."
 "musicPlayer/musicOnBase";"Play music in shelter";"Воспроизведение музыки в убежище";"Musik im Schutzraum abspielen"
 "musicPlayer/musicInRaids";"Play music in raids";"Воспроизведение музыки в рейдах";"Musik in Raids abspielen"
 "musicPlayer/musicVolume";"Player volume";"Громкость плеера";"Player-Lautstärke"
-"musicPlayer/onlyFreeStreaming";"Only music safe for video platforms";"Только музыка, безопасная для видеоплатформ";"Only music safe for video platforms"
+"musicPlayer/onlyFreeStreaming";"Only music safe for video platforms";"Только музыка безопасная для видеоплатформ";"Only music safe for video platforms"
 "musicPlayer/streamerModeRestricted";"Track {track} is unavailable in Streamer Mode.";"Запись {track} недоступена в режиме стримера.";"Track {track} is unavailable in Streamer Mode."
 "musicPlayer/streamerModeRestrictedHint";"Only music safe for video platforms is available in Streamer Mode.
 You can turn off Streamer Mode in the Options window, in the ""Game"" tab.";"В режиме стримера доступна только музыка, безопасная для видеоплатформ.
 Вы можете отключить режим стримера в окне настроек на вкладке ""Игра"".";"Only music safe for video platforms is available in Streamer Mode.
 You can turn off Streamer Mode in the Options window, in the ""Game"" tab."
 "musicPlayer/freeRoyalRestricted";"Track {track} is unavailable due to the ""Only music safe for video platforms"" setting.
-You can change this in the Settings tab of the ""Multifunctional Audio Interface"" window.";"Запись {track} недоступна из-за настройки ""Только музыка, безопасная для видеоплатформ"".
+You can change this in the Settings tab of the ""Multifunctional Audio Interface"" window.";"Запись {track} недоступна из-за настройки ""Только музыка безопасная для видеоплатформ"".
 Вы можете изменить это во вкладке ""Настройки"" окна ""Многофункциональный Аудио Интерфейс"".";"Track {track} is unavailable due to the ""Only music safe for video platforms"" setting.
 You can change this in the Settings tab of the ""Multifunctional Audio Interface"" window."
 "musicPlayer/freeRoyalRestrictedHint";"""Only music safe for video platforms"" setting is available.
-You can change this in the Settings tab of the ""Multifunctional Audio Interface"" window.";"Настройка ""Только музыка, безопасная для видеоплатформ"" включена.
+You can change this in the Settings tab of the ""Multifunctional Audio Interface"" window.";"Настройка ""Только музыка безопасная для видеоплатформ"" включена.
 Вы можете изменить это во вкладке ""Настройки"" окна ""Многофункциональный Аудио Интерфейс"".";"""Only music safe for video platforms"" setting is available.
 You can change this in the Settings tab of the ""Multifunctional Audio Interface"" window."
 "musicPlayer/streamerNoAvailableTracks";"No available tracks found.";"Нет доступных записей.";"No available tracks found."
@@ -6565,6 +6568,12 @@ Wir haben etwas getroffen. Es tauchte plötzlich vor uns auf, schwach leuchtend 
 "items/stamina_regeneration_chronogene_t2/desc";"Cool as a cucumber.";"Спокоен как удав.";"Kühl wie eine Gurke."
 "items/stamina_regeneration_chronogene_t3";"Serenity III";"Спокойствие III";"Gelassenheit III"
 "items/stamina_regeneration_chronogene_t3/desc";"Cool as a cucumber.";"Спокоен как удав.";"Kühl wie eine Gurke."
+"items/body_temperature_chronogene_t1";"Cold-blooded I";"Хладнокровие I";"Cold-blooded I"
+"items/body_temperature_chronogene_t1/desc";"Born to Brrr.";"Бррр inside.";"Born to Brrr."
+"items/body_temperature_chronogene_t2";"Cold-blooded II";"Хладнокровие II";"Cold-blooded II"
+"items/body_temperature_chronogene_t2/desc";"Ice not required.";"Лёд не требуется.";"Ice not required."
+"items/body_temperature_chronogene_t3";"Cold-blooded III";"Хладнокровие III";"Cold-blooded III"
+"items/body_temperature_chronogene_t3/desc";"I'm afraid my condition has left me cold to your pleas of mercy.";"Боюсь, твои мольбы о пощаде не растопят моего сердца.";"I'm afraid my condition has left me cold to your pleas of mercy."
 "items/observation_chronogene_t1";"Observation";"Внимательность";"Beobachtung"
 "items/observation_chronogene_t1/desc";"Lootable containers and items around you become highlighted.";"Контейнеры, которые можно обыскать, и предметы вокруг вас подсвечиваются.";"Lootbare Behälter und Objekte in deiner Nähe werden hervorgehoben."
 "items/calming_effect_chronogene_t1";"Calming Effect";"Успокаивающий эффект";"Beruhigende Wirkung"
@@ -6962,8 +6971,8 @@ Erfolg! Habe eine Probe nach Hause gebracht. Der Container hält gut. Ich werde 
 "items/dendroid_remains_pristine_item/desc";"A component for fusing Melee Strength improvement chronogenes.";"Являются компонентом для синтеза хроногена улучшения Ближнего боя.";"Eine Komponente zur Fusion von Chronogenen zur Nahkampfstärke-Verbesserung."
 "items/hellhound_remains_item";"Remains of Hellhound";"Останки Адской Гончей";"Höllenhund-Überreste"
 "items/hellhound_remains_item/desc";"A component for fusing useful chronogenes, that can be used in Alters creation.";"Являются компонентом для синтеза полезных хроногенов, которые могут быть использованы при создании Альтеров.";"Eine Komponente zur Fusion nützlicher Chronogene, die bei der Erschaffung von Alter verwendet werden kann."
-"items/hellhound_remains_pristine_item";"Pristine remains of Hellhound (Stamina improvement)";"Безупречные останки Адской Гончей (улучшение Выносливости)";"Makellose Höllenhund-Überreste (Ausdauerverbesserung)"
-"items/hellhound_remains_pristine_item/desc";"A component for fusing Stamina improvement chronogenes.";"Являются компонентом для синтеза хроногена улучшения Выносливости.";"Eine Komponente zur Fusion von Chronogenen zur Ausdauerverbesserung."
+"items/hellhound_remains_pristine_item";"Pristine remains of Hellhound (camouflage improvement: Cold-blooded)";"Безупречные останки Адской Гончей (улучшение маскировки: Хладнокровие)";"Pristine remains of Hellhound (camouflage improvement: Cold-blooded)"
+"items/hellhound_remains_pristine_item/desc";"A component for fusing Cold-blooded chronogenes.";"Являются компонентом для синтеза хроногенов Хладнокровия.";"A component for fusing Cold-blooded chronogenes."
 "items/altered_wax_item";"Altered wax";"Изменённый воск";"Verändertes Wachs"
 "items/altered_wax_item/desc";"A component for fusing useful chronogenes, that can be used in Alters creation.";"Является компонентом для синтеза полезных хроногенов, которые могут быть использованы при создании Альтеров.";"Eine Komponente zur Fusion nützlicher Chronogene, die bei der Erschaffung von Alter verwendet werden kann."
 "items/altered_wax_pristine_item";"Pristine altered wax (Active Matter Gathering improvement)";"Безупречный изменённый воск (улучшение Сбора Активной Материи)";"Unversehrtes verändertes Wachs (Verbesserung der Active Matter Sammlung)"
@@ -9608,19 +9617,13 @@ The maximum number is {maxMembers} {maxMembers=player/players}.";"У вас сл
 Вы не можете играть больше, чем {maxMembers} {maxMembers=игроком/игроками/игроками}.";"Dein Trupp ist zu groß für diesen Modus.
 Die maximale Anzahl beträgt {maxMembers} {maxMembers=Spieler/Spieler}."
 "squad/notEnoughGroupSize";"The size of your squad is smaller than recommended for this mode.
-Recommended: {reqMembers} {reqMembers=player/players}.
-If you continue, players will be randomly added to the squad, as far as possible.";"Размер вашего отряда меньше рекомендуемого для данного режима.
-Рекомендуется: {reqMembers} {reqMembers=игрок/игрока/игроков}.
-Если вы продолжите, игроки, по мере возможности, будут подобраны в отряд случайным образом.";"Die Größe deines Trupps ist kleiner als für diesen Modus empfohlen.
-Empfohlen: {reqMembers} {reqMembers=Spieler/Spieler}.
-Wenn du fortfährst, werden nach Möglichkeit zufällige Spieler dem Trupp hinzugefügt."
+Recommended: {reqMembers} {reqMembers=player/players}.";"Размер вашего отряда меньше рекомендуемого для данного режима.
+Рекомендуется: {reqMembers} {reqMembers=игрок/игрока/игроков}.";"Die Größe deines Trupps ist kleiner als für diesen Modus empfohlen.
+Empfohlen: {reqMembers} {reqMembers=Spieler/Spieler}."
 "squad/tooFewMembers";"The size of your squad is smaller than required for this mode.
-Required: {reqMembers} {reqMembers=player/players}.
-If you continue, players will be randomly added to the squad, as far as possible.";"Размер вашего отряда меньше минимального для данного режима.
-Требуется: {reqMembers} {reqMembers=игрок/игрока/игроков}.
-Если вы продолжите, игроки, по мере возможности, будут подобраны в отряд случайным образом.";"Die Größe deines Trupps ist kleiner als für diesen Modus erforderlich.
-Erforderlich: {reqMembers} {reqMembers=Spieler/Spieler}.
-Wenn du fortfährst, werden Spieler zufällig zum Trupp hinzugefügt, soweit es möglich ist."
+Required: {reqMembers} {reqMembers=player/players}.";"Размер вашего отряда меньше минимального для данного режима.
+Требуется: {reqMembers} {reqMembers=игрок/игрока/игроков}.";"Die Größe deines Trupps ist kleiner als für diesen Modus erforderlich.
+Erforderlich: {reqMembers} {reqMembers=Spieler/Spieler}."
 "squad/hasOfflineMembers";"You have {number} offline {number=member/members}.";"У вас {number} {number=игрок/игрока/игроков} не в сети.";"Du hast {number} offline {number=Mitglied/Mitglieder}."
 "squad/hasInvites";"You have {number} invited {number=player/players} who have not accepted the invitation.";"У вас {number} {number=приглашённый игрок, который не принял/приглашённых игрока, которые не приняли/приглашённых игроков, которые не приняли} приглашение.";"Du hast {number} eingeladene {number=Spieler/Spieler}, die die Einladung nicht angenommen haben."
 "squad/theyWillNotGoToBattle";"They will not go to battle with you.";"Они не попадут в бой с вами.";"Sie werden nicht mit dir in die Schlacht ziehen."

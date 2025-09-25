@@ -50,7 +50,7 @@ function parseMonolithLbData(result) {
 
   let data = result.result.users_data
   curMonolithLbData.set(data)
-  curMonolithLbPlayersCount.set(result?.result.info.total ?? 0)
+  curMonolithLbPlayersCount.set(max((result?.result.info.total ?? 0) - 1, 0))
   let aggregator = data?[0] 
   curMonolithLbVotesCount.set((aggregator?[1] ?? 0) == 208876377 ? (aggregator?[4] ?? 0) : curMonolithLbPlayersCount.get())
 }

@@ -309,7 +309,7 @@ function getCostOfRepair() {
 }
 
 function repairAllButton() {
-  let hasItemsToRepair = getItemsToRepair()
+  let hasItemsToRepair = (getItemsToRepair() ?? []).len() > 0
   return {
     watch = equipment
     children = button(
@@ -543,4 +543,5 @@ return {
   InventoryMenuId
   filters
   refillButton
+  repairAllButton
 }

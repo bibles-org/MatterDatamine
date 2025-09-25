@@ -7,13 +7,13 @@ shell_fly_sound{
   }
 }
 
-projectile_sound{
+projectile_impact_sound{
   _group{
     _tags:t="sound"
     projectile_sound__shellCaliberThreshold:r=0.025
     projectile_sound__ricoThreshold:r=0
 
-    "projectile_sound__paths:shared:object"{
+    "projectile_impact_sound__paths:shared:object"{
       hitBullet:t="impact/bullet"
       hitShell:t="impact/shell"
       explodeBullet:t="impact/bullet"
@@ -24,12 +24,12 @@ projectile_sound{
   }
 }
 
-bullet_projectile_sound{
-  _use:t="projectile_sound"
+bullet_projectile_impact_sound{
+  _use:t="projectile_impact_sound"
 }
 
-rocket_projectile_sound{
-  _use:t="projectile_sound"
+rocket_projectile_impact_sound{
+  _use:t="projectile_impact_sound"
 }
 
 projectile_lifetime_sound{
@@ -193,5 +193,89 @@ flash_grenade_explosion_net_sound{
   _group{
     _tags:t="server"
     oneshot_scene_net_sound__desc:t="explGrenadeFlash"
+  }
+}
+
+projectile_wiz_sound{
+  _group{
+    _tags:t="sound"
+    projectile_wiz_sound__nextSoundAt:r=0
+    projectile_wiz_sound__caliberToDist:p4=0.005, 0.1, 2, 20
+    projectile_wiz_sound__dirThresholds:p2=0.75, 0.25
+    projectile_wiz_sound__cooldown:r=0.05
+    projectile_wiz_sound__shellCaliberThreshold:r=0.02
+    projectile_wiz_sound__largeCaliberThreshold:r=0.012
+    projectile_wiz_sound__supersonicThreshold:r=340
+    projectile_wiz_sound__shellPath:t="impact/wiz_shell"
+    projectile_wiz_sound__largeCaliberPath:t="impact/wiz_large_caliber"
+    projectile_wiz_sound__supersonicBulletPath:t="impact/wiz_supersonic_bullet"
+    projectile_wiz_sound__subsonicBulletPath:t="impact/wiz_subsonic_bullet"
+  }
+}
+
+shell_shatter_sound_settings{
+  _group{
+    _tags:t="sound"
+    shell_shatter_sound__maxRadiusMul:r=1
+    shell_shatter_sound__countToSoundCount:p4=1, 128, 1, 5
+    shell_shatter_sound__relDistToCountMul:p4=0.5, 1, 1, 0
+    shell_shatter_sound__chance:i=75
+    shell_shatter_sound__nextTime:r=0
+    shell_shatter_sound__cooldown:r=4
+    shell_shatter_sound__radiusAroundListener:r=8
+    shell_shatter_sound__traceStart:r=0.5
+    shell_shatter_sound__hitSoundDistStart:r=2
+    shell_shatter_sound__wizPath:t="impact/wiz_fragment"
+    shell_shatter_sound__hitPath:t="impact/fragment"
+  }
+}
+
+projectile_sound_settings{
+  _use:t="projectile_sound_physmat"
+  _use:t="projectile_wiz_sound"
+  _use:t="shell_shatter_sound_settings"
+  _singleton:b=yes
+
+  _group{
+    _tags:t="sound"
+
+    "sound_physmat__soundMaterials:list<t>"{
+      mat:t="default"
+      mat:t="concrete"
+      mat:t="water"
+      mat:t="wood"
+      mat:t="metal"
+      mat:t="cactus"
+      mat:t="plastic"
+      mat:t="rubber"
+      mat:t="glass"
+    }
+
+    "sound_physmat__physmatToSoundmat:object"{
+      dirt:t="default"
+      concrete:t="concrete"
+      stone:t="concrete"
+      buildings:t="concrete"
+      rocks:t="concrete"
+      rocksSlippery:t="concrete"
+      gravel:t="concrete"
+      ceramic:t="concrete"
+      water:t="water"
+      water3d:t="water"
+      waterPuddle:t="water"
+      wood:t="wood"
+      wood_railway:t="wood"
+      wood_solid:t="wood"
+      window_wood:t="wood"
+      cactus:t="cactus"
+      softWoodDoor:t="wood"
+      metal:t="metal"
+      steel:t="metal"
+      train:t="metal"
+      softSteelDoor:t="metal"
+      plastic:t="plastic"
+      rubber:t="rubber"
+      glass:t="glass"
+    }
   }
 }

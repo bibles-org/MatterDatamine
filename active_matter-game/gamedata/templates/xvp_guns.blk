@@ -87,33 +87,35 @@ spider_minion_explosive_shell_phys{
   "retardable:tag"{}
 }
 
-spider_needle_projectile_sound{
-  "projectile_sound__paths:shared:object"{
+spider_needle_projectile_impact_sound{
+  _use:t="projectile_impact_sound"
+
+  "projectile_impact_sound__paths:shared:object"{
     _tags:t="sound"
     hitBullet:t="impact/bolt"
     hitShell:t="impact/bolt"
   }
+}
 
+spider_needle_projectile_wiz_sound{
   _group{
     _tags:t="sound"
-    projectile_sound__wizSound:t="impact/wiz_bolt"
+    projectile_wiz_sound__path:t="impact/wiz_bolt"
   }
 }
 
 spider_needle_projectile{
   _use:t="bullet_projectile"
   _use:t="disable_ricochet"
-  _use:t="spider_needle_projectile_sound"
+  _use:t="spider_needle_projectile_impact_sound"
+  _use:t="spider_needle_projectile_wiz_sound"
   projectile__addBulletHole:b=no
-}
-
-flower_human_projectile_sound{
-  _use:t="spider_needle_projectile_sound"
 }
 
 flower_human_projectile{
   _use:t="bullet_projectile"
   _use:t="disable_ricochet"
-  _use:t="flower_human_projectile_sound"
+  _use:t="spider_needle_projectile_impact_sound"
+  _use:t="spider_needle_projectile_wiz_sound"
   projectile__addBulletHole:b=no
 }

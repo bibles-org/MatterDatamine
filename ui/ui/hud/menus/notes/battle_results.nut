@@ -18,14 +18,15 @@ from "%ui/helpers/remap_nick.nut" import remap_nick
 import "%ui/components/colorize.nut" as colorize
 from "%ui/mainMenu/menus/options/player_interaction_option.nut" import isStreamerMode, playerRandName
 from "%ui/ui_library.nut" import *
+import "%dngscripts/ecs.nut" as ecs
 from "%ui/components/colors.nut" import BtnBgNormal, BtnBgSelected, RedFailColor, BtnBdNormal, BtnBdDisabled,
   ItemBgColor, InfoTextValueColor, ConsoleFillColor, RedWarningColor, TextNormal
-from "%ui/mainMenu/baseDebriefingLog.nut" import debriefingLog, debriefingSessionId
+from "%ui/mainMenu/baseDebriefingLog.nut" import debriefingLog, debriefingSessionId, complaintList, fakeComplaintList
 import "%ui/complaints/complainWnd.nut" as complain
 import "%ui/components/contextMenu.nut" as contextMenu
 from "%ui/components/cursors.nut" import setTooltip
+from "%ui/profile/battle_results.nut" import journalBattleResult, saveComplaintListToHistory
 
-let { journalBattleResult } = require("%ui/profile/battle_results.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
 let { debriefingScene } = require("%ui/mainMenu/nexus_debriefing_map.nut")
 let { defStats } = require("%ui/hud/menus/nexus_stats.nut")
@@ -389,7 +390,15 @@ function statsBlock() {
   let sortByScore = @(a, b, teamData) teamData[b]?.stats.score <=> teamData[a]?.stats.score
   let allyTeamArr = allyTeam.keys().sort(@(a, b) sortByScore(a, b, allyTeam))
   let enemyTeamArr = enemyTeam.keys().sort(@(a, b) sortByScore(a, b, enemyTeam))
-  let complaintAction = @(userId, name) complain(debriefingSessionId.get().tostring(), userId, name)
+  let complaintAction = @(userId, name) complain(debriefingSessionId.get().tostring(), userId, name,
+    function() {
+      if (userId == null || userId == $"{ecs.INVALID_ENTITY_ID}" || userId == ecs.INVALID_ENTITY_ID)
+        fakeComplaintList.mutate(@(v) v[name] <- true)
+      else
+        complaintList.mutate(@(v) v[userId] <- true)
+      saveComplaintListToHistory(journalBattleResult.get().id, complaintList.get())
+      saveComplaintListToHistory(journalBattleResult.get().id, fakeComplaintList.get())
+    })
   return {
     watch = journalBattleResult
     rendObj = ROBJ_BOX
@@ -421,10 +430,14 @@ function statsBlock() {
             children = allyTeamArr.map(function(eid, idx) {
               let stateFlags = Watched(0)
               return function() {
-                let canCompaint = eid != userInfo.get().userId
+                let canCompain = eid != userInfo.get().userId
                   && eid != null
                   && (allyTeam[eid]?.name ?? "") != ""
                   && debriefingSessionId.get() != null
+                  && allyTeam[eid]?.name not in (journalBattleResult.get()?.complaintList ?? {})
+                  && eid not in (journalBattleResult.get()?.complaintList ?? {})
+                let hasComplained = allyTeam[eid]?.name in (journalBattleResult.get()?.complaintList ?? {})
+                  || eid in (journalBattleResult.get()?.complaintList ?? {})
                 return {
                   watch = [userInfo, stateFlags, debriefingSessionId]
                   rendObj = ROBJ_BOX
@@ -434,18 +447,20 @@ function statsBlock() {
                     : mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
                   flow = FLOW_HORIZONTAL
                   gap = static { size = flex() }
-                  borderWidth = (stateFlags.get() & S_HOVER) && canCompaint ? hdpx(1) : 0
+                  borderWidth = (stateFlags.get() & S_HOVER) && (canCompain || hasComplained) ? hdpx(1) : 0
                   xmbNode = XmbNode()
                   behavior = Behaviors.Button
                   onElemState = @(sf) stateFlags.set(sf)
                   onClick = function(event) {
-                    if (canCompaint)
+                    if (canCompain)
                       contextMenu(event.screenX + 1, event.screenY + 1, fsh(30), [{
                         text = $"{loc("btn/complain")} {remap_nick(allyTeam[eid].name)}"
                         action = @() complaintAction(eid, allyTeam[eid].name)
                       }])
                   }
-                  onHover = @(on) setTooltip(on && canCompaint ? $"{loc("btn/complain")} {remap_nick(allyTeam[eid].name)}" : null)
+                  onHover = @(on) setTooltip(on && canCompain ? $"{loc("btn/complain")} {remap_nick(allyTeam[eid].name)}"
+                    : on && hasComplained ? loc("msg/complain/complainSent")
+                    : null)
                   children = [
                     @() {
                       watch = [isStreamerMode, playerRandName]
@@ -488,9 +503,13 @@ function statsBlock() {
             children = enemyTeamArr.map(function(eid, idx) {
               let stateFlags = Watched(0)
               return function() {
-                let canCompaint = eid != null
+                let canCompain = eid != null
                   && (enemyTeam[eid]?.name ?? "") != ""
                   && debriefingSessionId.get() != null
+                  && enemyTeam[eid]?.name not in (journalBattleResult.get()?.complaintList ?? {})
+                  && eid not in (journalBattleResult.get()?.complaintList ?? {})
+                let hasComplained = enemyTeam[eid]?.name in (journalBattleResult.get()?.complaintList ?? {})
+                  || eid in (journalBattleResult.get()?.complaintList ?? {})
                 return {
                   watch = [stateFlags, debriefingSessionId]
                   rendObj = ROBJ_BOX
@@ -501,16 +520,18 @@ function statsBlock() {
                   fillColor = mul_color(idx == 0 || idx % 2 == 0 ? ItemBgColor : BtnBgNormal, 1.0, 0.4)
                   flow = FLOW_HORIZONTAL
                   gap = static { size = flex() }
-                  borderWidth = (stateFlags.get() & S_HOVER) && canCompaint ? hdpx(1) : 0
+                  borderWidth = (stateFlags.get() & S_HOVER) && (canCompain || hasComplained) ? hdpx(1) : 0
                   onElemState = @(sf) stateFlags.set(sf)
                     onClick = function(event) {
-                      if (canCompaint)
+                      if (canCompain)
                         contextMenu(event.screenX + 1, event.screenY + 1, fsh(30), [{
                           text = $"{loc("btn/complain")} {remap_nick(enemyTeam[eid].name)}"
                           action = @() complaintAction(eid, enemyTeam[eid].name)
                         }])
                     }
-                    onHover = @(on) setTooltip(on && canCompaint ? $"{loc("btn/complain")} {remap_nick(enemyTeam[eid].name)}" : null)
+                    onHover = @(on) setTooltip(on && canCompain ? $"{loc("btn/complain")} {remap_nick(enemyTeam[eid].name)}"
+                      : on && hasComplained ? loc("msg/complain/complainSent")
+                      : null)
                   children = [
                     {
                       flow = FLOW_HORIZONTAL
@@ -685,6 +706,8 @@ function mkBattleResultTab() {
       onDetach = function() {
         journalBattleResult.set(null)
         debriefingSessionId.set(null)
+        complaintList.set({})
+        fakeComplaintList.set({})
       }
       onAttach = function() {
         if (hasResults) {

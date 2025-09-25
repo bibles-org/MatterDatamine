@@ -479,6 +479,8 @@ let needOpenWeaponShowroomAction = function(item) {
 }
 
 let needOpenItemShowroomAction = function(item) {
+  if (inShootingRange.get())
+    return false
   if (needOpenWeaponShowroomAction(item))
     return false
   return isOnPlayerBase.get() && item?.itemTemplate
