@@ -794,7 +794,7 @@ let dogtagChronogeneQuery = ecs.SqQuery("dogtagChronogeneQuery",
 ecs.register_es("player_hack_cortical_vault_es",
 {
   [EventAmStorageHacked] = function(evt, eid, _comp) {
-    if (watchedHeroPlayerEid.get() != eid)
+    if (evt.hackerActorEid != eid)
       return
     ragdollAttachedToQuery.perform(evt.ragdollPhysObjEid, function(_eid, ragdollComp) {
       if (ragdollComp?["ragdoll_phys_obj__attachedTo"] == null || ragdollComp["ragdoll_phys_obj__attachedTo"] == ecs.INVALID_ENTITY_ID)
@@ -844,7 +844,7 @@ ecs.register_es("player_hack_cortical_vault_es",
       })
     })
   }
-}, { comps_rq = ["player"] })
+}, { comps_rq = [ "watchedByPlr" ] })
 
 function mkAnimations(trigger) {
   return [

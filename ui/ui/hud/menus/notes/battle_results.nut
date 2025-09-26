@@ -396,8 +396,8 @@ function statsBlock() {
         fakeComplaintList.mutate(@(v) v[name] <- true)
       else
         complaintList.mutate(@(v) v[userId] <- true)
-      saveComplaintListToHistory(journalBattleResult.get().id, complaintList.get())
-      saveComplaintListToHistory(journalBattleResult.get().id, fakeComplaintList.get())
+      saveComplaintListToHistory(journalBattleResult.get()?.id, complaintList.get())
+      saveComplaintListToHistory(journalBattleResult.get()?.id, fakeComplaintList.get())
     })
   return {
     watch = journalBattleResult

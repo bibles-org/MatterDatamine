@@ -44,7 +44,7 @@ function closeBaseDebriefing() {
     openRewardWidnow()
     haveSeenRewards.set(true)
   }
-  saveComplaintListToHistory(lastBattleResult.get().id, complaintList.get())
+  saveComplaintListToHistory(lastBattleResult.get()?.id, complaintList.get())
   eventbus_send("hud_menus.close", static { id = BaseDebriefingMenuId })
   lastBattleResult.set(null)
   complaintList.set({})
@@ -314,7 +314,7 @@ function mkBaseDebriefingMenu() {
       tabs
       currentTab = currentTab.get()
       onChange = function(tab) {
-        saveComplaintListToHistory(lastBattleResult.get().id, fakeComplaintList.get())
+        saveComplaintListToHistory(lastBattleResult.get()?.id, fakeComplaintList.get())
         currentTab.set(tab.id)
         if (tab.id == "baseDebriefing/history")
           showRewardsAnimations.set(false)
@@ -442,8 +442,8 @@ function mkBaseDebriefingMenu() {
         showUnseenRewardsMessage()
       haveSeenRewards.set(true)
       if (lastBattleResult.get()?.id != null) {
-        saveComplaintListToHistory(lastBattleResult.get().id, complaintList.get())
-        saveComplaintListToHistory(lastBattleResult.get().id, fakeComplaintList.get())
+        saveComplaintListToHistory(lastBattleResult.get()?.id, complaintList.get())
+        saveComplaintListToHistory(lastBattleResult.get()?.id, fakeComplaintList.get())
       }
       complaintList.set({})
       fakeComplaintList.set({})
