@@ -7,7 +7,6 @@ pouch_base{
   item__recreateInEquipment:t="base_attached_invis_item"
   item__filterType:t="equipment"
   collres__res:t="medkit_collision"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
   item__nexusCost:i=25
 
   "item__equipmentSlots:list<t>"{
@@ -17,7 +16,7 @@ pouch_base{
   "equipment_item:tag"{}
   "item__chronotracesProgressionInfo:object"{
     "repeatedly:object"{
-      extract:i=100
+      extract:p2=100, 7.24
     }
   }
 }
@@ -37,7 +36,7 @@ small_pouch{
   item__iconScale:r=0.7
   showroom_item__customZoom:r=1.2
   showroom_item__customZoomBordersRng:p2=0.8, 1.6
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=12, 13
 
   "slot_attach__attached_show_dynmodel_nodes__forceShownNodes:list<t>"{
     item:t="pouches_1"
@@ -58,13 +57,13 @@ medium_pouch{
   item__name:t="items/medium_pouch"
   drop_item__horizontalAngleLimits:p2=0, 360
   item__inventoryExtension:i=200
-  item__weight:r=0.3
-  item__volume:i=50
+  item__weight:r=0.4
+  item__volume:i=65
   item__marketPrice:i=2050
   item__iconScale:r=1
   showroom_item__customZoom:r=1.8
   showroom_item__customZoomBordersRng:p2=1.6, 2.2
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=24, 24
 
   "slot_attach__attached_show_dynmodel_nodes__forceShownNodes:list<t>"{
     item:t="pouches_1"
@@ -93,7 +92,6 @@ large_pouch{
   item__iconScale:r=1.2
   showroom_item__customZoom:r=1.8
   showroom_item__customZoomBordersRng:p2=1.6, 2.2
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
 
   "slot_attach__attached_show_dynmodel_nodes__forceShownNodes:list<t>"{
     item:t="pouches_1"

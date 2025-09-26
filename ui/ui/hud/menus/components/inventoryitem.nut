@@ -37,7 +37,7 @@ import "%ui/hud/state/get_player_team.nut" as get_player_team
 import "%ui/hud/state/is_teams_friendly.nut" as is_teams_friendly
 
 let { BtnBgHover, BtnBdHover, BtnBdNormal, BtnBgDisabled, Inactive, noItemContainerBg,
-  ContactOffline, corruptedItemColor } = colors
+  corruptedItemColor } = colors
 let { inventoryImageParams } = require("%ui/hud/menus/components/inventoryItemImages.nut")
 let { focusedData, draggedData, contextHoveredData, isShiftPressed, isAltPressed, mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
 let { isSpectator } = require("%ui/hud/state/spectator_state.nut")
@@ -509,18 +509,6 @@ let highlightedItem = {
   size = flex()
 }
 
-let zoneItemIcon = faComp("paw", {
-  color = ContactOffline
-  padding = hdpx(4)
-  fontSize = hdpx(12)
-  hplace = ALIGN_LEFT
-  vplace = ALIGN_CENTER
-  behavior = Behaviors.Button
-  skipDirPadNav = true
-  onHover = @(on) setTooltip(on ? loc("items/item_created_by_zone") : null)
-  eventPassThrough = true
-})
-
 let isHovered = @(sf) (sf & (S_HOVER | S_DRAG)) > 0
 let isItemDragged = @(item) draggedData.get()?.eid == item.eid
 
@@ -640,7 +628,6 @@ function itemComp(stateFlags, item, opacity, list_type=null, itemIconParams=inve
                 mkStopLoadUnloadAmmoButton(item, list_type),
               isActionForbided ? null : mkCheckAmmoButton(item),
               isActionForbided ? null : mkStopCheckAmmoButton(item),
-              item?.createdByZone ? zoneItemIcon : null,
               !isListMutableDueQueue(list_type) ? lockedIconOnHover(stateFlags) : null
             ]
           }
@@ -925,7 +912,7 @@ function chocolateItemComp(stateFlags, item) {
   let { isBoxedItem = false, ammoCount = 0, count = 0, alwaysShowCount = false, charges = null,
     iconParamsOverride = {}, isWeapon = false, isDelayedMoveMod = false, countPerStack = 0,
     maxCharges = 0, countKnown = true, noSuitableItemForPresetFoundCount = 0,
-    eid = ecs.INVALID_ENTITY_ID, createdByZone = false, itemStorage = null, marketPrice = null,
+    eid = ecs.INVALID_ENTITY_ID, itemStorage = null, marketPrice = null,
     isCorrupted = false
   } = item
 
@@ -976,7 +963,6 @@ function chocolateItemComp(stateFlags, item) {
             children = (isBoxedItem && countPerStack != 1) || (entityToUse.get() == eid && itemCount == 0) ? null
               : itemCountLabel
           }
-          createdByZone ? zoneItemIcon : null
           nexusPointsCostComp(item?.nexusCost)
         ]
       }

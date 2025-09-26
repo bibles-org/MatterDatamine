@@ -545,6 +545,7 @@ vepr_10rd_magazine{
   item__name:t="items/vepr_10rd_magazine"
   collres__res:t="vepr_10rd_ammo_collision"
   item__marketPrice:i=350
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_akm"
@@ -628,6 +629,7 @@ makarov_magazine{
   item__marketPrice:i=160
   showroom_item__customZoom:r=2.2
   showroom_item__customZoomBordersRng:p2=2, 2.4
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_makarov"
@@ -646,6 +648,7 @@ pp_19_vityaz_magazine{
   item__name:t="items/pp_19_vityaz_magazine"
   collres__res:t="pp_19_vityaz_ammo_collision"
   item__marketPrice:i=435
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_pp_19_vityaz"
@@ -861,6 +864,7 @@ beretta_m9_magazine{
   item__name:t="items/beretta_m9_magazine"
   collres__res:t="beretta_m9_ammo_collision"
   item__marketPrice:i=220
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_beretta_m9"
@@ -943,6 +947,7 @@ pp_91_kedr_20_magazine{
   item__marketPrice:i=340
   showroom_item__customZoom:r=2.4
   showroom_item__customZoomBordersRng:p2=2, 2.8
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_pp91_kedr"
@@ -964,6 +969,7 @@ pp_91_kedr_30_magazine{
   item__marketPrice:i=410
   showroom_item__customZoom:r=2.4
   showroom_item__customZoomBordersRng:p2=2, 2.8
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_pp91_kedr"
@@ -984,6 +990,7 @@ pm_63_rak_magazine{
   item__marketPrice:i=375
   showroom_item__customZoom:r=2.4
   showroom_item__customZoomBordersRng:p2=2, 2.8
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_pm63"
@@ -1040,6 +1047,8 @@ kriss_vector_magazine{
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_akm"
   }
+
+  "item__cantBeCorrupted:tag"{}
 }
 
 kriss_vector_30_magazine{
@@ -1061,6 +1070,8 @@ kriss_vector_30_magazine{
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_akm"
   }
+
+  "item__cantBeCorrupted:tag"{}
 }
 
 origin_12_magazine{
@@ -1130,6 +1141,7 @@ svd_magazine{
   collres__res:t="svd_ammo_collision"
   item__marketPrice:i=400
   gunAttachable__slotTag:t="svd_magazine"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_svd"
@@ -1173,6 +1185,8 @@ sv98_magazine{
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_sv_98"
   }
+
+  "item__cantBeCorrupted:tag"{}
 }
 
 vssk_vyhlop_magazine{
@@ -1212,6 +1226,8 @@ m110a1_magazine{
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_m110a1_sdmr"
   }
+
+  "item__cantBeCorrupted:tag"{}
 }
 
 hk_g3a4_magazine{
@@ -1223,7 +1239,7 @@ hk_g3a4_magazine{
   item_holder__maxItemCount:i=20
   item_holder__boxedItemTemplate:t="box_7_62x51_magazine"
   item__baseWeight:r=0.26
-  item__volume:i=20
+  item__volume:i=30
   item__name:t="items/hk_g3a4_magazine"
   collres__res:t="g3a4_ammo_collision"
   item__marketPrice:i=580
@@ -1271,6 +1287,8 @@ ash_12_magazine{
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_ash12"
   }
+
+  "item__cantBeCorrupted:tag"{}
 }
 
 rpd_magazine{
@@ -1306,6 +1324,7 @@ rpk_74_magazine{
   collres__res:t="rpk_74m_ammo_collision"
   item__marketPrice:i=1200
   gunAttachable__slotTag:t="rpk_74_magazine"
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_rpk_74m"
@@ -1331,6 +1350,7 @@ pk_magazine{
   item__iconRoll:r=10
   item__iconYaw:r=45
   item__iconOffset:p2=0, 0.1
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=30, 30
 
   "item_holder__canLoadOnlyOnBase:tag"{}
   "ammo_holder__loadingAmmoType:shared:t"{

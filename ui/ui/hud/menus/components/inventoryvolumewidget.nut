@@ -102,22 +102,21 @@ let volumeHdrHeight = calc_comp_size(mkProgress(1,1,1))[1] + calc_comp_size(mkVo
 function mkVolumeHdr(carried, max_volume, inventory_item_type, eid = ecs.INVALID_ENTITY_ID) {
   let focusedVolume = Computed(function() {
 
-    if ( focusedData.get()?.itemTemplate == "small_safepack"
-      || focusedData.get()?.trashBinItemOrigin.name == inventory_item_type || focusedData.get()?.canDrop
-    )
+    if (focusedData.get()?.trashBinItemOrigin.name == inventory_item_type) {
       return 0.0
+    }
 
     let sign = (focusedData.get()?.fromList?.name ?? draggedData.get()?.fromList?.name ?? "") == inventory_item_type ? -1.0 : 1.0
     let usedFocused = focusedData.get()?.volume != null
     
-    let focusedVolume = isShiftPressed.get() ? (focusedData.get()?.count ?? 1) * (focusedData.get()?.volume ?? 0.0)
+    let fv = isShiftPressed.get() ? (focusedData.get()?.count ?? 1) * (focusedData.get()?.volume ?? 0.0)
       : focusedData.get()?.currentStackVolume ?? 0.0
     let draggedVolume = isShiftPressed.get() ? (draggedData.get()?.count ?? 1) * (draggedData.get()?.volume ?? 0.0)
       : draggedData.get()?.currentStackVolume ?? 0.0
     let contentVolume = inventory_item_type == STASH.name && sign == 1.0 
       ? get_inventory_content_volume((usedFocused ? focusedData.get()?.eid : draggedData.get()?.eid) ?? ecs.INVALID_ENTITY_ID)
       : 0.0
-    return (usedFocused ? focusedVolume : draggedVolume) * sign + contentVolume
+    return (usedFocused ? fv : draggedVolume) * sign + contentVolume
   })
 
   let size = [ flex(), volumeHdrHeight ]

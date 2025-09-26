@@ -508,7 +508,7 @@ function mkPartSuitEquipment(bodypart, suit, isActionForbidden = false) {
         })
 
       slots.append(mkEquipmentSlot(presetData, mkSuitSlotCallbacks(ON_BODY_SLOT.name, cbOverride),
-        inventoryImageParams, ON_BODY_SLOT, isActionForbidden || (cbOverride == null)))
+        inventoryImageParams, ON_BODY_SLOT, isActionForbidden))
     }
   }
   else {
@@ -577,8 +577,8 @@ function mkHelmet(isActionForbidden) {
   let helmetCbOverride = previewPresetCallbackOverride.get()?.helmet
   let helmetModCbOverride = previewPresetCallbackOverride.get()?.helmet.attachments.equipment_mod_night_vision_device
 
-  let helmetActionsForbidden = isActionForbidden || (previewPreset.get() != null && helmetCbOverride == null)
-  let helmetModActionsForbidden = isActionForbidden || (previewPreset.get() != null && helmetModCbOverride == null)
+  let helmetActionsForbidden = isActionForbidden
+  let helmetModActionsForbidden = isActionForbidden
 
   let helmet = mkEquipmentSlot(helmetSlot, mkSuitSlotCallbacks(ON_BODY_SLOT.name, helmetCbOverride), inventoryImageParams, ON_BODY_SLOT, helmetActionsForbidden)
   let helmetMod = nvdSlot ? mkEquipmentSlot(nvdSlot, mkSuitSlotCallbacks(ON_BODY_SLOT.name, helmetModCbOverride), inventoryImageParams, ON_BODY_SLOT, helmetModActionsForbidden) : null

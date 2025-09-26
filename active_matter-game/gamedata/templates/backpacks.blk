@@ -44,7 +44,6 @@ usable_backpack{
   use_object__obbMax:p3=0, 0, 0
   use_object__selectedTemplate:t="selected_lootable_container"
   item__setCustomUseAltPrompt:t="hud/search"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
   item__nexusCost:i=50
 
   "item__equipmentSlots:list<t>"{
@@ -64,7 +63,7 @@ usable_backpack{
 
   "item__chronotracesProgressionInfo:object"{
     "repeatedly:object"{
-      extract:i=100
+      extract:p2=100, 7.24
     }
   }
 }
@@ -90,7 +89,6 @@ usable_safepack{
   item__setCustomUseAltPrompt:t="hud/search"
   showroom_item__customZoom:r=1.8
   showroom_item__customZoomBordersRng:p2=1.6, 2.2
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "item__equipmentSlots:list<t>"{
     slot:t="backpack"
@@ -108,6 +106,7 @@ usable_safepack{
   }
 
   "mintBannedItem:tag"{}
+  "item__cantBeCorrupted:tag"{}
 }
 
 small_backpack_attachable_animchar_male{
@@ -134,7 +133,7 @@ small_backpack{
   foldable_container__foldedVolume:i=80
   foldable_container__res:t="am_trooper_empty_backpack_small_a_char"
   profile_server_data__enrichmentAMCount:ip2=24, 40
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
 
   "sex_based_subattach_controller__animcharTemplates:list<t>"{
     male:t="small_backpack_attachable_animchar_male"
@@ -256,7 +255,7 @@ medium_backpack{
   foldable_container__res:t="am_trooper_empty_backpack_medium_a_char"
   item__iconScale:r=1.2
   profile_server_data__enrichmentAMCount:ip2=36, 60
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=45, 45
 
   "sex_based_subattach_controller__animcharTemplates:list<t>"{
     male:t="medium_backpack_attachable_animchar_male"
@@ -376,7 +375,6 @@ large_backpack{
   item__marketPrice:i=5100
   foldable_container__foldedVolume:i=180
   foldable_container__res:t="am_trooper_empty_backpack_big_a_char"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
 
   "sex_based_subattach_controller__animcharTemplates:list<t>"{
     male:t="large_backpack_attachable_animchar_male"
@@ -503,7 +501,7 @@ small_sovmod_backpack{
   foldable_container__foldedVolume:i=70
   foldable_container__res:t="am_trooper_empty_backpack_old_a_char"
   profile_server_data__enrichmentAMCount:ip2=21, 35
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=17, 18
 
   "sex_based_subattach_controller__animcharTemplates:list<t>"{
     male:t="small_sovmod_backpack_attachable_animchar_male"
@@ -541,7 +539,7 @@ medium_sovmod_backpack{
   foldable_container__foldedVolume:i=130
   foldable_container__res:t="am_trooper_empty_backpack_old_b_char"
   profile_server_data__enrichmentAMCount:ip2=39, 75
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=48, 49
 
   "sex_based_subattach_controller__animcharTemplates:list<t>"{
     male:t="medium_sovmod_backpack_attachable_animchar_male"
@@ -579,7 +577,7 @@ large_sovmod_backpack{
   foldable_container__foldedVolume:i=160
   foldable_container__res:t="am_backpack_ermak_empty_char"
   profile_server_data__enrichmentAMCount:ip2=48, 80
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=80, 80
 
   "sex_based_subattach_controller__animcharTemplates:list<t>"{
     male:t="large_sovmod_backpack_attachable_animchar_male"
@@ -612,7 +610,6 @@ small_safepack{
   safepack__remainsTemplate:t="safepack_remains_item+item_enriched"
   safepack__destroyEffect:t="safepack_destroy_effect"
   safepack__visualYSize:i=1
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "item__equipmentSlots:list<t>"{
     slot:t="safepack"
@@ -633,7 +630,6 @@ medium_safepack{
   item__marketPrice:i=0
   safepack__visualYSize:i=2
   item__proto:t="medium_safepack"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
 }
 
 large_safepack{
@@ -648,7 +644,6 @@ large_safepack{
   item__marketPrice:i=0
   safepack__visualYSize:i=2
   item__proto:t="large_safepack"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
 }
 
 passive_chronogenes_stash{

@@ -8,6 +8,7 @@ from "%ui/options/mkOnlineSaveData.nut" import mkOnlineSaveData
 from "%ui/mainMenu/menus/options/miss_second_map_help.nut" import missSecondMapHelp
 import "%ui/mainMenu/menus/options/optionLabel.nut" as optionLabel
 from "%ui/mainMenu/menus/options/options_lib.nut" import optionCtor, optionCheckBox, optionPercentTextSliderCtor
+from "%ui/mainMenu/menus/options/player_interaction_option.nut" import isStreamerMode
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
@@ -47,9 +48,31 @@ function playMusicOnBase(playOnBase = null) {
   if (!needToPlay)
     return
 
-  let trackIdx = rand.rint(0, trackList.get().len() - 1)
+  if (playingSound.get() != null) {
+    startPlayer(playingSound.get())
+    return
+  }
+
+  let list = trackList.get()
+  let randTrackIdx = rand.rint(0, list.len() - 1)
+  local trackIdx = null
+  local trackFound = false
+  for (local i = randTrackIdx; i <= list.len(); i++) {
+    let newIdx = (randTrackIdx + list.len() + i) % list.len()
+    if (list?[newIdx] == null)
+      continue
+    let restricted = list[newIdx].isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get())
+    
+    if (!restricted) { 
+      trackIdx = newIdx
+      trackFound = true
+      break
+    }
+  }
+  if (!trackFound || trackIdx == null)
+    return
   playerLoopState.set(loopOrder[LoopStatus.ALL_TRACKS_LOOP])
-  let track = trackList.get()[trackIdx]
+  let track = list[trackIdx]
   startPlayer(track)
 }
 
@@ -73,9 +96,31 @@ function playMusicInRaids(isPlayInRaids = playMusicInRaidsWatch.get()) {
   if (!needToPlay)
     return
 
-  let trackIdx = rand.rint(0, trackList.get().len() - 1)
+  if (playingSound.get() != null) {
+    startPlayer(playingSound.get())
+    return
+  }
+
+  let list = trackList.get()
+  let randTrackIdx = rand.rint(0, list.len() - 1)
+  local trackIdx = null
+  local trackFound = false
+  for (local i = randTrackIdx; i <= list.len(); i++) {
+    let newIdx = (randTrackIdx + list.len() + i) % list.len()
+    if (list?[newIdx] == null)
+      continue
+    let restricted = list[newIdx].isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get())
+    
+    if (!restricted) { 
+      trackIdx = newIdx
+      trackFound = true
+      break
+    }
+  }
+  if (!trackFound || randTrackIdx == null)
+    return
   playerLoopState.set(loopOrder[LoopStatus.ALL_TRACKS_LOOP])
-  let track = trackList.get()[trackIdx]
+  let track = list[trackIdx]
   startPlayer(track)
 }
 

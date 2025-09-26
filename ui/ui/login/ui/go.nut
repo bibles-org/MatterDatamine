@@ -1,8 +1,10 @@
+from "eventbus" import eventbus_subscribe
 from "%ui/components/msgbox.nut" import msgboxGeneration
 from "%ui/fonts_style.nut" import h2_txt, body_txt, sub_txt
 import "%ui/login/ui/background.nut" as background
 from "app" import local_storage
-from "auth" import YU2_2STEP_AUTH, YU2_WRONG_LOGIN
+import "auth" as auth
+from "auth" import YU2_2STEP_AUTH, YU2_WRONG_LOGIN, get_web_login_session_id
 from "dagor.time" import get_time_msec
 import "%ui/components/urlText.nut" as urlText
 from "settings" import save_settings, get_setting_by_blk_path, set_setting_by_blk_path
@@ -94,18 +96,27 @@ persistActions[AFTER_ERROR_PROCESSED_ID] <- function(processState) {
   }
 }
 formStateLogin.subscribe_with_nasty_disregard_of_frp_update(@(_) need2Step.set(false))
-function doPasswordLogin() {
+
+function checkLoginAvailable(){
   if (currentStage.get()!=null) {
     log($"Ignore start login due current loginStage is {currentStage.get()}")
-    return
+    return false
   }
   let curTime = get_time_msec()
   if (curTime < lastLoginCalled + DUPLICATE_ACTION_DELAY_MSEC) {
     log("Ignore start login due duplicate action called")
-    return
+    return false
   }
-
   lastLoginCalled = curTime
+  return true
+}
+
+let needShowError = @(processState) processState?.status != YU2_2STEP_AUTH
+let afterErrorProcessed = @(processState) persistActions[AFTER_ERROR_PROCESSED_ID](processState)
+
+function doPasswordLogin() {
+  if (!checkLoginAvailable())
+    return
   local isValid = true
   foreach (f in availableFields()) {
     if (typeof(f.get())=="string" && !f.get().len()) {
@@ -121,10 +132,39 @@ function doPasswordLogin() {
       saveLogin = !doAutoLogin.get() && formStateSaveLogin.get(),
       savePassword = !doAutoLogin.get() && formStateSavePassword.get() && formStateSaveLogin.get(),
       two_step_code = twoStepCode
-      needShowError = @(processState) processState?.status != YU2_2STEP_AUTH
-      afterErrorProcessed = @(processState) persistActions[AFTER_ERROR_PROCESSED_ID](processState)
+      afterErrorProcessed
+      needShowError
     })
   }
+ else
+   showMsgbox(loc("login/error/incorrect_login_arguments"))
+}
+
+let started_web_login = mkWatched(persist, "started_web_login", false)
+
+function doWebLogin(session_id){
+  if (!checkLoginAvailable())
+    return
+  startLogin({session_id, needShowError, afterErrorProcessed})
+}
+
+const WEB_LOGIN_GET_SESSION_ID = "WEB_LOGIN_GET_SESSION"
+
+eventbus_subscribe(WEB_LOGIN_GET_SESSION_ID, function(evt) {
+  log("WEB_LOGIN", WEB_LOGIN_GET_SESSION_ID, evt)
+  let {session_id = null, status=null} = evt
+  if (status!=0 && type(session_id)!="string") {
+    showMsgbox(loc("login/error_getting_web_login_session"))
+    started_web_login.set(false)
+    return
+  }
+  started_web_login.set(false)
+  doWebLogin(session_id)
+})
+
+function startWebLogin(){
+  started_web_login.set(true)
+  get_web_login_session_id(WEB_LOGIN_GET_SESSION_ID)
 }
 
 function onMessageBoxChange(_) {
@@ -212,20 +252,25 @@ let formCheckbox = @(field, options={}, idx=null) checkBox(field,
 
 let loginBtn = textButton(loc("Login"),
   function() {
-    log("Start Login by login btn");
+    log("Start Login by login btn")
     doPasswordLogin()
   },
-  { size = static [flex(), hdpx(70)], halign = ALIGN_CENTER, margin = 0
-    hotkeys = [["^J:Y", { description = { skip = true }}]]
-    sound = {
+  static { size = static [flex(), hdpx(70)], halign = ALIGN_CENTER, margin = 0
+    hotkeys = [["^J:Y", static { description = { skip = true }}]]
+    sound = static {
       click = "ui_sounds/menu_enter"
       hover = "ui_sounds/menu_highlight"
     }
-  }.__update(accentButtonStyle, h2_txt)
+  }.__merge(accentButtonStyle, h2_txt)
 )
 
 let hotkeysRootChild = {hotkeys = [["^Tab", @() tabFocusTraverse(1)], ["^L.Shift Tab | R.Shift Tab", @() tabFocusTraverse(-1)],
   ["^Esc", @() showExitMsgBox()]]}
+
+let webLoginBtn = textButton(loc("login/web"), function(){
+  log("Start Web Login by login btn")
+  startWebLogin()
+}, static {margin = hdpx(1), size = FLEX_H, halign = ALIGN_CENTER})
 
 function createLoginForm() {
   let logo = {
@@ -259,7 +304,7 @@ function createLoginForm() {
       size = FLEX_H
       flow = FLOW_VERTICAL
       gap = hdpx(10)
-      children = currentStage.get() == null ? loginBtn : null
+      children = currentStage.get() == null ? [loginBtn, webLoginBtn] : null
     }
     regInfo
     hotkeysRootChild
@@ -268,8 +313,8 @@ function createLoginForm() {
 
 function loginRoot() {
   let watch = [currentStage, need2Step, formStateSaveLogin,
-    isLoggedIn]
-  let children = (currentStage.get() || isLoggedIn.get())
+    isLoggedIn, started_web_login]
+  let children = (currentStage.get() || started_web_login.get() || isLoggedIn.get())
     ? [progressText(loc("loggingInProcess"))]
     : createLoginForm()
   return {
@@ -277,7 +322,7 @@ function loginRoot() {
     halign = ALIGN_CENTER
     valign = ALIGN_CENTER
     size = static [fsh(40), fsh(55)]
-    pos = [-sw(15), -sh(5)]
+    pos = static [-sw(15), -sh(5)]
     hplace = ALIGN_RIGHT
     vplace = ALIGN_CENTER
     function onAttach() {

@@ -59,7 +59,7 @@ function chronogenesWidget() {
     let preset = previewPreset.get()
     #forbid-auto-freeze
     local slots = []
-    if (preset) {
+    if (preset && !preset?.ignoreChronogeneWidget) {
       foreach (slotName in [ "chronogene_secondary_1", "chronogene_secondary_2", "chronogene_secondary_3", "chronogene_secondary_4" ]) {
         let templateName = preset?[slotName].itemTemplate
         slots.append({
@@ -79,7 +79,7 @@ function chronogenesWidget() {
 
   let mainChronogene = Computed(function() {
     let preset = previewPreset.get()
-    if (preset) {
+    if (preset && !preset?.ignoreChronogeneWidget) {
       
       return clone(preset?.chronogene_primary_1)
     }
@@ -99,10 +99,10 @@ function chronogenesWidget() {
     }
 
     let previewPresetOverrideFunc = previewPresetCallbackOverride.get()?[$"chronogene_secondary_{idx+1}"].onDrop
-    if (!isOnPlayerBase.get() || (previewPresetOverrideFunc == null && previewPreset.get()))
+    if (!isOnPlayerBase.get() || (previewPresetOverrideFunc == null && previewPreset.get() && !previewPreset.get()?.ignoreChronogeneWidget))
       return
 
-    let isFakedChronogenes = previewPresetOverrideFunc != null && previewPreset.get() != null
+    let isFakedChronogenes = previewPresetOverrideFunc != null && !previewPreset.get()?.ignoreChronogeneWidget
 
     let equippedChronogenes = secondaryGeneEquipped.get().map(@(v) v?.uniqueId)
     local chronogeneList = []
@@ -216,7 +216,7 @@ function chronogenesWidget() {
         let overridedFunc = previewPresetCallbackOverride.get()?["chronogene_primary_1"].onDrop
         if (overridedFunc)
           openMainChronogeneSelection(overridedFunc)
-        else if (previewPreset.get() != null) {
+        else if (previewPreset.get() != null && previewPreset.get()?.ignoreChronogeneWidget != true) {
           return 
         }
         else {

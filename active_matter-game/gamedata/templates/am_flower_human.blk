@@ -917,10 +917,15 @@ flower_human_attack_affect{
   _use:t="game_effect_with_duration"
   _use:t="damage_target_single_affect"
   game_effect__timeToDestroy:r=1
-  game_effect__damageTargetDeltaHp:r=5
+  flower_human_attack__targetDeltaHp:r=5
+  flower_human_attack__targetDeltaHpRandom:r=0
   _use:t="game_effect_sound"
   game_effect_sound__enemy:t="enemy/walker/flower_human/voice_fx/attack"
   game_effect_sound__hero:t="enemy/walker/flower_human/voice_fx/attack"
+
+  "flower_human_attack__attackLimits:object"{
+    head:r=0.3
+  }
 }
 
 flower_human_unique_affect{
@@ -948,7 +953,7 @@ flower_human_concussion_run_attack{
 
 flower_human_stationary_attack_affect{
   _use:t="flower_human_attack_affect"
-  game_effect__damageTargetDeltaHp:r=2
+  flower_human_attack__targetDeltaHp:r=2
 }
 
 flower_human_stationary_damage_attack{
@@ -1308,8 +1313,8 @@ flower_human_miniboss_tex_replace{
 
 flower_human_miniboss_attack_affect{
   _use:t="flower_human_attack_affect"
-  game_effect__damageTargetDeltaHp:r=2.5
-  game_effect__damageTargetDeltaHpRandom:r=0.75
+  flower_human_attack__targetDeltaHp:r=2.5
+  flower_human_attack__targetDeltaHpRandom:r=0.75
 }
 
 flower_human_miniboss_damage_attack{

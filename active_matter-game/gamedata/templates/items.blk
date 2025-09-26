@@ -638,7 +638,7 @@ monstrify_artifact{
 
 monstrify_artifact_for_everyone{
   _use:t="item"
-  _use:t="item_rarity_uncommon"
+  _use:t="item_rarity_epic"
   item__unarmedUsage:b=yes
   monstrify_artifact__usableSubTemplate:t="monstrify_artifact_use"
   monstrify_artifact__updatePositionAllowed:b=no
@@ -652,6 +652,13 @@ monstrify_artifact_for_everyone{
   }
 
   "net__alwaysInScope:tag"{}
+}
+
+monstrify_artifact_inactive{
+  _use:t="item"
+  _use:t="item_rarity_epic"
+
+  "transform__dropOnGroundOnAppear:tag"{}
 }
 
 spawn_client_decorations_around{
@@ -671,6 +678,7 @@ monster_impostor_artifact_item{
   item__lootType:t="item"
   item__weight:r=0.1
   item__volume:i=10
+  item__extractionTemplateOverride:t="monster_impostor_artifact_inactive_item"
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -683,6 +691,23 @@ monster_impostor_artifact_item{
   "monster_impostor_artifact_item:tag"{}
 }
 
+monster_impostor_artifact_inactive_item{
+  _use:t="monstrify_artifact_inactive"
+  _use:t="spawn_client_decorations_around"
+  animchar__res:t="remains_trooper_char"
+  collres__res:t="remains_trooper_collision"
+  item__name:t="items/monster_impostor_artifact_inactive_item"
+  item__proto:t="monster_impostor_artifact_inactive_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:i=10
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  profile_server_data__enrichmentAMCount:ip2=400, 400
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
 monster_hunter_artifact_item{
   _use:t="monstrify_artifact"
   _use:t="spawn_client_decorations_around"
@@ -693,6 +718,7 @@ monster_hunter_artifact_item{
   item__lootType:t="item"
   item__weight:r=0.1
   item__volume:i=10
+  item__extractionTemplateOverride:t="monster_hunter_artifact_inactive_item"
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -713,6 +739,7 @@ monster_hunter_artifact_item_for_everyone{
   item__lootType:t="item"
   item__weight:r=0.1
   item__volume:i=10
+  item__extractionTemplateOverride:t="monster_hunter_artifact_inactive_item"
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -721,6 +748,23 @@ monster_hunter_artifact_item_for_everyone{
   monstrify_trap__group:t="default"
   monstrify_trap__icon:t="!ui/uiskin/raid_info/distorted.svg"
   monstrify_trap__monsterName:t="items/suit_militant_changed_item"
+}
+
+monster_hunter_artifact_inactive_item{
+  _use:t="monstrify_artifact_inactive"
+  _use:t="spawn_client_decorations_around"
+  animchar__res:t="remains_soldier_char"
+  collres__res:t="remains_soldier_collision"
+  item__name:t="items/monster_hunter_artifact_inactive_item"
+  item__proto:t="monster_hunter_artifact_inactive_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:i=10
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  profile_server_data__enrichmentAMCount:ip2=400, 400
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 }
 
 monster_mothman_artifact_item{
@@ -733,6 +777,7 @@ monster_mothman_artifact_item{
   item__lootType:t="item"
   item__weight:r=0.1
   item__volume:i=10
+  item__extractionTemplateOverride:t="monster_mothman_artifact_inactive_item"
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -759,6 +804,7 @@ monster_mothman_artifact_item_for_everyone{
   item__lootType:t="item"
   item__weight:r=0.1
   item__volume:i=10
+  item__extractionTemplateOverride:t="monster_mothman_artifact_inactive_item"
   item__iconYaw:r=-45
   item__iconRoll:r=30
   item__iconPitch:r=0
@@ -767,6 +813,23 @@ monster_mothman_artifact_item_for_everyone{
   monstrify_trap__group:t="default"
   monstrify_trap__icon:t="!ui/uiskin/raid_info/mothman.svg"
   monstrify_trap__monsterName:t="items/suit_militant_mothman_item"
+}
+
+monster_mothman_artifact_inactive_item{
+  _use:t="monstrify_artifact_inactive"
+  _use:t="spawn_client_decorations_around"
+  animchar__res:t="remains_invisible_char"
+  collres__res:t="remains_invisible_collision"
+  item__name:t="items/monster_mothman_artifact_inactive_item"
+  item__proto:t="monster_mothman_artifact_inactive_item"
+  item__lootType:t="item"
+  item__weight:r=0.1
+  item__volume:i=10
+  item__iconYaw:r=-45
+  item__iconRoll:r=30
+  item__iconPitch:r=0
+  profile_server_data__enrichmentAMCount:ip2=400, 400
+  dropTm:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
 }
 
 flowerman_remains_pristine_item{

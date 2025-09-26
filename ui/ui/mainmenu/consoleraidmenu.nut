@@ -1529,16 +1529,17 @@ function getContent() {
             mkText(getNexusNodeName(node), static { color = colors.InfoTextValueColor })
             owner
           ]
-        }
-        node?.minScoreToClaim ? mkTextArea(loc("nexus_graph/minScoreToClaim", {score=node.minScoreToClaim})) : null
-        factionWithMostProgress ? mkText(loc("nexus_graph/captureProgress")) : null
+        },
+        (node?.minScoreToClaim ?? 0) >= 100 ? mkTextArea(loc("nexus_graph/factionStartingPoint"), { color = colors.InfoTextValueColor }) : null,
+        node?.minScoreToClaim ? mkTextArea(loc("nexus_graph/minScoreToClaim", {score=node.minScoreToClaim})) : null,
+        factionWithMostProgress ? mkText(loc("nexus_graph/captureProgress")) : null,
         !factionWithMostProgress
           ? null
           : leader
             ? progressBar
-            : progressBarBelowLimit()
-        nodeContestedWidget
-        newOwnerWidget
+            : progressBarBelowLimit(),
+        nodeContestedWidget,
+        newOwnerWidget,
         
       ]
     }
@@ -2875,7 +2876,6 @@ function getContent() {
 
     function mkNode(node, id) {
       let sf = Watched(0)
-
       let isActive = Computed(@() activeNodes.get()?[id] != null)
       let isSelected = Computed(@() selectedNexusNode.get() == id)
 
@@ -2948,7 +2948,7 @@ function getContent() {
               commands = [
                 [VECTOR_ELLIPSE, 50, 50, 50, 50]
               ]
-            } : null
+            } : null,
             isSelected.get() ? {
               rendObj = ROBJ_VECTOR_CANVAS
               size = nodeSize * 2
@@ -2960,14 +2960,24 @@ function getContent() {
                 [VECTOR_LINE, 100,70, 100,100, 70,100],
                 [VECTOR_LINE, 30,100, 0,100, 0,70],
               ]
-            } : null
+            } : null,
             {
               rendObj = ROBJ_BOX
               size = nodeSize
               borderWidth = hdpxi(1)
               borderColor = sf.get() & S_HOVER ? colors.BtnTextHover : Color(60, 60, 60, 60)
               fillColor = nodeColor
-            }
+            },
+            (node?.minScoreToClaim ?? 0) >= 100 ? {
+              rendObj = ROBJ_VECTOR_CANVAS
+              size = 2 * nodeSize
+              fillColor = nodeColor
+              color = sf.get() & S_HOVER ? colors.BtnTextHover : Color(60, 60, 60, 60)
+              commands = [
+                [VECTOR_WIDTH, max(1.1, hdpx(1.2))],
+                [VECTOR_POLY, 50,0, 60,40, 100,50, 60,60, 50,100, 40,60, 0,50, 40,40]
+              ]
+            } : null,
             isActive.get() && (node?.owner ?? "") != "" ? {
               rendObj = ROBJ_VECTOR_CANVAS
               size = nodeSize * 0.4

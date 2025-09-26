@@ -5,14 +5,14 @@ import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 from "%dngscripts/globalState.nut" import nestWatched
 from "%ui/components/colors.nut" import TextDisabled, TextNormal, InfoTextValueColor, GreenSuccessColor,
-  RedWarningColor, OrangeHighlightColor, colorblindPalette, HudTipFillColor,
+  RedWarningColor, OrangeHighlightColor, colorblindPalette, HudTipFillColor, ItemIconBlocked,
   ConsoleHeaderFillColor
 from "eventbus" import eventbus_subscribe
-from "dasevents" import EventSpawnSequenceEnd, EventRewardDailyContract
+from "dasevents" import EventSpawnSequenceEnd, EventRewardDailyContract, EventAmStorageHacked
 from "math" import rand
-from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog
+from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog, marketIconSize
 from "%ui/fonts_style.nut" import fontawesome, sub_txt, tiny_txt
-from "%ui/components/commonComponents.nut" import mkDescTextarea, descriptionStyle
+from "%ui/components/commonComponents.nut" import mkDescTextarea, descriptionStyle, descriptionStyle
 from "%ui/hud/objectives/objective_components.nut" import mkObjectiveIdxMark, idxMarkDefaultSize, idxMarkHeight, getContractProgressionText, color_common
 from "%ui/components/scrollbar.nut" import makeVertScrollExt, thinStyle
 from "%ui/components/cursors.nut" import setTooltip
@@ -20,6 +20,8 @@ import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 import "%ui/components/faComp.nut" as faComp
 import "%ui/components/fontawesome.map.nut" as fa
+from "%ui/helpers/remap_nick.nut" import remap_nick
+from "%ui/components/itemIconComponent.nut" import itemIconNoBorder
 
 let { localPlayerEid } = require("%ui/hud/state/local_player.nut")
 let { watchedHeroPlayerEid } = require("%ui/hud/state/watched_hero.nut")
@@ -423,7 +425,7 @@ function mkProgressBar(currentValue, requiredValue, completed=false, failed=fals
         rendObj = ROBJ_SOLID
         size = [flex(currentValue), hdpx(4)]
         color = currentValue >= requiredValue ? fullfiledcolor : backColor
-      }   1
+      }
       {
         rendObj = ROBJ_SOLID
         size = [flex(requiredValue-currentValue), hdpx(4)]
@@ -778,6 +780,71 @@ ecs.register_es("player_daily_objectives_es",
       })
     }
   }, { comps_rq = ["player"] })
+
+let ragdollAttachedToQuery = ecs.SqQuery("ragdollAttachedToQuery", { comps_ro = [["ragdoll_phys_obj__attachedTo", ecs.TYPE_EID]] })
+let possessedByPlayerQuery = ecs.SqQuery("possessedByPlayerQuery", { comps_ro = [
+  ["possessedByPlr", ecs.TYPE_EID],
+  ["human_equipment__slots", ecs.TYPE_OBJECT],
+  ["cortical_vault_human_controller__dogtagItemDefaultTemplate", ecs.TYPE_STRING]
+]})
+let dogtagOwnerQuery = ecs.SqQuery("dogtagOwnerQuery", { comps_ro = [["name", ecs.TYPE_STRING]] })
+let dogtagChronogeneQuery = ecs.SqQuery("dogtagChronogeneQuery",
+  { comps_ro = [["dogtag_chronogene__dogtagItemTemplate ", ecs.TYPE_STRING]] })
+
+ecs.register_es("player_hack_cortical_vault_es",
+{
+  [EventAmStorageHacked] = function(evt, eid, _comp) {
+    if (watchedHeroPlayerEid.get() != eid)
+      return
+    ragdollAttachedToQuery.perform(evt.ragdollPhysObjEid, function(_eid, ragdollComp) {
+      if (ragdollComp?["ragdoll_phys_obj__attachedTo"] == null || ragdollComp["ragdoll_phys_obj__attachedTo"] == ecs.INVALID_ENTITY_ID)
+        return
+      possessedByPlayerQuery.perform(ragdollComp["ragdoll_phys_obj__attachedTo"], function(_eid1, actorComp) {
+        if (actorComp?["possessedByPlr"] == null || actorComp["possessedByPlr"] == ecs.INVALID_ENTITY_ID)
+          return
+        local dogtagTemplate = null
+        local dogtagIcon = null
+        let chronogeneEid = actorComp?["human_equipment__slots"]?["chronogene_dogtag_1"]
+        if (chronogeneEid != null) {
+          if (chronogeneEid == ecs.INVALID_ENTITY_ID)
+            dogtagTemplate = actorComp?["cortical_vault_human_controller__dogtagItemDefaultTemplate"]
+          else
+            dogtagChronogeneQuery.perform(chronogeneEid, function(_eid3, dogtagChronogeneComp ) {
+              dogtagTemplate = dogtagChronogeneComp ?["dogtag_chronogene__dogtagItemTemplate"]
+            })
+          if (dogtagTemplate != null) {
+            dogtagIcon = itemIconNoBorder(dogtagTemplate, {
+              width = marketIconSize[1]
+              height = marketIconSize[1]
+              silhouette = ItemIconBlocked
+              shading = "full"
+              vplace = ALIGN_CENTER
+              halign = ALIGN_CENTER
+              hplace = ALIGN_CENTER
+              margin = static [hdpx(4), 0, hdpx(4), hdpx(8)]
+            })
+          }
+        }
+        dogtagOwnerQuery.perform(actorComp["possessedByPlr"], function(_eid2, playerComp) {
+          let name = playerComp?["name"] ?? ""
+          addPlayerLog({
+            id = $"dogtag_{evt.ragdollPhysObjEid}"
+            content = mkPlayerLog({
+              titleText = loc("item/received")
+              titleFaIcon = "trophy"
+              bodyText = name != "" ? loc("items/dogtag", { nickname = remap_nick(name) }) : loc("items/dogtag_nameless")
+              bodyIcon = dogtagIcon
+              bodyTextParams = {
+                rendObj = ROBJ_TEXTAREA
+                behavior = Behaviors.TextArea
+              }.__merge(descriptionStyle)
+            })
+          })
+        })
+      })
+    })
+  }
+}, { comps_rq = ["player"] })
 
 function mkAnimations(trigger) {
   return [

@@ -17,7 +17,6 @@ item_grenade{
   weapon_stat__damage:r=0
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.4, 1.8
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
   item__nexusCost:i=50
   item__nexusIncreaseCostAfterCount:i=1
 
@@ -35,15 +34,14 @@ item_grenade{
 
   "item__canBeQuickUsed:tag"{}
   "item__chronotracesProgressionInfo:object"{
-    "once:object"{}
     "repeatedly:object"{
-      extract:i=100
-      militant_hits:i=1
-      monster_hits:i=1
-      trap_hits:i=1
-      militant_kills:i=35
-      monster_kills:i=25
-      uses:i=10
+      extract:p2=100, 7.24
+      militant_kills:p2=35, 1.9
+      monster_kills:p2=20, 0.26
+      uses:p2=12, 0.28
+      trap_hits:p2=12, 0.28
+      monster_hits:p2=12, 0.28
+      militant_hits:p2=15, 0.19
     }
   }
 }

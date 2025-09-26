@@ -604,7 +604,6 @@ function mkNexusDebriefingMenu() {
       sound_play("ui_sounds/raid_debriefing")
     }
     onDetach = function() {
-      lastNexusResult.set(null)
       debugShowWindow.set(false)
       currentTab.set("baseDebriefing/stats")
       eventbus_send("profile_server.mark_base_debriefing_shown", {})

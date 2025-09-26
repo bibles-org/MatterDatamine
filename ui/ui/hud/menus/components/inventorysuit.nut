@@ -25,6 +25,7 @@ from "%ui/mainMenu/raid_preparation_window_state.nut" import mkWarningSign
 from "%ui/mainMenu/market/inventoryToMarket.nut" import getItemPriceToShow, mkItemPrice
 from "%ui/hud/state/entity_use_state.nut" import calcItemUseProgress
 from "%ui/hud/menus/components/inventoryItemNexusPointPriceComp.nut" import nexusPointsCostComp
+from "%ui/equipPresets/presetsState.nut" import previewPreset
 
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
@@ -299,6 +300,13 @@ function mkEquipmentSlot(itemOrSlot, callbacks={}, itemIconParams=inventoryImage
             marketItems.get(), playerStats.get(), ["equipment", "medicines", "ammunition"])
               .filter(@(v) canDropItemToSlot(v, itemOrSlot))
               .sort(inventoryItemSorting)
+        }
+        if (previewPreset.get() && !mintEditState.get()) {
+          if (previewPreset.get()?.presetIdx == "lastUsed")
+            showMsgbox({ text = loc("playerPreset/cantChangeLastUsed") })
+          else
+            showMsgbox({ text = loc("playerPreset/rewritePresetToEdit") })
+          return
         }
         openChocolateWnd({
           event,

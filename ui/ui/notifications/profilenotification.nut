@@ -14,6 +14,11 @@ matchingNotifications.subscribe("profile", function(ev){
   if (ev.func == "newmail")
     return
   log($"[Matching notification] From <{ev.from}> message <{ev.func}>.")
-  let delay = rnd_float(0.0, 5.0)
-  gui_scene.resetTimeout(delay, @() loadFullProfile(), "profile_notification")
+  if (ev.func == "updateConfig") {
+    let delay = rnd_float(0.0, 5.0)
+    gui_scene.resetTimeout(delay, @() loadFullProfile(), "profile_notification")
+  }
+  else {
+    loadFullProfile()
+  }
 })

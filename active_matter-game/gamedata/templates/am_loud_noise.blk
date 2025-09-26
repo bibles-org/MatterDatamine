@@ -55,6 +55,9 @@ loud_noise_reaction{
   loud_noise_reaction__interval:r=0.5
   loud_noise_reaction__wasDisturbed:b=yes
   loud_noise_reaction__addedTemplate:t="loud_noise_reaction"
+  loud_noise_reaction__checkPlayerRadius:r=12
+  loud_noise_reaction__speedModFromPlayerProximity:r=0.4
+  loud_noise_reaction__minNoisePercentageFromPlayerProximity:r=0.25
 
   "loud_noise_reaction:tag"{}
 }

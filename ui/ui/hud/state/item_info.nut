@@ -94,7 +94,6 @@ let item_comps = freeze([
   ["item__recognizeTimeLeft", ecs.TYPE_FLOAT, 0.0],
   ["item__containerOwnerEid", ecs.TYPE_EID, ecs.INVALID_ENTITY_ID],
   ["item__hp", ecs.TYPE_FLOAT, null],
-  ["item_created_by_zone", ecs.TYPE_TAG, null],
   ["weaponMod", ecs.TYPE_TAG, null],
   ["item__invisible", ecs.TYPE_TAG, null],
   ["item__disablePickup", ecs.TYPE_BOOL, false],
@@ -342,7 +341,6 @@ function getItemInfo(eid, comp){
     hp
     maxHp
     maxAmount
-    createdByZone = comp.item_created_by_zone
     charges = (((!comp.boxed_item__template  && !inactiveItem) ? comp.item__currentBoxedItemCount : null) ??
                hp ?? amount)
     countKnown = comp?.ammo_holder__ammoCountKnown?.getAll()?.contains(watchedHeroEid.get()) ?? true

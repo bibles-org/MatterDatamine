@@ -176,13 +176,15 @@ frog_trap{
   _use:t="traceable_sphere"
   _use:t="optimised_visual_effect_source"
   _use:t="triggerable_anomaly_trap_sound"
-  _use:t="invulnerable"
   _use:t="traceable_spheres_static_grid_object"
+  _use:t="base_hitpoints"
   optimised_effect_source__template:t="frog_trap_visual_fx_controller"
   entity_bound_area__name:t="POLYAREA_DANGER"
   entity_bound_area__radius:r=2
   material:t="steel"
   needsBlood:b=no
+  hitpoints__hp:r=999999
+  hitpoints__maxHp:r=999999
   net__scopeDistanceSq:r=108900
   sphere_zone__radius:r=0.9
   sphere_trigger_trap__triggerRadius:r=1
@@ -205,6 +207,7 @@ frog_trap{
   loud_noise__noiseValue:r=180
 
   "trap_triggerable_by_projectile:tag"{}
+  "allow_friendly_damage:tag"{}
   "trigger_trap__humanAffectTemplates:list<t>"{
     i:t="concussion_affect"
     i:t="confusion_affect"
@@ -322,13 +325,15 @@ teleport_trap{
   _use:t="traceable_sphere"
   _use:t="optimised_visual_effect_source"
   _use:t="triggerable_anomaly_trap_sound"
-  _use:t="invulnerable"
   _use:t="traceable_spheres_static_grid_object"
+  _use:t="base_hitpoints"
   optimised_effect_source__template:t="teleport_trap_visual_fx_controller"
   entity_bound_area__name:t="POLYAREA_DANGER"
   entity_bound_area__radius:r=2
   material:t="steel"
   needsBlood:b=no
+  hitpoints__hp:r=999999
+  hitpoints__maxHp:r=999999
   net__scopeDistanceSq:r=108900
   sphere_zone__radius:r=0.9
   sphere_trigger_trap__triggerRadius:r=1
@@ -341,6 +346,7 @@ teleport_trap{
   loud_noise__noiseValue:r=30
 
   "trap_triggerable_by_projectile:tag"{}
+  "allow_friendly_damage:tag"{}
   "trigger_trap__humanAffectTemplates:list<t>"{
     i:t="concussion_affect"
     i:t="confusion_affect"
@@ -508,8 +514,8 @@ invisible_wakeup_enemies_flowerman_trap{
   _use:t="sphere_trigger_trap"
   _use:t="entity_bound_area"
   _use:t="traceable_sphere"
-  _use:t="invulnerable"
   _use:t="traceable_spheres_static_grid_object"
+  _use:t="base_hitpoints"
   sphere_zone__radius:r=0.4
   trigger_trap__radius:r=0.7
   trigger_trap__addSubTemplateOnTrigger:t="trigger_trap_reset_in_5_sec"
@@ -517,6 +523,8 @@ invisible_wakeup_enemies_flowerman_trap{
   entity_bound_area__name:t="POLYAREA_DANGER"
   material:t="wood"
   needsBlood:b=no
+  hitpoints__hp:r=999999
+  hitpoints__maxHp:r=999999
   net__scopeDistanceSq:r=108900
   nphys_obstacle__radius:r=0.3
   nphys_obstacle__numSegments:i=6
@@ -535,5 +543,6 @@ invisible_wakeup_enemies_flowerman_trap{
   }
 
   "trap_triggerable_by_projectile:tag"{}
+  "allow_friendly_damage:tag"{}
   "flower_trap:tag"{}
 }

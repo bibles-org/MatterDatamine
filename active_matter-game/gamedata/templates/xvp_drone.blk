@@ -364,7 +364,6 @@ item_foldable_drone{
   item__useTime:r=1
   showroom_item__customZoom:r=0.8
   showroom_item__customZoomBordersRng:p2=0.6, 1.2
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "item__isDirectlyUsable:tag"{}
   "item__closeInventoryOnUsage:tag"{}
@@ -400,7 +399,7 @@ item_foldable_drone{
   "item__cantBeCorrupted:tag"{}
   "item__chronotracesProgressionInfo:object"{
     "repeatedly:object"{
-      extract:i=100
+      extract:p2=100, 7.24
     }
   }
 

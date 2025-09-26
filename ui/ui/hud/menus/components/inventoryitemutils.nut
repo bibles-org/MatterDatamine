@@ -500,6 +500,7 @@ function showItemsForSlotInMarket(itemOrSlot) {
       if (marketItem != null) {
         itemToSelect = lot
         weaponRelated(marketItem, lot, resLots, marketItems.get())
+        resLots = resLots.filter(@(_v, k) marketItems.get()?[k]?.buyable)
       }
     }
   }
@@ -620,7 +621,6 @@ function isItemIdentical(itemA, itemB) {
     && itemA.gunAmmo == itemB.gunAmmo
     && itemA?.isReplica == itemB?.isReplica
     && itemA.isCorrupted == itemB.isCorrupted
-    && itemA?.createdByZone == itemB?.createdByZone
     && isSameWeaponMods(itemA, itemB)
     && backpackIdentical(itemA, itemB)
     && itemA.stacks && itemB.stacks

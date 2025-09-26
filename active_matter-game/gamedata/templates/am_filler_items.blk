@@ -2363,6 +2363,14 @@ author_jared_benson{
   author:t="Jared Benson"
 }
 
+author_kris_polar{
+  author:t="Kris Polar"
+}
+
+author_sergey_polymorph{
+  author:t="Sergey Polymorph"
+}
+
 item_audio_cassete_base{
   _use:t="item"
   _use:t="small_loot_item"
@@ -3223,6 +3231,248 @@ item_cd_j{
   soundTrack:t="music/player/yotam_ben_horin_alternate"
   pickup_unlock__name:t="item_audio_item_cd_j"
   stream_mode_restricted:b=yes
+}
+
+item_cd_01{
+  _use:t="item_cd_base"
+  _use:t="author_kris_polar"
+  animchar__res:t="loot_music_cd_a_char"
+  collres__res:t="loot_music_cd_a_collision"
+  item__proto:t="item_cd_01"
+  item__name:t="items/item_cd_01"
+  soundTrack:t="music/player/kris_polar_actuator"
+  pickup_unlock__name:t="item_audio_item_cd_01"
+}
+
+item_cd_02{
+  _use:t="item_cd_base"
+  _use:t="author_kris_polar"
+  animchar__res:t="loot_music_cd_b_char"
+  collres__res:t="loot_music_cd_b_collision"
+  item__proto:t="item_cd_02"
+  item__name:t="items/item_cd_02"
+  soundTrack:t="music/player/kris_polar_attic_flower"
+  pickup_unlock__name:t="item_audio_item_cd_02"
+}
+
+item_cd_03{
+  _use:t="item_cd_base"
+  _use:t="author_kris_polar"
+  animchar__res:t="loot_music_cd_c_char"
+  collres__res:t="loot_music_cd_c_collision"
+  item__proto:t="item_cd_03"
+  item__name:t="items/item_cd_03"
+  soundTrack:t="music/player/kris_polar_basic_component"
+  pickup_unlock__name:t="item_audio_item_cd_03"
+}
+
+item_cd_04{
+  _use:t="item_cd_base"
+  _use:t="author_kris_polar"
+  animchar__res:t="loot_music_cd_d_char"
+  collres__res:t="loot_music_cd_d_collision"
+  item__proto:t="item_cd_04"
+  item__name:t="items/item_cd_04"
+  soundTrack:t="music/player/kris_polar_clockwork_porridge"
+  pickup_unlock__name:t="item_audio_item_cd_04"
+}
+
+item_cd_05{
+  _use:t="item_cd_base"
+  _use:t="author_kris_polar"
+  animchar__res:t="loot_music_cd_e_char"
+  collres__res:t="loot_music_cd_e_collision"
+  item__proto:t="item_cd_05"
+  item__name:t="items/item_cd_05"
+  soundTrack:t="music/player/kris_polar_dreaming_giant"
+  pickup_unlock__name:t="item_audio_item_cd_05"
+}
+
+item_cd_06{
+  _use:t="item_cd_base"
+  _use:t="author_kris_polar"
+  animchar__res:t="loot_music_cd_f_char"
+  collres__res:t="loot_music_cd_f_collision"
+  item__proto:t="item_cd_06"
+  item__name:t="items/item_cd_06"
+  soundTrack:t="music/player/kris_polar_dual_solo"
+  pickup_unlock__name:t="item_audio_item_cd_06"
+}
+
+item_cd_07{
+  _use:t="item_cd_base"
+  _use:t="author_kris_polar"
+  animchar__res:t="loot_music_cd_a_char"
+  collres__res:t="loot_music_cd_a_collision"
+  item__proto:t="item_cd_07"
+  item__name:t="items/item_cd_07"
+  soundTrack:t="music/player/kris_polar_fragile_structure"
+  pickup_unlock__name:t="item_audio_item_cd_07"
+}
+
+item_cd_08{
+  _use:t="item_cd_base"
+  _use:t="author_kris_polar"
+  animchar__res:t="loot_music_cd_b_char"
+  collres__res:t="loot_music_cd_b_collision"
+  item__proto:t="item_cd_08"
+  item__name:t="items/item_cd_08"
+  soundTrack:t="music/player/kris_polar_nexorcist"
+  pickup_unlock__name:t="item_audio_item_cd_08"
+}
+
+item_cd_09{
+  _use:t="item_cd_base"
+  _use:t="author_kris_polar"
+  animchar__res:t="loot_music_cd_c_char"
+  collres__res:t="loot_music_cd_c_collision"
+  item__proto:t="item_cd_09"
+  item__name:t="items/item_cd_09"
+  soundTrack:t="music/player/kris_polar_odd_numbers"
+  pickup_unlock__name:t="item_audio_item_cd_09"
+}
+
+item_cd_10{
+  _use:t="item_cd_base"
+  _use:t="author_kris_polar"
+  animchar__res:t="loot_music_cd_d_char"
+  collres__res:t="loot_music_cd_d_collision"
+  item__proto:t="item_cd_10"
+  item__name:t="items/item_cd_10"
+  soundTrack:t="music/player/kris_polar_snowfake"
+  pickup_unlock__name:t="item_audio_item_cd_10"
+}
+
+item_cd_11{
+  _use:t="item_cd_base"
+  _use:t="author_kris_polar"
+  animchar__res:t="loot_music_cd_e_char"
+  collres__res:t="loot_music_cd_e_collision"
+  item__proto:t="item_cd_11"
+  item__name:t="items/item_cd_11"
+  soundTrack:t="music/player/kris_polar_stellar_dust"
+  pickup_unlock__name:t="item_audio_item_cd_11"
+}
+
+item_cd_12{
+  _use:t="item_cd_base"
+  _use:t="author_sergey_polymorph"
+  animchar__res:t="loot_music_cd_f_char"
+  collres__res:t="loot_music_cd_f_collision"
+  item__proto:t="item_cd_12"
+  item__name:t="items/item_cd_12"
+  soundTrack:t="music/player/sergey_polymorph_ambient_noise_etude_000"
+  pickup_unlock__name:t="item_audio_item_cd_12"
+}
+
+item_cd_13{
+  _use:t="item_cd_base"
+  _use:t="author_sergey_polymorph"
+  animchar__res:t="loot_music_cd_a_char"
+  collres__res:t="loot_music_cd_a_collision"
+  item__proto:t="item_cd_13"
+  item__name:t="items/item_cd_13"
+  soundTrack:t="music/player/sergey_polymorph_ambient_noise_etude_001"
+  pickup_unlock__name:t="item_audio_item_cd_13"
+}
+
+item_cd_14{
+  _use:t="item_cd_base"
+  _use:t="author_sergey_polymorph"
+  animchar__res:t="loot_music_cd_b_char"
+  collres__res:t="loot_music_cd_b_collision"
+  item__proto:t="item_cd_14"
+  item__name:t="items/item_cd_14"
+  soundTrack:t="music/player/sergey_polymorph_ambient_noise_etude_002"
+  pickup_unlock__name:t="item_audio_item_cd_14"
+}
+
+item_cd_15{
+  _use:t="item_cd_base"
+  _use:t="author_sergey_polymorph"
+  animchar__res:t="loot_music_cd_c_char"
+  collres__res:t="loot_music_cd_c_collision"
+  item__proto:t="item_cd_15"
+  item__name:t="items/item_cd_15"
+  soundTrack:t="music/player/sergey_polymorph_ambient_noise_etude_003"
+  pickup_unlock__name:t="item_audio_item_cd_15"
+}
+
+item_cd_16{
+  _use:t="item_cd_base"
+  _use:t="author_sergey_polymorph"
+  animchar__res:t="loot_music_cd_d_char"
+  collres__res:t="loot_music_cd_d_collision"
+  item__proto:t="item_cd_16"
+  item__name:t="items/item_cd_16"
+  soundTrack:t="music/player/sergey_polymorph_ambient_noise_etude_004"
+  pickup_unlock__name:t="item_audio_item_cd_16"
+}
+
+item_cd_17{
+  _use:t="item_cd_base"
+  _use:t="author_sergey_polymorph"
+  animchar__res:t="loot_music_cd_e_char"
+  collres__res:t="loot_music_cd_e_collision"
+  item__proto:t="item_cd_17"
+  item__name:t="items/item_cd_17"
+  soundTrack:t="music/player/sergey_polymorph_ambient_noise_etude_005"
+  pickup_unlock__name:t="item_audio_item_cd_17"
+}
+
+item_cd_18{
+  _use:t="item_cd_base"
+  _use:t="author_sergey_polymorph"
+  animchar__res:t="loot_music_cd_f_char"
+  collres__res:t="loot_music_cd_f_collision"
+  item__proto:t="item_cd_18"
+  item__name:t="items/item_cd_18"
+  soundTrack:t="music/player/sergey_polymorph_ambient_noise_etude_006"
+  pickup_unlock__name:t="item_audio_item_cd_18"
+}
+
+item_cd_19{
+  _use:t="item_cd_base"
+  _use:t="author_sergey_polymorph"
+  animchar__res:t="loot_music_cd_a_char"
+  collres__res:t="loot_music_cd_a_collision"
+  item__proto:t="item_cd_19"
+  item__name:t="items/item_cd_19"
+  soundTrack:t="music/player/sergey_polymorph_ambient_noise_etude_007"
+  pickup_unlock__name:t="item_audio_item_cd_19"
+}
+
+item_cd_20{
+  _use:t="item_cd_base"
+  _use:t="author_sergey_polymorph"
+  animchar__res:t="loot_music_cd_b_char"
+  collres__res:t="loot_music_cd_b_collision"
+  item__proto:t="item_cd_20"
+  item__name:t="items/item_cd_20"
+  soundTrack:t="music/player/sergey_polymorph_ambient_noise_etude_008"
+  pickup_unlock__name:t="item_audio_item_cd_20"
+}
+
+item_cd_21{
+  _use:t="item_cd_base"
+  _use:t="author_sergey_polymorph"
+  animchar__res:t="loot_music_cd_c_char"
+  collres__res:t="loot_music_cd_c_collision"
+  item__proto:t="item_cd_21"
+  item__name:t="items/item_cd_21"
+  soundTrack:t="music/player/sergey_polymorph_ambient_noise_etude_009"
+  pickup_unlock__name:t="item_audio_item_cd_21"
+}
+
+item_cd_22{
+  _use:t="item_cd_base"
+  _use:t="author_sergey_polymorph"
+  animchar__res:t="loot_music_cd_d_char"
+  collres__res:t="loot_music_cd_d_collision"
+  item__proto:t="item_cd_22"
+  item__name:t="items/item_cd_22"
+  soundTrack:t="music/player/sergey_polymorph_telemetry_transmission_411"
+  pickup_unlock__name:t="item_audio_item_cd_22"
 }
 
 item_newyear_toy_base{

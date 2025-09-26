@@ -26,7 +26,6 @@ helmet_base{
   _tracked:t="item__weight"
   showroom_item__customZoom:r=1.5
   showroom_item__customZoomBordersRng:p2=1.2, 1.7
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
   slot_attach__attached_hide_dynmodel_nodes__recursive:b=yes
 
   "item__equipmentSlots:list<t>"{
@@ -48,12 +47,9 @@ helmet_base{
   }
 
   "item__chronotracesProgressionInfo:object"{
-    "once:object"{
-      damaged:i=25
-    }
-
     "repeatedly:object"{
-      extract:i=100
+      extract:p2=100, 7.24
+      damaged:p2=20, 0.066
     }
   }
 
@@ -99,7 +95,7 @@ helmet_ussr_ssh40{
   item__marketPrice:i=500
   item__hp:r=120
   item__maxHp:r=120
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=35, 35
   item__nexusCost:i=100
 
   "dm_part_armor__protection:list<r>"{
@@ -120,7 +116,7 @@ helmet_ussr_ssh40_rust{
   item__marketPrice:i=350
   item__hp:r=100
   item__maxHp:r=100
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=8, 9
   profile_server_data__enrichmentResearchAlias:t="helmet_ussr_ssh40"
   item__nexusCost:i=100
 
@@ -180,7 +176,7 @@ helmet_d{
   item__marketPrice:i=1050
   item__hp:r=160
   item__maxHp:r=160
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=60, 60
   item__nexusCost:i=175
 
   "dm_part_armor__protection:list<r>"{
@@ -208,7 +204,7 @@ helmet_k6_3{
   item__marketPrice:i=4500
   item__hp:r=260
   item__maxHp:r=260
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=90, 90
   item__nexusCost:i=450
 
   "dm_part_armor__protection:list<r>"{
@@ -360,7 +356,6 @@ helmet_h{
   item__marketPrice:i=3600
   item__hp:r=250
   item__maxHp:r=250
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
   item__nexusCost:i=400
 
   "dm_part_armor__protection:list<r>"{
@@ -394,7 +389,6 @@ helmet_g{
   item__marketPrice:i=4800
   item__hp:r=280
   item__maxHp:r=280
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
   item__nexusCost:i=500
 
   "dm_part_armor__protection:list<r>"{
@@ -427,7 +421,7 @@ helmet_pasgt{
   item__marketPrice:i=750
   item__hp:r=140
   item__maxHp:r=140
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=35, 35
   item__nexusCost:i=125
 
   "dm_part_armor__protection:list<r>"{
@@ -454,7 +448,7 @@ helmet_pasgt_tactical{
   item__marketPrice:i=790
   item__hp:r=140
   item__maxHp:r=140
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=35, 35
   item__nexusCost:i=125
 
   "dm_part_armor__protection:list<r>"{
@@ -485,7 +479,7 @@ helmet_kiver{
   item__marketPrice:i=1100
   item__hp:r=160
   item__maxHp:r=160
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=35, 35
   item__nexusCost:i=175
 
   "dm_part_armor__protection:list<r>"{
@@ -516,7 +510,7 @@ helmet_galvion_viper_a3{
   item__marketPrice:i=1750
   item__hp:r=200
   item__maxHp:r=200
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=35, 35
   item__nexusCost:i=250
 
   "dm_part_armor__protection:list<r>"{
@@ -548,7 +542,7 @@ helmet_fast_sf{
   item__marketPrice:i=2400
   item__hp:r=220
   item__maxHp:r=220
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=45, 45
   item__nexusCost:i=325
 
   "dm_part_armor__protection:list<r>"{

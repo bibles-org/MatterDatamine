@@ -15,6 +15,7 @@ let { actionItemName, selectedObjectEid, useActionType, useAltActionType, useAct
 let { localPlayerEid, localPlayerTeam } = require("%ui/hud/state/local_player.nut")
 let { isInMonsterState } = require("%ui/hud/state/hero_monster_state.nut")
 let { inVehicle } = require("%ui/hud/state/vehicle_state.nut")
+let { isDroneMode } = require("%ui/hud/state/drone_state.nut")
 let { isDowned } = require("%ui/hud/state/health_state.nut")
 let { currentMenuId } = require("%ui/hud/hud_menus_state.nut")
 let { Market_id } = require("%ui/mainMenu/marketMenu.nut")
@@ -92,10 +93,12 @@ function mkAction(
     let res = {
       watch = [
         isDowned, selectedObjectEid, actionItemName, use_action_type, useActionAvailable,
-        inVehicle, custom_use_prompt, custom_use_prompt_params, isInMonsterState,
+        inVehicle, isDroneMode, custom_use_prompt, custom_use_prompt_params, isInMonsterState,
         currentMenuId
       ]
     }
+    if (isDroneMode.get())
+      return res
     if (isDowned.get() && !inVehicle.get())
       return res
 

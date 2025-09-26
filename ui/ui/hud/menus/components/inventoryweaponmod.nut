@@ -19,6 +19,7 @@ from "%ui/components/commonComponents.nut" import mkText
 from "%ui/mainMenu/market/inventoryToMarket.nut" import getItemPriceToShow, mkItemPrice
 from "%ui/hud/state/entity_use_state.nut" import calcItemUseProgress
 from "%ui/hud/menus/components/inventoryItemNexusPointPriceComp.nut" import nexusPointsCostComp
+from "%ui/components/msgbox.nut" import showMsgbox
 from "dagor.debug" import logerr
 
 from "%ui/ui_library.nut" import *
@@ -123,6 +124,13 @@ function weaponModWidgetContent(slotData, dropData, image, text, isUnloadable, g
             lmbAltAction(slotData)
           else {
             let fittingMods = getFittingMods()
+            if (previewPreset.get() && !mintEditState.get()) {
+              if (previewPreset.get()?.presetIdx == "lastUsed")
+                showMsgbox({ text = loc("playerPreset/cantChangeLastUsed") })
+              else
+                showMsgbox({ text = loc("playerPreset/rewritePresetToEdit") })
+              return
+            }
             openChocolateWnd({
               event,
               itemsDataArr = fittingMods,

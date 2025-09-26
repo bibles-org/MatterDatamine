@@ -118,6 +118,8 @@ let mkDataRow = @(data, ctor, idx, override) data == null ? null : {
 }.__update(override)
 
 function mkDataTable(dataToAdd) {
+  if (dataToAdd.len() <= 0)
+    return null
   let pageCols = lbCategories.map(function(category) {
     let { locId, width, dataIdx, valueToShow, override = static {} } = category
     let title = mkLbTitle(locId, override)
@@ -150,7 +152,7 @@ function lbList() {
   let res = []
   let totalRows = curMonolithLbData.get().len()
   let totalCols = ceil(totalRows.tofloat() / LB_ROWS_PER_COL)
-  let data = curMonolithLbData.get().slice(1)
+  let data = curMonolithLbData.get().filter(@(v) v?[1] != 208876377)
 
   for (local table = 0; table < totalCols; table++) {
     let dataToAdd = data.slice(table * LB_ROWS_PER_COL, min(data.len(), (table + 1) * LB_ROWS_PER_COL))

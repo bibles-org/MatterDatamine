@@ -108,7 +108,6 @@ resurrect_device_item{
     cooldown:r=0
     lockWhileSwimming:b=yes
     lockInVehicle:b=yes
-    profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
 
     "stages:array"{
       "placement_stage:object"{
@@ -126,6 +125,8 @@ resurrect_device_item{
         exit:b=yes
       }
     }
+
+    "item__cantBeCorrupted:tag"{}
   }
 
   "mintBannedItem:tag"{}

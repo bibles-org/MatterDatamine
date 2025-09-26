@@ -96,7 +96,6 @@ base_weapon{
   _replicated:t="melee_weapon__attackAt"
   _replicated:t="melee_weapon__attackTime"
   uniqueId:t="-1"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "item_weapon:tag"{}
   "gun__owner:eid"{}
@@ -286,14 +285,13 @@ smg_preset{
   item__nexusCost:i=250
 
   "item__chronotracesProgressionInfo:object"{
-    "once:object"{}
     "repeatedly:object"{
-      extract:i=100
-      militant_hits:i=1
-      monster_hits:i=1
-      trap_hits:i=1
-      militant_kills:i=35
-      monster_kills:i=25
+      extract:p2=100, 7.24
+      militant_hits:p2=2, 0.002
+      monster_hits:p2=2, 0.002
+      trap_hits:p2=2, 0.002
+      militant_kills:p2=35, 0.4
+      monster_kills:p2=35, 0.388
     }
   }
 }
@@ -317,12 +315,12 @@ assault_rifle_preset{
   "item__chronotracesProgressionInfo:object"{
     "once:object"{}
     "repeatedly:object"{
-      extract:i=100
-      militant_hits:i=1
-      monster_hits:i=1
-      trap_hits:i=1
-      militant_kills:i=35
-      monster_kills:i=25
+      extract:p2=100, 7.24
+      militant_hits:p2=2, 0.002
+      monster_hits:p2=2, 0.002
+      trap_hits:p2=2, 0.002
+      militant_kills:p2=35, 0.4
+      monster_kills:p2=35, 0.388
     }
   }
 }
@@ -346,12 +344,12 @@ semi_auto_rifle_preset{
   "item__chronotracesProgressionInfo:object"{
     "once:object"{}
     "repeatedly:object"{
-      extract:i=100
-      militant_hits:i=1
-      monster_hits:i=1
-      trap_hits:i=1
-      militant_kills:i=35
-      monster_kills:i=25
+      extract:p2=100, 7.24
+      militant_hits:p2=2, 0.002
+      monster_hits:p2=2, 0.002
+      trap_hits:p2=2, 0.002
+      militant_kills:p2=35, 0.4
+      monster_kills:p2=35, 0.388
     }
   }
 }
@@ -376,12 +374,12 @@ bolt_action_rifle_preset{
   "item__chronotracesProgressionInfo:object"{
     "once:object"{}
     "repeatedly:object"{
-      extract:i=100
-      militant_hits:i=5
-      monster_hits:i=5
-      trap_hits:i=5
-      militant_kills:i=50
-      monster_kills:i=35
+      extract:p2=100, 7.24
+      militant_hits:p2=5, 0.0074
+      monster_hits:p2=5, 0.0074
+      trap_hits:p2=5, 0.0074
+      militant_kills:p2=50, 1.88
+      monster_kills:p2=35, 0.595
     }
   }
 }
@@ -396,12 +394,12 @@ heavy_sniper_rifle_preset{
   "item__chronotracesProgressionInfo:object"{
     "once:object"{}
     "repeatedly:object"{
-      extract:i=100
-      militant_hits:i=1
-      monster_hits:i=1
-      trap_hits:i=1
-      militant_kills:i=35
-      monster_kills:i=25
+      extract:p2=100, 7.24
+      militant_hits:p2=2, 0.002
+      monster_hits:p2=2, 0.002
+      trap_hits:p2=2, 0.002
+      militant_kills:p2=35, 0.4
+      monster_kills:p2=35, 0.388
     }
   }
 }
@@ -423,12 +421,12 @@ shotgun_preset{
   "item__chronotracesProgressionInfo:object"{
     "once:object"{}
     "repeatedly:object"{
-      extract:i=100
-      militant_hits:i=1
-      monster_hits:i=1
-      trap_hits:i=1
-      militant_kills:i=35
-      monster_kills:i=25
+      extract:p2=100, 7.24
+      militant_hits:p2=1, 0.001
+      monster_hits:p2=1, 0.001
+      trap_hits:p2=1, 0.001
+      militant_kills:p2=35, 0.4
+      monster_kills:p2=35, 0.388
     }
   }
 }
@@ -459,12 +457,12 @@ pistol_preset{
   "item__chronotracesProgressionInfo:object"{
     "once:object"{}
     "repeatedly:object"{
-      extract:i=100
-      militant_hits:i=5
-      monster_hits:i=5
-      trap_hits:i=5
-      militant_kills:i=50
-      monster_kills:i=35
+      extract:p2=100, 7.24
+      militant_hits:p2=5, 0.0074
+      monster_hits:p2=5, 0.0074
+      trap_hits:p2=5, 0.0074
+      militant_kills:p2=50, 1.88
+      monster_kills:p2=35, 0.595
     }
   }
 }
@@ -489,12 +487,12 @@ lmg_preset{
   "item__chronotracesProgressionInfo:object"{
     "once:object"{}
     "repeatedly:object"{
-      extract:i=100
-      militant_hits:i=1
-      monster_hits:i=1
-      trap_hits:i=1
-      militant_kills:i=35
-      monster_kills:i=25
+      extract:p2=100, 7.24
+      militant_hits:p2=2, 0.002
+      monster_hits:p2=2, 0.002
+      trap_hits:p2=2, 0.002
+      militant_kills:p2=35, 0.4
+      monster_kills:p2=35, 0.388
     }
   }
 }
@@ -505,12 +503,12 @@ melee_preset{
   "item__chronotracesProgressionInfo:object"{
     "once:object"{}
     "repeatedly:object"{
-      extract:i=100
-      militant_hits:i=5
-      monster_hits:i=5
-      trap_hits:i=5
-      militant_kills:i=50
-      monster_kills:i=35
+      extract:p2=100, 7.24
+      militant_hits:p2=5, 0.0074
+      monster_hits:p2=5, 0.0074
+      trap_hits:p2=5, 0.0074
+      militant_kills:p2=50, 1.88
+      monster_kills:p2=35, 0.595
     }
   }
 }
@@ -606,7 +604,7 @@ akm_47_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[0.000815562, -0.032988, 0.999456] [-0.0111868, 0.999393, 0.0329952] [-0.999937, -0.0112075, 0.000446039] [-0.123653, 0.0580902, -0.0644531]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
 
   "gun_mods__slots:shared:object"{
     scope:t="scope_dovetail_high_slot"
@@ -753,7 +751,7 @@ akm_47_rust_gun{
   gun__kineticDamageMult:r=0.9
   gun_spread__maxDeltaAngle:r=1.4
   gun_jamming__jamChance:r=0.075
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=16, 17
   profile_server_data__enrichmentResearchAlias:t="akm_47_gun"
 
   "animchar__objTexReplace:object"{
@@ -908,7 +906,7 @@ ak_103_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[3.57628e-07, 2.79397e-09, 1] [-8.88178e-16, 0.999999, -2.79397e-09] [-1, 0, 3.57628e-07] [-0.23, 0.0406791, -0.0696411]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
   item__nexusCost:i=550
 
   "gun_mods__slots:shared:object"{
@@ -1127,7 +1125,7 @@ sks_carbine_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.25, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.254005, 0.0334778, -0.0665359]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=70, 70
 
   "gun__ammoHolders:list<t>"{
     ammoHolders:t="mosin_magazine"
@@ -1216,7 +1214,7 @@ sks_carbine_rust_gun{
   gun__shotFreq:r=3.7
   gun__kineticDamageMult:r=0.8
   gun_spread__maxDeltaAngle:r=1.2
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=17, 18
   profile_server_data__enrichmentResearchAlias:t="sks_carbine_gun"
 
   _group{
@@ -1260,7 +1258,7 @@ sks_carbine_hunt_gun{
   item__name:t="items/sks_carbine_hunt"
   item__marketPrice:i=100
   _use:t="gun_with_gun_mods"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=105, 105
 
   "gun_mods__slots:shared:object"{
     scope:t="scope_dovetail_slot"
@@ -1345,7 +1343,7 @@ makarov_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.25, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[-0.015613, -0.191174, 0.981432] [0.451507, 0.874431, 0.177514] [-0.892132, 0.445895, 0.0726639] [-0.0418701, 0.0178223, -0.0683594]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
   item__nexusCost:i=125
   showroom_item__customZoom:r=2
   showroom_item__customZoomBordersRng:p2=1.6, 2
@@ -1485,7 +1483,7 @@ makarov_rust_gun{
   gun__shotFreq:r=6.2
   gun__kineticDamageMult:r=0.9
   gun_spread__maxDeltaAngle:r=1.6
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=3, 4
   profile_server_data__enrichmentResearchAlias:t="makarov_gun"
 
   "animchar__objTexReplace:object"{
@@ -1503,13 +1501,13 @@ makarov_honorary_gun{
   item__proto:t="makarov_honorary_gun"
   item__name:t="items/makarov_honorary"
   item__marketPrice:i=100
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
-  profile_server_data__enrichmentResearchAlias:t="makarov_honorary_gun"
 
   "animchar__objTexReplace:object"{
     "makarov_pistol_tex_d*":t="makarov_engraved_tex_d*"
     "makarov_pistol_tex_n*":t="makarov_engraved_tex_n*"
   }
+
+  "item__cantBeCorrupted:tag"{}
 }
 
 box_9mm_rubber_magazine{
@@ -1541,6 +1539,8 @@ makarov_toy_magazine{
     "9x18mm_tex_d*":t="9x18mm_rubber_tex_d*"
     "9x18mm_tex_n*":t="9x18mm_rubber_tex_n*"
   }
+
+  "item__cantBeCorrupted:tag"{}
 }
 
 makarov_toy_magazine_slot{
@@ -1595,6 +1595,8 @@ makarov_toy_gun{
     "makarov_pistol_tex_d*":t="makarov_toy_tex_d*"
     "makarov_pistol_tex_n*":t="makarov_toy_tex_n*"
   }
+
+  "item__cantBeCorrupted:tag"{}
 }
 
 pp_19_vityaz_magazine_slot{
@@ -1673,7 +1675,6 @@ pp_19_vityaz_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74844e-07, 7.52844e-10, 1] [-0.00430576, 0.999991, 0] [-0.999991, -0.00430576, 1.74846e-07] [-0.106674, 0.0249925, -0.0615234]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "gun_mods__slots:shared:object"{
     silencer:t="vityaz_silencer_slot"
@@ -1897,7 +1898,6 @@ ak_12_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[3.57628e-07, 0, 1] [0, 1, 0] [-1, 0, 3.57628e-07] [-0.155884, 0.031, -0.0675659]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
   item__nexusCost:i=550
 
   "gun_mods__slots:shared:object"{
@@ -2143,7 +2143,7 @@ as_val_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[2.38419e-07, -2.79397e-09, 1] [0.0168475, 0.999858, -2.79397e-09] [-0.999858, 0.0168475, 2.38419e-07] [-0.0437445, 0.05, -0.0690002]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=120, 120
   item__nexusCost:i=600
 
   "gun_mods__slots:shared:object"{
@@ -2354,7 +2354,7 @@ toz_b_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.25, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74842e-07, -1.25237e-09, 1] [0.00716272, 0.999974, 0] [-0.999974, 0.00716272, 1.74846e-07] [-0.270752, 0.0670319, -0.0658722]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=70, 70
   item__nexusCost:i=300
 
   "gun__ammoHolders:list<t>"{
@@ -2516,7 +2516,7 @@ mosin_m44_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.05, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[-5.96047e-08, 0, 1] [0, 1, 0] [-1, 0, -5.96047e-08] [-0.214798, 0.0365753, -0.066013]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=70, 70
 
   "gun_shell_ejection__onShootRelease:tag"{}
   "gun__ammoHolders:list<t>"{
@@ -2619,7 +2619,7 @@ mosin_m44_rust_gun{
   gun__shotFreq:r=0.55
   gun__kineticDamageMult:r=0.8
   gun_spread__maxDeltaAngle:r=1.2
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=17, 18
   profile_server_data__enrichmentResearchAlias:t="mosin_m44_gun"
 
   "animchar__objTexReplace:object"{
@@ -2648,7 +2648,7 @@ mosin_m91_gun{
   gun__ammoInspectionIdleLoopDuration:r=3.56
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
   _use:t="gun_with_gun_mods"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=75, 75
 
   "gun_mods__slots:shared:object"{
     scope:t="scope_kochetov_slot"
@@ -2695,7 +2695,7 @@ mosin_m91_rust_gun{
   gun__shotFreq:r=0.55
   gun__kineticDamageMult:r=0.8
   gun_spread__maxDeltaAngle:r=1.1
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=18, 19
   profile_server_data__enrichmentResearchAlias:t="mosin_m91_gun"
 
   "animchar__objTexReplace:object"{
@@ -3668,7 +3668,7 @@ pp_91_kedr_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.4, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.0106768, 0.0635912, -0.0634766]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=35, 35
   item__nexusCost:i=225
 
   "gun_mods__slots:shared:object"{
@@ -3882,7 +3882,7 @@ mc_21_12_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.5, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[-5.96047e-08, 0, 1] [0, 1, 0] [-1, 0, -5.96047e-08] [-0.22556, 0.0468751, -0.0666103]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=105, 105
 
   "gun__ammoHolders:list<t>"{
     ammoHolders:t="box_12_gauge_magazine"
@@ -4049,7 +4049,7 @@ ks_23_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[4.76837e-07, 0, 1] [0, 1, 0] [-1, 0, 4.76837e-07] [-0.252346, 0.0749583, -0.065]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=90, 90
 
   "gun_mods__slots:shared:object"{
     stock:t="ks_23_stock_slot"
@@ -4414,7 +4414,7 @@ svd_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.25, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[2.38419e-07, -2.79397e-09, 1] [0.0168475, 0.999858, -2.79397e-09] [-0.999858, 0.0168475, 2.38419e-07] [-0.278939, -0.00792383, -0.067887]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=112, 112
   item__nexusCost:i=550
 
   "gun_mods__slots:shared:object"{
@@ -4617,7 +4617,7 @@ vss_vintorez_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[2.38419e-07, -2.79397e-09, 1] [0.0168475, 0.999858, -2.79397e-09] [-0.999858, 0.0168475, 2.38419e-07] [-0.300841, 0.0565186, -0.0690002]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=120, 120
 
   "gun_mods__slots:shared:object"{
     scope:t="scope_dovetail_slot"
@@ -4830,7 +4830,6 @@ mp_443_gun{
   item__iconYaw:r=50
   showroom_item__customZoom:r=2
   showroom_item__customZoomBordersRng:p2=1.6, 2.4
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
   item__nexusCost:i=200
 
   "gun_mods__slots:shared:object"{
@@ -5224,7 +5223,6 @@ sv98_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.25, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[3.57628e-07, -2.79397e-09, 1] [9.99201e-16, 1, 2.79397e-09] [-1, 0, 3.57628e-07] [-0.278939, -0.0284754, -0.069704]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "gun__mountPoints:shared:array"{
     "point:object"{
@@ -5581,7 +5579,6 @@ ak_74_gun{
   _use:t="hit_effect_group_medium"
   _use:t="assault_rifle_preset"
   _use:t="gun_check_weapon_magazine"
-  _use:t="item_rarity_uncommon"
   animchar__res:t="ak_74m_char"
   collres__res:t="ak_74m_collision"
   gun__blk:t="gamedata/weapons/ak_74m.blk"
@@ -5626,7 +5623,7 @@ ak_74_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.4, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[0, 0, 1] [0.00698126, 0.999976, 6.98492e-10] [-0.999976, 0.00698126, 0] [-0.13, 0.02, -0.078]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
 
   "gun_mods__slots:shared:object"{
     scope:t="scope_dovetail_high_slot"
@@ -5834,7 +5831,7 @@ aek_971_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.4, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[0, 0, 1] [0.00698126, 0.999976, 6.98492e-10] [-0.999976, 0.00698126, 0] [-0.12, 0.02, -0.078]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=97, 98
   item__nexusCost:i=550
 
   "gun_mods__slots:shared:object"{
@@ -6006,7 +6003,6 @@ aks_74u_gun{
   _use:t="hit_effect_group_medium"
   _use:t="gun_check_weapon_magazine"
   _use:t="assault_rifle_preset"
-  _use:t="item_rarity_uncommon"
   _use:t="gun_jamming"
   animchar__res:t="aks_74u_char"
   collres__res:t="aks_74u_collision"
@@ -6067,7 +6063,7 @@ aks_74u_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.8, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[-5.96046e-08, 0, 1] [0, 1, 0] [-1, 0, -5.96046e-08] [0.000797452, 0.0663334, -0.078]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=55, 55
 
   "gun_mods__slots:shared:object"{
     magazine:t="aks_74u_magazine_slot"
@@ -6226,7 +6222,7 @@ aks_74u_rust_gun{
   gun__kineticDamageMult:r=0.8
   gun_spread__maxDeltaAngle:r=1.6
   gun_jamming__jamChance:r=0.075
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=13, 14
   profile_server_data__enrichmentResearchAlias:t="aks_74u_gun"
 
   "animchar__objTexReplace:object"{
@@ -6372,7 +6368,7 @@ tkb_22_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[0.000815562, -0.032988, 0.999456] [-0.0111868, 0.999393, 0.0329952] [-0.999937, -0.0112075, 0.000446039] [-0.123653, 0.0580902, -0.0644531]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=90, 90
 
   "gun_mods__slots:shared:object"{
     magazine:t="tkb_22_magazine_slot"
@@ -6963,7 +6959,6 @@ ash_12_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.8, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[-5.96047e-08, 0, 1] [0, 1, 0] [-1, 0, -5.96047e-08] [0.0370972, -0.0370635, -0.0651926]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
   item__nexusCost:i=750
 
   "gun_mods__slots:shared:object"{
@@ -7358,7 +7353,7 @@ rpk_74_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[0.000815562, -0.032988, 0.999456] [-0.0111868, 0.999393, 0.0329952] [-0.999937, -0.0112075, 0.000446039] [-0.123653, 0.0580902, -0.0644531]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=130, 130
   item__nexusCost:i=600
 
   "gun__mountPoints:shared:array"{
@@ -7533,6 +7528,7 @@ pk_gun{
   _use:t="lmg_preset"
   _use:t="item_rarity_rare"
   _use:t="gun_with_bipod"
+  _use:t="gun_check_weapon_magazine"
   gun__embeddedBipod:b=yes
   animchar__res:t="pkm_char"
   collres__res:t="pkm_collision"
@@ -7580,6 +7576,9 @@ pk_gun{
   gun__rotInertia:p3=0.1, 2, 2
   gun__crawlRecoilMult:r=0.3
   gun_shell_ejection__templateName:t="762_54r_ejected_shell"
+  gun_check_weapon__ammoNodeName:t="ammocan"
+  gun_check_weapon__bulletInsideNodeName:t="bolt_1"
+  gun_ammo_check__canHaveChamberedAmmo:b=yes
   combatFiringRange:p2=50, 70
   combatShootTime:p2=0.2, 0.3
   combatCooldownTime:p2=0.1, 0.3
@@ -7601,7 +7600,7 @@ pk_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.25, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[-5.96046e-08, 0, 1] [0, 1, 0] [-1, 0, -5.96046e-08] [-0.28, 0.011, -0.0615234]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=190, 190
   item__nexusCost:i=800
 
   "gun__mountPoints:shared:array"{
@@ -8019,7 +8018,6 @@ fn_scar_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[3.57628e-07, 0, 1] [0, 1, 0] [-1, 0, 3.57628e-07] [-0.183281, 0.0443459, -0.0651373]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
   item__nexusCost:i=550
 
   "gun_mods__slots:shared:object"{
@@ -8225,7 +8223,7 @@ m4_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.101898, 0.0205688, -0.0644531]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
 
   "gun_mods__slots:shared:object"{
     silencer:t="556_silencer_slot"
@@ -8446,7 +8444,7 @@ m4a1_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.115544, 0.0205688, -0.0644531]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=65, 65
 
   "gun_mods__slots:shared:object"{
     silencer:t="556_silencer_slot"
@@ -8611,7 +8609,7 @@ m4_rust_gun{
   gun__shotFreq:r=11.3
   gun__kineticDamageMult:r=0.8
   gun_spread__maxDeltaAngle:r=1
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=16, 17
   profile_server_data__enrichmentResearchAlias:t="m4a1_gun"
 
   "animchar__objTexReplace:object"{
@@ -8773,7 +8771,6 @@ m16a4_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[4.76837e-07, 0, 1] [0.00872653, 0.999962, -4.65661e-09] [-0.999962, 0.00872653, 4.76837e-07] [-0.18, 0.02, -0.0644531]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "gun_mods__slots:shared:object"{
     silencer:t="556_silencer_slot"
@@ -8996,7 +8993,6 @@ hk416a5_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.101898, 0.0205688, -0.0644531]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
   item__nexusCost:i=600
 
   "gun_mods__slots:shared:object"{
@@ -9226,7 +9222,6 @@ steyr_aug_a1_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.141235, 0.0600739, -0.0654297]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
   item__nexusCost:i=550
 
   collres{}
@@ -9428,7 +9423,7 @@ spas_12_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.1, 0, 0] [0, 0.25, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[4.76837e-07, 0, 1] [0, 1, 0] [-1, 0, 4.76837e-07] [-0.26, 0.042, -0.0648708]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=90, 90
   item__nexusCost:i=400
 
   "gun__ammoHolders:list<t>"{
@@ -9584,7 +9579,7 @@ hk_mp5n_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.0544373, 0.0600779, -0.0634766]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=45, 45
 
   "gun_mods__slots:shared:object"{
     silencer:t="9_19_silencer_slot"
@@ -9820,7 +9815,7 @@ hk_ump_45_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.4, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.0970001, 0.0562134, -0.0649414]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=45, 45
 
   "gun_mods__slots:shared:object"{
     silencer:t="45_silencer_slot"
@@ -10016,7 +10011,7 @@ hk_g3a4_gun{
   item__name:t="items/hk_g3a4"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=4.6
-  item__volume:i=260
+  item__volume:i=280
   item__marketPrice:i=6800
   gun__altReloadTime:r=1.8
   gun__ammoInspectionInOutDuration:p2=1.4, 2.3
@@ -10050,7 +10045,7 @@ hk_g3a4_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[0.000815562, -0.032988, 0.999456] [-0.0111868, 0.999393, 0.0329952] [-0.999937, -0.0112075, 0.000446039] [-0.123653, 0.0580902, -0.0644531]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=105, 105
 
   "gun_mods__slots:shared:object"{
     scope:t="scope_picatinny_long_slot"
@@ -10285,7 +10280,6 @@ barrett_m82a1_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.5, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[5.14692e-05, 3.70182e-07, 1] [-0.00714479, 0.999974, -2.32831e-09] [-0.999974, -0.00714479, 5.14705e-05] [-0.428045, -0.0552216, -0.0693359]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
 
   "gun__mountPoints:shared:array"{
     "point:object"{
@@ -10492,7 +10486,7 @@ winchester_civil_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.241333, 0.0137253, -0.0693359]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=70, 70
 
   "gun__ammoHolders:list<t>"{
     ammoHolders:t="winchester_model_1912_magazine"
@@ -10632,7 +10626,7 @@ winchester_specops_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[3.57628e-07, 0, 1] [0, 1, 0] [-1, 0, 3.57628e-07] [-0.25, 0.0137253, -0.0693359]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=70, 70
 
   "gun__ammoHolders:list<t>"{
     ammoHolders:t="winchester_model_1912_magazine"
@@ -10779,7 +10773,7 @@ mossberg_590_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1.1, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[5.96046e-07, 0, 1] [0.00523596, 0.999986, -2.79397e-09] [-0.999986, 0.00523596, 5.96046e-07] [-0.221135, 0.0213644, -0.0667149]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=70, 70
 
   "gun__ammoHolders:list<t>"{
     ammoHolders:t="box_12_gauge_magazine"
@@ -10944,7 +10938,6 @@ scorpion_evo_3_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.0746002, 0.0452271, -0.0693359]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
   item__nexusCost:i=300
 
   "gun_mods__slots:shared:object"{
@@ -11157,7 +11150,7 @@ m1911_colt_gun{
   racked_weapon__transform:m=[[-5.96046e-08, -0.29467, 0.955599] [0.378832, 0.884374, 0.272707] [-0.925466, 0.362011, 0.11163] [-0.0755386, 0.0289307, -0.0759888]]
   showroom_item__customZoom:r=2
   showroom_item__customZoomBordersRng:p2=1.6, 3
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=17, 18
 
   "gun_mods__slots:shared:object"{
     silencer:t="45_silencer_slot"
@@ -11293,7 +11286,7 @@ m1911a1_colt_nickel_gun{
   item__proto:t="m1911a1_colt_nickel_gun"
   item__name:t="items/m1911a1_colt_nickel"
   item__marketPrice:i=1350
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 27
 
   "animchar__objTexReplace:object"{
     "m1911_colt_tex_d*":t="m_1911_a1_chrome_tex_d*"
@@ -11313,7 +11306,7 @@ m45a1_gun{
   gun__recoilAmount:r=0.14
   racked_weapon__gunwallVolumeBox:m=[[0.25, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[-0.00786796, -0.292061, 0.956367] [0.262603, 0.922226, 0.283795] [-0.964872, 0.253377, 0.0694398] [-0.0765209, 0.0273249, -0.0759888]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=17, 18
 
   "racked_weapon__rackRendinsts:shared:array"{
     "rack:object"{
@@ -11676,7 +11669,7 @@ beretta_m9_gun{
   item__iconYaw:r=50
   showroom_item__customZoom:r=2
   showroom_item__customZoomBordersRng:p2=1.6, 3
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=17, 18
 
   "gun_mods__slots:shared:object"{
     magazine:t="beretta_m9_magazine_slot"
@@ -12008,7 +12001,7 @@ pm_63_rak_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.6, 0, 0] [0, 0.2, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [0.059092, 0.017294, -0.0657705]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=35, 35
   item__nexusCost:i=225
 
   "gun_mods__slots:shared:object"{
@@ -12364,7 +12357,6 @@ kriss_vector_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[0.75, 0, 0] [0, 0.4, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.0970001, 0.0562134, -0.0649414]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
   item__nexusCost:i=450
 
   "gun_mods__slots:shared:object"{
@@ -13176,7 +13168,6 @@ m110a1_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[1.74846e-07, 0, 1] [0, 1, 0] [-1, 0, 1.74846e-07] [-0.16753, 0.00208619, -0.066586]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
   item__nexusCost:i=550
 
   "gun__mountPoints:shared:array"{
@@ -14013,7 +14004,7 @@ crossbow_gun{
   gun__projectileTemplate:t="crossbow_bolt_projectile"
   showroom_item__customZoom:r=1.2
   showroom_item__customZoomBordersRng:p2=1, 1.5
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=127, 127
   item__nexusCost:i=300
 
   "gun_mods__slots:shared:object"{
@@ -14093,14 +14084,13 @@ crossbow_gun{
   }
 
   "item__chronotracesProgressionInfo:object"{
-    "once:object"{}
     "repeatedly:object"{
-      extract:i=100
-      militant_hits:i=5
-      monster_hits:i=5
-      trap_hits:i=5
-      militant_kills:i=50
-      monster_kills:i=35
+      extract:p2=100, 7.24
+      militant_kills:p2=50, 1
+      monster_kills:p2=25, 0.96
+      militant_hits:p2=10, 0.056
+      monster_hits:p2=10, 0.056
+      trap_hits:p2=10, 0.056
     }
   }
 }
@@ -14133,6 +14123,7 @@ flamethrower_corefan_gun{
   _use:t="camera_shake_on_shot_high_freq"
   _use:t="flamethrower_deviation_preset"
   _use:t="item_rarity_uncommon"
+  _use:t="gun_check_weapon_no_magazine"
   gun_hand_stamina__drainMult:r=3.5
   animchar__res:t="xvp_flame_char"
   collres__res:t="xvp_flame_collision"
@@ -14205,6 +14196,9 @@ flamethrower_corefan_gun{
   weap__dofMult:r=0.85
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
+  gun_check_weapon__ammoNodeName:t="custom_ammo"
+  gun_ammo_check__canHaveChamberedAmmo:b=no
+  gun_ammo_check__needFiringModeMark:b=no
   _use:t="gun_sound_with_animchar"
   _use:t="antivehicle_gun_aim_sound"
   _use:t="flamethrower_gun_shot_dry_sound"
@@ -14213,7 +14207,6 @@ flamethrower_corefan_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[3.57628e-07, 9.31323e-10, 1] [-0.00823221, 0.999966, 1.86264e-09] [-0.999966, -0.00823221, 3.57628e-07] [-0.45, 0.0095674, -0.0311584]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
   item__nexusCost:i=400
 
   "gun_mods__slots:shared:object"{
@@ -14347,14 +14340,13 @@ flamethrower_corefan_gun{
   }
 
   "item__chronotracesProgressionInfo:object"{
-    "once:object"{}
     "repeatedly:object"{
-      extract:i=100
-      militant_hits:i=1
-      monster_hits:i=1
-      trap_hits:i=1
-      militant_kills:i=35
-      monster_kills:i=25
+      extract:p2=100, 7.24
+      militant_kills:p2=50, 1
+      monster_kills:p2=25, 0.96
+      militant_hits:p2=2, 0.002
+      monster_hits:p2=2, 0.002
+      trap_hits:p2=2, 0.002
     }
   }
 
@@ -14405,7 +14397,7 @@ knife_weapon{
   melee_weapon__blk:t="gamedata/weapons/knife.blk"
   showroom_item__customZoom:r=1.4
   showroom_item__customZoomBordersRng:p2=1.1, 2
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=7, 8
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -14484,7 +14476,7 @@ cooking_knife_weapon{
   item__marketPrice:i=100
   meleeSoundType:t="knife_cooking"
   melee_weapon__blk:t="gamedata/weapons/cooking_knife.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -14557,7 +14549,7 @@ sovmod_diver_flashlight{
   weapon__iconYaw:r=60
   weapon__iconPitch:r=60
   weapon__iconRoll:r=80
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -14593,7 +14585,7 @@ sovmod_flashlight_device{
   item__iconScale:r=1.2
   item__iconOffset:p2=0.3, -0.1
   weapon__iconOffset:p2=-0.2, 0
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=12, 13
 }
 
 screwdriver_a_weapon{
@@ -14657,7 +14649,7 @@ chisel_a_weapon{
   item__marketPrice:i=100
   meleeSoundType:t="screwdriver"
   melee_weapon__blk:t="gamedata/weapons/chisel.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=7, 8
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -14682,7 +14674,7 @@ chisel_b_weapon{
   item__marketPrice:i=100
   meleeSoundType:t="screwdriver"
   melee_weapon__blk:t="gamedata/weapons/chisel.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=7, 8
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -14724,7 +14716,7 @@ sov_knife_nr_40_weapon{
   item__volume:i=30
   item__marketPrice:i=100
   melee_weapon__blk:t="gamedata/weapons/sov_knife_nr_40.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=7, 8
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -14746,7 +14738,7 @@ ak_bayonet_weapon{
   item__volume:i=40
   item__marketPrice:i=100
   melee_weapon__blk:t="gamedata/weapons/ak_bayonet.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -14783,7 +14775,7 @@ sovmod_dirk_white{
   item__volume:i=50
   item__marketPrice:i=100
   melee_weapon__blk:t="gamedata/weapons/sovmod_dirk.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=18, 19
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -14804,7 +14796,7 @@ sovmod_dirk_yellow{
 
 sovmod_dirk_long{
   _use:t="knife_prototype"
-  _use:t="item_rarity_uncommon"
+  _use:t="item_rarity_rare"
   _use:t="melee_preset"
   animchar__res:t="sovmod_dirk_c_char"
   collres__res:t="sovmod_dirk_c_collision"
@@ -14814,7 +14806,7 @@ sovmod_dirk_long{
   item__volume:i=60
   item__marketPrice:i=100
   melee_weapon__blk:t="gamedata/weapons/sovmod_dirk_long.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=22, 23
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -14864,7 +14856,7 @@ axe_weapon{
   dropTm:m=[[0, 1, 0] [0, 0, 1] [1, 0, 0] [0, 0.01, 0]]
   item__iconRoll:r=43
   item__iconPitch:r=83
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
   item__nexusCost:i=150
 
   "gun_attach__holsterSlots:array"{
@@ -14893,7 +14885,7 @@ mpl50_shovel{
   item__iconRoll:r=43
   item__iconPitch:r=83
   meleeSoundType:t="shovel"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
   item__nexusCost:i=150
 
   "gun_attach__holsterSlots:array"{
@@ -14926,7 +14918,7 @@ rugbeater{
   weapon__iconYaw:r=-5
   weapon__iconScale:r=1
   weapon__iconOffset:p2=-0.1, 0.1
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=12, 13
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -15005,7 +14997,7 @@ cooking_cleaver_weapon{
   item__iconScale:r=1
   item__iconOffset:p2=0, -0.1
   meleeSoundType:t="axe"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
   item__nexusCost:i=150
 
   "gun_attach__holsterSlots:array"{
@@ -15053,7 +15045,7 @@ wrench_weapon{
   gun__statName:t="melee"
   dropTm:m=[[0, 1, 0] [0, 0, 1] [1, 0, 0] [0, 0.01, 0]]
   item__iconRoll:r=43
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
   item__nexusCost:i=150
 
   "gun_attach__holsterSlots:array"{
@@ -15111,7 +15103,6 @@ spear_weapon{
   weapon__iconYaw:r=130
   weapon__iconOffset:p2=-0.17, 0
   weapon__iconScale:r=0.85
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
   item__nexusCost:i=250
 
   "twoHandedMeleeWeapon:tag"{}
@@ -15169,7 +15160,6 @@ hammer_weapon{
   weapon__iconYaw:r=130
   weapon__iconOffset:p2=-0.19, 0
   weapon__iconScale:r=1.1
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
   item__nexusCost:i=250
 
   "twoHandedMeleeWeapon:tag"{}
@@ -15231,7 +15221,6 @@ brass_knuckles_knife_bouncer_weapon{
   weapon__iconRoll:r=0
   weapon__iconYaw:r=180
   weapon__iconScale:r=0.8
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -15273,7 +15262,6 @@ tomahawk_woodcutters_argument_weapon{
   item__volume:i=30
   item__marketPrice:i=0
   melee_weapon__blk:t="gamedata/weapons/axe.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -15315,7 +15303,6 @@ bugswatter_cbt_weapon{
   meleeSoundType:t="shovel"
   melee_weapon__blk:t="gamedata/weapons/rugbeater.blk"
   weapon__iconScale:r=0.9
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"

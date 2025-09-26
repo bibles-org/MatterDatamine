@@ -138,19 +138,23 @@ let weaponSlots = [ "weapon_0", "weapon_1", "weapon_2" ]
 function checkLoadout() {
   let weapWithoutAmmo = []
   local hasWeapon = false
+  local hasCorruptedItems = false
   foreach (item in loadoutItems.get()) {
-    let isWeapon = weaponSlots.findvalue(@(v) item?.slotName == v ) != null
-    if(!isWeapon)
-      continue
 
-    hasWeapon = true
-    let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(item.templateName)
-    if(!checkWeaponAmmo(template, item.templateName)) {
-      let locname = template?.getCompValNullable("item__name") ?? "unknown"
-      weapWithoutAmmo.append(locname)
+    if (item?.isCorrupted)
+      hasCorruptedItems = true
+
+    let isWeapon = weaponSlots.findvalue(@(v) item?.slotName == v ) != null
+    if (isWeapon) {
+      hasWeapon = true
+      let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(item.templateName)
+      if(!checkWeaponAmmo(template, item.templateName)) {
+        let locname = template?.getCompValNullable("item__name") ?? "unknown"
+        weapWithoutAmmo.append(locname)
+      }
     }
   }
-  return { weapWithoutAmmo, hasWeapon }
+  return { weapWithoutAmmo, hasWeapon, hasCorruptedItems }
 }
 
 function checkSafepack() {
@@ -165,7 +169,7 @@ let mkCheckEquipmentStateHandler = @(callback) function () {
     callback()
     return
   }
-  let { weapWithoutAmmo, hasWeapon } = checkLoadout()
+  let { weapWithoutAmmo, hasWeapon, hasCorruptedItems } = checkLoadout()
 
   let noAmmoMsg = {
     flow = FLOW_VERTICAL
@@ -177,10 +181,11 @@ let mkCheckEquipmentStateHandler = @(callback) function () {
     }))
   }
   let noWeaponsMsg = mkText(loc("startButton/warning/noWeapons"), {color = InfoTextValueColor}.__update(h2_txt))
+  let hasCorruptedItemsMsg = mkText(loc("startButton/warning/haveCorruptedItems"), {color = InfoTextValueColor}.__update(h2_txt))
   let warningMsg = mkText(loc("startButton/warning/warningHeader"), giant_txt)
   let proceed = mkText(loc("startButton/warning/areYouSure"), h2_txt)
 
-  let warningContent = {
+  let noWeaponsWarningContent = {
     flow = FLOW_VERTICAL
     gap = hdpx(20)
     halign = ALIGN_CENTER
@@ -193,18 +198,50 @@ let mkCheckEquipmentStateHandler = @(callback) function () {
     ]
   }
 
-  let isOk = ((weapWithoutAmmo.len() == 0) && hasWeapon) || useAgencyPreset.get()
+  let hasCorruptedItemsWarningContent = {
+    flow = FLOW_VERTICAL
+    gap = hdpx(20)
+    halign = ALIGN_CENTER
+    valign = ALIGN_CENTER
+    children = [
+      warningMsg
+      hasCorruptedItems ? hasCorruptedItemsMsg : null
+      proceed
+    ]
+  }
 
-  if (!isOk)
-    showMsgbox({
-      buttons = [
-        { text = loc("Yes"), isCurrent = true, action = function() { callback() } }
-        { text = loc("No"), isCancel = true }
-      ]
-      children = warningContent
-    })
-  else
-    callback()
+  let processWeaponWarning = function (cb) {
+    let isOk = ((weapWithoutAmmo.len() == 0) && hasWeapon) || useAgencyPreset.get()
+    if (!isOk) {
+      showMsgbox({
+        buttons = [
+          { text = loc("Yes"), isCurrent = true, action = function() { cb() } }
+          { text = loc("No"), isCancel = true }
+        ]
+        children = noWeaponsWarningContent
+      })
+    }
+    else
+      cb()
+  }
+
+  let processHasCorruptedItemsWarning = function (cb) {
+    let isOk = (!hasCorruptedItems || useAgencyPreset.get())
+    if (!isOk) {
+      showMsgbox({
+        buttons = [
+          { text = loc("Yes"), isCurrent = true, action = function() { cb() } }
+          { text = loc("No"), isCancel = true }
+        ]
+        children = hasCorruptedItemsWarningContent
+      })
+    }
+    else
+      cb()
+  }
+
+  processHasCorruptedItemsWarning(
+    @() processWeaponWarning(callback))
 }
 
 let setCannotTakeSafepackMsg = @() showMsgbox({

@@ -209,7 +209,7 @@ function mkPurchaseLogData(templateName, attachments = [], slotData = null, coun
 
 
 let mkPlayerLog = kwarg(function( titleFaIcon = null, titleText = null, bodyIcon = null,
-  bodyText = null, logColor = playerLogsColors.defaultLog
+  bodyText = null, logColor = playerLogsColors.defaultLog, bodyTextParams = {}
 ) {
   if (bodyText == null)
     return null
@@ -250,7 +250,7 @@ let mkPlayerLog = kwarg(function( titleFaIcon = null, titleText = null, bodyIcon
                 behavior = Behaviors.Marquee
                 scrollOnHover = false
                 color = InfoTextValueColor
-              }.__update(body_txt))
+              }.__update(body_txt, bodyTextParams))
             ]
           }
         ]

@@ -401,11 +401,12 @@ function mkSoundRow(soundData) {
         if (restricted) {
           showMsgbox({ text = isStreamerMode.get()
             ? loc("musicPlayer/streamerModeRestricted", { track = colorize(InfoTextValueColor, loc(soundData.soundTrack)) })
-            : loc("musicPlayer/freeRoyalRestricted", { track = colorize(InfoTextValueColor, loc(soundData.soundTrack)) })
+            : loc("musicPlayer/unsafeMusicRestricted", { track = colorize(InfoTextValueColor, loc(soundData.soundTrack)) })
           })
           return
         }
-        startPlayer(playingSound.get())
+        if (playingSound.get())
+          startPlayer(playingSound.get())
       }
       style = { SelBgNormal = restricted ? BtnBgDisabled : SelBgNormal }
       size = FLEX_H
@@ -453,7 +454,7 @@ function mkSoundRow(soundData) {
           if (isRestricted.get()) {
             showMsgbox({ text = isStreamerMode.get()
               ? loc("musicPlayer/streamerModeRestricted", { track = colorize(InfoTextValueColor, loc(soundData.soundTrack)) })
-              : loc("musicPlayer/freeRoyalRestricted", { track = colorize(InfoTextValueColor, loc(soundData.soundTrack)) })
+              : loc("musicPlayer/unsafeMusicRestricted", { track = colorize(InfoTextValueColor, loc(soundData.soundTrack)) })
             })
             return
           }
@@ -645,30 +646,6 @@ let playerBlock = freeze({
         musicVolumeBlock
       ]
     }.__update(bluredPanel)
-    function() {
-      if (!isStreamerMode.get() && !playOnlyFreeStreamingMusicWatch.get())
-        return { watch = [isStreamerMode, playOnlyFreeStreamingMusicWatch] }
-      return {
-        watch = [isStreamerMode, playOnlyFreeStreamingMusicWatch]
-        rendObj = ROBJ_BOX
-        size = static [hdpx(250), SIZE_TO_CONTENT]
-        borderWidth = hdpx(1)
-        hplace = ALIGN_RIGHT
-        padding = hdpx(1)
-        borderColor = RedWarningColor
-        children = {
-          size = FLEX_H
-          padding = hdpx(4)
-          behavior = Behaviors.Button
-          skipDirPadNav = true
-          onHover = function(on) {
-            let text = isStreamerMode.get() ? loc("musicPlayer/streamerModeRestrictedHint") : loc("musicPlayer/freeRoyalRestrictedHint")
-            setTooltip(on ? text : null)
-          }
-          children = mkTextArea(loc("musicPlayer/onlyFreeStreaming"))
-        }.__update(bluredPanel)
-      }
-    }
     {
       size = static [hdpx(250), SIZE_TO_CONTENT]
       padding = hdpx(4)

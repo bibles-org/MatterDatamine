@@ -26,6 +26,7 @@ from "%ui/components/mkLightBox.nut" import mkLightBox
 from "%sqstd/string.nut" import toIntegerSafe
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
+from "%ui/hud/menus/components/inventoryItem.nut" import corruptedItemImageBackground
 
 let { playerProfileMonolithTokensCount, craftTasks, playerBaseState, allCraftRecipes, marketItems,
   playerProfileOpenedNodes, playerProfileChronotracesCount, playerProfileAllResearchNodes
@@ -451,18 +452,8 @@ function startReplication(idx = null, event = null) {
             mkTextArea(loc("craft/startUnresearchedRecipe"), { halign = ALIGN_CENTER }.__merge(h2_txt))
             {
               children = [
+                corruptedItemImageBackground
                 mkCraftResultsItems(craftResultItems)
-                faComp("paw", {
-                  color = TextHighlight
-                  padding = static hdpx(4)
-                  fontSize = hdpx(20)
-                  behavior = Behaviors.Button
-                  skipDirPadNav = true
-                  transform = {}
-                  animations = [{prop = AnimProp.color, from = TextHighlight, to = TextNormal, duration = 1,
-                    play = true, loop = true, easing = CosineFull }]
-                  onHover = @(on) setTooltip(on ? loc("items/item_created_by_zone") : null)
-                })
               ]
             }
           ]

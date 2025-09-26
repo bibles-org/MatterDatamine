@@ -205,7 +205,7 @@ crossbow_gun{
   gun__projectileTemplate:t="crossbow_bolt_projectile"
   showroom_item__customZoom:r=1.2
   showroom_item__customZoomBordersRng:p2=1, 1.5
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=127, 127
   item__nexusCost:i=300
 
   "gun_mods__slots:shared:object"{
@@ -285,14 +285,13 @@ crossbow_gun{
   }
 
   "item__chronotracesProgressionInfo:object"{
-    "once:object"{}
     "repeatedly:object"{
-      extract:i=100
-      militant_hits:i=5
-      monster_hits:i=5
-      trap_hits:i=5
-      militant_kills:i=50
-      monster_kills:i=35
+      extract:p2=100, 7.24
+      militant_kills:p2=50, 1
+      monster_kills:p2=25, 0.96
+      militant_hits:p2=10, 0.056
+      monster_hits:p2=10, 0.056
+      trap_hits:p2=10, 0.056
     }
   }
 }
@@ -325,6 +324,7 @@ flamethrower_corefan_gun{
   _use:t="camera_shake_on_shot_high_freq"
   _use:t="flamethrower_deviation_preset"
   _use:t="item_rarity_uncommon"
+  _use:t="gun_check_weapon_no_magazine"
   gun_hand_stamina__drainMult:r=3.5
   animchar__res:t="xvp_flame_char"
   collres__res:t="xvp_flame_collision"
@@ -397,6 +397,9 @@ flamethrower_corefan_gun{
   weap__dofMult:r=0.85
   _use:t="gun_with_gun_mods"
   _use:t="gun_with_fillable_ammo_magazines"
+  gun_check_weapon__ammoNodeName:t="custom_ammo"
+  gun_ammo_check__canHaveChamberedAmmo:b=no
+  gun_ammo_check__needFiringModeMark:b=no
   _use:t="gun_sound_with_animchar"
   _use:t="antivehicle_gun_aim_sound"
   _use:t="flamethrower_gun_shot_dry_sound"
@@ -405,7 +408,6 @@ flamethrower_corefan_gun{
   gun_flash_fx__lightSourceNode:t="gunFx_main"
   racked_weapon__gunwallVolumeBox:m=[[1, 0, 0] [0, 0.3, 0] [0, 0, 0.1] [0, 0, 0]]
   racked_weapon__transform:m=[[3.57628e-07, 9.31323e-10, 1] [-0.00823221, 0.999966, 1.86264e-09] [-0.999966, -0.00823221, 3.57628e-07] [-0.45, 0.0095674, -0.0311584]]
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
   item__nexusCost:i=400
 
   "gun_mods__slots:shared:object"{
@@ -539,14 +541,13 @@ flamethrower_corefan_gun{
   }
 
   "item__chronotracesProgressionInfo:object"{
-    "once:object"{}
     "repeatedly:object"{
-      extract:i=100
-      militant_hits:i=1
-      monster_hits:i=1
-      trap_hits:i=1
-      militant_kills:i=35
-      monster_kills:i=25
+      extract:p2=100, 7.24
+      militant_kills:p2=50, 1
+      monster_kills:p2=25, 0.96
+      militant_hits:p2=2, 0.002
+      monster_hits:p2=2, 0.002
+      trap_hits:p2=2, 0.002
     }
   }
 

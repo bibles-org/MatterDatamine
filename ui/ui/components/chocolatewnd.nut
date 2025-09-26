@@ -27,7 +27,7 @@ let { chocolateRowSafeWatch, chocolateColSafeWatch
 } = require("%ui/mainMenu/menus/options/chocolate_matrix_option.nut")
 let { creditsTextIcon, monolithTokensTextIcon, premiumCreditsTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
 let { mintEditState } = require("%ui/mainMenu/raid_preparation_window_state.nut")
-let { previewPreset, previewPresetCallbackOverride } = require("%ui/equipPresets/presetsState.nut")
+let { previewPresetCallbackOverride } = require("%ui/equipPresets/presetsState.nut")
 let JB = require("%ui/control/gui_buttons.nut")
 let { isGamepad } = require("%ui/control/active_controls.nut")
 
@@ -459,8 +459,6 @@ function itemPicker(chocolateData) {
 }
 
 function openChocolateWnd(chocolateData) {
-  if (previewPreset.get() && !mintEditState.get())
-    return
   if (chocolateData == null)
     return
   addModalWindow({

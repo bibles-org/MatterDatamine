@@ -703,7 +703,7 @@ function mkPreparationPresetRow(presetIdx) {
     shopPresetToPurchase.set(null)
     selectedPreset.set(idx)
     useAgencyPreset.set(false)
-    let clonedPreset = deep_clone(presetData.get())
+    let clonedPreset = deep_clone(presetData.get()).__merge({ ignoreChronogeneWidget = true, presetIdx = presetIdx })
     patchPresetItems(clonedPreset)
     previewPreset.set(clonedPreset)
   }

@@ -40,6 +40,7 @@ from "%ui/hud/menus/inventories/workbenchInventory.nut" import itemCanBeRepaired
 from "%ui/hud/menus/components/inventoryItemUtils.nut" import repairItems, repairCost
 from "%ui/hud/state/item_info.nut" import get_item_info
 from "%ui/hud/state/equipment.nut" import equipment
+from "%ui/hud/state/shooting_range_state.nut" import inShootingRange
 
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
@@ -170,7 +171,7 @@ let aroundOrStash = @() {
       ? mkStashItemsList(moveItemWithKeyboardMode, inventoryItemClickActions[STASH.name], { xSize = 4 })
       : { size = [ inventoryPanelSize[0], 0] },
     isInPlayerSession.get() || isOnboarding.get() ? null : extendStashBlock,
-    isInPlayerSession.get() || isOnboarding.get() ? null : trashBin
+    isInPlayerSession.get() || isOnboarding.get() || inShootingRange.get() ? null : trashBin
   ]
 }.__update(bluredPanel)
 

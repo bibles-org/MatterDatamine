@@ -119,7 +119,6 @@ base_binoculars_item{
   _replicated:t="binoculars_item__useRequestBlockedUntil"
   item__lootType:t="item"
   item__unarmedUsage:b=yes
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "binoculars_item:tag"{}
   "item__customDoubleUseCall:tag"{}
@@ -187,7 +186,7 @@ b7_binoculars_item{
 
   "item__chronotracesProgressionInfo:object"{
     "repeatedly:object"{
-      extract:i=100
+      extract:p2=100, 7.24
     }
   }
 }

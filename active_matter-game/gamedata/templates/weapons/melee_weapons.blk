@@ -42,7 +42,7 @@ knife_weapon{
   melee_weapon__blk:t="gamedata/weapons/knife.blk"
   showroom_item__customZoom:r=1.4
   showroom_item__customZoomBordersRng:p2=1.1, 2
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=7, 8
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -121,7 +121,7 @@ cooking_knife_weapon{
   item__marketPrice:i=100
   meleeSoundType:t="knife_cooking"
   melee_weapon__blk:t="gamedata/weapons/cooking_knife.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -194,7 +194,7 @@ sovmod_diver_flashlight{
   weapon__iconYaw:r=60
   weapon__iconPitch:r=60
   weapon__iconRoll:r=80
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -230,7 +230,7 @@ sovmod_flashlight_device{
   item__iconScale:r=1.2
   item__iconOffset:p2=0.3, -0.1
   weapon__iconOffset:p2=-0.2, 0
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=12, 13
 }
 
 screwdriver_a_weapon{
@@ -294,7 +294,7 @@ chisel_a_weapon{
   item__marketPrice:i=100
   meleeSoundType:t="screwdriver"
   melee_weapon__blk:t="gamedata/weapons/chisel.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=7, 8
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -319,7 +319,7 @@ chisel_b_weapon{
   item__marketPrice:i=100
   meleeSoundType:t="screwdriver"
   melee_weapon__blk:t="gamedata/weapons/chisel.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=7, 8
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -361,7 +361,7 @@ sov_knife_nr_40_weapon{
   item__volume:i=30
   item__marketPrice:i=100
   melee_weapon__blk:t="gamedata/weapons/sov_knife_nr_40.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=7, 8
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -383,7 +383,7 @@ ak_bayonet_weapon{
   item__volume:i=40
   item__marketPrice:i=100
   melee_weapon__blk:t="gamedata/weapons/ak_bayonet.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -420,7 +420,7 @@ sovmod_dirk_white{
   item__volume:i=50
   item__marketPrice:i=100
   melee_weapon__blk:t="gamedata/weapons/sovmod_dirk.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=18, 19
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -441,7 +441,7 @@ sovmod_dirk_yellow{
 
 sovmod_dirk_long{
   _use:t="knife_prototype"
-  _use:t="item_rarity_uncommon"
+  _use:t="item_rarity_rare"
   _use:t="melee_preset"
   animchar__res:t="sovmod_dirk_c_char"
   collres__res:t="sovmod_dirk_c_collision"
@@ -451,7 +451,7 @@ sovmod_dirk_long{
   item__volume:i=60
   item__marketPrice:i=100
   melee_weapon__blk:t="gamedata/weapons/sovmod_dirk_long.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=22, 23
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -501,7 +501,7 @@ axe_weapon{
   dropTm:m=[[0, 1, 0] [0, 0, 1] [1, 0, 0] [0, 0.01, 0]]
   item__iconRoll:r=43
   item__iconPitch:r=83
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
   item__nexusCost:i=150
 
   "gun_attach__holsterSlots:array"{
@@ -530,7 +530,7 @@ mpl50_shovel{
   item__iconRoll:r=43
   item__iconPitch:r=83
   meleeSoundType:t="shovel"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=25, 25
   item__nexusCost:i=150
 
   "gun_attach__holsterSlots:array"{
@@ -563,7 +563,7 @@ rugbeater{
   weapon__iconYaw:r=-5
   weapon__iconScale:r=1
   weapon__iconOffset:p2=-0.1, 0.1
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=12, 13
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -642,7 +642,7 @@ cooking_cleaver_weapon{
   item__iconScale:r=1
   item__iconOffset:p2=0, -0.1
   meleeSoundType:t="axe"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
   item__nexusCost:i=150
 
   "gun_attach__holsterSlots:array"{
@@ -690,7 +690,7 @@ wrench_weapon{
   gun__statName:t="melee"
   dropTm:m=[[0, 1, 0] [0, 0, 1] [1, 0, 0] [0, 0.01, 0]]
   item__iconRoll:r=43
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
   item__nexusCost:i=150
 
   "gun_attach__holsterSlots:array"{
@@ -748,7 +748,6 @@ spear_weapon{
   weapon__iconYaw:r=130
   weapon__iconOffset:p2=-0.17, 0
   weapon__iconScale:r=0.85
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
   item__nexusCost:i=250
 
   "twoHandedMeleeWeapon:tag"{}
@@ -806,7 +805,6 @@ hammer_weapon{
   weapon__iconYaw:r=130
   weapon__iconOffset:p2=-0.19, 0
   weapon__iconScale:r=1.1
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
   item__nexusCost:i=250
 
   "twoHandedMeleeWeapon:tag"{}
@@ -868,7 +866,6 @@ brass_knuckles_knife_bouncer_weapon{
   weapon__iconRoll:r=0
   weapon__iconYaw:r=180
   weapon__iconScale:r=0.8
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -910,7 +907,6 @@ tomahawk_woodcutters_argument_weapon{
   item__volume:i=30
   item__marketPrice:i=0
   melee_weapon__blk:t="gamedata/weapons/axe.blk"
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"
@@ -952,7 +948,6 @@ bugswatter_cbt_weapon{
   meleeSoundType:t="shovel"
   melee_weapon__blk:t="gamedata/weapons/rugbeater.blk"
   weapon__iconScale:r=0.9
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "gun_attach__holsterSlots:array"{
     holsterSlots:t="slot_weapon_1"

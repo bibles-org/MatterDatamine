@@ -106,15 +106,11 @@ armorplate_base{
   item__filterType:t="equipment"
   showroom_item__customZoom:r=1.8
   showroom_item__customZoomBordersRng:p2=1.4, 2.2
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "item__chronotracesProgressionInfo:object"{
-    "once:object"{
-      damaged:i=25
-    }
-
     "repeatedly:object"{
-      extract:i=100
+      extract:p2=100, 7.24
+      damaged:p2=15, 0
     }
   }
 }
@@ -133,7 +129,7 @@ armorplate_small_a{
   item__marketPrice:i=750
   item__hp:r=185
   item__maxHp:r=185
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
   item__nexusCost:i=100
   item__nexusIncreaseCostAfterCount:i=2
 
@@ -162,7 +158,7 @@ armorplate_small_b{
   item__marketPrice:i=900
   item__hp:r=175
   item__maxHp:r=175
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
   item__nexusCost:i=135
   item__nexusIncreaseCostAfterCount:i=2
 
@@ -223,7 +219,7 @@ armorplate_big_a{
   item__marketPrice:i=1500
   item__hp:r=280
   item__maxHp:r=280
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=15, 15
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=17, 18
   item__nexusCost:i=150
   item__nexusIncreaseCostAfterCount:i=1
 
@@ -252,7 +248,7 @@ armorplate_big_b{
   item__marketPrice:i=1800
   item__hp:r=260
   item__maxHp:r=260
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=20, 20
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=17, 18
   item__nexusCost:i=200
   item__nexusIncreaseCostAfterCount:i=1
 
@@ -281,7 +277,7 @@ armorplate_big_c{
   item__marketPrice:i=1200
   item__hp:r=240
   item__maxHp:r=240
-  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=17, 18
   item__nexusCost:i=75
   item__nexusIncreaseCostAfterCount:i=1
 

@@ -146,18 +146,16 @@ function quickUsePanelEdit() {
   for(local i = 0; i < suitSlots.len(); i++) {
     let slot = suitSlots[i]
     let previewCallbackOverride = previewPreset.get() ? previewPresetCallbackOverride.get()?.chronogene_primary_1[$"equipment_mod_pocket_{i}"] : null
-    let actionsForbidden = previewPreset.get() != null && previewCallbackOverride == null
 
     let callbacks = previewCallbackOverride ? previewCallbackOverride : inventoryItemClickActions[POCKETS.name]
-    suitPockets.append(mkPocketSlot(slot, i, callbacks, actionsForbidden))
+    suitPockets.append(mkPocketSlot(slot, i, callbacks, false))
   }
   for(local i = 0; i < pouchesSlots.len(); i++) {
     let slot = pouchesSlots[i]
     let previewCallbackOverride = previewPreset.get() ? previewPresetCallbackOverride.get()?.pouch.attachments[$"equipment_mod_pocket_{i}"] : null
-    let actionsForbidden = previewPreset.get() != null && previewCallbackOverride == null
 
     let callbacks = previewCallbackOverride ? previewCallbackOverride : inventoryItemClickActions[POCKETS.name]
-    pouchPockets.append(mkPocketSlot(slot, suitSlots.len() + i, callbacks, actionsForbidden))
+    pouchPockets.append(mkPocketSlot(slot, suitSlots.len() + i, callbacks, false))
   }
 
   return {

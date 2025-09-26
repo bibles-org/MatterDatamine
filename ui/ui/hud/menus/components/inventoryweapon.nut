@@ -31,6 +31,7 @@ from "%ui/hud/menus/components/inventorySuit.nut" import mkSuitPartModsPanel, mk
 from "%ui/hud/state/equipment.nut" import equipment
 from "%ui/mainMenu/clonesMenu/cloneMenuState.nut" import equipMeleeChoronogeneItem
 from "%ui/equipPresets/presetsState.nut" import previewPreset
+from "%ui/components/msgbox.nut" import showMsgbox
 
 let { allCraftRecipes, marketItems, playerStats } = require("%ui/profile/profileState.nut")
 let { draggedData, focusedData, requestData, requestItemData, unremovableSlots, isAltPressed, mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
@@ -367,19 +368,28 @@ function meleeStubSlot() {
   let filteredStub = @() stashItems.get().filter(@(item) item?.filterType == "stub_melee_weapon")
 
   let callbacks = {
-    onClick = @(event) openChocolateWnd({
-      event,
-      itemsDataArr = filteredStub()
-      onClick = function(item, _actions) {
-        if (item?.itemTemplate == "defaultPocketKnifeTemplateName")
-          equipMeleeChoronogeneItem(null)
+    onClick = function(event) {
+      if (previewPreset.get() && !mintEditState.get()) {
+        if (previewPreset.get()?.presetIdx == "lastUsed")
+          showMsgbox({ text = loc("playerPreset/cantChangeLastUsed") })
         else
-          equipMeleeChoronogeneItem(item)
+          showMsgbox({ text = loc("playerPreset/rewritePresetToEdit") })
+        return
       }
-      itemInSlot = slotItem
-      forceOnClick = true
-      defaultItem
-    })
+      openChocolateWnd({
+        event,
+        itemsDataArr = filteredStub()
+        onClick = function(item, _actions) {
+          if (item?.itemTemplate == "defaultPocketKnifeTemplateName")
+            equipMeleeChoronogeneItem(null)
+          else
+            equipMeleeChoronogeneItem(item)
+        }
+        itemInSlot = slotItem
+        forceOnClick = true
+        defaultItem
+      })
+    }
   }
 
   return {
@@ -451,6 +461,13 @@ function mkMainFrame(weapon, canDropToWeaponSlot, onDropToWeaponSlot, hasAmmo) {
               .sort(inventoryItemSorting)
         }
         local defaultItem = null
+        if (previewPreset.get() && !mintEditState.get()) {
+          if (previewPreset.get()?.presetIdx == "lastUsed")
+            showMsgbox({ text = loc("playerPreset/cantChangeLastUsed") })
+          else
+            showMsgbox({ text = loc("playerPreset/rewritePresetToEdit") })
+          return
+        }
         openChocolateWnd({
           event,
           itemsDataArr = fittingItems

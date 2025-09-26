@@ -460,7 +460,7 @@ function getInventoryItemTooltipLines(item, additionalHints={}) {
     tooltip.append(colorize(corruptedItemColor, loc("item/corrupted")))
   if (item?.isReplica)
     tooltip.append(colorize(corruptedItemColor, loc("item/replica")))
-  if (item?.isCorrupted && item?.createdByZone != null && canResearchBeOpened(item.itemTemplate))
+  if (item?.isCorrupted && canResearchBeOpened(item.itemTemplate))
     tooltip.append(colorize(itemQuestTooltipStatColor, loc("item/canGetResearch")))
 
   if (additionalHints?.hasBulletInBarrel)

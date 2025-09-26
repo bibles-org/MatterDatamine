@@ -435,7 +435,6 @@ function mkBaseDebriefingMenu() {
     onDetach = function() {
       debugShowWindow.set(false)
       currentTab.set("baseDebriefing/history")
-      lastBattleResult.set(null)
       showHistoryAnimations.set(true)
       showRewardsAnimations.set(false)
       debriefingSessionId.set(null)

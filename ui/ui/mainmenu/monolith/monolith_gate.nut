@@ -38,6 +38,7 @@ from "%ui/components/glareAnimation.nut" import glareAnimation, animChildren
 from "%ui/mainMenu/clonesMenu/mainChronogeneSelection.nut" import selectedPreviewAlter, hoveredAlter, alterToFocus, updateAlterTemplateInShowroom, overrideReturnMenu
 from "%ui/mainMenu/clonesMenu/itemGenes.nut" import allChronogenesInGame
 from "%ui/mainMenu/currencyIcons.nut" import monolithTokensTextIcon, creditsTextIcon, monolithTokensColor, creditsColor, premiumColor, premiumCreditsTextIcon
+from "%ui/mainMenu/clonesMenu/clonesMenuCommon.nut" import mkChronogeneImage
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
@@ -498,6 +499,7 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
 
   if (unlockOffer?.children.items.len()) {
     let templateName = unlockOffer?.children.items[0].templateName
+
     local attachmentsToUse = []
     local suitOverrideData = {}
     if (unlockOffer?.itemType == "suits") {
@@ -635,12 +637,14 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
   })
 
   let itemIcon = fake?.iconToUse ? fake.iconToUse
-    : fake ? inventoryItemImage(fake, unlockOffer?.itemType == "suits" ? suitIconParams : iconParams,
-        unlockOffer?.itemType != "suits" ? {} : {
-          clipChildren = true
-          padding = [hdpx(1), 0]
-        })
-    : null
+    : fake ? fake?.filterType == "chronogene" ?
+      mkChronogeneImage(fake, iconParams) :
+      inventoryItemImage(fake, unlockOffer?.itemType == "suits" ? suitIconParams : iconParams,
+          unlockOffer?.itemType != "suits" ? {} : {
+            clipChildren = true
+            padding = [hdpx(1), 0]
+          })
+      : null
   if (!itemName)
     itemName = loc(fake?.itemName)
 
@@ -668,7 +672,7 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
         halign = ALIGN_CENTER
         gap = hdpx(10)
         children = [
-          inventoryItemImage(fake, largeInventoryImageParams)
+          fake?.filterType == "chronogene" ? mkChronogeneImage(fake, largeInventoryImageParams) : inventoryItemImage(fake, largeInventoryImageParams)
           buildInventoryItemTooltip(fake)
         ]
       }
@@ -841,6 +845,7 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
               !showPrice.get() ? null
                 : mkTextArea($"{colorize(monolithTokensColor, monolithTokensTextIcon)}{price}",
                   { size = SIZE_TO_CONTENT }.__merge(body_txt)),
+                  
               (!hasAlreadyBought && (!canBePurchased.get() || !levelUnlocked || lvlBlockedByTrial))
                 ? mkStatusIcon("lock", RedWarningColor)
                 : null

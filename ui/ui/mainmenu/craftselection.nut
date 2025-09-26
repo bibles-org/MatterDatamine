@@ -105,12 +105,9 @@ function craftInfoBlock() {
     let chronotraceIncome = getCronotraceIncomeInfo(templateName)
     let incomeData = [].append(chronotraceIncome?.once ?? {}, chronotraceIncome?.repeatedly ?? {})
     let hints = []
-    incomeData.each(@(data)
-      data.each(@(v, k) hints.append({
-        locId = $"chronotraceIncome/{k}"
-        value = v
-      }))
-    )
+    incomeData.each(@(data) data.each(@(v, k) hints.append(loc($"chronotraceIncome/{k}", { count = colorize(InfoTextValueColor, v )}))))
+    hints.sort()
+
     return {
       flow = FLOW_HORIZONTAL
       valign = ALIGN_CENTER
@@ -144,8 +141,7 @@ function craftInfoBlock() {
                       { neededCount = colorize(InfoTextValueColor, needResearchPoints - currentResearchPoints)
                         neededCountDiff = needResearchPoints - currentResearchPoints
                       }))
-                  ].extend(hints.map(@(v) mkTextArea(loc(v.locId, { count = colorize(InfoTextValueColor, v.value )}),
-                      static { color = InfoTextDescColor })))
+                  ].extend(hints.map(@(v) mkTextArea(v, static { color = InfoTextDescColor })))
                 })
             )
         })
@@ -782,9 +778,12 @@ function mkCraftSelection() {
     let playerProfileAllResearchNodesV = playerProfileAllResearchNodes.get()
     let allRecipes = allCraftRecipesV.filter(@(_v, k) k in playerProfileAllResearchNodesV)
     let data = selectedCat == null ? allRecipes : allRecipes.filter(@(prototype)
-      prototype.results.findindex(function(v) {
-        let rType = protoTypes?[v.keys()[0]]
-        return selectedCat == rType
+      prototype.results.findindex(function(result) {
+        foreach (id, prType in result) {
+          if (prType == "" && protoTypes?[id] == selectedCat)
+            return true
+        }
+        return false
       }) != null)
 
     let openedRecipes = allCraftRecipesV.filter(@(v) v?.isOpened)

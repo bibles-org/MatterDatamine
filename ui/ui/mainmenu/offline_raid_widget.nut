@@ -16,6 +16,8 @@ from "%ui/gameModeState.nut" import selectedRaid, leaderSelectedRaid
 from "%ui/state/queueState.nut" import isInQueue
 from "%ui/mainMenu/raid_preparation_window_state.nut" import isPreparationOpened, closePreparationsScreens
 from "%ui/squad/squadManager.nut" import myExtSquadData
+from "%ui/matchingQueues.nut" import matchingQueuesMap
+
 
 let wantOfflineRaid = Watched(false)
 let offlineRaidCachseList = Watched({})
@@ -172,7 +174,14 @@ function mkOfflineRaidCheckBox(override = {}, isDisabled = false) {
                 return
               }
               if (v && !isOfflineRaidAvailableForQueue.get()) {
-                let unlockParams = selectedRaid.get()?.extraParams.requiresToShow ?? []
+                let isNewby = selectedRaid.get()?.extraParams?.isNewby ?? false
+                let raidName = selectedRaid.get()?.extraParams?.raidName
+                let nonNewbyVersion = (isNewby && raidName != null)
+                  ? matchingQueuesMap.get().findvalue(@(queue) (!(queue?.extraParams?.isNewby ?? false)) && (queue?.extraParams?.raidName ?? "") == raidName)
+                  : null
+                let unlockParams = nonNewbyVersion != null
+                  ? nonNewbyVersion?.extraParams.requiresToShow ?? []
+                  : selectedRaid.get()?.extraParams.requiresToShow ?? []
                 if (unlockParams.len() > 0) {
                   let txts = [mkTextArea(loc("queue/offline_raids/unlockReqs"), { halign = ALIGN_CENTER }.__merge(h2_txt))]
                   foreach (req in unlockParams) {

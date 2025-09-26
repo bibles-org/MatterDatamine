@@ -284,6 +284,28 @@ objective_enter_to_raid{
   "objectiveEnterToRaid:tag"{}
 }
 
+objective_explore_raid{
+  _use:t="am_base_objective"
+  objective__progressPerAmCollected:i=1
+  objective__progressPerKillDefault:i=5
+  objective__progressPerItemCollected:i=3
+  objective__progressPerExtraction:i=20
+  objective__progressEachFogOfWarMetersSqOpened:r=1000
+  objective__progressOnFogOfWarOpened:i=1
+
+  "objective__progressPerKill:object"{
+    trap_frog:i=0
+    turned_soldier:i=10
+    militant:i=10
+  }
+
+  "objective__progressPerItemCollectedItemsCounted:object"{}
+  _group{
+    _tags:t="gameClient"
+    objective__fogMetersSqPreviousRecordedValue:r=-1
+  }
+}
+
 objective_final_extraction{
   _use:t="am_base_objective"
 
