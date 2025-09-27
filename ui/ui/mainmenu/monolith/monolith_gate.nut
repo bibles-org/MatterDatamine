@@ -17,7 +17,7 @@ from "eventbus" import eventbus_send, eventbus_subscribe
 from "dasevents" import CmdRequestOnboardingBuyMonolithAccess, CmdShowUiMenu
 from "%ui/components/scrollbar.nut" import makeVertScrollExt
 from "%ui/components/msgbox.nut" import showMsgbox, showMessageWithContent
-from "%ui/components/purchase_confirm_msgbox.nut" import showCurrencyPurchaseMsgBox, showNotEnoghPremiumMsgBox
+from "%ui/components/purchase_confirm_msgbox.nut" import showCurrencyPurchaseMsgBox, showNotEnoughPremiumMsgBox
 from "%ui/components/cursors.nut" import setTooltip
 from "%ui/mainMenu/market/inventoryToMarket.nut" import getLotFromItem, getBaseUpgradeFromItem
 from "%ui/hud/menus/components/inventoryItemUtils.nut" import showItemInMarket
@@ -651,7 +651,7 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
   let buyOnLvlUnlock = unlockOffer?.itemType == "immidiateAccessAfterLevelUnlocking"
   let price = unlockOffer?.additionalPrice.monolithTokensCount ?? 0
 
-  let lvlBlockedByTrial = trialData.get()?.trialType && !unlockOffer?.trialAvaliable
+  let lvlBlockedByDemo = trialData.get()?.trialType && !unlockOffer?.trialAvaliable
   let offerBought = Computed(@()
     (playerStats.get()?.purchasedUniqueMarketOffers.findindex(@(v) unlockOffer?.offerId != null && v.tostring() == unlockOffer.offerId) != null) ||
     (buyOnLvlUnlock && levelUnlocked)
@@ -712,8 +712,8 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
         goToMarket()
       return
     }
-    if (lvlBlockedByTrial) {
-      showMsgbox({text=loc("market/diabledDueToTrialStatus")})
+    if (lvlBlockedByDemo) {
+      showMsgbox({text=loc("market/disabledDueToDemoStatus")})
       return
     }
     if (!levelUnlocked || !canBePurchased.get()) {
@@ -846,7 +846,7 @@ function mkUnlockRow(levelUnlocked, unlockOffer) {
                 : mkTextArea($"{colorize(monolithTokensColor, monolithTokensTextIcon)}{price}",
                   { size = SIZE_TO_CONTENT }.__merge(body_txt)),
                   
-              (!hasAlreadyBought && (!canBePurchased.get() || !levelUnlocked || lvlBlockedByTrial))
+              (!hasAlreadyBought && (!canBePurchased.get() || !levelUnlocked || lvlBlockedByDemo))
                 ? mkStatusIcon("lock", RedWarningColor)
                 : null
             ]
@@ -1050,8 +1050,8 @@ let mkNextLevelButton = @(levelData) function() {
     lvlBought = playerStats.get()?.purchasedUniqueMarketOffers.findindex(@(v) v.tostring() == levelData.offerId) != null
   }
   let requireAccessLevel = (levelData?.requirements.monolithAccessLevel ?? 0)
-  let lvlBlockedByTrial = trialData.get()?.trialType && !levelData?.trialAvaliable
-  let lvlAvailable = requireAccessLevel <= currentMonolithLevel.get() && !lvlBlockedByTrial
+  let lvlBlockedByDemo = trialData.get()?.trialType && !levelData?.trialAvaliable
+  let lvlAvailable = requireAccessLevel <= currentMonolithLevel.get() && !lvlBlockedByDemo
   let price = levelData?.additionalPrice.monolithTokensCount ?? 0
   let premiumPrice = levelData?.additionalPrice.premiumCreditsCount ?? 0
 
@@ -1062,8 +1062,8 @@ let mkNextLevelButton = @(levelData) function() {
   let notEnoughPremiumMoney = playerProfilePremiumCredits.get() < premiumPrice
   let requirementsMet = isRequirementsMet(levelData)
 
-  let isAccentButton = !(lvlBought || notEnoughMoney || !lvlAvailable || !requirementsMet || lvlBlockedByTrial)
-  let isAccentPremiumButton = !(lvlBought || notEnoughPremiumMoney || !lvlAvailable || !requirementsMet || lvlBlockedByTrial)
+  let isAccentButton = !(lvlBought || notEnoughMoney || !lvlAvailable || !requirementsMet || lvlBlockedByDemo)
+  let isAccentPremiumButton = !(lvlBought || notEnoughPremiumMoney || !lvlAvailable || !requirementsMet || lvlBlockedByDemo)
 
   let priceStrings = $"{colorize(monolithTokensColor, monolithTokensTextIcon)}{price}"
   let premiumPriceStrings = $"{colorize(premiumColor, premiumCreditsTextIcon)}{premiumPrice}"
@@ -1099,7 +1099,7 @@ let mkNextLevelButton = @(levelData) function() {
       vplace = ALIGN_CENTER
       hplace = ALIGN_CENTER
       children = [
-        mkText( lvlBlockedByTrial ? loc("market/diabledDueToTrialStatus") : loc("monolith/locked"), { color = RedWarningColor }.__update(h2_txt))
+        mkText( lvlBlockedByDemo ? loc("market/disabledDueToDemoStatus") : loc("monolith/locked"), { color = RedWarningColor }.__update(h2_txt))
         mkStatusIcon("close", RedWarningColor)
       ]
     },
@@ -1160,7 +1160,7 @@ let mkNextLevelButton = @(levelData) function() {
             text = $"{loc("inventory/directPurchase")} {premiumPriceStrings}"
             action = function() {
               if (notEnoughPremiumMoney)
-                showNotEnoghPremiumMsgBox()
+                showNotEnoughPremiumMsgBox()
               else {
                 sound_play("am/ui/base_activation_start")
                 eventbus_send("profile_server.buyLots", [ { id = levelData.offerId, count = 1, usePremium = true } ])

@@ -21,7 +21,7 @@ from "eventbus" import eventbus_send, eventbus_subscribe_onehit
 from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
 from "string" import startswith
 from "%ui/components/msgbox.nut" import showMsgbox, showMessageWithContent
-from "%ui/components/purchase_confirm_msgbox.nut" import showCurrencyPurchaseMsgBox, showNotEnoghPremiumMsgBox
+from "%ui/components/purchase_confirm_msgbox.nut" import showCurrencyPurchaseMsgBox, showNotEnoughPremiumMsgBox
 from "%ui/mainMenu/marketMenu.nut" import setSectionToReturn
 from "%ui/mainMenu/market/marketItems.nut" import weaponRelated
 from "dagor.debug" import logerr
@@ -760,7 +760,7 @@ let handleClick = function(data) {
 
   let { price, isPremium } = item.marketPrice
   if (isPremium && price > premiumCredits) {
-    showNotEnoghPremiumMsgBox()
+    showNotEnoughPremiumMsgBox()
     return
   }
 

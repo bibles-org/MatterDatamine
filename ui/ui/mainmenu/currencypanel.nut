@@ -6,7 +6,7 @@ from "%ui/mainMenu/currencyIcons.nut" import monolithTokensColor, creditsColor, 
 from "%ui/components/commonComponents.nut" import mkText, mkTextArea, mkDescTextarea
 from "dasevents" import CmdShowUiMenu
 from "%ui/components/cursors.nut" import setTooltip
-from "%ui/components/msgbox.nut" import showMsgbox, showMessageWithContent
+from "%ui/components/msgbox.nut" import showMsgbox, showMessageWithContent, msgboxDefStyle
 from "%ui/mainMenu/currencyIcons.nut" import creditsTextIcon, monolithTokensTextIcon
 from "%ui/profile/profileState.nut" import playerProfileCreditsCount, playerProfileMonolithTokensCount,
   playerProfilePremiumCredits, playerBaseState
@@ -190,13 +190,13 @@ function mkPremiumBox(grade) {
   }
 }
 
-function showNotEnoghPremiumMsgBox(header = null) {
-  let buttons = [{
+function showNotEnoughPremiumMsgBox(header = null, noCloseBtn = false) {
+  let buttons = noCloseBtn ? [] : [{
     text = loc("mainmenu/btnClose")
     isCurrent = true
   }]
   if ((playerBaseState.get()?.purchasedPacks ?? 0) < packData.len())
-    buttons.insert(0, {
+    buttons.append({
       customButton = {
         flow = FLOW_HORIZONTAL
         gap = static hdpx(10)
@@ -215,7 +215,8 @@ function showNotEnoghPremiumMsgBox(header = null) {
     })
   showMessageWithContent({
     content = {
-      size = [sw(80), SIZE_TO_CONTENT]
+      size = static [sw(80), SIZE_TO_CONTENT]
+      hotkeys = noCloseBtn ? [["Esc", @() null]] : null
       halign = ALIGN_CENTER
       children = [
         {
@@ -243,7 +244,7 @@ function showNotEnoghPremiumMsgBox(header = null) {
       ]
     }
     buttons
-  })
+  }, noCloseBtn ? msgboxDefStyle.__merge({closeKeys=""}) : null )
 }
 
 let currencyPanel = [
@@ -263,7 +264,7 @@ let currencyPanel = [
     if (isOnboarding.get())
       showMsgboxDueToOnboarding()
     else
-      showNotEnoghPremiumMsgBox()
+      showNotEnoughPremiumMsgBox()
   }, premiumColor)
 ]
 
@@ -273,6 +274,6 @@ return freeze({
   notEnoughMoneyAnim
   useCurrencyColor = useColor
   defCurrencyColor = defColor
-  showNotEnoghPremiumMsgBox = showNotEnoghPremiumMsgBox
+  showNotEnoughPremiumMsgBox
   packData
 })

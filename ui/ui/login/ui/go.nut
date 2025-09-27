@@ -145,7 +145,15 @@ let started_web_login = mkWatched(persist, "started_web_login", false)
 function doWebLogin(session_id){
   if (!checkLoginAvailable())
     return
-  startLogin({session_id, needShowError, afterErrorProcessed})
+  let params = {session_id, needShowError, afterErrorProcessed}
+  if (formStateSaveLogin.get() && !doAutoLogin.get()) {
+    if ((formStateLogin.get()?.len() ?? 0) > 0) {
+      params.__update({saveLogin = true, login_id = formStateLogin.get()})
+      if (formStateSavePassword.get() && (formStatePassword.get()?.len() ?? 0) > 0 )
+        params.__update({savePassword = true, password = formStatePassword.get(),})
+    }
+  }
+  startLogin(params)
 }
 
 const WEB_LOGIN_GET_SESSION_ID = "WEB_LOGIN_GET_SESSION"

@@ -63,7 +63,8 @@ from "%ui/profile/profileState.nut" import playerBaseState, playerStats, playerP
   nexusNodesState, currentContractsUpdateTimeleft, numOfflineRaidsAvailable, trialData
 from "%ui/mainMenu/nexus_tutorial.nut" import checkShowNexusTutorial, mkNexusBriefingButton
 from "%sqGlob/userInfoState.nut" import userInfo
-from "%ui/mainMenu/currencyPanel.nut" import showNotEnoghPremiumMsgBox
+from "%ui/mainMenu/currencyPanel.nut" import showNotEnoughPremiumMsgBox
+from "%ui/mainMenu/trial_button.nut" import showEndDemoMsgBox
 
 let { matchingQueuesMap, matchingQueues, matchingTime } = require("%ui/matchingQueues.nut")
 let { selectedSpawn, selectedRaid, raidToFocus, leaderSelectedRaid, selectedNexusFaction,
@@ -2117,9 +2118,9 @@ function getContent() {
     }
   )
 
-  let blockedByTrialButton = buttonWithGamepadHotkey(
+  let blockedByDemoButton = buttonWithGamepadHotkey(
     mkText(utf8ToUpper(loc("nexus/select_node/button")), { hplace = ALIGN_CENTER }.__merge(h2_txt)),
-    @() showMsgbox({ text = loc("market/diabledDueToTrialStatus"), buttons = [
+    @() showMsgbox({ text = loc("market/disabledDueToDemoStatus"), buttons = [
         {text=loc("Ok"), customStyle={hotkeys=[["^Esc | Enter"]]}}
       ]
       }),
@@ -2157,10 +2158,11 @@ function getContent() {
     )
   }
 
-  let trialEndedButton = {
+  let demoEndedButton = {
     size = FLEX_H
-    children = textButton(loc("consoleRaid/trialExpiredButton"),
-      @() showNotEnoghPremiumMsgBox(mkText(loc("consoleRaid/trialExpiredButton/msg"), h2_txt))
+    children = textButton(loc("consoleRaid/demoExpiredButton"),
+      showEndDemoMsgBox
+      
       {
         size = static [flex(), hdpx(70)]
         halign = ALIGN_CENTER
@@ -2170,10 +2172,10 @@ function getContent() {
     )
   }
 
-  let trialNeedsOnlineRaid = {
+  let demoNeedsOnlineRaid = {
     size = FLEX_H
-    children = textButton(loc("market/diabledDueToTrialStatus"),
-      @() showNotEnoghPremiumMsgBox(mkText(loc("consoleRaid/trialNeedsOnlineRaid"), h2_txt))
+    children = textButton(loc("market/disabledDueToDemoStatus"),
+      @() showNotEnoughPremiumMsgBox(mkText(loc("consoleRaid/demoNeedsOnlineRaid"), h2_txt))
       {
         size = static [flex(), hdpx(70)]
         halign = ALIGN_CENTER
@@ -2183,10 +2185,10 @@ function getContent() {
     )
   }
 
-  let trialNeedsOflineRaid = {
+  let demoNeedsOflineRaid = {
     size = FLEX_H
-    children = textButton(loc("market/diabledDueToTrialStatus"),
-      @() showNotEnoghPremiumMsgBox(mkText(loc("consoleRaid/trialNeedsOfflineRaid"), h2_txt))
+    children = textButton(loc("market/disabledDueToDemoStatus"),
+      @() showNotEnoughPremiumMsgBox(mkText(loc("consoleRaid/demoNeedsOfflineRaid"), h2_txt))
       {
         size = static [flex(), hdpx(70)]
         halign = ALIGN_CENTER
@@ -2268,25 +2270,25 @@ function getContent() {
           return {
             watch
             size = FLEX_H
-            children = trialEndedButton
+            children = demoEndedButton
           }
         }
 
-        let trialType = trialData.get()?.trialType
-        const TRIAL_TYPE_OFFLINE_RAIDS = 1
-        const TRIAL_TYPE_ONLINE_RAIDS = 2
-        if (trialType == TRIAL_TYPE_OFFLINE_RAIDS && !wantOfflineRaid.get()) {
+        let demoType = trialData.get()?.trialType
+        const DEMO_TYPE_OFFLINE_RAIDS = 1
+        const DEMO_TYPE_ONLINE_RAIDS = 2
+        if (demoType == DEMO_TYPE_OFFLINE_RAIDS && !wantOfflineRaid.get()) {
           return {
             watch
             size = FLEX_H
-            children = trialNeedsOflineRaid
+            children = demoNeedsOflineRaid
           }
         }
-        else if (trialType == TRIAL_TYPE_ONLINE_RAIDS && wantOfflineRaid.get()) {
+        else if (demoType == DEMO_TYPE_ONLINE_RAIDS && wantOfflineRaid.get()) {
           return {
             watch
             size = FLEX_H
-            children = trialNeedsOnlineRaid
+            children = demoNeedsOnlineRaid
           }
         }
       }
@@ -2321,7 +2323,7 @@ function getContent() {
         return {
           watch
           size = FLEX_H
-          children = blockedByTrialButton
+          children = blockedByDemoButton
         }
       }
       if (isNexus && (selectedNexusNode.get() == null || activeNodes.get()?[selectedNexusNode.get()] == null))

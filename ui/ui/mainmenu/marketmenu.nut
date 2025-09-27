@@ -922,7 +922,7 @@ function mkLockedBuyButton(item) {
         function() {
           let reqs = getRequirements(item, marketItems.get(), playerStats.get(), monolithLevelOffers.get())
           if (trialData.get()?.trialType && !item?.trialAvaliable) {
-            showNotAvailableMsgbox([mkText(loc("market/diabledDueToTrialStatus"), body_txt)])
+            showNotAvailableMsgbox([mkText(loc("market/disabledDueToDemoStatus"), body_txt)])
           }
           else if (reqs.monolithUnlockName != null)
             showRequireMonolithUnlock(reqs.strings, reqs.unlocksAtMonolithLevel, reqs.monolithUnlockName, playerStats.get())
@@ -1402,7 +1402,7 @@ function mkAccentPurchaseButton(item, params = {}) {
               let showMonolithMsgbox = reqs.unlocksAtMonolithLevel != null && playerStats.get().unlocks.findindex(@(v) reqs.monolithUnlockName == v) == null
 
               if (trialData.get()?.trialType && !item?.trialAvaliable) {
-                showNotAvailableMsgbox([mkText(loc("market/diabledDueToTrialStatus"), body_txt)])
+                showNotAvailableMsgbox([mkText(loc("market/disabledDueToDemoStatus"), body_txt)])
               }
               else if (showMonolithMsgbox)
                 showRequireMonolithUnlock(reqs.strings, reqs.unlocksAtMonolithLevel, reqs.monolithUnlockName, playerStats.get())

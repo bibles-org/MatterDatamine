@@ -4160,7 +4160,7 @@ Erforschen Sie sie als Operativer mit Ihrer eigenen Ausrüstung oder übertragen
 "market/transactionDeclined";"Transaction declined";"Транзакция отклонена";"Transaktion abgelehnt"
 "market/addFavorites";"Add to favorite list";"Добавить в избранное";"Zur Favoritenliste hinzufügen"
 "market/removeFavorites";"Remove from favorite list";"Убрать из избранного";"Aus Favoritenliste entfernen"
-"market/diabledDueToTrialStatus";"Not available during the demo access";"Недоступно во время демо доступа";"Not available during the demo access"
+"market/disabledDueToDemoStatus";"Not available for the demo version";"Недоступно в демо версии";"Not available for the demo version"
 "monolithAccessLevel1";"ALPHA";"АЛЬФА";"ALPHA"
 "monolithAccessLevel2";"BETA";"БЕТА";"BETA"
 "monolithAccessLevel3";"GAMMA";"ГАММА";"GAMMA"
@@ -5262,13 +5262,13 @@ Das Portal muss dann für eine kurze Zeit gegen Eroberungsversuche des anderen T
 Getötete Kämpfer kehren mit Wellen von Verstärkungen in die Schlacht zurück. Die Anzahl der Verstärkungswellen für jedes Team ist begrenzt."
 "splitStack/move";"Move {count}";"Переместить {count}";"Bewege {count}"
 "splitStacks/header";"Choose item's count to move";"Выберите количество предметов";"Wähle die Anzahl der Gegenstände, die du bewegen möchtest"
-"consoleRaid/trialExpiredButton";"The demo access has ended";"Демо-доступ закончился";"The demo access has ended"
-"consoleRaid/trialExpiredButton/msg";"The demo access has ended. Purchase the full version to continue";"Демо-доступ закончился. Приобретите полную версию для продолжения";"The demo access has ended. Purchase the full version to continue"
+"consoleRaid/demoExpiredButton";"The demo version has ended";"Демо версия закончилась";"The demo version has ended"
+"consoleRaid/demoExpiredButton/msg";"The demo version has ended. Thanks for playing! Purchase the full version to continue";"Демо версия закончилась. Спасибо за участие. Приобретите полную версию для продолжения";"The demo version has ended. Thanks for playing! Purchase the full version to continue"
 "consoleRaid/presetTab";"Presets";"Шаблоны";"Voreinstellungen"
 "consoleRaid/stashTab";"Storage";"Склад";"Lager"
 "consoleRaid/unavailableStashTab";"Storage is available only when there is no active preset and not during raid search.";"Склад доступен только при отсутствии активного шаблона и не во время поиска рейда.";"Speicher ist nur verfügbar, wenn keine aktive Voreinstellung vorhanden ist und nicht während der Überfallsuche."
-"consoleRaid/trialNeedsOnlineRaid";"Your version only allows non-isolated raids. ";"Ваша версия допускает только неизолированные рейды.";"Your version only allows non-isolated raids. "
-"consoleRaid/trialNeedsOfflineRaid";"Your version only allows isolated raids.";"Ваша версия допускает только изолированные рейды.";"Your version only allows isolated raids."
+"consoleRaid/demoNeedsOnlineRaid";"Demo version only allows non-isolated raids. ";"Демо версия допускает только неизолированные рейды.";"Demo version only allows non-isolated raids. "
+"consoleRaid/demoNeedsOfflineRaid";"Demo version only allows isolated raids.";"Демо версия допускает только изолированные рейды.";"Demo version only allows isolated raids."
 "warning/empty";"Slot {slot} is empty";"Слот {slot} пуст";"Slot {slot} ist leer"
 "warning/noAmmo";"No ammo for weapon {weapon}";"Нет патронов для оружия {weapon}";"Keine Munition für Waffe {weapon}"
 "purchaseAndEquip/noSpace";"No space in inventories";"Нет места в инвентарях";"Kein Platz im Inventar"
@@ -5525,20 +5525,24 @@ complete <accented>special daily contracts</accented> or <accented>upgrade your 
 "ban/reason/SPAM";"Chat Spamming";"Спам в чате";"Chat Spamming"
 "ban/reason/TEAMKILL";"Teamkiller";"Убийство игроков своей команды";"Teamkiller"
 "ban/reasonTitle";"Select complaint reason:";"Выберите причину жалобы:";"Select complaint reason:"
-"version/trial";"Demo Access";"Демо-доступ";"Demo Access"
-"version/trialEnded";"Upgrade to Full version";"Обновление до полной версии";"Upgrade to Full version"
-"version/trialTitle";"You're playing with the <accented>demo access</accented> of the game.
-Isolated raids and Nexus battles are unavailable. Monolith progression are limited.";"Вы играете c <accented>демо-доступом</accented>.
-Изолированные рейды и Битвы Нексуса недоступны. Прогресс Монолита ограничен.";"You're playing with the <accented>demo access</accented> of the game.
-Isolated raids and Nexus battles are unavailable. Monolith progression are limited."
-"version/trialTitleIsolated";"You're playing with the <accented>demo access</accented> of the game.
-With only Isolated raids and without Nexus battles. Monolith progression are limited.";"Вы играете с <accented>демо-доступом</accented>.
-Доступны только Изолированные рейды. Битвы Нексуса недоступны. Прогресс Монолита ограничен.";"You're playing with the <accented>demo access</accented> of the game.
-With only Isolated raids and without Nexus battles. Monolith progression are limited."
-"version/trial_operative_raid_count";"Raid count: {pValue}/{limitValue}";"Количество рейдов: {pValue}/{limitValue}";"Raid count: {pValue}/{limitValue}"
-"version/trial_operative_raid_success";"Raid success count: {pValue}/{limitValue}";"Количество успешных рейдов: {pValue}/{limitValue}";"Raid success count: {pValue}/{limitValue}"
-"version/trial_operative_raid_time_total";"Time spent in Raids as operative: {pValue}/{limitValue}";"Время проведенное в рейдах оперативником: {pValue}/{limitValue}";"Time spent in Raids as operative: {pValue}/{limitValue}"
-"version/trial_monster_raid_time_total";"Time spent in Raids as monster: {pValue}/{limitValue}";"Время проведенное в рейдах монстром: {pValue}/{limitValue}";"Time spent in Raids as monster: {pValue}/{limitValue}"
+"version/demo";"Demo Version";"Демо Версия";"Demo Version"
+"version/demoEnded";"Upgrade to Full version";"Обновление до полной версии";"Upgrade to Full version"
+"version/demoEndedText";"Your <accented>demo version</accented> of the game has ended. Thanks for playing it!
+Upgrade to Full version to play more";"Ваша <accented>демо версия</accented> окончена. Спасибо за игру!
+Обновите до полной версии, чтобы продолжить";"Your <accented>demo version</accented> of the game has ended. Thanks for playing it!
+Upgrade to Full version to play more"
+"version/demoTitle";"You're playing on the <accented>demo version</accented> of the game.
+Isolated raids and Nexus battles are unavailable. Monolith progression is limited.";"Вы играете в <accented>демо версию</accented> игры.
+Изолированные рейды и Битвы Нексуса недоступны. Прогресс Монолита ограничен.";"You're playing on the <accented>demo version</accented> of the game.
+Isolated raids and Nexus battles are unavailable. Monolith progression is limited."
+"version/demoTitleIsolated";"You're playing on the <accented>demo version</accented> of the game.
+With only Isolated raids and without Nexus battles. Monolith progression is limited.";"Вы играете в <accented>демо версию</accented> игры.
+Доступны только Изолированные рейды. Битвы Нексуса недоступны. Прогресс Монолита ограничен.";"You're playing on the <accented>demo version</accented> of the game.
+With only Isolated raids and without Nexus battles. Monolith progression is limited."
+"version/demo_operative_raid_count";"Raid count: {pValue}/{limitValue}";"Количество рейдов: {pValue}/{limitValue}";"Raid count: {pValue}/{limitValue}"
+"version/demo_operative_raid_success";"Raid success count: {pValue}/{limitValue}";"Количество успешных рейдов: {pValue}/{limitValue}";"Raid success count: {pValue}/{limitValue}"
+"version/demo_operative_raid_time_total";"Time spent in Raids as operative: {pValue}/{limitValue}";"Время проведенное в рейдах оперативником: {pValue}/{limitValue}";"Time spent in Raids as operative: {pValue}/{limitValue}"
+"version/demo_monster_raid_time_total";"Time spent in Raids as monster: {pValue}/{limitValue}";"Время проведенное в рейдах монстром: {pValue}/{limitValue}";"Time spent in Raids as monster: {pValue}/{limitValue}"
 "items/medkit";"Medkit";"Аптечка";"Medikit"
 "items/injector_hot";"Regeneration injector";"Инъектор Регенерации";"Regenerationsinjektor"
 "items/injector_hot/desc";"Injects a gel that heals damage to all parts of the body evenly for 180 seconds, 3 units every 2 seconds.";"Вводит гель, который на протяжении 180 секунд равномерно вылечивает повреждения всех частей тела по 3 единицы каждые 2 секунды.";"Injiziert ein Gel, das Schäden an allen Körperteilen gleichmäßig über 180 Sekunden heilt, 3 Einheiten pro 2 Sekunden."

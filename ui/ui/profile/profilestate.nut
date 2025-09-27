@@ -70,7 +70,10 @@ let nexusNodesStateUpdate = @(v) nexusNodesState.set(v)
 let alwaysIsolatedQueues = nestWatched("alwaysIsolatedQueues", {})
 let neverIsolatedQueues = nestWatched("neverIsolatedQueues", {})
 let trialData = nestWatched("trialData", null)
-
+console_register_command(@() trialData.set(null),"ui.trial_remove")
+console_register_command(@(count) trialData.set({trialType=1,
+  trialStatsLimit={operative = {raid_time_total=count}}}),"ui.trial_set_count")
+console_register_command(@() trialData.set({trialType=1, trialStatsLimit={}}),"ui.trial_set_finished")
 
 addTabToDevInfo("Console commands", "", @"
     profile.unlock_all_shop -- unlock all items in shop until first 'profile.load'

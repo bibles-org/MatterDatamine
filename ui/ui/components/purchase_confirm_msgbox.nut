@@ -5,7 +5,7 @@ from "%ui/components/commonComponents.nut" import mkText
 from "%ui/components/msgbox.nut" import showMessageWithContent
 from "%ui/mainMenu/currencyIcons.nut" import creditsTextIcon, monolithTokensTextIcon, premiumColor,
   premiumCreditsTextIcon, creditsColor, monolithTokensColor
-from "%ui/mainMenu/currencyPanel.nut" import currencyPanel, showNotEnoghPremiumMsgBox
+from "%ui/mainMenu/currencyPanel.nut" import currencyPanel, showNotEnoughPremiumMsgBox
 import "%ui/components/colorize.nut" as colorize
 from "%ui/components/accentButton.style.nut" import accentButtonStyle
 
@@ -93,5 +93,5 @@ function showCurrencyPurchaseMsgBox(params) {
 
 return {
   showCurrencyPurchaseMsgBox
-  showNotEnoghPremiumMsgBox
+  showNotEnoughPremiumMsgBox
 }

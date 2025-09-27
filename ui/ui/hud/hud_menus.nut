@@ -12,7 +12,7 @@ from "%ui/hud/tips/tipComponent.nut" import tipCmp
 import "%ui/mainMenu/contacts/mkContactsButton.nut" as mkContactsButton
 from "%ui/mainMenu/contacts/mkSquadWidget.nut" import squadWidget
 from "%ui/hud/state/gametype_state.nut" import isOnPlayerBase
-from "%ui/mainMenu/trial_button.nut" import mkTrialButton
+from "%ui/mainMenu/trial_button.nut" import mkDemoButton
 import "%ui/mainMenu/mailboxButton.ui.nut" as mailboxButton
 import "%ui/hud/state/notes.nut" as notesState
 
@@ -254,7 +254,7 @@ function menusUi() {
     if (!isInBattle){
       let contactsButton = mkContactsButton(@() isContactsVisible.set(true))
       serviceButtons.extend(
-        isOnPlayerBase.get() ? [mkTrialButton()] : []
+        isOnPlayerBase.get() ? [mkDemoButton()] : []
         isOnboarding.get() ? [] : [profileWidget]
         !isOnboarding.get() || onboardingStateMachineCurrentStateEid.get() == onboardingStateMachineBaseKeyInsertionStateEid.get() ? currencyPanel : []
         !isOnboarding.get() ? [mailboxButton, contactsButton] : []
