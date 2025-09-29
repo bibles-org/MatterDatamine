@@ -140,10 +140,6 @@ mothman_monster_effect{
   game_effect__chromaticAberrationParams:p4=0, 0, 0, 0
   monster_flight_mode_effect__sprintGeomtreeEffectTemplate:t="mothman_monster_sprint_geomtree_effect"
 
-  "effect_enable_action_sets__actionSetList:list<t>"{
-    item:t="MonsterMothman"
-  }
-
   "mothman_monster_effect:tag"{}
   "monster_effect:tag"{}
   "locked_use_object__lockVehicleUse:tag"{}
@@ -309,7 +305,7 @@ monstrified_mothman_abilities{
 
     "mothman_gather_stones:object"{
       name:t="mothman_gather_stones"
-      actionHandleName:t="MonsterMothman.GatherItems"
+      actionHandleName:t="Human.Reload"
       hide_ui_after_first_use:b=yes
       type:t="active"
       icon:t="uiskin/ability/mothman_field.svg"

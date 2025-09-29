@@ -37,7 +37,7 @@ dashAbilitylastFailedUseTime.subscribe_with_nasty_disregard_of_frp_update(functi
 })
 
 let spawnTip = @() tipCmp({
-  inputId = "MonsterChanged.Dash"
+  inputId = "Human.Reload"
   text = dashAbilityAmCost.get() > 0 ? loc("hint/on_spawn_with_dash_ability", {ability_am_cost=dashAbilityAmCost.get()}) :
       loc("hint/on_spawn_with_free_dash_ability")
 })

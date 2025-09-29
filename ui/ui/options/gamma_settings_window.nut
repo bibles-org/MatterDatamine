@@ -1,3 +1,4 @@
+import "%ui/control/gui_buttons.nut" as JB
 from "%ui/fonts_style.nut" import body_txt, h1_txt
 from "%ui/components/modalWindows.nut" import addModalWindow, removeModalWindow
 from "%ui/components/button.nut" import textButton
@@ -8,7 +9,6 @@ from "%ui/mainMenu/currencyIcons.nut" import activeMatterIcon
 from "settings" import get_setting_by_blk_path, set_setting_by_blk_path_and_save
 from "%ui/components/colors.nut" import InfoTextValueColor
 from "dagor.system" import argv
-
 from "%ui/ui_library.nut" import *
 
 let { isLoggedIn } = require("%ui/login/login_state.nut")
@@ -23,7 +23,7 @@ let hasAlreadySetGamma = @() get_setting_by_blk_path(HAS_FIRST_LAUCH_GAMMA_SETTI
 let saveAndCloseBtn = textButton(loc("Ok"), function() {
   removeModalWindow(WND_UID)
   set_setting_by_blk_path_and_save(HAS_FIRST_LAUCH_GAMMA_SETTING, true)
-})
+}, {hotkeys = [[$"Enter | Esc | {JB.B}"]]})
 
 let logoSize = hdpxi(300)
 let logoColors = Watched([Color(5, 5, 5), Color(100, 100, 100), Color(200, 200, 200)])

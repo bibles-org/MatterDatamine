@@ -35,7 +35,7 @@ screamAbilitylastFailedUseTime.subscribe_with_nasty_disregard_of_frp_update(func
 })
 
 let spawnTip = @() tipCmp({
-  inputId = "MonsterChanged.SpawnMinion"
+  inputId = "Human.StoneThrow"
   text = loc("hint/on_spawn_with_scream_ability")
 })
 

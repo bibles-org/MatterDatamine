@@ -471,7 +471,17 @@ let mkTimeMonoTxtStyle = memoize(function(fontStyle) {
   return bs.__merge({monoWidth})
 })
 
+local hadError = false
 function mkMonospaceTimeComp(time, fontStyle = sub_txt, color = InfoTextValueColor) {
+  let t = type(time)
+  if (t != "integer" && t != "float") {
+    if (!hadError) {
+      logerr($"mkMonospaceTimeComp. Wrong value of time. type: {type(time)}, value: '{time}'")
+      hadError = true
+    }
+    return null
+  }
+
   #forbid-auto-freeze
   let { days=0, hours=0, minutes=0, seconds=0 } = secondsToTime(time)
   let txtStyle = mkTimeTxtStyle(fontStyle).__merge({color})

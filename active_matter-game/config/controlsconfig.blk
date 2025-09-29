@@ -494,21 +494,6 @@ actionSets{
       group_tag:t="Other"
     }
 
-    Human.UseAbility1{
-      type:t="digital_button"
-      group_tag:t="Other"
-    }
-
-    Human.UseAbility2{
-      type:t="digital_button"
-      group_tag:t="Other"
-    }
-
-    Human.UseAbility3{
-      type:t="digital_button"
-      group_tag:t="Other"
-    }
-
     Deploy.Create{
       type:t="digital_button"
       group_tag:t="Other"
@@ -572,50 +557,6 @@ actionSets{
     Human.HoldUpWeapon{
       type:t="digital_button"
       group_tag:t="Other"
-    }
-  }
-
-  MonsterChanged{
-    group_tag:t="Proxy"
-
-    MonsterChanged.Dash{
-      type:t="digital_button"
-    }
-
-    MonsterChanged.SpawnMinion{
-      type:t="digital_button"
-    }
-
-    MonsterChanged.Echolocation{
-      type:t="digital_button"
-    }
-
-    MonsterChanged.CommandAttack{
-      type:t="digital_button"
-    }
-  }
-
-  MonsterMothman{
-    group_tag:t="Proxy"
-
-    MonsterMothman.GatherItems{
-      type:t="digital_button"
-    }
-  }
-
-  MonsterInvisibleman{
-    group_tag:t="Proxy"
-
-    MonsterInvisibleman.Invis{
-      type:t="digital_button"
-    }
-
-    MonsterInvisibleman.Pushing{
-      type:t="digital_button"
-    }
-
-    MonsterInvisibleman.Trap{
-      type:t="digital_button"
     }
   }
 
@@ -980,9 +921,6 @@ actionSetsOrder{
   HelicopterMouse{}
   VehicleTurret{}
   Vehicle{}
-  MonsterChanged{}
-  MonsterMothman{}
-  MonsterInvisibleman{}
   Human{}
   Onboarding{}
   BackgroundHUD{}

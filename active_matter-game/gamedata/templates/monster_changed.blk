@@ -336,10 +336,6 @@ changed_monster_effect{
   game_effect_sound__hero:t="player/walker/changed/voice_fx/transmigration"
 
   "monster_effect:tag"{}
-  "effect_enable_action_sets__actionSetList:list<t>"{
-    item:t="MonsterChanged"
-  }
-
   "game_effect__colorGrading:object"{
     colorGain:p4=1, 1, 1, 1
     colorGamma:p4=1, 1, 1, 1.1
@@ -548,7 +544,7 @@ active_matter_dash_ability{
   "hero_ability__abilities:array"{
     "dash:object"{
       name:t="dash"
-      actionHandleName:t="MonsterChanged.Dash"
+      actionHandleName:t="Human.Reload"
       show_in_ui:b=yes
       activeMatterPrice:i=5
       icon:t="uiskin/ability/blink.svg"
@@ -626,7 +622,7 @@ active_matter_scream_ability{
   "hero_ability__abilities:array"{
     "scream:object"{
       name:t="scream"
-      actionHandleName:t="MonsterChanged.SpawnMinion"
+      actionHandleName:t="Human.StoneThrow"
       show_in_ui:b=yes
       activeMatterPrice:i=0
       icon:t="uiskin/ability/scream.svg"
@@ -745,7 +741,7 @@ active_matter_echolocation_ability{
   "hero_ability__abilities:array"{
     "echolocation:object"{
       name:t="echolocation"
-      actionHandleName:t="MonsterChanged.Echolocation"
+      actionHandleName:t="Human.Flashlight"
       activeMatterPrice:i=0
       icon:t="uiskin/ability/invisibility.svg"
       cooldown:r=2
@@ -842,7 +838,7 @@ am_mindcontrolled_changed_abilities{
   "hero_ability__abilities:array"{
     "dash:object"{
       name:t="dash"
-      actionHandleName:t="MonsterChanged.Dash"
+      actionHandleName:t="Human.Reload"
       icon:t="uiskin/ability/blink.svg"
       cooldown:r=0
       lockWhileSwimming:b=no
@@ -859,7 +855,7 @@ am_mindcontrolled_changed_abilities{
 
     "scream:object"{
       name:t="scream"
-      actionHandleName:t="MonsterChanged.SpawnMinion"
+      actionHandleName:t="Human.StoneThrow"
       icon:t="uiskin/ability/scream.svg"
       cooldown:r=60
       lockWhileSwimming:b=yes
@@ -884,7 +880,7 @@ am_mindcontrolled_changed_abilities{
 
     "echolocation:object"{
       name:t="echolocation"
-      actionHandleName:t="MonsterChanged.Echolocation"
+      actionHandleName:t="Human.Flashlight"
       activeMatterPrice:i=0
       icon:t="uiskin/ability/invisibility.svg"
       cooldown:r=10
@@ -911,7 +907,7 @@ am_mindcontrolled_changed_abilities{
 
     "command_attack:object"{
       name:t="command_attack"
-      actionHandleName:t="MonsterChanged.CommandAttack"
+      actionHandleName:t="Human.Aim2"
       activeMatterPrice:i=0
       icon:t="uiskin/ability/attack_target.svg"
       cooldown:r=1

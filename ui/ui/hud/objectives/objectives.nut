@@ -319,52 +319,88 @@ let monolithContractText = {contract_monolith_danger = loc("contract_monolith_da
 
 let titleGap = hdpx(10)
 let titleIconFontSize = hdpxi(20)
-let extractionPicture = {
-  rendObj = ROBJ_IMAGE
-  hplace = ALIGN_CENTER
-  vplace = ALIGN_BOTTOM
-  image = Picture($"ui/skin#extraction_man.svg:{titleIconFontSize-hdpxi(2)}:{titleIconFontSize-hdpxi(2)}:P:K")
-  color = Color(0,0,0)
-  size = titleIconFontSize-hdpxi(2)
-  animations = static [{ prop=AnimProp.color, from=Color(0,0,0), to=color_complete, easing=CosineFull, duration=0.8, loop=true, play=true }]
-  keepAspect = KEEP_ASPECT_FIT
+let titleIconFontTinySize = hdpxi(14)
+let mkExtractionIcon = function(fontSize) {
+  let extractionPicture = {
+    rendObj = ROBJ_IMAGE
+    hplace = ALIGN_CENTER
+    vplace = ALIGN_BOTTOM
+    image = Picture($"ui/skin#extraction_man.svg:{fontSize-hdpxi(2)}:{fontSize-hdpxi(2)}:P:K")
+    color = Color(0,0,0)
+    size = titleIconFontSize-hdpxi(2)
+    animations = static [{ prop=AnimProp.color, from=Color(0,0,0), to=color_complete, easing=CosineFull, duration=0.8, loop=true, play=true }]
+    keepAspect = KEEP_ASPECT_FIT
+  }
+
+  return {
+    size = fontSize
+    children = [
+      {
+        size = fontSize
+        animations = static [{ prop=AnimProp.opacity, from=1, to=0.3, easing=CosineFull, duration=0.8, loop=true, play=true }]
+        fillColor = color_addition
+        rendObj = ROBJ_BOX
+      }
+      extractionPicture
+    ]
+  }
 }
 
-let extractionIcon = static {
-  size = titleIconFontSize
-  children = [
-    {
-      size = titleIconFontSize
-      animations = static [{ prop=AnimProp.opacity, from=1, to=0.3, easing=CosineFull, duration=0.8, loop=true, play=true }]
-      fillColor = color_addition
-      rendObj = ROBJ_BOX
-    }
-    extractionPicture
-  ]
+let extractionIcon = mkExtractionIcon(titleIconFontSize)
+let extractionTinyIcon = mkExtractionIcon(titleIconFontTinySize)
+
+let starSub = faComp("star", { color = InfoTextValueColor, fontSize = sub_txt.fontSize, margin = [hdpx(2),0,0,0]})
+let starTiny = faComp("star", { color = InfoTextValueColor, fontSize = tiny_txt.fontSize, margin = [hdpx(2),0,0,0]})
+let extractionBlockedSub = faComp("extraction_point.svg", { color = RedWarningColor, margin = [hdpx(2),0,0,0] }.__merge(sub_txt))
+let extractionBlockedTiny = faComp("extraction_point.svg", { color = RedWarningColor, margin = [hdpx(2),0,0,0] }.__merge(tiny_txt))
+
+
+let idxMarkTinySize = idxMarkDefaultSize.map(@(v) v*0.85)
+let mkObjectiveStatus = function(idx, objectiveColor, requireExtraction, progress, isPrimary, obj, minimize) {
+  let { failed = false, blockExtraction = false, completed = false } = obj
+  let isComplete = !requireExtraction && completed
+  local mark
+  let failedNormal = static faComp("close", {color = RedWarningColor, fontSize = titleIconFontSize})
+  let failedTiny = static faComp("close", {color = RedWarningColor, fontSize = titleIconFontTinySize})
+  if (failed)
+    mark = minimize ? failedTiny : failedNormal
+  else if (requireExtraction && completed)
+    mark = minimize ? extractionTinyIcon : extractionIcon
+  else if (isComplete)
+    mark = minimize
+      ? static faComp("check-square-o", {color = color_complete_bright, fontSize = titleIconFontTinySize})
+      : static faComp("check-square-o", {color = color_complete_bright, fontSize = titleIconFontSize})
+  else
+    mark = minimize
+    ? mkObjectiveIdxMark($"{idx+1}", idxMarkTinySize, objectiveColor, progress, tiny_txt)
+    : mkObjectiveIdxMark($"{idx+1}", idxMarkDefaultSize, objectiveColor, progress)
+  let hasExtraMarks = isPrimary || (blockExtraction && !completed)
+  return {
+    size = FLEX_V
+    children = [
+      hasExtraMarks ? {
+        flow = FLOW_HORIZONTAL
+        valign = ALIGN_TOP
+        vplace = ALIGN_TOP
+        size = FLEX_H
+        children = [
+          isPrimary ? (minimize ? starTiny : starSub) : null,
+          (blockExtraction && !completed) ? (minimize ? extractionBlockedTiny : extractionBlockedSub) : null,
+        ]
+      } : null
+      { children = mark vplace = ALIGN_CENTER pos = hasExtraMarks ? static [0, hdpx(10)] : null }
+    ]
+  }
 }
-
-let mkObjectiveStatus = function(idx, is_complete, is_failed, objectiveColor, requireExtraction, isRequirementComplete, progress) {
-  if (is_failed)
-    return static faComp("close", {color = RedWarningColor, fontSize = titleIconFontSize})
-  if (requireExtraction && isRequirementComplete)
-    return extractionIcon
-  if (is_complete)
-    return static faComp("check-square-o", {color = color_complete_bright, fontSize = titleIconFontSize})
-  return mkObjectiveIdxMark($"{idx+1}", idxMarkDefaultSize, objectiveColor, progress)
-}
-
-let starSub = static faComp("star", { color = InfoTextValueColor, fontSize = sub_txt.fontSize, margin = [hdpx(2),0,0,0]})
-let starTiny = static faComp("star", { color = InfoTextValueColor, fontSize = tiny_txt.fontSize, margin = [hdpx(2),0,0,0]})
-
-let extractionBlockedSub = static faComp("extraction_point.svg", { color = RedWarningColor, margin = [hdpx(2),0,0,0] }.__merge(sub_txt))
-let extractionBlockedTiny = static faComp("extraction_point.svg", { color = RedWarningColor, margin = [hdpx(2),0,0,0] }.__merge(tiny_txt))
 
 let isPrimaryObjective = @(obj) (obj?.contractType ?? 1) == 0
 let isObjCompleted = @(obj) !obj?.requireExtraction && obj?.completed
 
 let mkObjectiveTitle = function(obj, minimize=false) {
-  let { name, failed = false, blockExtraction = false, completed = false } = obj
-  let isPrimary = isPrimaryObjective(obj)
+  let { name, failed = false,
+    
+  } = obj
+  
   let title = loc($"contract/{name}")
   let isCompleted = isObjCompleted(obj)
 
@@ -375,8 +411,8 @@ let mkObjectiveTitle = function(obj, minimize=false) {
     gap = hdpx(5)
     valign = ALIGN_CENTER
     children = [
-      isPrimary ? (minimize ? starTiny : starSub) : null,
-      (blockExtraction && !completed) ? (minimize ? extractionBlockedTiny : extractionBlockedSub) : null,
+
+
       mkDescTextarea(title, descStyle)
     ]
   }
@@ -928,14 +964,13 @@ let objectiveItem = function(obj, idx, allObjectives) {
     gap = hdpx(10)
     valign = ALIGN_CENTER
     children = [
-      mkObjectiveStatus(idx, isComplete, isFailed, objectiveColor, requireExtraction, completed, progress)
+      mkObjectiveStatus(idx, objectiveColor, requireExtraction, progress, isPrimary, obj, tryToMinimize)
       {
         flow = FLOW_VERTICAL
         size = FLEX_H
         children = !showCompact ? [
-          mkObjectiveTitle(obj, tooMany),
-          tryToMinimize ? null :
-            mkObjectiveProgression(name, handledByGameTemplate, completed, isFailed, { currentValue, requireValue, params, itemTags }),
+          tryToMinimize ? null : mkObjectiveTitle(obj, tooMany),
+          mkObjectiveProgression(name, handledByGameTemplate, completed, isFailed, { currentValue, requireValue, params, itemTags }),
           addition != null ? mkObjectiveAddition(addition) : null,
           !tryToMinimize || !completed ? {
             flow = FLOW_HORIZONTAL

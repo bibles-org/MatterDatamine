@@ -534,10 +534,6 @@ invisible_monster_effect{
   game_effect_sound__enemy:t="enemy/walker/changed/voice_fx/transmigration"
   game_effect_sound__hero:t="player/walker/changed/voice_fx/transmigration"
 
-  "effect_enable_action_sets__actionSetList:list<t>"{
-    item:t="MonsterInvisibleman"
-  }
-
   "game_effect__destroyAllItems:tag"{}
   "invisible_monster_effect:tag"{}
   "monster_effect:tag"{}
@@ -629,10 +625,6 @@ monstrified_invisible_man{
   "human_equipment__slots:object"{
     "chronogene_primary_1:eid"{}
     "cortical_vault:eid"{}
-  }
-
-  "effect_enable_action_sets__actionSetList:list<t>"{
-    item:t="MonsterInvisibleman"
   }
 
   "game_effect__initialAttachmentsServer:list<t>"{

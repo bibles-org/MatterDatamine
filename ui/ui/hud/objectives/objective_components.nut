@@ -13,8 +13,8 @@ let idxMarkDefaultSize = static [idxMarkHeight, idxMarkHeight]
 
 let mkPic = memoize(@(hgt) Picture("ui/skin#round.svg:{0}:{0}:K".subst(hgt.tointeger())))
 
-let mkObjectiveIdxMark = function(text, size, color, progress=1.0) {
-  let textSize = calc_str_box(text, sub_txt)
+let mkObjectiveIdxMark = function(text, size, color, progress=1.0, textFont = sub_txt) {
+  let textSize = calc_str_box(text, textFont)
   let canFitText = size[0] > 1.1 * textSize[0] && size[1] > 1.1 * textSize[1]
   let needProgress = (progress ?? 1.0) < 1.0 && progress > 0
   let fillColor = mul_color(color, 0.4)
@@ -48,7 +48,7 @@ let mkObjectiveIdxMark = function(text, size, color, progress=1.0) {
         color = color_common
         fontFx = FFT_SHADOW
         fontFxColor = Color(0,0,0)
-      }.__update(sub_txt)
+      }.__update(textFont)
     ]
   }
 }

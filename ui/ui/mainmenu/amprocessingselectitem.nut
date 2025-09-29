@@ -268,6 +268,8 @@ function uptadeRefinerWithTask(task) {
 }
 
 function startRefine() {
+  if (refineGettingInProgress.get())
+    return
   if (itemsInRefiner.get().len() == 0) {
     showMessageWithContent({
       content = {

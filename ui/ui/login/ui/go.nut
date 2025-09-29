@@ -136,8 +136,8 @@ function doPasswordLogin() {
       needShowError
     })
   }
- else
-   showMsgbox(loc("login/error/incorrect_login_arguments"))
+  else
+    showMsgbox({ text = loc("login/error/incorrect_login_arguments") })
 }
 
 let started_web_login = mkWatched(persist, "started_web_login", false)
