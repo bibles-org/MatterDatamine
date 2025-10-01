@@ -1,196 +1,24 @@
-scope_pulsar_n870{
-  _use:t="base_scope"
-  animchar__res:t="scope_pulsar_n870_char"
-  item__proto:t="scope_pulsar_n870"
-  item__weight:r=1.2
-  item__volume:i=60
-  item__name:t="items/scope_pulsar_n870"
+scope_1p63{
+  _use:t="base_collimator_scope"
+  _use:t="scope_2moa_dot_reticle"
+  animchar__res:t="1p63_char"
+  item__proto:t="scope_1p63"
+  item__weight:r=0.6
+  item__volume:i=30
+  item__name:t="items/scope_1p63"
+  item__marketPrice:i=600
   gunAttachable__slotName:t="scope"
-  collres__res:t="scope_pulsar_n870_collision"
-  gunmod__zoomFactor:r=3.5
+  collres__res:t="1p63_collision"
   weap__focusPlaneShift:r=0.3
   weap__dofNearAmountPercent:r=2
   gunmod__camNode:t="collimator_view"
-  gunmod__nightNode:t="scope_view"
-  gunmod__dayNode:t="collimator_view"
   gunmod__lensActive:b=no
-  gunmod__lensAtDay:b=no
-  gunmod__lensAtNight:b=yes
-  gunmod__enabledInTime:p2=20, 4
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=7, 8
 
-  "nightScope:tag"{}
-  "isCameraAlwaysOnScope:tag"{}
-  "gunAttachable:tag"{}
-  "gunmod__slots:list<t>"{
-    i:t="scope_picatinny_long_slot"
-  }
-
-  "item__cantBeCorrupted:tag"{}
-}
-
-scope_shahin{
-  _use:t="base_thermal_scope"
-  _use:t="item_rarity_rare"
-  animchar__res:t="shakhin_dovetail_char"
-  item__proto:t="scope_shahin"
-  item__weight:r=1.6
-  item__volume:i=60
-  item__name:t="items/scope_shahin"
-  item__marketPrice:i=12000
-  gunAttachable__slotName:t="scope"
-  collres__res:t="shakhin_dovetail_collision"
-  gunmod__zoomFactor:r=3.6
-  weap__focusPlaneShift:r=0.3
-  weap__dofNearAmountPercent:r=2
-  gunmod__camNode:t="scope_view"
-  gunmod__nightNode:t="scope_view"
-  gunmod__dayNode:t="scope_view"
-  gunmod__lensActive:b=yes
-  gunmod__lensAtDay:b=yes
-  gunmod__lensAtNight:b=yes
-  showroom_item__customZoom:r=1.6
-  showroom_item__customZoomBordersRng:p2=1.2, 2
-
-  _group{
-    _tags:t="render"
-    thermal_vision__noiseValue:r=0.04
-    thermal_vision__pixelSize:i=1024
-  }
-
-  "thermalScope:tag"{}
-  "isCameraAlwaysOnScope:tag"{}
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
     i:t="scope_dovetail_high_slot"
   }
-
-  "item__cantBeCorrupted:tag"{}
-}
-
-scope_scotopia_s350f_thermal{
-  _use:t="base_thermal_scope"
-  _use:t="item_rarity_uncommon"
-  animchar__res:t="scotopia_s350f_sight_char"
-  item__proto:t="scope_scotopia_s350f_thermal"
-  item__weight:r=0.475
-  item__volume:i=50
-  item__name:t="items/scope_scotopia_s350f_thermal"
-  item__marketPrice:i=11600
-  gunAttachable__slotName:t="scope"
-  collres__res:t="scotopia_s350f_sight_collision"
-  gunmod__zoomFactor:r=3
-  weap__focusPlaneShift:r=0.3
-  weap__dofNearAmountPercent:r=2
-  gunmod__camNode:t="scope_view"
-  gunmod__nightNode:t="scope_view"
-  gunmod__dayNode:t="scope_view"
-  gunmod__lensActive:b=yes
-  gunmod__lensAtDay:b=yes
-  gunmod__lensAtNight:b=yes
-  showroom_item__customZoom:r=1.6
-  showroom_item__customZoomBordersRng:p2=1.2, 2
-
-  _group{
-    _tags:t="render"
-    thermal_vision__noiseValue:r=0.04
-    thermal_vision__pixelSize:i=1024
-  }
-
-  "thermalScope:tag"{}
-  "isCameraAlwaysOnScope:tag"{}
-  "gunAttachable:tag"{}
-  "gunmod__slots:list<t>"{
-    i:t="scope_picatinny_long_slot"
-  }
-
-  "item__cantBeCorrupted:tag"{}
-}
-
-scope_an_pas_thermal{
-  _use:t="base_thermal_scope"
-  _use:t="item_rarity_rare"
-  animchar__res:t="an_pas_13b_v1_lwts_char"
-  item__proto:t="scope_an_pas_thermal"
-  item__weight:r=2.5
-  item__volume:i=80
-  item__name:t="items/scope_an_pas_thermal"
-  item__marketPrice:i=18400
-  gunAttachable__slotName:t="scope"
-  collres__res:t="an_pas_13b_v1_lwts_collision"
-  gunmod__zoomFactor:r=3.3
-  gunmod__camShiftMax:r=0.065
-  gunmod__camShiftMin:r=0.065
-  weap__focusPlaneShift:r=0.3
-  weap__dofNearAmountPercent:r=2
-  gunmod__camNode:t="scope_view"
-  gunmod__nightNode:t="scope_view"
-  gunmod__dayNode:t="scope_view"
-  gunmod__lensActive:b=yes
-  gunmod__lensAtDay:b=yes
-  gunmod__lensAtNight:b=yes
-  showroom_item__customZoom:r=1.4
-  showroom_item__customZoomBordersRng:p2=1.2, 1.8
-
-  _group{
-    _tags:t="render"
-    thermal_vision__noiseValue:r=0.04
-    thermal_vision__pixelSize:i=1024
-  }
-
-  "thermalScope:tag"{}
-  "isCameraAlwaysOnScope:tag"{}
-  "gunAttachable:tag"{}
-  "gunmod__slots:list<t>"{
-    i:t="scope_picatinny_long_slot"
-  }
-
-  "item__cantBeCorrupted:tag"{}
-}
-
-scope_fastfire{
-  _use:t="base_collimator_scope"
-  animchar__res:t="fastfire_char"
-  item__proto:t="scope_fastfire"
-  item__weight:r=0.05
-  item__volume:i=20
-  item__name:t="items/scope_fastfire"
-  gunAttachable__slotName:t="scope"
-  collres__res:t="fastfire_collision"
-  weap__focusPlaneShift:r=0.3
-  weap__dofNearAmountPercent:r=2
-  gunmod__camNode:t="collimator_view"
-  gunmod__lensActive:b=no
-
-  "gunAttachable:tag"{}
-  "gunmod__slots:list<t>"{
-    i:t="scope_picatinny_short_slot"
-  }
-
-  "item__cantBeCorrupted:tag"{}
-}
-
-scope_moosemark{
-  _use:t="base_collimator_scope"
-  _use:t="item_rarity_uncommon"
-  animchar__res:t="moosemark_char"
-  item__proto:t="scope_moosemark"
-  item__weight:r=0.11
-  item__volume:i=20
-  item__name:t="items/scope_moosemark"
-  item__marketPrice:i=1860
-  gunAttachable__slotName:t="scope"
-  collres__res:t="moosemark_collision"
-  weap__focusPlaneShift:r=0.3
-  weap__dofNearAmountPercent:r=2
-  gunmod__camNode:t="collimator_view"
-  gunmod__lensActive:b=no
-
-  "gunAttachable:tag"{}
-  "gunmod__slots:list<t>"{
-    i:t="scope_picatinny_short_slot"
-  }
-
-  "item__cantBeCorrupted:tag"{}
 }
 
 scope_okp7_reticle{
@@ -265,6 +93,11 @@ scope_2moa_dot_reticle{
   gunmod__collimator_moa_color:p4=5, 0, 0, 0.5
 }
 
+scope_pk_av_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__adsSpeedMult:r=0.99
+}
+
 scope_pk_av{
   _use:t="base_collimator_scope"
   _use:t="scope_2moa_dot_reticle"
@@ -280,6 +113,7 @@ scope_pk_av{
   weap__dofNearAmountPercent:r=2
   gunmod__camNode:t="collimator_view"
   gunmod__lensActive:b=no
+  gun_mod__effectTemplate:t="scope_pk_av_effect"
 
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
@@ -468,6 +302,175 @@ scope_vzor_1{
   "item__cantBeCorrupted:tag"{}
 }
 
+scope_moosemark{
+  _use:t="base_collimator_scope"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="moosemark_char"
+  item__proto:t="scope_moosemark"
+  item__weight:r=0.11
+  item__volume:i=20
+  item__name:t="items/scope_moosemark"
+  item__marketPrice:i=1860
+  gunAttachable__slotName:t="scope"
+  collres__res:t="moosemark_collision"
+  weap__focusPlaneShift:r=0.3
+  weap__dofNearAmountPercent:r=2
+  gunmod__camNode:t="collimator_view"
+  gunmod__lensActive:b=no
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_picatinny_short_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+scope_fastfire{
+  _use:t="base_collimator_scope"
+  animchar__res:t="fastfire_char"
+  item__proto:t="scope_fastfire"
+  item__weight:r=0.05
+  item__volume:i=20
+  item__name:t="items/scope_fastfire"
+  gunAttachable__slotName:t="scope"
+  collres__res:t="fastfire_collision"
+  weap__focusPlaneShift:r=0.3
+  weap__dofNearAmountPercent:r=2
+  gunmod__camNode:t="collimator_view"
+  gunmod__lensActive:b=no
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_picatinny_short_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+scope_pso1{
+  _use:t="base_scope"
+  animchar__res:t="pso_1_1_char"
+  item__proto:t="scope_pso1"
+  item__weight:r=0.62
+  item__volume:i=40
+  item__name:t="items/scope_pso"
+  item__marketPrice:i=1750
+  gunAttachable__slotName:t="scope"
+  collres__res:t="pso_1_1_collision"
+  gunmod__zoomFactor:r=4
+  gunmod__lensOnlyZoomDisabled:b=yes
+  gunmod__camShiftMax:r=0.041
+  gunmod__camShiftMin:r=0.041
+  gunmod__lensBrightness:r=0.7
+  gunmod__distortionParams:p3=0.11, 0.7, 0.15
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.4, 1.8
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_dovetail_slot"
+  }
+}
+
+scope_pso1_high{
+  _use:t="base_scope"
+  animchar__res:t="pso_1_akm_char"
+  item__proto:t="scope_pso1_high"
+  item__weight:r=0.7
+  item__volume:i=40
+  item__name:t="items/scope_pso_high"
+  item__marketPrice:i=1750
+  gunAttachable__slotName:t="scope"
+  collres__res:t="pso_1_akm_collision"
+  gunmod__zoomFactor:r=4
+  gunmod__camRealZoomShift:r=0.045
+  gunmod__camShiftMax:r=0.15
+  gunmod__camShiftMin:r=0.15
+  gunmod__lensBrightness:r=0.7
+  gunmod__distortionParams:p3=0.12, 0.7, 0.15
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.4, 1.8
+  profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_dovetail_high_slot"
+  }
+}
+
+scope_utg_t4_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__adsSpeedMult:r=0.98
+}
+
+scope_utg_t4{
+  _use:t="base_scope"
+  animchar__res:t="scp_t4iecdq_sight_char"
+  item__proto:t="scope_utg_t4"
+  item__weight:r=0.49
+  item__volume:i=40
+  item__name:t="items/scope_utg_t4"
+  item__marketPrice:i=1380
+  gunAttachable__slotName:t="scope"
+  collres__res:t="scp_t4iecdq_sight_collision"
+  gunmod__zoomFactor:r=4
+  gunmod__camRealZoomShift:r=0.065
+  gunmod__camShiftMax:r=0.21
+  gunmod__camShiftMin:r=0.21
+  gun_mod__effectTemplate:t="scope_utg_t4_effect"
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
+
+  "isCameraAlwaysOnScope:tag"{}
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_picatinny_short_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+scope_acog_ta31_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__adsSpeedMult:r=0.98
+}
+
+scope_acog_ta31{
+  _use:t="base_scope"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="acog_ta31_sight_char"
+  item__proto:t="scope_acog_ta31"
+  item__weight:r=0.38
+  item__volume:i=40
+  item__name:t="items/scope_acog_ta31"
+  item__marketPrice:i=3200
+  gunAttachable__slotName:t="scope"
+  collres__res:t="acog_ta31_sight_collision"
+  gunmod__zoomFactor:r=4
+  gunmod__camShiftMax:r=0.17
+  gunmod__camShiftMin:r=0.17
+  gunmod__lensBrightness:r=0.85
+  gunmod__distortionParams:p3=0.8, 0.2, 0.15
+  gun_mod__effectTemplate:t="scope_acog_ta31_effect"
+  showroom_item__customZoom:r=1.6
+  showroom_item__customZoomBordersRng:p2=1.2, 2
+
+  "isCameraAlwaysOnScope:tag"{}
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_picatinny_short_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+scope_1p69_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__adsSpeedMult:r=0.92
+}
+
 scope_1p69{
   _use:t="base_scope"
   _use:t="item_rarity_uncommon"
@@ -485,6 +488,7 @@ scope_1p69{
   gunmod__camShiftMin:r=0.04
   gunmod__lensBrightness:r=0.7
   gunmod__distortionParams:p3=0, 0.09, 0.04
+  gun_mod__effectTemplate:t="scope_1p69_effect"
   showroom_item__customZoom:r=1.2
   showroom_item__customZoomBordersRng:p2=1, 1.4
 
@@ -494,6 +498,11 @@ scope_1p69{
   }
 
   "item__cantBeCorrupted:tag"{}
+}
+
+scope_sig_tango_6_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__adsSpeedMult:r=0.96
 }
 
 scope_sig_tango_6{
@@ -514,6 +523,7 @@ scope_sig_tango_6{
   gunmod__camShiftMin:r=0.19
   gunmod__lensBrightness:r=0.7
   gunmod__distortionParams:p3=0, 0.09, 0.04
+  gun_mod__effectTemplate:t="scope_sig_tango_6_effect"
   showroom_item__customZoom:r=1.2
   showroom_item__customZoomBordersRng:p2=1, 1.4
 
@@ -525,32 +535,9 @@ scope_sig_tango_6{
   "item__cantBeCorrupted:tag"{}
 }
 
-scope_ppo_5_15{
-  _use:t="base_scope"
-  _use:t="item_rarity_uncommon"
-  animchar__res:t="sv_98_scope_char"
-  item__proto:t="scope_ppo_5_15"
-  item__weight:r=1.7
-  item__volume:i=60
-  item__name:t="items/scope_ppo_5_15"
-  item__marketPrice:i=5300
-  gunAttachable__slotName:t="scope"
-  collres__res:t="sv_98_scope_collision"
-  gunmod__zoomFactor:r=8
-  gunmod__camRealZoomShift:r=0.043
-  gunmod__camShiftMax:r=0.3
-  gunmod__camShiftMin:r=0.3
-  gunmod__lensBrightness:r=0.7
-  gunmod__distortionParams:p3=0, 0.09, 0.04
-  showroom_item__customZoom:r=1
-  showroom_item__customZoomBordersRng:p2=0.8, 1.2
-
-  "gunAttachable:tag"{}
-  "gunmod__slots:list<t>"{
-    i:t="scope_picatinny_long_slot"
-  }
-
-  "item__cantBeCorrupted:tag"{}
+scope_lpvo101_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__adsSpeedMult:r=0.96
 }
 
 scope_lpvo101{
@@ -570,6 +557,7 @@ scope_lpvo101{
   gunmod__camShiftMin:r=0.165
   gunmod__lensBrightness:r=0.7
   gunmod__distortionParams:p3=0, 0.09, 0.04
+  gun_mod__effectTemplate:t="scope_lpvo101_effect"
   showroom_item__customZoom:r=1.7
   showroom_item__customZoomBordersRng:p2=1.4, 2
 
@@ -579,6 +567,45 @@ scope_lpvo101{
   }
 
   "item__cantBeCorrupted:tag"{}
+}
+
+scope_ppo_5_15_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__adsSpeedMult:r=0.92
+}
+
+scope_ppo_5_15{
+  _use:t="base_scope"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="sv_98_scope_char"
+  item__proto:t="scope_ppo_5_15"
+  item__weight:r=1.7
+  item__volume:i=60
+  item__name:t="items/scope_ppo_5_15"
+  item__marketPrice:i=5300
+  gunAttachable__slotName:t="scope"
+  collres__res:t="sv_98_scope_collision"
+  gunmod__zoomFactor:r=8
+  gunmod__camRealZoomShift:r=0.043
+  gunmod__camShiftMax:r=0.3
+  gunmod__camShiftMin:r=0.3
+  gunmod__lensBrightness:r=0.7
+  gunmod__distortionParams:p3=0, 0.09, 0.04
+  gun_mod__effectTemplate:t="scope_ppo_5_15_effect"
+  showroom_item__customZoom:r=1
+  showroom_item__customZoomBordersRng:p2=0.8, 1.2
+
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_picatinny_long_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+scope_schmidt_pm2_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__adsSpeedMult:r=0.91
 }
 
 scope_schmidt_pm2{
@@ -598,6 +625,7 @@ scope_schmidt_pm2{
   gunmod__camShiftMin:r=0.25
   gunmod__lensBrightness:r=0.7
   gunmod__distortionParams:p3=0, 0.09, 0.04
+  gun_mod__effectTemplate:t="scope_schmidt_pm2_effect"
   showroom_item__customZoom:r=1.2
   showroom_item__customZoomBordersRng:p2=1, 1.4
 
@@ -609,55 +637,156 @@ scope_schmidt_pm2{
   "item__cantBeCorrupted:tag"{}
 }
 
-scope_acog_ta31{
-  _use:t="base_scope"
-  _use:t="item_rarity_uncommon"
-  animchar__res:t="acog_ta31_sight_char"
-  item__proto:t="scope_acog_ta31"
-  item__weight:r=0.38
-  item__volume:i=40
-  item__name:t="items/scope_acog_ta31"
-  item__marketPrice:i=3200
+scope_shahin{
+  _use:t="base_thermal_scope"
+  _use:t="item_rarity_rare"
+  animchar__res:t="shakhin_dovetail_char"
+  item__proto:t="scope_shahin"
+  item__weight:r=1.6
+  item__volume:i=60
+  item__name:t="items/scope_shahin"
+  item__marketPrice:i=12000
   gunAttachable__slotName:t="scope"
-  collres__res:t="acog_ta31_sight_collision"
-  gunmod__zoomFactor:r=4
-  gunmod__camShiftMax:r=0.17
-  gunmod__camShiftMin:r=0.17
-  gunmod__lensBrightness:r=0.85
-  gunmod__distortionParams:p3=0.8, 0.2, 0.15
+  collres__res:t="shakhin_dovetail_collision"
+  gunmod__zoomFactor:r=3.6
+  weap__focusPlaneShift:r=0.3
+  weap__dofNearAmountPercent:r=2
+  gunmod__camNode:t="scope_view"
+  gunmod__nightNode:t="scope_view"
+  gunmod__dayNode:t="scope_view"
+  gunmod__lensActive:b=yes
+  gunmod__lensAtDay:b=yes
+  gunmod__lensAtNight:b=yes
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.2, 2
 
+  _group{
+    _tags:t="render"
+    thermal_vision__noiseValue:r=0.04
+    thermal_vision__pixelSize:i=1024
+  }
+
+  "thermalScope:tag"{}
   "isCameraAlwaysOnScope:tag"{}
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
-    i:t="scope_picatinny_short_slot"
+    i:t="scope_dovetail_high_slot"
   }
 
   "item__cantBeCorrupted:tag"{}
 }
 
-scope_utg_t4{
-  _use:t="base_scope"
-  animchar__res:t="scp_t4iecdq_sight_char"
-  item__proto:t="scope_utg_t4"
-  item__weight:r=0.49
-  item__volume:i=40
-  item__name:t="items/scope_utg_t4"
-  item__marketPrice:i=1380
+scope_scotopia_s350f_thermal_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__adsSpeedMult:r=0.86
+}
+
+scope_scotopia_s350f_thermal{
+  _use:t="base_thermal_scope"
+  _use:t="item_rarity_uncommon"
+  animchar__res:t="scotopia_s350f_sight_char"
+  item__proto:t="scope_scotopia_s350f_thermal"
+  item__weight:r=0.475
+  item__volume:i=50
+  item__name:t="items/scope_scotopia_s350f_thermal"
+  item__marketPrice:i=11600
   gunAttachable__slotName:t="scope"
-  collres__res:t="scp_t4iecdq_sight_collision"
-  gunmod__zoomFactor:r=4
-  gunmod__camRealZoomShift:r=0.065
-  gunmod__camShiftMax:r=0.21
-  gunmod__camShiftMin:r=0.21
+  collres__res:t="scotopia_s350f_sight_collision"
+  gunmod__zoomFactor:r=3
+  weap__focusPlaneShift:r=0.3
+  weap__dofNearAmountPercent:r=2
+  gunmod__camNode:t="scope_view"
+  gunmod__nightNode:t="scope_view"
+  gunmod__dayNode:t="scope_view"
+  gunmod__lensActive:b=yes
+  gunmod__lensAtDay:b=yes
+  gunmod__lensAtNight:b=yes
+  gun_mod__effectTemplate:t="scope_scotopia_s350f_thermal_effect"
   showroom_item__customZoom:r=1.6
   showroom_item__customZoomBordersRng:p2=1.2, 2
 
+  _group{
+    _tags:t="render"
+    thermal_vision__noiseValue:r=0.04
+    thermal_vision__pixelSize:i=1024
+  }
+
+  "thermalScope:tag"{}
   "isCameraAlwaysOnScope:tag"{}
   "gunAttachable:tag"{}
   "gunmod__slots:list<t>"{
-    i:t="scope_picatinny_short_slot"
+    i:t="scope_picatinny_long_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+scope_an_pas_thermal{
+  _use:t="base_thermal_scope"
+  _use:t="item_rarity_rare"
+  animchar__res:t="an_pas_13b_v1_lwts_char"
+  item__proto:t="scope_an_pas_thermal"
+  item__weight:r=2.5
+  item__volume:i=80
+  item__name:t="items/scope_an_pas_thermal"
+  item__marketPrice:i=18400
+  gunAttachable__slotName:t="scope"
+  collres__res:t="an_pas_13b_v1_lwts_collision"
+  gunmod__zoomFactor:r=3.3
+  gunmod__camShiftMax:r=0.065
+  gunmod__camShiftMin:r=0.065
+  weap__focusPlaneShift:r=0.3
+  weap__dofNearAmountPercent:r=2
+  gunmod__camNode:t="scope_view"
+  gunmod__nightNode:t="scope_view"
+  gunmod__dayNode:t="scope_view"
+  gunmod__lensActive:b=yes
+  gunmod__lensAtDay:b=yes
+  gunmod__lensAtNight:b=yes
+  showroom_item__customZoom:r=1.4
+  showroom_item__customZoomBordersRng:p2=1.2, 1.8
+
+  _group{
+    _tags:t="render"
+    thermal_vision__noiseValue:r=0.04
+    thermal_vision__pixelSize:i=1024
+  }
+
+  "thermalScope:tag"{}
+  "isCameraAlwaysOnScope:tag"{}
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_picatinny_long_slot"
+  }
+
+  "item__cantBeCorrupted:tag"{}
+}
+
+scope_pulsar_n870{
+  _use:t="base_scope"
+  animchar__res:t="scope_pulsar_n870_char"
+  item__proto:t="scope_pulsar_n870"
+  item__weight:r=1.2
+  item__volume:i=60
+  item__name:t="items/scope_pulsar_n870"
+  gunAttachable__slotName:t="scope"
+  collres__res:t="scope_pulsar_n870_collision"
+  gunmod__zoomFactor:r=3.5
+  weap__focusPlaneShift:r=0.3
+  weap__dofNearAmountPercent:r=2
+  gunmod__camNode:t="collimator_view"
+  gunmod__nightNode:t="scope_view"
+  gunmod__dayNode:t="collimator_view"
+  gunmod__lensActive:b=no
+  gunmod__lensAtDay:b=no
+  gunmod__lensAtNight:b=yes
+  gunmod__enabledInTime:p2=20, 4
+
+  "nightScope:tag"{}
+  "isCameraAlwaysOnScope:tag"{}
+  "gunAttachable:tag"{}
+  "gunmod__slots:list<t>"{
+    i:t="scope_picatinny_long_slot"
   }
 
   "item__cantBeCorrupted:tag"{}

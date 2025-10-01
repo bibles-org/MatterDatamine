@@ -17,12 +17,16 @@ from "%ui/state/queueState.nut" import isInQueue
 from "%ui/mainMenu/raid_preparation_window_state.nut" import isPreparationOpened, closePreparationsScreens
 from "%ui/squad/squadManager.nut" import myExtSquadData
 from "%ui/matchingQueues.nut" import matchingQueuesMap
+from "%ui/hud/state/onboarding_state.nut" import isOnboarding
 
 
 let wantOfflineRaid = Watched(false)
 let offlineRaidCachseList = Watched({})
 
 let isOfflineRaidAvailableForQueue = Computed(function() {
+  if (isOnboarding.get()) {
+    return false
+  }
   let params = selectedRaid.get()?.extraParams
   let isNexus = params?.nexus ?? false
   if (isNexus)
@@ -78,6 +82,9 @@ let mkOfflineRaidUnavailableReason = function() {
   let reason = Computed(function() {
     if (isOfflineRaidAvailable.get()) {
       return null
+    }
+    if (isOnboarding.get()) {
+      return loc("queue/offline_raids/unavailable")
     }
     if (numOfflineRaidsAvailable.get() <= 0) {
       return loc("queue/offline_raids/noTicketsShort")
@@ -153,6 +160,10 @@ function mkOfflineRaidCheckBox(override = {}, isDisabled = false) {
           }
           {
             setValue = function(v) {
+              if (isOnboarding.get()) {
+                showMsgbox({ text = loc("closedDoor/accessDenied") })
+                return
+              }
               if (isInQueue.get()) {
                 showMsgbox({ text = loc("queue/offline_raids/forbidden") })
                 return

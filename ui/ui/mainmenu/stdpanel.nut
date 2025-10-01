@@ -114,7 +114,7 @@ let mkPanel = @(header, content, style = {}) function() {
       pos
       padding = static [fsh(1),0,0,0]
       children = {
-        size = flex()
+        size = size ?? flex()
         flow = FLOW_VERTICAL
         children = [
           header

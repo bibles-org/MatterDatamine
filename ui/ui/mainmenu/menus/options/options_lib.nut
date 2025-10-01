@@ -48,7 +48,7 @@ function optionCombo(opt, _group, xmbNode){
 let locOn = loc($"option/on")
 let locOff = loc($"option/off")
 
-function optionCheckBox(opt, group, xmbNode) {
+function optionCheckBox(opt, group, xmbNode, params = {}) {
   let available = Watched([false, true])
   return @(){
     size = flex()
@@ -61,7 +61,7 @@ function optionCheckBox(opt, group, xmbNode) {
       allValues = available.get()
       xmbNode
       group
-    })
+    }.__merge(params))
   }
 }
 

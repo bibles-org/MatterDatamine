@@ -47,7 +47,6 @@ function mkIcon(icon, itemCount, iconBlockSize, fontSize, isAdded) {
 
 function mkItemPanel(icon, nameLoc, itemTypeLoc, count, tooltip, iconBlockSize, fontSize, infoTextColor, isAdded) {
   return {
-    size = [iconBlockSize[0], SIZE_TO_CONTENT]
     flow = FLOW_VERTICAL
     halign = ALIGN_CENTER
     vplace = ALIGN_TOP
@@ -58,7 +57,6 @@ function mkItemPanel(icon, nameLoc, itemTypeLoc, count, tooltip, iconBlockSize, 
     children = [
       mkIcon(icon, count, iconBlockSize, fontSize, isAdded)
       {
-        size = FLEX_H
         flow = FLOW_VERTICAL
         halign = ALIGN_CENTER
         valign = ALIGN_CENTER
@@ -67,7 +65,6 @@ function mkItemPanel(icon, nameLoc, itemTypeLoc, count, tooltip, iconBlockSize, 
           itemTypeLoc && isAdded ? mkText(itemTypeLoc, {color = infoTextColor}) : null
           nameLoc == null ? null : {
             rendObj = ROBJ_TEXTAREA
-            size = FLEX_H
             behavior = Behaviors.TextArea
             halign = ALIGN_CENTER
             text = nameLoc

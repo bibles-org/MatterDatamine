@@ -35,6 +35,7 @@ let { playerProfileChronotracesCount, playerProfileNexusLoadoutStorageCount, pla
 let { profilePublicKey } = require("%ui/profile/profile_pubkey.nut")
 let { localPlayerEid } = require("%ui/hud/state/local_player.nut")
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
+let { DBGLEVEL } = require("dagor.system")
 
 local battle_reserve_update_timer = null
 let randomTimeGap = rnd_int(0, 300)
@@ -150,26 +151,24 @@ let debugDiffItems = function(old_items, new_items, prefix) {
     }
   }
 
-  log($"{prefix} added\n", addedItems)
-  log($"{prefix} mopdified (values will be presented as `param = old => new`)\n", modifiedItems)
-  log($"{prefix} deleted\n", deletedItems)
-  log($"{prefix} old\n", old_items)
-  log($"{prefix} new\n", new_items)
+  log($"{prefix} all items", new_items)
+  log($"{prefix} added items", addedItems)
+  log($"{prefix} mopdified items(values will be presented as `param = old => new`)", modifiedItems)
+  log($"{prefix} deleted items", deletedItems)
 }
 
 let debugInventoryHandler = function(debug_inventory_block, comp) {
-  log("debug_inventory_block (old = client inventory | new = profile server inventory)")
   debugDiffItems(comp.player_profile__allItems.getAll(), debug_inventory_block, "debug_inventory_block")
 }
 
 let debugLoadoutHandler = function(debug_loadout_block, comp) {
-  log("debug_loadout_block (old = client loadout | new = profile server loadout)")
   debugDiffItems(comp.player_profile__loadout.getAll(), debug_loadout_block, "debug_loadout_block")
 }
 
 let allItemsHandler = function(all_items, comp) {
-  log("all_items (old = client loadout | new = profile server loadout)", all_items)
-  debugDiffItems(comp.player_profile__allItems.getAll(), all_items, "all_items")
+  if (DBGLEVEL > 0) {
+    log($"all_items", all_items)
+  }
   comp.player_profile__allItems = all_items
 }
 
@@ -424,7 +423,9 @@ let alterHandler = function(alterContainerBlock, _comp) {
 }
 
 let mintsHandler = function(mints, comp) {
-  log("mints update", mints)
+  if (DBGLEVEL > 0) {
+    log("mints update", mints)
+  }
 
   let obj = {}
   foreach (idx, v in mints) {
@@ -436,7 +437,9 @@ let mintsHandler = function(mints, comp) {
 }
 
 let loadoutsAgencyHandler = function(loadouts_agency, _comp) {
-  log("loadouts_agency update", loadouts_agency)
+  if (DBGLEVEL > 0) {
+    log("loadouts_agency update", loadouts_agency)
+  }
 
   loadoutsAgency.set({
     updateTimeAt = get_sync_time() + loadouts_agency.updateTimeLeft.tofloat()

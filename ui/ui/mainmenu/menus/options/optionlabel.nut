@@ -5,7 +5,7 @@ from "%ui/ui_library.nut" import *
 
 
 
-function optionLabel(opt, group) {
+function optionLabel(opt, group, override = {}) {
   let stateFlags = Watched(0)
 
   return function() {
@@ -27,7 +27,7 @@ function optionLabel(opt, group) {
       sound = {
         hover = "ui_sounds/menu_highlight_settings"
       }
-    }.__update(body_txt)
+    }.__update(body_txt, override)
   }
 }
 

@@ -7,10 +7,13 @@ ecs.register_es("hud_moving_zone_pos_ui_es",
   {
     [["onInit", "onChange"]] = function(_evt, _eid, comp){
       movingZoneInfo.set({
-        worldPos=comp["transform"][3]
-        radius=comp["sphere_zone__radius"]
-        endTime = comp["moving_zone__startEndTime"].x
+        startEndTime = comp["moving_zone__startEndTime"]
         collapseTime = comp["moving_zone__collapseTime"]
+        targetRadius = comp["moving_zone__targetRadius"]
+        sourceRadius = comp["moving_zone__sourceRadius"]
+        targetPos = comp["moving_zone__targetPos"]
+        sourcePos = comp["moving_zone__sourcePos"]
+        isCollapsing = comp["moving_zone__isCollapsing"]
       })
     }
     function onDestroy(_evt, _eid, _comp) {
@@ -19,10 +22,11 @@ ecs.register_es("hud_moving_zone_pos_ui_es",
   },
   {
     comps_track = [
-      ["transform", ecs.TYPE_MATRIX],
-      ["sphere_zone__radius", ecs.TYPE_FLOAT],
+      ["moving_zone__isCollapsing", ecs.TYPE_BOOL, false],
       ["moving_zone__targetPos", ecs.TYPE_POINT3],
       ["moving_zone__targetRadius", ecs.TYPE_FLOAT],
+      ["moving_zone__sourcePos", ecs.TYPE_POINT3],
+      ["moving_zone__sourceRadius", ecs.TYPE_FLOAT],
       ["moving_zone__startEndTime", ecs.TYPE_POINT2],
       ["moving_zone__collapseTime", ecs.TYPE_FLOAT],
     ]

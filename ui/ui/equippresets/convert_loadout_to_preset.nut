@@ -59,6 +59,7 @@ let convertItemList = function(loadoutList, presetList) {
       itemTemplate = item.templateName
       count = 1
       countPerStack = template?.getCompValNullable("item__countPerStack") ?? 0
+      isCorrupted = item?.isCorrupted ?? false
       isBoxedItem
       ammoCount
       ammoId = null
@@ -187,6 +188,8 @@ function convertPresetWeapons(preset, items, id) {
     let attachments = weapon?.attachments ?? {}
     currentId++
     foreach (slotName, slotValue in attachments) {
+      if (slotValue.itemTemplate == null)
+        continue
       items.append({
         isCorrupted = false,
         itemId = $"{currentId}",

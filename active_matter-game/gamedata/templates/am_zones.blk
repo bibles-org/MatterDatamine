@@ -1201,17 +1201,15 @@ anomaly_zone_liana_branch{
 
 storm_zone{
   _use:t="replicating"
-  active:b=no
   sphere_zone__inverted:b=yes
-  sphere_zone__radius:r=500
-  _replicated:t="active"
   moving_zone__velIncrease:r=1.15
   moving_zone__checkSizeTime:r=1
   moving_zone__nextSizeCheckTime:r=0
+  sphere_zone__radius:r=500
+  _tracked:t="sphere_zone__radius"
   forcefieldAppliesFog:b=yes
   forcefieldFog__fadeSlowness:r=16
   forcefieldFog__fadeLimit:r=0.4
-  _tracked:t="sphere_zone__radius"
   volfog:t=""
   moving_zone__movingVelocity:r=0
   moving_zone__sleepingTime:r=60
@@ -1227,7 +1225,17 @@ storm_zone{
   moving_zone__sleepingTimeDecrease:r=10
 
   _group{
+    _tags:t="server"
+    moving_zone__isInitialized:b=no
+    moving_zone__chooseFinalExtraction:b=yes
+  }
+
+  _group{
+    transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
     _replicate:b=yes
+    _track:b=yes
+    active:b=no
+    moving_zone__isCollapsing:b=no
     moving_zone__startEndTime:p2=0, 0
     moving_zone__sourcePos:p3=0, 0, 0
     moving_zone__targetPos:p3=0, 0, 0
@@ -1236,22 +1244,6 @@ storm_zone{
     moving_zone__collapseRadius:r=0.001
     moving_zone__collapseTime:r=10
     moving_zone__manual_activation:b=no
-  }
-
-  _group{
-    _tags:t="server"
-    moving_zone__isInitialized:b=no
-    moving_zone__chooseFinalExtraction:b=yes
-  }
-
-  _group{
-    _replicate:b=yes
-    _track:b=yes
-    moving_zone_hud__playerZonePosition:i=0
-    moving_zone_hud__zoneStartTimer:i=-1
-    moving_zone_hud__zoneFinishTimer:i=-1
-    moving_zone_hud__zoneProgress:i=-1
-    transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
   }
 
   "moving_zone_hud:tag"{

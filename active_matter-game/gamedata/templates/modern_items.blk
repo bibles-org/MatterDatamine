@@ -533,8 +533,14 @@ akm_47_magazine{
   }
 }
 
+vepr_10rd_magazine_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__adsSpeedMult:r=1.06
+}
+
 vepr_10rd_magazine{
   _use:t="base_magazine"
+  _use:t="gun_mod_with_effect"
   animchar__res:t="vepr_10rd_ammo_char"
   item__proto:t="vepr_10rd_magazine"
   ammo_holder__templateName:t="vepr_10rd_magazine"
@@ -545,6 +551,7 @@ vepr_10rd_magazine{
   item__name:t="items/vepr_10rd_magazine"
   collres__res:t="vepr_10rd_ammo_collision"
   item__marketPrice:i=350
+  gun_mod__effectTemplate:t="vepr_10rd_magazine_effect"
   profile_server_data__enrichmentRefineChronotracesRange:ip2=5, 5
 
   "ammo_holder__loadingAmmoType:shared:t"{
@@ -1310,8 +1317,14 @@ rpd_magazine{
   }
 }
 
+rpk_74_magazine_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__adsSpeedMult:r=0.98
+}
+
 rpk_74_magazine{
   _use:t="base_magazine"
+  _use:t="gun_mod_with_effect"
   animchar__res:t="rpk_74m_ammo_char"
   item__proto:t="rpk_74_magazine"
   item__locDetails:t=""
@@ -1324,6 +1337,7 @@ rpk_74_magazine{
   collres__res:t="rpk_74m_ammo_collision"
   item__marketPrice:i=1200
   gunAttachable__slotTag:t="rpk_74_magazine"
+  gun_mod__effectTemplate:t="rpk_74_magazine_effect"
   profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 10
 
   "ammo_holder__loadingAmmoType:shared:t"{

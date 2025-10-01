@@ -1,5 +1,5 @@
 from "%dngscripts/globalState.nut" import nestWatched
-from "%ui/fonts_style.nut" import h2_txt, body_txt
+from "%ui/fonts_style.nut" import h2_txt, body_txt, sub_txt
 from "%ui/components/commonComponents.nut" import mkText, bluredPanel, mkTextArea, mkSelectPanelItem,
   mkSelectPanelTextCtor, BD_LEFT
 from "%ui/components/scrollbar.nut" import makeVertScroll
@@ -15,10 +15,15 @@ from "%ui/options/mkOnlineSaveData.nut" import mkOnlineSaveData
 from "%ui/mainMenu/notificationMark.nut" import mkNotificationCircle
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
+import "%ui/mainMenu/menus/options/optionLabel.nut" as optionLabel
 from "%ui/components/colors.nut" import BtnBgNormal, BtnBgSelected, TextNormal, BtnBgFocused, SelBgNormal,
-  BtnBgDisabled, InfoTextValueColor, RedWarningColor
+  BtnBgDisabled, InfoTextValueColor, RedWarningColor, BtnBdNormal, BtnBdHover, BtnBdSelected
 import "%ui/components/colorize.nut" as colorize
+from "%ui/mainMenu/menus/options/options_lib.nut" import optionCtor, optionCheckBox
 from "%ui/mainMenu/menus/options/player_interaction_option.nut" import isStreamerMode
+import "%ui/components/checkbox.nut" as checkBox
+from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog, playerLogsColors, marketIconSize
+from "%ui/hud/state/gametype_state.nut" import isOnPlayerBase
 
 let { playerStats } = require("%ui/profile/profileState.nut")
 
@@ -37,10 +42,20 @@ enum LoopStatus {
 const MUSIC_PLAYER_ID = "musicPlayerId"
 const MUSIC_PLAYER_VOLUME = "musicPlayerVolume"
 const MUSIC_STREAMING_FREE_ONLY_SETTING = "isFreeStreamingMusicOnly"
+const MUSIC_FAVORITES_LIST = "musicPlayerFavoritesTracks"
+const MUSIC_PLAY_ONLY_FAVORITES = "musicPlayOnlyFavoritesTracks"
 
 let playOnlyFreeStreamingMusicStorage = mkOnlineSaveData(MUSIC_STREAMING_FREE_ONLY_SETTING, @() true)
 let playOnlyFreeStreamingMusicWatch = playOnlyFreeStreamingMusicStorage.watch
 let playOnlyFreeStreamingMusicSet = playOnlyFreeStreamingMusicStorage.setValue
+
+let favoritesTracksListStorage = mkOnlineSaveData(MUSIC_FAVORITES_LIST, @() {})
+let favoritesTracksListWatch = favoritesTracksListStorage.watch
+let favoritesTracksListSet = favoritesTracksListStorage.setValue
+
+let playOnlyFavoritesTracksStorage = mkOnlineSaveData(MUSIC_PLAY_ONLY_FAVORITES, @() false)
+let playOnlyFavoritesTracksWatch = playOnlyFavoritesTracksStorage.watch
+let playOnlyFavoritesTracksSet = playOnlyFavoritesTracksStorage.setValue
 
 let playingSound = nestWatched("playingSound", null)
 let soundHandle = nestWatched("soundHandle", null)
@@ -49,6 +64,8 @@ let unseenTracks = nestWatched("unseenTracks", {})
 let isPlaying = nestWatched("isMusicPlaying", false)
 let soundLength = nestWatched("soundLength", 0)
 let newUnlocksSongList = nestWatched("newUnlocksSongList", [])
+let hoveredSoundData = Watched(null)
+let showFavorites = Watched(false)
 let lastPlayed = Watched(null)
 
 let loopBtnStateFlags = Watched(0)
@@ -180,7 +197,8 @@ function playNextLoopTrack() {
         break
       }
       let restricted = list[newIdx].isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get())
-      if (!restricted) {
+      let isFavorite = list[newIdx].soundTrack in favoritesTracksListWatch.get()
+      if (!restricted && (!playOnlyFavoritesTracksWatch.get() || isFavorite)) {
         soundPlay(list[newIdx])
         break
       }
@@ -192,17 +210,33 @@ function playNextLoopTrack() {
   else {
     let len = list.len()
     local hasFound = false
-    for (local i = 1; i < len; i++) {
-      let newIdx = (curTrackIdx + len + i) % len
-      let restricted = list[newIdx].isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get())
-      if (!restricted) {
-        soundPlay(list[newIdx])
-        hasFound = true
-        break
+    if (playOnlyFavoritesTracksWatch.get()) {
+      for (local i = 1; i <= len; i++) {
+        let newIdx = (curTrackIdx + len + i) % len
+        let restricted = list[newIdx].isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get())
+        let isFavorite = list[newIdx].soundTrack in favoritesTracksListWatch.get()
+        if (!restricted && isFavorite) {
+          soundPlay(list[newIdx])
+          hasFound = true
+          break
+        }
       }
+      if (!hasFound && isOnPlayerBase.get())
+        showMsgbox({ text = loc("musicPlayer/noFavoritesTracks") })
     }
-    if (!hasFound)
-      showMsgbox({ text = loc("musicPlayer/streamerNoAvailableTracks") })
+    else {
+      for (local i = 1; i < len; i++) {
+        let newIdx = (curTrackIdx + len + i) % len
+        let restricted = list[newIdx].isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get())
+        if (!restricted) {
+          soundPlay(list[newIdx])
+          hasFound = true
+          break
+        }
+      }
+      if (!hasFound && isOnPlayerBase.get())
+        showMsgbox({ text = loc("musicPlayer/streamerNoAvailableTracks") })
+    }
   }
 }
 
@@ -386,6 +420,56 @@ let notificationIcon = freeze({
   children = mkNotificationCircle([0, 100])
 })
 
+function toggleFavoriteTrackStatus(isFavorite, soundData) {
+  let { soundTrack, item__proto = null } = soundData
+  let logId = $"{soundTrack}_{isFavorite}"
+  let basePlayerLog = {
+    id = logId
+    idToIgnore = logId
+    content = mkPlayerLog({
+      titleFaIcon = isFavorite ? "heart-o" : "heart"
+      bodyText = loc(soundData.soundTrack)
+      titleText = isFavorite ? loc("musicPlayer/removedFromFavorites") : loc("musicPlayer/addedToFavorites")
+      bodyIcon = mkIconNoBorder(marketIconSize, item__proto)
+    })
+  }
+  if (isFavorite) {
+    favoritesTracksListSet(favoritesTracksListWatch.get().filter(@(_v, k) k != soundTrack))
+    addPlayerLog(basePlayerLog)
+  }
+  else {
+    favoritesTracksListSet(favoritesTracksListWatch.get().__merge({ [soundTrack] = true } ))
+    addPlayerLog(basePlayerLog)
+  }
+}
+
+function mkLikeButton(soundData) {
+  let soundTrack = soundData.soundTrack
+  let isFavorite = Computed(@() soundTrack in favoritesTracksListWatch.get())
+  let stateFlags = Watched(0)
+  return function() {
+    let color = stateFlags.get() & S_HOVER ? BtnBdHover
+      : isFavorite.get() ? BtnBdSelected
+      : BtnBdNormal
+    return {
+      watch = [isFavorite, stateFlags]
+      children = faComp(isFavorite.get() ? "heart" : "heart-o", {
+        fontSize = hdpxi(18)
+        color
+        onElemState = function(sf) {
+          stateFlags.set(sf)
+          setTooltip(sf == 0 ? null
+            : isFavorite.get() ? loc("musicPlayer/removeFavorite")
+            : loc("musicPlayer/addFavorite"))
+        }
+        behavior = Behaviors.Button
+        onClick = @() toggleFavoriteTrackStatus(isFavorite.get(), soundData)
+        padding = [0, hdpx(2)]
+      })
+    }
+  }
+}
+
 function mkSoundRow(soundData) {
   let soundTrack = soundData?.soundTrack
   let curTrack = Computed(@() playingSound.get()?.soundTrack)
@@ -394,6 +478,7 @@ function mkSoundRow(soundData) {
   let isRestricted = Computed(@() soundData?.isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get()))
   let textTrackCompCtor = mkSelectPanelTextCtor(loc(soundData.soundTrack), tracknameStyle)
   let textAuthorCompCtor = mkSelectPanelTextCtor(loc(soundData.author), authorStyle)
+  let needToHide = Computed(@() showFavorites.get() && soundTrack not in favoritesTracksListWatch.get())
   return function() {
     let visual_params = @(restricted) {
       group
@@ -416,11 +501,17 @@ function mkSoundRow(soundData) {
           unseenTracks.mutate(@(v) v?.$rawdelete(soundData?.pickup_unlock__name))
           unseenTracksCount.modify(@(v) v - 1)
         }
+        if (on)
+          hoveredSoundData.set(soundData)
+        else
+          hoveredSoundData.set(null)
       }
       xmbNode = XmbNode()
     }
+    if (needToHide.get())
+      return { watch = [isRestricted, needToHide] }
     return {
-      watch = isRestricted
+      watch = [isRestricted, needToHide]
       size = FLEX_H
       children = mkSelectPanelItem({
         children = @(params) @() {
@@ -430,6 +521,8 @@ function mkSoundRow(soundData) {
           gap = hdpx(10)
           valign = ALIGN_CENTER
           padding = static [0, hdpx(4), 0, hdpx(5)]
+          hotkeys = [["J:X", { description = loc("musicPlayer/changeFavoriteStatus")
+            action = @() toggleFavoriteTrackStatus(hoveredSoundData.get().soundTrack in favoritesTracksListWatch.get(), hoveredSoundData.get()) }]]
           children = [
             mkSoundIcon(soundData, params.stateFlags, group)
             {
@@ -444,6 +537,7 @@ function mkSoundRow(soundData) {
                 textAuthorCompCtor(params)
               ]
             }
+            mkLikeButton(soundData)
             isUnseen.get() ? notificationIcon : null
           ]
         },
@@ -466,8 +560,98 @@ function mkSoundRow(soundData) {
   }
 }
 
+let playerOnlyFavoriteSetting = optionCtor({
+  name = loc("musicPlayer/onlyFavorites")
+  setValue = function(v) {
+    if (v && favoritesTracksListWatch.get().len() <= 0) {
+      showMsgbox({ text = loc("musicPlayer/noFavorites")})
+      return
+    }
+    playOnlyFavoritesTracksSet(v)
+    showFavorites.set(v)
+  }
+  var = playOnlyFavoritesTracksWatch
+  defVal = false
+  tab = "Sound"
+  widgetCtor = optionCheckBox
+  valToString = @(v) (v ? loc("option/on") : loc("option/off"))
+})
+
+function mkFavoritesCheckbox() {
+  let hasFavorites = Computed(@() favoritesTracksListWatch.get().len() >= 1)
+  return function() {
+    if (!hasFavorites.get() && playOnlyFavoritesTracksWatch.get()) {
+      playOnlyFavoritesTracksSet(false)
+      addPlayerLog({
+        id = "onlyFavoritesOff"
+        idToIgnore = "onlyFavoritesOff"
+        content = mkPlayerLog({
+          titleFaIcon = "exclamation"
+          bodyText = loc("musicPlayer/onlyFavoritesOff")
+          titleText = loc("re_attention")
+        })
+      })
+      showFavorites.set(false)
+    }
+
+    let group = ElemGroup()
+    let xmbNode = XmbNode()
+
+    let widget = playerOnlyFavoriteSetting.widgetCtor(playerOnlyFavoriteSetting, group, xmbNode, {
+      textStyle = sub_txt
+      arrowSize = hdpx(25)
+    })
+    if (!widget)
+      return {}
+
+    let label = @() {
+      watch = showFavorites
+      size = [flex(1.7), SIZE_TO_CONTENT]
+      flow = FLOW_HORIZONTAL
+      gap = hdpx(4)
+      valign = ALIGN_CENTER
+      children = [
+        faComp(showFavorites.get() ? "heart" : "music", {
+          fontSize = hdpxi(18)
+          color = showFavorites.get() ? BtnBdSelected : TextNormal
+        })
+        optionLabel(playerOnlyFavoriteSetting, group, sub_txt)
+      ]
+    }
+
+    let row = {
+      padding = static [0, 0, 0, hdpx(10)]
+      size = [flex(), fsh(3)]
+      flow = FLOW_HORIZONTAL
+      valign = ALIGN_CENTER
+      gap = fsh(2)
+      children = [
+        label
+        widget
+      ]
+    }
+
+    return {
+      watch = [hasFavorites, showFavorites]
+      size = FLEX_H
+      children = row
+    }
+  }
+}
+
+function mkEmtyFavoritesListText() {
+  let needToShow = Computed(@() showFavorites.get() && favoritesTracksListWatch.get().len() <= 0)
+  if (!needToShow.get())
+    return @() { watch = needToShow }
+  return @() {
+    watch = needToShow
+    size = FLEX_H
+    children = mkTextArea(loc("musicPlayer/noFavorites"), { halign = ALIGN_CENTER }.__merge(body_txt))
+  }
+}
+
 let soundsListBlock = @() {
-  watch = trackList
+  watch = [trackList, showFavorites]
   size = static [hdpx(377), flex()]
   children = trackList.get().len() <= 0
     ? mkTextArea(loc("musicPlayer/noAudiosFound"), {
@@ -475,13 +659,22 @@ let soundsListBlock = @() {
       padding = hdpx(10)
       halign = ALIGN_CENTER
     })
-    : makeVertScroll({
-        size = FLEX_H
-        flow = FLOW_VERTICAL
-        gap = static hdpx(2)
-        xmbNode = XmbContainer({ canFocus = false, wrap = false })
-        children = trackList.get().map(mkSoundRow)
-      })
+    : {
+      size = flex()
+      flow = FLOW_VERTICAL
+      gap = hdpx(10)
+      children = [
+        mkFavoritesCheckbox()
+        mkEmtyFavoritesListText()
+        makeVertScroll({
+          size = FLEX_H
+          flow = FLOW_VERTICAL
+          gap = static hdpx(2)
+          xmbNode = XmbContainer({ canFocus = false, wrap = false })
+          children = trackList.get().map(mkSoundRow)
+        })
+      ]
+    }
 }.__update(bluredPanel)
 
 let getPos = @() isPlaying.get() ? getCurTrackPos()/1000 : 0
@@ -695,4 +888,7 @@ return freeze({
   musicPlayerSetVolume
   playOnlyFreeStreamingMusicWatch
   playOnlyFreeStreamingMusicSet
+  playOnlyFavoritesTracksWatch
+  favoritesTracksListWatch
+  playerOnlyFavoriteSetting
 })

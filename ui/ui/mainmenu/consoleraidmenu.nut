@@ -671,6 +671,8 @@ function getContent() {
       .filter(isZoneVisible) 
       .sort(@(a, b) isZoneUnlocked(b, stats, matchingUTCTime, isInSquad.get(), isSquadLeader.get(), raidData)
           <=> isZoneUnlocked(a, stats, matchingUTCTime, isInSquad.get(), isSquadLeader.get(), raidData)
+        || (!doesZoneFitRequirements(a?.extraParams.requiresToSelect, playerStats.get()) || !a.enabled || isQueueHiddenBySchedule(a, matchingUTCTime.get()))
+          <=> (!doesZoneFitRequirements(b?.extraParams.requiresToSelect, playerStats.get()) || !b.enabled || isQueueHiddenBySchedule(b, matchingUTCTime.get()))
         || (queues[a.id]?.extraParams?.uiOrder ?? 9999) <=> (queues[b.id]?.extraParams?.uiOrder ?? 9999)
         || a.id <=> b.id)
     if (isEqual(prev, variants))
@@ -1089,94 +1091,109 @@ function getContent() {
     let q = actualMatchingQueuesMap.get()?[opt.id]
     if (q == null)
       return null
-    let isUnlocked = @() isZoneUnlocked(q, playerStats.get(), matchingUTCTime,
-      isInSquad.get(), isSquadLeader.get(), selectedRaidBySquadLeader.get()?.raidData)
+    let isUnlocked = Computed(@() isZoneUnlocked(q, playerStats.get(), matchingUTCTime,
+      isInSquad.get(), isSquadLeader.get(), selectedRaidBySquadLeader.get()?.raidData))
     let scene = q?.scenes[0].fileName
     let raid_description = get_raid_description(scene)
 
     let notification = mkContractsCompleted(q?.extraParams.raidName)
-    let isDisabled = Computed(@() doesZoneFitRequirements(q?.extraParams.requiresToSelect, playerStats.get())
-      && (!q.enabled || isQueueHiddenBySchedule(q, matchingUTCTime.get())))
-    let visual_params = {
-      style = !isDisabled.get() ? {} : static { BtnBgNormal = colors.BtnBgDisabled }
-      size = FLEX_H
-      onHover = function(on) {
-        if (!on || !isInSquad.get()) {
-          setTooltip(null)
-          return
-        }
-        if (selectedRaidBySquadLeader.get()?.raidData == null) {
-          if (isSquadLeader.get())
-            setTooltip(loc("missions/makeLeaderSelection"))
-          else
-            setTooltip(loc("missions/waitingLeaderSelectionDesc"))
-        }
-        else
-          setTooltip(loc("missions/anotherLeaderSelectionDesc"))
+    let isDisabled = Computed(@() (!doesZoneFitRequirements(q?.extraParams.requiresToSelect, playerStats.get())
+      || !q.enabled || isQueueHiddenBySchedule(q, matchingUTCTime.get()))
+      && q.queueId != selectedRaidBySquadLeader.get()?.raidData.queueId)
+    let onHover = function(on) {
+      if (!on || !isInSquad.get()) {
+        setTooltip(null)
+        return
       }
-      padding = 0
+
+      if (selectedRaidBySquadLeader.get()?.raidData == null) {
+        if (isDisabled.get())
+          setTooltip(loc("missions/disabled"))
+        else if (isSquadLeader.get())
+          setTooltip(loc("missions/makeLeaderSelection"))
+        else
+          setTooltip(loc("missions/willBeAvailableAsSquadLeader"))
+      }
+      else if (q.queueId == selectedRaidBySquadLeader.get()?.raidData.queueId)
+        setTooltip(loc("missions/squadLeaderRaid"))
+      else if (isDisabled.get())
+        setTooltip(loc("missions/disabled"))
+      else
+        setTooltip(loc("missions/anotherLeaderSelectionDesc"))
     }
+
     let onSelect = function(v) {
       selectedRaid.set(v)
       prevSelectedZonesPerGameMode[selectedPlayerGameModeOption.get()] <- v
     }
     let qName = loc(q.locId)
     let difficulty = raid_description?.difficulty ?? "unknown"
-    return mkSelectPanelItem({
-      children = @(params) @() {
-        watch = [playerStats, selectedRaidBySquadLeader]
-        size = FLEX_H
-        children = [
-          @() {
-            watch = [playerProfileCurrentContracts, playerProfileOnboardingContracts, isOnboarding]
-            size = flex()
-            children = !hasPremiumContracts(playerProfileCurrentContracts.get(), playerProfileOnboardingContracts.get(),
-              isOnboarding.get(), q?.extraParams.raidName) ? null : premiumBg
-          }
-          {
-            size = FLEX_H
-            flow = FLOW_HORIZONTAL
-            gap = hdpx(4)
-            valign = ALIGN_CENTER
-            padding = static [hdpx(5), hdpx(10)]
-            children = [
-              mkRaidInfoIcon(difficulty, hdpx(20), (isUnlocked() ? difficultyColors : difficultyDisabledColors)?[difficulty] ?? colors.TextNormal)
-              !isUnlocked() ? static faComp("lock", {color = lockColor, fontSize = hdpxi(14)}) : null
-              function() {
-                let isHover = (params.stateFlags.get() & S_HOVER)
-                let textColor = isUnlocked()
-                  ? (params.isSelected()
-                      ? (isHover ? colors.BtnTextHover : colors.BtnTextActive)
-                      : (isHover ? colors.BtnTextHighlight : colors.BtnTextNormal)
-                    )
-                  : lockColor
-                return {
-                    color = textColor, text = qName, watch = params.watch
-                    rendObj = ROBJ_TEXT
-                    behavior = static [Behaviors.Marquee, Behaviors.Button]
-                    speed = static [hdpx(40),hdpx(40)]
-                    delay = 0.3
-                    scrollOnHover = true
-                    size = FLEX_H
-                    eventPassThrough = true
-                  }
-              }
-              @() {
-                watch = notification
-                size = notification.get() <= 0 ? 0 : hdpxi(16)
-                children = mkNotificationMark(notification)
-              }
-            ]
-          }
-        ]
-      }
-      visual_params = visual_params
-      sound = zoneSound
-      onSelect
-      state = selectedRaid
-      border_align = BD_LEFT
-      idx = opt
-    })
+    return @() {
+      watch = isDisabled
+      size = FLEX_H
+      children = mkSelectPanelItem({
+        children = @(params) @() {
+          watch = [playerStats, selectedRaidBySquadLeader]
+          size = FLEX_H
+          children = [
+            @() {
+              watch = [playerProfileCurrentContracts, playerProfileOnboardingContracts, isOnboarding]
+              size = flex()
+              children = !hasPremiumContracts(playerProfileCurrentContracts.get(), playerProfileOnboardingContracts.get(),
+                isOnboarding.get(), q?.extraParams.raidName) ? null : premiumBg
+            }
+            @() {
+              watch = [isDisabled, isUnlocked]
+              size = FLEX_H
+              flow = FLOW_HORIZONTAL
+              gap = hdpx(4)
+              valign = ALIGN_CENTER
+              padding = static [hdpx(5), hdpx(10)]
+              children = [
+                mkRaidInfoIcon(difficulty, hdpx(20), (isUnlocked.get() ? difficultyColors : difficultyDisabledColors)?[difficulty] ?? colors.TextNormal)
+                isDisabled.get() ? static faComp("lock", {color = lockColor, fontSize = hdpxi(14)}) : null
+                function() {
+                  let isHover = (params.stateFlags.get() & S_HOVER)
+                  let textColor = isUnlocked.get()
+                    ? (params.isSelected()
+                        ? (isHover ? colors.BtnTextHover : colors.BtnTextActive)
+                        : (isHover ? colors.BtnTextHighlight : colors.BtnTextNormal)
+                      )
+                    : lockColor
+                  return {
+                      color = textColor, text = qName, watch = params.watch
+                      rendObj = ROBJ_TEXT
+                      behavior = static [Behaviors.Marquee, Behaviors.Button]
+                      speed = static [hdpx(40),hdpx(40)]
+                      delay = 0.3
+                      scrollOnHover = true
+                      size = FLEX_H
+                      eventPassThrough = true
+                      onHover
+                    }
+                }
+                @() {
+                  watch = notification
+                  size = notification.get() <= 0 ? 0 : hdpxi(16)
+                  children = mkNotificationMark(notification)
+                }
+              ]
+            }
+          ]
+        }
+        visual_params = {
+          style = !isDisabled.get() ? {} : static { SelBgNormal = colors.SelBgDisabled }
+          size = FLEX_H
+          onHover
+          padding = 0
+        }
+        sound = zoneSound
+        onSelect
+        state = selectedRaid
+        border_align = BD_LEFT
+        idx = opt
+      })
+    }
   }
 
   let mkZonesWithTitle = @(title, zones, footer = null) {
@@ -1908,9 +1925,10 @@ function getContent() {
   function mkLockMsgboxContent(){
     let txts = []
     let q = selectedRaid.get()
+    let style = { color = colors.InfoTextValueColor }.__update(body_txt)
 
     if (doesZoneFitRequirements(q?.extraParams.requiresToSelect, playerStats.get())){
-      txts.append(mkText(loc("requirement/temporarily_disabled"), {color = colors.InfoTextValueColor}.__update(body_txt)))
+      txts.append(mkText(loc("requirement/temporarily_disabled"), style))
       txts.append({
         flow = FLOW_VERTICAL
         size = FLEX_H
@@ -1925,7 +1943,8 @@ function getContent() {
               mkText(loc("missions/available_in"), body_txt)
               @() {
                 watch = nextRotation
-                children = mkMonospaceTimeComp(nextRotation.get() != null ? max(0, nextRotation.get()) : "???", body_txt)
+                children = nextRotation.get() != null ? mkMonospaceTimeComp(max(0, nextRotation.get()), body_txt)
+                  : mkText("???", style)
               }
             ]
           }

@@ -24,10 +24,11 @@ let debriefingStatsCalculated = Computed(function() {
   if (!isOnPlayerBase.get()
     || playerPath.get() == null
     || (lastBattleResult.get() == null && journalBattleResult.get() == null)
+    || journalBattleResult.get()?.isNexus
   )
     return null
 
-  let battleResult = lastBattleResult.get() ?? journalBattleResult.get()
+  let battleResult = journalBattleResult.get() ?? lastBattleResult.get()
   let stats = battleResult.debriefingStatsV2
   let trackPoints = battleResult.trackPoints
 

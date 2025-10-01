@@ -279,91 +279,6 @@ let playerPreset_2 = {
 
 
 let playerPreset_3 = {
-  presetName = "Pistol"
-  chronogene_primary_1 = {
-    equipment_mod_body_0 = {
-      itemTemplate = "armorplate_big_a"
-      slotTemplateName = "armorplate_big_slot"
-    }
-    equipment_mod_right_leg_0 = {
-      itemTemplate = null
-      slotTemplateName = "armorplate_small_slot"
-    }
-    equipment_mod_pocket_0 = {
-      itemTemplate = "item_healkit"
-      slotTemplateName = "pocket_slot"
-    }
-    itemTemplate = "suit_militant_female_enforcer_item"
-    equipment_mod_left_leg_0 = {
-      itemTemplate = null
-      slotTemplateName = "armorplate_small_slot"
-    }
-  }
-  weapons = [{} {}
-    {
-      attachments = {
-        magazine = {
-          itemTemplate = "beretta_m9_magazine"
-        }
-      }
-      itemTemplate = "beretta_m9_gun"
-    }
-    {
-      attachments = {}
-      itemTemplate = "knife_weapon"
-    }
-  ]
-  flashlight = {
-    attachments = {}
-    itemTemplate = "flashlight_device"
-  }
-  pouch = {
-    attachments = {}
-    itemTemplate = "small_pouch"
-  }
-  backpack = {
-    attachments = {}
-    itemTemplate = "small_backpack"
-  }
-  helmet = {
-    attachments = {}
-    itemTemplate = "helmet_pasgt_tactical"
-  }
-  inventories = {
-    safepack = {
-      capacity = 0
-      items = []
-    }
-    myItems = {
-      capacity = 250
-      items = [
-        {
-          count = 2
-          ammoCount = 15
-          ammoId = null
-          countPerStack = 0
-          itemTemplate = "beretta_m9_magazine"
-          isBoxedItem = false
-        }
-        {
-          count = 1
-          ammoCount = 50
-          ammoId = null
-          countPerStack = 32
-          itemTemplate = "box_9x19_magazine"
-          isBoxedItem = true
-        }
-      ]
-    }
-    backpack = {
-      capacity = 400
-      items = []
-    }
-  }
-}
-
-
-let playerPreset_4 = {
   presetName = "Crossbow"
   chronogene_primary_1 = {
     equipment_mod_body_0 = {
@@ -389,7 +304,11 @@ let playerPreset_4 = {
     }
   }
   weapons = [{
-      attachments = {}
+      attachments = {
+        scope = {
+          itemTemplate = "scope_aimpoint_micro_t2"
+        }
+      }
       itemTemplate = "crossbow_gun"
     }{}
     {
@@ -460,7 +379,7 @@ let playerPreset_4 = {
       items = [
         {
           count = 1
-          ammoCount = 15
+          ammoCount = 35
           ammoId = null
           countPerStack = 1
           itemTemplate = "crossbow_bolt_item"
@@ -478,5 +397,4 @@ return {
   playerPreset_1
   playerPreset_2
   playerPreset_3
-  playerPreset_4
 }

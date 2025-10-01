@@ -94,8 +94,8 @@ let getWatchedPlrPosQ = ecs.SqQuery("getWatchedPlrPos", {
 let getWatchedPlrPos = @() getWatchedPlrPosQ.perform(@(_, comp) comp["transform"].getcol(3))
 
 function alignMapToZone(){
-  tiledMapContext.setViewCentered(false);
-  let radius = (movingZoneInfo.get()?.radius ?? mapDefaultVisibleRadius.get()) * 1.05
+  tiledMapContext.setViewCentered(false)
+  let radius = (movingZoneInfo.get()?.sourceRadius ?? mapDefaultVisibleRadius.get()) * 1.05
   let { leftTop, rightBottom } = tiledMapContextData.get()
   let mapCenter = Point3((leftTop.x + rightBottom.x) / 2, 0, (leftTop.y + rightBottom.y) / 2)
 
@@ -104,7 +104,7 @@ function alignMapToZone(){
   local actualRadius = radius
   if (tiledMapExist.get()){
     actualRadius = tiledMapContext.setVisibleRadius(radius)
-    tiledMapContext.setWorldPos(movingZoneInfo.get()?.worldPos ?? defaultWordPos)
+    tiledMapContext.setWorldPos(movingZoneInfo.get()?.sourcePos ?? defaultWordPos)
   }
   currentMapVisibleRadius.set(actualRadius)
 }
@@ -624,19 +624,21 @@ let hintsWithTimer = @(time) {
 
 
 let mkZoneInfo = function(){
-  let timerState = Computed(@() movingZoneInfo.get()?.endTime)
+  let isCollapsing = Computed(@() movingZoneInfo.get()?.isCollapsing ?? false)
+  let timerState = Computed(@() movingZoneInfo.get()?.startEndTime.x)
   let timer = mkCountdownTimer(timerState, "big_map:map_timer")
 
   return @() {
     valign = ALIGN_CENTER
     size = FLEX_H
-    watch = timer
+    watch = isCollapsing
     flow = FLOW_VERTICAL
     minHeight = closeBtnHgt
     gap = hdpx(2)
-    children = [altNexusDrawTip].append(timer.get() > 0
-      ? hintsWithTimer(timer.get())
-      : timerState.get() <= 0 ? null : wrap([zoneCollapseIcon, warningLoc, zoneCollapseLoc], wrapParams)
+    children = [altNexusDrawTip].append(
+      isCollapsing.get()
+      ? wrap([zoneCollapseIcon, warningLoc, zoneCollapseLoc], wrapParams)
+      : @() { watch = timer children = timer.get() > 0 ? hintsWithTimer(timer.get()) : null}
     )
   }
 }

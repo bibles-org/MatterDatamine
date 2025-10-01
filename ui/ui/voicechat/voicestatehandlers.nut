@@ -55,9 +55,9 @@ function onVoiceChat(new_value) {
   }
 }
 
-voiceChatRestricted.subscribe(@(_val) onVoiceChat(voiceChatMode.get()))
+voiceChatRestricted.subscribe_with_nasty_disregard_of_frp_update(@(_val) onVoiceChat(voiceChatMode.get()))
 
-tempDisableVoice.subscribe(function(val) {
+tempDisableVoice.subscribe_with_nasty_disregard_of_frp_update(function(val) {
   if (val) {
     onVoiceChat(voice_modes.off)
   }

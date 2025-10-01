@@ -20,7 +20,7 @@ let { stashVolume, stashMaxVolume } = require("%ui/state/allItems.nut")
 let { tostring_r } = require("%sqstd/string.nut")
 
 const PLAYER_PRESETS_IN_ONLINE_SETTINGS = "player_presets"
-const MAX_PRESETS_COUNT = 5
+const MAX_PRESETS_COUNT = 10
 const MAX_NAME_CHARS_COUNT = 16
 const PRESET_PREFIX = "playerPreset"
 const LAST_USED_EQUIPMENT = "lastUsed"
@@ -53,7 +53,7 @@ function setPlayerPreset(presetIdx, data, needChangeName = false) {
   if (!needChangeName) {
     let { presetName = null } = playerPresetWatch.get()?[$"{PRESET_PREFIX}_{presetIdx}"]
     if (presetName != null)
-      dataToSave = data.__merge({ presetName})
+      dataToSave = data.__merge({ presetName, notDefaultPreset = true })
   }
   playerPresetSetDirect(playerPresetWatch.get().__merge({[$"playerPreset_{presetIdx}"] = dataToSave}))
 }
@@ -66,7 +66,7 @@ function renamePreset(oldName, newName, presetIdx, presetData) {
     return
   if (charsCount > MAX_NAME_CHARS_COUNT)
     nameToSave = nameChars.slice(0, MAX_NAME_CHARS_COUNT)
-  let newData = presetData.__merge({ presetName = nameToSave })
+  let newData = presetData.__merge({ presetName = nameToSave, notDefaultPreset = true })
   setPlayerPreset(presetIdx, newData, true)
 }
 

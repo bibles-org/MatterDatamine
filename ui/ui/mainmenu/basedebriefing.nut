@@ -1,4 +1,4 @@
-from "%ui/components/commonComponents.nut" import mkConsoleScreen, mkText, mkTitleString, mkTooltiped, mkTabs
+from "%ui/components/commonComponents.nut" import mkText, mkTitleString, mkTooltiped, mkTabs
 from "%ui/mainMenu/debriefing_common_components.nut" import mkEvacuatedItems, mkChronotracesList, mkDailyRewardsBlock, mkPlayerExpBlock,
   DEF_ANIM_DURATION, openRewardWidnow, showUnseenRewardsMessage
 from "%ui/fonts_style.nut" import body_txt, fontawesome, h2_txt, tiny_txt
@@ -9,7 +9,7 @@ from "%ui/components/button.nut" import textButton
 from "%ui/mainMenu/baseDebriefingTeamStats.nut" import debriefingStats, mkTeamBlock
 from "%ui/mainMenu/baseDebriefingMap.nut" import mkDebriefingMap
 from "%ui/helpers/time.nut" import secondsToStringLoc
-from "%ui/mainMenu/stdPanel.nut" import wrapInStdPanel, mkCloseStyleBtn
+from "%ui/mainMenu/stdPanel.nut" import wrapInStdPanel, mkCloseStyleBtn, screenSize
 from "%ui/profile/battle_results.nut" import isBattleResultInHistory, saveBattleResultToHistory, saveComplaintListToHistory
 from "%ui/components/accentButton.style.nut" import accentButtonStyle
 import "%ui/components/fontawesome.map.nut" as fa
@@ -86,7 +86,6 @@ let statsAndLog = @() {
       fillColor = ConsoleFillColor
       borderWidth = static hdpx(1)
       borderColor = BtnBdDisabled
-      padding = static hdpx(10)
       transform = static{}
       animations = !showHistoryAnimations.get() ? null : static [
         { prop = AnimProp.opacity, from = 0, to = 0, duration = DEF_ANIM_DURATION * 5, play = true }
@@ -204,6 +203,7 @@ let showDebriefingWindow = Computed(
 let historyContent = @() {
   size = FLEX_H
   flow = FLOW_VERTICAL
+  vplace = ALIGN_CENTER
   gap = hdpx(20)
   children = [
     @() {
@@ -323,10 +323,11 @@ function mkBaseDebriefingMenu() {
       }
     })
     return {
+      watch = tabsWatcheds
       size = FLEX_H
       flow = FLOW_VERTICAL
-      watch = tabsWatcheds
       gap = hdpx(10)
+      padding = hdpx(10)
       children = [
         @() {
           watch = showHistoryAnimations
@@ -341,7 +342,7 @@ function mkBaseDebriefingMenu() {
         }
         @() {
           watch = currentTab
-          size = flex()
+          size = FLEX_H
           children = getCurTabContent(tabs, currentTab.get())
         }
       ]
@@ -426,7 +427,7 @@ function mkBaseDebriefingMenu() {
   }
 
   let getContent = @() wrapInStdPanel(BaseDebriefingMenuId, @() {
-    size = [flex(),  mapSize[1] + hdpx(80)]
+    size = FLEX_H
     clipChildren = true
     onAttach = function() {
       updateRewards()
@@ -449,7 +450,7 @@ function mkBaseDebriefingMenu() {
       fakeComplaintList.set({})
     }
     children = [
-      mkConsoleScreen(playerTrackWindow)
+      playerTrackWindow
       function() {
         if (debriefingSessionId.get() == null)
           return { watch = debriefingSessionId }
@@ -463,7 +464,7 @@ function mkBaseDebriefingMenu() {
       }
     ]
 
-  }, "", null, windowTitle)
+  }, "", null, windowTitle, { size = [screenSize[0], SIZE_TO_CONTENT] })
 
   return {
     getContent

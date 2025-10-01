@@ -41,7 +41,7 @@ let mkSpinnerLine = @(sf, indexWatch, total, setValue, allValues, group, hint) @
   })
 }
 
-let mkSpinnerBtn = function(isEnabled, icon, action, hint=null) {
+let mkSpinnerBtn = function(isEnabled, icon, action, hint=null, arrowSize = hdpx(35)) {
   let stateFlags = Watched(0)
   return function() {
     let sf = stateFlags.get()
@@ -66,7 +66,7 @@ let mkSpinnerBtn = function(isEnabled, icon, action, hint=null) {
         hplace = ALIGN_CENTER
         vplace = ALIGN_CENTER
         color = fillColor(sf, isEnabled.get())
-      }.__update(fontawesome, static {fontSize = hdpx(35)})
+      }.__update(fontawesome, { fontSize = arrowSize })
     }
   }
 }
@@ -75,7 +75,7 @@ let mkSpinnerBtn = function(isEnabled, icon, action, hint=null) {
 
 let spinner = kwarg(function(curValue, allValues, setValue = null,
   valToString = null, xmbNode= null, group = null, isEqual = null, hint=null, 
-  textStyle = body_txt, size = flex()
+  textStyle = body_txt, size = flex(), arrowSize = hdpx(35)
 ) {
   #forbid-auto-freeze
   setValue = setValue ?? @(v) curValue.set(v)
@@ -128,8 +128,8 @@ let spinner = kwarg(function(curValue, allValues, setValue = null,
     vplace = ALIGN_CENTER
     gap = hdpx(5)
     children = [
-      mkSpinnerBtn(isLeftBtnEnabled, fa["angle-left"], leftBtnAction, hint)
-      mkSpinnerBtn(isRightBtnEnabled, fa["angle-right"], rightBtnAction, hint)
+      mkSpinnerBtn(isLeftBtnEnabled, fa["angle-left"], leftBtnAction, hint, arrowSize)
+      mkSpinnerBtn(isRightBtnEnabled, fa["angle-right"], rightBtnAction, hint, arrowSize)
     ]
   }
   let stateFlags = Watched(0)

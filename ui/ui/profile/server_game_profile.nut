@@ -713,18 +713,28 @@ eventbus_subscribe("profile_server.get_nexus_loadout",
 let transactions_in_progress_query = ecs.SqQuery("transactions_in_progress_query", { comps_rw=[["player_profile__applyTransactionsInProgress", ecs.TYPE_BOOL]] })
 
 eventbus_subscribe("profile_server.make_alter_from_chronogenes",
-  @(genes) requestProfileServer("make_alter_from_chronogenes",
-    {
-      container_id_int64=genes?.container_id_int64 ?? 0,
-      primary_chronogenes=genes.mainGenes,
-      secondary_chronogenes=genes.secondaryGenes
-      alter_name=genes.alterName
-      stub_melee_chronogenes=genes.stub_melee_chronogenes,
-      dogtag_chronogenes=genes.dogtag_chronogenes
-    }, {}, function(response) {
-      updateProfileBlocks(response)
-      eventbus_send("profile_server.make_alter_from_chronogenes.result", {})
-    }))
+  function(genes) {
+    log("make_alter_from_chronogenes:")
+    log("container_id_int64:", genes?.container_id_int64)
+    log("primary_chronogenes:", genes?.primary_chronogenes)
+    log("secondary_chronogenes:", genes?.secondary_chronogenes)
+    log("alter_name:", genes?.alter_name)
+    log("stub_melee_chronogenes:", genes?.stub_melee_chronogenes)
+    log("dogtag_chronogenes:", genes?.dogtag_chronogenes)
+    requestProfileServer("make_alter_from_chronogenes",
+      {
+        container_id_int64=genes?.container_id_int64 ?? 0,
+        primary_chronogenes=genes.mainGenes,
+        secondary_chronogenes=genes.secondaryGenes
+        alter_name=genes.alterName
+        stub_melee_chronogenes=genes.stub_melee_chronogenes,
+        dogtag_chronogenes=genes.dogtag_chronogenes
+      }, {}, function(response) {
+        updateProfileBlocks(response)
+        eventbus_send("profile_server.make_alter_from_chronogenes.result", {})
+      }
+    )
+  })
 
 eventbus_subscribe("profile_server.remove_alter_from_container",
   @(container_id_int64) requestProfileServer("remove_alter_from_container",

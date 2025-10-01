@@ -1,5 +1,6 @@
 from "%ui/mainMenu/audioModule/music_player.nut" import startPlayer, stopPlayer, LoopStatus, musicPlayerVolumeSet,
-  musicPlayerSetVolume, playOnlyFreeStreamingMusicWatch, playOnlyFreeStreamingMusicSet
+  musicPlayerSetVolume, playOnlyFreeStreamingMusicWatch, playOnlyFreeStreamingMusicSet, playOnlyFavoritesTracksWatch,
+  favoritesTracksListWatch, playerOnlyFavoriteSetting
 from "%ui/fonts_style.nut" import body_txt
 from "%ui/components/colors.nut" import panelRowColor, BtnBgHover, BtnTextNormal
 from "%ui/components/commonComponents.nut" import mkTextArea, bluredPanel
@@ -261,6 +262,7 @@ let playerOptionsBlock = {
         makeOptionRow(playMusicOnBaseSetting)
         makeOptionRow(playMusicInRaidsSetting)
         makeOptionRow(playFreeStreamingMusicSetting)
+        makeOptionRow(playerOnlyFavoriteSetting)
       ]
     }
   ]
@@ -286,4 +288,5 @@ return {
   playMusicOnBaseSetting
   playMusicInRaidsSetting
   playFreeStreamingMusicSetting
+  playerOnlyFavoriteSetting
 }

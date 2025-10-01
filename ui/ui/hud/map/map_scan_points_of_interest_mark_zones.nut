@@ -65,14 +65,14 @@ function hideScanCircle() {
 
 ecs.register_es("scan_points_of_interest_map_scan_started_1",
   {
-    [[EventScanPointsOfInterest]] = function(_evt, _eid, comp){
+    [[EventScanPointsOfInterest]] = function(_evt, eid, comp){
 
       scanData.set({
         position = comp.transform[3]
         radius = comp.human_scan_points_of_interest__searchRange.y
         scanDur = comp.human_scan_points_of_interest__markShowDelayPerRelDist
       })
-      gui_scene.setTimeout(comp.human_scan_points_of_interest__markShowDelayPerRelDist, hideScanCircle)
+      gui_scene.resetTimeout(comp.human_scan_points_of_interest__markShowDelayPerRelDist, hideScanCircle, eid)
     }
   },
   {

@@ -26,7 +26,7 @@ let lbCategories = [
     locId = "lb/index"
     width = flex(0.5)
     dataIdx = 0
-    valueToShow = @(idx) curMonolithLbPlayersCount.get() - idx
+    valueToShow = @(idx) curMonolithLbPlayersCount.get() - idx + 1
   }
   {
     field = "name"
@@ -150,9 +150,9 @@ function lbList() {
     }
 
   let res = []
-  let totalRows = curMonolithLbData.get().len()
-  let totalCols = ceil(totalRows.tofloat() / LB_ROWS_PER_COL)
   let data = curMonolithLbData.get().filter(@(v) v?[1] != 208876377)
+  let totalRows = data.len()
+  let totalCols = ceil(totalRows.tofloat() / LB_ROWS_PER_COL)
 
   for (local table = 0; table < totalCols; table++) {
     let dataToAdd = data.slice(table * LB_ROWS_PER_COL, min(data.len(), (table + 1) * LB_ROWS_PER_COL))

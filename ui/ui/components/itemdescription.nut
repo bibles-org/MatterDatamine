@@ -6,8 +6,26 @@ from "%ui/hud/menus/components/inventoryItemRarity.nut" import getRarityColor
 import "%ui/components/colorize.nut" as colorize
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
+from "%ui/components/colors.nut" import TextNormal, RedWarningColor, GreenSuccessColor, InfoTextValueColor
 
 #allow-auto-freeze
+
+let shootNoiseTbl = freeze([
+  { limit = 110, locId = "desc/shotLoudReduced" }
+])
+
+let deviationTbl = freeze([
+  { limit = 70, locId = "desc/deviationHigh" }
+  { limit = 79.9999, locId = "desc/deviationMedium" }
+  { locId = "desc/deviationLow" }
+])
+
+let recoilTbl = freeze([
+  { limit = 9, locId = "desc/recoilLow" }
+  { limit = 15, locId = "desc/recoilMedium" }
+  { locId = "desc/recoilHigh" }
+])
+
 
 function getBoxedAmmoName(templateName) {
   let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(templateName)
@@ -100,28 +118,79 @@ function fillWeaponFiringModes(template, modsArr, resDataArr) {
   }
 }
 
-let shootNoiseTbl = freeze([
-  {
-    limit = 110
-    locId = "desc/shotLoudReduced"
+function getLocByLimit(value, limitsTbl) {
+  for (local i = 0; i < limitsTbl.len(); ++i) {
+    let { limit = null, locId } = limitsTbl[i]
+    if (limit == null || value <= limit)
+      return loc(locId)
   }
-  {
-    limit = 170
-    locId = "desc/shotLoud"
-  }
-])
+
+  return null
+}
 
 function getShootNoise(template) {
-  let shootNoise = template?.getCompValNullable("loud_noise__noisePerShot") ?? 0
-  if (shootNoise > 0) {
-    let mult = template?.getCompValNullable("gun_entity_mods__loudNoisePerShotMult") ?? 1.0
-    let value = round_by_value(shootNoise * mult, 0.1)
-    for (local i = 0; i < shootNoiseTbl.len(); i++) {
-      if (value <= shootNoiseTbl[i].limit)
-        return loc(shootNoiseTbl[i].locId)
-    }
-  }
-  return null
+  let shootNoise = template?.getCompValNullable("loud_noise__noisePerShot") ?? template?.loud_noise__noisePerShot
+  if (shootNoise == null)
+    return null
+
+  let mult = template?.getCompValNullable("gun_entity_mods__loudNoisePerShotMult") ?? template?.gun_entity_mods__loudNoisePerShotMult
+  return getLocByLimit(shootNoise * (mult ?? 1.0), shootNoiseTbl)
+}
+
+function getDeviation(template) {
+  let v = template?.getCompValNullable("gun_deviation__maxDeviation") ?? template?.gun_deviation__maxDeviation
+  return v == null ? null
+    : { value = v, desc = getLocByLimit(v, deviationTbl) }
+}
+
+function getRecoil(template, isShopDesc = false) {
+  let recoil = template?.getCompValNullable("gun__recoilAmount") ?? template?.gun__recoilAmount
+  if (recoil == null)
+    return null
+
+  let mul = template?.getCompValNullable("gun_entity_mods__recoilMult") ?? template?.gun_entity_mods__recoilMult ?? 1
+  let v = round_by_value((recoil ?? 0.0) * (mul ?? 1.0) * 100, 0.01)
+  let color = mul < 1.0 ? GreenSuccessColor
+    : mul > 1.0 ? RedWarningColor
+    : isShopDesc ? InfoTextValueColor
+    : TextNormal
+  return { value = colorize(color, v), desc = getLocByLimit(v, recoilTbl) }
+}
+
+function geMultLowNegative(template, effectName) {
+  let effect = template?.getCompValNullable("gun_mod__effectTemplate") ?? template?.gun_mod__effectTemplate
+  if (effect == null)
+    return null
+
+  let effectTemplate = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(effect)
+  if (effectTemplate == null)
+    return null
+
+  let mul = effectTemplate?.getCompValNullable(effectName)
+  if (mul == null || mul == 1)
+    return  null
+
+  let color = mul > 1.0 ? GreenSuccessColor : RedWarningColor
+  let preffix = mul > 1.0 ? "-" : "+"
+  return colorize(color, $"{preffix}{round_by_value((1.0 - mul) * 100.0, 0.1)}%")
+}
+
+function geMultLowPositive(template, effectName) {
+  let effect = template?.getCompValNullable("gun_mod__effectTemplate") ?? template?.gun_mod__effectTemplate
+  if (effect == null)
+    return null
+
+  let effectTemplate = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(effect)
+  if (effectTemplate == null)
+    return null
+
+  let mul = effectTemplate?.getCompValNullable(effectName)
+  if (mul == null || mul == 1)
+    return  null
+
+  let color = mul < 1.0 ? GreenSuccessColor : RedWarningColor
+  let preffix = mul < 1.0 ? "-" : "+"
+  return colorize(color, $"{preffix}{round_by_value((1.0 - mul) * 100.0, 0.1)}%")
 }
 
 function getReloadTime(template, maxAmmo) {
@@ -146,14 +215,17 @@ function getReloadTime(template, maxAmmo) {
 
 function getWeaponDesc(template, style=null) {
   #forbid-auto-freeze
-  let recoil = template?.getCompValNullable("gun__recoilAmount")
-  let deviation = template?.getCompValNullable("gun_deviation__maxDeviation")
+  let recoil = getRecoil(template, true)
+  let deviation = getDeviation(template)
   let caliber = getWeaponAmmo(template)
   let firingModeArr = template.getCompValNullable("gun__firingModeNames")
   let hasMagazineSlot = template?.getCompValNullable("gun_mods__slots").magazine != null
   let maxAmmo = template?.getCompValNullable("gun__maxAmmo") ?? 0
   let reloadTime = getReloadTime(template, maxAmmo)
-  let shootNoiseRes = getShootNoise(template)
+  let shootNoise = getShootNoise(template)
+  let recoilMult = geMultLowPositive(template, "gun_mod_effect__recoilMult")
+  let asdSpeedMult = geMultLowNegative(template, "gun_mod_effect__adsSpeedMult")
+  let noiseMult = geMultLowPositive(template, "gun_mod_effect__loudNoisePerShotMult")
 
   let firingModesAndReload = []
   fillWeaponFiringModes(template, firingModeArr, firingModesAndReload)
@@ -166,9 +238,14 @@ function getWeaponDesc(template, style=null) {
     mkFlexInfoTxt(v.title, v.val, style)))
   res.append(
     reloadTime.len() <= 0 ? null : mkFlexInfoTxt(reloadTime.title, reloadTime.val, style)
-    recoil ? mkFlexInfoTxt(loc("desc/recoil"), round_by_value(recoil, 0.01) * 100, style) : null
-    deviation ? mkFlexInfoTxt(loc("desc/deviation"), round_by_value(deviation, 0.1), style) : null
-    shootNoiseRes != null ? mkFlexInfoTxt(loc("desc/noise_per_shot"), shootNoiseRes, style) : null
+    recoil != null ? mkFlexInfoTxt(loc("desc/recoil"), loc("desc/valueWithText",
+      { value = recoil.value, desc = recoil.desc }), style) : null
+    deviation != null ? mkFlexInfoTxt(loc("desc/deviation"), loc("desc/valueWithText",
+      { value = deviation.value, desc = deviation.desc }), style) : null
+    shootNoise != null ? mkFlexInfoTxt(loc("desc/noise_per_shot"), shootNoise, style) : null
+    noiseMult != null ? mkFlexInfoTxt(loc("desc/loud_noise_per_shot"), noiseMult, style) : null
+    asdSpeedMult != null ? mkFlexInfoTxt(loc("desc/ads"), asdSpeedMult, style) : null
+    recoilMult != null ? mkFlexInfoTxt(loc("desc/recoil"), recoilMult, style) : null
   )
   return res
 }
@@ -345,4 +422,7 @@ return {
   itemDescriptionStrings
 
   getArmorDesc
+  getDeviation
+  getRecoil
+  getShootNoise
 }

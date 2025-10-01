@@ -4280,13 +4280,20 @@ Erforschen Sie sie als Operativer mit Ihrer eigenen Ausrüstung oder übertragen
 "desc/bigPlateMark";"(B)";"(Б)";"(B)"
 "desc/armorplate_big";"Big armor plate";"Большая плита";"Große Rüstungplatte"
 "desc/armorplate_small";"Small armor plate";"Маленькая плита";"Kleine Rüstungplatte"
-"desc/shotLoudReduced";"Reduced";"Сниженная";"Reduziert"
 "desc/shotLoud";"Loud";"Громко";"Laut"
+"desc/shotLoudReduced";"Reduced";"Снижена";"Reduziert"
 "desc/shotVeryLoud";"Very loud";"Очень громко";"Sehr laut"
 "desc/dogtagDeathReason";"Cause:";"Причина:";"Ursache:"
 "desc/dogtagWeapon";"Weapon:";"Оружие:";"Waffe:"
 "desc/killerNickname";"Killer:";"Убийца:";"Töter:"
 "desc/folded";"folded";"свёрнут";"gefaltet"
+"desc/valueWithText";"{value} ({desc})";"{value} ({desc})";"{value} ({desc})"
+"desc/deviationLow";"Low";"Низкий";"Low"
+"desc/deviationMedium";"Medium";"Средний";"Medium"
+"desc/deviationHigh";"High";"Высокий";"High"
+"desc/recoilLow";"Low";"Низкая";"Low"
+"desc/recoilMedium";"Medium";"Средняя";"Medium"
+"desc/recoilHigh";"High";"Высокая";"High"
 "playerBaseUpgrade/StashFeatured";"Permanent Storage Extension +10000 volume";"Постоянное расширение склада +10000 объёма";"Dauerhafte Lagererweiterung +10000 Volumen"
 "playerBaseUpgrade/StashFeatured/desc";"Adds a permanent storage upgrade unit to the base, which allows to store more weapons and items.";"Добавляет на базу постоянное улучшение хранилища, которое позволяет хранить больше оружия и предметов.";"Fügt der Basis eine permanente Lagereinheit hinzu, die es ermöglicht, mehr Waffen und Gegenstände zu lagern."
 "playerBaseUpgrade/BaseStash";"Initial Storage 10000 volume";"Базовый склад 10000 объёма";"Anfangsspeicher: 10.000 Volumen"
@@ -4461,6 +4468,8 @@ Er kann die gewählte Mission jederzeit ändern, indem er eine neue aus den aktu
 "missions/currentRaidStatus";"Current raid status: {status}";"Текущий статус рейда: {status}";"Aktueller Einsatzstatus: {status}"
 "missions/prepare";"Prepare for the raid";"Подготовиться к рейду";"Bereite dich auf den Raid vor"
 "missions/squadLeaderRaid";"Squad Leader’s Selected Raid";"Выбранный рейд главы отряда";"Vom Truppführer gewählter Überfall"
+"missions/disabled";"Not available at this moment";"Недоступно на данный момент";"Not available at this moment"
+"missions/willBeAvailableAsSquadLeader";"Will be available for selection if you become a Squad Leader";"Будет доступно для выбора, когда вы станете лидером отряда";"Will be available for selection if you become a Squad Leader"
 "needMoreSpaceMsgBox";"Storage is full.
 
 Free <color=#d28c3c>volume</color> required: {needMore}
@@ -4668,9 +4677,9 @@ Das Erlangen neuer Body Sleeves erfordert Zeit und Aufwand."
 "musicPlayer/musicVolume";"Player Volume";"Громкость плеера";"Player-Lautstärke"
 "musicPlayer/onlyFreeStreaming";"Safe for Video Platforms Music Only";"Только музыка безопасная для видеоплатформ";"Safe for Video Platforms Music Only"
 "musicPlayer/streamerModeRestricted";"Track {track} is unavailable in Streamer Mode.";"Запись {track} недоступена в режиме стримера.";"Track {track} is unavailable in Streamer Mode."
-"musicPlayer/streamerModeRestrictedHint";"Only 'safe for video platforms music' is available in 'Streamer Mode'.
+"musicPlayer/streamerModeRestrictedHint";"Only ""safe for video platforms music"" is available in 'Streamer Mode'.
 You can turn off 'Streamer Mode' in the Options window, in the ""Game"" tab.";"В режиме стримера доступна только музыка, безопасная для видеоплатформ.
-Вы можете отключить режим стримера в окне настроек на вкладке ""Игра"".";"Only 'safe for video platforms music' is available in 'Streamer Mode'.
+Вы можете отключить режим стримера в окне настроек на вкладке ""Игра"".";"Only ""safe for video platforms music"" is available in 'Streamer Mode'.
 You can turn off 'Streamer Mode' in the Options window, in the ""Game"" tab."
 "musicPlayer/unsafeMusicRestricted";"Track {track} is unavailable due to the ""Music safe for video platforms only"" setting.
 You can change this in the Settings tab of the ""Multifunctional Audio Interface"" window.";"Запись {track} недоступна из-за настройки ""Только музыка безопасная для видеоплатформ"".
@@ -4681,6 +4690,23 @@ You can change this in the Settings tab of the ""Multifunctional Audio Interface
 Вы можете изменить это во вкладке ""Настройки"" окна ""Многофункциональный Аудио Интерфейс"".";"""Only music safe for video platforms"" setting is available.
 You can change this in the Settings tab of the ""Multifunctional Audio Interface"" window."
 "musicPlayer/streamerNoAvailableTracks";"No available tracks found.";"Нет доступных записей.";"No available tracks found."
+"musicPlayer/noFavorites";"No favorite tracks yet.
+Click the heart icon next to any track to add it to your favorites.";"Список избранных треков пуст.
+Нажмите на значок сердца рядом с любой записью, чтобы добавить её в избранное.";"No favorite tracks yet.
+Click the heart icon next to any track to add it to your favorites."
+"musicPlayer/onlyFavorites";"Favorites only";"Только избранное";"Favorites only"
+"musicPlayer/onlyFavoritesOff";"Play favorites disabled";"Воспроизведение избранного отключено";"Play favorites disabled"
+"musicPlayer/removeFavorite";"Remove track from favorites";"Удалить из избранного";"Remove track from favorites"
+"musicPlayer/addFavorite";"Add track to favorites";"Добавить в избранное";"Add track to favorites"
+"musicPlayer/removedFromFavorites";"Removed from favorites";"Удалено из избранного";"Removed from favorites"
+"musicPlayer/addedToFavorites";"Added to favorites";"Добавлено в избранное";"Added to favorites"
+"musicPlayer/closeFavoritesList";"Favorite tracks";"Все записи";"Favorite tracks"
+"musicPlayer/favoritesList";"Only favorite tracks";"Только избранные записи";"Only favorite tracks"
+"musicPlayer/noFavoritesTracks";"No favorite tracks found.
+Click the heart icon next to any track to add it to your favorites, or check ""Streamer Mode"" or ""Safe for Video Platforms Music Only"" settings.";"Не найдена ни одна избранная запись.
+Нажмите на значок сердца рядом с любой записью, чтобы добавить её в избранное или проверьте настройки ""Режим стримера"" или ""Только музыка безопасная для видеоплатформ"".";"No favorite tracks found.
+Click the heart icon next to any track to add it to your favorites, or check ""Streamer Mode"" or ""Safe for Video Platforms Music Only"" settings."
+"musicPlayer/changeFavoriteStatus";"Add/Remove favorite status";"Добавить/Удалить статус избранного";"Add/Remove favorite status"
 "statisticsMenu/musicPlayer";"Find new tapes and disks in raids to expand your music collection.";"Находите новые кассеты и пластинки в рейдах, чтобы расширить свою музыкальную коллекцию.";"Finden Sie neue Kassetten und Discs in Raids, um Ihre Musiksammlung zu erweitern."
 "statisticsMenu/overwriteWarning";"Data for the last {maxSavedBattleResults} raids";"Данные последних {maxSavedBattleResults} рейдов";"Alte Raid-Daten werden gelöscht, wenn die Anzahl der Einträge {maxSavedBattleResults} überschreitet"
 "statisticsMenu/amStat";"Extracted {amAmount} Active Matter";"Извлечено {amAmount} Активной Материи";"Extrahiert {amAmount} Aktive Materie"
@@ -5101,9 +5127,9 @@ Schaltet Zugang zu Raids frei:
 "reason/trippleKill";"Tripple kill";"Тройное убийство";"Dreifachtötung"
 "reason/multipleKill";"Multiple kill";"Множественное убийство";"Mehrfachtötung"
 "reason/teammateKill";"Teammate kill";"Убийство союзника";"Teamkamerad getötet"
-"playerPreset/rewritePresetToEdit";"To change a preset, overwrite it";"Чтобы изменить шаблон, перезапишите его";"To change a preset, overwrite it"
-"playerPreset/cantChangeLastUsed";"The last used preset cannot be changed";"Последний использованный шаблон изменить нельзя";"The last used preset cannot be changed"
-"playerPreset/youCantEditAgencyPreset";"Can't edit agency presets";"Нельзя редактировать пресеты Агентства";"Can't edit agency presets"
+"playerPreset/youCantEditAgencyPreset";"Can't edit <accented>rented</accented> presets.";"Нельзя редактировать <accented>арендованные</accented> шаблоны.";"Can't edit <accented>rented</accented> presets."
+"playerPreset/rewritePresetToEdit";"To change a preset, overwrite it.";"Чтобы изменить шаблон, перезапишите его.";"To change a preset, overwrite it."
+"playerPreset/cantChangeLastUsed";"The last used preset cannot be changed.";"Последний использованный шаблон изменить нельзя.";"The last used preset cannot be changed."
 "playerPreset/cantLoadPresetRightNow";"Can't load preset right now.";"Невозможно применить пресет сейчас.";"Preset kann momentan nicht geladen werden."
 "playerPreset/cantSavePresetRightNow";"Saving an equipment preset is temporarily not possible.";"Сохранение шаблона экипировки временно недоступно.";"Das Speichern eines Ausrüstungs-Presets ist vorübergehend nicht möglich."
 "playerPreset/cantChangePresetRightNow";"Preset can't be changed right now.";"В данный момент изменить шаблон невозможно.";"Preset kann momentan nicht geändert werden."
@@ -5125,7 +5151,7 @@ Presetname darf 16 Zeichen nicht überschreiten"
 "playerPreset/defName";"Preset {presetIdx}";"<Шаблон {presetIdx}>";"Preset {presetIdx}"
 "playerPreset/presetsTitle";"Equipment presets";"Шаблоны экипировки";"Ausrüstungs-Voreinstellungen"
 "playerPreset/show";"Show presets";"Показать шаблоны";"Voreinstellungen anzeigen"
-"playerPreset/addPreset";"Add preset";"Доабвить шаблон";"Add preset"
+"playerPreset/addPreset";"Add preset";"Создать шаблон";"Add preset"
 "playerPreset/lastUsed";"Last used equipment";"Последнее использованное снаряжение";"Zuletzt verwendete Ausrüstung"
 "playerPreset/notEnoughStashVolume";"There is not enough space in the stash to apply the preset.";"Недостаточно места на складе для применения шаблона.";"Es ist nicht genügend Platz im Lager, um die Vorlage anzuwenden."
 "playerPreset/needToRewrite";"Do you want to rewrite your preset?";"Вы действительно хотите переписать шаблон?";"Möchten Sie Ihr Preset überschreiben?"
@@ -5549,7 +5575,7 @@ With only Isolated raids and without Nexus battles. Monolith progression is limi
 "items/injector_streaming";"Streaming injector";"Потоковый Инъектор";"Streaming-Injektor"
 "items/injector_streaming/desc";"Gradually injects a gel that treats all parts of the body simultaneously at 20 units per second. The treatment consumes the injector's charge. The charge is enough to heal 300 units of damage.";"Постепенно вводит гель, который лечит все части тела одновременно по 20 ед. в секунду. Лечение расходует заряд инъектора. Заряда хватает на исцеление 300 ед. повреждений.";"Injiziert allmählich ein Gel, das alle Körperteile gleichzeitig mit 20 Einheiten pro Sekunde heilt. Die Behandlung verbraucht die Ladung des Injektors. Die Ladung reicht aus, um 300 Einheiten Schaden zu heilen."
 "items/healing_ampoule";"Healing ampoule";"Лечебная ампула";"Heilampulle"
-"items/healing_ampoule/desc";"Instantly restores 50 units of health to one part of the body after use.";"Мгновенно восстанавливает 50 единиц здоровья одной части тела после использования.";"Stellt sofort 50 Einheiten Gesundheit für ein Körperteil nach der Anwendung wieder her."
+"items/healing_ampoule/desc";"Instantly restores 75 units of health to one part of the body after use.";"Мгновенно восстанавливает 75 единиц здоровья одной части тела после использования.";"Stellt sofort 75 Einheiten Gesundheit für ein Körperteil nach der Anwendung wieder her."
 "items/hacking_device";"Hacking device";"Взламыватель";"Hacking-Gerät"
 "items/repair_kit";"Tools";"Инструменты";"Werkzeuge"
 "items/soviet_repair_kit";"Tools";"Инструменты";"Werkzeuge"

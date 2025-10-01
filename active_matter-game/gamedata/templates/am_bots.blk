@@ -80,7 +80,7 @@ am_mindcontrolled_militant_land_bot{
   am_bot__attractPosMinStayTime:r=10
   kill_tracking_tag:t="turned_soldier"
   equipped_bot__equipmentGeneratorName:t="ordinary_equipment_mindcontrolled_land_generator"
-  equipped_bot__equipmentGeneratorCorruptionChance:r=1
+  equipped_bot__equipmentGeneratorCorruptionChance:r=0
 
   "kill_tracking__taggedPlayers:object"{}
   "cortical_hack_disabled:tag"{}
@@ -401,7 +401,7 @@ am_corrupted_boss_heavy_a{
     "right_hand:object"{
       maxHp:r=1500
       removeInjuryHp:r=10
-      distributionDamageMult:r=0.75
+      distributionDamageMult:r=1
       explosionImpact:b=yes
       collisionImpact:b=no
       holdBreathImpact:b=no
@@ -424,7 +424,7 @@ am_corrupted_boss_heavy_a{
     "left_hand:object"{
       maxHp:r=1500
       removeInjuryHp:r=10
-      distributionDamageMult:r=0.75
+      distributionDamageMult:r=1
       explosionImpact:b=yes
       collisionImpact:b=no
       holdBreathImpact:b=no
@@ -447,7 +447,7 @@ am_corrupted_boss_heavy_a{
     "right_leg:object"{
       maxHp:r=1500
       removeInjuryHp:r=10
-      distributionDamageMult:r=1.25
+      distributionDamageMult:r=1
       explosionImpact:b=yes
       collisionImpact:b=yes
       holdBreathImpact:b=no
@@ -469,7 +469,7 @@ am_corrupted_boss_heavy_a{
     "left_leg:object"{
       maxHp:r=1500
       removeInjuryHp:r=10
-      distributionDamageMult:r=1.25
+      distributionDamageMult:r=1
       explosionImpact:b=yes
       collisionImpact:b=yes
       holdBreathImpact:b=no
@@ -549,7 +549,7 @@ suit_encounter_guard_item{
 
 equipped_bot{
   equipped_bot__equipmentGeneratorName:t="ordinary_equipment_generator"
-  equipped_bot__equipmentGeneratorCorruptionChance:r=0.5
+  equipped_bot__equipmentGeneratorCorruptionChance:r=0
 }
 
 equipped_bot_female{

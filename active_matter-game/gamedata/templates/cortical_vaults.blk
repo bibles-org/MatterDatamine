@@ -186,6 +186,7 @@ dogtag_a_animchar{
 dogtag_item_a{
   _use:t="dogtag_item"
   _use:t="dogtag_a_animchar"
+  _use:t="item_rarity_rare"
   item__desc:t="items/dogtagPremium/desc"
   item__proto:t="dogtag_item_a"
 }
@@ -193,6 +194,7 @@ dogtag_item_a{
 dogtag_chronogene_a{
   _use:t="dogtag_chronogene"
   _use:t="dogtag_a_animchar"
+  _use:t="item_rarity_rare"
   item__desc:t="items/dogtagPremium/desc"
   dogtag_chronogene__dogtagItemTemplate:t="dogtag_item_a"
 
@@ -212,6 +214,7 @@ dogtag_cbt_animchar{
 dogtag_item_cbt{
   _use:t="dogtag_item"
   _use:t="dogtag_cbt_animchar"
+  _use:t="item_rarity_rare"
   item__desc:t="items/dogtagCBT/desc"
   item__proto:t="dogtag_item_cbt"
 }
@@ -219,6 +222,7 @@ dogtag_item_cbt{
 dogtag_chronogene_cbt{
   _use:t="dogtag_chronogene"
   _use:t="dogtag_cbt_animchar"
+  _use:t="item_rarity_rare"
   item__desc:t="items/dogtagCBT/desc"
   dogtag_chronogene__dogtagItemTemplate:t="dogtag_item_cbt"
 
@@ -238,6 +242,7 @@ dogtag_twitch_animchar{
 dogtag_item_twitch{
   _use:t="dogtag_item"
   _use:t="dogtag_twitch_animchar"
+  _use:t="item_rarity_uncommon"
   item__desc:t="items/dogtagTwitch/desc"
   item__proto:t="dogtag_item_twitch"
 }
@@ -245,6 +250,7 @@ dogtag_item_twitch{
 dogtag_chronogene_twitch{
   _use:t="dogtag_chronogene"
   _use:t="dogtag_twitch_animchar"
+  _use:t="item_rarity_uncommon"
   item__desc:t="items/dogtagTwitch/desc"
   dogtag_chronogene__dogtagItemTemplate:t="dogtag_item_twitch"
 
@@ -264,6 +270,7 @@ dogtag_developer_animchar{
 dogtag_item_developer{
   _use:t="dogtag_item"
   _use:t="dogtag_developer_animchar"
+  _use:t="item_rarity_epic"
   item__desc:t="items/dogtagDeveloper/desc"
   item__proto:t="dogtag_item_developer"
 }
@@ -271,6 +278,7 @@ dogtag_item_developer{
 dogtag_chronogene_developer{
   _use:t="dogtag_chronogene"
   _use:t="dogtag_developer_animchar"
+  _use:t="item_rarity_epic"
   item__desc:t="items/dogtagDeveloper/desc"
   dogtag_chronogene__dogtagItemTemplate:t="dogtag_item_developer"
 

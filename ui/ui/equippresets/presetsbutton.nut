@@ -4,7 +4,7 @@ from "%ui/components/colors.nut" import BtnBgNormal, BtnBgDisabled, BtnBgSelecte
   BtnBdTransparent, InfoTextValueColor, TextDisabled, TextNormal, RedWarningColor, BtnPrimaryBgNormal
 from "%ui/equipPresets/presetsState.nut" import setPlayerPreset, MAX_NAME_CHARS_COUNT, MAX_PRESETS_COUNT, renamePreset, makeDataToSave, equipPreset, saveLastEquipmentPreset
 from "%ui/components/button.nut" import button
-from "%ui/components/commonComponents.nut" import mkText, mkTextArea, mkSelectPanelItem, mkTimeComp, BD_LEFT
+from "%ui/components/commonComponents.nut" import mkText, mkTextArea, mkSelectPanelItem, mkTimeComp, BD_LEFT, textButton
 from "%ui/components/cursors.nut" import setTooltip
 import "%ui/components/faComp.nut" as faComp
 from "%ui/components/textInput.nut" import textInputUnderlined
@@ -630,10 +630,37 @@ function mkPresetRow(presetIdx) {
     flow = FLOW_HORIZONTAL
     gap = hdpx(4)
     children = [
-      presetData.get() == null && presetIdx == LAST_USED_EQUIPMENT ? null
+      presetData.get() == null ? null
         : isEditingPresetName.get() ? mkRenamePresetRow(presetIdx, presetData.get())
         : mkDefPresetRow(presetIdx, presetData.get())
     ]
+  }
+}
+
+function mkCreateNewPresetButton() {
+  let freeSlotIdx = Computed(function() {
+    if (playerPresetWatch.get() == null)
+      return null
+    for (local i = 0; i < MAX_PRESETS_COUNT; i++) {
+      let idx = $"{PRESET_PREFIX}_{i}"
+      if (playerPresetWatch.get()?[idx] == null) {
+        return i
+      }
+    }
+    return null
+  })
+
+  return @() {
+    watch = freeSlotIdx
+    size = FLEX_H
+    children = freeSlotIdx.get() != null ? textButton(loc("playerPreset/addPreset"), function() {
+        setPlayerPreset(freeSlotIdx.get(), makeDataToSave())
+      }, {
+        size = FLEX_H
+        textParams = sub_txt
+        textMargin = hdpx(5)
+        halign = ALIGN_CENTER
+      }) : null
   }
 }
 
@@ -656,7 +683,13 @@ function mkPresetsList() {
       stopRenameAction()
       isPlayerPresetOpened.set(false)
     }
-    children = presetsToShow.map(@(v) mkPresetRow(v))
+    children = [
+      {
+        flow = FLOW_VERTICAL
+        children = presetsToShow.map(@(v) mkPresetRow(v))
+      }
+      mkCreateNewPresetButton()
+    ]
   }
 }
 
@@ -770,7 +803,7 @@ function mkAgencyPresetRow() {
 
   let presetData = Computed(function() {
     let compArray = ecs.CompArray()
-    let generatorName = "ordinary_equipment_generator"
+    let generatorName = "rented_equipment_generator"
     generate_loadout_by_seed(generatorName, seed.get(), compArray)
     return loadoutToPreset({ items = compArray.getAll() }).__merge({ overrideMainChronogeneDoll = true })
   })
@@ -961,12 +994,19 @@ function mkPreviewPresetsBlock() {
           scrollSpeed = 5.0
         })
         halign = ALIGN_CENTER
-        children = [].extend(
-          presetsToShow.map(mkPreparationPresetRow),
-          marketPresets.get().topairs()
-            .sort(@(a, b) a[1].reqMoney <=> b[1].reqMoney)
-            .map(@(v) mkMarketPresetRow(v[1].__update({ id = v[0] })))
-        )
+        children = [
+          {
+            size = FLEX_H
+            flow = FLOW_VERTICAL
+            children = [].extend(
+              presetsToShow.map(mkPreparationPresetRow),
+              marketPresets.get().topairs()
+                .sort(@(a, b) a[1].reqMoney <=> b[1].reqMoney)
+                .map(@(v) mkMarketPresetRow(v[1].__update({ id = v[0] })))
+            )
+          }
+          mkCreateNewPresetButton()
+        ]
       })
     ]
   }

@@ -6,7 +6,7 @@ from "%ui/helpers/remap_nick.nut" import remap_nick
 from "dagor.system" import DBGLEVEL
 import "%ui/components/tooltipBox.nut" as tooltipBox
 from "%ui/components/pcHoverHotkeyHitns.nut" import tooltipHotkeyHints
-from "%ui/components/colors.nut" import RarityCommon, corruptedItemColor
+from "%ui/components/colors.nut" import RarityCommon, corruptedItemColor, RedWarningColor, GreenSuccessColor, TextNormal
 import "console" as console
 import "%ui/components/colorize.nut" as colorize
 from "%ui/fonts_style.nut" import body_txt, sub_txt
@@ -21,6 +21,7 @@ import "%dngscripts/ecs.nut" as ecs
 from "%ui/hud/menus/components/inventoryItemRarity.nut" import rarityColorTable
 from "%ui/components/controlHudHint.nut" import controlHudHint
 from "%ui/components/commonComponents.nut" import mkText
+from "%ui/components/itemDescription.nut" import getShootNoise, getDeviation, getRecoil
 
 let { chronogeneStatCustom, chronogeneStatDefault } = require("%ui/hud/state/item_info.nut")
 let { playerProfileAllResearchNodes, playerProfileOpenedNodes, allCraftRecipes, marketItems } = require("%ui/profile/profileState.nut")
@@ -48,17 +49,6 @@ let semiAutoBursts = {
   semi_auto_2_shots = true
   semi_auto_3_shots = true
 }
-
-let shootNoiseTbl = [
-  {
-    limit = 110
-    locId = "desc/shotLoudReduced"
-  }
-  {
-    limit = 170
-    locId = "desc/shotLoud"
-  }
-]
 
 let tooltipSeparator = {
   rendObj = ROBJ_SOLID
@@ -113,7 +103,9 @@ let inventoryItemTooltipQuery = ecs.SqQuery("inventoryItemTooltipQuery",
       ["dogtag_item", ecs.TYPE_TAG, null],
       ["cortical_vault_inactive__ownerNickname", ecs.TYPE_STRING, null],
       ["gun__recoilAmount", ecs.TYPE_FLOAT, null],
-      ["gun_entity_mods__recoilMult", ecs.TYPE_FLOAT, 1.0]
+      ["gun_entity_mods__recoilMult", ecs.TYPE_FLOAT, 1.0],
+      ["gun_entity_mods__adsSpeedMult", ecs.TYPE_FLOAT, 1.0],
+      ["gun__adsSpeedMult", ecs.TYPE_FLOAT, null]
     ].extend(DBGLEVEL != 0 ? [
       ["weapon_stat__damage", ecs.TYPE_FLOAT, 0.0],
       ["weapon_stat__damageCount", ecs.TYPE_INT, 1],
@@ -269,7 +261,9 @@ function getFromTemplate(template) {
     foldable_container__foldedVolume = template.getCompValNullable("foldable_container__foldedVolume")
     dogtag_item = template.getCompValNullable("dogtag_item")
     gun__recoilAmount = template.getCompValNullable("gun__recoilAmount")
-    gun_entity_mods__recoilMult = template.getCompValNullable("dogtag_item") ?? 1.0
+    gun__adsSpeedMult = template.getCompValNullable("gun__adsSpeedMult")
+    gun_entity_mods__recoilMult = template.getCompValNullable("gun_entity_mods__recoilMult") ?? 1.0
+    gun_entity_mods__adsSpeedMult = template.getCompValNullable("gun_entity_mods__adsSpeedMult") ?? 1.0
   }
 }
 
@@ -527,34 +521,42 @@ function getInventoryItemTooltipLines(item, additionalHints={}) {
   }
 
   
-  if ((comps?.gun__recoilAmount ?? 0.0) >= 0.01) {
-    let recoil = (comps?.gun__recoilAmount ?? 0.0) * comps.gun_entity_mods__recoilMult * 100
-    statsTooltip.append(coloredStatText(loc("desc/recoil"), round_by_value(recoil, 0.01)))
+  let recoil = getRecoil(comps)
+  if (recoil != null) {
+    let { value, desc } = recoil
+    statsTooltip.append(coloredStatText(loc("desc/recoil"), loc("desc/valueWithText", { value, desc })))
   }
 
   
-  if ((comps?.gun_deviation__maxDeviation ?? 0.0) > 0.0)
-    statsTooltip.append(coloredStatText(loc("desc/deviation"), round_by_value(comps?.gun_deviation__maxDeviation ?? 0.0, 0.1)))
+  let deviation = getDeviation(comps)
+  if (deviation != null) {
+    let { value, desc } = deviation
+    statsTooltip.append(coloredStatText(loc("desc/deviation"), loc("desc/valueWithText", { value, desc })))
+  }
 
   
-  if ((comps?.loud_noise__noisePerShot ?? 0.0) > 0.0) {
-    let mult = comps?.gun_entity_mods__loudNoisePerShotMult ?? 1.0
-    let value = round_by_value((comps?.loud_noise__noisePerShot ?? 0.0) * mult, 0.1)
-    local locIdToUse = loc("desc/shotVeryLoud")
-    let koef = 1.0 - mult
+  let noise = getShootNoise(comps)
+  if (noise != null) {
+    let koef = 1.0 - (comps?.gun_entity_mods__loudNoisePerShotMult ?? 1.0)
     let color = koef == 0 ? itemTooltipNameColor
       : koef > 0.0 ? itemTooltipStatValueIncreasedColor
       : itemTooltipStatValueDecreasedColor
-    for (local i = 0; i < shootNoiseTbl.len(); i++) {
-      if (value <= shootNoiseTbl[i].limit) {
-        locIdToUse = shootNoiseTbl[i].locId
-        break
-      }
-    }
 
-    statsTooltip.append(coloredStatText(loc("desc/noise_per_shot"), colorize(color, loc(locIdToUse))))
+    statsTooltip.append(coloredStatText(loc("desc/noise_per_shot"), colorize(color, loc(noise))))
   }
 
+  
+  if (comps?.gun__adsSpeedMult != null) {
+    let mul = comps.gun_entity_mods__adsSpeedMult
+    let speed = comps.gun__adsSpeedMult
+    let res = truncateToMultiple(speed / mul, 0.01)
+
+    let color = mul == 1.0 ? TextNormal
+      : mul > 1.0 ? GreenSuccessColor
+      : RedWarningColor
+
+    statsTooltip.append(coloredStatText(loc("desc/ads"), colorize(color, $"{res}{loc("measureUnits/seconds")}")))
+  }
 
   
   if (item?.playerOwnerEid && item?.playerOwnerEid != ecs.INVALID_ENTITY_ID && is_teams_friendly(localPlayerTeam.get(), get_player_team(item.playerOwnerEid))) {
@@ -630,9 +632,15 @@ function getInventoryItemTooltipLines(item, additionalHints={}) {
     let effectTemplate = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(comps?.gun_mod__effectTemplate)
     if (effectTemplate != null) {
       let loudNoisePerShotMult = effectTemplate?.getCompValNullable("gun_mod_effect__loudNoisePerShotMult")
-      if (loudNoisePerShotMult != null)
-        statsTooltip.append(coloredStatText(loc("desc/loud_noise_per_shot"),
-          $"-{round_by_value((1.0 - loudNoisePerShotMult) * 100.0, 0.1)}%"))
+      if (loudNoisePerShotMult != null) {
+        let color = loudNoisePerShotMult > 1.0 ? RedWarningColor
+          : loudNoisePerShotMult < 1.0 ? GreenSuccessColor
+          : TextNormal
+        let value = loudNoisePerShotMult < 1.0
+          ? $"-{round_by_value((1.0 - loudNoisePerShotMult) * 100.0, 0.1)}%"
+          : $"+{round_by_value((1.0 - loudNoisePerShotMult) * 100.0, 0.1)}%"
+        statsTooltip.append(coloredStatText(loc("desc/loud_noise_per_shot"), colorize(color, value)))
+      }
 
       let damageMult = effectTemplate?.getCompValNullable("gun_mod_effect__damageMult")
       if (damageMult != null && damageMult != 1.0) {
@@ -645,9 +653,27 @@ function getInventoryItemTooltipLines(item, additionalHints={}) {
       }
 
       let adsSpeedMult = effectTemplate?.getCompValNullable("gun_mod_effect__adsSpeedMult")
-      if (adsSpeedMult != null)
-        statsTooltip.append(coloredStatText(loc("desc/ads"),
-          $"-{round_by_value((1.0 - adsSpeedMult) * 100.0, 0.1)}%"))
+      if (adsSpeedMult != null && adsSpeedMult != 1.0) {
+        let color = adsSpeedMult > 1.0 ? GreenSuccessColor
+          : adsSpeedMult < 1.0 ? RedWarningColor
+          : TextNormal
+        let value = adsSpeedMult < 1.0
+          ? $"-{round_by_value((1.0 - adsSpeedMult) * 100.0, 0.1)}%"
+          : $"+{round_by_value((adsSpeedMult - 1.0) * 100.0, 0.1)}%"
+        statsTooltip.append(coloredStatText(loc("desc/ads"), colorize(color, value)))
+      }
+
+
+      let recoilMult = effectTemplate?.getCompValNullable("gun_mod_effect__recoilMult")
+      if (recoilMult != null && recoilMult != 1.0) {
+        let color = recoilMult > 1.0 ? RedWarningColor
+          : recoilMult < 1.0 ? GreenSuccessColor
+          : TextNormal
+        let value = recoilMult > 1.0
+          ? $"+{round_by_value((1.0 - recoilMult) * 100.0, 0.1)}%"
+          : $"-{round_by_value((1.0 - recoilMult) * 100.0, 0.1)}%"
+        statsTooltip.append(coloredStatText(loc("desc/recoil"), colorize(color, value)))
+      }
     }
   }
 
@@ -852,19 +878,26 @@ function getInventoryItemTooltipLines(item, additionalHints={}) {
       cortical_vault_inactive__deathReason = querycomp.cortical_vault_inactive__deathReason
     })
 
-    if (cortical_vault_inactive__killerNickname != "")
-      statsTooltip.append(coloredStatText(loc("desc/killerNickname"), $"{cortical_vault_inactive__killerNickname}"))
     let damageTypeStr = cortical_vault_inactive__deathReason
+    if (cortical_vault_inactive__killerNickname != "") {
+      local killerName = cortical_vault_inactive__killerNickname
+      
+      if (damageTypeStr == "__killed_by_monster")
+        killerName = loc(killerName)
+      statsTooltip.append(coloredStatText(loc("desc/killerNickname"), $"{killerName}"))
+    }
 
     
     if (damageTypeStr != null && damageTypeStr != "") {
       local dogtagDescr = $"items/dogtag/death_cause"
 
       
-      if (damageTypeStr == "0" || damageTypeStr == "1" || damageTypeStr == "2" || damageTypeStr == "8" ||
+      if (damageTypeStr == "0" || damageTypeStr == "1" || damageTypeStr == "2" || damageTypeStr == "8" || damageTypeStr == "__killed_by_monster" ||
           (damageTypeStr == "6" && cortical_vault_inactive__killerNickname != "")) {
-        dogtagDescr = loc($"{dogtagDescr}/weapon", {weaponName = loc(cortical_vault_inactive__killedByWeapon)})
-        statsTooltip.append(coloredStatText(loc("desc/dogtagWeapon"), $"{dogtagDescr}"))
+        if (cortical_vault_inactive__killedByWeapon.len() > 0) {
+          dogtagDescr = loc($"{dogtagDescr}/weapon", {weaponName = loc(cortical_vault_inactive__killedByWeapon)})
+          statsTooltip.append(coloredStatText(loc("desc/dogtagWeapon"), $"{dogtagDescr}"))
+        }
       }
       
       else if (damageTypeStr == "6") {

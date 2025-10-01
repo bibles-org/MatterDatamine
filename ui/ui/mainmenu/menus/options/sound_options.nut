@@ -4,7 +4,7 @@ from "%ui/mainMenu/menus/options/options_lib.nut" import getOnlineSaveData, opti
 from "settings" import get_setting_by_blk_path, set_setting_by_blk_path_and_save
 from "%ui/sound_state.nut" import soundOutputDeviceUpdate
 from "%ui/mainMenu/audioModule/audio_settings.nut" import playerMusicVolumeSetting, playMusicOnBaseSetting,
-  playMusicInRaidsSetting, playFreeStreamingMusicSetting
+  playMusicInRaidsSetting, playFreeStreamingMusicSetting, playerOnlyFavoriteSetting
 
 from "%ui/ui_library.nut" import *
 
@@ -126,7 +126,7 @@ return freeze({
     subtitles, subtitlesBackground, subtitlesFontSize,
     {name = loc("musicPlayer") isSeparator=true tab="Sound"},
     playerMusicVolumeSetting, playMusicOnBaseSetting,
-    playMusicInRaidsSetting, playFreeStreamingMusicSetting
+    playMusicInRaidsSetting, playFreeStreamingMusicSetting, playerOnlyFavoriteSetting
   ]
   subtitlesNeeded = subtitlesOnlineSaveData.watch
   subtitlesBackgroundNeeded = subtitlesBackgroundOnlineSaveData.watch

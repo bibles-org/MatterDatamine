@@ -34,6 +34,7 @@ let colors = {
   SelBdHover             = ActionBgHoverColor
   SelBdDisabled          = Color(20, 20, 20, 20)
   SelBgNormal            = mul_color(ItemListBgColor, 0.2, 3.6)
+  SelBgDisabled          = Color(18, 18, 18, 230)
 
   BtnBdActive            = mul_color(ActionBgHoverColor, 0.5,2)
   BtnBdDisabled          = Color(20, 20, 20, 20)

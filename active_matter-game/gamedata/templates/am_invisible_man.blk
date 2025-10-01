@@ -167,9 +167,18 @@ invisible_man_transition_affect{
   }
 }
 
-invisible_man_visibility_render_affect{
+invisible_man_render_affect_base{
   _use:t="replicated_game_effect_sequence"
   _use:t="game_effect_geomtree_effects"
+
+  "game_effect__geomtreeEffectTemplatesEraseOnDeath:list<t>"{
+    item:t="invisible_man_decay_sparks_effect_template"
+    item:t="invisible_man_trail_sparks_effect_template"
+  }
+}
+
+invisible_man_visibility_render_affect{
+  _use:t="invisible_man_render_affect_base"
   game_effect__showHideDistanceSq:p2=3600, 8100
   game_effect_sequence__autoDestroy:b=no
 
@@ -197,8 +206,7 @@ invisible_man_visibility_render_affect{
 }
 
 invisible_man_invisibility_render_affect{
-  _use:t="replicated_game_effect_sequence"
-  _use:t="game_effect_geomtree_effects"
+  _use:t="invisible_man_render_affect_base"
   game_effect__disableFlagOnce:t="burning__isBurning"
   game_effect__showHideDistanceSq:p2=3600, 8100
   game_effect_sequence__autoDestroy:b=no

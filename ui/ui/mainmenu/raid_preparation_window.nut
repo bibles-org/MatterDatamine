@@ -354,7 +354,7 @@ let mkPresetStashTabs = @(rotationTimer) function() {
 
       let seed = mindtransferSeed.get().tointeger() + ecs.calc_hash(selectedRaid.get()?.extraParams?.raidName ?? "")
       let compArray = ecs.CompArray()
-      let generatorName = "ordinary_equipment_generator"
+      let generatorName = "rented_equipment_generator"
       generate_loadout_by_seed(generatorName, seed, compArray)
       previewPreset.set (loadoutToPreset({ items = compArray.getAll() }).__merge({ overrideMainChronogeneDoll = true }))
     }
@@ -420,7 +420,7 @@ let mkPreparationWindow = @(rotationTimer) {
       let seed = mindtransferSeed.get().tointeger() + ecs.calc_hash(selectedRaid.get()?.extraParams?.raidName ?? "")
 
       let compArray = ecs.CompArray()
-      let generatorName = "ordinary_equipment_generator"
+      let generatorName = "rented_equipment_generator"
       generate_loadout_by_seed(generatorName, seed, compArray)
       let loadout = loadoutToPreset({ items = compArray.getAll() }).__merge({ overrideMainChronogeneDoll = true })
       previewPreset.set(loadout)

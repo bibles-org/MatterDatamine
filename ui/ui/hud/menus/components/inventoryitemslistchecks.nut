@@ -137,6 +137,9 @@ function isSafepackDropForbidder(item) {
       return MoveForbidReason.FORBIDDEN_QUEUE_STATUS
   }
 
+  if (!is_can_move_item_to_safepack(item.eid))
+    return MoveForbidReason.FORBIDDEN_FOR_CONTAINER
+
   let ret = isDropForbiddenCommon(item, SAFEPACK)
   if (ret != MoveForbidReason.NONE)
     return ret
@@ -145,9 +148,6 @@ function isSafepackDropForbidder(item) {
 
   if (!checkVolume(item, inventoryEid) && !is_can_move_to_safepack_with_overflow(inventoryEid, item.eid))
     return MoveForbidReason.VOLUME
-
-  if (!is_can_move_item_to_safepack(item.eid))
-    return MoveForbidReason.FORBIDDEN_FOR_CONTAINER
 
   if (is_inventory_in_use(inventoryEid))
     return MoveForbidReason.OTHER

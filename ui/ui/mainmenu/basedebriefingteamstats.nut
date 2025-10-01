@@ -76,6 +76,7 @@ function debriefingStats() {
     size = FLEX_H
     flow = FLOW_HORIZONTAL
     gap = hdpx(20)
+    padding = hdpx(10)
     children = [
       mkStatsColumn("debriefing/exploration", [
         mkStatsEntry("distance_traveled", loc("measureUnits/meters")),
