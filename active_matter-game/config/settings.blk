@@ -765,18 +765,6 @@ vulkan{
   tempBufferOverAllocWaitMs:i=20
 
   vendor{
-    Intel{
-      driverProps{
-        resourceHeaps{
-          entry{
-            data{
-              allowed:b=no
-            }
-          }
-        }
-      }
-    }
-
     default{
       driverProps{
         bufferSuballocation{

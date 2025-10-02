@@ -21,7 +21,9 @@ import "%dngscripts/ecs.nut" as ecs
 from "%ui/hud/menus/components/inventoryItemRarity.nut" import rarityColorTable
 from "%ui/components/controlHudHint.nut" import controlHudHint
 from "%ui/components/commonComponents.nut" import mkText
-from "%ui/components/itemDescription.nut" import getShootNoise, getDeviation, getRecoil
+from "%ui/components/itemDescription.nut" import getDeviation, getRecoil, getShootNoise
+from "das.human_weap" import get_human_aim_speed
+from "%ui/hud/state/controlled_hero.nut" import controlledHeroEid
 
 let { chronogeneStatCustom, chronogeneStatDefault } = require("%ui/hud/state/item_info.nut")
 let { playerProfileAllResearchNodes, playerProfileOpenedNodes, allCraftRecipes, marketItems } = require("%ui/profile/profileState.nut")
@@ -65,6 +67,7 @@ let inventoryItemTooltipQuery = ecs.SqQuery("inventoryItemTooltipQuery",
   {
     
     comps_ro = [
+      ["gun__recoilDirAmount", ecs.TYPE_FLOAT, null],
       ["gun_deviation__maxDeviation", ecs.TYPE_FLOAT, null],
       ["loud_noise__noisePerShot", ecs.TYPE_FLOAT, null],
       ["gun_entity_mods__loudNoisePerShotMult", ecs.TYPE_FLOAT, null],
@@ -221,6 +224,7 @@ function getFromTemplate(template) {
 
   
   return {
+    gun__recoilDirAmount = template.getCompValNullable("gun__recoilDirAmount")
     gun_deviation__maxDeviation = template.getCompValNullable("gun_deviation__maxDeviation")
     loud_noise__noisePerShot = template.getCompValNullable("loud_noise__noisePerShot")
     gun_entity_mods__loudNoisePerShotMult = template.getCompValNullable("gun_entity_mods__loudNoisePerShotMult")
@@ -546,11 +550,10 @@ function getInventoryItemTooltipLines(item, additionalHints={}) {
   }
 
   
-  if (comps?.gun__adsSpeedMult != null) {
+  let aimSpeed = get_human_aim_speed(controlledHeroEid.get(), item?.eid)
+  if (comps?.gun__adsSpeedMult != null && aimSpeed != 0) {
     let mul = comps.gun_entity_mods__adsSpeedMult
-    let speed = comps.gun__adsSpeedMult
-    let res = truncateToMultiple(speed / mul, 0.01)
-
+    let res = truncateToMultiple(1.0 / aimSpeed, 0.01)
     let color = mul == 1.0 ? TextNormal
       : mul > 1.0 ? GreenSuccessColor
       : RedWarningColor

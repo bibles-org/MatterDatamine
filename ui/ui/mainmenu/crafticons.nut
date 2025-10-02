@@ -126,7 +126,7 @@ function getCraftResultItems(results) {
   return results.map(function(result) {
     let itemTemplateName = result.reduce(@(a,v,k) v.len() == 0 ? k : a, "")
     let attachments = result.reduce(function(acc, slot_name, item_name) {
-      if (slot_name.len() != 0)
+      if (slot_name.len() != 0 && toIntegerSafe(slot_name, 0, false) == 0)
         acc.append(item_name)
       return acc
     }, [])

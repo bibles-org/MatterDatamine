@@ -192,7 +192,9 @@ autoSquadGatheringState.subscribe_with_nasty_disregard_of_frp_update(function(v)
   }
   gui_scene.clearTimer("resetAutoquadWaiting")
 
-  let queueId = selectedRaid.get().id
+  let queueId = selectedRaid.get()?.id
+  if (queueId == null)
+    return
 
   let params = {
     group = "custom-lobby"

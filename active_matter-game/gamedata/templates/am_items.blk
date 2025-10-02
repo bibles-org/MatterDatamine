@@ -1730,6 +1730,156 @@ monster_conversion_lootbox{
   item__name:t="lootbox/monster_conversion_lootbox"
 }
 
+nexus_reward_easy_melee_lootbox{
+  _use:t="item"
+  item__iconYaw:r=145
+  item__iconRoll:r=25
+  item__iconZenith:r=200
+  item__iconAzimuth:r=10
+  animchar__res:t="modern_case_700x400_a_char"
+  collres__res:t="modern_case_700x400_a_collision"
+  item__proto:t="nexus_reward_easy_melee_lootbox"
+  item__name:t="lootbox/nexus_reward_easy_melee_lootbox"
+}
+
+nexus_reward_hard_melee_lootbox{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  item__iconYaw:r=145
+  item__iconRoll:r=25
+  item__iconZenith:r=200
+  item__iconAzimuth:r=10
+  animchar__res:t="modern_case_700x400_a_char"
+  collres__res:t="modern_case_700x400_a_collision"
+  item__proto:t="nexus_reward_hard_melee_lootbox"
+  item__name:t="lootbox/nexus_reward_hard_melee_lootbox"
+}
+
+nexus_reward_easy_throwable_lootbox{
+  _use:t="item"
+  item__iconYaw:r=145
+  item__iconRoll:r=25
+  item__iconZenith:r=200
+  item__iconAzimuth:r=10
+  animchar__res:t="ammo_grenade_box_west_a_char"
+  collres__res:t="ammo_grenade_box_west_a_collision"
+  item__proto:t="nexus_reward_easy_throwable_lootbox"
+  item__name:t="lootbox/nexus_reward_easy_throwable_lootbox"
+}
+
+nexus_reward_hard_throwable_lootbox{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  item__iconYaw:r=145
+  item__iconRoll:r=25
+  item__iconZenith:r=200
+  item__iconAzimuth:r=10
+  animchar__res:t="ammo_grenade_box_west_a_char"
+  collres__res:t="ammo_grenade_box_west_a_collision"
+  item__proto:t="nexus_reward_hard_throwable_lootbox"
+  item__name:t="lootbox/nexus_reward_hard_throwable_lootbox"
+}
+
+nexus_reward_easy_heals_lootbox{
+  _use:t="item"
+  item__iconYaw:r=145
+  item__iconRoll:r=25
+  item__iconZenith:r=200
+  item__iconAzimuth:r=10
+  animchar__res:t="ammo_box_west_small_char"
+  collres__res:t="ammo_box_west_small_collision"
+  item__proto:t="nexus_reward_easy_heals_lootbox"
+  item__name:t="lootbox/nexus_reward_easy_heals_lootbox"
+}
+
+nexus_reward_hard_heals_lootbox{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  item__iconYaw:r=145
+  item__iconRoll:r=25
+  item__iconZenith:r=200
+  item__iconAzimuth:r=10
+  animchar__res:t="ammo_box_west_small_char"
+  collres__res:t="ammo_box_west_small_collision"
+  item__proto:t="nexus_reward_hard_heals_lootbox"
+  item__name:t="lootbox/nexus_reward_hard_heals_lootbox"
+}
+
+nexus_reward_easy_guns_lootbox{
+  _use:t="item"
+  item__iconYaw:r=145
+  item__iconRoll:r=25
+  item__iconZenith:r=200
+  item__iconAzimuth:r=10
+  animchar__res:t="modern_case_1000x800_a_char"
+  collres__res:t="modern_case_1000x800_a_collision"
+  item__proto:t="nexus_reward_easy_guns_lootbox"
+  item__name:t="lootbox/nexus_reward_easy_guns_lootbox"
+}
+
+nexus_reward_hard_guns_lootbox{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  item__iconYaw:r=145
+  item__iconRoll:r=25
+  item__iconZenith:r=200
+  item__iconAzimuth:r=10
+  animchar__res:t="modern_case_2000x600_a_char"
+  collres__res:t="modern_case_2000x600_a_collision"
+  item__proto:t="nexus_reward_hard_guns_lootbox"
+  item__name:t="lootbox/nexus_reward_hard_guns_lootbox"
+}
+
+nexus_reward_easy_equipment_lootbox{
+  _use:t="item"
+  item__iconYaw:r=145
+  item__iconRoll:r=25
+  item__iconZenith:r=200
+  item__iconAzimuth:r=10
+  animchar__res:t="ammo_box_west_drone_a_char"
+  collres__res:t="ammo_box_west_drone_a_collision"
+  item__proto:t="nexus_reward_easy_equipment_lootbox"
+  item__name:t="lootbox/nexus_reward_easy_equipment_lootbox"
+}
+
+nexus_reward_hard_equipment_lootbox{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  item__iconYaw:r=145
+  item__iconRoll:r=25
+  item__iconZenith:r=200
+  item__iconAzimuth:r=10
+  animchar__res:t="ammo_box_west_drone_a_char"
+  collres__res:t="ammo_box_west_drone_a_collision"
+  item__proto:t="nexus_reward_hard_equipment_lootbox"
+  item__name:t="lootbox/nexus_reward_hard_equipment_lootbox"
+}
+
+nexus_reward_easy_attachments_lootbox{
+  _use:t="item"
+  item__iconYaw:r=145
+  item__iconRoll:r=25
+  item__iconZenith:r=200
+  item__iconAzimuth:r=10
+  animchar__res:t="ammo_box_east_a_char"
+  collres__res:t="ammo_box_east_a_collision"
+  item__proto:t="nexus_reward_easy_attachments_lootbox"
+  item__name:t="lootbox/nexus_reward_easy_attachments_lootbox"
+}
+
+nexus_reward_hard_attachments_lootbox{
+  _use:t="item"
+  _use:t="item_rarity_uncommon"
+  item__iconYaw:r=145
+  item__iconRoll:r=25
+  item__iconZenith:r=200
+  item__iconAzimuth:r=10
+  animchar__res:t="ammo_box_east_a_char"
+  collres__res:t="ammo_box_east_a_collision"
+  item__proto:t="nexus_reward_hard_attachments_lootbox"
+  item__name:t="lootbox/nexus_reward_hard_attachments_lootbox"
+}
+
 base_upgrade_ReplicatorDevice{
   _use:t="item"
   _use:t="item_rarity_rare"

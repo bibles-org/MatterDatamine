@@ -1002,8 +1002,8 @@ base_human_net_phys{
   human_phys__inAirTimeThreshold:r=0.3
   human_phys__afterJumpDelay:r=0.2
   _replicated:t="human_phys__jumpEndTime"
-  human_phys__grenadeThrowOffset:p3=0, 0.2, 0
-  human_phys__grenadeThrowDirMult:r=0.5
+  human_phys__grenadeThrowOffset:p3=0, 0.4, 0
+  human_phys__grenadeThrowDirMult:r=0.1
   havePairCollision:b=yes
   human_net_phys__autoHeightIgnoreChangeSize:r=0.1
   human_net_phys__prevAutoHeight:r=0

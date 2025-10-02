@@ -77,7 +77,7 @@ function refreshMonolithLbData(requestData = null) {
 function refreshMonolithLb() {
   let request = {
     start = 0
-    count = max(curMonolithLbPlayersCount.get(), 45)
+    count = max(curMonolithLbPlayersCount.get() + 1, 45)
     projectid = "active_matter_pc"
     token = userInfo.get()?.token
     table = "season"
@@ -169,4 +169,5 @@ return {
   curFactionLbPlayersCount
   refreshFactionLb
   updateRefreshTimer
+  LB_MONOLITH_UPDATE_INTERVAL
 }

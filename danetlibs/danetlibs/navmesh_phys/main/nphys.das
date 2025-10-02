@@ -239,8 +239,8 @@ def update_nphys_scale(act : UpdateStageInfoAct; nPhys__animcharScale : float; v
 
 
 [es(on_appear, before=update_nphys_scale)]
-def nphys_randomize_animchar_scale(evt : Event; nPhys__animcharScaleRange : float2; var nPhys__animcharScale : float&)
-  nPhys__animcharScale = rnd_float(nPhys__animcharScaleRange)
+def nphys_randomize_animchar_scale(evt : Event; eid : EntityId; nPhys__animcharScaleRange : float2; var nPhys__animcharScale : float&)
+  nPhys__animcharScale = eid_frnd(eid) * (nPhys__animcharScaleRange.y - nPhys__animcharScaleRange.x) + nPhys__animcharScaleRange.x
 
 
 [es(tag=server, on_disappear, REQUIRE=nphys__disabled)]

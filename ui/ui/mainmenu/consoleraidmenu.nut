@@ -1159,7 +1159,9 @@ function getContent() {
                         ? (isHover ? colors.BtnTextHover : colors.BtnTextActive)
                         : (isHover ? colors.BtnTextHighlight : colors.BtnTextNormal)
                       )
-                    : lockColor
+                    : isDisabled.get()
+                      ? lockColor
+                      : colors.TextDisabled
                   return {
                       color = textColor, text = qName, watch = params.watch
                       rendObj = ROBJ_TEXT

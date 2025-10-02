@@ -149,6 +149,19 @@ function isRefinerReadyToStart(itemsIn, currentRecipe) {
   return isOk
 }
 
+let fittingRecipe = Computed(function() {
+  if (selectedRecipe.get() != null) {
+    return null
+  }
+
+  foreach (_, recipeKeyVal in refinerFusingRecipes.get().topairs()) {
+    if (isRefinerReadyToStart(itemsInRefiner.get(), recipeKeyVal)) {
+      return recipeKeyVal
+    }
+  }
+  return null
+})
+
 function cleanRefinerWithTask(task) {
   if (!refineIsProcessing(task)) {
     itemsInRefiner.set([])
@@ -548,7 +561,7 @@ let mkRefinerSlot = function(refiner) {
     }
     return {
       watch = [ currentRefinerIsReadOnly, hasCountDown, isRefinerReady,
-        refineGettingInProgress, currentKeyItem]
+        refineGettingInProgress, currentKeyItem, selectedRecipe]
       size = FLEX_H
       children = buttonWithGamepadHotkey(
         {
@@ -563,9 +576,11 @@ let mkRefinerSlot = function(refiner) {
             @() {
               watch = [countdown, itemsInRefiner]
               halign = ALIGN_CENTER
+              flow = FLOW_HORIZONTAL
               children = [
                 isProcessing ? null : mkText(loc("amClean/start"), defTxtStyle.__merge(body_txt))
                 !isProcessing ? null : mkText(processingTimeToText(countdown?.get()), defTxtStyle.__merge(body_txt))
+                !isProcessing && (selectedRecipe.get() == null) && isRefinerReady.get() ? mkText($"({loc("amClean/expectedRewardNoRecipe")})", defTxtStyle.__merge(body_txt)) : null
               ]
             }
           ]
@@ -997,7 +1012,7 @@ let fuseResulsInfo = {
   }
 }
 
-function fillItemsForFuse(fuseRecipe, itemsToDrop, hasAllComponents) {
+function fillItemsForFuse(fuseRecipe, itemsToDrop) {
   if ((amProcessingTask.get()?.taskId ?? "") != "") {
     showMsgbox(static { text = loc("amClean/autofill/taskAlreadyRunned")})
     return
@@ -1008,13 +1023,7 @@ function fillItemsForFuse(fuseRecipe, itemsToDrop, hasAllComponents) {
     return
   }
 
-  if (hasAllComponents) {
-    foreach (item in itemsToDrop) {
-      dropToRefiner(item, REFINER_STASH, 1)
-    }
-  }
-
-  if (!hasAllComponents) {
+  if (itemsToDrop.len() == 0) {
     addPlayerLog({
       id = fuseRecipe
       idToIgnore = fuseRecipe
@@ -1027,12 +1036,41 @@ function fillItemsForFuse(fuseRecipe, itemsToDrop, hasAllComponents) {
     })
     return
   }
+
+  foreach (item in itemsToDrop) {
+    dropToRefiner(item, REFINER_STASH, 1)
+  }
 }
 
 let openFuseWindow = @() addModalWindow(fuseResulsInfo)
 
 function refineRecipeSelection() {
   let onClick = refinerFusingRecipes.get()?.len() ? openFuseWindow : @() showMsgbox(static { text = loc("amClean/noRecipesKnown") })
+
+  let fullReipesCount = Computed(function() {
+    let items = itemsInRefiner.get()
+
+    let itemsTbl = {}
+
+    let components = (selectedRecipe.get()?[1].components ?? [])
+    foreach (comp in components) {
+      itemsTbl[comp] <- []
+    }
+
+    foreach (item in items) {
+      if ((components.findindex(@(v) v == item.itemTemplate) != null)) {
+        itemsTbl[item.itemTemplate].append(item)
+      }
+    }
+
+    const minCompDef = 9999
+    local minCompsCount = minCompDef
+    foreach (_, v in itemsTbl) {
+      minCompsCount = min(minCompsCount, v.len())
+    }
+
+    return minCompsCount
+  })
 
   function mkComponentImage(componentTemplate) {
     let fakedComponent = mkFakeItem(componentTemplate)
@@ -1047,6 +1085,12 @@ function refineRecipeSelection() {
           size = flex()
         }
         inventoryItemImage(fakedComponent, inventoryImageParams)
+        @() {
+          watch = fullReipesCount
+          padding = hdpx(4)
+          size = flex()
+          children = mkText(fullReipesCount.get())
+        }
       ]
       onClick
       onHover = @(on) setTooltip(on ? buildInventoryItemTooltip(fakedComponent) : null)
@@ -1110,7 +1154,7 @@ function refineRecipeSelection() {
                     behavior = Behaviors.Button
                     onClick
                     onHover = @(on) setTooltip(on ? buildInventoryItemTooltip(fakedRecipeItem) : null)
-                    children = inventoryItemImage(fakedRecipeItem, inventoryImageParams)
+                    children = mkComponentImage(fakedRecipeItem?.itemTemplate)
                   }
                 ]
               } : null
@@ -1130,16 +1174,34 @@ function refineRecipeSelection() {
             stashItems.get()
           ))
 
-          local hasAllComponents = true
           let itemsToDrop = []
           let alreadyInRefiner = @(item) itemsInRefiner.get().findindex(@(v) v.eid == item.eid) != null
-          foreach (component in (selectedRecipe.get()?[1].components ?? [])) {
-            let foundItem = allPossibleItems.findvalue(@(v) v.isCorrupted && v.itemTemplate == component && !alreadyInRefiner(v))
-            if (foundItem == null) {
-              hasAllComponents = false
-              continue
+
+          let itemsTbl = {}
+
+          let components = (selectedRecipe.get()?[1].components ?? [])
+          foreach (comp in components) {
+            itemsTbl[comp] <- []
+          }
+
+          foreach (posItem in allPossibleItems) {
+            if ((components.findindex(@(v) v == posItem.itemTemplate) != null) && !alreadyInRefiner(posItem)) {
+              itemsTbl[posItem.itemTemplate].append(posItem)
             }
-            itemsToDrop.append(foundItem)
+          }
+
+          const minCompDef = 9999
+          local minCompsCount = minCompDef
+          foreach (_, v in itemsTbl) {
+            minCompsCount = min(minCompsCount, v.len())
+          }
+
+          if (minCompsCount != minCompDef) {
+            foreach (_, v in itemsTbl) {
+              for (local i=0; i < minCompsCount; i++) {
+                itemsToDrop.append(v[i])
+              }
+            }
           }
 
           return {
@@ -1148,11 +1210,11 @@ function refineRecipeSelection() {
             flow = FLOW_VERTICAL
             gap = hdpx(2)
             children = [
-              mkTextArea($"{loc("amClean/fusePossibleCount")} {loc("ui/multiply")}{itemsToDrop.len()}",
+              mkTextArea($"{loc("amClean/fusePossibleCount")} {loc("ui/multiply")}{minCompsCount}",
                 { halign = ALIGN_CENTER, color = itemsToDrop.len() <= 0 ? RedWarningColor : TextNormal }.__merge(tiny_txt))
               button(
                 static mkText(loc("amClean/refillContainer"), sub_txt),
-                  @() fillItemsForFuse(selectedRecipe.get()?[1], itemsToDrop, hasAllComponents),
+                  @() fillItemsForFuse(selectedRecipe.get()?[1], itemsToDrop),
                 {
                   size = FLEX_H
                   hplace = ALIGN_RIGHT
@@ -1160,7 +1222,7 @@ function refineRecipeSelection() {
                   valign = ALIGN_CENTER
                   halign = ALIGN_CENTER
                   padding = static [hdpx(10), 0]
-                  style = { BtnBgNormal = hasAllComponents ? BtnBgNormal : BtnBgDisabled }
+                  style = { BtnBgNormal = itemsToDrop.len() ? BtnBgNormal : BtnBgDisabled }
                 }
               )
             ]
@@ -1222,6 +1284,20 @@ function warningNeedMoreItemsToFuze() {
   }.__merge(bluredPanel)
 }
 
+
+let selectFittingText = loc("amClean/selectFittingShort")
+let mkFuseRecipeName = @(name) loc($"fuse_result/{name ?? "default"}")
+let mkSelectFittingRecipeButton = @(recipe) button(
+  {
+    size = static [ flex(), hdpx(45) ]
+    halign = ALIGN_CENTER
+    valign = ALIGN_CENTER
+    children = mkText($"{selectFittingText} {mkFuseRecipeName(recipe?[1]?.name)}")
+  },
+  @() selectedRecipe.set(recipe),
+  { size = static [ flex(), hdpx(45) ] }
+)
+
 let keyItemPanelWithTitle = @() {
   flow = FLOW_VERTICAL
   size = FLEX_H
@@ -1236,6 +1312,14 @@ let keyItemPanelWithTitle = @() {
     }.__merge(bluredPanel)
     keyItemPanel
     warningNeedMoreItemsToFuze()
+    @() {
+      watch = [ selectedRecipe, fittingRecipe ]
+      size = static [flex(), SIZE_TO_CONTENT]
+      halign = ALIGN_CENTER
+      valign = ALIGN_CENTER
+      padding = hdpx(8)
+      children = (selectedRecipe.get() != null || fittingRecipe.get() == null) ? null : mkSelectFittingRecipeButton(fittingRecipe.get())
+    }
   ]
 }.__merge(bluredPanel)
 

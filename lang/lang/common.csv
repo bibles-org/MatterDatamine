@@ -2873,18 +2873,18 @@ The Agency requires the presence of multiple squads to handle its complexity, en
 "queue/offline_raids/next_ticket_in";"You will get {amount} {amounts=pass/passes} in ";"Вы получите ещё {amount} {amounts=пропуск/пропуска/пропусков} через ";"Du erhältst {amount} {amounts=Pass/Passes} in "
 "queue/offline_raids/desc";"
 
-You can use these passes to start an Isolated Raid - a special space-time variant where <accented>no other agents are present except you</accented>.
+You can use these passes to start an Isolated Raid - a special space-time variant where <accented>no other agents are present</accented> except you, but the <accented>chance of finding valuable enriched items is lower</accented> than in standard raids.
 
 Use this option if you want to explore the raid without any disturbance from other agents.";"
 
-Вы можете использовать эти пропуска, чтобы стартовать Изолированный рейд - специальный вариант в пространстве и времени, где <accented>нет других агентов, кроме вас</accented>.
+Вы можете использовать эти пропуска, чтобы стартовать Изолированный рейд - специальный вариант в пространстве и времени, где <accented>нет других агентов</accented>, кроме вас, но <accented>шанс найти ценные обогащенные вещи ниже</accented>, чем в стандартных рейдах.
 
 Используйте эту опцию, если хотите исследовать рейд без каких-либо помех со стороны других агентов.";"
 
 Du kannst diese Pässe verwenden, um einen isolierten Überfall zu starten – eine spezielle Raum-Zeit-Variante, bei der <accented>keine anderen Agenten außer dir anwesend sind</accented>.
 
 Verwende diese Option, wenn du den Überfall erkunden möchtest, ohne von anderen Agenten gestört zu werden."
-"queue/offline_raids/free_tickets_limit_reached";"Passes are replenished daily as long as you have fewer than {maxAmount}.";"Пропуски пополняются ежедневно, пока у вас их меньше {maxAmount}.";"Pässe werden täglich aufgefüllt, solange du weniger als {maxAmount} hast."
+"queue/offline_raids/free_tickets_limit_reached";"Passes are replenished daily as long as you have fewer than {maxAmount}.";"Пропуски пополняются ежедневно, если у вас их меньше {maxAmount}.";"Pässe werden täglich aufgefüllt, solange du weniger als {maxAmount} hast."
 "queue/offline_raids/noTickets";"You have no available passes to attend Isolated raids.
 
 The Agency provides passes to its employees on a daily basis.
@@ -2898,7 +2898,7 @@ Sie können auch im Shop erworben werden."
 "queue/offline_raids/leaderSetIsolated";"The squad leader has activated an isolated raid.";"Лидер отряда активировал изолированный рейд.";"The squad leader has activated an isolated raid."
 "queue/offline_raids/noTicketsShort";"Not enough isolated raid passes.";"Недостаточно пропусков в Изолированные рейды";"Nicht genug Pässe für isolierten Überfall."
 "queue/offline_raids/unlockReqs";"Complete all the requirements to gain access to the isolated raid:";"Выполните все условия, чтобы получить доступ к изолированному рейду:";"Complete all the requirements to gain access to the isolated raid:"
-"queue/offline_raids/active";"Isolated raid is active.";"Изолированный рейд активен.";"Isolierter Überfall ist aktiv."
+"queue/offline_raids/active";"<accented>Isolated raid is active.</accented>";"<accented>Изолированный рейд активен.</accented>";"Isolierter Überfall ist aktiv."
 "queue/offline_raids/forbidden";"You cannot change the Isolated raid status while in queue.";"Вы не можете изменить статус Изолированного рейда, находясь в очереди.";"Du kannst den Status „Isolierter Einsatz“ in der Warteschlange nicht ändern."
 "queue/offline_raid";"Isolated raid";"Изолированный рейд";"Isolierter Einsatz"
 "queue/common_raid";"Standard raid";"Стандартный рейд";"Standard-Einsatz"
@@ -3868,6 +3868,7 @@ Du kannst ihn im zyklischen Fortschritt des Monolithen freischalten."
 "amClean/initialIinput";"Initial input";"Изначальный вклад";"Initialer Input"
 "amClean/andMore";"and more...";"и другие...";"und mehr..."
 "amClean/expectedReward";"Expected result";"Ожидаемая результат";"Erwartetes Ergebnis"
+"amClean/expectedRewardNoRecipe";"Without recipe";"Без рецепта";"Without recipe"
 "amClean/keyItemPanelTitle";"Fuse";"Слияние";"Fusionieren"
 "amClean/expectedMoneySingle";"Income from Active Matter: {minVal}";"Ожидаемый доход от Активной Материи: {minVal}";"Einkommen aus Aktivmaterie: {minVal}"
 "amClean/expectedMoney";"Income from Active Matter: {minVal}-{maxVal}";"Ожидаемый доход от Активной Материи: {minVal}-{maxVal}";"Einkommen aus Aktivmaterie: {minVal}-{maxVal}"
@@ -3949,6 +3950,7 @@ Get upgrades for this device from Monolith Access Terminal.";"Устройств
 "amClean/noSpeedUp";"No refiner accelerators available";"Нет доступных ускорителей переработки";"Keine Refiner-Beschleuniger verfügbar"
 "amClean/noFuseMsgbox";"To activate, you need to recycle enriched items";"Для активации нужно переработать обогащенные предметы";"Zum Aktivieren musst du angereicherte Gegenstände recyceln"
 "amClean/selectRecipe";"Select a fuse recipe";"Выберите рецепт синтеза";"Wähle ein Sicherungsrezept"
+"amClean/selectFittingShort";"Select";"Выбрать";"Select"
 "amClean/unknownRecipesTitle";"Unresearched Recipes";"Неисследованные рецепты";"Unresearched Recipes"
 "amClean/autofill/haveNoItems";"There are not enough items for this recipe.";"Не хватает предметов для этого рецепта.";"Es sind nicht genügend Gegenstände für dieses Rezept vorhanden."
 "amClean/autofill/taskAlreadyRunned";"The refiner is already running.";"Переработка в процессе.";"Der Veredler läuft bereits."
@@ -3973,7 +3975,7 @@ Unlock the recipe in the Monolith Access Terminal to discover the required items
 "amClean/possibleResults";"Possible results:";"Возможные результаты:";"Mögliche Ergebnisse:"
 "amClean/requiredComponents";"Required items:";"Необходимые предметы:";"Benötigte Gegenstände:"
 "amClean/anyItemComponent";"Any item";"Любой предмет";"Any item"
-"amClean/fusePossibleCount";"Required items count:";"Количество необходимых предметов:";"Required items count:"
+"amClean/fusePossibleCount";"Possible count:";"Возможное количество:";"Possible count:"
 "workbench/repair";"Repair";"Починить";"Reparatur"
 "workbench/notEnoghMoney";"Not enough money";"Недостаточно денег";"Nicht genug Geld"
 "baseWorkbench";"Workbench";"Верстак";"Werkbank"
@@ -4878,13 +4880,16 @@ If yes - your choice is worthy of a unique reward.";"За <bluedoor>Синей �
  Der Weg zum Monolithen, der mit den Tränen und dem Blut deiner Kameraden getränkt ist, hat dich all die Zeit zu diesem schwierigsten Schritt geführt.
  Bist du bereit, dich selbst zu opfern, um das fatale Ende für andere zu verzögern? Ein namenloser Held zu werden, dessen heldenhaftes Tun niemals besungen wird?
  Wenn ja – deine Wahl ist eine einzigartige Belohnung wert."
-"monolith/blueDoorDesc/rewards";"<accented>Rejection of Multiverse Harmonization •
+"monolith/blueDoorDesc/rewards";"<accented>Refrain from Harmonizing the Multiverse •
 Ability to choose one more reward for self-sacrifice •
-<danger>Loss</danger> of all items and progress •</accented>";"<accented>Отказ от Гармонизации мультивселеленной •
+<danger>Loss</danger> of all items and progress •
+You will be able to repeat the path and visit the Monolith again •</accented>";"<accented>Воздержаться от Гармонизации Мультивселенной •
 Возможность выбрать еще одну награду за самопожертвование •
-<danger>Потеря</danger> всех предметов и прогресса •</accented>";"<accented>Rejection of Multiverse Harmonization •
+<danger>Потеря</danger> всех предметов и прогресса •
+Вы сможете повторить путь и посетить монолит еще раз •</accented>";"<accented>Refrain from Harmonizing the Multiverse •
 Ability to choose one more reward for self-sacrifice •
-<danger>Loss</danger> of all items and progress •</accented>"
+<danger>Loss</danger> of all items and progress •
+You will be able to repeat the path and visit the Monolith again •</accented>"
 "monolith/redDoorDesc";"Behind the <reddoor>Red Door</reddoor> is a path of renewal.
 
 To take a step forward, you are ready to destroy all obstacles. Even if one of them is the petrified world of the multiverse, calling for change.
@@ -4909,13 +4914,16 @@ If yes - you will be rewarded, but already in the new, reborn world of the renew
 "monolith/redDoorDesc/rewards";"<accented>• <premiumColor>₵</premiumColor>250 Crystallised Active Matter
 • Approaching the harmonization of the multiverse
 • Adding to the list ""Future Makers""
-• Saving all your items and progress</accented>";"<accented>• <premiumColor>₵</premiumColor>250 Кристаллов Активной Материи
+• Saving all your items and progress
+• You will be able to repeat the path and visit the Monolith again</accented>";"<accented>• <premiumColor>₵</premiumColor>250 Кристаллов Активной Материи
 • Приближение Гармонизации мультивселеленной
 • Добавление в список ""Творцов Будущего""
-• Сохранение всех предметов и прогресса</accented>";"<accented>• <premiumColor>₵</premiumColor>250 Crystallised Active Matter
+• Сохранение всех предметов и прогресса
+• Вы сможете повторить путь и посетить монолит еще раз</accented>";"<accented>• <premiumColor>₵</premiumColor>250 Crystallised Active Matter
 • Approaching the harmonization of the multiverse
 • Adding to the list ""Future Makers""
-• Saving all your items and progress</accented>"
+• Saving all your items and progress
+• You will be able to repeat the path and visit the Monolith again</accented>"
 "monolith/fullResetWarning";"ATTENTION: By choosing this reward, all progress will be lost!";"ВНИМАНИЕ: Выбирая эту награду, весь прогресс будет потерян!";"ACHTUNG: Durch die Wahl dieser Belohnung geht allen Fortschritt verloren!"
 "monolith/leaderboardEnteringWarning";"ATTENTION: Having made this choice, you will no longer be able to return to the monolith in this universe!";"ВНИМАНИЕ: Сделав этот выбор, вы не сможете больше вернуться к монолиту в этой вселенной!";"ACHTUNG: Wenn du diese Wahl triffst, wirst du nicht mehr in dieses Universum zum Monolith zurückkehren können!"
 "monolith/refinerRecipePrefix";"FUSE RECIPE:";"РЕЦЕПТ СИНТЕЗА:";"FUSIONSREZEPT:"
@@ -7381,6 +7389,66 @@ Du weißt nicht genau, was sich darin befindet, bis du es öffnest."
 You don't know what exactly is inside until you open this container.";"Вооружение из мультивселенной.
 Неизвестно, что конкретно внутри, пока вы не откроете ящик.";"Waffen aus dem Multiversum.
 Du weißt nicht genau, was sich darin befindet, bis du diesen Container öffnest."
+"lootbox/nexus_reward_easy_melee_lootbox";"Nexus Supply: Melee Weapons";"Нексус поставка: Холодное оружие";"Nexus Supply: Melee Weapons"
+"lootbox/nexus_reward_easy_melee_lootbox/desc";"Melee weapons from the multiverse.
+You don't know what exactly is inside until you open this container.";"Холодное оружие из мультивселенной.
+Неизвестно, что конкретно внутри, пока вы не откроете ящик.";"Melee weapons from the multiverse.
+You don't know what exactly is inside until you open this container."
+"lootbox/nexus_reward_hard_melee_lootbox";"Nexus Supply: Melee Weapons";"Нексус поставка: Холодное оружие";"Nexus Supply: Melee Weapons"
+"lootbox/nexus_reward_hard_melee_lootbox/desc";"Melee weapons from the multiverse.
+You don't know what exactly is inside until you open this container.";"Холодное оружие из мультивселенной.
+Неизвестно, что конкретно внутри, пока вы не откроете ящик.";"Melee weapons from the multiverse.
+You don't know what exactly is inside until you open this container."
+"lootbox/nexus_reward_easy_throwable_lootbox";"Nexus Supply: Grenades";"Нексус поставка: Гранаты";"Nexus Supply: Grenades"
+"lootbox/nexus_reward_easy_throwable_lootbox/desc";"Grenades from the multiverse.
+You don't know what exactly is inside until you open this container.";"Гранаты из мультивселенной.
+Неизвестно, что конкретно внутри, пока вы не откроете ящик.";"Grenades from the multiverse.
+You don't know what exactly is inside until you open this container."
+"lootbox/nexus_reward_hard_throwable_lootbox";"Nexus Supply: Grenades";"Нексус поставка: Гранаты";"Nexus Supply: Grenades"
+"lootbox/nexus_reward_hard_throwable_lootbox/desc";"Grenades from the multiverse.
+You don't know what exactly is inside until you open this container.";"Гранаты из мультивселенной.
+Неизвестно, что конкретно внутри, пока вы не откроете ящик.";"Grenades from the multiverse.
+You don't know what exactly is inside until you open this container."
+"lootbox/nexus_reward_easy_heals_lootbox";"Nexus Supply: Medicine";"Нексус поставка: Медицина";"Nexus Supply: Medicine"
+"lootbox/nexus_reward_easy_heals_lootbox/desc";"Medicine from the multiverse.
+You don't know what exactly is inside until you open this container.";"Лекарства из мультивселенной.
+Неизвестно, что конкретно внутри, пока вы не откроете ящик.";"Medicine from the multiverse.
+You don't know what exactly is inside until you open this container."
+"lootbox/nexus_reward_hard_heals_lootbox";"Nexus Supply: Medicine";"Нексус поставка: Медицина";"Nexus Supply: Medicine"
+"lootbox/nexus_reward_hard_heals_lootbox/desc";"Medicine from the multiverse.
+You don't know what exactly is inside until you open this container.";"Лекарства из мультивселенной.
+Неизвестно, что конкретно внутри, пока вы не откроете ящик.";"Medicine from the multiverse.
+You don't know what exactly is inside until you open this container."
+"lootbox/nexus_reward_easy_guns_lootbox";"Nexus Supply: Guns";"Нексус поставка: Огнестрельное оружие";"Nexus Supply: Guns"
+"lootbox/nexus_reward_easy_guns_lootbox/desc";"Guns from the multiverse.
+You don't know what exactly is inside until you open this container.";"Огнестрельное оружие из мультивселенной.
+Неизвестно, что конкретно внутри, пока вы не откроете ящик.";"Guns from the multiverse.
+You don't know what exactly is inside until you open this container."
+"lootbox/nexus_reward_hard_guns_lootbox";"Nexus Supply: Guns";"Нексус поставка: Огнестрельное оружие";"Nexus Supply: Guns"
+"lootbox/nexus_reward_hard_guns_lootbox/desc";"Guns from the multiverse.
+You don't know what exactly is inside until you open this container.";"Огнестрельное оружие из мультивселенной.
+Неизвестно, что конкретно внутри, пока вы не откроете ящик.";"Guns from the multiverse.
+You don't know what exactly is inside until you open this container."
+"lootbox/nexus_reward_easy_equipment_lootbox";"Nexus Supply: Equipment";"Нексус поставка: Экипировка";"Nexus Supply: Equipment"
+"lootbox/nexus_reward_easy_equipment_lootbox/desc";"Equipment from the multiverse.
+You don't know what exactly is inside until you open this container.";"Экипировка из мультивселенной.
+Неизвестно, что конкретно внутри, пока вы не откроете ящик.";"Equipment from the multiverse.
+You don't know what exactly is inside until you open this container."
+"lootbox/nexus_reward_hard_equipment_lootbox";"Nexus Supply: Equipment";"Нексус поставка: Экипировка";"Nexus Supply: Equipment"
+"lootbox/nexus_reward_hard_equipment_lootbox/desc";"Equipment from the multiverse.
+You don't know what exactly is inside until you open this container.";"Экипировка из мультивселенной.
+Неизвестно, что конкретно внутри, пока вы не откроете ящик.";"Equipment from the multiverse.
+You don't know what exactly is inside until you open this container."
+"lootbox/nexus_reward_easy_attachments_lootbox";"Nexus Supply: Gun Attachments";"Нексус поставка: Модули для оружия";"Nexus Supply: Gun Attachments"
+"lootbox/nexus_reward_easy_attachments_lootbox/desc";"Gun attachments from the multiverse.
+You don't know what exactly is inside until you open this container.";"Модули для оружия из мультивселенной.
+Неизвестно, что конкретно внутри, пока вы не откроете ящик.";"Gun attachments from the multiverse.
+You don't know what exactly is inside until you open this container."
+"lootbox/nexus_reward_hard_attachments_lootbox";"Nexus Supply: Gun Attachments";"Нексус поставка: Модули для оружия";"Nexus Supply: Gun Attachments"
+"lootbox/nexus_reward_hard_attachments_lootbox/desc";"Gun attachments from the multiverse.
+You don't know what exactly is inside until you open this container.";"Модули для оружия из мультивселенной.
+Неизвестно, что конкретно внутри, пока вы не откроете ящик.";"Gun attachments from the multiverse.
+You don't know what exactly is inside until you open this container."
 "items/item_cargoport_admin_docs";"Port operations documents";"Документы по портовым операциям";"Dokumente der Hafenoperationen"
 "items/item_cargoport_admin_docs/desc";"Documents describing daily port operations. One of them mentions an investigation into a missing container with weapons.";"Документы, описывающие ежедневные операции порта. В одном из них упоминается расследование пропажи контейнера с оружием.";"Dokumente, die die täglichen Hafenoperationen beschreiben. Eines davon erwähnt eine Untersuchung zu einem verschwundenen Container mit Waffen."
 "items/item_cargoport_cargo_movement_log";"Cargo movement logbook";"Журнал учета перемещения грузов";"Frachtbewegungslogbuch"

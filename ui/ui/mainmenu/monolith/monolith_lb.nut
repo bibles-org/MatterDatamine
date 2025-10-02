@@ -4,7 +4,9 @@ from "math" import ceil
 from "%ui/components/mkDotPaginatorList.nut" import mkHorizPaginatorList
 from "dagor.time" import format_unixtime
 from "%ui/components/colors.nut" import BtnBdFocused, BtnBdTransparent, BtnBgSelected
-from "%ui/leaderboard/lb_state_base.nut" import curMonolithLbData, curMonolithLbPlayersCount, curMonolithLbVotesCount
+from "%ui/leaderboard/lb_state_base.nut" import curMonolithLbData, curMonolithLbPlayersCount, curMonolithLbVotesCount,
+  refreshMonolithLb, LB_MONOLITH_UPDATE_INTERVAL
+from "dagor.time" import get_time_msec
 
 from "%ui/ui_library.nut" import *
 
@@ -182,6 +184,9 @@ let lbContent = @() {
   size = FLEX_H
   flow = FLOW_VERTICAL
   gap = hdpx(4)
+  onAttach = @() gui_scene.setInterval(LB_MONOLITH_UPDATE_INTERVAL / 1000, refreshMonolithLb,
+    "monolithLbUpdate")
+  onDetach = @() gui_scene.clearTimer("monolithLbUpdate")
   children = [
     lbListTitle
     lbList

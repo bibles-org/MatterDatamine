@@ -816,7 +816,7 @@ ks23_wire_stock{
 
 barrett_m82_cheekpad_effect{
   _use:t="gun_mod_effect"
-  gun_mod_effect__recoilMult:r=0.98
+  gun_mod_effect__recoilMult:r=0.91
 }
 
 barrett_m82_cheekpad{
@@ -830,7 +830,7 @@ barrett_m82_cheekpad{
   item__weight:r=0.3
   item__volume:i=30
   item__marketPrice:i=4950
-  gun_mod__effectTemplate:t="gun_mod_effect__recoilMult"
+  gun_mod__effectTemplate:t="barrett_m82_cheekpad_effect"
   item__iconOffset:p2=0, -0.1
   profile_server_data__enrichmentRefineChronotracesRange:ip2=10, 11
 

@@ -15,8 +15,8 @@ let shootNoiseTbl = freeze([
 ])
 
 let deviationTbl = freeze([
-  { limit = 70, locId = "desc/deviationHigh" }
-  { limit = 79.9999, locId = "desc/deviationMedium" }
+  { limit = 0.74, locId = "desc/deviationHigh" }
+  { limit = 0.79, locId = "desc/deviationMedium" }
   { locId = "desc/deviationLow" }
 ])
 
@@ -138,9 +138,9 @@ function getShootNoise(template) {
 }
 
 function getDeviation(template) {
-  let v = template?.getCompValNullable("gun_deviation__maxDeviation") ?? template?.gun_deviation__maxDeviation
+  let v = template?.getCompValNullable("gun__recoilDirAmount") ?? template?.gun__recoilDirAmount
   return v == null ? null
-    : { value = v, desc = getLocByLimit(v, deviationTbl) }
+    : { value = round_by_value(v, 0.01), desc = getLocByLimit(v, deviationTbl) }
 }
 
 function getRecoil(template, isShopDesc = false) {
