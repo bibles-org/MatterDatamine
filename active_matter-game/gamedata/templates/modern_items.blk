@@ -1224,11 +1224,38 @@ m110a1_magazine{
   item_holder__maxItemCount:i=20
   item_holder__boxedItemTemplate:t="box_7_62x51_magazine"
   item__baseWeight:r=0.3
-  item__volume:i=20
+  item__volume:i=30
   item__name:t="items/m110a1_magazine"
   collres__res:t="m110a1_sdmr_ammo_collision"
   item__marketPrice:i=580
   gunAttachable__slotTag:t="m110a1_magazine"
+
+  "ammo_holder__loadingAmmoType:shared:t"{
+    value:t="loading_ammo_m110a1_sdmr"
+  }
+}
+
+m110a1_10rnds_magazine_effect{
+  _use:t="gun_mod_effect"
+  gun_mod_effect__adsSpeedMult:r=1.03
+}
+
+m110a1_10rnds_magazine{
+  _use:t="base_magazine"
+  _use:t="gun_mod_with_effect"
+  animchar__res:t="m110a1_sdmr_ammo_b_char"
+  item__proto:t="m110a1_10rnds_magazine"
+  item__locDetails:t=""
+  ammo_holder__templateName:t="m110a1_10rnds_magazine"
+  item_holder__maxItemCount:i=10
+  item_holder__boxedItemTemplate:t="box_7_62x51_magazine"
+  item__baseWeight:r=0.2
+  item__volume:i=20
+  item__name:t="items/m110a1_10rnds_magazine"
+  collres__res:t="m110a1_sdmr_ammo_b_collision"
+  item__marketPrice:i=390
+  gun_mod__effectTemplate:t="m110a1_10rnds_magazine_effect"
+  gunAttachable__slotTag:t="m110a1_10rnds_magazine"
 
   "ammo_holder__loadingAmmoType:shared:t"{
     value:t="loading_ammo_m110a1_sdmr"

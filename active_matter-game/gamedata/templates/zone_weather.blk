@@ -20,7 +20,7 @@ zone_weather_postfx_color_grading{
   }
 }
 
-zone_weather_postfx_color_grading_storm{
+zone_weather_postfx_color_grading_storm_strong{
   _use:t="zone_weather_postfx_color_grading"
   zone_weather_postfx_color_grading__name:t="zone_weather_postfx_color_grading_storm"
 
@@ -29,6 +29,32 @@ zone_weather_postfx_color_grading_storm{
     colorGamma:p4=1.4, 0.8, 0.35, 0.95
     colorContrast:p4=1.2, 1, 0.7, 2
     colorSaturation:p4=1.4, 0.5, 0.4, 0.2
+    gradingFactor:r=1
+    priority:i=10000
+  }
+}
+
+zone_weather_postfx_color_grading_storm_medium{
+  _use:t="zone_weather_postfx_color_grading_storm_strong"
+
+  "zone_weather_postfx_color_grading__colorGrading:object"{
+    colorGain:p4=1.75, 0.8, 0.3, 1
+    colorGamma:p4=1.3, 0.85, 0.5, 0.96
+    colorContrast:p4=1.15, 1, 0.8, 1.75
+    colorSaturation:p4=1.3, 0.6, 0.6, 0.3
+    gradingFactor:r=1
+    priority:i=10000
+  }
+}
+
+zone_weather_postfx_color_grading_storm_light{
+  _use:t="zone_weather_postfx_color_grading_storm_strong"
+
+  "zone_weather_postfx_color_grading__colorGrading:object"{
+    colorGain:p4=1.5, 0.875, 0.4, 1
+    colorGamma:p4=1.2, 0.9, 0.7, 0.975
+    colorContrast:p4=1.1, 1, 0.85, 1.5
+    colorSaturation:p4=1.2, 0.75, 0.8, 0.4
     gradingFactor:r=1
     priority:i=10000
   }

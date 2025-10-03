@@ -2421,7 +2421,7 @@ Deine Aufgabe ist es, es erfolgreich zum Portal zu bringen und <accented>es sich
 "controls/Human.Shoot";"Shoot";"Огонь";"Schießen"
 "controls/Human.Aim";"Aiming";"Прицеливание";"Zielen"
 "controls/Human.Aim1";"Aiming";"Прицеливание";"Zielen"
-"controls/Human.Aim2";"Aiming (option 2)";"Прицеливание (вариант 2)";"Zielen (Option 2)"
+"controls/Human.Aim2";"Aiming (option 2) / Command to attack! (Monster)";"Прицеливание (вариант 2) / В атаку! (Монстр)";"Zielen (Option 2)"
 "controls/Human.HoldBreath";"Breath holding";"Задержка дыхания";"Atem anhalten"
 "controls/Human.Melee";"Melee";"Рукопашная атака";"Nahkampf"
 "controls/Human.Throw";"Throw explosive grenade";"Бросок осколочной гранаты";"Explosivgranate werfen"
@@ -2431,7 +2431,7 @@ Deine Aufgabe ist es, es erfolgreich zum Portal zu bringen und <accented>es sich
 "controls/Human.ThrowBack";"Throw back grenade";"Отбросить гранату";"Granate zurückwerfen"
 "controls/Human.ChooseGrenade";"Grenades selector";"Выбор гранат";"Granatenwahlschalter"
 "controls/Human.ChooseGrenade/empty";"No grenades in pouch or pockets";"В подсумке и карманах нет гранат";"Keine Granaten im Beutel oder in den Taschen"
-"controls/Human.Reload";"Gun reload";"Перезарядка";"Waffe nachladen"
+"controls/Human.Reload";"Gun reload / Dash (Monster)";"Перезарядка / Рывок (Монстр)";"Waffe nachladen"
 "controls/Human.CheckAmmo";"Check ammo";"Проверить боеприпасы";"Munition prüfen"
 "controls/Human.FiringModeNext";"Firing mode";"Режим стрельбы";"Feuer-Modus"
 "controls/Human.Weapon1";"Weapon 1";"Оружие 1";"Waffe 1"
@@ -2439,7 +2439,7 @@ Deine Aufgabe ist es, es erfolgreich zum Portal zu bringen und <accented>es sich
 "controls/Human.Weapon3";"Weapon 3";"Оружие 3";"Waffe 3"
 "controls/Human.Weapon4";"Weapon 4";"Оружие 4";"Waffe 4"
 "controls/Human.SpecialItemSlot";"Special Item";"Особое устройство";"Spezialgegenstand"
-"controls/Human.Flashlight";"Flashlight (Toggle)";"Фонарик (Переключение)";"Taschenlampe (umschalten)"
+"controls/Human.Flashlight";"Flashlight (Toggle) / Echolocation (Monster)";"Фонарик (Переключение) / Эхолокация (Монстр)";"Taschenlampe (umschalten)"
 "controls/Human.FlashlightWeapon";"Weapon flashlight (Toggle)";"Фонарик на оружии (Переключение)";"Weapon flashlight (Toggle)"
 "controls/Human.NightVisionDevice";"Night Vision Device (Toggle)";"Прибор ночного видения (Переключение)";"Nachtsichtgerät (umschalten)"
 "controls/Human.UseSignalGrenade";"Signal grenade";"Сигнальная граната";"Signalfackelgranate"
@@ -2756,7 +2756,7 @@ Wir entschuldigen uns für eventuelle Unannehmlichkeiten."
 "controls/Human.QuickUse4";"Pocket (Quick Use Slot) 4";"Карман (Быстрый слот) 4";"Tasche (Schnellnutzungsslot) 4"
 "controls/Human.QuickUse5";"Pocket (Quick Use Slot) 5";"Карман (Быстрый слот) 5";"Tasche (Schnellnutzungsslot) 5"
 "controls/Human.QuickUseObjectiveItem";"Use Objective Item";"Использовать предмет задания";"Zielobjekt verwenden"
-"controls/Human.StoneThrow";"Throw an item";"Бросить предмет";"Einen Gegenstand werfen"
+"controls/Human.StoneThrow";"Throw an item / Summon distorted (Monster)";"Бросить предмет / Призвать искажённого (Монстр)";"Einen Gegenstand werfen"
 "controls/Human.HoldUpWeapon";"Hold Up Weapon";"Поднять оружие";"Waffe hochhalten"
 "controls/pc/useGamepad";"Use gamepad";"Использовать контроллер";"Gamepad verwenden"
 "controls/Helicopter.Fly";"Altitude control";"Управление высотой";"Höhenkontrolle"
@@ -2900,6 +2900,7 @@ Sie können auch im Shop erworben werden."
 "queue/offline_raids/unlockReqs";"Complete all the requirements to gain access to the isolated raid:";"Выполните все условия, чтобы получить доступ к изолированному рейду:";"Complete all the requirements to gain access to the isolated raid:"
 "queue/offline_raids/active";"<accented>Isolated raid is active.</accented>";"<accented>Изолированный рейд активен.</accented>";"Isolierter Überfall ist aktiv."
 "queue/offline_raids/forbidden";"You cannot change the Isolated raid status while in queue.";"Вы не можете изменить статус Изолированного рейда, находясь в очереди.";"Du kannst den Status „Isolierter Einsatz“ in der Warteschlange nicht ändern."
+"queue/offline_raids/freeRaids";"The pass will not be spent.";"Пропуск не будет потрачен.";"The pass will not be spent."
 "queue/offline_raid";"Isolated raid";"Изолированный рейд";"Isolierter Einsatz"
 "queue/common_raid";"Standard raid";"Стандартный рейд";"Standard-Einsatz"
 "measureUnits/days";"d";"д.";"T"
@@ -4296,6 +4297,7 @@ Erforschen Sie sie als Operativer mit Ihrer eigenen Ausrüstung oder übertragen
 "desc/recoilLow";"Low";"Низкая";"Low"
 "desc/recoilMedium";"Medium";"Средняя";"Medium"
 "desc/recoilHigh";"High";"Высокая";"High"
+"desc/usedInRecipe";"Used in fuse recipes:";"Используется в рецептах:";"Used in fuse recipes:"
 "playerBaseUpgrade/StashFeatured";"Permanent Storage Extension +10000 volume";"Постоянное расширение склада +10000 объёма";"Dauerhafte Lagererweiterung +10000 Volumen"
 "playerBaseUpgrade/StashFeatured/desc";"Adds a permanent storage upgrade unit to the base, which allows to store more weapons and items.";"Добавляет на базу постоянное улучшение хранилища, которое позволяет хранить больше оружия и предметов.";"Fügt der Basis eine permanente Lagereinheit hinzu, die es ermöglicht, mehr Waffen und Gegenstände zu lagern."
 "playerBaseUpgrade/BaseStash";"Initial Storage 10000 volume";"Базовый склад 10000 объёма";"Anfangsspeicher: 10.000 Volumen"
@@ -4721,6 +4723,25 @@ Click the heart icon next to any track to add it to your favorites, or check ""S
 "monolith/lbTitle";"Lists of the most worthy who have reached the Monolith and chosen the Harmonization of the Multiverse";"Списки достойнейших, достигших Монолита и выбравших Гармонизацию Мультивселенной";"Listen der Wertvollsten, die den Monolithen erreicht und die Harmonisierung des Multiversums gewählt haben"
 "monolith/resetProgress";"Until the Harmonization of the Multiverse:";"До Гармонизации Мультивселенной:";"Bis zur Harmonisierung des Multiversums:"
 "monolith/resetProgressShort";"Harmonization";"Гармонизация";"Harmonisierung"
+"monolith/resetProgressionTooltip";"<accented>The Harmonization of the Multiverse</accented> will lead to the expansion of the world’s possibilities. All who take a step into the new world will begin exploring it from a clean slate.
+
+Those who choose to remain among the ruins of the collapsing world will become <accented>Schismatics</accented>.
+Schismatics will cease to gain experience, their Replicators and Refiners will fail, and they will be unable to venture into new worlds.
+Schismatics can visit isolated raids and use the shop.
+
+Yet Schismatics can always turn the page and, like the others, begin uncovering the mysteries of the new world.";"<accented>Гармонизация Мультивселенной</accented> приведет к расширению возможностей мира, все кто сделает шаг в новый мир начнут познавать его с чистого листа.
+
+Те кто решит остаться на руинах коллапсирующего мира станет <accented>Раскольниками</accented>.
+Раскольники перестанут получать опыт, их репликаторы и переработчики выйдут из строя, они не смогут посещать новые миры.
+Раскольники могут продолжать ходить в изолированные рейды и пользоваться магазином.
+
+Раскольники всегда могут перевернуть страницу и подобно остальным познавать тайны нового мира.";"<accented>The Harmonization of the Multiverse</accented> will lead to the expansion of the world’s possibilities. All who take a step into the new world will begin exploring it from a clean slate.
+
+Those who choose to remain among the ruins of the collapsing world will become <accented>Schismatics</accented>.
+Schismatics will cease to gain experience, their Replicators and Refiners will fail, and they will be unable to venture into new worlds.
+Schismatics can visit isolated raids and use the shop.
+
+Yet Schismatics can always turn the page and, like the others, begin uncovering the mysteries of the new world."
 "monolith/lbListTitle";"The most committed agents:";"Самые преданные агенты:";"Die engagiertesten Agenten:"
 "monolith/lbEmpty";"Nobody has made a sacrifice yet...";"Никто ещё не принёс жертву...";"Niemand hat bisher ein Opfer gebracht..."
 "monolith/upgradesTab";"All upgrades";"Все улучшения";"Alle Upgrades"
@@ -4880,16 +4901,51 @@ If yes - your choice is worthy of a unique reward.";"За <bluedoor>Синей �
  Der Weg zum Monolithen, der mit den Tränen und dem Blut deiner Kameraden getränkt ist, hat dich all die Zeit zu diesem schwierigsten Schritt geführt.
  Bist du bereit, dich selbst zu opfern, um das fatale Ende für andere zu verzögern? Ein namenloser Held zu werden, dessen heldenhaftes Tun niemals besungen wird?
  Wenn ja – deine Wahl ist eine einzigartige Belohnung wert."
-"monolith/blueDoorDesc/rewards";"<accented>Refrain from Harmonizing the Multiverse •
-Ability to choose one more reward for self-sacrifice •
-<danger>Loss</danger> of all items and progress •
-You will be able to repeat the path and visit the Monolith again •</accented>";"<accented>Воздержаться от Гармонизации Мультивселенной •
-Возможность выбрать еще одну награду за самопожертвование •
-<danger>Потеря</danger> всех предметов и прогресса •
-Вы сможете повторить путь и посетить монолит еще раз •</accented>";"<accented>Refrain from Harmonizing the Multiverse •
-Ability to choose one more reward for self-sacrifice •
-<danger>Loss</danger> of all items and progress •
-You will be able to repeat the path and visit the Monolith again •</accented>"
+"monolith/blueDoorDesc/rewards";"<accented>
+You will be able to repeat the path and visit the Monolith again •
+Ability to choose <safe>reward for self-sacrifice</safe> •
+Refrain from Harmonizing the Multiverse •
+
+<safe>Saving:</safe>
+Crystallised Active Matter •
+Self-sacrifice rewards •
+Isolated Raid Passes •
+Items and body sleeves from packages and bonuses •
+Beacons, Safepacks, Dogtags •
+
+<danger>Loss:</danger>
+Credits, Chronotraces, Monolith Tokens •
+All items, Chronogenes •
+Blueprints progression, player levels, Monolith levels and unlocks •</accented>";"<accented>
+Вы сможете повторить путь и посетить монолит еще раз •
+Возможность выбрать <safe>награду за самопожертвование</safe> •
+Воздержаться от Гармонизации Мультивселенной •
+
+<safe>Сохраняется:</safe>
+Кристаллы Активной Материи •
+награды за самопожертвование •
+предметы и оболочки из изданий и бонусов •
+Маяки, Защищенные контейнеры, Жетоны игроков •
+
+<danger>Теряется:</danger>
+кредиты, хронотрейсы, жетоны монолита •
+все предметы, хроногены •
+прогресс чертежей, уровни игрока, уровни Монолита и его прогрессия •</accented>";"<accented>
+You will be able to repeat the path and visit the Monolith again •
+Ability to choose <safe>reward for self-sacrifice</safe> •
+Refrain from Harmonizing the Multiverse •
+
+<safe>Saving:</safe>
+Crystallised Active Matter •
+Self-sacrifice rewards •
+Isolated Raid Passes •
+Items and body sleeves from packages and bonuses •
+Beacons, Safepacks, Dogtags •
+
+<danger>Loss:</danger>
+Credits, Chronotraces, Monolith Tokens •
+All items, Chronogenes •
+Blueprints progression, player levels, Monolith levels and unlocks •</accented>"
 "monolith/redDoorDesc";"Behind the <reddoor>Red Door</reddoor> is a path of renewal.
 
 To take a step forward, you are ready to destroy all obstacles. Even if one of them is the petrified world of the multiverse, calling for change.
@@ -4911,19 +4967,22 @@ If yes - you will be rewarded, but already in the new, reborn world of the renew
  Bist du bereit, das Fundament des Universums zu sprengen und es stolz zu verkünden?
  Wenn ja – du wirst belohnt, aber bereits in der neuen, wiedergeborenen Welt des erneuerten Multiversums.
  <accented>WARNUNG:</accented> Die Harmonisierung des Multiversums wird zum Zusammenbruch und zur Sterilisation aller bestehenden Zeitlinien führen."
-"monolith/redDoorDesc/rewards";"<accented>• <premiumColor>₵</premiumColor>250 Crystallised Active Matter
+"monolith/redDoorDesc/rewards";"<accented>
+• You will be able to repeat the path and visit the Monolith again
+• <premiumColor>₵</premiumColor>250 Crystallised Active Matter
 • Approaching the harmonization of the multiverse
 • Adding to the list ""Future Makers""
-• Saving all your items and progress
-• You will be able to repeat the path and visit the Monolith again</accented>";"<accented>• <premiumColor>₵</premiumColor>250 Кристаллов Активной Материи
+• <safe>Saving</safe> all your items and progress</accented>";"<accented>
+• Вы сможете повторить путь и посетить монолит еще раз
+• <premiumColor>₵</premiumColor>250 Кристаллов Активной Материи
 • Приближение Гармонизации мультивселеленной
 • Добавление в список ""Творцов Будущего""
-• Сохранение всех предметов и прогресса
-• Вы сможете повторить путь и посетить монолит еще раз</accented>";"<accented>• <premiumColor>₵</premiumColor>250 Crystallised Active Matter
+• <safe>Сохранение</safe> всех предметов и прогресса</accented>";"<accented>
+• You will be able to repeat the path and visit the Monolith again
+• <premiumColor>₵</premiumColor>250 Crystallised Active Matter
 • Approaching the harmonization of the multiverse
 • Adding to the list ""Future Makers""
-• Saving all your items and progress
-• You will be able to repeat the path and visit the Monolith again</accented>"
+• <safe>Saving</safe> all your items and progress</accented>"
 "monolith/fullResetWarning";"ATTENTION: By choosing this reward, all progress will be lost!";"ВНИМАНИЕ: Выбирая эту награду, весь прогресс будет потерян!";"ACHTUNG: Durch die Wahl dieser Belohnung geht allen Fortschritt verloren!"
 "monolith/leaderboardEnteringWarning";"ATTENTION: Having made this choice, you will no longer be able to return to the monolith in this universe!";"ВНИМАНИЕ: Сделав этот выбор, вы не сможете больше вернуться к монолиту в этой вселенной!";"ACHTUNG: Wenn du diese Wahl triffst, wirst du nicht mehr in dieses Universum zum Monolith zurückkehren können!"
 "monolith/refinerRecipePrefix";"FUSE RECIPE:";"РЕЦЕПТ СИНТЕЗА:";"FUSIONSREZEPT:"
@@ -10111,6 +10170,7 @@ aber du kannst weitere Spieler einladen, bis er voll ist."
 "items/ruger_10_22_specops_magazine";"10/22 magazine";"Магазин 10/22";"10/22 Magazin"
 "items/sv98_magazine";"SV-98 magazine";"Магазин СВ-98";"SV-98 Magazin"
 "items/m110a1_magazine";"M110A1 magazine";"Магазин M110A1";"M110A1 Magazin"
+"items/m110a1_10rnds_magazine";"M110A1 10 rds. magazine";"Магазин M110A1 10 патр.";"M110A1 10 rds. magazine"
 "items/hk_g3a4_magazine";"G3A4 magazine";"Магазин G3A4";"G3A4-Magazin"
 "items/barrett_m82a1_magazine";"M82A1 magazine";"Магазин M82A1";"M82A1 Magazin"
 "items/vssk_vyhlop_magazine";"VSSK Vyhlop magazine";"Магазин ВССК Выхлоп";"VSSK Vyhlop Magazin"
@@ -10288,7 +10348,10 @@ aber du kannst weitere Spieler einladen, bis er voll ist."
 "items/pp19_vityaz_silencer/short";"PP-19 Silencer";"Глушитель ПП-19";"PP-19 Schalldämpfer"
 "items/pp19_vityaz_silencer/desc";"Reduces the loudness of your shots.";"Уменьшает громкость ваших выстрелов.";"Reduziert die Lautstärke deiner Schüsse."
 "items/oss_hxqd_762_suppressor";"HX-QD Suppressor for M110A1";"Глушитель HX-QD для М110А1";"HX-QD Schalldämpfer für M110A1"
-"items/oss_hxqd_762_suppressor/short";"HX-QD Suppressor";"Глушитель HX-QD";"HX-QD Schalldämpfer"
+"items/oss_hxqd_762_suppressor/short";"HX-QD
+Suppressor";"Глушитель
+HX-QD";"HX-QD
+Schalldämpfer"
 "items/oss_hxqd_762_suppressor/desc";"Reduces the loudness of your shots.";"Уменьшает громкость ваших выстрелов.";"Reduziert die Lautstärke deiner Schüsse."
 "items/hexagon_silencer";"HX6 Silencer";"Глушитель HX6";"HX6 Schalldämpfer"
 "items/hexagon_silencer/desc";"Reduces the loudness of your shots.";"Уменьшает громкость ваших выстрелов.";"Reduziert die Lautstärke deiner Schüsse."

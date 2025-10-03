@@ -162,7 +162,7 @@ eventbus_subscribe(WEB_LOGIN_GET_SESSION_ID, function(evt) {
   log("WEB_LOGIN", WEB_LOGIN_GET_SESSION_ID, evt)
   let {session_id = null, status=null} = evt
   if (status!=0 && type(session_id)!="string") {
-    showMsgbox(loc("login/error_getting_web_login_session"))
+    showMsgbox({ text = loc("login/error_getting_web_login_session") })
     started_web_login.set(false)
     return
   }

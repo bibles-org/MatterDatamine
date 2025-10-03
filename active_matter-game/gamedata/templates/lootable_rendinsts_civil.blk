@@ -6655,9 +6655,21 @@ medical_partol_lootable_rendinst{
   ri_extra{}
 }
 
+dogorsk_escape_device_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="item_dogorsk_escape_device"
+      number:i=1
+    }
+  }
+}
+
 dogorsk_escape_device_safe_lootable_rendinst{
-  _use:t="quest_container"
-  _use:t="quest_container_for_all"
+  _use:t="lootable_rendinst"
+  _use:t="iteractable_drop_on_ri_destroy"
   _use:t="safe_openable_ri_sound"
   _replicated:t="transform"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
@@ -6666,13 +6678,14 @@ dogorsk_escape_device_safe_lootable_rendinst{
   ri_preload__name:t="sovindustrial_box_zip_b_type_b"
   human_inventory__maxVolume:i=900
   itemContainer__name:t="container/safe"
-  objective_static_target__tag:t="dogorsk_escape_device_safe"
+  loot_drop_system__lootPreset:t="dogorsk_escape_device_loot_preset"
+  map_object_marker__iconName:t="!ui/skin#bagpack_icon.svg"
+  map_object__show:b=yes
+  map_object_marker__activeColor:p3=235, 135, 235
+  map_object_marker__tooltip:t="items/item_dogorsk_escape_device"
 
   ri_extra{}
   "ri_preload__preloadOnLevelLoaded:tag"{}
-  "container_target__discoveredItemTemplates:list<t>"{
-    item:t="item_dogorsk_escape_device"
-  }
 }
 
 create_on_accessed_exit_keys_safe{
@@ -6680,8 +6693,21 @@ create_on_accessed_exit_keys_safe{
   create_on_accessed__timesLeft:i=1
 }
 
+dogorsk_escape_exit_keys_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="key_dogorsk_escape_exit_item"
+      number:i=1
+    }
+  }
+}
+
 dogorsk_escape_exit_keys_safe_lootable_rendinst{
-  _use:t="quest_container_secret"
+  _use:t="lootable_rendinst"
+  _use:t="iteractable_drop_on_ri_destroy"
   _use:t="safe_openable_ri_sound"
   _use:t="create_on_accessed_exit_keys_safe"
   _replicated:t="transform"
@@ -6691,13 +6717,15 @@ dogorsk_escape_exit_keys_safe_lootable_rendinst{
   ri_preload__name:t="sovmod_safe_type_b_loot_open"
   human_inventory__maxVolume:i=500
   itemContainer__name:t="container/safe"
-  objective_static_target__tag:t="dogorsk_escape_exit_keys"
+  loot_drop_system__lootPreset:t="dogorsk_escape_exit_keys_loot_preset"
+  map_object_marker__iconName:t="!ui/uiskin/itemFilter/keys.svg"
+  map_object__show:b=yes
+  map_object_marker__activeColor:p3=235, 135, 235
+  map_object_marker__tag:t="dogorsk_escape_exit_keys"
+  map_object_marker__tooltip:t="items/key_dogorsk_escape_exit_item"
 
   ri_extra{}
   "ri_preload__preloadOnLevelLoaded:tag"{}
-  "container_target__discoveredItemTemplates:list<t>"{
-    item:t="key_dogorsk_escape_exit_item"
-  }
 }
 
 create_on_accessed_america_xenos{

@@ -1,10 +1,10 @@
 from "%ui/ui_library.nut" import *
 from "%ui/fonts_style.nut" import body_txt, h2_txt
-from "%ui/components/colors.nut" import InfoTextValueColor, TextDisabled, RedWarningColor
+from "%ui/components/colors.nut" import InfoTextValueColor, TextDisabled, RedWarningColor, GreenSuccessColor
 import "%ui/components/checkbox.nut" as checkBox
 from "%ui/components/commonComponents.nut" import mkText, mkTimeComp, mkTextArea, mkDescTextarea
 from "%ui/profile/profileState.nut" import numOfflineRaidsAvailable, offlineFreeTicketAt, freeTicketsLimit,
-  freeTicketsPerDay, alwaysIsolatedQueues, neverIsolatedQueues, playerStats
+  freeTicketsPerDay, alwaysIsolatedQueues, neverIsolatedQueues, playerStats, playerBaseState
 from "%ui/helpers/timers.nut" import mkCountdownTimerPerSec
 import "%ui/components/tooltipBox.nut" as tooltipBox
 from "%ui/components/cursors.nut" import setTooltip
@@ -51,7 +51,8 @@ let isQueueOfflineOnly = Computed(function() {
   return (queueId in alwaysIsolatedQueues.get())
 })
 
-let isOfflineRaidAvailable = Computed(@() numOfflineRaidsAvailable.get() > 0 && isOfflineRaidAvailableForQueue.get())
+let isFreeOfflineSoloRaids = Computed(@() playerBaseState.get()?.purchasedPacks == 3 && !isInSquad.get())
+let isOfflineRaidAvailable = Computed(@() ((numOfflineRaidsAvailable.get() > 0) || isFreeOfflineSoloRaids.get()) && isOfflineRaidAvailableForQueue.get())
 let isOfflineRaidSelected = Computed(@() wantOfflineRaid.get() && isOfflineRaidAvailable.get())
 
 
@@ -180,7 +181,7 @@ function mkOfflineRaidCheckBox(override = {}, isDisabled = false) {
                 showMsgbox({ text = loc("queue/offline_raids/only_offline") })
                 return
               }
-              if (v && numOfflineRaidsAvailable.get() <= 0) {
+              if (v && (numOfflineRaidsAvailable.get() <= 0 && !isFreeOfflineSoloRaids.get())) {
                 showMsgbox({ text = loc("queue/offline_raids/noTickets") })
                 return
               }
@@ -231,11 +232,16 @@ function mkOfflineRaidCheckBox(override = {}, isDisabled = false) {
             textOnTheLeft = true
             override = { padding = hdpx(4) }
             tooltip = tooltipBox(@() {
-              watch = [isOfflineRaidAvailable, numOfflineRaidsAvailable, freeTicketsLimit, wantOfflineRaid]
+              watch = [isOfflineRaidAvailable, numOfflineRaidsAvailable, freeTicketsLimit, wantOfflineRaid, isFreeOfflineSoloRaids]
               flow = FLOW_VERTICAL
               gap = static hdpx(4)
               minWidth = static hdpx(500)
               children = [
+                isFreeOfflineSoloRaids.get() ? {
+                  size = FLEX_H
+                  children = mkTextArea(loc("queue/offline_raids/freeRaids"), { color = GreenSuccessColor})
+                } : null
+
                 isOfflineRaidAvailable.get() ? null : mkOfflineRaidUnavailableReason()
                 wantOfflineRaid.get() ? mkTextArea(loc("queue/offline_raids/active")) : null
                 {
@@ -262,5 +268,6 @@ return {
   isOfflineRaidAvailable,
   isQueueOfflineOnly,
   wantOfflineRaid,
-  mkOfflineRaidIcon
+  mkOfflineRaidIcon,
+  isFreeOfflineSoloRaids
 }

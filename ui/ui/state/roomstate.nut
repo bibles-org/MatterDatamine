@@ -384,17 +384,20 @@ eventbus_subscribe("battle_loadout_sign_success", startConnectToHostSequence)
 eventbus_subscribe("battle_loadout_sign_failed", @(...) forceLeaveRoom())
 
 function finishConnectingToHost() {
-
   local selfMember = getRoomMember(userInfo.get()?.userId)
+  let roomVal = room.get()
+  if (roomVal == null)
+    return
+
   let launchParams = {
-    host_urls = getRoomMember(hostId.get())?.public?.host_urls
-    sessionId = room.get().public?.sessionId
-    game = room.get().public?.gameName
-    authKey = selfMember?.private?.id_hmac
-    encKey = selfMember?.private?.enc_key
-    modManifestUrl = room.get().public?.modManifestUrl ?? ""
-    modHashes = room.get().public?.modHashes ?? ""
-    baseModsFilesUrl = room.get().public?.baseModsFilesUrl ?? ""
+    host_urls = getRoomMember(hostId.get())?.public.host_urls
+    sessionId = roomVal?.public.sessionId
+    game = roomVal?.public.gameName
+    authKey = selfMember?.private.id_hmac
+    encKey = selfMember?.private.enc_key
+    modManifestUrl = roomVal?.public.modManifestUrl ?? ""
+    modHashes = roomVal?.public.modHashes ?? ""
+    baseModsFilesUrl = roomVal?.public.baseModsFilesUrl ?? ""
   }
 
   launchParams.each(function(val, key) {

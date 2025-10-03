@@ -425,7 +425,7 @@ sub_objective_spawn_item_on_spawn{
 
 sub_objective_plant_item{
   objective__containerMinVolume:i=300
-  objective__additionalContainerTemplate:t="designated_objective_container"
+  objective__additionalContainerTemplate:t="designated_objective_rendinst_container"
   objective__backupContainerTemplate:t="backup_objective_container"
   objective__outlineContainerColor:c=255, 123, 33, 73
   objective__defaultContainerColor:c=0, 0, 0, 0
@@ -461,9 +461,14 @@ designated_objective_container{
   "net__alwaysInScope:tag"{}
 }
 
+designated_objective_rendinst_container{
+  _use:t="designated_objective_container"
+  _use:t="immortal_rendinst"
+}
+
 objective_extract_item{
   _use:t="am_base_objective"
-  objective__additionalContainerTemplate:t="designated_objective_container"
+  objective__additionalContainerTemplate:t="designated_objective_rendinst_container"
   objective__itemTemplateNameInParams:t="itemTemplate"
   objective__additionalItemTemplate:t="item_for_extract_item_objective"
   objective__backupContainerTemplate:t="backup_objective_container"
@@ -497,7 +502,7 @@ monolith_apply_params{
 
 backup_objective_container{
   _use:t="military_equipment_t2_lootable_rendinst"
-  _use:t="designated_objective_container"
+  _use:t="designated_objective_rendinst_container"
   map_object_marker__tooltip:t="container/armyCrate"
   loot_drop_system__lootPreset:t="empty_loot_preset"
 }

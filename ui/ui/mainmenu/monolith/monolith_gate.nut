@@ -5,7 +5,7 @@ from "%ui/components/colors.nut" import GreenSuccessColor, RedWarningColor, pane
 from "%ui/components/commonComponents.nut" import mkText, mkSelectPanelItem, mkSelectPanelTextCtor, BD_LEFT, BD_NONE,
   mkTextArea, panelParams, mkTooltiped, mkDescTextarea, selectPanelTextFromCtor
 from "%ui/profile/profileState.nut" import playerProfileMonolithTokensCountUpdate
-from "%ui/fonts_style.nut" import h2_txt, body_txt, h1_txt, tiny_txt
+from "%ui/fonts_style.nut" import h2_txt, body_txt, h1_txt, sub_txt, tiny_txt
 from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
 from "%ui/components/button.nut" import button, buttonWithGamepadHotkey
 from "%ui/components/accentButton.style.nut" import AlertButtonStyle, accentButtonStyle
@@ -1392,7 +1392,7 @@ let blueDoorBlock = @() {
       valign = ALIGN_BOTTOM
       vplace = ALIGN_BOTTOM
       pos = [0, hdpx(20)]
-    }.__update(body_txt))
+    }.__update(sub_txt))
 
   ]
 }
@@ -1435,7 +1435,7 @@ let redDoorBlock = @() {
       pos = [0, hdpx(20)]
       valign = ALIGN_BOTTOM
       vplace = ALIGN_BOTTOM
-    }.__update(body_txt))
+    }.__update(sub_txt))
   ]
 }
 

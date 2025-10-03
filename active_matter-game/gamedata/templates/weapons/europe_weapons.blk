@@ -2067,6 +2067,7 @@ hk_g3a4_gun{
   item__name:t="items/hk_g3a4"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=4.6
+  gun__adsSpeedMult:r=0.6
   item__volume:i=280
   item__marketPrice:i=6800
   gun__altReloadTime:r=1.8
@@ -4026,6 +4027,7 @@ pm_63_rak_gun{
   item__name:t="items/pm_63_rak"
   item__weapType:t="submachine_gun"
   item__baseWeight:r=1.6
+  gun__adsSpeedMult:r=0.9
   item__volume:i=140
   item__marketPrice:i=3000
   gun__ammoInspectionInOutDuration:p2=3.33, 2.56
@@ -4396,7 +4398,7 @@ kriss_vector_gun{
   gun__sightsDistance:r=0.25
   gun__statName:t="submachine_gun"
   gun__useLocalPlayerTracer:b=no
-  gun_spread__maxDeltaAngle:r=0.13
+  gun_spread__maxDeltaAngle:r=0.11
   weapon__aimNodeOffset:r=0.2
   gun_shell_ejection__templateName:t="45acp_ejected_shell"
   dropTm:m=[[0, 1, 0] [0, 0, -1] [-1, 0, 0] [0, 0.03, 0]]
@@ -5150,6 +5152,7 @@ m110a1_magazine_slot{
 
   "slot_holder__availableItems:list<t>"{
     i:t="m110a1_magazine"
+    i:t="m110a1_10rnds_magazine"
   }
 }
 
@@ -5187,6 +5190,7 @@ m110a1_gun{
   item__name:t="items/m110a1"
   item__weapType:t="semiauto"
   item__baseWeight:r=4.15
+  gun__adsSpeedMult:r=0.6
   item__volume:i=300
   item__marketPrice:i=22920
   item__iconRecalcAnimation:b=yes

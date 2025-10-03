@@ -144,7 +144,7 @@ eventbus_subscribe("matching.on_disconnect",
       return
     }
 
-    logM("suspicious state. No action performed.", getData().state)
+    logM("suspicious state. No action performed. state:", connState.get(), ", data:", getData())
   })
 
 return {

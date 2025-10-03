@@ -14,7 +14,7 @@ from "%ui/hud/state/item_info.nut" import getSlotAvailableMods
 from "%ui/mainMenu/raid_preparation_window_state.nut" import closePreparationsScreens
 from "dasevents" import CmdRequestOnboardingRaid, CmdHideAllUiMenus, CmdRequestOnboardingReportContract
 from "%ui/state/matchingUtils.nut" import get_matching_utc_time
-from "%ui/mainMenu/offline_raid_widget.nut" import wantOfflineRaid, isOfflineRaidAvailable
+from "%ui/mainMenu/offline_raid_widget.nut" import wantOfflineRaid, isOfflineRaidAvailable, isFreeOfflineSoloRaids
 from "%ui/profile/profileState.nut" import playerStats, numOfflineRaidsAvailable, playerProfileCurrentContracts
 from "%ui/mainMenu/monolith/monolith_common.nut" import MonolithMenuId
 from "%ui/components/profileAnswerMsgBox.nut" import showMsgBoxResult
@@ -329,7 +329,7 @@ let pressWhenReadyBtn = @(additionalFields) buttonWithGamepadHotkey(
     ]
   }
   function() {
-    if (isInSquad.get() && !isSquadLeader.get() && wantOfflineRaid.get() && numOfflineRaidsAvailable.get() <= 0) {
+    if (isInSquad.get() && !isSquadLeader.get() && wantOfflineRaid.get() && !isFreeOfflineSoloRaids.get() && numOfflineRaidsAvailable.get() <= 0) {
       showMsgbox({ text = loc("queue/offline_raids/noTickets") })
       return
     }

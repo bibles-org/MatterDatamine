@@ -245,7 +245,7 @@ let selectedBindingCell = mkWatched(persist, "selectedBindingCell")
 let selectedAxisCell = mkWatched(persist, "selectedAxisCell")
 
 isGamepad.subscribe_with_nasty_disregard_of_frp_update(function(isGp) {
-  if (!isGp)
+  if (!isGp || configuredButton.get() != null || actionRecording.get() != null)
     return
   selectedBindingCell.set(null)
   selectedAxisCell.set(null)
@@ -541,7 +541,7 @@ function actionButtons() {
       children = [
         buttonWithGamepadHotkey(mkText(loc("controls/clearBinding"), { padding = btnPadding }.__merge(body_txt)),
           function() {
-            clearBinding(cellData)
+            clearBinding(selectedBindingCell.get())
             nextGeneration()
           },
           static {
@@ -552,7 +552,7 @@ function actionButtons() {
       ]
       if (actionTypeGroup == dainput.TYPEGRP_AXIS || actionTypeGroup == dainput.TYPEGRP_STICK) {
         children.append(buttonWithGamepadHotkey(mkText(loc("controls/axisSetup"), { padding = btnPadding }.__merge(body_txt)),
-          @() configuredAxis.set(cellData),
+          @() configuredAxis.set(selectedBindingCell.get()),
           static {
             hotkeys = [["^{0}".subst(JB.A), { description = { skip = true } }]]
             skipDirPadNav = true
@@ -563,7 +563,7 @@ function actionButtons() {
       else if (actionTypeGroup == dainput.TYPEGRP_DIGITAL) {
         children.append(
           buttonWithGamepadHotkey(mkText(loc("controls/buttonSetup"), { padding = btnPadding }.__merge(body_txt)),
-            @() configuredButton.set(cellData),
+            @() configuredButton.set(selectedBindingCell.get()),
             static {
               hotkeys = [["^J:Y", { description = { skip = true } }]]
               skipDirPadNav = true
@@ -571,7 +571,7 @@ function actionButtons() {
             })
 
           buttonWithGamepadHotkey(mkText(loc("controls/bindBinding"), { padding = btnPadding }.__merge(body_txt)),
-            @() startRecording(cellData),
+            @() startRecording(selectedBindingCell.get()),
             static {
               hotkeys = [["^{0}".subst(JB.A), { description = { skip = true } }]]
               skipDirPadNav = true

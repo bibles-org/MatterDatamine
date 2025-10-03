@@ -2714,7 +2714,7 @@ function getContent() {
       gap = hdpx(4)
       children = []
         .append(!selectedRaid.get()?.extraParams.nexus
-          ? mkPossibleLootBlock(selectedRaid.get()?.scenes[0].fileName, raidDesc.get(), { num_in_row = 6 total_items = 11})
+          ? mkPossibleLootBlock(selectedRaid.get(), raidDesc.get(), { num_in_row = 6 total_items = 11})
           : currentPrimaryContract.get() != null ? mkRewardBlock(currentPrimaryContract.get(), 7) : null)
         .append(isNexus ? null : mkOfflineRaidCheckBox({ halign = ALIGN_LEFT }), isNexus ? null : autosquad)
     }

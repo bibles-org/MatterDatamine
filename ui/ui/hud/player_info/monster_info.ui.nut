@@ -334,13 +334,13 @@ let abilityIconPic = memoize(@(iconName) iconName == null ? null : {
   size = [abilityIconHeight,abilityIconHeight]
 })
 
-let abText = memoize(@(name) name != null ? mkText(loc(loc($"{name}/name"))) : null)
+let abText = memoize(@(name) name != null ? mkText(loc(loc($"{name}/name")), { margin = [0, hdpx(5), 0,0]}) : null)
 let mkHint = memoize( @(actionHandleName) { children = controlHudHint({ id = actionHandleName text_params={padding=static [hdpx(0), hdpx(4)]}}) rendObj = ROBJ_WORLD_BLUR_PANEL hplace = ALIGN_CENTER})
 
 let mkAbility = function(abilityInfo, cooldown, nextUse) {
 
   let { name, actionHandleName = null } = abilityInfo
-  let cdTimer = mkCountdownTimer(Watched(nextUse), name)
+  let cdTimer = mkCountdownTimer(Watched(nextUse), $"{name}_{nextUse}")
   let icoProgress = @() {
     watch = cdTimer
     rendObj = ROBJ_PROGRESS_CIRCULAR
@@ -368,7 +368,7 @@ let mkAbility = function(abilityInfo, cooldown, nextUse) {
       return { watch = showHint }
     return {
       watch = showHint
-      size = static [0,SIZE_TO_CONTENT]
+      size = static [0, SIZE_TO_CONTENT]
       halign = ALIGN_RIGHT
       onAttach = @() gui_scene.resetTimeout(20, hideHint, name)
       children = abText(name)

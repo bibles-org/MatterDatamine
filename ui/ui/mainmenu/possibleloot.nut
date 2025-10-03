@@ -25,7 +25,7 @@ function filter_possible_loot(item) {
   let itemTemplateName = item.itemTemplate
   let template = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(itemTemplateName)
   if (template == null) {
-    error($"failed to create info for template \"{itemTemplateName}\"")
+    
     return false
   }
   foreach (compName in forbiddenItemComponents) {
@@ -124,13 +124,16 @@ function lineFromComps(comps) {
   }
 }
 
-function mkPossibleLootBlock(scene, description, params) {
+function mkPossibleLootBlock(selectedRaid, description, params) {
+  let scene = selectedRaid?.scenes[0].fileName
+  let imports = selectedRaid?.imports
+
   let {
     num_in_row,
     total_items
   } = params
 
-  let parsedPossibleItems = get_possible_loot(scene).keys()
+  let parsedPossibleItems = get_possible_loot(scene, imports).keys()
     .map(@(v) mkFakeItem(v))
     .filter(filter_possible_loot)
     .sort(sort_possible_loot)

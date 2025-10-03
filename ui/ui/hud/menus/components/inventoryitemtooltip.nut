@@ -24,9 +24,10 @@ from "%ui/components/commonComponents.nut" import mkText
 from "%ui/components/itemDescription.nut" import getDeviation, getRecoil, getShootNoise
 from "das.human_weap" import get_human_aim_speed
 from "%ui/hud/state/controlled_hero.nut" import controlledHeroEid
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
 
 let { chronogeneStatCustom, chronogeneStatDefault } = require("%ui/hud/state/item_info.nut")
-let { playerProfileAllResearchNodes, playerProfileOpenedNodes, allCraftRecipes, marketItems } = require("%ui/profile/profileState.nut")
+let { playerProfileAllResearchNodes, playerProfileOpenedNodes, allCraftRecipes, marketItems, refinerFusingRecipes } = require("%ui/profile/profileState.nut")
 let { amTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
 let { matchingQueuesMap } = require("%ui/matchingQueues.nut")
 let { localPlayerTeam } = require("%ui/hud/state/local_player.nut")
@@ -962,13 +963,48 @@ function getInventoryItemTooltipLines(item, additionalHints={}) {
   return tooltipStrings
 }
 
+function mkUsedInRecipes(recipes) {
+  if (recipes.len() == 0)
+    return null
+
+  let recipesComp = []
+  foreach (recipe in recipes) {
+    let recipeFaked = mkFakeItem($"fuse_result_{recipe.name}")
+    recipesComp.append({
+      flow = FLOW_VERTICAL
+      padding = [ 0, fsh(1) ]
+      children = [
+        mkText($"- {loc(recipeFaked.itemName)}", { color = itemTooltipDescColor } ),
+      ]
+    })
+  }
+  return {
+    flow = FLOW_VERTICAL
+    margin = fsh(1)
+    gap = hdpx(4)
+    children = [
+      mkText("Used in fuse recipes:", { color = itemTooltipStatColor })
+      {
+        flow = FLOW_VERTICAL
+        children = recipesComp
+      }
+    ]
+  }
+}
+
 
 function buildInventoryItemTooltip(item, additionalHints={}) {
   let tooltipStrings = getInventoryItemTooltipLines(item, additionalHints)
 
-  #allow-auto-freeze
   if (tooltipStrings == null)
     return null
+
+  local recipes = []
+  foreach (fusingRecipe in refinerFusingRecipes.get()) {
+    if (fusingRecipe.components.findindex(@(v) v == item.itemTemplate) != null) {
+      recipes.append(fusingRecipe)
+    }
+  }
 
   return tooltipBox({
     children = [
@@ -1009,6 +1045,7 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
               } : null
             ]
           }
+          mkUsedInRecipes(recipes)
           tooltipHotkeyHints
         ]
       }

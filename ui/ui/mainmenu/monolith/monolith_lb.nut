@@ -1,12 +1,14 @@
 from "%ui/fonts_style.nut" import h2_txt, body_txt
-from "%ui/components/commonComponents.nut" import mkText, mkTextArea
+from "%ui/components/commonComponents.nut" import mkText, mkTextArea, mkTooltiped
 from "math" import ceil
 from "%ui/components/mkDotPaginatorList.nut" import mkHorizPaginatorList
 from "dagor.time" import format_unixtime
-from "%ui/components/colors.nut" import BtnBdFocused, BtnBdTransparent, BtnBgSelected
+from "%ui/components/colors.nut" import BtnBdFocused, BtnBdTransparent, BtnBgSelected, InfoTextValueColor
 from "%ui/leaderboard/lb_state_base.nut" import curMonolithLbData, curMonolithLbPlayersCount, curMonolithLbVotesCount,
   refreshMonolithLb, LB_MONOLITH_UPDATE_INTERVAL
 from "dagor.time" import get_time_msec
+import "%ui/components/faComp.nut" as faComp
+import "%ui/components/tooltipBox.nut" as tooltipBox
 
 from "%ui/ui_library.nut" import *
 
@@ -71,7 +73,6 @@ function monolithProgress() {
     flow = FLOW_VERTICAL
     gap = static hdpx(6)
     children = [
-      static mkText(loc("monolith/resetProgress"), body_txt)
       {
         rendObj = ROBJ_BOX
         size = static [flex(), hdpx(40)]
@@ -91,10 +92,35 @@ function monolithProgress() {
             margin = static [hdpx(2), 0, hdpx(2), hdpx(2)]
             color = BtnBgSelected
           }
-          mkText($"{curMonolithLbVotesCount.get()}/{playersCountToRestartProgress}", static {
+          {
+            
             vplace = ALIGN_CENTER
             hplace = ALIGN_CENTER
-          }.__update(body_txt, { fontSize=hdpx(22)}))
+            flow = FLOW_HORIZONTAL
+            gap = hdpx(6)
+            children = [
+              mkText($"{loc("monolith/resetProgress")}", static {
+                vplace = ALIGN_CENTER
+                hplace = ALIGN_CENTER
+                fontSize = hdpx(22)
+              }.__update(body_txt))
+              mkText($"{curMonolithLbVotesCount.get()}/{playersCountToRestartProgress}", static {
+                vplace = ALIGN_CENTER
+                hplace = ALIGN_CENTER
+                fontSize = hdpx(22)
+                color = InfoTextValueColor
+              }.__update(body_txt))
+              mkTooltiped(
+                faComp("question-circle"),
+                tooltipBox(mkTextArea(loc("monolith/resetProgressionTooltip"), { size = SIZE_TO_CONTENT })),
+                {
+                  hplace = ALIGN_LEFT
+                  vplace = ALIGN_CENTER
+                  padding = [ 0, hdpx(10) ]
+                }
+              )
+            ]
+          }
         ]
       }
     ]

@@ -364,8 +364,12 @@ function vectorToTable(vec) {
   }.__update(vec?.z != null ? { z = vec.z } : {})
 }
 
-function get_possible_loot_impl(scene) {
-  let presetsArr = get_entities_info_array_from_scene(scene, parse_loot_presets_from_scene) ?? []
+function get_possible_loot_impl(scene, imports) {
+  let importsArr = []
+  foreach (import in (imports ?? []))
+    importsArr.extend(get_entities_info_array_from_scene(import ?? "", parse_loot_presets_from_scene) ?? [])
+
+  let presetsArr = [].extend(get_entities_info_array_from_scene(scene, parse_loot_presets_from_scene) ?? [], importsArr)
   let lootFromPresets = presetsArr.reduce(function(accumulator, presetTemplate) {
     let presetItems = memoizedGetAllPresetItems(presetTemplate)
     extractLootFromPresetTemplates(presetItems, accumulator)
@@ -379,7 +383,7 @@ return {
   ensurePoint2
   ensurePoint3
   vectorToTable
-  get_possible_loot = memoize(@(scene) get_possible_loot_impl(scene))
+  get_possible_loot = memoize(@(scene, imports = []) get_possible_loot_impl(scene, imports))
   get_tiled_map_info = memoize(@(scene) get_entity_info_from_scene(scene, parse_tiled_map_info_from_scene_entity))
   get_zone_info = memoize(@(scene) get_entity_info_from_scene(scene, parse_zone_info_from_scene_entity))
   get_raid_description = memoize(@(scene) get_entity_info_from_scene(scene, parse_raid_description_from_scene_entity))

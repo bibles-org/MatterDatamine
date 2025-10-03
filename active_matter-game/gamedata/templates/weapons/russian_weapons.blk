@@ -790,10 +790,10 @@ makarov_gun{
   item__name:t="items/makarov"
   item__weapType:t="pistol"
   item__baseWeight:r=0.73
+  gun__adsSpeedMult:r=1.2
   item__volume:i=60
   item__marketPrice:i=400
   gun_shell_ejection__templateName:t="9x18_ejected_shell"
-  gun__adsSpeedMult:r=1.2
   gun__boltFreq:r=5
   gun__altReloadTime:r=1.6
   gun__ammoInspectionInOutDuration:p2=2.067, 1
@@ -1132,7 +1132,6 @@ pp_19_vityaz_gun{
   gun__ammoInspectionInOutDuration:p2=1.6, 1.8
   gun__ammoInspectionIdleLoopDuration:r=10.3
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
-  gun__crawlRecoilMult:r=0.8
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.09
   gun__recoilDirAmount:r=0.77
@@ -1348,12 +1347,10 @@ ak_12_gun{
   item__baseWeight:r=3.5
   item__volume:i=260
   item__marketPrice:i=6500
-  gun__adsSpeedMult:r=0.7
   gun__altReloadTime:r=2.3
   gun__ammoInspectionInOutDuration:p2=2.433, 2
   gun__ammoInspectionIdleLoopDuration:r=11.4
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
-  gun__inertialMass:r=5
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.105
   gun__recoilDirAmount:r=0.8
@@ -1594,23 +1591,24 @@ as_val_gun{
   item__name:t="items/as_val"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=2.5
+  gun__adsSpeedMult:r=0.8
   item__volume:i=240
   item__marketPrice:i=4100
   gun__ammoInspectionInOutDuration:p2=2.6, 2.3
   gun__ammoInspectionIdleLoopDuration:r=8.3
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.75
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.09
+  gun__recoilAmount:r=0.11
   gun__recoilDirAmount:r=0.83
   gun__recoilDir:r=0.2
-  gun__recoilControlMult:r=0.25
+  gun__recoilControlMult:r=0.3
   gun__visualRecoilMult:r=1.1
   gun_boxed_ammo_reload__batchReloadTime:r=3
-  gun__shotFreq:r=15
+  gun__shotFreq:r=14
   gun__sightsDistance:r=0.25
   gun__statName:t="assault_rifle"
   gun__useLocalPlayerTracer:b=no
-  gun_spread__maxDeltaAngle:r=0.03
+  gun_spread__maxDeltaAngle:r=0.02
   weapon__aimNodeOffset:r=0.3
   loud_noise__noisePerShot:r=80
   gun_shell_ejection__templateName:t="762_39_ejected_shell"
@@ -1795,7 +1793,6 @@ toz_b_gun{
   item__volume:i=280
   item__marketPrice:i=1200
   gun_shell_ejection__timeMult:r=0.35
-  gun__adsSpeedMult:r=0.8
   gun__chokeSpread:r=1.8
   gun__deviationInFireReady:r=2
   gun__prevHolsterGen:i=0
@@ -2121,6 +2118,7 @@ mosin_m91_gun{
   item__proto:t="mosin_m91_gun"
   item__name:t="items/mosin_m91"
   item__baseWeight:r=4.3
+  gun__adsSpeedMult:r=0.6
   item__volume:i=300
   item__marketPrice:i=100
   gun__recoilAmount:r=0.145
@@ -2316,7 +2314,7 @@ stechkin_gun{
       "options:array"{
         "silenced:object"{
           gunSilenced:b=yes
-          path:t="/weapon/mgun/m3_supressed"
+          path:t="/weapon/mgun/ak_103_silenced"
         }
 
         "default:object"{
@@ -2512,7 +2510,7 @@ tt_gun{
       "options:array"{
         "silenced:object"{
           gunSilenced:b=yes
-          path:t="/weapon/mgun/m3_supressed"
+          path:t="/weapon/mgun/ak_103_silenced"
         }
 
         "default:object"{
@@ -2671,7 +2669,7 @@ rsh_12_gun{
       "options:array"{
         "silenced:object"{
           gunSilenced:b=yes
-          path:t="/weapon/mgun/m3_supressed"
+          path:t="/weapon/mgun/ak_103_silenced"
         }
 
         "default:object"{
@@ -2836,7 +2834,7 @@ mc3_record_gun{
       "options:array"{
         "silenced:object"{
           gunSilenced:b=yes
-          path:t="/weapon/mgun/m3_supressed"
+          path:t="/weapon/mgun/ak_103_silenced"
         }
 
         "default:object"{
@@ -2946,7 +2944,6 @@ ppsh_41_gun{
   gun__ammoInspectionInOutDuration:p2=1.2, 1.1
   gun__ammoInspectionIdleLoopDuration:r=10
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
-  gun__crawlRecoilMult:r=0.8
   gun__deviationInFireReady:r=2
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.031
@@ -3115,6 +3112,7 @@ pp_91_kedr_gun{
   item__name:t="items/pp_91_kedr"
   item__weapType:t="submachine_gun"
   item__baseWeight:r=1.54
+  gun__adsSpeedMult:r=0.9
   item__volume:i=140
   item__marketPrice:i=2200
   gun__boltFreq:r=12
@@ -3122,7 +3120,6 @@ pp_91_kedr_gun{
   gun__ammoInspectionInOutDuration:p2=2.3, 2.4
   gun__ammoInspectionIdleLoopDuration:r=8.3
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
-  gun__crawlRecoilMult:r=0.8
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.1
   gun__recoilDirAmount:r=0.74
@@ -3864,6 +3861,7 @@ svd_gun{
   item__name:t="items/svd"
   item__weapType:t="semiauto"
   item__baseWeight:r=4
+  gun__adsSpeedMult:r=0.6
   item__volume:i=300
   item__marketPrice:i=2700
   gun_shell_ejection__templateName:t="762_54r_ejected_shell"
@@ -4068,23 +4066,24 @@ vss_vintorez_gun{
   item__name:t="items/vss_vintorez"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=2.6
+  gun__adsSpeedMult:r=0.75
   item__volume:i=240
   item__marketPrice:i=100
   gun__ammoInspectionInOutDuration:p2=2.6, 2.3
   gun__ammoInspectionIdleLoopDuration:r=8.3
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.75
   gun__prevHolsterGen:i=0
-  gun__recoilAmount:r=0.09
+  gun__recoilAmount:r=0.11
   gun__recoilDirAmount:r=0.83
   gun__recoilDir:r=0.2
-  gun__recoilControlMult:r=0.25
+  gun__recoilControlMult:r=0.3
   gun__visualRecoilMult:r=1.1
   gun_boxed_ammo_reload__batchReloadTime:r=3
-  gun__shotFreq:r=15
+  gun__shotFreq:r=14
   gun__sightsDistance:r=0.25
   gun__statName:t="assault_rifle"
   gun__useLocalPlayerTracer:b=no
-  gun_spread__maxDeltaAngle:r=0.02
+  gun_spread__maxDeltaAngle:r=0.016
   weapon__aimNodeOffset:r=0.3
   loud_noise__noisePerShot:r=80
   gun_shell_ejection__templateName:t="762_39_ejected_shell"
@@ -4272,6 +4271,7 @@ mp_443_gun{
   item__lootType:t="gun"
   item__lootSoundType:t="weapon"
   item__baseWeight:r=0.93
+  gun__adsSpeedMult:r=1.2
   item__volume:i=70
   item__marketPrice:i=2665
   gun_shell_ejection__templateName:t="9x19_brass_ejected_shell"
@@ -4673,6 +4673,7 @@ sv98_gun{
   item__name:t="items/sv98"
   item__weapType:t="rifle"
   item__baseWeight:r=5.9
+  gun__adsSpeedMult:r=0.6
   item__volume:i=300
   item__marketPrice:i=8850
   item__iconRecalcAnimation:b=yes
@@ -5499,9 +5500,9 @@ aks_74u_gun{
   item__name:t="items/aks_74u"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=2.7
+  gun__adsSpeedMult:r=0.8
   item__volume:i=220
   item__marketPrice:i=3500
-  gun__adsSpeedMult:r=0.7
   gun__ammoInspectionInOutDuration:p2=1, 2
   gun__ammoInspectionIdleLoopDuration:r=11.8
   gun__ammoInspectionProgressRemovedAmmoMarkers:p2=0.125, 2.5
@@ -5518,8 +5519,6 @@ aks_74u_gun{
   gun__sightsDistance:r=0.3
   gun__statName:t="assault_rifle"
   gun__useLocalPlayerTracer:b=no
-  gun__zeroingAngle:r=-1
-  gun__zeroingDistance:r=100
   gun_deviation__extraDeviationTau:r=0.2
   gun_deviation__maxDeviation:r=20
   gun_deviation__movementDevInc:p2=0, 15
@@ -5816,7 +5815,7 @@ tkb_22_gun{
   item__name:t="items/tkb_22"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=2.5
-  gun__adsSpeedMult:r=0.9
+  gun__adsSpeedMult:r=0.8
   item__volume:i=240
   item__marketPrice:i=4100
   gun__altReloadTime:r=1.8
@@ -6089,7 +6088,7 @@ tkb_0146_gun{
       "options:array"{
         "silenced:object"{
           gunSilenced:b=yes
-          path:t="/weapon/mgun/m3_supressed"
+          path:t="/weapon/mgun/ak_103_silenced"
         }
 
         "default:object"{
@@ -6291,7 +6290,7 @@ an94_abakan_gun{
       "options:array"{
         "silenced:object"{
           gunSilenced:b=yes
-          path:t="/weapon/mgun/m3_supressed"
+          path:t="/weapon/mgun/ak_103_silenced"
         }
 
         "default:object"{
@@ -6407,6 +6406,8 @@ ash_12_gun{
   item__name:t="items/ash_12"
   item__weapType:t="assault_rifle"
   item__baseWeight:r=5.1
+  gun__inertialMass:r=6
+  gun__adsSpeedMult:r=0.6
   item__volume:i=300
   item__marketPrice:i=21000
   gun__altReloadTime:r=1.8
@@ -6803,6 +6804,7 @@ rpk_74_gun{
   item__name:t="items/rpk_74"
   item__weapType:t="machine_gun"
   item__baseWeight:r=5
+  gun__inertialMass:r=6
   item__volume:i=350
   item__marketPrice:i=10000
   gun_shell_ejection__templateName:t="545_39_ejected_shell"
@@ -7027,7 +7029,7 @@ pk_gun{
   item__baseWeight:r=7.5
   item__volume:i=380
   item__marketPrice:i=11000
-  gun__adsSpeedMult:r=0.7
+  gun__adsSpeedMult:r=0.5
   gun__altReloadTime:r=1.8
   gun__ammoInspectionInOutDuration:p2=0.86, 1.06
   gun__ammoInspectionIdleLoopDuration:r=4.3
@@ -7045,8 +7047,6 @@ pk_gun{
   gun__sightsDistance:r=0.3
   gun__statName:t="machine_gun"
   gun__useLocalPlayerTracer:b=no
-  gun__zeroingAngle:r=-1
-  gun__zeroingDistance:r=100
   gun_deviation__extraDeviationTau:r=0.2
   gun_deviation__maxDeviation:r=20
   gun_deviation__movementDevInc:p2=0, 15
@@ -7059,6 +7059,7 @@ pk_gun{
   weapon__aimNodeOffset:r=0.3
   gun__rotationSpringMult:p3=1, 3.7, 3.7
   gun__rotInertia:p3=0.1, 2, 2
+  gun__inertialMass:r=8
   gun__crawlRecoilMult:r=0.3
   gun_shell_ejection__templateName:t="762_54r_ejected_shell"
   gun_check_weapon__ammoNodeName:t="ammocan"

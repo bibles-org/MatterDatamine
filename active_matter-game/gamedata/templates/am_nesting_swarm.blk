@@ -320,7 +320,7 @@ nesting_swarm_warrior_base{
   swarm_warrior__maxNests:i=3
   swarm_warrior__targetPos:p3=0, 0, 0
   swarm_warrior__investigationsLeft:i=0
-  swarm_warrior__maxRange:r=40
+  swarm_warrior__maxRange:r=60
   swarm_warrior__lastActionAt:r=0
   swarm_warrior__teleportDesire:r=0
   swarm_warrior__teleportLastActionTimeout:r=20
@@ -723,6 +723,9 @@ nesting_swarm_snake{
   nesting_swarm_snake__navmeshRadiusMult:r=2.5
   nesting_swarm_snake__boidsPerSegment:ip2=30, 1
   nesting_swarm_snake__boidsPerSegmentDeviation:ip2=1, 2
+  nesting_swarm_snake__wallCount:i=0
+  nesting_swarm_snake__maxWallCount:i=3
+  nesting_swarm_snake__damageFallPerWall:r=0.25
 
   "nesting_swarm_snake:tag"{}
   "nesting_swarm_snake__segmentEids:list<eid>"{}

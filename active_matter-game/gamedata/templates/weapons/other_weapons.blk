@@ -159,7 +159,7 @@ crossbow_gun{
   item__baseWeight:r=2.7
   item__volume:i=340
   item__marketPrice:i=3050
-  gun__adsSpeedMult:r=0.4
+  gun__adsSpeedMult:r=0.7
   gun__deviationInFireReady:r=1
   gun__prevHolsterGen:i=0
   gun__recoilAmount:r=0.01
@@ -336,6 +336,7 @@ flamethrower_corefan_gun{
   item__name:t="items/flamethrower_corefan"
   item__weapType:t="flamethrower"
   item__baseWeight:r=4.2
+  gun__adsSpeedMult:r=0.6
   item__volume:i=320
   item__marketPrice:i=7500
   gun__ammoInspectionInOutDuration:p2=2.7, 3.5

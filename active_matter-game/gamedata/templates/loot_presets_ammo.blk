@@ -246,30 +246,42 @@ modern_military_ammo_t2_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="box_12_gauge_magazine_loot_preset"
+      weight:r=1
     }
 
     "item:object"{
       template_name:t="box_9x19_magazine"
+      weight:r=1
     }
 
     "item:object"{
       sub_preset:t="box_45_acp_magazine_loot_preset"
+      weight:r=1
     }
 
     "item:object"{
       sub_preset:t="box_5_45x39_magazine_loot_preset"
+      weight:r=1
     }
 
     "item:object"{
       template_name:t="box_5_56_magazine"
+      weight:r=1
     }
 
     "item:object"{
       template_name:t="box_7_62x51_magazine"
+      weight:r=1
     }
 
     "item:object"{
       sub_preset:t="box_7_62x39_magazine_loot_preset"
+      weight:r=1
+    }
+
+    "item:object"{
+      template_name:t="m110a1_magazine"
+      weight:r=0.05
     }
   }
 }

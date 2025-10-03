@@ -663,13 +663,12 @@ key_cargoport_chief_stash_item{
 }
 
 key_dogorsk_escape_exit_item{
-  _use:t="base_quest_key"
+  _use:t="base_consumable_key_item"
   animchar__res:t="junk_keys_b_char"
   collres__res:t="junk_keys_b_collision"
   item__proto:t="key_dogorsk_escape_exit_item"
   item__name:t="items/key_dogorsk_escape_exit_item"
-  map_object_marker__tag:t="dogorsk_escape_exit_keys"
-  map_object_marker__tooltip:t="items/key_dogorsk_escape_exit_item"
+  item__extractionTemplateOverride:t=""
 
   "key__tags:list<t>"{
     i:t="dogorsk_escape_lock"

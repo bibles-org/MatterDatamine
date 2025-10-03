@@ -70,6 +70,8 @@ function mkLogPoints(transform) {
   return visiblePoints.reduce(function(acc, elem) {
     if (elem.eventType == "kill" && elem?.victimPosition != null) {
       acc.append(elem.__merge({eventType = "killPosition"}), elem.__merge({position = elem.victimPosition}))
+    } else if (elem.eventType == "died" && elem?.offenderPosition != null) {
+      acc.append(elem.__merge({eventType = "killerPosition", position = elem.offenderPosition}), elem)
     } else {
       acc.append(elem)
     }

@@ -806,7 +806,13 @@ function fuseResultInfoRow(keyVal, allPossibleItems, isOpened) {
 
   foreach (resultScheme in results) {
     let resultTemplate = resultScheme.reduce(@(a,v,k) v.len() == 0 ? k : a, "")
-    let faked = mkFakeItem(resultTemplate)
+    let attachTemplate = resultScheme.map(function(k, v) {
+      if (k == "")
+        throw null
+      return v
+    }).values()
+
+    let faked = mkFakeItem(resultTemplate, {}, attachTemplate)
     resultsComp.append({
       behavior = Behaviors.Button
       skipDirPadNav = true
@@ -1154,6 +1160,7 @@ function refineRecipeSelection() {
                     behavior = Behaviors.Button
                     onClick
                     onHover = @(on) setTooltip(on ? buildInventoryItemTooltip(fakedRecipeItem) : null)
+                    
                     children = mkComponentImage(fakedRecipeItem?.itemTemplate)
                   }
                 ]

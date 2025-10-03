@@ -1,5 +1,6 @@
 from "%ui/components/colors.nut" import ContactNotReady, ContactInBattle, ContactLeader, ContactReady,
-  ContactOffline, TeammateColor, UserNameColor, Inactive, Active, BtnBgHover, BtnTextVisualDisabled
+  ContactOffline, TeammateColor, UserNameColor, Inactive, Active, BtnBgHover, BtnTextVisualDisabled,
+  InfoTextValueColor
 from "%ui/fonts_style.nut" import h1_txt, body_txt, h2_txt
 from "base64" import decodeString
 from "%ui/fonts_style.nut" import sub_txt, fontawesome
@@ -265,8 +266,9 @@ let mkStatusBlock = @(contact, status) function() {
   let { userId, uid } = contact
   let squadMember = enabledSquad.get() && squadMembers.get()?[uid]
   let needReadyBtn = uid == userInfo.get().userId && !isSquadLeader.get()
+  let invitedIds = isInvitedToSquad.get()
 
-  let { iconParams = null, textParams = null } = getContactStatus(squadMember, isInvitedToSquad.get(),
+  let { iconParams = null, textParams = null } = getContactStatus(squadMember, invitedIds,
     userId, friendsUids.get(), status.get())
   let children = []
   if (iconParams)
@@ -274,6 +276,17 @@ let mkStatusBlock = @(contact, status) function() {
       rendObj = ROBJ_INSCRIPTION
       validateStaticText = false
     }.__update(fontawesome, iconParams))
+
+  if (uid in invitedIds) {
+    children.append({
+      rendObj = ROBJ_IMAGE
+      image = Picture($"!ui/skin#hourglass.svg:{hdpxi(16)}:{hdpxi(16)}")
+      size = hdpxi(16)
+      vplace = ALIGN_CENTER
+      color = InfoTextValueColor
+    })
+  }
+
   if (textParams) {
     if (needReadyBtn)
       children.append(squadReadyStatus)
@@ -385,7 +398,7 @@ function makeTeammateHoverHint(data, contact) {
 
 
 function mkContactWidgetBlock(contact, contextMenuActions, isEnable) {
-  let { userId } = contact
+  let { userId, uid } = contact
   let stateFlags = Watched(0)
   let status = mkContactOnlineStatus(userId)
 
@@ -425,6 +438,11 @@ function mkContactWidgetBlock(contact, contextMenuActions, isEnable) {
     flow = FLOW_HORIZONTAL
     gap = static hdpx(4)
     onHover = function(on) {
+      if (uid in isInvitedToSquad.get()) {
+        setTooltip(on ? loc("contact/Invited") : null)
+        return
+      }
+
       let data = allMembersState.get()?[contact.uid].playersData
       if (data == null)
         return

@@ -12,7 +12,8 @@ entity{
 
 entity{
   _template:t="dynamic_zone_weather"
-  dynamic_zone_weather__recoveryTimePerShrink:r=60
+  dynamic_zone_weather__recoveryTimePerShrink:r=20
+  zone_weather__stormColorGradingTemplate:t="zone_weather_postfx_color_grading_storm_light"
 }
 
 entity{
@@ -222,13 +223,14 @@ entity{
 
 entity{
   _template:t="dynamic_zone_controller"
-  dynamic_zone_controller__shrinksToFinalExtractionRng:ip2=3, 3
-  dynamic_zone_controller__finalZoneRadius:r=15
+  dynamic_zone_controller__shrinksToFinalExtractionRng:ip2=4, 4
+  dynamic_zone_controller__preFinalZoneShrinkingTimeMult:r=1.6
+  dynamic_zone_controller__finalZoneRadius:r=5
   dynamic_zone_controller__finalZoneShrinkingTime:r=15
-  dynamic_zone_controller__finalZoneWaitingTime:r=120
+  dynamic_zone_controller__finalZoneWaitingTime:r=45
   dynamic_zone_controller__waitingForZoneShrinkingTime:r=180
   dynamic_zone_controller__zoneShrinkingTime:r=60
-  dynamic_zone_controller__waitingForZoneShrinkingTimePow:r=0.8
+  dynamic_zone_controller__waitingForZoneShrinkingTimePow:r=0.7
   dynamic_zone_controller__zoneShrinkingTimePow:r=0.9
 }
 

@@ -30,9 +30,15 @@ function makeStaticZone(map_size, color, worldPos, radius, doOuter=false) {
       pivot = [0.5, 0.5]
     }
     watch = currentMapVisibleRadius
+    behavior = Behaviors.RtPropUpdate
     data = {
       worldPos
       clampToBorder = false
+    }
+    update = function() {
+      let cRadius = radius / currentMapVisibleRadius.get() * 50.0
+      cEllipseCmd[3] = cRadius
+      cEllipseCmd[4] = cRadius
     }
     ignoreEarlyClip = true
     key = {}
