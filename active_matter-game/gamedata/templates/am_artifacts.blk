@@ -436,54 +436,198 @@ alter_tube_flow_distortion{
   }
 }
 
-am_inside_body_1{
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_1"
-      dropChance:r=0.5
-      dropHeight:r=1
+active_matter_pile_1_coins_50_percent_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_1"
+    }
+
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
     }
   }
+}
+
+active_matter_pile_1_coins_75_percent_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_1"
+      weight:r=0.75
+    }
+
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=0.25
+    }
+  }
+}
+
+active_matter_pile_1_coins_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_1"
+    }
+  }
+}
+
+active_matter_pile_2_coins_10_percent_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_2"
+      weight:r=0.1
+    }
+
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=0.9
+    }
+  }
+}
+
+active_matter_pile_2_coins_50_percent_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_2"
+    }
+
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+    }
+  }
+}
+
+active_matter_pile_2_coins_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_2"
+    }
+  }
+}
+
+active_matter_pile_3_coins_50_percent_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_3"
+    }
+
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+    }
+  }
+}
+
+active_matter_pile_3_coins_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_3"
+    }
+  }
+}
+
+active_matter_pile_5_coins_50_percent_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_5"
+    }
+
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+    }
+  }
+}
+
+active_matter_pile_5_coins_75_percent_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_5"
+      weight:r=0.75
+    }
+
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=0.25
+    }
+  }
+}
+
+active_matter_pile_5_coins_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_5"
+    }
+  }
+}
+
+active_matter_pile_20_coins_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_20"
+    }
+  }
+}
+
+active_matter_pile_25_coins_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_25"
+    }
+  }
+}
+
+active_matter_pile_30_coins_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_30"
+    }
+  }
+}
+
+am_inside_body_1{
+  death_drop__outsideDropPreset:t="active_matter_pile_1_coins_50_percent_loot_preset"
 }
 
 am_inside_body_2{
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_2"
-      dropChance:r=0.5
-      dropHeight:r=1
-    }
-  }
+  death_drop__outsideDropPreset:t="active_matter_pile_2_coins_50_percent_loot_preset"
 }
 
 am_inside_body_3{
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_3"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-  }
+  death_drop__outsideDropPreset:t="active_matter_pile_3_coins_50_percent_loot_preset"
 }
 
 am_inside_body_5{
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_5"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-  }
+  death_drop__outsideDropPreset:t="active_matter_pile_5_coins_loot_preset"
 }
 
 am_inside_body_20{
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_20"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-  }
+  death_drop__outsideDropPreset:t="active_matter_pile_20_coins_loot_preset"
 }
 
 safepack_destroy_effect{

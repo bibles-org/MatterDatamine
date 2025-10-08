@@ -64,7 +64,7 @@ let mkUserNickname = @(contact, status) @() {
   color = contact.uid == userInfo.get()?.userId
     ? UserNameColor
     : status.get() ? Active : Inactive
-  text = isStreamerMode.get() && contact.userId == userInfo.get().userId.tostring()
+  text = isStreamerMode.get() && contact.userId == userInfo.get()?.userId.tostring()
     ? playerRandName.get()
     : getContactNick(contact)
 }.__update(sub_txt)
@@ -150,7 +150,7 @@ let mkCommonStatusBlock = @(contact, status) function() {
   let watch = [enabledSquad, isInvitedToSquad, status, friendsUids, userInfo, isSquadLeader, contacts]
   let { userId, uid } = contact
   let squadMember = enabledSquad.get() && squadMembers.get()?[uid]
-  let needReadyBtn = uid == userInfo.get().userId && !isSquadLeader.get()
+  let needReadyBtn = uid == userInfo.get()?.userId && !isSquadLeader.get()
 
   let { iconParams = null, textParams = null } = getContactStatus(squadMember, isInvitedToSquad.get(),
     userId, friendsUids.get(), status.get())
@@ -265,7 +265,7 @@ let mkStatusBlock = @(contact, status) function() {
   let watch = [enabledSquad, isInvitedToSquad, status, friendsUids, userInfo, isSquadLeader, contacts]
   let { userId, uid } = contact
   let squadMember = enabledSquad.get() && squadMembers.get()?[uid]
-  let needReadyBtn = uid == userInfo.get().userId && !isSquadLeader.get()
+  let needReadyBtn = uid == userInfo.get()?.userId && !isSquadLeader.get()
   let invitedIds = isInvitedToSquad.get()
 
   let { iconParams = null, textParams = null } = getContactStatus(squadMember, invitedIds,
@@ -378,7 +378,7 @@ function makeTeammateHoverHint(data, contact) {
         halign = ALIGN_CENTER
         children = [
           function() {
-            let name = isStreamerMode.get() && contact.userId == userInfo.get().userId.tostring()
+            let name = isStreamerMode.get() && contact.userId == userInfo.get()?.userId.tostring()
               ? playerRandName.get()
               : getContactNick(contact)
             return {

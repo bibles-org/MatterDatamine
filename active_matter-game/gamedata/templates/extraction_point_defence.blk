@@ -19,6 +19,28 @@ extraction_point_defence_controller{
   }
 }
 
+invisible_man_extraction_point_defender_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_1"
+      number:i=2
+      weight:r=0.2
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_1"
+      weight:r=0.8
+    }
+
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=0.2
+    }
+  }
+}
+
 invisible_man_extraction_point_defender{
   _use:t="invisible_man"
   invisible_man__type:i=2
@@ -28,19 +50,7 @@ invisible_man_extraction_point_defender{
   patroller__maxWaypoints:i=4
   agent_dangers__maxDangerDist:r=30
   agent_dangers__blindDistanceSq:r=900
+  death_drop__outsideDropPreset:t="invisible_man_extraction_point_defender_loot_preset"
 
   "invisible_man_extraction_point_defender:tag"{}
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_1"
-      dropChance:r=0.8
-      dropHeight:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_1"
-      dropChance:r=0.2
-      dropHeight:r=1
-    }
-  }
 }

@@ -179,6 +179,8 @@ firefly{
   firefly__spinSpeedOffset:r=0
   firefly__spinEuAngles:p3=0, 0, 0
   firefly__spinQuat:p4=0, 1, 0, 0
+  kill_tracking_tag:t="firefly"
+  death_drop__outsideDropPreset:t="active_matter_pile_1_coins_75_percent_loot_preset"
   death_note__name:t="note_seeds"
 
   "capsule_approximation__nodeNames:array"{
@@ -190,13 +192,6 @@ firefly{
   "spawnling__clusterEid:eid"{}
   "preloadSpawnActivatedShellProps:list<t>"{
     template:t="activated_firefly_explosion"
-  }
-
-  "firefly__dropOnExplosion:array"{
-    "loot:object"{
-      proto:t="active_matter_pile+item_in_world"
-      chance:r=0.7
-    }
   }
 }
 

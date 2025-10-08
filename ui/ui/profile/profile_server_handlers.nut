@@ -185,6 +185,7 @@ let contractsHandler = function(contracts_block, _comp) {
         return res
       }, {}),
       contractType =
+        contract.profileContract ? ContractType.PRIMARY :
         contract.uniqueContract ? ContractType.STORY :
         contract.dailyRestoring ? ContractType.SECONDARY :
         contract.params.findindex(@(v) v.name == "monsterTag") != null ? ContractType.MONSTER :

@@ -289,15 +289,18 @@ let mkPlayButton = @(soundData) @() {
     children = playIcon
   }, function() {
     if (soundData == null) {
-      if (lastPlayed.get() != null) {
-        let hasLastPlayed = trackList.get().findvalue(@(v) v.soundTrack == lastPlayed.get()?.soundTrack)
-        if (hasLastPlayed) {
-          startPlayer(lastPlayed.get())
-          return
-        }
+      let list = trackList.get().filter(function(track) {
+        let restricted = track.isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get())
+        let isFavorite = track.soundTrack in favoritesTracksListWatch.get()
+        return !restricted && (!playOnlyFavoritesTracksWatch.get() || isFavorite)
+      })
+      let isLastPlayedInList = list.findvalue(@(v) v?.soundTrack == lastPlayed.get()?.soundTrack) != null
+      if (lastPlayed.get() != null && isLastPlayedInList) {
+        startPlayer(lastPlayed.get())
+        return
       }
-      else if (trackList.get().len() > 0)
-        startPlayer(trackList.get()[0])
+      else if (list.len() > 0)
+        startPlayer(list[0])
       else
         showMsgbox({ text = loc("musicPlayer/chooseSound") })
       return
@@ -569,6 +572,8 @@ let playerOnlyFavoriteSetting = optionCtor({
     }
     playOnlyFavoritesTracksSet(v)
     showFavorites.set(v)
+    if (v && playingSound.get() != null)
+      soundPlay(trackList.get().findvalue(@(sound) sound.soundTrack in favoritesTracksListWatch.get()))
   }
   var = playOnlyFavoritesTracksWatch
   defVal = false
@@ -853,6 +858,8 @@ let musicPlayerTab = freeze({
   flow = FLOW_VERTICAL
   size = flex()
   gap = hdpx(10)
+  padding = [hdpx(10), 0, 0, 0]
+  onAttach = @() showFavorites.set(playOnlyFavoritesTracksWatch.get() && favoritesTracksListWatch.get().len() > 0)
   children = [
     {
       size = static [flex(), hdpx(50)]

@@ -25,12 +25,15 @@ from "%ui/components/itemDescription.nut" import getDeviation, getRecoil, getSho
 from "das.human_weap" import get_human_aim_speed
 from "%ui/hud/state/controlled_hero.nut" import controlledHeroEid
 from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "%ui/mainMenu/craftIconsCommon.nut" import blueprintBackground
+from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryItemImage, smallInventoryImageParams
 
 let { chronogeneStatCustom, chronogeneStatDefault } = require("%ui/hud/state/item_info.nut")
 let { playerProfileAllResearchNodes, playerProfileOpenedNodes, allCraftRecipes, marketItems, refinerFusingRecipes } = require("%ui/profile/profileState.nut")
 let { amTextIcon } = require("%ui/mainMenu/currencyIcons.nut")
 let { matchingQueuesMap } = require("%ui/matchingQueues.nut")
 let { localPlayerTeam } = require("%ui/hud/state/local_player.nut")
+let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
 
 let itemTooltipNameColor = Color(200,200,200)
 let itemQuestTooltipStatColor = Color(245,150,0)
@@ -983,10 +986,53 @@ function mkUsedInRecipes(recipes) {
     margin = fsh(1)
     gap = hdpx(4)
     children = [
-      mkText("Used in fuse recipes:", { color = itemTooltipStatColor })
+      mkText(loc("desc/usedInRecipe"), { color = itemTooltipStatColor })
       {
         flow = FLOW_VERTICAL
         children = recipesComp
+      }
+    ]
+  }
+}
+
+
+function replicatorStrings(item) {
+  if (isOnPlayerBase.get() || !item?.isCorrupted)
+    return null
+
+  let craftRecipe = allCraftRecipes.get().findindex(function(researchNode) {
+    return researchNode.results.findindex(function(arrNode) {
+      return arrNode.findindex(@(v, k) v == "" && k == item.itemTemplate) != null
+    }) != null
+  })
+
+  if (craftRecipe == null)
+    return null
+
+  let openInfo = playerProfileOpenedNodes.get()?.findindex(@(arr) arr.findindex(@(v) v == craftRecipe) != null)
+
+  if (openInfo)
+    return null
+
+  return {
+    flow = FLOW_VERTICAL
+    margin = fsh(1)
+    gap = hdpx(8)
+    children = [
+      mkText(loc("desc/opensReplicatorRecipe:"), { color = itemTooltipStatColor })
+      {
+        gap = hdpx(8)
+        flow = FLOW_HORIZONTAL
+        valign = ALIGN_CENTER
+        children = [
+          {
+            children = [
+              blueprintBackground(smallInventoryImageParams.slotSize, 0.0)
+              inventoryItemImage(item, smallInventoryImageParams.__merge({ shading="silhouette" }))
+            ]
+          }
+          mkText(loc(item?.itemName))
+        ]
       }
     ]
   }
@@ -1046,6 +1092,7 @@ function buildInventoryItemTooltip(item, additionalHints={}) {
             ]
           }
           mkUsedInRecipes(recipes)
+          replicatorStrings(item)
           tooltipHotkeyHints
         ]
       }

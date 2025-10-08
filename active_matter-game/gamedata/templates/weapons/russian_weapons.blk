@@ -658,7 +658,7 @@ sks_carbine_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/shell_out"
+      hero:t="player/weapon/_common/shell_drop"
       type:t="matUnderFeet"
     }
   }
@@ -727,7 +727,7 @@ sks_carbine_rust_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/shell_out"
+      hero:t="player/weapon/_common/shell_drop"
       type:t="matUnderFeet"
     }
   }
@@ -983,6 +983,7 @@ makarov_rust_gun{
 
 makarov_honorary_gun{
   _use:t="makarov_gun"
+  _use:t="item_rarity_rare"
   item__proto:t="makarov_honorary_gun"
   item__name:t="items/makarov_honorary"
   item__marketPrice:i=100
@@ -1309,6 +1310,8 @@ ak_12_magazine_slot{
     i:t="ak_12_magazine"
     i:t="ak_74_magazine"
     i:t="rpk_74_magazine"
+    i:t="ak_5_45x39_45rnds_magazine"
+    i:t="ak_5_45x39_60rnds_magazine"
   }
 }
 
@@ -1553,6 +1556,7 @@ as_val_magazine_slot{
 
   "slot_holder__availableItems:list<t>"{
     i:t="as_val_magazine"
+    i:t="val_30rnds_magazine"
   }
 }
 
@@ -1900,7 +1904,7 @@ toz_b_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/12_gauge_shell_out"
+      hero:t="player/weapon/_common/12_gauge_shell_drop"
       type:t="matUnderFeet"
     }
   }
@@ -2062,7 +2066,7 @@ mosin_m44_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/shell_out"
+      hero:t="player/weapon/_common/shell_drop"
       type:t="matUnderFeet"
     }
   }
@@ -2162,7 +2166,7 @@ mosin_m91_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/shell_out"
+      hero:t="player/weapon/_common/shell_drop"
       type:t="matUnderFeet"
     }
   }
@@ -3596,7 +3600,7 @@ ks_23_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/12_gauge_shell_out"
+      hero:t="player/weapon/_common/12_gauge_shell_drop"
       type:t="matUnderFeet"
     }
   }
@@ -5040,6 +5044,8 @@ ak_74_magazine_slot{
     i:t="ak_74_magazine"
     i:t="rpk_74_magazine"
     i:t="ak_12_magazine"
+    i:t="ak_5_45x39_45rnds_magazine"
+    i:t="ak_5_45x39_60rnds_magazine"
   }
 }
 
@@ -5464,6 +5470,8 @@ aks_74u_magazine_slot{
     i:t="ak_74_magazine"
     i:t="rpk_74_magazine"
     i:t="ak_12_magazine"
+    i:t="ak_5_45x39_45rnds_magazine"
+    i:t="ak_5_45x39_60rnds_magazine"
   }
 }
 
@@ -6410,6 +6418,7 @@ ash_12_gun{
   gun__adsSpeedMult:r=0.6
   item__volume:i=300
   item__marketPrice:i=21000
+  item__iconRecalcAnimation:b=yes
   gun__altReloadTime:r=1.8
   gun__ammoInspectionInOutDuration:p2=1.5, 2
   gun__ammoInspectionIdleLoopDuration:r=8.7
@@ -6766,6 +6775,8 @@ rpk_74_magazine_slot{
     i:t="rpk_74_magazine"
     i:t="ak_74_magazine"
     i:t="ak_12_magazine"
+    i:t="ak_5_45x39_45rnds_magazine"
+    i:t="ak_5_45x39_60rnds_magazine"
   }
 }
 

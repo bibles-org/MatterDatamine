@@ -93,22 +93,19 @@ shooting_range_militant_bot{
 
 shooting_range_changed_bot{
   _use:t="changed_human"
+  death_drop__outsideDropPreset:t=""
   _use:t="shooting_range_mannequin"
-
-  "human_inventory__deathDrop:array"{}
 }
 
 shooting_range_flowerhuman_bot{
   _use:t="flower_human"
+  death_drop__outsideDropPreset:t=""
   sleep_mode__isSleeping:b=no
   _use:t="shooting_range_mannequin"
-
-  "human_inventory__deathDrop:array"{}
 }
 
 shooting_range_firefly_bot{
   _use:t="firefly"
+  death_drop__outsideDropPreset:t=""
   _use:t="shooting_range_mannequin"
-
-  "firefly__dropOnExplosion:array"{}
 }

@@ -3596,9 +3596,21 @@ burntout_equipment_generator{
 
         "equipment_mod_body_0:object"{
           EMPTY:i=10
-          armorplate_big_a:i=40
-          armorplate_big_b:i=20
-          armorplate_big_c:i=30
+
+          "armorplate_big_a:object"{
+            weight:i=40
+            corrupted:r=0.1
+          }
+
+          "armorplate_big_b:object"{
+            weight:i=20
+            corrupted:r=0.1
+          }
+
+          "armorplate_big_c:object"{
+            weight:i=30
+            corrupted:r=0
+          }
         }
       }
 
@@ -3607,9 +3619,21 @@ burntout_equipment_generator{
 
         "equipment_mod_body_0:object"{
           EMPTY:i=10
-          armorplate_big_a:i=40
-          armorplate_big_b:i=20
-          armorplate_big_c:i=30
+
+          "armorplate_big_a:object"{
+            weight:i=40
+            corrupted:r=0.1
+          }
+
+          "armorplate_big_b:object"{
+            weight:i=20
+            corrupted:r=0.1
+          }
+
+          "armorplate_big_c:object"{
+            weight:i=30
+            corrupted:r=0
+          }
         }
       }
 
@@ -3618,37 +3642,1080 @@ burntout_equipment_generator{
 
         "equipment_mod_body_0:object"{
           EMPTY:i=10
-          armorplate_big_a:i=40
-          armorplate_big_b:i=20
-          armorplate_big_c:i=30
+
+          "armorplate_big_a:object"{
+            weight:i=40
+            corrupted:r=0.1
+          }
+
+          "armorplate_big_b:object"{
+            weight:i=20
+            corrupted:r=0.1
+          }
+
+          "armorplate_big_c:object"{
+            weight:i=30
+            corrupted:r=0
+          }
         }
 
         "equipment_mod_left_leg_0:object"{
           EMPTY:i=65
-          armorplate_small_a:i=20
-          armorplate_small_b:i=5
-          armorplate_small_c:i=10
+
+          "armorplate_small_a:object"{
+            weight:i=20
+            corrupted:r=0.1
+          }
+
+          "armorplate_small_b:object"{
+            weight:i=5
+            corrupted:r=0.1
+          }
+
+          "armorplate_small_c:object"{
+            weight:i=10
+            corrupted:r=0
+          }
         }
 
         "equipment_mod_right_leg_0:object"{
           EMPTY:i=65
-          armorplate_small_a:i=20
-          armorplate_small_b:i=5
-          armorplate_small_c:i=10
+
+          "armorplate_small_a:object"{
+            weight:i=20
+            corrupted:r=0.1
+          }
+
+          "armorplate_small_b:object"{
+            weight:i=5
+            corrupted:r=0.1
+          }
+
+          "armorplate_small_c:object"{
+            weight:i=10
+            corrupted:r=0
+          }
         }
 
         "equipment_mod_left_hand_0:object"{
           EMPTY:i=65
-          armorplate_small_a:i=20
-          armorplate_small_b:i=5
-          armorplate_small_c:i=10
+
+          "armorplate_small_a:object"{
+            weight:i=20
+            corrupted:r=0.1
+          }
+
+          "armorplate_small_b:object"{
+            weight:i=5
+            corrupted:r=0.1
+          }
+
+          "armorplate_small_c:object"{
+            weight:i=10
+            corrupted:r=0
+          }
         }
 
         "equipment_mod_right_hand_0:object"{
           EMPTY:i=65
-          armorplate_small_a:i=20
-          armorplate_small_b:i=5
-          armorplate_small_c:i=10
+
+          "armorplate_small_a:object"{
+            weight:i=20
+            corrupted:r=0.1
+          }
+
+          "armorplate_small_b:object"{
+            weight:i=5
+            corrupted:r=0.1
+          }
+
+          "armorplate_small_c:object"{
+            weight:i=10
+            corrupted:r=0
+          }
+        }
+      }
+    }
+
+    "main_weapons:array"{
+      "i:object"{
+        templateName:t="pm_63_rak_gun"
+        weight:i=100
+        corrupted:r=0.1
+
+        "magazine:object"{
+          pm_63_rak_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          pm_63_rak_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          pm_63_rak_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          pm_63_rak_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_9mm_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_9mm_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          pm_63_rak_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="pp_91_kedr_gun"
+        weight:i=100
+        corrupted:r=0.1
+
+        "magazine:object"{
+          pp_91_kedr_20_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          pp_91_kedr_20_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          pp_91_kedr_20_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          pp_91_kedr_20_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_9mm_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_9mm_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          pp_91_kedr_20_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="hk_mp5n_gun"
+        weight:i=100
+        corrupted:r=0.05
+
+        "magazine:object"{
+          hk_mp5n_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          hk_mp5n_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          hk_mp5n_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          hk_mp5n_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_9x19_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_9x19_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          hk_mp5n_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_9x19_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="hk_ump_45_gun"
+        weight:i=50
+        corrupted:r=0.01
+
+        "magazine:object"{
+          hk_ump_45_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          hk_ump_45_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          hk_ump_45_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          hk_ump_45_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_45_acp_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_45_acp_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          hk_ump_45_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_45_acp_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="toz_b_gun"
+        weight:i=100
+        corrupted:r=0.1
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mossberg_590_gun"
+        weight:i=100
+        corrupted:r=0.05
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="winchester_civil_gun"
+        weight:i=100
+        corrupted:r=0.05
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="winchester_specops_gun"
+        weight:i=100
+        corrupted:r=0.05
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="spas_12_gun"
+        weight:i=50
+        corrupted:r=0.01
+
+        "POUCH1:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          box_12_gauge_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_12_gauge_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_12_gauge_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m44_gun"
+        weight:i=100
+        corrupted:r=0.1
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m44_rust_gun"
+        weight:i=50
+        corrupted:r=0.2
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m91_gun"
+        weight:i=100
+        corrupted:r=0.1
+
+        "scope:object"{
+          EMPTY:i=80
+          scope_3_5x:i=20
+        }
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="mosin_m91_rust_gun"
+        weight:i=50
+        corrupted:r=0.2
+
+        "POUCH1:object"{
+          box_7_62x54_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          box_7_62x54_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x54_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_gun"
+        weight:i=100
+        corrupted:r=0.1
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_hunt_gun"
+        weight:i=50
+        corrupted:r=0.01
+
+        "scope:object"{
+          EMPTY:i=80
+          scope_pso1:i=20
+        }
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="sks_carbine_rust_gun"
+        weight:i=50
+        corrupted:r=0.2
+
+        "POUCH1:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_civil_gun"
+        weight:i=100
+        corrupted:r=0.01
+
+        "magazine:object"{
+          vepr_10rd_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=80
+          scope_pso1_high:i=20
+        }
+
+        "POUCH1:object"{
+          vepr_10rd_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=30
+          vepr_10rd_magazine:i=70
+        }
+
+        "POUCH3:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=50
+          vepr_10rd_magazine:i=50
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_gun"
+        weight:i=50
+        corrupted:r=0.01
+
+        "magazine:object"{
+          akm_47_magazine:i=100
+        }
+
+        "scope:object"{
+          EMPTY:i=95
+          scope_pso1_high:i=5
+        }
+
+        "POUCH1:object"{
+          akm_47_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          akm_47_magazine:i=50
+        }
+
+        "POUCH3:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          akm_47_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="akm_47_rust_gun"
+        weight:i=50
+        corrupted:r=0.05
+
+        "magazine:object"{
+          akm_47_rust_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          akm_47_rust_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          akm_47_rust_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          akm_47_rust_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_7_62x39_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_7_62x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          akm_47_rust_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_7_62x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m4_gun"
+        weight:i=50
+        corrupted:r=0.01
+
+        "magazine:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          m4a1_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_5_56_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          m4a1_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_56_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m4_rust_gun"
+        weight:i=50
+        corrupted:r=0.05
+
+        "magazine:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          m4a1_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          m4a1_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=50
+          box_5_56_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          m4a1_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_56_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="aks_74u_gun"
+        weight:i=50
+        corrupted:r=0.01
+
+        "magazine:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          ak_74_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_5_45x39_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          ak_74_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_45x39_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="aks_74u_rust_gun"
+        weight:i=50
+        corrupted:r=0.05
+
+        "magazine:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          ak_74_magazine:i=100
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          ak_74_magazine:i=50
+        }
+
+        "POUCH4:object"{
+          box_5_45x39_magazine:i=100
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=50
+          box_5_45x39_magazine:i=50
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=70
+          ak_74_magazine:i=30
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=70
+          box_5_45x39_magazine:i=30
+        }
+      }
+    }
+
+    "pistol_weapons:array"{
+      "i:object"{
+        templateName:t="EMPTY"
+        weight:i=100
+      }
+
+      "i:object"{
+        templateName:t="makarov_gun"
+        weight:i=100
+        corrupted:r=0.2
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          makarov_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="makarov_rust_gun"
+        weight:i=20
+        corrupted:r=0.5
+
+        "magazine:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          makarov_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          makarov_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_9mm_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m45a1_gun"
+        weight:i=40
+        corrupted:r=0.01
+
+        "magazine:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          m1911_colt_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_45_acp_magazine:i=30
+        }
+      }
+
+      "i:object"{
+        templateName:t="m1911_colt_gun"
+        weight:i=20
+        corrupted:r=0.01
+
+        "magazine:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH1:object"{
+          m1911_colt_magazine:i=100
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=70
+          m1911_colt_magazine:i=30
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=70
+          box_45_acp_magazine:i=30
+        }
+      }
+    }
+
+    "melee_weapons:object"{
+      "knife_weapon:object"{
+        weight:i=40
+        corrupted:r=0.01
+      }
+
+      "hammer_weapon:object"{
+        weight:i=10
+        corrupted:r=0
+      }
+
+      "spear_weapon:object"{
+        weight:i=10
+        corrupted:r=0
+      }
+
+      "axe_weapon:object"{
+        weight:i=20
+        corrupted:r=0.1
+      }
+
+      "sov_knife_nr_40_weapon:object"{
+        weight:i=5
+        corrupted:r=0.05
+      }
+
+      "ak_bayonet_weapon:object"{
+        weight:i=5
+        corrupted:r=0.1
+      }
+
+      "mpl50_shovel:object"{
+        weight:i=5
+        corrupted:r=0.1
+      }
+
+      "wrench_weapon:object"{
+        weight:i=5
+        corrupted:r=0.1
+      }
+
+      "sovmod_flashlight_device:object"{
+        weight:i=5
+        corrupted:r=0.1
+      }
+
+      "sovmod_diver_flashlight:object"{
+        weight:i=5
+        corrupted:r=0.1
+      }
+
+      "screwdriver_a_weapon:object"{
+        weight:i=1
+        corrupted:r=0.1
+      }
+
+      "screwdriver_b_weapon:object"{
+        weight:i=1
+        corrupted:r=0.1
+      }
+
+      "chisel_a_weapon:object"{
+        weight:i=1
+        corrupted:r=0.1
+      }
+
+      "chisel_a_weapon:object"{
+        weight:i=1
+        corrupted:r=0.1
+      }
+    }
+
+    "medicines:array"{
+      "i:object"{
+        "POUCH1:object"{
+          EMPTY:i=50
+          item_healing_ampoule:i=50
+        }
+
+        "POUCH2:object"{
+          EMPTY:i=50
+          item_healing_ampoule:i=50
+        }
+
+        "POUCH3:object"{
+          EMPTY:i=50
+          item_healing_ampoule:i=50
+        }
+
+        "POUCH4:object"{
+          EMPTY:i=70
+          item_painkiller:i=30
+        }
+
+        "POUCH5:object"{
+          EMPTY:i=70
+
+          "loot_item_healkit_magazine_small:object"{
+            weight:i=30
+            corrupted:r=0.5
+          }
+        }
+
+        "BACKPACK1:object"{
+          EMPTY:i=50
+          item_injector_hot:i=50
+        }
+
+        "BACKPACK2:object"{
+          EMPTY:i=50
+          item_injector_hot:i=50
+        }
+
+        "BACKPACK3:object"{
+          EMPTY:i=70
+          item_healkit:i=30
+        }
+
+        "BACKPACK4:object"{
+          EMPTY:i=90
+
+          "loot_item_healkit_magazine_avg:object"{
+            weight:i=10
+            corrupted:r=0.3
+          }
         }
       }
     }

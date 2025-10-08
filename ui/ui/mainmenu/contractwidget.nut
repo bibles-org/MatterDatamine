@@ -264,7 +264,7 @@ function getNexusContracts(contracts, mItems, nexusNode) {
     .filter(function(v) {
       let isMonsterType = v.contractType == ContractType.MONSTER
       let shouldBeReported = v.currentValue >= v.requireValue && !v.isReported
-      let sameNexusNode = v?.params.nodeId[0] != null && v?.params.nodeId[0] == nexusNode
+      let sameNexusNode = v?.params.nodeId[0] != null && (v?.params.nodeId[0] == nexusNode || v?.params.nodeId[0] == "all")
       return sameNexusNode && (!isMonsterType || shouldBeReported)
     })
     .topairs()
@@ -895,6 +895,9 @@ let mkContractBlock = @(idx, contract, isRaidAvailable, manyContractsPossible) f
 
 
 function isContractAvailable(contract) {
+  if (contract?[1].profileContract ?? false)
+    return false
+
   let recs = contract?[1].requireParams
   if (!recs?.len())
     return true

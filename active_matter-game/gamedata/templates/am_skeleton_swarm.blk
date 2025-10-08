@@ -109,18 +109,24 @@ skeleton_swarm_actions{
   }
 }
 
-skeleton_swarm_loot{
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_2"
-      dropChance:r=1
+skeleton_swarm_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="active_matter_pile_2_coins_loot_preset"
+      weight:r=0.6
     }
 
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_3"
-      dropChance:r=0.4
+    "item:object"{
+      sub_preset:t="active_matter_pile_5_coins_loot_preset"
+      weight:r=0.4
     }
   }
+}
+
+skeleton_swarm_loot{
+  death_drop__outsideDropPreset:t="skeleton_swarm_loot_preset"
 }
 
 skeleton_swarm_hitpoints{

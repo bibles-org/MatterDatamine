@@ -65,6 +65,7 @@ let clicksHandler = {
 
 let changelogRoot = @() {
   stopHover = true
+  stopMouse = true
   rendObj = ROBJ_WORLD_BLUR_PANEL
   size = flex()
   children = [

@@ -48,6 +48,7 @@ am_mimic{
   surface_crawler__active:b=no
   nphys__mass:r=10
   nphys__ccdOffset:p3=0, 0, 0
+  death_drop__outsideDropPreset:t="active_matter_pile_1_coins_50_percent_loot_preset"
   am_mimic__lowDiscrepancyMode:b=no
   _replicated:t="am_mimic__lowDiscrepancyMode"
   death_note__name:t="note_mimic"
@@ -62,21 +63,13 @@ am_mimic{
   "capsule_approximation__nodeNames:array"{
     node:t="col"
   }
-
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_1"
-      dropChance:r=0.33
-      dropHeight:r=1
-    }
-  }
 }
 
 am_mimic_hitpoints{
   _use:t="base_dm_parts"
   _use:t="ai_target"
-  hitpoints__hp:r=8
-  hitpoints__maxHp:r=8
+  hitpoints__hp:r=16
+  hitpoints__maxHp:r=16
   am_mimic__serverDeathAt:r=0
   am_mimic__serverDeathDelay:r=1
   hit_verification__maxDistance:r=9

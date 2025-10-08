@@ -1,6 +1,6 @@
 from "%sqstd/math.nut" import lerp
 
-from "dasevents" import NotifyItemHolderLoadingStart
+from "dasevents" import NotifyItemHolderLoadingStart, NotifyItemHolderLoadingEnd
 
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
@@ -16,7 +16,7 @@ let entityUseStart = Watched(-1)
 let entityUseEnd = Watched(-1)
 
 ecs.register_es("entityUsage",{
-  [["onInit","onChange", NotifyItemHolderLoadingStart]] = function(_eid,comp){
+  [["onInit","onChange", NotifyItemHolderLoadingStart, NotifyItemHolderLoadingEnd]] = function(_eid,comp){
     entityUseStart.set(comp["human_inventory__entityUseStart"])
     entityUseEnd.set(comp["human_inventory__progressBarEnd"])
 

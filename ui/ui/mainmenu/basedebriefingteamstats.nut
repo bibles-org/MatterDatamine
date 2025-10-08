@@ -149,7 +149,7 @@ function mkPlayerData(data, iconHeight) {
   })
 
   return function() {
-    let isLocalPlayer = data.userId == userInfo.get().userId.tostring()
+    let isLocalPlayer = data.userId == userInfo.get()?.userId.tostring()
     let canInvite = !isLocalPlayer && isAvailable.get()
     let ad = iconHeight / 2 * 3
     return {

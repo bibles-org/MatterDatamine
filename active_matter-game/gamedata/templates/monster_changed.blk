@@ -460,11 +460,10 @@ monster_changed_minion_common{
   _use:t="minion_creature"
   _use:t="minion_creature_alternate_targets"
   _use:t="minion_creature_teleport_to_master"
+  death_drop__outsideDropPreset:t=""
   outline__disabledUntil:r=0
   personal_enemies__damageToMakeEnemy:r=-1
   personal_enemies__damageToMakeEnemySameKind:r=-1
-
-  "human_inventory__deathDrop:array"{}
 }
 
 monster_changed_minion{
@@ -607,6 +606,7 @@ active_matter_scream_ability{
     hero_scream_ability__lastFailedUseTime:r=0
   }
 
+  "active_matter_scream_ability:tag"{}
   "game_effect__screamMinionTemplates:array"{
     "i:object"{
       template:t="monster_changed_minion"

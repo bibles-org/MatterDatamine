@@ -6,6 +6,9 @@ m_gun_magazine_slot{
     i:t="m4a1_magazine"
     i:t="m4_rust_magazine"
     i:t="fn_scar_magazine"
+    i:t="m4_magpul_30rnds_magazine"
+    i:t="m4_magpul_40rnds_magazine"
+    i:t="m4_60rnds_drum"
   }
 }
 
@@ -666,7 +669,7 @@ m4_rust_gun{
   gun__kineticDamageMult:r=0.8
   gun_spread__maxDeltaAngle:r=1
   profile_server_data__enrichmentRefineChronotracesRange:ip2=16, 17
-  profile_server_data__enrichmentResearchAlias:t="m4a1_gun"
+  profile_server_data__enrichmentResearchAlias:t="m4_gun"
 
   "animchar__objTexReplace:object"{
     "m4_d*":t="m4_rust_tex_d*"
@@ -1528,7 +1531,7 @@ spas_12_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/12_gauge_shell_out"
+      hero:t="player/weapon/_common/12_gauge_shell_drop"
       type:t="matUnderFeet"
     }
 
@@ -2232,8 +2235,8 @@ hk_g3a4_gun{
 
   anim_phys{}
   "gun_aim_offset__gunOffsets:list<p3>"{
-    stand:p3=0.03, -0.07, 0.1
-    crouch:p3=0.03, -0.07, 0.1
+    stand:p3=0.03, -0.08, 0.1
+    crouch:p3=0.03, -0.08, 0.1
     crawl:p3=0.02, -0.03, 0.2
   }
 
@@ -2883,7 +2886,7 @@ mossberg_590_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/12_gauge_shell_out"
+      hero:t="player/weapon/_common/12_gauge_shell_drop"
       type:t="matUnderFeet"
     }
 

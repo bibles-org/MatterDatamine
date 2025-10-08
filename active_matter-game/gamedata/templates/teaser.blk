@@ -809,9 +809,8 @@ teaser_invisible_man_guard{
   hitpoints__hp:r=700000
   hitpoints__maxHp:r=700000
   invisible_man__anotherDimensionAvailable:b=no
+  death_drop__outsideDropPreset:t=""
   body_cleanup_server_after_death__delay:r=-1
-
-  "human_inventory__deathDrop:array"{}
 }
 
 teaser_extraction_point{
@@ -902,6 +901,7 @@ teaser_spider{
   anim_state__forceAnimStateId:i=-1
   _tracked:t="anim_state__forceAnimStateId"
   _replicated:t="anim_state__forceAnimStateId"
+  death_drop__outsideDropPreset:t=""
   needsBlood:b=no
   material:t=""
 
@@ -915,7 +915,6 @@ teaser_spider{
   "npys_homoErectus:tag"{}
   "teaser_spider:tag"{}
   "loc_snapshots__scaledTransform:tag"{}
-  "human_inventory__deathDrop:array"{}
 }
 
 teaser_recorder_spider{

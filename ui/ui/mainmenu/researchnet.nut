@@ -316,7 +316,13 @@ function mkResearchNet() {
         continue
 
       let matchesCategory = selectedCat == null ||
-        prototype.results.findindex(@(v) protoTypes?[v.keys()[0]] == selectedCat) != null
+        (prototype.results.findindex(function(result) {
+          foreach (id, prType in result) {
+            if (prType == "" && protoTypes?[id] == selectedCat)
+              return true
+          }
+          return false
+        }) != null)
 
       local opacity = 1.0
       if (!matchesCategory)

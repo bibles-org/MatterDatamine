@@ -23,7 +23,7 @@ from "%ui/components/textarea.nut" import textarea
 from "%ui/mainMenu/contractWidget.nut" import contractsPanel, mkRewardBlock, reportContract, mkDifficultyBlock
 from "%ui/mainMenu/possibleLoot.nut" import mkPossibleLootBlock
 from "%ui/matchingQueues.nut" import getNearestEnableTime, getNextEnableTime, isQueueDisabledBySchedule
-from "%ui/quickMatchQueue.nut" import leaveQueue
+from "%ui/quickMatchQueue.nut" import leaveQueue, isInQueue, curQueueParam
 from "%ui/mainMenu/raidAutoSquad.nut" import autosquadWidget
 from "%ui/mainMenu/offline_raid_widget.nut" import mkOfflineRaidCheckBox, wantOfflineRaid, mkOfflineRaidIcon, isOfflineRaidAvailable
 from "%ui/mainMenu/contractPanelCommon.nut" import mkContractsCompleted, hasPremiumContracts
@@ -2153,15 +2153,32 @@ function getContent() {
   )
 
   function mkPrepareButton(menuId) {
-    return {
+    let isActive = Computed(function() {
+      if (!isInQueue.get())
+        return true
+      let isNexus = selectedRaid.get()?.extraParams.nexus
+      let isNexusQueue = curQueueParam.get()?.queueRaid.extraParams.nexus || curQueueParam.get()?.queueId == "am_nexus_all_assault"
+      if (isNexus)
+        return isNexusQueue
+      else
+        return !isNexusQueue
+    })
+    return @() {
+      watch = isActive
       size = FLEX_H
       children = buttonWithGamepadHotkey(mkText(loc("missions/loadoutCheck"), { hplace = ALIGN_CENTER }.__merge(h2_txt)),
-        @() openMenuInteractive(menuId)
+        function() {
+          if (!isActive.get()) {
+            showMsgbox({ text = loc("inventory/cannotPutToContainerDuringSearch") })
+            return
+          }
+          openMenuInteractive(menuId)
+        }
         {
           size = static [flex(), hdpx(70)]
           halign = ALIGN_CENTER
           hotkeys = [["J:Y", {description = { skip = true }}]]
-        }.__update(accentButtonStyle)
+        }.__update(!isActive.get() ? {} : accentButtonStyle)
       )
     }
   }
@@ -2533,8 +2550,13 @@ function getContent() {
   }
   function selectedNodeInfo() {
     let nodeId = selectedNexusNode.get()
+    let node = patchedNodes.get()?[nodeId]
+
     return {
-      flow = FLOW_VERTICAL watch = selectedNexusNode size = FLEX_H children = nodeId!=null ? [gapLine, mkNodeInfo(patchedNodes.get()[nodeId], nodeId, FLEX_H), gapLine] : null
+      flow = FLOW_VERTICAL
+      watch = selectedNexusNode
+      size = FLEX_H
+      children = node != null ? [gapLine, mkNodeInfo(node, nodeId, FLEX_H), gapLine] : null
     }
   }
   function nexusRaidPreview(){

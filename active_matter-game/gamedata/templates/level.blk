@@ -47,6 +47,7 @@ cuttable_fence{
   item__setCustomUsePrompt:t=""
   use_object__offset:p3=0, 1.3, 0
   use_object__interactingExtraUseDistance:r=0.75
+  _use:t="rendinst_resource_preload"
   ri_preload__name:t="sovmod_fence_metal_a_type_f"
   ri_extra__isBeingReplaced:b=no
 
@@ -60,8 +61,6 @@ cuttable_fence{
   "interactable__invoiceTemplateList:list<t>"{
     action:t="cuttable_fence_cut_action"
   }
-
-  "ri_preload__preloadOnLevelLoaded:tag"{}
 }
 
 cuttable_fence_metal_netting_barbed_fence_a{
@@ -84,6 +83,7 @@ cuttable_fence_metal_netting_barbed_fence_a{
   item__setCustomUsePrompt:t=""
   use_object__offset:p3=0, 1.3, 0
   use_object__interactingExtraUseDistance:r=0.75
+  _use:t="rendinst_resource_preload"
   ri_preload__name:t="metal_netting_barbed_fence_b"
   ri_extra__isBeingReplaced:b=no
 
@@ -97,8 +97,6 @@ cuttable_fence_metal_netting_barbed_fence_a{
   "interactable__invoiceTemplateList:list<t>"{
     action:t="cuttable_fence_cut_action"
   }
-
-  "ri_preload__preloadOnLevelLoaded:tag"{}
 }
 
 cuttable_fence_cut_action{

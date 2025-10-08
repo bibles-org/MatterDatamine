@@ -300,26 +300,25 @@ spider_ai{
 }
 
 spider_loot_minor{
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_2"
-      dropChance:r=0.1
+  death_drop__outsideDropPreset:t="active_matter_pile_2_coins_10_percent_loot_preset"
+}
+
+spider_loot_major_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      sub_preset:t="active_matter_pile_3_coins_loot_preset"
+    }
+
+    "item:object"{
+      sub_preset:t="active_matter_pile_5_coins_50_percent_loot_preset"
     }
   }
 }
 
 spider_loot_major{
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_3"
-      dropChance:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_5"
-      dropChance:r=0.5
-    }
-  }
+  death_drop__outsideDropPreset:t="spider_loot_major_preset"
 }
 
 spider{

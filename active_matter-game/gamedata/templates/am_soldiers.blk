@@ -357,6 +357,7 @@ militant_inventory{
   human_inventory__lookNodeName:t="reye"
   human_inventory__lookNodeId:i=-1
   human_inventory__dropsLoot:b=yes
+  death_drop__outsideDropPreset:t=""
   human_inventory__dropVolumePerSec:i=100
   human_inventory__lastDropAt:r=-1
 
@@ -371,7 +372,6 @@ militant_inventory{
   "inventory__supportsQuickUse:tag"{}
   "human_inventory__selectConvex:list<p4>"{}
   "human_inventory__selectTpsConvex:list<p4>"{}
-  "human_inventory__deathDrop:array"{}
   "human_inventory__dropFromInventoryEid:eid"{}
   "human_inventory__dropToInventoryEid:eid"{}
 }

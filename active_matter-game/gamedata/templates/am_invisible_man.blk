@@ -639,13 +639,7 @@ invisible_man_hit_reactions{
 }
 
 invisible_man_loot{
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_3"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-  }
+  death_drop__outsideDropPreset:t="active_matter_pile_3_coins_50_percent_loot_preset"
 }
 
 invisible_man_damaged_sparks_effect{

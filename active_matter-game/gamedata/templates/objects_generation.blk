@@ -21,6 +21,8 @@ loot_generator_by_loot_preset{
   loot_generator__allowVolumesOverflow:b=no
   loot_generator__lootPreset:t=""
   loot_generator__finished:b=no
+  loot_generator__fixedTm:b=no
+  loot_generator__compensateDropTm:b=no
 }
 
 custom_game_objects_loot_generator_by_loot_preset{
@@ -37,6 +39,12 @@ custom_game_objects_loot_generator_by_loot_preset{
   loot_generator__lootPreset:t=""
   loot_generator__finished:b=no
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+}
+
+loot_generator_for_monster_loot{
+  "loot_generator_for_monster:tag"{}
+  "loot_generator__monsterLootPreset:object"{}
+  "loot_generator__monsterOutsideLootPreset:object"{}
 }
 
 box_loot_generator_by_loot_preset{

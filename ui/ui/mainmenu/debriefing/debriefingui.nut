@@ -10,6 +10,7 @@ from "%ui/hud/state/interactive_state.nut" import addInteractiveElement, removeI
 from "%ui/helpers/time.nut" import secondsToStringLoc
 from "%ui/helpers/timers.nut" import mkCountdownTimer, mkCountdownTimerPerSec
 from "net" import get_sync_time
+from "%ui/components/msgbox.nut" import showMsgbox
 from "%ui/hud/hud_menus_state.nut" import openMenu
 
 import "%ui/components/colorize.nut" as colorize
@@ -48,7 +49,14 @@ let btnStyleRespawn = btnStyle.__merge({
   }
 })
 
-let closeButton = textButton(loc("gamemenu/btnExitBattle"), exitBattle, btnStyle)
+let closeButton = textButton(loc("gamemenu/btnExitBattle"), @() showMsgbox({
+    text = loc("gamemenu/btnExitBattleApply")
+    buttons = [
+      { text = loc("Yes"), action = exitBattle}
+      { text = loc("No"), isCancel = true }
+    ]
+  }),
+  btnStyle)
 
 let spectateButton = textButton(loc("briefing/spectate"), function() {
   ecs.g_entity_mgr.sendEvent(localPlayerEid.get(), CmdDebriefingSpectateRequest())

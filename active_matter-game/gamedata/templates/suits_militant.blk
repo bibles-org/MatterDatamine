@@ -995,7 +995,7 @@ sm_redBerete_item{
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0
-    DM_MELEE:r=0.05
+    DM_MELEE:r=0
     DM_EXPLOSION:r=0
     DM_ZONE:r=0
     DM_COLLISION:r=0
@@ -1005,6 +1005,7 @@ sm_redBerete_item{
 
   "entity_mod_effects:object"{
     "fasterChangePoseMult+mult_diminishing":r=1.2
+    "meleeProtectionMult+mult_diminishing":r=1.05
   }
 
   "equipment__setDefaultStubEquipmentTemplates:object"{
@@ -1049,7 +1050,7 @@ sm_jackal_item{
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0
-    DM_MELEE:r=0.05
+    DM_MELEE:r=0
     DM_EXPLOSION:r=0
     DM_ZONE:r=0
     DM_COLLISION:r=0
@@ -1059,6 +1060,7 @@ sm_jackal_item{
 
   "entity_mod_effects:object"{
     "fasterChangePoseMult+mult_diminishing":r=1.2
+    "meleeProtectionMult+mult_diminishing":r=1.05
   }
 
   "equipment__setDefaultStubEquipmentTemplates:object"{
@@ -1108,7 +1110,7 @@ sm_rebel_item{
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0
-    DM_MELEE:r=0.05
+    DM_MELEE:r=0
     DM_EXPLOSION:r=0
     DM_ZONE:r=0
     DM_COLLISION:r=0
@@ -1118,6 +1120,7 @@ sm_rebel_item{
 
   "entity_mod_effects:object"{
     "recoilMult+mult_diminishing":r=0.97
+    "meleeProtectionMult+mult_diminishing":r=1.05
   }
 
   "equipment__setDefaultStubEquipmentTemplates:object"{
@@ -1398,7 +1401,7 @@ sm_spider_item{
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0
-    DM_MELEE:r=0.05
+    DM_MELEE:r=0
     DM_EXPLOSION:r=0
     DM_ZONE:r=0
     DM_COLLISION:r=0
@@ -1408,6 +1411,7 @@ sm_spider_item{
 
   "entity_mod_effects:object"{
     "fasterChangePoseMult+mult_diminishing":r=1.2
+    "meleeProtectionMult+mult_diminishing":r=1.05
   }
 }
 
@@ -1446,7 +1450,7 @@ sm_biker_item{
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0
-    DM_MELEE:r=0.05
+    DM_MELEE:r=0
     DM_EXPLOSION:r=0
     DM_ZONE:r=0
     DM_COLLISION:r=0
@@ -1456,6 +1460,7 @@ sm_biker_item{
 
   "entity_mod_effects:object"{
     "fasterChangePoseMult+mult_diminishing":r=1.2
+    "meleeProtectionMult+mult_diminishing":r=1.05
   }
 
   "equipment__setDefaultStubEquipmentTemplates:object"{
@@ -1503,12 +1508,16 @@ sm_mirage_item{
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0
-    DM_MELEE:r=0.1
+    DM_MELEE:r=0
     DM_EXPLOSION:r=0
     DM_ZONE:r=0
     DM_COLLISION:r=0
     DM_HOLD_BREATH:r=0
     DM_FIRE:r=0
+  }
+
+  "entity_mod_effects:object"{
+    "meleeProtectionMult+mult_diminishing":r=1.1
   }
 }
 
@@ -1558,13 +1567,18 @@ sm_hunter_item{
   }
 
   "dm_part_armor__protection:list<r>"{
-    DM_PROJECTILE:r=0.03
-    DM_MELEE:r=0.05
+    DM_PROJECTILE:r=0
+    DM_MELEE:r=0
     DM_EXPLOSION:r=0
     DM_ZONE:r=0
     DM_COLLISION:r=0
     DM_HOLD_BREATH:r=0
     DM_FIRE:r=0
+  }
+
+  "entity_mod_effects:object"{
+    "bulletProtectionMult+mult_diminishing":r=1.03
+    "meleeProtectionMult+mult_diminishing":r=1.05
   }
 
   "equipment__setDefaultStubEquipmentTemplates:object"{
@@ -2312,7 +2326,7 @@ suit_militant_light_i_item{
 
   "dm_part_armor__protection:list<r>"{
     DM_PROJECTILE:r=0
-    DM_MELEE:r=0.05
+    DM_MELEE:r=0
     DM_EXPLOSION:r=0
     DM_ZONE:r=0
     DM_COLLISION:r=0
@@ -2322,6 +2336,7 @@ suit_militant_light_i_item{
 
   "entity_mod_effects:object"{
     "fasterChangePoseMult+mult_diminishing":r=1.2
+    "meleeProtectionMult+mult_diminishing":r=1.05
   }
 }
 

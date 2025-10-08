@@ -37,7 +37,12 @@ let previewPresetOverrideRibbons = Watched(null)
 let useAgencyPreset = Watched(false)
 
 levelIsLoading.subscribe_with_nasty_disregard_of_frp_update(@(v) v ? useAgencyPreset.set(false) : null)
-isInBattleState.subscribe_with_nasty_disregard_of_frp_update(@(v) v ? previewPreset.set(null) : null)
+isInBattleState.subscribe_with_nasty_disregard_of_frp_update(function(v) {
+  if (v) {
+    previewPreset.set(null)
+    previewPreset.trigger()
+  }
+})
 
 function setPlayerPreset(presetIdx, data, needChangeName = false) {
   if (!onlineSettingUpdated.get()) {

@@ -177,6 +177,7 @@ am_guard_base{
   find_player__radius:r=100
   obstacle_avoider__avoidTriggers:b=yes
   kill_tracking_tag:t="turned_soldier"
+  death_drop__outsideDropPreset:t=""
   death_note__name:t="note_turned_soldier"
 
   "find_player__ignoreEids:list<eid>"{}
@@ -185,7 +186,6 @@ am_guard_base{
   "encounter_item__encounterEid:eid"{}
   "kill_tracking__taggedPlayers:object"{}
   "cortical_hack_disabled:tag"{}
-  "human_inventory__deathDrop:array"{}
   _group{
     _tags:t="server"
     net_ragdoll__physObjTemplate:t="turned_soldier_ragdoll_physobj"
@@ -569,7 +569,7 @@ test_all_equipped_bot_female{
 
 burntout_equipped_bot{
   equipped_bot__equipmentGeneratorName:t="burntout_equipment_generator"
-  equipped_bot__equipmentGeneratorCorruptionChance:r=0.75
+  equipped_bot__equipmentGeneratorCorruptionChance:r=0
 }
 
 burntout_bot_slots{

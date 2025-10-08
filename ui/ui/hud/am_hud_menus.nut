@@ -13,6 +13,7 @@ from "%ui/mainMenu/baseDebriefing.nut" import mkBaseDebriefingMenu
 from "%ui/mainMenu/nexus_debriefing.nut" import mkNexusDebriefingMenu
 from "%ui/mainMenu/researchAndCraft.nut" import mkCraftWnd
 from "%ui/mainMenu/amProcessingDeviceMenu.nut" import mkAmProcessing
+from "%ui/mainMenu/amProcessingSelectItem.nut" import refinerRecipeListWindowId, refinerRecipeListWindow, refinerRecipeListWindowIsAvailable
 from "%ui/mainMenu/consoleRaidMenu.nut" import mkMissionsScreen
 from "%ui/hud/menus/journal.nut" import journalMenuUi
 from "%ui/mainMenu/monolith/monolithMenu.nut" import mkMonolithMenu
@@ -100,6 +101,7 @@ let battleHudMenus = freeze({
     isAvailable = Computed(@() !isNexus.get()) notifications = journalNotifications },
   [AudioModuleId]  =  { getContent = @() audioModuleUi, name = audioModuleName,
     notifications = audioNotifications, isAvailable = audioModuleIsAvailable},
+  [refinerRecipeListWindowId] = { getMenu = @() refinerRecipeListWindow() isAvailable = refinerRecipeListWindowIsAvailable }
 }.map(@(v, k) v.__merge({id = k})))
 
 let battleHudMenuTabs = [
@@ -107,7 +109,8 @@ let battleHudMenuTabs = [
   InventoryMenuId,
   JournalMenuId,
   BigMapId,
-  AudioModuleId
+  AudioModuleId,
+  refinerRecipeListWindowId
 ]
 
 return {playerBaseHudMenus, battleHudMenus, playerBaseHudMenuTabs, battleHudMenuTabs}

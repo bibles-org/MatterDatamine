@@ -799,6 +799,9 @@ function inventoryItem(item, list_type, custom_actions = {}, inventoryItemSize=[
   let isRecognizingRequired = item.recognizeTimeLeft > 0.0
 
   function canDrop(data) {
+    if (data == null)
+      return null
+
     if (data.eid == ecs.INVALID_ENTITY_ID)
       return MoveForbidReason.OTHER
     return canDropItem(data, item, list_type)
@@ -1018,4 +1021,7 @@ return {
   itemFillColorHovered
   itemFillColorDef
   recognitionImagePattern
+
+  mkCountLabel
+  modsIndicator
 }

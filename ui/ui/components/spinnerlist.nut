@@ -133,13 +133,20 @@ let spinner = kwarg(function(curValue, allValues, setValue = null,
     ]
   }
   let stateFlags = Watched(0)
+  let amount = allValues.len()
   return function() {
     let sf = stateFlags.get()
     return {
       behavior = showCursor.get() ? Behaviors.Button : null
       watch = [stateFlags, curIdx, curValue, showCursor]
       onElemState = @(s) stateFlags.set(s)
-      onClick = @() allValues.len() > 0 ? setValue(allValues[(curIdx.get()+1 > allValues.len()-1) ? 0 : curIdx.get()+1]) : null
+      onClick = amount == 0 ? null
+        : function() {
+            let current = curIdx.get()
+            let nextIndex = current == null ? 0
+              : (current + 1) % amount
+            setValue(allValues[nextIndex])
+          }
       xmbNode
       onHover = hint ? @(on) setTooltip(on ? hint : null) : null
       group

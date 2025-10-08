@@ -1172,6 +1172,7 @@ outdoor_sleeper_changed_human_miniboss{
   phys_move_anim__runTimescale:r=0.7
   phys_move_anim__walkTimescale:r=1
   navmesh_phys__maxWalkSpeed:r=2.5
+  death_drop__outsideDropPreset:t="active_matter_pile_30_coins_loot_preset"
   sleeping_monster__templateAdd:t="changed_human_miniboss_appear_effect"
   miniboss__type:t="changed"
   kill_tracking_tag:t="changed_miniboss"
@@ -1201,14 +1202,6 @@ outdoor_sleeper_changed_human_miniboss{
   agent_dangers__loseTargetTimeout:r=150
   _use:t="human_animchar_parts"
   human_animchar_parts__partTemplate:t="changed_human_miniboss_animchar_attachable_part"
-
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_30"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-  }
 
   "anim_state__runStateName:list<t>"{
     i:t="lower_walk"

@@ -198,32 +198,24 @@ wandering_core_base{
   "kill_tracking__taggedPlayers:object"{}
 }
 
-wandering_core_death_drop{
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_3"
-      dropChance:r=1
-      dropHeight:r=1
+wandering_core_death_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_3"
+      number:i=3
     }
 
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_3"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_3"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_3"
-      dropChance:r=0.5
-      dropHeight:r=1
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_3"
+      number:i=4
     }
   }
+}
+
+wandering_core_death_drop{
+  death_drop__outsideDropPreset:t="wandering_core_death_loot_preset"
 }
 
 am_wandering_core_ai{

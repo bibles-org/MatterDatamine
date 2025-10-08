@@ -72,8 +72,9 @@ let horizontalContact = @(contact) {
 
 let squadMembersUi = function() {
   let squadList = [mkRaidSelectionNotif()]
+  let id = userInfo.get()?.userId
   let sortedMembers = squadMembers.get().values().sort(@(a, b)
-    (b.userId == userInfo.get().userId) <=> (a.userId == userInfo.get().userId)
+    (b.userId == id) <=> (a.userId == id)
     || b.isLeader <=> a.isLeader)
 
   foreach (_id, member in sortedMembers){

@@ -7,25 +7,28 @@ postfx_color_grading_tonemap{
 
   "color_grading:object"{
     colorSaturation:p4=1, 1, 1, 1
+    colorSaturationLow:p4=1, 0.9, 0.85, 0.7
+    colorSaturationHigh:p4=1, 1, 1, 1
+    colorSaturationHighVsLowCurve:r=4
     colorContrast:p4=1, 1, 1, 1
     colorGamma:p4=1, 1, 1, 1
     colorGain:p4=1, 1, 1, 1
     colorOffset:p4=0, 0, 0, 0
-    hueToSaturationKey:p4=1, 0.1, 0, 0
-    hueToSaturationKeyFalloff:r=0.0002
-    hueToSaturationValueMul:p4=1, 1, 1, 1.4
+    hueToSaturationKey:p4=1, 0, 0, 0
+    hueToSaturationKeyFalloff:r=0.001
+    hueToSaturationValueMul:p4=1, 1, 1, 1
     hueToSaturationValueAdd:p4=0, 0, 0, 0
-    shadows_colorSaturation:p4=1, 1, 1, 0.9
+    shadows_colorSaturation:p4=1, 1, 1, 1
     shadows_colorContrast:p4=1, 0.75, 0.8, 1.3
     shadows_colorGamma:p4=1, 1, 1, 1
     shadows_colorGain:p4=1, 1, 1, 1
     shadows_colorOffset:p4=0.005, 0.001, 0, 0
-    midtones_colorSaturation:p4=1, 0.9, 0.95, 0.7
+    midtones_colorSaturation:p4=1, 1, 1, 1
     midtones_colorContrast:p4=0.9, 1, 0.85, 1.3
     midtones_colorGamma:p4=0.95, 1, 0.93, 1
     midtones_colorGain:p4=1, 1, 1, 1
     midtones_colorOffset:p4=0, 0, 0, 0
-    highlights_colorSaturation:p4=1, 1, 1, 0.7
+    highlights_colorSaturation:p4=1, 1, 1, 1
     highlights_colorContrast:p4=1, 1, 1, 1
     highlights_colorGamma:p4=1, 1, 1, 1
     highlights_colorGain:p4=1, 1, 1, 1

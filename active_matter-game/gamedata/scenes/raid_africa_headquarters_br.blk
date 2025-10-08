@@ -270,6 +270,11 @@ entity{
 }
 
 entity{
+  _template:t="misc_ent_generator"
+  ri_extra_gen__blk:t="gamedata/sovmod_misc.blk"
+}
+
+entity{
   _template:t="level+level_synced_environment"
   level__blk:t="levels/forsaken_africa.blk"
   level__useGroundHolesCollision:b=yes

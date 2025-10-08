@@ -12,8 +12,8 @@ from "%ui/mainMenu/menus/options/options_lib.nut" import optionCtor, optionCheck
 from "%ui/mainMenu/menus/options/player_interaction_option.nut" import isStreamerMode
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
+from "%sqstd/rand.nut" import shuffle
 
-let rand = require("%sqstd/rand.nut")()
 let { isOnPlayerBase } = require("%ui/hud/state/gametype_state.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
@@ -54,26 +54,16 @@ function playMusicOnBase(playOnBase = null) {
     return
   }
 
-  let list = trackList.get()
-  let randTrackIdx = rand.rint(0, list.len() - 1)
-  local trackIdx = null
-  local trackFound = false
-  for (local i = randTrackIdx; i <= list.len(); i++) {
-    let newIdx = (randTrackIdx + list.len() + i) % list.len()
-    if (list?[newIdx] == null)
-      continue
-    let restricted = list[newIdx].isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get())
-    
-    if (!restricted) { 
-      trackIdx = newIdx
-      trackFound = true
-      break
-    }
-  }
-  if (!trackFound || trackIdx == null)
+  let list = trackList.get().filter(function(track) {
+    let restricted = track.isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get())
+    let isFavorite = track.soundTrack in favoritesTracksListWatch.get()
+    return !restricted && (!playOnlyFavoritesTracksWatch.get() || isFavorite)
+  })
+  if (list.len() <= 0)
     return
+
   playerLoopState.set(loopOrder[LoopStatus.ALL_TRACKS_LOOP])
-  let track = list[trackIdx]
+  let track = shuffle(list)[0]
   startPlayer(track)
 }
 
@@ -102,26 +92,16 @@ function playMusicInRaids(isPlayInRaids = playMusicInRaidsWatch.get()) {
     return
   }
 
-  let list = trackList.get()
-  let randTrackIdx = rand.rint(0, list.len() - 1)
-  local trackIdx = null
-  local trackFound = false
-  for (local i = randTrackIdx; i <= list.len(); i++) {
-    let newIdx = (randTrackIdx + list.len() + i) % list.len()
-    if (list?[newIdx] == null)
-      continue
-    let restricted = list[newIdx].isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get())
-    
-    if (!restricted) { 
-      trackIdx = newIdx
-      trackFound = true
-      break
-    }
-  }
-  if (!trackFound || randTrackIdx == null)
+  let list = trackList.get().filter(function(track) {
+    let restricted = track.isStreamRestricted && (isStreamerMode.get() || playOnlyFreeStreamingMusicWatch.get())
+    let isFavorite = track.soundTrack in favoritesTracksListWatch.get()
+    return !restricted && (!playOnlyFavoritesTracksWatch.get() || isFavorite)
+  })
+  if (list.len() <= 0)
     return
+
   playerLoopState.set(loopOrder[LoopStatus.ALL_TRACKS_LOOP])
-  let track = list[trackIdx]
+  let track = shuffle(list)[0]
   startPlayer(track)
 }
 

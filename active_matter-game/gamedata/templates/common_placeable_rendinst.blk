@@ -8,11 +8,11 @@ placeable_rendinst{
 
 damageable_rendinst{
   _use:t="decor_rendinst"
+  _use:t="rendinst_resource_preload"
   ri_extra__isBeingReplaced:b=no
   ri_extra__riAfterDestructionTriggered:b=no
   ri_preload__name:t=""
 
-  "ri_preload__preloadOnLevelLoaded:tag"{}
   "riExtraCustomDestroy:tag"{}
 }
 

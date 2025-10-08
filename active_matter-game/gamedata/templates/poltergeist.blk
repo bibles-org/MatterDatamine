@@ -43,6 +43,24 @@ poltergeist_ai{
   }
 }
 
+poltergeist_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_1"
+      number:i=2
+      weight:r=0.75
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_1"
+      number:i=3
+      weight:r=0.25
+    }
+  }
+}
+
 poltergeist{
   _use:t="am_navmesh_creature_base"
   _use:t="dont_create_nphys_obstacle"
@@ -68,6 +86,7 @@ poltergeist{
   nphys__ccdOffset:p3=0, 0, 0
   hit_verification__maxDistance:r=9
   dm__bsphereRad:r=9
+  death_drop__outsideDropPreset:t="poltergeist_loot_preset"
   death_note__name:t="note_poltergeist"
 
   "poltergeist:tag"{}
@@ -79,19 +98,6 @@ poltergeist{
   "disable_capsule_ao:tag"{}
   "grid_obj__updateAlways:tag"{}
   "kill_tracking__taggedPlayers:object"{}
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_2"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_1"
-      dropChance:r=0.25
-      dropHeight:r=1
-    }
-  }
 }
 
 poltergeist_possession_retry{

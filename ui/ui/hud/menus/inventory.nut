@@ -2,7 +2,7 @@ from "%sqstd/math.nut" import truncateToMultiple
 
 from "%ui/hud/menus/components/inventoryItemsHeroExtraInventories.nut" import mkHeroBackpackItemContainerItemsList, mkHeroSafepackItemContainerItemsList
 
-from "%ui/components/colors.nut" import RedWarningColor, ConsoleFillColor, TextNormal, BtnBgDisabled, BtnBgNormal
+from "%ui/components/colors.nut" import RedWarningColor, ConsoleFillColor, TextNormal, BtnBgDisabled, BtnBgNormal, GreenSuccessColor
 from "%ui/fonts_style.nut" import body_txt
 from "%ui/hud/state/interactive_state.nut" import addInteractiveElement, removeInteractiveElement
 from "%ui/hud/menus/components/amStorage.nut" import mkActiveMatterStorageWidget
@@ -38,9 +38,13 @@ from "%ui/components/msgbox.nut" import showMsgbox
 from "%ui/context_hotkeys.nut" import contextHotkeys, rmbGamepadHotkey
 from "%ui/hud/menus/inventories/workbenchInventory.nut" import itemCanBeRepaired
 from "%ui/hud/menus/components/inventoryItemUtils.nut" import repairItems, repairCost
-from "%ui/hud/state/item_info.nut" import get_item_info
+from "%ui/hud/state/item_info.nut" import get_item_info, getTemplateNameByEid
 from "%ui/hud/state/equipment.nut" import equipment
 from "%ui/hud/state/shooting_range_state.nut" import inShootingRange
+from "%ui/profile/profileState.nut" import refinerFusingRecipes
+from "%ui/popup/player_event_log.nut" import addPlayerLog, mkPlayerLog, playerLogsColors
+from "%ui/hud/menus/components/fakeItem.nut" import mkFakeItem
+from "%ui/hud/menus/components/inventoryItemImages.nut" import inventoryItemImage
 
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
@@ -68,6 +72,8 @@ let { isInMonsterState, isMonsterInventoryEnabled, isMonsterWeaponsEnabled } = r
 let { safeAreaVerPadding, safeAreaHorPadding, safeAreaAmount } = require("%ui/options/safeArea.nut")
 let { isInBattleState } = require("%ui/state/appState.nut")
 let { tagChronogeneSlot } = require("%ui/mainMenu/clonesMenu/clonesMenuCommon.nut")
+let { get_controlled_hero } = require("%dngscripts/common_queries.nut")
+let { backpackItems, inventoryItems, safepackItems } = require("%ui/hud/state/inventory_items_es.nut")
 
 const InventoryMenuId = "Inventory"
 
@@ -93,6 +99,126 @@ externalInventoryEid.subscribe(function(v) {
 })
 
 
+function showRecipeComponentLog(pickedTemplateName) {
+  let recipe = refinerFusingRecipes.get().findvalue(function(recipe) {
+    return (recipe.components.findindex(@(v) v == pickedTemplateName) != null)
+  })
+
+  if (recipe == null)
+    return
+
+  let allRaidItems = [].extend(
+    backpackItems.get(),
+    inventoryItems.get(),
+    safepackItems.get()
+  )
+
+  let foundCoponents = {}
+
+  foreach (component in (recipe?.components ?? [])) {
+    foundCoponents[component] <- []
+  }
+
+  foreach (item in allRaidItems) {
+    if (recipe.components.findindex(@(v) v == item.itemTemplate ) == null)
+      continue
+
+    foundCoponents[item.itemTemplate].append(item)
+  }
+
+  local curItemsCount = {}
+  local pickedUpItemCount = 0
+
+  foreach (templ, arr in foundCoponents) {
+    if (templ == pickedTemplateName) {
+      pickedUpItemCount = arr.len() + 1
+      curItemsCount[templ] <- arr.len() + 1
+    }
+    else {
+      curItemsCount[templ] <- arr.len()
+    }
+  }
+
+  local enoughComponentsForRecipe = true
+  foreach (_countTemplate, count in curItemsCount) {
+    if ( count < pickedUpItemCount )
+      enoughComponentsForRecipe = false
+  }
+
+  let recipeTemplate = $"fuse_result_{recipe.name}"
+  let fakedRecipe = mkFakeItem(recipeTemplate)
+
+  function mkComponentImage(count, templateName) {
+    let fake = mkFakeItem(templateName)
+    let isPickedUp = pickedTemplateName == templateName
+
+    let enoughMark = count >= pickedUpItemCount
+    return {
+      rendObj = ROBJ_BOX
+      borderRadius = hdpx(2)
+      fillColor = 0
+      borderWidth = hdpx(1)
+      borderColor = enoughComponentsForRecipe ? GreenSuccessColor : Color(60, 60, 60, 120)
+      gap = hdpx(2)
+      children = [
+        inventoryItemImage(fake)
+        enoughMark ? {
+          padding = hdpx(2)
+          children = faComp("check", {
+            color = isPickedUp ? GreenSuccessColor : TextNormal
+          })
+        } : null
+      ]
+    }
+  }
+
+  let recipeName = loc("amCleaner/recipe", { name = loc(fakedRecipe.itemName) })
+
+  addPlayerLog({
+    id = pickedTemplateName
+    content = {
+      rendObj = ROBJ_WORLD_BLUR_PANEL
+      minWidth = hdpx(300)
+      fillColor = playerLogsColors.infoLog
+      valign = ALIGN_CENTER
+      flow = FLOW_VERTICAL
+      padding = hdpx(6)
+      children = [
+        mkTextArea(
+          enoughComponentsForRecipe ?
+            loc("amCleaner/foundAllItemForRecipe", { recipe = recipeName }) :
+            loc("amCleaner/foundItemForRecipe", { recipe = recipeName })
+        ),
+        {
+          flow = FLOW_HORIZONTAL
+          padding = hdpx(4)
+          gap = hdpx(4)
+          children = curItemsCount.map(mkComponentImage).values()
+        }
+      ]
+    }
+  })
+}
+
+let pickedRecipes = {}
+isInBattleState.subscribe(@(_) pickedRecipes.clear())
+
+ecs.register_es("check_recipes", {
+    [["onChange"]] = function(eid, comp) {
+      if (comp.item__humanOwnerEid != get_controlled_hero())
+        return
+
+      let pickedTemplateName = getTemplateNameByEid(eid)
+
+      if (pickedRecipes?[pickedTemplateName] == null) {
+        pickedRecipes[pickedTemplateName] <- true
+        showRecipeComponentLog(pickedTemplateName)
+      }
+    }
+  },
+  { comps_track=[["item__humanOwnerEid", ecs.TYPE_EID]] },
+  { tags="gameClient" }
+)
 
 let contentPadding = [ hdpx(1), hdpx(10), hdpx(10), hdpx(10) ]
 

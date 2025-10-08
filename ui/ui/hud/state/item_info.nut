@@ -380,6 +380,9 @@ function getItemInfo(eid, comp){
 }
 
 function get_item_info(item_eid) {
+  if (item_eid == null)
+    return null
+
   local info = get_item_info_query.perform(item_eid, getItemInfo)
 
   return info

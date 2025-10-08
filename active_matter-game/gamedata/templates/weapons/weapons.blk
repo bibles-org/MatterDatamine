@@ -1177,7 +1177,7 @@ sks_carbine_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/shell_out"
+      hero:t="player/weapon/_common/shell_drop"
       type:t="matUnderFeet"
     }
   }
@@ -1246,7 +1246,7 @@ sks_carbine_rust_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/shell_out"
+      hero:t="player/weapon/_common/shell_drop"
       type:t="matUnderFeet"
     }
   }
@@ -1502,6 +1502,7 @@ makarov_rust_gun{
 
 makarov_honorary_gun{
   _use:t="makarov_gun"
+  _use:t="item_rarity_rare"
   item__proto:t="makarov_honorary_gun"
   item__name:t="items/makarov_honorary"
   item__marketPrice:i=100
@@ -1828,6 +1829,8 @@ ak_12_magazine_slot{
     i:t="ak_12_magazine"
     i:t="ak_74_magazine"
     i:t="rpk_74_magazine"
+    i:t="ak_5_45x39_45rnds_magazine"
+    i:t="ak_5_45x39_60rnds_magazine"
   }
 }
 
@@ -2072,6 +2075,7 @@ as_val_magazine_slot{
 
   "slot_holder__availableItems:list<t>"{
     i:t="as_val_magazine"
+    i:t="val_30rnds_magazine"
   }
 }
 
@@ -2419,7 +2423,7 @@ toz_b_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/12_gauge_shell_out"
+      hero:t="player/weapon/_common/12_gauge_shell_drop"
       type:t="matUnderFeet"
     }
   }
@@ -2581,7 +2585,7 @@ mosin_m44_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/shell_out"
+      hero:t="player/weapon/_common/shell_drop"
       type:t="matUnderFeet"
     }
   }
@@ -2681,7 +2685,7 @@ mosin_m91_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/shell_out"
+      hero:t="player/weapon/_common/shell_drop"
       type:t="matUnderFeet"
     }
   }
@@ -4115,7 +4119,7 @@ ks_23_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/12_gauge_shell_out"
+      hero:t="player/weapon/_common/12_gauge_shell_drop"
       type:t="matUnderFeet"
     }
   }
@@ -5559,6 +5563,8 @@ ak_74_magazine_slot{
     i:t="ak_74_magazine"
     i:t="rpk_74_magazine"
     i:t="ak_12_magazine"
+    i:t="ak_5_45x39_45rnds_magazine"
+    i:t="ak_5_45x39_60rnds_magazine"
   }
 }
 
@@ -5983,6 +5989,8 @@ aks_74u_magazine_slot{
     i:t="ak_74_magazine"
     i:t="rpk_74_magazine"
     i:t="ak_12_magazine"
+    i:t="ak_5_45x39_45rnds_magazine"
+    i:t="ak_5_45x39_60rnds_magazine"
   }
 }
 
@@ -6929,6 +6937,7 @@ ash_12_gun{
   gun__adsSpeedMult:r=0.6
   item__volume:i=300
   item__marketPrice:i=21000
+  item__iconRecalcAnimation:b=yes
   gun__altReloadTime:r=1.8
   gun__ammoInspectionInOutDuration:p2=1.5, 2
   gun__ammoInspectionIdleLoopDuration:r=8.7
@@ -7285,6 +7294,8 @@ rpk_74_magazine_slot{
     i:t="rpk_74_magazine"
     i:t="ak_74_magazine"
     i:t="ak_12_magazine"
+    i:t="ak_5_45x39_45rnds_magazine"
+    i:t="ak_5_45x39_60rnds_magazine"
   }
 }
 
@@ -7955,6 +7966,9 @@ m_gun_magazine_slot{
     i:t="m4a1_magazine"
     i:t="m4_rust_magazine"
     i:t="fn_scar_magazine"
+    i:t="m4_magpul_30rnds_magazine"
+    i:t="m4_magpul_40rnds_magazine"
+    i:t="m4_60rnds_drum"
   }
 }
 
@@ -8615,7 +8629,7 @@ m4_rust_gun{
   gun__kineticDamageMult:r=0.8
   gun_spread__maxDeltaAngle:r=1
   profile_server_data__enrichmentRefineChronotracesRange:ip2=16, 17
-  profile_server_data__enrichmentResearchAlias:t="m4a1_gun"
+  profile_server_data__enrichmentResearchAlias:t="m4_gun"
 
   "animchar__objTexReplace:object"{
     "m4_d*":t="m4_rust_tex_d*"
@@ -9477,7 +9491,7 @@ spas_12_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/12_gauge_shell_out"
+      hero:t="player/weapon/_common/12_gauge_shell_drop"
       type:t="matUnderFeet"
     }
 
@@ -10181,8 +10195,8 @@ hk_g3a4_gun{
 
   anim_phys{}
   "gun_aim_offset__gunOffsets:list<p3>"{
-    stand:p3=0.03, -0.07, 0.1
-    crouch:p3=0.03, -0.07, 0.1
+    stand:p3=0.03, -0.08, 0.1
+    crouch:p3=0.03, -0.08, 0.1
     crawl:p3=0.02, -0.03, 0.2
   }
 
@@ -10832,7 +10846,7 @@ mossberg_590_gun{
     }
 
     "shell_drop:object"{
-      hero:t="player/weapon/_common/12_gauge_shell_out"
+      hero:t="player/weapon/_common/12_gauge_shell_drop"
       type:t="matUnderFeet"
     }
 

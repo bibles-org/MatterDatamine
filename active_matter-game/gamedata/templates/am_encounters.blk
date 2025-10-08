@@ -223,6 +223,20 @@ changed_alarm_sound{
   }
 }
 
+changed_human_trap_death_loot_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="changed_ear_item"
+    }
+
+    "item:object"{
+      sub_preset:t="active_matter_pile_1_coins_75_percent_loot_preset"
+    }
+  }
+}
+
 changed_human_trap{
   _use:t="changed_human"
   beh_tree__enabled:b=no
@@ -242,19 +256,7 @@ changed_human_trap{
   sleeping_trap__radiusLimit:r=7
   sleeping_trap__awakeRadius:r=5
   sleeping_trap__propagateCount:i=1
-
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="changed_ear_item"
-      dropChance:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="active_matter_pile"
-      dropChance:r=0.8
-      dropHeight:r=1
-    }
-  }
+  death_drop__outsideDropPreset:t="changed_human_trap_death_loot_preset"
 }
 
 regional_sleeping_changed_generator{

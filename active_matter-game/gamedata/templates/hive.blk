@@ -198,6 +198,7 @@ beehive{
   _use:t="damageable_rendinst"
   ri_extra__name:t="hive_wasp_wall_a"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
+  _use:t="rendinst_resource_preload"
   ri_preload__name:t="hive_wasp_wall_a_dmg"
   hive_body__destructionTriggered:b=no
   hive_body__spawnChance:r=0.4

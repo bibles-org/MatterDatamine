@@ -1047,6 +1047,12 @@ status_tip_mothman_too_high_to_gather{
   status_tip__text:t="mothman_gather_stones/too_high"
 }
 
+status_tip_scream_ability_wrong_location{
+  _use:t="client_game_effect_with_duration"
+  game_effect__timeToDestroy:r=3
+  status_tip__text:t="scream_ability/wrong_location"
+}
+
 status_tip_out_of_ammo{
   _use:t="client_game_effect_with_duration"
   game_effect__timeToDestroy:r=3

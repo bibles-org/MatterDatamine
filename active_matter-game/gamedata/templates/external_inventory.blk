@@ -33,19 +33,19 @@ external_inventory_container{
   "human_inventory__autoCalculateCapacities:tag"{}
 }
 
+rendinst_resource_preload{
+  ri_preload__name:t=""
+
+  RendinstResourcePreload{}
+}
+
 openable_ri{
   openable_ri__closed:t=""
   openable_ri__isOpened:b=no
   _tracked:t="openable_ri__isOpened"
   _replicated:t="openable_ri__isOpened"
-  ri_preload__name:t=""
+  _use:t="rendinst_resource_preload"
   ri_extra__isBeingReplaced:b=no
-
-  "ri_preload__preloadOnLevelLoaded:tag"{}
-}
-
-rendinst_resource_preload{
-  RendinstResourcePreload{}
 }
 
 openable_external_inventory_container_ri{

@@ -924,7 +924,9 @@ flower_human_attack_affect{
   game_effect_sound__hero:t="enemy/walker/flower_human/voice_fx/attack"
 
   "flower_human_attack__attackLimits:object"{
-    head:r=0.3
+    head:r=1
+    left_leg:r=1
+    right_leg:r=1
   }
 }
 
@@ -954,6 +956,12 @@ flower_human_concussion_run_attack{
 flower_human_stationary_attack_affect{
   _use:t="flower_human_attack_affect"
   flower_human_attack__targetDeltaHp:r=2
+
+  "flower_human_attack__attackLimits:object"{
+    head:r=0.3
+    left_leg:r=1
+    right_leg:r=1
+  }
 }
 
 flower_human_stationary_damage_attack{
@@ -1343,6 +1351,7 @@ flower_human_miniboss{
   collision_damage__velDeltaMult:r=0.5
   collision_damage__pushThreshold:r=1
   collision_damage__threshold:r=3
+  death_drop__outsideDropPreset:t="active_matter_pile_25_coins_loot_preset"
   sleep_mode__extraAwakeChance:r=0.5
   loud_noise__muffledMultiplier:r=1
   loud_noise__noisePercentPerAwake:r=1
@@ -1365,14 +1374,6 @@ flower_human_miniboss{
   beh_tree__node:t="flower_human_miniboss"
 
   "kill_tracking__taggedPlayers:object"{}
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_25"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-  }
-
   "anim_state__runStateName:list<t>"{
     i:t="lower_run"
   }

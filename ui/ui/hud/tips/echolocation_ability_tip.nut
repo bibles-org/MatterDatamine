@@ -15,7 +15,7 @@ ecs.register_es("echolocation_tip_es", {
 })
 
 let echolocationTip = @() tipCmp({
-  inputId = "MonsterChanged.Echolocation"
+  inputId = "Human.Flashlight"
   text = loc("hint/echolocation_ability")
 })
 

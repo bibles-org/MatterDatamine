@@ -98,6 +98,49 @@ nesting_swarm_nest_oscillation{
   euler_sinusoidal_oscillation__frequency:p3=0.2, 0.025, 0.15
 }
 
+devourer_remains_pristine_loot_preset{
+  _use:t="loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="devourer_remains_pristine_item"
+      weight:r=0.15
+    }
+
+    "item:object"{
+      sub_preset:t="empty_loot_preset"
+      weight:r=0.85
+    }
+  }
+}
+
+nesting_swarm_nest_death_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="devourer_remains_item"
+    }
+
+    "item:object"{
+      sub_preset:t="devourer_remains_pristine_loot_preset"
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_5"
+      number:i=4
+    }
+
+    "item:object"{
+      sub_preset:t="active_matter_pile_5_coins_75_percent_loot_preset"
+    }
+
+    "item:object"{
+      sub_preset:t="active_matter_pile_5_coins_50_percent_loot_preset"
+    }
+  }
+}
+
 nesting_swarm_nest{
   _use:t="replicating"
   _use:t="animchar"
@@ -125,6 +168,7 @@ nesting_swarm_nest{
   body_cleanup_server_after_death__delay:r=0
   nesting_swarm_nest__createOnDestroyTemplate:t="nesting_swarm_nest_explosion"
   nesting_swarm_nest__createOnDestroyOffset:p3=0, 1, 0
+  death_drop__outsideDropPreset:t="nesting_swarm_nest_death_preset"
   animchar__appliedAnimSpeed:r=0
   nesting_swarm_nest__warriorTemplate:t="nesting_swarm_warrior"
   nesting_swarm_nest__supplyTemplate:t="nesting_swarm_supply"
@@ -147,56 +191,6 @@ nesting_swarm_nest{
   capsule_approximation{}
   "preloadSpawnActivatedShellProps:list<t>"{
     template:t="nesting_swarm_nest_explosion"
-  }
-
-  "human_inventory__deathDrop:array"{
-    "loot:object"{
-      itemTemplate:t="devourer_remains_item"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="devourer_remains_pristine_item"
-      dropChance:r=0.15
-      dropHeight:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_5"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_5"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_5"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_5"
-      dropChance:r=1
-      dropHeight:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_5"
-      dropChance:r=0.75
-      dropHeight:r=1
-    }
-
-    "loot:object"{
-      itemTemplate:t="active_matter_pile+coin_item_count_5"
-      dropChance:r=0.5
-      dropHeight:r=1
-    }
   }
 
   "animchar__animStateDirty:b"{

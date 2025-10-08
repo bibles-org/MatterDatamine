@@ -68,10 +68,17 @@ zone_weather{
   zone_weather__stateFinalTimeAt:r=-1
   zone_weather__riseTime:r=920
   zone_weather__recoveryTime:r=30
+  _tracked:t="zone_weather__stormProgress"
+
+  _group{
+    _tags:t="gameClient"
+    zone_weather__stormProgress:r=0
+    zone_weather__stormProgressFromTo:p2=0, 0
+  }
 
   _group{
     _tags:t="render"
-    zone_weather__stormColorGradingTemplate:t="zone_weather_postfx_color_grading_storm"
+    zone_weather__stormColorGradingTemplate:t="zone_weather_postfx_color_grading_storm_strong"
     zone_weather__noize__factorStorm:r=0.65
     zone_weather__noize__enabled:b=no
     zone_weather__noize__factor:r=0
