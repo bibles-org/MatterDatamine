@@ -9,7 +9,7 @@ xenohound_event{
   xenohound_event__radius:p2=18, 36
   xenohound_event__minDstBetweenPortalsSq:r=64
   xenohound_event__portalTemplate:t="xenohound_portal"
-  xenohound_event__xenoTemplate:t="xenohound_creature+am_xenohound_mm+xenohound_scale_on_appear+am_inside_body_1"
+  xenohound_event__xenoTemplate:t="xenohound_creature+am_xenohound_mm+xenohound_scale_on_appear"
   xenohound_event__duration:p2=24, 45
   xenohound_event__state:i=0
   xenohound_event__leftToSpawn:i=0
@@ -169,6 +169,8 @@ xenohound_creature{
   collres__res:t="xenos_dog_collision"
   animchar_fast_phys__res:t="xenos_dog_fastphys"
   kill_tracking_tag:t="hellhound"
+  death_drop__outsideDropPreset:t="active_matter_pile_3_coins_50_percent_loot_preset"
+  loot_drop_system__generatorLootType:t="xenohound"
   needsBlood:b=no
   material:t="changedFlesh"
   collres__centerNode:t="Bip01 Pelvis"
@@ -644,5 +646,5 @@ xenohound_portal_guard{
   _use:t="xenohound_portal"
   xenohound_portal__spawnsLeft:i=3
   xenohound_portal__endAt:r=999999
-  xenohound_portal__xenoTemplate:t="xenohound_creature+am_xenohound_mm+am_inside_body_1"
+  xenohound_portal__xenoTemplate:t="xenohound_creature+am_xenohound_mm"
 }

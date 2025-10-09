@@ -550,6 +550,8 @@ changed_human{
   kill_tracking_tag:t="changed_human"
   damage_model__blk:t="gamedata/units/humans/human.blk"
   collres__centerNode:t="Bip01 Pelvis"
+  death_drop__outsideDropPreset:t="active_matter_pile_10_13_coins_loot_preset"
+  loot_drop_system__generatorLootType:t="changed_human"
   agent_switchable_collision__collisionTemplate:t="changed_human_collision"
   navmesh_phys__acceleration:r=8
   nphys__mass:r=80
@@ -1334,7 +1336,7 @@ outdoor_sleeper_changed_human_minion{
 outdoor_sleeper_changed_human_minion_cirlce{
   _use:t="spawn_circle"
   _use:t="teaser_episode_entity"
-  spawn_circle__template:t="outdoor_sleeper_changed_human_minion+am_inside_body_3+sleeping_changed_human"
+  spawn_circle__template:t="outdoor_sleeper_changed_human_minion+sleeping_changed_human"
   spawn_circle__radius:r=2
   spawn_circle__count:ip2=4, 6
   spawn_circle__offsetRnd:p2=0.1, 0.35

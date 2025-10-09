@@ -397,7 +397,7 @@ teaser_outdoor_sleeper_changed_human{
 teaser_outdoor_sleeper_changed_human_cirlce{
   _use:t="spawn_circle"
   _use:t="teaser_episode_entity"
-  spawn_circle__template:t="teaser_outdoor_sleeper_changed_human+am_inside_body_3+sleeping_changed_human"
+  spawn_circle__template:t="teaser_outdoor_sleeper_changed_human+sleeping_changed_human"
   spawn_circle__radius:r=3
   spawn_circle__count:ip2=12, 12
   spawn_circle__offsetRnd:p2=0.1, 0.7
@@ -484,7 +484,7 @@ teaser_anomaly_zone_flowerman_field_branch{
   "anomaly_zone__spawnPresets:object"{
     "creature_preset:array"{
       "it:object"{
-        template:t="teaser_flower_human+flower_human_root_spawner+am_inside_body_3"
+        template:t="teaser_flower_human+flower_human_root_spawner"
         projectToNavmesh:b=yes
         minDistanceToWall:r=0.4
         spawnOnLeafs:b=yes

@@ -480,6 +480,8 @@ flower_human{
   team:i=1
   kill_tracking_tag:t="flower_human"
   damage_model__blk:t="gamedata/units/humans/human.blk"
+  death_drop__outsideDropPreset:t="active_matter_pile_10_13_coins_loot_preset"
+  loot_drop_system__generatorLootType:t="flower_human"
   sleep_mode__awakeTemplateClient:t="flower_human_awake_client"
   sleep_mode__awakeTemplateServer:t="flower_human_awake_server"
   sleep_mode__sleepTemplateClient:t="flower_human_sleeping_client"
@@ -1450,7 +1452,7 @@ flower_human_minion_root_with_spawn_list{
 
   "spawn_entity_from_list__entitiesToSpawn:array"{
     "i:object"{
-      name:t="flower_human_minion+am_inside_body_3"
+      name:t="flower_human_minion"
       chance:r=1
     }
   }

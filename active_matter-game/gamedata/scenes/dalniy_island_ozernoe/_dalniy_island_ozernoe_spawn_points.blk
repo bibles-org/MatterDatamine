@@ -113,14 +113,20 @@ entity{
 }
 
 entity{
-  transform:m=[[-0.95558, 0, -0.294732] [0, 1, 0] [0.294732, 0, -0.95558] [251.645, 75.63, -661.721]]
+  transform:m=[[-0.999654, 0, 0.026299] [0, 1, 0] [-0.026299, 0, -0.999654] [250.292, 76.111, -668.572]]
   _template:t="am_respawn_group_0"
   spawnBase__spawnRadius:r=1
 }
 
 entity{
+  transform:m=[[-0.730138, 0, 0.6833] [0, 1, 0] [-0.6833, 0, -0.730138] [-20.3304, 67.8434, -834.738]]
+  _template:t="am_respawn_group_0"
+  spawnBase__spawnRadius:r=0.5
+}
+
+entity{
   _template:t="am_respawn_group_1"
-  transform:m=[[0.129087, 0, -0.991633] [0, 1, 0] [0.991633, -0, 0.129087] [144.921, 80.0558, -486.308]]
+  transform:m=[[-0.0470734, 0, -0.998891] [0, 1, 0] [0.998891, 0, -0.0470734] [149.394, 80.8455, -479.266]]
   spawnBase__spawnRadius:r=2
 }
 
@@ -167,15 +173,21 @@ entity{
 }
 
 entity{
-  transform:m=[[0.395152, 0, -0.918616] [0, 1, 0] [0.918616, -0, 0.395152] [90.6469, 79.5121, -527.565]]
+  transform:m=[[0.968622, 0, -0.248539] [0, 1, 0] [0.248539, -0, 0.968622] [61.7196, 80.579, -506.393]]
   _template:t="am_respawn_group_1"
   spawnBase__spawnRadius:r=1
 }
 
 entity{
-  transform:m=[[-0.997192, 0, -0.0748836] [0, 1, 0] [0.0748836, 0, -0.997192] [259.487, 79.2146, -561.029]]
+  transform:m=[[-0.74829, 0, -0.663372] [0, 1, 0] [0.663372, 0, -0.74829] [257.269, 79.362, -558.486]]
   _template:t="am_respawn_group_1"
   spawnBase__spawnRadius:r=1
+}
+
+entity{
+  _template:t="placeable_rendinst"
+  transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [253.951, 79.425, -555.247]]
+  ri_extra__name:t="tree_salix_bush_medium_b"
 }
 
 entity{
@@ -185,7 +197,7 @@ entity{
 }
 
 entity{
-  transform:m=[[0.215924, 0, -0.97641] [0, 1, 0] [0.97641, -0, 0.215924] [135.802, 81.8094, -442.338]]
+  transform:m=[[0.816551, 0, -0.577273] [0, 1, 0] [0.577273, -0, 0.816551] [129.952, 82.9895, -445.455]]
   _template:t="am_respawn_group_1"
   spawnBase__spawnRadius:r=1
 }
@@ -227,7 +239,13 @@ entity{
 }
 
 entity{
-  transform:m=[[0.245271, 0, -0.969455] [0, 1, 0] [0.969455, -0, 0.245271] [69.4424, 80.0571, -525.365]]
+  transform:m=[[0.997995, 0, 0.0633061] [0, 1, -0] [-0.0633061, 0, 0.997995] [64.0622, 80.2488, -524.411]]
   _template:t="am_respawn_group_1"
   spawnBase__spawnRadius:r=1
+}
+
+entity{
+  transform:m=[[-0.806683, 0, -0.590985] [0, 1, 0] [0.590985, 0, -0.806683] [96.7602, 86.9533, -439.012]]
+  _template:t="am_respawn_group_1"
+  spawnBase__spawnRadius:r=0.5
 }

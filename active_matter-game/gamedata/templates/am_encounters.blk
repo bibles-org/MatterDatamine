@@ -94,7 +94,7 @@ changed_region_monster_generator{
   monster_gen__density:p2=0.001, 0.001
 
   "monster_gen__templates:list<t>"{
-    i:t="regional_changed_human+changed_appear_effect+am_inside_body_3"
+    i:t="regional_changed_human+changed_appear_effect"
   }
 }
 
@@ -312,7 +312,7 @@ household_changed_monster_generator{
   monster_gen__density:p2=0.00135, 0.00135
 
   "monster_gen__templates:list<t>"{
-    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
+    i:t="household_changed_human+sleeping_changed_human"
   }
 }
 
@@ -322,7 +322,7 @@ household_milbase_changed_monster_generator{
   monster_gen__density:p2=0.0008, 0.0008
 
   "monster_gen__templates:list<t>"{
-    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
+    i:t="household_changed_human+sleeping_changed_human"
   }
 }
 
@@ -332,7 +332,7 @@ household_euclid_changed_monster_generator{
   monster_gen__density:p2=0.001, 0.001
 
   "monster_gen__templates:list<t>"{
-    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
+    i:t="household_changed_human+sleeping_changed_human"
   }
 }
 
@@ -342,7 +342,7 @@ household_changed_monster_t1_generator{
   monster_gen__density:p2=0.001, 0.001
 
   "monster_gen__templates:list<t>"{
-    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
+    i:t="household_changed_human+sleeping_changed_human"
   }
 }
 
@@ -352,7 +352,7 @@ household_africa_changed_monster_generator{
   monster_gen__density:p2=0.0042, 0.0042
 
   "monster_gen__templates:list<t>"{
-    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
+    i:t="household_changed_human+sleeping_changed_human"
   }
 }
 
@@ -362,7 +362,7 @@ household_america_changed_monster_generator{
   monster_gen__density:p2=0.0005, 0.0005
 
   "monster_gen__templates:list<t>"{
-    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
+    i:t="household_changed_human+sleeping_changed_human"
   }
 }
 
@@ -372,7 +372,7 @@ household_distortion_changed_monster_generator{
   monster_gen__density:p2=0.0021, 0.0021
 
   "monster_gen__templates:list<t>"{
-    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
+    i:t="household_changed_human+sleeping_changed_human"
   }
 }
 
@@ -452,8 +452,8 @@ outdoor_sleeper_changed_monster_generator{
   monster_gen__spawnInterval:r=0.5
 
   "monster_gen__templates:list<t>"{
-    i:t="outdoor_sleeper_changed_human+sleeping_changed_human+am_inside_body_3"
-    i:t="outdoor_sleeper_changed_human_mini+sleeping_changed_human+am_inside_body_2"
+    i:t="outdoor_sleeper_changed_human+sleeping_changed_human"
+    i:t="outdoor_sleeper_changed_human_mini+sleeping_changed_human"
   }
 }
 
@@ -463,7 +463,7 @@ changed_human_generator{
   monster_gen__density:p2=0.0025, 0.0025
 
   "monster_gen__templates:list<t>"{
-    i:t="regional_changed_human+am_inside_body_3"
+    i:t="regional_changed_human"
   }
 }
 
@@ -473,8 +473,8 @@ outdoor_sleeper_changed_tm_generator{
   monster_gen__density:p2=0.0025, 0.0025
 
   "monster_gen__templates:list<t>"{
-    i:t="outdoor_sleeper_changed_human+sleeping_changed_human+am_inside_body_3"
-    i:t="outdoor_sleeper_changed_human_mini+sleeping_changed_human+am_inside_body_2"
+    i:t="outdoor_sleeper_changed_human+sleeping_changed_human"
+    i:t="outdoor_sleeper_changed_human_mini+sleeping_changed_human"
   }
 }
 
@@ -484,8 +484,8 @@ indoor_sleeper_changed_tm_generator{
   monster_gen__density:p2=0.0025, 0.0025
 
   "monster_gen__templates:list<t>"{
-    i:t="household_changed_human+sleeping_changed_human+am_inside_body_3"
-    i:t="indoor_sleeper_changed_human_mini+sleeping_changed_human+am_inside_body_2"
+    i:t="household_changed_human+sleeping_changed_human"
+    i:t="indoor_sleeper_changed_human_mini+sleeping_changed_human"
   }
 }
 
@@ -496,8 +496,8 @@ forest_changed_generator{
   monster_gen__spawnInterval:r=0.5
 
   "monster_gen__templates:list<t>"{
-    i:t="outdoor_sleeper_changed_human+sleeping_changed_human+am_inside_body_3"
-    i:t="outdoor_sleeper_changed_human_mini+sleeping_changed_human+am_inside_body_2"
+    i:t="outdoor_sleeper_changed_human+sleeping_changed_human"
+    i:t="outdoor_sleeper_changed_human_mini+sleeping_changed_human"
   }
 }
 
@@ -704,8 +704,8 @@ changed_group_cluster{
   star_cluster__grid:t="humans"
 
   "star_cluster__spawnTemplates:list<t>"{
-    i:t="outdoor_sleeper_changed_human+sleeping_changed_human+am_inside_body_3+star_cluster_child"
-    i:t="outdoor_sleeper_changed_human_mini+sleeping_changed_human+am_inside_body_2+star_cluster_child"
+    i:t="outdoor_sleeper_changed_human+sleeping_changed_human+star_cluster_child"
+    i:t="outdoor_sleeper_changed_human_mini+sleeping_changed_human+star_cluster_child"
   }
 }
 
@@ -855,7 +855,7 @@ xenohounds_group_cluster{
   star_cluster__grid:t="humans"
 
   "star_cluster__spawnTemplates:list<t>"{
-    i:t="xenohound_creature+am_xenohound_mm+am_inside_body_1+star_cluster_child+sleeping_xenohound"
+    i:t="xenohound_creature+am_xenohound_mm+star_cluster_child+sleeping_xenohound"
   }
 }
 

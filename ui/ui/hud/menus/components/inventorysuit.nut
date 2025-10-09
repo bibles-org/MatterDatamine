@@ -4,8 +4,8 @@ from "%ui/hud/menus/components/inventoryItem.nut" import chargesIndicator, corru
 from "das.inventory" import is_item_inventory_move_blocked, is_item_pickup_blocked, is_on_equip_equipment_prev_can_fit, notify_equip_in_occupied_slot_failed,
   is_equip_to_slot_cause_inventory_overflow, is_equip_to_slot_cause_from_pocket_drop, move_item_from_ground_to_slot, move_item_from_inventory_to_slot,
   is_on_equip_equipment_mod_prev_can_fit, install_equipment_mod_to_slot
-from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems, needShowQuickSlotPurchase, purchaseItemsToSlot
-
+from "%ui/hud/menus/components/inventoryItemUtils.nut" import mergeNonUniqueItems, needShowQuickSlotPurchase, purchaseItemsToSlot,
+  mkNoVolumeLog
 from "math" import ceil
 import "%ui/hud/menus/components/dropMarker.nut" as dropMarker
 from "%ui/hud/state/equipment.nut" import getEquipmentModSlots, isEquipmentHasSlot
@@ -26,10 +26,11 @@ from "%ui/mainMenu/market/inventoryToMarket.nut" import getItemPriceToShow, mkIt
 from "%ui/hud/state/entity_use_state.nut" import calcItemUseProgress
 from "%ui/hud/menus/components/inventoryItemNexusPointPriceComp.nut" import nexusPointsCostComp
 from "%ui/equipPresets/presetsState.nut" import previewPreset
-
+from "%ui/state/allItems.nut" import allItems, stashVolume, stashMaxVolume
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/mainMenu/raid_preparation_window_state.nut" import getNexusStashItemsForChocolateMenu
+from "%ui/popup/player_event_log.nut" import addPlayerLog
 
 let { allCraftRecipes, marketItems, playerStats } = require("%ui/profile/profileState.nut")
 let { focusedData, draggedData, isAltPressed, mutationForbidenDueToInQueueState } = require("%ui/hud/state/inventory_state.nut")
@@ -41,14 +42,12 @@ let { canModifyInventory } = require("%ui/hud/state/inventory_common_es.nut")
 let { GROUND, STASH, REFINER } = require("%ui/hud/menus/components/inventoryItemTypes.nut")
 let { isInPlayerSession } = require("%ui/hud/state/gametype_state.nut")
 let { isOnboarding } = require("%ui/hud/state/onboarding_state.nut")
-
 let { backpackItems, stashItems, inventoryItems, safepackItems } = require("%ui/hud/state/inventory_items_es.nut")
 let { hoverHotkeysWatchedList } = require("%ui/components/pcHoverHotkeyHitns.nut")
 let { hoverPcHotkeysPresentation } = require("%ui/hud/menus/components/inventoryActionsHints.nut")
 let { slotsWithWarning, mintEditState } = require("%ui/mainMenu/raid_preparation_window_state.nut")
 let { curTime } = require("%ui/hud/state/time_state.nut")
 let { entityToUse } = require("%ui/hud/state/entity_use_state.nut")
-let { allItems } = require("%ui/state/allItems.nut")
 
 let modFillDragColor = ItemBgColor
 let modBorderColor = ItemBdColor
@@ -191,6 +190,10 @@ function canDropItemToSlot(item, slot) {
 function dropItemToSlot(item, slot) {
   if (mutationForbidenDueToInQueueState.get() || !canDropItemToSlot(item, slot))
     return
+  if (slot?.slotTemplateName == "safepack_slot" && stashVolume.get() > stashMaxVolume.get()) {
+    addPlayerLog(mkNoVolumeLog(loc("hint/equip_in_empty_slot_failed_capacity_exceeded")))
+    return
+  }
   if (slot?.attachedToEquipment == controlledHeroEid.get())
     dropEquipmentToSlot(item, slot)
   else

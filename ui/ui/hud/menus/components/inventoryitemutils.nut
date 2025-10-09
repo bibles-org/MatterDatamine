@@ -939,11 +939,12 @@ function repairItems(items, itemsCost = null) {
   })
 }
 
-let noVolumeLog = {
-  id = "noVolumeItemMove"
+let mkNoVolumeLog = @(bodyText) {
+  id = bodyText
   content = mkPlayerLog({
+    titleFaIcon = "close"
     titleText = loc("pieMenu/actionUnavailable")
-    bodyText = loc("hint/equip_in_occupied_slot_failed_capacity_exceeded")
+    bodyText = bodyText
     logColor = playerLogsColors.warningLog
   })
 }
@@ -969,7 +970,7 @@ function fastUnequipItem(item) {
 
   let itemInSlotVolume = item?.volume ?? 0
   if (itemInSlotVolume > 0 && !is_inventory_have_free_volume(targetInventoryEid, itemInSlotVolume)) {
-    addPlayerLog(noVolumeLog)
+    addPlayerLog(mkNoVolumeLog(loc("hint/equip_in_occupied_slot_failed_capacity_exceeded")))
     return
   }
   if (item?.isWeapon)
@@ -1064,4 +1065,5 @@ return {
   getInspectingAmmoCountInfo
   findInventoryWithFreeVolume
   inventories
+  mkNoVolumeLog
 }

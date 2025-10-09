@@ -639,7 +639,7 @@ invisible_man_hit_reactions{
 }
 
 invisible_man_loot{
-  death_drop__outsideDropPreset:t="active_matter_pile_3_coins_50_percent_loot_preset"
+  death_drop__outsideDropPreset:t="active_matter_pile_10_13_coins_loot_preset"
 }
 
 invisible_man_damaged_sparks_effect{
@@ -682,6 +682,7 @@ invisible_man{
   _use:t="deformation_bbox_receiver"
   kill_tracking_tag:t="invisible_man"
   damage_model__blk:t="gamedata/units/humans/human.blk"
+  loot_drop_system__generatorLootType:t="invisible_man"
   nphys__ccdOffset:p3=0, 1, 0
   invisible_man__type:i=0
   human__damagedRenderAffect:t="invisible_man_damaged_affect"

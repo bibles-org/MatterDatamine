@@ -263,10 +263,12 @@ dendroid_death_loot_preset{
   "loot_preset__chances:array"{
     "item:object"{
       template_name:t="dendroid_remains_item"
+      weight:r=1
     }
 
     "item:object"{
-      sub_preset:t="dendroid_pristine_remains_preset"
+      template_name:t="dendroid_remains_pristine_item"
+      weight:r=0.15
     }
   }
 }

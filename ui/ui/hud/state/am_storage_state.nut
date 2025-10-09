@@ -5,9 +5,14 @@ from "net" import get_sync_time
 import "%dngscripts/ecs.nut" as ecs
 from "%ui/ui_library.nut" import *
 
+const corticalVaultTemplateName = "cortical_vault"
+function getDefaultAmStorageMaxVolume() {
+  let corticalVaultTemplate = ecs.g_entity_mgr.getTemplateDB().getTemplateByName(corticalVaultTemplateName)
+  return corticalVaultTemplate?.getCompValNullable("am_storage__maxValue") ?? 300
+}
 
 let heroAmValue = Watched(0)
-let heroAmMaxValue = Watched(100)
+let heroAmMaxValue = Watched(getDefaultAmStorageMaxVolume())
 
 ecs.register_es("track_am_value_ui_es",
   {
@@ -17,7 +22,7 @@ ecs.register_es("track_am_value_ui_es",
     }
     onDestroy = function(_eid, _comp) {
       heroAmValue.set(0)
-      heroAmMaxValue.set(100)
+      heroAmMaxValue.set(getDefaultAmStorageMaxVolume())
     }
   },
   {

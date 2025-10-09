@@ -610,24 +610,130 @@ active_matter_pile_30_coins_loot_preset{
   }
 }
 
+active_matter_pile_4_6_coins_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_2"
+      number:i=2
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_3"
+      number:i=2
+    }
+  }
+}
+
+active_matter_pile_6_10_coins_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 1
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_3"
+      number:i=2
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_10"
+      weight:r=6
+    }
+  }
+}
+
+active_matter_pile_10_13_coins_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_10"
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_3"
+      weight:r=3
+    }
+  }
+}
+
+active_matter_pile_20_30_coins_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_10"
+      number:i=2
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_10"
+      weight:r=3
+    }
+  }
+}
+
+active_matter_pile_30_40_coins_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_10"
+      number:i=3
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_10"
+      weight:r=3
+    }
+  }
+}
+
+active_matter_pile_50_60_coins_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=1, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_25"
+      number:i=2
+      weight:r=10
+    }
+
+    "item:object"{
+      template_name:t="active_matter_pile+coin_item_count_10"
+      weight:r=3
+    }
+  }
+}
+
 am_inside_body_1{
-  death_drop__outsideDropPreset:t="active_matter_pile_1_coins_50_percent_loot_preset"
+  death_drop__outsideDropPreset:t=""
 }
 
 am_inside_body_2{
-  death_drop__outsideDropPreset:t="active_matter_pile_2_coins_50_percent_loot_preset"
+  death_drop__outsideDropPreset:t=""
 }
 
 am_inside_body_3{
-  death_drop__outsideDropPreset:t="active_matter_pile_3_coins_50_percent_loot_preset"
+  death_drop__outsideDropPreset:t=""
 }
 
 am_inside_body_5{
-  death_drop__outsideDropPreset:t="active_matter_pile_5_coins_loot_preset"
+  death_drop__outsideDropPreset:t=""
 }
 
 am_inside_body_20{
-  death_drop__outsideDropPreset:t="active_matter_pile_20_coins_loot_preset"
+  death_drop__outsideDropPreset:t=""
 }
 
 safepack_destroy_effect{

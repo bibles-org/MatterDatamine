@@ -103,13 +103,13 @@ devourer_remains_pristine_loot_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="devourer_remains_pristine_item"
-      weight:r=0.15
+      template_name:t="devourer_remains_item"
+      weight:r=1
     }
 
     "item:object"{
-      sub_preset:t="empty_loot_preset"
-      weight:r=0.85
+      template_name:t="devourer_remains_pristine_item"
+      weight:r=0.15
     }
   }
 }
@@ -119,24 +119,25 @@ nesting_swarm_nest_death_preset{
 
   "loot_preset__chances:array"{
     "item:object"{
-      template_name:t="devourer_remains_item"
+      sub_preset:t="devourer_remains_pristine_loot_preset"
     }
 
+    "item:object"{
+      sub_preset:t="active_matter_pile_30_40_coins_loot_preset"
+    }
+  }
+}
+
+nesting_swarm_nest_death_pve_preset{
+  _use:t="full_loot_preset"
+
+  "loot_preset__chances:array"{
     "item:object"{
       sub_preset:t="devourer_remains_pristine_loot_preset"
     }
 
     "item:object"{
-      template_name:t="active_matter_pile+coin_item_count_5"
-      number:i=4
-    }
-
-    "item:object"{
-      sub_preset:t="active_matter_pile_5_coins_75_percent_loot_preset"
-    }
-
-    "item:object"{
-      sub_preset:t="active_matter_pile_5_coins_50_percent_loot_preset"
+      sub_preset:t="active_matter_pile_20_30_coins_loot_preset"
     }
   }
 }
@@ -169,6 +170,7 @@ nesting_swarm_nest{
   nesting_swarm_nest__createOnDestroyTemplate:t="nesting_swarm_nest_explosion"
   nesting_swarm_nest__createOnDestroyOffset:p3=0, 1, 0
   death_drop__outsideDropPreset:t="nesting_swarm_nest_death_preset"
+  loot_drop_system__generatorLootType:t="devourer"
   animchar__appliedAnimSpeed:r=0
   nesting_swarm_nest__warriorTemplate:t="nesting_swarm_warrior"
   nesting_swarm_nest__supplyTemplate:t="nesting_swarm_supply"

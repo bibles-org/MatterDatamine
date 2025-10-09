@@ -53,6 +53,7 @@ wandering_core{
   wandering_core__damageAgroBlockedUntil:r=0
   wandering_core__damageAgroCooldown:r=3
   wandering_core__targetPos:p3=0, 0, 0
+  loot_drop_system__generatorLootType:t="wandering_core"
 
   "wandering_core__waypointsEid:eid"{}
   "wandering_core__trackedObjectPos:list<p3>"{}
@@ -215,7 +216,7 @@ wandering_core_death_loot_preset{
 }
 
 wandering_core_death_drop{
-  death_drop__outsideDropPreset:t="wandering_core_death_loot_preset"
+  death_drop__outsideDropPreset:t="active_matter_pile_30_40_coins_loot_preset"
 }
 
 am_wandering_core_ai{

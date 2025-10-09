@@ -23,8 +23,8 @@ guarded_zones_avaliable_monsters{
       difficultyMult:r=1
 
       "bucketTemplates:object"{
-        "outdoor_sleeper_changed_human_mini+sleeping_changed_human+am_inside_body_1":r=20
-        "outdoor_sleeper_changed_human+sleeping_changed_human+am_inside_body_1":r=80
+        "outdoor_sleeper_changed_human_mini+sleeping_changed_human+distorted_guard_loot_type":r=20
+        "outdoor_sleeper_changed_human+sleeping_changed_human+distorted_guard_loot_type":r=80
       }
     }
 
@@ -40,7 +40,7 @@ guarded_zones_avaliable_monsters{
       difficultyMult:r=0.4
 
       "bucketTemplates:object"{
-        "flower_human+flower_human_root_spawner+am_inside_body_2":r=100
+        "flower_human+flower_human_root_spawner+flowermen_guard_loot_type":r=100
       }
     }
   }
@@ -55,6 +55,10 @@ guarded_zone_on_map{
   "showMapObjectOnQuestTargetAssignition:tag"{}
 }
 
+distorted_guard_loot_type{
+  loot_drop_system__generatorLootType:t="changed_human_zone_guard"
+}
+
 distorted_guarded_zone{
   _use:t="guarded_zone"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
@@ -65,8 +69,8 @@ distorted_guarded_zone{
   guarded_zone__regenerationTime:p2=90, 120
 
   "guarded_zone__guardTemplateNames:object"{
-    "outdoor_sleeper_changed_human_mini+sleeping_changed_human+am_inside_body_1":r=20
-    "outdoor_sleeper_changed_human+sleeping_changed_human+am_inside_body_1":r=80
+    "outdoor_sleeper_changed_human_mini+sleeping_changed_human+distorted_guard_loot_type":r=20
+    "outdoor_sleeper_changed_human+sleeping_changed_human+distorted_guard_loot_type":r=80
   }
 }
 
@@ -80,6 +84,10 @@ distorted_america_xenos_quest_guarded_zone{
   guarded_zone__maxGuardsCount:i=4
 }
 
+flowermen_guard_loot_type{
+  loot_drop_system__generatorLootType:t="flower_human_zone_guard"
+}
+
 flowermen_guarded_zone{
   _use:t="guarded_zone"
   transform:m=[[1, 0, 0] [0, 1, 0] [0, 0, 1] [0, 0, 0]]
@@ -90,7 +98,7 @@ flowermen_guarded_zone{
   guarded_zone__regenerationTime:p2=90, 120
 
   "guarded_zone__guardTemplateNames:object"{
-    "flower_human+flower_human_root_spawner+am_inside_body_2":r=100
+    "flower_human+flower_human_root_spawner+flowermen_guard_loot_type":r=100
   }
 }
 

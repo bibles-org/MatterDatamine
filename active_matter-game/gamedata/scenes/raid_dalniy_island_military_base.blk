@@ -189,10 +189,8 @@ entity{
   _template:t="military_lootable_rendinst_manager_t1"
 }
 
-entity{
-  _template:t="unique_item_location_marker"
-  transform:m=[[42.5949, -3.03239e-06, -19.8227] [2.64029e-06, 48.9205, -1.22873e-06] [13.8148, 0, 61.1189] [681.175, 11.6947, -1051.88]]
-  unique_item_location_marker__location:t="spy_trailer"
+import{
+  scene:t="gamedata/scenes/_monsters_loot_regular.blk"
 }
 
 entity{

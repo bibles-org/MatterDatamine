@@ -234,7 +234,7 @@ anomaly_zone_flowerman_branch{
   "anomaly_zone__spawnPresets:object"{
     "creature_preset:array"{
       "it:object"{
-        template:t="flower_human+flower_human_root_spawner+am_inside_body_5"
+        template:t="flower_human+flower_human_root_spawner"
         projectToNavmesh:b=yes
         minDistanceToWall:r=0.4
         spawnOnLeafs:b=yes
@@ -401,7 +401,7 @@ anomaly_zone_flowerman_field_branch{
   "anomaly_zone__spawnPresets:object"{
     "creature_preset:array"{
       "it:object"{
-        template:t="flower_human+flower_human_root_spawner+am_inside_body_3"
+        template:t="flower_human+flower_human_root_spawner"
         projectToNavmesh:b=yes
         minDistanceToWall:r=0.4
         spawnOnLeafs:b=yes
@@ -575,7 +575,7 @@ anomaly_zone_flowerman_indoor_branch{
   "anomaly_zone__spawnPresets:object"{
     "indoor_creature_preset:array"{
       "it:object"{
-        template:t="flower_human+flower_human_root_spawner+am_inside_body_3"
+        template:t="flower_human+flower_human_root_spawner"
         projectToNavmesh:b=yes
         minDistanceToWall:r=0.4
         spawnOnLeafs:b=yes
@@ -592,7 +592,7 @@ anomaly_zone_flowerman_indoor_branch{
 
     "creature_preset:array"{
       "it:object"{
-        template:t="flower_human+flower_human_root_spawner+am_inside_body_3"
+        template:t="flower_human+flower_human_root_spawner"
         projectToNavmesh:b=yes
         minDistanceToWall:r=0.4
       }
@@ -1401,7 +1401,7 @@ anomaly_zone_changed_indoor_branch{
   "anomaly_zone__spawnPresets:object"{
     "indoor_creature_preset:array"{
       "it:object"{
-        template:t="household_changed_human+changed_human_collision+sleeping_changed_human+am_inside_body_3"
+        template:t="household_changed_human+changed_human_collision+sleeping_changed_human"
         projectToNavmesh:b=yes
         minDistanceToWall:r=0.4
         spawnIndoor:b=yes
@@ -1410,7 +1410,7 @@ anomaly_zone_changed_indoor_branch{
 
     "indoor_mini_creature_preset:array"{
       "it:object"{
-        template:t="indoor_sleeper_changed_human_mini+changed_human_collision+sleeping_changed_human+am_inside_body_2"
+        template:t="indoor_sleeper_changed_human_mini+changed_human_collision+sleeping_changed_human"
         projectToNavmesh:b=yes
         minDistanceToWall:r=0.4
         spawnIndoor:b=yes
@@ -1495,7 +1495,7 @@ anomaly_zone_changed_indoor_t1_branch{
   "anomaly_zone__spawnPresets:object"{
     "indoor_creature_preset:array"{
       "it:object"{
-        template:t="household_changed_human+changed_human_collision+sleeping_changed_human+am_inside_body_3"
+        template:t="household_changed_human+changed_human_collision+sleeping_changed_human"
         projectToNavmesh:b=yes
         minDistanceToWall:r=0.4
         spawnIndoor:b=yes
@@ -1504,7 +1504,7 @@ anomaly_zone_changed_indoor_t1_branch{
 
     "indoor_mini_creature_preset:array"{
       "it:object"{
-        template:t="indoor_sleeper_changed_human_mini+changed_human_collision+sleeping_changed_human+am_inside_body_2"
+        template:t="indoor_sleeper_changed_human_mini+changed_human_collision+sleeping_changed_human"
         projectToNavmesh:b=yes
         minDistanceToWall:r=0.4
         spawnIndoor:b=yes
@@ -1589,14 +1589,14 @@ anomaly_zone_changed_spiked_branch{
   "anomaly_zone__spawnPresets:object"{
     "creature_preset:array"{
       "it:object"{
-        template:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_changed_human+am_inside_body_3"
+        template:t="outdoor_sleeper_changed_human+changed_human_collision+sleeping_changed_human"
         projectToNavmesh:b=yes
       }
     }
 
     "mini_creature_preset:array"{
       "it:object"{
-        template:t="outdoor_sleeper_changed_human_mini+changed_human_collision+sleeping_changed_human+am_inside_body_2"
+        template:t="outdoor_sleeper_changed_human_mini+changed_human_collision+sleeping_changed_human"
         projectToNavmesh:b=yes
       }
     }

@@ -50,7 +50,8 @@ invisible_man_extraction_point_defender{
   patroller__maxWaypoints:i=4
   agent_dangers__maxDangerDist:r=30
   agent_dangers__blindDistanceSq:r=900
-  death_drop__outsideDropPreset:t="invisible_man_extraction_point_defender_loot_preset"
+  death_drop__outsideDropPreset:t="active_matter_pile_6_10_coins_loot_preset"
+  loot_drop_system__generatorLootType:t="invisible_man_zone_guard"
 
   "invisible_man_extraction_point_defender:tag"{}
 }

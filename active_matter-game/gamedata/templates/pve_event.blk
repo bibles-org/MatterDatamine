@@ -268,7 +268,7 @@ pve_event_auto_cargoport_guard_device{
       duration:p2=10, 15
 
       "spawn:object"{
-        "changed_human+am_inside_body_3":ip2=4, 5
+        changed_human:ip2=4, 5
       }
     }
 
@@ -303,7 +303,7 @@ pve_event_auto_america_military_post{
       duration:p2=10, 20
 
       "spawn:object"{
-        "changed_human+am_inside_body_3":ip2=4, 5
+        changed_human:ip2=4, 5
       }
     }
 
