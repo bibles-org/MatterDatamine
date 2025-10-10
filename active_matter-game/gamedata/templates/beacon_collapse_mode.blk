@@ -55,7 +55,7 @@ beacon_america_collapse_mode_manager{
     _tags:t="server"
     beacon_collapse_mode__arenaRad:r=30
     beacon_collapse_mode__preparationTime:r=30
-    beacon_collapse_mode__zoneExpandShrinkTime:p2=20, 45
+    beacon_collapse_mode__zoneExpandShrinkTime:p2=20, 60
     beacon_collapse_mode__finishTime:r=300
     beacon_collapse_mode__overallZoneRad:r=130
     beacon_collapse_mode__overallZonePos:p3=-286.031, 5.2597, 236.293
@@ -64,7 +64,6 @@ beacon_america_collapse_mode_manager{
       i:t="collapse_america_smg_weapons_loot_preset"
       i:t="collapse_america_ar_weapons_loot_preset"
       i:t="collapse_america_shotgun_weapons_loot_preset"
-      i:t="collapse_america_lmg_weapons_loot_preset"
     }
   }
 
@@ -81,7 +80,6 @@ beacon_collapse_mode_beacon_destroyed{
   _use:t="placeable_rendinst"
   _use:t="fire_spot_1m_effect"
   ri_extra__name:t="nexus_point_device_e_dmg"
-  ri_preload__name:t="nexus_point_device_e_dmg"
 }
 
 beacon_collapse_mode_beacon_effect{
@@ -99,6 +97,7 @@ beacon_collapse_mode_beacon{
   _use:t="loot_drop_system_delayed_loot_generation"
   ri_extra__name:t="nexus_point_device_e"
   ri_preload__name:t="nexus_point_device_e"
+  _use:t="nexus_beacon_capture_device_sound"
   _use:t="pve_event_target"
   flanking_ai_target__maxCount:i=12
   flanking_ai_target__interval:r=1
@@ -136,6 +135,16 @@ beacon_collapse_mode_beacon{
   beacon_collapse_mode_beacon__effectTemplate:t="beacon_collapse_mode_beacon_effect"
   beacon_collapse_mode_beacon__effectOffset:p3=0, 1, 0
 
+  _group{
+    _tags:t="gameClient"
+    nexus_beacon_capture_device__progressVisual:r=0
+  }
+
+  _group{
+    _tags:t="sound"
+    nexus_beacon_capture_device_sound__path:t="env_effects/beacon"
+  }
+
   "ai_target__alwaysDanger:tag"{}
   "riextra_destroy_on_death:tag"{}
   "quest_device__questItemTemplates:list<t>"{}
@@ -154,6 +163,11 @@ beacon_collapse_mode_beacon{
   }
 
   "beacon_collapse_mode_beacon__effectEid:eid"{}
+  "net_sound__descs:shared:object"{
+    "finish:object"{
+      path:t="ui_sounds/beacon_charged"
+    }
+  }
 }
 
 beacon_collapse_mode_beacon_lock{
@@ -180,7 +194,6 @@ item_america_collapse_flashdrive{
   item__iconPitch:r=0
   item__iconRoll:r=75
   profile_server_data__enrichmentRefineChronotracesRange:ip2=100, 100
-  item__extractionTemplateOverride:t=""
 
   "item__alwaysUseful:tag"{}
   "item__cantBeReplica:tag"{}
@@ -307,7 +320,7 @@ america_collapse_fight_2{
 
       "spawn:object"{
         am_mimic:ip2=10, 10
-        invisible_man:ip2=1, 2
+        invisible_man:ip2=2, 2
       }
     }
 
@@ -343,7 +356,7 @@ america_collapse_fight_3{
       duration:p2=15, 15
 
       "spawn:object"{
-        xenohound_creature:ip2=8, 10
+        xenohound_creature:ip2=12, 12
       }
     }
 
@@ -357,7 +370,7 @@ america_collapse_fight_3{
       duration:p2=10, 10
 
       "spawn:object"{
-        xenohound_creature:ip2=6, 6
+        xenohound_creature:ip2=12, 12
         am_modern_pmc_encounter_guard:ip2=2, 2
       }
     }
@@ -372,7 +385,7 @@ america_collapse_fight_3{
       duration:p2=10, 10
 
       "spawn:object"{
-        xenohound_creature:ip2=6, 6
+        xenohound_creature:ip2=18, 18
       }
     }
 

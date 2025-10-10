@@ -9,6 +9,7 @@ let ActionBgColor = Color(217,193, 127)
 let ActionBgHoverColor = Color(227, 109, 0, 255)
 
 let ActionBdHoverColor = Color(220, 220, 220, 120)
+let SafeColor = Color(30, 193, 30)
 let MajorBdColor = Color(20, 220, 253)
 let SuccessBdColor = Color(20, 253, 180)
 let ItemListBgColor = Color(69,90,100)
@@ -52,6 +53,8 @@ let colors = {
   BtnBgSelected          = mul_color(TabTextColor, 0.5, 0.4)
   BtnBgTransparent       = Color(0, 0, 0, 50)
 
+  BtnSafeBgNormal     = mul_color(SafeColor, 0.3, 0.7)
+  BtnSafeBdNormal     = mul_color(SafeColor, 1, 0.95)
   BtnPrimaryBgNormal     = mul_color(MajorBdColor, 0.3, 0.7)
   BtnPrimaryBdNormal     = mul_color(MajorBdColor, 1, 0.95)
   BtnPrimaryBgSelected   = Color(25, 160, 240)

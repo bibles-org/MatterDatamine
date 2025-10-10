@@ -35,6 +35,7 @@ from "das.equipment" import generate_loadout_by_seed
 from "%ui/hud/menus/components/inventoryStashFiltersWidget.nut" import inventoryFiltersWidget
 from "%ui/context_hotkeys.nut" import contextHotkeys
 from "%ui/mainMenu/offline_raid_widget.nut" import mkOfflineRaidIcon, wantOfflineRaid
+from "%ui/squad/squadState.nut" import squadLeaderState
 
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
@@ -384,7 +385,7 @@ let mkPresetStashTabs = @(rotationTimer) function() {
           [CURRENT_PRESET_UID, AGENCY_PRESET_UID].contains(selectedPreset.get()) ? null : purchaseButton,
           [CURRENT_PRESET_UID, AGENCY_PRESET_UID].contains(selectedPreset.get())
             ? startButton(@() {
-              watch = wantOfflineRaid
+              watch = [wantOfflineRaid, squadLeaderState]
               flow = FLOW_HORIZONTAL
               valign = ALIGN_CENTER
               gap = {
@@ -394,7 +395,9 @@ let mkPresetStashTabs = @(rotationTimer) function() {
                 color = ContactLeader
               }
               children = [
-                wantOfflineRaid.get() ? mkOfflineRaidIcon({ fontSize = hdpx(20), color = ContactLeader }) : null
+                wantOfflineRaid.get() || squadLeaderState.get()?.leaderRaid.isOffline
+                  ? mkOfflineRaidIcon({ fontSize = hdpx(20), color = ContactLeader })
+                  : null
                 mkDifficultyBlock(false)
               ]
             }) : null

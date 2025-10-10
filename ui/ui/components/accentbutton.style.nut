@@ -15,6 +15,15 @@ let accentButtonStyle = {
   fgChild
 }
 
+let greenButtonStyle = { 
+  style = {
+    BtnBgNormal = colors.BtnSafeBgNormal
+    BtnBdNormal = colors.BtnSafeBdNormal
+    TextNormal = colors.BtnPrimaryTextNormal
+  }
+  fgChild
+}
+
 let accentSelectedButtonStyle = {
   style = {
     BtnBgNormal = colors.BtnPrimaryBgSelected
@@ -48,6 +57,7 @@ let stopButtonStyle = {
 
 return freeze({
   accentButtonStyle
+  greenButtonStyle
   accentSelectedButtonStyle
   successButtonStyle
   stopButtonStyle

@@ -101,11 +101,7 @@ xenohound_teleport_trap{
   _group{
     _tags:t="sound"
     sound_effect__path:t="env_effects/traps/trap_teleport"
-  }
-
-  _group{
-    _tags:t="sound"
-    trap_trigger_sound__path:t="impact/trap_teleport"
+    am_mimic_sound__appearPath:t="enemy/effects/teleport_monster_spawn"
   }
 }
 

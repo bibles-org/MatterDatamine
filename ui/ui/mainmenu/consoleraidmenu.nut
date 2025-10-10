@@ -35,7 +35,7 @@ from "%ui/hud/map/tiled_map_ctx.nut" import tiledMapSetup, getFogOfWarData
 from "dagor.debug" import logerr
 from "%ui/state/queueState.nut" import doesZoneFitRequirements, isZoneUnlocked, isQueueHiddenBySchedule
 from "%ui/mainMenu/notificationMark.nut" import mkNotificationMark
-from "%ui/components/accentButton.style.nut" import accentButtonStyle
+from "%ui/components/accentButton.style.nut" import accentButtonStyle, greenButtonStyle
 from "%ui/hud/map/map_spawn_points.nut" import mkSpawns
 from "%ui/hud/map/map_extraction_points.nut" import mkExtractionPoints
 from "%ui/hud/map/map_nexus_beacons.nut" import mkNexusBeaconMarkers
@@ -1219,6 +1219,19 @@ function getContent() {
     ]
   }
 
+  let opsRaidRotationTimerComp = {
+    flow = FLOW_HORIZONTAL
+    size = FLEX_H
+    behavior = Behaviors.Button
+    skipDirPadNav = true
+    onHover = @(on) setTooltip(on ? loc("missions/opsRaids/rotationHint") : null)
+    padding = [ hdpx(8), 0 ]
+    children = [
+      static mkText(loc("missions/opsRaids/title"))
+      
+    ]
+  }
+
   let mkRotationComp = @(nextIn) {
     flow = FLOW_HORIZONTAL
     size = FLEX_H
@@ -1260,8 +1273,9 @@ function getContent() {
       size = FLEX_H
       flow = FLOW_VERTICAL
       gap = hdpx(4)
+      margin = static [0,0, hdpx(8), 0]
       children = [
-        mkTextArea(loc("missions/squadLeaderRaid"))
+        mkTextArea(loc("missions/squadLeaderRaid"), { color = colors.InfoTextValueColor })
         button({
           size = FLEX_H
           flow = FLOW_HORIZONTAL
@@ -1837,6 +1851,7 @@ function getContent() {
 
   function zonesSelector() {
     local content = null
+    local lifeOps = null
     if (selectedPlayerGameModeOption.get() == GameMode.Nexus) {
       if (showNexusFactions.get() == false) {
         content = mkZonesWithTitle(null, availableZones.get().map(mkNexusRaidLine))
@@ -1869,7 +1884,10 @@ function getContent() {
       }
     }
     else {
-      content = mkZonesWithTitle(null, availableZones.get().map(mkZoneSelItem))
+      let normalZones = availableZones.get().filter(@(v) !v?.extraParams.lifeOpsRaid)
+      let lifeOpsZones = availableZones.get().filter(@(v) v?.extraParams.lifeOpsRaid)
+      lifeOps = lifeOpsZones.map(@(v) mkZoneSelItem(v))
+      content = mkZonesWithTitle(null, normalZones.map(mkZoneSelItem))
     }
     let valToString = function(v) {
       return v ? loc("nexus/factionsView") : loc("nexus/raidsView")
@@ -1883,8 +1901,14 @@ function getContent() {
         (selectedPlayerGameModeOption.get() == GameMode.Nexus && allowRaidsSelectInNexus)
           ? spinnerList({ curValue = showNexusFactions, allValues = [false, true], size = FLEX_H, valToString, setValue=setShowNexusFactions })
           : null
-        selectedPlayerGameModeOption.get() == GameMode.Nexus && showNexusFactions.get() ? null : nextRaidRotationTimer
         squadLeaderRaid
+        !lifeOps || lifeOps.len() <= 0 ? null : {
+          flow = FLOW_VERTICAL
+          size = FLEX_H
+          margin = static [0,0, hdpx(8), 0]
+          children = [opsRaidRotationTimerComp].extend(lifeOps)
+        }
+        selectedPlayerGameModeOption.get() == GameMode.Nexus && showNexusFactions.get() ? null : nextRaidRotationTimer
         {
           size = flex()
           flow = FLOW_VERTICAL
@@ -2164,7 +2188,7 @@ function getContent() {
         return !isNexusQueue
     })
     return @() {
-      watch = isActive
+      watch = [isActive, wantOfflineRaid, squadLeaderState]
       size = FLEX_H
       children = buttonWithGamepadHotkey(mkText(loc("missions/loadoutCheck"), { hplace = ALIGN_CENTER }.__merge(h2_txt)),
         function() {
@@ -2178,7 +2202,9 @@ function getContent() {
           size = static [flex(), hdpx(70)]
           halign = ALIGN_CENTER
           hotkeys = [["J:Y", {description = { skip = true }}]]
-        }.__update(!isActive.get() ? {} : accentButtonStyle)
+        }.__update(!isActive.get() ? {}
+          : wantOfflineRaid.get() || squadLeaderState.get()?.isOffline ? greenButtonStyle
+          : accentButtonStyle)
       )
     }
   }

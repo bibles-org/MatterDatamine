@@ -1019,7 +1019,7 @@ function replicatorStrings(item) {
     margin = fsh(1)
     gap = hdpx(8)
     children = [
-      mkText(loc("desc/opensReplicatorRecipe:"), { color = itemTooltipStatColor })
+      mkText(loc("desc/opensReplicatorRecipe"), { color = itemTooltipStatColor })
       {
         gap = hdpx(8)
         flow = FLOW_HORIZONTAL

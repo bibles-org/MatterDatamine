@@ -540,22 +540,6 @@ fn_scar_gun_loot_preset{
   }
 }
 
-fn_scar_gun_collapse_loot_preset{
-  _use:t="loot_preset"
-  loot_preset__numSamples:ip2=2, 2
-
-  "loot_preset__chances:array"{
-    "item:object"{
-      template_name:t="fn_scar_gun"
-    }
-
-    "item:object"{
-      template_name:t="fn_scar_magazine"
-      number:ip2=5, 7
-    }
-  }
-}
-
 m4a1_gun_loot_preset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=4, 4
@@ -807,6 +791,22 @@ steyr_aug_a1_gun_loot_preset{
   }
 }
 
+steyr_aug_a1_gun_collapse_loot_preset{
+  _use:t="loot_preset"
+  loot_preset__numSamples:ip2=2, 2
+
+  "loot_preset__chances:array"{
+    "item:object"{
+      template_name:t="steyr_aug_a1_gun"
+    }
+
+    "item:object"{
+      template_name:t="steyr_aug_a1_magazine"
+      number:ip2=5, 7
+    }
+  }
+}
+
 as_val_gun_loot_preset{
   _use:t="loot_preset"
   loot_preset__numSamples:ip2=4, 4
@@ -870,22 +870,6 @@ hk_g3a4_gun_loot_preset{
 
     "item:object"{
       template_name:t="hk_g3a4_magazine"
-    }
-  }
-}
-
-hk_g3a4_gun_collapse_loot_preset{
-  _use:t="loot_preset"
-  loot_preset__numSamples:ip2=2, 2
-
-  "loot_preset__chances:array"{
-    "item:object"{
-      template_name:t="hk_g3a4_gun"
-    }
-
-    "item:object"{
-      template_name:t="hk_g3a4_magazine"
-      number:ip2=5, 7
     }
   }
 }
@@ -2206,7 +2190,7 @@ collapse_ar_weapons_loot_preset{
     }
 
     "item:object"{
-      sub_preset:t="fn_scar_gun_collapse_loot_preset"
+      sub_preset:t="steyr_aug_a1_gun_collapse_loot_preset"
       weight:r=1
     }
 
@@ -2217,11 +2201,6 @@ collapse_ar_weapons_loot_preset{
 
     "item:object"{
       sub_preset:t="m16a4_gun_collapse_loot_preset"
-      weight:r=1
-    }
-
-    "item:object"{
-      sub_preset:t="hk_g3a4_gun_collapse_loot_preset"
       weight:r=1
     }
   }

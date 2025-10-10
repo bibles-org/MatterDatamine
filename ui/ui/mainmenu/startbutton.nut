@@ -7,7 +7,7 @@ from "%ui/components/commonComponents.nut" import mkText, mkDescTextarea
 from "%ui/squad/squadManager.nut" import leaveSquad
 from "%ui/gameModeState.nut" import isGroupAvailable
 from "%ui/matchingQueues.nut" import isQueueDisabledBySchedule
-from "%ui/components/accentButton.style.nut" import accentButtonStyle
+from "%ui/components/accentButton.style.nut" import accentButtonStyle, greenButtonStyle
 from "%ui/state/queueState.nut" import doesZoneFitRequirements
 from "%ui/hud/hud_menus_state.nut" import openMenu
 from "%ui/hud/state/item_info.nut" import getSlotAvailableMods
@@ -18,13 +18,13 @@ from "%ui/mainMenu/offline_raid_widget.nut" import wantOfflineRaid, isOfflineRai
 from "%ui/profile/profileState.nut" import playerStats, numOfflineRaidsAvailable, playerProfileCurrentContracts
 from "%ui/mainMenu/monolith/monolith_common.nut" import MonolithMenuId
 from "%ui/components/profileAnswerMsgBox.nut" import showMsgBoxResult
+from "%ui/squad/squadState.nut" import isInSquad, isSquadLeader, squadSelfMember, allMembersState, selfUid, squadLeaderState
 from "%ui/ui_library.nut" import *
 import "%dngscripts/ecs.nut" as ecs
 
 let { isInQueue } = require("%ui/quickMatchQueue.nut")
 let roomState = require("%ui/state/roomState.nut")
 let { showCreateRoom } = require("%ui/mainMenu/customGames/showCreateRoom.nut")
-let { isInSquad, isSquadLeader, squadSelfMember, allMembersState, selfUid } = require("%ui/squad/squadState.nut")
 let { myExtSquadData } = require("%ui/squad/squadManager.nut")
 let { selectedRaid, queueRaid, selectedNexusNode, showNexusFactions, selectedPlayerGameModeOption, GameMode } = require("%ui/gameModeState.nut")
 let { matchingQueuesMap } = require("%ui/matchingQueues.nut")
@@ -49,6 +49,7 @@ let stdQuickMatchBtnParams = {sound = { click = "ui_sounds/button_raid" }}
   .__merge(accentButtonStyle, defQuickMatchBtnParams)
 let disabledQuickMatchBtnParams = {}.__merge(defQuickMatchBtnParams, { style = { BtnBgNormal = BtnBgDisabled }, sound = { click = "ui_sounds/button_click_inactive" } })
 let quickMatchBtnParams = stdQuickMatchBtnParams.__merge({hotkeys = [ ["^J:Y", skip_descr] ]})
+let isolatedRaidMatchBtnParams = quickMatchBtnParams.__merge(greenButtonStyle)
 let leaveBtnParams = defQuickMatchBtnParams.__merge({ sound = { click = "ui_sounds/button_leave_queue"} })
 
 function quickMatchFn() {
@@ -254,18 +255,20 @@ let setCannotTakeSafepackMsg = @() showMsgbox({
 let setCannotTakeSafepackBtn = textButton(loc("startButton/cannotTakeSafepack"),
   setCannotTakeSafepackMsg, disabledQuickMatchBtnParams)
 
-let mkJoinQuickMatchButton = @(additionalFields)
-  buttonWithGamepadHotkey({
-    flow = FLOW_VERTICAL
-    hplace = ALIGN_CENTER
-    halign = ALIGN_CENTER
-    children = [
-      mkText(loc("missionStart"), h2_txt)
-      additionalFields
-    ]
-  },
-    mkCheckEquipmentStateHandler(@() quickMatchFn()), quickMatchBtnParams)
-
+let mkJoinQuickMatchButton = @(additionalFields, params)
+  buttonWithGamepadHotkey(
+    {
+      flow = FLOW_VERTICAL
+      hplace = ALIGN_CENTER
+      halign = ALIGN_CENTER
+      children = [
+        mkText(loc("missionStart"), h2_txt)
+        additionalFields
+      ]
+    },
+    mkCheckEquipmentStateHandler(@() quickMatchFn()),
+    params
+  )
 
 let nexusFittingQueues = Computed(function() {
   let raidName = playerProfileCurrentContracts.get().findvalue(
@@ -306,18 +309,16 @@ let mkJoinNexusMatchButton = buttonWithGamepadHotkey(mkText(loc("missionStart"),
   joinNexusFittingQueues, quickMatchBtnParams)
 
 let quickMatchButton = @(additionalFields) @() {
-  watch = [isInQueue, loadoutItems, stashVolume, stashMaxVolume]
+  watch = [isInQueue, loadoutItems, stashVolume, stashMaxVolume, wantOfflineRaid]
   size = FLEX_H
-  children = isInQueue.get()
-              ? leaveQuickMatchButton
-              : !checkSafepack()
-                ? setCannotTakeSafepackBtn
-                : selectedPlayerGameModeOption.get() == GameMode.Nexus
-                  ? mkJoinNexusMatchButton
-                  : mkJoinQuickMatchButton(additionalFields)
+  children = isInQueue.get()? leaveQuickMatchButton
+    : !checkSafepack() ? setCannotTakeSafepackBtn
+    : selectedPlayerGameModeOption.get() == GameMode.Nexus ? mkJoinNexusMatchButton
+    : wantOfflineRaid.get() ? mkJoinQuickMatchButton(additionalFields, isolatedRaidMatchBtnParams)
+    : mkJoinQuickMatchButton(additionalFields, quickMatchBtnParams)
 }
 
-let pressWhenReadyBtn = @(additionalFields) buttonWithGamepadHotkey(
+let pressWhenReadyBtn = @(additionalFields, params) buttonWithGamepadHotkey(
   {
     flow = FLOW_VERTICAL
     gap = hdpx(4)
@@ -335,7 +336,7 @@ let pressWhenReadyBtn = @(additionalFields) buttonWithGamepadHotkey(
     }
     mkCheckEquipmentStateHandler(@() myExtSquadData.ready.set(true))()
   },
-  quickMatchBtnParams)
+  params)
 
 let setNotAllReadyBtn = textButton(loc("startButton/notWholeSquadIsReady"),
   @() null,
@@ -363,9 +364,12 @@ let squadQuickMatchButton = @(additionalFields) function() {
   )
     btn = setNotAllReadyBtn
   else if (!isSquadLeader.get() && squadSelfMember.get() != null)
-    btn = myExtSquadData.ready.get() ? setNotReadyButton(additionalFields) : pressWhenReadyBtn(additionalFields)
+    btn = myExtSquadData.ready.get() ? setNotReadyButton(additionalFields)
+      : wantOfflineRaid.get() || squadLeaderState.get()?.leaderRaid.isOffline ? pressWhenReadyBtn(additionalFields, isolatedRaidMatchBtnParams)
+      : pressWhenReadyBtn(additionalFields, quickMatchBtnParams)
   return {
-    watch = [isSquadLeader, squadSelfMember, myExtSquadData.ready, allMembersState, loadoutItems, stashVolume, stashMaxVolume]
+    watch = [isSquadLeader, squadSelfMember, myExtSquadData.ready, allMembersState, loadoutItems,
+      stashVolume, stashMaxVolume, wantOfflineRaid, squadLeaderState]
     size = FLEX_H
     children = btn
   }
